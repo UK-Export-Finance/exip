@@ -1,0 +1,58 @@
+name: PR tests
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+env:
+  environment: dev
+
+jobs:
+  set-environment:
+    name: Set Environment
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ env.environment }}
+    steps:
+    - name: Initialise Environment
+      run: |
+        echo Setting environment to ${{ env.environment }}
+
+  linting:
+    name: Run linting
+    needs: set-environment
+    environment:
+      name: ${{ needs.set-environment.outputs.environment }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - name: Linting
+      run: |
+        npm install --legacy-peer-deps
+        cd ui
+        npm install --legacy-peer-deps
+        cd ..
+        npm run lint
+
+  e2e-tests:
+    name: Run e2e tests
+    needs: linting
+    runs-on: ubuntu-latest
+    container: cypress/base:16.13.0
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Start Docker Compose
+        run: docker-compose -f docker-compose.gha.yml up --build -d
+      - name: Run e2e tests
+        uses: cypress-io/github-action@v2
+        with:
+          headless: true
+          record: true
+          parallel: true
+          browser: chrome
+          project: ./e2e-tests
+          config: video=false

@@ -10,9 +10,4 @@ services:
       - ./ui/server:/app/server:ro
       - ./ui/public:/app/public:ro
       - ./ui/templates:/app/templates:ro
-    deploy:
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 300M
     command: npx nodemon server/index.js -L
