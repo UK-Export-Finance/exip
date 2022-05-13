@@ -49,7 +49,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           headless: true
-          record: true
+          record: false
           parallel: true
           browser: chrome
           project: ./e2e-tests
