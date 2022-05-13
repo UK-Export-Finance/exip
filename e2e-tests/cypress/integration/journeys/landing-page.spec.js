@@ -17,8 +17,7 @@ context('Landing page', () => {
 
   it('renders correct content', () => {
     landingPage.heading().invoke('text').then((text) => {
-      // expect(text.trim()).equal('Check if you can apply for export insurance');
-      expect(text.trim()).equal('Incorrect text');
+      expect(text.trim()).equal('Check if you can apply for export insurance');
     });
 
     landingPage.intro().invoke('text').then((text) => {
