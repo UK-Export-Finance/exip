@@ -24,7 +24,8 @@ EXPOSE 80 ${SSH_PORT}
 # Node setup
 WORKDIR /app
 COPY package.json .
-RUN npm install --legacy-peer-deps
+RUN npm install --only-production --legacy-peer-deps
+RUN npm cache clean --force
 COPY . .
 
 # Execute Script
