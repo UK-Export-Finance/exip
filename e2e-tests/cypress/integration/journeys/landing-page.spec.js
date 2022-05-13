@@ -1,9 +1,21 @@
 import landingPage from '../pages/landingPage';
 
 context('Landing page', () => {
-  it('renders correct content', () => {
+  before(() => {
     landingPage.visit();
+  });
 
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 90,
+      'best-practices': 100,
+      seo: 90,
+    });
+    cy.pa11y();
+  });
+
+  it('renders correct content', () => {
     landingPage.heading().invoke('text').then((text) => {
       expect(text.trim()).equal('Check if you can apply for export insurance');
     });
