@@ -2,7 +2,6 @@ name: PR tests
 
 on:
   pull_request:
-    types: [opened, reopened]
 
 env:
   environment: dev
@@ -41,18 +40,17 @@ jobs:
     name: Run e2e tests
     needs: linting
     runs-on: ubuntu-latest
-    container: cypress/base:16.13.0
 
     steps:
       - uses: actions/checkout@v3
       - name: Start Docker Compose
-        run: docker-compose -f docker-compose.gha.yml up --build -d
+        run: docker-compose up -d
       - name: Run e2e tests
         uses: cypress-io/github-action@v2
         with:
           headless: true
-          record: true
-          parallel: true
+          record: false
+          parallel: false
           browser: chrome
           project: ./e2e-tests
           config: video=false
