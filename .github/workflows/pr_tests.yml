@@ -50,7 +50,7 @@ jobs:
         with:
           headless: true
           record: false
-          parallel: true
+          parallel: false
           browser: chrome
           project: ./e2e-tests
           config: video=false
