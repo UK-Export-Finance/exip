@@ -1,0 +1,18 @@
+version: "3"
+services:
+  ui:
+    build: ./ui
+    image: dtfs/ui
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./ui/server:/app/server:ro
+      - ./ui/public:/app/public:ro
+      - ./ui/templates:/app/templates:ro
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 300M
+    command: npx nodemon server/index.js -L
