@@ -1,0 +1,34 @@
+{
+  "name": "exip",
+  "version": "1.0.0",
+  "description": "Export Insurance Policies",
+  "engineStrict": true,
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=6.0.0"
+  },
+  "scripts": {
+    "lint": "eslint ./ui/scripts ./ui/server ./e2e-tests",
+    "lint:fix": "eslint ./ui/scripts ./ui/server ./e2e-tests --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UK-Export-Finance/exip.git"
+  },
+  "author": "UK Export Finance",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UK-Export-Finance/exip/issues"
+  },
+  "homepage": "https://github.com/UK-Export-Finance/exip#readme",
+  "devDependencies": {
+    "cypress": "^9.6.1"
+  },
+  "dependencies": {
+    "cypress-audit": "^1.1.0",
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}
