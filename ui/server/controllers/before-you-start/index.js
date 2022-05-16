@@ -1,5 +1,5 @@
-const CONTENT_STRINGS = require('../../../content-strings');
-const CONSTANTS = require('../../../constants');
+const CONTENT_STRINGS = require('../../../../content-strings');
+const CONSTANTS = require('../../../../constants');
 
 const getIndex = (req, res) =>
   res.render('before-you-start.njk', {

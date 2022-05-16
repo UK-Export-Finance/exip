@@ -1,7 +1,7 @@
 const controller = require('.');
-const { mockReq, mockRes } = require('../test-mocks');
-const CONTENT_STRINGS = require('../../../content-strings');
-const CONSTANTS = require('../../../constants');
+const { mockReq, mockRes } = require('../../test-mocks');
+const CONTENT_STRINGS = require('../../../../content-strings');
+const CONSTANTS = require('../../../../constants');
 
 describe('controllers/index', () => {
   let req;
