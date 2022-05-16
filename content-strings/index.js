@@ -60,9 +60,15 @@ const LANDING_PAGE = {
   },
 };
 
+const COMPANY_BASED_PAGE = {
+  PAGE_TITLE: 'Is your company based inside the UK, Channel Islands and Isle of Man?',
+  HEADING: 'Is your company based inside the UK, Channel Islands and Isle of Man?',
+};
+
 const CONTENT_STRINGS = {
   ORGANISATION,
   LANDING_PAGE,
+  COMPANY_BASED_PAGE,
 };
 
 module.exports = CONTENT_STRINGS;

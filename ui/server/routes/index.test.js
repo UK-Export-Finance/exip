@@ -1,5 +1,7 @@
 const { get } = require('../test-mocks/mock-router');
+const CONSTANTS = require('../../../constants');
 const indexController = require('../controllers');
+const companyBasedController = require('../controllers/company-based');
 
 describe('routes/index', () => {
   beforeEach(() => {
@@ -11,7 +13,9 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(1);
-    expect(get).toHaveBeenCalledWith('/', indexController);
+    expect(get).toHaveBeenCalledTimes(2);
+
+    expect(get).toHaveBeenCalledWith(CONSTANTS.ROUTES.BEFORE_YOU_START, indexController);
+    expect(get).toHaveBeenCalledWith(CONSTANTS.ROUTES.COMPANY_BASED, companyBasedController);
   });
 });
