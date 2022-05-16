@@ -11,7 +11,7 @@ const landingPage = {
     listItems: () => cy.get('[data-cy="use-service-to-list"] li'),
   },
   completionTime: () => cy.get('[data-cy="completion-time"]'),
-  submitButton: () => cy.get('[data-cy="submitButton"]'),
+  submitButton: () => cy.get('[data-cy="submit-button"]'),
   beforeYouStart: {
     heading: () => cy.get('[data-cy="before-you-start-heading"]'),
     intro: () => cy.get('[data-cy="before-you-start-intro"]'),

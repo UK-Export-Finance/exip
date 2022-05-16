@@ -3,6 +3,7 @@ import {
   ORGANISATION,
   LANDING_PAGE as CONTENT_STRINGS,
 } from '../../../../content-strings';
+import CONSTANTS from '../../../../constants';
 
 context('Landing page', () => {
   before(() => {
@@ -64,6 +65,14 @@ context('Landing page', () => {
     });
   });
 
+  it('renders a `start now` button`', () => {
+    landingPage.submitButton().invoke('text').then((text) => {
+      expect(text.trim()).equal(CONTENT_STRINGS.SUBMIT_BUTTON);
+    });
+
+    landingPage.submitButton().should('have.attr', 'href', CONSTANTS.ROUTES.COMPANY_BASED);
+  });
+
   it('renders `before you start` content', () => {
     landingPage.beforeYouStart.heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.BEFORE_YOU_START.HEADING);
@@ -82,5 +91,11 @@ context('Landing page', () => {
     landingPage.beforeYouStart.listItemLinks().each(($element, index) => {
       expect($element.attr('href')).equal(CONTENT_STRINGS.BEFORE_YOU_START.LIST[index].href);
     });
+  });
+
+  it('clicking `start now` redirects to the `Company based` page', () => {
+    landingPage.submitButton().click();
+
+    cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED);
   });
 });
