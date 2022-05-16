@@ -1,5 +1,5 @@
 const { get } = require('../test-mocks/mock-router');
-const CONSTANTS = require('../../constants');
+const CONSTANTS = require('../constants');
 const beforeYouStartController = require('../controllers/before-you-start');
 const companyBasedController = require('../controllers/company-based');
 

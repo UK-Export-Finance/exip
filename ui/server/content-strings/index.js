@@ -19,10 +19,10 @@ const LANDING_PAGE = {
     INTRO: 'Use this service to:',
     LIST: [
       {
-        text: 'check if you can apply for export insurance for a specific export'
+        text: 'check if you can apply for export insurance for a specific export',
       },
       {
-        text: 'get a premium quote'
+        text: 'get a premium quote',
       },
     ],
   },
