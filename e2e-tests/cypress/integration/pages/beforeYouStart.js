@@ -1,4 +1,4 @@
-const landingPage = {
+const beforeYouStartPage = {
   visit: () => cy.visit('/'),
   heading: () => cy.get('[data-cy="heading"]'),
   description: () => cy.get('[data-cy="description"]'),
@@ -20,4 +20,4 @@ const landingPage = {
   },
 };
 
-export default landingPage;
+export default beforeYouStartPage;
