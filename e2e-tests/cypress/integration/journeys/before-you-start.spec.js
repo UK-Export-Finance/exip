@@ -2,8 +2,8 @@ import beforeYouStartPage from '../pages/beforeYouStart';
 import {
   ORGANISATION,
   LANDING_PAGE as CONTENT_STRINGS,
-} from '../../../../content-strings';
-import CONSTANTS from '../../../../constants';
+} from '../../../content-strings';
+import CONSTANTS from '../../../constants';
 
 context('Landing page', () => {
   before(() => {

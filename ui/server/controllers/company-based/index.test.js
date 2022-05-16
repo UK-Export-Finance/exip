@@ -1,5 +1,5 @@
 const controller = require('.');
-const CONTENT_STRINGS = require('../../../../content-strings');
+const CONTENT_STRINGS = require('../../../content-strings');
 const { mockReq, mockRes } = require('../../test-mocks');
 
 describe('controllers/company-based', () => {

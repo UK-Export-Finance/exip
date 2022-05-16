@@ -1,4 +1,4 @@
-const CONTENT_STRINGS = require('../../../../content-strings');
+const CONTENT_STRINGS = require('../../../content-strings');
 
 const getCompanyBased = (req, res) =>
   res.render('company-based.njk', {
