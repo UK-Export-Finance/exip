@@ -1,0 +1,23 @@
+{% macro render(params) %}
+  {% set items = params.items %}
+  {% set dataCy = params.dataCy %}
+
+  {% if items.length %}
+    <ul class="govuk-list govuk-list--bullet" data-cy="{{ dataCy }}">
+
+      {% for item in items %}
+        <li>
+            {% if item.href %}
+              <a href="{{ item.href }}">{{ item.text }}</a>
+
+            {% else %}
+              {{ item.text }}
+
+            {% endif %}
+        </li>
+
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+{% endmacro %}

@@ -1,11 +1,49 @@
-{% extends "index.njk" %}
+{% extends 'index.njk' %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import './components/text-list.njk' as textList %}
 
 {% block pageTitle %}
-  Check if you can apply for export insurance
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
 {% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-l" data-cy="heading">Check if you can apply for export insurance</h1>
+  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
 
-  <p class="govuk-body" data-cy="intro">We can help UK based exporters manage risks in challenging markets, ensuring that they get paid even where the private market is not able to offer insurance.</p>
+  <p class="govuk-body" data-cy="description">{{ CONTENT_STRINGS.DESCRIPTION }}</p>
+
+  <p class="govuk-body" data-cy="cover-against-intro">{{ CONTENT_STRINGS.COVERS_AGAINST.INTRO }}</p>
+
+  {{textList.render({
+    items: CONTENT_STRINGS.COVERS_AGAINST.LIST,
+    dataCy: 'cover-against-list'
+  })}}
+
+  <p class="govuk-body" data-cy="use-service-to-intro">{{ CONTENT_STRINGS.USE_SERVICE_TO.INTRO }}</p>
+
+  {{textList.render({
+    items: CONTENT_STRINGS.USE_SERVICE_TO.LIST,
+    dataCy: 'use-service-to-list'
+  })}}
+
+  <p class="govuk-body" data-cy="completion-time">{{ CONTENT_STRINGS.COMPLETION_TIME }}</p>
+
+  {{ govukButton({
+    text: CONTENT_STRINGS.SUBMIT_BUTTON,
+    attributes: {
+      'data-cy': 'submit-button'
+    },
+    isStartButton: true,
+    href: SUBMIT_URL,
+    classes: 'govuk-!-margin-bottom-9'
+  }) }}
+
+  <h2 class="govuk-heading-l" data-cy="before-you-start-heading">{{ CONTENT_STRINGS.BEFORE_YOU_START.HEADING }}</h2>
+
+  <p class="govuk-body" data-cy="before-you-start-intro">{{ CONTENT_STRINGS.BEFORE_YOU_START.INTRO }}</p>
+
+  {{textList.render({
+    items: CONTENT_STRINGS.BEFORE_YOU_START.LIST,
+    dataCy: 'before-you-start-list'
+  })}}
+
 {% endblock %}
