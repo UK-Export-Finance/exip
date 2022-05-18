@@ -36,4 +36,4 @@ app.use(
 
 // app.get('*', (req, res) => res.render('page-not-found.njk', { user: req.session.user }));
 
-app.listen(PORT, () => console.info(`EXIP UI app listening on port ${PORT}!`));
+app.listen(PORT, () => console.info(`EXIP UI app listening on port ${PORT}!`))
