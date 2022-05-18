@@ -24,17 +24,25 @@ jobs:
       name: ${{ needs.set-environment.outputs.environment }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-    - name: Linting
-      run: |
-        npm install --legacy-peer-deps
-        cd ui
-        npm install --legacy-peer-deps
-        cd ..
-        npm run lint
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Linting
+        run: |
+          npm install --legacy-peer-deps
+          cd ui
+          npm install --legacy-peer-deps
+          cd ..
+          npm run lint
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#exip-github-actions'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()  
 
   unit-tests:
     name: Run unit tests
@@ -43,15 +51,23 @@ jobs:
       name: ${{ needs.set-environment.outputs.environment }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-    - name: Unit tests
-      run: |
-        cd ui
-        npm install --legacy-peer-deps
-        npm run test
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Unit tests
+        run: |
+          cd ui
+          npm install --legacy-peer-deps
+          npm run test
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#exip-github-actions'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()
 
   e2e-tests:
     name: Run e2e tests
@@ -70,3 +86,11 @@ jobs:
           browser: chrome
           project: ./e2e-tests
           config: video=false
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#exip-github-actions'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()
