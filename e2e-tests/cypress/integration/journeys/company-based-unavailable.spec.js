@@ -22,7 +22,7 @@ context('Answering `no` to Company based inside the UK, Channel Islands and Isle
   it('passes the audits', () => {
     cy.lighthouse({
       accessibility: 100,
-      performance: 90,
+      performance: 85,
       'best-practices': 100,
       seo: 90,
     });
