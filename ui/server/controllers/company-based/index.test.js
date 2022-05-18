@@ -44,14 +44,14 @@ describe('controllers/company-based', () => {
     });
 
     describe('when submitted answer is false', () => {
-      it(`should redirect to ${CONSTANTS.ROUTES.UNAVAILABLE.COMPANY}`, () => {
+      it(`should redirect to ${CONSTANTS.ROUTES.COMPANY_BASED_UNAVAILABLE}`, () => {
         req.body = {
           [CONSTANTS.FIELDS.VALID_COMPANY_BASE]: 'false',
         };
 
         controller.post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(CONSTANTS.ROUTES.UNAVAILABLE.COMPANY);
+        expect(res.redirect).toHaveBeenCalledWith(CONSTANTS.ROUTES.COMPANY_BASED_UNAVAILABLE);
       });
     });
 

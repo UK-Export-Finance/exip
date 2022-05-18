@@ -13,15 +13,15 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
     companyBasedPage.visit();
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 90,
-  //     'best-practices': 100,
-  //     seo: 90,
-  //   });
-  //   cy.pa11y();
-  // });
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 90,
+      'best-practices': 100,
+      seo: 90,
+    });
+    cy.pa11y();
+  });
 
   it('renders a page title and heading', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
@@ -78,11 +78,11 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
     });
 
     describe('when submitting the answer as `no`', () => {
-      it(`should redirect to ${CONSTANTS.ROUTES.UNAVAILABLE.COMPANY}`, () => {
+      it(`should redirect to ${CONSTANTS.ROUTES.COMPANY_BASED_UNAVAILABLE}`, () => {
         companyBasedPage[CONSTANTS.FIELDS.VALID_COMPANY_BASE].no().click();
         companyBasedPage.submitButton().click();
 
-        cy.url().should('include', CONSTANTS.ROUTES.UNAVAILABLE.COMPANY);
+        cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED_UNAVAILABLE);
       });
     });
 

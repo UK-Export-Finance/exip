@@ -1,0 +1,21 @@
+{% extends 'index.njk' %}
+{% import './components/text-list.njk' as textList %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+
+  <p class="govuk-body" data-cy="description">{{ CONTENT_STRINGS.DESCRIPTION }}</p>
+
+  <p class="govuk-body" data-cy="actions-intro">{{ CONTENT_STRINGS.ACTIONS.INTRO }}</p>
+
+  {{textList.render({
+    items: CONTENT_STRINGS.ACTIONS.LIST,
+    dataCy: 'actions-list'
+  })}}
+
+{% endblock %}

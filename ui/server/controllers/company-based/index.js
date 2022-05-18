@@ -26,7 +26,7 @@ const post = (req, res) => {
   }
 
   if (req.body[CONSTANTS.FIELDS.VALID_COMPANY_BASE] === 'false') {
-    return res.redirect(CONSTANTS.ROUTES.UNAVAILABLE.COMPANY);
+    return res.redirect(CONSTANTS.ROUTES.COMPANY_BASED_UNAVAILABLE);
   }
 
   return res.redirect(CONSTANTS.ROUTES.BUYER_BASED);
