@@ -1,5 +1,7 @@
 const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
+const CONSTANTS = require('../../constants');
+const generateValidationErrors = require('./validation');
 const { mockReq, mockRes } = require('../../test-mocks');
 
 describe('controllers/company-based', () => {
@@ -11,11 +13,58 @@ describe('controllers/company-based', () => {
     res = mockRes();
   });
 
-  it('should render company-based template', () => {
-    controller(req, res);
+  describe('get', () => {
+    it('should render template', () => {
+      controller.get(req, res);
 
-    expect(res.render).toHaveBeenCalledWith('company-based.njk', {
-      CONTENT_STRINGS: CONTENT_STRINGS.COMPANY_BASED_PAGE,
+      expect(res.render).toHaveBeenCalledWith('company-based.njk', {
+        CONTENT_STRINGS: {
+          BUTTONS: CONTENT_STRINGS.BUTTONS,
+          ...CONTENT_STRINGS.COMPANY_BASED_PAGE,
+        },
+        FIELD_NAME: CONSTANTS.FIELDS.VALID_COMPANY_BASE,
+      });
+    });
+  });
+
+  describe('post', () => {
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors', () => {
+        controller.post(req, res);
+
+        expect(res.render).toHaveBeenCalledWith('company-based.njk', {
+          CONTENT_STRINGS: {
+            BUTTONS: CONTENT_STRINGS.BUTTONS,
+            ...CONTENT_STRINGS.COMPANY_BASED_PAGE,
+          },
+          FIELD_NAME: CONSTANTS.FIELDS.VALID_COMPANY_BASE,
+          validationErrors: generateValidationErrors(req.body),
+        });
+      });
+    });
+
+    describe('when submitted answer is false', () => {
+      it(`should redirect to ${CONSTANTS.ROUTES.UNAVAILABLE.COMPANY}`, () => {
+        req.body = {
+          [CONSTANTS.FIELDS.VALID_COMPANY_BASE]: 'false',
+        };
+
+        controller.post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(CONSTANTS.ROUTES.UNAVAILABLE.COMPANY);
+      });
+    });
+
+    describe('when there are no validation errors', () => {
+      it(`should redirect to ${CONSTANTS.ROUTES.BUYER_BASED}`, () => {
+        req.body = {
+          [CONSTANTS.FIELDS.VALID_COMPANY_BASE]: 'true',
+        };
+
+        controller.post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(CONSTANTS.ROUTES.BUYER_BASED);
+      });
     });
   });
 });

@@ -1,4 +1,12 @@
+const CONSTANTS = require('../constants');
+
 const ORGANISATION = 'UK Export Finance';
+
+const BUTTONS = {
+  CONTINUE: 'Continue',
+  SUBMIT: 'Submit',
+  START_APPLICATION: 'Start an application',
+};
 
 const LANDING_PAGE = {
   PAGE_TITLE: 'Check if you can apply for export insurance',
@@ -65,10 +73,16 @@ const COMPANY_BASED_PAGE = {
   HEADING: 'Is your company based inside the UK, Channel Islands and Isle of Man?',
 };
 
+const ERROR_MESSAGES = {
+  [CONSTANTS.FIELDS.VALID_COMPANY_BASE]: 'Select if your company is based in the UK, Channel Islands, Isle of Man or not',
+};
+
 const CONTENT_STRINGS = {
+  BUTTONS,
   ORGANISATION,
   LANDING_PAGE,
   COMPANY_BASED_PAGE,
+  ERROR_MESSAGES,
 };
 
 module.exports = CONTENT_STRINGS;

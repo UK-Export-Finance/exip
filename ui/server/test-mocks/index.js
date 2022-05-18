@@ -1,5 +1,6 @@
 const mockReq = () => ({
   session: {},
+  body: {},
 });
 
 const mockRes = () => {

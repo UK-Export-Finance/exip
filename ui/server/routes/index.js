@@ -6,6 +6,8 @@ const companyBasedController = require('../controllers/company-based');
 const router = express.Router();
 
 router.get(CONSTANTS.ROUTES.BEFORE_YOU_START, beforeYouStartController);
-router.get(CONSTANTS.ROUTES.COMPANY_BASED, companyBasedController);
+
+router.get(CONSTANTS.ROUTES.COMPANY_BASED, companyBasedController.get);
+router.post(CONSTANTS.ROUTES.COMPANY_BASED, companyBasedController.post);
 
 module.exports = router;
