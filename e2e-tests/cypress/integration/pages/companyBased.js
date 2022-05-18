@@ -1,6 +1,6 @@
 import CONSTANTS from '../../../constants';
 
-const beforeYouStartPage = {
+const companyBasedPage = {
   visit: () => cy.visit('/company-based'),
   heading: () => cy.get('[data-cy="heading"]'),
   [CONSTANTS.FIELDS.VALID_COMPANY_BASE]: {
@@ -11,4 +11,4 @@ const beforeYouStartPage = {
   submitButton: () => cy.get('[data-cy="submit-button"]'),
 };
 
-export default beforeYouStartPage;
+export default companyBasedPage;

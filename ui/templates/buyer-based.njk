@@ -1,0 +1,76 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from 'govuk/components/radios/macro.njk' import govukRadios %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <form method="POST">
+
+    {{ govukRadios({
+      classes: "govuk-radios--inline",
+      idPrefix: FIELD_NAME,
+      name: FIELD_NAME,
+      fieldset: {
+        legend: {
+          html: "<h1 class='govuk-heading-l' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1>"
+        }
+      },
+      items: [
+        {
+          value: true,
+          text: "Yes",
+          label: {
+            attributes: {
+              "data-cy": FIELD_NAME + "-yes"
+            }
+          }
+        },
+        {
+          value: false,
+          text: "No",
+          label: {
+            attributes: {
+              "data-cy": FIELD_NAME + "-no"
+            }
+          }
+        }
+      ],
+      errorMessage: validationErrors.errorList[FIELD_NAME]and {
+        text: validationErrors.errorList[FIELD_NAME].text,
+        attributes: {
+          "data-cy": FIELD_NAME + "-error-message"
+        }
+      }
+    }) }}
+
+    {{ govukButton({
+      text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+      attributes: {
+        'data-cy': 'submit-button'
+      }
+    }) }}
+
+  </form>
+
+{% endblock %}
