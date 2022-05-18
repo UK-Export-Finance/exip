@@ -20,8 +20,10 @@ describe('controllers/company-based', () => {
       expect(res.render).toHaveBeenCalledWith('company-based.njk', {
         CONTENT_STRINGS: {
           BUTTONS: CONTENT_STRINGS.BUTTONS,
+          LINKS: CONTENT_STRINGS.LINKS,
           ...CONTENT_STRINGS.COMPANY_BASED_PAGE,
         },
+        BACK_LINK: CONSTANTS.ROUTES.BEFORE_YOU_START,
         FIELD_NAME: CONSTANTS.FIELDS.VALID_COMPANY_BASE,
       });
     });
@@ -35,8 +37,10 @@ describe('controllers/company-based', () => {
         expect(res.render).toHaveBeenCalledWith('company-based.njk', {
           CONTENT_STRINGS: {
             BUTTONS: CONTENT_STRINGS.BUTTONS,
+            LINKS: CONTENT_STRINGS.LINKS,
             ...CONTENT_STRINGS.COMPANY_BASED_PAGE,
           },
+          BACK_LINK: CONSTANTS.ROUTES.BEFORE_YOU_START,
           FIELD_NAME: CONSTANTS.FIELDS.VALID_COMPANY_BASE,
           validationErrors: generateValidationErrors(req.body),
         });

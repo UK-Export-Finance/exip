@@ -3,6 +3,7 @@ import partials from '../partials';
 import {
   ORGANISATION,
   BUTTONS,
+  LINKS,
   COMPANY_BASED_PAGE as CONTENT_STRINGS,
   ERROR_MESSAGES,
 } from '../../../content-strings';
@@ -11,6 +12,7 @@ import CONSTANTS from '../../../constants';
 context('Company based inside the UK, Channel Islands and Isle of Man page', () => {
   beforeEach(() => {
     companyBasedPage.visit();
+    cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED);
   });
 
   it('passes the audits', () => {
@@ -21,6 +23,17 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
       seo: 90,
     });
     cy.pa11y();
+  });
+
+  it('renders a back button with correct link', () => {
+    partials.backLink().should('exist');
+    partials.backLink().invoke('text').then((text) => {
+      expect(text.trim()).equal(LINKS.BACK);
+    });
+
+    partials.backLink().click();
+
+    cy.url().should('include', CONSTANTS.ROUTES.BEFORE_YOU_START);
   });
 
   it('renders a page title and heading', () => {

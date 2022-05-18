@@ -1,7 +1,9 @@
 import companyBasedPage from '../pages/companyBased';
 import companyBasedUnavailablePage from '../pages/companyBasedUnavailable';
+import partials from '../partials';
 import {
   ORGANISATION,
+  LINKS,
   EXIT_PAGES,
 } from '../../../content-strings';
 import CONSTANTS from '../../../constants';
@@ -9,8 +11,10 @@ import CONSTANTS from '../../../constants';
 const CONTENT_STRINGS = EXIT_PAGES.COMPANY_BASED;
 
 context('Answering `no` to Company based inside the UK, Channel Islands and Isle of Man', () => {
-  before(() => {
+  beforeEach(() => {
     companyBasedPage.visit();
+    cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED);
+
     companyBasedPage[CONSTANTS.FIELDS.VALID_COMPANY_BASE].no().click();
     companyBasedPage.submitButton().click();
   });
@@ -27,6 +31,17 @@ context('Answering `no` to Company based inside the UK, Channel Islands and Isle
 
   it(`should redirect to ${CONSTANTS.ROUTES.COMPANY_BASED_UNAVAILABLE}`, () => {
     cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED_UNAVAILABLE);
+  });
+
+  it('renders a back button with correct link', () => {
+    partials.backLink().should('exist');
+    partials.backLink().invoke('text').then((text) => {
+      expect(text.trim()).equal(LINKS.BACK);
+    });
+
+    partials.backLink().click();
+
+    cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED);
   });
 
   it('renders a page title, heading and description', () => {

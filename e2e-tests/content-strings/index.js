@@ -8,6 +8,10 @@ const BUTTONS = {
   START_APPLICATION: 'Start an application',
 };
 
+const LINKS = {
+  BACK: 'Back',
+};
+
 const LANDING_PAGE = {
   PAGE_TITLE: 'Check if you can apply for export insurance',
   HEADING: 'Check if you can apply for export insurance',
@@ -102,6 +106,7 @@ EXIT_PAGES.COMPANY_BASED = {
 
 const CONTENT_STRINGS = {
   BUTTONS,
+  LINKS,
   ORGANISATION,
   LANDING_PAGE,
   COMPANY_BASED_PAGE,
