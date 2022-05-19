@@ -1,6 +1,7 @@
 const FIELDS = {
   VALID_COMPANY_BASE: 'validCompanyBase',
   VALID_BUYER_BASE: 'validBuyerBase',
+  TRIED_PRIVATE_COVER: 'triedPrivateCover',
 };
 
 const ROUTES = {
@@ -10,6 +11,7 @@ const ROUTES = {
   BUYER_BASED: '/buyer-based',
   BUYER_BASED_UNAVAILABLE: '/buyer-based/unavailable',
   TRIED_TO_OBTAIN_COVER: '/tried-to-obtain-cover',
+  FINAL_DESTINATION: '/final-destination',
   PROBLEM_WITH_SERVICE: '/problem-with-service',
 };
 
