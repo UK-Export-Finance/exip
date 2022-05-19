@@ -35,6 +35,9 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(cookieParser());
 app.use(csrf());
 app.use(csrfToken());
@@ -44,9 +47,6 @@ configureNunjucks({
   express: app,
   noCache: true,
 });
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 app.use(morgan('dev', {
   skip: (req) => req.url.startsWith('/assets'),
@@ -59,6 +59,10 @@ app.use(
   express.static(path.join(__dirname, '..', 'node_modules', 'govuk-frontend', 'govuk', 'assets')),
   express.static(path.join(__dirname, '..', 'public')),
 );
+
+app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+  res.redirect('/problem-with-service');
+});
 
 // app.get('*', (req, res) => res.render('page-not-found.njk', { user: req.session.user }));
 
