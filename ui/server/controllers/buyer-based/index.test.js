@@ -1,6 +1,6 @@
 const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
-const { FIELDS, ROUTES } = require('../../constants');
+const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const generateValidationErrors = require('./validation');
 const { mockReq, mockRes } = require('../../test-mocks');
@@ -30,7 +30,7 @@ describe('controllers/buyer-based', () => {
     it('should render template', () => {
       controller.get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith('buyer-based.njk', singleInputPageVariables(controller.PAGE_VARIABLES));
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED, singleInputPageVariables(controller.PAGE_VARIABLES));
     });
   });
 
@@ -39,7 +39,7 @@ describe('controllers/buyer-based', () => {
       it('should render template with validation errors', () => {
         controller.post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith('buyer-based.njk', {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
           validationErrors: generateValidationErrors(req.body),
         });

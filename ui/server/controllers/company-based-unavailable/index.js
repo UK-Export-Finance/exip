@@ -1,8 +1,8 @@
 const CONTENT_STRINGS = require('../../content-strings');
-const { ROUTES } = require('../../constants');
+const { ROUTES, TEMPLATES } = require('../../constants');
 
 const getCompanyBasedUnavailable = (req, res) =>
-  res.render('company-based-unavailable.njk', {
+  res.render(TEMPLATES.COMPANY_BASED_UNAVAILABLE, {
     CONTENT_STRINGS: {
       LINKS: CONTENT_STRINGS.LINKS,
       ...CONTENT_STRINGS.EXIT_PAGES.COMPANY_BASED,

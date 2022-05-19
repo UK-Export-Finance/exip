@@ -12,9 +12,19 @@ const ROUTES = {
   TRIED_TO_OBTAIN_COVER: '/tried-to-obtain-cover',
 };
 
+const TEMPLATES = {
+  BEFORE_YOU_START: 'before-you-start.njk',
+  COMPANY_BASED: 'company-based.njk',
+  COMPANY_BASED_UNAVAILABLE: 'company-based-unavailable.njk',
+  BUYER_BASED: 'buyer-based.njk',
+  BUYER_BASED_UNAVAILABLE: 'buyer-based-unavailable.njk',
+  TRIED_TO_OBTAIN_COVER: 'tried-to-obtain-cover.njk',
+};
+
 const CONSTANTS = {
   FIELDS,
   ROUTES,
+  TEMPLATES,
 };
 
 module.exports = CONSTANTS;

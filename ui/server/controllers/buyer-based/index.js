@@ -1,9 +1,7 @@
 const CONTENT_STRINGS = require('../../content-strings');
-const { FIELDS, ROUTES } = require('../../constants');
+const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const generateValidationErrors = require('./validation');
-
-const TEMPLATE = 'buyer-based.njk';
 
 const PAGE_VARIABLES = {
   FIELD_NAME: FIELDS.VALID_BUYER_BASE,
@@ -12,13 +10,13 @@ const PAGE_VARIABLES = {
 };
 
 const get = (req, res) =>
-  res.render(TEMPLATE, singleInputPageVariables(PAGE_VARIABLES));
+  res.render(TEMPLATES.BUYER_BASED, singleInputPageVariables(PAGE_VARIABLES));
 
 const post = (req, res) => {
   const validationErrors = generateValidationErrors(req.body);
 
   if (validationErrors) {
-    return res.render(TEMPLATE, {
+    return res.render(TEMPLATES.BUYER_BASED, {
       ...singleInputPageVariables(PAGE_VARIABLES),
       validationErrors,
     });
