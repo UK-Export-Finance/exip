@@ -27,6 +27,8 @@
 
   <form method="POST">
 
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
     {{ govukRadios({
       classes: "govuk-radios--inline",
       idPrefix: FIELD_NAME,
