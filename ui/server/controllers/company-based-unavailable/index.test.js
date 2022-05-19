@@ -1,6 +1,6 @@
 const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
-const CONSTANTS = require('../../constants');
+const { ROUTES } = require('../../constants');
 const { mockReq, mockRes } = require('../../test-mocks');
 
 describe('controllers/company-based-unavailable', () => {
@@ -20,7 +20,7 @@ describe('controllers/company-based-unavailable', () => {
         LINKS: CONTENT_STRINGS.LINKS,
         ...CONTENT_STRINGS.EXIT_PAGES.COMPANY_BASED,
       },
-      BACK_LINK: CONSTANTS.ROUTES.COMPANY_BASED,
+      BACK_LINK: ROUTES.COMPANY_BASED,
     });
   });
 });

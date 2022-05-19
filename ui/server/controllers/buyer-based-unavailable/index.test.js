@@ -1,6 +1,6 @@
 const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
-const CONSTANTS = require('../../constants');
+const { ROUTES } = require('../../constants');
 const { mockReq, mockRes } = require('../../test-mocks');
 
 describe('controllers/buyer-based-unavailable', () => {
@@ -20,7 +20,7 @@ describe('controllers/buyer-based-unavailable', () => {
         LINKS: CONTENT_STRINGS.LINKS,
         ...CONTENT_STRINGS.EXIT_PAGES.BUYER_BASED,
       },
-      BACK_LINK: CONSTANTS.ROUTES.BUYER_BASED,
+      BACK_LINK: ROUTES.BUYER_BASED,
     });
   });
 });

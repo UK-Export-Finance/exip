@@ -1,7 +1,7 @@
 const controller = require('.');
 const { mockReq, mockRes } = require('../../test-mocks');
 const CONTENT_STRINGS = require('../../content-strings');
-const CONSTANTS = require('../../constants');
+const { ROUTES } = require('../../constants');
 
 describe('controllers/index', () => {
   let req;
@@ -17,7 +17,7 @@ describe('controllers/index', () => {
 
     expect(res.render).toHaveBeenCalledWith('before-you-start.njk', {
       CONTENT_STRINGS: CONTENT_STRINGS.LANDING_PAGE,
-      SUBMIT_URL: CONSTANTS.ROUTES.COMPANY_BASED,
+      SUBMIT_URL: ROUTES.COMPANY_BASED,
     });
   });
 });
