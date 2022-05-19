@@ -5,7 +5,7 @@ on:
 
 jobs:
   codacy-analysis-cli:
-    name: Run Analysis
+    name: Analyze
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
