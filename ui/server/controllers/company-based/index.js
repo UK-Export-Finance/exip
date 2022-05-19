@@ -1,42 +1,36 @@
 const CONTENT_STRINGS = require('../../content-strings');
-const CONSTANTS = require('../../constants');
+const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
+const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const generateValidationErrors = require('./validation');
 
+const PAGE_VARIABLES = {
+  FIELD_NAME: FIELDS.VALID_COMPANY_BASE,
+  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.COMPANY_BASED_PAGE,
+  BACK_LINK: ROUTES.BEFORE_YOU_START,
+};
+
 const get = (req, res) =>
-  res.render('company-based.njk', {
-    CONTENT_STRINGS: {
-      BUTTONS: CONTENT_STRINGS.BUTTONS,
-      LINKS: CONTENT_STRINGS.LINKS,
-      ...CONTENT_STRINGS.COMPANY_BASED_PAGE,
-    },
-    BACK_LINK: CONSTANTS.ROUTES.BEFORE_YOU_START,
-    FIELD_NAME: CONSTANTS.FIELDS.VALID_COMPANY_BASE,
-  });
+  res.render(TEMPLATES.COMPANY_BASED, singleInputPageVariables(PAGE_VARIABLES));
 
 const post = (req, res) => {
   const validationErrors = generateValidationErrors(req.body);
 
   if (validationErrors) {
-    return res.render('company-based.njk', {
-      CONTENT_STRINGS: {
-        BUTTONS: CONTENT_STRINGS.BUTTONS,
-        LINKS: CONTENT_STRINGS.LINKS,
-        ...CONTENT_STRINGS.COMPANY_BASED_PAGE,
-      },
-      BACK_LINK: CONSTANTS.ROUTES.BEFORE_YOU_START,
-      FIELD_NAME: CONSTANTS.FIELDS.VALID_COMPANY_BASE,
+    return res.render(TEMPLATES.COMPANY_BASED, {
+      ...singleInputPageVariables(PAGE_VARIABLES),
       validationErrors,
     });
   }
 
-  if (req.body[CONSTANTS.FIELDS.VALID_COMPANY_BASE] === 'false') {
-    return res.redirect(CONSTANTS.ROUTES.COMPANY_BASED_UNAVAILABLE);
+  if (req.body[FIELDS.VALID_COMPANY_BASE] === 'false') {
+    return res.redirect(ROUTES.COMPANY_BASED_UNAVAILABLE);
   }
 
-  return res.redirect(CONSTANTS.ROUTES.BUYER_BASED);
+  return res.redirect(ROUTES.BUYER_BASED);
 };
 
 module.exports = {
+  PAGE_VARIABLES,
   get,
   post,
 };

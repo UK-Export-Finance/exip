@@ -82,6 +82,11 @@ const BUYER_BASED_PAGE = {
   HEADING: 'Is your buyer based outside of the UK, Channel Islands and Isle of Man?',
 };
 
+const PROBLEM_WITH_SERVICE_PAGE = {
+  PAGE_TITLE: 'Problem with the service',
+  HEADING: 'Sorry, there is a problem with the service',
+};
+
 const ERROR_MESSAGES = {
   [CONSTANTS.FIELDS.VALID_COMPANY_BASE]: 'Select if your company is based in the UK, Channel Islands, Isle of Man or not',
   [CONSTANTS.FIELDS.VALID_BUYER_BASE]: 'Select if your buyer is based outside the UK, Channel Islands, Isle of Man or not',
@@ -124,6 +129,7 @@ const CONTENT_STRINGS = {
   LANDING_PAGE,
   COMPANY_BASED_PAGE,
   BUYER_BASED_PAGE,
+  PROBLEM_WITH_SERVICE_PAGE,
   ERROR_MESSAGES,
   EXIT_PAGES,
 };

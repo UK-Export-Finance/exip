@@ -1,5 +1,5 @@
 const validation = require('./validation');
-const CONSTANTS = require('../../constants');
+const { FIELDS } = require('../../constants');
 const CONTENT_STRINGS = require('../../content-strings');
 const generateValidationErrors = require('../../helpers/validation');
 
@@ -9,21 +9,21 @@ describe('controllers/buyer-based/validation', () => {
       const result = validation({});
 
       const expected = generateValidationErrors(
-        CONSTANTS.FIELDS.VALID_BUYER_BASE,
-        CONTENT_STRINGS.ERROR_MESSAGES[CONSTANTS.FIELDS.VALID_BUYER_BASE],
+        FIELDS.VALID_BUYER_BASE,
+        CONTENT_STRINGS.ERROR_MESSAGES[FIELDS.VALID_BUYER_BASE],
       );
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe(`when ${CONSTANTS.FIELDS.VALID_BUYER_BASE} is not provided`, () => {
+  describe(`when ${FIELDS.VALID_BUYER_BASE} is not provided`, () => {
     it('should return validation errors', () => {
       const result = validation({});
 
       const expected = generateValidationErrors(
-        CONSTANTS.FIELDS.VALID_BUYER_BASE,
-        CONTENT_STRINGS.ERROR_MESSAGES[CONSTANTS.FIELDS.VALID_BUYER_BASE],
+        FIELDS.VALID_BUYER_BASE,
+        CONTENT_STRINGS.ERROR_MESSAGES[FIELDS.VALID_BUYER_BASE],
       );
 
       expect(result).toEqual(expected);
@@ -32,7 +32,7 @@ describe('controllers/buyer-based/validation', () => {
 
   describe('when there are no errors', () => {
     it('should return null', () => {
-      const result = validation({ [CONSTANTS.FIELDS.VALID_BUYER_BASE]: true });
+      const result = validation({ [FIELDS.VALID_BUYER_BASE]: true });
 
       expect(result).toEqual(null);
     });
