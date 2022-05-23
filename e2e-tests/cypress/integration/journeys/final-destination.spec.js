@@ -16,15 +16,15 @@ context('What is the final destination for your export page', () => {
     cy.url().should('include', CONSTANTS.ROUTES.FINAL_DESTINATION);
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 80,
-  //     'best-practices': 100,
-  //     seo: 90,
-  //   });
-  //   cy.pa11y();
-  // });
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 80,
+      'best-practices': 100,
+      seo: 90,
+    });
+    cy.pa11y();
+  });
 
   it('renders a back button with correct link', () => {
     partials.backLink().should('exist');

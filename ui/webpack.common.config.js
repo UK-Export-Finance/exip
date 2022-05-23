@@ -7,7 +7,7 @@ module.exports = {
     main: './scripts/main.js',
     jsEnabled: './scripts/js-enabled.js',
     govukFrontend: './scripts/govuk-frontend.js',
-    locationAutocomplete: './scripts/location-autocomplete.js',
+    accessibleAutocomplete: './scripts/accessible-autocomplete.js',
   },
   output: {
     path: path.join(__dirname, 'public/js'),

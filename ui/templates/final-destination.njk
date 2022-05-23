@@ -74,7 +74,7 @@
           }) }}
 
           <select class="govuk-select" id="{{ FIELD_NAME }}">
-            <option value="" disabled selected>{{ CONTENT_STRINGS.HINTS.PICK_OPTION }}</option>
+            <option value="" disabled selected></option>
 
             {% for country in countries %}
               <option value="{{ country.value }}">{{ country.name }}</option>
@@ -94,16 +94,16 @@
 
   </form>
 
-  <script src="/assets/js/locationAutocomplete.js" type="text/javascript"></script>
+  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript"></script>
 
   <script type="text/javascript">
-    openregisterLocationPicker({
-      selectElement: document.getElementById('{{ FIELD_NAME }}'),
-      id: '{{ FIELD_NAME }}',
+    var element = document.getElementById('{{ FIELD_NAME }}');
+    accessibleAutocomplete.enhanceSelectElement({
+      selectElement: element,
       defaultValue: '',
       onConfirm: function(event) {
         if (event) {
-          document.getElementById('{{ HIDDEN_FIELD_NAME }}').value = event.name;
+          document.getElementById('{{ HIDDEN_FIELD_NAME }}').value = event;
         }
       }
     })

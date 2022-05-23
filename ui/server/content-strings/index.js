@@ -12,10 +12,6 @@ const LINKS = {
   BACK: 'Back',
 };
 
-const HINTS = {
-  PICK_OPTION: 'Pick an option',
-};
-
 const FIELDS = {
   [CONSTANTS.FIELDS.COUNTRY_SEARCH]: {
     HINT: 'Some countries are not covered by UK Export Finance. If your chosen destination is not in the list, then we cannot provide cover for it.',
@@ -148,7 +144,6 @@ EXIT_PAGES.BUYER_BASED = {
 const CONTENT_STRINGS = {
   BUTTONS,
   LINKS,
-  HINTS,
   FIELDS,
   ORGANISATION,
   LANDING_PAGE,
