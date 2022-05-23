@@ -3,10 +3,10 @@ const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const api = require('../../api');
 const mapCountries = require('../../helpers/map-countries');
-const generateValidationErrors = require('./validation');
+const { validation: generateValidationErrors } = require('./validation');
 
 const PAGE_VARIABLES = {
-  FIELD_NAME: FIELDS.COUNTRY_SEARCH,
+  FIELD_NAME: FIELDS.COUNTRY,
   PAGE_CONTENT_STRINGS: CONTENT_STRINGS.FINAL_DESTINATION_PAGE,
   BACK_LINK: ROUTES.TRIED_TO_OBTAIN_COVER,
 };

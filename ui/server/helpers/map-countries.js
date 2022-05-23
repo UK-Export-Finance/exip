@@ -1,7 +1,7 @@
 const mapCountries = (countries) =>
   countries.map(({ marketName, isoCode }) => ({
     name: marketName,
-    value: `country:${isoCode}`,
+    value: isoCode,
   }));
 
 module.exports = mapCountries;

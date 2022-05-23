@@ -14,7 +14,7 @@ describe('sever/helpers/map-countries', () => {
     const expected = [
       {
         name: mockCountries[0].marketName,
-        value: `country:${mockCountries[0].isoCode}`,
+        value: mockCountries[0].isoCode,
       },
     ];
 

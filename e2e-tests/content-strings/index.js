@@ -13,7 +13,7 @@ const LINKS = {
 };
 
 const FIELDS = {
-  [CONSTANTS.FIELDS.COUNTRY_SEARCH]: {
+  [CONSTANTS.FIELDS.COUNTRY]: {
     HINT: 'Some countries are not covered by UK Export Finance. If your chosen destination is not in the list, then we cannot provide cover for it.',
   },
 };
@@ -108,7 +108,7 @@ const ERROR_MESSAGES = {
   [CONSTANTS.FIELDS.VALID_COMPANY_BASE]: 'Select if your company is based in the UK, Channel Islands, Isle of Man or not',
   [CONSTANTS.FIELDS.VALID_BUYER_BASE]: 'Select if your buyer is based outside the UK, Channel Islands, Isle of Man or not',
   [CONSTANTS.FIELDS.TRIED_PRIVATE_COVER]: 'Select if you have tried to obtain private insurance or not',
-  [CONSTANTS.FIELDS.COUNTRY_SEARCH]: 'Select the final destination for your export',
+  [CONSTANTS.FIELDS.COUNTRY]: 'Select the final destination for your export',
 };
 
 const EXIT_PAGES = {

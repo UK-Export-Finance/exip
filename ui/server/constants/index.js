@@ -2,7 +2,7 @@ const FIELDS = {
   VALID_COMPANY_BASE: 'validCompanyBase',
   VALID_BUYER_BASE: 'validBuyerBase',
   TRIED_PRIVATE_COVER: 'triedPrivateCover',
-  COUNTRY_SEARCH: 'countrySearch',
+  COUNTRY: 'country',
   FINAL_DESTINATION: 'finalDestination',
 };
 

@@ -48,21 +48,21 @@ context('What is the final destination for your export page', () => {
 
   describe('searchable autocomplete input', () => {
     it('renders an input and hint', () => {
-      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].searchInput().should('exist');
+      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].searchInput().should('exist');
 
-      const hint = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].hint();
+      const hint = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].hint();
       hint.should('exist');
 
       hint.invoke('text').then((text) => {
-        const expectedText = FIELDS[`${CONSTANTS.FIELDS.COUNTRY_SEARCH}`].HINT;
+        const expectedText = FIELDS[`${CONSTANTS.FIELDS.COUNTRY}`].HINT;
         expect(text.trim()).equal(expectedText);
       });
     });
 
     it('renders `no results` message when no results are found', () => {
-      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].searchInput().type('test');
+      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].searchInput().type('test');
 
-      const noResults = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].noResults();
+      const noResults = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].noResults();
       noResults.should('exist');
 
       noResults.invoke('text').then((text) => {
@@ -73,59 +73,59 @@ context('What is the final destination for your export page', () => {
 
     it('renders a single country result after searching', () => {
       // start searching for France
-      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].searchInput().type('Fra');
+      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].searchInput().type('Fra');
 
-      const noResults = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].noResults();
+      const noResults = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].noResults();
       noResults.should('not.exist');
 
-      const results = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].results();
+      const results = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].results();
 
       results.should('have.length', 1);
     });
 
     it('renders multiple country results after searching', () => {
-      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].searchInput().type('Be');
+      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].searchInput().type('Be');
 
-      const noResults = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].noResults();
+      const noResults = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].noResults();
       noResults.should('not.exist');
 
-      const results = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].results();
+      const results = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].results();
 
       results.should('have.length.greaterThan', 1);
     });
 
     it('adds the country name to a hidden input value after searching', () => {
-      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].searchInput().type('Fra');
+      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].searchInput().type('Fra');
 
-      const noResults = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].noResults();
+      const noResults = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].noResults();
       noResults.should('not.exist');
 
-      const results = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].results();
+      const results = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].results();
 
       // select the first result (France)
       results.first().click();
 
       // check hidden input value
       const expectedValue = 'France';
-      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].hiddenInput().should('have.attr', 'value', expectedValue);
+      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].hiddenInput().should('have.attr', 'value', expectedValue);
     });
 
     it('allows user to remove a selected country and search again', () => {
-      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].searchInput().type('Fra');
-      const results = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].results();
+      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].searchInput().type('Fra');
+      const results = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].results();
 
       // select the first result (France)
       results.first().click();
 
       // clear the input
-      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].searchInput().clear();
+      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].searchInput().clear();
 
       // search for a different country, submit with enter key
-      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].searchInput().type('Belg{enter}');
+      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].searchInput().type('Belg{enter}');
 
       // check hidden input value
       const expectedValue = 'Belgium';
-      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].hiddenInput().should('have.attr', 'value', expectedValue);
+      finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].hiddenInput().should('have.attr', 'value', expectedValue);
     });
   });
 
@@ -146,13 +146,13 @@ context('What is the final destination for your export page', () => {
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELDS.COUNTRY_SEARCH];
+        const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELDS.COUNTRY];
 
         partials.errorSummaryListItems().first().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedMessage);
         });
 
-        finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].errorMessage().invoke('text').then((text) => {
+        finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].errorMessage().invoke('text').then((text) => {
           expect(text.trim()).includes(expectedMessage);
         });
       });
@@ -160,9 +160,9 @@ context('What is the final destination for your export page', () => {
 
     describe('when submitting with a selected acountry', () => {
       it(`should redirect to ${CONSTANTS.ROUTES.UK_CONTENT_PERCENTAGE}`, () => {
-        finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].searchInput().type('Fra');
+        finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].searchInput().type('Fra');
 
-        const results = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY_SEARCH].results();
+        const results = finalDestinationPage[CONSTANTS.FIELDS.COUNTRY].results();
         results.first().click();
 
         finalDestinationPage.submitButton().click();
