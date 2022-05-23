@@ -2,6 +2,8 @@ const FIELDS = {
   VALID_COMPANY_BASE: 'validCompanyBase',
   VALID_BUYER_BASE: 'validBuyerBase',
   TRIED_PRIVATE_COVER: 'triedPrivateCover',
+  COUNTRY: 'country',
+  FINAL_DESTINATION: 'finalDestination',
 };
 
 const ROUTES = {
@@ -12,6 +14,7 @@ const ROUTES = {
   BUYER_BASED_UNAVAILABLE: '/buyer-based/unavailable',
   TRIED_TO_OBTAIN_COVER: '/tried-to-obtain-cover',
   FINAL_DESTINATION: '/final-destination',
+  UK_CONTENT_PERCENTAGE: '/uk-content-percentage',
   PROBLEM_WITH_SERVICE: '/problem-with-service',
 };
 
@@ -22,6 +25,7 @@ const TEMPLATES = {
   BUYER_BASED: 'buyer-based.njk',
   BUYER_BASED_UNAVAILABLE: 'buyer-based-unavailable.njk',
   TRIED_TO_OBTAIN_COVER: 'tried-to-obtain-cover.njk',
+  FINAL_DESTINATION: 'final-destination.njk',
   PROBLEM_WITH_SERVICE: 'problem-with-service.njk',
 };
 
