@@ -10,6 +10,7 @@ const buyerBasedController = require('../controllers/buyer-based');
 const buyerBasedUnavailableController = require('../controllers/buyer-based-unavailable');
 const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
 const problemWithServiceController = require('../controllers/problem-with-service');
+const finalDestinationController = require('../controllers/final-destination');
 
 describe('routes/index', () => {
   beforeEach(() => {
@@ -21,8 +22,8 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(7);
-    expect(post).toHaveBeenCalledTimes(3);
+    expect(get).toHaveBeenCalledTimes(8);
+    expect(post).toHaveBeenCalledTimes(4);
 
     expect(get).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController);
 
@@ -36,6 +37,9 @@ describe('routes/index', () => {
 
     expect(get).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.post);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.FINAL_DESTINATION, finalDestinationController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.FINAL_DESTINATION, finalDestinationController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceController);
   });

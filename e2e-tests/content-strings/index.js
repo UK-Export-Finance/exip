@@ -12,6 +12,16 @@ const LINKS = {
   BACK: 'Back',
 };
 
+const HINTS = {
+  PICK_OPTION: 'Pick an option',
+};
+
+const FIELDS = {
+  [CONSTANTS.FIELDS.COUNTRY_SEARCH]: {
+    HINT: 'Some countries are not covered by UK Export Finance. If your chosen destination is not in the list, then we cannot provide cover for it.',
+  },
+};
+
 const LANDING_PAGE = {
   PAGE_TITLE: 'Check if you can apply for export insurance',
   HEADING: 'Check if you can apply for export insurance',
@@ -88,6 +98,11 @@ const TRIED_TO_OBTAIN_COVER_PAGE = {
   WARNING: 'In order to submit a full application you will need to provide evidence that you were unable to obtain cover from a private insurer for this export.',
 };
 
+const FINAL_DESTINATION_PAGE = {
+  PAGE_TITLE: 'What is the final destination for your export?',
+  HEADING: 'What is the final destination for your export?',
+};
+
 const PROBLEM_WITH_SERVICE_PAGE = {
   PAGE_TITLE: 'Problem with the service',
   HEADING: 'Sorry, there is a problem with the service',
@@ -97,6 +112,7 @@ const ERROR_MESSAGES = {
   [CONSTANTS.FIELDS.VALID_COMPANY_BASE]: 'Select if your company is based in the UK, Channel Islands, Isle of Man or not',
   [CONSTANTS.FIELDS.VALID_BUYER_BASE]: 'Select if your buyer is based outside the UK, Channel Islands, Isle of Man or not',
   [CONSTANTS.FIELDS.TRIED_PRIVATE_COVER]: 'Select if you have tried to obtain private insurance or not',
+  [CONSTANTS.FIELDS.COUNTRY_SEARCH]: 'Select the final destination for your export',
 };
 
 const EXIT_PAGES = {
@@ -132,11 +148,14 @@ EXIT_PAGES.BUYER_BASED = {
 const CONTENT_STRINGS = {
   BUTTONS,
   LINKS,
+  HINTS,
+  FIELDS,
   ORGANISATION,
   LANDING_PAGE,
   COMPANY_BASED_PAGE,
   BUYER_BASED_PAGE,
   TRIED_TO_OBTAIN_COVER_PAGE,
+  FINAL_DESTINATION_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
   ERROR_MESSAGES,
   EXIT_PAGES,
