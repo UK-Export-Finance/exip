@@ -93,4 +93,7 @@ jobs:
           channel: '#exip-github-actions'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          MULESOFT_API_CIS_URL: ${{ secrets.MULESOFT_API_CIS_URL }}
+          MULESOFT_API_CIS_KEY: ${{ secrets.MULESOFT_API_CIS_KEY }}
+          MULESOFT_API_CIS_SECRET: ${{ secrets.MULESOFT_API_CIS_SECRET }}
         if: failure()
