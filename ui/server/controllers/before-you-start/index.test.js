@@ -16,7 +16,10 @@ describe('controllers/index', () => {
     controller(req, res);
 
     expect(res.render).toHaveBeenCalledWith(TEMPLATES.BEFORE_YOU_START, {
-      CONTENT_STRINGS: CONTENT_STRINGS.LANDING_PAGE,
+      CONTENT_STRINGS: {
+        PRODUCT: CONTENT_STRINGS.PRODUCT,
+        ...CONTENT_STRINGS.LANDING_PAGE,
+      },
       SUBMIT_URL: ROUTES.COMPANY_BASED,
     });
   });

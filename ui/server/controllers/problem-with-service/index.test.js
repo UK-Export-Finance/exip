@@ -17,7 +17,10 @@ describe('controllers/problem-with-service', () => {
       controller(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.PROBLEM_WITH_SERVICE, {
-        CONTENT_STRINGS: CONTENT_STRINGS.PROBLEM_WITH_SERVICE_PAGE,
+        CONTENT_STRINGS: {
+          PRODUCT: CONTENT_STRINGS.PRODUCT,
+          ...CONTENT_STRINGS.PROBLEM_WITH_SERVICE_PAGE,
+        },
       });
     });
   });

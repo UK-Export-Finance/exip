@@ -17,6 +17,7 @@ describe('controllers/company-based-unavailable', () => {
 
     expect(res.render).toHaveBeenCalledWith(TEMPLATES.COMPANY_BASED_UNAVAILABLE, {
       CONTENT_STRINGS: {
+        PRODUCT: CONTENT_STRINGS.PRODUCT,
         LINKS: CONTENT_STRINGS.LINKS,
         ...CONTENT_STRINGS.EXIT_PAGES.COMPANY_BASED,
       },

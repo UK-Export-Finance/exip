@@ -7,6 +7,7 @@ const singleInputPageVariables = ({
 }) => {
   const pageVariables = {
     CONTENT_STRINGS: {
+      PRODUCT: CONTENT_STRINGS.PRODUCT,
       BUTTONS: CONTENT_STRINGS.BUTTONS,
       LINKS: CONTENT_STRINGS.LINKS,
       HINTS: CONTENT_STRINGS.HINTS,

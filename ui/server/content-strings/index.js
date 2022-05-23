@@ -2,6 +2,10 @@ const CONSTANTS = require('../constants');
 
 const ORGANISATION = 'UK Export Finance';
 
+const PRODUCT = {
+  DESCRIPTION: 'Check if you can apply for export insurance',
+};
+
 const BUTTONS = {
   CONTINUE: 'Continue',
   SUBMIT: 'Submit',
@@ -19,8 +23,8 @@ const FIELDS = {
 };
 
 const LANDING_PAGE = {
-  PAGE_TITLE: 'Check if you can apply for export insurance',
-  HEADING: 'Check if you can apply for export insurance',
+  PAGE_TITLE: PRODUCT.DESCRIPTION,
+  HEADING: PRODUCT.DESCRIPTION,
   DESCRIPTION: 'We can help UK based exporters manage risks in challenging markets, ensuring that they get paid even where the private market is not able to offer insurance.',
   COVERS_AGAINST: {
     INTRO: 'Our Export Insurance Policy offers cover against the risk of:',
@@ -146,6 +150,7 @@ const CONTENT_STRINGS = {
   LINKS,
   FIELDS,
   ORGANISATION,
+  PRODUCT,
   LANDING_PAGE,
   COMPANY_BASED_PAGE,
   BUYER_BASED_PAGE,

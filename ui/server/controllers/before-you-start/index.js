@@ -3,7 +3,10 @@ const { TEMPLATES, ROUTES } = require('../../constants');
 
 const getBeforeYouStart = (req, res) =>
   res.render(TEMPLATES.BEFORE_YOU_START, {
-    CONTENT_STRINGS: CONTENT_STRINGS.LANDING_PAGE,
+    CONTENT_STRINGS: {
+      PRODUCT: CONTENT_STRINGS.PRODUCT,
+      ...CONTENT_STRINGS.LANDING_PAGE,
+    },
     SUBMIT_URL: ROUTES.COMPANY_BASED,
   });
 
