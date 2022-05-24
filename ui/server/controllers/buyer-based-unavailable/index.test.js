@@ -18,6 +18,7 @@ describe('controllers/buyer-based-unavailable', () => {
     expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED_UNAVAILABLE, {
       CONTENT_STRINGS: {
         PRODUCT: CONTENT_STRINGS.PRODUCT,
+        FOOTER: CONTENT_STRINGS.FOOTER,
         LINKS: CONTENT_STRINGS.LINKS,
         ...CONTENT_STRINGS.EXIT_PAGES.BUYER_BASED,
       },

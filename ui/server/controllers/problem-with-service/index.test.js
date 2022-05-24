@@ -19,6 +19,7 @@ describe('controllers/problem-with-service', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.PROBLEM_WITH_SERVICE, {
         CONTENT_STRINGS: {
           PRODUCT: CONTENT_STRINGS.PRODUCT,
+          FOOTER: CONTENT_STRINGS.FOOTER,
           ...CONTENT_STRINGS.PROBLEM_WITH_SERVICE_PAGE,
         },
       });

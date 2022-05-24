@@ -18,6 +18,7 @@ describe('controllers/index', () => {
     expect(res.render).toHaveBeenCalledWith(TEMPLATES.BEFORE_YOU_START, {
       CONTENT_STRINGS: {
         PRODUCT: CONTENT_STRINGS.PRODUCT,
+        FOOTER: CONTENT_STRINGS.FOOTER,
         ...CONTENT_STRINGS.LANDING_PAGE,
       },
       SUBMIT_URL: ROUTES.COMPANY_BASED,
