@@ -17,7 +17,6 @@ context('Landing page', () => {
       'best-practices': 100,
       seo: 90,
     });
-    cy.pa11y();
   });
 
   it('renders a page title, heading and description', () => {

@@ -22,7 +22,6 @@ context('Buyer based outside of the UK, Channel Islands and Isle of Man page', (
       'best-practices': 100,
       seo: 90,
     });
-    cy.pa11y();
   });
 
   it('renders a back button with correct link', () => {

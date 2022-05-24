@@ -22,7 +22,6 @@ context('Tried to obtain private cover page', () => {
       'best-practices': 100,
       seo: 90,
     });
-    cy.pa11y();
   });
 
   it('renders a back button with correct link', () => {
