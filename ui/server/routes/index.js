@@ -7,6 +7,7 @@ const buyerBasedController = require('../controllers/buyer-based');
 const buyerBasedUnavailableController = require('../controllers/buyer-based-unavailable');
 const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
 const finalDestinationController = require('../controllers/final-destination');
+const ukContentPercentageController = require('../controllers/uk-content-pecentage');
 const problemWithServiceController = require('../controllers/problem-with-service');
 
 const router = express.Router();
@@ -26,6 +27,9 @@ router.post(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.post);
 
 router.get(ROUTES.FINAL_DESTINATION, finalDestinationController.get);
 router.post(ROUTES.FINAL_DESTINATION, finalDestinationController.post);
+
+router.get(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.get);
+router.post(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.post);
 
 router.get(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceController);
 

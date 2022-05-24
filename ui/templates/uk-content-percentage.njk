@@ -1,0 +1,105 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from 'govuk/components/label/macro.njk' import govukLabel %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  {% set class = "govuk-form-group" %}
+
+  {% if validationErrors.errorList[FIELD_NAME] %}
+    {% set class = "govuk-form-group govuk-form-group--error" %}
+  {% endif %}
+
+  <form method="POST">
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="{{ class }}">
+
+      <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+
+      <p class="govuk-body" data-cy="description-1">{{ CONTENT_STRINGS.DESCRIPTION_1 }}</p>
+      <p class="govuk-body" data-cy="description-2">{{ CONTENT_STRINGS.DESCRIPTION_2 }}</p>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds-from-desktop">
+          {{ govukWarningText({
+            text: CONTENT_STRINGS.WARNING,
+            attributes: {
+              "data-cy": "warning"
+            }
+          }) }}
+        </div>
+      </div>
+
+        {{ govukLabel({
+          for: FIELD_NAME,
+          classes: "govuk-!-margin-bottom-3",
+          html: "<span class='govuk-hint' data-cy='label-hint'>" + FIELD_HINT + "</span>",
+          attributes: {
+            "data-cy": "label"
+          }
+        }) }}
+
+        {{ govukErrorMessage({
+          text: validationErrors.errorList[FIELD_NAME].text,
+          attributes: {
+            "data-cy": FIELD_NAME + "-error-message"
+          }
+        }) }}
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-quarter-from-desktop">
+            <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-padding-right-0 govuk-!-padding-left-0">
+
+              {{ govukInput({
+                id: FIELD_NAME,
+                name: FIELD_NAME,
+                suffix: {
+                  text: "%"
+                },
+                attributes: {
+                  "data-cy": "input"
+                }
+              }) }}
+
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+    {{ govukButton({
+      text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+      attributes: {
+        'data-cy': 'submit-button'
+      }
+    }) }}
+
+  </form>
+
+{% endblock %}

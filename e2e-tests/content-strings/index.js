@@ -59,6 +59,10 @@ const FIELDS = {
   [CONSTANTS.FIELDS.COUNTRY]: {
     HINT: 'Some countries are not covered by UK Export Finance. If your chosen destination is not in the list, then we cannot provide cover for it.',
   },
+  [CONSTANTS.FIELDS.UK_CONTENT_PERCENTAGE]: {
+    LABEL: 'Percentage of your export that is UK content',
+    HINT: 'Enter the UK content of your export as a percentage.',
+  },
 };
 
 const LANDING_PAGE = {
@@ -142,6 +146,14 @@ const FINAL_DESTINATION_PAGE = {
   HEADING: 'What is the final destination for your export?',
 };
 
+const UK_CONTENT_PERCENTAGE_PAGE = {
+  PAGE_TITLE: 'What percentage of your export is UK content?',
+  HEADING: 'What percentage of your export is UK content?',
+  DESCRIPTION_1: 'UK content is an export contract’s value less the cost to you of buying any goods and/or services from suppliers outside the UK, the Isle of Man or the Channel Islands, to be supplied directly to the buyer or otherwise “as is”.',
+  DESCRIPTION_2: 'Materials and components in goods manufactured or assembled in the UK, the Isle of Man or the Channel Islands, which would be eligible for a certificate of UK origin from a British Chamber of Commerce are treated as UK content.',
+  WARNING: 'In order to submit a full application you will need to provide evidence that the export contains a minimum of 20% UK content.',
+};
+
 const PROBLEM_WITH_SERVICE_PAGE = {
   PAGE_TITLE: 'Problem with the service',
   HEADING: 'Sorry, there is a problem with the service',
@@ -152,6 +164,12 @@ const ERROR_MESSAGES = {
   [CONSTANTS.FIELDS.VALID_BUYER_BASE]: 'Select if your buyer is based outside the UK, Channel Islands, Isle of Man or not',
   [CONSTANTS.FIELDS.TRIED_PRIVATE_COVER]: 'Select if you have tried to obtain private insurance or not',
   [CONSTANTS.FIELDS.COUNTRY]: 'Select the final destination for your export',
+  [CONSTANTS.FIELDS.UK_CONTENT_PERCENTAGE]: {
+    IS_EMPTY: 'Enter the percentage of your export that is UK content',
+    NOT_A_NUMBER: `${FIELDS[CONSTANTS.FIELDS.UK_CONTENT_PERCENTAGE].LABEL} must be a number`,
+    BELOW_MINIMUM: `${FIELDS[CONSTANTS.FIELDS.UK_CONTENT_PERCENTAGE].LABEL} must be 0 or more`,
+    ABOVE_MAXIMUM: `${FIELDS[CONSTANTS.FIELDS.UK_CONTENT_PERCENTAGE].LABEL} must be 100 or fewer`,
+  },
 };
 
 const EXIT_PAGES = {
@@ -196,6 +214,7 @@ const CONTENT_STRINGS = {
   BUYER_BASED_PAGE,
   TRIED_TO_OBTAIN_COVER_PAGE,
   FINAL_DESTINATION_PAGE,
+  UK_CONTENT_PERCENTAGE_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
   ERROR_MESSAGES,
   EXIT_PAGES,
