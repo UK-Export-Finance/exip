@@ -3,7 +3,11 @@ const { TEMPLATES } = require('../../constants');
 
 const get = (req, res) =>
   res.render(TEMPLATES.PROBLEM_WITH_SERVICE, {
-    CONTENT_STRINGS: CONTENT_STRINGS.PROBLEM_WITH_SERVICE_PAGE,
+    CONTENT_STRINGS: {
+      PRODUCT: CONTENT_STRINGS.PRODUCT,
+      FOOTER: CONTENT_STRINGS.FOOTER,
+      ...CONTENT_STRINGS.PROBLEM_WITH_SERVICE_PAGE,
+    },
   });
 
 module.exports = get;

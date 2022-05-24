@@ -26,7 +26,6 @@ context('Answering `no` to Company based inside the UK, Channel Islands and Isle
       'best-practices': 100,
       seo: 90,
     });
-    cy.pa11y();
   });
 
   it(`should redirect to ${CONSTANTS.ROUTES.COMPANY_BASED_UNAVAILABLE}`, () => {
