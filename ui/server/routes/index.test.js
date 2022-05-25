@@ -9,8 +9,9 @@ const companyBasedUnavailableController = require('../controllers/company-based-
 const buyerBasedController = require('../controllers/buyer-based');
 const buyerBasedUnavailableController = require('../controllers/buyer-based-unavailable');
 const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
-const problemWithServiceController = require('../controllers/problem-with-service');
 const finalDestinationController = require('../controllers/final-destination');
+const ukContentPercentageController = require('../controllers/uk-content-pecentage');
+const problemWithServiceController = require('../controllers/problem-with-service');
 
 describe('routes/index', () => {
   beforeEach(() => {
@@ -22,8 +23,8 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(8);
-    expect(post).toHaveBeenCalledTimes(4);
+    expect(get).toHaveBeenCalledTimes(9);
+    expect(post).toHaveBeenCalledTimes(5);
 
     expect(get).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController);
 
@@ -40,6 +41,9 @@ describe('routes/index', () => {
 
     expect(get).toHaveBeenCalledWith(ROUTES.FINAL_DESTINATION, finalDestinationController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.FINAL_DESTINATION, finalDestinationController.post);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceController);
   });

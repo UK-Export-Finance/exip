@@ -21,6 +21,7 @@ const singleInputPageVariables = ({
   const fieldStrings = CONTENT_STRINGS.FIELDS[FIELD_NAME];
 
   if (fieldStrings) {
+    pageVariables.FIELD_LABEL = fieldStrings.LABEL;
     pageVariables.FIELD_HINT = fieldStrings.HINT;
   }
 

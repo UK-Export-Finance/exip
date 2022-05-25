@@ -4,6 +4,7 @@ const FIELDS = {
   TRIED_PRIVATE_COVER: 'triedPrivateCover',
   COUNTRY: 'country',
   FINAL_DESTINATION: 'finalDestination',
+  UK_CONTENT_PERCENTAGE: 'ukContentPercentage',
 };
 
 const ROUTES = {
@@ -15,6 +16,7 @@ const ROUTES = {
   TRIED_TO_OBTAIN_COVER: '/tried-to-obtain-cover',
   FINAL_DESTINATION: '/final-destination',
   UK_CONTENT_PERCENTAGE: '/uk-content-percentage',
+  TELL_US_ABOUT_YOUR_DEAL: '/tell-us-about-your-deal',
   PROBLEM_WITH_SERVICE: '/problem-with-service',
 };
 
@@ -26,6 +28,7 @@ const TEMPLATES = {
   BUYER_BASED_UNAVAILABLE: 'buyer-based-unavailable.njk',
   TRIED_TO_OBTAIN_COVER: 'tried-to-obtain-cover.njk',
   FINAL_DESTINATION: 'final-destination.njk',
+  UK_CONTENT_PERCENTAGE: 'uk-content-percentage.njk',
   PROBLEM_WITH_SERVICE: 'problem-with-service.njk',
 };
 
