@@ -12,7 +12,8 @@ const problemWithServiceController = require('../controllers/problem-with-servic
 
 const router = express.Router();
 
-router.get(ROUTES.BEFORE_YOU_START, beforeYouStartController);
+router.get(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
+router.post(ROUTES.BEFORE_YOU_START, beforeYouStartController.post);
 
 router.get(ROUTES.COMPANY_BASED, companyBasedController.get);
 router.post(ROUTES.COMPANY_BASED, companyBasedController.post);
