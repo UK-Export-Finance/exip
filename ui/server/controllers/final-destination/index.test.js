@@ -3,9 +3,10 @@ const CONTENT_STRINGS = require('../../content-strings');
 const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const { validation: generateValidationErrors } = require('./validation');
-const { mockReq, mockRes } = require('../../test-mocks');
 const api = require('../../api');
 const mapCountries = require('../../helpers/map-countries');
+const updateSubmittedData = require('../../helpers/update-submitted-data');
+const { mockReq, mockRes } = require('../../test-mocks');
 
 describe('controllers/final-destination', () => {
   let req;
@@ -85,6 +86,21 @@ describe('controllers/final-destination', () => {
     });
 
     describe('when there are no validation errors', () => {
+      it('should update the session with submitted data', () => {
+        req.body = {
+          [FIELDS.FINAL_DESTINATION]: mapCountries(mockCountriesResponse)[0].value,
+        };
+
+        controller.post(req, res);
+
+        const expected = updateSubmittedData(
+          req.body,
+          req.session.submittedData,
+        );
+
+        expect(req.session.submittedData).toEqual(expected);
+      });
+
       it(`should redirect to ${ROUTES.UK_CONTENT_PERCENTAGE}`, async () => {
         req.body = {
           [FIELDS.FINAL_DESTINATION]: mapCountries(mockCountriesResponse)[0].value,

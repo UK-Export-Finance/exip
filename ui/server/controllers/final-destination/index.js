@@ -4,6 +4,7 @@ const singleInputPageVariables = require('../../helpers/single-input-page-variab
 const api = require('../../api');
 const mapCountries = require('../../helpers/map-countries');
 const { validation: generateValidationErrors } = require('./validation');
+const updateSubmittedData = require('../../helpers/update-submitted-data');
 
 const PAGE_VARIABLES = {
   FIELD_NAME: FIELDS.COUNTRY,
@@ -36,6 +37,11 @@ const post = async (req, res) => {
       validationErrors,
     });
   }
+
+  req.session.submittedData = updateSubmittedData(
+    req.body,
+    req.session.submittedData,
+  );
 
   return res.redirect(ROUTES.UK_CONTENT_PERCENTAGE);
 };
