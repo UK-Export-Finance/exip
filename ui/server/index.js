@@ -8,7 +8,7 @@ const csrf = require('csurf');
 const path = require('path');
 const basicAuth = require('express-basic-auth');
 
-const { csrf: csrfToken, security } = require('./middleware');
+const { csrf: csrfToken, security, seo } = require('./middleware');
 const configureNunjucks = require('./nunjucks-configuration');
 const routes = require('./routes');
 
@@ -16,6 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const https = Boolean(process.env.HTTPS || 0);
 
+app.use(seo);
 app.use(security);
 app.use(compression());
 
