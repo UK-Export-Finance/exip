@@ -38,7 +38,7 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
         accessibility: 100,
         performance: 80,
         'best-practices': 100,
-        seo: 90,
+        seo: 80,
       });
     });
 

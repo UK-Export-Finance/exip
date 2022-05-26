@@ -39,7 +39,7 @@ context('What is the final destination for your export page', () => {
         accessibility: 100,
         performance: 80,
         'best-practices': 100,
-        seo: 90,
+        seo: 80,
       });
     });
 
