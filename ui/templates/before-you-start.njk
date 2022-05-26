@@ -27,15 +27,21 @@
 
   <p class="govuk-body" data-cy="completion-time">{{ CONTENT_STRINGS.COMPLETION_TIME }}</p>
 
-  {{ govukButton({
-    text: CONTENT_STRINGS.SUBMIT_BUTTON,
-    attributes: {
-      'data-cy': 'submit-button'
-    },
-    isStartButton: true,
-    href: SUBMIT_URL,
-    classes: 'govuk-!-margin-bottom-9'
-  }) }}
+  <form method="POST">
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {{ govukButton({
+      text: CONTENT_STRINGS.SUBMIT_BUTTON,
+      attributes: {
+        'data-cy': 'submit-button'
+      },
+      isStartButton: true,
+      href: SUBMIT_URL,
+      classes: 'govuk-!-margin-bottom-9'
+    }) }}
+  
+  </form>
 
   <h2 class="govuk-heading-l" data-cy="before-you-start-heading">{{ CONTENT_STRINGS.BEFORE_YOU_START.HEADING }}</h2>
 

@@ -24,9 +24,10 @@ describe('routes/index', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(9);
-    expect(post).toHaveBeenCalledTimes(5);
+    expect(post).toHaveBeenCalledTimes(6);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController);
+    expect(get).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.COMPANY_BASED, companyBasedController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.COMPANY_BASED, companyBasedController.post);

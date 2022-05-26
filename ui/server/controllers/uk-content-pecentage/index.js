@@ -2,6 +2,7 @@ const CONTENT_STRINGS = require('../../content-strings');
 const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const { validation: generateValidationErrors } = require('./validation');
+const updateSubmittedData = require('../../helpers/update-submitted-data');
 
 const PAGE_VARIABLES = {
   FIELD_NAME: FIELDS.UK_CONTENT_PERCENTAGE,
@@ -21,6 +22,11 @@ const post = (req, res) => {
       validationErrors,
     });
   }
+
+  req.session.submittedData = updateSubmittedData(
+    req.body,
+    req.session.submittedData,
+  );
 
   return res.redirect(ROUTES.TELL_US_ABOUT_YOUR_DEAL);
 };

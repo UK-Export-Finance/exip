@@ -3,6 +3,7 @@ const CONTENT_STRINGS = require('../../content-strings');
 const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const { validation: generateValidationErrors } = require('./validation');
+const updateSubmittedData = require('../../helpers/update-submitted-data');
 const { mockReq, mockRes } = require('../../test-mocks');
 
 describe('controllers/uk-content-percentage', () => {
@@ -47,6 +48,21 @@ describe('controllers/uk-content-percentage', () => {
     });
 
     describe('when there are no validation errors', () => {
+      it('should update the session with submitted data', () => {
+        req.body = {
+          [FIELDS.UK_CONTENT_PERCENTAGE]: '50',
+        };
+
+        controller.post(req, res);
+
+        const expected = updateSubmittedData(
+          req.body,
+          req.session.submittedData,
+        );
+
+        expect(req.session.submittedData).toEqual(expected);
+      });
+
       it(`should redirect to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL}`, () => {
         req.body = {
           [FIELDS.UK_CONTENT_PERCENTAGE]: '50',

@@ -6,7 +6,7 @@ import {
 import CONSTANTS from '../../../constants';
 
 context('Landing page', () => {
-  before(() => {
+  beforeEach(() => {
     beforeYouStartPage.visit();
   });
 
@@ -68,8 +68,6 @@ context('Landing page', () => {
     beforeYouStartPage.submitButton().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.SUBMIT_BUTTON);
     });
-
-    beforeYouStartPage.submitButton().should('have.attr', 'href', CONSTANTS.ROUTES.COMPANY_BASED);
   });
 
   it('renders `before you start` content', () => {

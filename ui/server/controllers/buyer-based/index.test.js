@@ -3,6 +3,7 @@ const CONTENT_STRINGS = require('../../content-strings');
 const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const generateValidationErrors = require('./validation');
+const updateSubmittedData = require('../../helpers/update-submitted-data');
 const { mockReq, mockRes } = require('../../test-mocks');
 
 describe('controllers/buyer-based', () => {
@@ -59,6 +60,21 @@ describe('controllers/buyer-based', () => {
     });
 
     describe('when there are no validation errors', () => {
+      it('should update the session with submitted data', () => {
+        req.body = {
+          [FIELDS.VALID_BUYER_BASE]: 'true',
+        };
+
+        controller.post(req, res);
+
+        const expected = updateSubmittedData(
+          req.body,
+          req.session.submittedData,
+        );
+
+        expect(req.session.submittedData).toEqual(expected);
+      });
+
       it(`should redirect to ${ROUTES.TRIED_TO_OBTAIN_COVER}`, () => {
         req.body = {
           [FIELDS.VALID_BUYER_BASE]: 'true',
