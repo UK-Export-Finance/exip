@@ -1,5 +1,4 @@
 const beforeYouStartPage = {
-  visit: () => cy.visit('/'),
   heading: () => cy.get('[data-cy="heading"]'),
   description: () => cy.get('[data-cy="description"]'),
   coverAgainst: {

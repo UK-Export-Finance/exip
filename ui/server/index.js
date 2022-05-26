@@ -6,8 +6,9 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const csrf = require('csurf');
 const path = require('path');
+const basicAuth = require('express-basic-auth');
 
-const { csrf: csrfToken, security } = require('./middleware');
+const { csrf: csrfToken, security, seo } = require('./middleware');
 const configureNunjucks = require('./nunjucks-configuration');
 const routes = require('./routes');
 
@@ -15,6 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const https = Boolean(process.env.HTTPS || 0);
 
+app.use(seo);
 app.use(security);
 app.use(compression());
 
@@ -50,6 +52,13 @@ configureNunjucks({
 
 app.use(morgan('dev', {
   skip: (req) => req.url.startsWith('/assets'),
+}));
+
+app.use(basicAuth({
+  users: {
+    [process.env.BASIC_AUTH_KEY]: process.env.BASIC_AUTH_SECRET,
+  },
+  challenge: true,
 }));
 
 app.use('/', routes);

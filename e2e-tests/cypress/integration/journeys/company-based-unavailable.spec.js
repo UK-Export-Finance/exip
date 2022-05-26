@@ -12,7 +12,13 @@ const CONTENT_STRINGS = EXIT_PAGES.COMPANY_BASED;
 
 context('Answering `no` to Company based inside the UK, Channel Islands and Isle of Man', () => {
   beforeEach(() => {
-    companyBasedPage.visit();
+    cy.visit(CONSTANTS.ROUTES.COMPANY_BASED, {
+      auth: {
+        username: Cypress.config('basicAuthKey'),
+        password: Cypress.config('basicAuthSecret'),
+      },
+    });
+
     cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED);
 
     companyBasedPage[CONSTANTS.FIELDS.VALID_COMPANY_BASE].no().click();
@@ -24,7 +30,7 @@ context('Answering `no` to Company based inside the UK, Channel Islands and Isle
       accessibility: 100,
       performance: 80,
       'best-practices': 100,
-      seo: 90,
+      seo: 80,
     });
   });
 

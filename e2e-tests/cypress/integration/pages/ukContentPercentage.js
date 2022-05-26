@@ -1,7 +1,6 @@
 import CONSTANTS from '../../../constants';
 
 const ukContentPercentagePage = {
-  visit: () => cy.visit('/uk-content-percentage'),
   heading: () => cy.get('[data-cy="heading"]'),
   description1: () => cy.get('[data-cy="description-1"]'),
   description2: () => cy.get('[data-cy="description-2"]'),

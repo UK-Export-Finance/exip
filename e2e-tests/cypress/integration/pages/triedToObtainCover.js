@@ -1,7 +1,6 @@
 import CONSTANTS from '../../../constants';
 
 const triedToObtainCoverPage = {
-  visit: () => cy.visit('/tried-to-obtain-cover'),
   heading: () => cy.get('[data-cy="heading"]'),
   warning: () => cy.get('[data-cy="warning"]'),
   [CONSTANTS.FIELDS.TRIED_PRIVATE_COVER]: {
