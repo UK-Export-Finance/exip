@@ -1,7 +1,6 @@
 import CONSTANTS from '../../../constants';
 
 const buyerBasedPage = {
-  visit: () => cy.visit('/buyer-based'),
   heading: () => cy.get('[data-cy="heading"]'),
   [CONSTANTS.FIELDS.VALID_BUYER_BASE]: {
     yes: () => cy.get(`[data-cy="${CONSTANTS.FIELDS.VALID_BUYER_BASE}-yes"]`),

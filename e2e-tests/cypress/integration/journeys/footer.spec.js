@@ -1,10 +1,15 @@
-import beforeYouStartPage from '../pages/beforeYouStart';
 import footer from '../partials/footer';
+import CONSTANTS from '../../../constants';
 import { FOOTER } from '../../../content-strings';
 
 context('Footer', () => {
   beforeEach(() => {
-    beforeYouStartPage.visit();
+    cy.visit(CONSTANTS.ROUTES.BEFORE_YOU_START, {
+      auth: {
+        username: Cypress.config('basicAuthKey'),
+        password: Cypress.config('basicAuthSecret'),
+      },
+    });
   });
 
   it('renders a heading', () => {

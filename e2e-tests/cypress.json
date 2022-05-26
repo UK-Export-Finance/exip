@@ -2,5 +2,7 @@
   "baseUrl": "http://localhost:5000",
   "testFiles": "**/*.spec.js",
   "projectId": "exip",
-  "numTestsKeptInMemory": 1
+  "numTestsKeptInMemory": 1,
+  "basicAuthKey": "dev",
+  "basicAuthSecret": "test"
 }

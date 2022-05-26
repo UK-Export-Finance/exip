@@ -12,6 +12,8 @@ services:
       - ./ui/templates:/app/templates:ro
     environment:
       - PORT=5000
+      - BASIC_AUTH_KEY
+      - BASIC_AUTH_SECRET
       - MULESOFT_API_CIS_URL
       - MULESOFT_API_CIS_KEY
       - MULESOFT_API_CIS_SECRET

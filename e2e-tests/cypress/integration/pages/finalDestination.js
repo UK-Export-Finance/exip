@@ -1,7 +1,6 @@
 import { FIELDS } from '../../../constants';
 
 const companyBasedPage = {
-  visit: () => cy.visit('/final-destination'),
   heading: () => cy.get('[data-cy="heading"]'),
   [FIELDS.COUNTRY]: {
     hint: () => cy.get(`[data-cy="${FIELDS.COUNTRY}-hint"]`),

@@ -74,6 +74,8 @@ jobs:
     needs: unit-tests
     runs-on: ubuntu-latest
     env:
+      BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
+      BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
       MULESOFT_API_CIS_URL: ${{ secrets.MULESOFT_API_CIS_URL }}
       MULESOFT_API_CIS_KEY: ${{ secrets.MULESOFT_API_CIS_KEY }}
       MULESOFT_API_CIS_SECRET: ${{ secrets.MULESOFT_API_CIS_SECRET }}
