@@ -87,24 +87,7 @@
                       text: FIELDS.CREDIT_LIMIT_CURRENCY.LABEL,
                       classes: "govuk-visually-hidden"
                     },
-                    items: [
-                    {
-                        value: "",
-                        text: "",
-                        selected: true,
-                        disabled: true
-                      },
-                      {
-                        value: "mockA",
-                        text: "mock A",
-                        selected: submittedValues[FIELDS.CREDIT_LIMIT_CURRENCY.ID] === "mockA"
-                      },
-                      {
-                        value: "mockB",
-                        text: "mock B",
-                        selected: submittedValues[FIELDS.CREDIT_LIMIT_CURRENCY.ID] === "mockB"
-                      }
-                    ],
+                    items: currencies,
                     classes: "govuk-!-width-full"
                   }) }}
 

@@ -1,5 +1,7 @@
 const CONTENT_STRINGS = require('../../content-strings');
 const { TEMPLATES, ROUTES, FIELDS } = require('../../constants');
+const api = require('../../api');
+const mapCurrencies = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
 
@@ -43,15 +45,26 @@ const PAGE_VARIABLES = {
   },
 };
 
-const get = (req, res) =>
-  res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, PAGE_VARIABLES);
+const get = async (req, res) => {
+  const currencies = await api.getCurrencies();
+  const mappedCurrencies = mapCurrencies(currencies);
 
-const post = (req, res) => {
+  return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
+    ...PAGE_VARIABLES,
+    currencies: mappedCurrencies,
+  });
+};
+
+const post = async (req, res) => {
   const validationErrors = generateValidationErrors(req.body);
 
   if (validationErrors) {
+    const currencies = await api.getCurrencies();
+    const mappedCurrencies = mapCurrencies(currencies, req.body[FIELDS.CREDIT_LIMIT_CURRENCY]);
+
     return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
       ...PAGE_VARIABLES,
+      currencies: mappedCurrencies,
       validationErrors,
       submittedValues: req.body,
     });

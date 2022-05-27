@@ -1,6 +1,8 @@
 const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
+const api = require('../../api');
+const mapCurrencies = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
 const { mockReq, mockRes } = require('../../test-mocks');
@@ -8,10 +10,24 @@ const { mockReq, mockRes } = require('../../test-mocks');
 describe('controllers/buyer-based', () => {
   let req;
   let res;
+  const mockCurrenciesResponse = [
+    {
+      name: 'Euros',
+      isoCode: 'EUR',
+    },
+    {
+      name: 'Hong Kong Dollars',
+      isoCode: 'HKD',
+    },
+  ];
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
+  });
+
+  afterAll(() => {
+    jest.resetAllMocks();
   });
 
   describe('PAGE_VARIABLES', () => {
@@ -61,20 +77,48 @@ describe('controllers/buyer-based', () => {
   });
 
   describe('get', () => {
-    it('should render template', () => {
-      controller.get(req, res);
+    const getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, controller.PAGE_VARIABLES);
+    beforeEach(() => {
+      api.getCurrencies = getCurrenciesSpy;
+    });
+
+    it('should call api.getCurrencies', async () => {
+      await controller.get(req, res);
+
+      expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should render template', async () => {
+      await controller.get(req, res);
+
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
+        ...controller.PAGE_VARIABLES,
+        currencies: mapCurrencies(mockCurrenciesResponse),
+      });
     });
   });
 
   describe('post', () => {
+    const getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+
+    beforeEach(() => {
+      api.getCurrencies = getCurrenciesSpy;
+    });
+
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submitted values', () => {
-        controller.post(req, res);
+      it('should call api.getCurrencies', async () => {
+        await controller.get(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+      });
+
+      it('should render template with validation errors and submitted values', async () => {
+        await controller.post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
           ...controller.PAGE_VARIABLES,
+          currencies: mapCurrencies(mockCurrenciesResponse, req.body[FIELDS.CREDIT_LIMIT_CURRENCY]),
           validationErrors: generateValidationErrors(req.body),
           submittedValues: req.body,
         });
@@ -95,8 +139,8 @@ describe('controllers/buyer-based', () => {
         req.body = validBody;
       });
 
-      it('should update the session with submitted data', () => {
-        controller.post(req, res);
+      it('should update the session with submitted data', async () => {
+        await controller.post(req, res);
 
         const expected = updateSubmittedData(
           req.body,
@@ -106,8 +150,8 @@ describe('controllers/buyer-based', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
-        controller.post(req, res);
+      it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, async () => {
+        await controller.post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS);
       });
