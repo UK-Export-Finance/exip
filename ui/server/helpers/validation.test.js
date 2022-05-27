@@ -5,7 +5,6 @@ describe('sever/helpers/validation', () => {
     const result = generateValidationErrors(
       'firstName',
       'Enter first name',
-      1,
     );
 
     expect(result).toEqual({
@@ -23,17 +22,15 @@ describe('sever/helpers/validation', () => {
     });
   });
 
-  it('should return errorList and summary with multiple errors, retaining order and count', () => {
+  it('should return errorList and summary with multiple errors, incrementing the order and count', () => {
     const firstNameErrors = generateValidationErrors(
       'firstName',
       'Enter first name',
-      1,
     );
 
     const middleNameErrors = generateValidationErrors(
       'middleName',
       'Enter middle name',
-      2,
       firstNameErrors,
     );
 
@@ -42,7 +39,6 @@ describe('sever/helpers/validation', () => {
     const result = generateValidationErrors(
       'lastName',
       'Enter last name',
-      3,
       previousErrors,
     );
 

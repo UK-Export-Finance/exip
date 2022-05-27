@@ -1,0 +1,252 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from 'govuk/components/hint/macro.njk' import govukHint %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+
+  <p class="govuk-body" data-cy="description">{{ CONTENT_STRINGS.DESCRIPTION }}</p>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      <form method="POST">
+
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+        {% set class = "govuk-form-group" %}
+
+          {% if validationErrors.errorList[FIELDS.CREDIT_LIMIT_GROUP.ID].text %}
+            {% set class = "govuk-form-group govuk-form-group--error" %}
+          {% endif %}
+
+          {% set hasCreditLimitError %}
+
+        {% endset %}
+
+
+        <div class="{{ class }}">
+          {% call govukFieldset({
+            legend: {
+              text: FIELDS.CREDIT_LIMIT_GROUP.HEADING,
+              classes: "govuk-fieldset__legend--m"
+            }
+          }) %}
+
+            {{ govukHint({
+              text: FIELDS.CREDIT_LIMIT_GROUP.HINT,
+              id: FIELDS.CREDIT_LIMIT_CURRENCY.ID
+            }) }}
+
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-padding-left-0 govuk-!-padding-right-0">
+
+                {% if validationErrors.errorList[FIELDS.CREDIT_LIMIT_GROUP.ID].text %}
+                  {{ govukErrorMessage({
+                    text: validationErrors.errorList[FIELDS.CREDIT_LIMIT_GROUP.ID].text,
+                    classes: "govuk-!-padding-left-3",
+                    attributes: {
+                      "data-cy": FIELDS.CREDIT_LIMIT_GROUP.ID + "-error-message"
+                    }
+                  }) }}
+                {% endif %}
+
+                <div class="govuk-grid-column-one-half-from-desktop govuk-!-padding-right-0">
+                  {{ govukSelect({
+                    id: FIELDS.CREDIT_LIMIT_CURRENCY.ID,
+                    name: FIELDS.CREDIT_LIMIT_CURRENCY.ID,
+                    label: {
+                      text: FIELDS.CREDIT_LIMIT_CURRENCY.LABEL,
+                      classes: "govuk-visually-hidden"
+                    },
+                    items: [
+                    {
+                        value: "",
+                        text: "",
+                        selected: true,
+                        disabled: true
+                      },
+                      {
+                        value: "mockA",
+                        text: "mock A",
+                        selected: submittedValues[FIELDS.CREDIT_LIMIT_CURRENCY.ID] === "mockA"
+                      },
+                      {
+                        value: "mockB",
+                        text: "mock B",
+                        selected: submittedValues[FIELDS.CREDIT_LIMIT_CURRENCY.ID] === "mockB"
+                      }
+                    ],
+                    classes: "govuk-!-width-full"
+                  }) }}
+
+                </div>
+
+                <div class="govuk-grid-column-one-third-from-desktop govuk-!-padding-left-0">
+                  {{ govukInput({
+                    label: {
+                      text: FIELDS.CREDIT_LIMIT.LABEL,
+                      classes: "govuk-visually-hidden"
+                    },
+                    id: FIELDS.CREDIT_LIMIT.ID,
+                    name: FIELDS.CREDIT_LIMIT.ID,
+                    spellcheck: false,
+                    value: submittedValues[FIELDS.CREDIT_LIMIT.ID]
+                  }) }}
+                </div>
+
+              </div>
+            </div>
+
+          {% endcall %}
+
+        </div>
+
+        {{ govukInput({
+          label: {
+            html: "<label class='govuk-heading-m' for='" + FIELDS.PRE_CREDIT_PERIOD.ID + "'>" + FIELDS.PRE_CREDIT_PERIOD.LABEL + "</label>"
+          },
+          hint: {
+            text: FIELDS.PRE_CREDIT_PERIOD.HINT
+          },
+          classes: "govuk-input--width-5",
+          id: FIELDS.PRE_CREDIT_PERIOD.ID,
+          name: FIELDS.PRE_CREDIT_PERIOD.ID,
+          suffix: {
+            text: "days"
+          },
+          spellcheck: false,
+          errorMessage: validationErrors.errorList[FIELDS.PRE_CREDIT_PERIOD.ID]and {
+            text: validationErrors.errorList[FIELDS.PRE_CREDIT_PERIOD.ID].text,
+            attributes: {
+              "data-cy": FIELDS.PRE_CREDIT_PERIOD.ID + "-error-message"
+            }
+          },
+          value: submittedValues[FIELDS.PRE_CREDIT_PERIOD.ID]
+        }) }}
+
+
+        {{ govukInput({
+          label: {
+            html: "<label class='govuk-heading-m' for='" + FIELDS.CREDIT_PERIOD.ID + "'>" + FIELDS.CREDIT_PERIOD.LABEL + "</label>"
+          },
+          hint: {
+            text: FIELDS.CREDIT_PERIOD.HINT
+          },
+          classes: "govuk-input--width-5",
+          id: FIELDS.CREDIT_PERIOD.ID,
+          name: FIELDS.CREDIT_PERIOD.ID,
+          suffix: {
+            text: "days"
+          },
+          spellcheck: false,
+          errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID]and {
+            text: validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID].text,
+            attributes: {
+              "data-cy": FIELDS.CREDIT_PERIOD.ID + "-error-message"
+            }
+          },
+          value: submittedValues[FIELDS.CREDIT_PERIOD.ID]
+        }) }}
+
+        {{ govukInput({
+          label: {
+            html: "<label class='govuk-heading-m' for='" + FIELDS.POLICY_LENGTH.ID + "'>" + FIELDS.POLICY_LENGTH.LABEL + "</label>"
+          },
+          hint: {
+            text: FIELDS.POLICY_LENGTH.HINT
+          },
+          classes: "govuk-input--width-5",
+          id: FIELDS.POLICY_LENGTH.ID,
+          name: FIELDS.POLICY_LENGTH.ID,
+          suffix: {
+            text: "months"
+          },
+          spellcheck: false,
+          errorMessage: validationErrors.errorList[FIELDS.POLICY_LENGTH.ID]and {
+            text: validationErrors.errorList[FIELDS.POLICY_LENGTH.ID].text,
+            attributes: {
+              "data-cy": FIELDS.POLICY_LENGTH.ID + "-error-message"
+            }
+          },
+          value: submittedValues[FIELDS.POLICY_LENGTH.ID]
+        }) }}
+
+        {{ govukRadios({
+          idPrefix: FIELDS.POLICY_TYPE.ID,
+          name: FIELDS.POLICY_TYPE.ID,
+          fieldset: {
+            legend: {
+              html: "<legend class='govuk-heading-m'>" + FIELDS.POLICY_TYPE.LABEL + "</legend>"
+            }
+          },
+          hint: {
+            text: FIELDS.POLICY_TYPE.HINT
+          },
+          items: [
+            {
+              value: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE,
+              text: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.TEXT,
+              hint: {
+                text: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.HINT
+              },
+              checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE
+            },
+            {
+              value: FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE,
+              text: FIELDS.POLICY_TYPE.OPTIONS.MULTI.TEXT,
+              hint: {
+                text: FIELDS.POLICY_TYPE.OPTIONS.MULTI.HINT
+              },
+              checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE
+            }
+          ],
+          errorMessage: validationErrors.errorList[FIELDS.POLICY_TYPE.ID]and {
+            text: validationErrors.errorList[FIELDS.POLICY_TYPE.ID].text,
+            attributes: {
+              "data-cy": FIELDS.POLICY_TYPE.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukButton({
+          text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+          attributes: {
+            'data-cy': 'submit-button'
+          }
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -5,6 +5,21 @@ const FIELDS = {
   COUNTRY: 'country',
   FINAL_DESTINATION: 'finalDestination',
   UK_CONTENT_PERCENTAGE: 'ukContentPercentage',
+
+  CREDIT_LIMIT_GROUP: 'creditLimitGroup',
+  CREDIT_LIMIT_CURRENCY: 'creditLimitCurrency',
+  CREDIT_LIMIT: 'creditLimit',
+  PRE_CREDIT_PERIOD: 'preCreditPeriodDays',
+  CREDIT_PERIOD: 'creditPeriodDays',
+  POLICY_LENGTH: 'policyLengthMonths',
+  POLICY_TYPE: 'policyType',
+};
+
+const FIELD_VALUES = {
+  POLICY_TYPE: {
+    SINGLE: 'single',
+    MULTI: 'multi',
+  },
 };
 
 const ROUTES = {
@@ -17,6 +32,7 @@ const ROUTES = {
   FINAL_DESTINATION: '/final-destination',
   UK_CONTENT_PERCENTAGE: '/uk-content-percentage',
   TELL_US_ABOUT_YOUR_DEAL: '/tell-us-about-your-deal',
+  CHECK_YOUR_ANSWERS: '/check-your-answers',
   PROBLEM_WITH_SERVICE: '/problem-with-service',
 };
 
@@ -29,11 +45,13 @@ const TEMPLATES = {
   TRIED_TO_OBTAIN_COVER: 'tried-to-obtain-cover.njk',
   FINAL_DESTINATION: 'final-destination.njk',
   UK_CONTENT_PERCENTAGE: 'uk-content-percentage.njk',
+  TELL_US_ABOUT_YOUR_DEAL: 'tell-us-about-your-deal.njk',
   PROBLEM_WITH_SERVICE: 'problem-with-service.njk',
 };
 
 const CONSTANTS = {
   FIELDS,
+  FIELD_VALUES,
   ROUTES,
   TEMPLATES,
 };
