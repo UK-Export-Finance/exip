@@ -79,6 +79,10 @@ jobs:
       MULESOFT_API_CIS_URL: ${{ secrets.MULESOFT_API_CIS_URL }}
       MULESOFT_API_CIS_KEY: ${{ secrets.MULESOFT_API_CIS_KEY }}
       MULESOFT_API_CIS_SECRET: ${{ secrets.MULESOFT_API_CIS_SECRET }}
+      MULESOFT_API_MDM_EA_URL: ${{ secrets.MULESOFT_API_MDM_EA_URL }}
+      MULESOFT_API_MDM_EA_KEY: ${{ secrets.MULESOFT_API_MDM_EA_KEY }}
+      MULESOFT_API_MDM_EA_SECRET: ${{ secrets.MULESOFT_API_MDM_EA_SECRET }}
+
     steps:
       - uses: actions/checkout@v3
       - name: Start Docker Compose

@@ -63,6 +63,49 @@ const FIELDS = {
     LABEL: 'Percentage of your export that is UK content',
     HINT: 'Enter the UK content of your export as a percentage.',
   },
+  [CONSTANTS.FIELDS.CREDIT_LIMIT_GROUP]: {
+    HEADING: 'What credit limit do you need?',
+    HINT: 'Enter the currency and credit limit required for this export.',
+  },
+  [CONSTANTS.FIELDS.CREDIT_LIMIT_CURRENCY]: {
+    TITLE: 'Credit limit currency',
+    LABEL: 'Credit limit currency',
+  },
+  [CONSTANTS.FIELDS.CREDIT_LIMIT]: {
+    TITLE: 'Credit limit',
+    LABEL: 'Credit limit',
+  },
+  [CONSTANTS.FIELDS.PRE_CREDIT_PERIOD]: {
+    TITLE: 'Pre-credit period',
+    LABEL: 'What pre-credit period do you need? (optional)',
+    HINT: 'The pre-credit period is the number of days that you require cover for costs incurred under your export contract, before the goods or services are supplied to your buyer.',
+  },
+  [CONSTANTS.FIELDS.CREDIT_PERIOD]: {
+    TITLE: 'Credit period',
+    LABEL: 'What credit period do you need?',
+    HINT: 'The credit period is the number of days that your customer is allowed to wait before paying their invoice.',
+  },
+  [CONSTANTS.FIELDS.POLICY_LENGTH]: {
+    TITLE: 'Policy length',
+    LABEL: 'How long do you need the policy for?',
+    HINT: 'Enter the required policy length in months.',
+  },
+  [CONSTANTS.FIELDS.POLICY_TYPE]: {
+    LABEL: 'What kind of policy do you need?',
+    HINT: 'If known, select the type of policy you need.',
+    OPTIONS: {
+      SINGLE: {
+        VALUE: CONSTANTS.FIELD_VALUES.POLICY_TYPE.SINGLE,
+        TEXT: 'Single policy',
+        HINT: 'Single policies offer cover for a single export contract with a specific buyer for a pre-determined value.',
+      },
+      MULTI: {
+        VALUE: CONSTANTS.FIELD_VALUES.POLICY_TYPE.MULTI,
+        TEXT: 'Multi policy (also known as a revolving policy)',
+        HINT: 'Multi policies offer cover for multiple export contracts or orders with the same buyer for up to 12 months where you are able to estimate the total value of the exports during that time.',
+      },
+    },
+  },
 };
 
 const LANDING_PAGE = {
@@ -154,6 +197,12 @@ const UK_CONTENT_PERCENTAGE_PAGE = {
   WARNING: 'In order to submit a full application you will need to provide evidence that the export contains a minimum of 20% UK content.',
 };
 
+const TELL_US_ABOUT_YOUR_DEAL_PAGE = {
+  PAGE_TITLE: 'Tell us about your deal',
+  HEADING: 'Tell us about your deal',
+  DESCRIPTION: 'In order to give you a premium quote, we need some information on your deal.',
+};
+
 const PROBLEM_WITH_SERVICE_PAGE = {
   PAGE_TITLE: 'Problem with the service',
   HEADING: 'Sorry, there is a problem with the service',
@@ -170,6 +219,24 @@ const ERROR_MESSAGES = {
     BELOW_MINIMUM: `${FIELDS[CONSTANTS.FIELDS.UK_CONTENT_PERCENTAGE].LABEL} must be 0 or more`,
     ABOVE_MAXIMUM: `${FIELDS[CONSTANTS.FIELDS.UK_CONTENT_PERCENTAGE].LABEL} must be 100 or fewer`,
   },
+  [CONSTANTS.FIELDS.CREDIT_LIMIT_GROUP]: {
+    IS_EMPTY: 'Select the currency and input the credit limit needed',
+  },
+  [CONSTANTS.FIELDS.CREDIT_LIMIT]: {
+    NOT_A_NUMBER: `${FIELDS[CONSTANTS.FIELDS.CREDIT_LIMIT].TITLE} must be a number`,
+  },
+  [CONSTANTS.FIELDS.PRE_CREDIT_PERIOD]: {
+    NOT_A_NUMBER: `${FIELDS[CONSTANTS.FIELDS.PRE_CREDIT_PERIOD].TITLE} must be a number`,
+  },
+  [CONSTANTS.FIELDS.CREDIT_PERIOD]: {
+    IS_EMPTY: 'Enter the credit period needed',
+    NOT_A_NUMBER: `${FIELDS[CONSTANTS.FIELDS.CREDIT_PERIOD].TITLE} must be a number`,
+  },
+  [CONSTANTS.FIELDS.POLICY_LENGTH]: {
+    IS_EMPTY: 'Enter the credit policy length needed',
+    NOT_A_NUMBER: `${FIELDS[CONSTANTS.FIELDS.POLICY_LENGTH].TITLE} must be a number`,
+  },
+  [CONSTANTS.FIELDS.POLICY_TYPE]: 'Select an option for the policy type needed',
 };
 
 const EXIT_PAGES = {
@@ -215,6 +282,7 @@ const CONTENT_STRINGS = {
   TRIED_TO_OBTAIN_COVER_PAGE,
   FINAL_DESTINATION_PAGE,
   UK_CONTENT_PERCENTAGE_PAGE,
+  TELL_US_ABOUT_YOUR_DEAL_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
   ERROR_MESSAGES,
   EXIT_PAGES,

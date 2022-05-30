@@ -8,6 +8,7 @@ const buyerBasedUnavailableController = require('../controllers/buyer-based-unav
 const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
 const finalDestinationController = require('../controllers/final-destination');
 const ukContentPercentageController = require('../controllers/uk-content-pecentage');
+const tellUsAboutYourDealController = require('../controllers/tell-us-about-your-deal');
 const problemWithServiceController = require('../controllers/problem-with-service');
 
 const router = express.Router();
@@ -31,6 +32,9 @@ router.post(ROUTES.FINAL_DESTINATION, finalDestinationController.post);
 
 router.get(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.get);
 router.post(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.post);
+
+router.get(ROUTES.TELL_US_ABOUT_YOUR_DEAL, tellUsAboutYourDealController.get);
+router.post(ROUTES.TELL_US_ABOUT_YOUR_DEAL, tellUsAboutYourDealController.post);
 
 router.get(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceController);
 

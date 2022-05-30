@@ -1,7 +1,6 @@
 const generateValidationErrors = (
   fieldId,
   errorText,
-  count = 0,
   errors = { errorList: {}, summary: [] },
 ) => {
   let summary = [
@@ -22,12 +21,12 @@ const generateValidationErrors = (
   }
 
   const result = {
-    count,
+    count: Object.keys(errors.errorList).length + 1,
     errorList: {
       ...errors.errorList,
       [fieldId]: {
         text: errorText,
-        order: count,
+        order: Object.keys(errors.errorList).length + 1,
       },
     },
     summary,
