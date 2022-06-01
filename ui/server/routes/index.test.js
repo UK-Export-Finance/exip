@@ -12,6 +12,7 @@ const triedToObtainCoverController = require('../controllers/tried-to-obtain-cov
 const finalDestinationController = require('../controllers/final-destination');
 const ukContentPercentageController = require('../controllers/uk-content-pecentage');
 const tellUsAboutYourDealController = require('../controllers/tell-us-about-your-deal');
+const checkYourAnswersController = require('../controllers/check-your-answers');
 const problemWithServiceController = require('../controllers/problem-with-service');
 
 describe('routes/index', () => {
@@ -24,7 +25,7 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(10);
+    expect(get).toHaveBeenCalledTimes(11);
     expect(post).toHaveBeenCalledTimes(7);
 
     expect(get).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
@@ -49,6 +50,8 @@ describe('routes/index', () => {
 
     expect(get).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_DEAL, tellUsAboutYourDealController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_DEAL, tellUsAboutYourDealController.post);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS, checkYourAnswersController.get);
 
     expect(get).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceController);
   });

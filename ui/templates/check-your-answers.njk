@@ -1,0 +1,56 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+
+  <h2 class="govuk-heading-m">{{ SUMMARY_LIST.COMPANY.GROUP_TITLE }}</h2>
+
+  {{ govukSummaryList({
+    classes: 'govuk-!-margin-bottom-9',
+    rows: SUMMARY_LIST.COMPANY.ROWS
+  }) }}
+
+  <h2 class="govuk-heading-m">{{ SUMMARY_LIST.EXPORT.GROUP_TITLE }}</h2>
+
+  {{ govukSummaryList({
+    classes: 'govuk-!-margin-bottom-9',
+    rows: SUMMARY_LIST.EXPORT.ROWS
+  }) }}
+
+  <h2 class="govuk-heading-m">{{ SUMMARY_LIST.DEAL.GROUP_TITLE }}</h2>
+
+  {{ govukSummaryList({
+    classes: 'govuk-!-margin-bottom-9',
+    rows: SUMMARY_LIST.DEAL.ROWS
+  }) }}
+
+  <form method="POST">
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {{ govukButton({
+      text: CONTENT_STRINGS.BUTTONS.SUBMIT,
+      attributes: {
+        'data-cy': 'submit-button'
+      }
+    }) }}
+
+  </form>
+
+{% endblock %}

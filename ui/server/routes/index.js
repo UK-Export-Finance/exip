@@ -9,6 +9,7 @@ const triedToObtainCoverController = require('../controllers/tried-to-obtain-cov
 const finalDestinationController = require('../controllers/final-destination');
 const ukContentPercentageController = require('../controllers/uk-content-pecentage');
 const tellUsAboutYourDealController = require('../controllers/tell-us-about-your-deal');
+const checkYourAnswersController = require('../controllers/check-your-answers');
 const problemWithServiceController = require('../controllers/problem-with-service');
 
 const router = express.Router();
@@ -35,6 +36,8 @@ router.post(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.post);
 
 router.get(ROUTES.TELL_US_ABOUT_YOUR_DEAL, tellUsAboutYourDealController.get);
 router.post(ROUTES.TELL_US_ABOUT_YOUR_DEAL, tellUsAboutYourDealController.post);
+
+router.get(ROUTES.CHECK_YOUR_ANSWERS, checkYourAnswersController.get);
 
 router.get(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceController);
 
