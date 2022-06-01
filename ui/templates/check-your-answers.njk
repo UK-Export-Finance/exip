@@ -19,21 +19,21 @@
 
   <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
 
-  <h2 class="govuk-heading-m">{{ SUMMARY_LIST.COMPANY.GROUP_TITLE }}</h2>
+  <h2 class="govuk-heading-m" data-cy="summaryList-heading-company">{{ SUMMARY_LIST.COMPANY.GROUP_TITLE }}</h2>
 
   {{ govukSummaryList({
     classes: 'govuk-!-margin-bottom-9',
     rows: SUMMARY_LIST.COMPANY.ROWS
   }) }}
 
-  <h2 class="govuk-heading-m">{{ SUMMARY_LIST.EXPORT.GROUP_TITLE }}</h2>
+  <h3 class="govuk-heading-m" data-cy="summaryList-heading-export">{{ SUMMARY_LIST.EXPORT.GROUP_TITLE }}</h3>
 
   {{ govukSummaryList({
     classes: 'govuk-!-margin-bottom-9',
     rows: SUMMARY_LIST.EXPORT.ROWS
   }) }}
 
-  <h2 class="govuk-heading-m">{{ SUMMARY_LIST.DEAL.GROUP_TITLE }}</h2>
+  <h3 class="govuk-heading-m" data-cy="summaryList-heading-deal">{{ SUMMARY_LIST.DEAL.GROUP_TITLE }}</h3>
 
   {{ govukSummaryList({
     classes: 'govuk-!-margin-bottom-9',

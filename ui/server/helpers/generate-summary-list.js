@@ -10,9 +10,11 @@ const generateSummaryListRows = (fields, submittedData) =>
   fields.map((field) => ({
     key: {
       text: field.TITLE,
+      classes: `${field.ID}-key`,
     },
     value: {
       text: submittedData[field.ID],
+      classes: `${field.ID}-value`,
     },
     actions: {
       items: [
@@ -20,6 +22,7 @@ const generateSummaryListRows = (fields, submittedData) =>
           href: field.CHANGE_ROUTE,
           text: CONTENT_STRINGS.LINKS.CHANGE,
           visuallyHiddenText: field.TITLE,
+          classes: `${field.ID}-action-link`,
         },
       ],
     },
