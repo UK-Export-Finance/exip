@@ -22,7 +22,9 @@ const generateSummaryListRows = (fields, submittedData) =>
           href: field.CHANGE_ROUTE,
           text: CONTENT_STRINGS.LINKS.CHANGE,
           visuallyHiddenText: field.TITLE,
-          classes: `${field.ID}-action-link`,
+          attributes: {
+            'data-cy': `${field.ID}-change-link`,
+          },
         },
       ],
     },

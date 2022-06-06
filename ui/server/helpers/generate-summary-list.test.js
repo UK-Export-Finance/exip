@@ -34,9 +34,11 @@ describe('sever/helpers/generate-summary-list', () => {
       const expectedObj = (field) => ({
         key: {
           text: field.TITLE,
+          classes: `${field.ID}-key`,
         },
         value: {
           text: mockSubmittedData[field.ID],
+          classes: `${field.ID}-value`,
         },
         actions: {
           items: [
@@ -44,6 +46,9 @@ describe('sever/helpers/generate-summary-list', () => {
               href: field.CHANGE_ROUTE,
               text: CONTENT_STRINGS.LINKS.CHANGE,
               visuallyHiddenText: field.TITLE,
+              attributes: {
+                'data-cy': `${field.ID}-change-link`,
+              },
             },
           ],
         },

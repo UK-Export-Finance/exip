@@ -13,6 +13,7 @@ import {
   ORGANISATION,
   BUTTONS,
   FIELDS,
+  LINKS,
   CHECK_YOUR_ANSWERS_PAGE as CONTENT_STRINGS,
   SUMMARY,
 } from '../../../content-strings';
@@ -91,194 +92,22 @@ context('Check your answers page', () => {
     cy.url().should('include', CONSTANTS.ROUTES.CHECK_YOUR_ANSWERS);
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 80,
-  //     'best-practices': 100,
-  //     seo: 80,
-  //   });
-  // });
-
-  // it('renders a back button with correct link', () => {
-  //   partials.backLink().should('exist');
-  //   partials.backLink().invoke('text').then((text) => {
-  //     expect(text.trim()).equal(LINKS.BACK);
-  //   });
-
-  //   partials.backLink().click();
-
-  //   cy.url().should('include', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL);
-  // });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    checkYourAnswersPage.heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 80,
+      'best-practices': 100,
+      seo: 80,
     });
   });
 
-  // TOOO: add tests for change links
-
-  describe('company summary list', () => {
-    const list = checkYourAnswersPage.summaryLists.company;
-
-    it('renders a heading', () => {
-      list.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_COMPANY);
-      });
+  it('renders a back button with correct link', () => {
+    partials.backLink().should('exist');
+    partials.backLink().invoke('text').then((text) => {
+      expect(text.trim()).equal(LINKS.BACK);
     });
 
-    it('renders `Company` key, value and change link', () => {
-      const row = list[CONSTANTS.FIELDS.VALID_COMPANY_BASE];
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[VALID_COMPANY_BASE].TITLE);
-      });
-
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY[VALID_COMPANY_BASE]);
-      });
-    });
-  });
-
-  describe('export summary list', () => {
-    const list = checkYourAnswersPage.summaryLists.export;
-
-    it('renders a heading', () => {
-      list.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_EXPORT);
-      });
-    });
-
-    it('renders `Buyer location` key, value and change link', () => {
-      const row = list[CONSTANTS.FIELDS.VALID_BUYER_BASE];
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[VALID_BUYER_BASE].TITLE);
-      });
-
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY[VALID_BUYER_BASE]);
-      });
-    });
-
-    it('renders `Private insurance` key, value and change link', () => {
-      const row = list[CONSTANTS.FIELDS.TRIED_PRIVATE_COVER];
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[TRIED_PRIVATE_COVER].TITLE);
-      });
-
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY[TRIED_PRIVATE_COVER]);
-      });
-    });
-
-    it('renders `Export destination` key, value and change link', () => {
-      const row = list[CONSTANTS.FIELDS.FINAL_DESTINATION];
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[FINAL_DESTINATION].TITLE);
-      });
-
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(submissionData[FINAL_DESTINATION]);
-      });
-    });
-
-    it('renders `UK content` key, value and change link', () => {
-      const row = list[CONSTANTS.FIELDS.UK_CONTENT_PERCENTAGE];
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[UK_CONTENT_PERCENTAGE].TITLE);
-      });
-
-      row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[UK_CONTENT_PERCENTAGE]}%`;
-
-        expect(text.trim()).equal(expected);
-      });
-    });
-  });
-
-  describe('deal summary list', () => {
-    const list = checkYourAnswersPage.summaryLists.deal;
-
-    it('renders a heading', () => {
-      list.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_DEAL);
-      });
-    });
-
-    it('renders `Credit limit` key, value and change link', () => {
-      const row = list[CONSTANTS.FIELDS.CREDIT_LIMIT];
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[CREDIT_LIMIT].TITLE);
-      });
-
-      row.value().invoke('text').then((text) => {
-        const expected = '£100.00';
-        expect(text.trim()).equal(expected);
-      });
-    });
-
-    it('renders `Pre-credit period` key, value and change link', () => {
-      const row = list[CONSTANTS.FIELDS.PRE_CREDIT_PERIOD];
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[PRE_CREDIT_PERIOD].TITLE);
-      });
-
-      row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[PRE_CREDIT_PERIOD]} days`;
-
-        expect(text.trim()).equal(expected);
-      });
-    });
-
-    it('renders `Credit period` key, value and change link', () => {
-      const row = list[CONSTANTS.FIELDS.CREDIT_PERIOD];
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[CREDIT_PERIOD].TITLE);
-      });
-
-      row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[CREDIT_PERIOD]} days`;
-
-        expect(text.trim()).equal(expected);
-      });
-    });
-
-    it('renders `Policy length` key, value and change link', () => {
-      const row = list[CONSTANTS.FIELDS.POLICY_LENGTH];
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[POLICY_LENGTH].TITLE);
-      });
-
-      row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[POLICY_LENGTH]} months`;
-
-        expect(text.trim()).equal(expected);
-      });
-    });
-
-    it('renders `Policy type` key, value and change link', () => {
-      const row = list[CONSTANTS.FIELDS.POLICY_TYPE];
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[POLICY_TYPE].TITLE);
-      });
-
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(submissionData[POLICY_TYPE]);
-      });
-    });
+    partials.backLink().should('have.attr', 'href', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL);
   });
 
   it('renders a submit button', () => {
@@ -290,9 +119,260 @@ context('Check your answers page', () => {
     });
   });
 
-  it(`should redirect to ${CONSTANTS.ROUTES.PREMIUM_QUOTE}`, () => {
-    checkYourAnswersPage.submitButton().click();
+  it('renders a page title and heading', () => {
+    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
+    cy.title().should('eq', expectedPageTitle);
 
-    cy.url().should('include', CONSTANTS.ROUTES.PREMIUM_QUOTE);
+    checkYourAnswersPage.heading().invoke('text').then((text) => {
+      expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
+    });
   });
+
+  context('company summary list', () => {
+    const list = checkYourAnswersPage.summaryLists.company;
+
+    it('renders a heading', () => {
+      list.heading().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_COMPANY);
+      });
+    });
+
+    it('renders `Company` key, value and change link', () => {
+      const row = list[FIELD_IDS.VALID_COMPANY_BASE];
+      const expectedKeyText = FIELDS[VALID_COMPANY_BASE].TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        expect(text.trim()).equal(SUMMARY[VALID_COMPANY_BASE]);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.COMPANY_BASED_CHANGE);
+    });
+  });
+
+  context('export summary list', () => {
+    const list = checkYourAnswersPage.summaryLists.export;
+
+    it('renders a heading', () => {
+      list.heading().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_EXPORT);
+      });
+    });
+
+    it('renders `Buyer location` key, value and change link', () => {
+      const row = list[FIELD_IDS.VALID_BUYER_BASE];
+      const expectedKeyText = FIELDS[VALID_BUYER_BASE].TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        expect(text.trim()).equal(SUMMARY[VALID_BUYER_BASE]);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.BUYER_BASED_CHANGE);
+    });
+
+    it('renders `Private insurance` key, value and change link', () => {
+      // TODO: simplify row selector to use field_ids.
+      const row = list[FIELD_IDS.TRIED_PRIVATE_COVER];
+      const expectedKeyText = FIELDS[TRIED_PRIVATE_COVER].TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        expect(text.trim()).equal(SUMMARY[TRIED_PRIVATE_COVER]);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE);
+    });
+
+    it('renders `Export destination` key, value and change link', () => {
+      const row = list[FIELD_IDS.FINAL_DESTINATION];
+      const expectedKeyText = FIELDS[FINAL_DESTINATION].TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        expect(text.trim()).equal(submissionData[FINAL_DESTINATION]);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.FINAL_DESTINATION_CHANGE);
+    });
+
+    it('renders `UK content` key, value and change link', () => {
+      const row = list[FIELD_IDS.UK_CONTENT_PERCENTAGE];
+      const expectedKeyText = FIELDS[UK_CONTENT_PERCENTAGE].TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        const expected = `${submissionData[UK_CONTENT_PERCENTAGE]}%`;
+
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.UK_CONTENT_PERCENTAGE_CHANGE);
+    });
+  });
+
+  context('deal summary list', () => {
+    const list = checkYourAnswersPage.summaryLists.deal;
+
+    it('renders a heading', () => {
+      list.heading().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_DEAL);
+      });
+    });
+
+    it('renders `Credit limit` key, value and change link', () => {
+      const row = list[FIELD_IDS.CREDIT_LIMIT];
+      const expectedKeyText = FIELDS[CREDIT_LIMIT].TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        const expected = '£100.00';
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+    });
+
+    it('renders `Pre-credit period` key, value and change link', () => {
+      const row = list[FIELD_IDS.PRE_CREDIT_PERIOD];
+      const expectedKeyText = FIELDS[PRE_CREDIT_PERIOD].TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        const expected = `${submissionData[PRE_CREDIT_PERIOD]} days`;
+
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+    });
+
+    it('renders `Credit period` key, value and change link', () => {
+      const row = list[FIELD_IDS.CREDIT_PERIOD];
+      const expectedKeyText = FIELDS[CREDIT_PERIOD].TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        const expected = `${submissionData[CREDIT_PERIOD]} days`;
+
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+    });
+
+    it('renders `Policy length` key, value and change link', () => {
+      const row = list[FIELD_IDS.POLICY_LENGTH];
+      const expectedKeyText = FIELDS[POLICY_LENGTH].TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        const expected = `${submissionData[POLICY_LENGTH]} months`;
+
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+    });
+
+    it('renders `Policy type` key, value and change link', () => {
+      const row = list[FIELD_IDS.POLICY_TYPE];
+      const expectedKeyText = FIELDS[POLICY_TYPE].TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        expect(text.trim()).equal(submissionData[POLICY_TYPE]);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+    });
+  });
+
+  // context('form submission', () => {
+  // it(`should redirect to ${CONSTANTS.ROUTES.PREMIUM_QUOTE}`, () => {
+  //   checkYourAnswersPage.submitButton().click();
+
+  //   cy.url().should('include', CONSTANTS.ROUTES.PREMIUM_QUOTE);
+  // });
+  // });
 });

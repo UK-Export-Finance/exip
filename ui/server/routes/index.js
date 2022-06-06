@@ -38,6 +38,7 @@ router.get(ROUTES.TELL_US_ABOUT_YOUR_DEAL, tellUsAboutYourDealController.get);
 router.post(ROUTES.TELL_US_ABOUT_YOUR_DEAL, tellUsAboutYourDealController.post);
 
 router.get(ROUTES.CHECK_YOUR_ANSWERS, checkYourAnswersController.get);
+router.post(ROUTES.CHECK_YOUR_ANSWERS, checkYourAnswersController.post);
 
 router.get(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceController);
 
