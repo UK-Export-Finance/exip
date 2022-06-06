@@ -46,12 +46,21 @@ const PAGE_VARIABLES = {
 };
 
 const get = async (req, res) => {
+  const { submittedData } = req.session;
+
   const currencies = await api.getCurrencies();
-  const mappedCurrencies = mapCurrencies(currencies);
+
+  let mappedCurrencies;
+  if (submittedData) {
+    mappedCurrencies = mapCurrencies(currencies, submittedData[FIELDS.CREDIT_LIMIT_CURRENCY]);
+  } else {
+    mappedCurrencies = mapCurrencies(currencies);
+  }
 
   return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
     ...PAGE_VARIABLES,
     currencies: mappedCurrencies,
+    submittedValues: submittedData,
   });
 };
 

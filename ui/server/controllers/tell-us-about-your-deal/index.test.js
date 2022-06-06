@@ -5,7 +5,7 @@ const api = require('../../api');
 const mapCurrencies = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
-const { mockReq, mockRes } = require('../../test-mocks');
+const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
 
 describe('controllers/buyer-based', () => {
   let req;
@@ -24,6 +24,7 @@ describe('controllers/buyer-based', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
+    req.session.submittedData = mockAnswers;
   });
 
   afterAll(() => {
@@ -80,6 +81,7 @@ describe('controllers/buyer-based', () => {
     const getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
     beforeEach(() => {
+      delete req.session.submittedData;
       api.getCurrencies = getCurrenciesSpy;
     });
 
@@ -92,9 +94,31 @@ describe('controllers/buyer-based', () => {
     it('should render template', async () => {
       await controller.get(req, res);
 
+      const expectedCurrencies = mapCurrencies(
+        mockCurrenciesResponse,
+      );
+
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
         ...controller.PAGE_VARIABLES,
-        currencies: mapCurrencies(mockCurrenciesResponse),
+        currencies: expectedCurrencies,
+      });
+    });
+
+    describe('when a currency has been submitted', () => {
+      it('should render template with currencies mapped to submitted currency and submittedValues', async () => {
+        req.session.submittedData = mockAnswers;
+        await controller.get(req, res);
+
+        const expectedCurrencies = mapCurrencies(
+          mockCurrenciesResponse,
+          req.session.submittedData[FIELDS.CREDIT_LIMIT_CURRENCY],
+        );
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
+          ...controller.PAGE_VARIABLES,
+          currencies: expectedCurrencies,
+          submittedValues: mockAnswers,
+        });
       });
     });
   });
