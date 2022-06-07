@@ -25,8 +25,12 @@ context('Tell us about your deal page', () => {
   describe('with valid login', () => {
     describe('rendering', () => {
       before(() => {
-        cy.login();
-        cy.visit(CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+        cy.visit(CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL, {
+          auth: {
+            username: Cypress.config('basicAuthKey'),
+            password: Cypress.config('basicAuthSecret'),
+          },
+        });
         cy.url().should('include', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL);
       });
 
@@ -200,8 +204,12 @@ context('Tell us about your deal page', () => {
 
     describe('form submission', () => {
       beforeEach(() => {
-        cy.login();
-        cy.visit(CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+        cy.visit(CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL, {
+          auth: {
+            username: Cypress.config('basicAuthKey'),
+            password: Cypress.config('basicAuthSecret'),
+          },
+        });
       });
 
       describe('when submitting an empty form', () => {

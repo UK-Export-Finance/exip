@@ -23,8 +23,13 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
 
   describe('with valid login', () => {
     beforeEach(() => {
-      cy.login();
-      cy.visit(CONSTANTS.ROUTES.COMPANY_BASED);
+      cy.visit(CONSTANTS.ROUTES.COMPANY_BASED, {
+        auth: {
+          username: Cypress.config('basicAuthKey'),
+          password: Cypress.config('basicAuthSecret'),
+        },
+      });
+
       cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED);
     });
 

@@ -23,8 +23,12 @@ context('Tried to obtain private cover page', () => {
 
   describe('with valid login', () => {
     beforeEach(() => {
-      cy.login();
-      cy.visit(CONSTANTS.ROUTES.TRIED_TO_OBTAIN_COVER);
+      cy.visit(CONSTANTS.ROUTES.TRIED_TO_OBTAIN_COVER, {
+        auth: {
+          username: Cypress.config('basicAuthKey'),
+          password: Cypress.config('basicAuthSecret'),
+        },
+      });
       cy.url().should('include', CONSTANTS.ROUTES.TRIED_TO_OBTAIN_COVER);
     });
 

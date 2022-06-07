@@ -24,8 +24,12 @@ context('What is the final destination for your export page', () => {
 
   describe('with valid login', () => {
     beforeEach(() => {
-      cy.login();
-      cy.visit(CONSTANTS.ROUTES.FINAL_DESTINATION);
+      cy.visit(CONSTANTS.ROUTES.FINAL_DESTINATION, {
+        auth: {
+          username: Cypress.config('basicAuthKey'),
+          password: Cypress.config('basicAuthSecret'),
+        },
+      });
       cy.url().should('include', CONSTANTS.ROUTES.FINAL_DESTINATION);
     });
 
