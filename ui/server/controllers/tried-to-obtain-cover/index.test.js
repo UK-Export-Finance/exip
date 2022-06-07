@@ -31,7 +31,10 @@ describe('controllers/tried-to-obtain-cover', () => {
     it('should render template', () => {
       controller.get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.TRIED_TO_OBTAIN_COVER, singleInputPageVariables(controller.PAGE_VARIABLES));
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
+        ...singleInputPageVariables(controller.PAGE_VARIABLES),
+        submittedValues: req.session.submittedData,
+      });
     });
   });
 
@@ -48,11 +51,15 @@ describe('controllers/tried-to-obtain-cover', () => {
     });
 
     describe('when there are no validation errors', () => {
-      it('should update the session with submitted data', () => {
-        req.body = {
-          [FIELDS.TRIED_PRIVATE_COVER]: 'true',
-        };
+      const validBody = {
+        [FIELDS.TRIED_PRIVATE_COVER]: 'true',
+      };
 
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it('should update the session with submitted data', () => {
         controller.post(req, res);
 
         const expected = updateSubmittedData(
@@ -64,13 +71,19 @@ describe('controllers/tried-to-obtain-cover', () => {
       });
 
       it(`should redirect to ${ROUTES.FINAL_DESTINATION}`, () => {
-        req.body = {
-          [FIELDS.TRIED_PRIVATE_COVER]: 'true',
-        };
-
         controller.post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.FINAL_DESTINATION);
+      });
+
+      describe('when the url\'s last substring is `change`', () => {
+        it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
+          req.originalUrl = 'mock/change';
+
+          controller.post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS);
+        });
       });
     });
   });

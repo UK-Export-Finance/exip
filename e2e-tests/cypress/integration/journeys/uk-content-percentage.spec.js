@@ -30,7 +30,6 @@ context('What percentage of your export is UK content page', () => {
           password: Cypress.config('basicAuthSecret'),
         },
       });
-
       cy.url().should('include', CONSTANTS.ROUTES.UK_CONTENT_PERCENTAGE);
     });
 

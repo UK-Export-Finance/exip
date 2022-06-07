@@ -30,7 +30,6 @@ context('What is the final destination for your export page', () => {
           password: Cypress.config('basicAuthSecret'),
         },
       });
-
       cy.url().should('include', CONSTANTS.ROUTES.FINAL_DESTINATION);
     });
 

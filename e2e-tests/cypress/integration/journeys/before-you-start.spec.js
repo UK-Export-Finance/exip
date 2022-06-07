@@ -19,12 +19,7 @@ context('Before you start page', () => {
 
   describe('with valid login', () => {
     beforeEach(() => {
-      cy.visit(CONSTANTS.ROUTES.BEFORE_YOU_START, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
+      cy.login();
     });
 
     it('passes the audits', () => {

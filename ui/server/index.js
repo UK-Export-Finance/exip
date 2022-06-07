@@ -41,7 +41,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
-app.use(csrf());
+app.use(csrf({
+  cookie: {
+    ...cookie,
+    maxAge: 43200, // 12 hours
+  },
+}));
 app.use(csrfToken());
 
 configureNunjucks({

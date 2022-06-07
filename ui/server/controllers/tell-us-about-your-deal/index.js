@@ -4,6 +4,7 @@ const api = require('../../api');
 const mapCurrencies = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
+const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
   CONTENT_STRINGS: {
@@ -46,12 +47,20 @@ const PAGE_VARIABLES = {
 };
 
 const get = async (req, res) => {
+  const { submittedData } = req.session;
   const currencies = await api.getCurrencies();
-  const mappedCurrencies = mapCurrencies(currencies);
+
+  let mappedCurrencies;
+  if (submittedData) {
+    mappedCurrencies = mapCurrencies(currencies, submittedData[FIELDS.CREDIT_LIMIT_CURRENCY]);
+  } else {
+    mappedCurrencies = mapCurrencies(currencies);
+  }
 
   return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
     ...PAGE_VARIABLES,
     currencies: mappedCurrencies,
+    submittedValues: submittedData,
   });
 };
 
@@ -74,6 +83,10 @@ const post = async (req, res) => {
     req.body,
     req.session.submittedData,
   );
+
+  if (isChangeRoute(req.originalUrl)) {
+    return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
+  }
 
   return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
 };

@@ -31,7 +31,6 @@ context('Tell us about your deal page', () => {
             password: Cypress.config('basicAuthSecret'),
           },
         });
-
         cy.url().should('include', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL);
       });
 

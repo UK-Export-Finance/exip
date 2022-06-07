@@ -3,6 +3,7 @@ const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const { validation: generateValidationErrors } = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
+const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
   FIELD_NAME: FIELDS.UK_CONTENT_PERCENTAGE,
@@ -11,7 +12,10 @@ const PAGE_VARIABLES = {
 };
 
 const get = (req, res) =>
-  res.render(TEMPLATES.UK_CONTENT_PERCENTAGE, singleInputPageVariables(PAGE_VARIABLES));
+  res.render(TEMPLATES.UK_CONTENT_PERCENTAGE, {
+    ...singleInputPageVariables(PAGE_VARIABLES),
+    submittedValues: req.session.submittedData,
+  });
 
 const post = (req, res) => {
   const validationErrors = generateValidationErrors(req.body);
@@ -27,6 +31,10 @@ const post = (req, res) => {
     req.body,
     req.session.submittedData,
   );
+
+  if (isChangeRoute(req.originalUrl)) {
+    return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
+  }
 
   return res.redirect(ROUTES.TELL_US_ABOUT_YOUR_DEAL);
 };

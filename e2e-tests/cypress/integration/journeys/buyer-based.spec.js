@@ -29,7 +29,6 @@ context('Buyer based outside of the UK, Channel Islands and Isle of Man page', (
           password: Cypress.config('basicAuthSecret'),
         },
       });
-
       cy.url().should('include', CONSTANTS.ROUTES.BUYER_BASED);
     });
 

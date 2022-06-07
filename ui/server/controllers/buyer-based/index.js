@@ -3,6 +3,7 @@ const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const generateValidationErrors = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
+const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
   FIELD_NAME: FIELDS.VALID_BUYER_BASE,
@@ -11,7 +12,10 @@ const PAGE_VARIABLES = {
 };
 
 const get = (req, res) =>
-  res.render(TEMPLATES.BUYER_BASED, singleInputPageVariables(PAGE_VARIABLES));
+  res.render(TEMPLATES.BUYER_BASED, {
+    ...singleInputPageVariables(PAGE_VARIABLES),
+    submittedValues: req.session.submittedData,
+  });
 
 const post = (req, res) => {
   const validationErrors = generateValidationErrors(req.body);
@@ -30,6 +34,10 @@ const post = (req, res) => {
 
   if (req.body[FIELDS.VALID_BUYER_BASE] === 'false') {
     return res.redirect(ROUTES.BUYER_BASED_UNAVAILABLE);
+  }
+
+  if (isChangeRoute(req.originalUrl)) {
+    return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
   }
 
   return res.redirect(ROUTES.TRIED_TO_OBTAIN_COVER);

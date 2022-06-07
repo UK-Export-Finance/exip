@@ -29,7 +29,6 @@ context('Tried to obtain private cover page', () => {
           password: Cypress.config('basicAuthSecret'),
         },
       });
-
       cy.url().should('include', CONSTANTS.ROUTES.TRIED_TO_OBTAIN_COVER);
     });
 

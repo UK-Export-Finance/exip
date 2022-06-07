@@ -31,7 +31,10 @@ describe('controllers/uk-content-percentage', () => {
     it('should render template', () => {
       controller.get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.UK_CONTENT_PERCENTAGE, singleInputPageVariables(controller.PAGE_VARIABLES));
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.UK_CONTENT_PERCENTAGE, {
+        ...singleInputPageVariables(controller.PAGE_VARIABLES),
+        submittedValues: req.session.submittedData,
+      });
     });
   });
 
@@ -48,11 +51,15 @@ describe('controllers/uk-content-percentage', () => {
     });
 
     describe('when there are no validation errors', () => {
-      it('should update the session with submitted data', () => {
-        req.body = {
-          [FIELDS.UK_CONTENT_PERCENTAGE]: '50',
-        };
+      const validBody = {
+        [FIELDS.UK_CONTENT_PERCENTAGE]: '50',
+      };
 
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it('should update the session with submitted data', () => {
         controller.post(req, res);
 
         const expected = updateSubmittedData(
@@ -64,13 +71,19 @@ describe('controllers/uk-content-percentage', () => {
       });
 
       it(`should redirect to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL}`, () => {
-        req.body = {
-          [FIELDS.UK_CONTENT_PERCENTAGE]: '50',
-        };
-
         controller.post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+      });
+
+      describe('when the url\'s last substring is `change`', () => {
+        it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
+          req.originalUrl = 'mock/change';
+
+          controller.post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS);
+        });
       });
     });
   });
