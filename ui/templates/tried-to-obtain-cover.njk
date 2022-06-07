@@ -51,7 +51,8 @@
             attributes: {
               "data-cy": FIELD_NAME + "-yes"
             }
-          }
+          },
+          checked: submittedValues[FIELD_NAME] === true
         },
         {
           value: false,
@@ -60,7 +61,8 @@
             attributes: {
               "data-cy": FIELD_NAME + "-no"
             }
-          }
+          },
+          checked: submittedValues[FIELD_NAME] === false
         }
       ],
       errorMessage: validationErrors.errorList[FIELD_NAME]and {

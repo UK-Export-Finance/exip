@@ -31,7 +31,10 @@ describe('controllers/company-based', () => {
     it('should render template', () => {
       controller.get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.COMPANY_BASED, singleInputPageVariables(controller.PAGE_VARIABLES));
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.COMPANY_BASED, {
+        ...singleInputPageVariables(controller.PAGE_VARIABLES),
+        submittedValues: req.session.submittedData,
+      });
     });
   });
 

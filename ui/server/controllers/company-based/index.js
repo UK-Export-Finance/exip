@@ -11,7 +11,10 @@ const PAGE_VARIABLES = {
 };
 
 const get = (req, res) =>
-  res.render(TEMPLATES.COMPANY_BASED, singleInputPageVariables(PAGE_VARIABLES));
+  res.render(TEMPLATES.COMPANY_BASED, {
+    ...singleInputPageVariables(PAGE_VARIABLES),
+    submittedValues: req.session.submittedData,
+  });
 
 const post = (req, res) => {
   const validationErrors = generateValidationErrors(req.body);

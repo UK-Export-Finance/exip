@@ -11,7 +11,10 @@ const PAGE_VARIABLES = {
 };
 
 const get = (req, res) =>
-  res.render(TEMPLATES.UK_CONTENT_PERCENTAGE, singleInputPageVariables(PAGE_VARIABLES));
+  res.render(TEMPLATES.UK_CONTENT_PERCENTAGE, {
+    ...singleInputPageVariables(PAGE_VARIABLES),
+    submittedValues: req.session.submittedData,
+  });
 
 const post = (req, res) => {
   const validationErrors = generateValidationErrors(req.body);

@@ -31,7 +31,10 @@ describe('controllers/uk-content-percentage', () => {
     it('should render template', () => {
       controller.get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.UK_CONTENT_PERCENTAGE, singleInputPageVariables(controller.PAGE_VARIABLES));
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.UK_CONTENT_PERCENTAGE, {
+        ...singleInputPageVariables(controller.PAGE_VARIABLES),
+        submittedValues: req.session.submittedData,
+      });
     });
   });
 

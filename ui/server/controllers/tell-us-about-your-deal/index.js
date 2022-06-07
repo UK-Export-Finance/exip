@@ -47,7 +47,6 @@ const PAGE_VARIABLES = {
 
 const get = async (req, res) => {
   const { submittedData } = req.session;
-
   const currencies = await api.getCurrencies();
 
   let mappedCurrencies;

@@ -13,13 +13,21 @@ const PAGE_VARIABLES = {
 };
 
 const get = async (req, res) => {
+  const { submittedData } = req.session;
   const countries = await api.getCountries();
-  const mappedCountries = mapCountries(countries);
+
+  let mappedCountries;
+  if (submittedData) {
+    mappedCountries = mapCountries(countries, submittedData[FIELDS.FINAL_DESTINATION]);
+  } else {
+    mappedCountries = mapCountries(countries);
+  }
 
   return res.render(TEMPLATES.FINAL_DESTINATION, {
     ...singleInputPageVariables(PAGE_VARIABLES),
     HIDDEN_FIELD_NAME: FIELDS.FINAL_DESTINATION,
     countries: mappedCountries,
+    submittedValues: req.session.submittedData,
   });
 };
 

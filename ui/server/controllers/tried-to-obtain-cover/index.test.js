@@ -31,7 +31,10 @@ describe('controllers/tried-to-obtain-cover', () => {
     it('should render template', () => {
       controller.get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.TRIED_TO_OBTAIN_COVER, singleInputPageVariables(controller.PAGE_VARIABLES));
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
+        ...singleInputPageVariables(controller.PAGE_VARIABLES),
+        submittedValues: req.session.submittedData,
+      });
     });
   });
 

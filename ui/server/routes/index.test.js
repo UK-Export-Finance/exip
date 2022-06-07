@@ -25,31 +25,43 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(11);
-    expect(post).toHaveBeenCalledTimes(8);
+    expect(get).toHaveBeenCalledTimes(17);
+    expect(post).toHaveBeenCalledTimes(14);
 
     expect(get).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.COMPANY_BASED, companyBasedController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.COMPANY_BASED, companyBasedController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.post);
     expect(get).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_UNAVAILABLE, companyBasedUnavailableController);
 
     expect(get).toHaveBeenCalledWith(ROUTES.BUYER_BASED, buyerBasedController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.BUYER_BASED, buyerBasedController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.post);
     expect(get).toHaveBeenCalledWith(ROUTES.BUYER_BASED_UNAVAILABLE, buyerBasedUnavailableController);
 
     expect(get).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE, triedToObtainCoverController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE, triedToObtainCoverController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.FINAL_DESTINATION, finalDestinationController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.FINAL_DESTINATION, finalDestinationController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.FINAL_DESTINATION_CHANGE, finalDestinationController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.FINAL_DESTINATION_CHANGE, finalDestinationController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.UK_CONTENT_PERCENTAGE_CHANGE, ukContentPercentageController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.UK_CONTENT_PERCENTAGE_CHANGE, ukContentPercentageController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_DEAL, tellUsAboutYourDealController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_DEAL, tellUsAboutYourDealController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE, tellUsAboutYourDealController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE, tellUsAboutYourDealController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS, checkYourAnswersController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS, checkYourAnswersController.post);
