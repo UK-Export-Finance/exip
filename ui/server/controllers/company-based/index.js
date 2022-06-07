@@ -36,11 +36,6 @@ const post = (req, res) => {
     return res.redirect(ROUTES.COMPANY_BASED_UNAVAILABLE);
   }
 
-  req.session.submittedData = updateSubmittedData(
-    req.body,
-    req.session.submittedData,
-  );
-
   if (isChangeRoute(req.originalUrl)) {
     return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
   }
