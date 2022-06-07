@@ -139,7 +139,6 @@ context('Check your answers page', () => {
     });
 
     it('renders `Private insurance` key, value and change link', () => {
-      // TODO: simplify row selector to use field_ids.
       const row = list[FIELD_IDS.TRIED_PRIVATE_COVER];
       const expectedKeyText = FIELDS[TRIED_PRIVATE_COVER].TITLE;
 
