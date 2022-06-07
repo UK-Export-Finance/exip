@@ -23,13 +23,8 @@ context('Buyer based outside of the UK, Channel Islands and Isle of Man page', (
 
   describe('with valid login', () => {
     beforeEach(() => {
-      cy.visit(CONSTANTS.ROUTES.BUYER_BASED, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
-
+      cy.login();
+      cy.visit(CONSTANTS.ROUTES.BUYER_BASED);
       cy.url().should('include', CONSTANTS.ROUTES.BUYER_BASED);
     });
 

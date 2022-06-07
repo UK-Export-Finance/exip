@@ -1,15 +1,9 @@
 import footer from '../partials/footer';
-import CONSTANTS from '../../../constants';
 import { FOOTER } from '../../../content-strings';
 
 context('Footer', () => {
   beforeEach(() => {
-    cy.visit(CONSTANTS.ROUTES.BEFORE_YOU_START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.login();
   });
 
   it('renders a heading', () => {

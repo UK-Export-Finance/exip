@@ -24,13 +24,8 @@ context('What percentage of your export is UK content page', () => {
 
   describe('with valid login', () => {
     beforeEach(() => {
-      cy.visit(CONSTANTS.ROUTES.UK_CONTENT_PERCENTAGE, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
-
+      cy.login();
+      cy.visit(CONSTANTS.ROUTES.UK_CONTENT_PERCENTAGE);
       cy.url().should('include', CONSTANTS.ROUTES.UK_CONTENT_PERCENTAGE);
     });
 

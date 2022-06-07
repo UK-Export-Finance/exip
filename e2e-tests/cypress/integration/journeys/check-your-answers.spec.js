@@ -1,13 +1,4 @@
-import {
-  beforeYouStartPage,
-  companyBasedPage,
-  buyerBasedPage,
-  triedToObtainCoverPage,
-  finalDestinationPage,
-  ukContentPercentagePage,
-  tellUsAboutYourDealPage,
-  checkYourAnswersPage,
-} from '../pages';
+import { checkYourAnswersPage } from '../pages';
 import partials from '../partials';
 import {
   ORGANISATION,
@@ -25,7 +16,6 @@ context('Check your answers page', () => {
     VALID_COMPANY_BASE,
     VALID_BUYER_BASE,
     TRIED_PRIVATE_COVER,
-    COUNTRY,
     FINAL_DESTINATION,
     UK_CONTENT_PERCENTAGE,
     CREDIT_LIMIT_CURRENCY,
@@ -48,47 +38,8 @@ context('Check your answers page', () => {
   };
 
   before(() => {
-    cy.visit(CONSTANTS.ROUTES.BEFORE_YOU_START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
-
-    beforeYouStartPage.submitButton().click();
-
-    // company page/form
-    companyBasedPage[VALID_COMPANY_BASE].yes().click();
-    companyBasedPage.submitButton().click();
-
-    // buyer page/form
-    buyerBasedPage[VALID_BUYER_BASE].yes().click();
-    buyerBasedPage.submitButton().click();
-
-    // tried to obtain cover page/form
-    triedToObtainCoverPage[TRIED_PRIVATE_COVER].yes().click();
-    triedToObtainCoverPage.submitButton().click();
-
-    // final destination page/form
-    finalDestinationPage[COUNTRY].searchInput().type('Fra');
-
-    const results = finalDestinationPage[COUNTRY].results();
-    results.first().click();
-    finalDestinationPage.submitButton().click();
-
-    // uk content percentage page/form
-    ukContentPercentagePage.input().type('50');
-    ukContentPercentagePage.submitButton().click();
-
-    // tell us about your deal page
-    tellUsAboutYourDealPage[CREDIT_LIMIT_CURRENCY].input().select('GBP');
-    tellUsAboutYourDealPage[CREDIT_LIMIT].input().type('100');
-    tellUsAboutYourDealPage[PRE_CREDIT_PERIOD].input().type('1');
-    tellUsAboutYourDealPage[CREDIT_PERIOD].input().type('2');
-    tellUsAboutYourDealPage[POLICY_LENGTH].input().type('3');
-    tellUsAboutYourDealPage[POLICY_TYPE].single.input().click();
-    tellUsAboutYourDealPage.submitButton().click();
-
+    cy.login();
+    cy.submitAnswersHappyPath();
     cy.url().should('include', CONSTANTS.ROUTES.CHECK_YOUR_ANSWERS);
   });
 

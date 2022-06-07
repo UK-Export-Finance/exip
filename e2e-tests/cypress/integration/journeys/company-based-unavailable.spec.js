@@ -12,12 +12,8 @@ const CONTENT_STRINGS = EXIT_PAGES.COMPANY_BASED;
 
 context('Answering `no` to Company based inside the UK, Channel Islands and Isle of Man', () => {
   beforeEach(() => {
-    cy.visit(CONSTANTS.ROUTES.COMPANY_BASED, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.login();
+    cy.visit(CONSTANTS.ROUTES.COMPANY_BASED);
 
     cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED);
 
