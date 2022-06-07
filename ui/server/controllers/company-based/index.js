@@ -3,6 +3,7 @@ const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const generateValidationErrors = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
+const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
   FIELD_NAME: FIELDS.VALID_COMPANY_BASE,
@@ -39,6 +40,10 @@ const post = (req, res) => {
     req.body,
     req.session.submittedData,
   );
+
+  if (isChangeRoute(req.originalUrl)) {
+    return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
+  }
 
   return res.redirect(ROUTES.BUYER_BASED);
 };

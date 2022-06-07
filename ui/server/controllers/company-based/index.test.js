@@ -63,11 +63,15 @@ describe('controllers/company-based', () => {
     });
 
     describe('when there are no validation errors', () => {
-      it('should update the session with submitted data', () => {
-        req.body = {
-          [FIELDS.VALID_COMPANY_BASE]: 'true',
-        };
+      const validBody = {
+        [FIELDS.VALID_COMPANY_BASE]: 'true',
+      };
 
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it('should update the session with submitted data', () => {
         controller.post(req, res);
 
         const expected = updateSubmittedData(
@@ -79,13 +83,19 @@ describe('controllers/company-based', () => {
       });
 
       it(`should redirect to ${ROUTES.BUYER_BASED}`, () => {
-        req.body = {
-          [FIELDS.VALID_COMPANY_BASE]: 'true',
-        };
-
         controller.post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.BUYER_BASED);
+      });
+
+      describe('when the url\'s last substring is `change`', () => {
+        it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
+          req.originalUrl = 'mock/change';
+
+          controller.post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS);
+        });
       });
     });
   });

@@ -5,6 +5,7 @@ const api = require('../../api');
 const mapCountries = require('../../helpers/map-countries');
 const { validation: generateValidationErrors } = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
+const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
   FIELD_NAME: FIELDS.COUNTRY,
@@ -50,6 +51,10 @@ const post = async (req, res) => {
     req.body,
     req.session.submittedData,
   );
+
+  if (isChangeRoute(req.originalUrl)) {
+    return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
+  }
 
   return res.redirect(ROUTES.UK_CONTENT_PERCENTAGE);
 };

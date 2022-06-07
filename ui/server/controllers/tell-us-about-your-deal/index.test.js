@@ -179,6 +179,16 @@ describe('controllers/buyer-based', () => {
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS);
       });
+
+      describe('when the url\'s last substring is `change`', () => {
+        it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
+          req.originalUrl = 'mock/change';
+
+          controller.post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS);
+        });
+      });
     });
   });
 });

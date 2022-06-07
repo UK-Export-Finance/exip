@@ -110,11 +110,15 @@ describe('controllers/final-destination', () => {
     });
 
     describe('when there are no validation errors', () => {
-      it('should update the session with submitted data', () => {
-        req.body = {
-          [FIELDS.FINAL_DESTINATION]: mapCountries(mockCountriesResponse)[0].value,
-        };
+      const validBody = {
+        [FIELDS.FINAL_DESTINATION]: mapCountries(mockCountriesResponse)[0].value,
+      };
 
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it('should update the session with submitted data', () => {
         controller.post(req, res);
 
         const expected = updateSubmittedData(
@@ -126,13 +130,19 @@ describe('controllers/final-destination', () => {
       });
 
       it(`should redirect to ${ROUTES.UK_CONTENT_PERCENTAGE}`, async () => {
-        req.body = {
-          [FIELDS.FINAL_DESTINATION]: mapCountries(mockCountriesResponse)[0].value,
-        };
-
         await controller.post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.UK_CONTENT_PERCENTAGE);
+      });
+
+      describe('when the url\'s last substring is `change`', () => {
+        it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
+          req.originalUrl = 'mock/change';
+
+          controller.post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS);
+        });
       });
     });
   });
