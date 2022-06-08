@@ -11,6 +11,7 @@ const basicAuth = require('express-basic-auth');
 const { csrf: csrfToken, security, seo } = require('./middleware');
 const configureNunjucks = require('./nunjucks-configuration');
 const routes = require('./routes');
+const CONTENT_STRINGS = require('./content-strings');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -78,6 +79,12 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   res.redirect('/problem-with-service');
 });
 
-// app.get('*', (req, res) => res.render('page-not-found.njk', { user: req.session.user }));
+app.get('*', (req, res) => res.render('page-not-found.njk', {
+  CONTENT_STRINGS: {
+    PRODUCT: CONTENT_STRINGS.PRODUCT,
+    FOOTER: CONTENT_STRINGS.FOOTER,
+    ...CONTENT_STRINGS.PAGE_NOT_FOUND_PAGE,
+  },
+}));
 
 app.listen(PORT, () => console.info(`EXIP UI app listening on port ${PORT}!`));
