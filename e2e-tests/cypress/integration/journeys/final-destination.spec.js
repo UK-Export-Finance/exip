@@ -64,21 +64,21 @@ context('What is the final destination for your export page', () => {
 
     describe('searchable autocomplete input', () => {
       it('renders an input and hint', () => {
-        finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].searchInput().should('exist');
+        finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].searchInput().should('exist');
 
-        const hint = finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].hint();
+        const hint = finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].hint();
         hint.should('exist');
 
         hint.invoke('text').then((text) => {
-          const expectedText = FIELDS[`${CONSTANTS.FIELD_IDSCOUNTRY}`].HINT;
+          const expectedText = FIELDS[`${CONSTANTS.FIELD_IDS.COUNTRY}`].HINT;
           expect(text.trim()).equal(expectedText);
         });
       });
 
       it('renders `no results` message when no results are found', () => {
-        finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].searchInput().type('test');
+        finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].searchInput().type('test');
 
-        const noResults = finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].noResults();
+        const noResults = finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].noResults();
         noResults.should('exist');
 
         noResults.invoke('text').then((text) => {
@@ -89,59 +89,59 @@ context('What is the final destination for your export page', () => {
 
       it('renders a single country result after searching', () => {
         // start searching for France
-        finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].searchInput().type('Fra');
+        finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].searchInput().type('Fra');
 
-        const noResults = finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].noResults();
+        const noResults = finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].noResults();
         noResults.should('not.exist');
 
-        const results = finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].results();
+        const results = finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].results();
 
         results.should('have.length', 1);
       });
 
       it('renders multiple country results after searching', () => {
-        finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].searchInput().type('Be');
+        finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].searchInput().type('Be');
 
-        const noResults = finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].noResults();
+        const noResults = finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].noResults();
         noResults.should('not.exist');
 
-        const results = finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].results();
+        const results = finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].results();
 
         results.should('have.length.greaterThan', 1);
       });
 
       it('adds the country name to a hidden input value after searching', () => {
-        finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].searchInput().type('Fra');
+        finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].searchInput().type('Fra');
 
-        const noResults = finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].noResults();
+        const noResults = finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].noResults();
         noResults.should('not.exist');
 
-        const results = finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].results();
+        const results = finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].results();
 
         // select the first result (France)
         results.first().click();
 
         // check hidden input value
         const expectedValue = 'France';
-        finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].hiddenInput().should('have.attr', 'value', expectedValue);
+        finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].hiddenInput().should('have.attr', 'value', expectedValue);
       });
 
       it('allows user to remove a selected country and search again', () => {
-        finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].searchInput().type('Fra');
-        const results = finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].results();
+        finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].searchInput().type('Fra');
+        const results = finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].results();
 
         // select the first result (France)
         results.first().click();
 
         // clear the input
-        finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].searchInput().clear();
+        finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].searchInput().clear();
 
         // search for a different country, submit with enter key
-        finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].searchInput().type('Belg{enter}');
+        finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].searchInput().type('Belg{enter}');
 
         // check hidden input value
         const expectedValue = 'Belgium';
-        finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].hiddenInput().should('have.attr', 'value', expectedValue);
+        finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].hiddenInput().should('have.attr', 'value', expectedValue);
       });
     });
 
@@ -162,13 +162,13 @@ context('What is the final destination for your export page', () => {
           partials.errorSummaryListItems().should('exist');
           partials.errorSummaryListItems().should('have.length', 1);
 
-          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSCOUNTRY];
+          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.COUNTRY];
 
           partials.errorSummaryListItems().first().invoke('text').then((text) => {
             expect(text.trim()).equal(expectedMessage);
           });
 
-          finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].errorMessage().invoke('text').then((text) => {
+          finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].errorMessage().invoke('text').then((text) => {
             expect(text.trim()).includes(expectedMessage);
           });
         });
@@ -176,9 +176,9 @@ context('What is the final destination for your export page', () => {
 
       describe('when submitting with a selected acountry', () => {
         it(`should redirect to ${CONSTANTS.ROUTES.UK_CONTENT_PERCENTAGE}`, () => {
-          finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].searchInput().type('Fra');
+          finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].searchInput().type('Fra');
 
-          const results = finalDestinationPage[CONSTANTS.FIELD_IDSCOUNTRY].results();
+          const results = finalDestinationPage[CONSTANTS.FIELD_IDS.COUNTRY].results();
           results.first().click();
 
           finalDestinationPage.submitButton().click();

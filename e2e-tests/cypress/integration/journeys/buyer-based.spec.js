@@ -62,14 +62,14 @@ context('Buyer based outside of the UK, Channel Islands and Isle of Man page', (
     });
 
     it('renders yes and no radio buttons', () => {
-      const yesRadio = buyerBasedPage[CONSTANTS.FIELD_IDSVALID_BUYER_BASE].yes();
+      const yesRadio = buyerBasedPage[CONSTANTS.FIELD_IDS.VALID_BUYER_BASE].yes();
       yesRadio.should('exist');
 
       yesRadio.invoke('text').then((text) => {
         expect(text.trim()).equal('Yes');
       });
 
-      const noRadio = buyerBasedPage[CONSTANTS.FIELD_IDSVALID_BUYER_BASE].no();
+      const noRadio = buyerBasedPage[CONSTANTS.FIELD_IDS.VALID_BUYER_BASE].no();
       noRadio.should('exist');
 
       noRadio.invoke('text').then((text) => {
@@ -94,13 +94,13 @@ context('Buyer based outside of the UK, Channel Islands and Isle of Man page', (
           partials.errorSummaryListItems().should('exist');
           partials.errorSummaryListItems().should('have.length', 1);
 
-          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSVALID_BUYER_BASE];
+          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.VALID_BUYER_BASE];
 
           partials.errorSummaryListItems().first().invoke('text').then((text) => {
             expect(text.trim()).equal(expectedMessage);
           });
 
-          buyerBasedPage[CONSTANTS.FIELD_IDSVALID_BUYER_BASE].errorMessage().invoke('text').then((text) => {
+          buyerBasedPage[CONSTANTS.FIELD_IDS.VALID_BUYER_BASE].errorMessage().invoke('text').then((text) => {
             expect(text.trim()).includes(expectedMessage);
           });
         });
@@ -108,7 +108,7 @@ context('Buyer based outside of the UK, Channel Islands and Isle of Man page', (
 
       describe('when submitting the answer as `no`', () => {
         it(`should redirect to ${CONSTANTS.ROUTES.BUYER_BASED_UNAVAILABLE}`, () => {
-          buyerBasedPage[CONSTANTS.FIELD_IDSVALID_BUYER_BASE].no().click();
+          buyerBasedPage[CONSTANTS.FIELD_IDS.VALID_BUYER_BASE].no().click();
           buyerBasedPage.submitButton().click();
 
           cy.url().should('include', CONSTANTS.ROUTES.BUYER_BASED_UNAVAILABLE);
@@ -117,7 +117,7 @@ context('Buyer based outside of the UK, Channel Islands and Isle of Man page', (
 
       describe('when submitting the answer as `yes`', () => {
         it(`should redirect to ${CONSTANTS.ROUTES.TRIED_TO_OBTAIN_COVER}`, () => {
-          buyerBasedPage[CONSTANTS.FIELD_IDSVALID_BUYER_BASE].yes().click();
+          buyerBasedPage[CONSTANTS.FIELD_IDS.VALID_BUYER_BASE].yes().click();
           buyerBasedPage.submitButton().click();
 
           cy.url().should('include', CONSTANTS.ROUTES.TRIED_TO_OBTAIN_COVER);

@@ -66,7 +66,7 @@ context('Tell us about your deal page', () => {
       });
 
       it('renders `credit limit group` label and hint', () => {
-        const fieldId = CONSTANTS.FIELD_IDSCREDIT_LIMIT_GROUP;
+        const fieldId = CONSTANTS.FIELD_IDS.CREDIT_LIMIT_GROUP;
 
         const field = tellUsAboutYourDealPage[fieldId];
 
@@ -82,7 +82,7 @@ context('Tell us about your deal page', () => {
       });
 
       it('renders `credit limit currency` hidden label and input', () => {
-        const fieldId = CONSTANTS.FIELD_IDSCREDIT_LIMIT_CURRENCY;
+        const fieldId = CONSTANTS.FIELD_IDS.CREDIT_LIMIT_CURRENCY;
 
         const field = tellUsAboutYourDealPage[fieldId];
 
@@ -94,7 +94,7 @@ context('Tell us about your deal page', () => {
       });
 
       it('renders `credit limit` hidden label and input', () => {
-        const fieldId = CONSTANTS.FIELD_IDSCREDIT_LIMIT;
+        const fieldId = CONSTANTS.FIELD_IDS.CREDIT_LIMIT;
 
         const field = tellUsAboutYourDealPage[fieldId];
 
@@ -106,7 +106,7 @@ context('Tell us about your deal page', () => {
       });
 
       it('renders `pre credit period` label, hint and input', () => {
-        const fieldId = CONSTANTS.FIELD_IDSPRE_CREDIT_PERIOD;
+        const fieldId = CONSTANTS.FIELD_IDS.PRE_CREDIT_PERIOD;
 
         const field = tellUsAboutYourDealPage[fieldId];
 
@@ -124,7 +124,7 @@ context('Tell us about your deal page', () => {
       });
 
       it('renders `credit period` label, hint and input', () => {
-        const fieldId = CONSTANTS.FIELD_IDSCREDIT_PERIOD;
+        const fieldId = CONSTANTS.FIELD_IDS.CREDIT_PERIOD;
 
         const field = tellUsAboutYourDealPage[fieldId];
 
@@ -142,7 +142,7 @@ context('Tell us about your deal page', () => {
       });
 
       it('renders `policy length` label, hint and input', () => {
-        const fieldId = CONSTANTS.FIELD_IDSPOLICY_LENGTH;
+        const fieldId = CONSTANTS.FIELD_IDS.POLICY_LENGTH;
 
         const field = tellUsAboutYourDealPage[fieldId];
 
@@ -160,7 +160,7 @@ context('Tell us about your deal page', () => {
       });
 
       it('renders `policy type` label, hint and radio inputs', () => {
-        const fieldId = CONSTANTS.FIELD_IDSPOLICY_TYPE;
+        const fieldId = CONSTANTS.FIELD_IDS.POLICY_TYPE;
 
         const field = tellUsAboutYourDealPage[fieldId];
 
@@ -223,52 +223,52 @@ context('Tell us about your deal page', () => {
 
           // credit limit
           partials.errorSummaryListItems().eq(0).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSCREDIT_LIMIT_GROUP].IS_EMPTY;
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.CREDIT_LIMIT_GROUP].IS_EMPTY;
 
             expect(text.trim()).equal(expectedMessage);
           });
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_LIMIT_GROUP].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSCREDIT_LIMIT_GROUP].IS_EMPTY;
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_LIMIT_GROUP].errorMessage().invoke('text').then((text) => {
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.CREDIT_LIMIT_GROUP].IS_EMPTY;
 
             expect(text.trim()).includes(expectedMessage);
           });
 
           // credit period
           partials.errorSummaryListItems().eq(1).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSCREDIT_PERIOD].IS_EMPTY;
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.CREDIT_PERIOD].IS_EMPTY;
 
             expect(text.trim()).equal(expectedMessage);
           });
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_PERIOD].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSCREDIT_PERIOD].IS_EMPTY;
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_PERIOD].errorMessage().invoke('text').then((text) => {
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.CREDIT_PERIOD].IS_EMPTY;
 
             expect(text.trim()).includes(expectedMessage);
           });
 
           // policy length
           partials.errorSummaryListItems().eq(2).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSPOLICY_LENGTH].IS_EMPTY;
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.POLICY_LENGTH].IS_EMPTY;
 
             expect(text.trim()).equal(expectedMessage);
           });
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPOLICY_LENGTH].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSPOLICY_LENGTH].IS_EMPTY;
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.POLICY_LENGTH].errorMessage().invoke('text').then((text) => {
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.POLICY_LENGTH].IS_EMPTY;
 
             expect(text.trim()).includes(expectedMessage);
           });
 
           // policy type
           partials.errorSummaryListItems().eq(3).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSPOLICY_TYPE];
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.POLICY_TYPE];
 
             expect(text.trim()).equal(expectedMessage);
           });
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPOLICY_TYPE].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSPOLICY_TYPE];
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.POLICY_TYPE].errorMessage().invoke('text').then((text) => {
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.POLICY_TYPE];
 
             expect(text.trim()).includes(expectedMessage);
           });
@@ -277,17 +277,17 @@ context('Tell us about your deal page', () => {
 
       describe('when no `credit limit currency` is provided, but credit limit is', () => {
         it('should render a validation error', () => {
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_LIMIT_CURRENCY].input().select('AED');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_LIMIT_CURRENCY].input().select('AED');
           tellUsAboutYourDealPage.submitButton().click();
 
           partials.errorSummaryListItems().eq(0).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSCREDIT_LIMIT_GROUP].IS_EMPTY;
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.CREDIT_LIMIT_GROUP].IS_EMPTY;
 
             expect(text.trim()).equal(expectedMessage);
           });
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_LIMIT_GROUP].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSCREDIT_LIMIT_GROUP].IS_EMPTY;
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_LIMIT_GROUP].errorMessage().invoke('text').then((text) => {
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.CREDIT_LIMIT_GROUP].IS_EMPTY;
 
             expect(text.trim()).includes(expectedMessage);
           });
@@ -296,17 +296,17 @@ context('Tell us about your deal page', () => {
 
       describe('when no `credit limit` is provided, but `credit limit currency` is', () => {
         it('should render a validation error', () => {
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_LIMIT].input().type('100');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_LIMIT].input().type('100');
           tellUsAboutYourDealPage.submitButton().click();
 
           partials.errorSummaryListItems().eq(0).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSCREDIT_LIMIT_GROUP].IS_EMPTY;
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.CREDIT_LIMIT_GROUP].IS_EMPTY;
 
             expect(text.trim()).equal(expectedMessage);
           });
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_LIMIT_GROUP].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSCREDIT_LIMIT_GROUP].IS_EMPTY;
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_LIMIT_GROUP].errorMessage().invoke('text').then((text) => {
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.CREDIT_LIMIT_GROUP].IS_EMPTY;
 
             expect(text.trim()).includes(expectedMessage);
           });
@@ -315,18 +315,18 @@ context('Tell us about your deal page', () => {
 
       describe('when `credit limit` has a non-numeric value', () => {
         it('should render a validation error', () => {
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_LIMIT_CURRENCY].input().select('AED');
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_LIMIT].input().type('a');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_LIMIT_CURRENCY].input().select('AED');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_LIMIT].input().type('a');
           tellUsAboutYourDealPage.submitButton().click();
 
           partials.errorSummaryListItems().eq(0).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSCREDIT_LIMIT].NOT_A_NUMBER;
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.CREDIT_LIMIT].NOT_A_NUMBER;
 
             expect(text.trim()).equal(expectedMessage);
           });
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_LIMIT].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSCREDIT_LIMIT].NOT_A_NUMBER;
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_LIMIT].errorMessage().invoke('text').then((text) => {
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.CREDIT_LIMIT].NOT_A_NUMBER;
 
             expect(text.trim()).includes(expectedMessage);
           });
@@ -335,17 +335,17 @@ context('Tell us about your deal page', () => {
 
       describe('when (optional field) `pre-credit period` has a non-numeric value', () => {
         it('should render a validation error', () => {
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPRE_CREDIT_PERIOD].input().type('a');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.PRE_CREDIT_PERIOD].input().type('a');
           tellUsAboutYourDealPage.submitButton().click();
 
           partials.errorSummaryListItems().eq(1).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSPRE_CREDIT_PERIOD].NOT_A_NUMBER;
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER;
 
             expect(text.trim()).equal(expectedMessage);
           });
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPRE_CREDIT_PERIOD].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSPRE_CREDIT_PERIOD].NOT_A_NUMBER;
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.PRE_CREDIT_PERIOD].errorMessage().invoke('text').then((text) => {
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER;
 
             expect(text.trim()).includes(expectedMessage);
           });
@@ -354,30 +354,30 @@ context('Tell us about your deal page', () => {
 
       describe('when `credit period` and `policy length` have non-numeric values', () => {
         it('should render validation errors', () => {
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_PERIOD].input().type('a');
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPOLICY_LENGTH].input().type('a');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_PERIOD].input().type('a');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.POLICY_LENGTH].input().type('a');
           tellUsAboutYourDealPage.submitButton().click();
 
           partials.errorSummaryListItems().eq(1).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSCREDIT_PERIOD].NOT_A_NUMBER;
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER;
 
             expect(text.trim()).equal(expectedMessage);
           });
 
           partials.errorSummaryListItems().eq(2).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSPOLICY_LENGTH].NOT_A_NUMBER;
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.POLICY_LENGTH].NOT_A_NUMBER;
 
             expect(text.trim()).equal(expectedMessage);
           });
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_PERIOD].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSCREDIT_PERIOD].NOT_A_NUMBER;
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_PERIOD].errorMessage().invoke('text').then((text) => {
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER;
 
             expect(text.trim()).includes(expectedMessage);
           });
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPOLICY_LENGTH].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSPOLICY_LENGTH].NOT_A_NUMBER;
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.POLICY_LENGTH].errorMessage().invoke('text').then((text) => {
+            const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.POLICY_LENGTH].NOT_A_NUMBER;
 
             expect(text.trim()).includes(expectedMessage);
           });
@@ -386,35 +386,35 @@ context('Tell us about your deal page', () => {
 
       describe('with any validation error', () => {
         it('should render submitted values', () => {
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_LIMIT_CURRENCY].input().select('AED');
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPRE_CREDIT_PERIOD].input().type('0');
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_PERIOD].input().type('1');
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPOLICY_LENGTH].input().type('2');
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPOLICY_TYPE].multi.input().click();
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_LIMIT_CURRENCY].input().select('AED');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.PRE_CREDIT_PERIOD].input().type('0');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_PERIOD].input().type('1');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.POLICY_LENGTH].input().type('2');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.POLICY_TYPE].multi.input().click();
 
           tellUsAboutYourDealPage.submitButton().click();
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPRE_CREDIT_PERIOD].input()
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.PRE_CREDIT_PERIOD].input()
             .should('have.attr', 'value', '0');
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_PERIOD].input()
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_PERIOD].input()
             .should('have.attr', 'value', '1');
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPOLICY_LENGTH].input()
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.POLICY_LENGTH].input()
             .should('have.attr', 'value', '2');
 
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPOLICY_TYPE].multi.input().should('be.checked');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.POLICY_TYPE].multi.input().should('be.checked');
         });
       });
 
       describe('when form is valid', () => {
         it(`should redirect to ${CONSTANTS.ROUTES.CHECK_YOUR_ANSWERS}`, () => {
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_LIMIT_CURRENCY].input().select('AED');
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_LIMIT].input().type('100');
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPRE_CREDIT_PERIOD].input().type('0');
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSCREDIT_PERIOD].input().type('1');
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPOLICY_LENGTH].input().type('2');
-          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDSPOLICY_TYPE].single.input().click();
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_LIMIT_CURRENCY].input().select('AED');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_LIMIT].input().type('100');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.PRE_CREDIT_PERIOD].input().type('0');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.CREDIT_PERIOD].input().type('1');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.POLICY_LENGTH].input().type('2');
+          tellUsAboutYourDealPage[CONSTANTS.FIELD_IDS.POLICY_TYPE].single.input().click();
 
           tellUsAboutYourDealPage.submitButton().click();
 

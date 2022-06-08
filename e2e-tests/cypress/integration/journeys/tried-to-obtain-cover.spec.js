@@ -66,14 +66,14 @@ context('Tried to obtain private cover page', () => {
     });
 
     it('renders yes and no radio buttons', () => {
-      const yesRadio = triedToObtainCoverPage[CONSTANTS.FIELD_IDSTRIED_PRIVATE_COVER].yes();
+      const yesRadio = triedToObtainCoverPage[CONSTANTS.FIELD_IDS.TRIED_PRIVATE_COVER].yes();
       yesRadio.should('exist');
 
       yesRadio.invoke('text').then((text) => {
         expect(text.trim()).equal('Yes');
       });
 
-      const noRadio = triedToObtainCoverPage[CONSTANTS.FIELD_IDSTRIED_PRIVATE_COVER].no();
+      const noRadio = triedToObtainCoverPage[CONSTANTS.FIELD_IDS.TRIED_PRIVATE_COVER].no();
       noRadio.should('exist');
 
       noRadio.invoke('text').then((text) => {
@@ -98,13 +98,13 @@ context('Tried to obtain private cover page', () => {
           partials.errorSummaryListItems().should('exist');
           partials.errorSummaryListItems().should('have.length', 1);
 
-          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSTRIED_PRIVATE_COVER];
+          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.TRIED_PRIVATE_COVER];
 
           partials.errorSummaryListItems().first().invoke('text').then((text) => {
             expect(text.trim()).equal(expectedMessage);
           });
 
-          triedToObtainCoverPage[CONSTANTS.FIELD_IDSTRIED_PRIVATE_COVER].errorMessage().invoke('text').then((text) => {
+          triedToObtainCoverPage[CONSTANTS.FIELD_IDS.TRIED_PRIVATE_COVER].errorMessage().invoke('text').then((text) => {
             expect(text.trim()).includes(expectedMessage);
           });
         });
@@ -112,7 +112,7 @@ context('Tried to obtain private cover page', () => {
 
       describe('when submitting the answer as `yes`', () => {
         it(`should redirect to ${CONSTANTS.ROUTES.FINAL_DESTINATION}`, () => {
-          triedToObtainCoverPage[CONSTANTS.FIELD_IDSTRIED_PRIVATE_COVER].yes().click();
+          triedToObtainCoverPage[CONSTANTS.FIELD_IDS.TRIED_PRIVATE_COVER].yes().click();
           triedToObtainCoverPage.submitButton().click();
 
           cy.url().should('include', CONSTANTS.ROUTES.FINAL_DESTINATION);
@@ -121,7 +121,7 @@ context('Tried to obtain private cover page', () => {
 
       describe('when submitting the answer as `no`', () => {
         it(`should redirect to ${CONSTANTS.ROUTES.FINAL_DESTINATION}`, () => {
-          triedToObtainCoverPage[CONSTANTS.FIELD_IDSTRIED_PRIVATE_COVER].no().click();
+          triedToObtainCoverPage[CONSTANTS.FIELD_IDS.TRIED_PRIVATE_COVER].no().click();
           triedToObtainCoverPage.submitButton().click();
 
           cy.url().should('include', CONSTANTS.ROUTES.FINAL_DESTINATION);
