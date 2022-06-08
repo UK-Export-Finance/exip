@@ -1,4 +1,4 @@
-import CONSTANTS from '../../../constants';
+import { FIELD_IDS } from '../../../constants';
 
 const ukContentPercentagePage = {
   heading: () => cy.get('[data-cy="heading"]'),
@@ -8,7 +8,7 @@ const ukContentPercentagePage = {
   label: () => cy.get('[data-cy="label"]'),
   hint: () => cy.get('[data-cy="label-hint"]'),
   input: () => cy.get('[data-cy="input"]'),
-  errorMessage: () => cy.get(`[data-cy="${CONSTANTS.FIELD_IDSUK_CONTENT_PERCENTAGE}-error-message"]`),
+  errorMessage: () => cy.get(`[data-cy="${FIELD_IDs.UK_CONTENT_PERCENTAGE}-error-message"]`),
   submitButton: () => cy.get('[data-cy="submit-button"]'),
 };
 
