@@ -234,6 +234,13 @@ const CHECK_YOUR_ANSWERS_PAGE = {
   GROUP_HEADING_DEAL: 'Deal details',
 };
 
+const PAGE_NOT_FOUND_PAGE = {
+  PAGE_TITLE: 'Page not found',
+  HEADING: 'Page not found',
+  BODY_1: 'If you typed the web address, check it is correct.',
+  BODY_2: 'If you pasted the web address, check you copied the entire address.',
+};
+
 const PROBLEM_WITH_SERVICE_PAGE = {
   PAGE_TITLE: 'Problem with the service',
   HEADING: 'Sorry, there is a problem with the service',
@@ -315,8 +322,9 @@ module.exports = {
   FINAL_DESTINATION_PAGE,
   UK_CONTENT_PERCENTAGE_PAGE,
   TELL_US_ABOUT_YOUR_DEAL_PAGE,
-  PROBLEM_WITH_SERVICE_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,
+  PAGE_NOT_FOUND_PAGE,
+  PROBLEM_WITH_SERVICE_PAGE,
   ERROR_MESSAGES,
   EXIT_PAGES,
 };

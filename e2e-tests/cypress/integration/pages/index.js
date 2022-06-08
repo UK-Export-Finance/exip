@@ -6,6 +6,7 @@ const finalDestinationPage = require('./finalDestination');
 const ukContentPercentagePage = require('./ukContentPercentage');
 const tellUsAboutYourDealPage = require('./tellUsAboutYourDeal');
 const checkYourAnswersPage = require('./checkYourAnswers');
+const pageNotFoundPage = require('./pageNotFound');
 
 module.exports = {
   beforeYouStartPage,
@@ -16,4 +17,5 @@ module.exports = {
   ukContentPercentagePage,
   tellUsAboutYourDealPage,
   checkYourAnswersPage,
+  pageNotFoundPage,
 };
