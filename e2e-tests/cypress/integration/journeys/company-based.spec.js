@@ -63,14 +63,14 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
     });
 
     it('renders yes and no radio buttons', () => {
-      const yesRadio = companyBasedPage[CONSTANTS.FIELDS.VALID_COMPANY_BASE].yes();
+      const yesRadio = companyBasedPage[CONSTANTS.FIELD_IDSVALID_COMPANY_BASE].yes();
       yesRadio.should('exist');
 
       yesRadio.invoke('text').then((text) => {
         expect(text.trim()).equal('Yes');
       });
 
-      const noRadio = companyBasedPage[CONSTANTS.FIELDS.VALID_COMPANY_BASE].no();
+      const noRadio = companyBasedPage[CONSTANTS.FIELD_IDSVALID_COMPANY_BASE].no();
       noRadio.should('exist');
 
       noRadio.invoke('text').then((text) => {
@@ -95,13 +95,13 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
           partials.errorSummaryListItems().should('exist');
           partials.errorSummaryListItems().should('have.length', 1);
 
-          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELDS.VALID_COMPANY_BASE];
+          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDSVALID_COMPANY_BASE];
 
           partials.errorSummaryListItems().first().invoke('text').then((text) => {
             expect(text.trim()).equal(expectedMessage);
           });
 
-          companyBasedPage[CONSTANTS.FIELDS.VALID_COMPANY_BASE].errorMessage().invoke('text').then((text) => {
+          companyBasedPage[CONSTANTS.FIELD_IDSVALID_COMPANY_BASE].errorMessage().invoke('text').then((text) => {
             expect(text.trim()).includes(expectedMessage);
           });
         });
@@ -109,7 +109,7 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
 
       describe('when submitting the answer as `no`', () => {
         it(`should redirect to ${CONSTANTS.ROUTES.COMPANY_BASED_UNAVAILABLE}`, () => {
-          companyBasedPage[CONSTANTS.FIELDS.VALID_COMPANY_BASE].no().click();
+          companyBasedPage[CONSTANTS.FIELD_IDSVALID_COMPANY_BASE].no().click();
           companyBasedPage.submitButton().click();
 
           cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED_UNAVAILABLE);
@@ -118,7 +118,7 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
 
       describe('when submitting the answer as `yes`', () => {
         it(`should redirect to ${CONSTANTS.ROUTES.BUYER_BASED}`, () => {
-          companyBasedPage[CONSTANTS.FIELDS.VALID_COMPANY_BASE].yes().click();
+          companyBasedPage[CONSTANTS.FIELD_IDSVALID_COMPANY_BASE].yes().click();
           companyBasedPage.submitButton().click();
 
           cy.url().should('include', CONSTANTS.ROUTES.BUYER_BASED);

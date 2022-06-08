@@ -1,4 +1,4 @@
-const { FIELDS } = require('../../../../constants');
+const { FIELD_IDS } = require('../../../../constants');
 const CONTENT_STRINGS = require('../../../../content-strings');
 const generateValidationErrors = require('../../../../helpers/validation');
 const { objectHasProperty } = require('../../../../helpers/object');
@@ -7,10 +7,10 @@ const isNumber = require('../../../../helpers/number');
 const creditLimitRules = (formBody, errors) => {
   let updatedErrors = errors;
 
-  if (objectHasProperty(formBody, FIELDS.CREDIT_LIMIT) && !isNumber(Number(formBody[FIELDS.CREDIT_LIMIT]))) {
+  if (objectHasProperty(formBody, FIELD_IDS.CREDIT_LIMIT) && !isNumber(Number(formBody[FIELD_IDS.CREDIT_LIMIT]))) {
     updatedErrors = generateValidationErrors(
-      FIELDS.CREDIT_LIMIT,
-      CONTENT_STRINGS.ERROR_MESSAGES[FIELDS.CREDIT_LIMIT].NOT_A_NUMBER,
+      FIELD_IDS.CREDIT_LIMIT,
+      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.CREDIT_LIMIT].NOT_A_NUMBER,
       errors,
     );
   }

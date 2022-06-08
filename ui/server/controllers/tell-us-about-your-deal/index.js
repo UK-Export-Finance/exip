@@ -1,5 +1,5 @@
 const CONTENT_STRINGS = require('../../content-strings');
-const { TEMPLATES, ROUTES, FIELDS } = require('../../constants');
+const { TEMPLATES, ROUTES, FIELD_IDS } = require('../../constants');
 const api = require('../../api');
 const mapCurrencies = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
@@ -16,32 +16,32 @@ const PAGE_VARIABLES = {
   BACK_LINK: ROUTES.UK_CONTENT_PERCENTAGE,
   FIELDS: {
     CREDIT_LIMIT_GROUP: {
-      ID: FIELDS.CREDIT_LIMIT_GROUP,
-      ...CONTENT_STRINGS.FIELDS[FIELDS.CREDIT_LIMIT_GROUP],
+      ID: FIELD_IDS.CREDIT_LIMIT_GROUP,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_LIMIT_GROUP],
     },
     CREDIT_LIMIT_CURRENCY: {
-      ID: FIELDS.CREDIT_LIMIT_CURRENCY,
-      ...CONTENT_STRINGS.FIELDS[FIELDS.CREDIT_LIMIT_CURRENCY],
+      ID: FIELD_IDS.CREDIT_LIMIT_CURRENCY,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_LIMIT_CURRENCY],
     },
     CREDIT_LIMIT: {
-      ID: FIELDS.CREDIT_LIMIT,
-      ...CONTENT_STRINGS.FIELDS[FIELDS.CREDIT_LIMIT],
+      ID: FIELD_IDS.CREDIT_LIMIT,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_LIMIT],
     },
     PRE_CREDIT_PERIOD: {
-      ID: FIELDS.PRE_CREDIT_PERIOD,
-      ...CONTENT_STRINGS.FIELDS[FIELDS.PRE_CREDIT_PERIOD],
+      ID: FIELD_IDS.PRE_CREDIT_PERIOD,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.PRE_CREDIT_PERIOD],
     },
     CREDIT_PERIOD: {
-      ID: FIELDS.CREDIT_PERIOD,
-      ...CONTENT_STRINGS.FIELDS[FIELDS.CREDIT_PERIOD],
+      ID: FIELD_IDS.CREDIT_PERIOD,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_PERIOD],
     },
     POLICY_LENGTH: {
-      ID: FIELDS.POLICY_LENGTH,
-      ...CONTENT_STRINGS.FIELDS[FIELDS.POLICY_LENGTH],
+      ID: FIELD_IDS.POLICY_LENGTH,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.POLICY_LENGTH],
     },
     POLICY_TYPE: {
-      ID: FIELDS.POLICY_TYPE,
-      ...CONTENT_STRINGS.FIELDS[FIELDS.POLICY_TYPE],
+      ID: FIELD_IDS.POLICY_TYPE,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.POLICY_TYPE],
     },
   },
 };
@@ -52,7 +52,7 @@ const get = async (req, res) => {
 
   let mappedCurrencies;
   if (submittedData) {
-    mappedCurrencies = mapCurrencies(currencies, submittedData[FIELDS.CREDIT_LIMIT_CURRENCY]);
+    mappedCurrencies = mapCurrencies(currencies, submittedData[FIELD_IDS.CREDIT_LIMIT_CURRENCY]);
   } else {
     mappedCurrencies = mapCurrencies(currencies);
   }
@@ -69,7 +69,7 @@ const post = async (req, res) => {
 
   if (validationErrors) {
     const currencies = await api.getCurrencies();
-    const mappedCurrencies = mapCurrencies(currencies, req.body[FIELDS.CREDIT_LIMIT_CURRENCY]);
+    const mappedCurrencies = mapCurrencies(currencies, req.body[FIELD_IDS.CREDIT_LIMIT_CURRENCY]);
 
     return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
       ...PAGE_VARIABLES,

@@ -1,5 +1,5 @@
 const rule = require('./credit-limit');
-const { FIELDS } = require('../../../../constants');
+const { FIELD_IDS } = require('../../../../constants');
 const CONTENT_STRINGS = require('../../../../content-strings');
 const generateValidationErrors = require('../../../../helpers/validation');
 
@@ -9,17 +9,17 @@ describe('controllers/tell-us-about-your-deal/validation/rules/credit-limit', ()
     errorList: {},
   };
 
-  describe(`when ${FIELDS.CREDIT_LIMIT} is not a number`, () => {
+  describe(`when ${FIELD_IDS.CREDIT_LIMIT} is not a number`, () => {
     it('should return validation error', () => {
       const mockBody = {
-        [FIELDS.CREDIT_LIMIT]: 'invalid',
+        [FIELD_IDS.CREDIT_LIMIT]: 'invalid',
       };
 
       const result = rule(mockBody, mockErrors);
 
       const expected = generateValidationErrors(
-        FIELDS.CREDIT_LIMIT,
-        CONTENT_STRINGS.ERROR_MESSAGES[FIELDS.CREDIT_LIMIT].NOT_A_NUMBER,
+        FIELD_IDS.CREDIT_LIMIT,
+        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.CREDIT_LIMIT].NOT_A_NUMBER,
         mockErrors,
       );
 
@@ -30,7 +30,7 @@ describe('controllers/tell-us-about-your-deal/validation/rules/credit-limit', ()
   describe('when there are no validation errors', () => {
     it('should return the already provided errors', () => {
       const mockBody = {
-        [FIELDS.CREDIT_LIMIT]: '10',
+        [FIELD_IDS.CREDIT_LIMIT]: '10',
       };
 
       const result = rule(mockBody, mockErrors);

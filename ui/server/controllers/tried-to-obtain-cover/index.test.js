@@ -1,6 +1,6 @@
 const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
-const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
+const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const generateValidationErrors = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
@@ -18,7 +18,7 @@ describe('controllers/tried-to-obtain-cover', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_NAME: FIELDS.TRIED_PRIVATE_COVER,
+        FIELD_NAME: FIELD_IDS.TRIED_PRIVATE_COVER,
         PAGE_CONTENT_STRINGS: CONTENT_STRINGS.TRIED_TO_OBTAIN_COVER_PAGE,
         BACK_LINK: ROUTES.BUYER_BASED,
       };
@@ -52,7 +52,7 @@ describe('controllers/tried-to-obtain-cover', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELDS.TRIED_PRIVATE_COVER]: 'true',
+        [FIELD_IDS.TRIED_PRIVATE_COVER]: 'true',
       };
 
       beforeEach(() => {

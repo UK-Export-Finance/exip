@@ -1,4 +1,4 @@
-const { FIELDS } = require('../../constants');
+const { FIELD_IDS } = require('../../constants');
 const CONTENT_STRINGS = require('../../content-strings');
 const generateValidationErrors = require('../../helpers/validation');
 const {
@@ -12,17 +12,17 @@ const hasErrors = (formBody) => {
   }
 
   const keys = Object.keys(formBody);
-  if (keys.includes(FIELDS.FINAL_DESTINATION) && keys.includes(FIELDS.COUNTRY)) {
+  if (keys.includes(FIELD_IDS.FINAL_DESTINATION) && keys.includes(FIELD_IDS.COUNTRY)) {
     // form submitted without client side JS
 
-    if (!objectHasProperty(formBody, FIELDS.COUNTRY)) {
+    if (!objectHasProperty(formBody, FIELD_IDS.COUNTRY)) {
       return true;
     }
 
     return false;
   }
 
-  if (!objectHasProperty(formBody, FIELDS.FINAL_DESTINATION)) {
+  if (!objectHasProperty(formBody, FIELD_IDS.FINAL_DESTINATION)) {
     // form submitted with client side JS
     return true;
   }
@@ -35,8 +35,8 @@ const validation = (formBody) => {
 
   if (hasErrors(formBody)) {
     errors = generateValidationErrors(
-      FIELDS.COUNTRY,
-      CONTENT_STRINGS.ERROR_MESSAGES[FIELDS.COUNTRY],
+      FIELD_IDS.COUNTRY,
+      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.COUNTRY],
     );
 
     return errors;

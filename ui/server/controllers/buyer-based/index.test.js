@@ -1,6 +1,6 @@
 const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
-const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
+const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const generateValidationErrors = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
@@ -18,7 +18,7 @@ describe('controllers/buyer-based', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_NAME: FIELDS.VALID_BUYER_BASE,
+        FIELD_NAME: FIELD_IDS.VALID_BUYER_BASE,
         PAGE_CONTENT_STRINGS: CONTENT_STRINGS.BUYER_BASED_PAGE,
         BACK_LINK: ROUTES.COMPANY_BASED,
       };
@@ -53,7 +53,7 @@ describe('controllers/buyer-based', () => {
     describe('when submitted answer is false', () => {
       it(`should redirect to ${ROUTES.BUYER_BASED_UNAVAILABLE}`, () => {
         req.body = {
-          [FIELDS.VALID_BUYER_BASE]: 'false',
+          [FIELD_IDS.VALID_BUYER_BASE]: 'false',
         };
 
         controller.post(req, res);
@@ -64,7 +64,7 @@ describe('controllers/buyer-based', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELDS.VALID_BUYER_BASE]: 'true',
+        [FIELD_IDS.VALID_BUYER_BASE]: 'true',
       };
 
       beforeEach(() => {

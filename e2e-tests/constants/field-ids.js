@@ -5,7 +5,6 @@ const FIELD_IDS = {
   COUNTRY: 'country',
   FINAL_DESTINATION: 'finalDestination',
   UK_CONTENT_PERCENTAGE: 'ukContentPercentage',
-
   CREDIT_LIMIT_GROUP: 'creditLimitGroup',
   CREDIT_LIMIT_CURRENCY: 'creditLimitCurrency',
   CREDIT_LIMIT: 'creditLimit',

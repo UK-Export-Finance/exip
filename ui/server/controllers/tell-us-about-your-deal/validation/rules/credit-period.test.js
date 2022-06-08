@@ -1,5 +1,5 @@
 const rule = require('./credit-period');
-const { FIELDS } = require('../../../../constants');
+const { FIELD_IDS } = require('../../../../constants');
 const CONTENT_STRINGS = require('../../../../content-strings');
 const generateValidationErrors = require('../../../../helpers/validation');
 
@@ -9,17 +9,17 @@ describe('controllers/tell-us-about-your-deal/validation/rules/credit-period', (
     errorList: {},
   };
 
-  describe(`when ${FIELDS.CREDIT_PERIOD} is not provided`, () => {
+  describe(`when ${FIELD_IDS.CREDIT_PERIOD} is not provided`, () => {
     it('should return validation error', () => {
       const mockBody = {
-        [FIELDS.CREDIT_PERIOD]: '',
+        [FIELD_IDS.CREDIT_PERIOD]: '',
       };
 
       const result = rule(mockBody, mockErrors);
 
       const expected = generateValidationErrors(
-        FIELDS.CREDIT_PERIOD,
-        CONTENT_STRINGS.ERROR_MESSAGES[FIELDS.CREDIT_PERIOD].IS_EMPTY,
+        FIELD_IDS.CREDIT_PERIOD,
+        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY,
         mockErrors,
       );
 
@@ -27,17 +27,17 @@ describe('controllers/tell-us-about-your-deal/validation/rules/credit-period', (
     });
   });
 
-  describe(`when ${FIELDS.CREDIT_PERIOD} is not a number`, () => {
+  describe(`when ${FIELD_IDS.CREDIT_PERIOD} is not a number`, () => {
     it('should return validation error', () => {
       const mockBody = {
-        [FIELDS.CREDIT_PERIOD]: 'invalid',
+        [FIELD_IDS.CREDIT_PERIOD]: 'invalid',
       };
 
       const result = rule(mockBody, mockErrors);
 
       const expected = generateValidationErrors(
-        FIELDS.CREDIT_PERIOD,
-        CONTENT_STRINGS.ERROR_MESSAGES[FIELDS.CREDIT_PERIOD].NOT_A_NUMBER,
+        FIELD_IDS.CREDIT_PERIOD,
+        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER,
         mockErrors,
       );
 
@@ -48,7 +48,7 @@ describe('controllers/tell-us-about-your-deal/validation/rules/credit-period', (
   describe('when there are no validation errors', () => {
     it('should return the already provided errors', () => {
       const mockBody = {
-        [FIELDS.CREDIT_PERIOD]: '10',
+        [FIELD_IDS.CREDIT_PERIOD]: '10',
       };
 
       const result = rule(mockBody, mockErrors);

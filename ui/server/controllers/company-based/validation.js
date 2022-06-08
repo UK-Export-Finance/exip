@@ -1,4 +1,4 @@
-const { FIELDS } = require('../../constants');
+const { FIELD_IDS } = require('../../constants');
 const CONTENT_STRINGS = require('../../content-strings');
 const generateValidationErrors = require('../../helpers/validation');
 const {
@@ -10,12 +10,12 @@ const validation = (formBody) => {
   let errors;
 
   const hasErrors = (!objectHasValues(formBody)
-    || !objectHasProperty(formBody, FIELDS.VALID_COMPANY_BASE));
+    || !objectHasProperty(formBody, FIELD_IDS.VALID_COMPANY_BASE));
 
   if (hasErrors) {
     errors = generateValidationErrors(
-      FIELDS.VALID_COMPANY_BASE,
-      CONTENT_STRINGS.ERROR_MESSAGES[FIELDS.VALID_COMPANY_BASE],
+      FIELD_IDS.VALID_COMPANY_BASE,
+      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.VALID_COMPANY_BASE],
     );
 
     return errors;

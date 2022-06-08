@@ -1,4 +1,4 @@
-const { FIELDS } = require('../../constants');
+const { FIELD_IDS } = require('../../constants');
 const CONTENT_STRINGS = require('../../content-strings');
 const generateValidationErrors = require('../../helpers/validation');
 const {
@@ -10,12 +10,12 @@ const validation = (formBody) => {
   let errors;
 
   const hasErrors = (!objectHasValues(formBody)
-    || !objectHasProperty(formBody, FIELDS.TRIED_PRIVATE_COVER));
+    || !objectHasProperty(formBody, FIELD_IDS.TRIED_PRIVATE_COVER));
 
   if (hasErrors) {
     errors = generateValidationErrors(
-      FIELDS.TRIED_PRIVATE_COVER,
-      CONTENT_STRINGS.ERROR_MESSAGES[FIELDS.TRIED_PRIVATE_COVER],
+      FIELD_IDS.TRIED_PRIVATE_COVER,
+      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.TRIED_PRIVATE_COVER],
     );
 
     return errors;
