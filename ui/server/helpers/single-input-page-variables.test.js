@@ -32,7 +32,7 @@ describe('sever/helpers/single-input-page-variables', () => {
 
   describe('when a FIELD_NAME exists in content string fields', () => {
     it('should also return FIELD_HINT', () => {
-      mock.FIELD_NAME = CONSTANTS.FIELD_IDSCOUNTRY;
+      mock.FIELD_NAME = CONSTANTS.FIELD_IDS.COUNTRY;
       const result = singleInputPageVariables(mock);
 
       const expected = CONTENT_STRINGS.FIELDS[mock.FIELD_NAME].HINT;

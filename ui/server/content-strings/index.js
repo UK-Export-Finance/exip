@@ -6,6 +6,7 @@ const FIELDS = require('./fields');
 const LINKS = require('./links');
 const PAGES = require('./pages');
 const PRODUCT = require('./product');
+const SUMMARY = require('./summary');
 
 const ORGANISATION = 'UK Export Finance';
 
@@ -19,4 +20,5 @@ module.exports = {
   ORGANISATION,
   ...PAGES,
   PRODUCT,
+  SUMMARY,
 };
