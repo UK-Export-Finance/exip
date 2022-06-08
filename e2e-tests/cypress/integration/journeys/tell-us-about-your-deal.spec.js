@@ -39,7 +39,7 @@ context('Tell us about your deal page', () => {
           accessibility: 100,
           performance: 80,
           'best-practices': 100,
-          seo: 80,
+          seo: 75,
         });
       });
 

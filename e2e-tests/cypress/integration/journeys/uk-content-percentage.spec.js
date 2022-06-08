@@ -38,7 +38,7 @@ context('What percentage of your export is UK content page', () => {
         accessibility: 100,
         performance: 80,
         'best-practices': 100,
-        seo: 80,
+        seo: 75,
       });
     });
 
