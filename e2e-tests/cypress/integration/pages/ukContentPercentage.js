@@ -8,7 +8,7 @@ const ukContentPercentagePage = {
   label: () => cy.get('[data-cy="label"]'),
   hint: () => cy.get('[data-cy="label-hint"]'),
   input: () => cy.get('[data-cy="input"]'),
-  errorMessage: () => cy.get(`[data-cy="${FIELD_IDs.UK_CONTENT_PERCENTAGE}-error-message"]`),
+  errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.UK_CONTENT_PERCENTAGE}-error-message"]`),
   submitButton: () => cy.get('[data-cy="submit-button"]'),
 };
 

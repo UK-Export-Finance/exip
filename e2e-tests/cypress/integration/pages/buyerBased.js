@@ -1,4 +1,4 @@
-import { FIELD_IDS  } from '../../../constants';
+import { FIELD_IDS } from '../../../constants';
 
 const buyerBasedPage = {
   heading: () => cy.get('[data-cy="heading"]'),
