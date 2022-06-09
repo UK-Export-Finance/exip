@@ -1,5 +1,5 @@
 const CONTENT_STRINGS = require('../../content-strings');
-const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
+const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const api = require('../../api');
 const mapCountries = require('../../helpers/map-countries');
@@ -8,8 +8,8 @@ const updateSubmittedData = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
-  FIELD_NAME: FIELDS.COUNTRY,
-  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.FINAL_DESTINATION_PAGE,
+  FIELD_NAME: FIELD_IDS.COUNTRY,
+  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.FINAL_DESTINATION_PAGE,
   BACK_LINK: ROUTES.TRIED_TO_OBTAIN_COVER,
 };
 
@@ -19,14 +19,14 @@ const get = async (req, res) => {
 
   let mappedCountries;
   if (submittedData) {
-    mappedCountries = mapCountries(countries, submittedData[FIELDS.FINAL_DESTINATION]);
+    mappedCountries = mapCountries(countries, submittedData[FIELD_IDS.FINAL_DESTINATION]);
   } else {
     mappedCountries = mapCountries(countries);
   }
 
   return res.render(TEMPLATES.FINAL_DESTINATION, {
     ...singleInputPageVariables(PAGE_VARIABLES),
-    HIDDEN_FIELD_NAME: FIELDS.FINAL_DESTINATION,
+    HIDDEN_FIELD_NAME: FIELD_IDS.FINAL_DESTINATION,
     countries: mappedCountries,
     submittedValues: req.session.submittedData,
   });
@@ -41,7 +41,7 @@ const post = async (req, res) => {
 
     return res.render(TEMPLATES.FINAL_DESTINATION, {
       ...singleInputPageVariables(PAGE_VARIABLES),
-      HIDDEN_FIELD_NAME: FIELDS.FINAL_DESTINATION,
+      HIDDEN_FIELD_NAME: FIELD_IDS.FINAL_DESTINATION,
       countries: mappedCountries,
       validationErrors,
     });

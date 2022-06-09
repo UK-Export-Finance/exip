@@ -21,7 +21,7 @@ context('Answering `no` to Company based inside the UK, Channel Islands and Isle
 
     cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED);
 
-    companyBasedPage[CONSTANTS.FIELDS.VALID_COMPANY_BASE].no().click();
+    companyBasedPage[CONSTANTS.FIELD_IDS.VALID_COMPANY_BASE].no().click();
     companyBasedPage.submitButton().click();
   });
 

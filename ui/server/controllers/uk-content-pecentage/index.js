@@ -1,13 +1,13 @@
 const CONTENT_STRINGS = require('../../content-strings');
-const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
+const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const { validation: generateValidationErrors } = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
-  FIELD_NAME: FIELDS.UK_CONTENT_PERCENTAGE,
-  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.UK_CONTENT_PERCENTAGE_PAGE,
+  FIELD_NAME: FIELD_IDS.UK_CONTENT_PERCENTAGE,
+  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.UK_CONTENT_PERCENTAGE_PAGE,
   BACK_LINK: ROUTES.FINAL_DESTINATION,
 };
 

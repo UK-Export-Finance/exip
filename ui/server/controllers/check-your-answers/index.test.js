@@ -25,7 +25,7 @@ describe('controllers/check-your-answers', () => {
           FOOTER: CONTENT_STRINGS.FOOTER,
           LINKS: CONTENT_STRINGS.LINKS,
           BUTTONS: CONTENT_STRINGS.BUTTONS,
-          ...CONTENT_STRINGS.CHECK_YOUR_ANSWERS_PAGE,
+          ...CONTENT_STRINGS.PAGES.CHECK_YOUR_ANSWERS_PAGE,
         },
         BACK_LINK: ROUTES.TELL_US_ABOUT_YOUR_DEAL,
       };

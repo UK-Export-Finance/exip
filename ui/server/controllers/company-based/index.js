@@ -1,13 +1,13 @@
 const CONTENT_STRINGS = require('../../content-strings');
-const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
+const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const generateValidationErrors = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
-  FIELD_NAME: FIELDS.VALID_COMPANY_BASE,
-  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.COMPANY_BASED_PAGE,
+  FIELD_NAME: FIELD_IDS.VALID_COMPANY_BASE,
+  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.COMPANY_BASED_PAGE,
   BACK_LINK: ROUTES.BEFORE_YOU_START,
 };
 
@@ -32,7 +32,7 @@ const post = (req, res) => {
     req.session.submittedData,
   );
 
-  if (req.body[FIELDS.VALID_COMPANY_BASE] === 'false') {
+  if (req.body[FIELD_IDS.VALID_COMPANY_BASE] === 'false') {
     return res.redirect(ROUTES.COMPANY_BASED_UNAVAILABLE);
   }
 

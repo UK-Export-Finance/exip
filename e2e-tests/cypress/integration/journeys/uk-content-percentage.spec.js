@@ -85,7 +85,7 @@ context('What percentage of your export is UK content page', () => {
       const hint = ukContentPercentagePage.hint();
       hint.should('exist');
 
-      const input = CONSTANTS.FIELDS.UK_CONTENT_PERCENTAGE;
+      const input = CONSTANTS.FIELD_IDS.UK_CONTENT_PERCENTAGE;
 
       hint.invoke('text').then((text) => {
         expect(text.trim()).equal(FIELDS[input].HINT);
@@ -114,7 +114,7 @@ context('What percentage of your export is UK content page', () => {
           partials.errorSummaryListItems().should('exist');
           partials.errorSummaryListItems().should('have.length', 1);
 
-          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELDS.UK_CONTENT_PERCENTAGE].IS_EMPTY;
+          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.UK_CONTENT_PERCENTAGE].IS_EMPTY;
 
           partials.errorSummaryListItems().first().invoke('text').then((text) => {
             expect(text.trim()).equal(expectedMessage);
@@ -134,7 +134,7 @@ context('What percentage of your export is UK content page', () => {
           partials.errorSummaryListItems().should('exist');
           partials.errorSummaryListItems().should('have.length', 1);
 
-          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELDS.UK_CONTENT_PERCENTAGE].NOT_A_NUMBER;
+          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.UK_CONTENT_PERCENTAGE].NOT_A_NUMBER;
 
           partials.errorSummaryListItems().first().invoke('text').then((text) => {
             expect(text.trim()).equal(expectedMessage);
@@ -154,7 +154,7 @@ context('What percentage of your export is UK content page', () => {
           partials.errorSummaryListItems().should('exist');
           partials.errorSummaryListItems().should('have.length', 1);
 
-          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELDS.UK_CONTENT_PERCENTAGE].BELOW_MINIMUM;
+          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.UK_CONTENT_PERCENTAGE].BELOW_MINIMUM;
 
           partials.errorSummaryListItems().first().invoke('text').then((text) => {
             expect(text.trim()).equal(expectedMessage);
@@ -174,7 +174,7 @@ context('What percentage of your export is UK content page', () => {
           partials.errorSummaryListItems().should('exist');
           partials.errorSummaryListItems().should('have.length', 1);
 
-          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELDS.UK_CONTENT_PERCENTAGE].ABOVE_MAXIMUM;
+          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.UK_CONTENT_PERCENTAGE].ABOVE_MAXIMUM;
 
           partials.errorSummaryListItems().first().invoke('text').then((text) => {
             expect(text.trim()).equal(expectedMessage);

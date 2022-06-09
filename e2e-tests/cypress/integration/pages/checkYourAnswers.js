@@ -1,4 +1,4 @@
-import { FIELDS } from '../../../constants';
+import { FIELD_IDS } from '../../../constants';
 
 const {
   VALID_COMPANY_BASE,
@@ -11,7 +11,7 @@ const {
   CREDIT_PERIOD,
   POLICY_LENGTH,
   POLICY_TYPE,
-} = FIELDS;
+} = FIELD_IDS;
 
 const checkYourAnswersPage = {
   heading: () => cy.get('[data-cy="heading"]'),

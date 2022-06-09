@@ -1,6 +1,6 @@
 const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
-const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
+const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const { validation: generateValidationErrors } = require('./validation');
 const api = require('../../api');
@@ -30,8 +30,8 @@ describe('controllers/final-destination', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_NAME: FIELDS.COUNTRY,
-        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.FINAL_DESTINATION_PAGE,
+        FIELD_NAME: FIELD_IDS.COUNTRY,
+        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.FINAL_DESTINATION_PAGE,
         BACK_LINK: ROUTES.TRIED_TO_OBTAIN_COVER,
       };
 
@@ -58,7 +58,7 @@ describe('controllers/final-destination', () => {
 
       const expectedVariables = {
         ...singleInputPageVariables(controller.PAGE_VARIABLES),
-        HIDDEN_FIELD_NAME: FIELDS.FINAL_DESTINATION,
+        HIDDEN_FIELD_NAME: FIELD_IDS.FINAL_DESTINATION,
         countries: mapCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData,
       };
@@ -74,12 +74,12 @@ describe('controllers/final-destination', () => {
 
         const expectedCountries = mapCountries(
           mockCountriesResponse,
-          req.session.submittedData[FIELDS.FINAL_DESTINATION],
+          req.session.submittedData[FIELD_IDS.FINAL_DESTINATION],
         );
 
         const expectedVariables = {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
-          HIDDEN_FIELD_NAME: FIELDS.FINAL_DESTINATION,
+          HIDDEN_FIELD_NAME: FIELD_IDS.FINAL_DESTINATION,
           countries: expectedCountries,
           submittedValues: req.session.submittedData,
         };
@@ -102,7 +102,7 @@ describe('controllers/final-destination', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.FINAL_DESTINATION, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
-          HIDDEN_FIELD_NAME: FIELDS.FINAL_DESTINATION,
+          HIDDEN_FIELD_NAME: FIELD_IDS.FINAL_DESTINATION,
           countries: mapCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),
         });
@@ -111,7 +111,7 @@ describe('controllers/final-destination', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELDS.FINAL_DESTINATION]: mapCountries(mockCountriesResponse)[0].value,
+        [FIELD_IDS.FINAL_DESTINATION]: mapCountries(mockCountriesResponse)[0].value,
       };
 
       beforeEach(() => {

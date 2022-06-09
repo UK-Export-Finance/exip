@@ -1,6 +1,6 @@
 const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
-const { FIELDS, ROUTES, TEMPLATES } = require('../../constants');
+const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const api = require('../../api');
 const mapCurrencies = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
@@ -38,37 +38,37 @@ describe('controllers/buyer-based', () => {
           PRODUCT: CONTENT_STRINGS.PRODUCT,
           FOOTER: CONTENT_STRINGS.FOOTER,
           BUTTONS: CONTENT_STRINGS.BUTTONS,
-          ...CONTENT_STRINGS.TELL_US_ABOUT_YOUR_DEAL_PAGE,
+          ...CONTENT_STRINGS.PAGES.TELL_US_ABOUT_YOUR_DEAL_PAGE,
         },
         BACK_LINK: ROUTES.UK_CONTENT_PERCENTAGE,
         FIELDS: {
           CREDIT_LIMIT_GROUP: {
-            ID: FIELDS.CREDIT_LIMIT_GROUP,
-            ...CONTENT_STRINGS.FIELDS[FIELDS.CREDIT_LIMIT_GROUP],
+            ID: FIELD_IDS.CREDIT_LIMIT_GROUP,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_LIMIT_GROUP],
           },
           CREDIT_LIMIT_CURRENCY: {
-            ID: FIELDS.CREDIT_LIMIT_CURRENCY,
-            ...CONTENT_STRINGS.FIELDS[FIELDS.CREDIT_LIMIT_CURRENCY],
+            ID: FIELD_IDS.CREDIT_LIMIT_CURRENCY,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_LIMIT_CURRENCY],
           },
           CREDIT_LIMIT: {
-            ID: FIELDS.CREDIT_LIMIT,
-            ...CONTENT_STRINGS.FIELDS[FIELDS.CREDIT_LIMIT],
+            ID: FIELD_IDS.CREDIT_LIMIT,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_LIMIT],
           },
           PRE_CREDIT_PERIOD: {
-            ID: FIELDS.PRE_CREDIT_PERIOD,
-            ...CONTENT_STRINGS.FIELDS[FIELDS.PRE_CREDIT_PERIOD],
+            ID: FIELD_IDS.PRE_CREDIT_PERIOD,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.PRE_CREDIT_PERIOD],
           },
           CREDIT_PERIOD: {
-            ID: FIELDS.CREDIT_PERIOD,
-            ...CONTENT_STRINGS.FIELDS[FIELDS.CREDIT_PERIOD],
+            ID: FIELD_IDS.CREDIT_PERIOD,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_PERIOD],
           },
           POLICY_LENGTH: {
-            ID: FIELDS.POLICY_LENGTH,
-            ...CONTENT_STRINGS.FIELDS[FIELDS.POLICY_LENGTH],
+            ID: FIELD_IDS.POLICY_LENGTH,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.POLICY_LENGTH],
           },
           POLICY_TYPE: {
-            ID: FIELDS.POLICY_TYPE,
-            ...CONTENT_STRINGS.FIELDS[FIELDS.POLICY_TYPE],
+            ID: FIELD_IDS.POLICY_TYPE,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.POLICY_TYPE],
           },
         },
       };
@@ -111,7 +111,7 @@ describe('controllers/buyer-based', () => {
 
         const expectedCurrencies = mapCurrencies(
           mockCurrenciesResponse,
-          req.session.submittedData[FIELDS.CREDIT_LIMIT_CURRENCY],
+          req.session.submittedData[FIELD_IDS.CREDIT_LIMIT_CURRENCY],
         );
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
@@ -142,7 +142,7 @@ describe('controllers/buyer-based', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
           ...controller.PAGE_VARIABLES,
-          currencies: mapCurrencies(mockCurrenciesResponse, req.body[FIELDS.CREDIT_LIMIT_CURRENCY]),
+          currencies: mapCurrencies(mockCurrenciesResponse, req.body[FIELD_IDS.CREDIT_LIMIT_CURRENCY]),
           validationErrors: generateValidationErrors(req.body),
           submittedValues: req.body,
         });
@@ -151,12 +151,12 @@ describe('controllers/buyer-based', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELDS.CREDIT_LIMIT_CURRENCY]: 'GBP',
-        [FIELDS.CREDIT_LIMIT]: '10',
-        [FIELDS.PRE_CREDIT_PERIOD]: '20',
-        [FIELDS.CREDIT_PERIOD]: '30',
-        [FIELDS.POLICY_LENGTH]: '40',
-        [FIELDS.POLICY_TYPE]: 'mock',
+        [FIELD_IDS.CREDIT_LIMIT_CURRENCY]: 'GBP',
+        [FIELD_IDS.CREDIT_LIMIT]: '10',
+        [FIELD_IDS.PRE_CREDIT_PERIOD]: '20',
+        [FIELD_IDS.CREDIT_PERIOD]: '30',
+        [FIELD_IDS.POLICY_LENGTH]: '40',
+        [FIELD_IDS.POLICY_TYPE]: 'mock',
       };
 
       beforeEach(() => {

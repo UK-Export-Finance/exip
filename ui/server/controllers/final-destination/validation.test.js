@@ -2,7 +2,7 @@ const {
   hasErrors,
   validation,
 } = require('./validation');
-const { FIELDS } = require('../../constants');
+const { FIELD_IDS } = require('../../constants');
 const CONTENT_STRINGS = require('../../content-strings');
 const generateValidationErrors = require('../../helpers/validation');
 
@@ -16,12 +16,12 @@ describe('controllers/final-destination/validation', () => {
       });
     });
 
-    describe(`when both ${FIELDS.FINAL_DESTINATION} and ${FIELDS.COUNTRY} are provided`, () => {
-      describe(`when ${FIELDS.COUNTRY} does NOT have a value`, () => {
+    describe(`when both ${FIELD_IDS.FINAL_DESTINATION} and ${FIELD_IDS.COUNTRY} are provided`, () => {
+      describe(`when ${FIELD_IDS.COUNTRY} does NOT have a value`, () => {
         it('should return true', () => {
           const mockBody = {
-            [FIELDS.FINAL_DESTINATION]: '',
-            [FIELDS.COUNTRY]: '',
+            [FIELD_IDS.FINAL_DESTINATION]: '',
+            [FIELD_IDS.COUNTRY]: '',
           };
 
           const result = hasErrors(mockBody);
@@ -30,11 +30,11 @@ describe('controllers/final-destination/validation', () => {
         });
       });
 
-      describe(`when ${FIELDS.COUNTRY} has a value`, () => {
+      describe(`when ${FIELD_IDS.COUNTRY} has a value`, () => {
         it('should return false', () => {
           const mockBody = {
-            [FIELDS.FINAL_DESTINATION]: '',
-            [FIELDS.COUNTRY]: 'Australia',
+            [FIELD_IDS.FINAL_DESTINATION]: '',
+            [FIELD_IDS.COUNTRY]: 'Australia',
           };
 
           const result = hasErrors(mockBody);
@@ -44,10 +44,10 @@ describe('controllers/final-destination/validation', () => {
       });
     });
 
-    describe(`when only ${FIELDS.FINAL_DESTINATION} is provided and there is no value`, () => {
+    describe(`when only ${FIELD_IDS.FINAL_DESTINATION} is provided and there is no value`, () => {
       it('should return true', () => {
         const mockBody = {
-          [FIELDS.FINAL_DESTINATION]: '',
+          [FIELD_IDS.FINAL_DESTINATION]: '',
         };
 
         const result = hasErrors(mockBody);
@@ -58,7 +58,7 @@ describe('controllers/final-destination/validation', () => {
 
     it('should return false', () => {
       const mockBody = {
-        [FIELDS.FINAL_DESTINATION]: 'Australia',
+        [FIELD_IDS.FINAL_DESTINATION]: 'Australia',
       };
 
       const result = hasErrors(mockBody);
@@ -73,21 +73,21 @@ describe('controllers/final-destination/validation', () => {
         const result = validation({});
 
         const expected = generateValidationErrors(
-          FIELDS.COUNTRY,
-          CONTENT_STRINGS.ERROR_MESSAGES[FIELDS.COUNTRY],
+          FIELD_IDS.COUNTRY,
+          CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.COUNTRY],
         );
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when ${FIELDS.FINAL_DESTINATION} is not provided`, () => {
+    describe(`when ${FIELD_IDS.FINAL_DESTINATION} is not provided`, () => {
       it('should return validation errors', () => {
         const result = validation({});
 
         const expected = generateValidationErrors(
-          FIELDS.COUNTRY,
-          CONTENT_STRINGS.ERROR_MESSAGES[FIELDS.COUNTRY],
+          FIELD_IDS.COUNTRY,
+          CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.COUNTRY],
         );
 
         expect(result).toEqual(expected);
@@ -96,7 +96,7 @@ describe('controllers/final-destination/validation', () => {
 
     describe('when there are no errors', () => {
       it('should return null', () => {
-        const result = validation({ [FIELDS.FINAL_DESTINATION]: true });
+        const result = validation({ [FIELD_IDS.FINAL_DESTINATION]: true });
 
         expect(result).toEqual(null);
       });
