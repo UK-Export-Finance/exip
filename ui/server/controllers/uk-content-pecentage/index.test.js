@@ -19,7 +19,7 @@ describe('controllers/uk-content-percentage', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_NAME: FIELD_IDS.UK_CONTENT_PERCENTAGE,
-        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.UK_CONTENT_PERCENTAGE_PAGE,
+        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.UK_CONTENT_PERCENTAGE_PAGE,
         BACK_LINK: ROUTES.FINAL_DESTINATION,
       };
 

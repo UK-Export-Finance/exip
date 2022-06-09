@@ -19,7 +19,7 @@ describe('controllers/buyer-based', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_NAME: FIELD_IDS.VALID_BUYER_BASE,
-        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.BUYER_BASED_PAGE,
+        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.BUYER_BASED_PAGE,
         BACK_LINK: ROUTES.COMPANY_BASED,
       };
 

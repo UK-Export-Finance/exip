@@ -31,7 +31,7 @@ describe('controllers/final-destination', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_NAME: FIELD_IDS.COUNTRY,
-        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.FINAL_DESTINATION_PAGE,
+        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.FINAL_DESTINATION_PAGE,
         BACK_LINK: ROUTES.TRIED_TO_OBTAIN_COVER,
       };
 

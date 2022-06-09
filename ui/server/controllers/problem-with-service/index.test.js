@@ -20,7 +20,7 @@ describe('controllers/problem-with-service', () => {
         CONTENT_STRINGS: {
           PRODUCT: CONTENT_STRINGS.PRODUCT,
           FOOTER: CONTENT_STRINGS.FOOTER,
-          ...CONTENT_STRINGS.PROBLEM_WITH_SERVICE_PAGE,
+          ...CONTENT_STRINGS.PAGES.PROBLEM_WITH_SERVICE_PAGE,
         },
       });
     });

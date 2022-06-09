@@ -83,7 +83,7 @@ app.get('*', (req, res) => res.render('page-not-found.njk', {
   CONTENT_STRINGS: {
     PRODUCT: CONTENT_STRINGS.PRODUCT,
     FOOTER: CONTENT_STRINGS.FOOTER,
-    ...CONTENT_STRINGS.PAGE_NOT_FOUND_PAGE,
+    ...CONTENT_STRINGS.PAGES.PAGE_NOT_FOUND_PAGE,
   },
 }));
 

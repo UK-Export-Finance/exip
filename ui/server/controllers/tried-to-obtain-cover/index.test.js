@@ -19,7 +19,7 @@ describe('controllers/tried-to-obtain-cover', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_NAME: FIELD_IDS.TRIED_PRIVATE_COVER,
-        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.TRIED_TO_OBTAIN_COVER_PAGE,
+        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.TRIED_TO_OBTAIN_COVER_PAGE,
         BACK_LINK: ROUTES.BUYER_BASED,
       };
 

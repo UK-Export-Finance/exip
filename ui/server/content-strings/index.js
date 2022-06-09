@@ -18,7 +18,7 @@ module.exports = {
   FOOTER,
   LINKS,
   ORGANISATION,
-  ...PAGES,
+  PAGES,
   PRODUCT,
   SUMMARY,
 };

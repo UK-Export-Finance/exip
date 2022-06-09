@@ -44,7 +44,7 @@
 
         {% set class = "govuk-form-group govuk-!-margin-bottom-8" %}
 
-        {% if validationErrors.errorList[FIELD_IDSCREDIT_LIMIT_GROUP.ID].text or validationErrors.errorList[FIELD_IDSCREDIT_LIMIT.ID].text %}
+        {% if validationErrors.errorList[FIELDS.CREDIT_LIMIT_GROUP.ID].text or validationErrors.errorList[FIELDS.CREDIT_LIMIT.ID].text %}
           {% set class = "govuk-form-group govuk-!-margin-bottom-8 govuk-form-group--error" %}
         {% endif %}
 
@@ -52,56 +52,56 @@
         <div class="{{ class }}">
           {% call govukFieldset({
             legend: {
-              html: "<span class='govuk-fieldset__legend--m' data-cy='" + FIELD_IDSCREDIT_LIMIT_GROUP.ID + "-label-text'>" + FIELD_IDSCREDIT_LIMIT_GROUP.HEADING + "</span>"
+              html: "<span class='govuk-fieldset__legend--m' data-cy='" + FIELDS.CREDIT_LIMIT_GROUP.ID + "-label-text'>" + FIELDS.CREDIT_LIMIT_GROUP.HEADING + "</span>"
             }
           }) %}
 
             {{ govukHint({
-              text: FIELD_IDSCREDIT_LIMIT_GROUP.HINT,
-              id: FIELD_IDSCREDIT_LIMIT_GROUP.ID,
+              text: FIELDS.CREDIT_LIMIT_GROUP.HINT,
+              id: FIELDS.CREDIT_LIMIT_GROUP.ID,
               attributes: {
-                'data-cy': FIELD_IDSCREDIT_LIMIT_GROUP.ID + '-hint'
+                'data-cy': FIELDS.CREDIT_LIMIT_GROUP.ID + '-hint'
               }
             }) }}
 
             <div class="govuk-grid-row">
               <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-padding-left-0 govuk-!-padding-right-0">
 
-                {% if validationErrors.errorList[FIELD_IDSCREDIT_LIMIT_GROUP.ID].text %}
+                {% if validationErrors.errorList[FIELDS.CREDIT_LIMIT_GROUP.ID].text %}
                   {{ govukErrorMessage({
-                    text: validationErrors.errorList[FIELD_IDSCREDIT_LIMIT_GROUP.ID].text,
+                    text: validationErrors.errorList[FIELDS.CREDIT_LIMIT_GROUP.ID].text,
                     classes: "govuk-!-padding-left-3",
                     attributes: {
-                      "data-cy": FIELD_IDSCREDIT_LIMIT_GROUP.ID + "-error-message"
+                      "data-cy": FIELDS.CREDIT_LIMIT_GROUP.ID + "-error-message"
                     }
                   }) }}
                 {% endif %}
 
-                {% if validationErrors.errorList[FIELD_IDSCREDIT_LIMIT.ID].text %}
+                {% if validationErrors.errorList[FIELDS.CREDIT_LIMIT.ID].text %}
                   {{ govukErrorMessage({
-                    text: validationErrors.errorList[FIELD_IDSCREDIT_LIMIT.ID].text,
+                    text: validationErrors.errorList[FIELDS.CREDIT_LIMIT.ID].text,
                     classes: "govuk-!-padding-left-3",
                     attributes: {
-                      "data-cy": FIELD_IDSCREDIT_LIMIT.ID + "-error-message"
+                      "data-cy": FIELDS.CREDIT_LIMIT.ID + "-error-message"
                     }
                   }) }}
                 {% endif %}
 
                 <div class="govuk-grid-column-one-half-from-desktop govuk-!-padding-right-0">
                   {{ govukSelect({
-                    id: FIELD_IDSCREDIT_LIMIT_CURRENCY.ID,
-                    name: FIELD_IDSCREDIT_LIMIT_CURRENCY.ID,
+                    id: FIELDS.CREDIT_LIMIT_CURRENCY.ID,
+                    name: FIELDS.CREDIT_LIMIT_CURRENCY.ID,
                     label: {
-                      text: FIELD_IDSCREDIT_LIMIT_CURRENCY.LABEL,
+                      text: FIELDS.CREDIT_LIMIT_CURRENCY.LABEL,
                       classes: "govuk-visually-hidden",
                       attributes: {
-                        "data-cy": FIELD_IDSCREDIT_LIMIT_CURRENCY.ID + "-label"
+                        "data-cy": FIELDS.CREDIT_LIMIT_CURRENCY.ID + "-label"
                       }
                     },
                     items: currencies,
                     classes: "govuk-!-width-full",
                     attributes: {
-                      "data-cy": FIELD_IDSCREDIT_LIMIT_CURRENCY.ID + "-input"
+                      "data-cy": FIELDS.CREDIT_LIMIT_CURRENCY.ID + "-input"
                     }
                   }) }}
 
@@ -110,18 +110,18 @@
                 <div class="govuk-grid-column-one-third-from-desktop govuk-!-padding-left-0">
                   {{ govukInput({
                     label: {
-                      text: FIELD_IDSCREDIT_LIMIT.LABEL,
+                      text: FIELDS.CREDIT_LIMIT.LABEL,
                       classes: "govuk-visually-hidden",
                       attributes: {
-                        "data-cy": FIELD_IDSCREDIT_LIMIT.ID + "-label"
+                        "data-cy": FIELDS.CREDIT_LIMIT.ID + "-label"
                       }
                     },
-                    id: FIELD_IDSCREDIT_LIMIT.ID,
-                    name: FIELD_IDSCREDIT_LIMIT.ID,
+                    id: FIELDS.CREDIT_LIMIT.ID,
+                    name: FIELDS.CREDIT_LIMIT.ID,
                     spellcheck: false,
-                    value: submittedValues[FIELD_IDSCREDIT_LIMIT.ID],
+                    value: submittedValues[FIELDS.CREDIT_LIMIT.ID],
                     attributes: {
-                      "data-cy": FIELD_IDSCREDIT_LIMIT.ID + "-input"
+                      "data-cy": FIELDS.CREDIT_LIMIT.ID + "-input"
                     }
                   }) }}
                 </div>
@@ -136,158 +136,158 @@
         {{ govukInput({
           label: {
             attributes: {
-              'data-cy': FIELD_IDSPRE_CREDIT_PERIOD.ID + '-label'
+              'data-cy': FIELDS.PRE_CREDIT_PERIOD.ID + '-label'
             },
-            html: "<span class='govuk-heading-m' data-cy='" + FIELD_IDSPRE_CREDIT_PERIOD.ID + "-label-text'>" + FIELD_IDSPRE_CREDIT_PERIOD.LABEL + "</span>"
+            html: "<span class='govuk-heading-m' data-cy='" + FIELDS.PRE_CREDIT_PERIOD.ID + "-label-text'>" + FIELDS.PRE_CREDIT_PERIOD.LABEL + "</span>"
           },
           hint: {
-            text: FIELD_IDSPRE_CREDIT_PERIOD.HINT,
+            text: FIELDS.PRE_CREDIT_PERIOD.HINT,
             attributes: {
-              'data-cy': FIELD_IDSPRE_CREDIT_PERIOD.ID + '-hint'
+              'data-cy': FIELDS.PRE_CREDIT_PERIOD.ID + '-hint'
             }
           },
           classes: "govuk-input--width-5 govuk-!-margin-bottom-4",
           attributes: {
-            'data-cy': FIELD_IDSPRE_CREDIT_PERIOD.ID + '-input'
+            'data-cy': FIELDS.PRE_CREDIT_PERIOD.ID + '-input'
           },
-          id: FIELD_IDSPRE_CREDIT_PERIOD.ID,
-          name: FIELD_IDSPRE_CREDIT_PERIOD.ID,
+          id: FIELDS.PRE_CREDIT_PERIOD.ID,
+          name: FIELDS.PRE_CREDIT_PERIOD.ID,
           suffix: {
             text: "days"
           },
           spellcheck: false,
-          errorMessage: validationErrors.errorList[FIELD_IDSPRE_CREDIT_PERIOD.ID]and {
-            text: validationErrors.errorList[FIELD_IDSPRE_CREDIT_PERIOD.ID].text,
+          errorMessage: validationErrors.errorList[FIELDS.PRE_CREDIT_PERIOD.ID]and {
+            text: validationErrors.errorList[FIELDS.PRE_CREDIT_PERIOD.ID].text,
             attributes: {
-              "data-cy": FIELD_IDSPRE_CREDIT_PERIOD.ID + "-error-message"
+              "data-cy": FIELDS.PRE_CREDIT_PERIOD.ID + "-error-message"
             }
           },
-          value: submittedValues[FIELD_IDSPRE_CREDIT_PERIOD.ID]
+          value: submittedValues[FIELDS.PRE_CREDIT_PERIOD.ID]
         }) }}
 
         {{ govukInput({
           label: {
             attributes: {
-              'data-cy': FIELD_IDSCREDIT_PERIOD.ID + '-label'
+              'data-cy': FIELDS.CREDIT_PERIOD.ID + '-label'
             },
-            html: "<span class='govuk-heading-m' data-cy='" + FIELD_IDSCREDIT_PERIOD.ID + "-label-text'>" + FIELD_IDSCREDIT_PERIOD.LABEL + "</span>"
+            html: "<span class='govuk-heading-m' data-cy='" + FIELDS.CREDIT_PERIOD.ID + "-label-text'>" + FIELDS.CREDIT_PERIOD.LABEL + "</span>"
           },
           hint: {
-            text: FIELD_IDSCREDIT_PERIOD.HINT,
+            text: FIELDS.CREDIT_PERIOD.HINT,
             attributes: {
-              'data-cy': FIELD_IDSCREDIT_PERIOD.ID + '-hint'
+              'data-cy': FIELDS.CREDIT_PERIOD.ID + '-hint'
             }
           },
           classes: "govuk-input--width-5 govuk-!-margin-bottom-4",
           attributes: {
-            'data-cy': FIELD_IDSCREDIT_PERIOD.ID + '-input'
+            'data-cy': FIELDS.CREDIT_PERIOD.ID + '-input'
           },
-          id: FIELD_IDSCREDIT_PERIOD.ID,
-          name: FIELD_IDSCREDIT_PERIOD.ID,
+          id: FIELDS.CREDIT_PERIOD.ID,
+          name: FIELDS.CREDIT_PERIOD.ID,
           suffix: {
             text: "days"
           },
           spellcheck: false,
-          errorMessage: validationErrors.errorList[FIELD_IDSCREDIT_PERIOD.ID]and {
-            text: validationErrors.errorList[FIELD_IDSCREDIT_PERIOD.ID].text,
+          errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID]and {
+            text: validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID].text,
             attributes: {
-              "data-cy": FIELD_IDSCREDIT_PERIOD.ID + "-error-message"
+              "data-cy": FIELDS.CREDIT_PERIOD.ID + "-error-message"
             }
           },
-          value: submittedValues[FIELD_IDSCREDIT_PERIOD.ID]
+          value: submittedValues[FIELDS.CREDIT_PERIOD.ID]
         }) }}
 
         {{ govukInput({
           label: {
             attributes: {
-              'data-cy': FIELD_IDSPOLICY_LENGTH.ID + '-label'
+              'data-cy': FIELDS.POLICY_LENGTH.ID + '-label'
             },
-            html: "<span class='govuk-heading-m' data-cy='" + FIELD_IDSPOLICY_LENGTH.ID + "-label-text'>" + FIELD_IDSPOLICY_LENGTH.LABEL + "</span>"
+            html: "<span class='govuk-heading-m' data-cy='" + FIELDS.POLICY_LENGTH.ID + "-label-text'>" + FIELDS.POLICY_LENGTH.LABEL + "</span>"
           },
           hint: {
-            text: FIELD_IDSPOLICY_LENGTH.HINT,
+            text: FIELDS.POLICY_LENGTH.HINT,
             attributes: {
-              'data-cy': FIELD_IDSPOLICY_LENGTH.ID + '-hint'
+              'data-cy': FIELDS.POLICY_LENGTH.ID + '-hint'
             }
           },
           classes: "govuk-input--width-5 govuk-!-margin-bottom-4",
           attributes: {
-            'data-cy': FIELD_IDSPOLICY_LENGTH.ID + '-input'
+            'data-cy': FIELDS.POLICY_LENGTH.ID + '-input'
           },
-          id: FIELD_IDSPOLICY_LENGTH.ID,
-          name: FIELD_IDSPOLICY_LENGTH.ID,
+          id: FIELDS.POLICY_LENGTH.ID,
+          name: FIELDS.POLICY_LENGTH.ID,
           suffix: {
             text: "months"
           },
           spellcheck: false,
-          errorMessage: validationErrors.errorList[FIELD_IDSPOLICY_LENGTH.ID]and {
-            text: validationErrors.errorList[FIELD_IDSPOLICY_LENGTH.ID].text,
+          errorMessage: validationErrors.errorList[FIELDS.POLICY_LENGTH.ID]and {
+            text: validationErrors.errorList[FIELDS.POLICY_LENGTH.ID].text,
             attributes: {
-              "data-cy": FIELD_IDSPOLICY_LENGTH.ID + "-error-message"
+              "data-cy": FIELDS.POLICY_LENGTH.ID + "-error-message"
             }
           },
-          value: submittedValues[FIELD_IDSPOLICY_LENGTH.ID]
+          value: submittedValues[FIELDS.POLICY_LENGTH.ID]
         }) }}
 
         {{ govukRadios({
-          idPrefix: FIELD_IDSPOLICY_TYPE.ID,
-          name: FIELD_IDSPOLICY_TYPE.ID,
+          idPrefix: FIELDS.POLICY_TYPE.ID,
+          name: FIELDS.POLICY_TYPE.ID,
           fieldset: {
             legend: {
-              html: "<span class='govuk-heading-m' data-cy='" + FIELD_IDSPOLICY_TYPE.ID + "-label-text'>" + FIELD_IDSPOLICY_TYPE.LABEL + "</span>"
+              html: "<span class='govuk-heading-m' data-cy='" + FIELDS.POLICY_TYPE.ID + "-label-text'>" + FIELDS.POLICY_TYPE.LABEL + "</span>"
             }
           },
           hint: {
-            text: FIELD_IDSPOLICY_TYPE.HINT,
+            text: FIELDS.POLICY_TYPE.HINT,
             attributes: {
-              'data-cy': FIELD_IDSPOLICY_TYPE.ID + '-hint'
+              'data-cy': FIELDS.POLICY_TYPE.ID + '-hint'
             }
           },
           classes: "govuk-!-margin-bottom-4",
           items: [
             {
-              value: FIELD_IDSPOLICY_TYPE.OPTIONS.SINGLE.VALUE,
-              text: FIELD_IDSPOLICY_TYPE.OPTIONS.SINGLE.TEXT,
+              value: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE,
+              text: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.TEXT,
               label: {
                 attributes: {
-                  'data-cy': FIELD_IDSPOLICY_TYPE.ID + '-' + FIELD_IDSPOLICY_TYPE.OPTIONS.SINGLE.VALUE + '-label'
+                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE + '-label'
                 }
               },
               hint: {
-                text: FIELD_IDSPOLICY_TYPE.OPTIONS.SINGLE.HINT,
+                text: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.HINT,
                 attributes: {
-                  'data-cy': FIELD_IDSPOLICY_TYPE.ID + '-' + FIELD_IDSPOLICY_TYPE.OPTIONS.SINGLE.VALUE + '-hint'
+                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE + '-hint'
                 }
               },
               attributes: {
-                'data-cy': FIELD_IDSPOLICY_TYPE.ID + '-' + FIELD_IDSPOLICY_TYPE.OPTIONS.SINGLE.VALUE + '-input'
+                'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE + '-input'
               },
-              checked: submittedValues[FIELD_IDSPOLICY_TYPE.ID] === FIELD_IDSPOLICY_TYPE.OPTIONS.SINGLE.VALUE
+              checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE
             },
             {
-              value: FIELD_IDSPOLICY_TYPE.OPTIONS.MULTI.VALUE,
-              text: FIELD_IDSPOLICY_TYPE.OPTIONS.MULTI.TEXT,
+              value: FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE,
+              text: FIELDS.POLICY_TYPE.OPTIONS.MULTI.TEXT,
               label: {
                 attributes: {
-                  'data-cy': FIELD_IDSPOLICY_TYPE.ID + '-' + FIELD_IDSPOLICY_TYPE.OPTIONS.MULTI.VALUE + '-label'
+                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE + '-label'
                 }
               },
               hint: {
-                text: FIELD_IDSPOLICY_TYPE.OPTIONS.MULTI.HINT,
+                text: FIELDS.POLICY_TYPE.OPTIONS.MULTI.HINT,
                 attributes: {
-                  'data-cy': FIELD_IDSPOLICY_TYPE.ID + '-' + FIELD_IDSPOLICY_TYPE.OPTIONS.MULTI.VALUE + '-hint'
+                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE + '-hint'
                 }
               },
               attributes: {
-                'data-cy': FIELD_IDSPOLICY_TYPE.ID + '-' + FIELD_IDSPOLICY_TYPE.OPTIONS.MULTI.VALUE + '-input'
+                'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE + '-input'
               },
-              checked: submittedValues[FIELD_IDSPOLICY_TYPE.ID] === FIELD_IDSPOLICY_TYPE.OPTIONS.MULTI.VALUE
+              checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE
             }
           ],
-          errorMessage: validationErrors.errorList[FIELD_IDSPOLICY_TYPE.ID]and {
-            text: validationErrors.errorList[FIELD_IDSPOLICY_TYPE.ID].text,
+          errorMessage: validationErrors.errorList[FIELDS.POLICY_TYPE.ID]and {
+            text: validationErrors.errorList[FIELDS.POLICY_TYPE.ID].text,
             attributes: {
-              "data-cy": FIELD_IDSPOLICY_TYPE.ID + "-error-message"
+              "data-cy": FIELDS.POLICY_TYPE.ID + "-error-message"
             }
           }
         }) }}
