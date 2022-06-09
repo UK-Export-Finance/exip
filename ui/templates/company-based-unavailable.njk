@@ -1,6 +1,5 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% import './components/text-list.njk' as textList %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -22,9 +21,11 @@
 
   <p class="govuk-body" data-cy="actions-intro">{{ CONTENT_STRINGS.ACTIONS.INTRO }}</p>
 
-  {{textList.render({
-    items: CONTENT_STRINGS.ACTIONS.LIST,
-    dataCy: 'actions-list'
-  })}}
+  <ul class="govuk-list govuk-list--bullet" data-cy="actions-list">
+    <li data-cy="action-eligibility">{{ CONTENT_STRINGS.ACTIONS.ELIGIBILITY.TEXT }} <a data-cy="action-eligibility-link" href="{{ CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF }}">{{ CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT }}</a></li>
+    <li data-cy="action-approved-broker">
+      <a data-cy="action-approved-broker-link"href="{{ CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF }}">{{ CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT }}</a> {{ CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.TEXT }}
+    </li>
+  </ul>
 
 {% endblock %}
