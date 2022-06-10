@@ -125,10 +125,10 @@ describe('controllers/tried-to-obtain-cover', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.FINAL_DESTINATION}`, () => {
+      it(`should redirect to ${ROUTES.UK_CONTENT_PERCENTAGE}`, () => {
         controller.post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.FINAL_DESTINATION);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.UK_CONTENT_PERCENTAGE);
       });
 
       describe('when the url\'s last substring is `change`', () => {

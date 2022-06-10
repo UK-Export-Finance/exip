@@ -116,11 +116,11 @@ context('Tried to obtain private cover page', () => {
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.FINAL_DESTINATION}`, () => {
+      it(`should redirect to ${ROUTES.UK_CONTENT_PERCENTAGE}`, () => {
         triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].yes().click();
         triedToObtainCoverPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.FINAL_DESTINATION);
+        cy.url().should('include', ROUTES.UK_CONTENT_PERCENTAGE);
       });
     });
   });

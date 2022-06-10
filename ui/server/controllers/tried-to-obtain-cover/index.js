@@ -73,7 +73,7 @@ const post = (req, res) => {
     return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
   }
 
-  return res.redirect(ROUTES.FINAL_DESTINATION);
+  return res.redirect(ROUTES.UK_CONTENT_PERCENTAGE);
 };
 
 module.exports = {
