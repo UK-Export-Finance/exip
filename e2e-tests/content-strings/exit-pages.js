@@ -5,7 +5,7 @@ const EXIT_PAGES = {
       TEXT: 'read about',
       LINK: {
         TEXT: 'eligibility',
-        HREF:'#',
+        HREF: '#',
       },
     },
     CONTACT_APPROVED_BROKER: {

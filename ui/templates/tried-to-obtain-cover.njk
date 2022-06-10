@@ -4,7 +4,6 @@
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {% from 'govuk/components/radios/macro.njk' import govukRadios %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
-{% import './components/page-heading-with-warning.njk' as pageHeadingWithWarning %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -32,46 +31,58 @@
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
     {{ govukRadios({
-      classes: "govuk-radios--inline",
-      idPrefix: FIELD_NAME,
-      name: FIELD_NAME,
+      idPrefix: FIELD.ID,
+      name: FIELD.ID,
       fieldset: {
         legend: {
-          html: pageHeadingWithWarning.render({
-            heading: CONTENT_STRINGS.HEADING,
-            warning: CONTENT_STRINGS.WARNING
-          })
+          html: "<h1 class='govuk-heading-l' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1>"
         }
       },
       items: [
         {
-          value: true,
-          text: "Yes",
+          value: FIELD.OPTIONS.YES.VALUE,
+          text: FIELD.OPTIONS.YES.TEXT,
           label: {
             attributes: {
-              "data-cy": FIELD_NAME + "-yes"
+              "data-cy": FIELD.ID + "-yes"
             }
           },
           attributes: {
-            "data-cy": FIELD_NAME + "-yes-input"
+            "data-cy": FIELD.ID + "-yes-input"
           },
-          checked: submittedValues[FIELD_NAME] === true
+          checked: submittedValues[FIELD.ID] === FIELD.OPTIONS.YES.VALUE
         },
         {
-          value: false,
-          text: "No",
+          value: FIELD.OPTIONS.NO.VALUE,
+          text: FIELD.OPTIONS.NO.TEXT,
           label: {
             attributes: {
-              "data-cy": FIELD_NAME + "-no"
+              "data-cy": FIELD.ID + "-no"
             }
           },
-          checked: submittedValues[FIELD_NAME] === false
+          attributes: {
+            "data-cy": FIELD.ID + "-no-input"
+          },
+          checked: submittedValues[FIELD.ID] === FIELD.OPTIONS.NO.VALUE
+        },
+        {
+          value: FIELD.OPTIONS.NOT_TRIED.VALUE,
+          text: FIELD.OPTIONS.NOT_TRIED.TEXT,
+          label: {
+            attributes: {
+              "data-cy": FIELD.ID + "-not-tried"
+            }
+          },
+          attributes: {
+            "data-cy": FIELD.ID + "-not-tried-input"
+          },
+          checked: submittedValues[FIELD.ID] === FIELD.OPTIONS.NOT_TRIED.VALUE
         }
       ],
-      errorMessage: validationErrors.errorList[FIELD_NAME]and {
-        text: validationErrors.errorList[FIELD_NAME].text,
+      errorMessage: validationErrors.errorList[FIELD.ID] and {
+        text: validationErrors.errorList[FIELD.ID].text,
         attributes: {
-          "data-cy": FIELD_NAME + "-error-message"
+          "data-cy": FIELD.ID + "-error-message"
         }
       }
     }) }}

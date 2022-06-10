@@ -4,6 +4,7 @@ const mockReq = () => ({
   session: {},
   body: {},
   originalUrl: 'mock',
+  flash: jest.fn(),
 });
 
 const mockRes = () => {

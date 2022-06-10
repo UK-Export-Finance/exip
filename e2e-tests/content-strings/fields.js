@@ -1,5 +1,6 @@
 const FIELD_IDS = require('../constants/field-ids');
 const FIELD_VALUES = require('../constants/field-values');
+const { TRIED_TO_OBTAIN_COVER_PAGE } = require('./pages');
 
 const FIELDS = {
   [FIELD_IDS.COUNTRY]: {
@@ -13,7 +14,21 @@ const FIELDS = {
     TITLE: 'Buyer location',
   },
   [FIELD_IDS.TRIED_PRIVATE_COVER]: {
-    TITLE: 'Private insurance',
+    TITLE: TRIED_TO_OBTAIN_COVER_PAGE.HEADING,
+    OPTIONS: {
+      YES: {
+        VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.YES,
+        TEXT: 'Yes, I\'ve been turned down',
+      },
+      NO: {
+        VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.NO,
+        TEXT: 'No, I\'ve been offered private insurance',
+      },
+      NOT_TRIED: {
+        VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.NOT_TRIED,
+        TEXT: 'I\'ve not tried',
+      },
+    },
   },
   [FIELD_IDS.FINAL_DESTINATION]: {
     TITLE: 'Export destination',

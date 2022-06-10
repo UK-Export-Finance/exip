@@ -22,6 +22,9 @@ const ROUTES = {
   TELL_US_ABOUT_YOUR_DEAL_CHANGE: '/tell-us-about-your-deal/change',
 
   CHECK_YOUR_ANSWERS: '/check-your-answers',
+
+  CANNOT_OBTAIN_COVER: '/cannot-obtain-cover',
+
   PREMIUM_QUOTE: '/premium-quote',
   PROBLEM_WITH_SERVICE: '/problem-with-service',
 };

@@ -1,18 +1,25 @@
-import triedToObtainCoverPage from '../pages/triedToObtainCover';
-import partials from '../partials';
+import { triedToObtainCoverPage } from '../../pages';
+import partials from '../../partials';
 import {
   ORGANISATION,
   BUTTONS,
+  FIELDS,
   LINKS,
-  TRIED_TO_OBTAIN_COVER_PAGE as CONTENT_STRINGS,
+  PAGES,
   ERROR_MESSAGES,
-} from '../../../content-strings';
-import CONSTANTS from '../../../constants';
+} from '../../../../content-strings';
+import CONSTANTS from '../../../../constants';
+
+const CONTENT_STRINGS = PAGES.TRIED_TO_OBTAIN_COVER_PAGE;
+const {
+  FIELD_IDS,
+  ROUTES,
+} = CONSTANTS;
 
 context('Tried to obtain private cover page', () => {
   it('returns 401 when incorrect login provided', () => {
     cy.request({
-      url: CONSTANTS.ROUTES.TRIED_TO_OBTAIN_COVER,
+      url: ROUTES.TRIED_TO_OBTAIN_COVER,
       failOnStatusCode: false,
       auth: {
         username: 'invalid',
@@ -23,13 +30,13 @@ context('Tried to obtain private cover page', () => {
 
   describe('with valid login', () => {
     beforeEach(() => {
-      cy.visit(CONSTANTS.ROUTES.TRIED_TO_OBTAIN_COVER, {
+      cy.visit(ROUTES.TRIED_TO_OBTAIN_COVER, {
         auth: {
           username: Cypress.config('basicAuthKey'),
           password: Cypress.config('basicAuthSecret'),
         },
       });
-      cy.url().should('include', CONSTANTS.ROUTES.TRIED_TO_OBTAIN_COVER);
+      cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
     });
 
     it('passes the audits', () => {
@@ -49,35 +56,48 @@ context('Tried to obtain private cover page', () => {
 
       partials.backLink().click();
 
-      cy.url().should('include', CONSTANTS.ROUTES.BUYER_BASED);
+      cy.url().should('include', ROUTES.BUYER_BASED);
     });
 
-    it('renders a page title, heading and warning', () => {
+    it('renders a page title and heading', () => {
       const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
       cy.title().should('eq', expectedPageTitle);
 
       triedToObtainCoverPage.heading().invoke('text').then((text) => {
         expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
       });
-
-      triedToObtainCoverPage.warning().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.WARNING);
-      });
     });
 
-    it('renders yes and no radio buttons', () => {
-      const yesRadio = triedToObtainCoverPage[CONSTANTS.FIELD_IDS.TRIED_PRIVATE_COVER].yes();
+    it('renders `yes` radio button', () => {
+      const fieldId = FIELD_IDS.TRIED_PRIVATE_COVER;
+      const yesRadio = triedToObtainCoverPage[fieldId].yes();
       yesRadio.should('exist');
 
       yesRadio.invoke('text').then((text) => {
-        expect(text.trim()).equal('Yes');
+        const expected = FIELDS[fieldId].OPTIONS.YES.TEXT;
+        expect(text.trim()).equal(expected);
       });
+    });
 
-      const noRadio = triedToObtainCoverPage[CONSTANTS.FIELD_IDS.TRIED_PRIVATE_COVER].no();
+    it('renders `no` radio button', () => {
+      const fieldId = FIELD_IDS.TRIED_PRIVATE_COVER;
+      const noRadio = triedToObtainCoverPage[fieldId].no();
       noRadio.should('exist');
 
       noRadio.invoke('text').then((text) => {
-        expect(text.trim()).equal('No');
+        const expected = FIELDS[fieldId].OPTIONS.NO.TEXT;
+        expect(text.trim()).equal(expected);
+      });
+    });
+
+    it('renders `not tried` radio button', () => {
+      const fieldId = FIELD_IDS.TRIED_PRIVATE_COVER;
+      const notTriedRadio = triedToObtainCoverPage[fieldId].notTried();
+      notTriedRadio.should('exist');
+
+      notTriedRadio.invoke('text').then((text) => {
+        const expected = FIELDS[fieldId].OPTIONS.NOT_TRIED.TEXT;
+        expect(text.trim()).equal(expected);
       });
     });
 
@@ -98,33 +118,24 @@ context('Tried to obtain private cover page', () => {
           partials.errorSummaryListItems().should('exist');
           partials.errorSummaryListItems().should('have.length', 1);
 
-          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.TRIED_PRIVATE_COVER];
+          const expectedMessage = ERROR_MESSAGES[FIELD_IDS.TRIED_PRIVATE_COVER];
 
           partials.errorSummaryListItems().first().invoke('text').then((text) => {
             expect(text.trim()).equal(expectedMessage);
           });
 
-          triedToObtainCoverPage[CONSTANTS.FIELD_IDS.TRIED_PRIVATE_COVER].errorMessage().invoke('text').then((text) => {
+          triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].errorMessage().invoke('text').then((text) => {
             expect(text.trim()).includes(expectedMessage);
           });
         });
       });
 
       describe('when submitting the answer as `yes`', () => {
-        it(`should redirect to ${CONSTANTS.ROUTES.FINAL_DESTINATION}`, () => {
-          triedToObtainCoverPage[CONSTANTS.FIELD_IDS.TRIED_PRIVATE_COVER].yes().click();
+        it(`should redirect to ${ROUTES.FINAL_DESTINATION}`, () => {
+          triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].yes().click();
           triedToObtainCoverPage.submitButton().click();
 
-          cy.url().should('include', CONSTANTS.ROUTES.FINAL_DESTINATION);
-        });
-      });
-
-      describe('when submitting the answer as `no`', () => {
-        it(`should redirect to ${CONSTANTS.ROUTES.FINAL_DESTINATION}`, () => {
-          triedToObtainCoverPage[CONSTANTS.FIELD_IDS.TRIED_PRIVATE_COVER].no().click();
-          triedToObtainCoverPage.submitButton().click();
-
-          cy.url().should('include', CONSTANTS.ROUTES.FINAL_DESTINATION);
+          cy.url().should('include', ROUTES.FINAL_DESTINATION);
         });
       });
     });

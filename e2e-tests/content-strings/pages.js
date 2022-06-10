@@ -46,9 +46,8 @@ const BUYER_BASED_PAGE = {
 };
 
 const TRIED_TO_OBTAIN_COVER_PAGE = {
-  PAGE_TITLE: 'Have you tried, and been unable, to obtain cover for your export contract(s) with this buyer from the private insurance market?',
-  HEADING: 'Have you tried, and been unable, to obtain cover for your export contract(s) with this buyer from the private insurance market?',
-  WARNING: 'In order to submit a full application you will need to provide evidence that you were unable to obtain cover from a private insurer for this export.',
+  PAGE_TITLE: 'Are you unable to get insurance for this export from companies in the private sector?',
+  HEADING: 'Are you unable to get insurance for this export from companies in the private sector?',
 };
 
 const FINAL_DESTINATION_PAGE = {
@@ -78,6 +77,33 @@ const CHECK_YOUR_ANSWERS_PAGE = {
   GROUP_HEADING_DEAL: 'Deal details',
 };
 
+const CANNOT_OBTAIN_COVER_PAGE = {
+  PAGE_TITLE: 'You cannot apply for UKEF export insurance',
+  HEADING: 'You cannot apply for UKEF export insurance',
+  REASON: {
+    INTRO: 'This is because',
+    CAN_GET_PRIVATE_INSURANCE: 'you\'re able to get insurance for this export from companies in the private sector.',
+    HAVE_NOT_TRIED_PRIVATE_INSURANCE: 'you\'ve not yet tried to get this from private insurers.',
+  },
+  ACTIONS: {
+    INTRO: 'You can:',
+    ELIGIBILITY: {
+      TEXT: 'read about',
+      LINK: {
+        TEXT: 'eligibility',
+        HREF: '#',
+      },
+    },
+    CONTACT_APPROVED_BROKER: {
+      LINK: {
+        TEXT: 'contact an approved broker',
+        HREF: '#',
+      },
+      TEXT: 'who may be able to help you get insurance from the private sector, if you`ve not tried already',
+    },
+  },
+};
+
 const PAGE_NOT_FOUND_PAGE = {
   PAGE_TITLE: 'Page not found',
   HEADING: 'Page not found',
@@ -99,6 +125,7 @@ module.exports = {
   UK_CONTENT_PERCENTAGE_PAGE,
   TELL_US_ABOUT_YOUR_DEAL_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,
+  CANNOT_OBTAIN_COVER_PAGE,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
 };
