@@ -18,7 +18,7 @@ context('Tried to obtain private cover page - answer `not tried`', () => {
     });
     cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
 
-    triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].no().click();
+    triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].notTried().click();
     triedToObtainCoverPage.submitButton().click();
   });
 
