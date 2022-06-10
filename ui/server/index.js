@@ -6,6 +6,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const csrf = require('csurf');
 const path = require('path');
+const flash = require('connect-flash');
 const basicAuth = require('express-basic-auth');
 
 const { csrf: csrfToken, security, seo } = require('./middleware');
@@ -49,6 +50,8 @@ app.use(csrf({
   },
 }));
 app.use(csrfToken());
+
+app.use(flash());
 
 configureNunjucks({
   autoescape: true,

@@ -4,124 +4,114 @@ import {
   ORGANISATION,
   BUTTONS,
   LINKS,
-  BUYER_BASED_PAGE as CONTENT_STRINGS,
+  PAGES,
   ERROR_MESSAGES,
 } from '../../../content-strings';
 import CONSTANTS from '../../../constants';
 
+const CONTENT_STRINGS = PAGES.BUYER_BASED_PAGE;
+const { ROUTES, FIELD_IDS } = CONSTANTS;
+
 context('Buyer based outside of the UK, Channel Islands and Isle of Man page', () => {
-  it('returns 401 when incorrect login provided', () => {
-    cy.request({
-      url: CONSTANTS.ROUTES.BUYER_BASED,
-      failOnStatusCode: false,
+  beforeEach(() => {
+    cy.visit(ROUTES.BUYER_BASED, {
       auth: {
-        username: 'invalid',
-        password: 'invalid',
+        username: Cypress.config('basicAuthKey'),
+        password: Cypress.config('basicAuthSecret'),
       },
-    }).its('status').should('equal', 401);
+    });
+    cy.url().should('include', ROUTES.BUYER_BASED);
   });
 
-  describe('with valid login', () => {
-    beforeEach(() => {
-      cy.visit(CONSTANTS.ROUTES.BUYER_BASED, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
-      cy.url().should('include', CONSTANTS.ROUTES.BUYER_BASED);
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 80,
+      'best-practices': 100,
+      seo: 75,
+    });
+  });
+
+  it('renders a back button with correct link', () => {
+    partials.backLink().should('exist');
+    partials.backLink().invoke('text').then((text) => {
+      expect(text.trim()).equal(LINKS.BACK);
     });
 
-    it('passes the audits', () => {
-      cy.lighthouse({
-        accessibility: 100,
-        performance: 80,
-        'best-practices': 100,
-        seo: 75,
-      });
+    partials.backLink().click();
+
+    cy.url().should('include', ROUTES.COMPANY_BASED);
+  });
+
+  it('renders a page title and heading', () => {
+    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
+    cy.title().should('eq', expectedPageTitle);
+
+    buyerBasedPage.heading().invoke('text').then((text) => {
+      expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
+    });
+  });
+
+  it('renders yes and no radio buttons', () => {
+    const yesRadio = buyerBasedPage[FIELD_IDS.VALID_BUYER_BASE].yes();
+    yesRadio.should('exist');
+
+    yesRadio.invoke('text').then((text) => {
+      expect(text.trim()).equal('Yes');
     });
 
-    it('renders a back button with correct link', () => {
-      partials.backLink().should('exist');
-      partials.backLink().invoke('text').then((text) => {
-        expect(text.trim()).equal(LINKS.BACK);
-      });
+    const noRadio = buyerBasedPage[FIELD_IDS.VALID_BUYER_BASE].no();
+    noRadio.should('exist');
 
-      partials.backLink().click();
-
-      cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED);
+    noRadio.invoke('text').then((text) => {
+      expect(text.trim()).equal('No');
     });
+  });
 
-    it('renders a page title and heading', () => {
-      const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-      cy.title().should('eq', expectedPageTitle);
+  it('renders a submit button', () => {
+    const button = buyerBasedPage.submitButton();
+    button.should('exist');
 
-      buyerBasedPage.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
-      });
+    button.invoke('text').then((text) => {
+      expect(text.trim()).equal(BUTTONS.CONTINUE);
     });
+  });
 
-    it('renders yes and no radio buttons', () => {
-      const yesRadio = buyerBasedPage[CONSTANTS.FIELD_IDS.VALID_BUYER_BASE].yes();
-      yesRadio.should('exist');
+  describe('form submission', () => {
+    describe('when submitting an empty form', () => {
+      it('should render validation errors', () => {
+        buyerBasedPage.submitButton().click();
 
-      yesRadio.invoke('text').then((text) => {
-        expect(text.trim()).equal('Yes');
-      });
+        partials.errorSummaryListItems().should('exist');
+        partials.errorSummaryListItems().should('have.length', 1);
 
-      const noRadio = buyerBasedPage[CONSTANTS.FIELD_IDS.VALID_BUYER_BASE].no();
-      noRadio.should('exist');
+        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.VALID_BUYER_BASE];
 
-      noRadio.invoke('text').then((text) => {
-        expect(text.trim()).equal('No');
-      });
-    });
+        partials.errorSummaryListItems().first().invoke('text').then((text) => {
+          expect(text.trim()).equal(expectedMessage);
+        });
 
-    it('renders a submit button', () => {
-      const button = buyerBasedPage.submitButton();
-      button.should('exist');
-
-      button.invoke('text').then((text) => {
-        expect(text.trim()).equal(BUTTONS.CONTINUE);
-      });
-    });
-
-    describe('form submission', () => {
-      describe('when submitting an empty form', () => {
-        it('should render validation errors', () => {
-          buyerBasedPage.submitButton().click();
-
-          partials.errorSummaryListItems().should('exist');
-          partials.errorSummaryListItems().should('have.length', 1);
-
-          const expectedMessage = ERROR_MESSAGES[CONSTANTS.FIELD_IDS.VALID_BUYER_BASE];
-
-          partials.errorSummaryListItems().first().invoke('text').then((text) => {
-            expect(text.trim()).equal(expectedMessage);
-          });
-
-          buyerBasedPage[CONSTANTS.FIELD_IDS.VALID_BUYER_BASE].errorMessage().invoke('text').then((text) => {
-            expect(text.trim()).includes(expectedMessage);
-          });
+        buyerBasedPage[FIELD_IDS.VALID_BUYER_BASE].errorMessage().invoke('text').then((text) => {
+          expect(text.trim()).includes(expectedMessage);
         });
       });
+    });
 
-      describe('when submitting the answer as `no`', () => {
-        it(`should redirect to ${CONSTANTS.ROUTES.BUYER_BASED_UNAVAILABLE}`, () => {
-          buyerBasedPage[CONSTANTS.FIELD_IDS.VALID_BUYER_BASE].no().click();
-          buyerBasedPage.submitButton().click();
+    describe('when submitting the answer as `no`', () => {
+      it(`should redirect to ${ROUTES.BUYER_BASED_UNAVAILABLE}`, () => {
+        buyerBasedPage[FIELD_IDS.VALID_BUYER_BASE].no().click();
+        buyerBasedPage.submitButton().click();
 
-          cy.url().should('include', CONSTANTS.ROUTES.BUYER_BASED_UNAVAILABLE);
-        });
+        cy.url().should('include', ROUTES.BUYER_BASED_UNAVAILABLE);
       });
+    });
 
-      describe('when submitting the answer as `yes`', () => {
-        it(`should redirect to ${CONSTANTS.ROUTES.TRIED_TO_OBTAIN_COVER}`, () => {
-          buyerBasedPage[CONSTANTS.FIELD_IDS.VALID_BUYER_BASE].yes().click();
-          buyerBasedPage.submitButton().click();
+    describe('when submitting the answer as `yes`', () => {
+      it(`should redirect to ${ROUTES.TRIED_TO_OBTAIN_COVER}`, () => {
+        buyerBasedPage[FIELD_IDS.VALID_BUYER_BASE].yes().click();
+        buyerBasedPage.submitButton().click();
 
-          cy.url().should('include', CONSTANTS.ROUTES.TRIED_TO_OBTAIN_COVER);
-        });
+        cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
       });
     });
   });

@@ -1,19 +1,32 @@
 const CONTENT_STRINGS = require('../../content-strings');
-const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
-const singleInputPageVariables = require('../../helpers/single-input-page-variables');
+const {
+  FIELD_IDS,
+  FIELD_VALUES,
+  ROUTES,
+  TEMPLATES,
+} = require('../../constants');
 const generateValidationErrors = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
-  FIELD_NAME: FIELD_IDS.TRIED_PRIVATE_COVER,
-  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.TRIED_TO_OBTAIN_COVER_PAGE,
+  CONTENT_STRINGS: {
+    PRODUCT: CONTENT_STRINGS.PRODUCT,
+    FOOTER: CONTENT_STRINGS.FOOTER,
+    BUTTONS: CONTENT_STRINGS.BUTTONS,
+    LINKS: CONTENT_STRINGS.LINKS,
+    ...CONTENT_STRINGS.PAGES.TRIED_TO_OBTAIN_COVER_PAGE,
+  },
   BACK_LINK: ROUTES.BUYER_BASED,
+  FIELD: {
+    ID: FIELD_IDS.TRIED_PRIVATE_COVER,
+    ...CONTENT_STRINGS.FIELDS[FIELD_IDS.TRIED_PRIVATE_COVER],
+  },
 };
 
 const get = (req, res) =>
   res.render(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
-    ...singleInputPageVariables(PAGE_VARIABLES),
+    ...PAGE_VARIABLES,
     submittedValues: req.session.submittedData,
   });
 
@@ -22,9 +35,33 @@ const post = (req, res) => {
 
   if (validationErrors) {
     return res.render(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
-      ...singleInputPageVariables(PAGE_VARIABLES),
+      ...PAGE_VARIABLES,
       validationErrors,
     });
+  }
+
+  const answer = req.body[FIELD_IDS.TRIED_PRIVATE_COVER];
+
+  const redirectToExitPage = (answer === 'false' || answer === FIELD_VALUES.TRIED_PRIVATE_COVER.NOT_TRIED);
+
+  if (redirectToExitPage) {
+    req.flash('previousRoute', ROUTES.TRIED_TO_OBTAIN_COVER);
+
+    const { PAGES } = CONTENT_STRINGS;
+    const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
+    const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
+
+    if (answer === 'false') {
+      req.flash('exitReason', REASON.CAN_GET_PRIVATE_INSURANCE);
+
+      return res.redirect(ROUTES.CANNOT_OBTAIN_COVER);
+    }
+
+    if (answer === FIELD_VALUES.TRIED_PRIVATE_COVER.NOT_TRIED) {
+      req.flash('exitReason', REASON.HAVE_NOT_TRIED_PRIVATE_INSURANCE);
+
+      return res.redirect(ROUTES.CANNOT_OBTAIN_COVER);
+    }
   }
 
   req.session.submittedData = updateSubmittedData(
@@ -36,7 +73,7 @@ const post = (req, res) => {
     return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
   }
 
-  return res.redirect(ROUTES.FINAL_DESTINATION);
+  return res.redirect(ROUTES.UK_CONTENT_PERCENTAGE);
 };
 
 module.exports = {

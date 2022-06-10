@@ -1,5 +1,5 @@
 const PRODUCT = {
-  DESCRIPTION: 'Check if you can apply for export insurance',
+  DESCRIPTION: 'Get a quote for UKEF export insurance',
 };
 
 module.exports = PRODUCT;

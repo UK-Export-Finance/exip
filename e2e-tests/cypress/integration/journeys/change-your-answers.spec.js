@@ -2,23 +2,23 @@ import {
   companyBasedPage,
   buyerBasedPage,
   triedToObtainCoverPage,
-  finalDestinationPage,
   ukContentPercentagePage,
   tellUsAboutYourDealPage,
   checkYourAnswersPage,
 } from '../pages';
-import {
+import CONSTANTS from '../../../constants';
+
+const {
+  FIELD_IDS,
   FIELD_VALUES,
   ROUTES,
-} from '../../../constants';
-import FIELD_IDS from '../../../constants/field-ids';
+} = CONSTANTS;
 
 context('Change your answers after checking answers', () => {
   const {
     VALID_COMPANY_BASE,
     VALID_BUYER_BASE,
     TRIED_PRIVATE_COVER,
-    COUNTRY,
     FINAL_DESTINATION,
     UK_CONTENT_PERCENTAGE,
     CREDIT_LIMIT_CURRENCY,
@@ -108,41 +108,6 @@ context('Change your answers after checking answers', () => {
         triedToObtainCoverPage.submitButton().click();
 
         cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
-      });
-    });
-
-    describe('change `Export destination`', () => {
-      let row = checkYourAnswersPage.summaryLists.export[FINAL_DESTINATION];
-
-      it(`clicking 'change' redirects to ${ROUTES.FINAL_DESTINATION_CHANGE}`, () => {
-        row.changeLink().click();
-        cy.url().should('include', ROUTES.FINAL_DESTINATION_CHANGE);
-      });
-
-      it('has originally submitted answer selected', () => {
-        const expectedValue = submissionData[FINAL_DESTINATION];
-        finalDestinationPage[COUNTRY].hiddenInput().should('have.attr', 'value', expectedValue);
-      });
-
-      it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-        finalDestinationPage[COUNTRY].searchInput().type('Belgium');
-
-        const results = finalDestinationPage[COUNTRY].results();
-        results.first().click();
-
-        finalDestinationPage.submitButton().click();
-
-        cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
-      });
-
-      it('renders the new answer in `Check your answers` page', () => {
-        row = checkYourAnswersPage.summaryLists.export[FINAL_DESTINATION];
-
-        row.value().invoke('text').then((text) => {
-          const expected = 'Belgium';
-
-          expect(text.trim()).equal(expected);
-        });
       });
     });
 

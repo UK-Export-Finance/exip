@@ -9,19 +9,20 @@ import {
 import CONSTANTS from '../../../constants';
 
 const CONTENT_STRINGS = EXIT_PAGES.COMPANY_BASED;
+const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Answering `no` to Company based inside the UK, Channel Islands and Isle of Man', () => {
   beforeEach(() => {
-    cy.visit(CONSTANTS.ROUTES.COMPANY_BASED, {
+    cy.visit(ROUTES.COMPANY_BASED, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
-    cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED);
+    cy.url().should('include', ROUTES.COMPANY_BASED);
 
-    companyBasedPage[CONSTANTS.FIELD_IDS.VALID_COMPANY_BASE].no().click();
+    companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].no().click();
     companyBasedPage.submitButton().click();
   });
 
@@ -34,8 +35,8 @@ context('Answering `no` to Company based inside the UK, Channel Islands and Isle
     });
   });
 
-  it(`should redirect to ${CONSTANTS.ROUTES.COMPANY_BASED_UNAVAILABLE}`, () => {
-    cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED_UNAVAILABLE);
+  it(`should redirect to ${ROUTES.COMPANY_BASED_UNAVAILABLE}`, () => {
+    cy.url().should('include', ROUTES.COMPANY_BASED_UNAVAILABLE);
   });
 
   it('renders a back button with correct link', () => {
@@ -46,7 +47,7 @@ context('Answering `no` to Company based inside the UK, Channel Islands and Isle
 
     partials.backLink().click();
 
-    cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED);
+    cy.url().should('include', ROUTES.COMPANY_BASED);
   });
 
   it('renders a page title, heading and description', () => {
@@ -63,11 +64,23 @@ context('Answering `no` to Company based inside the UK, Channel Islands and Isle
       expect(text.trim()).equal(CONTENT_STRINGS.ACTIONS.INTRO);
     });
 
-    const expectedLength = CONTENT_STRINGS.ACTIONS.LIST.length;
-    companyBasedUnavailablePage.actions.listItems().should('have.length', expectedLength);
+    const listItems = companyBasedUnavailablePage.actions.listItems();
 
-    companyBasedUnavailablePage.actions.listItems().each(($element, index) => {
-      expect($element.text().trim()).equal(CONTENT_STRINGS.ACTIONS.LIST[index].text);
+    const expectedLength = 2;
+    listItems.should('have.length', expectedLength);
+
+    companyBasedUnavailablePage.actions.eligibility().invoke('text').then((text) => {
+      const expected = `${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.TEXT} ${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT}`;
+      expect(text.trim()).equal(expected);
     });
+
+    companyBasedUnavailablePage.actions.eligibilityLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
+
+    companyBasedUnavailablePage.actions.approvedBroker().invoke('text').then((text) => {
+      const expected = `${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT} ${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.TEXT}`;
+      expect(text.trim()).equal(expected);
+    });
+
+    companyBasedUnavailablePage.actions.approvedBrokerLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF);
   });
 });

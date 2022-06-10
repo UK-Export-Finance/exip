@@ -3,15 +3,19 @@ const PRODUCT = require('./product');
 const LANDING_PAGE = {
   PAGE_TITLE: PRODUCT.DESCRIPTION,
   HEADING: PRODUCT.DESCRIPTION,
-  DESCRIPTION: 'We can help UK based exporters manage risks in challenging markets, ensuring that they get paid even where the private market is not able to offer insurance.',
-  COVERS_AGAINST: {
-    INTRO: 'Our Export Insurance Policy offers cover against the risk of:',
+  INTRO_1: 'If you’re an exporter and having problems getting export insurance, you may be able to get cover from UK Export Finance (UKEF).',
+  INTRO_2: 'This is sometimes known as credit insurance.',
+  INTRO_3: 'You can get cover for up to 2 years (credit terms)',
+
+  COVERS: {
+    HEADING: 'What UK export insurance covers',
+    INTRO: 'It covers you if:',
     LIST: [
       {
-        text: 'not being paid under an export contract',
+        text: 'your buyer fails to pay you for an export',
       },
       {
-        text: 'not being able to recover the costs of performing that contract because of certain events which prevent its performance or lead to its termination',
+        text: 'you lose money when a contract cannot be carried out or is terminated early due to certain events',
       },
     ],
   },
@@ -19,45 +23,16 @@ const LANDING_PAGE = {
     INTRO: 'Use this service to:',
     LIST: [
       {
-        text: 'check if you can apply for export insurance for a specific export',
+        text: 'check if you`re eligible',
       },
       {
-        text: 'get a premium quote',
+        text: 'get a non-binding quote for single or multiple exports to one buyer',
       },
     ],
   },
-  COMPLETION_TIME: 'Checking eligibility takes around 5 minutes.',
+  YOU_WILL_NEED: 'You`ll need to get a separate quote for each buyer you want to export to.',
+  COMPLETION_TIME: 'It takes around 5 minutes.',
   SUBMIT_BUTTON: 'Start now',
-  BEFORE_YOU_START: {
-    HEADING: 'Before you start',
-    INTRO: 'You can read more about:',
-    LIST: [
-      {
-        text: 'how export insurance works',
-        href: '#',
-      },
-      {
-        text: 'benefits',
-        href: '#',
-      },
-      {
-        text: 'eligibility criteria',
-        href: '#',
-      },
-      {
-        text: 'how to apply',
-        href: '#',
-      },
-      {
-        text: 'product documentation and application form',
-        href: '#',
-      },
-      {
-        text: 'more information',
-        href: '#',
-      },
-    ],
-  },
 };
 
 const COMPANY_BASED_PAGE = {
@@ -71,9 +46,8 @@ const BUYER_BASED_PAGE = {
 };
 
 const TRIED_TO_OBTAIN_COVER_PAGE = {
-  PAGE_TITLE: 'Have you tried, and been unable, to obtain cover for your export contract(s) with this buyer from the private insurance market?',
-  HEADING: 'Have you tried, and been unable, to obtain cover for your export contract(s) with this buyer from the private insurance market?',
-  WARNING: 'In order to submit a full application you will need to provide evidence that you were unable to obtain cover from a private insurer for this export.',
+  PAGE_TITLE: 'Are you unable to get insurance for this export from companies in the private sector?',
+  HEADING: 'Are you unable to get insurance for this export from companies in the private sector?',
 };
 
 const FINAL_DESTINATION_PAGE = {
@@ -103,6 +77,33 @@ const CHECK_YOUR_ANSWERS_PAGE = {
   GROUP_HEADING_DEAL: 'Deal details',
 };
 
+const CANNOT_OBTAIN_COVER_PAGE = {
+  PAGE_TITLE: 'You cannot apply for UKEF export insurance',
+  HEADING: 'You cannot apply for UKEF export insurance',
+  REASON: {
+    INTRO: 'This is because',
+    CAN_GET_PRIVATE_INSURANCE: 'you\'re able to get insurance for this export from companies in the private sector.',
+    HAVE_NOT_TRIED_PRIVATE_INSURANCE: 'you\'ve not yet tried to get this from private insurers.',
+  },
+  ACTIONS: {
+    INTRO: 'You can:',
+    ELIGIBILITY: {
+      TEXT: 'read about',
+      LINK: {
+        TEXT: 'eligibility',
+        HREF: '#',
+      },
+    },
+    CONTACT_APPROVED_BROKER: {
+      LINK: {
+        TEXT: 'contact an approved broker',
+        HREF: '#',
+      },
+      TEXT: 'who may be able to help you get insurance from the private sector, if you`ve not tried already',
+    },
+  },
+};
+
 const PAGE_NOT_FOUND_PAGE = {
   PAGE_TITLE: 'Page not found',
   HEADING: 'Page not found',
@@ -124,6 +125,7 @@ module.exports = {
   UK_CONTENT_PERCENTAGE_PAGE,
   TELL_US_ABOUT_YOUR_DEAL_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,
+  CANNOT_OBTAIN_COVER_PAGE,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
 };

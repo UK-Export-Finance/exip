@@ -1,14 +1,14 @@
 import beforeYouStartPage from '../pages/beforeYouStart';
-import {
-  ORGANISATION,
-  LANDING_PAGE as CONTENT_STRINGS,
-} from '../../../content-strings';
+import { ORGANISATION, PAGES } from '../../../content-strings';
 import CONSTANTS from '../../../constants';
+
+const CONTENT_STRINGS = PAGES.LANDING_PAGE;
+const { ROUTES } = CONSTANTS;
 
 context('Before you start page', () => {
   it('returns 401 when incorrect login provided', () => {
     cy.request({
-      url: CONSTANTS.ROUTES.BEFORE_YOU_START,
+      url: ROUTES.BEFORE_YOU_START,
       failOnStatusCode: false,
       auth: {
         username: 'invalid',
@@ -31,7 +31,7 @@ context('Before you start page', () => {
       });
     });
 
-    it('renders a page title, heading and description', () => {
+    it('renders a page title, heading and intro text', () => {
       const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
       cy.title().should('eq', expectedPageTitle);
 
@@ -39,21 +39,29 @@ context('Before you start page', () => {
         expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
       });
 
-      beforeYouStartPage.description().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.DESCRIPTION);
+      beforeYouStartPage.intro1().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.INTRO_1);
+      });
+
+      beforeYouStartPage.intro2().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.INTRO_2);
+      });
+
+      beforeYouStartPage.intro3().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.INTRO_3);
       });
     });
 
-    it('renders `cover against` content', () => {
-      beforeYouStartPage.coverAgainst.intro().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.COVERS_AGAINST.INTRO);
+    it('renders `covers` content', () => {
+      beforeYouStartPage.coverAgainst.heading().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.COVERS.HEADING);
       });
 
-      const expectedLength = CONTENT_STRINGS.COVERS_AGAINST.LIST.length;
+      const expectedLength = CONTENT_STRINGS.COVERS.LIST.length;
       beforeYouStartPage.coverAgainst.listItems().should('have.length', expectedLength);
 
       beforeYouStartPage.coverAgainst.listItems().each(($element, index) => {
-        expect($element.text().trim()).equal(CONTENT_STRINGS.COVERS_AGAINST.LIST[index].text);
+        expect($element.text().trim()).equal(CONTENT_STRINGS.COVERS.LIST[index].text);
       });
     });
 
@@ -70,6 +78,12 @@ context('Before you start page', () => {
       });
     });
 
+    it('renders `you will need` copy', () => {
+      beforeYouStartPage.youWillNeed().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.YOU_WILL_NEED);
+      });
+    });
+
     it('renders `completion time` copy', () => {
       beforeYouStartPage.completionTime().invoke('text').then((text) => {
         expect(text.trim()).equal(CONTENT_STRINGS.COMPLETION_TIME);
@@ -82,30 +96,10 @@ context('Before you start page', () => {
       });
     });
 
-    it('renders `before you start` content', () => {
-      beforeYouStartPage.beforeYouStart.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.BEFORE_YOU_START.HEADING);
-      });
-      beforeYouStartPage.beforeYouStart.intro().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.BEFORE_YOU_START.INTRO);
-      });
-
-      const expectedLength = CONTENT_STRINGS.BEFORE_YOU_START.LIST.length;
-      beforeYouStartPage.beforeYouStart.listItems().should('have.length', expectedLength);
-
-      beforeYouStartPage.beforeYouStart.listItems().each(($element, index) => {
-        expect($element.text().trim()).equal(CONTENT_STRINGS.BEFORE_YOU_START.LIST[index].text);
-      });
-
-      beforeYouStartPage.beforeYouStart.listItemLinks().each(($element, index) => {
-        expect($element.attr('href')).equal(CONTENT_STRINGS.BEFORE_YOU_START.LIST[index].href);
-      });
-    });
-
     it('clicking `start now` redirects to the `Company based` page', () => {
       beforeYouStartPage.submitButton().click();
 
-      cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED);
+      cy.url().should('include', ROUTES.COMPANY_BASED);
     });
   });
 });

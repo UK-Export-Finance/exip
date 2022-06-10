@@ -1,5 +1,7 @@
 import { pageNotFoundPage } from '../pages';
-import { PAGE_NOT_FOUND_PAGE } from '../../../content-strings';
+import { PAGES } from '../../../content-strings';
+
+const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
 
 context('Page not found', () => {
   before(() => {
@@ -13,17 +15,17 @@ context('Page not found', () => {
 
   it('renders a heading', () => {
     pageNotFoundPage.heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(PAGE_NOT_FOUND_PAGE.HEADING);
+      expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
 
   it('renders body text', () => {
     pageNotFoundPage.body1().invoke('text').then((text) => {
-      expect(text.trim()).equal(PAGE_NOT_FOUND_PAGE.BODY_1);
+      expect(text.trim()).equal(CONTENT_STRINGS.BODY_1);
     });
 
     pageNotFoundPage.body2().invoke('text').then((text) => {
-      expect(text.trim()).equal(PAGE_NOT_FOUND_PAGE.BODY_2);
+      expect(text.trim()).equal(CONTENT_STRINGS.BODY_2);
     });
   });
 });

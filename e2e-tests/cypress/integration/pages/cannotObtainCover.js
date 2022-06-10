@@ -1,6 +1,6 @@
-const companyBasedUnavailablePage = {
+const cannotObtainCoverPage = {
   heading: () => cy.get('[data-cy="heading"]'),
-  description: () => cy.get('[data-cy="description"]'),
+  reason: () => cy.get('[data-cy="reason"]'),
   actions: {
     intro: () => cy.get('[data-cy="actions-intro"]'),
     listItems: () => cy.get('[data-cy="actions-list"] li'),
@@ -11,4 +11,4 @@ const companyBasedUnavailablePage = {
   },
 };
 
-export default companyBasedUnavailablePage;
+export default cannotObtainCoverPage;

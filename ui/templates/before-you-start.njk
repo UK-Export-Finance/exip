@@ -9,14 +9,28 @@
 {% block content %}
   <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
 
-  <p class="govuk-body" data-cy="description">{{ CONTENT_STRINGS.DESCRIPTION }}</p>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <p class="govuk-body" data-cy="intro-1">{{ CONTENT_STRINGS.INTRO_1 }}</p>
+    </div>
+  </div>
 
-  <p class="govuk-body" data-cy="cover-against-intro">{{ CONTENT_STRINGS.COVERS_AGAINST.INTRO }}</p>
+  <p class="govuk-body" data-cy="intro-2">{{ CONTENT_STRINGS.INTRO_2 }}</p>
+  <p class="govuk-body" data-cy="intro-3">{{ CONTENT_STRINGS.INTRO_3 }}</p>
 
-  {{textList.render({
-    items: CONTENT_STRINGS.COVERS_AGAINST.LIST,
-    dataCy: 'cover-against-list'
-  })}}
+  <h2 class="govuk-heading-m" data-cy="covers-heading">{{ CONTENT_STRINGS.COVERS.HEADING }}</h2>
+
+  
+  <p class="govuk-body" data-cy="covers-intro">{{ CONTENT_STRINGS.COVERS.INTRO }}</p>
+
+  <ul class="govuk-list govuk-list--bullet" data-cy="covers-list">
+    <li>{{ CONTENT_STRINGS.COVERS.LIST[0].text }}</li>
+    <li class="govuk-grid-row govuk-!-margin-left-0">
+      <span class="govuk-grid-column-two-thirds-from-desktop govuk-!-padding-right-0 govuk-!-padding-left-0">
+        {{ CONTENT_STRINGS.COVERS.LIST[1].text }}
+      </span>
+    </li>
+  </ul>
 
   <p class="govuk-body" data-cy="use-service-to-intro">{{ CONTENT_STRINGS.USE_SERVICE_TO.INTRO }}</p>
 
@@ -24,6 +38,8 @@
     items: CONTENT_STRINGS.USE_SERVICE_TO.LIST,
     dataCy: 'use-service-to-list'
   })}}
+
+  <p class="govuk-body" data-cy="you-will-need">{{ CONTENT_STRINGS.YOU_WILL_NEED }}</p>
 
   <p class="govuk-body" data-cy="completion-time">{{ CONTENT_STRINGS.COMPLETION_TIME }}</p>
 
@@ -42,10 +58,6 @@
     }) }}
   
   </form>
-
-  <h2 class="govuk-heading-l" data-cy="before-you-start-heading">{{ CONTENT_STRINGS.BEFORE_YOU_START.HEADING }}</h2>
-
-  <p class="govuk-body" data-cy="before-you-start-intro">{{ CONTENT_STRINGS.BEFORE_YOU_START.INTRO }}</p>
 
   {{textList.render({
     items: CONTENT_STRINGS.BEFORE_YOU_START.LIST,
