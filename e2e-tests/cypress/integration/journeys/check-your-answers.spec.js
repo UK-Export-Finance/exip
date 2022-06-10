@@ -19,7 +19,6 @@ context('Check your answers page', () => {
     VALID_COMPANY_BASE,
     VALID_BUYER_BASE,
     TRIED_PRIVATE_COVER,
-    FINAL_DESTINATION,
     UK_CONTENT_PERCENTAGE,
     CREDIT_LIMIT_CURRENCY,
     CREDIT_LIMIT,
@@ -30,7 +29,6 @@ context('Check your answers page', () => {
   } = FIELD_IDS;
 
   const submissionData = {
-    [FINAL_DESTINATION]: 'France',
     [UK_CONTENT_PERCENTAGE]: '50',
     [CREDIT_LIMIT_CURRENCY]: 'GBP',
     [CREDIT_LIMIT]: '100',
@@ -164,26 +162,6 @@ context('Check your answers page', () => {
       });
 
       row.changeLink().should('have.attr', 'href', ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE);
-    });
-
-    it('renders `Export destination` key, value and change link', () => {
-      const row = list[FIELD_IDS.FINAL_DESTINATION];
-      const expectedKeyText = FIELDS[FINAL_DESTINATION].TITLE;
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
-
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(submissionData[FINAL_DESTINATION]);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().should('have.attr', 'href', ROUTES.FINAL_DESTINATION_CHANGE);
     });
 
     it('renders `UK content` key, value and change link', () => {

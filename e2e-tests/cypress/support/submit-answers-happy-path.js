@@ -3,7 +3,6 @@ import {
   companyBasedPage,
   buyerBasedPage,
   triedToObtainCoverPage,
-  finalDestinationPage,
   ukContentPercentagePage,
   tellUsAboutYourDealPage,
 } from '../integration/pages';
@@ -13,7 +12,6 @@ const {
   VALID_COMPANY_BASE,
   VALID_BUYER_BASE,
   TRIED_PRIVATE_COVER,
-  COUNTRY,
   CREDIT_LIMIT_CURRENCY,
   CREDIT_LIMIT,
   PRE_CREDIT_PERIOD,
@@ -36,13 +34,6 @@ export default () => {
   // tried to obtain cover page/form
   triedToObtainCoverPage[TRIED_PRIVATE_COVER].yes().click();
   triedToObtainCoverPage.submitButton().click();
-
-  // final destination page/form
-  finalDestinationPage[COUNTRY].searchInput().type('Fra');
-
-  const results = finalDestinationPage[COUNTRY].results();
-  results.first().click();
-  finalDestinationPage.submitButton().click();
 
   // uk content percentage page/form
   ukContentPercentagePage.input().type('50');
