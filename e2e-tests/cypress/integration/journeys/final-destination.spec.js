@@ -13,7 +13,7 @@ import CONSTANTS from '../../../constants';
 const CONTENT_STRINGS = PAGES.FINAL_DESTINATION_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
-context('What is the final destination for your export page', () => {
+context.skip('What is the final destination for your export page', () => {
   describe('with valid login', () => {
     beforeEach(() => {
       cy.visit(ROUTES.FINAL_DESTINATION, {
