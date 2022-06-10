@@ -6,10 +6,7 @@ import { PAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
-const {
-  FIELD_IDS,
-  ROUTES,
-} = CONSTANTS;
+const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 context('Tried to obtain private cover page - answer `no`', () => {
   before(() => {

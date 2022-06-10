@@ -7,11 +7,13 @@ import {
   tellUsAboutYourDealPage,
   checkYourAnswersPage,
 } from '../pages';
-import {
+import CONSTANTS from '../../../constants';
+
+const {
+  FIELD_IDS,
   FIELD_VALUES,
   ROUTES,
-} from '../../../constants';
-import FIELD_IDS from '../../../constants/field-ids';
+} = CONSTANTS;
 
 context('Change your answers after checking answers', () => {
   const {

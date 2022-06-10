@@ -1,14 +1,14 @@
 import beforeYouStartPage from '../pages/beforeYouStart';
-import {
-  ORGANISATION,
-  LANDING_PAGE as CONTENT_STRINGS,
-} from '../../../content-strings';
+import { ORGANISATION, PAGES } from '../../../content-strings';
 import CONSTANTS from '../../../constants';
+
+const CONTENT_STRINGS = PAGES.LANDING_PAGE;
+const { ROUTES } = CONSTANTS;
 
 context('Before you start page', () => {
   it('returns 401 when incorrect login provided', () => {
     cy.request({
-      url: CONSTANTS.ROUTES.BEFORE_YOU_START,
+      url: ROUTES.BEFORE_YOU_START,
       failOnStatusCode: false,
       auth: {
         username: 'invalid',
@@ -99,7 +99,7 @@ context('Before you start page', () => {
     it('clicking `start now` redirects to the `Company based` page', () => {
       beforeYouStartPage.submitButton().click();
 
-      cy.url().should('include', CONSTANTS.ROUTES.COMPANY_BASED);
+      cy.url().should('include', ROUTES.COMPANY_BASED);
     });
   });
 });

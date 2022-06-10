@@ -11,10 +11,7 @@ import {
 import CONSTANTS from '../../../constants';
 
 const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
-const {
-  FIELD_IDS,
-  ROUTES,
-} = CONSTANTS;
+const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 context('Cannot obtain UKEF cover exit page', () => {
   beforeEach(() => {

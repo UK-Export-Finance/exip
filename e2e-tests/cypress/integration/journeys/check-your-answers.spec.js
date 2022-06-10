@@ -5,11 +5,14 @@ import {
   BUTTONS,
   FIELDS,
   LINKS,
-  CHECK_YOUR_ANSWERS_PAGE as CONTENT_STRINGS,
+  PAGES,
   SUMMARY,
 } from '../../../content-strings';
 import CONSTANTS from '../../../constants';
 import FIELD_IDS from '../../../constants/field-ids';
+
+const CONTENT_STRINGS = PAGES.CHECK_YOUR_ANSWERS_PAGE;
+const { ROUTES, FIELD_VALUES } = CONSTANTS;
 
 context('Check your answers page', () => {
   const {
@@ -34,13 +37,18 @@ context('Check your answers page', () => {
     [PRE_CREDIT_PERIOD]: '1',
     [CREDIT_PERIOD]: '2',
     [POLICY_LENGTH]: '3',
-    [POLICY_TYPE]: CONSTANTS.FIELD_VALUES.POLICY_TYPE.SINGLE,
+    [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
   };
 
   before(() => {
     cy.login();
     cy.submitAnswersHappyPath();
-    cy.url().should('include', CONSTANTS.ROUTES.CHECK_YOUR_ANSWERS);
+    cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+  });
+
+  beforeEach(() => {
+    Cypress.Cookies.preserveOnce('_csrf');
+    Cypress.Cookies.preserveOnce('connect.sid');
   });
 
   it('passes the audits', () => {
@@ -58,7 +66,7 @@ context('Check your answers page', () => {
       expect(text.trim()).equal(LINKS.BACK);
     });
 
-    partials.backLink().should('have.attr', 'href', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+    partials.backLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
   });
 
   it('renders a submit button', () => {
@@ -105,7 +113,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.COMPANY_BASED_CHANGE);
+      row.changeLink().should('have.attr', 'href', ROUTES.COMPANY_BASED_CHANGE);
     });
   });
 
@@ -135,7 +143,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.BUYER_BASED_CHANGE);
+      row.changeLink().should('have.attr', 'href', ROUTES.BUYER_BASED_CHANGE);
     });
 
     it('renders `Private insurance` key, value and change link', () => {
@@ -155,7 +163,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE);
+      row.changeLink().should('have.attr', 'href', ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE);
     });
 
     it('renders `Export destination` key, value and change link', () => {
@@ -175,7 +183,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.FINAL_DESTINATION_CHANGE);
+      row.changeLink().should('have.attr', 'href', ROUTES.FINAL_DESTINATION_CHANGE);
     });
 
     it('renders `UK content` key, value and change link', () => {
@@ -197,7 +205,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.UK_CONTENT_PERCENTAGE_CHANGE);
+      row.changeLink().should('have.attr', 'href', ROUTES.UK_CONTENT_PERCENTAGE_CHANGE);
     });
   });
 
@@ -228,7 +236,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
     });
 
     it('renders `Pre-credit period` key, value and change link', () => {
@@ -250,7 +258,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
     });
 
     it('renders `Credit period` key, value and change link', () => {
@@ -272,7 +280,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
     });
 
     it('renders `Policy length` key, value and change link', () => {
@@ -294,7 +302,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
     });
 
     it('renders `Policy type` key, value and change link', () => {
@@ -314,15 +322,15 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', CONSTANTS.ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
     });
   });
 
-  // context('form submission', () => {
-  // it(`should redirect to ${CONSTANTS.ROUTES.PREMIUM_QUOTE}`, () => {
-  //   checkYourAnswersPage.submitButton().click();
+  context('form submission', () => {
+    it(`should redirect to ${ROUTES.PREMIUM_QUOTE}`, () => {
+      checkYourAnswersPage.submitButton().click();
 
-  //   cy.url().should('include', CONSTANTS.ROUTES.PREMIUM_QUOTE);
-  // });
-  // });
+      cy.url().should('include', ROUTES.PREMIUM_QUOTE);
+    });
+  });
 });
