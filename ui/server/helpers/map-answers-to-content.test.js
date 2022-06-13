@@ -1,5 +1,4 @@
 const {
-  mapPercentage,
   mapPeriodDays,
   mapPeriodMonths,
   mapAnswersToContent,
@@ -10,16 +9,6 @@ const formatCurrency = require('./format-currency');
 const { mockAnswers } = require('../test-mocks');
 
 describe('sever/helpers/map-answers-to-content', () => {
-  describe('mapPercentage', () => {
-    it('should return a formatted string', () => {
-      const result = mapPercentage(20);
-
-      const expected = `${20}%`;
-
-      expect(result).toEqual(expected);
-    });
-  });
-
   describe('mapPeriodDays', () => {
     it('should return a formatted string', () => {
       const result = mapPeriodDays(20);
@@ -62,7 +51,7 @@ describe('sever/helpers/map-answers-to-content', () => {
         [VALID_BUYER_BASE]: SUMMARY[VALID_BUYER_BASE],
         [TRIED_PRIVATE_COVER]: SUMMARY[TRIED_PRIVATE_COVER],
         [FINAL_DESTINATION]: mockAnswers[FINAL_DESTINATION],
-        [UK_CONTENT_PERCENTAGE]: mapPercentage(mockAnswers[UK_CONTENT_PERCENTAGE]),
+        [UK_CONTENT_PERCENTAGE]: SUMMARY[UK_CONTENT_PERCENTAGE],
         [CREDIT_LIMIT]: formatCurrency(mockAnswers[CREDIT_LIMIT], 'GBP'),
         [PRE_CREDIT_PERIOD]: mapPeriodDays(mockAnswers[PRE_CREDIT_PERIOD]),
         [CREDIT_PERIOD]: mapPeriodDays(mockAnswers[CREDIT_PERIOD]),

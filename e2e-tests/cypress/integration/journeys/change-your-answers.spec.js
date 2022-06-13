@@ -112,7 +112,7 @@ context('Change your answers after checking answers', () => {
     });
 
     describe('change `UK content`', () => {
-      let row = checkYourAnswersPage.summaryLists.export[UK_CONTENT_PERCENTAGE];
+      const row = checkYourAnswersPage.summaryLists.export[UK_CONTENT_PERCENTAGE];
 
       it(`clicking 'change' redirects to ${ROUTES.UK_CONTENT_PERCENTAGE_CHANGE}`, () => {
         row.changeLink().click();
@@ -120,26 +120,13 @@ context('Change your answers after checking answers', () => {
       });
 
       it('has originally submitted answer', () => {
-        const expectedValue = submissionData[UK_CONTENT_PERCENTAGE];
-        ukContentPercentagePage.input().should('have.attr', 'value', expectedValue);
+        ukContentPercentagePage.yesInput().should('be.checked');
       });
 
-      it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-        ukContentPercentagePage.input().clear().type('40');
-
+      it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
         ukContentPercentagePage.submitButton().click();
 
         cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
-      });
-
-      it('renders the new answer in `Check your answers` page', () => {
-        row = checkYourAnswersPage.summaryLists.export[UK_CONTENT_PERCENTAGE];
-
-        row.value().invoke('text').then((text) => {
-          const expected = '40%';
-
-          expect(text.trim()).equal(expected);
-        });
       });
     });
   });

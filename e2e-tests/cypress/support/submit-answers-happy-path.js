@@ -36,7 +36,7 @@ export default () => {
   triedToObtainCoverPage.submitButton().click();
 
   // uk content percentage page/form
-  ukContentPercentagePage.input().type('50');
+  ukContentPercentagePage.yes().click();
   ukContentPercentagePage.submitButton().click();
 
   // tell us about your deal page
