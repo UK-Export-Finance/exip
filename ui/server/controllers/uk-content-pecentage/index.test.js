@@ -2,7 +2,7 @@ const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
-const { validation: generateValidationErrors } = require('./validation');
+const generateValidationErrors = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
 const { mockReq, mockRes } = require('../../test-mocks');
 
@@ -50,9 +50,30 @@ describe('controllers/uk-content-percentage', () => {
       });
     });
 
+    describe('when the submitted answer is `false`', () => {
+      beforeEach(() => {
+        req.body[FIELD_IDS.UK_CONTENT_PERCENTAGE] = 'false';
+      });
+
+      it(`should redirect to ${ROUTES.CANNOT_OBTAIN_COVER}`, () => {
+        controller.post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.CANNOT_OBTAIN_COVER);
+      });
+
+      it('should add previousRoute and exitReason to req.flash', () => {
+        controller.post(req, res);
+
+        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.UK_CONTENT_PERCENTAGE);
+
+        const expectedReason = CONTENT_STRINGS.PAGES.CANNOT_OBTAIN_COVER_PAGE.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES;
+        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
+      });
+    });
+
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.UK_CONTENT_PERCENTAGE]: '50',
+        [FIELD_IDS.UK_CONTENT_PERCENTAGE]: 'true',
       };
 
       beforeEach(() => {

@@ -173,9 +173,7 @@ context('Check your answers page', () => {
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[UK_CONTENT_PERCENTAGE]}%`;
-
-        expect(text.trim()).equal(expected);
+        expect(text.trim()).equal(SUMMARY[UK_CONTENT_PERCENTAGE]);
       });
 
       row.changeLink().invoke('text').then((text) => {

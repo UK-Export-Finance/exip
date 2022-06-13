@@ -34,7 +34,7 @@ const FIELDS = {
     TITLE: 'Export destination',
   },
   [FIELD_IDS.UK_CONTENT_PERCENTAGE]: {
-    TITLE: 'UK Content',
+    TITLE: 'UK goods or services in export',
     LABEL: 'Percentage of your export that is UK content',
     HINT: 'Enter the UK content of your export as a percentage.',
   },

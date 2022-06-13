@@ -51,16 +51,40 @@ const TRIED_TO_OBTAIN_COVER_PAGE = {
 };
 
 const FINAL_DESTINATION_PAGE = {
-  PAGE_TITLE: 'What is the final destination for your export?',
-  HEADING: 'What is the final destination for your export?',
+  PAGE_TITLE: 'Is at least 20% of your export made up of UK goods or services',
+  HEADING: 'Is at least 20% of your export made up of UK goods or services',
 };
 
 const UK_CONTENT_PERCENTAGE_PAGE = {
-  PAGE_TITLE: 'What percentage of your export is UK content?',
-  HEADING: 'What percentage of your export is UK content?',
-  DESCRIPTION_1: 'UK content is an export contract’s value less the cost to you of buying any goods and/or services from suppliers outside the UK, the Isle of Man or the Channel Islands, to be supplied directly to the buyer or otherwise “as is”.',
-  DESCRIPTION_2: 'Materials and components in goods manufactured or assembled in the UK, the Isle of Man or the Channel Islands, which would be eligible for a certificate of UK origin from a British Chamber of Commerce are treated as UK content.',
-  WARNING: 'In order to submit a full application you will need to provide evidence that the export contains a minimum of 20% UK content.',
+  PAGE_TITLE: 'Is at least 20% of your export made up of UK goods or services?',
+  HEADING: 'Is at least 20% of your export made up of UK goods or services?',
+  DETAILS: {
+    INTRO: 'I\'m not sure',
+    ITEMS: [
+      [
+        {
+          text: 'Your export must be made up of at least 20% UK goods or services to be eligible for UKEF export insurance.',
+        },
+      ],
+      [
+        {
+          text: 'You can get help with this question from one of our',
+        },
+        {
+          text: 'Export Finance Managers',
+          href: '#',
+        },
+        {
+          text: 'if you want to work out if you\'re eligible or not.',
+        },
+      ],
+      [
+        {
+          text: 'We\'ll also calculate this amount exactly with you later if you decide to go ahead and make a full application.',
+        },
+      ],
+    ],
+  },
 };
 
 const TELL_US_ABOUT_YOUR_DEAL_PAGE = {
@@ -84,6 +108,7 @@ const CANNOT_OBTAIN_COVER_PAGE = {
     INTRO: 'This is because',
     CAN_GET_PRIVATE_INSURANCE: 'you\'re able to get insurance for this export from companies in the private sector.',
     HAVE_NOT_TRIED_PRIVATE_INSURANCE: 'you\'ve not yet tried to get this from private insurers.',
+    NOT_ENOUGH_UK_GOODS_OR_SERVICES: 'your export does not contain enough UK goods or services.',
   },
   ACTIONS: {
     INTRO: 'You can:',

@@ -1,7 +1,7 @@
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
-const { validation: generateValidationErrors } = require('./validation');
+const generateValidationErrors = require('./validation');
 const updateSubmittedData = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
 
@@ -25,6 +25,22 @@ const post = (req, res) => {
       ...singleInputPageVariables(PAGE_VARIABLES),
       validationErrors,
     });
+  }
+
+  const answer = req.body[FIELD_IDS.UK_CONTENT_PERCENTAGE];
+
+  const redirectToExitPage = (answer === 'false');
+
+  if (redirectToExitPage) {
+    req.flash('previousRoute', ROUTES.UK_CONTENT_PERCENTAGE);
+
+    const { PAGES } = CONTENT_STRINGS;
+    const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
+    const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
+
+    req.flash('exitReason', REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES);
+
+    return res.redirect(ROUTES.CANNOT_OBTAIN_COVER);
   }
 
   req.session.submittedData = updateSubmittedData(

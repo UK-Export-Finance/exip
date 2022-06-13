@@ -1,0 +1,26 @@
+{% macro render(params) %}
+  {% set items = params.items %}
+
+  {% if items.length %}
+
+    {% for item in items %}
+
+      <p data-cy="details-{{ loop.index }}">
+        {% for child in item %}
+
+          {% if child.href %}
+            <a href="{{ child.href }}">{{ child.text }}</a>
+
+          {% else %}
+            {{ child.text }}
+
+          {% endif %}
+
+        {% endfor %}
+      </p>
+
+    {% endfor %}
+
+  {% endif %}
+
+{% endmacro %}
