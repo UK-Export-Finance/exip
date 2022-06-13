@@ -5,42 +5,18 @@ const {
   objectHasValues,
   objectHasProperty,
 } = require('../../helpers/object');
-const isNumber = require('../../helpers/number');
-
-const getValidationErrors = (message) =>
-  generateValidationErrors(
-    FIELD_IDS.UK_CONTENT_PERCENTAGE,
-    message,
-  );
 
 const validation = (formBody) => {
   let errors;
 
-  const hasNoValue = (!objectHasValues(formBody)
+  const hasErrors = (!objectHasValues(formBody)
     || !objectHasProperty(formBody, FIELD_IDS.UK_CONTENT_PERCENTAGE));
 
-  if (hasNoValue) {
-    errors = getValidationErrors(CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.UK_CONTENT_PERCENTAGE].IS_EMPTY);
-
-    return errors;
-  }
-
-  const submittedValue = formBody[FIELD_IDS.UK_CONTENT_PERCENTAGE];
-
-  if (!isNumber(Number(submittedValue))) {
-    errors = getValidationErrors(CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.UK_CONTENT_PERCENTAGE].NOT_A_NUMBER);
-
-    return errors;
-  }
-
-  if (Number(submittedValue) < 0) {
-    errors = getValidationErrors(CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.UK_CONTENT_PERCENTAGE].BELOW_MINIMUM);
-
-    return errors;
-  }
-
-  if (Number(submittedValue) > 100) {
-    errors = getValidationErrors(CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.UK_CONTENT_PERCENTAGE].ABOVE_MAXIMUM);
+  if (hasErrors) {
+    errors = generateValidationErrors(
+      FIELD_IDS.UK_CONTENT_PERCENTAGE,
+      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.UK_CONTENT_PERCENTAGE].IS_EMPTY,
+    );
 
     return errors;
   }
@@ -48,7 +24,4 @@ const validation = (formBody) => {
   return null;
 };
 
-module.exports = {
-  getValidationErrors,
-  validation,
-};
+module.exports = validation;

@@ -1,9 +1,9 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-{% from 'govuk/components/label/macro.njk' import govukLabel %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from 'govuk/components/radios/macro.njk' import govukRadios %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% import './components/details-text.njk' as detailsText %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 
@@ -38,60 +38,51 @@
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-    <div class="{{ class }}">
-
-      <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
-
-      <p class="govuk-body" data-cy="description-1">{{ CONTENT_STRINGS.DESCRIPTION_1 }}</p>
-      <p class="govuk-body" data-cy="description-2">{{ CONTENT_STRINGS.DESCRIPTION_2 }}</p>
-
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds-from-desktop">
-          {{ govukWarningText({
-            text: CONTENT_STRINGS.WARNING,
-            attributes: {
-              "data-cy": "warning"
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ govukRadios({
+          classes: "govuk-radios--inline",
+          idPrefix: FIELD_NAME,
+          name: FIELD_NAME,
+          fieldset: {
+            legend: {
+              html: "<h1 class='govuk-heading-l' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1>"
             }
-          }) }}
-        </div>
-      </div>
-
-        {{ govukLabel({
-          for: FIELD_NAME,
-          classes: "govuk-!-margin-bottom-3",
-          html: "<span class='govuk-hint' data-cy='label-hint'>" + FIELD_HINT + "</span>",
-          attributes: {
-            "data-cy": "label"
-          }
-        }) }}
-
-        {{ govukErrorMessage({
-          text: validationErrors.errorList[FIELD_NAME].text,
-          attributes: {
-            "data-cy": FIELD_NAME + "-error-message"
-          }
-        }) }}
-
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-one-quarter-from-desktop">
-            <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-padding-right-0 govuk-!-padding-left-0">
-
-              {{ govukInput({
-                id: FIELD_NAME,
-                name: FIELD_NAME,
-                suffix: {
-                  text: "%"
-                },
+          },
+          items: [
+            {
+              value: true,
+              text: "Yes",
+              label: {
                 attributes: {
-                  "data-cy": "input"
-                },
-                value: submittedValues[FIELD_NAME]
-              }) }}
+                  "data-cy": FIELD_NAME + "-yes"
+                }
+              },
+              attributes: {
+                "data-cy": FIELD_NAME + "-yes-input"
+              },
+              checked: submittedValues[FIELD_NAME] === true
+            },
+            {
+              value: false,
+              text: "No",
+              label: {
+                attributes: {
+                  "data-cy": FIELD_NAME + "-no"
+                }
+              },
+              checked: submittedValues[FIELD_NAME] === false
+            }
+          ],
+          errorMessage: validationErrors.errorList[FIELD_NAME]and {
+            text: validationErrors.errorList[FIELD_NAME].text,
+            attributes: {
+              "data-cy": FIELD_NAME + "-error-message"
+            }
+          }
+        }) }}
 
-            </div>
-          </div>
-        </div>
-
+      </div>
     </div>
 
     {{ govukButton({
@@ -100,6 +91,22 @@
         'data-cy': 'submit-button'
       }
     }) }}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {{ govukDetails({
+          summaryText: CONTENT_STRINGS.DETAILS.INTRO,
+          html: detailsText.render({
+            items: CONTENT_STRINGS.DETAILS.ITEMS
+          }),
+          attributes: {
+            "data-cy": "details"
+          }
+        }) }}
+
+      </div>
+    </div>
 
   </form>
 

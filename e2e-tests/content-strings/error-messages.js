@@ -7,10 +7,7 @@ const ERROR_MESSAGES = {
   [FIELD_IDS.TRIED_PRIVATE_COVER]: 'Select if you are unable to get private insurance for this export',
   [FIELD_IDS.COUNTRY]: 'Select the final destination for your export',
   [FIELD_IDS.UK_CONTENT_PERCENTAGE]: {
-    IS_EMPTY: 'Enter the percentage of your export that is UK content',
-    NOT_A_NUMBER: `${FIELDS[FIELD_IDS.UK_CONTENT_PERCENTAGE].LABEL} must be a number`,
-    BELOW_MINIMUM: `${FIELDS[FIELD_IDS.UK_CONTENT_PERCENTAGE].LABEL} must be 0 or more`,
-    ABOVE_MAXIMUM: `${FIELDS[FIELD_IDS.UK_CONTENT_PERCENTAGE].LABEL} must be 100 or fewer`,
+    IS_EMPTY: 'Select whether at least 20% of your export is made up of UK goods and services',
   },
   [FIELD_IDS.CREDIT_LIMIT_GROUP]: {
     IS_EMPTY: 'Select the currency and input the credit limit needed',
