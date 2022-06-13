@@ -56,8 +56,8 @@ const FINAL_DESTINATION_PAGE = {
 };
 
 const UK_CONTENT_PERCENTAGE_PAGE = {
-  PAGE_TITLE: 'What percentage of your export is UK content?',
-  HEADING: 'What percentage of your export is UK content?',
+  PAGE_TITLE: 'Is at least 20% of your export made up of UK goods or services?',
+  HEADING: 'Is at least 20% of your export made up of UK goods or services?',
   DETAILS: {
     INTRO: 'I\'m not sure',
     ITEMS: [
