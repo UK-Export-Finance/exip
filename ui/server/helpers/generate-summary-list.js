@@ -9,7 +9,7 @@ const { FIELD_GROUPS } = require('../constants');
 const generateSummaryListRows = (fields, submittedData) =>
   fields.map((field) => ({
     key: {
-      text: field.TITLE,
+      text: field.LABEL,
       classes: `${field.ID}-key`,
     },
     value: {
@@ -21,7 +21,7 @@ const generateSummaryListRows = (fields, submittedData) =>
         {
           href: field.CHANGE_ROUTE,
           text: CONTENT_STRINGS.LINKS.CHANGE,
-          visuallyHiddenText: field.TITLE,
+          visuallyHiddenText: field.LABEL,
           attributes: {
             'data-cy': `${field.ID}-change-link`,
           },

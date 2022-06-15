@@ -1,6 +1,6 @@
 const rule = require('./policy-length');
-const { FIELD_IDS } = require('../../../../constants');
-const CONTENT_STRINGS = require('../../../../content-strings');
+const { FIELD_IDS, FIELD_VALUES } = require('../../../../constants');
+const { ERROR_MESSAGES } = require('../../../../content-strings');
 const generateValidationErrors = require('../../../../helpers/validation');
 
 describe('controllers/tell-us-about-your-deal/validation/rules/policy-length', () => {
@@ -9,47 +9,154 @@ describe('controllers/tell-us-about-your-deal/validation/rules/policy-length', (
     errorList: {},
   };
 
-  describe(`when ${FIELD_IDS.POLICY_LENGTH} is not provided`, () => {
-    it('should return validation error', () => {
-      const mockBody = {
-        [FIELD_IDS.POLICY_LENGTH]: '',
-      };
+  const mockBody = {
+    [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+  };
 
-      const result = rule(mockBody, mockErrors);
+  describe(`when ${FIELD_IDS.POLICY_TYPE} is ${FIELD_VALUES.POLICY_TYPE.SINGLE}`, () => {
+    beforeEach(() => {
+      mockBody[FIELD_IDS.POLICY_TYPE] = FIELD_VALUES.POLICY_TYPE.SINGLE;
+    });
 
-      const expected = generateValidationErrors(
-        FIELD_IDS.POLICY_LENGTH,
-        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.POLICY_LENGTH].IS_EMPTY,
-        mockErrors,
-      );
+    describe(`when ${FIELD_IDS.SINGLE_POLICY_LENGTH} is not provided`, () => {
+      it('should return validation error', () => {
+        mockBody[FIELD_IDS.SINGLE_POLICY_LENGTH] = '';
 
-      expect(result).toEqual(expected);
+        const result = rule(mockBody, mockErrors);
+
+        const expected = generateValidationErrors(
+          FIELD_IDS.SINGLE_POLICY_LENGTH,
+          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY,
+          mockErrors,
+        );
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${FIELD_IDS.SINGLE_POLICY_LENGTH} is not a number`, () => {
+      it('should return validation error', () => {
+        mockBody[FIELD_IDS.SINGLE_POLICY_LENGTH] = 'invalid';
+
+        const result = rule(mockBody, mockErrors);
+
+        const expected = generateValidationErrors(
+          FIELD_IDS.SINGLE_POLICY_LENGTH,
+          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER,
+          mockErrors,
+        );
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${FIELD_IDS.SINGLE_POLICY_LENGTH} is below the minimum`, () => {
+      it('should return validation error', () => {
+        mockBody[FIELD_IDS.SINGLE_POLICY_LENGTH] = '0';
+
+        const result = rule(mockBody, mockErrors);
+
+        const expected = generateValidationErrors(
+          FIELD_IDS.SINGLE_POLICY_LENGTH,
+          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM,
+          mockErrors,
+        );
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${FIELD_IDS.SINGLE_POLICY_LENGTH} is above the maximum`, () => {
+      it('should return validation error', () => {
+        mockBody[FIELD_IDS.SINGLE_POLICY_LENGTH] = '25';
+
+        const result = rule(mockBody, mockErrors);
+
+        const expected = generateValidationErrors(
+          FIELD_IDS.SINGLE_POLICY_LENGTH,
+          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM,
+          mockErrors,
+        );
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 
-  describe(`when ${FIELD_IDS.POLICY_LENGTH} is not a number`, () => {
-    it('should return validation error', () => {
-      const mockBody = {
-        [FIELD_IDS.POLICY_LENGTH]: 'invalid',
-      };
+  describe(`when ${FIELD_IDS.POLICY_TYPE} is ${FIELD_VALUES.POLICY_TYPE.MULTI}`, () => {
+    beforeEach(() => {
+      mockBody[FIELD_IDS.POLICY_TYPE] = FIELD_VALUES.POLICY_TYPE.MULTI;
+    });
 
-      const result = rule(mockBody, mockErrors);
+    describe(`when ${FIELD_IDS.MULTI_POLICY_LENGTH} is not provided`, () => {
+      it('should return validation error', () => {
+        mockBody[FIELD_IDS.MULTI_POLICY_LENGTH] = '';
 
-      const expected = generateValidationErrors(
-        FIELD_IDS.POLICY_LENGTH,
-        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.POLICY_LENGTH].NOT_A_NUMBER,
-        mockErrors,
-      );
+        const result = rule(mockBody, mockErrors);
 
-      expect(result).toEqual(expected);
+        const expected = generateValidationErrors(
+          FIELD_IDS.MULTI_POLICY_LENGTH,
+          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].IS_EMPTY,
+          mockErrors,
+        );
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${FIELD_IDS.MULTI_POLICY_LENGTH} is not a number`, () => {
+      it('should return validation error', () => {
+        mockBody[FIELD_IDS.MULTI_POLICY_LENGTH] = 'invalid';
+
+        const result = rule(mockBody, mockErrors);
+
+        const expected = generateValidationErrors(
+          FIELD_IDS.MULTI_POLICY_LENGTH,
+          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_NUMBER,
+          mockErrors,
+        );
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${FIELD_IDS.MULTI_POLICY_LENGTH} is below the minimum`, () => {
+      it('should return validation error', () => {
+        mockBody[FIELD_IDS.MULTI_POLICY_LENGTH] = '0';
+
+        const result = rule(mockBody, mockErrors);
+
+        const expected = generateValidationErrors(
+          FIELD_IDS.MULTI_POLICY_LENGTH,
+          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].BELOW_MINIMUM,
+          mockErrors,
+        );
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${FIELD_IDS.POLICY_LENGTH} is above the maximum`, () => {
+      it('should return validation error', () => {
+        mockBody[FIELD_IDS.MULTI_POLICY_LENGTH] = '13';
+
+        const result = rule(mockBody, mockErrors);
+
+        const expected = generateValidationErrors(
+          FIELD_IDS.MULTI_POLICY_LENGTH,
+          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].ABOVE_MAXIMUM,
+          mockErrors,
+        );
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 
   describe('when there are no validation errors', () => {
     it('should return the already provided errors', () => {
-      const mockBody = {
-        [FIELD_IDS.POLICY_LENGTH]: '10',
-      };
+      mockBody[FIELD_IDS.POLICY_TYPE] = FIELD_VALUES.POLICY_TYPE.MULTI;
+      mockBody[FIELD_IDS.MULTI_POLICY_LENGTH] = '10';
 
       const result = rule(mockBody, mockErrors);
 

@@ -1,25 +1,25 @@
-const rule = require('./credit-limit');
+const rule = require('./currency');
 const { FIELD_IDS } = require('../../../../constants');
-const CONTENT_STRINGS = require('../../../../content-strings');
+const { ERROR_MESSAGES } = require('../../../../content-strings');
 const generateValidationErrors = require('../../../../helpers/validation');
 
-describe('controllers/tell-us-about-your-deal/validation/rules/credit-limit', () => {
+describe('controllers/tell-us-about-your-deal/validation/rules/currency', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
   };
 
-  describe(`when ${FIELD_IDS.CREDIT_LIMIT} is not a number`, () => {
+  describe(`when ${FIELD_IDS.CURRENCY} is not provided`, () => {
     it('should return validation error', () => {
       const mockBody = {
-        [FIELD_IDS.CREDIT_LIMIT]: 'invalid',
+        [FIELD_IDS.CURRENCY]: '',
       };
 
       const result = rule(mockBody, mockErrors);
 
       const expected = generateValidationErrors(
-        FIELD_IDS.CREDIT_LIMIT,
-        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.CREDIT_LIMIT].NOT_A_NUMBER,
+        FIELD_IDS.CURRENCY,
+        ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,
         mockErrors,
       );
 
@@ -30,7 +30,7 @@ describe('controllers/tell-us-about-your-deal/validation/rules/credit-limit', ()
   describe('when there are no validation errors', () => {
     it('should return the already provided errors', () => {
       const mockBody = {
-        [FIELD_IDS.CREDIT_LIMIT]: '10',
+        [FIELD_IDS.CURRENCY]: 'GBP',
       };
 
       const result = rule(mockBody, mockErrors);

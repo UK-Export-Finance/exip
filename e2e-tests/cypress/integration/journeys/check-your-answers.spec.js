@@ -20,8 +20,8 @@ context('Check your answers page', () => {
     VALID_BUYER_BASE,
     TRIED_PRIVATE_COVER,
     UK_CONTENT_PERCENTAGE,
-    CREDIT_LIMIT_CURRENCY,
-    CREDIT_LIMIT,
+    CURRENCY,
+    AMOUNT,
     PRE_CREDIT_PERIOD,
     CREDIT_PERIOD,
     POLICY_LENGTH,
@@ -30,8 +30,8 @@ context('Check your answers page', () => {
 
   const submissionData = {
     [UK_CONTENT_PERCENTAGE]: '50',
-    [CREDIT_LIMIT_CURRENCY]: 'GBP',
-    [CREDIT_LIMIT]: '100',
+    [CURRENCY]: 'GBP',
+    [AMOUNT]: '100',
     [PRE_CREDIT_PERIOD]: '1',
     [CREDIT_PERIOD]: '2',
     [POLICY_LENGTH]: '3',
@@ -85,7 +85,7 @@ context('Check your answers page', () => {
     });
   });
 
-  context('company summary list', () => {
+  context.only('company summary list', () => {
     const list = checkYourAnswersPage.summaryLists.company;
 
     it('renders a heading', () => {
@@ -194,30 +194,9 @@ context('Check your answers page', () => {
       });
     });
 
-    it('renders `Credit limit` key, value and change link', () => {
-      const row = list[FIELD_IDS.CREDIT_LIMIT];
-      const expectedKeyText = FIELDS[CREDIT_LIMIT].TITLE;
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
-
-      row.value().invoke('text').then((text) => {
-        const expected = '£100.00';
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
-    });
-
     it('renders `Pre-credit period` key, value and change link', () => {
       const row = list[FIELD_IDS.PRE_CREDIT_PERIOD];
-      const expectedKeyText = FIELDS[PRE_CREDIT_PERIOD].TITLE;
+      const expectedKeyText = FIELDS[PRE_CREDIT_PERIOD].LABEL;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);

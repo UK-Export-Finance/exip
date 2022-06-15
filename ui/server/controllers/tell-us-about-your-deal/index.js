@@ -15,17 +15,17 @@ const PAGE_VARIABLES = {
   },
   BACK_LINK: ROUTES.UK_CONTENT_PERCENTAGE,
   FIELDS: {
-    CREDIT_LIMIT_GROUP: {
-      ID: FIELD_IDS.CREDIT_LIMIT_GROUP,
-      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_LIMIT_GROUP],
+    AMOUNT_CURRENCY: {
+      ID: FIELD_IDS.AMOUNT_CURRENCY,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.AMOUNT_CURRENCY],
     },
-    CREDIT_LIMIT_CURRENCY: {
-      ID: FIELD_IDS.CREDIT_LIMIT_CURRENCY,
-      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_LIMIT_CURRENCY],
+    CURRENCY: {
+      ID: FIELD_IDS.CURRENCY,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CURRENCY],
     },
-    CREDIT_LIMIT: {
-      ID: FIELD_IDS.CREDIT_LIMIT,
-      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_LIMIT],
+    AMOUNT: {
+      ID: FIELD_IDS.AMOUNT,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.AMOUNT],
     },
     PRE_CREDIT_PERIOD: {
       ID: FIELD_IDS.PRE_CREDIT_PERIOD,
@@ -35,9 +35,13 @@ const PAGE_VARIABLES = {
       ID: FIELD_IDS.CREDIT_PERIOD,
       ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_PERIOD],
     },
-    POLICY_LENGTH: {
-      ID: FIELD_IDS.POLICY_LENGTH,
-      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.POLICY_LENGTH],
+    SINGLE_POLICY_LENGTH: {
+      ID: FIELD_IDS.SINGLE_POLICY_LENGTH,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.SINGLE_POLICY_LENGTH],
+    },
+    MULTI_POLICY_LENGTH: {
+      ID: FIELD_IDS.MULTI_POLICY_LENGTH,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.MULTI_POLICY_LENGTH],
     },
     POLICY_TYPE: {
       ID: FIELD_IDS.POLICY_TYPE,
@@ -52,7 +56,7 @@ const get = async (req, res) => {
 
   let mappedCurrencies;
   if (submittedData) {
-    mappedCurrencies = mapCurrencies(currencies, submittedData[FIELD_IDS.CREDIT_LIMIT_CURRENCY]);
+    mappedCurrencies = mapCurrencies(currencies, submittedData[FIELD_IDS.CURRENCY]);
   } else {
     mappedCurrencies = mapCurrencies(currencies);
   }
@@ -69,7 +73,7 @@ const post = async (req, res) => {
 
   if (validationErrors) {
     const currencies = await api.getCurrencies();
-    const mappedCurrencies = mapCurrencies(currencies, req.body[FIELD_IDS.CREDIT_LIMIT_CURRENCY]);
+    const mappedCurrencies = mapCurrencies(currencies, req.body[FIELD_IDS.CURRENCY]);
 
     return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
       ...PAGE_VARIABLES,

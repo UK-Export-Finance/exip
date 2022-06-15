@@ -90,7 +90,7 @@ const UK_CONTENT_PERCENTAGE_PAGE = {
 const TELL_US_ABOUT_YOUR_DEAL_PAGE = {
   PAGE_TITLE: 'Tell us about your deal',
   HEADING: 'Tell us about your deal',
-  DESCRIPTION: 'In order to give you a premium quote, we need some information on your deal.',
+  DESCRIPTION: 'To give you a quote, we need some more information.',
 };
 
 const CHECK_YOUR_ANSWERS_PAGE = {

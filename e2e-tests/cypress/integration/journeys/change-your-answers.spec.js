@@ -21,8 +21,8 @@ context('Change your answers after checking answers', () => {
     TRIED_PRIVATE_COVER,
     FINAL_DESTINATION,
     UK_CONTENT_PERCENTAGE,
-    CREDIT_LIMIT_CURRENCY,
-    CREDIT_LIMIT,
+    CURRENCY,
+    AMOUNT,
     PRE_CREDIT_PERIOD,
     CREDIT_PERIOD,
     POLICY_LENGTH,
@@ -32,8 +32,8 @@ context('Change your answers after checking answers', () => {
   const submissionData = {
     [FINAL_DESTINATION]: 'France',
     [UK_CONTENT_PERCENTAGE]: '50',
-    [CREDIT_LIMIT_CURRENCY]: 'GBP',
-    [CREDIT_LIMIT]: '100',
+    [CURRENCY]: 'GBP',
+    [AMOUNT]: '100',
     [PRE_CREDIT_PERIOD]: '1',
     [CREDIT_PERIOD]: '2',
     [POLICY_LENGTH]: '3',
@@ -132,8 +132,8 @@ context('Change your answers after checking answers', () => {
   });
 
   context('Deal fields', () => {
-    describe('change `Credit limit`', () => {
-      let row = checkYourAnswersPage.summaryLists.deal[CREDIT_LIMIT];
+    describe('change `Currency`', () => {
+      let row = checkYourAnswersPage.summaryLists.deal[CURRENCY];
 
       it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
         row.changeLink().click();
@@ -141,19 +141,50 @@ context('Change your answers after checking answers', () => {
       });
 
       it('has originally submitted answer', () => {
-        const expectedValue = submissionData[CREDIT_LIMIT];
-        tellUsAboutYourDealPage[CREDIT_LIMIT].input().should('have.attr', 'value', expectedValue);
+        const expectedValue = submissionData[CURRENCY];
+        tellUsAboutYourDealPage[CURRENCY].inputOptionSelected().contains(expectedValue);
       });
 
       it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-        tellUsAboutYourDealPage[CREDIT_LIMIT].input().clear().type('200');
+        tellUsAboutYourDealPage[CURRENCY].input().select('EUR');
         tellUsAboutYourDealPage.submitButton().click();
 
         cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
       });
 
       it('renders the new answer in `Check your answers` page', () => {
-        row = checkYourAnswersPage.summaryLists.deal[CREDIT_LIMIT];
+        row = checkYourAnswersPage.summaryLists.deal[AMOUNT];
+
+        row.value().invoke('text').then((text) => {
+          const expected = '£100.00';
+
+          expect(text.trim()).equal(expected);
+        });
+      });
+    });
+
+    describe('change `Amount`', () => {
+      let row = checkYourAnswersPage.summaryLists.deal[AMOUNT];
+
+      it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
+        row.changeLink().click();
+        cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+      });
+
+      it('has originally submitted answer', () => {
+        const expectedValue = submissionData[AMOUNT];
+        tellUsAboutYourDealPage[AMOUNT].input().should('have.attr', 'value', expectedValue);
+      });
+
+      it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+        tellUsAboutYourDealPage[AMOUNT].input().clear().type('200');
+        tellUsAboutYourDealPage.submitButton().click();
+
+        cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+      });
+
+      it('renders the new answer in `Check your answers` page', () => {
+        row = checkYourAnswersPage.summaryLists.deal[AMOUNT];
 
         row.value().invoke('text').then((text) => {
           const expected = '£200.00';

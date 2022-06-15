@@ -42,17 +42,17 @@ describe('controllers/buyer-based', () => {
         },
         BACK_LINK: ROUTES.UK_CONTENT_PERCENTAGE,
         FIELDS: {
-          CREDIT_LIMIT_GROUP: {
-            ID: FIELD_IDS.CREDIT_LIMIT_GROUP,
-            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_LIMIT_GROUP],
+          AMOUNT_CURRENCY: {
+            ID: FIELD_IDS.AMOUNT_CURRENCY,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.AMOUNT_CURRENCY],
           },
-          CREDIT_LIMIT_CURRENCY: {
-            ID: FIELD_IDS.CREDIT_LIMIT_CURRENCY,
-            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_LIMIT_CURRENCY],
+          CURRENCY: {
+            ID: FIELD_IDS.CURRENCY,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CURRENCY],
           },
-          CREDIT_LIMIT: {
-            ID: FIELD_IDS.CREDIT_LIMIT,
-            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_LIMIT],
+          AMOUNT: {
+            ID: FIELD_IDS.AMOUNT,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.AMOUNT],
           },
           PRE_CREDIT_PERIOD: {
             ID: FIELD_IDS.PRE_CREDIT_PERIOD,
@@ -62,9 +62,13 @@ describe('controllers/buyer-based', () => {
             ID: FIELD_IDS.CREDIT_PERIOD,
             ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_PERIOD],
           },
-          POLICY_LENGTH: {
-            ID: FIELD_IDS.POLICY_LENGTH,
-            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.POLICY_LENGTH],
+          SINGLE_POLICY_LENGTH: {
+            ID: FIELD_IDS.SINGLE_POLICY_LENGTH,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.SINGLE_POLICY_LENGTH],
+          },
+          MULTI_POLICY_LENGTH: {
+            ID: FIELD_IDS.MULTI_POLICY_LENGTH,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.MULTI_POLICY_LENGTH],
           },
           POLICY_TYPE: {
             ID: FIELD_IDS.POLICY_TYPE,
@@ -111,7 +115,7 @@ describe('controllers/buyer-based', () => {
 
         const expectedCurrencies = mapCurrencies(
           mockCurrenciesResponse,
-          req.session.submittedData[FIELD_IDS.CREDIT_LIMIT_CURRENCY],
+          req.session.submittedData[FIELD_IDS.CURRENCY],
         );
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
@@ -142,7 +146,7 @@ describe('controllers/buyer-based', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
           ...controller.PAGE_VARIABLES,
-          currencies: mapCurrencies(mockCurrenciesResponse, req.body[FIELD_IDS.CREDIT_LIMIT_CURRENCY]),
+          currencies: mapCurrencies(mockCurrenciesResponse, req.body[FIELD_IDS.CURRENCY]),
           validationErrors: generateValidationErrors(req.body),
           submittedValues: req.body,
         });
@@ -151,10 +155,10 @@ describe('controllers/buyer-based', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.CREDIT_LIMIT_CURRENCY]: 'GBP',
-        [FIELD_IDS.CREDIT_LIMIT]: '10',
-        [FIELD_IDS.PRE_CREDIT_PERIOD]: '20',
+        [FIELD_IDS.CURRENCY]: 'GBP',
+        [FIELD_IDS.AMOUNT]: '10',
         [FIELD_IDS.CREDIT_PERIOD]: '30',
+        [FIELD_IDS.PRE_CREDIT_PERIOD]: '20',
         [FIELD_IDS.POLICY_LENGTH]: '40',
         [FIELD_IDS.POLICY_TYPE]: 'mock',
       };

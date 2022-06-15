@@ -12,12 +12,12 @@ const {
   VALID_COMPANY_BASE,
   VALID_BUYER_BASE,
   TRIED_PRIVATE_COVER,
-  CREDIT_LIMIT_CURRENCY,
-  CREDIT_LIMIT,
+  CURRENCY,
+  AMOUNT,
   PRE_CREDIT_PERIOD,
   CREDIT_PERIOD,
-  POLICY_LENGTH,
   POLICY_TYPE,
+  SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
 export default () => {
@@ -40,11 +40,11 @@ export default () => {
   ukContentPercentagePage.submitButton().click();
 
   // tell us about your deal page
-  tellUsAboutYourDealPage[CREDIT_LIMIT_CURRENCY].input().select('GBP');
-  tellUsAboutYourDealPage[CREDIT_LIMIT].input().type('100');
+  tellUsAboutYourDealPage[CURRENCY].input().select('GBP');
+  tellUsAboutYourDealPage[AMOUNT].input().type('100');
   tellUsAboutYourDealPage[PRE_CREDIT_PERIOD].input().type('1');
   tellUsAboutYourDealPage[CREDIT_PERIOD].input().type('2');
-  tellUsAboutYourDealPage[POLICY_LENGTH].input().type('3');
   tellUsAboutYourDealPage[POLICY_TYPE].single.input().click();
+  tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().type('13');
   tellUsAboutYourDealPage.submitButton().click();
 };

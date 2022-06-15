@@ -5,12 +5,13 @@ const FIELD_IDS = {
   COUNTRY: 'country',
   FINAL_DESTINATION: 'finalDestination',
   UK_CONTENT_PERCENTAGE: 'ukContentPercentage',
-  CREDIT_LIMIT_GROUP: 'creditLimitGroup',
-  CREDIT_LIMIT_CURRENCY: 'creditLimitCurrency',
-  CREDIT_LIMIT: 'creditLimit',
+  AMOUNT_CURRENCY: 'amountAndCurrency',
+  CURRENCY: 'currency',
+  AMOUNT: 'amount',
   PRE_CREDIT_PERIOD: 'preCreditPeriodDays',
   CREDIT_PERIOD: 'creditPeriodDays',
-  POLICY_LENGTH: 'policyLengthMonths',
+  SINGLE_POLICY_LENGTH: 'singlePolicyLengthMonths',
+  MULTI_POLICY_LENGTH: 'multiPolicyLengthMonths',
   POLICY_TYPE: 'policyType',
 };
 
