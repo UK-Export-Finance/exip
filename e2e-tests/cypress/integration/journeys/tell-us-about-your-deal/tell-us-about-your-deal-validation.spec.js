@@ -2,7 +2,7 @@ import tellUsAboutYourDealPage from '../../pages/tellUsAboutYourDeal';
 import partials from '../../partials';
 import { ERROR_MESSAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
-import checkText from '../../helpers/check-error-message';
+import checkText from '../../helpers/check-text';
 
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
@@ -132,9 +132,8 @@ context('Tell us about your deal page - form validation', () => {
 
       checkText(
         partials.errorSummaryListItems().eq(2),
-        ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER
+        ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER,
       );
-      });
 
       checkText(
         tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].errorMessage(),
