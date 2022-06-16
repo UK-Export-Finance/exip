@@ -25,6 +25,7 @@ context('Change your answers after checking answers', () => {
     PRE_CREDIT_PERIOD,
     CREDIT_PERIOD,
     POLICY_TYPE,
+    POLICY_LENGTH,
     SINGLE_POLICY_LENGTH,
     MULTI_POLICY_LENGTH,
   } = FIELD_IDS;
@@ -36,7 +37,7 @@ context('Change your answers after checking answers', () => {
     [PRE_CREDIT_PERIOD]: '1',
     [CREDIT_PERIOD]: '2',
     [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-    [SINGLE_POLICY_LENGTH]: '13',
+    [POLICY_LENGTH]: '13',
   };
 
   before(() => {
@@ -254,7 +255,7 @@ context('Change your answers after checking answers', () => {
     });
 
     describe('change `Policy type` and `Policy length`', () => {
-      let row = checkYourAnswersPage.summaryLists.deal[SINGLE_POLICY_LENGTH];
+      let row = checkYourAnswersPage.summaryLists.deal[POLICY_LENGTH];
 
       it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
         row.changeLink().click();
@@ -266,7 +267,7 @@ context('Change your answers after checking answers', () => {
       });
 
       it('has originally submitted `policy length`', () => {
-        tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().should('have.attr', 'value', submissionData[SINGLE_POLICY_LENGTH]);
+        tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().should('have.attr', 'value', submissionData[POLICY_LENGTH]);
       });
 
       it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
@@ -286,10 +287,12 @@ context('Change your answers after checking answers', () => {
           expect(text.trim()).equal(expected);
         });
 
-        row = checkYourAnswersPage.summaryLists.deal[MULTI_POLICY_LENGTH];
+        row = checkYourAnswersPage.summaryLists.deal[POLICY_LENGTH];
 
         row.value().invoke('text').then((text) => {
-          expect(text.trim()).equal(10);
+          const expected = '10 months';
+
+          expect(text.trim()).equal(expected);
         });
       });
     });
