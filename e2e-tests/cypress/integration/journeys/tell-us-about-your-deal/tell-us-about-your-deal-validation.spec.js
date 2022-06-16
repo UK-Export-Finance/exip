@@ -64,7 +64,7 @@ context('Tell us about your deal page - form validation', () => {
       // policy type
       checkText(
         partials.errorSummaryListItems().eq(3),
-        ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE]
+        ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE],
       );
 
       checkText(
