@@ -2,6 +2,7 @@ import tellUsAboutYourDealPage from '../../pages/tellUsAboutYourDeal';
 import partials from '../../partials';
 import { ERROR_MESSAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
+import checkText from '../../helpers/check-error-message';
 
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
@@ -28,56 +29,48 @@ context('Tell us about your deal page - form validation', () => {
       partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
       // currency
-      partials.errorSummaryListItems().eq(0).invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY;
+      checkText(
+        partials.errorSummaryListItems().eq(0),
+        ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,
+      );
 
-        expect(text.trim()).equal(expectedMessage);
-      });
-
-      tellUsAboutYourDealPage[FIELD_IDS.CURRENCY].errorMessage().invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY;
-
-        expect(text.trim()).includes(expectedMessage);
-      });
+      checkText(
+        tellUsAboutYourDealPage[FIELD_IDS.CURRENCY].errorMessage(),
+        ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,
+      );
 
       // amount
-      partials.errorSummaryListItems().eq(1).invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY;
+      checkText(
+        partials.errorSummaryListItems().eq(1),
+        ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY,
+      );
 
-        expect(text.trim()).equal(expectedMessage);
-      });
-
-      tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].errorMessage().invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY;
-
-        expect(text.trim()).includes(expectedMessage);
-      });
+      checkText(
+        tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].errorMessage(),
+        ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY,
+      );
 
       // credit period
-      partials.errorSummaryListItems().eq(2).invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY;
+      checkText(
+        partials.errorSummaryListItems().eq(2),
+        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY,
+      );
 
-        expect(text.trim()).equal(expectedMessage);
-      });
-
-      tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].errorMessage().invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY;
-
-        expect(text.trim()).includes(expectedMessage);
-      });
+      checkText(
+        tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
+        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY,
+      );
 
       // policy type
-      partials.errorSummaryListItems().eq(3).invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE];
+      checkText(
+        partials.errorSummaryListItems().eq(3),
+        ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE],
+      );
 
-        expect(text.trim()).equal(expectedMessage);
-      });
-
-      tellUsAboutYourDealPage[FIELD_IDS.POLICY_TYPE].errorMessage().invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE];
-
-        expect(text.trim()).includes(expectedMessage);
-      });
+      checkText(
+        tellUsAboutYourDealPage[FIELD_IDS.POLICY_TYPE].errorMessage(),
+        ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE],
+      );
     });
   });
 
@@ -86,17 +79,15 @@ context('Tell us about your deal page - form validation', () => {
       tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].input().type('a');
       tellUsAboutYourDealPage.submitButton().click();
 
-      partials.errorSummaryListItems().eq(1).invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_NUMBER;
+      checkText(
+        partials.errorSummaryListItems().eq(1),
+        ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_NUMBER,
+      );
 
-        expect(text.trim()).equal(expectedMessage);
-      });
-
-      tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].errorMessage().invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_NUMBER;
-
-        expect(text.trim()).includes(expectedMessage);
-      });
+      checkText(
+        tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].errorMessage(),
+        ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_NUMBER,
+      );
     });
   });
 
@@ -105,17 +96,15 @@ context('Tell us about your deal page - form validation', () => {
       tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].input().type('0');
       tellUsAboutYourDealPage.submitButton().click();
 
-      partials.errorSummaryListItems().eq(1).invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.AMOUNT].BELOW_MINIMUM;
+      checkText(
+        partials.errorSummaryListItems().eq(1),
+        ERROR_MESSAGES[FIELD_IDS.AMOUNT].BELOW_MINIMUM,
+      );
 
-        expect(text.trim()).equal(expectedMessage);
-      });
-
-      tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].errorMessage().invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.AMOUNT].BELOW_MINIMUM;
-
-        expect(text.trim()).includes(expectedMessage);
-      });
+      checkText(
+        tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].errorMessage(),
+        ERROR_MESSAGES[FIELD_IDS.AMOUNT].BELOW_MINIMUM,
+      );
     });
   });
 
@@ -124,17 +113,15 @@ context('Tell us about your deal page - form validation', () => {
       tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].input().type('a');
       tellUsAboutYourDealPage.submitButton().click();
 
-      partials.errorSummaryListItems().eq(2).invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER;
+      checkText(
+        partials.errorSummaryListItems().eq(2),
+        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER,
+      );
 
-        expect(text.trim()).equal(expectedMessage);
-      });
-
-      tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].errorMessage().invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER;
-
-        expect(text.trim()).includes(expectedMessage);
-      });
+      checkText(
+        tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
+        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER,
+      );
     });
   });
 
@@ -143,17 +130,16 @@ context('Tell us about your deal page - form validation', () => {
       tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].input().type('a');
       tellUsAboutYourDealPage.submitButton().click();
 
-      partials.errorSummaryListItems().eq(2).invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER;
-
-        expect(text.trim()).equal(expectedMessage);
+      checkText(
+        partials.errorSummaryListItems().eq(2),
+        ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER
+      );
       });
 
-      tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].errorMessage().invoke('text').then((text) => {
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER;
-
-        expect(text.trim()).includes(expectedMessage);
-      });
+      checkText(
+        tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].errorMessage(),
+        ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER,
+      );
     });
   });
 

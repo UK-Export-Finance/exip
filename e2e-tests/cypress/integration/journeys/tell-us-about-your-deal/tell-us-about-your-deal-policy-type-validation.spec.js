@@ -2,6 +2,7 @@ import tellUsAboutYourDealPage from '../../pages/tellUsAboutYourDeal';
 import partials from '../../partials';
 import { ERROR_MESSAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
+import checkText from '../../helpers/check-text';
 
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
@@ -30,17 +31,15 @@ context('Tell us about your deal page - policy type & length validation', () => 
       it('should render a validation error', () => {
         tellUsAboutYourDealPage.submitButton().click();
 
-        partials.errorSummaryListItems().eq(3).invoke('text').then((text) => {
-          const expectedMessage = ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY;
+        checkText(
+          partials.errorSummaryListItems().eq(3),
+          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY,
+        );
 
-          expect(text.trim()).equal(expectedMessage);
-        });
-
-        tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage().invoke('text').then((text) => {
-          const expectedMessage = ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY;
-
-          expect(text.trim()).includes(expectedMessage);
-        });
+        checkText(
+          tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
+          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY,
+        );
       });
 
       describe('when `single policy length` has a non-numeric value', () => {
@@ -48,17 +47,15 @@ context('Tell us about your deal page - policy type & length validation', () => 
           tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('a');
           tellUsAboutYourDealPage.submitButton().click();
 
-          partials.errorSummaryListItems().eq(3).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER;
+          checkText(
+            partials.errorSummaryListItems().eq(3),
+            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER,
+          );
 
-            expect(text.trim()).equal(expectedMessage);
-          });
-
-          tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER;
-
-            expect(text.trim()).includes(expectedMessage);
-          });
+          checkText(
+            tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
+            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER,
+          );
         });
       });
 
@@ -67,17 +64,15 @@ context('Tell us about your deal page - policy type & length validation', () => 
           tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('0');
           tellUsAboutYourDealPage.submitButton().click();
 
-          partials.errorSummaryListItems().eq(3).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM;
+          checkText(
+            partials.errorSummaryListItems().eq(3),
+            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM,
+          );
 
-            expect(text.trim()).equal(expectedMessage);
-          });
-
-          tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM;
-
-            expect(text.trim()).includes(expectedMessage);
-          });
+          checkText(
+            tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
+            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM,
+          );
         });
       });
 
@@ -86,17 +81,15 @@ context('Tell us about your deal page - policy type & length validation', () => 
           tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('25');
           tellUsAboutYourDealPage.submitButton().click();
 
-          partials.errorSummaryListItems().eq(3).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM;
+          checkText(
+            partials.errorSummaryListItems().eq(3),
+            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM,
+          );
 
-            expect(text.trim()).equal(expectedMessage);
-          });
-
-          tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM;
-
-            expect(text.trim()).includes(expectedMessage);
-          });
+          checkText(
+            tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
+            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM,
+          );
         });
       });
     });
@@ -111,17 +104,15 @@ context('Tell us about your deal page - policy type & length validation', () => 
       it('should render a validation error', () => {
         tellUsAboutYourDealPage.submitButton().click();
 
-        partials.errorSummaryListItems().eq(3).invoke('text').then((text) => {
-          const expectedMessage = ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].IS_EMPTY;
+        checkText(
+          partials.errorSummaryListItems().eq(3),
+          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].IS_EMPTY,
+        );
 
-          expect(text.trim()).equal(expectedMessage);
-        });
-
-        tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].errorMessage().invoke('text').then((text) => {
-          const expectedMessage = ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].IS_EMPTY;
-
-          expect(text.trim()).includes(expectedMessage);
-        });
+        checkText(
+          tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].errorMessage(),
+          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].IS_EMPTY,
+        );
       });
 
       describe('when `single policy length` has a non-numeric value', () => {
@@ -129,17 +120,15 @@ context('Tell us about your deal page - policy type & length validation', () => 
           tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].input().clear().type('a');
           tellUsAboutYourDealPage.submitButton().click();
 
-          partials.errorSummaryListItems().eq(3).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_NUMBER;
+          checkText(
+            partials.errorSummaryListItems().eq(3),
+            ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_NUMBER,
+          );
 
-            expect(text.trim()).equal(expectedMessage);
-          });
-
-          tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_NUMBER;
-
-            expect(text.trim()).includes(expectedMessage);
-          });
+          checkText(
+            tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].errorMessage(),
+            ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_NUMBER,
+          );
         });
       });
 
@@ -148,17 +137,15 @@ context('Tell us about your deal page - policy type & length validation', () => 
           tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].input().clear().type('0');
           tellUsAboutYourDealPage.submitButton().click();
 
-          partials.errorSummaryListItems().eq(3).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].BELOW_MINIMUM;
+          checkText(
+            partials.errorSummaryListItems().eq(3),
+            ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].BELOW_MINIMUM,
+          );
 
-            expect(text.trim()).equal(expectedMessage);
-          });
-
-          tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].BELOW_MINIMUM;
-
-            expect(text.trim()).includes(expectedMessage);
-          });
+          checkText(
+            tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].errorMessage(),
+            ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].BELOW_MINIMUM,
+          );
         });
       });
 
@@ -167,17 +154,15 @@ context('Tell us about your deal page - policy type & length validation', () => 
           tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].input().clear().type('13');
           tellUsAboutYourDealPage.submitButton().click();
 
-          partials.errorSummaryListItems().eq(3).invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].ABOVE_MAXIMUM;
+          checkText(
+            partials.errorSummaryListItems().eq(3),
+            ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].ABOVE_MAXIMUM,
+          );
 
-            expect(text.trim()).equal(expectedMessage);
-          });
-
-          tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].errorMessage().invoke('text').then((text) => {
-            const expectedMessage = ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].ABOVE_MAXIMUM;
-
-            expect(text.trim()).includes(expectedMessage);
-          });
+          checkText(
+            tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].errorMessage(),
+            ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].ABOVE_MAXIMUM,
+          );
         });
       });
     });
