@@ -3,7 +3,7 @@ const { TEMPLATES, ROUTES, FIELD_IDS } = require('../../constants');
 const api = require('../../api');
 const mapCurrencies = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
-const updateSubmittedData = require('../../helpers/update-submitted-data');
+const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {

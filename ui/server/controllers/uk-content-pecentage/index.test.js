@@ -3,7 +3,7 @@ const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const generateValidationErrors = require('./validation');
-const updateSubmittedData = require('../../helpers/update-submitted-data');
+const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const { mockReq, mockRes } = require('../../test-mocks');
 
 describe('controllers/uk-content-percentage', () => {

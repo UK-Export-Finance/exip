@@ -4,7 +4,7 @@ const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const api = require('../../api');
 const mapCurrencies = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
-const updateSubmittedData = require('../../helpers/update-submitted-data');
+const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
 
 describe('controllers/buyer-based', () => {
