@@ -11,7 +11,7 @@ const mapPolicyLength = (answers) => {
 
     return {
       [fieldId]: mapPeriodMonths(answers[FIELD_IDS.SINGLE_POLICY_LENGTH]),
-    }
+    };
   }
 
   if (answers[FIELD_IDS.MULTI_POLICY_LENGTH]) {
@@ -19,7 +19,7 @@ const mapPolicyLength = (answers) => {
 
     return {
       [fieldId]: mapPeriodMonths(answers[FIELD_IDS.MULTI_POLICY_LENGTH]),
-    }
+    };
   }
 
   return null;
@@ -35,7 +35,6 @@ const mapAnswersToContent = (answers) => {
     AMOUNT,
     PRE_CREDIT_PERIOD,
     CREDIT_PERIOD,
-    POLICY_LENGTH,
     POLICY_TYPE,
   } = FIELD_IDS;
 

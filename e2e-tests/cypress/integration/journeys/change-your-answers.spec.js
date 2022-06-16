@@ -25,9 +25,8 @@ context('Change your answers after checking answers', () => {
     PRE_CREDIT_PERIOD,
     CREDIT_PERIOD,
     POLICY_TYPE,
-    POLICY_LENGTH,
     SINGLE_POLICY_LENGTH,
-    MULTI_POLICY_LENGTH
+    MULTI_POLICY_LENGTH,
   } = FIELD_IDS;
 
   const submissionData = {
@@ -293,7 +292,6 @@ context('Change your answers after checking answers', () => {
           expect(text.trim()).equal(10);
         });
       });
-
     });
   });
 });

@@ -33,9 +33,7 @@ describe('sever/helpers/map-answers-to-content', () => {
   describe('mapPolicyLength', () => {
     describe(`when ${FIELD_IDS.SINGLE_POLICY_LENGTH} exists`, () => {
       it(`should return mapped ${FIELD_IDS.SINGLE_POLICY_LENGTH} object`, () => {
-        const mockAnswers = {
-          [FIELD_IDS.SINGLE_POLICY_LENGTH]: 10,
-        };
+        mockAnswers[FIELD_IDS.SINGLE_POLICY_LENGTH] = 10;
 
         const result = mapPolicyLength(mockAnswers);
 
@@ -49,9 +47,7 @@ describe('sever/helpers/map-answers-to-content', () => {
 
     describe(`when ${FIELD_IDS.MULTI_POLICY_LENGTH} exists`, () => {
       it(`should return mapped ${FIELD_IDS.MULTI_POLICY_LENGTH}`, () => {
-        const mockAnswers = {
-          [FIELD_IDS.MULTI_POLICY_LENGTH]: 10,
-        };
+        mockAnswers[FIELD_IDS.MULTI_POLICY_LENGTH] = 10;
 
         const result = mapPolicyLength(mockAnswers);
 
@@ -76,7 +72,6 @@ describe('sever/helpers/map-answers-to-content', () => {
         VALID_COMPANY_BASE,
         VALID_BUYER_BASE,
         TRIED_PRIVATE_COVER,
-        FINAL_DESTINATION,
         UK_CONTENT_PERCENTAGE,
         CURRENCY,
         AMOUNT,

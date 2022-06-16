@@ -24,7 +24,7 @@ describe('sever/helpers/generate-summary-list', () => {
     },
   ];
 
-  const mockSubmittedData = {
+  let mockSubmittedData = {
     [FIELD_IDS.VALID_COMPANY_BASE]: true,
   };
 
@@ -33,7 +33,7 @@ describe('sever/helpers/generate-summary-list', () => {
   describe('generateFieldGroups', () => {
     describe(`when submitted data has ${FIELD_IDS.SINGLE_POLICY_LENGTH}`, () => {
       it('should add `single policy length` to the `deal details` field groups', () => {
-        const mockSubmittedData = {
+        mockSubmittedData = {
           [FIELD_IDS.SINGLE_POLICY_LENGTH]: 'mock',
         };
 
@@ -53,7 +53,7 @@ describe('sever/helpers/generate-summary-list', () => {
 
     describe(`when submitted data has ${FIELD_IDS.MULTI_POLICY_LENGTH}`, () => {
       it('should return single policy length field', () => {
-        const mockSubmittedData = {
+        mockSubmittedData = {
           [FIELD_IDS.MULTI_POLICY_LENGTH]: 'mock',
         };
 
@@ -71,7 +71,7 @@ describe('sever/helpers/generate-summary-list', () => {
       });
     });
   });
-  
+
   describe('generateSummaryListRows', () => {
     it('returns an array of objects mapped to submitted data', () => {
       const result = generateSummaryListRows(
