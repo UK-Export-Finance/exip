@@ -1,4 +1,3 @@
-const FIELDS = require('./fields');
 const FIELD_IDS = require('../constants/field-ids');
 
 const ERROR_MESSAGES = {
@@ -9,24 +8,34 @@ const ERROR_MESSAGES = {
   [FIELD_IDS.UK_CONTENT_PERCENTAGE]: {
     IS_EMPTY: 'Select whether at least 20% of your export is made up of UK goods and services',
   },
-  [FIELD_IDS.CREDIT_LIMIT_GROUP]: {
-    IS_EMPTY: 'Select the currency and input the credit limit needed',
+  [FIELD_IDS.CURRENCY]: {
+    IS_EMPTY: 'Select the currency your buyer will pay you in',
   },
-  [FIELD_IDS.CREDIT_LIMIT]: {
-    NOT_A_NUMBER: `${FIELDS[FIELD_IDS.CREDIT_LIMIT].TITLE} must be a number`,
+  [FIELD_IDS.AMOUNT]: {
+    IS_EMPTY: 'Enter maximum amount your buyer will owe you at any single point',
+    NOT_A_NUMBER: 'Maximum amount must be a number',
+    BELOW_MINIMUM: 'Maximum amount must be 1 or more',
   },
   [FIELD_IDS.PRE_CREDIT_PERIOD]: {
-    NOT_A_NUMBER: `${FIELDS[FIELD_IDS.PRE_CREDIT_PERIOD].TITLE} must be a number`,
+    NOT_A_NUMBER: 'Pre-credit period must be a number',
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
-    IS_EMPTY: 'Enter the credit period needed',
-    NOT_A_NUMBER: `${FIELDS[FIELD_IDS.CREDIT_PERIOD].TITLE} must be a number`,
+    IS_EMPTY: 'Enter how many days credit you extent do your buyer',
+    NOT_A_NUMBER: 'Credit period must be a number',
   },
-  [FIELD_IDS.POLICY_LENGTH]: {
-    IS_EMPTY: 'Enter the credit policy length needed',
-    NOT_A_NUMBER: `${FIELDS[FIELD_IDS.POLICY_LENGTH].TITLE} must be a number`,
+  [FIELD_IDS.POLICY_TYPE]: 'Select a policy type',
+  [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
+    NOT_A_NUMBER: 'Policy length must be a number',
+    BELOW_MINIMUM: 'Policy length must be 1 month or more',
+    IS_EMPTY: 'Enter policy length of no more than 24 months',
+    ABOVE_MAXIMUM: 'Enter policy length of no more than 24 months',
   },
-  [FIELD_IDS.POLICY_TYPE]: 'Select an option for the policy type needed',
+  [FIELD_IDS.MULTI_POLICY_LENGTH]: {
+    NOT_A_NUMBER: 'Policy length must be a number',
+    BELOW_MINIMUM: 'Policy length must be 1 month or more',
+    IS_EMPTY: 'Enter policy length of no more than 12 months',
+    ABOVE_MAXIMUM: 'Enter policy length of no more than 12 months',
+  },
 };
 
 module.exports = ERROR_MESSAGES;

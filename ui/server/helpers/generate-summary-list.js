@@ -1,4 +1,8 @@
-const CONTENT_STRINGS = require('../content-strings');
+const {
+  PAGES,
+  FIELDS,
+  LINKS,
+} = require('../content-strings');
 const { FIELD_GROUPS } = require('../constants');
 
 /*
@@ -9,7 +13,7 @@ const { FIELD_GROUPS } = require('../constants');
 const generateSummaryListRows = (fields, submittedData) =>
   fields.map((field) => ({
     key: {
-      text: field.TITLE,
+      text: FIELDS[field.ID].SUMMARY.TITLE,
       classes: `${field.ID}-key`,
     },
     value: {
@@ -20,8 +24,8 @@ const generateSummaryListRows = (fields, submittedData) =>
       items: [
         {
           href: field.CHANGE_ROUTE,
-          text: CONTENT_STRINGS.LINKS.CHANGE,
-          visuallyHiddenText: field.TITLE,
+          text: LINKS.CHANGE,
+          visuallyHiddenText: FIELDS[field.ID].SUMMARY.TITLE,
           attributes: {
             'data-cy': `${field.ID}-change-link`,
           },
@@ -37,15 +41,15 @@ const generateSummaryListRows = (fields, submittedData) =>
 const generateSummaryList = (submittedData) => {
   const summaryList = {
     COMPANY: {
-      GROUP_TITLE: CONTENT_STRINGS.PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_COMPANY,
+      GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_COMPANY,
       ROWS: generateSummaryListRows(FIELD_GROUPS.COMPANY_DETAILS.FIELDS, submittedData),
     },
     EXPORT: {
-      GROUP_TITLE: CONTENT_STRINGS.PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
+      GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
       ROWS: generateSummaryListRows(FIELD_GROUPS.EXPORT_DETAILS.FIELDS, submittedData),
     },
     DEAL: {
-      GROUP_TITLE: CONTENT_STRINGS.PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_DEAL,
+      GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_DEAL,
       ROWS: generateSummaryListRows(FIELD_GROUPS.DEAL_DETAILS.FIELDS, submittedData),
     },
   };

@@ -6,11 +6,12 @@ const {
   TRIED_PRIVATE_COVER,
   FINAL_DESTINATION,
   UK_CONTENT_PERCENTAGE,
-  CREDIT_LIMIT,
+  CURRENCY,
+  AMOUNT,
   PRE_CREDIT_PERIOD,
   CREDIT_PERIOD,
-  POLICY_LENGTH,
   POLICY_TYPE,
+  POLICY_LENGTH,
 } = FIELD_IDS;
 
 const checkYourAnswersPage = {
@@ -51,10 +52,15 @@ const checkYourAnswersPage = {
     },
     deal: {
       heading: () => cy.get('[data-cy="summaryList-heading-deal"]'),
-      [CREDIT_LIMIT]: {
-        key: () => cy.get(`.${CREDIT_LIMIT}-key`),
-        value: () => cy.get(`.${CREDIT_LIMIT}-value`),
-        changeLink: () => cy.get(`[data-cy="${CREDIT_LIMIT}-change-link"]`),
+      [CURRENCY]: {
+        key: () => cy.get(`.${CURRENCY}-key`),
+        value: () => cy.get(`.${CURRENCY}-value`),
+        changeLink: () => cy.get(`[data-cy="${CURRENCY}-change-link"]`),
+      },
+      [AMOUNT]: {
+        key: () => cy.get(`.${AMOUNT}-key`),
+        value: () => cy.get(`.${AMOUNT}-value`),
+        changeLink: () => cy.get(`[data-cy="${AMOUNT}-change-link"]`),
       },
       [PRE_CREDIT_PERIOD]: {
         key: () => cy.get(`.${PRE_CREDIT_PERIOD}-key`),
@@ -66,15 +72,15 @@ const checkYourAnswersPage = {
         value: () => cy.get(`.${CREDIT_PERIOD}-value`),
         changeLink: () => cy.get(`[data-cy="${CREDIT_PERIOD}-change-link"]`),
       },
-      [POLICY_LENGTH]: {
-        key: () => cy.get(`.${POLICY_LENGTH}-key`),
-        value: () => cy.get(`.${POLICY_LENGTH}-value`),
-        changeLink: () => cy.get(`[data-cy="${POLICY_LENGTH}-change-link"]`),
-      },
       [POLICY_TYPE]: {
         key: () => cy.get(`.${POLICY_TYPE}-key`),
         value: () => cy.get(`.${POLICY_TYPE}-value`),
         changeLink: () => cy.get(`[data-cy="${POLICY_TYPE}-change-link"]`),
+      },
+      [POLICY_LENGTH]: {
+        key: () => cy.get(`.${POLICY_LENGTH}-key`),
+        value: () => cy.get(`.${POLICY_LENGTH}-value`),
+        changeLink: () => cy.get(`[data-cy="${POLICY_LENGTH}-change-link"]`),
       },
     },
   },

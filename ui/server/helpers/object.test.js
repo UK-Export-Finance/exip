@@ -20,6 +20,14 @@ describe('sever/helpers/object', () => {
         expect(result).toEqual(false);
       });
     });
+
+    describe('when there is no object', () => {
+      it('should return false', () => {
+        const result = objectHasValues();
+
+        expect(result).toEqual(false);
+      });
+    });
   });
 
   describe('objectHasProperty', () => {

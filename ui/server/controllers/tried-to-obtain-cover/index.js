@@ -6,7 +6,7 @@ const {
   TEMPLATES,
 } = require('../../constants');
 const generateValidationErrors = require('./validation');
-const updateSubmittedData = require('../../helpers/update-submitted-data');
+const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {

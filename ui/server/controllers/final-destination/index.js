@@ -4,7 +4,7 @@ const singleInputPageVariables = require('../../helpers/single-input-page-variab
 const api = require('../../api');
 const mapCountries = require('../../helpers/map-countries');
 const { validation: generateValidationErrors } = require('./validation');
-const updateSubmittedData = require('../../helpers/update-submitted-data');
+const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {

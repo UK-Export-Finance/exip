@@ -2,15 +2,14 @@ const { FIELD_IDS } = require('../../../../constants');
 const CONTENT_STRINGS = require('../../../../content-strings');
 const generateValidationErrors = require('../../../../helpers/validation');
 const { objectHasProperty } = require('../../../../helpers/object');
-const isNumber = require('../../../../helpers/number');
 
-const creditLimitRules = (formBody, errors) => {
+const currencyRules = (formBody, errors) => {
   let updatedErrors = errors;
 
-  if (objectHasProperty(formBody, FIELD_IDS.CREDIT_LIMIT) && !isNumber(Number(formBody[FIELD_IDS.CREDIT_LIMIT]))) {
+  if (!objectHasProperty(formBody, FIELD_IDS.CURRENCY)) {
     updatedErrors = generateValidationErrors(
-      FIELD_IDS.CREDIT_LIMIT,
-      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.CREDIT_LIMIT].NOT_A_NUMBER,
+      FIELD_IDS.CURRENCY,
+      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,
       errors,
     );
   }
@@ -18,4 +17,4 @@ const creditLimitRules = (formBody, errors) => {
   return updatedErrors;
 };
 
-module.exports = creditLimitRules;
+module.exports = currencyRules;

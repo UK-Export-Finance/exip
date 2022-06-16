@@ -7,7 +7,7 @@ const {
   TEMPLATES,
 } = require('../../constants');
 const generateValidationErrors = require('./validation');
-const updateSubmittedData = require('../../helpers/update-submitted-data');
+const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const { mockReq, mockRes } = require('../../test-mocks');
 
 describe('controllers/tried-to-obtain-cover', () => {

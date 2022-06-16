@@ -5,7 +5,7 @@ const singleInputPageVariables = require('../../helpers/single-input-page-variab
 const { validation: generateValidationErrors } = require('./validation');
 const api = require('../../api');
 const mapCountries = require('../../helpers/map-countries');
-const updateSubmittedData = require('../../helpers/update-submitted-data');
+const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
 
 describe('controllers/final-destination', () => {

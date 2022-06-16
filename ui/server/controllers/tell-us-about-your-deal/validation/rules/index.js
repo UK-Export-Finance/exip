@@ -1,17 +1,17 @@
-const creditLimitGroupRules = require('./credit-limit-group');
-const creditLimitRules = require('./credit-limit');
+const currencyRules = require('./currency');
+const amountRules = require('./amount');
 const preCreditPeriodRules = require('./pre-credit-period');
 const creditPeriodRules = require('./credit-period');
-const policyLengthRules = require('./policy-length');
 const policyTypeRules = require('./policy-type');
+const policyLengthRules = require('./policy-length');
 
 const rules = [
-  creditLimitGroupRules,
-  creditLimitRules,
+  currencyRules,
+  amountRules,
   preCreditPeriodRules,
   creditPeriodRules,
-  policyLengthRules,
   policyTypeRules,
+  policyLengthRules,
 ];
 
 module.exports = rules;

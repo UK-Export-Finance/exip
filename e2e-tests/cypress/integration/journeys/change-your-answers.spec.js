@@ -19,25 +19,25 @@ context('Change your answers after checking answers', () => {
     VALID_COMPANY_BASE,
     VALID_BUYER_BASE,
     TRIED_PRIVATE_COVER,
-    FINAL_DESTINATION,
     UK_CONTENT_PERCENTAGE,
-    CREDIT_LIMIT_CURRENCY,
-    CREDIT_LIMIT,
+    CURRENCY,
+    AMOUNT,
     PRE_CREDIT_PERIOD,
     CREDIT_PERIOD,
-    POLICY_LENGTH,
     POLICY_TYPE,
+    POLICY_LENGTH,
+    SINGLE_POLICY_LENGTH,
+    MULTI_POLICY_LENGTH,
   } = FIELD_IDS;
 
   const submissionData = {
-    [FINAL_DESTINATION]: 'France',
     [UK_CONTENT_PERCENTAGE]: '50',
-    [CREDIT_LIMIT_CURRENCY]: 'GBP',
-    [CREDIT_LIMIT]: '100',
+    [CURRENCY]: 'GBP',
+    [AMOUNT]: '100',
     [PRE_CREDIT_PERIOD]: '1',
     [CREDIT_PERIOD]: '2',
-    [POLICY_LENGTH]: '3',
     [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+    [POLICY_LENGTH]: '13',
   };
 
   before(() => {
@@ -73,7 +73,7 @@ context('Change your answers after checking answers', () => {
   });
 
   context('Export fields', () => {
-    describe('change `Buyer location`', () => {
+    describe('change `Buyer based`', () => {
       const row = checkYourAnswersPage.summaryLists.export[VALID_BUYER_BASE];
 
       it(`clicking 'change' redirects to ${ROUTES.BUYER_BASED_CHANGE}`, () => {
@@ -111,7 +111,7 @@ context('Change your answers after checking answers', () => {
       });
     });
 
-    describe('change `UK content`', () => {
+    describe('change `UK goods`', () => {
       const row = checkYourAnswersPage.summaryLists.export[UK_CONTENT_PERCENTAGE];
 
       it(`clicking 'change' redirects to ${ROUTES.UK_CONTENT_PERCENTAGE_CHANGE}`, () => {
@@ -132,8 +132,8 @@ context('Change your answers after checking answers', () => {
   });
 
   context('Deal fields', () => {
-    describe('change `Credit limit`', () => {
-      let row = checkYourAnswersPage.summaryLists.deal[CREDIT_LIMIT];
+    describe('change `Amount`', () => {
+      let row = checkYourAnswersPage.summaryLists.deal[AMOUNT];
 
       it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
         row.changeLink().click();
@@ -141,24 +141,53 @@ context('Change your answers after checking answers', () => {
       });
 
       it('has originally submitted answer', () => {
-        const expectedValue = submissionData[CREDIT_LIMIT];
-        tellUsAboutYourDealPage[CREDIT_LIMIT].input().should('have.attr', 'value', expectedValue);
+        const expectedValue = submissionData[AMOUNT];
+        tellUsAboutYourDealPage[AMOUNT].input().should('have.attr', 'value', expectedValue);
       });
 
       it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-        tellUsAboutYourDealPage[CREDIT_LIMIT].input().clear().type('200');
+        tellUsAboutYourDealPage[AMOUNT].input().clear().type('200');
         tellUsAboutYourDealPage.submitButton().click();
 
         cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
       });
 
       it('renders the new answer in `Check your answers` page', () => {
-        row = checkYourAnswersPage.summaryLists.deal[CREDIT_LIMIT];
+        row = checkYourAnswersPage.summaryLists.deal[AMOUNT];
 
         row.value().invoke('text').then((text) => {
           const expected = '£200.00';
 
           expect(text.trim()).equal(expected);
+        });
+      });
+    });
+
+    describe('change `Currency`', () => {
+      let row = checkYourAnswersPage.summaryLists.deal[CURRENCY];
+
+      it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
+        row.changeLink().click();
+        cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+      });
+
+      it('has originally submitted answer', () => {
+        const expectedValue = submissionData[CURRENCY];
+        tellUsAboutYourDealPage[CURRENCY].inputOptionSelected().contains(expectedValue);
+      });
+
+      it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+        tellUsAboutYourDealPage[CURRENCY].input().select('EUR');
+        tellUsAboutYourDealPage.submitButton().click();
+
+        cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+      });
+
+      it('renders the new answer in `Check your answers` page', () => {
+        row = checkYourAnswersPage.summaryLists.deal[CURRENCY];
+
+        row.value().invoke('text').then((text) => {
+          expect(text.trim()).equal('EUR');
         });
       });
     });
@@ -225,7 +254,7 @@ context('Change your answers after checking answers', () => {
       });
     });
 
-    describe('change `Policy length`', () => {
+    describe('change `Policy type` and `Policy length`', () => {
       let row = checkYourAnswersPage.summaryLists.deal[POLICY_LENGTH];
 
       it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
@@ -233,53 +262,35 @@ context('Change your answers after checking answers', () => {
         cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
       });
 
-      it('has originally submitted answer', () => {
-        const expectedValue = submissionData[POLICY_LENGTH];
-        tellUsAboutYourDealPage[POLICY_LENGTH].input().should('have.attr', 'value', expectedValue);
-      });
-
-      it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-        tellUsAboutYourDealPage[POLICY_LENGTH].input().clear().type('4');
-        tellUsAboutYourDealPage.submitButton().click();
-
-        cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
-      });
-
-      it('renders the new answer in `Check your answers` page', () => {
-        row = checkYourAnswersPage.summaryLists.deal[POLICY_LENGTH];
-
-        row.value().invoke('text').then((text) => {
-          const expected = '4 months';
-
-          expect(text.trim()).equal(expected);
-        });
-      });
-    });
-
-    describe('change `Policy type`', () => {
-      let row = checkYourAnswersPage.summaryLists.deal[POLICY_TYPE];
-
-      it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
-        row.changeLink().click();
-        cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
-      });
-
-      it('has originally submitted answer', () => {
+      it('has originally submitted `policy type`', () => {
         tellUsAboutYourDealPage[POLICY_TYPE].single.input().should('be.checked');
       });
 
-      it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+      it('has originally submitted `policy length`', () => {
+        tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().should('have.attr', 'value', submissionData[POLICY_LENGTH]);
+      });
+
+      it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
         tellUsAboutYourDealPage[POLICY_TYPE].multi.input().click();
+        tellUsAboutYourDealPage[MULTI_POLICY_LENGTH].input().type('10');
         tellUsAboutYourDealPage.submitButton().click();
 
         cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
       });
 
-      it('renders the new answer in `Check your answers` page', () => {
+      it('renders the new answers in `Check your answers` page', () => {
         row = checkYourAnswersPage.summaryLists.deal[POLICY_TYPE];
 
         row.value().invoke('text').then((text) => {
           const expected = FIELD_VALUES.POLICY_TYPE.MULTI;
+
+          expect(text.trim()).equal(expected);
+        });
+
+        row = checkYourAnswersPage.summaryLists.deal[POLICY_LENGTH];
+
+        row.value().invoke('text').then((text) => {
+          const expected = '10 months';
 
           expect(text.trim()).equal(expected);
         });
