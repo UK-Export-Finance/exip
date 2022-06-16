@@ -38,7 +38,7 @@ context('Tell us about your deal page - policy type & length validation', () => 
 
         checkText(
           tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
-          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY,
+          `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY}`,
         );
       });
 
@@ -54,7 +54,7 @@ context('Tell us about your deal page - policy type & length validation', () => 
 
           checkText(
             tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
-            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER,
+            `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER}`,
           );
         });
       });
@@ -71,7 +71,7 @@ context('Tell us about your deal page - policy type & length validation', () => 
 
           checkText(
             tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
-            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM,
+            `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM}`,
           );
         });
       });
@@ -88,7 +88,7 @@ context('Tell us about your deal page - policy type & length validation', () => 
 
           checkText(
             tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
-            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM,
+            `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM}`,
           );
         });
       });
@@ -111,7 +111,7 @@ context('Tell us about your deal page - policy type & length validation', () => 
 
         checkText(
           tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].errorMessage(),
-          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].IS_EMPTY,
+          `Error: ${ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].IS_EMPTY}`,
         );
       });
 
@@ -127,7 +127,7 @@ context('Tell us about your deal page - policy type & length validation', () => 
 
           checkText(
             tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].errorMessage(),
-            ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_NUMBER,
+            `Error: ${ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_NUMBER}`,
           );
         });
       });
@@ -144,7 +144,7 @@ context('Tell us about your deal page - policy type & length validation', () => 
 
           checkText(
             tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].errorMessage(),
-            ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].BELOW_MINIMUM,
+            `Error: ${ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].BELOW_MINIMUM}`,
           );
         });
       });
@@ -161,7 +161,7 @@ context('Tell us about your deal page - policy type & length validation', () => 
 
           checkText(
             tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].errorMessage(),
-            ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].ABOVE_MAXIMUM,
+            `Error: ${ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].ABOVE_MAXIMUM}`,
           );
         });
       });

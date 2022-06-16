@@ -36,7 +36,7 @@ context('Tell us about your deal page - form validation', () => {
 
       checkText(
         tellUsAboutYourDealPage[FIELD_IDS.CURRENCY].errorMessage(),
-        ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY}`,
       );
 
       // amount
@@ -47,7 +47,7 @@ context('Tell us about your deal page - form validation', () => {
 
       checkText(
         tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].errorMessage(),
-        ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY,
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY}`,
       );
 
       // credit period
@@ -58,18 +58,18 @@ context('Tell us about your deal page - form validation', () => {
 
       checkText(
         tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
-        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY,
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY}`,
       );
 
       // policy type
       checkText(
         partials.errorSummaryListItems().eq(3),
-        ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE],
+        ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE]
       );
 
       checkText(
         tellUsAboutYourDealPage[FIELD_IDS.POLICY_TYPE].errorMessage(),
-        ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE],
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE]}`,
       );
     });
   });
@@ -86,7 +86,7 @@ context('Tell us about your deal page - form validation', () => {
 
       checkText(
         tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].errorMessage(),
-        ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_NUMBER,
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_NUMBER}`,
       );
     });
   });
@@ -103,7 +103,7 @@ context('Tell us about your deal page - form validation', () => {
 
       checkText(
         tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].errorMessage(),
-        ERROR_MESSAGES[FIELD_IDS.AMOUNT].BELOW_MINIMUM,
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.AMOUNT].BELOW_MINIMUM}`,
       );
     });
   });
@@ -120,7 +120,7 @@ context('Tell us about your deal page - form validation', () => {
 
       checkText(
         tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
-        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER,
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER}`,
       );
     });
   });
@@ -137,7 +137,7 @@ context('Tell us about your deal page - form validation', () => {
 
       checkText(
         tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].errorMessage(),
-        ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER,
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER}`,
       );
     });
   });

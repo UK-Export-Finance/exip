@@ -6,7 +6,7 @@ import {
   FIELDS,
   LINKS,
   PAGES,
-  SUMMARY,
+  SUMMARY_ANSWERS,
 } from '../../../content-strings';
 import CONSTANTS from '../../../constants';
 import FIELD_IDS from '../../../constants/field-ids';
@@ -103,7 +103,7 @@ context('Check your answers page', () => {
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY[VALID_COMPANY_BASE]);
+        expect(text.trim()).equal(SUMMARY_ANSWERS[VALID_COMPANY_BASE]);
       });
 
       row.changeLink().invoke('text').then((text) => {
@@ -133,7 +133,7 @@ context('Check your answers page', () => {
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY[VALID_BUYER_BASE]);
+        expect(text.trim()).equal(SUMMARY_ANSWERS[VALID_BUYER_BASE]);
       });
 
       row.changeLink().invoke('text').then((text) => {
@@ -153,7 +153,7 @@ context('Check your answers page', () => {
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY[TRIED_PRIVATE_COVER]);
+        expect(text.trim()).equal(SUMMARY_ANSWERS[TRIED_PRIVATE_COVER]);
       });
 
       row.changeLink().invoke('text').then((text) => {
@@ -173,7 +173,7 @@ context('Check your answers page', () => {
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY[UK_CONTENT_PERCENTAGE]);
+        expect(text.trim()).equal(SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE]);
       });
 
       row.changeLink().invoke('text').then((text) => {
