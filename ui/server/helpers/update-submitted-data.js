@@ -29,7 +29,6 @@ const mapSubmittedData = (submittedData) => {
   return mapped;
 };
 
-
 /*
  * updateSubmittedData
  * update session data with sanitised form data

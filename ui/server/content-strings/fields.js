@@ -1,29 +1,24 @@
 const FIELD_IDS = require('../constants/field-ids');
 const FIELD_VALUES = require('../constants/field-values');
-const { TRIED_TO_OBTAIN_COVER_PAGE } = require('./pages');
 
 const FIELDS = {
   [FIELD_IDS.COUNTRY]: {
-    TITLE: 'Company',
     HINT: 'Some countries are not covered by UK Export Finance. If your chosen destination is not in the list, then we cannot provide cover for it.',
     SUMMARY: {
       TITLE: 'Your company',
     },
   },
   [FIELD_IDS.VALID_COMPANY_BASE]: {
-    TITLE: 'Company',
     SUMMARY: {
       TITLE: 'Your company',
     },
   },
   [FIELD_IDS.VALID_BUYER_BASE]: {
-    TITLE: 'Buyer location',
     SUMMARY: {
       TITLE: 'Buyer is based',
     },
   },
   [FIELD_IDS.TRIED_PRIVATE_COVER]: {
-    TITLE: TRIED_TO_OBTAIN_COVER_PAGE.HEADING,
     OPTIONS: {
       YES: {
         VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.YES,
@@ -46,7 +41,6 @@ const FIELDS = {
     TITLE: 'Export destination',
   },
   [FIELD_IDS.UK_CONTENT_PERCENTAGE]: {
-    TITLE: 'UK goods or services in export',
     LABEL: 'Percentage of your export that is UK content',
     HINT: 'Enter the UK content of your export as a percentage.',
     SUMMARY: {

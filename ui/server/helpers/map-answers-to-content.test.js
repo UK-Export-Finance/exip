@@ -4,7 +4,7 @@ const {
   mapAnswersToContent,
 } = require('./map-answers-to-content');
 const FIELD_IDS = require('../constants/field-ids');
-const { SUMMARY } = require('../content-strings');
+const { SUMMARY_ANSWERS } = require('../content-strings');
 const formatCurrency = require('./format-currency');
 const { mockAnswers } = require('../test-mocks');
 
@@ -47,10 +47,10 @@ describe('sever/helpers/map-answers-to-content', () => {
       const result = mapAnswersToContent(mockAnswers);
 
       const expected = {
-        [VALID_COMPANY_BASE]: SUMMARY[VALID_COMPANY_BASE],
-        [VALID_BUYER_BASE]: SUMMARY[VALID_BUYER_BASE],
-        [TRIED_PRIVATE_COVER]: SUMMARY[TRIED_PRIVATE_COVER],
-        [UK_CONTENT_PERCENTAGE]: SUMMARY[UK_CONTENT_PERCENTAGE],
+        [VALID_COMPANY_BASE]: SUMMARY_ANSWERS[VALID_COMPANY_BASE],
+        [VALID_BUYER_BASE]: SUMMARY_ANSWERS[VALID_BUYER_BASE],
+        [TRIED_PRIVATE_COVER]: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER],
+        [UK_CONTENT_PERCENTAGE]: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
         [AMOUNT]: formatCurrency(mockAnswers[AMOUNT], 'GBP'),
         [CURRENCY]: mockAnswers[CURRENCY],
         [PRE_CREDIT_PERIOD]: mapPeriodDays(mockAnswers[PRE_CREDIT_PERIOD]),
