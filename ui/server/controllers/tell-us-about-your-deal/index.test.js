@@ -5,6 +5,7 @@ const api = require('../../api');
 const mapCurrencies = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
+const mapSubmittedValues = require('../../helpers/map-submitted-values');
 const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
 
 describe('controllers/buyer-based', () => {
@@ -121,7 +122,7 @@ describe('controllers/buyer-based', () => {
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
           ...controller.PAGE_VARIABLES,
           currencies: expectedCurrencies,
-          submittedValues: mockAnswers,
+          submittedValues: mapSubmittedValues(mockAnswers),
         });
       });
     });

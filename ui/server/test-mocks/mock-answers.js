@@ -12,7 +12,7 @@ const {
   PRE_CREDIT_PERIOD,
   CREDIT_PERIOD,
   POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
+  POLICY_LENGTH,
 } = FIELD_IDS;
 
 const mockAnswers = {
@@ -26,7 +26,7 @@ const mockAnswers = {
   [PRE_CREDIT_PERIOD]: 12,
   [CREDIT_PERIOD]: 24,
   [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-  [SINGLE_POLICY_LENGTH]: 10,
+  [POLICY_LENGTH]: 10,
 };
 
 module.exports = mockAnswers;

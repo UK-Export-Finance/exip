@@ -1,6 +1,5 @@
 const {
   generateSummaryListRows,
-  generateFieldGroups,
   generateSummaryList,
 } = require('./generate-summary-list');
 const {
@@ -24,58 +23,14 @@ describe('sever/helpers/generate-summary-list', () => {
     },
   ];
 
-  let mockSubmittedData = {
+  const mockSubmittedData = {
     [FIELD_IDS.VALID_COMPANY_BASE]: true,
   };
-
-  const fieldGroups = generateFieldGroups(mockAnswers);
-
-  describe('generateFieldGroups', () => {
-    describe(`when submitted data has ${FIELD_IDS.SINGLE_POLICY_LENGTH}`, () => {
-      it('should add `single policy length` to the `deal details` field groups', () => {
-        mockSubmittedData = {
-          [FIELD_IDS.SINGLE_POLICY_LENGTH]: 'mock',
-        };
-
-        const result = generateFieldGroups(mockSubmittedData);
-
-        const lastGroup = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 1];
-
-        const expected = {
-          ID: FIELD_IDS.SINGLE_POLICY_LENGTH,
-          ...FIELDS[FIELD_IDS.SINGLE_POLICY_LENGTH],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-        };
-
-        expect(lastGroup).toEqual(expected);
-      });
-    });
-
-    describe(`when submitted data has ${FIELD_IDS.MULTI_POLICY_LENGTH}`, () => {
-      it('should return single policy length field', () => {
-        mockSubmittedData = {
-          [FIELD_IDS.MULTI_POLICY_LENGTH]: 'mock',
-        };
-
-        const result = generateFieldGroups(mockSubmittedData);
-
-        const lastGroup = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 1];
-
-        const expected = {
-          ID: FIELD_IDS.MULTI_POLICY_LENGTH,
-          ...FIELDS[FIELD_IDS.MULTI_POLICY_LENGTH],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-        };
-
-        expect(lastGroup).toEqual(expected);
-      });
-    });
-  });
 
   describe('generateSummaryListRows', () => {
     it('returns an array of objects mapped to submitted data', () => {
       const result = generateSummaryListRows(
-        fieldGroups.COMPANY_DETAILS.FIELDS,
+        FIELD_GROUPS.COMPANY_DETAILS.FIELDS,
         mockSubmittedData,
       );
 

@@ -5,26 +5,6 @@ const formatCurrency = require('./format-currency');
 const mapPeriodDays = (answer) => `${answer} days`;
 const mapPeriodMonths = (answer) => `${answer} months`;
 
-const mapPolicyLength = (answers) => {
-  if (answers[FIELD_IDS.SINGLE_POLICY_LENGTH]) {
-    const fieldId = FIELD_IDS.SINGLE_POLICY_LENGTH;
-
-    return {
-      [fieldId]: mapPeriodMonths(answers[FIELD_IDS.SINGLE_POLICY_LENGTH]),
-    };
-  }
-
-  if (answers[FIELD_IDS.MULTI_POLICY_LENGTH]) {
-    const fieldId = FIELD_IDS.MULTI_POLICY_LENGTH;
-
-    return {
-      [fieldId]: mapPeriodMonths(answers[FIELD_IDS.MULTI_POLICY_LENGTH]),
-    };
-  }
-
-  return null;
-};
-
 const mapAnswersToContent = (answers) => {
   const {
     VALID_COMPANY_BASE,
@@ -36,6 +16,7 @@ const mapAnswersToContent = (answers) => {
     PRE_CREDIT_PERIOD,
     CREDIT_PERIOD,
     POLICY_TYPE,
+    POLICY_LENGTH,
   } = FIELD_IDS;
 
   const mapped = {
@@ -48,7 +29,7 @@ const mapAnswersToContent = (answers) => {
     [PRE_CREDIT_PERIOD]: mapPeriodDays(answers[PRE_CREDIT_PERIOD]),
     [CREDIT_PERIOD]: mapPeriodDays(answers[CREDIT_PERIOD]),
     [POLICY_TYPE]: answers[POLICY_TYPE],
-    ...mapPolicyLength(answers),
+    [POLICY_LENGTH]: mapPeriodMonths(answers[POLICY_LENGTH]),
   };
 
   return mapped;
@@ -57,6 +38,5 @@ const mapAnswersToContent = (answers) => {
 module.exports = {
   mapPeriodDays,
   mapPeriodMonths,
-  mapPolicyLength,
   mapAnswersToContent,
 };

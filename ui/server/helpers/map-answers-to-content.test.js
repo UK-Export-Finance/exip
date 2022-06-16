@@ -1,7 +1,6 @@
 const {
   mapPeriodDays,
   mapPeriodMonths,
-  mapPolicyLength,
   mapAnswersToContent,
 } = require('./map-answers-to-content');
 const FIELD_IDS = require('../constants/field-ids');
@@ -30,42 +29,6 @@ describe('sever/helpers/map-answers-to-content', () => {
     });
   });
 
-  describe('mapPolicyLength', () => {
-    describe(`when ${FIELD_IDS.SINGLE_POLICY_LENGTH} exists`, () => {
-      it(`should return mapped ${FIELD_IDS.SINGLE_POLICY_LENGTH} object`, () => {
-        mockAnswers[FIELD_IDS.SINGLE_POLICY_LENGTH] = 10;
-
-        const result = mapPolicyLength(mockAnswers);
-
-        const expected = {
-          [FIELD_IDS.SINGLE_POLICY_LENGTH]: mapPeriodMonths(mockAnswers[FIELD_IDS.SINGLE_POLICY_LENGTH]),
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe(`when ${FIELD_IDS.MULTI_POLICY_LENGTH} exists`, () => {
-      it(`should return mapped ${FIELD_IDS.MULTI_POLICY_LENGTH}`, () => {
-        mockAnswers[FIELD_IDS.MULTI_POLICY_LENGTH] = 10;
-
-        const result = mapPolicyLength(mockAnswers);
-
-        const expected = {
-          [FIELD_IDS.MULTI_POLICY_LENGTH]: mapPeriodMonths(mockAnswers[FIELD_IDS.MULTI_POLICY_LENGTH]),
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    it('should return null', () => {
-      const result = mapPolicyLength({});
-
-      expect(result).toEqual(null);
-    });
-  });
-
   describe('mapAnswersToContent', () => {
     it('should return an object of fields with mapped/formatted answers', () => {
       const {
@@ -78,6 +41,7 @@ describe('sever/helpers/map-answers-to-content', () => {
         PRE_CREDIT_PERIOD,
         CREDIT_PERIOD,
         POLICY_TYPE,
+        POLICY_LENGTH,
       } = FIELD_IDS;
 
       const result = mapAnswersToContent(mockAnswers);
@@ -92,7 +56,7 @@ describe('sever/helpers/map-answers-to-content', () => {
         [PRE_CREDIT_PERIOD]: mapPeriodDays(mockAnswers[PRE_CREDIT_PERIOD]),
         [CREDIT_PERIOD]: mapPeriodDays(mockAnswers[CREDIT_PERIOD]),
         [POLICY_TYPE]: mockAnswers[POLICY_TYPE],
-        ...mapPolicyLength(mockAnswers),
+        [POLICY_LENGTH]: mapPeriodMonths(mockAnswers[POLICY_LENGTH]),
       };
 
       expect(result).toEqual(expected);

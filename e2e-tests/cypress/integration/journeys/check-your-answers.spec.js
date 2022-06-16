@@ -25,7 +25,7 @@ context('Check your answers page', () => {
     PRE_CREDIT_PERIOD,
     CREDIT_PERIOD,
     POLICY_TYPE,
-    SINGLE_POLICY_LENGTH,
+    POLICY_LENGTH,
   } = FIELD_IDS;
 
   const submissionData = {
@@ -35,7 +35,7 @@ context('Check your answers page', () => {
     [PRE_CREDIT_PERIOD]: '1',
     [CREDIT_PERIOD]: '2',
     [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-    [SINGLE_POLICY_LENGTH]: '13',
+    [POLICY_LENGTH]: '13',
   };
 
   before(() => {
@@ -303,15 +303,15 @@ context('Check your answers page', () => {
     });
 
     it('renders `Policy length` key, value and change link', () => {
-      const row = list[FIELD_IDS.SINGLE_POLICY_LENGTH];
-      const expectedKeyText = FIELDS[SINGLE_POLICY_LENGTH].SUMMARY.TITLE;
+      const row = list[FIELD_IDS.POLICY_LENGTH];
+      const expectedKeyText = FIELDS[POLICY_LENGTH].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
+        const expected = `${submissionData[POLICY_LENGTH]} months`;
 
         expect(text.trim()).equal(expected);
       });
