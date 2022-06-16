@@ -1,6 +1,7 @@
 const {
   mapPeriodDays,
   mapPeriodMonths,
+  mapPolicyLength,
   mapAnswersToContent,
 } = require('./map-answers-to-content');
 const FIELD_IDS = require('../constants/field-ids');
@@ -13,7 +14,7 @@ describe('sever/helpers/map-answers-to-content', () => {
     it('should return a formatted string', () => {
       const result = mapPeriodDays(20);
 
-      const expected = `${20} days`;
+      const expected = '20 days';
 
       expect(result).toEqual(expected);
     });
@@ -23,9 +24,49 @@ describe('sever/helpers/map-answers-to-content', () => {
     it('should return a formatted string', () => {
       const result = mapPeriodMonths(20);
 
-      const expected = `${20} months`;
+      const expected = '20 months';
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe('mapPolicyLength', () => {
+    describe(`when ${FIELD_IDS.SINGLE_POLICY_LENGTH} exists`, () => {
+      it(`should return mapped ${FIELD_IDS.SINGLE_POLICY_LENGTH} object`, () => {
+        const mockAnswers = {
+          [FIELD_IDS.SINGLE_POLICY_LENGTH]: 10,
+        };
+
+        const result = mapPolicyLength(mockAnswers);
+
+        const expected = {
+          [FIELD_IDS.SINGLE_POLICY_LENGTH]: mapPeriodMonths(mockAnswers[FIELD_IDS.SINGLE_POLICY_LENGTH]),
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${FIELD_IDS.MULTI_POLICY_LENGTH} exists`, () => {
+      it(`should return mapped ${FIELD_IDS.MULTI_POLICY_LENGTH}`, () => {
+        const mockAnswers = {
+          [FIELD_IDS.MULTI_POLICY_LENGTH]: 10,
+        };
+
+        const result = mapPolicyLength(mockAnswers);
+
+        const expected = {
+          [FIELD_IDS.MULTI_POLICY_LENGTH]: mapPeriodMonths(mockAnswers[FIELD_IDS.MULTI_POLICY_LENGTH]),
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    it('should return null', () => {
+      const result = mapPolicyLength({});
+
+      expect(result).toEqual(null);
     });
   });
 
@@ -37,10 +78,10 @@ describe('sever/helpers/map-answers-to-content', () => {
         TRIED_PRIVATE_COVER,
         FINAL_DESTINATION,
         UK_CONTENT_PERCENTAGE,
+        CURRENCY,
         AMOUNT,
         PRE_CREDIT_PERIOD,
         CREDIT_PERIOD,
-        POLICY_LENGTH,
         POLICY_TYPE,
       } = FIELD_IDS;
 
@@ -50,13 +91,13 @@ describe('sever/helpers/map-answers-to-content', () => {
         [VALID_COMPANY_BASE]: SUMMARY[VALID_COMPANY_BASE],
         [VALID_BUYER_BASE]: SUMMARY[VALID_BUYER_BASE],
         [TRIED_PRIVATE_COVER]: SUMMARY[TRIED_PRIVATE_COVER],
-        [FINAL_DESTINATION]: mockAnswers[FINAL_DESTINATION],
         [UK_CONTENT_PERCENTAGE]: SUMMARY[UK_CONTENT_PERCENTAGE],
         [AMOUNT]: formatCurrency(mockAnswers[AMOUNT], 'GBP'),
+        [CURRENCY]: mockAnswers[CURRENCY],
         [PRE_CREDIT_PERIOD]: mapPeriodDays(mockAnswers[PRE_CREDIT_PERIOD]),
         [CREDIT_PERIOD]: mapPeriodDays(mockAnswers[CREDIT_PERIOD]),
-        [POLICY_LENGTH]: mapPeriodMonths(mockAnswers[POLICY_LENGTH]),
         [POLICY_TYPE]: mockAnswers[POLICY_TYPE],
+        ...mapPolicyLength(mockAnswers),
       };
 
       expect(result).toEqual(expected);

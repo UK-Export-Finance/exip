@@ -10,8 +10,9 @@ const {
   AMOUNT,
   PRE_CREDIT_PERIOD,
   CREDIT_PERIOD,
-  POLICY_LENGTH,
   POLICY_TYPE,
+  SINGLE_POLICY_LENGTH,
+  MULTI_POLICY_LENGTH,
 } = FIELD_IDS;
 
 const checkYourAnswersPage = {
@@ -72,15 +73,20 @@ const checkYourAnswersPage = {
         value: () => cy.get(`.${CREDIT_PERIOD}-value`),
         changeLink: () => cy.get(`[data-cy="${CREDIT_PERIOD}-change-link"]`),
       },
-      [POLICY_LENGTH]: {
-        key: () => cy.get(`.${POLICY_LENGTH}-key`),
-        value: () => cy.get(`.${POLICY_LENGTH}-value`),
-        changeLink: () => cy.get(`[data-cy="${POLICY_LENGTH}-change-link"]`),
-      },
       [POLICY_TYPE]: {
         key: () => cy.get(`.${POLICY_TYPE}-key`),
         value: () => cy.get(`.${POLICY_TYPE}-value`),
         changeLink: () => cy.get(`[data-cy="${POLICY_TYPE}-change-link"]`),
+      },
+      [SINGLE_POLICY_LENGTH]: {
+        key: () => cy.get(`.${SINGLE_POLICY_LENGTH}-key`),
+        value: () => cy.get(`.${SINGLE_POLICY_LENGTH}-value`),
+        changeLink: () => cy.get(`[data-cy="${SINGLE_POLICY_LENGTH}-change-link"]`),
+      },
+      [MULTI_POLICY_LENGTH]: {
+        key: () => cy.get(`.${MULTI_POLICY_LENGTH}-key`),
+        value: () => cy.get(`.${MULTI_POLICY_LENGTH}-value`),
+        changeLink: () => cy.get(`[data-cy="${MULTI_POLICY_LENGTH}-change-link"]`),
       },
     },
   },

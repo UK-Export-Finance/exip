@@ -83,6 +83,8 @@ const post = async (req, res) => {
     });
   }
 
+  // TODO: have a single "policyLength" field instead of seperated.
+
   req.session.submittedData = updateSubmittedData(
     req.body,
     req.session.submittedData,

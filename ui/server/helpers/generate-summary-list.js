@@ -1,5 +1,40 @@
-const CONTENT_STRINGS = require('../content-strings');
-const { FIELD_GROUPS } = require('../constants');
+const {
+  PAGES,
+  FIELDS,
+  LINKS,
+} = require('../content-strings');
+const {
+  FIELD_IDS,
+  FIELD_GROUPS,
+  ROUTES,
+} = require('../constants');
+
+/*
+ * generateFieldGroups
+ * Business rules for field groups.
+ * Return the appropriate policy length depending on the policy type
+ */
+const generateFieldGroups = (submittedData) => {
+  const fieldGroups = FIELD_GROUPS;
+
+  if (submittedData[FIELD_IDS.SINGLE_POLICY_LENGTH]) {
+    fieldGroups.DEAL_DETAILS.FIELDS.push({
+      ID: FIELD_IDS.SINGLE_POLICY_LENGTH,
+      ...FIELDS[FIELD_IDS.SINGLE_POLICY_LENGTH],
+      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+    });
+  }
+
+  if (submittedData[FIELD_IDS.MULTI_POLICY_LENGTH]) {
+    fieldGroups.DEAL_DETAILS.FIELDS.push({
+      ID: FIELD_IDS.MULTI_POLICY_LENGTH,
+      ...FIELDS[FIELD_IDS.MULTI_POLICY_LENGTH],
+      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+    });
+  }
+
+  return fieldGroups;
+};
 
 /*
  * generateSummaryListRows
@@ -9,7 +44,7 @@ const { FIELD_GROUPS } = require('../constants');
 const generateSummaryListRows = (fields, submittedData) =>
   fields.map((field) => ({
     key: {
-      text: field.LABEL,
+      text: FIELDS[field.ID].SUMMARY.TITLE,
       classes: `${field.ID}-key`,
     },
     value: {
@@ -20,8 +55,8 @@ const generateSummaryListRows = (fields, submittedData) =>
       items: [
         {
           href: field.CHANGE_ROUTE,
-          text: CONTENT_STRINGS.LINKS.CHANGE,
-          visuallyHiddenText: field.LABEL,
+          text: LINKS.CHANGE,
+          visuallyHiddenText: FIELDS[field.ID].SUMMARY.TITLE,
           attributes: {
             'data-cy': `${field.ID}-change-link`,
           },
@@ -35,18 +70,20 @@ const generateSummaryListRows = (fields, submittedData) =>
  * Create multiple summary lists
  */
 const generateSummaryList = (submittedData) => {
+  const fieldGroups = generateFieldGroups(submittedData);
+
   const summaryList = {
     COMPANY: {
-      GROUP_TITLE: CONTENT_STRINGS.PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_COMPANY,
-      ROWS: generateSummaryListRows(FIELD_GROUPS.COMPANY_DETAILS.FIELDS, submittedData),
+      GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_COMPANY,
+      ROWS: generateSummaryListRows(fieldGroups.COMPANY_DETAILS.FIELDS, submittedData),
     },
     EXPORT: {
-      GROUP_TITLE: CONTENT_STRINGS.PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
-      ROWS: generateSummaryListRows(FIELD_GROUPS.EXPORT_DETAILS.FIELDS, submittedData),
+      GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
+      ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS.FIELDS, submittedData),
     },
     DEAL: {
-      GROUP_TITLE: CONTENT_STRINGS.PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_DEAL,
-      ROWS: generateSummaryListRows(FIELD_GROUPS.DEAL_DETAILS.FIELDS, submittedData),
+      GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_DEAL,
+      ROWS: generateSummaryListRows(fieldGroups.DEAL_DETAILS.FIELDS, submittedData),
     },
   };
 
@@ -55,5 +92,6 @@ const generateSummaryList = (submittedData) => {
 
 module.exports = {
   generateSummaryListRows,
+  generateFieldGroups,
   generateSummaryList,
 };

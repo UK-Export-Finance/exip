@@ -24,8 +24,8 @@ context('Check your answers page', () => {
     AMOUNT,
     PRE_CREDIT_PERIOD,
     CREDIT_PERIOD,
-    POLICY_LENGTH,
     POLICY_TYPE,
+    SINGLE_POLICY_LENGTH,
   } = FIELD_IDS;
 
   const submissionData = {
@@ -34,8 +34,8 @@ context('Check your answers page', () => {
     [AMOUNT]: '100',
     [PRE_CREDIT_PERIOD]: '1',
     [CREDIT_PERIOD]: '2',
-    [POLICY_LENGTH]: '3',
     [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+    [SINGLE_POLICY_LENGTH]: '13',
   };
 
   before(() => {
@@ -85,7 +85,7 @@ context('Check your answers page', () => {
     });
   });
 
-  context.only('company summary list', () => {
+  context('company summary list', () => {
     const list = checkYourAnswersPage.summaryLists.company;
 
     it('renders a heading', () => {
@@ -96,7 +96,7 @@ context('Check your answers page', () => {
 
     it('renders `Company` key, value and change link', () => {
       const row = list[FIELD_IDS.VALID_COMPANY_BASE];
-      const expectedKeyText = FIELDS[VALID_COMPANY_BASE].TITLE;
+      const expectedKeyText = FIELDS[VALID_COMPANY_BASE].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
@@ -124,9 +124,9 @@ context('Check your answers page', () => {
       });
     });
 
-    it('renders `Buyer location` key, value and change link', () => {
+    it('renders `Buyer based` key, value and change link', () => {
       const row = list[FIELD_IDS.VALID_BUYER_BASE];
-      const expectedKeyText = FIELDS[VALID_BUYER_BASE].TITLE;
+      const expectedKeyText = FIELDS[VALID_BUYER_BASE].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
@@ -146,7 +146,7 @@ context('Check your answers page', () => {
 
     it('renders `Private insurance` key, value and change link', () => {
       const row = list[FIELD_IDS.TRIED_PRIVATE_COVER];
-      const expectedKeyText = FIELDS[TRIED_PRIVATE_COVER].TITLE;
+      const expectedKeyText = FIELDS[TRIED_PRIVATE_COVER].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
@@ -164,9 +164,9 @@ context('Check your answers page', () => {
       row.changeLink().should('have.attr', 'href', ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE);
     });
 
-    it('renders `UK content` key, value and change link', () => {
+    it('renders `UK goods` key, value and change link', () => {
       const row = list[FIELD_IDS.UK_CONTENT_PERCENTAGE];
-      const expectedKeyText = FIELDS[UK_CONTENT_PERCENTAGE].TITLE;
+      const expectedKeyText = FIELDS[UK_CONTENT_PERCENTAGE].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
@@ -194,9 +194,53 @@ context('Check your answers page', () => {
       });
     });
 
+    it('renders `Amount` key, value and change link', () => {
+      const row = list[FIELD_IDS.AMOUNT];
+      const expectedKeyText = FIELDS[AMOUNT].SUMMARY.TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        const expected = `£${submissionData[AMOUNT]}.00`;
+
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+    });
+
+    it('renders `Currency` key, value and change link', () => {
+      const row = list[FIELD_IDS.CURRENCY];
+      const expectedKeyText = FIELDS[CURRENCY].SUMMARY.TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        const expected = submissionData[CURRENCY];
+
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+    });
+
     it('renders `Pre-credit period` key, value and change link', () => {
       const row = list[FIELD_IDS.PRE_CREDIT_PERIOD];
-      const expectedKeyText = FIELDS[PRE_CREDIT_PERIOD].LABEL;
+      const expectedKeyText = FIELDS[PRE_CREDIT_PERIOD].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
@@ -218,7 +262,7 @@ context('Check your answers page', () => {
 
     it('renders `Credit period` key, value and change link', () => {
       const row = list[FIELD_IDS.CREDIT_PERIOD];
-      const expectedKeyText = FIELDS[CREDIT_PERIOD].TITLE;
+      const expectedKeyText = FIELDS[CREDIT_PERIOD].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
@@ -238,18 +282,16 @@ context('Check your answers page', () => {
       row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
     });
 
-    it('renders `Policy length` key, value and change link', () => {
-      const row = list[FIELD_IDS.POLICY_LENGTH];
-      const expectedKeyText = FIELDS[POLICY_LENGTH].TITLE;
+    it('renders `Policy type` key, value and change link', () => {
+      const row = list[FIELD_IDS.POLICY_TYPE];
+      const expectedKeyText = FIELDS[POLICY_TYPE].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[POLICY_LENGTH]} months`;
-
-        expect(text.trim()).equal(expected);
+        expect(text.trim()).equal(submissionData[POLICY_TYPE]);
       });
 
       row.changeLink().invoke('text').then((text) => {
@@ -260,16 +302,18 @@ context('Check your answers page', () => {
       row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
     });
 
-    it('renders `Policy type` key, value and change link', () => {
-      const row = list[FIELD_IDS.POLICY_TYPE];
-      const expectedKeyText = FIELDS[POLICY_TYPE].TITLE;
+    it('renders `Policy length` key, value and change link', () => {
+      const row = list[FIELD_IDS.SINGLE_POLICY_LENGTH];
+      const expectedKeyText = FIELDS[SINGLE_POLICY_LENGTH].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(submissionData[POLICY_TYPE]);
+        const expected = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
+
+        expect(text.trim()).equal(expected);
       });
 
       row.changeLink().invoke('text').then((text) => {

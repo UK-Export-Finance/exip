@@ -10,9 +10,9 @@ const FIELD_IDS = {
   AMOUNT: 'amount',
   PRE_CREDIT_PERIOD: 'preCreditPeriodDays',
   CREDIT_PERIOD: 'creditPeriodDays',
+  POLICY_TYPE: 'policyType',
   SINGLE_POLICY_LENGTH: 'singlePolicyLengthMonths',
   MULTI_POLICY_LENGTH: 'multiPolicyLengthMonths',
-  POLICY_TYPE: 'policyType',
 };
 
 module.exports = FIELD_IDS;

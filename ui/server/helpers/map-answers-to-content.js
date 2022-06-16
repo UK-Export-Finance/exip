@@ -5,14 +5,33 @@ const formatCurrency = require('./format-currency');
 const mapPeriodDays = (answer) => `${answer} days`;
 const mapPeriodMonths = (answer) => `${answer} months`;
 
+const mapPolicyLength = (answers) => {
+  if (answers[FIELD_IDS.SINGLE_POLICY_LENGTH]) {
+    const fieldId = FIELD_IDS.SINGLE_POLICY_LENGTH;
+
+    return {
+      [fieldId]: mapPeriodMonths(answers[FIELD_IDS.SINGLE_POLICY_LENGTH]),
+    }
+  }
+
+  if (answers[FIELD_IDS.MULTI_POLICY_LENGTH]) {
+    const fieldId = FIELD_IDS.MULTI_POLICY_LENGTH;
+
+    return {
+      [fieldId]: mapPeriodMonths(answers[FIELD_IDS.MULTI_POLICY_LENGTH]),
+    }
+  }
+
+  return null;
+};
+
 const mapAnswersToContent = (answers) => {
   const {
     VALID_COMPANY_BASE,
     VALID_BUYER_BASE,
     TRIED_PRIVATE_COVER,
-    FINAL_DESTINATION,
     UK_CONTENT_PERCENTAGE,
-    // CURRENCY,
+    CURRENCY,
     AMOUNT,
     PRE_CREDIT_PERIOD,
     CREDIT_PERIOD,
@@ -24,14 +43,13 @@ const mapAnswersToContent = (answers) => {
     [VALID_COMPANY_BASE]: SUMMARY[VALID_COMPANY_BASE],
     [VALID_BUYER_BASE]: SUMMARY[VALID_BUYER_BASE],
     [TRIED_PRIVATE_COVER]: SUMMARY[TRIED_PRIVATE_COVER],
-    [FINAL_DESTINATION]: answers[FINAL_DESTINATION],
     [UK_CONTENT_PERCENTAGE]: SUMMARY[UK_CONTENT_PERCENTAGE],
-    // CURRENCY
     [AMOUNT]: formatCurrency(answers[AMOUNT], 'GBP'),
+    [CURRENCY]: answers[CURRENCY],
     [PRE_CREDIT_PERIOD]: mapPeriodDays(answers[PRE_CREDIT_PERIOD]),
     [CREDIT_PERIOD]: mapPeriodDays(answers[CREDIT_PERIOD]),
-    [POLICY_LENGTH]: mapPeriodMonths(answers[POLICY_LENGTH]),
     [POLICY_TYPE]: answers[POLICY_TYPE],
+    ...mapPolicyLength(answers),
   };
 
   return mapped;
@@ -40,5 +58,6 @@ const mapAnswersToContent = (answers) => {
 module.exports = {
   mapPeriodDays,
   mapPeriodMonths,
+  mapPolicyLength,
   mapAnswersToContent,
 };
