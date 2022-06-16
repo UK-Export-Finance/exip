@@ -10,7 +10,7 @@ const {
 
 /*
  * mapSubmittedValues
- * Map single/multi policy length fields to the submitted policy length.
+ * Map "single/multi policy length" fields to the submitted policy length.
  */
 const mapSubmittedValues = (submittedData) => {
   const mapped = submittedData;
