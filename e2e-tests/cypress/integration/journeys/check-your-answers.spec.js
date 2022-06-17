@@ -225,7 +225,7 @@ context('Check your answers page', () => {
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = submissionData[CURRENCY];
+        const expected = `UK Sterling (${submissionData[CURRENCY]})`;
 
         expect(text.trim()).equal(expected);
       });

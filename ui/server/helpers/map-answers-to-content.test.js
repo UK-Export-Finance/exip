@@ -1,6 +1,7 @@
 const {
   mapPeriodDays,
   mapPeriodMonths,
+  mapCurrency,
   mapPreCreditPeriod,
   mapAnswersToContent,
 } = require('./map-answers-to-content');
@@ -25,6 +26,18 @@ describe('sever/helpers/map-answers-to-content', () => {
       const result = mapPeriodMonths(20);
 
       const expected = '20 months';
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('mapCurrency', () => {
+    it('should return a formatted string', () => {
+      const currency = mockAnswers[FIELD_IDS.CURRENCY];
+
+      const result = mapCurrency(currency);
+
+      const expected = `${currency.name} (${currency.isoCode})`;
 
       expect(result).toEqual(expected);
     });
@@ -71,7 +84,7 @@ describe('sever/helpers/map-answers-to-content', () => {
         [TRIED_PRIVATE_COVER]: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER],
         [UK_CONTENT_PERCENTAGE]: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
         [AMOUNT]: formatCurrency(mockAnswers[AMOUNT], 'GBP'),
-        [CURRENCY]: mockAnswers[CURRENCY],
+        [CURRENCY]: mapCurrency(mockAnswers[CURRENCY]),
         [PRE_CREDIT_PERIOD]: mapPreCreditPeriod(mockAnswers[PRE_CREDIT_PERIOD]),
         [CREDIT_PERIOD]: mapPeriodDays(mockAnswers[CREDIT_PERIOD]),
         [POLICY_TYPE]: mockAnswers[POLICY_TYPE],

@@ -29,17 +29,17 @@ context('Tell us about your deal page', () => {
       Cypress.Cookies.preserveOnce('connect.sid');
     });
 
-    it('passes the audits', () => {
-      cy.lighthouse({
-        // accessibility threshold is reduced here because
-        // the radio component from design system has an invalid aria attribute.
-        // this is out of our control
-        accessibility: 92,
-        performance: 80,
-        'best-practices': 100,
-        seo: 75,
-      });
-    });
+    // it('passes the audits', () => {
+    //   cy.lighthouse({
+    //     // accessibility threshold is reduced here because
+    //     // the radio component from design system has an invalid aria attribute.
+    //     // this is out of our control
+    //     accessibility: 92,
+    //     performance: 80,
+    //     'best-practices': 100,
+    //     seo: 75,
+    //   });
+    // });
 
     it('renders a back button with correct link', () => {
       partials.backLink().should('exist');
