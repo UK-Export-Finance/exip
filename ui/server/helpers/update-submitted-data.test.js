@@ -2,10 +2,11 @@ const {
   mapSubmittedData,
   updateSubmittedData,
 } = require('./update-submitted-data');
-const { FIELD_IDS } = require('../constants');
+const { FIELD_IDS, FIELD_VALUES } = require('../constants');
 const { sanitiseFormData } = require('./sanitise-form-data');
 
 const {
+  POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
   POLICY_LENGTH,
@@ -13,17 +14,20 @@ const {
 
 describe('sever/helpers/update-submitted-data', () => {
   describe('mapSubmittedData', () => {
-    describe(`when ${SINGLE_POLICY_LENGTH} is provided`, () => {
-      it('should return policy length field without single/multi prefix', () => {
+    describe(`when ${POLICY_TYPE} is 'single'`, () => {
+      it('should return policy length field without single/multi specific fields', () => {
         const mockFormData = {
           mock: '1',
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [SINGLE_POLICY_LENGTH]: '10',
+          [MULTI_POLICY_LENGTH]: '1',
         };
 
         const result = mapSubmittedData(mockFormData);
 
         const expected = {
           mock: '1',
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [POLICY_LENGTH]: '10',
         };
 
@@ -31,17 +35,20 @@ describe('sever/helpers/update-submitted-data', () => {
       });
     });
 
-    describe(`when ${MULTI_POLICY_LENGTH} is provided`, () => {
-      it('should return policy length field without single/multi prefix', () => {
+    describe(`when ${POLICY_TYPE} is 'multi'`, () => {
+      it('should return policy length field without single/multi specific fields', () => {
         const mockFormData = {
           mock: '1',
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
           [MULTI_POLICY_LENGTH]: '10',
+          [SINGLE_POLICY_LENGTH]: '1',
         };
 
         const result = mapSubmittedData(mockFormData);
 
         const expected = {
           mock: '1',
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
           [POLICY_LENGTH]: '10',
         };
 
@@ -49,7 +56,7 @@ describe('sever/helpers/update-submitted-data', () => {
       });
     });
 
-    describe('when no single/multi policy length fields are provided', () => {
+    describe('when no policy type fields are provided', () => {
       it('should return all fields', () => {
         const mockFormData = {
           mock: '1',

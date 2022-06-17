@@ -263,11 +263,11 @@ context('Change your answers after checking answers', () => {
         cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
       });
 
-      it('has originally submitted `policy type`', () => {
+      it('has originally submitted `policy type` (single)', () => {
         tellUsAboutYourDealPage[POLICY_TYPE].single.input().should('be.checked');
       });
 
-      it('has originally submitted `policy length`', () => {
+      it(`has originally submitted 'policy length' (${submissionData[POLICY_LENGTH]})`, () => {
         tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().should('have.attr', 'value', submissionData[POLICY_LENGTH]);
       });
 
@@ -279,7 +279,7 @@ context('Change your answers after checking answers', () => {
         cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
       });
 
-      it('renders the new answers in `Check your answers` page', () => {
+      it('renders the new answers in `Check your answers` page (multi policy, 10 months)', () => {
         row = checkYourAnswersPage.summaryLists.deal[POLICY_TYPE];
 
         row.value().invoke('text').then((text) => {
@@ -294,6 +294,47 @@ context('Change your answers after checking answers', () => {
           const expected = '10 months';
 
           expect(text.trim()).equal(expected);
+        });
+      });
+
+      describe('change `Policy type` and `Policy length` for a second time', () => {
+        before(() => {
+          row.changeLink().click();
+          cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+        });
+
+        it('has previously submitted `policy type` (multi)', () => {
+          tellUsAboutYourDealPage[POLICY_TYPE].multi.input().should('be.checked');
+        });
+
+        it('has previously submitted `policy length` (10 months)', () => {
+          tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().should('have.attr', 'value', submissionData[POLICY_LENGTH]);
+        });
+
+        it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
+          tellUsAboutYourDealPage[POLICY_TYPE].single.input().click();
+          tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().clear().type('15');
+          tellUsAboutYourDealPage.submitButton().click();
+
+          cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+        });
+
+        it('renders the new answers in `Check your answers` page (single policy, 15 months)', () => {
+          row = checkYourAnswersPage.summaryLists.deal[POLICY_TYPE];
+
+          row.value().invoke('text').then((text) => {
+            const expected = FIELD_VALUES.POLICY_TYPE.SINGLE;
+
+            expect(text.trim()).equal(expected);
+          });
+
+          row = checkYourAnswersPage.summaryLists.deal[POLICY_LENGTH];
+
+          row.value().invoke('text').then((text) => {
+            const expected = '15 months';
+
+            expect(text.trim()).equal(expected);
+          });
         });
       });
     });

@@ -1,7 +1,8 @@
-const { FIELD_IDS } = require('../constants');
+const { FIELD_IDS, FIELD_VALUES } = require('../constants');
 const { sanitiseFormData } = require('./sanitise-form-data');
 
 const {
+  POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
   POLICY_LENGTH,
@@ -14,17 +15,19 @@ const {
 const mapSubmittedData = (submittedData) => {
   const mapped = submittedData;
 
-  if (mapped[SINGLE_POLICY_LENGTH]) {
+  const isSinglePolicy = (mapped[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.SINGLE);
+  const isMultiPolicy = (mapped[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.MULTI);
+
+  if (isSinglePolicy) {
     mapped[POLICY_LENGTH] = mapped[SINGLE_POLICY_LENGTH];
-
-    delete mapped[SINGLE_POLICY_LENGTH];
   }
 
-  if (mapped[MULTI_POLICY_LENGTH]) {
+  if (isMultiPolicy) {
     mapped[POLICY_LENGTH] = mapped[MULTI_POLICY_LENGTH];
-
-    delete mapped[MULTI_POLICY_LENGTH];
   }
+
+  delete mapped[SINGLE_POLICY_LENGTH];
+  delete mapped[MULTI_POLICY_LENGTH];
 
   return mapped;
 };
