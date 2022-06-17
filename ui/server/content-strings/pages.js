@@ -23,7 +23,7 @@ const LANDING_PAGE = {
     INTRO: 'Use this service to:',
     LIST: [
       {
-        text: 'check if you`re eligible',
+        text: 'check if you\'re eligible',
       },
       {
         text: 'get a non-binding quote for single or multiple exports to one buyer',
