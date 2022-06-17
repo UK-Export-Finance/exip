@@ -4,6 +4,7 @@ const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const api = require('../../api');
 const mapCurrencies = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
+const getCurrencyByCode = require('../../helpers/get-currency-by-code');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const mapSubmittedValues = require('../../helpers/map-submitted-values');
 const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
@@ -19,6 +20,10 @@ describe('controllers/buyer-based', () => {
     {
       name: 'Hong Kong Dollars',
       isoCode: 'HKD',
+    },
+    {
+      name: 'UK Sterling',
+      isoCode: 'GBP',
     },
   ];
 
@@ -116,7 +121,7 @@ describe('controllers/buyer-based', () => {
 
         const expectedCurrencies = mapCurrencies(
           mockCurrenciesResponse,
-          req.session.submittedData[FIELD_IDS.CURRENCY],
+          req.session.submittedData[FIELD_IDS.CURRENCY].isoCode,
         );
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
@@ -133,30 +138,48 @@ describe('controllers/buyer-based', () => {
 
     beforeEach(() => {
       api.getCurrencies = getCurrenciesSpy;
+      // req.body = {};
     });
 
-    describe('when there are validation errors', () => {
+    describe('when a currency code has been submitted', () => {
       it('should call api.getCurrencies', async () => {
-        await controller.get(req, res);
+        req.body[FIELD_IDS.CURRENCY] = mockAnswers[FIELD_IDS.CURRENCY];
+        await controller.post(req, res);
 
         expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
       });
+    });
 
+    describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
         await controller.post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
           ...controller.PAGE_VARIABLES,
-          currencies: mapCurrencies(mockCurrenciesResponse, req.body[FIELD_IDS.CURRENCY]),
+          currencies: mapCurrencies(mockCurrenciesResponse),
           validationErrors: generateValidationErrors(req.body),
           submittedValues: req.body,
+        });
+      });
+
+      describe('when a currency code has been submitted', () => {
+        it('should render template with mapped submitted currency', async () => {
+          req.body[FIELD_IDS.CURRENCY] = mockAnswers[FIELD_IDS.CURRENCY];
+          await controller.post(req, res);
+
+          expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
+            ...controller.PAGE_VARIABLES,
+            currencies: mapCurrencies(mockCurrenciesResponse, req.body[FIELD_IDS.CURRENCY]),
+            validationErrors: generateValidationErrors(req.body),
+            submittedValues: req.body,
+          });
         });
       });
     });
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.CURRENCY]: 'GBP',
+        [FIELD_IDS.CURRENCY]: mockAnswers[FIELD_IDS.CURRENCY],
         [FIELD_IDS.AMOUNT]: '10',
         [FIELD_IDS.CREDIT_PERIOD]: '30',
         [FIELD_IDS.PRE_CREDIT_PERIOD]: '20',
@@ -168,11 +191,15 @@ describe('controllers/buyer-based', () => {
         req.body = validBody;
       });
 
-      it('should update the session with submitted data', async () => {
+      it('should update the session with submitted data, popluated with full currency object', async () => {
         await controller.post(req, res);
 
+        const expectedPopulatedData = {
+          ...validBody,
+          [FIELD_IDS.CURRENCY]: getCurrencyByCode(mockCurrenciesResponse, mockAnswers[FIELD_IDS.CURRENCY]),
+        };
         const expected = updateSubmittedData(
-          req.body,
+          expectedPopulatedData,
           req.session.submittedData,
         );
 
@@ -186,10 +213,10 @@ describe('controllers/buyer-based', () => {
       });
 
       describe('when the url\'s last substring is `change`', () => {
-        it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
+        it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, async () => {
           req.originalUrl = 'mock/change';
 
-          controller.post(req, res);
+          await controller.post(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS);
         });

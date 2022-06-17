@@ -7,6 +7,7 @@ const {
 const api = require('../../api');
 const mapCurrencies = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
+const getCurrencyByCode = require('../../helpers/get-currency-by-code');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
 const mapSubmittedValues = require('../../helpers/map-submitted-values');
@@ -71,8 +72,8 @@ const get = async (req, res) => {
   const currencies = await api.getCurrencies();
 
   let mappedCurrencies;
-  if (submittedData) {
-    mappedCurrencies = mapCurrencies(currencies, submittedData[FIELD_IDS.CURRENCY]);
+  if (submittedData && submittedData[FIELD_IDS.CURRENCY]) {
+    mappedCurrencies = mapCurrencies(currencies, submittedData[FIELD_IDS.CURRENCY].isoCode);
   } else {
     mappedCurrencies = mapCurrencies(currencies);
   }
@@ -87,9 +88,18 @@ const get = async (req, res) => {
 const post = async (req, res) => {
   const validationErrors = generateValidationErrors(req.body);
 
+  const submittedCurrencyCode = req.body[FIELD_IDS.CURRENCY];
+
+  const currencies = await api.getCurrencies();
+
   if (validationErrors) {
-    const currencies = await api.getCurrencies();
-    const mappedCurrencies = mapCurrencies(currencies, req.body[FIELD_IDS.CURRENCY]);
+    let mappedCurrencies = [];
+
+    if (submittedCurrencyCode) {
+      mappedCurrencies = mapCurrencies(currencies, submittedCurrencyCode);
+    } else {
+      mappedCurrencies = mapCurrencies(currencies);
+    }
 
     return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
       ...PAGE_VARIABLES,
@@ -99,8 +109,13 @@ const post = async (req, res) => {
     });
   }
 
+  const populatedData = {
+    ...req.body,
+    [FIELD_IDS.CURRENCY]: getCurrencyByCode(currencies, submittedCurrencyCode),
+  };
+
   req.session.submittedData = updateSubmittedData(
-    req.body,
+    populatedData,
     req.session.submittedData,
   );
 

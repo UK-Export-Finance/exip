@@ -187,7 +187,8 @@ context('Change your answers after checking answers', () => {
         row = checkYourAnswersPage.summaryLists.deal[CURRENCY];
 
         row.value().invoke('text').then((text) => {
-          expect(text.trim()).equal('EUR');
+          const expected = 'Euros (EUR)';
+          expect(text.trim()).equal(expected);
         });
       });
     });

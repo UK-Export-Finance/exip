@@ -5,6 +5,17 @@ const formatCurrency = require('./format-currency');
 const mapPeriodDays = (answer) => `${answer} days`;
 const mapPeriodMonths = (answer) => `${answer} months`;
 
+const mapCurrency = (currencyObj) =>
+  `${currencyObj.name} (${currencyObj.isoCode})`;
+
+const mapPreCreditPeriod = (answer) => {
+  if (answer) {
+    return mapPeriodDays(answer);
+  }
+
+  return '-';
+};
+
 const mapAnswersToContent = (answers) => {
   const {
     VALID_COMPANY_BASE,
@@ -25,8 +36,8 @@ const mapAnswersToContent = (answers) => {
     [TRIED_PRIVATE_COVER]: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER],
     [UK_CONTENT_PERCENTAGE]: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
     [AMOUNT]: formatCurrency(answers[AMOUNT], 'GBP'),
-    [CURRENCY]: answers[CURRENCY],
-    [PRE_CREDIT_PERIOD]: mapPeriodDays(answers[PRE_CREDIT_PERIOD]),
+    [CURRENCY]: mapCurrency(answers[CURRENCY]),
+    [PRE_CREDIT_PERIOD]: mapPreCreditPeriod(answers[PRE_CREDIT_PERIOD]),
     [CREDIT_PERIOD]: mapPeriodDays(answers[CREDIT_PERIOD]),
     [POLICY_TYPE]: answers[POLICY_TYPE],
     [POLICY_LENGTH]: mapPeriodMonths(answers[POLICY_LENGTH]),
@@ -38,5 +49,7 @@ const mapAnswersToContent = (answers) => {
 module.exports = {
   mapPeriodDays,
   mapPeriodMonths,
+  mapCurrency,
+  mapPreCreditPeriod,
   mapAnswersToContent,
 };
