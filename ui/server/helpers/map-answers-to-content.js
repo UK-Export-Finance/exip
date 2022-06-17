@@ -5,6 +5,14 @@ const formatCurrency = require('./format-currency');
 const mapPeriodDays = (answer) => `${answer} days`;
 const mapPeriodMonths = (answer) => `${answer} months`;
 
+const mapPreCreditPeriod = (answer) => {
+  if (answer) {
+    return mapPeriodDays(answer);
+  }
+
+  return '-';
+};
+
 const mapAnswersToContent = (answers) => {
   const {
     VALID_COMPANY_BASE,
@@ -26,7 +34,7 @@ const mapAnswersToContent = (answers) => {
     [UK_CONTENT_PERCENTAGE]: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
     [AMOUNT]: formatCurrency(answers[AMOUNT], 'GBP'),
     [CURRENCY]: answers[CURRENCY],
-    [PRE_CREDIT_PERIOD]: mapPeriodDays(answers[PRE_CREDIT_PERIOD]),
+    [PRE_CREDIT_PERIOD]: mapPreCreditPeriod(answers[PRE_CREDIT_PERIOD]),
     [CREDIT_PERIOD]: mapPeriodDays(answers[CREDIT_PERIOD]),
     [POLICY_TYPE]: answers[POLICY_TYPE],
     [POLICY_LENGTH]: mapPeriodMonths(answers[POLICY_LENGTH]),
@@ -38,5 +46,6 @@ const mapAnswersToContent = (answers) => {
 module.exports = {
   mapPeriodDays,
   mapPeriodMonths,
+  mapPreCreditPeriod,
   mapAnswersToContent,
 };

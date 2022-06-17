@@ -1,6 +1,7 @@
 const {
   mapPeriodDays,
   mapPeriodMonths,
+  mapPreCreditPeriod,
   mapAnswersToContent,
 } = require('./map-answers-to-content');
 const FIELD_IDS = require('../constants/field-ids');
@@ -29,6 +30,24 @@ describe('sever/helpers/map-answers-to-content', () => {
     });
   });
 
+  describe('mapPreCreditPeriod', () => {
+    it('should return a formatted string', () => {
+      const result = mapPreCreditPeriod(20);
+
+      const expected = mapPeriodDays(20);
+
+      expect(result).toEqual(expected);
+    });
+
+    describe('when there is no value', () => {
+      it('should return a dash', () => {
+        const result = mapPreCreditPeriod();
+
+        expect(result).toEqual('-');
+      });
+    });
+  });
+
   describe('mapAnswersToContent', () => {
     it('should return an object of fields with mapped/formatted answers', () => {
       const {
@@ -53,7 +72,7 @@ describe('sever/helpers/map-answers-to-content', () => {
         [UK_CONTENT_PERCENTAGE]: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
         [AMOUNT]: formatCurrency(mockAnswers[AMOUNT], 'GBP'),
         [CURRENCY]: mockAnswers[CURRENCY],
-        [PRE_CREDIT_PERIOD]: mapPeriodDays(mockAnswers[PRE_CREDIT_PERIOD]),
+        [PRE_CREDIT_PERIOD]: mapPreCreditPeriod(mockAnswers[PRE_CREDIT_PERIOD]),
         [CREDIT_PERIOD]: mapPeriodDays(mockAnswers[CREDIT_PERIOD]),
         [POLICY_TYPE]: mockAnswers[POLICY_TYPE],
         [POLICY_LENGTH]: mapPeriodMonths(mockAnswers[POLICY_LENGTH]),
