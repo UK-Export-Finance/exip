@@ -17,7 +17,7 @@ const {
 context('Change your answers after checking answers', () => {
   const {
     VALID_COMPANY_BASE,
-    VALID_BUYER_BASE,
+    BUYER_COUNTRY,
     TRIED_PRIVATE_COVER,
     UK_CONTENT_PERCENTAGE,
     CURRENCY,
@@ -31,6 +31,7 @@ context('Change your answers after checking answers', () => {
   } = FIELD_IDS;
 
   const submissionData = {
+    [BUYER_COUNTRY]: 'France',
     [UK_CONTENT_PERCENTAGE]: '50',
     [CURRENCY]: 'GBP',
     [AMOUNT]: '100',
@@ -74,7 +75,7 @@ context('Change your answers after checking answers', () => {
 
   context('Export fields', () => {
     describe('change `Buyer based`', () => {
-      const row = checkYourAnswersPage.summaryLists.export[VALID_BUYER_BASE];
+      let row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
 
       it(`clicking 'change' redirects to ${ROUTES.BUYER_BASED_CHANGE}`, () => {
         row.changeLink().click();
@@ -82,13 +83,28 @@ context('Change your answers after checking answers', () => {
       });
 
       it('has originally submitted answer selected', () => {
-        buyerBasedPage[VALID_BUYER_BASE].yesInput().should('be.checked');
+        const expectedValue = submissionData[BUYER_COUNTRY];
+
+        buyerBasedPage.hiddenInput().should('have.attr', 'value', expectedValue);
       });
 
-      it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
+      it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting a new answer`, () => {
+        buyerBasedPage.searchInput().type('Belg');
+        const results = buyerBasedPage.results();
+        results.first().click();
         buyerBasedPage.submitButton().click();
 
         cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+      });
+
+      it('renders the new answer in `Check your answers` page', () => {
+        row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
+
+        row.value().invoke('text').then((text) => {
+          const expected = 'Belgium';
+
+          expect(text.trim()).equal(expected);
+        });
       });
     });
 

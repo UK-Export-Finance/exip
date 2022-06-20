@@ -2,7 +2,7 @@ import { FIELD_IDS } from '../../../constants';
 
 const {
   VALID_COMPANY_BASE,
-  VALID_BUYER_BASE,
+  BUYER_COUNTRY,
   TRIED_PRIVATE_COVER,
   UK_CONTENT_PERCENTAGE,
   CURRENCY,
@@ -28,10 +28,10 @@ const checkYourAnswersPage = {
     },
     export: {
       heading: () => cy.get('[data-cy="summaryList-heading-export"]'),
-      [VALID_BUYER_BASE]: {
-        key: () => cy.get(`.${VALID_BUYER_BASE}-key`),
-        value: () => cy.get(`.${VALID_BUYER_BASE}-value`),
-        changeLink: () => cy.get(`[data-cy="${VALID_BUYER_BASE}-change-link"]`),
+      [BUYER_COUNTRY]: {
+        key: () => cy.get(`.${BUYER_COUNTRY}-key`),
+        value: () => cy.get(`.${BUYER_COUNTRY}-value`),
+        changeLink: () => cy.get(`[data-cy="${BUYER_COUNTRY}-change-link"]`),
       },
       [TRIED_PRIVATE_COVER]: {
         key: () => cy.get(`.${TRIED_PRIVATE_COVER}-key`),

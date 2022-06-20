@@ -23,14 +23,14 @@ context('Which country is your buyer based', () => {
     cy.url().should('include', ROUTES.BUYER_BASED);
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 80,
-  //     'best-practices': 100,
-  //     seo: 75,
-  //   });
-  // });
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 80,
+      'best-practices': 100,
+      seo: 75,
+    });
+  });
 
   it('renders a back button with correct link', () => {
     partials.backLink().should('exist');
@@ -158,7 +158,6 @@ context('Which country is your buyer based', () => {
 
     // describe('when submitting the answer as `no`', () => {
     //   it(`should redirect to ${ROUTES.BUYER_BASED_UNAVAILABLE}`, () => {
-    //     buyerBasedPage[FIELD_IDS.VALID_BUYER_BASE].no().click();
     //     buyerBasedPage.submitButton().click();
 
     //     cy.url().should('include', ROUTES.BUYER_BASED_UNAVAILABLE);
@@ -167,7 +166,6 @@ context('Which country is your buyer based', () => {
 
     // describe('when submitting the answer as `yes`', () => {
     //   it(`should redirect to ${ROUTES.TRIED_TO_OBTAIN_COVER}`, () => {
-    //     buyerBasedPage[FIELD_IDS.VALID_BUYER_BASE].yes().click();
     //     buyerBasedPage.submitButton().click();
 
     //     cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);

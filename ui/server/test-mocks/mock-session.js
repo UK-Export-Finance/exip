@@ -10,7 +10,7 @@ const mockSession = {
   submittedData: {
     ...mockAnswers,
     [BUYER_COUNTRY]: {
-      name: mockAnswers[BUYER_COUNTRY].name,
+      name: mockAnswers[BUYER_COUNTRY],
       isoCode: 'FRA',
     },
     [CURRENCY]: {

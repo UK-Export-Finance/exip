@@ -29,7 +29,7 @@
   <form method="POST">
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-    <input type="hidden" name="{{ HIDDEN_FIELD_NAME }}" id="{{ HIDDEN_FIELD_NAME }}" value="{{ submittedValues[HIDDEN_FIELD_NAME] }}">
+    <input type="hidden" name="{{ HIDDEN_FIELD_NAME }}" id="{{ HIDDEN_FIELD_NAME }}" value="{{ submittedValues[HIDDEN_FIELD_NAME].name }}">
 
     {{ govukLabel({
       for: FIELD_NAME_COUNTRY,

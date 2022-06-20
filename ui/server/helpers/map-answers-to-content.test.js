@@ -1,16 +1,49 @@
 const {
+  mapCountry,
+  mapCurrency,
   mapPeriodDays,
   mapPeriodMonths,
-  mapCurrency,
   mapPreCreditPeriod,
   mapAnswersToContent,
 } = require('./map-answers-to-content');
 const FIELD_IDS = require('../constants/field-ids');
 const { SUMMARY_ANSWERS } = require('../content-strings');
 const formatCurrency = require('./format-currency');
-const { mockAnswers } = require('../test-mocks');
+const { mockSession, mockAnswers } = require('../test-mocks');
 
 describe('sever/helpers/map-answers-to-content', () => {
+  describe('mapCountry', () => {
+    it('should return country name', () => {
+      const country = mockSession.submittedData[FIELD_IDS.BUYER_COUNTRY];
+
+      const result = mapCountry(country);
+
+      const expected = `${country.name}`;
+
+      expect(result).toEqual(expected);
+    });
+
+    describe('when there is no value', () => {
+      it('should return a dash', () => {
+        const result = mapCountry();
+
+        expect(result).toEqual('-');
+      });
+    });
+  });
+
+  describe('mapCurrency', () => {
+    it('should return a formatted string', () => {
+      const currency = mockAnswers[FIELD_IDS.CURRENCY];
+
+      const result = mapCurrency(currency);
+
+      const expected = `${currency.name} (${currency.isoCode})`;
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('mapPeriodDays', () => {
     it('should return a formatted string', () => {
       const result = mapPeriodDays(20);
@@ -30,19 +63,6 @@ describe('sever/helpers/map-answers-to-content', () => {
       expect(result).toEqual(expected);
     });
   });
-
-  describe('mapCurrency', () => {
-    it('should return a formatted string', () => {
-      const currency = mockAnswers[FIELD_IDS.CURRENCY];
-
-      const result = mapCurrency(currency);
-
-      const expected = `${currency.name} (${currency.isoCode})`;
-
-      expect(result).toEqual(expected);
-    });
-  });
-
   describe('mapPreCreditPeriod', () => {
     it('should return a formatted string', () => {
       const result = mapPreCreditPeriod(20);
@@ -80,7 +100,7 @@ describe('sever/helpers/map-answers-to-content', () => {
 
       const expected = {
         [VALID_COMPANY_BASE]: SUMMARY_ANSWERS[VALID_COMPANY_BASE],
-        [BUYER_COUNTRY]: mockAnswers[BUYER_COUNTRY].name,
+        [BUYER_COUNTRY]: mapCountry(mockAnswers[BUYER_COUNTRY]),
         [TRIED_PRIVATE_COVER]: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER],
         [UK_CONTENT_PERCENTAGE]: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
         [AMOUNT]: formatCurrency(mockAnswers[AMOUNT], 'GBP'),
