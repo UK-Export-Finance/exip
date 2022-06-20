@@ -4,7 +4,6 @@ const beforeYouStartController = require('../controllers/before-you-start');
 const companyBasedController = require('../controllers/company-based');
 const companyBasedUnavailableController = require('../controllers/company-based-unavailable');
 const buyerBasedController = require('../controllers/buyer-based');
-const buyerBasedUnavailableController = require('../controllers/buyer-based-unavailable');
 const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
 const ukContentPercentageController = require('../controllers/uk-content-pecentage');
 const tellUsAboutYourDealController = require('../controllers/tell-us-about-your-deal');
@@ -27,7 +26,6 @@ router.get(ROUTES.BUYER_BASED, buyerBasedController.get);
 router.post(ROUTES.BUYER_BASED, buyerBasedController.post);
 router.get(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.get);
 router.post(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.post);
-router.get(ROUTES.BUYER_BASED_UNAVAILABLE, buyerBasedUnavailableController);
 
 router.get(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.get);
 router.post(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.post);
