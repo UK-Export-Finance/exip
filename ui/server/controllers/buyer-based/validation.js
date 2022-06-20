@@ -6,16 +6,37 @@ const {
   objectHasProperty,
 } = require('../../helpers/object');
 
+const hasErrors = (formBody) => {
+  if (!objectHasValues(formBody)) {
+    return true;
+  }
+
+  const keys = Object.keys(formBody);
+  if (keys.includes(FIELD_IDS.BUYER_COUNTRY) && keys.includes(FIELD_IDS.COUNTRY)) {
+    // form submitted without client side JS
+
+    if (!objectHasProperty(formBody, FIELD_IDS.COUNTRY)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  if (!objectHasProperty(formBody, FIELD_IDS.BUYER_COUNTRY)) {
+    // form submitted with client side JS
+    return true;
+  }
+
+  return false;
+};
+
 const validation = (formBody) => {
   let errors;
 
-  const hasErrors = (!objectHasValues(formBody)
-    || !objectHasProperty(formBody, FIELD_IDS.VALID_BUYER_BASE));
-
-  if (hasErrors) {
+  if (hasErrors(formBody)) {
     errors = generateValidationErrors(
-      FIELD_IDS.VALID_BUYER_BASE,
-      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.VALID_BUYER_BASE],
+      FIELD_IDS.COUNTRY,
+      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.COUNTRY],
     );
 
     return errors;
@@ -24,4 +45,7 @@ const validation = (formBody) => {
   return null;
 };
 
-module.exports = validation;
+module.exports = {
+  hasErrors,
+  validation,
+};

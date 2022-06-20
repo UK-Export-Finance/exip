@@ -4,7 +4,7 @@ const { FIELDS } = require('../content-strings');
 
 const {
   VALID_COMPANY_BASE,
-  VALID_BUYER_BASE,
+  BUYER_COUNTRY,
   TRIED_PRIVATE_COVER,
   UK_CONTENT_PERCENTAGE,
   AMOUNT,
@@ -28,8 +28,8 @@ const FIELD_GROUPS = {
   EXPORT_DETAILS: {
     FIELDS: [
       {
-        ID: VALID_BUYER_BASE,
-        ...FIELDS[VALID_BUYER_BASE],
+        ID: BUYER_COUNTRY,
+        ...FIELDS[BUYER_COUNTRY],
         CHANGE_ROUTE: ROUTES.BUYER_BASED_CHANGE,
       },
       {

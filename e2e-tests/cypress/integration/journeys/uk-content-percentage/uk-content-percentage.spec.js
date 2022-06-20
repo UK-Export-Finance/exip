@@ -40,7 +40,7 @@ context('What percentage of your export is UK content page', () => {
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.FINAL_DESTINATION);
+    cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
   });
 
   it('renders a page title and heading', () => {

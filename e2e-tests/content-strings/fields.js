@@ -13,7 +13,7 @@ const FIELDS = {
       TITLE: 'Your company',
     },
   },
-  [FIELD_IDS.VALID_BUYER_BASE]: {
+  [FIELD_IDS.BUYER_COUNTRY]: {
     SUMMARY: {
       TITLE: 'Buyer is based',
     },
@@ -36,9 +36,6 @@ const FIELDS = {
     SUMMARY: {
       TITLE: 'Unable to get private insurance?',
     },
-  },
-  [FIELD_IDS.FINAL_DESTINATION]: {
-    TITLE: 'Export destination',
   },
   [FIELD_IDS.UK_CONTENT_PERCENTAGE]: {
     LABEL: 'Percentage of your export that is UK content',

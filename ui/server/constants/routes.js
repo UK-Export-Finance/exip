@@ -12,9 +12,6 @@ const ROUTES = {
   TRIED_TO_OBTAIN_COVER: '/tried-to-obtain-cover',
   TRIED_TO_OBTAIN_COVER_CHANGE: '/tried-to-obtain-cover/change',
 
-  FINAL_DESTINATION: '/final-destination',
-  FINAL_DESTINATION_CHANGE: '/final-destination/change',
-
   UK_CONTENT_PERCENTAGE: '/uk-content-percentage',
   UK_CONTENT_PERCENTAGE_CHANGE: '/uk-content-percentage/change',
 

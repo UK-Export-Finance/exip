@@ -41,18 +41,13 @@ const COMPANY_BASED_PAGE = {
 };
 
 const BUYER_BASED_PAGE = {
-  PAGE_TITLE: 'Is your buyer based outside of the UK, Channel Islands and Isle of Man?',
-  HEADING: 'Is your buyer based outside of the UK, Channel Islands and Isle of Man?',
+  PAGE_TITLE: 'In which country is your buyer based?',
+  HEADING: 'In which country is your buyer based?',
 };
 
 const TRIED_TO_OBTAIN_COVER_PAGE = {
   PAGE_TITLE: 'Are you unable to get insurance for this export from companies in the private sector?',
   HEADING: 'Are you unable to get insurance for this export from companies in the private sector?',
-};
-
-const FINAL_DESTINATION_PAGE = {
-  PAGE_TITLE: 'Is at least 20% of your export made up of UK goods or services',
-  HEADING: 'Is at least 20% of your export made up of UK goods or services',
 };
 
 const UK_CONTENT_PERCENTAGE_PAGE = {
@@ -146,7 +141,6 @@ module.exports = {
   COMPANY_BASED_PAGE,
   BUYER_BASED_PAGE,
   TRIED_TO_OBTAIN_COVER_PAGE,
-  FINAL_DESTINATION_PAGE,
   UK_CONTENT_PERCENTAGE_PAGE,
   TELL_US_ABOUT_YOUR_DEAL_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,

@@ -5,7 +5,6 @@ const TEMPLATES = {
   BUYER_BASED: 'buyer-based.njk',
   BUYER_BASED_UNAVAILABLE: 'buyer-based-unavailable.njk',
   TRIED_TO_OBTAIN_COVER: 'tried-to-obtain-cover.njk',
-  FINAL_DESTINATION: 'final-destination.njk',
   UK_CONTENT_PERCENTAGE: 'uk-content-percentage.njk',
   TELL_US_ABOUT_YOUR_DEAL: 'tell-us-about-your-deal.njk',
   CHECK_YOUR_ANSWERS: 'check-your-answers.njk',

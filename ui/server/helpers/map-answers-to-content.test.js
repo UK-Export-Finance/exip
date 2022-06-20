@@ -65,7 +65,7 @@ describe('sever/helpers/map-answers-to-content', () => {
     it('should return an object of fields with mapped/formatted answers', () => {
       const {
         VALID_COMPANY_BASE,
-        VALID_BUYER_BASE,
+        BUYER_COUNTRY,
         TRIED_PRIVATE_COVER,
         UK_CONTENT_PERCENTAGE,
         CURRENCY,
@@ -80,7 +80,7 @@ describe('sever/helpers/map-answers-to-content', () => {
 
       const expected = {
         [VALID_COMPANY_BASE]: SUMMARY_ANSWERS[VALID_COMPANY_BASE],
-        [VALID_BUYER_BASE]: SUMMARY_ANSWERS[VALID_BUYER_BASE],
+        [BUYER_COUNTRY]: mockAnswers[BUYER_COUNTRY].name,
         [TRIED_PRIVATE_COVER]: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER],
         [UK_CONTENT_PERCENTAGE]: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
         [AMOUNT]: formatCurrency(mockAnswers[AMOUNT], 'GBP'),

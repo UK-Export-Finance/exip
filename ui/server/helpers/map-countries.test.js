@@ -29,11 +29,11 @@ describe('sever/helpers/map-countries', () => {
     expect(result).toEqual(expected);
   });
 
-  describe('when a selectedValue is passed', () => {
+  describe.only('when a selectedIsoCode is passed', () => {
     it('should return an array of mapped objects with selected option', () => {
-      const mockSelectedValue = mockCountries[0].marketName;
+      const mockSelectedIsoCode = mockCountries[0].isoCode;
 
-      const result = mapCountries(mockCountries, mockSelectedValue);
+      const result = mapCountries(mockCountries, mockSelectedIsoCode);
 
       const expected = [
         {

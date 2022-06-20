@@ -4,7 +4,6 @@ const {
   VALID_COMPANY_BASE,
   VALID_BUYER_BASE,
   TRIED_PRIVATE_COVER,
-  FINAL_DESTINATION,
   UK_CONTENT_PERCENTAGE,
   CURRENCY,
   AMOUNT,
@@ -38,11 +37,6 @@ const checkYourAnswersPage = {
         key: () => cy.get(`.${TRIED_PRIVATE_COVER}-key`),
         value: () => cy.get(`.${TRIED_PRIVATE_COVER}-value`),
         changeLink: () => cy.get(`[data-cy="${TRIED_PRIVATE_COVER}-change-link"]`),
-      },
-      [FINAL_DESTINATION]: {
-        key: () => cy.get(`.${FINAL_DESTINATION}-key`),
-        value: () => cy.get(`.${FINAL_DESTINATION}-value`),
-        changeLink: () => cy.get(`[data-cy="${FINAL_DESTINATION}-change-link"]`),
       },
       [UK_CONTENT_PERCENTAGE]: {
         key: () => cy.get(`.${UK_CONTENT_PERCENTAGE}-key`),

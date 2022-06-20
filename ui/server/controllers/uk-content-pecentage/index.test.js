@@ -20,7 +20,7 @@ describe('controllers/uk-content-percentage', () => {
       const expected = {
         FIELD_NAME: FIELD_IDS.UK_CONTENT_PERCENTAGE,
         PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.UK_CONTENT_PERCENTAGE_PAGE,
-        BACK_LINK: ROUTES.FINAL_DESTINATION,
+        BACK_LINK: ROUTES.TRIED_TO_OBTAIN_COVER,
       };
 
       expect(controller.PAGE_VARIABLES).toEqual(expected);
