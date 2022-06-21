@@ -32,8 +32,18 @@ const post = (req, res) => {
     req.session.submittedData,
   );
 
-  if (req.body[FIELD_IDS.VALID_COMPANY_BASE] === 'false') {
-    return res.redirect(ROUTES.COMPANY_BASED_UNAVAILABLE);
+  const answer = req.body[FIELD_IDS.VALID_COMPANY_BASE];
+
+  if (answer === 'false') {
+    req.flash('previousRoute', ROUTES.VALID_COMPANY_BASE);
+
+    const { PAGES } = CONTENT_STRINGS;
+    const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
+    const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
+
+    req.flash('exitReason', REASON.UNSUPPORTED_COMPANY_COUNTRY);
+
+    return res.redirect(ROUTES.CANNOT_OBTAIN_COVER);
   }
 
   if (isChangeRoute(req.originalUrl)) {

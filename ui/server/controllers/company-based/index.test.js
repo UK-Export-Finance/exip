@@ -51,14 +51,25 @@ describe('controllers/company-based', () => {
     });
 
     describe('when submitted answer is false', () => {
-      it(`should redirect to ${ROUTES.COMPANY_BASED_UNAVAILABLE}`, () => {
+      beforeEach(() => {
         req.body = {
           [FIELD_IDS.VALID_COMPANY_BASE]: 'false',
         };
+      });
 
-        controller.post(req, res);
+      it(`should redirect to ${ROUTES.CANNOT_OBTAIN_COVER}`, async () => {
+        await controller.post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_UNAVAILABLE);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.CANNOT_OBTAIN_COVER);
+      });
+
+      it('should add previousRoute and exitReason to req.flash', async () => {
+        await controller.post(req, res);
+
+        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.BUYVALID_COMPANY_BASEER_BASED);
+
+        const expectedReason = CONTENT_STRINGS.PAGES.CANNOT_OBTAIN_COVER_PAGE.REASON.UNSUPPORTED_COMPANY_COUNTRY;
+        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });
 

@@ -101,6 +101,7 @@ const CANNOT_OBTAIN_COVER_PAGE = {
   HEADING: 'You cannot apply for UKEF export insurance',
   REASON: {
     INTRO: 'This is because',
+    UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man',
     UNSUPPORTED_BUYER_COUNTRY: 'your buyer is based in a country we cannot provide cover for.',
     CAN_GET_PRIVATE_INSURANCE: 'you\'re able to get insurance for this export from companies in the private sector.',
     HAVE_NOT_TRIED_PRIVATE_INSURANCE: 'you\'ve not yet tried to get this from private insurers.',

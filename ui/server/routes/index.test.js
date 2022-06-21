@@ -5,7 +5,6 @@ const {
 const { ROUTES } = require('../constants');
 const beforeYouStartController = require('../controllers/before-you-start');
 const companyBasedController = require('../controllers/company-based');
-const companyBasedUnavailableController = require('../controllers/company-based-unavailable');
 const buyerBasedController = require('../controllers/buyer-based');
 const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
 const ukContentPercentageController = require('../controllers/uk-content-pecentage');
@@ -24,7 +23,7 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(15);
+    expect(get).toHaveBeenCalledTimes(14);
     expect(post).toHaveBeenCalledTimes(12);
 
     expect(get).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
@@ -34,7 +33,6 @@ describe('routes/index', () => {
     expect(post).toHaveBeenCalledWith(ROUTES.COMPANY_BASED, companyBasedController.post);
     expect(get).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.post);
-    expect(get).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_UNAVAILABLE, companyBasedUnavailableController);
 
     expect(get).toHaveBeenCalledWith(ROUTES.BUYER_BASED, buyerBasedController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.BUYER_BASED, buyerBasedController.post);

@@ -1,13 +1,13 @@
-import companyBasedPage from '../pages/companyBased';
-import partials from '../partials';
+import companyBasedPage from '../../pages/companyBased';
+import partials from '../../partials';
 import {
   ORGANISATION,
   BUTTONS,
   LINKS,
   PAGES,
   ERROR_MESSAGES,
-} from '../../../content-strings';
-import CONSTANTS from '../../../constants';
+} from '../../../../content-strings';
+import CONSTANTS from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.COMPANY_BASED_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
@@ -95,15 +95,6 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
         companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].errorMessage().invoke('text').then((text) => {
           expect(text.trim()).includes(expectedMessage);
         });
-      });
-    });
-
-    describe('when submitting the answer as `no`', () => {
-      it(`should redirect to ${ROUTES.COMPANY_BASED_UNAVAILABLE}`, () => {
-        companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].no().click();
-        companyBasedPage.submitButton().click();
-
-        cy.url().should('include', ROUTES.COMPANY_BASED_UNAVAILABLE);
       });
     });
 

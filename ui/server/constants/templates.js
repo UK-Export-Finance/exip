@@ -1,7 +1,6 @@
 const TEMPLATES = {
   BEFORE_YOU_START: 'before-you-start.njk',
   COMPANY_BASED: 'company-based.njk',
-  COMPANY_BASED_UNAVAILABLE: 'company-based-unavailable.njk',
   BUYER_BASED: 'buyer-based.njk',
   TRIED_TO_OBTAIN_COVER: 'tried-to-obtain-cover.njk',
   UK_CONTENT_PERCENTAGE: 'uk-content-percentage.njk',

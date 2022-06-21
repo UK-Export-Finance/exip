@@ -3,11 +3,9 @@ const ROUTES = {
 
   COMPANY_BASED: '/company-based',
   COMPANY_BASED_CHANGE: '/company-based/change',
-  COMPANY_BASED_UNAVAILABLE: '/company-based/unavailable',
 
   BUYER_BASED: '/buyer-based',
   BUYER_BASED_CHANGE: '/buyer-based/change',
-  BUYER_BASED_UNAVAILABLE: '/buyer-based/unavailable',
 
   TRIED_TO_OBTAIN_COVER: '/tried-to-obtain-cover',
   TRIED_TO_OBTAIN_COVER_CHANGE: '/tried-to-obtain-cover/change',
