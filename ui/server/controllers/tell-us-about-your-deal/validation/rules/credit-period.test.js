@@ -45,6 +45,24 @@ describe('controllers/tell-us-about-your-deal/validation/rules/credit-period', (
     });
   });
 
+  describe(`when ${FIELD_IDS.CREDIT_PERIOD} is below the minimum`, () => {
+    it('should return validation error', () => {
+      const mockBody = {
+        [FIELD_IDS.CREDIT_PERIOD]: '0',
+      };
+
+      const result = rule(mockBody, mockErrors);
+
+      const expected = generateValidationErrors(
+        FIELD_IDS.CREDIT_PERIOD,
+        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].BELOW_MINIMUM,
+        mockErrors,
+      );
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when there are no validation errors', () => {
     it('should return the already provided errors', () => {
       const mockBody = {
