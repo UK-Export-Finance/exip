@@ -1,10 +1,7 @@
-const getCountryByName = (countries, name) => {
-  const country = countries.find((c) => c.marketName === name);
+const getCountryByName = (countries, countryName) => {
+  const country = countries.find((c) => c.name === countryName);
 
-  return {
-    isoCode: country.isoCode,
-    name: country.marketName,
-  };
+  return country;
 };
 
 module.exports = getCountryByName;

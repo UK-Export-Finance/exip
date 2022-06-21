@@ -1,18 +1,18 @@
-import buyerBasedPage from '../pages/buyerBased';
-import partials from '../partials';
+import buyerBasedPage from '../../pages/buyerBased';
+import partials from '../../partials';
 import {
   ORGANISATION,
   BUTTONS,
   LINKS,
   PAGES,
   ERROR_MESSAGES,
-} from '../../../content-strings';
-import CONSTANTS from '../../../constants';
+} from '../../../../content-strings';
+import CONSTANTS from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.BUYER_BASED_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
-context('Which country is your buyer based', () => {
+context('Which country is your buyer based page', () => {
   beforeEach(() => {
     cy.visit(ROUTES.BUYER_BASED, {
       auth: {
@@ -156,23 +156,7 @@ context('Which country is your buyer based', () => {
       });
     });
 
-    // describe('when submitting the answer as `no`', () => {
-    //   it(`should redirect to ${ROUTES.BUYER_BASED_UNAVAILABLE}`, () => {
-    //     buyerBasedPage.submitButton().click();
-
-    //     cy.url().should('include', ROUTES.BUYER_BASED_UNAVAILABLE);
-    //   });
-    // });
-
-    // describe('when submitting the answer as `yes`', () => {
-    //   it(`should redirect to ${ROUTES.TRIED_TO_OBTAIN_COVER}`, () => {
-    //     buyerBasedPage.submitButton().click();
-
-    //     cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
-    //   });
-    // });
-
-    describe('when submitting with a valid country', () => {
+    describe('when submitting with a supported country', () => {
       it(`should redirect to ${ROUTES.TRIED_TO_OBTAIN_COVER}`, () => {
         buyerBasedPage.searchInput().type('Fra');
 

@@ -5,7 +5,7 @@ const singleInputPageVariables = require('../../helpers/single-input-page-variab
 const { validation: generateValidationErrors } = require('./validation');
 const getCountryByName = require('../../helpers/get-country-by-name');
 const api = require('../../api');
-const mapCountries = require('../../helpers/map-countries');
+const { mapCountries } = require('../../helpers/map-countries');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const {
   mockReq,
@@ -21,10 +21,12 @@ describe('controllers/buyer-based', () => {
     {
       marketName: 'Abu Dhabi',
       isoCode: 'XAD',
+      active: 'N',
     },
     {
       marketName: 'France',
       isoCode: 'FRA',
+      active: 'Y',
     },
   ];
 
@@ -119,21 +121,52 @@ describe('controllers/buyer-based', () => {
       });
     });
 
+    describe('when the submitted country is not supported', () => {
+      const unsupportedCountry = mockCountriesResponse[0];
+
+      beforeEach(() => {
+        req.body[FIELD_IDS.BUYER_COUNTRY] = unsupportedCountry.marketName;
+      });
+
+      it(`should redirect to ${ROUTES.CANNOT_OBTAIN_COVER}`, async () => {
+        await controller.post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.CANNOT_OBTAIN_COVER);
+      });
+
+      it('should add previousRoute and exitReason to req.flash', async () => {
+        await controller.post(req, res);
+
+        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.BUYER_BASED);
+
+        const expectedReason = CONTENT_STRINGS.PAGES.CANNOT_OBTAIN_COVER_PAGE.REASON.UNSUPPORTED_BUYER_COUNTRY;
+        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
+      });
+    });
+
     describe('when there are no validation errors', () => {
+      const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
+      const mappedCountries = mapCountries(mockCountriesResponse);
+
+      const selectedCountry = getCountryByName(mappedCountries, selectedCountryName);
+
       const validBody = {
-        [FIELD_IDS.BUYER_COUNTRY]: mockAnswers[FIELD_IDS.BUYER_COUNTRY],
+        [FIELD_IDS.BUYER_COUNTRY]: selectedCountryName,
       };
 
       beforeEach(() => {
         req.body = validBody;
       });
 
-      it('should update the session with submitted data, popluated with full country object', async () => {
+      it('should update the session with submitted data, popluated with country object', async () => {
         await controller.post(req, res);
 
         const expectedPopulatedData = {
           ...validBody,
-          [FIELD_IDS.BUYER_COUNTRY]: getCountryByName(mockCountriesResponse, validBody[FIELD_IDS.BUYER_COUNTRY]),
+          [FIELD_IDS.BUYER_COUNTRY]: {
+            name: selectedCountry.name,
+            isoCode: selectedCountry.isoCode,
+          },
         };
 
         const expected = updateSubmittedData(
