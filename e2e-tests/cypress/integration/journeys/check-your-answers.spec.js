@@ -17,7 +17,7 @@ const { ROUTES, FIELD_VALUES } = CONSTANTS;
 context('Check your answers page', () => {
   const {
     VALID_COMPANY_BASE,
-    VALID_BUYER_BASE,
+    BUYER_COUNTRY,
     TRIED_PRIVATE_COVER,
     UK_CONTENT_PERCENTAGE,
     CURRENCY,
@@ -29,6 +29,7 @@ context('Check your answers page', () => {
   } = FIELD_IDS;
 
   const submissionData = {
+    [BUYER_COUNTRY]: 'France',
     [UK_CONTENT_PERCENTAGE]: '50',
     [CURRENCY]: 'GBP',
     [AMOUNT]: '100',
@@ -95,7 +96,7 @@ context('Check your answers page', () => {
     });
 
     it('renders `Company` key, value and change link', () => {
-      const row = list[FIELD_IDS.VALID_COMPANY_BASE];
+      const row = list[VALID_COMPANY_BASE];
       const expectedKeyText = FIELDS[VALID_COMPANY_BASE].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
@@ -125,15 +126,17 @@ context('Check your answers page', () => {
     });
 
     it('renders `Buyer based` key, value and change link', () => {
-      const row = list[FIELD_IDS.VALID_BUYER_BASE];
-      const expectedKeyText = FIELDS[VALID_BUYER_BASE].SUMMARY.TITLE;
+      const row = list[BUYER_COUNTRY];
+      const expectedKeyText = FIELDS[BUYER_COUNTRY].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_ANSWERS[VALID_BUYER_BASE]);
+        const expected = submissionData[BUYER_COUNTRY];
+
+        expect(text.trim()).equal(expected);
       });
 
       row.changeLink().invoke('text').then((text) => {
@@ -145,7 +148,7 @@ context('Check your answers page', () => {
     });
 
     it('renders `Private insurance` key, value and change link', () => {
-      const row = list[FIELD_IDS.TRIED_PRIVATE_COVER];
+      const row = list[TRIED_PRIVATE_COVER];
       const expectedKeyText = FIELDS[TRIED_PRIVATE_COVER].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
@@ -165,7 +168,7 @@ context('Check your answers page', () => {
     });
 
     it('renders `UK goods` key, value and change link', () => {
-      const row = list[FIELD_IDS.UK_CONTENT_PERCENTAGE];
+      const row = list[UK_CONTENT_PERCENTAGE];
       const expectedKeyText = FIELDS[UK_CONTENT_PERCENTAGE].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
@@ -195,7 +198,7 @@ context('Check your answers page', () => {
     });
 
     it('renders `Amount` key, value and change link', () => {
-      const row = list[FIELD_IDS.AMOUNT];
+      const row = list[AMOUNT];
       const expectedKeyText = FIELDS[AMOUNT].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
@@ -217,7 +220,7 @@ context('Check your answers page', () => {
     });
 
     it('renders `Currency` key, value and change link', () => {
-      const row = list[FIELD_IDS.CURRENCY];
+      const row = list[CURRENCY];
       const expectedKeyText = FIELDS[CURRENCY].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
@@ -239,7 +242,7 @@ context('Check your answers page', () => {
     });
 
     it('renders `Pre-credit period` key, value and change link', () => {
-      const row = list[FIELD_IDS.PRE_CREDIT_PERIOD];
+      const row = list[PRE_CREDIT_PERIOD];
       const expectedKeyText = FIELDS[PRE_CREDIT_PERIOD].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
@@ -261,7 +264,7 @@ context('Check your answers page', () => {
     });
 
     it('renders `Credit period` key, value and change link', () => {
-      const row = list[FIELD_IDS.CREDIT_PERIOD];
+      const row = list[CREDIT_PERIOD];
       const expectedKeyText = FIELDS[CREDIT_PERIOD].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
@@ -283,7 +286,7 @@ context('Check your answers page', () => {
     });
 
     it('renders `Policy type` key, value and change link', () => {
-      const row = list[FIELD_IDS.POLICY_TYPE];
+      const row = list[POLICY_TYPE];
       const expectedKeyText = FIELDS[POLICY_TYPE].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
@@ -303,7 +306,7 @@ context('Check your answers page', () => {
     });
 
     it('renders `Policy length` key, value and change link', () => {
-      const row = list[FIELD_IDS.POLICY_LENGTH];
+      const row = list[POLICY_LENGTH];
       const expectedKeyText = FIELDS[POLICY_LENGTH].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {

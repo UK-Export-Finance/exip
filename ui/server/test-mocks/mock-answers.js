@@ -3,9 +3,8 @@ const FIELD_VALUES = require('../constants/field-values');
 
 const {
   VALID_COMPANY_BASE,
-  VALID_BUYER_BASE,
+  BUYER_COUNTRY,
   TRIED_PRIVATE_COVER,
-  FINAL_DESTINATION,
   UK_CONTENT_PERCENTAGE,
   CURRENCY,
   AMOUNT,
@@ -17,9 +16,8 @@ const {
 
 const mockAnswers = {
   [VALID_COMPANY_BASE]: true,
-  [VALID_BUYER_BASE]: true,
+  [BUYER_COUNTRY]: 'France',
   [TRIED_PRIVATE_COVER]: true,
-  [FINAL_DESTINATION]: 'France',
   [UK_CONTENT_PERCENTAGE]: 30,
   [CURRENCY]: 'GBP',
   [AMOUNT]: 123456,

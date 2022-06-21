@@ -41,18 +41,13 @@ const COMPANY_BASED_PAGE = {
 };
 
 const BUYER_BASED_PAGE = {
-  PAGE_TITLE: 'Is your buyer based outside of the UK, Channel Islands and Isle of Man?',
-  HEADING: 'Is your buyer based outside of the UK, Channel Islands and Isle of Man?',
+  PAGE_TITLE: 'In which country is your buyer based?',
+  HEADING: 'In which country is your buyer based?',
 };
 
 const TRIED_TO_OBTAIN_COVER_PAGE = {
   PAGE_TITLE: 'Are you unable to get insurance for this export from companies in the private sector?',
   HEADING: 'Are you unable to get insurance for this export from companies in the private sector?',
-};
-
-const FINAL_DESTINATION_PAGE = {
-  PAGE_TITLE: 'Is at least 20% of your export made up of UK goods or services',
-  HEADING: 'Is at least 20% of your export made up of UK goods or services',
 };
 
 const UK_CONTENT_PERCENTAGE_PAGE = {
@@ -106,6 +101,8 @@ const CANNOT_OBTAIN_COVER_PAGE = {
   HEADING: 'You cannot apply for UKEF export insurance',
   REASON: {
     INTRO: 'This is because',
+    UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man',
+    UNSUPPORTED_BUYER_COUNTRY: 'your buyer is based in a country we cannot provide cover for.',
     CAN_GET_PRIVATE_INSURANCE: 'you\'re able to get insurance for this export from companies in the private sector.',
     HAVE_NOT_TRIED_PRIVATE_INSURANCE: 'you\'ve not yet tried to get this from private insurers.',
     NOT_ENOUGH_UK_GOODS_OR_SERVICES: 'your export does not contain enough UK goods or services.',
@@ -146,7 +143,6 @@ module.exports = {
   COMPANY_BASED_PAGE,
   BUYER_BASED_PAGE,
   TRIED_TO_OBTAIN_COVER_PAGE,
-  FINAL_DESTINATION_PAGE,
   UK_CONTENT_PERCENTAGE_PAGE,
   TELL_US_ABOUT_YOUR_DEAL_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,

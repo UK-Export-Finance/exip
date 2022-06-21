@@ -2,9 +2,8 @@ import { FIELD_IDS } from '../../../constants';
 
 const {
   VALID_COMPANY_BASE,
-  VALID_BUYER_BASE,
+  BUYER_COUNTRY,
   TRIED_PRIVATE_COVER,
-  FINAL_DESTINATION,
   UK_CONTENT_PERCENTAGE,
   CURRENCY,
   AMOUNT,
@@ -29,20 +28,15 @@ const checkYourAnswersPage = {
     },
     export: {
       heading: () => cy.get('[data-cy="summaryList-heading-export"]'),
-      [VALID_BUYER_BASE]: {
-        key: () => cy.get(`.${VALID_BUYER_BASE}-key`),
-        value: () => cy.get(`.${VALID_BUYER_BASE}-value`),
-        changeLink: () => cy.get(`[data-cy="${VALID_BUYER_BASE}-change-link"]`),
+      [BUYER_COUNTRY]: {
+        key: () => cy.get(`.${BUYER_COUNTRY}-key`),
+        value: () => cy.get(`.${BUYER_COUNTRY}-value`),
+        changeLink: () => cy.get(`[data-cy="${BUYER_COUNTRY}-change-link"]`),
       },
       [TRIED_PRIVATE_COVER]: {
         key: () => cy.get(`.${TRIED_PRIVATE_COVER}-key`),
         value: () => cy.get(`.${TRIED_PRIVATE_COVER}-value`),
         changeLink: () => cy.get(`[data-cy="${TRIED_PRIVATE_COVER}-change-link"]`),
-      },
-      [FINAL_DESTINATION]: {
-        key: () => cy.get(`.${FINAL_DESTINATION}-key`),
-        value: () => cy.get(`.${FINAL_DESTINATION}-value`),
-        changeLink: () => cy.get(`[data-cy="${FINAL_DESTINATION}-change-link"]`),
       },
       [UK_CONTENT_PERCENTAGE]: {
         key: () => cy.get(`.${UK_CONTENT_PERCENTAGE}-key`),

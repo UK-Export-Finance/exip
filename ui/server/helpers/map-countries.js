@@ -1,15 +1,31 @@
-const mapCountries = (countries, selectedValue) =>
-  countries.map(({ marketName, isoCode }) => {
-    const country = {
-      name: marketName,
-      value: isoCode,
-    };
+const mapActiveFlag = (active) => {
+  if (active === 'Y') {
+    return true;
+  }
 
-    if (selectedValue && country.name === selectedValue) {
-      country.selected = true;
-    }
+  return false;
+};
 
-    return country;
-  });
+const mapCountry = (country, selectedIsoCode) => {
+  const mapped = {
+    name: country.marketName,
+    isoCode: country.isoCode,
+    value: country.isoCode,
+    active: mapActiveFlag(country.active),
+  };
 
-module.exports = mapCountries;
+  if (selectedIsoCode && country.isoCode === selectedIsoCode) {
+    mapped.selected = true;
+  }
+
+  return mapped;
+};
+
+const mapCountries = (countries, selectedIsoCode) =>
+  countries.map((country) => mapCountry(country, selectedIsoCode));
+
+module.exports = {
+  mapActiveFlag,
+  mapCountry,
+  mapCountries,
+};

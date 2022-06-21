@@ -10,7 +10,6 @@ import FIELD_IDS from '../../constants/field-ids';
 
 const {
   VALID_COMPANY_BASE,
-  VALID_BUYER_BASE,
   TRIED_PRIVATE_COVER,
   CURRENCY,
   AMOUNT,
@@ -28,7 +27,9 @@ export default () => {
   companyBasedPage.submitButton().click();
 
   // buyer page/form
-  buyerBasedPage[VALID_BUYER_BASE].yes().click();
+  buyerBasedPage.searchInput().type('Fra');
+  const results = buyerBasedPage.results();
+  results.first().click();
   buyerBasedPage.submitButton().click();
 
   // tried to obtain cover page/form

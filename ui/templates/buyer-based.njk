@@ -1,8 +1,9 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from 'govuk/components/radios/macro.njk' import govukRadios %}
+{% from 'govuk/components/label/macro.njk' import govukLabel %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -28,48 +29,49 @@
   <form method="POST">
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <input type="hidden" name="{{ HIDDEN_FIELD_NAME }}" id="{{ HIDDEN_FIELD_NAME }}" value="{{ submittedValues[HIDDEN_FIELD_NAME].name }}">
 
-    {{ govukRadios({
-      classes: "govuk-radios--inline",
-      idPrefix: FIELD_NAME,
-      name: FIELD_NAME,
-      fieldset: {
-        legend: {
-          html: "<h1 class='govuk-heading-l' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1>"
-        }
-      },
-      items: [
-        {
-          value: true,
-          text: "Yes",
-          label: {
-            attributes: {
-              "data-cy": FIELD_NAME + "-yes"
-            }
-          },
-          attributes: {
-            "data-cy": FIELD_NAME + "-yes-input"
-          },
-          checked: submittedValues[FIELD_NAME] === true
-        },
-        {
-          value: false,
-          text: "No",
-          label: {
-            attributes: {
-              "data-cy": FIELD_NAME + "-no"
-            }
-          },
-          checked: submittedValues[FIELD_NAME] === false
-        }
-      ],
-      errorMessage: validationErrors.errorList[FIELD_NAME]and {
-        text: validationErrors.errorList[FIELD_NAME].text,
-        attributes: {
-          "data-cy": FIELD_NAME + "-error-message"
-        }
+    {{ govukLabel({
+      for: FIELD_NAME_COUNTRY,
+      classes: "govuk-heading-l",
+      html: "<h1 class='govuk-heading-l'><label for='" + FIELD_NAME + "'>" + CONTENT_STRINGS.HEADING + "</label></h1>",
+      attributes: {
+        "data-cy": "heading"
       }
     }) }}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half-from-desktop">
+
+        {% set class = "govuk-form-group" %}
+
+        {% if validationErrors.errorList[FIELD_NAME] %}
+          {% set class = "govuk-form-group govuk-form-group--error" %}
+        {% endif %}
+
+        <div class="{{ class }}">
+          {{ govukErrorMessage({
+            text: validationErrors.errorList[FIELD_NAME].text,
+            attributes: {
+              "data-cy": FIELD_NAME + "-error-message"
+            }
+          }) }}
+
+          <select class="govuk-select" id="{{ FIELD_NAME }}" name="{{ FIELD_NAME }}">
+            <option value="" disabled selected></option>
+
+            {% for country in countries %}
+              {% if country.selected %}
+                <option value="{{ country.name }}" selected>{{ country.name }}</option>
+              {% else %}
+                <option value="{{ country.name }}">{{ country.name }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+
+      </div>
+    </div>
 
     {{ govukButton({
       text: CONTENT_STRINGS.BUTTONS.CONTINUE,
@@ -79,5 +81,20 @@
     }) }}
 
   </form>
+
+  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    var element = document.getElementById('{{ FIELD_NAME }}');
+    accessibleAutocomplete.enhanceSelectElement({
+      selectElement: element,
+      defaultValue: '',
+      onConfirm: function(event) {
+        if (event) {
+          document.getElementById('{{ HIDDEN_FIELD_NAME }}').value = event;
+        }
+      }
+    })
+  </script>
 
 {% endblock %}

@@ -2,11 +2,19 @@ const FIELD_IDS = require('../constants/field-ids');
 const { SUMMARY_ANSWERS } = require('../content-strings');
 const formatCurrency = require('./format-currency');
 
-const mapPeriodDays = (answer) => `${answer} days`;
-const mapPeriodMonths = (answer) => `${answer} months`;
+const mapCountry = (countryObj) => {
+  if (countryObj && countryObj.name) {
+    return countryObj.name;
+  }
+
+  return '-';
+};
 
 const mapCurrency = (currencyObj) =>
   `${currencyObj.name} (${currencyObj.isoCode})`;
+
+const mapPeriodDays = (answer) => `${answer} days`;
+const mapPeriodMonths = (answer) => `${answer} months`;
 
 const mapPreCreditPeriod = (answer) => {
   if (answer) {
@@ -19,7 +27,7 @@ const mapPreCreditPeriod = (answer) => {
 const mapAnswersToContent = (answers) => {
   const {
     VALID_COMPANY_BASE,
-    VALID_BUYER_BASE,
+    BUYER_COUNTRY,
     TRIED_PRIVATE_COVER,
     UK_CONTENT_PERCENTAGE,
     CURRENCY,
@@ -32,7 +40,7 @@ const mapAnswersToContent = (answers) => {
 
   const mapped = {
     [VALID_COMPANY_BASE]: SUMMARY_ANSWERS[VALID_COMPANY_BASE],
-    [VALID_BUYER_BASE]: SUMMARY_ANSWERS[VALID_BUYER_BASE],
+    [BUYER_COUNTRY]: mapCountry(answers[BUYER_COUNTRY]),
     [TRIED_PRIVATE_COVER]: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER],
     [UK_CONTENT_PERCENTAGE]: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
     [AMOUNT]: formatCurrency(answers[AMOUNT], 'GBP'),
@@ -47,9 +55,10 @@ const mapAnswersToContent = (answers) => {
 };
 
 module.exports = {
+  mapCountry,
+  mapCurrency,
   mapPeriodDays,
   mapPeriodMonths,
-  mapCurrency,
   mapPreCreditPeriod,
   mapAnswersToContent,
 };

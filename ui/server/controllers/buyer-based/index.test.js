@@ -2,23 +2,47 @@ const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
-const generateValidationErrors = require('./validation');
+const { validation: generateValidationErrors } = require('./validation');
+const getCountryByName = require('../../helpers/get-country-by-name');
+const api = require('../../api');
+const { mapCountries } = require('../../helpers/map-countries');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
-const { mockReq, mockRes } = require('../../test-mocks');
+const {
+  mockReq,
+  mockRes,
+  mockAnswers,
+  mockSession,
+} = require('../../test-mocks');
 
 describe('controllers/buyer-based', () => {
   let req;
   let res;
+  const mockCountriesResponse = [
+    {
+      marketName: 'Abu Dhabi',
+      isoCode: 'XAD',
+      active: 'N',
+    },
+    {
+      marketName: 'France',
+      isoCode: 'FRA',
+      active: 'Y',
+    },
+  ];
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
   });
 
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
+
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_NAME: FIELD_IDS.VALID_BUYER_BASE,
+        FIELD_NAME: FIELD_IDS.COUNTRY,
         PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.BUYER_BASED_PAGE,
         BACK_LINK: ROUTES.COMPANY_BASED,
       };
@@ -28,71 +52,142 @@ describe('controllers/buyer-based', () => {
   });
 
   describe('get', () => {
-    it('should render template', () => {
-      controller.get(req, res);
+    const getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED, {
+    beforeEach(() => {
+      delete req.session.submittedData;
+      api.getCountries = getCountriesSpy;
+    });
+
+    it('should call api.getCountries', async () => {
+      await controller.get(req, res);
+
+      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should render template', async () => {
+      await controller.get(req, res);
+
+      const expectedVariables = {
         ...singleInputPageVariables(controller.PAGE_VARIABLES),
+        HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
+        countries: mapCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData,
+      };
+
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED, expectedVariables);
+    });
+
+    describe('when a country has been submitted', () => {
+      it('should render template with countries mapped to submitted country', async () => {
+        req.session.submittedData = mockSession.submittedData;
+
+        await controller.get(req, res);
+
+        const expectedCountries = mapCountries(
+          mockCountriesResponse,
+          req.session.submittedData[FIELD_IDS.BUYER_COUNTRY].isoCode,
+        );
+
+        const expectedVariables = {
+          ...singleInputPageVariables(controller.PAGE_VARIABLES),
+          HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
+          countries: expectedCountries,
+          submittedValues: req.session.submittedData,
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED, expectedVariables);
       });
     });
   });
 
   describe('post', () => {
+    const getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+    beforeEach(() => {
+      api.getCountries = getCountriesSpy;
+    });
+
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', () => {
-        controller.post(req, res);
+      it('should render template with validation errors', async () => {
+        await controller.post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
+          HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
+          countries: mapCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),
         });
       });
     });
 
-    describe('when submitted answer is false', () => {
-      it(`should redirect to ${ROUTES.BUYER_BASED_UNAVAILABLE}`, () => {
-        req.body = {
-          [FIELD_IDS.VALID_BUYER_BASE]: 'false',
-        };
+    describe('when the submitted country is not supported', () => {
+      const unsupportedCountry = mockCountriesResponse[0];
 
-        controller.post(req, res);
+      beforeEach(() => {
+        req.body[FIELD_IDS.BUYER_COUNTRY] = unsupportedCountry.marketName;
+      });
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.BUYER_BASED_UNAVAILABLE);
+      it(`should redirect to ${ROUTES.CANNOT_OBTAIN_COVER}`, async () => {
+        await controller.post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.CANNOT_OBTAIN_COVER);
+      });
+
+      it('should add previousRoute and exitReason to req.flash', async () => {
+        await controller.post(req, res);
+
+        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.BUYER_BASED);
+
+        const expectedReason = CONTENT_STRINGS.PAGES.CANNOT_OBTAIN_COVER_PAGE.REASON.UNSUPPORTED_BUYER_COUNTRY;
+        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });
 
     describe('when there are no validation errors', () => {
+      const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
+      const mappedCountries = mapCountries(mockCountriesResponse);
+
+      const selectedCountry = getCountryByName(mappedCountries, selectedCountryName);
+
       const validBody = {
-        [FIELD_IDS.VALID_BUYER_BASE]: 'true',
+        [FIELD_IDS.BUYER_COUNTRY]: selectedCountryName,
       };
 
       beforeEach(() => {
         req.body = validBody;
       });
 
-      it('should update the session with submitted data', () => {
-        controller.post(req, res);
+      it('should update the session with submitted data, popluated with country object', async () => {
+        await controller.post(req, res);
+
+        const expectedPopulatedData = {
+          ...validBody,
+          [FIELD_IDS.BUYER_COUNTRY]: {
+            name: selectedCountry.name,
+            isoCode: selectedCountry.isoCode,
+          },
+        };
 
         const expected = updateSubmittedData(
-          req.body,
+          expectedPopulatedData,
           req.session.submittedData,
         );
 
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.TRIED_TO_OBTAIN_COVER}`, () => {
-        controller.post(req, res);
+      it(`should redirect to ${ROUTES.TRIED_TO_OBTAIN_COVER}`, async () => {
+        await controller.post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER);
       });
 
       describe('when the url\'s last substring is `change`', () => {
-        it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
+        it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, async () => {
           req.originalUrl = 'mock/change';
 
-          controller.post(req, res);
+          await controller.post(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS);
         });
