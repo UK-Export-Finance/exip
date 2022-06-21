@@ -22,6 +22,7 @@ const ERROR_MESSAGES = {
   [FIELD_IDS.CREDIT_PERIOD]: {
     IS_EMPTY: 'Enter how many days credit you extent do your buyer',
     NOT_A_NUMBER: 'Credit period must be a number',
+    BELOW_MINIMUM: 'Credit period must be 1 month or more',
   },
   [FIELD_IDS.POLICY_TYPE]: 'Select a policy type',
   [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
