@@ -27,6 +27,24 @@ describe('controllers/tell-us-about-your-deal/validation/rules/pre-credit-period
     });
   });
 
+  describe(`when ${FIELD_IDS.PRE_CREDIT_PERIOD} is below the minimum`, () => {
+    it('should return validation error', () => {
+      const mockBody = {
+        [FIELD_IDS.PRE_CREDIT_PERIOD]: '-1',
+      };
+
+      const result = rule(mockBody, mockErrors);
+
+      const expected = generateValidationErrors(
+        FIELD_IDS.PRE_CREDIT_PERIOD,
+        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].BELOW_MINIMUM,
+        mockErrors,
+      );
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when there are no validation errors', () => {
     it('should return the already provided errors', () => {
       const mockBody = {

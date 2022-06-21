@@ -18,6 +18,7 @@ const ERROR_MESSAGES = {
   },
   [FIELD_IDS.PRE_CREDIT_PERIOD]: {
     NOT_A_NUMBER: 'Pre-credit period must be a number',
+    BELOW_MINIMUM: 'Pre-Credit period must be 0 months or more',
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
     IS_EMPTY: 'Enter how many days credit you extent do your buyer',
