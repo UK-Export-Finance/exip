@@ -161,7 +161,7 @@ context('Tell us about your deal page - form validation', () => {
 
   describe('when (optional field) `pre-credit period` has a value less than the minimum', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].input().type('-1');
+      tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].input().type('-1');
       tellUsAboutYourDealPage.submitButton().click();
 
       checkText(
