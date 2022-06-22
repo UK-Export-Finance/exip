@@ -42,6 +42,14 @@ describe('sever/helpers/map-answers-to-content', () => {
 
       expect(result).toEqual(expected);
     });
+
+    describe('when there is no object/values', () => {
+      it('should return a dash', () => {
+        const result = mapCurrency();
+
+        expect(result).toEqual('-');
+      });
+    });
   });
 
   describe('mapPeriodDays', () => {

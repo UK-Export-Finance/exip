@@ -16,7 +16,6 @@ const PAGE_VARIABLES = {
 
 const get = (req, res) => {
   const answers = mapAnswersToContent(req.session.submittedData);
-
   const summaryList = generateSummaryList(answers);
 
   return res.render(TEMPLATES.CHECK_YOUR_ANSWERS, {

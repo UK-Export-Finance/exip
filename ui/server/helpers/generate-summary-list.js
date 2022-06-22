@@ -3,27 +3,96 @@ const {
   FIELDS,
   LINKS,
 } = require('../content-strings');
-const { FIELD_GROUPS } = require('../constants');
+const {
+  FIELD_GROUPS,
+  FIELD_IDS,
+  FIELD_VALUES,
+  ROUTES,
+} = require('../constants');
+
+const {
+  POLICY_TYPE,
+  SINGLE_POLICY_LENGTH,
+  MULTI_POLICY_LENGTH,
+  POLICY_LENGTH,
+} = FIELD_IDS;
+
+const {
+  COMPANY_DETAILS,
+  EXPORT_DETAILS,
+  DEAL_DETAILS,
+} = FIELD_GROUPS;
+
+/*
+ * generateFieldGroups
+ * Create all field groups for govukSummaryList
+ * Add a Policy Length field depending on the Policy type (single/multi)
+ * Policy length field must return the correct single/multi input ID.
+ */
+const generateFieldGroups = (submittedData) => {
+  const fieldGroups = { ...FIELD_GROUPS };
+
+  fieldGroups.COMPANY_DETAILS.FIELDS = COMPANY_DETAILS.FIELDS.map((field) => ({
+    ...field,
+    value: submittedData[field.ID],
+  }));
+
+  fieldGroups.EXPORT_DETAILS.FIELDS = EXPORT_DETAILS.FIELDS.map((field) => ({
+    ...field,
+    value: submittedData[field.ID],
+  }));
+
+  fieldGroups.DEAL_DETAILS.FIELDS = DEAL_DETAILS.FIELDS.map((field) => ({
+    ...field,
+    value: submittedData[field.ID],
+  }));
+
+  if (submittedData[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.SINGLE) {
+    fieldGroups.DEAL_DETAILS.FIELDS = [
+      ...fieldGroups.DEAL_DETAILS.FIELDS,
+      {
+        ID: SINGLE_POLICY_LENGTH,
+        ...FIELDS[SINGLE_POLICY_LENGTH],
+        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+        value: submittedData[POLICY_LENGTH],
+      },
+    ];
+  }
+
+  if (submittedData[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.MULTI) {
+    fieldGroups.DEAL_DETAILS.FIELDS = [
+      ...fieldGroups.DEAL_DETAILS.FIELDS,
+      {
+        ID: MULTI_POLICY_LENGTH,
+        ...FIELDS[MULTI_POLICY_LENGTH],
+        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+        value: submittedData[POLICY_LENGTH],
+      },
+    ];
+  }
+
+  return fieldGroups;
+};
 
 /*
  * generateSummaryListRows
  * Map an array of fields with values in submitted data object
  * for govukSummaryList component
  */
-const generateSummaryListRows = (fields, submittedData) =>
+const generateSummaryListRows = (fields) =>
   fields.map((field) => ({
     key: {
       text: FIELDS[field.ID].SUMMARY.TITLE,
       classes: `${field.ID}-key`,
     },
     value: {
-      text: submittedData[field.ID],
+      text: field.value,
       classes: `${field.ID}-value`,
     },
     actions: {
       items: [
         {
-          href: field.CHANGE_ROUTE,
+          href: `${field.CHANGE_ROUTE}#${field.ID}`,
           text: LINKS.CHANGE,
           visuallyHiddenText: FIELDS[field.ID].SUMMARY.TITLE,
           attributes: {
@@ -39,18 +108,20 @@ const generateSummaryListRows = (fields, submittedData) =>
  * Create multiple summary lists
  */
 const generateSummaryList = (submittedData) => {
+  const fieldGroups = generateFieldGroups(submittedData);
+
   const summaryList = {
     COMPANY: {
       GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_COMPANY,
-      ROWS: generateSummaryListRows(FIELD_GROUPS.COMPANY_DETAILS.FIELDS, submittedData),
+      ROWS: generateSummaryListRows(fieldGroups.COMPANY_DETAILS.FIELDS, submittedData),
     },
     EXPORT: {
       GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
-      ROWS: generateSummaryListRows(FIELD_GROUPS.EXPORT_DETAILS.FIELDS, submittedData),
+      ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS.FIELDS, submittedData),
     },
     DEAL: {
       GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_DEAL,
-      ROWS: generateSummaryListRows(FIELD_GROUPS.DEAL_DETAILS.FIELDS, submittedData),
+      ROWS: generateSummaryListRows(fieldGroups.DEAL_DETAILS.FIELDS, submittedData),
     },
   };
 
@@ -58,6 +129,7 @@ const generateSummaryList = (submittedData) => {
 };
 
 module.exports = {
+  generateFieldGroups,
   generateSummaryListRows,
   generateSummaryList,
 };

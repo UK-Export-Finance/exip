@@ -1,18 +1,45 @@
 const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
-const { ROUTES, TEMPLATES } = require('../../constants');
+const { ROUTES, TEMPLATES, FIELD_IDS } = require('../../constants');
 const { mapAnswersToContent } = require('../../helpers/map-answers-to-content');
 const { generateSummaryList } = require('../../helpers/generate-summary-list');
 
 const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
 
+const {
+  VALID_COMPANY_BASE,
+  BUYER_COUNTRY,
+  TRIED_PRIVATE_COVER,
+  UK_CONTENT_PERCENTAGE,
+  CURRENCY,
+  AMOUNT,
+  CREDIT_PERIOD,
+} = FIELD_IDS;
+
 describe('controllers/check-your-answers', () => {
   let req;
   let res;
+  const mockSessionData = {
+    [VALID_COMPANY_BASE]: true,
+    [BUYER_COUNTRY]: {
+      name: mockAnswers[BUYER_COUNTRY],
+      isoCode: 'FRA',
+    },
+    [TRIED_PRIVATE_COVER]: true,
+    [UK_CONTENT_PERCENTAGE]: 30,
+    [CURRENCY]: {
+      name: 'UK Sterling',
+      isoCode: 'GBP',
+    },
+    [AMOUNT]: 123456,
+    [CREDIT_PERIOD]: 24,
+  };
 
   beforeEach(() => {
     req = mockReq();
-    req.session.submittedData = mockAnswers;
+    req.session = {
+      submittedData: mockSessionData,
+    };
 
     res = mockRes();
   });
@@ -38,7 +65,8 @@ describe('controllers/check-your-answers', () => {
     it('should render template', () => {
       controller.get(req, res);
 
-      const expectedSummaryList = generateSummaryList(mapAnswersToContent(mockAnswers));
+      const answers = mapAnswersToContent(mockSessionData);
+      const expectedSummaryList = generateSummaryList(answers);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.CHECK_YOUR_ANSWERS, {
         ...controller.PAGE_VARIABLES,

@@ -10,8 +10,13 @@ const mapCountry = (countryObj) => {
   return '-';
 };
 
-const mapCurrency = (currencyObj) =>
-  `${currencyObj.name} (${currencyObj.isoCode})`;
+const mapCurrency = (currencyObj) => {
+  if (currencyObj) {
+    return `${currencyObj.name} (${currencyObj.isoCode})`;
+  }
+
+  return '-';
+};
 
 const mapPeriodDays = (answer) => `${answer} days`;
 const mapPeriodMonths = (answer) => `${answer} months`;

@@ -1,18 +1,27 @@
 const {
+  generateFieldGroups,
   generateSummaryListRows,
   generateSummaryList,
 } = require('./generate-summary-list');
 const {
+  PAGES,
   FIELDS,
   LINKS,
-  PAGES,
 } = require('../content-strings');
 const {
-  FIELD_IDS,
   FIELD_GROUPS,
+  FIELD_IDS,
+  FIELD_VALUES,
   ROUTES,
 } = require('../constants');
 const { mockAnswers } = require('../test-mocks');
+
+const {
+  POLICY_TYPE,
+  SINGLE_POLICY_LENGTH,
+  MULTI_POLICY_LENGTH,
+  POLICY_LENGTH,
+} = FIELD_IDS;
 
 describe('sever/helpers/generate-summary-list', () => {
   const mockFields = [
@@ -23,15 +32,88 @@ describe('sever/helpers/generate-summary-list', () => {
     },
   ];
 
-  const mockSubmittedData = {
-    [FIELD_IDS.VALID_COMPANY_BASE]: true,
-  };
+  describe('generateFieldGroups', () => {
+    it('should map over each field group with value from submittedData', () => {
+      const mockAnswersNoPolicyType = mockAnswers;
+      delete mockAnswersNoPolicyType[POLICY_TYPE];
+
+      const result = generateFieldGroups(mockAnswersNoPolicyType);
+      const fieldGroups = FIELD_GROUPS;
+
+      const expected = {
+        COMPANY_DETAILS: {
+          FIELDS: fieldGroups.COMPANY_DETAILS.FIELDS.map((field) => ({
+            ...field,
+            value: mockAnswers[field.ID],
+          })),
+        },
+        EXPORT_DETAILS: {
+          FIELDS: fieldGroups.EXPORT_DETAILS.FIELDS.map((field) => ({
+            ...field,
+            value: mockAnswers[field.ID],
+          })),
+        },
+        DEAL_DETAILS: {
+          FIELDS: fieldGroups.DEAL_DETAILS.FIELDS.map((field) => ({
+            ...field,
+            value: mockAnswers[field.ID],
+          })),
+        },
+      };
+
+      expect(result).toEqual(expected);
+    });
+
+    describe('when policy type is single', () => {
+      it(`should add a ${POLICY_LENGTH} object to DEAL_DETAILS with single policy length field values`, () => {
+        const mockAnswersSinglePolicyType = {
+          ...mockAnswers,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+        };
+
+        const result = generateFieldGroups(mockAnswersSinglePolicyType);
+
+        const lastDealDetailsField = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 1];
+
+        const expected = {
+          ID: SINGLE_POLICY_LENGTH,
+          ...FIELDS[SINGLE_POLICY_LENGTH],
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          value: mockAnswers[POLICY_LENGTH],
+        };
+
+        expect(lastDealDetailsField).toEqual(expected);
+      });
+    });
+
+    describe('when policy type is multi', () => {
+      it(`should add a ${POLICY_LENGTH} object to DEAL_DETAILS with single policy length field values`, () => {
+        const mockAnswersMultiPolicyType = {
+          ...mockAnswers,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+        };
+
+        const result = generateFieldGroups(mockAnswersMultiPolicyType);
+
+        const lastDealDetailsField = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 1];
+
+        const expected = {
+          ID: MULTI_POLICY_LENGTH,
+          ...FIELDS[MULTI_POLICY_LENGTH],
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          value: mockAnswersMultiPolicyType[POLICY_LENGTH],
+        };
+
+        expect(lastDealDetailsField).toEqual(expected);
+      });
+    });
+  });
 
   describe('generateSummaryListRows', () => {
     it('returns an array of objects mapped to submitted data', () => {
       const result = generateSummaryListRows(
         FIELD_GROUPS.COMPANY_DETAILS.FIELDS,
-        mockSubmittedData,
+        mockAnswers,
       );
 
       const expectedObj = (field) => ({
@@ -46,7 +128,7 @@ describe('sever/helpers/generate-summary-list', () => {
         actions: {
           items: [
             {
-              href: field.CHANGE_ROUTE,
+              href: `${field.CHANGE_ROUTE}#${field.ID}`,
               text: LINKS.CHANGE,
               visuallyHiddenText: FIELDS[field.ID].SUMMARY.TITLE,
               attributes: {

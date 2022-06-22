@@ -96,10 +96,16 @@ const FIELDS = {
   [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
     HINT: 'Enter policy length in months. The maximum is 24 months.',
+    SUMMARY: {
+      TITLE: 'Policy length',
+    },
   },
   [FIELD_IDS.MULTI_POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
     HINT: 'Enter policy length in months. The maximum is 12 months.',
+    SUMMARY: {
+      TITLE: 'Policy length',
+    },
   },
   [FIELD_IDS.POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
