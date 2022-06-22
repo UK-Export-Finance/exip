@@ -41,7 +41,9 @@ context('Change your answers after checking answers - Policy type and length', (
 
   it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
     row.changeLink().click();
-    cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+
+    const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_TYPE}`;
+    cy.url().should('include', expectedUrl);
   });
 
   it('has originally submitted `policy type` (single)', () => {
@@ -87,7 +89,9 @@ context('Change your answers after checking answers - Policy type and length', (
 
     before(() => {
       row.changeLink().click();
-      cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+
+      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${MULTI_POLICY_TYPE}`;
+      cy.url().should('include', expectedUrl);
     });
 
     it('has previously submitted `policy type` (multi)', () => {
@@ -135,6 +139,9 @@ describe('change only `Policy length` (single policy type)', () => {
 
   before(() => {
     row.changeLink().click();
+
+    const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+    cy.url().should('include', expectedUrl);
   });
 
   it('auto focuses the input', () => {
@@ -164,6 +171,9 @@ describe('change only `Policy length` (multi policy type)', () => {
     // click `change` (policy length)
     row = checkYourAnswersPage.summaryLists.deal[MULTI_POLICY_LENGTH];
     row.changeLink().click();
+
+    const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${MULTI_POLICY_LENGTH}`;
+    cy.url().should('include', expectedUrl);
   });
 
   it('auto focuses the input', () => {

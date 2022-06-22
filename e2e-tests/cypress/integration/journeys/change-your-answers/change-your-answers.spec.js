@@ -56,7 +56,9 @@ context('Change your answers after checking answers', () => {
 
       it(`clicking 'change' redirects to ${ROUTES.COMPANY_BASED_CHANGE}`, () => {
         row.changeLink().click();
-        cy.url().should('include', ROUTES.COMPANY_BASED_CHANGE);
+
+        const expectedUrl = `${ROUTES.COMPANY_BASED_CHANGE}#${VALID_COMPANY_BASE}`;
+        cy.url().should('include', expectedUrl);
       });
 
       it('has originally submitted answer selected', () => {
@@ -81,7 +83,9 @@ context('Change your answers after checking answers', () => {
 
       it(`clicking 'change' redirects to ${ROUTES.BUYER_BASED_CHANGE}`, () => {
         row.changeLink().click();
-        cy.url().should('include', ROUTES.BUYER_BASED_CHANGE);
+
+        const expectedUrl = `${ROUTES.BUYER_BASED_CHANGE}#${BUYER_COUNTRY}`;
+        cy.url().should('include', expectedUrl);
       });
 
       it('has originally submitted answer selected', () => {
@@ -120,7 +124,9 @@ context('Change your answers after checking answers', () => {
 
       it(`clicking 'change' redirects to ${ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE}`, () => {
         row.changeLink().click();
-        cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE);
+
+        const expectedUrl = `${ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE}#${TRIED_PRIVATE_COVER}`;
+        cy.url().should('include', expectedUrl);
       });
 
       it('has originally submitted answer selected', () => {
@@ -143,7 +149,9 @@ context('Change your answers after checking answers', () => {
 
       it(`clicking 'change' redirects to ${ROUTES.UK_CONTENT_PERCENTAGE_CHANGE}`, () => {
         row.changeLink().click();
-        cy.url().should('include', ROUTES.UK_CONTENT_PERCENTAGE_CHANGE);
+
+        const expectedUrl = `${ROUTES.UK_CONTENT_PERCENTAGE_CHANGE}#${UK_CONTENT_PERCENTAGE}`;
+        cy.url().should('include', expectedUrl);
       });
 
       it('has originally submitted answer', () => {
@@ -168,7 +176,9 @@ context('Change your answers after checking answers', () => {
 
       it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
         row.changeLink().click();
-        cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+
+        const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${AMOUNT}`;
+        cy.url().should('include', expectedUrl);
       });
 
       it('has originally submitted answer', () => {
@@ -203,7 +213,9 @@ context('Change your answers after checking answers', () => {
 
       it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
         row.changeLink().click();
-        cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+
+        const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${CURRENCY}`;
+        cy.url().should('include', expectedUrl);
       });
 
       it('has originally submitted answer', () => {
@@ -237,7 +249,9 @@ context('Change your answers after checking answers', () => {
 
       it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
         row.changeLink().click();
-        cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+
+        const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${PRE_CREDIT_PERIOD}`;
+        cy.url().should('include', expectedUrl);
       });
 
       it('has originally submitted answer', () => {
@@ -272,7 +286,9 @@ context('Change your answers after checking answers', () => {
 
       it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
         row.changeLink().click();
-        cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+
+        const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${CREDIT_PERIOD}`;
+        cy.url().should('include', expectedUrl);
       });
 
       it('has originally submitted answer', () => {
