@@ -57,7 +57,7 @@
             }
           }) }}
 
-          <select class="govuk-select" id="{{ FIELD_NAME }}" name="{{ FIELD_NAME }}">
+          <select class="govuk-select" id="{{ FIELD_NAME }}" name="{{ FIELD_NAME }}" autofocus="true">
             <option value="" disabled selected></option>
 
             {% for country in countries %}
@@ -95,6 +95,10 @@
         }
       }
     })
+
+    if ('{{ isChangeRoute }}') {
+      document.getElementById('{{ FIELD_NAME }}').focus();
+    }
   </script>
 
 {% endblock %}
