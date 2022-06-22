@@ -11,8 +11,6 @@ const {
   CURRENCY,
   PRE_CREDIT_PERIOD,
   CREDIT_PERIOD,
-  POLICY_TYPE,
-  // POLICY_LENGTH,
 } = FIELD_IDS;
 
 const FIELD_GROUPS = {
@@ -64,11 +62,6 @@ const FIELD_GROUPS = {
       {
         ID: CREDIT_PERIOD,
         ...FIELDS[CREDIT_PERIOD],
-        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-      },
-      {
-        ID: POLICY_TYPE,
-        ...FIELDS[POLICY_TYPE],
         CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
       },
     ],

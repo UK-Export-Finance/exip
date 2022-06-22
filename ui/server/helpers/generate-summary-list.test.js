@@ -18,9 +18,10 @@ const { mockAnswers } = require('../test-mocks');
 
 const {
   POLICY_TYPE,
+  SINGLE_POLICY_TYPE,
+  MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
-  POLICY_LENGTH,
 } = FIELD_IDS;
 
 describe('sever/helpers/generate-summary-list', () => {
@@ -65,46 +66,86 @@ describe('sever/helpers/generate-summary-list', () => {
     });
 
     describe('when policy type is single', () => {
-      it(`should add a ${POLICY_LENGTH} object to DEAL_DETAILS with single policy length field values`, () => {
+      it(`should add a ${SINGLE_POLICY_TYPE} object to DEAL_DETAILS`, () => {
         const mockAnswersSinglePolicyType = {
           ...mockAnswers,
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
         };
 
         const result = generateFieldGroups(mockAnswersSinglePolicyType);
 
-        const lastDealDetailsField = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 1];
+        const expectedField = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 2];
+
+        const expected = {
+          ID: SINGLE_POLICY_TYPE,
+          ...FIELDS[SINGLE_POLICY_TYPE],
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          value: mockAnswersSinglePolicyType[SINGLE_POLICY_TYPE],
+        };
+
+        expect(expectedField).toEqual(expected);
+      });
+
+      it(`should add a ${SINGLE_POLICY_LENGTH} object to DEAL_DETAILS`, () => {
+        const mockAnswersSinglePolicyType = {
+          ...mockAnswers,
+          [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+        };
+
+        const result = generateFieldGroups(mockAnswersSinglePolicyType);
+
+        const expectedField = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 1];
 
         const expected = {
           ID: SINGLE_POLICY_LENGTH,
           ...FIELDS[SINGLE_POLICY_LENGTH],
           CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-          value: mockAnswers[POLICY_LENGTH],
+          value: mockAnswersSinglePolicyType[SINGLE_POLICY_LENGTH],
         };
 
-        expect(lastDealDetailsField).toEqual(expected);
+        expect(expectedField).toEqual(expected);
       });
     });
 
     describe('when policy type is multi', () => {
-      it(`should add a ${POLICY_LENGTH} object to DEAL_DETAILS with single policy length field values`, () => {
+      it(`should add a ${MULTI_POLICY_TYPE} object to DEAL_DETAILS`, () => {
         const mockAnswersMultiPolicyType = {
           ...mockAnswers,
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [MULTI_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
         };
 
         const result = generateFieldGroups(mockAnswersMultiPolicyType);
 
-        const lastDealDetailsField = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 1];
+        const expectedField = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 2];
+
+        const expected = {
+          ID: MULTI_POLICY_TYPE,
+          ...FIELDS[MULTI_POLICY_TYPE],
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          value: mockAnswersMultiPolicyType[MULTI_POLICY_TYPE],
+        };
+
+        expect(expectedField).toEqual(expected);
+      });
+
+      it(`should add a ${MULTI_POLICY_LENGTH} object to DEAL_DETAILS with single policy length field values`, () => {
+        const mockAnswersMultiPolicyType = {
+          ...mockAnswers,
+          [MULTI_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+        };
+
+        const result = generateFieldGroups(mockAnswersMultiPolicyType);
+
+        const expectedField = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 1];
 
         const expected = {
           ID: MULTI_POLICY_LENGTH,
           ...FIELDS[MULTI_POLICY_LENGTH],
           CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-          value: mockAnswersMultiPolicyType[POLICY_LENGTH],
+          value: mockAnswersMultiPolicyType[MULTI_POLICY_LENGTH],
         };
 
-        expect(lastDealDetailsField).toEqual(expected);
+        expect(expectedField).toEqual(expected);
       });
     });
   });

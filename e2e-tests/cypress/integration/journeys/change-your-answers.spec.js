@@ -25,6 +25,8 @@ context('Change your answers after checking answers', () => {
     PRE_CREDIT_PERIOD,
     CREDIT_PERIOD,
     POLICY_TYPE,
+    SINGLE_POLICY_TYPE,
+    MULTI_POLICY_TYPE,
     POLICY_LENGTH,
     SINGLE_POLICY_LENGTH,
     MULTI_POLICY_LENGTH,
@@ -65,6 +67,10 @@ context('Change your answers after checking answers', () => {
         companyBasedPage[VALID_COMPANY_BASE].yesInput().should('be.checked');
       });
 
+      it('auto focuses the input', () => {
+        companyBasedPage[VALID_COMPANY_BASE].yesInput().should('have.focus');
+      });
+
       it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
         companyBasedPage.submitButton().click();
 
@@ -86,6 +92,11 @@ context('Change your answers after checking answers', () => {
         const expectedValue = submissionData[BUYER_COUNTRY];
 
         buyerBasedPage.hiddenInput().should('have.attr', 'value', expectedValue);
+      });
+
+      it('auto focuses the input', () => {
+        // autocomplete component does not have a focused attribute, instead it has a class.
+        buyerBasedPage.searchInput().should('have.class', 'autocomplete__input--focused');
       });
 
       it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting a new answer`, () => {
@@ -120,6 +131,10 @@ context('Change your answers after checking answers', () => {
         triedToObtainCoverPage[TRIED_PRIVATE_COVER].yesInput().should('be.checked');
       });
 
+      it('auto focuses the input', () => {
+        triedToObtainCoverPage[TRIED_PRIVATE_COVER].yesInput().should('have.focus');
+      });
+
       it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
         triedToObtainCoverPage.submitButton().click();
 
@@ -137,6 +152,10 @@ context('Change your answers after checking answers', () => {
 
       it('has originally submitted answer', () => {
         ukContentPercentagePage.yesInput().should('be.checked');
+      });
+
+      it('auto focuses the input', () => {
+        ukContentPercentagePage.yesInput().should('have.focus');
       });
 
       it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
@@ -159,6 +178,10 @@ context('Change your answers after checking answers', () => {
       it('has originally submitted answer', () => {
         const expectedValue = submissionData[AMOUNT];
         tellUsAboutYourDealPage[AMOUNT].input().should('have.attr', 'value', expectedValue);
+      });
+
+      it('auto focuses the input', () => {
+        tellUsAboutYourDealPage[AMOUNT].input().should('have.focus');
       });
 
       it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -192,6 +215,10 @@ context('Change your answers after checking answers', () => {
         tellUsAboutYourDealPage[CURRENCY].inputOptionSelected().contains(expectedValue);
       });
 
+      it('auto focuses the input', () => {
+        tellUsAboutYourDealPage[CURRENCY].input().should('have.focus');
+      });
+
       it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
         tellUsAboutYourDealPage[CURRENCY].input().select('EUR');
         tellUsAboutYourDealPage.submitButton().click();
@@ -220,6 +247,10 @@ context('Change your answers after checking answers', () => {
       it('has originally submitted answer', () => {
         const expectedValue = submissionData[PRE_CREDIT_PERIOD];
         tellUsAboutYourDealPage[PRE_CREDIT_PERIOD].input().should('have.attr', 'value', expectedValue);
+      });
+
+      it('auto focuses the input', () => {
+        tellUsAboutYourDealPage[PRE_CREDIT_PERIOD].input().should('have.focus');
       });
 
       it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -253,6 +284,10 @@ context('Change your answers after checking answers', () => {
         tellUsAboutYourDealPage[CREDIT_PERIOD].input().should('have.attr', 'value', expectedValue);
       });
 
+      it('auto focuses the input', () => {
+        tellUsAboutYourDealPage[CREDIT_PERIOD].input().should('have.focus');
+      });
+
       it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
         tellUsAboutYourDealPage[CREDIT_PERIOD].input().clear().type('3');
         tellUsAboutYourDealPage.submitButton().click();
@@ -272,7 +307,7 @@ context('Change your answers after checking answers', () => {
     });
 
     describe('change `Policy type` and `Policy length`', () => {
-      let row = checkYourAnswersPage.summaryLists.deal[POLICY_LENGTH];
+      let row = checkYourAnswersPage.summaryLists.deal[SINGLE_POLICY_TYPE];
 
       it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
         row.changeLink().click();
@@ -281,6 +316,10 @@ context('Change your answers after checking answers', () => {
 
       it('has originally submitted `policy type` (single)', () => {
         tellUsAboutYourDealPage[POLICY_TYPE].single.input().should('be.checked');
+      });
+
+      it('auto focuses the input', () => {
+        tellUsAboutYourDealPage[POLICY_TYPE].single.input().should('have.focus');
       });
 
       it(`has originally submitted 'policy length' (${submissionData[POLICY_LENGTH]})`, () => {
@@ -296,7 +335,7 @@ context('Change your answers after checking answers', () => {
       });
 
       it('renders the new answers in `Check your answers` page (multi policy, 10 months)', () => {
-        row = checkYourAnswersPage.summaryLists.deal[POLICY_TYPE];
+        row = checkYourAnswersPage.summaryLists.deal[MULTI_POLICY_TYPE];
 
         row.value().invoke('text').then((text) => {
           const expected = FIELD_VALUES.POLICY_TYPE.MULTI;
@@ -304,7 +343,7 @@ context('Change your answers after checking answers', () => {
           expect(text.trim()).equal(expected);
         });
 
-        row = checkYourAnswersPage.summaryLists.deal[POLICY_LENGTH];
+        row = checkYourAnswersPage.summaryLists.deal[MULTI_POLICY_LENGTH];
 
         row.value().invoke('text').then((text) => {
           const expected = '10 months';
@@ -314,6 +353,8 @@ context('Change your answers after checking answers', () => {
       });
 
       describe('change `Policy type` and `Policy length` for a second time', () => {
+        row = checkYourAnswersPage.summaryLists.deal[MULTI_POLICY_TYPE];
+
         before(() => {
           row.changeLink().click();
           cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
@@ -323,8 +364,12 @@ context('Change your answers after checking answers', () => {
           tellUsAboutYourDealPage[POLICY_TYPE].multi.input().should('be.checked');
         });
 
+        it('auto focuses the input', () => {
+          tellUsAboutYourDealPage[POLICY_TYPE].multi.input().should('have.focus');
+        });
+
         it('has previously submitted `policy length` (10 months)', () => {
-          tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().should('have.attr', 'value', submissionData[POLICY_LENGTH]);
+          tellUsAboutYourDealPage[MULTI_POLICY_LENGTH].input().should('have.attr', 'value', '10');
         });
 
         it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
@@ -336,7 +381,7 @@ context('Change your answers after checking answers', () => {
         });
 
         it('renders the new answers in `Check your answers` page (single policy, 15 months)', () => {
-          row = checkYourAnswersPage.summaryLists.deal[POLICY_TYPE];
+          row = checkYourAnswersPage.summaryLists.deal[SINGLE_POLICY_TYPE];
 
           row.value().invoke('text').then((text) => {
             const expected = FIELD_VALUES.POLICY_TYPE.SINGLE;
@@ -344,7 +389,7 @@ context('Change your answers after checking answers', () => {
             expect(text.trim()).equal(expected);
           });
 
-          row = checkYourAnswersPage.summaryLists.deal[POLICY_LENGTH];
+          row = checkYourAnswersPage.summaryLists.deal[SINGLE_POLICY_LENGTH];
 
           row.value().invoke('text').then((text) => {
             const expected = '15 months';
@@ -352,6 +397,55 @@ context('Change your answers after checking answers', () => {
             expect(text.trim()).equal(expected);
           });
         });
+      });
+    });
+
+    describe('change only `Policy length` (single policy type)', () => {
+      const row = checkYourAnswersPage.summaryLists.deal[SINGLE_POLICY_LENGTH];
+
+      before(() => {
+        row.changeLink().click();
+      });
+
+      it('auto focuses the input', () => {
+        tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().should('have.focus');
+      });
+
+      it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
+        tellUsAboutYourDealPage[POLICY_TYPE].single.input().click();
+        tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().clear().type('15');
+        tellUsAboutYourDealPage.submitButton().click();
+
+        cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+      });
+    });
+
+    describe('change only `Policy length` (multi policy type)', () => {
+      let row;
+
+      before(() => {
+        // change back to multi policy
+        row = checkYourAnswersPage.summaryLists.deal[SINGLE_POLICY_TYPE];
+        row.changeLink().click();
+
+        tellUsAboutYourDealPage[POLICY_TYPE].multi.input().click();
+        tellUsAboutYourDealPage.submitButton().click();
+
+        // click `change` (policy length)
+        row = checkYourAnswersPage.summaryLists.deal[MULTI_POLICY_LENGTH];
+        row.changeLink().click();
+      });
+
+      it('auto focuses the input', () => {
+        tellUsAboutYourDealPage[MULTI_POLICY_LENGTH].input().should('have.focus');
+      });
+
+      it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
+        tellUsAboutYourDealPage[POLICY_TYPE].multi.input().click();
+        tellUsAboutYourDealPage[MULTI_POLICY_LENGTH].input().clear().type('10');
+        tellUsAboutYourDealPage.submitButton().click();
+
+        cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
       });
     });
   });

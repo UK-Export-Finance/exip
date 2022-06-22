@@ -6,15 +6,14 @@ const {
 const {
   FIELD_GROUPS,
   FIELD_IDS,
-  FIELD_VALUES,
   ROUTES,
 } = require('../constants');
 
 const {
-  POLICY_TYPE,
+  SINGLE_POLICY_TYPE,
+  MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
-  POLICY_LENGTH,
 } = FIELD_IDS;
 
 const {
@@ -47,26 +46,38 @@ const generateFieldGroups = (submittedData) => {
     value: submittedData[field.ID],
   }));
 
-  if (submittedData[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.SINGLE) {
+  if (submittedData[SINGLE_POLICY_TYPE]) {
     fieldGroups.DEAL_DETAILS.FIELDS = [
       ...fieldGroups.DEAL_DETAILS.FIELDS,
+      {
+        ID: SINGLE_POLICY_TYPE,
+        ...FIELDS[SINGLE_POLICY_TYPE],
+        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+        value: submittedData[SINGLE_POLICY_TYPE],
+      },
       {
         ID: SINGLE_POLICY_LENGTH,
         ...FIELDS[SINGLE_POLICY_LENGTH],
         CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-        value: submittedData[POLICY_LENGTH],
+        value: submittedData[SINGLE_POLICY_LENGTH],
       },
     ];
   }
 
-  if (submittedData[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.MULTI) {
+  if (submittedData[MULTI_POLICY_TYPE]) {
     fieldGroups.DEAL_DETAILS.FIELDS = [
       ...fieldGroups.DEAL_DETAILS.FIELDS,
+      {
+        ID: MULTI_POLICY_TYPE,
+        ...FIELDS[MULTI_POLICY_TYPE],
+        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+        value: submittedData[MULTI_POLICY_TYPE],
+      },
       {
         ID: MULTI_POLICY_LENGTH,
         ...FIELDS[MULTI_POLICY_LENGTH],
         CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-        value: submittedData[POLICY_LENGTH],
+        value: submittedData[MULTI_POLICY_LENGTH],
       },
     ];
   }

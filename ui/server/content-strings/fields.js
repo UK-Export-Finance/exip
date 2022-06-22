@@ -79,11 +79,13 @@ const FIELDS = {
     LEGEND: 'What kind of policy do you need?',
     OPTIONS: {
       SINGLE: {
+        ID: FIELD_IDS.SINGLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.SINGLE,
         TEXT: 'Single policy',
         HINT: 'This offers cover for a single export contract with a specific buyer for a pre-determined amount.',
       },
       MULTI: {
+        ID: FIELD_IDS.MULTI_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTI,
         TEXT: 'Multi policy (also known as a revolving policy)',
         HINT: 'Multi policies offer cover for multiple export contracts or orders with the same buyer for up to 12 months. You’ll need to be able to estimate the total value of the exports during that time.',
@@ -91,6 +93,23 @@ const FIELDS = {
     },
     SUMMARY: {
       TITLE: 'Policy type',
+    },
+  },
+  [FIELD_IDS.SINGLE_POLICY_TYPE]: {
+    SUMMARY: {
+      TITLE: 'Policy type',
+    },
+  },
+  [FIELD_IDS.MULTI_POLICY_TYPE]: {
+    SUMMARY: {
+      TITLE: 'Policy type',
+    },
+  },
+  [FIELD_IDS.POLICY_LENGTH]: {
+    LABEL: 'How long do you need the policy for?',
+    HINT: 'Enter policy length in months. The maximum is 24 months.',
+    SUMMARY: {
+      TITLE: 'Policy length',
     },
   },
   [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
@@ -103,13 +122,6 @@ const FIELDS = {
   [FIELD_IDS.MULTI_POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
     HINT: 'Enter policy length in months. The maximum is 12 months.',
-    SUMMARY: {
-      TITLE: 'Policy length',
-    },
-  },
-  [FIELD_IDS.POLICY_LENGTH]: {
-    LABEL: 'How long do you need the policy for?',
-    HINT: 'Enter policy length in months. The maximum is 24 months.',
     SUMMARY: {
       TITLE: 'Policy length',
     },
