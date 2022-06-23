@@ -85,9 +85,9 @@ context('Change your answers after checking answers - Policy type and length', (
   });
 
   describe('change `Policy type` and `Policy length` for a second time', () => {
-    row = checkYourAnswersPage.summaryLists.deal[MULTI_POLICY_TYPE];
-
     before(() => {
+      row = checkYourAnswersPage.summaryLists.deal[MULTI_POLICY_TYPE];
+
       row.changeLink().click();
 
       const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${MULTI_POLICY_TYPE}`;
@@ -132,59 +132,56 @@ context('Change your answers after checking answers - Policy type and length', (
       });
     });
   });
-});
 
-describe('change only `Policy length` (single policy type)', () => {
-  const row = checkYourAnswersPage.summaryLists.deal[SINGLE_POLICY_LENGTH];
+  describe('change only `Policy length` (single policy type)', () => {
+    before(() => {
+      row = checkYourAnswersPage.summaryLists.deal[SINGLE_POLICY_LENGTH];
+      row.changeLink().click();
 
-  before(() => {
-    row.changeLink().click();
+      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+      cy.url().should('include', expectedUrl);
+    });
 
-    const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_LENGTH}`;
-    cy.url().should('include', expectedUrl);
+    it('auto focuses the input', () => {
+      tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().should('have.focus');
+    });
+
+    it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
+      tellUsAboutYourDealPage[POLICY_TYPE].single.input().click();
+      tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().clear().type('15');
+      tellUsAboutYourDealPage.submitButton().click();
+
+      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+    });
   });
 
-  it('auto focuses the input', () => {
-    tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().should('have.focus');
-  });
+  describe('change only `Policy length` (multi policy type)', () => {
+    before(() => {
+      // change back to multi policy
+      row = checkYourAnswersPage.summaryLists.deal[SINGLE_POLICY_TYPE];
+      row.changeLink().click();
 
-  it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
-    tellUsAboutYourDealPage[POLICY_TYPE].single.input().click();
-    tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().clear().type('15');
-    tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourDealPage[POLICY_TYPE].multi.input().click();
+      tellUsAboutYourDealPage.submitButton().click();
 
-    cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
-  });
-});
+      // click `change` (policy length)
+      row = checkYourAnswersPage.summaryLists.deal[MULTI_POLICY_LENGTH];
+      row.changeLink().click();
 
-describe('change only `Policy length` (multi policy type)', () => {
-  let row;
+      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${MULTI_POLICY_LENGTH}`;
+      cy.url().should('include', expectedUrl);
+    });
 
-  before(() => {
-    // change back to multi policy
-    row = checkYourAnswersPage.summaryLists.deal[SINGLE_POLICY_TYPE];
-    row.changeLink().click();
+    it('auto focuses the input', () => {
+      tellUsAboutYourDealPage[MULTI_POLICY_LENGTH].input().should('have.focus');
+    });
 
-    tellUsAboutYourDealPage[POLICY_TYPE].multi.input().click();
-    tellUsAboutYourDealPage.submitButton().click();
+    it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
+      tellUsAboutYourDealPage[POLICY_TYPE].multi.input().click();
+      tellUsAboutYourDealPage[MULTI_POLICY_LENGTH].input().clear().type('10');
+      tellUsAboutYourDealPage.submitButton().click();
 
-    // click `change` (policy length)
-    row = checkYourAnswersPage.summaryLists.deal[MULTI_POLICY_LENGTH];
-    row.changeLink().click();
-
-    const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${MULTI_POLICY_LENGTH}`;
-    cy.url().should('include', expectedUrl);
-  });
-
-  it('auto focuses the input', () => {
-    tellUsAboutYourDealPage[MULTI_POLICY_LENGTH].input().should('have.focus');
-  });
-
-  it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
-    tellUsAboutYourDealPage[POLICY_TYPE].multi.input().click();
-    tellUsAboutYourDealPage[MULTI_POLICY_LENGTH].input().clear().type('10');
-    tellUsAboutYourDealPage.submitButton().click();
-
-    cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+    });
   });
 });
