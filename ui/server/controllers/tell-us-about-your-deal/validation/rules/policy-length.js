@@ -2,7 +2,7 @@ const { FIELD_IDS, FIELD_VALUES } = require('../../../../constants');
 const { ERROR_MESSAGES } = require('../../../../content-strings');
 const generateValidationErrors = require('../../../../helpers/validation');
 const { objectHasProperty } = require('../../../../helpers/object');
-const isNumber = require('../../../../helpers/number');
+const { isNumber, numberHasDecimal } = require('../../../../helpers/number');
 
 const MINIMUM = 1;
 const SINGLE_POLICY_MAX_MONTHS = 24;
@@ -23,6 +23,16 @@ const policyLengthRules = (formBody, errors) => {
           FIELD_IDS.SINGLE_POLICY_LENGTH,
           errorMessage,
           errors,
+        );
+
+        return updatedErrors;
+      }
+
+      if (numberHasDecimal(formBody[FIELD_IDS.SINGLE_POLICY_LENGTH])) {
+        updatedErrors = generateValidationErrors(
+          FIELD_IDS.SINGLE_POLICY_LENGTH,
+          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_WHOLE_NUMBER,
+          updatedErrors,
         );
 
         return updatedErrors;
@@ -67,6 +77,16 @@ const policyLengthRules = (formBody, errors) => {
           FIELD_IDS.MULTI_POLICY_LENGTH,
           errorMessage,
           errors,
+        );
+
+        return updatedErrors;
+      }
+
+      if (numberHasDecimal(formBody[FIELD_IDS.MULTI_POLICY_LENGTH])) {
+        updatedErrors = generateValidationErrors(
+          FIELD_IDS.MULTI_POLICY_LENGTH,
+          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_WHOLE_NUMBER,
+          updatedErrors,
         );
 
         return updatedErrors;

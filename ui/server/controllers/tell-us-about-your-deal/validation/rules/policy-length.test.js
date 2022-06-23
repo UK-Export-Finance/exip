@@ -34,6 +34,22 @@ describe('controllers/tell-us-about-your-deal/validation/rules/policy-length', (
       });
     });
 
+    describe(`when ${FIELD_IDS.SINGLE_POLICY_LENGTH} has a decimal`, () => {
+      it('should return validation error', () => {
+        mockBody[FIELD_IDS.SINGLE_POLICY_LENGTH] = '1.2';
+
+        const result = rule(mockBody, mockErrors);
+
+        const expected = generateValidationErrors(
+          FIELD_IDS.SINGLE_POLICY_LENGTH,
+          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_WHOLE_NUMBER,
+          mockErrors,
+        );
+
+        expect(result).toEqual(expected);
+      });
+    });
+
     describe(`when ${FIELD_IDS.SINGLE_POLICY_LENGTH} is not a number`, () => {
       it('should return validation error', () => {
         mockBody[FIELD_IDS.SINGLE_POLICY_LENGTH] = 'invalid';
@@ -97,6 +113,22 @@ describe('controllers/tell-us-about-your-deal/validation/rules/policy-length', (
         const expected = generateValidationErrors(
           FIELD_IDS.MULTI_POLICY_LENGTH,
           ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].IS_EMPTY,
+          mockErrors,
+        );
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${FIELD_IDS.MULTI_POLICY_LENGTH} has a decimal`, () => {
+      it('should return validation error', () => {
+        mockBody[FIELD_IDS.MULTI_POLICY_LENGTH] = '1.2';
+
+        const result = rule(mockBody, mockErrors);
+
+        const expected = generateValidationErrors(
+          FIELD_IDS.MULTI_POLICY_LENGTH,
+          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_WHOLE_NUMBER,
           mockErrors,
         );
 

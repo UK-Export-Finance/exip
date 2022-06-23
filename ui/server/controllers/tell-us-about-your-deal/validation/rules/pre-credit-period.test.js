@@ -9,6 +9,24 @@ describe('controllers/tell-us-about-your-deal/validation/rules/pre-credit-period
     errorList: {},
   };
 
+  describe(`when ${FIELD_IDS.PRE_CREDIT_PERIOD} has a decimal`, () => {
+    it('should return validation error', () => {
+      const mockBody = {
+        [FIELD_IDS.PRE_CREDIT_PERIOD]: '1.2',
+      };
+
+      const result = rule(mockBody, mockErrors);
+
+      const expected = generateValidationErrors(
+        FIELD_IDS.PRE_CREDIT_PERIOD,
+        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_WHOLE_NUMBER,
+        mockErrors,
+      );
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe(`when ${FIELD_IDS.PRE_CREDIT_PERIOD} is not a number`, () => {
     it('should return validation error', () => {
       const mockBody = {
