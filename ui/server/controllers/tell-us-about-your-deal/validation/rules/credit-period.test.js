@@ -27,6 +27,24 @@ describe('controllers/tell-us-about-your-deal/validation/rules/credit-period', (
     });
   });
 
+  describe(`when ${FIELD_IDS.CREDIT_PERIOD} has a decimal`, () => {
+    it('should return validation error', () => {
+      const mockBody = {
+        [FIELD_IDS.CREDIT_PERIOD]: '1.2',
+      };
+
+      const result = rule(mockBody, mockErrors);
+
+      const expected = generateValidationErrors(
+        FIELD_IDS.CREDIT_PERIOD,
+        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_WHOLE_NUMBER,
+        mockErrors,
+      );
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe(`when ${FIELD_IDS.CREDIT_PERIOD} is not a number`, () => {
     it('should return validation error', () => {
       const mockBody = {

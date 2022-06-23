@@ -1,3 +1,8 @@
 const isNumber = (value) => Number.isInteger(value);
 
-module.exports = isNumber;
+const numberHasDecimal = (value) => String(value).includes('.');
+
+module.exports = {
+  isNumber,
+  numberHasDecimal,
+};

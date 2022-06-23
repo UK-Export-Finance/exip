@@ -125,6 +125,23 @@ context('Tell us about your deal page - form validation', () => {
     });
   });
 
+  describe('when `credit period` contains a decimal', () => {
+    it('should render a validation error', () => {
+      tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].input().type('1.2');
+      tellUsAboutYourDealPage.submitButton().click();
+
+      checkText(
+        partials.errorSummaryListItems().eq(2),
+        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_WHOLE_NUMBER,
+      );
+
+      checkText(
+        tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_WHOLE_NUMBER}`,
+      );
+    });
+  });
+
   describe('when `credit period` has a value less than the minimum', () => {
     it('should render a validation error', () => {
       tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].input().type('0');
@@ -155,6 +172,23 @@ context('Tell us about your deal page - form validation', () => {
       checkText(
         tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER}`,
+      );
+    });
+  });
+
+  describe('when (optional field) `pre-credit period` contains a decimal', () => {
+    it('should render a validation error', () => {
+      tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].input().type('1.2');
+      tellUsAboutYourDealPage.submitButton().click();
+
+      checkText(
+        partials.errorSummaryListItems().eq(2),
+        ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_WHOLE_NUMBER,
+      );
+
+      checkText(
+        tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].errorMessage(),
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_WHOLE_NUMBER}`,
       );
     });
   });

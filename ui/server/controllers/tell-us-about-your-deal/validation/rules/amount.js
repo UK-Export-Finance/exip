@@ -1,8 +1,8 @@
 const { FIELD_IDS } = require('../../../../constants');
-const CONTENT_STRINGS = require('../../../../content-strings');
+const { ERROR_MESSAGES } = require('../../../../content-strings');
 const generateValidationErrors = require('../../../../helpers/validation');
 const { objectHasProperty } = require('../../../../helpers/object');
-const isNumber = require('../../../../helpers/number');
+const { isNumber } = require('../../../../helpers/number');
 
 const MINIMUM = 1;
 
@@ -12,7 +12,7 @@ const amountRules = (formBody, errors) => {
   if (!objectHasProperty(formBody, FIELD_IDS.AMOUNT)) {
     updatedErrors = generateValidationErrors(
       FIELD_IDS.AMOUNT,
-      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY,
+      ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY,
       errors,
     );
 
@@ -22,7 +22,7 @@ const amountRules = (formBody, errors) => {
   if (!isNumber(Number(formBody[FIELD_IDS.AMOUNT]))) {
     updatedErrors = generateValidationErrors(
       FIELD_IDS.AMOUNT,
-      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_NUMBER,
+      ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_NUMBER,
       errors,
     );
 
@@ -32,7 +32,7 @@ const amountRules = (formBody, errors) => {
   if (Number(formBody[FIELD_IDS.AMOUNT]) < MINIMUM) {
     updatedErrors = generateValidationErrors(
       FIELD_IDS.AMOUNT,
-      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.AMOUNT].BELOW_MINIMUM,
+      ERROR_MESSAGES[FIELD_IDS.AMOUNT].BELOW_MINIMUM,
       errors,
     );
 

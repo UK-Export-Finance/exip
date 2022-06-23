@@ -1,8 +1,8 @@
 const { FIELD_IDS } = require('../../../../constants');
-const CONTENT_STRINGS = require('../../../../content-strings');
+const { ERROR_MESSAGES } = require('../../../../content-strings');
 const generateValidationErrors = require('../../../../helpers/validation');
 const { objectHasProperty } = require('../../../../helpers/object');
-const isNumber = require('../../../../helpers/number');
+const { isNumber, numberHasDecimal } = require('../../../../helpers/number');
 
 const MINIMUM = 0;
 
@@ -10,10 +10,20 @@ const preCreditPeriodRules = (formBody, errors) => {
   let updatedErrors = errors;
 
   if (objectHasProperty(formBody, FIELD_IDS.PRE_CREDIT_PERIOD)) {
+    if (numberHasDecimal(formBody[FIELD_IDS.PRE_CREDIT_PERIOD])) {
+      updatedErrors = generateValidationErrors(
+        FIELD_IDS.PRE_CREDIT_PERIOD,
+        ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_WHOLE_NUMBER,
+        updatedErrors,
+      );
+
+      return updatedErrors;
+    }
+
     if (!isNumber(Number(formBody[FIELD_IDS.PRE_CREDIT_PERIOD]))) {
       updatedErrors = generateValidationErrors(
         FIELD_IDS.PRE_CREDIT_PERIOD,
-        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER,
+        ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER,
         errors,
       );
 
@@ -23,7 +33,7 @@ const preCreditPeriodRules = (formBody, errors) => {
     if (Number(formBody[FIELD_IDS.PRE_CREDIT_PERIOD]) < MINIMUM) {
       updatedErrors = generateValidationErrors(
         FIELD_IDS.PRE_CREDIT_PERIOD,
-        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].BELOW_MINIMUM,
+        ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].BELOW_MINIMUM,
         errors,
       );
 

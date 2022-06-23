@@ -59,6 +59,23 @@ context('Tell us about your deal page - policy type & length validation', () => 
         });
       });
 
+      describe('when `single policy length` contains a decimal', () => {
+        it('should render a validation error', () => {
+          tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('1.2');
+          tellUsAboutYourDealPage.submitButton().click();
+
+          checkText(
+            partials.errorSummaryListItems().eq(3),
+            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_WHOLE_NUMBER,
+          );
+
+          checkText(
+            tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
+            `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_WHOLE_NUMBER}`,
+          );
+        });
+      });
+
       describe('when `single policy length` is less than the minimum', () => {
         it('should render a validation error', () => {
           tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('0');
@@ -95,8 +112,8 @@ context('Tell us about your deal page - policy type & length validation', () => 
     });
   });
 
-  context('with single policy type selected', () => {
-    describe('when `single policy length` is not provided', () => {
+  context('with multi policy type selected', () => {
+    describe('when `multi policy length` is not provided', () => {
       beforeEach(() => {
         tellUsAboutYourDealPage[FIELD_IDS.POLICY_TYPE].multi.input().click();
       });
@@ -115,7 +132,7 @@ context('Tell us about your deal page - policy type & length validation', () => 
         );
       });
 
-      describe('when `single policy length` has a non-numeric value', () => {
+      describe('when `multi policy length` has a non-numeric value', () => {
         it('should render a validation error', () => {
           tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].input().clear().type('a');
           tellUsAboutYourDealPage.submitButton().click();
@@ -132,7 +149,24 @@ context('Tell us about your deal page - policy type & length validation', () => 
         });
       });
 
-      describe('when `single policy length` is less than the minimum', () => {
+      describe('when `multi policy length` contains a decimal', () => {
+        it('should render a validation error', () => {
+          tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].input().clear().type('1.2');
+          tellUsAboutYourDealPage.submitButton().click();
+
+          checkText(
+            partials.errorSummaryListItems().eq(3),
+            ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_WHOLE_NUMBER,
+          );
+
+          checkText(
+            tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].errorMessage(),
+            `Error: ${ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_WHOLE_NUMBER}`,
+          );
+        });
+      });
+
+      describe('when `multi policy length` is less than the minimum', () => {
         it('should render a validation error', () => {
           tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].input().clear().type('0');
           tellUsAboutYourDealPage.submitButton().click();
@@ -149,7 +183,7 @@ context('Tell us about your deal page - policy type & length validation', () => 
         });
       });
 
-      describe('when `single policy length` is greater than the maximum', () => {
+      describe('when `multi policy length` is greater than the maximum', () => {
         it('should render a validation error', () => {
           tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH].input().clear().type('13');
           tellUsAboutYourDealPage.submitButton().click();
