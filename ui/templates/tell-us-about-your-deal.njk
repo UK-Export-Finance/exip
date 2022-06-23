@@ -38,7 +38,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters-from-desktop">
 
-      <form method="POST">
+      <form method="POST" novalidate>
 
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
@@ -126,6 +126,8 @@
             },
             id: FIELDS.PRE_CREDIT_PERIOD.ID,
             name: FIELDS.PRE_CREDIT_PERIOD.ID,
+            inputmode: "numeric",
+            pattern: "[0-9]*",
             suffix: {
               text: "days"
             },
@@ -161,6 +163,8 @@
           },
           id: FIELDS.CREDIT_PERIOD.ID,
           name: FIELDS.CREDIT_PERIOD.ID,
+          inputmode: "numeric",
+          pattern: "[0-9]*",
           suffix: {
             text: "days"
           },
@@ -194,6 +198,8 @@
             },
             id: FIELDS.SINGLE_POLICY_LENGTH.ID,
             name: FIELDS.SINGLE_POLICY_LENGTH.ID,
+            inputmode: "numeric",
+            pattern: "[0-9]*",
             suffix: {
               text: "months"
             },
@@ -228,6 +234,8 @@
             },
             id: FIELDS.MULTI_POLICY_LENGTH.ID,
             name: FIELDS.MULTI_POLICY_LENGTH.ID,
+            inputmode: "numeric",
+            pattern: "[0-9]*",
             suffix: {
               text: "months"
             },
