@@ -94,10 +94,15 @@
           document.getElementById('{{ HIDDEN_FIELD_NAME }}').value = event;
         }
       }
-    })
+    });
 
     if ('{{ isChangeRoute }}' === 'true') {
-      document.getElementById('{{ FIELD_NAME }}').focus();
+      setTimeout(function() {
+        var input = document.getElementById('{{ FIELD_NAME }}');
+        if (input) {
+         input.focus(); 
+        }
+      }, 0);
     }
   </script>
 
