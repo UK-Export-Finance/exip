@@ -54,7 +54,9 @@ context('Tell us about your deal page', () => {
         expect(text.trim()).equal(LINKS.BACK);
       });
 
-      partials.backLink().should('have.attr', 'href', ROUTES.UK_CONTENT_PERCENTAGE);
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.UK_CONTENT_PERCENTAGE}`;
+
+      partials.backLink().should('have.attr', 'href', expected);
     });
 
     it('renders a page title, heading and description', () => {
