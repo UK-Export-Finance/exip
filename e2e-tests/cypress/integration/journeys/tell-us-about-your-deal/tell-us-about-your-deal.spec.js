@@ -1,4 +1,7 @@
-import tellUsAboutYourDealPage from '../../pages/tellUsAboutYourDeal';
+import {
+  ukContentPercentagePage,
+  tellUsAboutYourDealPage,
+} from '../../pages';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -15,12 +18,16 @@ const { ROUTES, FIELD_IDS } = CONSTANTS;
 context('Tell us about your deal page', () => {
   describe('rendering', () => {
     before(() => {
-      cy.visit(ROUTES.TELL_US_ABOUT_YOUR_DEAL, {
+      cy.visit(ROUTES.UK_CONTENT_PERCENTAGE, {
         auth: {
           username: Cypress.config('basicAuthKey'),
           password: Cypress.config('basicAuthSecret'),
         },
       });
+
+      ukContentPercentagePage.yes().click();
+      ukContentPercentagePage.submitButton().click();
+
       cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
     });
 
@@ -47,7 +54,9 @@ context('Tell us about your deal page', () => {
         expect(text.trim()).equal(LINKS.BACK);
       });
 
-      partials.backLink().should('have.attr', 'href', ROUTES.UK_CONTENT_PERCENTAGE);
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.UK_CONTENT_PERCENTAGE}`;
+
+      partials.backLink().should('have.attr', 'href', expected);
     });
 
     it('renders a page title, heading and description', () => {

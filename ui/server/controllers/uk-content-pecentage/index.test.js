@@ -20,7 +20,6 @@ describe('controllers/uk-content-percentage', () => {
       const expected = {
         FIELD_NAME: FIELD_IDS.UK_CONTENT_PERCENTAGE,
         PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.UK_CONTENT_PERCENTAGE_PAGE,
-        BACK_LINK: ROUTES.TRIED_TO_OBTAIN_COVER,
       };
 
       expect(controller.PAGE_VARIABLES).toEqual(expected);
@@ -33,6 +32,7 @@ describe('controllers/uk-content-percentage', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.UK_CONTENT_PERCENTAGE, {
         ...singleInputPageVariables(controller.PAGE_VARIABLES),
+        BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData,
       });
     });
@@ -45,6 +45,7 @@ describe('controllers/uk-content-percentage', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.UK_CONTENT_PERCENTAGE, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
+          BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(req.body),
         });
       });

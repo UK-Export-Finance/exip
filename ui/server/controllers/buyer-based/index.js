@@ -1,8 +1,8 @@
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
-const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const api = require('../../api');
 const { mapCountries } = require('../../helpers/map-countries');
+const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const { validation: generateValidationErrors } = require('./validation');
 const isChangeRoute = require('../../helpers/is-change-route');
 const getCountryByName = require('../../helpers/get-country-by-name');
@@ -12,7 +12,6 @@ const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const PAGE_VARIABLES = {
   FIELD_NAME: FIELD_IDS.COUNTRY,
   PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.BUYER_BASED_PAGE,
-  BACK_LINK: ROUTES.COMPANY_BASED,
 };
 
 const get = async (req, res) => {
@@ -28,6 +27,7 @@ const get = async (req, res) => {
 
   return res.render(TEMPLATES.BUYER_BASED, {
     ...singleInputPageVariables(PAGE_VARIABLES),
+    BACK_LINK: req.headers.referer,
     HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
     submittedValues: req.session.submittedData,
@@ -44,6 +44,7 @@ const post = async (req, res) => {
   if (validationErrors) {
     return res.render(TEMPLATES.BUYER_BASED, {
       ...singleInputPageVariables(PAGE_VARIABLES),
+      BACK_LINK: req.headers.referer,
       HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
       countries: mappedCountries,
       validationErrors,

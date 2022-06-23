@@ -54,7 +54,6 @@ describe('controllers/check-your-answers', () => {
           BUTTONS: CONTENT_STRINGS.BUTTONS,
           ...CONTENT_STRINGS.PAGES.CHECK_YOUR_ANSWERS_PAGE,
         },
-        BACK_LINK: ROUTES.TELL_US_ABOUT_YOUR_DEAL,
       };
 
       expect(controller.PAGE_VARIABLES).toEqual(expected);
@@ -70,6 +69,7 @@ describe('controllers/check-your-answers', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.CHECK_YOUR_ANSWERS, {
         ...controller.PAGE_VARIABLES,
+        BACK_LINK: req.headers.referer,
         SUMMARY_LIST: expectedSummaryList,
       });
     });

@@ -1,4 +1,7 @@
-import companyBasedPage from '../../pages/companyBased';
+import {
+  beforeYouStartPage,
+  companyBasedPage,
+} from '../../pages';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -14,12 +17,14 @@ const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Company based inside the UK, Channel Islands and Isle of Man page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.COMPANY_BASED, {
+    cy.visit(ROUTES.BEFORE_YOU_START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
+
+    beforeYouStartPage.submitButton().click();
 
     cy.url().should('include', ROUTES.COMPANY_BASED);
   });

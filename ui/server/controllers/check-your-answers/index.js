@@ -11,7 +11,6 @@ const PAGE_VARIABLES = {
     BUTTONS: CONTENT_STRINGS.BUTTONS,
     ...CONTENT_STRINGS.PAGES.CHECK_YOUR_ANSWERS_PAGE,
   },
-  BACK_LINK: ROUTES.TELL_US_ABOUT_YOUR_DEAL,
 };
 
 const get = (req, res) => {
@@ -20,6 +19,7 @@ const get = (req, res) => {
 
   return res.render(TEMPLATES.CHECK_YOUR_ANSWERS, {
     ...PAGE_VARIABLES,
+    BACK_LINK: req.headers.referer,
     SUMMARY_LIST: summaryList,
   });
 };

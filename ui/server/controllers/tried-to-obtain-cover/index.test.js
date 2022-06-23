@@ -29,7 +29,6 @@ describe('controllers/tried-to-obtain-cover', () => {
           LINKS: CONTENT_STRINGS.LINKS,
           ...CONTENT_STRINGS.PAGES.TRIED_TO_OBTAIN_COVER_PAGE,
         },
-        BACK_LINK: ROUTES.BUYER_BASED,
         FIELD: {
           ID: FIELD_IDS.TRIED_PRIVATE_COVER,
           ...CONTENT_STRINGS.FIELDS[FIELD_IDS.TRIED_PRIVATE_COVER],
@@ -46,6 +45,7 @@ describe('controllers/tried-to-obtain-cover', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
         ...controller.PAGE_VARIABLES,
+        BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData,
       });
     });
@@ -58,6 +58,7 @@ describe('controllers/tried-to-obtain-cover', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
           ...controller.PAGE_VARIABLES,
+          BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(req.body),
         });
       });

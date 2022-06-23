@@ -45,7 +45,6 @@ describe('controllers/buyer-based', () => {
       const expected = {
         FIELD_NAME: FIELD_IDS.COUNTRY,
         PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.BUYER_BASED_PAGE,
-        BACK_LINK: ROUTES.COMPANY_BASED,
       };
 
       expect(controller.PAGE_VARIABLES).toEqual(expected);
@@ -71,6 +70,7 @@ describe('controllers/buyer-based', () => {
 
       const expectedVariables = {
         ...singleInputPageVariables(controller.PAGE_VARIABLES),
+        BACK_LINK: req.headers.referer,
         HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
         countries: mapCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData,
@@ -93,6 +93,7 @@ describe('controllers/buyer-based', () => {
 
         const expectedVariables = {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
+          BACK_LINK: req.headers.referer,
           HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
           countries: expectedCountries,
           submittedValues: req.session.submittedData,
@@ -117,6 +118,7 @@ describe('controllers/buyer-based', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
+          BACK_LINK: req.headers.referer,
           HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
           countries: mapCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),

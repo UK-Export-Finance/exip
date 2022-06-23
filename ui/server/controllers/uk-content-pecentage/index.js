@@ -8,12 +8,12 @@ const isChangeRoute = require('../../helpers/is-change-route');
 const PAGE_VARIABLES = {
   FIELD_NAME: FIELD_IDS.UK_CONTENT_PERCENTAGE,
   PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.UK_CONTENT_PERCENTAGE_PAGE,
-  BACK_LINK: ROUTES.TRIED_TO_OBTAIN_COVER,
 };
 
 const get = (req, res) =>
   res.render(TEMPLATES.UK_CONTENT_PERCENTAGE, {
     ...singleInputPageVariables(PAGE_VARIABLES),
+    BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData,
   });
 
@@ -23,6 +23,7 @@ const post = (req, res) => {
   if (validationErrors) {
     return res.render(TEMPLATES.UK_CONTENT_PERCENTAGE, {
       ...singleInputPageVariables(PAGE_VARIABLES),
+      BACK_LINK: req.headers.referer,
       validationErrors,
     });
   }

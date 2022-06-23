@@ -30,7 +30,6 @@ const PAGE_VARIABLES = {
     BUTTONS: CONTENT_STRINGS.BUTTONS,
     ...CONTENT_STRINGS.PAGES.TELL_US_ABOUT_YOUR_DEAL_PAGE,
   },
-  BACK_LINK: ROUTES.UK_CONTENT_PERCENTAGE,
   FIELDS: {
     AMOUNT_CURRENCY: {
       ID: AMOUNT_CURRENCY,
@@ -80,6 +79,7 @@ const get = async (req, res) => {
 
   return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
     ...PAGE_VARIABLES,
+    BACK_LINK: req.headers.referer,
     currencies: mappedCurrencies,
     submittedValues: mapSubmittedValues(submittedData),
   });
@@ -103,6 +103,7 @@ const post = async (req, res) => {
 
     return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
       ...PAGE_VARIABLES,
+      BACK_LINK: req.headers.referer,
       currencies: mappedCurrencies,
       validationErrors,
       submittedValues: req.body,

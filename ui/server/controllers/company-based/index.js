@@ -8,12 +8,12 @@ const isChangeRoute = require('../../helpers/is-change-route');
 const PAGE_VARIABLES = {
   FIELD_NAME: FIELD_IDS.VALID_COMPANY_BASE,
   PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.COMPANY_BASED_PAGE,
-  BACK_LINK: ROUTES.BEFORE_YOU_START,
 };
 
 const get = (req, res) =>
   res.render(TEMPLATES.COMPANY_BASED, {
     ...singleInputPageVariables(PAGE_VARIABLES),
+    BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData,
   });
 
@@ -23,6 +23,7 @@ const post = (req, res) => {
   if (validationErrors) {
     return res.render(TEMPLATES.COMPANY_BASED, {
       ...singleInputPageVariables(PAGE_VARIABLES),
+      BACK_LINK: req.headers.referer,
       validationErrors,
     });
   }

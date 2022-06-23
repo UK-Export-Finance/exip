@@ -46,7 +46,6 @@ describe('controllers/buyer-based', () => {
           BUTTONS: CONTENT_STRINGS.BUTTONS,
           ...CONTENT_STRINGS.PAGES.TELL_US_ABOUT_YOUR_DEAL_PAGE,
         },
-        BACK_LINK: ROUTES.UK_CONTENT_PERCENTAGE,
         FIELDS: {
           AMOUNT_CURRENCY: {
             ID: FIELD_IDS.AMOUNT_CURRENCY,
@@ -110,6 +109,7 @@ describe('controllers/buyer-based', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
         ...controller.PAGE_VARIABLES,
+        BACK_LINK: req.headers.referer,
         currencies: expectedCurrencies,
       });
     });
@@ -126,6 +126,7 @@ describe('controllers/buyer-based', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
           ...controller.PAGE_VARIABLES,
+          BACK_LINK: req.headers.referer,
           currencies: expectedCurrencies,
           submittedValues: mapSubmittedValues(mockAnswers),
         });
@@ -156,6 +157,7 @@ describe('controllers/buyer-based', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
           ...controller.PAGE_VARIABLES,
+          BACK_LINK: req.headers.referer,
           currencies: mapCurrencies(mockCurrenciesResponse),
           validationErrors: generateValidationErrors(req.body),
           submittedValues: req.body,
@@ -169,6 +171,7 @@ describe('controllers/buyer-based', () => {
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
             ...controller.PAGE_VARIABLES,
+            BACK_LINK: req.headers.referer,
             currencies: mapCurrencies(mockCurrenciesResponse, req.body[FIELD_IDS.CURRENCY]),
             validationErrors: generateValidationErrors(req.body),
             submittedValues: req.body,

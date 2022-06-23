@@ -20,7 +20,6 @@ describe('controllers/company-based', () => {
       const expected = {
         FIELD_NAME: FIELD_IDS.VALID_COMPANY_BASE,
         PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.COMPANY_BASED_PAGE,
-        BACK_LINK: ROUTES.BEFORE_YOU_START,
       };
 
       expect(controller.PAGE_VARIABLES).toEqual(expected);
@@ -33,6 +32,7 @@ describe('controllers/company-based', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.COMPANY_BASED, {
         ...singleInputPageVariables(controller.PAGE_VARIABLES),
+        BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData,
       });
     });
@@ -45,6 +45,7 @@ describe('controllers/company-based', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.COMPANY_BASED, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
+          BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(req.body),
         });
       });
