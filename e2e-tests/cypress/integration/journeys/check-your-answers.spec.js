@@ -64,7 +64,8 @@ context('Check your answers page', () => {
       expect(text.trim()).equal(LINKS.BACK);
     });
 
-    partials.backLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+    const expected = `${Cypress.config('baseUrl')}${ROUTES.TELL_US_ABOUT_YOUR_DEAL}`;
+    partials.backLink().should('have.attr', 'href', expected);
   });
 
   it('renders a submit button', () => {
