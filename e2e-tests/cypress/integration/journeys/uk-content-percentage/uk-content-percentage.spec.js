@@ -1,4 +1,7 @@
-import ukContentPercentagePage from '../../pages/ukContentPercentage';
+import {
+  triedToObtainCoverPage,
+  ukContentPercentagePage,
+} from '../../pages';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -14,12 +17,16 @@ const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('What percentage of your export is UK content page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.UK_CONTENT_PERCENTAGE, {
+    cy.visit(ROUTES.TRIED_TO_OBTAIN_COVER, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
+
+    triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].yes().click();
+    triedToObtainCoverPage.submitButton().click();
+
     cy.url().should('include', ROUTES.UK_CONTENT_PERCENTAGE);
   });
 

@@ -1,4 +1,7 @@
-import { triedToObtainCoverPage } from '../../pages';
+import {
+  buyerBasedPage,
+  triedToObtainCoverPage,
+} from '../../pages';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -15,12 +18,18 @@ const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 context('Tried to obtain private cover page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.TRIED_TO_OBTAIN_COVER, {
+    cy.visit(ROUTES.BUYER_BASED, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
+
+    buyerBasedPage.searchInput().type('Fra');
+    const results = buyerBasedPage.results();
+    results.first().click();
+    buyerBasedPage.submitButton().click();
+
     cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
   });
 
