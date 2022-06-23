@@ -6,7 +6,6 @@ const {
   ROUTES,
   TEMPLATES,
 } = require('../../constants');
-const previousPageUrl = require('../../helpers/previous-page-url');
 const generateValidationErrors = require('./validation');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const { mockReq, mockRes } = require('../../test-mocks');
@@ -46,7 +45,7 @@ describe('controllers/tried-to-obtain-cover', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
         ...controller.PAGE_VARIABLES,
-        BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.BUYER_BASED),
+        BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData,
       });
     });
@@ -59,7 +58,7 @@ describe('controllers/tried-to-obtain-cover', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
           ...controller.PAGE_VARIABLES,
-          BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.BUYER_BASED),
+          BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(req.body),
         });
       });

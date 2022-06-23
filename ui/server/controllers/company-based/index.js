@@ -1,7 +1,6 @@
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
-const previousPageUrl = require('../../helpers/previous-page-url');
 const generateValidationErrors = require('./validation');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
@@ -14,7 +13,7 @@ const PAGE_VARIABLES = {
 const get = (req, res) =>
   res.render(TEMPLATES.COMPANY_BASED, {
     ...singleInputPageVariables(PAGE_VARIABLES),
-    BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.BEFORE_YOU_START),
+    BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData,
   });
 
@@ -24,7 +23,7 @@ const post = (req, res) => {
   if (validationErrors) {
     return res.render(TEMPLATES.COMPANY_BASED, {
       ...singleInputPageVariables(PAGE_VARIABLES),
-      BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.BEFORE_YOU_START),
+      BACK_LINK: req.headers.referer,
       validationErrors,
     });
   }

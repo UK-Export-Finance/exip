@@ -2,7 +2,6 @@ const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
-const previousPageUrl = require('../../helpers/previous-page-url');
 const generateValidationErrors = require('./validation');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const { mockReq, mockRes } = require('../../test-mocks');
@@ -33,7 +32,7 @@ describe('controllers/company-based', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.COMPANY_BASED, {
         ...singleInputPageVariables(controller.PAGE_VARIABLES),
-        BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.BEFORE_YOU_START),
+        BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData,
       });
     });
@@ -46,7 +45,7 @@ describe('controllers/company-based', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.COMPANY_BASED, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
-          BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.BEFORE_YOU_START),
+          BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(req.body),
         });
       });

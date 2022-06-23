@@ -3,7 +3,6 @@ const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const api = require('../../api');
 const { mapCountries } = require('../../helpers/map-countries');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
-const previousPageUrl = require('../../helpers/previous-page-url');
 const { validation: generateValidationErrors } = require('./validation');
 const isChangeRoute = require('../../helpers/is-change-route');
 const getCountryByName = require('../../helpers/get-country-by-name');
@@ -28,7 +27,7 @@ const get = async (req, res) => {
 
   return res.render(TEMPLATES.BUYER_BASED, {
     ...singleInputPageVariables(PAGE_VARIABLES),
-    BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.COMPANY_BASED),
+    BACK_LINK: req.headers.referer,
     HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
     submittedValues: req.session.submittedData,
@@ -45,7 +44,7 @@ const post = async (req, res) => {
   if (validationErrors) {
     return res.render(TEMPLATES.BUYER_BASED, {
       ...singleInputPageVariables(PAGE_VARIABLES),
-      BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.COMPANY_BASED),
+      BACK_LINK: req.headers.referer,
       HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
       countries: mappedCountries,
       validationErrors,

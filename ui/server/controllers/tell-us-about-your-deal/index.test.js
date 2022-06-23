@@ -3,7 +3,6 @@ const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const api = require('../../api');
 const mapCurrencies = require('../../helpers/map-currencies');
-const previousPageUrl = require('../../helpers/previous-page-url');
 const generateValidationErrors = require('./validation');
 const getCurrencyByCode = require('../../helpers/get-currency-by-code');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
@@ -110,7 +109,7 @@ describe('controllers/buyer-based', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
         ...controller.PAGE_VARIABLES,
-        BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.UK_CONTENT_PERCENTAGE),
+        BACK_LINK: req.headers.referer,
         currencies: expectedCurrencies,
       });
     });
@@ -127,7 +126,7 @@ describe('controllers/buyer-based', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
           ...controller.PAGE_VARIABLES,
-          BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.UK_CONTENT_PERCENTAGE),
+          BACK_LINK: req.headers.referer,
           currencies: expectedCurrencies,
           submittedValues: mapSubmittedValues(mockAnswers),
         });
@@ -158,7 +157,7 @@ describe('controllers/buyer-based', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
           ...controller.PAGE_VARIABLES,
-          BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.UK_CONTENT_PERCENTAGE),
+          BACK_LINK: req.headers.referer,
           currencies: mapCurrencies(mockCurrenciesResponse),
           validationErrors: generateValidationErrors(req.body),
           submittedValues: req.body,
@@ -172,7 +171,7 @@ describe('controllers/buyer-based', () => {
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
             ...controller.PAGE_VARIABLES,
-            BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.UK_CONTENT_PERCENTAGE),
+            BACK_LINK: req.headers.referer,
             currencies: mapCurrencies(mockCurrenciesResponse, req.body[FIELD_IDS.CURRENCY]),
             validationErrors: generateValidationErrors(req.body),
             submittedValues: req.body,

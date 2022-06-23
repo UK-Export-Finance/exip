@@ -6,7 +6,6 @@ const {
 } = require('../../constants');
 const api = require('../../api');
 const mapCurrencies = require('../../helpers/map-currencies');
-const previousPageUrl = require('../../helpers/previous-page-url');
 const generateValidationErrors = require('./validation');
 const getCurrencyByCode = require('../../helpers/get-currency-by-code');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
@@ -80,7 +79,7 @@ const get = async (req, res) => {
 
   return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
     ...PAGE_VARIABLES,
-    BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.UK_CONTENT_PERCENTAGE),
+    BACK_LINK: req.headers.referer,
     currencies: mappedCurrencies,
     submittedValues: mapSubmittedValues(submittedData),
   });
@@ -104,7 +103,7 @@ const post = async (req, res) => {
 
     return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
       ...PAGE_VARIABLES,
-      BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.UK_CONTENT_PERCENTAGE),
+      BACK_LINK: req.headers.referer,
       currencies: mappedCurrencies,
       validationErrors,
       submittedValues: req.body,

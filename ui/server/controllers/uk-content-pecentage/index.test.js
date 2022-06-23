@@ -2,7 +2,6 @@ const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
-const previousPageUrl = require('../../helpers/previous-page-url');
 const generateValidationErrors = require('./validation');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const { mockReq, mockRes } = require('../../test-mocks');
@@ -33,7 +32,7 @@ describe('controllers/uk-content-percentage', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.UK_CONTENT_PERCENTAGE, {
         ...singleInputPageVariables(controller.PAGE_VARIABLES),
-        BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.TRIED_TO_OBTAIN_COVER),
+        BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData,
       });
     });
@@ -46,7 +45,7 @@ describe('controllers/uk-content-percentage', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.UK_CONTENT_PERCENTAGE, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
-          BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.TRIED_TO_OBTAIN_COVER),
+          BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(req.body),
         });
       });

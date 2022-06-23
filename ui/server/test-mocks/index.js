@@ -6,6 +6,9 @@ const mockReq = () => ({
   body: {},
   originalUrl: 'mock',
   flash: jest.fn(),
+  headers: {
+    referer: '/mock',
+  },
 });
 
 const mockRes = () => {

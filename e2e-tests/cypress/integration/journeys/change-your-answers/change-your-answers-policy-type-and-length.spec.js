@@ -49,7 +49,9 @@ context('Change your answers after checking answers - Policy type and length', (
 
   it('renders a back button with correct link', () => {
     partials.backLink().should('exist');
-    partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
+
+    const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
+    partials.backLink().should('have.attr', 'href', expected);
   });
 
   it('has originally submitted `policy type` (single)', () => {
@@ -102,7 +104,9 @@ context('Change your answers after checking answers - Policy type and length', (
 
     it('renders a back button with correct link', () => {
       partials.backLink().should('exist');
-      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
+
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
+      partials.backLink().should('have.attr', 'href', expected);
     });
 
     it('has previously submitted `policy type` (multi)', () => {
@@ -155,7 +159,9 @@ context('Change your answers after checking answers - Policy type and length', (
 
     it('renders a back button with correct link', () => {
       partials.backLink().should('exist');
-      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
+
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
+      partials.backLink().should('have.attr', 'href', expected);
     });
 
     it('auto focuses the input', () => {
@@ -190,7 +196,9 @@ context('Change your answers after checking answers - Policy type and length', (
 
     it('renders a back button with correct link', () => {
       partials.backLink().should('exist');
-      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
+
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
+      partials.backLink().should('have.attr', 'href', expected);
     });
 
     it('auto focuses the input', () => {
