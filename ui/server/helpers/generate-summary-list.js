@@ -31,24 +31,24 @@ const {
 const generateFieldGroups = (submittedData) => {
   const fieldGroups = { ...FIELD_GROUPS };
 
-  fieldGroups.COMPANY_DETAILS.FIELDS = COMPANY_DETAILS.FIELDS.map((field) => ({
+  fieldGroups.COMPANY_DETAILS = COMPANY_DETAILS.map((field) => ({
     ...field,
     value: submittedData[field.ID],
   }));
 
-  fieldGroups.EXPORT_DETAILS.FIELDS = EXPORT_DETAILS.FIELDS.map((field) => ({
+  fieldGroups.EXPORT_DETAILS = EXPORT_DETAILS.map((field) => ({
     ...field,
     value: submittedData[field.ID],
   }));
 
-  fieldGroups.DEAL_DETAILS.FIELDS = DEAL_DETAILS.FIELDS.map((field) => ({
+  fieldGroups.DEAL_DETAILS = DEAL_DETAILS.map((field) => ({
     ...field,
     value: submittedData[field.ID],
   }));
 
   if (submittedData[SINGLE_POLICY_TYPE]) {
-    fieldGroups.DEAL_DETAILS.FIELDS = [
-      ...fieldGroups.DEAL_DETAILS.FIELDS,
+    fieldGroups.DEAL_DETAILS = [
+      ...fieldGroups.DEAL_DETAILS,
       {
         ID: SINGLE_POLICY_TYPE,
         ...FIELDS[SINGLE_POLICY_TYPE],
@@ -65,8 +65,8 @@ const generateFieldGroups = (submittedData) => {
   }
 
   if (submittedData[MULTI_POLICY_TYPE]) {
-    fieldGroups.DEAL_DETAILS.FIELDS = [
-      ...fieldGroups.DEAL_DETAILS.FIELDS,
+    fieldGroups.DEAL_DETAILS = [
+      ...fieldGroups.DEAL_DETAILS,
       {
         ID: MULTI_POLICY_TYPE,
         ...FIELDS[MULTI_POLICY_TYPE],
@@ -124,15 +124,15 @@ const generateSummaryList = (submittedData) => {
   const summaryList = {
     COMPANY: {
       GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_COMPANY,
-      ROWS: generateSummaryListRows(fieldGroups.COMPANY_DETAILS.FIELDS, submittedData),
+      ROWS: generateSummaryListRows(fieldGroups.COMPANY_DETAILS, submittedData),
     },
     EXPORT: {
       GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
-      ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS.FIELDS, submittedData),
+      ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, submittedData),
     },
     DEAL: {
       GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_DEAL,
-      ROWS: generateSummaryListRows(fieldGroups.DEAL_DETAILS.FIELDS, submittedData),
+      ROWS: generateSummaryListRows(fieldGroups.DEAL_DETAILS, submittedData),
     },
   };
 

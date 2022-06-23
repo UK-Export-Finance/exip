@@ -42,24 +42,18 @@ describe('sever/helpers/generate-summary-list', () => {
       const fieldGroups = FIELD_GROUPS;
 
       const expected = {
-        COMPANY_DETAILS: {
-          FIELDS: fieldGroups.COMPANY_DETAILS.FIELDS.map((field) => ({
-            ...field,
-            value: mockAnswers[field.ID],
-          })),
-        },
-        EXPORT_DETAILS: {
-          FIELDS: fieldGroups.EXPORT_DETAILS.FIELDS.map((field) => ({
-            ...field,
-            value: mockAnswers[field.ID],
-          })),
-        },
-        DEAL_DETAILS: {
-          FIELDS: fieldGroups.DEAL_DETAILS.FIELDS.map((field) => ({
-            ...field,
-            value: mockAnswers[field.ID],
-          })),
-        },
+        COMPANY_DETAILS: fieldGroups.COMPANY_DETAILS.map((field) => ({
+          ...field,
+          value: mockAnswers[field.ID],
+        })),
+        EXPORT_DETAILS: fieldGroups.EXPORT_DETAILS.map((field) => ({
+          ...field,
+          value: mockAnswers[field.ID],
+        })),
+        DEAL_DETAILS: fieldGroups.DEAL_DETAILS.map((field) => ({
+          ...field,
+          value: mockAnswers[field.ID],
+        })),
       };
 
       expect(result).toEqual(expected);
@@ -74,7 +68,7 @@ describe('sever/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersSinglePolicyType);
 
-        const expectedField = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 2];
+        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 2];
 
         const expected = {
           ID: SINGLE_POLICY_TYPE,
@@ -94,7 +88,7 @@ describe('sever/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersSinglePolicyType);
 
-        const expectedField = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 1];
+        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 1];
 
         const expected = {
           ID: SINGLE_POLICY_LENGTH,
@@ -116,7 +110,7 @@ describe('sever/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersMultiPolicyType);
 
-        const expectedField = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 2];
+        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 2];
 
         const expected = {
           ID: MULTI_POLICY_TYPE,
@@ -136,7 +130,7 @@ describe('sever/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersMultiPolicyType);
 
-        const expectedField = result.DEAL_DETAILS.FIELDS[result.DEAL_DETAILS.FIELDS.length - 1];
+        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 1];
 
         const expected = {
           ID: MULTI_POLICY_LENGTH,
@@ -152,8 +146,10 @@ describe('sever/helpers/generate-summary-list', () => {
 
   describe('generateSummaryListRows', () => {
     it('returns an array of objects mapped to submitted data', () => {
+      const fieldGroups = generateFieldGroups(mockAnswers);
+
       const result = generateSummaryListRows(
-        FIELD_GROUPS.COMPANY_DETAILS.FIELDS,
+        fieldGroups.COMPANY_DETAILS,
         mockAnswers,
       );
 
@@ -189,20 +185,22 @@ describe('sever/helpers/generate-summary-list', () => {
 
   describe('generateSummaryList', () => {
     it('should return an object with multiple summary lists', () => {
+      const fieldGroups = generateFieldGroups(mockAnswers);
+
       const result = generateSummaryList(mockAnswers);
 
       const expected = {
         COMPANY: {
           GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_COMPANY,
-          ROWS: generateSummaryListRows(FIELD_GROUPS.COMPANY_DETAILS.FIELDS, mockAnswers),
+          ROWS: generateSummaryListRows(fieldGroups.COMPANY_DETAILS, mockAnswers),
         },
         EXPORT: {
           GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
-          ROWS: generateSummaryListRows(FIELD_GROUPS.EXPORT_DETAILS.FIELDS, mockAnswers),
+          ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, mockAnswers),
         },
         DEAL: {
           GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_DEAL,
-          ROWS: generateSummaryListRows(FIELD_GROUPS.DEAL_DETAILS.FIELDS, mockAnswers),
+          ROWS: generateSummaryListRows(fieldGroups.DEAL_DETAILS, mockAnswers),
         },
       };
 
