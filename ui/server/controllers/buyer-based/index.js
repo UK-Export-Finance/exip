@@ -62,7 +62,9 @@ const post = async (req, res) => {
     const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
     const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
 
-    req.flash('exitReason', REASON.UNSUPPORTED_BUYER_COUNTRY);
+    const reason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${country.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
+
+    req.flash('exitReason', reason);
 
     return res.redirect(ROUTES.CANNOT_OBTAIN_COVER);
   }

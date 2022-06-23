@@ -34,7 +34,8 @@ context('Which country is your buyer based page', () => {
 
   it('renders a specific reason', () => {
     cannotObtainCoverPage.reason().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.UNSUPPORTED_BUYER_COUNTRY}`;
+      const { REASON } = CONTENT_STRINGS;
+      const expected = `${REASON.INTRO} ${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${UNSUPPORTED_COUNTRY_NAME}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 
       expect(text.trim()).equal(expected);
     });
