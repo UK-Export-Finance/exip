@@ -2,6 +2,7 @@ import {
   companyBasedPage,
   checkYourAnswersPage,
 } from '../../pages';
+import partials from '../../partials';
 import CONSTANTS from '../../../../constants';
 
 const {
@@ -31,6 +32,11 @@ context('Change your answers after checking answers - Company fields', () => {
 
       const expectedUrl = `${ROUTES.COMPANY_BASED_CHANGE}#${VALID_COMPANY_BASE}`;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('renders a back button with correct link', () => {
+      partials.backLink().should('exist');
+      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
     });
 
     it('has originally submitted answer selected', () => {

@@ -4,6 +4,7 @@ import {
   ukContentPercentagePage,
   checkYourAnswersPage,
 } from '../../pages';
+import partials from '../../partials';
 import CONSTANTS from '../../../../constants';
 
 const {
@@ -42,6 +43,11 @@ context('Change your answers after checking answers - Export fields', () => {
 
       const expectedUrl = `${ROUTES.BUYER_BASED_CHANGE}#${BUYER_COUNTRY}`;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('renders a back button with correct link', () => {
+      partials.backLink().should('exist');
+      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
     });
 
     it('has originally submitted answer selected', () => {
@@ -85,6 +91,11 @@ context('Change your answers after checking answers - Export fields', () => {
       cy.url().should('include', expectedUrl);
     });
 
+    it('renders a back button with correct link', () => {
+      partials.backLink().should('exist');
+      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
+    });
+
     it('has originally submitted answer selected', () => {
       triedToObtainCoverPage[TRIED_PRIVATE_COVER].yesInput().should('be.checked');
     });
@@ -108,6 +119,11 @@ context('Change your answers after checking answers - Export fields', () => {
 
       const expectedUrl = `${ROUTES.UK_CONTENT_PERCENTAGE_CHANGE}#${UK_CONTENT_PERCENTAGE}`;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('renders a back button with correct link', () => {
+      partials.backLink().should('exist');
+      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
     });
 
     it('has originally submitted answer', () => {

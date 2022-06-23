@@ -2,6 +2,7 @@ const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
+const previousPageUrl = require('../../helpers/previous-page-url');
 const { validation: generateValidationErrors } = require('./validation');
 const isChangeRoute = require('../../helpers/is-change-route');
 const getCountryByName = require('../../helpers/get-country-by-name');
@@ -45,7 +46,6 @@ describe('controllers/buyer-based', () => {
       const expected = {
         FIELD_NAME: FIELD_IDS.COUNTRY,
         PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.BUYER_BASED_PAGE,
-        BACK_LINK: ROUTES.COMPANY_BASED,
       };
 
       expect(controller.PAGE_VARIABLES).toEqual(expected);
@@ -71,6 +71,7 @@ describe('controllers/buyer-based', () => {
 
       const expectedVariables = {
         ...singleInputPageVariables(controller.PAGE_VARIABLES),
+        BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.COMPANY_BASED),
         HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
         countries: mapCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData,
@@ -93,6 +94,7 @@ describe('controllers/buyer-based', () => {
 
         const expectedVariables = {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
+          BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.COMPANY_BASED),
           HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
           countries: expectedCountries,
           submittedValues: req.session.submittedData,
@@ -117,6 +119,7 @@ describe('controllers/buyer-based', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
+          BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.COMPANY_BASED),
           HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
           countries: mapCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),

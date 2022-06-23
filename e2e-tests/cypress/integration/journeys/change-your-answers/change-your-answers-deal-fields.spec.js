@@ -2,6 +2,7 @@ import {
   tellUsAboutYourDealPage,
   checkYourAnswersPage,
 } from '../../pages';
+import partials from '../../partials';
 import CONSTANTS from '../../../../constants';
 
 const {
@@ -45,6 +46,11 @@ context('Change your answers after checking answers - Deal fields', () => {
       cy.url().should('include', expectedUrl);
     });
 
+    it('renders a back button with correct link', () => {
+      partials.backLink().should('exist');
+      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
+    });
+
     it('has originally submitted answer', () => {
       const expectedValue = submissionData[AMOUNT];
       tellUsAboutYourDealPage[AMOUNT].input().should('have.attr', 'value', expectedValue);
@@ -80,6 +86,11 @@ context('Change your answers after checking answers - Deal fields', () => {
 
       const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${CURRENCY}`;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('renders a back button with correct link', () => {
+      partials.backLink().should('exist');
+      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
     });
 
     it('has originally submitted answer', () => {
@@ -118,6 +129,11 @@ context('Change your answers after checking answers - Deal fields', () => {
       cy.url().should('include', expectedUrl);
     });
 
+    it('renders a back button with correct link', () => {
+      partials.backLink().should('exist');
+      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
+    });
+
     it('has originally submitted answer', () => {
       const expectedValue = submissionData[PRE_CREDIT_PERIOD];
       tellUsAboutYourDealPage[PRE_CREDIT_PERIOD].input().should('have.attr', 'value', expectedValue);
@@ -153,6 +169,11 @@ context('Change your answers after checking answers - Deal fields', () => {
 
       const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${CREDIT_PERIOD}`;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('renders a back button with correct link', () => {
+      partials.backLink().should('exist');
+      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
     });
 
     it('has originally submitted answer', () => {

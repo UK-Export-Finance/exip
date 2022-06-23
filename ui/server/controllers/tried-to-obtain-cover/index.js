@@ -5,6 +5,7 @@ const {
   ROUTES,
   TEMPLATES,
 } = require('../../constants');
+const previousPageUrl = require('../../helpers/previous-page-url');
 const generateValidationErrors = require('./validation');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
@@ -17,7 +18,6 @@ const PAGE_VARIABLES = {
     LINKS: CONTENT_STRINGS.LINKS,
     ...CONTENT_STRINGS.PAGES.TRIED_TO_OBTAIN_COVER_PAGE,
   },
-  BACK_LINK: ROUTES.BUYER_BASED,
   FIELD: {
     ID: FIELD_IDS.TRIED_PRIVATE_COVER,
     ...CONTENT_STRINGS.FIELDS[FIELD_IDS.TRIED_PRIVATE_COVER],
@@ -27,6 +27,7 @@ const PAGE_VARIABLES = {
 const get = (req, res) =>
   res.render(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
     ...PAGE_VARIABLES,
+    BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.BUYER_BASED),
     submittedValues: req.session.submittedData,
   });
 
@@ -36,6 +37,7 @@ const post = (req, res) => {
   if (validationErrors) {
     return res.render(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
       ...PAGE_VARIABLES,
+      BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.BUYER_BASED),
       validationErrors,
     });
   }

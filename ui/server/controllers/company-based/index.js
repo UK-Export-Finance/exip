@@ -1,6 +1,7 @@
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
+const previousPageUrl = require('../../helpers/previous-page-url');
 const generateValidationErrors = require('./validation');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
@@ -8,12 +9,12 @@ const isChangeRoute = require('../../helpers/is-change-route');
 const PAGE_VARIABLES = {
   FIELD_NAME: FIELD_IDS.VALID_COMPANY_BASE,
   PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.COMPANY_BASED_PAGE,
-  BACK_LINK: ROUTES.BEFORE_YOU_START,
 };
 
 const get = (req, res) =>
   res.render(TEMPLATES.COMPANY_BASED, {
     ...singleInputPageVariables(PAGE_VARIABLES),
+    BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.BEFORE_YOU_START),
     submittedValues: req.session.submittedData,
   });
 
@@ -23,6 +24,7 @@ const post = (req, res) => {
   if (validationErrors) {
     return res.render(TEMPLATES.COMPANY_BASED, {
       ...singleInputPageVariables(PAGE_VARIABLES),
+      BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.BEFORE_YOU_START),
       validationErrors,
     });
   }

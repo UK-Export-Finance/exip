@@ -2,6 +2,7 @@ import {
   tellUsAboutYourDealPage,
   checkYourAnswersPage,
 } from '../../pages';
+import partials from '../../partials';
 import CONSTANTS from '../../../../constants';
 
 const {
@@ -44,6 +45,11 @@ context('Change your answers after checking answers - Policy type and length', (
 
     const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_TYPE}`;
     cy.url().should('include', expectedUrl);
+  });
+
+  it('renders a back button with correct link', () => {
+    partials.backLink().should('exist');
+    partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
   });
 
   it('has originally submitted `policy type` (single)', () => {
@@ -94,6 +100,11 @@ context('Change your answers after checking answers - Policy type and length', (
       cy.url().should('include', expectedUrl);
     });
 
+    it('renders a back button with correct link', () => {
+      partials.backLink().should('exist');
+      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
+    });
+
     it('has previously submitted `policy type` (multi)', () => {
       tellUsAboutYourDealPage[POLICY_TYPE].multi.input().should('be.checked');
     });
@@ -142,6 +153,11 @@ context('Change your answers after checking answers - Policy type and length', (
       cy.url().should('include', expectedUrl);
     });
 
+    it('renders a back button with correct link', () => {
+      partials.backLink().should('exist');
+      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
+    });
+
     it('auto focuses the input', () => {
       tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().should('have.focus');
     });
@@ -170,6 +186,11 @@ context('Change your answers after checking answers - Policy type and length', (
 
       const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${MULTI_POLICY_LENGTH}`;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('renders a back button with correct link', () => {
+      partials.backLink().should('exist');
+      partials.backLink().should('have.attr', 'href', ROUTES.CHECK_YOUR_ANSWERS);
     });
 
     it('auto focuses the input', () => {

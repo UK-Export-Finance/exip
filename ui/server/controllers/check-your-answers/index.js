@@ -14,6 +14,8 @@ const PAGE_VARIABLES = {
   BACK_LINK: ROUTES.TELL_US_ABOUT_YOUR_DEAL,
 };
 
+// TODO: how to handle moving from a /change route
+
 const get = (req, res) => {
   const answers = mapAnswersToContent(req.session.submittedData);
   const summaryList = generateSummaryList(answers);

@@ -2,6 +2,7 @@ const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
+const previousPageUrl = require('../../helpers/previous-page-url');
 const generateValidationErrors = require('./validation');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const { mockReq, mockRes } = require('../../test-mocks');
@@ -20,7 +21,6 @@ describe('controllers/uk-content-percentage', () => {
       const expected = {
         FIELD_NAME: FIELD_IDS.UK_CONTENT_PERCENTAGE,
         PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.UK_CONTENT_PERCENTAGE_PAGE,
-        BACK_LINK: ROUTES.TRIED_TO_OBTAIN_COVER,
       };
 
       expect(controller.PAGE_VARIABLES).toEqual(expected);
@@ -33,6 +33,7 @@ describe('controllers/uk-content-percentage', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.UK_CONTENT_PERCENTAGE, {
         ...singleInputPageVariables(controller.PAGE_VARIABLES),
+        BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.TRIED_TO_OBTAIN_COVER),
         submittedValues: req.session.submittedData,
       });
     });
@@ -45,6 +46,7 @@ describe('controllers/uk-content-percentage', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.UK_CONTENT_PERCENTAGE, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
+          BACK_LINK: previousPageUrl(req.originalUrl, ROUTES.TRIED_TO_OBTAIN_COVER),
           validationErrors: generateValidationErrors(req.body),
         });
       });
