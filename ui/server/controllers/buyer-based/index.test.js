@@ -3,6 +3,7 @@ const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const { validation: generateValidationErrors } = require('./validation');
+const isChangeRoute = require('../../helpers/is-change-route');
 const getCountryByName = require('../../helpers/get-country-by-name');
 const api = require('../../api');
 const { mapCountries } = require('../../helpers/map-countries');
@@ -73,6 +74,7 @@ describe('controllers/buyer-based', () => {
         HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
         countries: mapCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData,
+        isChangeRoute: isChangeRoute(req.originalUrl),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED, expectedVariables);
@@ -94,6 +96,7 @@ describe('controllers/buyer-based', () => {
           HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
           countries: expectedCountries,
           submittedValues: req.session.submittedData,
+          isChangeRoute: isChangeRoute(req.originalUrl),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED, expectedVariables);
@@ -117,6 +120,7 @@ describe('controllers/buyer-based', () => {
           HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
           countries: mapCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),
+          isChangeRoute: isChangeRoute(req.originalUrl),
         });
       });
     });

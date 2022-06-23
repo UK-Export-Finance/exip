@@ -14,4 +14,12 @@ describe('sever/helpers/format-currency', () => {
 
     expect(result).toEqual(expected);
   });
+
+  describe('when there is no number and currencyCode', () => {
+    it('should return null', () => {
+      const result = formatCurrency();
+
+      expect(result).toEqual(null);
+    });
+  });
 });

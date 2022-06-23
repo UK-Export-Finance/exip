@@ -4,10 +4,10 @@ const singleInputPageVariables = require('../../helpers/single-input-page-variab
 const api = require('../../api');
 const { mapCountries } = require('../../helpers/map-countries');
 const { validation: generateValidationErrors } = require('./validation');
+const isChangeRoute = require('../../helpers/is-change-route');
 const getCountryByName = require('../../helpers/get-country-by-name');
 const isCountrySupported = require('../../helpers/is-country-supported');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
-const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
   FIELD_NAME: FIELD_IDS.COUNTRY,
@@ -31,6 +31,7 @@ const get = async (req, res) => {
     HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
     submittedValues: req.session.submittedData,
+    isChangeRoute: isChangeRoute(req.originalUrl),
   });
 };
 
@@ -46,6 +47,7 @@ const post = async (req, res) => {
       HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
       countries: mappedCountries,
       validationErrors,
+      isChangeRoute: isChangeRoute(req.originalUrl),
     });
   }
 

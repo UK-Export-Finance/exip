@@ -10,6 +10,8 @@ const FIELD_IDS = {
   PRE_CREDIT_PERIOD: 'preCreditPeriodDays',
   CREDIT_PERIOD: 'creditPeriodDays',
   POLICY_TYPE: 'policyType',
+  SINGLE_POLICY_TYPE: 'singlePolicyType',
+  MULTI_POLICY_TYPE: 'multiPolicyType',
   POLICY_LENGTH: 'policyLength',
   SINGLE_POLICY_LENGTH: 'singlePolicyLengthMonths',
   MULTI_POLICY_LENGTH: 'multiPolicyLengthMonths',

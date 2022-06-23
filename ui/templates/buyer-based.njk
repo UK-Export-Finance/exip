@@ -57,7 +57,7 @@
             }
           }) }}
 
-          <select class="govuk-select" id="{{ FIELD_NAME }}" name="{{ FIELD_NAME }}">
+          <select class="govuk-select" id="{{ FIELD_NAME }}" name="{{ FIELD_NAME }}" autofocus="true">
             <option value="" disabled selected></option>
 
             {% for country in countries %}
@@ -94,7 +94,16 @@
           document.getElementById('{{ HIDDEN_FIELD_NAME }}').value = event;
         }
       }
-    })
+    });
+
+    if ('{{ isChangeRoute }}' === 'true') {
+      setTimeout(function() {
+        var input = document.getElementById('{{ FIELD_NAME }}');
+        if (input) {
+         input.focus(); 
+        }
+      }, 0);
+    }
   </script>
 
 {% endblock %}

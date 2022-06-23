@@ -24,8 +24,8 @@ context('Check your answers page', () => {
     AMOUNT,
     PRE_CREDIT_PERIOD,
     CREDIT_PERIOD,
-    POLICY_TYPE,
-    POLICY_LENGTH,
+    SINGLE_POLICY_TYPE,
+    SINGLE_POLICY_LENGTH,
   } = FIELD_IDS;
 
   const submissionData = {
@@ -35,8 +35,8 @@ context('Check your answers page', () => {
     [AMOUNT]: '100',
     [PRE_CREDIT_PERIOD]: '1',
     [CREDIT_PERIOD]: '2',
-    [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-    [POLICY_LENGTH]: '13',
+    [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+    [SINGLE_POLICY_LENGTH]: '13',
   };
 
   before(() => {
@@ -47,7 +47,6 @@ context('Check your answers page', () => {
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
   });
 
   it('passes the audits', () => {
@@ -112,7 +111,8 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', ROUTES.COMPANY_BASED_CHANGE);
+      const expectedHref = `${ROUTES.COMPANY_BASED_CHANGE}#${VALID_COMPANY_BASE}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });
 
@@ -144,7 +144,8 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', ROUTES.BUYER_BASED_CHANGE);
+      const expectedHref = `${ROUTES.BUYER_BASED_CHANGE}#${BUYER_COUNTRY}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
     it('renders `Private insurance` key, value and change link', () => {
@@ -164,7 +165,8 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE);
+      const expectedHref = `${ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE}#${TRIED_PRIVATE_COVER}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
     it('renders `UK goods` key, value and change link', () => {
@@ -184,7 +186,8 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', ROUTES.UK_CONTENT_PERCENTAGE_CHANGE);
+      const expectedHref = `${ROUTES.UK_CONTENT_PERCENTAGE_CHANGE}#${UK_CONTENT_PERCENTAGE}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });
 
@@ -216,7 +219,8 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${AMOUNT}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
     it('renders `Currency` key, value and change link', () => {
@@ -238,7 +242,8 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${CURRENCY}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
     it('renders `Pre-credit period` key, value and change link', () => {
@@ -260,7 +265,8 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${PRE_CREDIT_PERIOD}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
     it('renders `Credit period` key, value and change link', () => {
@@ -282,19 +288,20 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${CREDIT_PERIOD}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
     it('renders `Policy type` key, value and change link', () => {
-      const row = list[POLICY_TYPE];
-      const expectedKeyText = FIELDS[POLICY_TYPE].SUMMARY.TITLE;
+      const row = list[SINGLE_POLICY_TYPE];
+      const expectedKeyText = FIELDS[SINGLE_POLICY_TYPE].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(submissionData[POLICY_TYPE]);
+        expect(text.trim()).equal(submissionData[SINGLE_POLICY_TYPE]);
       });
 
       row.changeLink().invoke('text').then((text) => {
@@ -302,19 +309,20 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_TYPE}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
     it('renders `Policy length` key, value and change link', () => {
-      const row = list[POLICY_LENGTH];
-      const expectedKeyText = FIELDS[POLICY_LENGTH].SUMMARY.TITLE;
+      const row = list[SINGLE_POLICY_LENGTH];
+      const expectedKeyText = FIELDS[SINGLE_POLICY_LENGTH].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[POLICY_LENGTH]} months`;
+        const expected = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
 
         expect(text.trim()).equal(expected);
       });
@@ -324,7 +332,8 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().should('have.attr', 'href', ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE);
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });
 
