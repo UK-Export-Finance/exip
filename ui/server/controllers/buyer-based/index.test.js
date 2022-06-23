@@ -143,7 +143,14 @@ describe('controllers/buyer-based', () => {
 
         expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.BUYER_BASED);
 
-        const expectedReason = CONTENT_STRINGS.PAGES.CANNOT_OBTAIN_COVER_PAGE.REASON.UNSUPPORTED_BUYER_COUNTRY;
+        const countryName = unsupportedCountry.marketName;
+
+        const { PAGES } = CONTENT_STRINGS;
+        const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
+        const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
+
+        const expectedReason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${countryName}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
+
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });
