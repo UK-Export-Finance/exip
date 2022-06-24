@@ -12,7 +12,7 @@ const ERROR_MESSAGES = {
     IS_EMPTY: 'Select the currency your buyer will pay you in',
   },
   [FIELD_IDS.AMOUNT]: {
-    IS_EMPTY: 'Enter maximum amount your buyer will owe you at any single point',
+    IS_EMPTY: 'Enter the maximum amount your buyer will owe you at any single point',
     NOT_A_NUMBER: 'Maximum amount must be a number',
     BELOW_MINIMUM: 'Maximum amount must be 1 or more',
   },
@@ -22,7 +22,7 @@ const ERROR_MESSAGES = {
     BELOW_MINIMUM: 'Pre-credit period must be 0 months or more',
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
-    IS_EMPTY: 'Enter how many days credit you extent do your buyer',
+    IS_EMPTY: 'Enter how many days credit you extend to your buyer',
     NOT_A_NUMBER: 'Credit period must be a number',
     NOT_A_WHOLE_NUMBER: 'Credit period must be a whole number, like 10 - you cannot enter decimal points',
     BELOW_MINIMUM: 'Credit period must be 1 month or more',

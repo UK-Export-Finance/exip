@@ -55,7 +55,7 @@ const FIELDS = {
   },
   [FIELD_IDS.AMOUNT]: {
     LABEL: 'Amount',
-    HINT: 'The amount your buyer owes will probably rise and fall during the export contract. You only need to tell us the highest amount it’ll be at any single point.',
+    HINT: 'The amount your buyer owes will probably rise and fall during the export contract. You only need to enter the highest amount it\'ll be at any single point.',
     SUMMARY: {
       TITLE: 'Maximum amount owed',
     },
@@ -69,7 +69,7 @@ const FIELDS = {
     },
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
-    LABEL: 'How many days credit do you extend to your buyer?',
+    LABEL: 'What credit period do you have with your buyer?',
     HINT: 'For example, they may have 30, 60 or 90 days to pay you.',
     SUMMARY: {
       TITLE: 'Days credit extended to buyer',
@@ -81,14 +81,14 @@ const FIELDS = {
       SINGLE: {
         ID: FIELD_IDS.SINGLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.SINGLE,
-        TEXT: 'Single policy',
-        HINT: 'This offers cover for a single export contract with a specific buyer for a pre-determined amount.',
+        TEXT: 'Single contract policy',
+        HINT: 'This covers a single export contract with a specific buyer with one or more shipments.',
       },
       MULTI: {
         ID: FIELD_IDS.MULTI_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTI,
-        TEXT: 'Multi policy (also known as a revolving policy)',
-        HINT: 'Multi policies offer cover for multiple export contracts or orders with the same buyer for up to 12 months. You’ll need to be able to estimate the total value of the exports during that time.',
+        TEXT: 'Multiple contract policy (also known as a revolving policy)',
+        HINT: 'This covers multiple export contracts or orders with the same buyer. You\'ll need to be able to estimate the total value of the exports during the policy.',
       },
     },
     SUMMARY: {
@@ -105,16 +105,9 @@ const FIELDS = {
       TITLE: 'Policy type',
     },
   },
-  [FIELD_IDS.POLICY_LENGTH]: {
-    LABEL: 'How long do you need the policy for?',
-    HINT: 'Enter policy length in months. The maximum is 24 months.',
-    SUMMARY: {
-      TITLE: 'Policy length',
-    },
-  },
   [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
-    HINT: 'Enter policy length in months. The maximum is 24 months.',
+    HINT: 'Calculate this from the date your export is delivered to your buyer. Do not include any shipping period, as UKEF cannot insure this.',
     SUMMARY: {
       TITLE: 'Policy length',
     },
