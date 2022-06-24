@@ -16,7 +16,7 @@ const LANDING_PAGE = {
       },
       {
         text: 'get a non-binding quote to cover a single buyer for up to 9 months',
-      }
+      },
     ],
   },
   YOU_WILL_NEED: 'You`ll need to get a separate quote for each buyer you want to export to.',

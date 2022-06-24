@@ -190,10 +190,10 @@ describe('controllers/buyer-based', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.TRIED_TO_OBTAIN_COVER}`, async () => {
+      it(`should redirect to ${ROUTES.COMPANY_BASED}`, async () => {
         await controller.post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.COMPANY_BASED);
       });
 
       describe('when the url\'s last substring is `change`', () => {

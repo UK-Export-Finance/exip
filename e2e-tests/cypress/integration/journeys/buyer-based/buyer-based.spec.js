@@ -1,5 +1,5 @@
 import {
-  companyBasedPage,
+  beforeYouStartPage,
   buyerBasedPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -17,15 +17,14 @@ const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Which country is your buyer based page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.COMPANY_BASED, {
+    cy.visit(ROUTES.BEFORE_YOU_START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
-    companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].yes().click();
-    companyBasedPage.submitButton().click();
+    beforeYouStartPage.submitButton().click();
 
     cy.url().should('include', ROUTES.BUYER_BASED);
   });
@@ -47,7 +46,7 @@ context('Which country is your buyer based page', () => {
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.COMPANY_BASED);
+    cy.url().should('include', ROUTES.BEFORE_YOU_START);
   });
 
   it('renders a page title and heading', () => {
@@ -164,7 +163,7 @@ context('Which country is your buyer based page', () => {
     });
 
     describe('when submitting with a supported country', () => {
-      it(`should redirect to ${ROUTES.TRIED_TO_OBTAIN_COVER}`, () => {
+      it(`should redirect to ${ROUTES.COMPANY_BASED}`, () => {
         buyerBasedPage.searchInput().type('Fra');
 
         const results = buyerBasedPage.results();
@@ -172,7 +171,7 @@ context('Which country is your buyer based page', () => {
 
         buyerBasedPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
+        cy.url().should('include', ROUTES.COMPANY_BASED);
       });
     });
   });

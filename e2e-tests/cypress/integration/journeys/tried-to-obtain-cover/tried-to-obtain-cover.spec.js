@@ -1,5 +1,5 @@
 import {
-  buyerBasedPage,
+  companyBasedPage,
   triedToObtainCoverPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -18,17 +18,15 @@ const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 context('Tried to obtain private cover page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.BUYER_BASED, {
+    cy.visit(ROUTES.COMPANY_BASED, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
-    buyerBasedPage.searchInput().type('Fra');
-    const results = buyerBasedPage.results();
-    results.first().click();
-    buyerBasedPage.submitButton().click();
+    companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].yes().click();
+    companyBasedPage.submitButton().click();
 
     cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
   });
@@ -50,7 +48,7 @@ context('Tried to obtain private cover page', () => {
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.BUYER_BASED);
+    cy.url().should('include', ROUTES.COMPANY_BASED);
   });
 
   it('renders a page title and heading', () => {

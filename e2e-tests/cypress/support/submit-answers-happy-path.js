@@ -22,15 +22,15 @@ const {
 export default () => {
   beforeYouStartPage.submitButton().click();
 
-  // company page/form
-  companyBasedPage[VALID_COMPANY_BASE].yes().click();
-  companyBasedPage.submitButton().click();
-
   // buyer page/form
   buyerBasedPage.searchInput().type('Fra');
   const results = buyerBasedPage.results();
   results.first().click();
   buyerBasedPage.submitButton().click();
+
+  // company page/form
+  companyBasedPage[VALID_COMPANY_BASE].yes().click();
+  companyBasedPage.submitButton().click();
 
   // tried to obtain cover page/form
   triedToObtainCoverPage[TRIED_PRIVATE_COVER].yes().click();
