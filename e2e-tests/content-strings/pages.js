@@ -43,13 +43,13 @@ const BUYER_BASED_PAGE = {
 };
 
 const TRIED_TO_OBTAIN_COVER_PAGE = {
-  PAGE_TITLE: 'Are you unable to get insurance for this export from companies in the private sector?',
-  HEADING: 'Are you unable to get insurance for this export from companies in the private sector?',
+  PAGE_TITLE: 'Are you able to get insurance for this export from companies in the private sector?',
+  HEADING: 'Are you able to get insurance for this export from companies in the private sector?',
 };
 
 const UK_CONTENT_PERCENTAGE_PAGE = {
-  PAGE_TITLE: 'Is at least 20% of your export made up of UK goods or services?',
-  HEADING: 'Is at least 20% of your export made up of UK goods or services?',
+  PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
+  HEADING: 'Is at least 20% of your export contract value made up from UK goods or services?',
   DETAILS: {
     INTRO: 'I\'m not sure',
     ITEMS: [

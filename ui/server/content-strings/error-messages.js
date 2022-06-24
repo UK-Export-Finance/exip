@@ -3,10 +3,10 @@ const FIELD_IDS = require('../constants/field-ids');
 const ERROR_MESSAGES = {
   [FIELD_IDS.VALID_COMPANY_BASE]: 'Select if your company is based in the UK, Channel Islands, Isle of Man or not',
   [FIELD_IDS.BUYER_COUNTRY]: 'Select the country your buyer is based in',
-  [FIELD_IDS.TRIED_PRIVATE_COVER]: 'Select if you are unable to get private insurance for this export',
+  [FIELD_IDS.TRIED_PRIVATE_COVER]: 'Select if you are able to get private insurance for this export',
   [FIELD_IDS.COUNTRY]: 'Select the country your buyer is based in',
   [FIELD_IDS.UK_CONTENT_PERCENTAGE]: {
-    IS_EMPTY: 'Select whether at least 20% of your export is made up of UK goods and services',
+    IS_EMPTY: 'Select whether at least 20% of your export contract value is made up from UK goods and services',
   },
   [FIELD_IDS.CURRENCY]: {
     IS_EMPTY: 'Select the currency your buyer will pay you in',
