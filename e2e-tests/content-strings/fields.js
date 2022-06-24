@@ -109,14 +109,14 @@ const FIELDS = {
     LABEL: 'How long do you need the policy for?',
     HINT: 'Calculate this from the date your export is delivered to your buyer. Do not include any shipping period, as UKEF cannot insure this.',
     SUMMARY: {
-      TITLE: 'Policy length',
+      TITLE: 'Main policy length',
     },
   },
   [FIELD_IDS.MULTI_POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
     HINT: 'Enter policy length in months. The maximum is 12 months.',
     SUMMARY: {
-      TITLE: 'Policy length',
+      TITLE: 'Main policy length',
     },
   },
 };

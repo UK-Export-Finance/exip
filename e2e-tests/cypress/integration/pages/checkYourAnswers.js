@@ -58,11 +58,6 @@ const checkYourAnswersPage = {
         value: () => cy.get(`.${AMOUNT}-value`),
         changeLink: () => cy.get(`[data-cy="${AMOUNT}-change-link"]`),
       },
-      [PRE_CREDIT_PERIOD]: {
-        key: () => cy.get(`.${PRE_CREDIT_PERIOD}-key`),
-        value: () => cy.get(`.${PRE_CREDIT_PERIOD}-value`),
-        changeLink: () => cy.get(`[data-cy="${PRE_CREDIT_PERIOD}-change-link"]`),
-      },
       [CREDIT_PERIOD]: {
         key: () => cy.get(`.${CREDIT_PERIOD}-key`),
         value: () => cy.get(`.${CREDIT_PERIOD}-value`),
@@ -87,6 +82,11 @@ const checkYourAnswersPage = {
         key: () => cy.get(`.${MULTI_POLICY_LENGTH}-key`),
         value: () => cy.get(`.${MULTI_POLICY_LENGTH}-value`),
         changeLink: () => cy.get(`[data-cy="${MULTI_POLICY_LENGTH}-change-link"]`),
+      },
+      [PRE_CREDIT_PERIOD]: {
+        key: () => cy.get(`.${PRE_CREDIT_PERIOD}-key`),
+        value: () => cy.get(`.${PRE_CREDIT_PERIOD}-value`),
+        changeLink: () => cy.get(`[data-cy="${PRE_CREDIT_PERIOD}-change-link"]`),
       },
     },
   },
