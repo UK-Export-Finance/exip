@@ -51,7 +51,7 @@ const post = (req, res) => {
     return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
   }
 
-  return res.redirect(ROUTES.BUYER_BASED);
+  return res.redirect(ROUTES.TRIED_TO_OBTAIN_COVER);
 };
 
 module.exports = {

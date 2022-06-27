@@ -87,7 +87,7 @@ const post = async (req, res) => {
     return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
   }
 
-  return res.redirect(ROUTES.TRIED_TO_OBTAIN_COVER);
+  return res.redirect(ROUTES.COMPANY_BASED);
 };
 
 module.exports = {

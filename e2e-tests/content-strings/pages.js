@@ -3,35 +3,32 @@ const PRODUCT = require('./product');
 const LANDING_PAGE = {
   PAGE_TITLE: PRODUCT.DESCRIPTION,
   HEADING: PRODUCT.DESCRIPTION,
-  INTRO_1: 'If you’re an exporter and having problems getting export insurance, you may be able to get cover from UK Export Finance (UKEF).',
+  INTRO_1: 'If you\'re an exporter and having problems getting export insurance, you may be able to get cover from UK Export Finance (UKEF).',
   INTRO_2: 'This is sometimes known as credit insurance.',
-  INTRO_3: 'You can get cover for up to 2 years (credit terms)',
-
-  COVERS: {
-    HEADING: 'What UK export insurance covers',
-    INTRO: 'It covers you if:',
-    LIST: [
-      {
-        text: 'your buyer fails to pay you for an export',
-      },
-      {
-        text: 'you lose money when a contract cannot be carried out or is terminated early due to certain events',
-      },
-    ],
-  },
   USE_SERVICE_TO: {
-    INTRO: 'Use this service to:',
+    INTRO: 'Use this service to',
     LIST: [
       {
-        text: 'check if you\'re eligible',
+        text: 'check if your buyer country is covered',
       },
       {
-        text: 'get a non-binding quote for single or multiple exports to one buyer',
+        text: 'complete a basic eligibility check',
+      },
+      {
+        text: 'get a non-binding quote to cover a single buyer for up to 9 months',
       },
     ],
   },
   YOU_WILL_NEED: 'You`ll need to get a separate quote for each buyer you want to export to.',
   COMPLETION_TIME: 'It takes around 5 minutes.',
+  MORE_THAN_MAX_PERIOD: {
+    INTRO: 'If you need cover for more than 9 months,',
+    LINK: {
+      TEXT: 'fill in this form',
+      HREF: '#',
+    },
+    OUTRO: 'instead',
+  },
   SUBMIT_BUTTON: 'Start now',
 };
 
@@ -46,13 +43,13 @@ const BUYER_BASED_PAGE = {
 };
 
 const TRIED_TO_OBTAIN_COVER_PAGE = {
-  PAGE_TITLE: 'Are you unable to get insurance for this export from companies in the private sector?',
-  HEADING: 'Are you unable to get insurance for this export from companies in the private sector?',
+  PAGE_TITLE: 'Are you able to get insurance for this export from companies in the private sector?',
+  HEADING: 'Are you able to get insurance for this export from companies in the private sector?',
 };
 
 const UK_CONTENT_PERCENTAGE_PAGE = {
-  PAGE_TITLE: 'Is at least 20% of your export made up of UK goods or services?',
-  HEADING: 'Is at least 20% of your export made up of UK goods or services?',
+  PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
+  HEADING: 'Is at least 20% of your export contract value made up from UK goods or services?',
   DETAILS: {
     INTRO: 'I\'m not sure',
     ITEMS: [

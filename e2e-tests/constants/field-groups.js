@@ -9,9 +9,16 @@ const {
   UK_CONTENT_PERCENTAGE,
   AMOUNT,
   CURRENCY,
-  PRE_CREDIT_PERIOD,
   CREDIT_PERIOD,
 } = FIELD_IDS;
+
+/*
+ * Field groups
+ * Groups of fields that will render in the Answers page.
+ * These are fields that will always be present.
+ * Additional fields are dynamically added to groups,
+ * depending on the submitted answers.
+ */
 
 const FIELD_GROUPS = {
   COMPANY_DETAILS: [
@@ -47,11 +54,6 @@ const FIELD_GROUPS = {
     {
       ID: CURRENCY,
       ...FIELDS[CURRENCY],
-      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-    },
-    {
-      ID: PRE_CREDIT_PERIOD,
-      ...FIELDS[PRE_CREDIT_PERIOD],
       CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
     },
     {

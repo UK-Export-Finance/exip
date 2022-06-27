@@ -123,50 +123,6 @@ context('Change your answers after checking answers - Deal fields', () => {
     });
   });
 
-  describe('change `Pre-credit period`', () => {
-    let row = checkYourAnswersPage.summaryLists.deal[PRE_CREDIT_PERIOD];
-
-    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
-      row.changeLink().click();
-
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${PRE_CREDIT_PERIOD}`;
-      cy.url().should('include', expectedUrl);
-    });
-
-    it('renders a back button with correct link', () => {
-      partials.backLink().should('exist');
-
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('has originally submitted answer', () => {
-      const expectedValue = submissionData[PRE_CREDIT_PERIOD];
-      tellUsAboutYourDealPage[PRE_CREDIT_PERIOD].input().should('have.attr', 'value', expectedValue);
-    });
-
-    it('auto focuses the input', () => {
-      tellUsAboutYourDealPage[PRE_CREDIT_PERIOD].input().should('have.focus');
-    });
-
-    it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourDealPage[PRE_CREDIT_PERIOD].input().clear().type('2');
-      tellUsAboutYourDealPage.submitButton().click();
-
-      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
-    });
-
-    it('renders the new answer in `Check your answers` page', () => {
-      row = checkYourAnswersPage.summaryLists.deal[PRE_CREDIT_PERIOD];
-
-      row.value().invoke('text').then((text) => {
-        const expected = '2 days';
-
-        expect(text.trim()).equal(expected);
-      });
-    });
-  });
-
   describe('change `Credit period`', () => {
     let row = checkYourAnswersPage.summaryLists.deal[CREDIT_PERIOD];
 
@@ -205,6 +161,50 @@ context('Change your answers after checking answers - Deal fields', () => {
 
       row.value().invoke('text').then((text) => {
         const expected = '3 days';
+
+        expect(text.trim()).equal(expected);
+      });
+    });
+  });
+
+  describe('change `Pre-credit period`', () => {
+    let row = checkYourAnswersPage.summaryLists.deal[PRE_CREDIT_PERIOD];
+
+    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
+      row.changeLink().click();
+
+      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${PRE_CREDIT_PERIOD}`;
+      cy.url().should('include', expectedUrl);
+    });
+
+    it('renders a back button with correct link', () => {
+      partials.backLink().should('exist');
+
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
+      partials.backLink().should('have.attr', 'href', expected);
+    });
+
+    it('has originally submitted answer', () => {
+      const expectedValue = submissionData[PRE_CREDIT_PERIOD];
+      tellUsAboutYourDealPage[PRE_CREDIT_PERIOD].input().should('have.attr', 'value', expectedValue);
+    });
+
+    it('auto focuses the input', () => {
+      tellUsAboutYourDealPage[PRE_CREDIT_PERIOD].input().should('have.focus');
+    });
+
+    it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+      tellUsAboutYourDealPage[PRE_CREDIT_PERIOD].input().clear().type('2');
+      tellUsAboutYourDealPage.submitButton().click();
+
+      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+    });
+
+    it('renders the new answer in `Check your answers` page', () => {
+      row = checkYourAnswersPage.summaryLists.deal[PRE_CREDIT_PERIOD];
+
+      row.value().invoke('text').then((text) => {
+        const expected = '2 days';
 
         expect(text.trim()).equal(expected);
       });

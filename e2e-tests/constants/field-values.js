@@ -5,8 +5,8 @@ const FIELD_VALUES = {
     NOT_TRIED: 'Not tried',
   },
   POLICY_TYPE: {
-    SINGLE: 'Single policy',
-    MULTI: 'Multi policy',
+    SINGLE: 'Single contract policy',
+    MULTI: 'Multiple contract policy',
   },
 };
 

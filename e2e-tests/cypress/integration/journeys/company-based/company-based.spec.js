@@ -1,5 +1,5 @@
 import {
-  beforeYouStartPage,
+  buyerBasedPage,
   companyBasedPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -17,14 +17,17 @@ const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Company based inside the UK, Channel Islands and Isle of Man page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.BEFORE_YOU_START, {
+    cy.visit(ROUTES.BUYER_BASED, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
-    beforeYouStartPage.submitButton().click();
+    buyerBasedPage.searchInput().type('Fra');
+    const results = buyerBasedPage.results();
+    results.first().click();
+    buyerBasedPage.submitButton().click();
 
     cy.url().should('include', ROUTES.COMPANY_BASED);
   });
@@ -46,7 +49,7 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.BEFORE_YOU_START);
+    cy.url().should('include', ROUTES.BUYER_BASED);
   });
 
   it('renders a page title and heading', () => {
@@ -104,11 +107,11 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.BUYER_BASED}`, () => {
+      it(`should redirect to ${ROUTES.TRIED_TO_OBTAIN_COVER}`, () => {
         companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].yes().click();
         companyBasedPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.BUYER_BASED);
+        cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
       });
     });
   });

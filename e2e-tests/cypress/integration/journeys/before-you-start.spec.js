@@ -46,23 +46,6 @@ context('Before you start page', () => {
       beforeYouStartPage.intro2().invoke('text').then((text) => {
         expect(text.trim()).equal(CONTENT_STRINGS.INTRO_2);
       });
-
-      beforeYouStartPage.intro3().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.INTRO_3);
-      });
-    });
-
-    it('renders `covers` content', () => {
-      beforeYouStartPage.coverAgainst.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.COVERS.HEADING);
-      });
-
-      const expectedLength = CONTENT_STRINGS.COVERS.LIST.length;
-      beforeYouStartPage.coverAgainst.listItems().should('have.length', expectedLength);
-
-      beforeYouStartPage.coverAgainst.listItems().each(($element, index) => {
-        expect($element.text().trim()).equal(CONTENT_STRINGS.COVERS.LIST[index].text);
-      });
     });
 
     it('renders `use this service to` content', () => {
@@ -90,16 +73,33 @@ context('Before you start page', () => {
       });
     });
 
+    it('renders `if you need cover for more than...` copy', () => {
+      beforeYouStartPage.moreThanMaxPeriod().invoke('text').then((text) => {
+        const expected = `${CONTENT_STRINGS.MORE_THAN_MAX_PERIOD.INTRO} ${CONTENT_STRINGS.MORE_THAN_MAX_PERIOD.LINK.TEXT} ${CONTENT_STRINGS.MORE_THAN_MAX_PERIOD.OUTRO}`;
+
+        expect(text.trim()).equal(expected);
+      });
+    });
+
+    it('renders `if you need cover for more than...` link', () => {
+      beforeYouStartPage.moreThanMaxPeriodLink().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.MORE_THAN_MAX_PERIOD.LINK.TEXT);
+      });
+
+      const expectedHref = CONTENT_STRINGS.MORE_THAN_MAX_PERIOD.LINK.HREF;
+      beforeYouStartPage.moreThanMaxPeriodLink().should('have.attr', 'href', expectedHref);
+    });
+
     it('renders a `start now` button`', () => {
       beforeYouStartPage.submitButton().invoke('text').then((text) => {
         expect(text.trim()).equal(CONTENT_STRINGS.SUBMIT_BUTTON);
       });
     });
 
-    it('clicking `start now` redirects to the `Company based` page', () => {
+    it('clicking `start now` redirects to the `Buyer based` page', () => {
       beforeYouStartPage.submitButton().click();
 
-      cy.url().should('include', ROUTES.COMPANY_BASED);
+      cy.url().should('include', ROUTES.BUYER_BASED);
     });
   });
 });

@@ -22,6 +22,7 @@ const {
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
+  PRE_CREDIT_PERIOD,
 } = FIELD_IDS;
 
 describe('sever/helpers/generate-summary-list', () => {
@@ -37,6 +38,7 @@ describe('sever/helpers/generate-summary-list', () => {
     it('should map over each field group with value from submittedData', () => {
       const mockAnswersNoPolicyType = mockAnswers;
       delete mockAnswersNoPolicyType[POLICY_TYPE];
+      delete mockAnswersNoPolicyType[PRE_CREDIT_PERIOD];
 
       const result = generateFieldGroups(mockAnswersNoPolicyType);
       const fieldGroups = FIELD_GROUPS;
@@ -137,6 +139,28 @@ describe('sever/helpers/generate-summary-list', () => {
           ...FIELDS[MULTI_POLICY_LENGTH],
           CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
           value: mockAnswersMultiPolicyType[MULTI_POLICY_LENGTH],
+        };
+
+        expect(expectedField).toEqual(expected);
+      });
+    });
+
+    describe(`when ${PRE_CREDIT_PERIOD} is in submittedData`, () => {
+      it(`should add a ${PRE_CREDIT_PERIOD} object to DEAL_DETAILS`, () => {
+        const mockAnswersPreCreditPeriod = {
+          ...mockAnswers,
+          [PRE_CREDIT_PERIOD]: 1,
+        };
+
+        const result = generateFieldGroups(mockAnswersPreCreditPeriod);
+
+        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 1];
+
+        const expected = {
+          ID: PRE_CREDIT_PERIOD,
+          ...FIELDS[PRE_CREDIT_PERIOD],
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          value: mockAnswersPreCreditPeriod[PRE_CREDIT_PERIOD],
         };
 
         expect(expectedField).toEqual(expected);

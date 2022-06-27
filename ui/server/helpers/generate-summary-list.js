@@ -14,6 +14,7 @@ const {
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
+  PRE_CREDIT_PERIOD,
 } = FIELD_IDS;
 
 const {
@@ -25,8 +26,11 @@ const {
 /*
  * generateFieldGroups
  * Create all field groups for govukSummaryList
- * Add a Policy Length field depending on the Policy type (single/multi)
- * Policy length field must return the correct single/multi input ID.
+ * Add additional fields depending on the submitted answers:
+ * - Policy type depending on the Policy type (single/multi)
+ * - Policy length depending on the Policy type (single/multi)
+ * - Policy type & length must have the correct single/multi input ID.
+ * - Pre-credit period (if submitted)
  */
 const generateFieldGroups = (submittedData) => {
   const fieldGroups = { ...FIELD_GROUPS };
@@ -78,6 +82,18 @@ const generateFieldGroups = (submittedData) => {
         ...FIELDS[MULTI_POLICY_LENGTH],
         CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
         value: submittedData[MULTI_POLICY_LENGTH],
+      },
+    ];
+  }
+
+  if (submittedData[PRE_CREDIT_PERIOD]) {
+    fieldGroups.DEAL_DETAILS = [
+      ...fieldGroups.DEAL_DETAILS,
+      {
+        ID: PRE_CREDIT_PERIOD,
+        ...FIELDS[PRE_CREDIT_PERIOD],
+        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+        value: submittedData[PRE_CREDIT_PERIOD],
       },
     ];
   }
