@@ -45,6 +45,9 @@ const submissionData = {
 };
 
 // TODO: test for non-gbp currency with `converted from` copy.
+// TODO: test user testing scenarios
+// TODO: test multi policy length appears in list.
+// TODO: test change links.
 
 context('Your quote page', () => {
   before(() => {
@@ -114,7 +117,7 @@ context('Your quote page', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '123%';
+          const expected = '1.5%';
 
           expect(text.trim()).equal(expected);
         });
@@ -131,7 +134,7 @@ context('Your quote page', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£456.00';
+          const expected = '£1000.00';
 
           expect(text.trim()).equal(expected);
         });
