@@ -24,7 +24,7 @@ const mapInsuredFor = (field) => {
     text: formatCurrency(field.amount, 'GBP'),
   };
 
-  if (field.convertedFrom !== 'GBP') {
+  if (field.convertedFrom.isoCode !== 'GBP') {
     const { convertedFrom } = field;
 
     const countryString = `${convertedFrom.name} (${convertedFrom.isoCode})`;

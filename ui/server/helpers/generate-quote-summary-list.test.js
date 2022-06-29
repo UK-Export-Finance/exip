@@ -41,7 +41,7 @@ describe('sever/helpers/generate-quote-summary-list', () => {
 
         const result = insuredForFieldValue(mockValue);
 
-        const expected = `<span>${mockValue.text}<br><small>${mockValue.additionalText}</small></span>`;
+        const expected = `<span>${mockValue.text}<br> <small>${mockValue.additionalText}</small></span>`;
 
         expect(result).toEqual(expected);
       });

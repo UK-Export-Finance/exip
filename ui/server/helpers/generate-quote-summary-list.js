@@ -27,7 +27,7 @@ const insuredForFieldValue = (value) => {
   const closeTag = '</span>';
 
   if (value.additionalText) {
-    return `${openTag}${value.text}<br><small>${value.additionalText}</small>${closeTag}`;
+    return `${openTag}${value.text}<br> <small>${value.additionalText}</small>${closeTag}`;
   }
 
   return `${openTag}${value.text}${closeTag}`;

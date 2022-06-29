@@ -44,6 +44,8 @@ const submissionData = {
   [SINGLE_POLICY_LENGTH]: '13',
 };
 
+// TODO: test for non-gbp currency with `converted from` copy.
+
 context('Your quote page', () => {
   before(() => {
     cy.login();
