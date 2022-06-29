@@ -9,7 +9,7 @@
         {% for child in item %}
 
           {% if child.href %}
-            <a href="{{ child.href }}">{{ child.text }}</a>
+            <a class="govuk-link" href="{{ child.href }}">{{ child.text }}</a>
 
           {% else %}
             {{ child.text }}

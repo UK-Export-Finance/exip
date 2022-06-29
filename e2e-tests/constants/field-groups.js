@@ -12,14 +12,6 @@ const {
   CREDIT_PERIOD,
 } = FIELD_IDS;
 
-/*
- * Field groups
- * Groups of fields that will render in the Answers page.
- * These are fields that will always be present.
- * Additional fields are dynamically added to groups,
- * depending on the submitted answers.
- */
-
 const FIELD_GROUPS = {
   COMPANY_DETAILS: [
     {

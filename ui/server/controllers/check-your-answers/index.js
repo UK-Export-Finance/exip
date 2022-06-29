@@ -24,7 +24,7 @@ const get = (req, res) => {
   });
 };
 
-const post = (req, res) => res.redirect(ROUTES.PREMIUM_QUOTE);
+const post = (req, res) => res.redirect(ROUTES.YOUR_QUOTE);
 
 module.exports = {
   PAGE_VARIABLES,

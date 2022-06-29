@@ -209,9 +209,9 @@ describe('sever/helpers/generate-summary-list', () => {
 
   describe('generateSummaryList', () => {
     it('should return an object with multiple summary lists', () => {
-      const fieldGroups = generateFieldGroups(mockAnswers);
-
       const result = generateSummaryList(mockAnswers);
+
+      const fieldGroups = generateFieldGroups(mockAnswers);
 
       const expected = {
         COMPANY: {

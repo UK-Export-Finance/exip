@@ -76,10 +76,10 @@ describe('controllers/check-your-answers', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${ROUTES.PREMIUM_QUOTE}`, () => {
+    it(`should redirect to ${ROUTES.YOUR_QUOTE}`, () => {
       controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.PREMIUM_QUOTE);
+      expect(res.redirect).toHaveBeenCalledWith(ROUTES.YOUR_QUOTE);
     });
   });
 });

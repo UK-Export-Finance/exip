@@ -11,6 +11,7 @@ const ukContentPercentageController = require('../controllers/uk-content-pecenta
 const tellUsAboutYourDealController = require('../controllers/tell-us-about-your-deal');
 const checkYourAnswersController = require('../controllers/check-your-answers');
 const cannotObtainCoverController = require('../controllers/cannot-obtain-cover');
+const yourQuoteController = require('../controllers/your-quote');
 const problemWithServiceController = require('../controllers/problem-with-service');
 
 describe('routes/index', () => {
@@ -23,7 +24,7 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(14);
+    expect(get).toHaveBeenCalledTimes(15);
     expect(post).toHaveBeenCalledTimes(12);
 
     expect(get).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
@@ -58,6 +59,8 @@ describe('routes/index', () => {
     expect(post).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS, checkYourAnswersController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.CANNOT_OBTAIN_COVER, cannotObtainCoverController);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.YOUR_QUOTE, yourQuoteController);
 
     expect(get).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceController);
   });

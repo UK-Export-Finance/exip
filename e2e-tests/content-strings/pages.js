@@ -124,6 +124,82 @@ const CANNOT_OBTAIN_COVER_PAGE = {
   },
 };
 
+const YOUR_QUOTE_PAGE = {
+  PAGE_TITLE: 'You can apply for UKEF export insurance',
+  DESCRIPTION: 'To give you a quote, we need some more information.',
+  QUOTE: {
+    HEADING: 'You can apply for UKEF export insurance',
+    SUB_HEADING: 'Your quote',
+  },
+  NOTICE_1: 'This quote is not binding and does not commit UKEF to providing cover.',
+  NOTICE_2: 'You need to make a full application to UKEF to confirm your eligibility and price.',
+  NOTICE_3: 'Your price may be higher if our underwriters find additional risks with your export or buyer.',
+  WHAT_HAPPENS_NEXT: {
+    HEADING: 'What happens next?',
+    INTRO: [
+      [
+        {
+          text: 'You can now submit a',
+        },
+        {
+          text: 'full application',
+          href: '#',
+        },
+        {
+          text: '.',
+        },
+        {
+          text: 'It takes about 2 weeks to get a decision from UKEF.',
+        },
+      ],
+      [
+        {
+          text: 'You can get help with the application process from export finance managers or brokers.',
+        },
+      ],
+    ],
+    EXPORT_FINANCE_MANAGERS: {
+      HEADING: 'Export finance managers',
+      ITEMS: [
+        [
+          {
+            text: 'They work for UKEF and are available in every region.They can give you free guidance when making a full application. Find your nearest',
+          },
+          {
+            text: 'export finance manager',
+            href: '#',
+          },
+          {
+            text: '.',
+          },
+        ],
+      ],
+    },
+    BROKERS: {
+      HEADING: 'Brokers',
+      ITEMS: [
+        [
+          {
+            text: 'They act as an agent between you and UKEF.  They can also help you with the application process.',
+          },
+        ],
+        [
+          {
+            text: 'They receive a 15% fee for providing any successful policies at no extra cost to you. UKEF will pay their fee out of the policy premium you pay.',
+          },
+          {
+            text: 'Use our approved broker list',
+            href: '#',
+          },
+          {
+            text: 'to find a broker to help you.',
+          },
+        ],
+      ],
+    },
+  },
+};
+
 const PAGE_NOT_FOUND_PAGE = {
   PAGE_TITLE: 'Page not found',
   HEADING: 'Page not found',
@@ -145,6 +221,7 @@ module.exports = {
   TELL_US_ABOUT_YOUR_DEAL_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,
   CANNOT_OBTAIN_COVER_PAGE,
+  YOUR_QUOTE_PAGE,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
 };
