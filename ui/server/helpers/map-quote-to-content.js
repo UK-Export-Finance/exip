@@ -1,9 +1,9 @@
-const { FIELD_IDS } = require('../../constants');
+const { FIELD_IDS } = require('../constants');
 const {
   mapPolicyLength,
   mapCountry,
-} = require('../../helpers/map-answers-to-content');
-const formatCurrency = require('../../helpers/format-currency');
+} = require('./map-answers-to-content');
+const formatCurrency = require('./format-currency');
 
 // TODO: extract above mapping functions
 
@@ -20,13 +20,13 @@ const {
 } = QUOTE;
 
 const mapInsuredFor = (field) => {
+  const { convertedFrom } = field;
+
   const mapped = {
-    text: formatCurrency(field.amount, 'GBP'),
+    text: formatCurrency(field.amount, convertedFrom.isoCode),
   };
 
   if (field.convertedFrom.isoCode !== 'GBP') {
-    const { convertedFrom } = field;
-
     const countryString = `${convertedFrom.name} (${convertedFrom.isoCode})`;
 
     mapped.additionalText = `converted from ${countryString}`;
@@ -52,4 +52,7 @@ const mapQuoteToContent = (quote) => {
   return mapped;
 };
 
-module.exports = mapQuoteToContent;
+module.exports = {
+  mapInsuredFor,
+  mapQuoteToContent,
+};
