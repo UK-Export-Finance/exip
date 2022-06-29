@@ -122,7 +122,9 @@ describe('sever/helpers/map-answers-to-content', () => {
         const result = mapPolicyType(mockAnswersSinglePolicyType);
 
         const expected = {
-          [SINGLE_POLICY_TYPE]: mockAnswersSinglePolicyType[POLICY_TYPE],
+          [SINGLE_POLICY_TYPE]: {
+            text: mockAnswersSinglePolicyType[POLICY_TYPE],
+          },
         };
 
         expect(result).toEqual(expected);
@@ -138,7 +140,9 @@ describe('sever/helpers/map-answers-to-content', () => {
         const result = mapPolicyType(mockAnswersMultiPolicyType);
 
         const expected = {
-          [MULTI_POLICY_TYPE]: mockAnswersMultiPolicyType[POLICY_TYPE],
+          [MULTI_POLICY_TYPE]: {
+            text: mockAnswersMultiPolicyType[POLICY_TYPE],
+          },
         };
 
         expect(result).toEqual(expected);
@@ -157,7 +161,9 @@ describe('sever/helpers/map-answers-to-content', () => {
         const result = mapPolicyLength(mockAnswersSinglePolicyType);
 
         const expected = {
-          [SINGLE_POLICY_LENGTH]: mapPeriodMonths(mockAnswersSinglePolicyType[POLICY_LENGTH]),
+          [SINGLE_POLICY_LENGTH]: {
+            text: mapPeriodMonths(mockAnswersSinglePolicyType[POLICY_LENGTH]),
+          },
         };
 
         expect(result).toEqual(expected);
@@ -174,7 +180,9 @@ describe('sever/helpers/map-answers-to-content', () => {
         const result = mapPolicyLength(mockAnswersSinglePolicyType);
 
         const expected = {
-          [MULTI_POLICY_LENGTH]: mapPeriodMonths(mockAnswersSinglePolicyType[POLICY_LENGTH]),
+          [MULTI_POLICY_LENGTH]: {
+            text: mapPeriodMonths(mockAnswersSinglePolicyType[POLICY_LENGTH]),
+          },
         };
 
         expect(result).toEqual(expected);
@@ -187,14 +195,30 @@ describe('sever/helpers/map-answers-to-content', () => {
       const result = mapAnswersToContent(mockAnswers);
 
       const expected = {
-        [VALID_COMPANY_BASE]: SUMMARY_ANSWERS[VALID_COMPANY_BASE],
-        [BUYER_COUNTRY]: mapCountry(mockAnswers[BUYER_COUNTRY]),
-        [TRIED_PRIVATE_COVER]: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER],
-        [UK_CONTENT_PERCENTAGE]: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
-        [AMOUNT]: formatCurrency(mockAnswers[AMOUNT], 'GBP'),
-        [CURRENCY]: mapCurrency(mockAnswers[CURRENCY]),
-        [PRE_CREDIT_PERIOD]: mapPreCreditPeriod(mockAnswers[PRE_CREDIT_PERIOD]),
-        [CREDIT_PERIOD]: mapPeriodDays(mockAnswers[CREDIT_PERIOD]),
+        [VALID_COMPANY_BASE]: {
+          text: SUMMARY_ANSWERS[VALID_COMPANY_BASE],
+        },
+        [BUYER_COUNTRY]: {
+          text: mapCountry(mockAnswers[BUYER_COUNTRY]),
+        },
+        [TRIED_PRIVATE_COVER]: {
+          text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER],
+        },
+        [UK_CONTENT_PERCENTAGE]: {
+          text: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
+        },
+        [AMOUNT]: {
+          text: formatCurrency(mockAnswers[AMOUNT], 'GBP'),
+        },
+        [CURRENCY]: {
+          text: mapCurrency(mockAnswers[CURRENCY]),
+        },
+        [PRE_CREDIT_PERIOD]: {
+          text: mapPreCreditPeriod(mockAnswers[PRE_CREDIT_PERIOD]),
+        },
+        [CREDIT_PERIOD]: {
+          text: mapPeriodDays(mockAnswers[CREDIT_PERIOD]),
+        },
         ...mapPolicyType(mockAnswers),
         ...mapPolicyLength(mockAnswers),
       };

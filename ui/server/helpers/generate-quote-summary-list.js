@@ -8,7 +8,6 @@ const {
 } = require('../constants');
 
 const {
-  AMOUNT,
   POLICY_LENGTH,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
@@ -23,6 +22,17 @@ const {
   BUYER_LOCATION,
 } = QUOTE;
 
+const insuredForFieldValue = (value) => {
+  const openTag = '<span>';
+  const closeTag = '</span>';
+
+  if (value.additionalText) {
+    return `${openTag}${value.text}<br><small>${value.additionalText}</small>${closeTag}`;
+  }
+
+  return `${openTag}${value.text}${closeTag}`;
+};
+
 /*
  * generateFields
  * Create all fields for govukSummaryList
@@ -34,19 +44,25 @@ const generateFields = (answers) => {
     {
       id: INSURED_FOR,
       title: QUOTE_TITLES[INSURED_FOR],
-      value: answers[AMOUNT],
+      value: {
+        html: insuredForFieldValue(answers[INSURED_FOR]),
+      },
       renderChangeLink: true,
       changeRoute: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
     },
     {
       id: PREMIUM_RATE_PERCENTAGE,
       title: QUOTE_TITLES[PREMIUM_RATE_PERCENTAGE],
-      value: '1.1% mock',
+      value: {
+        text: answers[PREMIUM_RATE_PERCENTAGE].text,
+      },
     },
     {
       id: ESTIMATED_COST,
       title: QUOTE_TITLES[ESTIMATED_COST],
-      value: '123 mock',
+      value: {
+        text: answers[ESTIMATED_COST].text,
+      },
     },
   ];
 
@@ -56,7 +72,9 @@ const generateFields = (answers) => {
       {
         id: FIELD_IDS.SINGLE_POLICY_LENGTH,
         title: QUOTE_TITLES[POLICY_LENGTH],
-        value: answers[SINGLE_POLICY_LENGTH],
+        value: {
+          text: answers[SINGLE_POLICY_LENGTH].text,
+        },
         renderChangeLink: true,
         changeRoute: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
       },
@@ -69,7 +87,9 @@ const generateFields = (answers) => {
       {
         id: FIELD_IDS.MULTI_POLICY_LENGTH,
         title: QUOTE_TITLES[POLICY_LENGTH],
-        value: answers[MULTI_POLICY_LENGTH],
+        value: {
+          text: answers[MULTI_POLICY_LENGTH].text,
+        },
         renderChangeLink: true,
         changeRoute: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
       },
@@ -81,7 +101,9 @@ const generateFields = (answers) => {
     {
       id: BUYER_LOCATION,
       title: QUOTE_TITLES[BUYER_LOCATION],
-      value: answers[BUYER_COUNTRY],
+      value: {
+        text: answers[BUYER_COUNTRY].text,
+      },
       renderChangeLink: true,
       changeRoute: ROUTES.BUYER_BASED_CHANGE,
     },
@@ -104,13 +126,18 @@ const generateSummaryListRows = (fields) =>
         classes: `${field.id}-key govuk-!-width-one-half`,
       },
       value: {
-        text: field.value,
         classes: `${field.id}-value`,
       },
       actions: {
         items: [],
       },
     };
+
+    if (field.value.html) {
+      mapped.value.html = field.value.html;
+    } else {
+      mapped.value.text = field.value.text;
+    }
 
     if (field.renderChangeLink) {
       mapped.actions.items.push({
@@ -140,6 +167,7 @@ const generateQuoteSummaryList = (answers) => {
 };
 
 module.exports = {
+  insuredForFieldValue,
   generateFields,
   generateSummaryListRows,
   generateQuoteSummaryList,

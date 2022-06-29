@@ -16,7 +16,7 @@ const FIELD_IDS = {
   SINGLE_POLICY_LENGTH: 'singlePolicyLengthMonths',
   MULTI_POLICY_LENGTH: 'multiPolicyLengthMonths',
   QUOTE: {
-    INSURED_FOR: 'amount',
+    INSURED_FOR: 'insuredFor',
     PREMIUM_RATE_PERCENTAGE: 'premiumRatePercentage',
     ESTIMATED_COST: 'estimatedCost',
     BUYER_LOCATION: 'buyerCountry',

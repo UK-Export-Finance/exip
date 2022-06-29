@@ -52,13 +52,17 @@ const mapPolicyType = (answers) => {
 
   if (answers[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.SINGLE) {
     mapped = {
-      [SINGLE_POLICY_TYPE]: answers[POLICY_TYPE],
+      [SINGLE_POLICY_TYPE]: {
+        text: answers[POLICY_TYPE],
+      },
     };
   }
 
   if (answers[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.MULTI) {
     mapped = {
-      [MULTI_POLICY_TYPE]: answers[POLICY_TYPE],
+      [MULTI_POLICY_TYPE]: {
+        text: answers[POLICY_TYPE],
+      },
     };
   }
 
@@ -70,13 +74,17 @@ const mapPolicyLength = (answers) => {
 
   if (answers[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.SINGLE) {
     mapped = {
-      [SINGLE_POLICY_LENGTH]: mapPeriodMonths(answers[POLICY_LENGTH]),
+      [SINGLE_POLICY_LENGTH]: {
+        text: mapPeriodMonths(answers[POLICY_LENGTH]),
+      },
     };
   }
 
   if (answers[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.MULTI) {
     mapped = {
-      [MULTI_POLICY_LENGTH]: mapPeriodMonths(answers[POLICY_LENGTH]),
+      [MULTI_POLICY_LENGTH]: {
+        text: mapPeriodMonths(answers[POLICY_LENGTH]),
+      },
     };
   }
 
@@ -85,14 +93,30 @@ const mapPolicyLength = (answers) => {
 
 const mapAnswersToContent = (answers) => {
   const mapped = {
-    [VALID_COMPANY_BASE]: SUMMARY_ANSWERS[VALID_COMPANY_BASE],
-    [BUYER_COUNTRY]: mapCountry(answers[BUYER_COUNTRY]),
-    [TRIED_PRIVATE_COVER]: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER],
-    [UK_CONTENT_PERCENTAGE]: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
-    [AMOUNT]: formatCurrency(answers[AMOUNT], 'GBP'),
-    [CURRENCY]: mapCurrency(answers[CURRENCY]),
-    [PRE_CREDIT_PERIOD]: mapPreCreditPeriod(answers[PRE_CREDIT_PERIOD]),
-    [CREDIT_PERIOD]: mapPeriodDays(answers[CREDIT_PERIOD]),
+    [VALID_COMPANY_BASE]: {
+      text: SUMMARY_ANSWERS[VALID_COMPANY_BASE],
+    },
+    [BUYER_COUNTRY]: {
+      text: mapCountry(answers[BUYER_COUNTRY]),
+    },
+    [TRIED_PRIVATE_COVER]: {
+      text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER],
+    },
+    [UK_CONTENT_PERCENTAGE]: {
+      text: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
+    },
+    [AMOUNT]: {
+      text: formatCurrency(answers[AMOUNT], 'GBP'),
+    },
+    [CURRENCY]: {
+      text: mapCurrency(answers[CURRENCY]),
+    },
+    [PRE_CREDIT_PERIOD]: {
+      text: mapPreCreditPeriod(answers[PRE_CREDIT_PERIOD]),
+    },
+    [CREDIT_PERIOD]: {
+      text: mapPeriodDays(answers[CREDIT_PERIOD]),
+    },
     ...mapPolicyType(answers),
     ...mapPolicyLength(answers),
   };
