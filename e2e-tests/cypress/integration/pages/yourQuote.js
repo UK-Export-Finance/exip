@@ -48,6 +48,24 @@ const yourQuotePage = {
     item2: () => cy.get('[data-cy="notice-list-item-2"]'),
     item3: () => cy.get('[data-cy="notice-list-item-3"]'),
   },
+  whatHappensNext: {
+    intro: {
+      heading: () => cy.get('[data-cy="what-happens-next-heading"]'),
+      listItems: () => cy.get('[data-cy="what-happens-next-intro"] li'),
+    },
+    financeManagers: {
+      heading: () => cy.get('[data-cy="what-happens-next-finance-managers-heading"]'),
+      listItems: () => cy.get('[data-cy="what-happens-next-finance-managers"] li'),
+    },
+    brokers: {
+      heading: () => cy.get('[data-cy="what-happens-next-brokers-heading"]'),
+      listItems: () => cy.get('[data-cy="what-happens-next-brokers"] li'),
+    },
+  },
+  links: {
+    startAgain: () => cy.get('[data-cy="start-again"]'),
+    feedback: () => cy.get('[data-cy="feedback"]'),
+  },
 };
 
 export default yourQuotePage;

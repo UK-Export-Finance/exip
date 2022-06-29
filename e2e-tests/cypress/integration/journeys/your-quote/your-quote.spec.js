@@ -1,4 +1,8 @@
-import { yourQuotePage } from '../../pages';
+import {
+  yourQuotePage,
+  beforeYouStartPage,
+  buyerBasedPage,
+} from '../../pages';
 import {
   LINKS,
   PAGES,
@@ -108,7 +112,7 @@ context('Your quote page', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '1.1% mock';
+          const expected = '123%';
 
           expect(text.trim()).equal(expected);
         });
@@ -125,7 +129,7 @@ context('Your quote page', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '123 mock';
+          const expected = '£456.00';
 
           expect(text.trim()).equal(expected);
         });
@@ -193,6 +197,48 @@ context('Your quote page', () => {
 
       yourQuotePage.noticeList.item3().invoke('text').then((text) => {
         expect(text.trim()).equal(CONTENT_STRINGS.NOTICE_3);
+      });
+    });
+  });
+
+  // TODO
+  // describe('what happens next', () => {
+  //   it('renders intro heading and copy', () => {
+
+  //   });
+  //   it('renders finance managers heading and copy', () => {
+
+  //   });
+
+  //   it('renders brokers heading and copy', () => {
+
+  //   });
+  // });
+
+  describe('links', () => {
+    describe('feedback', () => {
+      it('renders', () => {
+        yourQuotePage.links.feedback().should('exist');
+        yourQuotePage.links.feedback().should('have.attr', 'href', ROUTES.FEEDBACK);
+      });
+    });
+
+    describe('start again', () => {
+      it('renders', () => {
+        yourQuotePage.links.startAgain().should('exist');
+        yourQuotePage.links.startAgain().should('have.attr', 'href', ROUTES.BEFORE_YOU_START);
+      });
+
+      context('clicking `start again`', () => {
+        it('redirects to the start page', () => {
+          yourQuotePage.links.startAgain().click();
+          cy.url().should('include', ROUTES.BEFORE_YOU_START);
+        });
+
+        it('clears the session', () => {
+          beforeYouStartPage.submitButton().click();
+          buyerBasedPage.hiddenInput().should('have.attr', 'value', '');
+        });
       });
     });
   });

@@ -52,7 +52,7 @@
     items: CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO
   }) }}
 
-  <h4 data-cy="what-happens-next-finance-managers-heading">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.HEADING }}</h4>
+  <h4 data-cy="what-happens-next-finance-managers-heading"z{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.HEADING }}</h4>
 
   {{ detailsText.render({
     items: CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.ITEMS
@@ -65,7 +65,7 @@
     items: CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.ITEMS
   }) }}
 
-  <p><a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.LINKS.START_AGAIN.HREF }}">{{ CONTENT_STRINGS.LINKS.START_AGAIN.TEXT }}</a></p>
-  <p><a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.LINKS.GIVE_FEEDBACK.HREF }}">{{ CONTENT_STRINGS.LINKS.GIVE_FEEDBACK.TEXT }}</a></p>
+  <p><a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.LINKS.START_AGAIN.HREF }}" data-cy="start-again">{{ CONTENT_STRINGS.LINKS.START_AGAIN.TEXT }}</a></p>
+  <p><a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.LINKS.GIVE_FEEDBACK.HREF }}" data-cy="feedback">{{ CONTENT_STRINGS.LINKS.GIVE_FEEDBACK.TEXT }}</a></p>
 
 {% endblock %}

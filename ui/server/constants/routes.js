@@ -21,6 +21,8 @@ const ROUTES = {
   CANNOT_OBTAIN_COVER: '/cannot-obtain-cover',
 
   YOUR_QUOTE: '/your-quote',
+  FEEDBACK: '/feedback',
+
   PROBLEM_WITH_SERVICE: '/problem-with-service',
 };
 
