@@ -3,7 +3,7 @@ const {
   generateSummaryListRows,
   generateSummaryList,
 } = require('./generate-summary-list');
-const { mapAnswersToContent } = require('../map-answers-to-content');
+const { mapAnswersToContent } = require('./map-answers-to-content');
 const {
   PAGES,
   FIELDS,
