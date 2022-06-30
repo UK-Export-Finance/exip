@@ -16,6 +16,7 @@ const {
 const { mockQuote } = require('../test-mocks');
 
 const {
+  AMOUNT,
   POLICY_LENGTH,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
@@ -72,7 +73,7 @@ describe('sever/helpers/generate-quote-summary-list', () => {
 
       const expected = [
         {
-          id: INSURED_FOR,
+          id: AMOUNT,
           title: QUOTE_TITLES[INSURED_FOR],
           value: {
             html: insuredForFieldValue(mockQuoteContent[INSURED_FOR]),

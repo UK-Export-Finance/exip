@@ -8,6 +8,7 @@ const {
 } = require('../constants');
 
 const {
+  AMOUNT,
   POLICY_LENGTH,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
@@ -42,7 +43,7 @@ const insuredForFieldValue = (value) => {
 const generateFields = (answers) => {
   let fields = [
     {
-      id: INSURED_FOR,
+      id: AMOUNT,
       title: QUOTE_TITLES[INSURED_FOR],
       value: {
         html: insuredForFieldValue(answers[INSURED_FOR]),
