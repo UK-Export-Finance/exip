@@ -1,9 +1,10 @@
 import { FIELD_IDS } from '../../../constants';
 
 const {
-  QUOTE,
+  AMOUNT,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
+  QUOTE,
 } = FIELD_IDS;
 
 const yourQuotePage = {
@@ -12,9 +13,9 @@ const yourQuotePage = {
     subHeading: () => cy.get('[data-cy="sub-heading"]'),
     summaryList: {
       [QUOTE.INSURED_FOR]: {
-        key: () => cy.get(`.${QUOTE.INSURED_FOR}-key`),
-        value: () => cy.get(`.${QUOTE.INSURED_FOR}-value`),
-        changeLink: () => cy.get(`[data-cy="${QUOTE.INSURED_FOR}-change-link"]`),
+        key: () => cy.get(`.${AMOUNT}-key`),
+        value: () => cy.get(`.${AMOUNT}-value`),
+        changeLink: () => cy.get(`[data-cy="${AMOUNT}-change-link"]`),
       },
       [QUOTE.PREMIUM_RATE_PERCENTAGE]: {
         key: () => cy.get(`.${QUOTE.PREMIUM_RATE_PERCENTAGE}-key`),

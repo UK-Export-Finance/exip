@@ -2,6 +2,7 @@ import {
   yourQuotePage,
   beforeYouStartPage,
   buyerBasedPage,
+  tellUsAboutYourDealPage,
 } from '../../pages';
 import {
   LINKS,
@@ -44,15 +45,15 @@ const submissionData = {
   [SINGLE_POLICY_LENGTH]: '13',
 };
 
-// TODO: test for non-gbp currency with `converted from` copy.
 // TODO: test user testing scenarios
-// TODO: test multi policy length appears in list.
-// TODO: test change links.
 
 context('Your quote page', () => {
   before(() => {
     cy.login();
-    cy.submitAnswersHappyPathNew();
+
+    cy.submitAnswersHappyPath();
+    tellUsAboutYourDealPage.submitButton().click();
+
     cy.url().should('include', ROUTES.YOUR_QUOTE);
   });
 
@@ -60,14 +61,14 @@ context('Your quote page', () => {
     Cypress.Cookies.preserveOnce('_csrf');
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 80,
-  //     'best-practices': 100,
-  //     seo: 75,
-  //   });
-  // });
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 80,
+      'best-practices': 100,
+      seo: 75,
+    });
+  });
 
   context('panel/quote', () => {
     it('renders `you can apply` heading', () => {
@@ -134,7 +135,7 @@ context('Your quote page', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£1000.00';
+          const expected = '£1,000.00';
 
           expect(text.trim()).equal(expected);
         });
