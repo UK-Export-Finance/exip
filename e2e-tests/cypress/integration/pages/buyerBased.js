@@ -2,7 +2,7 @@ import { FIELD_IDS } from '../../../constants';
 
 const buyerBasedPage = {
   heading: () => cy.get('[data-cy="heading"]'),
-  searchInput: () => cy.get(`#${FIELD_IDS.COUNTRY}`, { timeout: 10000 }),
+  searchInput: () => cy.get(`#${FIELD_IDS.COUNTRY}`, { timeout: 30000 }),
   hiddenInput: () => cy.get(`#${FIELD_IDS.BUYER_COUNTRY}`),
   results: () => cy.get(`#${FIELD_IDS.COUNTRY} + ul li`),
   noResults: () => cy.get('.autocomplete__option--no-results'),
