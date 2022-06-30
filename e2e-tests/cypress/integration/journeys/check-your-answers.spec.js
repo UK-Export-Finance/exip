@@ -47,6 +47,7 @@ context('Check your answers page', () => {
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
+    Cypress.Cookies.preserveOnce('connect.sid');
   });
 
   it('passes the audits', () => {
