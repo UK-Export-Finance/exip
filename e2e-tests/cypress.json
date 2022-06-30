@@ -4,5 +4,6 @@
   "projectId": "exip",
   "numTestsKeptInMemory": 1,
   "basicAuthKey": "dev",
-  "basicAuthSecret": "test"
+  "basicAuthSecret": "test",
+  "chromeWebSecurity": false
 }
