@@ -12,3 +12,12 @@ $govuk-new-link-styles: true;
     color: govuk-colour('white');
   }
 }
+
+.ukef-list-item-dash {
+  list-style-type: none;
+  margin-left: -20px;
+  &::before {
+    content: "—";
+    color: govuk-colour('blue');
+  }
+}
