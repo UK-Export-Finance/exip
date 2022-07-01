@@ -1,4 +1,5 @@
 const PRODUCT = require('./product');
+const LINKS = require('./links');
 
 const LANDING_PAGE = {
   PAGE_TITLE: PRODUCT.DESCRIPTION,
@@ -25,7 +26,7 @@ const LANDING_PAGE = {
     INTRO: 'If you need cover for more than 9 months,',
     LINK: {
       TEXT: 'fill in this form',
-      HREF: '#',
+      HREF: LINKS.EXTERNAL.NBI_FORM,
     },
     OUTRO: 'instead',
   },
@@ -167,7 +168,7 @@ const YOUR_QUOTE_PAGE = {
           },
           {
             text: 'export finance manager',
-            href: '#',
+            href: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
           },
           {
             text: '.',
@@ -189,7 +190,7 @@ const YOUR_QUOTE_PAGE = {
           },
           {
             text: 'Use our approved broker list',
-            href: '#',
+            href: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
           },
           {
             text: 'to find a broker to help you.',
