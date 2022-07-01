@@ -2,13 +2,11 @@ const {
   mapInsuredFor,
   mapQuoteToContent,
 } = require('./map-quote-to-content');
-const { FIELD_IDS } = require('../constants');
-const {
-  mapPolicyLength,
-  mapCountry,
-} = require('./map-answers-to-content');
-const formatCurrency = require('./format-currency');
-const { mockQuote } = require('../test-mocks');
+const { FIELD_IDS } = require('../../constants');
+const mapCountry = require('./map-country');
+const mapPolicyLength = require('./map-policy-length');
+const formatCurrency = require('../format-currency');
+const { mockQuote } = require('../../test-mocks');
 
 const {
   BUYER_COUNTRY,

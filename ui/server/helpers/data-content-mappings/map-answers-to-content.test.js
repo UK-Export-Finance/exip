@@ -1,20 +1,19 @@
 const {
-  mapCountry,
   mapCurrency,
-  mapPeriodDays,
-  mapPeriodMonths,
   mapPreCreditPeriod,
   mapPolicyType,
-  mapPolicyLength,
   mapAnswersToContent,
 } = require('./map-answers-to-content');
+const mapCountry = require('./map-country');
+const mapPeriodDays = require('./map-period-days');
+const mapPolicyLength = require('./map-policy-length');
 const {
   FIELD_IDS,
   FIELD_VALUES,
-} = require('../constants');
-const { SUMMARY_ANSWERS } = require('../content-strings');
-const formatCurrency = require('./format-currency');
-const { mockSession, mockAnswers } = require('../test-mocks');
+} = require('../../constants');
+const { SUMMARY_ANSWERS } = require('../../content-strings');
+const formatCurrency = require('../format-currency');
+const { mockAnswers } = require('../../test-mocks');
 
 const {
   VALID_COMPANY_BASE,
@@ -28,32 +27,9 @@ const {
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
   MULTI_POLICY_TYPE,
-  POLICY_LENGTH,
-  SINGLE_POLICY_LENGTH,
-  MULTI_POLICY_LENGTH,
 } = FIELD_IDS;
 
 describe('sever/helpers/map-answers-to-content', () => {
-  describe('mapCountry', () => {
-    it('should return country name', () => {
-      const country = mockSession.submittedData[FIELD_IDS.BUYER_COUNTRY];
-
-      const result = mapCountry(country);
-
-      const expected = `${country.name}`;
-
-      expect(result).toEqual(expected);
-    });
-
-    describe('when there is no value', () => {
-      it('should return a dash', () => {
-        const result = mapCountry();
-
-        expect(result).toEqual('-');
-      });
-    });
-  });
-
   describe('mapCurrency', () => {
     it('should return a formatted string', () => {
       const currency = mockAnswers[FIELD_IDS.CURRENCY];
@@ -71,26 +47,6 @@ describe('sever/helpers/map-answers-to-content', () => {
 
         expect(result).toEqual('-');
       });
-    });
-  });
-
-  describe('mapPeriodDays', () => {
-    it('should return a formatted string', () => {
-      const result = mapPeriodDays(20);
-
-      const expected = '20 days';
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('mapPeriodMonths', () => {
-    it('should return a formatted string', () => {
-      const result = mapPeriodMonths(20);
-
-      const expected = '20 months';
-
-      expect(result).toEqual(expected);
     });
   });
 
@@ -142,46 +98,6 @@ describe('sever/helpers/map-answers-to-content', () => {
         const expected = {
           [MULTI_POLICY_TYPE]: {
             text: mockAnswersMultiPolicyType[POLICY_TYPE],
-          },
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-  });
-
-  describe('mapPolicyLength', () => {
-    describe('when policy type is single', () => {
-      it(`should return an object with mapped ${SINGLE_POLICY_LENGTH}`, () => {
-        const mockAnswersSinglePolicyType = {
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-          [POLICY_LENGTH]: 10,
-        };
-
-        const result = mapPolicyLength(mockAnswersSinglePolicyType);
-
-        const expected = {
-          [SINGLE_POLICY_LENGTH]: {
-            text: mapPeriodMonths(mockAnswersSinglePolicyType[POLICY_LENGTH]),
-          },
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when policy type is multi', () => {
-      it(`should return an object with mapped ${MULTI_POLICY_LENGTH}`, () => {
-        const mockAnswersSinglePolicyType = {
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [POLICY_LENGTH]: 10,
-        };
-
-        const result = mapPolicyLength(mockAnswersSinglePolicyType);
-
-        const expected = {
-          [MULTI_POLICY_LENGTH]: {
-            text: mapPeriodMonths(mockAnswersSinglePolicyType[POLICY_LENGTH]),
           },
         };
 

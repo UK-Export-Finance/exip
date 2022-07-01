@@ -4,7 +4,7 @@ const {
   generateSummaryListRows,
   generateQuoteSummaryList,
 } = require('./generate-quote-summary-list');
-const { mapQuoteToContent } = require('./map-quote-to-content');
+const { mapQuoteToContent } = require('./data-content-mappings/map-quote-to-content');
 const {
   LINKS,
   QUOTE_TITLES,

@@ -1,7 +1,12 @@
-const { FIELD_VALUES } = require('../constants');
-const FIELD_IDS = require('../constants/field-ids');
-const { SUMMARY_ANSWERS } = require('../content-strings');
-const formatCurrency = require('./format-currency');
+const {
+  FIELD_IDS,
+  FIELD_VALUES,
+} = require('../../constants');
+const { SUMMARY_ANSWERS } = require('../../content-strings');
+const formatCurrency = require('../format-currency');
+const mapCountry = require('./map-country');
+const mapPeriodDays = require('./map-period-days');
+const mapPolicyLength = require('./map-policy-length');
 
 const {
   VALID_COMPANY_BASE,
@@ -15,18 +20,7 @@ const {
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
   MULTI_POLICY_TYPE,
-  POLICY_LENGTH,
-  SINGLE_POLICY_LENGTH,
-  MULTI_POLICY_LENGTH,
 } = FIELD_IDS;
-
-const mapCountry = (countryObj) => {
-  if (countryObj && countryObj.name) {
-    return countryObj.name;
-  }
-
-  return '-';
-};
 
 const mapCurrency = (currencyObj) => {
   if (currencyObj) {
@@ -35,9 +29,6 @@ const mapCurrency = (currencyObj) => {
 
   return '-';
 };
-
-const mapPeriodDays = (answer) => `${answer} days`;
-const mapPeriodMonths = (answer) => `${answer} months`;
 
 const mapPreCreditPeriod = (answer) => {
   if (answer) {
@@ -62,28 +53,6 @@ const mapPolicyType = (answers) => {
     mapped = {
       [MULTI_POLICY_TYPE]: {
         text: answers[POLICY_TYPE],
-      },
-    };
-  }
-
-  return mapped;
-};
-
-const mapPolicyLength = (answers) => {
-  let mapped;
-
-  if (answers[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.SINGLE) {
-    mapped = {
-      [SINGLE_POLICY_LENGTH]: {
-        text: mapPeriodMonths(answers[POLICY_LENGTH]),
-      },
-    };
-  }
-
-  if (answers[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.MULTI) {
-    mapped = {
-      [MULTI_POLICY_LENGTH]: {
-        text: mapPeriodMonths(answers[POLICY_LENGTH]),
       },
     };
   }
@@ -125,12 +94,8 @@ const mapAnswersToContent = (answers) => {
 };
 
 module.exports = {
-  mapCountry,
   mapCurrency,
-  mapPeriodDays,
-  mapPeriodMonths,
   mapPreCreditPeriod,
   mapPolicyType,
-  mapPolicyLength,
   mapAnswersToContent,
 };

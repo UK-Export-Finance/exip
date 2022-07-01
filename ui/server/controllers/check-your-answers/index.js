@@ -1,6 +1,6 @@
 const CONTENT_STRINGS = require('../../content-strings');
 const { ROUTES, TEMPLATES } = require('../../constants');
-const { mapAnswersToContent } = require('../../helpers/map-answers-to-content');
+const { mapAnswersToContent } = require('../../helpers/data-content-mappings/map-answers-to-content');
 const { generateSummaryList } = require('../../helpers/generate-summary-list');
 
 const PAGE_VARIABLES = {

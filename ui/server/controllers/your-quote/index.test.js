@@ -6,7 +6,7 @@ const {
 } = require('../../constants');
 const api = require('../../api');
 const { generateQuote } = require('./generate-quote');
-const { mapQuoteToContent } = require('../../helpers/map-quote-to-content');
+const { mapQuoteToContent } = require('../../helpers/data-content-mappings/map-quote-to-content');
 const { generateQuoteSummaryList } = require('../../helpers/generate-quote-summary-list');
 const {
   mockReq,

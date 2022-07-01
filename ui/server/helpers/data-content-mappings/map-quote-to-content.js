@@ -1,11 +1,7 @@
-const { FIELD_IDS } = require('../constants');
-const {
-  mapPolicyLength,
-  mapCountry,
-} = require('./map-answers-to-content');
-const formatCurrency = require('./format-currency');
-
-// TODO: extract above mapping functions
+const { FIELD_IDS } = require('../../constants');
+const mapCountry = require('./map-country');
+const mapPolicyLength = require('./map-policy-length');
+const formatCurrency = require('../format-currency');
 
 const {
   BUYER_COUNTRY,
