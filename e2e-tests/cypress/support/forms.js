@@ -31,7 +31,7 @@ export const completeAndSubmitCompanyForm = () => {
 };
 
 export const completeAndSubmitTriedToObtainCoverForm = () => {
-  triedToObtainCoverPage[TRIED_PRIVATE_COVER].yes().click();
+  triedToObtainCoverPage[TRIED_PRIVATE_COVER].no().click();
   triedToObtainCoverPage.submitButton().click();
 };
 
