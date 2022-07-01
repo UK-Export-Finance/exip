@@ -1,5 +1,6 @@
 const express = require('express');
 const { ROUTES } = require('../constants');
+const guidanceController = require('../controllers/guidance');
 const beforeYouStartController = require('../controllers/before-you-start');
 const companyBasedController = require('../controllers/company-based');
 const buyerBasedController = require('../controllers/buyer-based');
@@ -12,6 +13,7 @@ const yourQuoteController = require('../controllers/your-quote');
 const problemWithServiceController = require('../controllers/problem-with-service');
 
 const router = express.Router();
+router.get(ROUTES.GUIDANCE, guidanceController);
 
 router.get(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
 router.post(ROUTES.BEFORE_YOU_START, beforeYouStartController.post);
