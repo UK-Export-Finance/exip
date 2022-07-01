@@ -1,5 +1,5 @@
 const ROUTES = {
-  GUIDANCE: '/guidance',
+  GUIDANCE: '/',
   BEFORE_YOU_START: '/before-you-start',
 
   COMPANY_BASED: '/company-based',
