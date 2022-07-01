@@ -135,6 +135,10 @@ context('Your quote page - change answers', () => {
 
     it('auto focuses the input', () => {
       // autocomplete component does not have a focused attribute, instead it has a class.
+      // this is added with client side JS.
+      // we have to wait to ensure that client side js has been executed.
+      cy.wait(1000);
+
       buyerBasedPage.searchInput().should('have.class', 'autocomplete__input--focused');
     });
 
