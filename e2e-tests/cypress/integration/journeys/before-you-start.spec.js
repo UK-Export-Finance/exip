@@ -2,7 +2,7 @@ import beforeYouStartPage from '../pages/beforeYouStart';
 import { ORGANISATION, PAGES } from '../../../content-strings';
 import CONSTANTS from '../../../constants';
 
-const CONTENT_STRINGS = PAGES.LANDING_PAGE;
+const CONTENT_STRINGS = PAGES.BEFORE_YOU_START;
 const { ROUTES } = CONSTANTS;
 
 context('Before you start page', () => {

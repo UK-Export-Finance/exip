@@ -1,7 +1,7 @@
 const PRODUCT = require('./product');
 const LINKS = require('./links');
 
-const LANDING_PAGE = {
+const BEFORE_YOU_START = {
   PAGE_TITLE: PRODUCT.DESCRIPTION,
   HEADING: PRODUCT.DESCRIPTION,
   INTRO_1: 'If you\'re an exporter and having problems getting export insurance, you may be able to get cover from UK Export Finance (UKEF).',
@@ -10,13 +10,13 @@ const LANDING_PAGE = {
     INTRO: 'Use this service to',
     LIST: [
       {
+        text: 'get a non-binding quote to cover a single buyer for up to 9 months',
+      },
+      {
         text: 'check if your buyer country is covered',
       },
       {
         text: 'complete a basic eligibility check',
-      },
-      {
-        text: 'get a non-binding quote to cover a single buyer for up to 9 months',
       },
     ],
   },
@@ -214,7 +214,7 @@ const PROBLEM_WITH_SERVICE_PAGE = {
 };
 
 module.exports = {
-  LANDING_PAGE,
+  BEFORE_YOU_START,
   COMPANY_BASED_PAGE,
   BUYER_BASED_PAGE,
   TRIED_TO_OBTAIN_COVER_PAGE,

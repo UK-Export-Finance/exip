@@ -22,7 +22,7 @@ describe('controllers/index', () => {
         CONTENT_STRINGS: {
           PRODUCT: CONTENT_STRINGS.PRODUCT,
           FOOTER: CONTENT_STRINGS.FOOTER,
-          ...CONTENT_STRINGS.PAGES.LANDING_PAGE,
+          ...CONTENT_STRINGS.PAGES.BEFORE_YOU_START,
         },
       };
 
