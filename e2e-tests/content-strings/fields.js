@@ -22,15 +22,11 @@ const FIELDS = {
     OPTIONS: {
       YES: {
         VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.YES,
-        TEXT: 'Yes, I\'ve been turned down',
+        TEXT: 'Yes',
       },
       NO: {
         VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.NO,
-        TEXT: 'No, I\'ve been offered private insurance',
-      },
-      NOT_TRIED: {
-        VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.NOT_TRIED,
-        TEXT: 'I\'ve not tried',
+        TEXT: 'No',
       },
     },
     SUMMARY: {
