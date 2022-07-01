@@ -1,3 +1,4 @@
+const guidancePage = require('./guidance');
 const beforeYouStartPage = require('./beforeYouStart');
 const companyBasedPage = require('./companyBased');
 const buyerBasedPage = require('./buyerBased');
@@ -10,6 +11,7 @@ const cannotObtainCoverPage = require('./cannotObtainCover');
 const pageNotFoundPage = require('./pageNotFound');
 
 module.exports = {
+  guidancePage,
   beforeYouStartPage,
   companyBasedPage,
   buyerBasedPage,

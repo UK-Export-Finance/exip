@@ -3,6 +3,7 @@ const {
   post,
 } = require('../test-mocks/mock-router');
 const { ROUTES } = require('../constants');
+const guidanceController = require('../controllers/guidance');
 const beforeYouStartController = require('../controllers/before-you-start');
 const companyBasedController = require('../controllers/company-based');
 const buyerBasedController = require('../controllers/buyer-based');
@@ -24,8 +25,10 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(15);
+    expect(get).toHaveBeenCalledTimes(16);
     expect(post).toHaveBeenCalledTimes(12);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.GUIDANCE, guidanceController);
 
     expect(get).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.post);

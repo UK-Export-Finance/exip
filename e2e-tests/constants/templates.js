@@ -1,4 +1,5 @@
 const TEMPLATES = {
+  GUIDANCE: 'guidance.njk',
   BEFORE_YOU_START: 'before-you-start.njk',
   COMPANY_BASED: 'company-based.njk',
   BUYER_BASED: 'buyer-based.njk',

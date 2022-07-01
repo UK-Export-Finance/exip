@@ -1,0 +1,536 @@
+{% extends 'index.njk' %}
+{% from 'govuk/components/inset-text/macro.njk' import govukInsetText %}
+
+{% block pageTitle %}
+  Guidance - Export Insurance Policy
+{% endblock %}
+
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <span class="govuk-caption-xl">Guidance</span>
+      <h1 class="govuk-heading-l" data-cy="heading">Export Insurance Policy</h1>
+
+      <p class="govuk-body-l">Find out about government export insurance: what it covers, eligibility, how to apply and how to claim.</p>
+
+
+      <p class="govuk-body govuk-!-margin-bottom-1">From: <strong>UK Export Finance</strong></p>
+      <p class="govuk-body govuk-!-margin-bottom-1">Published 26 April 2013</p>
+      <p class="govuk-body">Last updated 20 June 2022</p>
+      
+
+      <p class="govuk-body">Contents</p>
+
+      <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-8">
+        <li>
+          <a class="govuk-link" href="#what-it-covers">What it covers</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#eligibility">Eligibility</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#buyer-countries">Which buyer countries are covered</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#type-of-exports">Type of exports covered</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#how-many-buyers">How many buyers you can insure</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#length-of-cover">Length of cover</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#what-it-costs">What it costs</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#how-to-apply">How to apply</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#how-to-pay">How to pay</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#changes-to-report">Changes you need to report</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#new-export-sale-multiple-policy">How to declare a new export sale under a multiple contact policy</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#amending-your-policy">Amending your policy</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#make-a-claim">How to make a claim</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#how-to-renew">How to renew</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#how-to-end-policy">How to end your policy</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#commission-for-brokers">Commission for brokers</a>
+        </li>
+        <li>
+          <a class="govuk-link" href="#help-and-support">Help and support</a>
+        </li>
+      </ul>
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <p class="govuk-body">This guidance is for exporters and brokers who've been unable to get export credit insurance from the private sector.</p>
+
+        <p class="govuk-body">You may be able to get this insurance instead from UK Export Finance (UKEF), the government's export credit agency.</p>
+
+      </div>
+
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h2 class="govuk-heading-m" id="what-it-covers">What it covers</h2>
+
+        <p class="govuk-body">UKEF can insure you for up to 95% of money lost under an export contract.</p>
+
+        <p class="govuk-body">For example, if:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>the buyer fails to pay, for example, because they become insolvent</li>
+          <li>the contract is terminated early before goods are shipped</li>
+          <li>the export cannot be completed due to political events, such as new import restrictions or outbreak of war</li>
+        </ul>
+
+        <p class="govuk-body">It may help when you cannot get insurance from the private sector. For example, if you're dealing in:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>small value exports</li>
+          <li>exports to a single buyer</li>
+          <li>high-risk markets</li>
+          <li>emerging markets</li>
+        </ul>
+
+
+        <h3 class="govuk-heading-s">What's not covered</h3>
+
+        <p class="govuk-body">It does not cover certain losses.  For example if you lose money due to:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>problems during transport or shipping</li>
+          <li>non-payment because of an unresolved dispute between you and the buyer</li>
+        </ul>
+
+        <p class="govuk-body">(You'll usually need to resolve any dispute or get a <a class="govuk-link" href="#ongoing-dispute">judgment</a> in your favour before a claim can be considered.</p>
+
+      </div>
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="eligibility">Eligibility</h3>
+
+        <p class="govuk-body">You must meet the following conditions:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>you're exporting from the UK and have an established business base here</li>
+          <li>your buyer is based overseas <a class="govuk-link" href="#buyer-countries">in a country that UKEF covers</a></li>
+          <li>you've tried but are unable to get export insurance from the private sector</li>
+          <li>you have the relevant export licences for your goods</li>
+          <li>at least 20% of the value of your export comes from UK goods or services (the value can include your profit margin)</li>
+        </ul>
+
+        <p class="govuk-body">You can do a basic eligibility check and get a quote. You can do this:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a class="govuk-link" href="/before-you-start" data-cy="eligibility-get-a-quote-online">online</a>, if you need cover up to 9 months</li>
+          <li><a class="govuk-link" href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1041659/export-insurance-non-binding-indication-request-form_20170609.pdf">by filling in a form</a> for cover over 9 months</li>
+        </ul>
+
+        <p class="govuk-body">If you go on to make a full application, underwriters will do a full eligibility check on your business, buyer and exports.</p>
+
+      </div>
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="how-many-buyers">How many buyers you can insure</h3>
+
+        <p class="govuk-body">A policy will cover you for exports to one buyer.</p>
+
+        <p class="govuk-body">This can be for:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>a single export contract with that buyer (with one or more shipments)</li>
+          <li>multiple export sales or contracts with the same buyer</li>
+        </ul>
+
+        {{ govukInsetText({
+          text: "You need a separate policy for each buyer you want to insure."
+        }) }}
+
+        <p class="govuk-body">There are no minimum or maximum amounts that can be covered.</p>
+
+        <p class="govuk-body">You do not have to insure the full value of your export. You can choose to insure only a proportion of the value.</p>
+
+        <p class="govuk-body">You can view <a class="govuk-link" href="https://www.gov.uk/government/publications/export-insurance-policy-a-guide-for-brokers">sample policies</a> to decide whether UKEF export insurance is suitable for your export.</p>
+
+      </div>
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="length-of-cover">Length of cover</h3>
+
+        <p class="govuk-body">For a single export contract policy, you can usually get cover up to 2 years.</p>
+
+        <p class="govuk-body">For a multiple export contract policy, you can usually get cover up to 12 months.</p>
+
+        <p class="govuk-body">You can request a longer period for either policy. UKEF will consider this on a case by case basis.</p>
+
+      </div>
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="buyer-countries">Which buyer countries are covered</h3>
+
+        <p class="govuk-body">UKEF provides cover based on your buyer and the country they're located in. </p>
+        
+        <p class="govuk-body">Cover is not based on the country the goods or services are being exported to.</p>
+
+        <p class="govuk-body">You can check which countries are covered by using the <a class="govuk-link" href="/before-you-start" data-cy="buyer-countries-get-a-quote-online">'Get a quote' service</a>.</p>
+
+        <p class="govuk-body">Exports to buyers in these countries cannot be covered:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>all EU member states
+          <li>Australia</li>
+          <li>Canada</li>
+          <li>Iceland</li>
+          <li>Japan</li>
+          <li>New Zealand</li>
+          <li>Norway</li>
+          <li>Switzerland</li>
+          <li>USA</li>
+        </ul>
+
+        {{ govukInsetText({
+          text: "UKEF cannot cover any buyer if they're on a UK sanctions list."
+        }) }}
+
+        <h3 class="govuk-heading-s">If your buyer is a UK company with overseas subsidiaries</h3>
+
+        <p class="govuk-body">UKEF may be able to offer insurance for exports from the UK to the overseas subsidiary but only for losses caused by political events.</p>
+
+        <p class="govuk-body">It would not cover any other losses.</p>
+
+      </div>
+
+
+      <div class="govuk-!-margin-bottom-8">
+        <h3 class="govuk-heading-m" id="type-of-exports">Type of exports covered</h3>
+
+        <p class="govuk-body">UKEF covers most types of business and sectors, as long as you have the relevant export licences.</p>
+
+        <p class="govuk-body">You cannot get cover for exports related to these sectors:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+        <li>fossil fuel, for example, oil and gas extraction</li>
+        <li>sharp arms defence</li>
+        <li>nuclear</li>
+        <li>radiological</li>
+        <li>biological</li>
+        <li>human cloning</li>
+        <li>pornography</li>
+        <li>gambling</li>
+        <li>tobacco</li>
+        </ul>
+
+        <p class="govuk-body">If you're exporting in a "high carbon" sector, you may be able to get cover. However, UKEF will need to carry out extra checks.</p>
+
+      </div>
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="what-it-costs">What it costs<h3>
+
+        <p class="govuk-body">For policies up to 9 months, <a class="govuk-link" href="/before-you-start" data-cy="what-it-costs-get-a-quote-online">you can get a quote online</a>.</p>
+        
+        <p class="govuk-body">For more than 9 months, <a class="govuk-link" href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1041659/export-insurance-non-binding-indication-request-form_20170609.pdf">fill in this form</a> and email to UKEF to get a quote.</p>
+
+        <p class="govuk-body">Cost depends on:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>what's being insured</li>
+          <li>length of cover</li>
+          <li>your buyer and where they're based</li>
+        </ul>
+
+      </div>
+
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="how-to-apply">How to apply</h3>
+
+        <ol class="govuk-list govuk-list--number">
+          <li>If <a class="govuk-link" href="#eligibility">you're eligible</a>, you can make a full application.  It's free to apply.</li>
+          <li>Underwriters will review your application and carry out a full eligibility and price check. They'll assess your company finances and the buyer risk. </li>
+          <li>They'll let you know if UKEF can provide cover. It usually takes about 2 weeks to hear back.</li>
+        </ol>
+
+
+        <h3 class="govuk-heading-s">If UKEF accepts your application</h3>
+
+        <p class="govuk-body">You'll get a reply by email with a formal offer of cover and payment schedule.</p>
+
+        <p class="govuk-body">Cover is in place when:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>you've signed and returned the policy to UKEF</li>
+          <li>UKEF has countersigned</li>
+          <li>you've paid your premium</li>
+          <li>you've declared any export sales (multiple contract policy only)</li>
+        </ul>
+
+      </div>
+
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="how-to-pay">How to pay</h3>
+
+        <p class="govuk-body">Account details for payment are included in the policy.</p>
+
+        <p class="govuk-body">You can pay for the insurance in:</p>
+
+        <ol class="govuk-list govuk-list--number">
+          <li>Pounds sterling</li>
+          <li>US dollars</li>
+          <li>Euro</li>
+        </ol>
+
+        <h3 class="govuk-heading-s">Single contract policies</h3>
+        
+        <p class="govuk-body">You should pay the premium shown on the schedule at the same time you accept the policy.</p>
+
+        <h3 class="govuk-heading-s">Multiple contract policies</h3>
+
+        <p class="govuk-body">These cover repeat business with the same buyer, usually over 12 months.</p>
+        
+        <p class="govuk-body">You must:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a class="govuk-link" href="#new-export-sale-multiple-policy">declare each new export</a> sale to UKEF separately</li>
+          <li>calculate the premium due by checking the premium rate on your policy schedule</li>
+        </ul>
+
+        <p class="govuk-body">You must pay:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>within 14 day of each new declaration</li>
+          <li>before the goods are dispatched or the services are carried out</li>
+        </ul>
+
+        <h3 class="govuk-heading-s">Late payments</h3>
+
+        <p class="govuk-body">UKEF recognises that buyers may pay you late.</p>
+
+        <p class="govuk-body">You must tell UKEF:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>if you're going to be late paying your premium</li>
+          <li>within 30 days of the due date of any payment missed</li>
+        </ul>
+
+        {{ govukInsetText({
+          text: "UKEF does not send out invoices asking for payment"
+        }) }}
+
+      </div>
+
+
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="changes-to-report">Changes you need to report</h3>
+
+        <p class="govuk-body">You must tell UKEF if:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>you make changes to your export contract, such as changing the goods supplied or new payment terms</li>
+          <li>you become aware the buyer is not going to pay - you must tell UKEF within 15 days of becoming aware</li>
+          <li>the buyer fails to pay within 30 days of a due date</li>
+          <li>there are changes to information you gave in your application,  which would now make you ineligible</li>
+        </ul>
+
+        <p class="govuk-body">If you do not tell UKEF about these changes, it may invalidate your insurance.</p>
+        
+        <p class="govuk-body">You may need written consent from UKEF if you're making changes to  the export contract or deal.</p>
+
+        <p class="govuk-body">Tell UKEF about changes by emailing: <a class="govuk-link" href="mailto:exipunderwriting@ukexportfinance.gov.uk">exipunderwriting@ukexportfinance.gov.uk</a></p>
+
+        <p class="govuk-body">If you're not sure if you need to tell UKEF about a certain change, you can check using the same email address.</p>
+
+      </div>
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="new-export-sale-multiple-policy">How to declare a new export sale under a multiple contract policy</h3>
+
+        <p class="govuk-body">If you have a multiple contract policy, this will cover you for repeat exports to the same buyer, usually over 12 months.</p>
+
+        <p class="govuk-body">You must declare each new export sale before you make the shipment.</p>
+
+        <p class="govuk-body">Complete the <a class="govuk-link" href="#">declaration form</a> each time. You can also find this form at the back of your multiple contract policy.</p>
+
+        <p class="govuk-body">Email this to: <a class="govuk-link" href="mailto:stb.pim@ukexportfinance.gov.uk">stb.pim@ukexportfinance.gov.uk</a>.</p>
+
+      </div>
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="amending-your-policy">Amending your policy</h3>
+
+        <p class="govuk-body">You can request changes to your policy during the period of cover. For example, you can ask UKEF to increase your insured amount.</p>
+
+        <p class="govuk-body">Contact <a class="govuk-link" href="#help-and-support">your broker or export finance manager</a> to discuss this.</p>
+
+      </div>
+
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="make-a-claim">How to make a claim</h3>
+
+        <p class="govuk-body">You can submit a claim if:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>you've lost money owed under the export contract</li>
+          <li>it's been at least 6 months since the money was due (earlier if the buyer has become insolvent)</li>
+        </ul>
+
+        <p class="govuk-body">! You should tell UKEF if you intend to make a claim, as soon as possible. Do not wait 6 months to get in touch about this.</p>
+
+        <p class="govuk-body">You must try to recover the money you're owed and minimise the loss before you claim.</p>
+
+        <p class="govuk-body">If you cannot recover what you're owed, you can get a claim form by emailing <a class="govuk-link" href="mailto:stb.pim@ukexportfinance.gov.uk">stb.pim@ukexportfinance.gov.uk</a>.</p>
+
+        <p class="govuk-body">Send your completed claim form to this same email address.</p>
+
+        {{ govukInsetText({
+          text: "UKEF cannot accept claims submitted more than 12 months after the end date stated in your policy"
+        }) }}
+
+
+
+        <h3 class="govuk-heading-s">Excess fees</h3>
+
+        <p class="govuk-body">You do not pay any excess when making a claim on your insurance.</p>
+
+        <h3 class="govuk-heading-s" id="ongoing-dispute">If you have an ongoing dispute with your buyer</h3>
+
+        <p class="govuk-body">Before you can claim, you may need an arbitration award or court judgment in your favour, if there's a dispute between you and the buyer about the amount you're owed.</p>
+
+        <p class="govuk-body">An arbitration award or court judgment may reduce the waiting period of 6 months. And if so, you may be able to claim earlier.</p>
+
+      </div>
+
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="how-to-renew">How to renew</h3>
+
+        <p class="govuk-body">The insurance does not automatically renew.</p>
+
+        <p class="govuk-body">If you need further cover and still cannot get this from the private sector, you'll need to make a new application.</p>
+
+      </div>
+
+
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="how-to-end-policy">How to end your policy</h3>
+
+        <p class="govuk-body">You should tell UKEF by emailing <a class="govuk-link" href="mailto:stb.pim@ukexportfinance.gov.uk">stb.pim@ukexportfinance.gov.uk</a>.</p>
+
+        <p class="govuk-body">If you no longer want to use a multiple contract policy, you should also stop declaring new export sales.</p>
+
+        {{ govukInsetText({
+          text: "You cannot get a refund on any premiums you've already paid."
+        }) }}
+
+      </div>
+
+
+      <div class="govuk-!-margin-bottom-8">
+
+        <h3 class="govuk-heading-m" id="commission-for-brokers">Commission for brokers</h3>
+
+        <p class="govuk-body">UKEF pays a commission to brokers of 15% for any successful policies, up to a maximum of £25,000.</p>
+
+        <p class="govuk-body">This is at no extra cost to the exporter. UKEF pays the commission out of the exporter's premium.</p>
+
+        <p class="govuk-body">Commission is for broking services given to the exporter including:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>advice on the credit insurance market</li>
+          <li>UKEF's export insurance</li>
+          <li>continuing support during the life of the policy</li>
+        </ul>
+
+        <p class="govuk-body">UKEF pays the commission when it's received payment from the exporter.</p>
+
+        <p class="govuk-body">On a multiple contract policy, UKEF will pay commission each time the exporter pays their premium for a new export sale.</p>
+
+        <p class="govuk-body">UKEF does not pay fees for introductions.</p>
+
+      </div>
+
+      <h3 class="govuk-heading-m" id="help-and-support">Help and support</h3>
+
+
+      <p class="govuk-body">You can get free help from export finance managers or brokers if you:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>have questions about export insurance or eligibility</li>
+        <li>need support with the application process</li>
+      </ul>
+
+      <h3 class="govuk-heading-s">Export finance managers</h3>
+
+      <p class="govuk-body">They work for UKEF and are available in every region in the UK.</p>
+
+      <p class="govuk-body"><a class="govuk-link" href="https://www.gov.uk/government/publications/find-an-export-finance-manager">Find your nearest export finance manager</a>.</p>
+
+      <h3 class="govuk-heading-s">Brokers</h3>
+
+      <p class="govuk-body">They act as an agent between you and UKEF.</p>
+
+      <p class="govuk-body">They can also help arrange insurance from companies in the private sector, if you've not tried  that already.</p>
+
+      <p class="govuk-body">They receive a 15% fee for providing any successful UKEF policies at no extra cost to you. UKEF will pay their fee out of the premium you pay.</p>
+
+      <p class="govuk-body">Use <a class="govuk-link" href="https://www.gov.uk/government/publications/uk-export-finance-insurance-list-of-approved-brokers">our approved broker list</a> to find a broker to help you.</p>
+
+
+    </div>
+  </div>
+
+  <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
+
+  <p class="govuk-body govuk-!-margin-bottom-1">Published 26th April 2013</p>
+  <p class="govuk-body">Last updated 20 June 2022</p>
+
+{% endblock %}
