@@ -57,13 +57,17 @@ const generateFieldGroups = (submittedData) => {
         ID: SINGLE_POLICY_TYPE,
         ...FIELDS[SINGLE_POLICY_TYPE],
         CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-        value: submittedData[SINGLE_POLICY_TYPE],
+        value: {
+          text: submittedData[SINGLE_POLICY_TYPE].text,
+        },
       },
       {
         ID: SINGLE_POLICY_LENGTH,
         ...FIELDS[SINGLE_POLICY_LENGTH],
         CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-        value: submittedData[SINGLE_POLICY_LENGTH],
+        value: {
+          text: submittedData[SINGLE_POLICY_LENGTH].text,
+        },
       },
     ];
   }
@@ -75,13 +79,17 @@ const generateFieldGroups = (submittedData) => {
         ID: MULTI_POLICY_TYPE,
         ...FIELDS[MULTI_POLICY_TYPE],
         CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-        value: submittedData[MULTI_POLICY_TYPE],
+        value: {
+          text: submittedData[MULTI_POLICY_TYPE].text,
+        },
       },
       {
         ID: MULTI_POLICY_LENGTH,
         ...FIELDS[MULTI_POLICY_LENGTH],
         CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-        value: submittedData[MULTI_POLICY_LENGTH],
+        value: {
+          text: submittedData[MULTI_POLICY_LENGTH].text,
+        },
       },
     ];
   }
@@ -93,7 +101,9 @@ const generateFieldGroups = (submittedData) => {
         ID: PRE_CREDIT_PERIOD,
         ...FIELDS[PRE_CREDIT_PERIOD],
         CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-        value: submittedData[PRE_CREDIT_PERIOD],
+        value: {
+          text: submittedData[PRE_CREDIT_PERIOD].text,
+        },
       },
     ];
   }
@@ -113,7 +123,7 @@ const generateSummaryListRows = (fields) =>
       classes: `${field.ID}-key`,
     },
     value: {
-      text: field.value,
+      text: field.value.text,
       classes: `${field.ID}-value`,
     },
     actions: {

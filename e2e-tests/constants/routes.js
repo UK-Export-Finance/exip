@@ -20,7 +20,9 @@ const ROUTES = {
 
   CANNOT_OBTAIN_COVER: '/cannot-obtain-cover',
 
-  PREMIUM_QUOTE: '/premium-quote',
+  YOUR_QUOTE: '/your-quote',
+  FEEDBACK: '/feedback',
+
   PROBLEM_WITH_SERVICE: '/problem-with-service',
 };
 

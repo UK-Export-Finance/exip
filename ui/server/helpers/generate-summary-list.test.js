@@ -3,6 +3,7 @@ const {
   generateSummaryListRows,
   generateSummaryList,
 } = require('./generate-summary-list');
+const { mapAnswersToContent } = require('./data-content-mappings/map-answers-to-content');
 const {
   PAGES,
   FIELDS,
@@ -17,7 +18,6 @@ const {
 const { mockAnswers } = require('../test-mocks');
 
 const {
-  POLICY_TYPE,
   SINGLE_POLICY_TYPE,
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -36,25 +36,32 @@ describe('sever/helpers/generate-summary-list', () => {
 
   describe('generateFieldGroups', () => {
     it('should map over each field group with value from submittedData', () => {
-      const mockAnswersNoPolicyType = mockAnswers;
-      delete mockAnswersNoPolicyType[POLICY_TYPE];
-      delete mockAnswersNoPolicyType[PRE_CREDIT_PERIOD];
+      const mockAnswersContent = mapAnswersToContent(mockAnswers);
+      delete mockAnswersContent[SINGLE_POLICY_TYPE];
+      delete mockAnswersContent[SINGLE_POLICY_LENGTH];
+      delete mockAnswersContent[PRE_CREDIT_PERIOD];
 
-      const result = generateFieldGroups(mockAnswersNoPolicyType);
+      const result = generateFieldGroups(mockAnswersContent);
       const fieldGroups = FIELD_GROUPS;
 
       const expected = {
         COMPANY_DETAILS: fieldGroups.COMPANY_DETAILS.map((field) => ({
           ...field,
-          value: mockAnswers[field.ID],
+          value: {
+            text: mockAnswersContent[field.ID].text,
+          },
         })),
         EXPORT_DETAILS: fieldGroups.EXPORT_DETAILS.map((field) => ({
           ...field,
-          value: mockAnswers[field.ID],
+          value: {
+            text: mockAnswersContent[field.ID].text,
+          },
         })),
         DEAL_DETAILS: fieldGroups.DEAL_DETAILS.map((field) => ({
           ...field,
-          value: mockAnswers[field.ID],
+          value: {
+            text: mockAnswersContent[field.ID].text,
+          },
         })),
       };
 
@@ -63,12 +70,16 @@ describe('sever/helpers/generate-summary-list', () => {
 
     describe('when policy type is single', () => {
       it(`should add a ${SINGLE_POLICY_TYPE} object to DEAL_DETAILS`, () => {
-        const mockAnswersSinglePolicyType = {
-          ...mockAnswers,
-          [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+        const mockAnswersContent = {
+          ...mapAnswersToContent(mockAnswers),
+          [SINGLE_POLICY_TYPE]: {
+            text: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          },
         };
 
-        const result = generateFieldGroups(mockAnswersSinglePolicyType);
+        delete mockAnswersContent[PRE_CREDIT_PERIOD];
+
+        const result = generateFieldGroups(mockAnswersContent);
 
         const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 2];
 
@@ -76,19 +87,26 @@ describe('sever/helpers/generate-summary-list', () => {
           ID: SINGLE_POLICY_TYPE,
           ...FIELDS[SINGLE_POLICY_TYPE],
           CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-          value: mockAnswersSinglePolicyType[SINGLE_POLICY_TYPE],
+          value: {
+            text: mockAnswersContent[SINGLE_POLICY_TYPE].text,
+          },
         };
 
         expect(expectedField).toEqual(expected);
       });
 
       it(`should add a ${SINGLE_POLICY_LENGTH} object to DEAL_DETAILS`, () => {
-        const mockAnswersSinglePolicyType = {
+        const mockAnswersContent = {
+          ...mapAnswersToContent(mockAnswers),
           ...mockAnswers,
-          [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          [SINGLE_POLICY_TYPE]: {
+            text: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          },
         };
 
-        const result = generateFieldGroups(mockAnswersSinglePolicyType);
+        delete mockAnswersContent[PRE_CREDIT_PERIOD];
+
+        const result = generateFieldGroups(mockAnswersContent);
 
         const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 1];
 
@@ -96,7 +114,9 @@ describe('sever/helpers/generate-summary-list', () => {
           ID: SINGLE_POLICY_LENGTH,
           ...FIELDS[SINGLE_POLICY_LENGTH],
           CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-          value: mockAnswersSinglePolicyType[SINGLE_POLICY_LENGTH],
+          value: {
+            text: mockAnswersContent[SINGLE_POLICY_LENGTH].text,
+          },
         };
 
         expect(expectedField).toEqual(expected);
@@ -105,12 +125,20 @@ describe('sever/helpers/generate-summary-list', () => {
 
     describe('when policy type is multi', () => {
       it(`should add a ${MULTI_POLICY_TYPE} object to DEAL_DETAILS`, () => {
-        const mockAnswersMultiPolicyType = {
-          ...mockAnswers,
-          [MULTI_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+        const mockAnswersContent = {
+          ...mapAnswersToContent(mockAnswers),
+          [MULTI_POLICY_TYPE]: {
+            text: FIELD_VALUES.POLICY_TYPE.MULTI,
+          },
+          [MULTI_POLICY_LENGTH]: {
+            text: 2,
+          },
         };
 
-        const result = generateFieldGroups(mockAnswersMultiPolicyType);
+        delete mockAnswersContent[SINGLE_POLICY_TYPE];
+        delete mockAnswersContent[PRE_CREDIT_PERIOD];
+
+        const result = generateFieldGroups(mockAnswersContent);
 
         const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 2];
 
@@ -118,19 +146,29 @@ describe('sever/helpers/generate-summary-list', () => {
           ID: MULTI_POLICY_TYPE,
           ...FIELDS[MULTI_POLICY_TYPE],
           CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-          value: mockAnswersMultiPolicyType[MULTI_POLICY_TYPE],
+          value: {
+            text: mockAnswersContent[MULTI_POLICY_TYPE].text,
+          },
         };
 
         expect(expectedField).toEqual(expected);
       });
 
       it(`should add a ${MULTI_POLICY_LENGTH} object to DEAL_DETAILS with single policy length field values`, () => {
-        const mockAnswersMultiPolicyType = {
-          ...mockAnswers,
-          [MULTI_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+        const mockAnswersContent = {
+          ...mapAnswersToContent(mockAnswers),
+          [MULTI_POLICY_TYPE]: {
+            text: FIELD_VALUES.POLICY_TYPE.MULTI,
+          },
+          [MULTI_POLICY_LENGTH]: {
+            text: 2,
+          },
         };
 
-        const result = generateFieldGroups(mockAnswersMultiPolicyType);
+        delete mockAnswersContent[SINGLE_POLICY_TYPE];
+        delete mockAnswersContent[PRE_CREDIT_PERIOD];
+
+        const result = generateFieldGroups(mockAnswersContent);
 
         const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 1];
 
@@ -138,7 +176,9 @@ describe('sever/helpers/generate-summary-list', () => {
           ID: MULTI_POLICY_LENGTH,
           ...FIELDS[MULTI_POLICY_LENGTH],
           CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-          value: mockAnswersMultiPolicyType[MULTI_POLICY_LENGTH],
+          value: {
+            text: mockAnswersContent[MULTI_POLICY_LENGTH].text,
+          },
         };
 
         expect(expectedField).toEqual(expected);
@@ -147,12 +187,14 @@ describe('sever/helpers/generate-summary-list', () => {
 
     describe(`when ${PRE_CREDIT_PERIOD} is in submittedData`, () => {
       it(`should add a ${PRE_CREDIT_PERIOD} object to DEAL_DETAILS`, () => {
-        const mockAnswersPreCreditPeriod = {
-          ...mockAnswers,
-          [PRE_CREDIT_PERIOD]: 1,
+        const mockAnswersContent = {
+          ...mapAnswersToContent(mockAnswers),
+          [PRE_CREDIT_PERIOD]: {
+            text: 1,
+          },
         };
 
-        const result = generateFieldGroups(mockAnswersPreCreditPeriod);
+        const result = generateFieldGroups(mockAnswersContent);
 
         const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 1];
 
@@ -160,7 +202,9 @@ describe('sever/helpers/generate-summary-list', () => {
           ID: PRE_CREDIT_PERIOD,
           ...FIELDS[PRE_CREDIT_PERIOD],
           CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-          value: mockAnswersPreCreditPeriod[PRE_CREDIT_PERIOD],
+          value: {
+            text: mockAnswersContent[PRE_CREDIT_PERIOD].text,
+          },
         };
 
         expect(expectedField).toEqual(expected);
@@ -183,7 +227,7 @@ describe('sever/helpers/generate-summary-list', () => {
           classes: `${field.ID}-key`,
         },
         value: {
-          text: mockAnswers[field.ID],
+          text: mockAnswers[field.ID].text,
           classes: `${field.ID}-value`,
         },
         actions: {
@@ -209,9 +253,11 @@ describe('sever/helpers/generate-summary-list', () => {
 
   describe('generateSummaryList', () => {
     it('should return an object with multiple summary lists', () => {
-      const fieldGroups = generateFieldGroups(mockAnswers);
+      const mockAnswersContent = mapAnswersToContent(mockAnswers);
 
-      const result = generateSummaryList(mockAnswers);
+      const fieldGroups = generateFieldGroups(mockAnswersContent);
+
+      const result = generateSummaryList(mockAnswersContent);
 
       const expected = {
         COMPANY: {

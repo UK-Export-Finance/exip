@@ -1,8 +1,9 @@
 {
   "baseUrl": "http://localhost:5000",
   "testFiles": "**/*.spec.js",
-  "projectId": "exip",
+  "projectId": "sefntb",
   "numTestsKeptInMemory": 1,
   "basicAuthKey": "dev",
-  "basicAuthSecret": "test"
+  "basicAuthSecret": "test",
+  "chromeWebSecurity": false
 }

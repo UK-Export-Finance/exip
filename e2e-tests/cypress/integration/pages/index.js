@@ -5,6 +5,7 @@ const triedToObtainCoverPage = require('./triedToObtainCover');
 const ukContentPercentagePage = require('./ukContentPercentage');
 const tellUsAboutYourDealPage = require('./tellUsAboutYourDeal');
 const checkYourAnswersPage = require('./checkYourAnswers');
+const yourQuotePage = require('./yourQuote');
 const cannotObtainCoverPage = require('./cannotObtainCover');
 const pageNotFoundPage = require('./pageNotFound');
 
@@ -16,6 +17,7 @@ module.exports = {
   ukContentPercentagePage,
   tellUsAboutYourDealPage,
   checkYourAnswersPage,
+  yourQuotePage,
   cannotObtainCoverPage,
   pageNotFoundPage,
 };

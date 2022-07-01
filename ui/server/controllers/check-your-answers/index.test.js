@@ -1,7 +1,7 @@
 const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
 const { ROUTES, TEMPLATES, FIELD_IDS } = require('../../constants');
-const { mapAnswersToContent } = require('../../helpers/map-answers-to-content');
+const { mapAnswersToContent } = require('../../helpers/data-content-mappings/map-answers-to-content');
 const { generateSummaryList } = require('../../helpers/generate-summary-list');
 
 const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
@@ -76,10 +76,10 @@ describe('controllers/check-your-answers', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${ROUTES.PREMIUM_QUOTE}`, () => {
+    it(`should redirect to ${ROUTES.YOUR_QUOTE}`, () => {
       controller.post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.PREMIUM_QUOTE);
+      expect(res.redirect).toHaveBeenCalledWith(ROUTES.YOUR_QUOTE);
     });
   });
 });

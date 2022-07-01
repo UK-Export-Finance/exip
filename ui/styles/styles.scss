@@ -2,3 +2,13 @@ $govuk-new-link-styles: true;
 
 @import "node_modules/govuk-frontend/govuk/all";
 @import "./accessible-autocomplete.min.scss";
+
+.ukef-white-text {
+  color: govuk-colour('white');
+  &:link {
+    color: govuk-colour('white');
+  }
+  &:visited {
+    color: govuk-colour('white');
+  }
+}

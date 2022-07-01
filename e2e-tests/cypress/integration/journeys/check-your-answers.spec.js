@@ -47,6 +47,7 @@ context('Check your answers page', () => {
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
+    Cypress.Cookies.preserveOnce('connect.sid');
   });
 
   it('passes the audits', () => {
@@ -339,10 +340,10 @@ context('Check your answers page', () => {
   });
 
   context('form submission', () => {
-    it(`should redirect to ${ROUTES.PREMIUM_QUOTE}`, () => {
+    it(`should redirect to ${ROUTES.YOUR_QUOTE}`, () => {
       checkYourAnswersPage.submitButton().click();
 
-      cy.url().should('include', ROUTES.PREMIUM_QUOTE);
+      cy.url().should('include', ROUTES.YOUR_QUOTE);
     });
   });
 });

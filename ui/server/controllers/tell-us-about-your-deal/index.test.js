@@ -139,7 +139,6 @@ describe('controllers/buyer-based', () => {
 
     beforeEach(() => {
       api.getCurrencies = getCurrenciesSpy;
-      // req.body = {};
     });
 
     describe('when a currency code has been submitted', () => {

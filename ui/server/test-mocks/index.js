@@ -1,5 +1,6 @@
 const mockAnswers = require('./mock-answers');
 const mockSession = require('./mock-session');
+const mockQuote = require('./mock-quote');
 
 const mockReq = () => ({
   session: {},
@@ -24,4 +25,5 @@ module.exports = {
   mockRes,
   mockAnswers,
   mockSession,
+  mockQuote,
 };
