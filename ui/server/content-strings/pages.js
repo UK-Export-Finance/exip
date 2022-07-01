@@ -111,13 +111,13 @@ const CANNOT_OBTAIN_COVER_PAGE = {
       TEXT: 'read about',
       LINK: {
         TEXT: 'eligibility',
-        HREF: '#',
+        HREF: '/#eligibility',
       },
     },
     CONTACT_APPROVED_BROKER: {
       LINK: {
         TEXT: 'contact an approved broker',
-        HREF: '#',
+        HREF: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
       },
       TEXT: 'who may be able to help you get insurance from the private sector, if you`ve not tried already',
     },
