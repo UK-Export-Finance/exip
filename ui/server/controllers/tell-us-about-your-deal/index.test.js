@@ -59,10 +59,6 @@ describe('controllers/buyer-based', () => {
             ID: FIELD_IDS.AMOUNT,
             ...CONTENT_STRINGS.FIELDS[FIELD_IDS.AMOUNT],
           },
-          PRE_CREDIT_PERIOD: {
-            ID: FIELD_IDS.PRE_CREDIT_PERIOD,
-            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.PRE_CREDIT_PERIOD],
-          },
           CREDIT_PERIOD: {
             ID: FIELD_IDS.CREDIT_PERIOD,
             ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_PERIOD],
@@ -184,7 +180,6 @@ describe('controllers/buyer-based', () => {
         [FIELD_IDS.CURRENCY]: mockAnswers[FIELD_IDS.CURRENCY],
         [FIELD_IDS.AMOUNT]: '10',
         [FIELD_IDS.CREDIT_PERIOD]: '30',
-        [FIELD_IDS.PRE_CREDIT_PERIOD]: '20',
         [FIELD_IDS.POLICY_LENGTH]: '40',
         [FIELD_IDS.POLICY_TYPE]: 'mock',
       };

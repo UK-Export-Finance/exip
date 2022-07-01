@@ -15,7 +15,6 @@ const {
   UK_CONTENT_PERCENTAGE,
   CURRENCY,
   AMOUNT,
-  PRE_CREDIT_PERIOD,
   CREDIT_PERIOD,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
@@ -25,14 +24,6 @@ const {
 const mapCurrency = (currencyObj) => {
   if (currencyObj) {
     return `${currencyObj.name} (${currencyObj.isoCode})`;
-  }
-
-  return '-';
-};
-
-const mapPreCreditPeriod = (answer) => {
-  if (answer) {
-    return mapPeriodDays(answer);
   }
 
   return '-';
@@ -80,9 +71,6 @@ const mapAnswersToContent = (answers) => {
     [CURRENCY]: {
       text: mapCurrency(answers[CURRENCY]),
     },
-    [PRE_CREDIT_PERIOD]: {
-      text: mapPreCreditPeriod(answers[PRE_CREDIT_PERIOD]),
-    },
     [CREDIT_PERIOD]: {
       text: mapPeriodDays(answers[CREDIT_PERIOD]),
     },
@@ -95,7 +83,6 @@ const mapAnswersToContent = (answers) => {
 
 module.exports = {
   mapCurrency,
-  mapPreCreditPeriod,
   mapPolicyType,
   mapAnswersToContent,
 };

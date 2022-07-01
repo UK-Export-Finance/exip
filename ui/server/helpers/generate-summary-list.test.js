@@ -22,7 +22,6 @@ const {
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
-  PRE_CREDIT_PERIOD,
 } = FIELD_IDS;
 
 describe('sever/helpers/generate-summary-list', () => {
@@ -39,7 +38,6 @@ describe('sever/helpers/generate-summary-list', () => {
       const mockAnswersContent = mapAnswersToContent(mockAnswers);
       delete mockAnswersContent[SINGLE_POLICY_TYPE];
       delete mockAnswersContent[SINGLE_POLICY_LENGTH];
-      delete mockAnswersContent[PRE_CREDIT_PERIOD];
 
       const result = generateFieldGroups(mockAnswersContent);
       const fieldGroups = FIELD_GROUPS;
@@ -77,8 +75,6 @@ describe('sever/helpers/generate-summary-list', () => {
           },
         };
 
-        delete mockAnswersContent[PRE_CREDIT_PERIOD];
-
         const result = generateFieldGroups(mockAnswersContent);
 
         const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 2];
@@ -103,8 +99,6 @@ describe('sever/helpers/generate-summary-list', () => {
             text: FIELD_VALUES.POLICY_TYPE.SINGLE,
           },
         };
-
-        delete mockAnswersContent[PRE_CREDIT_PERIOD];
 
         const result = generateFieldGroups(mockAnswersContent);
 
@@ -136,7 +130,6 @@ describe('sever/helpers/generate-summary-list', () => {
         };
 
         delete mockAnswersContent[SINGLE_POLICY_TYPE];
-        delete mockAnswersContent[PRE_CREDIT_PERIOD];
 
         const result = generateFieldGroups(mockAnswersContent);
 
@@ -166,7 +159,6 @@ describe('sever/helpers/generate-summary-list', () => {
         };
 
         delete mockAnswersContent[SINGLE_POLICY_TYPE];
-        delete mockAnswersContent[PRE_CREDIT_PERIOD];
 
         const result = generateFieldGroups(mockAnswersContent);
 
@@ -178,32 +170,6 @@ describe('sever/helpers/generate-summary-list', () => {
           CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
           value: {
             text: mockAnswersContent[MULTI_POLICY_LENGTH].text,
-          },
-        };
-
-        expect(expectedField).toEqual(expected);
-      });
-    });
-
-    describe(`when ${PRE_CREDIT_PERIOD} is in submittedData`, () => {
-      it(`should add a ${PRE_CREDIT_PERIOD} object to DEAL_DETAILS`, () => {
-        const mockAnswersContent = {
-          ...mapAnswersToContent(mockAnswers),
-          [PRE_CREDIT_PERIOD]: {
-            text: 1,
-          },
-        };
-
-        const result = generateFieldGroups(mockAnswersContent);
-
-        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 1];
-
-        const expected = {
-          ID: PRE_CREDIT_PERIOD,
-          ...FIELDS[PRE_CREDIT_PERIOD],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-          value: {
-            text: mockAnswersContent[PRE_CREDIT_PERIOD].text,
           },
         };
 

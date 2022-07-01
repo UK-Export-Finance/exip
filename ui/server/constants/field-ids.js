@@ -7,7 +7,6 @@ const FIELD_IDS = {
   AMOUNT_CURRENCY: 'amountAndCurrency',
   CURRENCY: 'currency',
   AMOUNT: 'amount',
-  PRE_CREDIT_PERIOD: 'preCreditPeriodDays',
   CREDIT_PERIOD: 'creditPeriodDays',
   POLICY_TYPE: 'policyType',
   SINGLE_POLICY_TYPE: 'singlePolicyType',

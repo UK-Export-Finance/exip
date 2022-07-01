@@ -14,7 +14,6 @@ const {
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
-  PRE_CREDIT_PERIOD,
 } = FIELD_IDS;
 
 const {
@@ -89,20 +88,6 @@ const generateFieldGroups = (submittedData) => {
         CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
         value: {
           text: submittedData[MULTI_POLICY_LENGTH].text,
-        },
-      },
-    ];
-  }
-
-  if (submittedData[PRE_CREDIT_PERIOD]) {
-    fieldGroups.DEAL_DETAILS = [
-      ...fieldGroups.DEAL_DETAILS,
-      {
-        ID: PRE_CREDIT_PERIOD,
-        ...FIELDS[PRE_CREDIT_PERIOD],
-        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-        value: {
-          text: submittedData[PRE_CREDIT_PERIOD].text,
         },
       },
     ];

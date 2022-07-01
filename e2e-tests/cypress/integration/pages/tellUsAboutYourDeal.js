@@ -22,12 +22,6 @@ const tellUsAboutYourDealPage = {
     inputOption: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-input"] option`),
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-error-message"]`),
   },
-  [FIELD_IDS.PRE_CREDIT_PERIOD]: {
-    label: () => cy.get(`[data-cy="${FIELD_IDS.PRE_CREDIT_PERIOD}-label"]`),
-    hint: () => cy.get(`[data-cy="${FIELD_IDS.PRE_CREDIT_PERIOD}-hint"]`).first(),
-    input: () => cy.get(`[data-cy="${FIELD_IDS.PRE_CREDIT_PERIOD}-input"]`),
-    errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.PRE_CREDIT_PERIOD}-error-message"]`),
-  },
   [FIELD_IDS.CREDIT_PERIOD]: {
     label: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-label"]`),
     labelText: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-label"]`),

@@ -22,7 +22,6 @@ context('Check your answers page', () => {
     UK_CONTENT_PERCENTAGE,
     CURRENCY,
     AMOUNT,
-    PRE_CREDIT_PERIOD,
     CREDIT_PERIOD,
     SINGLE_POLICY_TYPE,
     SINGLE_POLICY_LENGTH,
@@ -33,7 +32,6 @@ context('Check your answers page', () => {
     [UK_CONTENT_PERCENTAGE]: '50',
     [CURRENCY]: 'GBP',
     [AMOUNT]: '100',
-    [PRE_CREDIT_PERIOD]: '1',
     [CREDIT_PERIOD]: '2',
     [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
     [SINGLE_POLICY_LENGTH]: '13',
@@ -312,29 +310,6 @@ context('Check your answers page', () => {
       });
 
       const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_LENGTH}`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
-    });
-
-    it('renders `Pre-credit period` key, value and change link', () => {
-      const row = list[PRE_CREDIT_PERIOD];
-      const expectedKeyText = FIELDS[PRE_CREDIT_PERIOD].SUMMARY.TITLE;
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
-
-      row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[PRE_CREDIT_PERIOD]} days`;
-
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
-
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${PRE_CREDIT_PERIOD}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });

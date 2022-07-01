@@ -1,6 +1,5 @@
 const {
   mapCurrency,
-  mapPreCreditPeriod,
   mapPolicyType,
   mapAnswersToContent,
 } = require('./map-answers-to-content');
@@ -22,7 +21,6 @@ const {
   UK_CONTENT_PERCENTAGE,
   CURRENCY,
   AMOUNT,
-  PRE_CREDIT_PERIOD,
   CREDIT_PERIOD,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
@@ -44,24 +42,6 @@ describe('sever/helpers/map-answers-to-content', () => {
     describe('when there is no object/values', () => {
       it('should return a dash', () => {
         const result = mapCurrency();
-
-        expect(result).toEqual('-');
-      });
-    });
-  });
-
-  describe('mapPreCreditPeriod', () => {
-    it('should return a formatted string', () => {
-      const result = mapPreCreditPeriod(20);
-
-      const expected = mapPeriodDays(20);
-
-      expect(result).toEqual(expected);
-    });
-
-    describe('when there is no value', () => {
-      it('should return a dash', () => {
-        const result = mapPreCreditPeriod();
 
         expect(result).toEqual('-');
       });
@@ -128,9 +108,6 @@ describe('sever/helpers/map-answers-to-content', () => {
         },
         [CURRENCY]: {
           text: mapCurrency(mockAnswers[CURRENCY]),
-        },
-        [PRE_CREDIT_PERIOD]: {
-          text: mapPreCreditPeriod(mockAnswers[PRE_CREDIT_PERIOD]),
         },
         [CREDIT_PERIOD]: {
           text: mapPeriodDays(mockAnswers[CREDIT_PERIOD]),

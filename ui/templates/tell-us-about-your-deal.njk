@@ -99,50 +99,6 @@
 
         {% endcall %}
 
-
-        {% call govukFieldset({
-          legend: {
-            text: FIELDS.PRE_CREDIT_PERIOD.LEGEND,
-            classes: "govuk-fieldset__legend--m"
-          }
-        }) %}
-
-          {{ govukInput({
-            label: {
-              attributes: {
-                'data-cy': FIELDS.PRE_CREDIT_PERIOD.ID + '-label'
-              },
-              text: FIELDS.PRE_CREDIT_PERIOD.LABEL
-            },
-            hint: {
-              html: "<div class='govuk-grid-row'><div class='govuk-grid-column-three-quarters-from-desktop'><span data-cy='" + FIELDS.PRE_CREDIT_PERIOD.ID + "-hint'>" + FIELDS.PRE_CREDIT_PERIOD.HINT + "</span></div></div>",
-              attributes: {
-                'data-cy': FIELDS.PRE_CREDIT_PERIOD.ID + '-hint'
-              }
-            },
-            classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
-            attributes: {
-              'data-cy': FIELDS.PRE_CREDIT_PERIOD.ID + '-input'
-            },
-            id: FIELDS.PRE_CREDIT_PERIOD.ID,
-            name: FIELDS.PRE_CREDIT_PERIOD.ID,
-            inputmode: "numeric",
-            pattern: "[0-9]*",
-            suffix: {
-              text: "days"
-            },
-            spellcheck: false,
-            errorMessage: validationErrors.errorList[FIELDS.PRE_CREDIT_PERIOD.ID]and {
-              text: validationErrors.errorList[FIELDS.PRE_CREDIT_PERIOD.ID].text,
-              attributes: {
-                "data-cy": FIELDS.PRE_CREDIT_PERIOD.ID + "-error-message"
-              }
-            },
-            value: submittedValues[FIELDS.PRE_CREDIT_PERIOD.ID]
-          }) }}
-
-        {% endcall %}
-
         {{ govukInput({
           label: {
             text: FIELDS.CREDIT_PERIOD.LABEL,

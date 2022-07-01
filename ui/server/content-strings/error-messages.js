@@ -16,11 +16,6 @@ const ERROR_MESSAGES = {
     NOT_A_NUMBER: 'Maximum amount must be a number',
     BELOW_MINIMUM: 'Maximum amount must be 1 or more',
   },
-  [FIELD_IDS.PRE_CREDIT_PERIOD]: {
-    NOT_A_NUMBER: 'Pre-credit period must be a number',
-    NOT_A_WHOLE_NUMBER: 'Pre-credit period must be a whole number, like 10 - you cannot enter decimal points',
-    BELOW_MINIMUM: 'Pre-credit period must be 0 months or more',
-  },
   [FIELD_IDS.CREDIT_PERIOD]: {
     IS_EMPTY: 'Enter how many days credit you extend to your buyer',
     NOT_A_NUMBER: 'Credit period must be a number',

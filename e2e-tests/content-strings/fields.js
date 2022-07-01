@@ -56,14 +56,6 @@ const FIELDS = {
       TITLE: 'Maximum amount owed',
     },
   },
-  [FIELD_IDS.PRE_CREDIT_PERIOD]: {
-    LEGEND: 'Enter any pre-credit period cover you need (optional)',
-    LABEL: 'Pre-credit period',
-    HINT: 'A pre-credit period insures you for costs you\'ll incur in this export contract before you supply goods or services to your buyer.',
-    SUMMARY: {
-      TITLE: 'Pre-credit period',
-    },
-  },
   [FIELD_IDS.CREDIT_PERIOD]: {
     LABEL: 'What credit period do you have with your buyer?',
     HINT: 'For example, they may have 30, 60 or 90 days to pay you.',

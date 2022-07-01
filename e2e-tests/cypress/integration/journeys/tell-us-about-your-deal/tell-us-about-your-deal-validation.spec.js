@@ -159,62 +159,10 @@ context('Tell us about your deal page - form validation', () => {
     });
   });
 
-  describe('when (optional field) `pre-credit period` has a non-numeric value', () => {
-    it('should render a validation error', () => {
-      tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].input().type('a');
-      tellUsAboutYourDealPage.submitButton().click();
-
-      checkText(
-        partials.errorSummaryListItems().eq(2),
-        ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER,
-      );
-
-      checkText(
-        tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_NUMBER}`,
-      );
-    });
-  });
-
-  describe('when (optional field) `pre-credit period` contains a decimal', () => {
-    it('should render a validation error', () => {
-      tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].input().type('1.2');
-      tellUsAboutYourDealPage.submitButton().click();
-
-      checkText(
-        partials.errorSummaryListItems().eq(2),
-        ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_WHOLE_NUMBER,
-      );
-
-      checkText(
-        tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].NOT_A_WHOLE_NUMBER}`,
-      );
-    });
-  });
-
-  describe('when (optional field) `pre-credit period` has a value less than the minimum', () => {
-    it('should render a validation error', () => {
-      tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].input().type('-1');
-      tellUsAboutYourDealPage.submitButton().click();
-
-      checkText(
-        partials.errorSummaryListItems().eq(2),
-        ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].BELOW_MINIMUM,
-      );
-
-      checkText(
-        tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.PRE_CREDIT_PERIOD].BELOW_MINIMUM}`,
-      );
-    });
-  });
-
   describe('with any validation error', () => {
     it('should render submitted values', () => {
       tellUsAboutYourDealPage[FIELD_IDS.CURRENCY].input().select('AED');
       tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].input().type('10');
-      tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].input().type('1');
       tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].input().type('2');
       tellUsAboutYourDealPage[FIELD_IDS.POLICY_TYPE].single.input().click();
 
@@ -224,9 +172,6 @@ context('Tell us about your deal page - form validation', () => {
 
       tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].input()
         .should('have.attr', 'value', '10');
-
-      tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].input()
-        .should('have.attr', 'value', '1');
 
       tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].input()
         .should('have.attr', 'value', '2');
