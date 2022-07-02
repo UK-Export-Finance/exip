@@ -233,7 +233,7 @@ context('Tell us about the policy you need page', () => {
   describe('when form is valid', () => {
     it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('100');
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('AED');
+      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('1');
       tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].single.input().click();
       tellUsAboutYourPolicyPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().type('13');

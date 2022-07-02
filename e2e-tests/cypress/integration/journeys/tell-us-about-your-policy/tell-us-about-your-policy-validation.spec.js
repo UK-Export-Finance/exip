@@ -161,14 +161,14 @@ context('Tell us about the policy you need page - form validation', () => {
 
   describe('with any validation error', () => {
     it('should render submitted values', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('AED');
+      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('10');
       tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('2');
       tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].single.input().click();
 
       tellUsAboutYourPolicyPage.submitButton().click();
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].inputOptionSelected().contains('AED');
+      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].inputOptionSelected().contains('GBP');
 
       tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input()
         .should('have.attr', 'value', '10');
