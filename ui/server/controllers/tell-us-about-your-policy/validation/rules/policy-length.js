@@ -5,8 +5,8 @@ const { objectHasProperty } = require('../../../../helpers/object');
 const { isNumber, numberHasDecimal } = require('../../../../helpers/number');
 
 const MINIMUM = 1;
-const SINGLE_POLICY_MAX_MONTHS = 24;
-const MULTI_POLICY_MAX_MONTHS = 12;
+const SINGLE_POLICY_MAX_MONTHS = 9;
+const MULTI_POLICY_MAX_MONTHS = 9;
 
 const policyLengthRules = (formBody, errors) => {
   let updatedErrors = errors;

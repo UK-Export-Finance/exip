@@ -95,7 +95,7 @@ context('Tell us about the policy you need page - policy type & length validatio
 
       describe('when `single policy length` is greater than the maximum', () => {
         it('should render a validation error', () => {
-          tellUsAboutYourPolicyPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('25');
+          tellUsAboutYourPolicyPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('10');
           tellUsAboutYourPolicyPage.submitButton().click();
 
           checkText(
@@ -185,7 +185,7 @@ context('Tell us about the policy you need page - policy type & length validatio
 
       describe('when `multi policy length` is greater than the maximum', () => {
         it('should render a validation error', () => {
-          tellUsAboutYourPolicyPage[FIELD_IDS.MULTI_POLICY_LENGTH].input().clear().type('13');
+          tellUsAboutYourPolicyPage[FIELD_IDS.MULTI_POLICY_LENGTH].input().clear().type('10');
           tellUsAboutYourPolicyPage.submitButton().click();
 
           checkText(
