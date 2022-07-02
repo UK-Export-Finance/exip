@@ -99,7 +99,7 @@ context('Your quote page - change answers', () => {
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().click();
-      tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().type('10');
+      tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().type('5');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
@@ -111,7 +111,7 @@ context('Your quote page - change answers', () => {
       row = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal('10 months');
+        expect(text.trim()).equal('5 months');
       });
     });
   });
@@ -137,7 +137,7 @@ context('Your quote page - change answers', () => {
       // autocomplete component does not have a focused attribute, instead it has a class.
       // this is added with client side JS.
       // we have to wait to ensure that client side js has been executed.
-      cy.wait(3000); // eslint-disable-line cypress/no-unnecessary-waiting
+      cy.wait(4000); // eslint-disable-line cypress/no-unnecessary-waiting
 
       buyerBasedPage.searchInput().should('have.class', 'autocomplete__input--focused');
     });

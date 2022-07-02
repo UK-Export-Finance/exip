@@ -28,7 +28,7 @@ context('Your quote page - multi policy type', () => {
     checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE].changeLink().click();
 
     tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().click();
-    tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().type('10');
+    tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().type('8');
     tellUsAboutYourPolicyPage.submitButton().click();
     checkYourAnswersPage.submitButton().click();
 
@@ -52,7 +52,7 @@ context('Your quote page - multi policy type', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '10 months';
+          const expected = '8 months';
 
           expect(text.trim()).equal(expected);
         });

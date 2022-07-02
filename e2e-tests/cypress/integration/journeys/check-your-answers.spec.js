@@ -32,7 +32,7 @@ context('Check your answers page', () => {
     [AMOUNT]: '100',
     [CREDIT_PERIOD]: '2',
     [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-    [SINGLE_POLICY_LENGTH]: '13',
+    [SINGLE_POLICY_LENGTH]: '9',
   };
 
   before(() => {
