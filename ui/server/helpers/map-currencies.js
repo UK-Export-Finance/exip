@@ -1,5 +1,16 @@
+const { SUPPORTED_CURRENCIES } = require('../constants');
+
+const getSupportedCurrencies = (currencies) => {
+  const supported = currencies.filter((currency) =>
+    SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
+
+  return supported;
+};
+
 const mapCurrencies = (currencies, selectedValue) => {
-  const mapped = currencies.map(({ name, isoCode }) => {
+  const supportedCurrencies = getSupportedCurrencies(currencies);
+
+  const mapped = supportedCurrencies.map(({ name, isoCode }) => {
     if (selectedValue && selectedValue === isoCode) {
       return {
         text: `${isoCode} - ${name}`,
@@ -34,4 +45,7 @@ const mapCurrencies = (currencies, selectedValue) => {
   return result;
 };
 
-module.exports = mapCurrencies;
+module.exports = {
+  getSupportedCurrencies,
+  mapCurrencies,
+};

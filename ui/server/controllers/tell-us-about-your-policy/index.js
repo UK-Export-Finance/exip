@@ -5,7 +5,7 @@ const {
   FIELD_IDS,
 } = require('../../constants');
 const api = require('../../api');
-const mapCurrencies = require('../../helpers/map-currencies');
+const { mapCurrencies } = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
 const getCurrencyByCode = require('../../helpers/get-currency-by-code');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');

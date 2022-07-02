@@ -13,7 +13,11 @@ import {
 import CONSTANTS from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE;
-const { ROUTES, FIELD_IDS } = CONSTANTS;
+const {
+  ROUTES,
+  FIELD_IDS,
+  SUPPORTED_CURRENCIES,
+} = CONSTANTS;
 
 context('Tell us about the policy you need page', () => {
   describe('rendering', () => {
@@ -94,6 +98,16 @@ context('Tell us about the policy you need page', () => {
       });
 
       field.input().should('exist');
+    });
+
+    it('only renders supported currencies', () => {
+      const fieldId = FIELD_IDS.CURRENCY;
+
+      const field = tellUsAboutYourPolicyPage[fieldId];
+
+      field.input().select(1).should('have.value', SUPPORTED_CURRENCIES[0]);
+      field.input().select(2).should('have.value', SUPPORTED_CURRENCIES[1]);
+      field.input().select(3).should('have.value', SUPPORTED_CURRENCIES[2]);
     });
 
     it('renders `amount` label and input', () => {
