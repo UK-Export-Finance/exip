@@ -2,8 +2,8 @@ const express = require('express');
 const { ROUTES } = require('../constants');
 const guidanceController = require('../controllers/guidance');
 const beforeYouStartController = require('../controllers/before-you-start');
-const companyBasedController = require('../controllers/company-based');
 const buyerBasedController = require('../controllers/buyer-based');
+const companyBasedController = require('../controllers/company-based');
 const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
 const ukContentPercentageController = require('../controllers/uk-content-pecentage');
 const tellUsAboutYourPolicyController = require('../controllers/tell-us-about-your-policy');
@@ -18,15 +18,15 @@ router.get(ROUTES.GUIDANCE, guidanceController);
 router.get(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
 router.post(ROUTES.BEFORE_YOU_START, beforeYouStartController.post);
 
-router.get(ROUTES.COMPANY_BASED, companyBasedController.get);
-router.post(ROUTES.COMPANY_BASED, companyBasedController.post);
-router.get(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.get);
-router.post(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.post);
-
 router.get(ROUTES.BUYER_BASED, buyerBasedController.get);
 router.post(ROUTES.BUYER_BASED, buyerBasedController.post);
 router.get(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.get);
 router.post(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.post);
+
+router.get(ROUTES.COMPANY_BASED, companyBasedController.get);
+router.post(ROUTES.COMPANY_BASED, companyBasedController.post);
+router.get(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.get);
+router.post(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.post);
 
 router.get(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.get);
 router.post(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.post);

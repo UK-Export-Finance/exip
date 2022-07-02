@@ -33,15 +33,15 @@ describe('routes/index', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.post);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.COMPANY_BASED, companyBasedController.get);
-    expect(post).toHaveBeenCalledWith(ROUTES.COMPANY_BASED, companyBasedController.post);
-    expect(get).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.get);
-    expect(post).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.post);
-
     expect(get).toHaveBeenCalledWith(ROUTES.BUYER_BASED, buyerBasedController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.BUYER_BASED, buyerBasedController.post);
     expect(get).toHaveBeenCalledWith(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.post);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.COMPANY_BASED, companyBasedController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.COMPANY_BASED, companyBasedController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.post);
