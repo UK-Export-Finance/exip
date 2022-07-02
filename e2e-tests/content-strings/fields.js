@@ -60,7 +60,6 @@ const FIELDS = {
   },
   [FIELD_IDS.AMOUNT]: {
     LABEL: 'Amount',
-    HINT: 'The amount your buyer owes will probably rise and fall during the export contract. You only need to enter the highest amount it\'ll be at any single point.',
     SUMMARY: {
       TITLE: 'Amount insured for',
     },
