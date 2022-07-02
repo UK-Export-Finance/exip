@@ -2,6 +2,7 @@ const {
   getSupportedCurrencies,
   mapCurrencies,
 } = require('./map-currencies');
+const sortArrayAlphabetically = require('./sort-array-alphabetically');
 
 describe('sever/helpers/map-currencies', () => {
   const mockCurrencies = [
@@ -42,12 +43,7 @@ describe('sever/helpers/map-currencies', () => {
       const supportedCurrencies = getSupportedCurrencies(mockCurrencies);
       const result = mapCurrencies(supportedCurrencies);
 
-      const expected = [
-        {
-          disabled: true,
-          selected: true,
-          value: '',
-        },
+      const expectedSorted = sortArrayAlphabetically([
         {
           text: `${mockCurrencies[0].isoCode} - ${mockCurrencies[0].name}`,
           value: mockCurrencies[0].isoCode,
@@ -60,6 +56,15 @@ describe('sever/helpers/map-currencies', () => {
           text: `${mockCurrencies[2].isoCode} - ${mockCurrencies[2].name}`,
           value: mockCurrencies[2].isoCode,
         },
+      ], 'text');
+
+      const expected = [
+        {
+          disabled: true,
+          selected: true,
+          value: '',
+        },
+        ...expectedSorted,
       ];
 
       expect(result).toEqual(expected);
@@ -71,7 +76,7 @@ describe('sever/helpers/map-currencies', () => {
 
         const result = mapCurrencies(mockCurrencies, mockSelectedValue);
 
-        const expected = [
+        const expected = sortArrayAlphabetically([
           {
             text: `${mockCurrencies[0].isoCode} - ${mockCurrencies[0].name}`,
             value: mockCurrencies[0].isoCode,
@@ -85,7 +90,7 @@ describe('sever/helpers/map-currencies', () => {
             text: `${mockCurrencies[2].isoCode} - ${mockCurrencies[2].name}`,
             value: mockCurrencies[2].isoCode,
           },
-        ];
+        ], 'text');
 
         expect(result).toEqual(expected);
       });

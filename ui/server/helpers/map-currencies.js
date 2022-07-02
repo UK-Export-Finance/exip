@@ -1,4 +1,5 @@
 const { SUPPORTED_CURRENCIES } = require('../constants');
+const sortArrayAlphabetically = require('./sort-array-alphabetically');
 
 const getSupportedCurrencies = (currencies) => {
   const supported = currencies.filter((currency) =>
@@ -25,6 +26,8 @@ const mapCurrencies = (currencies, selectedValue) => {
     };
   });
 
+  const sorted = sortArrayAlphabetically(mapped, 'text');
+
   if (!selectedValue) {
     const defaultOption = {
       disabled: true,
@@ -34,13 +37,13 @@ const mapCurrencies = (currencies, selectedValue) => {
 
     const result = [
       defaultOption,
-      ...mapped,
+      ...sorted,
     ];
 
     return result;
   }
 
-  const result = mapped;
+  const result = sorted;
 
   return result;
 };

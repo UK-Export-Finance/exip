@@ -100,7 +100,7 @@ context('Tell us about the policy you need page', () => {
       field.input().should('exist');
     });
 
-    it('only renders supported currencies', () => {
+    it('renders only supported currencies in alphabetical order', () => {
       const fieldId = FIELD_IDS.CURRENCY;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
@@ -236,7 +236,7 @@ context('Tell us about the policy you need page', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('1');
       tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].single.input().click();
-      tellUsAboutYourPolicyPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().type('13');
+      tellUsAboutYourPolicyPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().type('8');
 
       tellUsAboutYourPolicyPage.submitButton().click();
 

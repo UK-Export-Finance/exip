@@ -1,6 +1,6 @@
 const SUPPORTED_CURRENCIES = [
-  'GBP',
   'EUR',
+  'GBP',
   'USD',
 ];
 
