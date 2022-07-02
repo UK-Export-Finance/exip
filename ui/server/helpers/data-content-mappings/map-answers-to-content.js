@@ -15,21 +15,13 @@ const {
   TRIED_PRIVATE_COVER_YES,
   TRIED_PRIVATE_COVER_NO,
   UK_CONTENT_PERCENTAGE,
-  CURRENCY,
   AMOUNT,
+  CURRENCY,
   CREDIT_PERIOD,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
   MULTI_POLICY_TYPE,
 } = FIELD_IDS;
-
-const mapCurrency = (currencyObj) => {
-  if (currencyObj) {
-    return `${currencyObj.name} (${currencyObj.isoCode})`;
-  }
-
-  return '-';
-};
 
 const mapPolicyType = (answer) => {
   let mapped;
@@ -88,23 +80,19 @@ const mapAnswersToContent = (answers) => {
       text: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
     },
     [AMOUNT]: {
-      text: formatCurrency(answers[AMOUNT], 'GBP'),
-    },
-    [CURRENCY]: {
-      text: mapCurrency(answers[CURRENCY]),
-    },
-    [CREDIT_PERIOD]: {
-      text: mapPeriodDays(answers[CREDIT_PERIOD]),
+      text: formatCurrency(answers[AMOUNT], answers[CURRENCY].isoCode),
     },
     ...mapPolicyType(answers[POLICY_TYPE]),
     ...mapPolicyLength(answers),
+    [CREDIT_PERIOD]: {
+      text: mapPeriodDays(answers[CREDIT_PERIOD]),
+    },
   };
 
   return mapped;
 };
 
 module.exports = {
-  mapCurrency,
   mapPolicyType,
   mapTriedPrivateCover,
   mapAnswersToContent,

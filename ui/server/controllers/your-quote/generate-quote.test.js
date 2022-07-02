@@ -60,10 +60,8 @@ describe('controllers/your-quote/generate-quote', () => {
       const result = generateQuote(mockSubmittedData);
 
       const expected = {
-        [QUOTE.INSURED_FOR]: {
-          amount: mockSubmittedData[AMOUNT],
-          convertedFrom: mockSubmittedData[CURRENCY],
-        },
+        [AMOUNT]: mockSubmittedData[AMOUNT],
+        [CURRENCY]: mockSubmittedData[CURRENCY],
         ...mockCalculation(mockSubmittedData[BUYER_COUNTRY].isoCode),
         [QUOTE.BUYER_LOCATION]: mockSubmittedData[BUYER_COUNTRY],
         [POLICY_TYPE]: mockSubmittedData[POLICY_TYPE],
@@ -71,28 +69,6 @@ describe('controllers/your-quote/generate-quote', () => {
       };
 
       expect(result).toEqual(expected);
-    });
-
-    describe('when amountInGbp is provided (submitted currency was not GBP)', () => {
-      it('should return a quote with amountInGbp value', () => {
-        const mockSubmittedData = mockSession.submittedData;
-
-        const mockAmountInGbp = 2500;
-        const result = generateQuote(mockSubmittedData, mockAmountInGbp);
-
-        const expected = {
-          [QUOTE.INSURED_FOR]: {
-            amount: mockAmountInGbp,
-            convertedFrom: mockSubmittedData[CURRENCY],
-          },
-          ...mockCalculation(mockSubmittedData[BUYER_COUNTRY].isoCode),
-          [QUOTE.BUYER_LOCATION]: mockSubmittedData[BUYER_COUNTRY],
-          [POLICY_TYPE]: mockSubmittedData[POLICY_TYPE],
-          [POLICY_LENGTH]: mockSubmittedData[POLICY_LENGTH],
-        };
-
-        expect(result).toEqual(expected);
-      });
     });
   });
 });

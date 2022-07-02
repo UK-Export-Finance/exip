@@ -9,15 +9,15 @@ const ERROR_MESSAGES = {
     IS_EMPTY: 'Select whether at least 20% of your export contract value is made up from UK goods and services',
   },
   [FIELD_IDS.CURRENCY]: {
-    IS_EMPTY: 'Select the currency your buyer will pay you in',
+    IS_EMPTY: 'Select currency',
   },
   [FIELD_IDS.AMOUNT]: {
-    IS_EMPTY: 'Enter the maximum amount your buyer will owe you at any single point',
+    IS_EMPTY: 'Enter how much you want to be insured for',
     NOT_A_NUMBER: 'Maximum amount must be a number',
     BELOW_MINIMUM: 'Maximum amount must be 1 or more',
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
-    IS_EMPTY: 'Enter how many days credit you extend to your buyer',
+    IS_EMPTY: 'Enter the credit period you have with your buyer',
     NOT_A_NUMBER: 'Credit period must be a number',
     NOT_A_WHOLE_NUMBER: 'Credit period must be a whole number, like 10 - you cannot enter decimal points',
     BELOW_MINIMUM: 'Credit period must be 1 month or more',
@@ -27,15 +27,15 @@ const ERROR_MESSAGES = {
     NOT_A_NUMBER: 'Policy length must be a number',
     NOT_A_WHOLE_NUMBER: 'Policy length must be a whole number, like 10 - you cannot enter decimal points',
     BELOW_MINIMUM: 'Policy length must be 1 month or more',
-    IS_EMPTY: 'Enter policy length of no more than 24 months',
-    ABOVE_MAXIMUM: 'Enter policy length of no more than 24 months',
+    IS_EMPTY: 'Enter how long you need the policy for',
+    ABOVE_MAXIMUM: 'Enter policy length of no more than 9 months',
   },
   [FIELD_IDS.MULTI_POLICY_LENGTH]: {
     NOT_A_NUMBER: 'Policy length must be a number',
     NOT_A_WHOLE_NUMBER: 'Policy length must be a whole number, like 10 - you cannot enter decimal points',
     BELOW_MINIMUM: 'Policy length must be 1 month or more',
-    IS_EMPTY: 'Enter policy length of no more than 12 months',
-    ABOVE_MAXIMUM: 'Enter policy length of no more than 12 months',
+    IS_EMPTY: 'Enter policy length of no more than 9 months',
+    ABOVE_MAXIMUM: 'Enter policy length of no more than 9 months',
   },
 };
 

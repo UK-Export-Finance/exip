@@ -33,7 +33,9 @@
 
   <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
 
-  <p class="govuk-body" data-cy="description">{{ CONTENT_STRINGS.DESCRIPTION }}</p>
+  <p class="govuk-body govuk-!-margin-bottom-7">
+    <span class="govuk-caption-m" data-cy="description">{{ CONTENT_STRINGS.DESCRIPTION }}</span>
+  </p>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters-from-desktop">
@@ -78,9 +80,6 @@
                 "data-cy": FIELDS.AMOUNT.ID + "-label"
               }
             },
-            hint: {
-              html: "<div class='govuk-grid-row'><div class='govuk-grid-column-three-quarters-from-desktop'><span data-cy='" + FIELDS.AMOUNT.ID + "-hint'>" + FIELDS.AMOUNT.HINT + "</span></div></div>"
-            },
             id: FIELDS.AMOUNT.ID,
             name: FIELDS.AMOUNT.ID,
             spellcheck: false,
@@ -98,41 +97,6 @@
           }) }}
 
         {% endcall %}
-
-        {{ govukInput({
-          label: {
-            text: FIELDS.CREDIT_PERIOD.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              'data-cy': FIELDS.CREDIT_PERIOD.ID + '-label'
-            }
-          },
-          hint: {
-            text: FIELDS.CREDIT_PERIOD.HINT,
-            attributes: {
-              'data-cy': FIELDS.CREDIT_PERIOD.ID + '-hint'
-            }
-          },
-          classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
-          attributes: {
-            'data-cy': FIELDS.CREDIT_PERIOD.ID + '-input'
-          },
-          id: FIELDS.CREDIT_PERIOD.ID,
-          name: FIELDS.CREDIT_PERIOD.ID,
-          inputmode: "numeric",
-          pattern: "[0-9]*",
-          suffix: {
-            text: "days"
-          },
-          spellcheck: false,
-          errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID]and {
-            text: validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID].text,
-            attributes: {
-              "data-cy": FIELDS.CREDIT_PERIOD.ID + "-error-message"
-            }
-          },
-          value: submittedValues[FIELDS.CREDIT_PERIOD.ID]
-        }) }}
 
         {% set singlePolicyLengthHtml %}
           {{ govukInput({
@@ -269,6 +233,41 @@
               "data-cy": FIELDS.POLICY_TYPE.ID + "-error-message"
             }
           }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.CREDIT_PERIOD.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              'data-cy': FIELDS.CREDIT_PERIOD.ID + '-label'
+            }
+          },
+          hint: {
+            text: FIELDS.CREDIT_PERIOD.HINT,
+            attributes: {
+              'data-cy': FIELDS.CREDIT_PERIOD.ID + '-hint'
+            }
+          },
+          classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
+          attributes: {
+            'data-cy': FIELDS.CREDIT_PERIOD.ID + '-input'
+          },
+          id: FIELDS.CREDIT_PERIOD.ID,
+          name: FIELDS.CREDIT_PERIOD.ID,
+          inputmode: "numeric",
+          pattern: "[0-9]*",
+          suffix: {
+            text: "days"
+          },
+          spellcheck: false,
+          errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID]and {
+            text: validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID].text,
+            attributes: {
+              "data-cy": FIELDS.CREDIT_PERIOD.ID + "-error-message"
+            }
+          },
+          value: submittedValues[FIELDS.CREDIT_PERIOD.ID]
         }) }}
 
         {{ govukButton({

@@ -23,17 +23,6 @@ const {
   BUYER_LOCATION,
 } = QUOTE;
 
-const insuredForFieldValue = (value) => {
-  const openTag = '<span>';
-  const closeTag = '</span>';
-
-  if (value.additionalText) {
-    return `${openTag}${value.text}<br> <small>${value.additionalText}</small>${closeTag}`;
-  }
-
-  return `${openTag}${value.text}${closeTag}`;
-};
-
 /*
  * generateFields
  * Create all fields for govukSummaryList
@@ -46,10 +35,10 @@ const generateFields = (answers) => {
       id: AMOUNT,
       title: QUOTE_TITLES[INSURED_FOR],
       value: {
-        html: insuredForFieldValue(answers[INSURED_FOR]),
+        text: answers[AMOUNT].text,
       },
       renderChangeLink: true,
-      changeRoute: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+      changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
     },
     {
       id: PREMIUM_RATE_PERCENTAGE,
@@ -77,7 +66,7 @@ const generateFields = (answers) => {
           text: answers[SINGLE_POLICY_LENGTH].text,
         },
         renderChangeLink: true,
-        changeRoute: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+        changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
       },
     ];
   }
@@ -92,7 +81,7 @@ const generateFields = (answers) => {
           text: answers[MULTI_POLICY_LENGTH].text,
         },
         renderChangeLink: true,
-        changeRoute: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+        changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
       },
     ];
   }
@@ -128,17 +117,12 @@ const generateSummaryListRows = (fields) =>
       },
       value: {
         classes: `${field.id}-value`,
+        text: field.value.text,
       },
       actions: {
         items: [],
       },
     };
-
-    if (field.value.html) {
-      mapped.value.html = field.value.html;
-    } else {
-      mapped.value.text = field.value.text;
-    }
 
     if (field.renderChangeLink) {
       mapped.actions.items.push({
@@ -168,7 +152,6 @@ const generateQuoteSummaryList = (answers) => {
 };
 
 module.exports = {
-  insuredForFieldValue,
   generateFields,
   generateSummaryListRows,
   generateQuoteSummaryList,

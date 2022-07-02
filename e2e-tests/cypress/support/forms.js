@@ -3,7 +3,7 @@ import {
   buyerBasedPage,
   triedToObtainCoverPage,
   ukContentPercentagePage,
-  tellUsAboutYourDealPage,
+  tellUsAboutYourPolicyPage,
 } from '../integration/pages';
 import { FIELD_IDS } from '../../constants';
 
@@ -39,11 +39,11 @@ export const completeAndSubmitUkContentForm = () => {
   ukContentPercentagePage.submitButton().click();
 };
 
-export const compmleteAndSubmitTellUsAboutYourDealForm = () => {
-  tellUsAboutYourDealPage[CURRENCY].input().select('GBP');
-  tellUsAboutYourDealPage[AMOUNT].input().type('100');
-  tellUsAboutYourDealPage[CREDIT_PERIOD].input().type('2');
-  tellUsAboutYourDealPage[POLICY_TYPE].single.input().click();
-  tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().type('13');
-  tellUsAboutYourDealPage.submitButton().click();
+export const compmleteAndSubmitTellUsAboutYourPolicyForm = () => {
+  tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
+  tellUsAboutYourPolicyPage[AMOUNT].input().type('100');
+  tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('2');
+  tellUsAboutYourPolicyPage[POLICY_TYPE].single.input().click();
+  tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().type('9');
+  tellUsAboutYourPolicyPage.submitButton().click();
 };

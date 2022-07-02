@@ -2,27 +2,27 @@ const ROUTES = {
   GUIDANCE: '/',
   BEFORE_YOU_START: '/before-you-start',
 
-  COMPANY_BASED: '/company-based',
-  COMPANY_BASED_CHANGE: '/company-based/change',
+  BUYER_BASED: '/buyer-country',
+  BUYER_BASED_CHANGE: '/buyer-country/change',
 
-  BUYER_BASED: '/buyer-based',
-  BUYER_BASED_CHANGE: '/buyer-based/change',
+  COMPANY_BASED: '/is-exporter-in-UK',
+  COMPANY_BASED_CHANGE: '/is-exporter-in-UK/change',
 
-  TRIED_TO_OBTAIN_COVER: '/tried-to-obtain-cover',
-  TRIED_TO_OBTAIN_COVER_CHANGE: '/tried-to-obtain-cover/change',
+  TRIED_TO_OBTAIN_COVER: '/can-get-private-insurance',
+  TRIED_TO_OBTAIN_COVER_CHANGE: '/can-get-private-insurance/change',
 
-  UK_CONTENT_PERCENTAGE: '/uk-content-percentage',
-  UK_CONTENT_PERCENTAGE_CHANGE: '/uk-content-percentage/change',
+  UK_CONTENT_PERCENTAGE: '/uk-goods-or-services',
+  UK_CONTENT_PERCENTAGE_CHANGE: '/uk-goods-or-services/change',
 
-  TELL_US_ABOUT_YOUR_DEAL: '/tell-us-about-your-deal',
-  TELL_US_ABOUT_YOUR_DEAL_CHANGE: '/tell-us-about-your-deal/change',
+  TELL_US_ABOUT_YOUR_POLICY: '/tell-us-about-policy',
+  TELL_US_ABOUT_YOUR_POLICY_CHANGE: '/tell-us-about-policy/change',
 
   CHECK_YOUR_ANSWERS: '/check-your-answers',
 
   CANNOT_OBTAIN_COVER: '/cannot-obtain-cover',
 
   YOUR_QUOTE: '/your-quote',
-  FEEDBACK: '/feedback',
+  FEEDBACK: '/give-feedback',
 
   PROBLEM_WITH_SERVICE: '/problem-with-service',
 };

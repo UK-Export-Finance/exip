@@ -26,14 +26,15 @@ const {
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
+  CREDIT_PERIOD,
 } = FIELD_IDS;
 
 describe('sever/helpers/generate-summary-list', () => {
   const mockFields = [
     {
-      ID: FIELD_IDS.VALID_COMPANY_BASE,
-      ...FIELDS[FIELD_IDS.VALID_COMPANY_BASE],
-      CHANGE_ROUTE: ROUTES.COMPANY_BASED_CHANGE,
+      ID: FIELD_IDS.BUYER_COUNTRY,
+      ...FIELDS[FIELD_IDS.BUYER_COUNTRY],
+      CHANGE_ROUTE: ROUTES.BUYER_BASED_CHANGE,
     },
   ];
 
@@ -48,19 +49,13 @@ describe('sever/helpers/generate-summary-list', () => {
       const fieldGroups = FIELD_GROUPS;
 
       const expected = {
-        COMPANY_DETAILS: fieldGroups.COMPANY_DETAILS.map((field) => ({
-          ...field,
-          value: {
-            text: mockAnswersContent[field.ID].text,
-          },
-        })),
         EXPORT_DETAILS: fieldGroups.EXPORT_DETAILS.map((field) => ({
           ...field,
           value: {
             text: mockAnswersContent[field.ID].text,
           },
         })),
-        DEAL_DETAILS: fieldGroups.DEAL_DETAILS.map((field) => ({
+        POLICY_DETAILS: fieldGroups.POLICY_DETAILS.map((field) => ({
           ...field,
           value: {
             text: mockAnswersContent[field.ID].text,
@@ -77,6 +72,19 @@ describe('sever/helpers/generate-summary-list', () => {
           CHANGE_ROUTE: ROUTES.UK_CONTENT_PERCENTAGE_CHANGE,
           value: {
             text: mockAnswersContent[UK_CONTENT_PERCENTAGE].text,
+          },
+        },
+      ];
+
+      // CREDIT_PERIOD is dynamically added after a previous field.
+      expected.POLICY_DETAILS = [
+        ...expected.POLICY_DETAILS,
+        {
+          ID: CREDIT_PERIOD,
+          ...FIELDS[CREDIT_PERIOD],
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          value: {
+            text: mockAnswersContent[CREDIT_PERIOD].text,
           },
         },
       ];
@@ -138,7 +146,7 @@ describe('sever/helpers/generate-summary-list', () => {
     });
 
     describe('when policy type is single', () => {
-      it(`should add a ${SINGLE_POLICY_TYPE} object to DEAL_DETAILS`, () => {
+      it(`should add a ${SINGLE_POLICY_TYPE} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockAnswers),
           [SINGLE_POLICY_TYPE]: {
@@ -148,12 +156,12 @@ describe('sever/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 2];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 3];
 
         const expected = {
           ID: SINGLE_POLICY_TYPE,
           ...FIELDS[SINGLE_POLICY_TYPE],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
           value: {
             text: mockAnswersContent[SINGLE_POLICY_TYPE].text,
           },
@@ -162,7 +170,7 @@ describe('sever/helpers/generate-summary-list', () => {
         expect(expectedField).toEqual(expected);
       });
 
-      it(`should add a ${SINGLE_POLICY_LENGTH} object to DEAL_DETAILS`, () => {
+      it(`should add a ${SINGLE_POLICY_LENGTH} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockAnswers),
           ...mockAnswers,
@@ -173,12 +181,12 @@ describe('sever/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 1];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 2];
 
         const expected = {
           ID: SINGLE_POLICY_LENGTH,
           ...FIELDS[SINGLE_POLICY_LENGTH],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
           value: {
             text: mockAnswersContent[SINGLE_POLICY_LENGTH].text,
           },
@@ -189,7 +197,7 @@ describe('sever/helpers/generate-summary-list', () => {
     });
 
     describe('when policy type is multi', () => {
-      it(`should add a ${MULTI_POLICY_TYPE} object to DEAL_DETAILS`, () => {
+      it(`should add a ${MULTI_POLICY_TYPE} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockAnswers),
           [MULTI_POLICY_TYPE]: {
@@ -204,12 +212,12 @@ describe('sever/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 2];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 3];
 
         const expected = {
           ID: MULTI_POLICY_TYPE,
           ...FIELDS[MULTI_POLICY_TYPE],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
           value: {
             text: mockAnswersContent[MULTI_POLICY_TYPE].text,
           },
@@ -218,7 +226,7 @@ describe('sever/helpers/generate-summary-list', () => {
         expect(expectedField).toEqual(expected);
       });
 
-      it(`should add a ${MULTI_POLICY_LENGTH} object to DEAL_DETAILS with single policy length field values`, () => {
+      it(`should add a ${MULTI_POLICY_LENGTH} object to POLICY_DETAILS with single policy length field values`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockAnswers),
           [MULTI_POLICY_TYPE]: {
@@ -233,12 +241,12 @@ describe('sever/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 1];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 2];
 
         const expected = {
           ID: MULTI_POLICY_LENGTH,
           ...FIELDS[MULTI_POLICY_LENGTH],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
           value: {
             text: mockAnswersContent[MULTI_POLICY_LENGTH].text,
           },
@@ -254,7 +262,7 @@ describe('sever/helpers/generate-summary-list', () => {
       const fieldGroups = generateFieldGroups(mockAnswers);
 
       const result = generateSummaryListRows(
-        fieldGroups.COMPANY_DETAILS,
+        fieldGroups.EXPORT_DETAILS,
         mockAnswers,
       );
 
@@ -297,17 +305,13 @@ describe('sever/helpers/generate-summary-list', () => {
       const result = generateSummaryList(mockAnswersContent);
 
       const expected = {
-        COMPANY: {
-          GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_COMPANY,
-          ROWS: generateSummaryListRows(fieldGroups.COMPANY_DETAILS, mockAnswers),
-        },
         EXPORT: {
           GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
           ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, mockAnswers),
         },
-        DEAL: {
-          GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_DEAL,
-          ROWS: generateSummaryListRows(fieldGroups.DEAL_DETAILS, mockAnswers),
+        POLICY: {
+          GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_POLICY,
+          ROWS: generateSummaryListRows(fieldGroups.POLICY_DETAILS, mockAnswers),
         },
       };
 

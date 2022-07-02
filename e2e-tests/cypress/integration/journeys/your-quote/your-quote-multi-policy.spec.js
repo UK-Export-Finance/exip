@@ -1,6 +1,6 @@
 import {
   checkYourAnswersPage,
-  tellUsAboutYourDealPage,
+  tellUsAboutYourPolicyPage,
   yourQuotePage,
 } from '../../pages';
 import {
@@ -25,11 +25,11 @@ context('Your quote page - multi policy type', () => {
     cy.submitAnswersHappyPath();
 
     // change policy type to multi
-    checkYourAnswersPage.summaryLists.deal[SINGLE_POLICY_TYPE].changeLink().click();
+    checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE].changeLink().click();
 
-    tellUsAboutYourDealPage[POLICY_TYPE].multi.input().click();
-    tellUsAboutYourDealPage[MULTI_POLICY_LENGTH].input().type('10');
-    tellUsAboutYourDealPage.submitButton().click();
+    tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().click();
+    tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().type('8');
+    tellUsAboutYourPolicyPage.submitButton().click();
     checkYourAnswersPage.submitButton().click();
 
     cy.url().should('include', ROUTES.YOUR_QUOTE);
@@ -52,7 +52,7 @@ context('Your quote page - multi policy type', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '10 months';
+          const expected = '8 months';
 
           expect(text.trim()).equal(expected);
         });
@@ -62,7 +62,7 @@ context('Your quote page - multi policy type', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${MULTI_POLICY_LENGTH}`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MULTI_POLICY_LENGTH}`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
     });

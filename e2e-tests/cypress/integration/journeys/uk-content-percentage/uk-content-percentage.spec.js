@@ -251,11 +251,11 @@ context('What percentage of your export is UK content page', () => {
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL}`, () => {
+      it(`should redirect to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY}`, () => {
         ukContentPercentagePage.yes().click();
         ukContentPercentagePage.submitButton().click();
 
-        cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+        cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
       });
     });
   });

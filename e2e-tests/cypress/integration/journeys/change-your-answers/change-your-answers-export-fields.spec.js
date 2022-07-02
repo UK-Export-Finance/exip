@@ -1,5 +1,6 @@
 import {
   buyerBasedPage,
+  companyBasedPage,
   triedToObtainCoverPage,
   ukContentPercentagePage,
   checkYourAnswersPage,
@@ -14,6 +15,7 @@ const {
 
 const {
   BUYER_COUNTRY,
+  VALID_COMPANY_BASE,
   TRIED_PRIVATE_COVER,
   TRIED_PRIVATE_COVER_NO,
   UK_CONTENT_PERCENTAGE,
@@ -63,7 +65,7 @@ context('Change your answers after checking answers - Export fields', () => {
       // autocomplete component does not have a focused attribute, instead it has a class.
       // this is added with client side JS.
       // we have to wait to ensure that client side js has been executed.
-      cy.wait(2000); // eslint-disable-line cypress/no-unnecessary-waiting
+      cy.wait(4000); // eslint-disable-line cypress/no-unnecessary-waiting
 
       buyerBasedPage.searchInput().should('have.class', 'autocomplete__input--focused');
     });
@@ -85,6 +87,38 @@ context('Change your answers after checking answers - Export fields', () => {
 
         expect(text.trim()).equal(expected);
       });
+    });
+  });
+
+  describe('change `Company`', () => {
+    const row = checkYourAnswersPage.summaryLists.export[VALID_COMPANY_BASE];
+
+    it(`clicking 'change' redirects to ${ROUTES.COMPANY_BASED_CHANGE}`, () => {
+      row.changeLink().click();
+
+      const expectedUrl = `${ROUTES.COMPANY_BASED_CHANGE}#${VALID_COMPANY_BASE}`;
+      cy.url().should('include', expectedUrl);
+    });
+
+    it('renders a back button with correct link', () => {
+      partials.backLink().should('exist');
+
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
+      partials.backLink().should('have.attr', 'href', expected);
+    });
+
+    it('has originally submitted answer selected', () => {
+      companyBasedPage[VALID_COMPANY_BASE].yesInput().should('be.checked');
+    });
+
+    it('auto focuses the input', () => {
+      companyBasedPage[VALID_COMPANY_BASE].yesInput().should('have.focus');
+    });
+
+    it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
+      companyBasedPage.submitButton().click();
+
+      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });
   });
 

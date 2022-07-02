@@ -1,3 +1,5 @@
+const sortArrayAlphabetically = require('./sort-array-alphabetically');
+
 const mapActiveFlag = (active) => {
   if (active === 'Y') {
     return true;
@@ -21,8 +23,13 @@ const mapCountry = (country, selectedIsoCode) => {
   return mapped;
 };
 
-const mapCountries = (countries, selectedIsoCode) =>
-  countries.map((country) => mapCountry(country, selectedIsoCode));
+const mapCountries = (countries, selectedIsoCode) => {
+  const mapped = countries.map((country) => mapCountry(country, selectedIsoCode));
+
+  const sorted = sortArrayAlphabetically(mapped, 'name');
+
+  return sorted;
+};
 
 module.exports = {
   mapActiveFlag,

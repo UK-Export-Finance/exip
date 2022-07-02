@@ -4,7 +4,7 @@ const companyBasedPage = require('./companyBased');
 const buyerBasedPage = require('./buyerBased');
 const triedToObtainCoverPage = require('./triedToObtainCover');
 const ukContentPercentagePage = require('./ukContentPercentage');
-const tellUsAboutYourDealPage = require('./tellUsAboutYourDeal');
+const tellUsAboutYourPolicyPage = require('./tellUsAboutYourPolicy');
 const checkYourAnswersPage = require('./checkYourAnswers');
 const yourQuotePage = require('./yourQuote');
 const cannotObtainCoverPage = require('./cannotObtainCover');
@@ -17,7 +17,7 @@ module.exports = {
   buyerBasedPage,
   triedToObtainCoverPage,
   ukContentPercentagePage,
-  tellUsAboutYourDealPage,
+  tellUsAboutYourPolicyPage,
   checkYourAnswersPage,
   yourQuotePage,
   cannotObtainCoverPage,

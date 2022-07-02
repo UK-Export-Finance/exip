@@ -22,7 +22,7 @@ const mockAnswers = {
   [AMOUNT]: 123456,
   [CREDIT_PERIOD]: 24,
   [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-  [POLICY_LENGTH]: 10,
+  [POLICY_LENGTH]: 9,
 };
 
 module.exports = mockAnswers;

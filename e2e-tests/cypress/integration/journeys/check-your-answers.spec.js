@@ -20,7 +20,6 @@ context('Check your answers page', () => {
     BUYER_COUNTRY,
     TRIED_PRIVATE_COVER_NO,
     UK_CONTENT_PERCENTAGE,
-    CURRENCY,
     AMOUNT,
     CREDIT_PERIOD,
     SINGLE_POLICY_TYPE,
@@ -30,11 +29,10 @@ context('Check your answers page', () => {
   const submissionData = {
     [BUYER_COUNTRY]: 'France',
     [UK_CONTENT_PERCENTAGE]: '50',
-    [CURRENCY]: 'GBP',
     [AMOUNT]: '100',
     [CREDIT_PERIOD]: '2',
     [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-    [SINGLE_POLICY_LENGTH]: '13',
+    [SINGLE_POLICY_LENGTH]: '9',
   };
 
   before(() => {
@@ -63,7 +61,7 @@ context('Check your answers page', () => {
       expect(text.trim()).equal(LINKS.BACK);
     });
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.TELL_US_ABOUT_YOUR_DEAL}`;
+    const expected = `${Cypress.config('baseUrl')}${ROUTES.TELL_US_ABOUT_YOUR_POLICY}`;
     partials.backLink().should('have.attr', 'href', expected);
   });
 
@@ -82,37 +80,6 @@ context('Check your answers page', () => {
 
     checkYourAnswersPage.heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
-    });
-  });
-
-  context('company summary list', () => {
-    const list = checkYourAnswersPage.summaryLists.company;
-
-    it('renders a heading', () => {
-      list.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_COMPANY);
-      });
-    });
-
-    it('renders `Company` key, value and change link', () => {
-      const row = list[VALID_COMPANY_BASE];
-      const expectedKeyText = FIELDS[VALID_COMPANY_BASE].SUMMARY.TITLE;
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
-
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_ANSWERS[VALID_COMPANY_BASE]);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
-
-      const expectedHref = `${ROUTES.COMPANY_BASED_CHANGE}#${VALID_COMPANY_BASE}`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });
 
@@ -145,6 +112,27 @@ context('Check your answers page', () => {
       });
 
       const expectedHref = `${ROUTES.BUYER_BASED_CHANGE}#${BUYER_COUNTRY}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
+    });
+
+    it('renders `Company` key, value and change link', () => {
+      const row = list[VALID_COMPANY_BASE];
+      const expectedKeyText = FIELDS[VALID_COMPANY_BASE].SUMMARY.TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        expect(text.trim()).equal(SUMMARY_ANSWERS[VALID_COMPANY_BASE]);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      const expectedHref = `${ROUTES.COMPANY_BASED_CHANGE}#${VALID_COMPANY_BASE}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -191,12 +179,12 @@ context('Check your answers page', () => {
     });
   });
 
-  context('deal summary list', () => {
-    const list = checkYourAnswersPage.summaryLists.deal;
+  context('policy summary list', () => {
+    const list = checkYourAnswersPage.summaryLists.policy;
 
     it('renders a heading', () => {
       list.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_DEAL);
+        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_POLICY);
       });
     });
 
@@ -219,53 +207,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${AMOUNT}`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
-    });
-
-    it('renders `Currency` key, value and change link', () => {
-      const row = list[CURRENCY];
-      const expectedKeyText = FIELDS[CURRENCY].SUMMARY.TITLE;
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
-
-      row.value().invoke('text').then((text) => {
-        const expected = `UK Sterling (${submissionData[CURRENCY]})`;
-
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
-
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${CURRENCY}`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
-    });
-
-    it('renders `Credit period` key, value and change link', () => {
-      const row = list[CREDIT_PERIOD];
-      const expectedKeyText = FIELDS[CREDIT_PERIOD].SUMMARY.TITLE;
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
-
-      row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[CREDIT_PERIOD]} days`;
-
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
-
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${CREDIT_PERIOD}`;
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -286,7 +228,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_TYPE}`;
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${SINGLE_POLICY_TYPE}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -309,7 +251,30 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
+    });
+
+    it('renders `Credit period` key, value and change link', () => {
+      const row = list[CREDIT_PERIOD];
+      const expectedKeyText = FIELDS[CREDIT_PERIOD].SUMMARY.TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        const expected = `${submissionData[CREDIT_PERIOD]} days`;
+
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });

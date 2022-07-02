@@ -11,9 +11,10 @@ const {
 } = FIELD_IDS;
 
 const mockQuote = {
-  [QUOTE.INSURED_FOR]: {
-    amount: mockAnswers[AMOUNT],
-    convertedFrom: mockAnswers[CURRENCY],
+  [AMOUNT]: mockAnswers[AMOUNT],
+  [CURRENCY]: {
+    name: 'UK Sterling',
+    isoCode: mockAnswers[CURRENCY],
   },
   [QUOTE.PREMIUM_RATE_PERCENTAGE]: 123,
   [QUOTE.ESTIMATED_COST]: 456,

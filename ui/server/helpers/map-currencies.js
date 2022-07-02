@@ -1,5 +1,17 @@
+const { SUPPORTED_CURRENCIES } = require('../constants');
+const sortArrayAlphabetically = require('./sort-array-alphabetically');
+
+const getSupportedCurrencies = (currencies) => {
+  const supported = currencies.filter((currency) =>
+    SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
+
+  return supported;
+};
+
 const mapCurrencies = (currencies, selectedValue) => {
-  const mapped = currencies.map(({ name, isoCode }) => {
+  const supportedCurrencies = getSupportedCurrencies(currencies);
+
+  const mapped = supportedCurrencies.map(({ name, isoCode }) => {
     if (selectedValue && selectedValue === isoCode) {
       return {
         text: `${isoCode} - ${name}`,
@@ -14,6 +26,8 @@ const mapCurrencies = (currencies, selectedValue) => {
     };
   });
 
+  const sorted = sortArrayAlphabetically(mapped, 'text');
+
   if (!selectedValue) {
     const defaultOption = {
       disabled: true,
@@ -23,15 +37,18 @@ const mapCurrencies = (currencies, selectedValue) => {
 
     const result = [
       defaultOption,
-      ...mapped,
+      ...sorted,
     ];
 
     return result;
   }
 
-  const result = mapped;
+  const result = sorted;
 
   return result;
 };
 
-module.exports = mapCurrencies;
+module.exports = {
+  getSupportedCurrencies,
+  mapCurrencies,
+};

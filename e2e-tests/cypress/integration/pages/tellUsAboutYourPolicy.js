@@ -3,7 +3,7 @@ import {
   FIELD_VALUES,
 } from '../../../constants';
 
-const tellUsAboutYourDealPage = {
+const tellUsAboutYourPolicyPage = {
   heading: () => cy.get('[data-cy="heading"]'),
   description: () => cy.get('[data-cy="description"]'),
   [FIELD_IDS.AMOUNT_CURRENCY]: {
@@ -17,7 +17,6 @@ const tellUsAboutYourDealPage = {
   },
   [FIELD_IDS.AMOUNT]: {
     label: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-label"]`),
-    hint: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-hint"]`),
     input: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-input"]`),
     inputOption: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-input"] option`),
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-error-message"]`),
@@ -58,4 +57,4 @@ const tellUsAboutYourDealPage = {
   submitButton: () => cy.get('[data-cy="submit-button"]'),
 };
 
-export default tellUsAboutYourDealPage;
+export default tellUsAboutYourPolicyPage;

@@ -2,11 +2,11 @@ const express = require('express');
 const { ROUTES } = require('../constants');
 const guidanceController = require('../controllers/guidance');
 const beforeYouStartController = require('../controllers/before-you-start');
-const companyBasedController = require('../controllers/company-based');
 const buyerBasedController = require('../controllers/buyer-based');
+const companyBasedController = require('../controllers/company-based');
 const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
 const ukContentPercentageController = require('../controllers/uk-content-pecentage');
-const tellUsAboutYourDealController = require('../controllers/tell-us-about-your-deal');
+const tellUsAboutYourPolicyController = require('../controllers/tell-us-about-your-policy');
 const checkYourAnswersController = require('../controllers/check-your-answers');
 const cannotObtainCoverController = require('../controllers/cannot-obtain-cover');
 const yourQuoteController = require('../controllers/your-quote');
@@ -18,15 +18,15 @@ router.get(ROUTES.GUIDANCE, guidanceController);
 router.get(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
 router.post(ROUTES.BEFORE_YOU_START, beforeYouStartController.post);
 
-router.get(ROUTES.COMPANY_BASED, companyBasedController.get);
-router.post(ROUTES.COMPANY_BASED, companyBasedController.post);
-router.get(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.get);
-router.post(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.post);
-
 router.get(ROUTES.BUYER_BASED, buyerBasedController.get);
 router.post(ROUTES.BUYER_BASED, buyerBasedController.post);
 router.get(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.get);
 router.post(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.post);
+
+router.get(ROUTES.COMPANY_BASED, companyBasedController.get);
+router.post(ROUTES.COMPANY_BASED, companyBasedController.post);
+router.get(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.get);
+router.post(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.post);
 
 router.get(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.get);
 router.post(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.post);
@@ -38,10 +38,10 @@ router.post(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.post);
 router.get(ROUTES.UK_CONTENT_PERCENTAGE_CHANGE, ukContentPercentageController.get);
 router.post(ROUTES.UK_CONTENT_PERCENTAGE_CHANGE, ukContentPercentageController.post);
 
-router.get(ROUTES.TELL_US_ABOUT_YOUR_DEAL, tellUsAboutYourDealController.get);
-router.post(ROUTES.TELL_US_ABOUT_YOUR_DEAL, tellUsAboutYourDealController.post);
-router.get(ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE, tellUsAboutYourDealController.get);
-router.post(ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE, tellUsAboutYourDealController.post);
+router.get(ROUTES.TELL_US_ABOUT_YOUR_POLICY, tellUsAboutYourPolicyController.get);
+router.post(ROUTES.TELL_US_ABOUT_YOUR_POLICY, tellUsAboutYourPolicyController.post);
+router.get(ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE, tellUsAboutYourPolicyController.get);
+router.post(ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE, tellUsAboutYourPolicyController.post);
 
 router.get(ROUTES.CHECK_YOUR_ANSWERS, checkYourAnswersController.get);
 router.post(ROUTES.CHECK_YOUR_ANSWERS, checkYourAnswersController.post);

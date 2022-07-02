@@ -3,6 +3,7 @@ const {
   mapCountry,
   mapCountries,
 } = require('./map-countries');
+const sortArrayAlphabetically = require('./sort-array-alphabetically');
 
 describe('sever/helpers/map-countries', () => {
   const mockCountries = [
@@ -78,15 +79,15 @@ describe('sever/helpers/map-countries', () => {
   });
 
   describe('mapCountries', () => {
-    it('should returns array of mapped objects', () => {
+    it('should returns array of mapped, sorted objects', () => {
       const mockSelectedIsoCode = mockCountries[0].isoCode;
 
       const result = mapCountries(mockCountries, mockSelectedIsoCode);
 
-      const expected = [
+      const expected = sortArrayAlphabetically([
         mapCountry(mockCountries[0], mockSelectedIsoCode),
         mapCountry(mockCountries[1], mockSelectedIsoCode),
-      ];
+      ], 'name');
 
       expect(result).toEqual(expected);
     });

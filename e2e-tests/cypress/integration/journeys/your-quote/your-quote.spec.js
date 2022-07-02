@@ -2,7 +2,7 @@ import {
   yourQuotePage,
   beforeYouStartPage,
   buyerBasedPage,
-  tellUsAboutYourDealPage,
+  tellUsAboutYourPolicyPage,
 } from '../../pages';
 import {
   LINKS,
@@ -36,10 +36,11 @@ const {
 const submissionData = {
   [BUYER_COUNTRY]: 'France',
   [UK_CONTENT_PERCENTAGE]: '50',
+  [AMOUNT]: '100',
   [CURRENCY]: 'GBP',
-  [CREDIT_PERIOD]: '2',
   [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-  [SINGLE_POLICY_LENGTH]: '13',
+  [SINGLE_POLICY_LENGTH]: '9',
+  [CREDIT_PERIOD]: '2',
 };
 
 // TODO: test user testing scenarios
@@ -49,7 +50,7 @@ context('Your quote page', () => {
     cy.login();
 
     cy.submitAnswersHappyPath();
-    tellUsAboutYourDealPage.submitButton().click();
+    tellUsAboutYourPolicyPage.submitButton().click();
 
     cy.url().should('include', ROUTES.YOUR_QUOTE);
   });
@@ -58,14 +59,14 @@ context('Your quote page', () => {
     Cypress.Cookies.preserveOnce('_csrf');
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 80,
-  //     'best-practices': 100,
-  //     seo: 75,
-  //   });
-  // });
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 80,
+      'best-practices': 100,
+      seo: 75,
+    });
+  });
 
   context('panel/quote', () => {
     it('renders `you can apply` heading', () => {
@@ -102,7 +103,7 @@ context('Your quote page', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${AMOUNT}`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
@@ -159,7 +160,7 @@ context('Your quote page', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${SINGLE_POLICY_LENGTH}`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 

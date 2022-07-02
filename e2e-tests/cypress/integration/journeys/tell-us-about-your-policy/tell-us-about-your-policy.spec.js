@@ -1,6 +1,6 @@
 import {
   ukContentPercentagePage,
-  tellUsAboutYourDealPage,
+  tellUsAboutYourPolicyPage,
 } from '../../pages';
 import partials from '../../partials';
 import {
@@ -12,10 +12,14 @@ import {
 } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
 
-const CONTENT_STRINGS = PAGES.TELL_US_ABOUT_YOUR_DEAL_PAGE;
-const { ROUTES, FIELD_IDS } = CONSTANTS;
+const CONTENT_STRINGS = PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE;
+const {
+  ROUTES,
+  FIELD_IDS,
+  SUPPORTED_CURRENCIES,
+} = CONSTANTS;
 
-context('Tell us about your deal page', () => {
+context('Tell us about the policy you need page', () => {
   describe('rendering', () => {
     before(() => {
       cy.visit(ROUTES.UK_CONTENT_PERCENTAGE, {
@@ -28,7 +32,7 @@ context('Tell us about your deal page', () => {
       ukContentPercentagePage.yes().click();
       ukContentPercentagePage.submitButton().click();
 
-      cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+      cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     beforeEach(() => {
@@ -63,11 +67,11 @@ context('Tell us about your deal page', () => {
       const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
       cy.title().should('eq', expectedPageTitle);
 
-      tellUsAboutYourDealPage.heading().invoke('text').then((text) => {
+      tellUsAboutYourPolicyPage.heading().invoke('text').then((text) => {
         expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
       });
 
-      tellUsAboutYourDealPage.description().invoke('text').then((text) => {
+      tellUsAboutYourPolicyPage.description().invoke('text').then((text) => {
         expect(text.trim()).equal(CONTENT_STRINGS.DESCRIPTION);
       });
     });
@@ -75,7 +79,7 @@ context('Tell us about your deal page', () => {
     it('renders `currency and amount` legend', () => {
       const fieldId = FIELD_IDS.AMOUNT_CURRENCY;
 
-      const field = tellUsAboutYourDealPage[fieldId];
+      const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.legend().should('exist');
       field.legend().invoke('text').then((text) => {
@@ -86,7 +90,7 @@ context('Tell us about your deal page', () => {
     it('renders `currency` legend, label and input', () => {
       const fieldId = FIELD_IDS.CURRENCY;
 
-      const field = tellUsAboutYourDealPage[fieldId];
+      const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
       field.label().invoke('text').then((text) => {
@@ -96,19 +100,24 @@ context('Tell us about your deal page', () => {
       field.input().should('exist');
     });
 
-    it('renders `amount` label, hint and input', () => {
+    it('renders only supported currencies in alphabetical order', () => {
+      const fieldId = FIELD_IDS.CURRENCY;
+
+      const field = tellUsAboutYourPolicyPage[fieldId];
+
+      field.input().select(1).should('have.value', SUPPORTED_CURRENCIES[0]);
+      field.input().select(2).should('have.value', SUPPORTED_CURRENCIES[1]);
+      field.input().select(3).should('have.value', SUPPORTED_CURRENCIES[2]);
+    });
+
+    it('renders `amount` label and input', () => {
       const fieldId = FIELD_IDS.AMOUNT;
 
-      const field = tellUsAboutYourDealPage[fieldId];
+      const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
       field.label().invoke('text').then((text) => {
         expect(text.trim()).equal(FIELDS[fieldId].LABEL);
-      });
-
-      field.hint().should('exist');
-      field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].HINT);
       });
 
       field.input().should('exist');
@@ -117,7 +126,7 @@ context('Tell us about your deal page', () => {
     it('renders `credit period` label, hint and input', () => {
       const fieldId = FIELD_IDS.CREDIT_PERIOD;
 
-      const field = tellUsAboutYourDealPage[fieldId];
+      const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
       field.labelText().invoke('text').then((text) => {
@@ -134,7 +143,7 @@ context('Tell us about your deal page', () => {
 
     it('renders `policy type` legend and radio inputs with labels and hints', () => {
       const fieldId = FIELD_IDS.POLICY_TYPE;
-      const field = tellUsAboutYourDealPage[fieldId];
+      const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.legend().invoke('text').then((text) => {
         expect(text.trim()).equal(FIELDS[fieldId].LEGEND);
@@ -160,20 +169,20 @@ context('Tell us about your deal page', () => {
     });
 
     it('should not render policy length inputs by default', () => {
-      const singlePolicyLength = tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH];
+      const singlePolicyLength = tellUsAboutYourPolicyPage[FIELD_IDS.SINGLE_POLICY_LENGTH];
       singlePolicyLength.input().should('not.be.visible');
 
-      const multiPolicyLength = tellUsAboutYourDealPage[FIELD_IDS.MULTI_POLICY_LENGTH];
+      const multiPolicyLength = tellUsAboutYourPolicyPage[FIELD_IDS.MULTI_POLICY_LENGTH];
       multiPolicyLength.input().should('not.be.visible');
     });
 
     describe('when clicking `single` policy type', () => {
       it('should reveal policy length input with label and hint', () => {
-        const singlePolicyType = tellUsAboutYourDealPage[FIELD_IDS.POLICY_TYPE].single;
+        const singlePolicyType = tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].single;
         singlePolicyType.label().click();
 
         const singlePolicyLengthId = FIELD_IDS.SINGLE_POLICY_LENGTH;
-        const singlePolicyLength = tellUsAboutYourDealPage[singlePolicyLengthId];
+        const singlePolicyLength = tellUsAboutYourPolicyPage[singlePolicyLengthId];
 
         singlePolicyLength.label().should('be.visible');
         singlePolicyLength.hint().should('be.visible');
@@ -191,11 +200,11 @@ context('Tell us about your deal page', () => {
 
     describe('when clicking `single` policy type', () => {
       it('should reveal policy length input with label and hint', () => {
-        const multiPolicyType = tellUsAboutYourDealPage[FIELD_IDS.POLICY_TYPE].multi;
+        const multiPolicyType = tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].multi;
         multiPolicyType.label().click();
 
         const multiPolicyLengthId = FIELD_IDS.MULTI_POLICY_LENGTH;
-        const multiPolicyLength = tellUsAboutYourDealPage[multiPolicyLengthId];
+        const multiPolicyLength = tellUsAboutYourPolicyPage[multiPolicyLengthId];
 
         multiPolicyLength.label().should('be.visible');
         multiPolicyLength.hint().should('be.visible');
@@ -212,7 +221,7 @@ context('Tell us about your deal page', () => {
     });
 
     it('renders a submit button', () => {
-      const button = tellUsAboutYourDealPage.submitButton();
+      const button = tellUsAboutYourPolicyPage.submitButton();
       button.should('exist');
 
       button.invoke('text').then((text) => {
@@ -223,13 +232,13 @@ context('Tell us about your deal page', () => {
 
   describe('when form is valid', () => {
     it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
-      tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].input().type('100');
-      tellUsAboutYourDealPage[FIELD_IDS.CURRENCY].input().select('AED');
-      tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].input().type('1');
-      tellUsAboutYourDealPage[FIELD_IDS.POLICY_TYPE].single.input().click();
-      tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().type('13');
+      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('100');
+      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
+      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('1');
+      tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].single.input().click();
+      tellUsAboutYourPolicyPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().type('8');
 
-      tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });

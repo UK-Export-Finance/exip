@@ -1,6 +1,6 @@
 import {
   checkYourAnswersPage,
-  tellUsAboutYourDealPage,
+  tellUsAboutYourPolicyPage,
   yourQuotePage,
 } from '../../pages';
 import {
@@ -22,6 +22,10 @@ const {
   ESTIMATED_COST,
 } = QUOTE;
 
+const submissionData = {
+  [AMOUNT]: '100',
+};
+
 context('Your quote page - non GBP currency', () => {
   before(() => {
     cy.login();
@@ -29,10 +33,10 @@ context('Your quote page - non GBP currency', () => {
     cy.submitAnswersHappyPath();
 
     // change currency to non-GBP
-    checkYourAnswersPage.summaryLists.deal[CURRENCY].changeLink().click();
+    checkYourAnswersPage.summaryLists.policy[AMOUNT].changeLink().click();
 
-    tellUsAboutYourDealPage[CURRENCY].input().select('EUR');
-    tellUsAboutYourDealPage.submitButton().click();
+    tellUsAboutYourPolicyPage[CURRENCY].input().select('EUR');
+    tellUsAboutYourPolicyPage.submitButton().click();
 
     checkYourAnswersPage.submitButton().click();
 
@@ -47,7 +51,7 @@ context('Your quote page - non GBP currency', () => {
     context('summary list', () => {
       const { summaryList } = yourQuotePage.panel;
 
-      it('renders `insured for` key, value and change link with converted currency', () => {
+      it('renders `insured for` key, value and change link with unconverted value and currency', () => {
         const row = summaryList[INSURED_FOR];
         const expectedKeyText = QUOTE_TITLES[INSURED_FOR];
 
@@ -56,8 +60,8 @@ context('Your quote page - non GBP currency', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          expect(text.trim()).includes('€');
-          expect(text.trim()).includes('converted from Euros (EUR)');
+          const expected = `€${submissionData[AMOUNT]}`;
+          expect(text.trim()).includes(expected);
         });
 
         row.changeLink().invoke('text').then((text) => {
@@ -65,7 +69,7 @@ context('Your quote page - non GBP currency', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${AMOUNT}`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 

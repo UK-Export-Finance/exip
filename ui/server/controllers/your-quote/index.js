@@ -1,33 +1,13 @@
 const CONTENT_STRINGS = require('../../content-strings');
-const {
-  TEMPLATES,
-  FIELD_IDS,
-} = require('../../constants');
-const api = require('../../api');
+const { TEMPLATES } = require('../../constants');
 const { generateQuote } = require('./generate-quote');
 const { generateQuoteSummaryList } = require('../../helpers/generate-quote-summary-list');
-const { mapQuoteToContent } = require('../../helpers/data-content-mappings/map-quote-to-content');
+const mapQuoteToContent = require('../../helpers/data-content-mappings/map-quote-to-content');
 
-const get = async (req, res) => {
+const get = (req, res) => {
   const { submittedData } = req.session;
-  const { isoCode } = submittedData.currency;
 
-  let quote;
-
-  if (isoCode !== 'GBP') {
-    const currencyExchangeRate = await api.getCurrencyExchangeRate(
-      submittedData.currency.isoCode,
-      'GBP',
-    );
-
-    const { exchangeRate } = currencyExchangeRate;
-
-    const amountInGbp = (submittedData[FIELD_IDS.AMOUNT] * exchangeRate);
-
-    quote = generateQuote(submittedData, amountInGbp);
-  } else {
-    quote = generateQuote(submittedData);
-  }
+  const quote = generateQuote(submittedData);
 
   req.session.quote = quote;
 

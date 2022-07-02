@@ -5,7 +5,7 @@ const {
   FIELD_IDS,
 } = require('../../constants');
 const api = require('../../api');
-const mapCurrencies = require('../../helpers/map-currencies');
+const { mapCurrencies } = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
 const getCurrencyByCode = require('../../helpers/get-currency-by-code');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
@@ -27,7 +27,7 @@ const PAGE_VARIABLES = {
     PRODUCT: CONTENT_STRINGS.PRODUCT,
     FOOTER: CONTENT_STRINGS.FOOTER,
     BUTTONS: CONTENT_STRINGS.BUTTONS,
-    ...CONTENT_STRINGS.PAGES.TELL_US_ABOUT_YOUR_DEAL_PAGE,
+    ...CONTENT_STRINGS.PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
   },
   FIELDS: {
     AMOUNT_CURRENCY: {
@@ -72,7 +72,7 @@ const get = async (req, res) => {
     mappedCurrencies = mapCurrencies(currencies);
   }
 
-  return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
+  return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
     ...PAGE_VARIABLES,
     BACK_LINK: req.headers.referer,
     currencies: mappedCurrencies,
@@ -96,7 +96,7 @@ const post = async (req, res) => {
       mappedCurrencies = mapCurrencies(currencies);
     }
 
-    return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
+    return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
       currencies: mappedCurrencies,
