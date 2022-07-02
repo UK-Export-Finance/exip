@@ -23,7 +23,7 @@ context('Cannot obtain UKEF cover exit page', () => {
     });
     cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
 
-    triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].no().click();
+    triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].yesInput().click();
     triedToObtainCoverPage.submitButton().click();
     cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
   });
@@ -83,5 +83,13 @@ context('Cannot obtain UKEF cover exit page', () => {
     });
 
     cannotObtainCoverPage.actions.approvedBrokerLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF);
+  });
+
+  describe('when clicking `eligibility` link', () => {
+    it('redirects to guidance page with eligibility hash tag', () => {
+      cannotObtainCoverPage.actions.eligibilityLink().click();
+
+      cy.url().should('include', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
+    });
   });
 });

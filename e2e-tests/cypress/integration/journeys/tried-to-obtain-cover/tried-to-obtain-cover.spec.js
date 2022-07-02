@@ -82,17 +82,6 @@ context('Tried to obtain private cover page', () => {
     });
   });
 
-  it('renders `not tried` radio button', () => {
-    const fieldId = FIELD_IDS.TRIED_PRIVATE_COVER;
-    const notTriedRadio = triedToObtainCoverPage[fieldId].notTried();
-    notTriedRadio.should('exist');
-
-    notTriedRadio.invoke('text').then((text) => {
-      const expected = FIELDS[fieldId].OPTIONS.NOT_TRIED.TEXT;
-      expect(text.trim()).equal(expected);
-    });
-  });
-
   it('renders a submit button', () => {
     const button = triedToObtainCoverPage.submitButton();
     button.should('exist');
@@ -122,9 +111,9 @@ context('Tried to obtain private cover page', () => {
       });
     });
 
-    describe('when submitting the answer as `yes`', () => {
+    describe('when submitting the answer as `no`', () => {
       it(`should redirect to ${ROUTES.UK_CONTENT_PERCENTAGE}`, () => {
-        triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].yes().click();
+        triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].no().click();
         triedToObtainCoverPage.submitButton().click();
 
         cy.url().should('include', ROUTES.UK_CONTENT_PERCENTAGE);

@@ -1,7 +1,6 @@
 const CONTENT_STRINGS = require('../../content-strings');
 const {
   FIELD_IDS,
-  FIELD_VALUES,
   ROUTES,
   TEMPLATES,
 } = require('../../constants');
@@ -43,7 +42,7 @@ const post = (req, res) => {
 
   const answer = req.body[FIELD_IDS.TRIED_PRIVATE_COVER];
 
-  const redirectToExitPage = (answer === 'false' || answer === FIELD_VALUES.TRIED_PRIVATE_COVER.NOT_TRIED);
+  const redirectToExitPage = (answer === 'true');
 
   if (redirectToExitPage) {
     req.flash('previousRoute', ROUTES.TRIED_TO_OBTAIN_COVER);
@@ -52,17 +51,9 @@ const post = (req, res) => {
     const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
     const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
 
-    if (answer === 'false') {
-      req.flash('exitReason', REASON.CAN_GET_PRIVATE_INSURANCE);
+    req.flash('exitReason', REASON.CAN_GET_PRIVATE_INSURANCE);
 
-      return res.redirect(ROUTES.CANNOT_OBTAIN_COVER);
-    }
-
-    if (answer === FIELD_VALUES.TRIED_PRIVATE_COVER.NOT_TRIED) {
-      req.flash('exitReason', REASON.HAVE_NOT_TRIED_PRIVATE_INSURANCE);
-
-      return res.redirect(ROUTES.CANNOT_OBTAIN_COVER);
-    }
+    return res.redirect(ROUTES.CANNOT_OBTAIN_COVER);
   }
 
   req.session.submittedData = updateSubmittedData(

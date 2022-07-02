@@ -12,10 +12,11 @@ const {
   VALID_COMPANY_BASE,
   BUYER_COUNTRY,
   TRIED_PRIVATE_COVER,
+  TRIED_PRIVATE_COVER_YES,
+  TRIED_PRIVATE_COVER_NO,
   UK_CONTENT_PERCENTAGE,
   CURRENCY,
   AMOUNT,
-  PRE_CREDIT_PERIOD,
   CREDIT_PERIOD,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
@@ -30,29 +31,43 @@ const mapCurrency = (currencyObj) => {
   return '-';
 };
 
-const mapPreCreditPeriod = (answer) => {
-  if (answer) {
-    return mapPeriodDays(answer);
-  }
-
-  return '-';
-};
-
-const mapPolicyType = (answers) => {
+const mapPolicyType = (answer) => {
   let mapped;
 
-  if (answers[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.SINGLE) {
+  if (answer === FIELD_VALUES.POLICY_TYPE.SINGLE) {
     mapped = {
       [SINGLE_POLICY_TYPE]: {
-        text: answers[POLICY_TYPE],
+        text: answer,
       },
     };
   }
 
-  if (answers[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.MULTI) {
+  if (answer === FIELD_VALUES.POLICY_TYPE.MULTI) {
     mapped = {
       [MULTI_POLICY_TYPE]: {
-        text: answers[POLICY_TYPE],
+        text: answer,
+      },
+    };
+  }
+
+  return mapped;
+};
+
+const mapTriedPrivateCover = (answer) => {
+  let mapped;
+
+  if (answer === FIELD_VALUES.TRIED_PRIVATE_COVER.YES) {
+    mapped = {
+      [TRIED_PRIVATE_COVER_YES]: {
+        text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER_YES],
+      },
+    };
+  }
+
+  if (answer === FIELD_VALUES.TRIED_PRIVATE_COVER.NO) {
+    mapped = {
+      [TRIED_PRIVATE_COVER_NO]: {
+        text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER_NO],
       },
     };
   }
@@ -68,9 +83,7 @@ const mapAnswersToContent = (answers) => {
     [BUYER_COUNTRY]: {
       text: mapCountry(answers[BUYER_COUNTRY]),
     },
-    [TRIED_PRIVATE_COVER]: {
-      text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER],
-    },
+    ...mapTriedPrivateCover(answers[TRIED_PRIVATE_COVER]),
     [UK_CONTENT_PERCENTAGE]: {
       text: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
     },
@@ -80,13 +93,10 @@ const mapAnswersToContent = (answers) => {
     [CURRENCY]: {
       text: mapCurrency(answers[CURRENCY]),
     },
-    [PRE_CREDIT_PERIOD]: {
-      text: mapPreCreditPeriod(answers[PRE_CREDIT_PERIOD]),
-    },
     [CREDIT_PERIOD]: {
       text: mapPeriodDays(answers[CREDIT_PERIOD]),
     },
-    ...mapPolicyType(answers),
+    ...mapPolicyType(answers[POLICY_TYPE]),
     ...mapPolicyLength(answers),
   };
 
@@ -95,7 +105,7 @@ const mapAnswersToContent = (answers) => {
 
 module.exports = {
   mapCurrency,
-  mapPreCreditPeriod,
   mapPolicyType,
+  mapTriedPrivateCover,
   mapAnswersToContent,
 };

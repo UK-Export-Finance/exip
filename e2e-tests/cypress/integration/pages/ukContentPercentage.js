@@ -10,10 +10,36 @@ const ukContentPercentagePage = {
   submitButton: () => cy.get('[data-cy="submit-button"]'),
   details: {
     summary: () => cy.get('[data-cy="details"] summary'),
-    item1: () => cy.get('[data-cy="details-1"]'),
-    item2: () => cy.get('[data-cy="details-2"]'),
-    item2Link: () => cy.get('[data-cy="details-2"] a'),
-    item3: () => cy.get('[data-cy="details-3"]'),
+    includes: {
+      copy: () => cy.get('[data-cy="details-includes"]'),
+      listItem1: () => cy.get('[data-cy="details-includes-item-1"]'),
+      listItem2: () => cy.get('[data-cy="details-includes-item-2"]'),
+      listItem3: () => cy.get('[data-cy="details-includes-item-3"]'),
+      listItem3Link: () => cy.get('[data-cy="details-includes-item-3-link"]'),
+      listItem4: () => cy.get('[data-cy="details-includes-item-4"]'),
+      listItem4Link: () => cy.get('[data-cy="details-includes-item-4-link"]'),
+    },
+    doesNotCount: {
+      heading: () => cy.get('[data-cy="details-does-not-count-heading"]'),
+      copy: () => cy.get('[data-cy="details-does-not-count-copy"]'),
+    },
+    staffingCosts: {
+      heading: () => cy.get('[data-cy="details-staffing-costs-heading"]'),
+      copy: () => cy.get('[data-cy="details-staffing-costs-copy"]'),
+      listItem1: () => cy.get('[data-cy="details-staffing-costs-list-item-1"]'),
+      listItem2: () => cy.get('[data-cy="details-staffing-costs-list-item-2"]'),
+      listItem3: () => cy.get('[data-cy="details-staffing-costs-list-item-3"]'),
+    },
+    nonPhysicalAssets: {
+      heading: () => cy.get('[data-cy="details-non-physical-assets-heading"]'),
+      copy: () => cy.get('[data-cy="details-non-physical-assets-copy"]'),
+    },
+    notSure: {
+      heading: () => cy.get('[data-cy="details-not-sure-heading"]'),
+      details1: () => cy.get('[data-cy="details-not-sure"]').children('[data-cy="details-1"]'),
+      details1Link: () => cy.get('[data-cy="details-not-sure"] a'),
+      details2: () => cy.get('[data-cy="details-not-sure"]').children('[data-cy="details-2"]'),
+    },
   },
 };
 

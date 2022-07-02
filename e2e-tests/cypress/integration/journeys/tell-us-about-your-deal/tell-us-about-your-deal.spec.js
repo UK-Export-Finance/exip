@@ -114,24 +114,6 @@ context('Tell us about your deal page', () => {
       field.input().should('exist');
     });
 
-    it('renders `pre credit period` label, hint and input', () => {
-      const fieldId = FIELD_IDS.PRE_CREDIT_PERIOD;
-
-      const field = tellUsAboutYourDealPage[fieldId];
-
-      field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
-      });
-
-      field.hint().should('exist');
-      field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].HINT);
-      });
-
-      field.input().should('exist');
-    });
-
     it('renders `credit period` label, hint and input', () => {
       const fieldId = FIELD_IDS.CREDIT_PERIOD;
 
@@ -243,7 +225,6 @@ context('Tell us about your deal page', () => {
     it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
       tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].input().type('100');
       tellUsAboutYourDealPage[FIELD_IDS.CURRENCY].input().select('AED');
-      tellUsAboutYourDealPage[FIELD_IDS.PRE_CREDIT_PERIOD].input().type('0');
       tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].input().type('1');
       tellUsAboutYourDealPage[FIELD_IDS.POLICY_TYPE].single.input().click();
       tellUsAboutYourDealPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().type('13');

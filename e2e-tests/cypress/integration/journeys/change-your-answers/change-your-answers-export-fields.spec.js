@@ -15,6 +15,7 @@ const {
 const {
   BUYER_COUNTRY,
   TRIED_PRIVATE_COVER,
+  TRIED_PRIVATE_COVER_NO,
   UK_CONTENT_PERCENTAGE,
 } = FIELD_IDS;
 
@@ -88,12 +89,12 @@ context('Change your answers after checking answers - Export fields', () => {
   });
 
   describe('change `Private insurance`', () => {
-    const row = checkYourAnswersPage.summaryLists.export[TRIED_PRIVATE_COVER];
+    const row = checkYourAnswersPage.summaryLists.export[TRIED_PRIVATE_COVER_NO];
 
     it(`clicking 'change' redirects to ${ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE}#${TRIED_PRIVATE_COVER}`;
+      const expectedUrl = `${ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE}#${TRIED_PRIVATE_COVER_NO}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -105,11 +106,11 @@ context('Change your answers after checking answers - Export fields', () => {
     });
 
     it('has originally submitted answer selected', () => {
-      triedToObtainCoverPage[TRIED_PRIVATE_COVER].yesInput().should('be.checked');
+      triedToObtainCoverPage[TRIED_PRIVATE_COVER].noInput().should('be.checked');
     });
 
     it('auto focuses the input', () => {
-      triedToObtainCoverPage[TRIED_PRIVATE_COVER].yesInput().should('have.focus');
+      triedToObtainCoverPage[TRIED_PRIVATE_COVER].noInput().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {

@@ -1,7 +1,7 @@
 const PRODUCT = require('./product');
 const LINKS = require('./links');
 
-const LANDING_PAGE = {
+const BEFORE_YOU_START = {
   PAGE_TITLE: PRODUCT.DESCRIPTION,
   HEADING: PRODUCT.DESCRIPTION,
   INTRO_1: 'If you\'re an exporter and having problems getting export insurance, you may be able to get cover from UK Export Finance (UKEF).',
@@ -10,13 +10,13 @@ const LANDING_PAGE = {
     INTRO: 'Use this service to',
     LIST: [
       {
+        text: 'get a non-binding quote to cover a single buyer for up to 9 months',
+      },
+      {
         text: 'check if your buyer country is covered',
       },
       {
         text: 'complete a basic eligibility check',
-      },
-      {
-        text: 'get a non-binding quote to cover a single buyer for up to 9 months',
       },
     ],
   },
@@ -52,31 +52,71 @@ const UK_CONTENT_PERCENTAGE_PAGE = {
   PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
   HEADING: 'Is at least 20% of your export contract value made up from UK goods or services?',
   DETAILS: {
-    INTRO: 'I\'m not sure',
-    ITEMS: [
-      [
+    INTRO: 'What counts as UK goods and services?',
+    INCLUDES: {
+      INTRO: 'UK goods and services includes:',
+      PRODUCTS: 'products made in the UK',
+      MANUFACTURED: 'goods manufactured outside the UK but processed or modified here - they\'ll usually still have a certificate of UK origin',
+      STAFFING_COSTS: {
+        LINK: {
+          TEXT: 'staffing costs',
+          HREF: '#',
+        },
+        TEXT: 'from services provided by UK companies',
+      },
+      NON_PHYSICAL_ASSETS: {
+        LINK: {
+          TEXT: 'non-physical assets',
+          HREF: '#',
+        },
+        TEXT: 'that are produced in the UK',
+      },
+    },
+    DOES_NOT_COUNT: {
+      HEADING: 'What does not count as UK goods and services',
+      TEXT: 'Goods or services from outside the UK that you\'ll send directly to the buyer unprocessed or unaltered in the UK are classed as foreign goods and services.',
+    },
+    STAFFING_COSTS: {
+      HEADING: 'Staffing costs',
+      TEXT: 'You can treat the following staffing costs as UK services:',
+      LIST: [
         {
-          text: 'Your export must be made up of at least 20% UK goods or services to be eligible for UKEF export insurance.',
+          TEXT: 'employees of your UK business',
+        },
+        {
+          TEXT: 'contractors supplied to work for you by a UK sub- contractor',
+        },
+        {
+          TEXT: 'staff seconded from abroad to work for you in the UK, on the export contract, and for whom you’re financially responsible',
         },
       ],
-      [
-        {
-          text: 'You can get help with this question from one of our',
-        },
-        {
-          text: 'Export Finance Managers',
-          href: '#',
-        },
-        {
-          text: 'if you want to work out if you\'re eligible or not.',
-        },
+    },
+    NON_PHYSICAL_ASSETS: {
+      HEADING: 'Non-physical assets',
+      TEXT: 'Some assets cannot have a certificate of origin as they\'re not physical goods, for example, a licence to manufacture goods in another country. But they still count as UK goods or services if they originate from the UK.',
+    },
+    NOT_SURE: {
+      HEADING: 'If you\'re not sure',
+      ITEMS: [
+        [
+          {
+            text: 'You can speak with',
+          },
+          {
+            text: 'an export finance manager',
+            href: '#',
+          },
+          {
+            text: 'if you\'d like to check whether you\'re eligible around this criteria.',
+          },
+        ],
+        [
+          {
+            text: 'We\'ll also calculate this thoroughly if you go on to make a full application.',
+          },
+        ],
       ],
-      [
-        {
-          text: 'We\'ll also calculate this amount exactly with you later if you decide to go ahead and make a full application.',
-        },
-      ],
-    ],
+    },
   },
 };
 
@@ -103,8 +143,7 @@ const CANNOT_OBTAIN_COVER_PAGE = {
     UNSUPPORTED_BUYER_COUNTRY_1: 'your buyer is based in',
     UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
     CAN_GET_PRIVATE_INSURANCE: 'you\'re able to get insurance for this export from companies in the private sector.',
-    HAVE_NOT_TRIED_PRIVATE_INSURANCE: 'you\'ve not yet tried to get this from private insurers.',
-    NOT_ENOUGH_UK_GOODS_OR_SERVICES: 'your export does not contain enough UK goods or services.',
+    NOT_ENOUGH_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from  at least 20% UK goods or services.',
   },
   ACTIONS: {
     INTRO: 'You can:',
@@ -112,13 +151,13 @@ const CANNOT_OBTAIN_COVER_PAGE = {
       TEXT: 'read about',
       LINK: {
         TEXT: 'eligibility',
-        HREF: '#',
+        HREF: '/#eligibility',
       },
     },
     CONTACT_APPROVED_BROKER: {
       LINK: {
         TEXT: 'contact an approved broker',
-        HREF: '#',
+        HREF: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
       },
       TEXT: 'who may be able to help you get insurance from the private sector, if you`ve not tried already',
     },
@@ -214,7 +253,7 @@ const PROBLEM_WITH_SERVICE_PAGE = {
 };
 
 module.exports = {
-  LANDING_PAGE,
+  BEFORE_YOU_START,
   COMPANY_BASED_PAGE,
   BUYER_BASED_PAGE,
   TRIED_TO_OBTAIN_COVER_PAGE,

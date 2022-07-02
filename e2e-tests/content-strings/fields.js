@@ -21,18 +21,26 @@ const FIELDS = {
   [FIELD_IDS.TRIED_PRIVATE_COVER]: {
     OPTIONS: {
       YES: {
+        ID: FIELD_IDS.TRIED_PRIVATE_COVER_YES,
         VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.YES,
-        TEXT: 'Yes, I\'ve been turned down',
+        TEXT: 'Yes',
       },
       NO: {
+        ID: FIELD_IDS.TRIED_PRIVATE_COVER_NO,
         VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.NO,
-        TEXT: 'No, I\'ve been offered private insurance',
-      },
-      NOT_TRIED: {
-        VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.NOT_TRIED,
-        TEXT: 'I\'ve not tried',
+        TEXT: 'No',
       },
     },
+    SUMMARY: {
+      TITLE: 'Unable to get private insurance?',
+    },
+  },
+  [FIELD_IDS.TRIED_PRIVATE_COVER_YES]: {
+    SUMMARY: {
+      TITLE: 'Unable to get private insurance?',
+    },
+  },
+  [FIELD_IDS.TRIED_PRIVATE_COVER_NO]: {
     SUMMARY: {
       TITLE: 'Unable to get private insurance?',
     },
@@ -58,14 +66,6 @@ const FIELDS = {
     HINT: 'The amount your buyer owes will probably rise and fall during the export contract. You only need to enter the highest amount it\'ll be at any single point.',
     SUMMARY: {
       TITLE: 'Maximum amount owed',
-    },
-  },
-  [FIELD_IDS.PRE_CREDIT_PERIOD]: {
-    LEGEND: 'Enter any pre-credit period cover you need (optional)',
-    LABEL: 'Pre-credit period',
-    HINT: 'A pre-credit period insures you for costs you\'ll incur in this export contract before you supply goods or services to your buyer.',
-    SUMMARY: {
-      TITLE: 'Pre-credit period',
     },
   },
   [FIELD_IDS.CREDIT_PERIOD]: {

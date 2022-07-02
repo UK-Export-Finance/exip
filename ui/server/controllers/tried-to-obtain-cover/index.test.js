@@ -2,7 +2,6 @@ const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
 const {
   FIELD_IDS,
-  FIELD_VALUES,
   ROUTES,
   TEMPLATES,
 } = require('../../constants');
@@ -64,9 +63,9 @@ describe('controllers/tried-to-obtain-cover', () => {
       });
     });
 
-    describe('when the submitted answer is `no`/false', () => {
+    describe('when the submitted answer is `yes`/true', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.TRIED_PRIVATE_COVER] = 'false';
+        req.body[FIELD_IDS.TRIED_PRIVATE_COVER] = 'true';
       });
 
       it(`should redirect to ${ROUTES.CANNOT_OBTAIN_COVER}`, () => {
@@ -85,30 +84,9 @@ describe('controllers/tried-to-obtain-cover', () => {
       });
     });
 
-    describe(`when the submitted answer is '${FIELD_VALUES.TRIED_PRIVATE_COVER.NOT_TRIED}'`, () => {
-      beforeEach(() => {
-        req.body[FIELD_IDS.TRIED_PRIVATE_COVER] = FIELD_VALUES.TRIED_PRIVATE_COVER.NOT_TRIED;
-      });
-
-      it(`should redirect to ${ROUTES.CANNOT_OBTAIN_COVER}`, () => {
-        controller.post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.CANNOT_OBTAIN_COVER);
-      });
-
-      it('should add previousRoute and exitReason to req.flash', () => {
-        controller.post(req, res);
-
-        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.TRIED_TO_OBTAIN_COVER);
-
-        const expectedReason = CONTENT_STRINGS.PAGES.CANNOT_OBTAIN_COVER_PAGE.REASON.HAVE_NOT_TRIED_PRIVATE_INSURANCE;
-        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
-      });
-    });
-
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.TRIED_PRIVATE_COVER]: 'true',
+        [FIELD_IDS.TRIED_PRIVATE_COVER]: 'false',
       };
 
       beforeEach(() => {

@@ -12,7 +12,6 @@ const {
   TRIED_PRIVATE_COVER,
   CURRENCY,
   AMOUNT,
-  PRE_CREDIT_PERIOD,
   CREDIT_PERIOD,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -31,7 +30,7 @@ export const completeAndSubmitCompanyForm = () => {
 };
 
 export const completeAndSubmitTriedToObtainCoverForm = () => {
-  triedToObtainCoverPage[TRIED_PRIVATE_COVER].yes().click();
+  triedToObtainCoverPage[TRIED_PRIVATE_COVER].no().click();
   triedToObtainCoverPage.submitButton().click();
 };
 
@@ -43,7 +42,6 @@ export const completeAndSubmitUkContentForm = () => {
 export const compmleteAndSubmitTellUsAboutYourDealForm = () => {
   tellUsAboutYourDealPage[CURRENCY].input().select('GBP');
   tellUsAboutYourDealPage[AMOUNT].input().type('100');
-  tellUsAboutYourDealPage[PRE_CREDIT_PERIOD].input().type('1');
   tellUsAboutYourDealPage[CREDIT_PERIOD].input().type('2');
   tellUsAboutYourDealPage[POLICY_TYPE].single.input().click();
   tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().type('13');

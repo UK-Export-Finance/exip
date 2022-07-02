@@ -8,7 +8,7 @@ import CONSTANTS from '../../../../constants';
 const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
 const { FIELD_IDS, ROUTES } = CONSTANTS;
 
-context('Tried to obtain private cover page - answer `not tried`', () => {
+context('Tried to obtain private cover page - answer `yes`', () => {
   before(() => {
     cy.visit(ROUTES.TRIED_TO_OBTAIN_COVER, {
       auth: {
@@ -18,7 +18,7 @@ context('Tried to obtain private cover page - answer `not tried`', () => {
     });
     cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
 
-    triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].notTried().click();
+    triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].yes().click();
     triedToObtainCoverPage.submitButton().click();
   });
 
@@ -28,7 +28,7 @@ context('Tried to obtain private cover page - answer `not tried`', () => {
 
   it('renders a specific reason', () => {
     cannotObtainCoverPage.reason().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.HAVE_NOT_TRIED_PRIVATE_INSURANCE}`;
+      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.CAN_GET_PRIVATE_INSURANCE}`;
 
       expect(text.trim()).equal(expected);
     });

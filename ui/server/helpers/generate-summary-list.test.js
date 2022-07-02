@@ -8,6 +8,7 @@ const {
   PAGES,
   FIELDS,
   LINKS,
+  SUMMARY_ANSWERS,
 } = require('../content-strings');
 const {
   FIELD_GROUPS,
@@ -18,11 +19,13 @@ const {
 const { mockAnswers } = require('../test-mocks');
 
 const {
+  TRIED_PRIVATE_COVER_YES,
+  TRIED_PRIVATE_COVER_NO,
+  UK_CONTENT_PERCENTAGE,
   SINGLE_POLICY_TYPE,
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
-  PRE_CREDIT_PERIOD,
 } = FIELD_IDS;
 
 describe('sever/helpers/generate-summary-list', () => {
@@ -37,9 +40,9 @@ describe('sever/helpers/generate-summary-list', () => {
   describe('generateFieldGroups', () => {
     it('should map over each field group with value from submittedData', () => {
       const mockAnswersContent = mapAnswersToContent(mockAnswers);
+      delete mockAnswersContent[TRIED_PRIVATE_COVER_NO];
       delete mockAnswersContent[SINGLE_POLICY_TYPE];
       delete mockAnswersContent[SINGLE_POLICY_LENGTH];
-      delete mockAnswersContent[PRE_CREDIT_PERIOD];
 
       const result = generateFieldGroups(mockAnswersContent);
       const fieldGroups = FIELD_GROUPS;
@@ -65,7 +68,73 @@ describe('sever/helpers/generate-summary-list', () => {
         })),
       };
 
+      // UK_CONTENT_PERCENTAGE is dynamically added after a previous field.
+      expected.EXPORT_DETAILS = [
+        ...expected.EXPORT_DETAILS,
+        {
+          ID: UK_CONTENT_PERCENTAGE,
+          ...FIELDS[UK_CONTENT_PERCENTAGE],
+          CHANGE_ROUTE: ROUTES.UK_CONTENT_PERCENTAGE_CHANGE,
+          value: {
+            text: mockAnswersContent[UK_CONTENT_PERCENTAGE].text,
+          },
+        },
+      ];
+
       expect(result).toEqual(expected);
+    });
+
+    describe('when `unable to get private cover` is true', () => {
+      it(`should add a ${TRIED_PRIVATE_COVER_YES} object to EXPORT_DETAILS`, () => {
+        const mockAnswersContent = {
+          ...mapAnswersToContent(mockAnswers),
+          [TRIED_PRIVATE_COVER_YES]: {
+            text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER_YES],
+          },
+        };
+        delete mockAnswersContent[TRIED_PRIVATE_COVER_NO];
+
+        const result = generateFieldGroups(mockAnswersContent);
+
+        const expectedField = result.EXPORT_DETAILS[result.EXPORT_DETAILS.length - 2];
+
+        const expected = {
+          ID: TRIED_PRIVATE_COVER_YES,
+          ...FIELDS[TRIED_PRIVATE_COVER_YES],
+          CHANGE_ROUTE: ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE,
+          value: {
+            text: mockAnswersContent[TRIED_PRIVATE_COVER_YES].text,
+          },
+        };
+
+        expect(expectedField).toEqual(expected);
+      });
+    });
+
+    describe('when `unable to get private cover` is false', () => {
+      it(`should add a ${TRIED_PRIVATE_COVER_NO} object to EXPORT_DETAILS`, () => {
+        const mockAnswersContent = {
+          ...mapAnswersToContent(mockAnswers),
+          [TRIED_PRIVATE_COVER_NO]: {
+            text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER_NO],
+          },
+        };
+
+        const result = generateFieldGroups(mockAnswersContent);
+
+        const expectedField = result.EXPORT_DETAILS[result.EXPORT_DETAILS.length - 2];
+
+        const expected = {
+          ID: TRIED_PRIVATE_COVER_NO,
+          ...FIELDS[TRIED_PRIVATE_COVER_NO],
+          CHANGE_ROUTE: ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE,
+          value: {
+            text: mockAnswersContent[TRIED_PRIVATE_COVER_NO].text,
+          },
+        };
+
+        expect(expectedField).toEqual(expected);
+      });
     });
 
     describe('when policy type is single', () => {
@@ -76,8 +145,6 @@ describe('sever/helpers/generate-summary-list', () => {
             text: FIELD_VALUES.POLICY_TYPE.SINGLE,
           },
         };
-
-        delete mockAnswersContent[PRE_CREDIT_PERIOD];
 
         const result = generateFieldGroups(mockAnswersContent);
 
@@ -103,8 +170,6 @@ describe('sever/helpers/generate-summary-list', () => {
             text: FIELD_VALUES.POLICY_TYPE.SINGLE,
           },
         };
-
-        delete mockAnswersContent[PRE_CREDIT_PERIOD];
 
         const result = generateFieldGroups(mockAnswersContent);
 
@@ -136,7 +201,6 @@ describe('sever/helpers/generate-summary-list', () => {
         };
 
         delete mockAnswersContent[SINGLE_POLICY_TYPE];
-        delete mockAnswersContent[PRE_CREDIT_PERIOD];
 
         const result = generateFieldGroups(mockAnswersContent);
 
@@ -166,7 +230,6 @@ describe('sever/helpers/generate-summary-list', () => {
         };
 
         delete mockAnswersContent[SINGLE_POLICY_TYPE];
-        delete mockAnswersContent[PRE_CREDIT_PERIOD];
 
         const result = generateFieldGroups(mockAnswersContent);
 
@@ -178,32 +241,6 @@ describe('sever/helpers/generate-summary-list', () => {
           CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
           value: {
             text: mockAnswersContent[MULTI_POLICY_LENGTH].text,
-          },
-        };
-
-        expect(expectedField).toEqual(expected);
-      });
-    });
-
-    describe(`when ${PRE_CREDIT_PERIOD} is in submittedData`, () => {
-      it(`should add a ${PRE_CREDIT_PERIOD} object to DEAL_DETAILS`, () => {
-        const mockAnswersContent = {
-          ...mapAnswersToContent(mockAnswers),
-          [PRE_CREDIT_PERIOD]: {
-            text: 1,
-          },
-        };
-
-        const result = generateFieldGroups(mockAnswersContent);
-
-        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 1];
-
-        const expected = {
-          ID: PRE_CREDIT_PERIOD,
-          ...FIELDS[PRE_CREDIT_PERIOD],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
-          value: {
-            text: mockAnswersContent[PRE_CREDIT_PERIOD].text,
           },
         };
 

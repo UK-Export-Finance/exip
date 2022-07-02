@@ -3,11 +3,10 @@ import { FIELD_IDS } from '../../../constants';
 const {
   VALID_COMPANY_BASE,
   BUYER_COUNTRY,
-  TRIED_PRIVATE_COVER,
+  TRIED_PRIVATE_COVER_NO,
   UK_CONTENT_PERCENTAGE,
   CURRENCY,
   AMOUNT,
-  PRE_CREDIT_PERIOD,
   CREDIT_PERIOD,
   SINGLE_POLICY_TYPE,
   MULTI_POLICY_TYPE,
@@ -35,10 +34,10 @@ const checkYourAnswersPage = {
         value: () => cy.get(`.${BUYER_COUNTRY}-value`),
         changeLink: () => cy.get(`[data-cy="${BUYER_COUNTRY}-change-link"]`),
       },
-      [TRIED_PRIVATE_COVER]: {
-        key: () => cy.get(`.${TRIED_PRIVATE_COVER}-key`),
-        value: () => cy.get(`.${TRIED_PRIVATE_COVER}-value`),
-        changeLink: () => cy.get(`[data-cy="${TRIED_PRIVATE_COVER}-change-link"]`),
+      [TRIED_PRIVATE_COVER_NO]: {
+        key: () => cy.get(`.${TRIED_PRIVATE_COVER_NO}-key`),
+        value: () => cy.get(`.${TRIED_PRIVATE_COVER_NO}-value`),
+        changeLink: () => cy.get(`[data-cy="${TRIED_PRIVATE_COVER_NO}-change-link"]`),
       },
       [UK_CONTENT_PERCENTAGE]: {
         key: () => cy.get(`.${UK_CONTENT_PERCENTAGE}-key`),
@@ -82,11 +81,6 @@ const checkYourAnswersPage = {
         key: () => cy.get(`.${MULTI_POLICY_LENGTH}-key`),
         value: () => cy.get(`.${MULTI_POLICY_LENGTH}-value`),
         changeLink: () => cy.get(`[data-cy="${MULTI_POLICY_LENGTH}-change-link"]`),
-      },
-      [PRE_CREDIT_PERIOD]: {
-        key: () => cy.get(`.${PRE_CREDIT_PERIOD}-key`),
-        value: () => cy.get(`.${PRE_CREDIT_PERIOD}-value`),
-        changeLink: () => cy.get(`[data-cy="${PRE_CREDIT_PERIOD}-change-link"]`),
       },
     },
   },
