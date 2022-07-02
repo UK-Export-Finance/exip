@@ -6,12 +6,12 @@ const {
 const mapCountry = require('./map-country');
 const mapPeriodDays = require('./map-period-days');
 const mapPolicyLength = require('./map-policy-length');
+const formatCurrency = require('../format-currency');
 const {
   FIELD_IDS,
   FIELD_VALUES,
 } = require('../../constants');
 const { SUMMARY_ANSWERS } = require('../../content-strings');
-const formatCurrency = require('../format-currency');
 const { mockAnswers } = require('../../test-mocks');
 
 const {
@@ -22,6 +22,7 @@ const {
   TRIED_PRIVATE_COVER_NO,
   UK_CONTENT_PERCENTAGE,
   AMOUNT,
+  CURRENCY,
   CREDIT_PERIOD,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
@@ -112,13 +113,13 @@ describe('sever/helpers/map-answers-to-content', () => {
           text: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
         },
         [AMOUNT]: {
-          text: formatCurrency(mockAnswers[AMOUNT], 'GBP'),
-        },
-        [CREDIT_PERIOD]: {
-          text: mapPeriodDays(mockAnswers[CREDIT_PERIOD]),
+          text: formatCurrency(mockAnswers[AMOUNT], mockAnswers[CURRENCY].isoCode),
         },
         ...mapPolicyType(mockAnswers[POLICY_TYPE]),
         ...mapPolicyLength(mockAnswers),
+        [CREDIT_PERIOD]: {
+          text: mapPeriodDays(mockAnswers[CREDIT_PERIOD]),
+        },
       };
 
       expect(result).toEqual(expected);

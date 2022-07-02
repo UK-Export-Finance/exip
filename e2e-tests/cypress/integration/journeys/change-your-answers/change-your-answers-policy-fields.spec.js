@@ -11,13 +11,11 @@ const {
 } = CONSTANTS;
 
 const {
-  CURRENCY,
   AMOUNT,
   CREDIT_PERIOD,
 } = FIELD_IDS;
 
 const submissionData = {
-  [CURRENCY]: 'GBP',
   [AMOUNT]: '100',
   [CREDIT_PERIOD]: '2',
 };
@@ -73,49 +71,6 @@ context('Change your answers after checking answers - Policy fields', () => {
       row.value().invoke('text').then((text) => {
         const expected = '£200.00';
 
-        expect(text.trim()).equal(expected);
-      });
-    });
-  });
-
-  describe('change `Currency`', () => {
-    let row = checkYourAnswersPage.summaryLists.policy[CURRENCY];
-
-    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
-      row.changeLink().click();
-
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CURRENCY}`;
-      cy.url().should('include', expectedUrl);
-    });
-
-    it('renders a back button with correct link', () => {
-      partials.backLink().should('exist');
-
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('has originally submitted answer', () => {
-      const expectedValue = submissionData[CURRENCY];
-      tellUsAboutYourPolicyPage[CURRENCY].inputOptionSelected().contains(expectedValue);
-    });
-
-    it('auto focuses the input', () => {
-      tellUsAboutYourPolicyPage[CURRENCY].input().should('have.focus');
-    });
-
-    it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourPolicyPage[CURRENCY].input().select('EUR');
-      tellUsAboutYourPolicyPage.submitButton().click();
-
-      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
-    });
-
-    it('renders the new answer in `Check your answers` page', () => {
-      row = checkYourAnswersPage.summaryLists.policy[CURRENCY];
-
-      row.value().invoke('text').then((text) => {
-        const expected = 'Euros (EUR)';
         expect(text.trim()).equal(expected);
       });
     });

@@ -16,6 +16,7 @@ const {
   TRIED_PRIVATE_COVER_NO,
   UK_CONTENT_PERCENTAGE,
   AMOUNT,
+  CURRENCY,
   CREDIT_PERIOD,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
@@ -79,13 +80,13 @@ const mapAnswersToContent = (answers) => {
       text: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
     },
     [AMOUNT]: {
-      text: formatCurrency(answers[AMOUNT], 'GBP'),
-    },
-    [CREDIT_PERIOD]: {
-      text: mapPeriodDays(answers[CREDIT_PERIOD]),
+      text: formatCurrency(answers[AMOUNT], answers[CURRENCY].isoCode),
     },
     ...mapPolicyType(answers[POLICY_TYPE]),
     ...mapPolicyLength(answers),
+    [CREDIT_PERIOD]: {
+      text: mapPeriodDays(answers[CREDIT_PERIOD]),
+    },
   };
 
   return mapped;

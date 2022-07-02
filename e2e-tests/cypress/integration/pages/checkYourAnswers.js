@@ -5,7 +5,6 @@ const {
   BUYER_COUNTRY,
   TRIED_PRIVATE_COVER_NO,
   UK_CONTENT_PERCENTAGE,
-  CURRENCY,
   AMOUNT,
   CREDIT_PERIOD,
   SINGLE_POLICY_TYPE,
@@ -44,11 +43,6 @@ const checkYourAnswersPage = {
     },
     policy: {
       heading: () => cy.get('[data-cy="summaryList-heading-policy"]'),
-      [CURRENCY]: {
-        key: () => cy.get(`.${CURRENCY}-key`),
-        value: () => cy.get(`.${CURRENCY}-value`),
-        changeLink: () => cy.get(`[data-cy="${CURRENCY}-change-link"]`),
-      },
       [AMOUNT]: {
         key: () => cy.get(`.${AMOUNT}-key`),
         value: () => cy.get(`.${AMOUNT}-value`),

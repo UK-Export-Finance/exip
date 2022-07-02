@@ -10,6 +10,7 @@ const { mockQuote } = require('../../test-mocks');
 
 const {
   BUYER_COUNTRY,
+  AMOUNT,
   QUOTE,
 } = FIELD_IDS;
 
@@ -68,7 +69,7 @@ describe('sever/helpers/map-quote-to-content', () => {
       const result = mapQuoteToContent(mockQuote);
 
       const expected = {
-        [INSURED_FOR]: mapInsuredFor(mockQuote[INSURED_FOR]),
+        [AMOUNT]: mapInsuredFor(mockQuote[INSURED_FOR]),
         [PREMIUM_RATE_PERCENTAGE]: {
           text: `${mockQuote[PREMIUM_RATE_PERCENTAGE]}%`,
         },

@@ -46,7 +46,7 @@ const generateFields = (answers) => {
       id: AMOUNT,
       title: QUOTE_TITLES[INSURED_FOR],
       value: {
-        html: insuredForFieldValue(answers[INSURED_FOR]),
+        html: insuredForFieldValue(answers[AMOUNT]),
       },
       renderChangeLink: true,
       changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,

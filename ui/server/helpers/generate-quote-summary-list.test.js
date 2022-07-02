@@ -76,7 +76,7 @@ describe('sever/helpers/generate-quote-summary-list', () => {
           id: AMOUNT,
           title: QUOTE_TITLES[INSURED_FOR],
           value: {
-            html: insuredForFieldValue(mockQuoteContent[INSURED_FOR]),
+            html: insuredForFieldValue(mockQuoteContent[AMOUNT]),
           },
           renderChangeLink: true,
           changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,

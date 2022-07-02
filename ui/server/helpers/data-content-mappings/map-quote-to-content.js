@@ -5,6 +5,7 @@ const formatCurrency = require('../format-currency');
 
 const {
   BUYER_COUNTRY,
+  AMOUNT,
   QUOTE,
 } = FIELD_IDS;
 
@@ -33,7 +34,7 @@ const mapInsuredFor = (field) => {
 
 const mapQuoteToContent = (quote) => {
   const mapped = {
-    [INSURED_FOR]: mapInsuredFor(quote[INSURED_FOR]),
+    [AMOUNT]: mapInsuredFor(quote[INSURED_FOR]),
     [PREMIUM_RATE_PERCENTAGE]: {
       text: `${quote[PREMIUM_RATE_PERCENTAGE]}%`,
     },

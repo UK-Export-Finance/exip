@@ -20,7 +20,6 @@ context('Check your answers page', () => {
     BUYER_COUNTRY,
     TRIED_PRIVATE_COVER_NO,
     UK_CONTENT_PERCENTAGE,
-    CURRENCY,
     AMOUNT,
     CREDIT_PERIOD,
     SINGLE_POLICY_TYPE,
@@ -30,7 +29,6 @@ context('Check your answers page', () => {
   const submissionData = {
     [BUYER_COUNTRY]: 'France',
     [UK_CONTENT_PERCENTAGE]: '50',
-    [CURRENCY]: 'GBP',
     [AMOUNT]: '100',
     [CREDIT_PERIOD]: '2',
     [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
@@ -210,29 +208,6 @@ context('Check your answers page', () => {
       });
 
       const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
-    });
-
-    it('renders `Currency` key, value and change link', () => {
-      const row = list[CURRENCY];
-      const expectedKeyText = FIELDS[CURRENCY].SUMMARY.TITLE;
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
-
-      row.value().invoke('text').then((text) => {
-        const expected = `UK Sterling (${submissionData[CURRENCY]})`;
-
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
-
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CURRENCY}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 

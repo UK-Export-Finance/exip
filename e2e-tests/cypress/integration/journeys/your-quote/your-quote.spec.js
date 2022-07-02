@@ -36,10 +36,11 @@ const {
 const submissionData = {
   [BUYER_COUNTRY]: 'France',
   [UK_CONTENT_PERCENTAGE]: '50',
+  [AMOUNT]: '100',
   [CURRENCY]: 'GBP',
-  [CREDIT_PERIOD]: '2',
   [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
   [SINGLE_POLICY_LENGTH]: '13',
+  [CREDIT_PERIOD]: '2',
 };
 
 // TODO: test user testing scenarios
@@ -58,14 +59,14 @@ context('Your quote page', () => {
     Cypress.Cookies.preserveOnce('_csrf');
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 80,
-  //     'best-practices': 100,
-  //     seo: 75,
-  //   });
-  // });
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 80,
+      'best-practices': 100,
+      seo: 75,
+    });
+  });
 
   context('panel/quote', () => {
     it('renders `you can apply` heading', () => {
