@@ -50,26 +50,26 @@ context('Tell us about the policy you need page - form validation', () => {
         `Error: ${ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY}`,
       );
 
-      // credit period
-      checkText(
-        partials.errorSummaryListItems().eq(2),
-        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY,
-      );
-
-      checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY}`,
-      );
-
       // policy type
       checkText(
-        partials.errorSummaryListItems().eq(3),
+        partials.errorSummaryListItems().eq(2),
         ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE],
       );
 
       checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE]}`,
+      );
+
+      // credit period
+      checkText(
+        partials.errorSummaryListItems().eq(3),
+        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY,
+      );
+
+      checkText(
+        tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY}`,
       );
     });
   });
@@ -114,7 +114,7 @@ context('Tell us about the policy you need page - form validation', () => {
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
-        partials.errorSummaryListItems().eq(2),
+        partials.errorSummaryListItems().eq(3),
         ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER,
       );
 
@@ -131,7 +131,7 @@ context('Tell us about the policy you need page - form validation', () => {
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
-        partials.errorSummaryListItems().eq(2),
+        partials.errorSummaryListItems().eq(3),
         ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_WHOLE_NUMBER,
       );
 
@@ -148,7 +148,7 @@ context('Tell us about the policy you need page - form validation', () => {
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
-        partials.errorSummaryListItems().eq(2),
+        partials.errorSummaryListItems().eq(3),
         ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].BELOW_MINIMUM,
       );
 

@@ -32,7 +32,7 @@ context('Tell us about the policy you need page - policy type & length validatio
         tellUsAboutYourPolicyPage.submitButton().click();
 
         checkText(
-          partials.errorSummaryListItems().eq(3),
+          partials.errorSummaryListItems().eq(2),
           ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY,
         );
 
@@ -48,7 +48,7 @@ context('Tell us about the policy you need page - policy type & length validatio
           tellUsAboutYourPolicyPage.submitButton().click();
 
           checkText(
-            partials.errorSummaryListItems().eq(3),
+            partials.errorSummaryListItems().eq(2),
             ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER,
           );
 
@@ -65,7 +65,7 @@ context('Tell us about the policy you need page - policy type & length validatio
           tellUsAboutYourPolicyPage.submitButton().click();
 
           checkText(
-            partials.errorSummaryListItems().eq(3),
+            partials.errorSummaryListItems().eq(2),
             ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_WHOLE_NUMBER,
           );
 
@@ -82,7 +82,7 @@ context('Tell us about the policy you need page - policy type & length validatio
           tellUsAboutYourPolicyPage.submitButton().click();
 
           checkText(
-            partials.errorSummaryListItems().eq(3),
+            partials.errorSummaryListItems().eq(2),
             ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM,
           );
 
@@ -99,7 +99,7 @@ context('Tell us about the policy you need page - policy type & length validatio
           tellUsAboutYourPolicyPage.submitButton().click();
 
           checkText(
-            partials.errorSummaryListItems().eq(3),
+            partials.errorSummaryListItems().eq(2),
             ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM,
           );
 
@@ -122,7 +122,7 @@ context('Tell us about the policy you need page - policy type & length validatio
         tellUsAboutYourPolicyPage.submitButton().click();
 
         checkText(
-          partials.errorSummaryListItems().eq(3),
+          partials.errorSummaryListItems().eq(2),
           ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].IS_EMPTY,
         );
 
@@ -138,7 +138,7 @@ context('Tell us about the policy you need page - policy type & length validatio
           tellUsAboutYourPolicyPage.submitButton().click();
 
           checkText(
-            partials.errorSummaryListItems().eq(3),
+            partials.errorSummaryListItems().eq(2),
             ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_NUMBER,
           );
 
@@ -155,7 +155,7 @@ context('Tell us about the policy you need page - policy type & length validatio
           tellUsAboutYourPolicyPage.submitButton().click();
 
           checkText(
-            partials.errorSummaryListItems().eq(3),
+            partials.errorSummaryListItems().eq(2),
             ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_WHOLE_NUMBER,
           );
 
@@ -172,7 +172,7 @@ context('Tell us about the policy you need page - policy type & length validatio
           tellUsAboutYourPolicyPage.submitButton().click();
 
           checkText(
-            partials.errorSummaryListItems().eq(3),
+            partials.errorSummaryListItems().eq(2),
             ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].BELOW_MINIMUM,
           );
 
@@ -189,7 +189,7 @@ context('Tell us about the policy you need page - policy type & length validatio
           tellUsAboutYourPolicyPage.submitButton().click();
 
           checkText(
-            partials.errorSummaryListItems().eq(3),
+            partials.errorSummaryListItems().eq(2),
             ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].ABOVE_MAXIMUM,
           );
 

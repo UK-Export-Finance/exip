@@ -53,10 +53,10 @@ const FIELDS = {
     },
   },
   [FIELD_IDS.AMOUNT_CURRENCY]: {
-    LEGEND: 'What\'s the maximum amount excluding VAT your buyer will owe you at any single point during the export contract?',
+    LEGEND: 'How much do you want to be insured for?',
   },
   [FIELD_IDS.CURRENCY]: {
-    LABEL: 'Select the currency your buyer will pay you in.',
+    LABEL: 'Select currency (Pounds sterling, Euro or US dollars)',
   },
   [FIELD_IDS.AMOUNT]: {
     LABEL: 'Amount',
@@ -66,7 +66,7 @@ const FIELDS = {
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
     LABEL: 'What credit period do you have with your buyer?',
-    HINT: 'For example, they may have 30, 60 or 90 days to pay you.',
+    HINT: 'This starts from when you dispatch the goods to when you’re paid. For example, your buyer may have 30, 60 or 90 days to pay you.',
     SUMMARY: {
       TITLE: 'Credit period',
     },
@@ -103,14 +103,14 @@ const FIELDS = {
   },
   [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
-    HINT: 'Calculate this from the date your export is delivered to your buyer. Do not include any shipping period, as UKEF cannot insure this.',
+    HINT: 'Calculate this from the date you start working on the contract until you receive final payment. The maximum is 9 months.',
     SUMMARY: {
       TITLE: 'Policy length',
     },
   },
   [FIELD_IDS.MULTI_POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
-    HINT: 'Enter policy length in months. The maximum is 12 months.',
+    HINT: 'Calculate this from the date you start working on the contract until you receive final payment. The maximum is 9 months.',
     SUMMARY: {
       TITLE: 'Policy length',
     },

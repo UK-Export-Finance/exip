@@ -17,7 +17,6 @@ const tellUsAboutYourPolicyPage = {
   },
   [FIELD_IDS.AMOUNT]: {
     label: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-label"]`),
-    hint: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-hint"]`),
     input: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-input"]`),
     inputOption: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-input"] option`),
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-error-message"]`),

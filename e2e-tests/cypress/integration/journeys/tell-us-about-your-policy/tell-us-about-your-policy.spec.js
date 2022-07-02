@@ -96,7 +96,7 @@ context('Tell us about the policy you need page', () => {
       field.input().should('exist');
     });
 
-    it('renders `amount` label, hint and input', () => {
+    it('renders `amount` label and input', () => {
       const fieldId = FIELD_IDS.AMOUNT;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
@@ -104,11 +104,6 @@ context('Tell us about the policy you need page', () => {
       field.label().should('exist');
       field.label().invoke('text').then((text) => {
         expect(text.trim()).equal(FIELDS[fieldId].LABEL);
-      });
-
-      field.hint().should('exist');
-      field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].HINT);
       });
 
       field.input().should('exist');
