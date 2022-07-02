@@ -188,7 +188,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/policy-length',
   describe('when there are no validation errors', () => {
     it('should return the already provided errors', () => {
       mockBody[FIELD_IDS.POLICY_TYPE] = FIELD_VALUES.POLICY_TYPE.MULTI;
-      mockBody[FIELD_IDS.MULTI_POLICY_LENGTH] = '10';
+      mockBody[FIELD_IDS.MULTI_POLICY_LENGTH] = '8';
 
       const result = rule(mockBody, mockErrors);
 
