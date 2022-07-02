@@ -21,14 +21,26 @@ const FIELDS = {
   [FIELD_IDS.TRIED_PRIVATE_COVER]: {
     OPTIONS: {
       YES: {
+        ID: FIELD_IDS.TRIED_PRIVATE_COVER_YES,
         VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.YES,
         TEXT: 'Yes',
       },
       NO: {
+        ID: FIELD_IDS.TRIED_PRIVATE_COVER_NO,
         VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.NO,
         TEXT: 'No',
       },
     },
+    SUMMARY: {
+      TITLE: 'Unable to get private insurance?',
+    },
+  },
+  [FIELD_IDS.TRIED_PRIVATE_COVER_YES]: {
+    SUMMARY: {
+      TITLE: 'Unable to get private insurance?',
+    },
+  },
+  [FIELD_IDS.TRIED_PRIVATE_COVER_NO]: {
     SUMMARY: {
       TITLE: 'Unable to get private insurance?',
     },

@@ -23,7 +23,7 @@ context('Cannot obtain UKEF cover exit page', () => {
     });
     cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
 
-    triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].no().click();
+    triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].yesInput().click();
     triedToObtainCoverPage.submitButton().click();
     cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
   });

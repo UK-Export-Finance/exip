@@ -16,7 +16,7 @@ const {
 const mockAnswers = {
   [VALID_COMPANY_BASE]: true,
   [BUYER_COUNTRY]: 'France',
-  [TRIED_PRIVATE_COVER]: true,
+  [TRIED_PRIVATE_COVER]: false,
   [UK_CONTENT_PERCENTAGE]: 30,
   [CURRENCY]: 'GBP',
   [AMOUNT]: 123456,

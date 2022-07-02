@@ -1,6 +1,7 @@
 const {
   mapCurrency,
   mapPolicyType,
+  mapTriedPrivateCover,
   mapAnswersToContent,
 } = require('./map-answers-to-content');
 const mapCountry = require('./map-country');
@@ -18,6 +19,8 @@ const {
   VALID_COMPANY_BASE,
   BUYER_COUNTRY,
   TRIED_PRIVATE_COVER,
+  TRIED_PRIVATE_COVER_YES,
+  TRIED_PRIVATE_COVER_NO,
   UK_CONTENT_PERCENTAGE,
   CURRENCY,
   AMOUNT,
@@ -51,15 +54,12 @@ describe('sever/helpers/map-answers-to-content', () => {
   describe('mapPolicyType', () => {
     describe('when policy type is single', () => {
       it(`should return an object with ${SINGLE_POLICY_TYPE}`, () => {
-        const mockAnswersSinglePolicyType = {
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-        };
-
-        const result = mapPolicyType(mockAnswersSinglePolicyType);
+        const mockAnswer = FIELD_VALUES.POLICY_TYPE.SINGLE;
+        const result = mapPolicyType(mockAnswer);
 
         const expected = {
           [SINGLE_POLICY_TYPE]: {
-            text: mockAnswersSinglePolicyType[POLICY_TYPE],
+            text: mockAnswer,
           },
         };
 
@@ -69,15 +69,47 @@ describe('sever/helpers/map-answers-to-content', () => {
 
     describe('when policy type is single', () => {
       it(`should return an object with ${MULTI_POLICY_TYPE}`, () => {
-        const mockAnswersMultiPolicyType = {
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-        };
+        const mockAnswer = FIELD_VALUES.POLICY_TYPE.MULTI;
 
-        const result = mapPolicyType(mockAnswersMultiPolicyType);
+        const result = mapPolicyType(mockAnswer);
 
         const expected = {
           [MULTI_POLICY_TYPE]: {
-            text: mockAnswersMultiPolicyType[POLICY_TYPE],
+            text: mockAnswer,
+          },
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
+
+  describe('mapTriedPrivateCover', () => {
+    describe('when answer is yes', () => {
+      it(`should return an object with ${TRIED_PRIVATE_COVER_YES} and mapped summary answer`, () => {
+        const mockAnswer = FIELD_VALUES.TRIED_PRIVATE_COVER.YES;
+
+        const result = mapTriedPrivateCover(mockAnswer);
+
+        const expected = {
+          [TRIED_PRIVATE_COVER_YES]: {
+            text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER_YES],
+          },
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when answer is no', () => {
+      it(`should return an object with ${TRIED_PRIVATE_COVER_NO} and mapped summary answer`, () => {
+        const mockAnswer = FIELD_VALUES.TRIED_PRIVATE_COVER.NO;
+
+        const result = mapTriedPrivateCover(mockAnswer);
+
+        const expected = {
+          [TRIED_PRIVATE_COVER_NO]: {
+            text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER_NO],
           },
         };
 
@@ -97,9 +129,7 @@ describe('sever/helpers/map-answers-to-content', () => {
         [BUYER_COUNTRY]: {
           text: mapCountry(mockAnswers[BUYER_COUNTRY]),
         },
-        [TRIED_PRIVATE_COVER]: {
-          text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER],
-        },
+        ...mapTriedPrivateCover(mockAnswers[TRIED_PRIVATE_COVER]),
         [UK_CONTENT_PERCENTAGE]: {
           text: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
         },
@@ -112,7 +142,7 @@ describe('sever/helpers/map-answers-to-content', () => {
         [CREDIT_PERIOD]: {
           text: mapPeriodDays(mockAnswers[CREDIT_PERIOD]),
         },
-        ...mapPolicyType(mockAnswers),
+        ...mapPolicyType(mockAnswers[POLICY_TYPE]),
         ...mapPolicyLength(mockAnswers),
       };
 

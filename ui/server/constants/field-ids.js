@@ -2,6 +2,8 @@ const FIELD_IDS = {
   VALID_COMPANY_BASE: 'validCompanyBase',
   BUYER_COUNTRY: 'buyerCountry',
   TRIED_PRIVATE_COVER: 'triedPrivateCover',
+  TRIED_PRIVATE_COVER_YES: 'triedPrivateCoverYes',
+  TRIED_PRIVATE_COVER_NO: 'triedPrivateCoverNo',
   COUNTRY: 'country',
   UK_CONTENT_PERCENTAGE: 'ukContentPercentage',
   AMOUNT_CURRENCY: 'amountAndCurrency',

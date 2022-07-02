@@ -31,7 +31,6 @@
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
     {{ govukRadios({
-      idPrefix: FIELD.ID,
       name: FIELD.ID,
       fieldset: {
         legend: {
@@ -40,6 +39,7 @@
       },
       items: [
         {
+          id: FIELD.OPTIONS.YES.ID,
           value: FIELD.OPTIONS.YES.VALUE,
           text: FIELD.OPTIONS.YES.TEXT,
           label: {
@@ -53,6 +53,7 @@
           checked: submittedValues[FIELD.ID] === FIELD.OPTIONS.YES.VALUE
         },
         {
+          id: FIELD.OPTIONS.NO.ID,
           value: FIELD.OPTIONS.NO.VALUE,
           text: FIELD.OPTIONS.NO.TEXT,
           label: {
