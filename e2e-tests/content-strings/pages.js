@@ -129,9 +129,8 @@ const TELL_US_ABOUT_YOUR_DEAL_PAGE = {
 const CHECK_YOUR_ANSWERS_PAGE = {
   PAGE_TITLE: 'Check your answers before you submit',
   HEADING: 'Check your answers before you submit',
-  GROUP_HEADING_COMPANY: 'Company details',
   GROUP_HEADING_EXPORT: 'Export details',
-  GROUP_HEADING_DEAL: 'Deal details',
+  GROUP_HEADING_DEAL: 'Policy details',
 };
 
 const CANNOT_OBTAIN_COVER_PAGE = {

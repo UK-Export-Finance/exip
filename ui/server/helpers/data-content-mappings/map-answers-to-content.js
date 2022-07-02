@@ -15,21 +15,12 @@ const {
   TRIED_PRIVATE_COVER_YES,
   TRIED_PRIVATE_COVER_NO,
   UK_CONTENT_PERCENTAGE,
-  CURRENCY,
   AMOUNT,
   CREDIT_PERIOD,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
   MULTI_POLICY_TYPE,
 } = FIELD_IDS;
-
-const mapCurrency = (currencyObj) => {
-  if (currencyObj) {
-    return `${currencyObj.name} (${currencyObj.isoCode})`;
-  }
-
-  return '-';
-};
 
 const mapPolicyType = (answer) => {
   let mapped;
@@ -90,9 +81,6 @@ const mapAnswersToContent = (answers) => {
     [AMOUNT]: {
       text: formatCurrency(answers[AMOUNT], 'GBP'),
     },
-    [CURRENCY]: {
-      text: mapCurrency(answers[CURRENCY]),
-    },
     [CREDIT_PERIOD]: {
       text: mapPeriodDays(answers[CREDIT_PERIOD]),
     },
@@ -104,7 +92,6 @@ const mapAnswersToContent = (answers) => {
 };
 
 module.exports = {
-  mapCurrency,
   mapPolicyType,
   mapTriedPrivateCover,
   mapAnswersToContent,

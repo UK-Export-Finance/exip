@@ -1,5 +1,4 @@
 const {
-  mapCurrency,
   mapPolicyType,
   mapTriedPrivateCover,
   mapAnswersToContent,
@@ -22,7 +21,6 @@ const {
   TRIED_PRIVATE_COVER_YES,
   TRIED_PRIVATE_COVER_NO,
   UK_CONTENT_PERCENTAGE,
-  CURRENCY,
   AMOUNT,
   CREDIT_PERIOD,
   POLICY_TYPE,
@@ -31,26 +29,6 @@ const {
 } = FIELD_IDS;
 
 describe('sever/helpers/map-answers-to-content', () => {
-  describe('mapCurrency', () => {
-    it('should return a formatted string', () => {
-      const currency = mockAnswers[FIELD_IDS.CURRENCY];
-
-      const result = mapCurrency(currency);
-
-      const expected = `${currency.name} (${currency.isoCode})`;
-
-      expect(result).toEqual(expected);
-    });
-
-    describe('when there is no object/values', () => {
-      it('should return a dash', () => {
-        const result = mapCurrency();
-
-        expect(result).toEqual('-');
-      });
-    });
-  });
-
   describe('mapPolicyType', () => {
     describe('when policy type is single', () => {
       it(`should return an object with ${SINGLE_POLICY_TYPE}`, () => {
@@ -135,9 +113,6 @@ describe('sever/helpers/map-answers-to-content', () => {
         },
         [AMOUNT]: {
           text: formatCurrency(mockAnswers[AMOUNT], 'GBP'),
-        },
-        [CURRENCY]: {
-          text: mapCurrency(mockAnswers[CURRENCY]),
         },
         [CREDIT_PERIOD]: {
           text: mapPeriodDays(mockAnswers[CREDIT_PERIOD]),

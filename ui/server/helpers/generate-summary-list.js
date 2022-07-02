@@ -17,10 +17,10 @@ const {
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
+  CREDIT_PERIOD,
 } = FIELD_IDS;
 
 const {
-  COMPANY_DETAILS,
   EXPORT_DETAILS,
   DEAL_DETAILS,
 } = FIELD_GROUPS;
@@ -29,19 +29,15 @@ const {
  * generateFieldGroups
  * Create all field groups for govukSummaryList
  * Add additional fields depending on the submitted answers and design ordering requirements:
- * - Tried private cover (yes/no)
+ * - Tried private cover (must have the correct yes/no input ID)
  * - UK goods/services
  * - Policy type depending on the Policy type (single/multi)
  * - Policy length depending on the Policy type (single/multi)
- * - Policy type & length must have the correct single/multi input ID.
+ * - Policy type & length (must have the correct single/multi input ID).
+ * - Credit periood
  */
 const generateFieldGroups = (submittedData) => {
   const fieldGroups = { ...FIELD_GROUPS };
-
-  fieldGroups.COMPANY_DETAILS = COMPANY_DETAILS.map((field) => ({
-    ...field,
-    value: submittedData[field.ID],
-  }));
 
   fieldGroups.EXPORT_DETAILS = EXPORT_DETAILS.map((field) => ({
     ...field,
@@ -137,6 +133,18 @@ const generateFieldGroups = (submittedData) => {
     ];
   }
 
+  fieldGroups.DEAL_DETAILS = [
+    ...fieldGroups.DEAL_DETAILS,
+    {
+      ID: CREDIT_PERIOD,
+      ...FIELDS[CREDIT_PERIOD],
+      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+      value: {
+        text: submittedData[CREDIT_PERIOD].text,
+      },
+    },
+  ];
+
   return fieldGroups;
 };
 
@@ -177,10 +185,6 @@ const generateSummaryList = (submittedData) => {
   const fieldGroups = generateFieldGroups(submittedData);
 
   const summaryList = {
-    COMPANY: {
-      GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_COMPANY,
-      ROWS: generateSummaryListRows(fieldGroups.COMPANY_DETAILS, submittedData),
-    },
     EXPORT: {
       GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
       ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, submittedData),
