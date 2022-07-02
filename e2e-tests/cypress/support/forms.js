@@ -44,6 +44,6 @@ export const compmleteAndSubmitTellUsAboutYourPolicyForm = () => {
   tellUsAboutYourPolicyPage[AMOUNT].input().type('100');
   tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('2');
   tellUsAboutYourPolicyPage[POLICY_TYPE].single.input().click();
-  tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().type('13');
+  tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().type('9');
   tellUsAboutYourPolicyPage.submitButton().click();
 };

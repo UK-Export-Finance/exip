@@ -22,7 +22,7 @@ const {
 
 const submissionData = {
   [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-  [POLICY_LENGTH]: '13',
+  [POLICY_LENGTH]: '9',
 };
 
 context('Change your answers after checking answers - Policy type and length', () => {
@@ -68,13 +68,13 @@ context('Change your answers after checking answers - Policy type and length', (
 
   it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
     tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().click();
-    tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().type('10');
+    tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().type('8');
     tellUsAboutYourPolicyPage.submitButton().click();
 
     cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
   });
 
-  it('renders the new answers in `Check your answers` page (multi policy, 10 months)', () => {
+  it('renders the new answers in `Check your answers` page (multi policy, 8 months)', () => {
     row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_TYPE];
 
     row.value().invoke('text').then((text) => {
@@ -86,7 +86,7 @@ context('Change your answers after checking answers - Policy type and length', (
     row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];
 
     row.value().invoke('text').then((text) => {
-      const expected = '10 months';
+      const expected = '8 months';
 
       expect(text.trim()).equal(expected);
     });
@@ -117,19 +117,19 @@ context('Change your answers after checking answers - Policy type and length', (
       tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().should('have.focus');
     });
 
-    it('has previously submitted `policy length` (10 months)', () => {
-      tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().should('have.attr', 'value', '10');
+    it('has previously submitted `policy length` (8 months)', () => {
+      tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().should('have.attr', 'value', '8');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
       tellUsAboutYourPolicyPage[POLICY_TYPE].single.input().click();
-      tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().clear().type('15');
+      tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().clear().type('5');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });
 
-    it('renders the new answers in `Check your answers` page (single policy, 15 months)', () => {
+    it('renders the new answers in `Check your answers` page (single policy, 5 months)', () => {
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
 
       row.value().invoke('text').then((text) => {
@@ -141,7 +141,7 @@ context('Change your answers after checking answers - Policy type and length', (
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_LENGTH];
 
       row.value().invoke('text').then((text) => {
-        const expected = '15 months';
+        const expected = '5 months';
 
         expect(text.trim()).equal(expected);
       });
@@ -170,7 +170,7 @@ context('Change your answers after checking answers - Policy type and length', (
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
       tellUsAboutYourPolicyPage[POLICY_TYPE].single.input().click();
-      tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().clear().type('15');
+      tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().clear().type('7');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
@@ -207,7 +207,7 @@ context('Change your answers after checking answers - Policy type and length', (
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
       tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().click();
-      tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().clear().type('10');
+      tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().clear().type('5');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
