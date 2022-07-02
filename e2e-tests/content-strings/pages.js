@@ -219,7 +219,7 @@ const YOUR_QUOTE_PAGE = {
       ITEMS: [
         [
           {
-            text: 'They act as an agent between you and UKEF.  They can also help you with the application process.',
+            text: 'They act as an agent between you and UKEF. They can also help you with the application process.',
           },
         ],
         [
