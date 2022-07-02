@@ -65,7 +65,7 @@ context('Change your answers after checking answers - Export fields', () => {
       // autocomplete component does not have a focused attribute, instead it has a class.
       // this is added with client side JS.
       // we have to wait to ensure that client side js has been executed.
-      cy.wait(2000); // eslint-disable-line cypress/no-unnecessary-waiting
+      cy.wait(3000); // eslint-disable-line cypress/no-unnecessary-waiting
 
       buyerBasedPage.searchInput().should('have.class', 'autocomplete__input--focused');
     });
