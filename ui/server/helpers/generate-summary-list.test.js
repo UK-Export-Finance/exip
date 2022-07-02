@@ -55,7 +55,7 @@ describe('sever/helpers/generate-summary-list', () => {
             text: mockAnswersContent[field.ID].text,
           },
         })),
-        DEAL_DETAILS: fieldGroups.DEAL_DETAILS.map((field) => ({
+        POLICY_DETAILS: fieldGroups.POLICY_DETAILS.map((field) => ({
           ...field,
           value: {
             text: mockAnswersContent[field.ID].text,
@@ -77,8 +77,8 @@ describe('sever/helpers/generate-summary-list', () => {
       ];
 
       // CREDIT_PERIOD is dynamically added after a previous field.
-      expected.DEAL_DETAILS = [
-        ...expected.DEAL_DETAILS,
+      expected.POLICY_DETAILS = [
+        ...expected.POLICY_DETAILS,
         {
           ID: CREDIT_PERIOD,
           ...FIELDS[CREDIT_PERIOD],
@@ -146,7 +146,7 @@ describe('sever/helpers/generate-summary-list', () => {
     });
 
     describe('when policy type is single', () => {
-      it(`should add a ${SINGLE_POLICY_TYPE} object to DEAL_DETAILS`, () => {
+      it(`should add a ${SINGLE_POLICY_TYPE} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockAnswers),
           [SINGLE_POLICY_TYPE]: {
@@ -156,7 +156,7 @@ describe('sever/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 3];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 3];
 
         const expected = {
           ID: SINGLE_POLICY_TYPE,
@@ -170,7 +170,7 @@ describe('sever/helpers/generate-summary-list', () => {
         expect(expectedField).toEqual(expected);
       });
 
-      it(`should add a ${SINGLE_POLICY_LENGTH} object to DEAL_DETAILS`, () => {
+      it(`should add a ${SINGLE_POLICY_LENGTH} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockAnswers),
           ...mockAnswers,
@@ -181,7 +181,7 @@ describe('sever/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 2];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 2];
 
         const expected = {
           ID: SINGLE_POLICY_LENGTH,
@@ -197,7 +197,7 @@ describe('sever/helpers/generate-summary-list', () => {
     });
 
     describe('when policy type is multi', () => {
-      it(`should add a ${MULTI_POLICY_TYPE} object to DEAL_DETAILS`, () => {
+      it(`should add a ${MULTI_POLICY_TYPE} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockAnswers),
           [MULTI_POLICY_TYPE]: {
@@ -212,7 +212,7 @@ describe('sever/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 3];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 3];
 
         const expected = {
           ID: MULTI_POLICY_TYPE,
@@ -226,7 +226,7 @@ describe('sever/helpers/generate-summary-list', () => {
         expect(expectedField).toEqual(expected);
       });
 
-      it(`should add a ${MULTI_POLICY_LENGTH} object to DEAL_DETAILS with single policy length field values`, () => {
+      it(`should add a ${MULTI_POLICY_LENGTH} object to POLICY_DETAILS with single policy length field values`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockAnswers),
           [MULTI_POLICY_TYPE]: {
@@ -241,7 +241,7 @@ describe('sever/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.DEAL_DETAILS[result.DEAL_DETAILS.length - 2];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 2];
 
         const expected = {
           ID: MULTI_POLICY_LENGTH,
@@ -310,8 +310,8 @@ describe('sever/helpers/generate-summary-list', () => {
           ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, mockAnswers),
         },
         DEAL: {
-          GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_DEAL,
-          ROWS: generateSummaryListRows(fieldGroups.DEAL_DETAILS, mockAnswers),
+          GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_POLICY,
+          ROWS: generateSummaryListRows(fieldGroups.POLICY_DETAILS, mockAnswers),
         },
       };
 

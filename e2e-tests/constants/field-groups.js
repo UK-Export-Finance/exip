@@ -21,7 +21,7 @@ const FIELD_GROUPS = {
       CHANGE_ROUTE: ROUTES.COMPANY_BASED_CHANGE,
     },
   ],
-  DEAL_DETAILS: [
+  POLICY_DETAILS: [
     {
       ID: AMOUNT,
       ...FIELDS[AMOUNT],

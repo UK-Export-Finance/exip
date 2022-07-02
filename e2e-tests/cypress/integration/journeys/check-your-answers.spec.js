@@ -186,7 +186,7 @@ context('Check your answers page', () => {
 
     it('renders a heading', () => {
       list.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_DEAL);
+        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_POLICY);
       });
     });
 

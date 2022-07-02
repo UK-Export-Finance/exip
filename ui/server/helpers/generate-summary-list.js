@@ -22,7 +22,7 @@ const {
 
 const {
   EXPORT_DETAILS,
-  DEAL_DETAILS,
+  POLICY_DETAILS,
 } = FIELD_GROUPS;
 
 /*
@@ -44,7 +44,7 @@ const generateFieldGroups = (submittedData) => {
     value: submittedData[field.ID],
   }));
 
-  fieldGroups.DEAL_DETAILS = DEAL_DETAILS.map((field) => ({
+  fieldGroups.POLICY_DETAILS = POLICY_DETAILS.map((field) => ({
     ...field,
     value: submittedData[field.ID],
   }));
@@ -90,8 +90,8 @@ const generateFieldGroups = (submittedData) => {
   ];
 
   if (submittedData[SINGLE_POLICY_TYPE]) {
-    fieldGroups.DEAL_DETAILS = [
-      ...fieldGroups.DEAL_DETAILS,
+    fieldGroups.POLICY_DETAILS = [
+      ...fieldGroups.POLICY_DETAILS,
       {
         ID: SINGLE_POLICY_TYPE,
         ...FIELDS[SINGLE_POLICY_TYPE],
@@ -112,8 +112,8 @@ const generateFieldGroups = (submittedData) => {
   }
 
   if (submittedData[MULTI_POLICY_TYPE]) {
-    fieldGroups.DEAL_DETAILS = [
-      ...fieldGroups.DEAL_DETAILS,
+    fieldGroups.POLICY_DETAILS = [
+      ...fieldGroups.POLICY_DETAILS,
       {
         ID: MULTI_POLICY_TYPE,
         ...FIELDS[MULTI_POLICY_TYPE],
@@ -133,8 +133,8 @@ const generateFieldGroups = (submittedData) => {
     ];
   }
 
-  fieldGroups.DEAL_DETAILS = [
-    ...fieldGroups.DEAL_DETAILS,
+  fieldGroups.POLICY_DETAILS = [
+    ...fieldGroups.POLICY_DETAILS,
     {
       ID: CREDIT_PERIOD,
       ...FIELDS[CREDIT_PERIOD],
@@ -190,8 +190,8 @@ const generateSummaryList = (submittedData) => {
       ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, submittedData),
     },
     DEAL: {
-      GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_DEAL,
-      ROWS: generateSummaryListRows(fieldGroups.DEAL_DETAILS, submittedData),
+      GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_POLICY,
+      ROWS: generateSummaryListRows(fieldGroups.POLICY_DETAILS, submittedData),
     },
   };
 

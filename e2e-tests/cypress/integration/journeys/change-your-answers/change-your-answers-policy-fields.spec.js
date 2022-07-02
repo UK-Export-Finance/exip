@@ -22,7 +22,7 @@ const submissionData = {
   [CREDIT_PERIOD]: '2',
 };
 
-context('Change your answers after checking answers - Deal fields', () => {
+context('Change your answers after checking answers - Policy fields', () => {
   before(() => {
     cy.login();
     cy.submitAnswersHappyPath();
