@@ -2,7 +2,7 @@ const CONTENT_STRINGS = require('../../content-strings');
 const { TEMPLATES } = require('../../constants');
 const { generateQuote } = require('./generate-quote');
 const { generateQuoteSummaryList } = require('../../helpers/generate-quote-summary-list');
-const { mapQuoteToContent } = require('../../helpers/data-content-mappings/map-quote-to-content');
+const mapQuoteToContent = require('../../helpers/data-content-mappings/map-quote-to-content');
 
 const get = (req, res) => {
   const { submittedData } = req.session;

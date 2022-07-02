@@ -1,14 +1,10 @@
 const {
-  insuredForFieldValue,
   generateFields,
   generateSummaryListRows,
   generateQuoteSummaryList,
 } = require('./generate-quote-summary-list');
-const { mapQuoteToContent } = require('./data-content-mappings/map-quote-to-content');
-const {
-  LINKS,
-  QUOTE_TITLES,
-} = require('../content-strings');
+const mapQuoteToContent = require('./data-content-mappings/map-quote-to-content');
+const { QUOTE_TITLES } = require('../content-strings');
 const {
   FIELD_IDS,
   ROUTES,
@@ -32,37 +28,6 @@ const {
 } = QUOTE;
 
 describe('sever/helpers/generate-quote-summary-list', () => {
-  describe('insuredForFieldValue', () => {
-    describe('when field value has additionalText', () => {
-      it('should return element with field text and additionalText', () => {
-        const mockValue = {
-          text: 'Test',
-          additionalText: 'Mock',
-        };
-
-        const result = insuredForFieldValue(mockValue);
-
-        const expected = `<span>${mockValue.text}<br> <small>${mockValue.additionalText}</small></span>`;
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when field value does NOT have additionalText', () => {
-      it('should return element with field text', () => {
-        const mockValue = {
-          text: 'Test',
-        };
-
-        const result = insuredForFieldValue(mockValue);
-
-        const expected = `<span>${mockValue.text}</span>`;
-
-        expect(result).toEqual(expected);
-      });
-    });
-  });
-
   describe('generateFields', () => {
     it('should map over each field group with value from submittedData', () => {
       const mockQuoteContent = mapQuoteToContent(mockQuote);
@@ -76,7 +41,7 @@ describe('sever/helpers/generate-quote-summary-list', () => {
           id: AMOUNT,
           title: QUOTE_TITLES[INSURED_FOR],
           value: {
-            html: insuredForFieldValue(mockQuoteContent[AMOUNT]),
+            text: mockQuoteContent[AMOUNT].text,
           },
           renderChangeLink: true,
           changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
@@ -209,49 +174,6 @@ describe('sever/helpers/generate-quote-summary-list', () => {
 
       const expected = expectedObj(fields[1]);
       expect(result[1]).toEqual(expected);
-    });
-
-    describe('when a field has html value instead of text and renderChangeLink', () => {
-      it('returns an object with value.html and change link', () => {
-        const mockQuoteContent = mapQuoteToContent(mockQuote);
-
-        const fields = generateFields(mockQuoteContent);
-
-        const result = generateSummaryListRows(
-          fields,
-        );
-
-        const expectedObj = (field) => {
-          const initObj = expectedObjBase(field);
-
-          const mapped = {
-            ...initObj,
-            value: {
-              ...initObj.value,
-              html: field.value.html,
-            },
-            actions: {
-              items: [
-                {
-                  href: `${field.changeRoute}#${field.id}`,
-                  text: LINKS.CHANGE,
-                  visuallyHiddenText: field.title,
-                  attributes: {
-                    'data-cy': `${field.id}-change-link`,
-                  },
-                  classes: 'ukef-white-text govuk-link--no-visited-state',
-                },
-              ],
-            },
-          };
-          return mapped;
-        };
-
-        expect(result).toBeInstanceOf(Array);
-
-        const expected = expectedObj(fields[0]);
-        expect(result[0]).toEqual(expected);
-      });
     });
   });
 

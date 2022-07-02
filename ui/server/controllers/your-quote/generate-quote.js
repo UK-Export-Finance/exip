@@ -38,12 +38,10 @@ const mockCalculation = (submittedCountryCode) => {
   };
 };
 
-const generateQuote = (submittedData, amountInGbp) => {
+const generateQuote = (submittedData) => {
   const quote = {
-    [QUOTE.INSURED_FOR]: {
-      amount: (amountInGbp || submittedData[AMOUNT]),
-      convertedFrom: submittedData[CURRENCY],
-    },
+    [AMOUNT]: submittedData[AMOUNT],
+    [CURRENCY]: submittedData[CURRENCY],
     ...mockCalculation(submittedData[BUYER_COUNTRY].isoCode),
     [QUOTE.BUYER_LOCATION]: submittedData[BUYER_COUNTRY],
     [POLICY_TYPE]: submittedData[POLICY_TYPE],
