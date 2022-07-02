@@ -1,5 +1,5 @@
 import {
-  tellUsAboutYourDealPage,
+  tellUsAboutYourPolicyPage,
   checkYourAnswersPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -35,12 +35,12 @@ context('Change your answers after checking answers - Policy fields', () => {
   });
 
   describe('change `Amount`', () => {
-    let row = checkYourAnswersPage.summaryLists.deal[AMOUNT];
+    let row = checkYourAnswersPage.summaryLists.policy[AMOUNT];
 
-    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${AMOUNT}`;
+      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -53,22 +53,22 @@ context('Change your answers after checking answers - Policy fields', () => {
 
     it('has originally submitted answer', () => {
       const expectedValue = submissionData[AMOUNT];
-      tellUsAboutYourDealPage[AMOUNT].input().should('have.attr', 'value', expectedValue);
+      tellUsAboutYourPolicyPage[AMOUNT].input().should('have.attr', 'value', expectedValue);
     });
 
     it('auto focuses the input', () => {
-      tellUsAboutYourDealPage[AMOUNT].input().should('have.focus');
+      tellUsAboutYourPolicyPage[AMOUNT].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourDealPage[AMOUNT].input().clear().type('200');
-      tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourPolicyPage[AMOUNT].input().clear().type('200');
+      tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in `Check your answers` page', () => {
-      row = checkYourAnswersPage.summaryLists.deal[AMOUNT];
+      row = checkYourAnswersPage.summaryLists.policy[AMOUNT];
 
       row.value().invoke('text').then((text) => {
         const expected = '£200.00';
@@ -79,12 +79,12 @@ context('Change your answers after checking answers - Policy fields', () => {
   });
 
   describe('change `Currency`', () => {
-    let row = checkYourAnswersPage.summaryLists.deal[CURRENCY];
+    let row = checkYourAnswersPage.summaryLists.policy[CURRENCY];
 
-    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${CURRENCY}`;
+      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CURRENCY}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -97,22 +97,22 @@ context('Change your answers after checking answers - Policy fields', () => {
 
     it('has originally submitted answer', () => {
       const expectedValue = submissionData[CURRENCY];
-      tellUsAboutYourDealPage[CURRENCY].inputOptionSelected().contains(expectedValue);
+      tellUsAboutYourPolicyPage[CURRENCY].inputOptionSelected().contains(expectedValue);
     });
 
     it('auto focuses the input', () => {
-      tellUsAboutYourDealPage[CURRENCY].input().should('have.focus');
+      tellUsAboutYourPolicyPage[CURRENCY].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourDealPage[CURRENCY].input().select('EUR');
-      tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourPolicyPage[CURRENCY].input().select('EUR');
+      tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in `Check your answers` page', () => {
-      row = checkYourAnswersPage.summaryLists.deal[CURRENCY];
+      row = checkYourAnswersPage.summaryLists.policy[CURRENCY];
 
       row.value().invoke('text').then((text) => {
         const expected = 'Euros (EUR)';
@@ -122,12 +122,12 @@ context('Change your answers after checking answers - Policy fields', () => {
   });
 
   describe('change `Credit period`', () => {
-    let row = checkYourAnswersPage.summaryLists.deal[CREDIT_PERIOD];
+    let row = checkYourAnswersPage.summaryLists.policy[CREDIT_PERIOD];
 
-    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${CREDIT_PERIOD}`;
+      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -140,22 +140,22 @@ context('Change your answers after checking answers - Policy fields', () => {
 
     it('has originally submitted answer', () => {
       const expectedValue = submissionData[CREDIT_PERIOD];
-      tellUsAboutYourDealPage[CREDIT_PERIOD].input().should('have.attr', 'value', expectedValue);
+      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().should('have.attr', 'value', expectedValue);
     });
 
     it('auto focuses the input', () => {
-      tellUsAboutYourDealPage[CREDIT_PERIOD].input().should('have.focus');
+      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourDealPage[CREDIT_PERIOD].input().clear().type('3');
-      tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().clear().type('3');
+      tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in `Check your answers` page', () => {
-      row = checkYourAnswersPage.summaryLists.deal[CREDIT_PERIOD];
+      row = checkYourAnswersPage.summaryLists.policy[CREDIT_PERIOD];
 
       row.value().invoke('text').then((text) => {
         const expected = '3 days';

@@ -63,7 +63,7 @@ context('Check your answers page', () => {
       expect(text.trim()).equal(LINKS.BACK);
     });
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.TELL_US_ABOUT_YOUR_DEAL}`;
+    const expected = `${Cypress.config('baseUrl')}${ROUTES.TELL_US_ABOUT_YOUR_POLICY}`;
     partials.backLink().should('have.attr', 'href', expected);
   });
 
@@ -181,8 +181,8 @@ context('Check your answers page', () => {
     });
   });
 
-  context('deal summary list', () => {
-    const list = checkYourAnswersPage.summaryLists.deal;
+  context('policy summary list', () => {
+    const list = checkYourAnswersPage.summaryLists.policy;
 
     it('renders a heading', () => {
       list.heading().invoke('text').then((text) => {
@@ -209,7 +209,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${AMOUNT}`;
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -232,7 +232,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${CURRENCY}`;
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CURRENCY}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -253,7 +253,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_TYPE}`;
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${SINGLE_POLICY_TYPE}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -276,7 +276,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${SINGLE_POLICY_LENGTH}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -299,7 +299,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${CREDIT_PERIOD}`;
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });

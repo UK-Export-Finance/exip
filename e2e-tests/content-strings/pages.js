@@ -120,9 +120,9 @@ const UK_CONTENT_PERCENTAGE_PAGE = {
   },
 };
 
-const TELL_US_ABOUT_YOUR_DEAL_PAGE = {
-  PAGE_TITLE: 'Tell us about your deal',
-  HEADING: 'Tell us about your deal',
+const TELL_US_ABOUT_YOUR_POLICY_PAGE = {
+  PAGE_TITLE: 'Tell us about the policy you need',
+  HEADING: 'Tell us about the policy you need',
   DESCRIPTION: 'To give you a quote, we need some more information.',
 };
 
@@ -257,7 +257,7 @@ module.exports = {
   BUYER_BASED_PAGE,
   TRIED_TO_OBTAIN_COVER_PAGE,
   UK_CONTENT_PERCENTAGE_PAGE,
-  TELL_US_ABOUT_YOUR_DEAL_PAGE,
+  TELL_US_ABOUT_YOUR_POLICY_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,
   CANNOT_OBTAIN_COVER_PAGE,
   YOUR_QUOTE_PAGE,

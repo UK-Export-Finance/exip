@@ -14,8 +14,8 @@ const ROUTES = {
   UK_CONTENT_PERCENTAGE: '/uk-content-percentage',
   UK_CONTENT_PERCENTAGE_CHANGE: '/uk-content-percentage/change',
 
-  TELL_US_ABOUT_YOUR_DEAL: '/tell-us-about-your-deal',
-  TELL_US_ABOUT_YOUR_DEAL_CHANGE: '/tell-us-about-your-deal/change',
+  TELL_US_ABOUT_YOUR_POLICY: '/tell-us-about-policy',
+  TELL_US_ABOUT_YOUR_POLICY_CHANGE: '/tell-us-about-policy/change',
 
   CHECK_YOUR_ANSWERS: '/check-your-answers',
 

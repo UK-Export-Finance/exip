@@ -92,10 +92,10 @@ describe('controllers/uk-content-percentage', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL}`, () => {
+      it(`should redirect to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY}`, () => {
         controller.post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_DEAL);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_POLICY);
       });
 
       describe('when the url\'s last substring is `change`', () => {

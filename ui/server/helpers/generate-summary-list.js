@@ -95,7 +95,7 @@ const generateFieldGroups = (submittedData) => {
       {
         ID: SINGLE_POLICY_TYPE,
         ...FIELDS[SINGLE_POLICY_TYPE],
-        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
         value: {
           text: submittedData[SINGLE_POLICY_TYPE].text,
         },
@@ -103,7 +103,7 @@ const generateFieldGroups = (submittedData) => {
       {
         ID: SINGLE_POLICY_LENGTH,
         ...FIELDS[SINGLE_POLICY_LENGTH],
-        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
         value: {
           text: submittedData[SINGLE_POLICY_LENGTH].text,
         },
@@ -117,7 +117,7 @@ const generateFieldGroups = (submittedData) => {
       {
         ID: MULTI_POLICY_TYPE,
         ...FIELDS[MULTI_POLICY_TYPE],
-        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
         value: {
           text: submittedData[MULTI_POLICY_TYPE].text,
         },
@@ -125,7 +125,7 @@ const generateFieldGroups = (submittedData) => {
       {
         ID: MULTI_POLICY_LENGTH,
         ...FIELDS[MULTI_POLICY_LENGTH],
-        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
         value: {
           text: submittedData[MULTI_POLICY_LENGTH].text,
         },
@@ -138,7 +138,7 @@ const generateFieldGroups = (submittedData) => {
     {
       ID: CREDIT_PERIOD,
       ...FIELDS[CREDIT_PERIOD],
-      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
       value: {
         text: submittedData[CREDIT_PERIOD].text,
       },
@@ -189,7 +189,7 @@ const generateSummaryList = (submittedData) => {
       GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
       ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, submittedData),
     },
-    DEAL: {
+    POLICY: {
       GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_POLICY,
       ROWS: generateSummaryListRows(fieldGroups.POLICY_DETAILS, submittedData),
     },

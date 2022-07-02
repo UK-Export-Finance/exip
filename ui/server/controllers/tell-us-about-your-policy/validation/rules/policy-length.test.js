@@ -3,7 +3,7 @@ const { FIELD_IDS, FIELD_VALUES } = require('../../../../constants');
 const { ERROR_MESSAGES } = require('../../../../content-strings');
 const generateValidationErrors = require('../../../../helpers/validation');
 
-describe('controllers/tell-us-about-your-deal/validation/rules/policy-length', () => {
+describe('controllers/tell-us-about-your-policy/validation/rules/policy-length', () => {
   const mockErrors = {
     summary: [],
     errorList: {},

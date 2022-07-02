@@ -3,7 +3,7 @@ import {
   FIELD_VALUES,
 } from '../../../constants';
 
-const tellUsAboutYourDealPage = {
+const tellUsAboutYourPolicyPage = {
   heading: () => cy.get('[data-cy="heading"]'),
   description: () => cy.get('[data-cy="description"]'),
   [FIELD_IDS.AMOUNT_CURRENCY]: {
@@ -58,4 +58,4 @@ const tellUsAboutYourDealPage = {
   submitButton: () => cy.get('[data-cy="submit-button"]'),
 };
 
-export default tellUsAboutYourDealPage;
+export default tellUsAboutYourPolicyPage;

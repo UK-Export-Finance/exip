@@ -5,7 +5,7 @@ const TEMPLATES = {
   BUYER_BASED: 'buyer-based.njk',
   TRIED_TO_OBTAIN_COVER: 'tried-to-obtain-cover.njk',
   UK_CONTENT_PERCENTAGE: 'uk-content-percentage.njk',
-  TELL_US_ABOUT_YOUR_DEAL: 'tell-us-about-your-deal.njk',
+  TELL_US_ABOUT_YOUR_POLICY: 'tell-us-about-your-policy.njk',
   CHECK_YOUR_ANSWERS: 'check-your-answers.njk',
   CANNOT_OBTAIN_COVER: 'cannot-obtain-cover.njk',
   YOUR_QUOTE: 'your-quote.njk',

@@ -42,8 +42,8 @@ const checkYourAnswersPage = {
         changeLink: () => cy.get(`[data-cy="${UK_CONTENT_PERCENTAGE}-change-link"]`),
       },
     },
-    deal: {
-      heading: () => cy.get('[data-cy="summaryList-heading-deal"]'),
+    policy: {
+      heading: () => cy.get('[data-cy="summaryList-heading-policy"]'),
       [CURRENCY]: {
         key: () => cy.get(`.${CURRENCY}-key`),
         value: () => cy.get(`.${CURRENCY}-value`),

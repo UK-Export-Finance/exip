@@ -1,25 +1,25 @@
-const rule = require('./currency');
+const rule = require('./policy-type');
 const { FIELD_IDS } = require('../../../../constants');
-const { ERROR_MESSAGES } = require('../../../../content-strings');
+const CONTENT_STRINGS = require('../../../../content-strings');
 const generateValidationErrors = require('../../../../helpers/validation');
 
-describe('controllers/tell-us-about-your-deal/validation/rules/currency', () => {
+describe('controllers/tell-us-about-your-policy/validation/rules/policy-type', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
   };
 
-  describe(`when ${FIELD_IDS.CURRENCY} is not provided`, () => {
+  describe(`when ${FIELD_IDS.POLICY_TYPE} is not provided`, () => {
     it('should return validation error', () => {
       const mockBody = {
-        [FIELD_IDS.CURRENCY]: '',
+        [FIELD_IDS.POLICY_TYPE]: '',
       };
 
       const result = rule(mockBody, mockErrors);
 
       const expected = generateValidationErrors(
-        FIELD_IDS.CURRENCY,
-        ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,
+        FIELD_IDS.POLICY_TYPE,
+        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE],
         mockErrors,
       );
 
@@ -30,7 +30,7 @@ describe('controllers/tell-us-about-your-deal/validation/rules/currency', () => 
   describe('when there are no validation errors', () => {
     it('should return the already provided errors', () => {
       const mockBody = {
-        [FIELD_IDS.CURRENCY]: 'GBP',
+        [FIELD_IDS.POLICY_TYPE]: 'single',
       };
 
       const result = rule(mockBody, mockErrors);

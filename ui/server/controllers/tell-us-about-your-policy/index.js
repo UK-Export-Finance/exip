@@ -27,7 +27,7 @@ const PAGE_VARIABLES = {
     PRODUCT: CONTENT_STRINGS.PRODUCT,
     FOOTER: CONTENT_STRINGS.FOOTER,
     BUTTONS: CONTENT_STRINGS.BUTTONS,
-    ...CONTENT_STRINGS.PAGES.TELL_US_ABOUT_YOUR_DEAL_PAGE,
+    ...CONTENT_STRINGS.PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
   },
   FIELDS: {
     AMOUNT_CURRENCY: {
@@ -72,7 +72,7 @@ const get = async (req, res) => {
     mappedCurrencies = mapCurrencies(currencies);
   }
 
-  return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
+  return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
     ...PAGE_VARIABLES,
     BACK_LINK: req.headers.referer,
     currencies: mappedCurrencies,
@@ -96,7 +96,7 @@ const post = async (req, res) => {
       mappedCurrencies = mapCurrencies(currencies);
     }
 
-    return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
+    return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
       currencies: mappedCurrencies,

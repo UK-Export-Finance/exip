@@ -2,7 +2,7 @@ import {
   yourQuotePage,
   beforeYouStartPage,
   buyerBasedPage,
-  tellUsAboutYourDealPage,
+  tellUsAboutYourPolicyPage,
 } from '../../pages';
 import {
   LINKS,
@@ -49,7 +49,7 @@ context('Your quote page', () => {
     cy.login();
 
     cy.submitAnswersHappyPath();
-    tellUsAboutYourDealPage.submitButton().click();
+    tellUsAboutYourPolicyPage.submitButton().click();
 
     cy.url().should('include', ROUTES.YOUR_QUOTE);
   });
@@ -102,7 +102,7 @@ context('Your quote page', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${AMOUNT}`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
@@ -159,7 +159,7 @@ context('Your quote page', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${SINGLE_POLICY_LENGTH}`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 

@@ -1,4 +1,4 @@
-import tellUsAboutYourDealPage from '../../pages/tellUsAboutYourDeal';
+import { tellUsAboutYourPolicyPage } from '../../pages';
 import partials from '../../partials';
 import { ERROR_MESSAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
@@ -6,9 +6,9 @@ import checkText from '../../helpers/check-text';
 
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
-context('Tell us about your deal page - form validation', () => {
+context('Tell us about the policy you need page - form validation', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.TELL_US_ABOUT_YOUR_DEAL, {
+    cy.visit(ROUTES.TELL_US_ABOUT_YOUR_POLICY, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
@@ -21,7 +21,7 @@ context('Tell us about your deal page - form validation', () => {
 
   describe('when submitting an empty form', () => {
     it('should render validation errors for all required fields', () => {
-      tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourPolicyPage.submitButton().click();
 
       partials.errorSummaryListItems().should('exist');
 
@@ -35,7 +35,7 @@ context('Tell us about your deal page - form validation', () => {
       );
 
       checkText(
-        tellUsAboutYourDealPage[FIELD_IDS.CURRENCY].errorMessage(),
+        tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY}`,
       );
 
@@ -46,7 +46,7 @@ context('Tell us about your deal page - form validation', () => {
       );
 
       checkText(
-        tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].errorMessage(),
+        tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY}`,
       );
 
@@ -57,7 +57,7 @@ context('Tell us about your deal page - form validation', () => {
       );
 
       checkText(
-        tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
+        tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY}`,
       );
 
@@ -68,7 +68,7 @@ context('Tell us about your deal page - form validation', () => {
       );
 
       checkText(
-        tellUsAboutYourDealPage[FIELD_IDS.POLICY_TYPE].errorMessage(),
+        tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE]}`,
       );
     });
@@ -76,8 +76,8 @@ context('Tell us about your deal page - form validation', () => {
 
   describe('when `amount` has a non-numeric value', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].input().type('a');
-      tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('a');
+      tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(1),
@@ -85,7 +85,7 @@ context('Tell us about your deal page - form validation', () => {
       );
 
       checkText(
-        tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].errorMessage(),
+        tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_NUMBER}`,
       );
     });
@@ -93,8 +93,8 @@ context('Tell us about your deal page - form validation', () => {
 
   describe('when `amount` has a value less than the minimum', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].input().type('0');
-      tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('0');
+      tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(1),
@@ -102,7 +102,7 @@ context('Tell us about your deal page - form validation', () => {
       );
 
       checkText(
-        tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].errorMessage(),
+        tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.AMOUNT].BELOW_MINIMUM}`,
       );
     });
@@ -110,8 +110,8 @@ context('Tell us about your deal page - form validation', () => {
 
   describe('when `credit period` has a non-numeric value', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].input().type('a');
-      tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('a');
+      tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(2),
@@ -119,7 +119,7 @@ context('Tell us about your deal page - form validation', () => {
       );
 
       checkText(
-        tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
+        tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER}`,
       );
     });
@@ -127,8 +127,8 @@ context('Tell us about your deal page - form validation', () => {
 
   describe('when `credit period` contains a decimal', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].input().type('1.2');
-      tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('1.2');
+      tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(2),
@@ -136,7 +136,7 @@ context('Tell us about your deal page - form validation', () => {
       );
 
       checkText(
-        tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
+        tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_WHOLE_NUMBER}`,
       );
     });
@@ -144,8 +144,8 @@ context('Tell us about your deal page - form validation', () => {
 
   describe('when `credit period` has a value less than the minimum', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].input().type('0');
-      tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('0');
+      tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(2),
@@ -153,7 +153,7 @@ context('Tell us about your deal page - form validation', () => {
       );
 
       checkText(
-        tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
+        tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].BELOW_MINIMUM}`,
       );
     });
@@ -161,22 +161,22 @@ context('Tell us about your deal page - form validation', () => {
 
   describe('with any validation error', () => {
     it('should render submitted values', () => {
-      tellUsAboutYourDealPage[FIELD_IDS.CURRENCY].input().select('AED');
-      tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].input().type('10');
-      tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].input().type('2');
-      tellUsAboutYourDealPage[FIELD_IDS.POLICY_TYPE].single.input().click();
+      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('AED');
+      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('10');
+      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('2');
+      tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].single.input().click();
 
-      tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourPolicyPage.submitButton().click();
 
-      tellUsAboutYourDealPage[FIELD_IDS.CURRENCY].inputOptionSelected().contains('AED');
+      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].inputOptionSelected().contains('AED');
 
-      tellUsAboutYourDealPage[FIELD_IDS.AMOUNT].input()
+      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input()
         .should('have.attr', 'value', '10');
 
-      tellUsAboutYourDealPage[FIELD_IDS.CREDIT_PERIOD].input()
+      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input()
         .should('have.attr', 'value', '2');
 
-      tellUsAboutYourDealPage[FIELD_IDS.POLICY_TYPE].single.input().should('be.checked');
+      tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].single.input().should('be.checked');
     });
   });
 });

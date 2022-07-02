@@ -82,7 +82,7 @@ describe('sever/helpers/generate-summary-list', () => {
         {
           ID: CREDIT_PERIOD,
           ...FIELDS[CREDIT_PERIOD],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
           value: {
             text: mockAnswersContent[CREDIT_PERIOD].text,
           },
@@ -161,7 +161,7 @@ describe('sever/helpers/generate-summary-list', () => {
         const expected = {
           ID: SINGLE_POLICY_TYPE,
           ...FIELDS[SINGLE_POLICY_TYPE],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
           value: {
             text: mockAnswersContent[SINGLE_POLICY_TYPE].text,
           },
@@ -186,7 +186,7 @@ describe('sever/helpers/generate-summary-list', () => {
         const expected = {
           ID: SINGLE_POLICY_LENGTH,
           ...FIELDS[SINGLE_POLICY_LENGTH],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
           value: {
             text: mockAnswersContent[SINGLE_POLICY_LENGTH].text,
           },
@@ -217,7 +217,7 @@ describe('sever/helpers/generate-summary-list', () => {
         const expected = {
           ID: MULTI_POLICY_TYPE,
           ...FIELDS[MULTI_POLICY_TYPE],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
           value: {
             text: mockAnswersContent[MULTI_POLICY_TYPE].text,
           },
@@ -246,7 +246,7 @@ describe('sever/helpers/generate-summary-list', () => {
         const expected = {
           ID: MULTI_POLICY_LENGTH,
           ...FIELDS[MULTI_POLICY_LENGTH],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
           value: {
             text: mockAnswersContent[MULTI_POLICY_LENGTH].text,
           },
@@ -309,7 +309,7 @@ describe('sever/helpers/generate-summary-list', () => {
           GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
           ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, mockAnswers),
         },
-        DEAL: {
+        POLICY: {
           GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_POLICY,
           ROWS: generateSummaryListRows(fieldGroups.POLICY_DETAILS, mockAnswers),
         },

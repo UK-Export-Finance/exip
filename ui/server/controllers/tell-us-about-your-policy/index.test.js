@@ -44,7 +44,7 @@ describe('controllers/buyer-based', () => {
           PRODUCT: CONTENT_STRINGS.PRODUCT,
           FOOTER: CONTENT_STRINGS.FOOTER,
           BUTTONS: CONTENT_STRINGS.BUTTONS,
-          ...CONTENT_STRINGS.PAGES.TELL_US_ABOUT_YOUR_DEAL_PAGE,
+          ...CONTENT_STRINGS.PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
         },
         FIELDS: {
           AMOUNT_CURRENCY: {
@@ -103,7 +103,7 @@ describe('controllers/buyer-based', () => {
         mockCurrenciesResponse,
       );
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
         ...controller.PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
         currencies: expectedCurrencies,
@@ -120,7 +120,7 @@ describe('controllers/buyer-based', () => {
           req.session.submittedData[FIELD_IDS.CURRENCY].isoCode,
         );
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
           ...controller.PAGE_VARIABLES,
           BACK_LINK: req.headers.referer,
           currencies: expectedCurrencies,
@@ -150,7 +150,7 @@ describe('controllers/buyer-based', () => {
       it('should render template with validation errors and submitted values', async () => {
         await controller.post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
           ...controller.PAGE_VARIABLES,
           BACK_LINK: req.headers.referer,
           currencies: mapCurrencies(mockCurrenciesResponse),
@@ -164,7 +164,7 @@ describe('controllers/buyer-based', () => {
           req.body[FIELD_IDS.CURRENCY] = mockAnswers[FIELD_IDS.CURRENCY];
           await controller.post(req, res);
 
-          expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_DEAL, {
+          expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
             ...controller.PAGE_VARIABLES,
             BACK_LINK: req.headers.referer,
             currencies: mapCurrencies(mockCurrenciesResponse, req.body[FIELD_IDS.CURRENCY]),

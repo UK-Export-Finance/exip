@@ -1,7 +1,7 @@
 const validation = require('.');
 const validationRules = require('./rules');
 
-describe('controllers/tell-us-about-your-deal/validation', () => {
+describe('controllers/tell-us-about-your-policy/validation', () => {
   it('should return an array of results from rule functions', () => {
     const mockBody = {};
 

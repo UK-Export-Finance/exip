@@ -49,7 +49,7 @@ const generateFields = (answers) => {
         html: insuredForFieldValue(answers[INSURED_FOR]),
       },
       renderChangeLink: true,
-      changeRoute: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+      changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
     },
     {
       id: PREMIUM_RATE_PERCENTAGE,
@@ -77,7 +77,7 @@ const generateFields = (answers) => {
           text: answers[SINGLE_POLICY_LENGTH].text,
         },
         renderChangeLink: true,
-        changeRoute: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+        changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
       },
     ];
   }
@@ -92,7 +92,7 @@ const generateFields = (answers) => {
           text: answers[MULTI_POLICY_LENGTH].text,
         },
         renderChangeLink: true,
-        changeRoute: ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE,
+        changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
       },
     ];
   }

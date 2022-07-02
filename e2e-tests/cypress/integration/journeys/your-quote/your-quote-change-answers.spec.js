@@ -1,6 +1,6 @@
 import {
   buyerBasedPage,
-  tellUsAboutYourDealPage,
+  tellUsAboutYourPolicyPage,
   checkYourAnswersPage,
   yourQuotePage,
 } from '../../pages';
@@ -25,7 +25,7 @@ context('Your quote page - change answers', () => {
     cy.login();
 
     cy.submitAnswersHappyPath();
-    tellUsAboutYourDealPage.submitButton().click();
+    tellUsAboutYourPolicyPage.submitButton().click();
 
     cy.url().should('include', ROUTES.YOUR_QUOTE);
   });
@@ -38,10 +38,10 @@ context('Your quote page - change answers', () => {
   describe('change `insured for`', () => {
     let row = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
 
-    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${AMOUNT}`;
+      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -53,12 +53,12 @@ context('Your quote page - change answers', () => {
     });
 
     it('auto focuses the input', () => {
-      tellUsAboutYourDealPage[AMOUNT].input().should('have.focus');
+      tellUsAboutYourPolicyPage[AMOUNT].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourDealPage[AMOUNT].input().clear().type('200');
-      tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourPolicyPage[AMOUNT].input().clear().type('200');
+      tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });
@@ -79,10 +79,10 @@ context('Your quote page - change answers', () => {
   describe('change `policy length`', () => {
     let row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
 
-    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${SINGLE_POLICY_LENGTH}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -94,13 +94,13 @@ context('Your quote page - change answers', () => {
     });
 
     it('auto focuses the input', () => {
-      tellUsAboutYourDealPage[SINGLE_POLICY_LENGTH].input().should('have.focus');
+      tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourDealPage[POLICY_TYPE].multi.input().click();
-      tellUsAboutYourDealPage[MULTI_POLICY_LENGTH].input().type('10');
-      tellUsAboutYourDealPage.submitButton().click();
+      tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().click();
+      tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().type('10');
+      tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });

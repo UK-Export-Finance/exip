@@ -4,7 +4,7 @@ import {
   completeAndSubmitCompanyForm,
   completeAndSubmitTriedToObtainCoverForm,
   completeAndSubmitUkContentForm,
-  compmleteAndSubmitTellUsAboutYourDealForm,
+  compmleteAndSubmitTellUsAboutYourPolicyForm,
 } from './forms';
 
 export default () => {
@@ -14,5 +14,5 @@ export default () => {
   completeAndSubmitCompanyForm();
   completeAndSubmitTriedToObtainCoverForm();
   completeAndSubmitUkContentForm();
-  compmleteAndSubmitTellUsAboutYourDealForm();
+  compmleteAndSubmitTellUsAboutYourPolicyForm();
 };

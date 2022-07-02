@@ -1,6 +1,6 @@
 import {
   checkYourAnswersPage,
-  tellUsAboutYourDealPage,
+  tellUsAboutYourPolicyPage,
   yourQuotePage,
 } from '../../pages';
 import {
@@ -29,10 +29,10 @@ context('Your quote page - non GBP currency', () => {
     cy.submitAnswersHappyPath();
 
     // change currency to non-GBP
-    checkYourAnswersPage.summaryLists.deal[CURRENCY].changeLink().click();
+    checkYourAnswersPage.summaryLists.policy[CURRENCY].changeLink().click();
 
-    tellUsAboutYourDealPage[CURRENCY].input().select('EUR');
-    tellUsAboutYourDealPage.submitButton().click();
+    tellUsAboutYourPolicyPage[CURRENCY].input().select('EUR');
+    tellUsAboutYourPolicyPage.submitButton().click();
 
     checkYourAnswersPage.submitButton().click();
 
@@ -65,7 +65,7 @@ context('Your quote page - non GBP currency', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_DEAL_CHANGE}#${AMOUNT}`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
