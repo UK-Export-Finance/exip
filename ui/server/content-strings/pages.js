@@ -127,8 +127,8 @@ const TELL_US_ABOUT_YOUR_POLICY_PAGE = {
 };
 
 const CHECK_YOUR_ANSWERS_PAGE = {
-  PAGE_TITLE: 'Check your answers before you submit',
-  HEADING: 'Check your answers before you submit',
+  PAGE_TITLE: 'Check your answers',
+  HEADING: 'Check your answers',
   GROUP_HEADING_EXPORT: 'Export details',
   GROUP_HEADING_POLICY: 'Policy details',
 };
