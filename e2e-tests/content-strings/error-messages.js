@@ -20,7 +20,7 @@ const ERROR_MESSAGES = {
     IS_EMPTY: 'Enter the credit period you have with your buyer',
     NOT_A_NUMBER: 'Credit period must be a number',
     NOT_A_WHOLE_NUMBER: 'Credit period must be a whole number, like 10 - you cannot enter decimal points',
-    BELOW_MINIMUM: 'Credit period must be 1 month or more',
+    BELOW_MINIMUM: 'Credit period must be 1 day or more',
   },
   [FIELD_IDS.POLICY_TYPE]: 'Select a policy type',
   [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
