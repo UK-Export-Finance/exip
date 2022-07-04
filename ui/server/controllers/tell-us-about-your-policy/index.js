@@ -18,6 +18,7 @@ const {
   AMOUNT,
   CREDIT_PERIOD,
   POLICY_TYPE,
+  SINGLE_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
 } = FIELD_IDS;
@@ -48,6 +49,13 @@ const PAGE_VARIABLES = {
     },
     POLICY_TYPE: {
       ID: POLICY_TYPE,
+      ...CONTENT_STRINGS.FIELDS[POLICY_TYPE],
+    },
+    // note: single policy type is only required for scenario where
+    // empty form is submitted. Then, error message link can link to
+    // the first policy type radio button (single).
+    SINGLE_POLICY_TYPE: {
+      ID: SINGLE_POLICY_TYPE,
       ...CONTENT_STRINGS.FIELDS[POLICY_TYPE],
     },
     SINGLE_POLICY_LENGTH: {

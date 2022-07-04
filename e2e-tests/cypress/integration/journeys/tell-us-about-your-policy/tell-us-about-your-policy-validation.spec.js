@@ -20,9 +20,11 @@ context('Tell us about the policy you need page - form validation', () => {
   });
 
   describe('when submitting an empty form', () => {
-    it('should render validation errors for all required fields', () => {
+    beforeEach(() => {
       tellUsAboutYourPolicyPage.submitButton().click();
+    });
 
+    it('should render validation errors for all required fields', () => {
       partials.errorSummaryListItems().should('exist');
 
       const TOTAL_REQUIRED_FIELDS = 4;
@@ -71,6 +73,24 @@ context('Tell us about the policy you need page - form validation', () => {
         tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY}`,
       );
+    });
+
+    it('should focus on inputs when clicking summary error message', () => {
+      // currency
+      partials.errorSummaryListItemLinks().eq(0).click();
+      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().should('have.focus');
+
+      // amount
+      partials.errorSummaryListItemLinks().eq(1).click();
+      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().should('have.focus');
+
+      // policy type
+      partials.errorSummaryListItemLinks().eq(2).click();
+      tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].single.input().should('have.focus');
+
+      // credit period
+      partials.errorSummaryListItemLinks().eq(3).click();
+      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().should('have.focus');
     });
   });
 
