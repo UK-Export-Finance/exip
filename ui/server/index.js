@@ -66,6 +66,11 @@ app.use(morgan('dev', {
 app.use(basicAuth({
   users: {
     [process.env.BASIC_AUTH_KEY]: process.env.BASIC_AUTH_SECRET,
+    [process.env.USER_1_KEY]: process.env.USER_1_SECRET,
+    [process.env.USER_2_KEY]: process.env.USER_2_SECRET,
+    [process.env.USER_3_KEY]: process.env.USER_3_SECRET,
+    [process.env.USER_4_KEY]: process.env.USER_4_SECRET,
+    [process.env.USER_5_KEY]: process.env.USER_5_SECRET,
   },
   challenge: true,
 }));
