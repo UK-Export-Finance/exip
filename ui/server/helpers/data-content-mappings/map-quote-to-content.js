@@ -17,15 +17,17 @@ const {
 } = QUOTE;
 
 const mapQuoteToContent = (quote) => {
+  const currencyCode = quote[CURRENCY].isoCode;
+
   const mapped = {
     [AMOUNT]: {
-      text: formatCurrency(quote[AMOUNT], quote[CURRENCY].isoCode),
+      text: formatCurrency(quote[AMOUNT], currencyCode),
     },
     [PREMIUM_RATE_PERCENTAGE]: {
       text: `${quote[PREMIUM_RATE_PERCENTAGE]}%`,
     },
     [ESTIMATED_COST]: {
-      text: formatCurrency(quote[ESTIMATED_COST], 'GBP'),
+      text: formatCurrency(quote[ESTIMATED_COST], currencyCode),
     },
     ...mapPolicyLength(quote),
     [BUYER_LOCATION]: {

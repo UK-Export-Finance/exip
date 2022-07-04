@@ -31,7 +31,7 @@ describe('sever/helpers/map-quote-to-content', () => {
           text: `${mockQuote[PREMIUM_RATE_PERCENTAGE]}%`,
         },
         [ESTIMATED_COST]: {
-          text: formatCurrency(mockQuote[ESTIMATED_COST], 'GBP'),
+          text: formatCurrency(mockQuote[ESTIMATED_COST], mockQuote[CURRENCY].isoCode),
         },
         ...mapPolicyLength(mockQuote),
         [BUYER_LOCATION]: {
