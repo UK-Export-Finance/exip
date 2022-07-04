@@ -144,11 +144,7 @@ describe('sever/helpers/generate-quote-summary-list', () => {
         classes: `${field.id}-value`,
       },
       actions: {
-        items: [
-          {
-            text: '',
-          },
-        ],
+        items: [],
       },
     });
 

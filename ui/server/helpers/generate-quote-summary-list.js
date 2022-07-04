@@ -134,10 +134,6 @@ const generateSummaryListRows = (fields) =>
         },
         classes: 'ukef-white-text govuk-link--no-visited-state',
       });
-    } else {
-      mapped.actions.items.push({
-        text: '',
-      });
     }
 
     return mapped;
