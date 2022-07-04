@@ -13,8 +13,8 @@ const ERROR_MESSAGES = {
   },
   [FIELD_IDS.AMOUNT]: {
     IS_EMPTY: 'Enter how much you want to be insured for',
-    NOT_A_NUMBER: 'Maximum amount must be a number',
-    BELOW_MINIMUM: 'Maximum amount must be 1 or more',
+    NOT_A_NUMBER: 'Amount must be a number',
+    BELOW_MINIMUM: 'Amount must be 1 or more',
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
     IS_EMPTY: 'Enter the credit period you have with your buyer',
