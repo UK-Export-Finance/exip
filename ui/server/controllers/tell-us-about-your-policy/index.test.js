@@ -63,6 +63,14 @@ describe('controllers/buyer-based', () => {
             ID: FIELD_IDS.CREDIT_PERIOD,
             ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_PERIOD],
           },
+          POLICY_TYPE: {
+            ID: FIELD_IDS.POLICY_TYPE,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.POLICY_TYPE],
+          },
+          SINGLE_POLICY_TYPE: {
+            ID: FIELD_IDS.SINGLE_POLICY_TYPE,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.POLICY_TYPE],
+          },
           SINGLE_POLICY_LENGTH: {
             ID: FIELD_IDS.SINGLE_POLICY_LENGTH,
             ...CONTENT_STRINGS.FIELDS[FIELD_IDS.SINGLE_POLICY_LENGTH],
@@ -70,10 +78,6 @@ describe('controllers/buyer-based', () => {
           MULTI_POLICY_LENGTH: {
             ID: FIELD_IDS.MULTI_POLICY_LENGTH,
             ...CONTENT_STRINGS.FIELDS[FIELD_IDS.MULTI_POLICY_LENGTH],
-          },
-          POLICY_TYPE: {
-            ID: FIELD_IDS.POLICY_TYPE,
-            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.POLICY_TYPE],
           },
         },
       };

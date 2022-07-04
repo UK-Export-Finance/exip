@@ -30,8 +30,17 @@
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
+    {% if validationErrors.errorList[FIELDS.TRIED_PRIVATE_COVER.ID] %}
+      {% set validationError = validationErrors.errorList[FIELDS.TRIED_PRIVATE_COVER.ID] %}
+    {% endif %}
+
+    {% if validationErrors.errorList[FIELDS.TRIED_PRIVATE_COVER_YES.ID] %}
+      {% set validationError = validationErrors.errorList[FIELDS.TRIED_PRIVATE_COVER_YES.ID] %}
+    {% endif %}
+
     {{ govukRadios({
-      name: FIELD.ID,
+      classes: "govuk-radios--inline",
+      name: FIELDS.TRIED_PRIVATE_COVER.ID,
       fieldset: {
         legend: {
           html: "<h1 class='govuk-heading-l' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1>"
@@ -39,38 +48,38 @@
       },
       items: [
         {
-          id: FIELD.OPTIONS.YES.ID,
-          value: FIELD.OPTIONS.YES.VALUE,
-          text: FIELD.OPTIONS.YES.TEXT,
+          id: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.YES.ID,
+          value: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.YES.VALUE,
+          text: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.YES.TEXT,
           label: {
             attributes: {
-              "data-cy": FIELD.ID + "-yes"
+              "data-cy": FIELDS.TRIED_PRIVATE_COVER.ID + "-yes"
             }
           },
           attributes: {
-            "data-cy": FIELD.ID + "-yes-input"
+            "data-cy": FIELDS.TRIED_PRIVATE_COVER.ID + "-yes-input"
           },
-          checked: submittedValues[FIELD.ID] === FIELD.OPTIONS.YES.VALUE
+          checked: submittedValues[FIELDS.TRIED_PRIVATE_COVER.ID] === FIELDS.TRIED_PRIVATE_COVER.OPTIONS.YES.VALUE
         },
         {
-          id: FIELD.OPTIONS.NO.ID,
-          value: FIELD.OPTIONS.NO.VALUE,
-          text: FIELD.OPTIONS.NO.TEXT,
+          id: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.NO.ID,
+          value: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.NO.VALUE,
+          text: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.NO.TEXT,
           label: {
             attributes: {
-              "data-cy": FIELD.ID + "-no"
+              "data-cy": FIELDS.TRIED_PRIVATE_COVER.ID + "-no"
             }
           },
           attributes: {
-            "data-cy": FIELD.ID + "-no-input"
+            "data-cy": FIELDS.TRIED_PRIVATE_COVER.ID + "-no-input"
           },
-          checked: submittedValues[FIELD.ID] === FIELD.OPTIONS.NO.VALUE
+          checked: submittedValues[FIELDS.TRIED_PRIVATE_COVER.ID] === FIELDS.TRIED_PRIVATE_COVER.OPTIONS.NO.VALUE
         }
       ],
-      errorMessage: validationErrors.errorList[FIELD.ID] and {
-        text: validationErrors.errorList[FIELD.ID].text,
+      errorMessage: validationError and {
+        text: validationError.text,
         attributes: {
-          "data-cy": FIELD.ID + "-error-message"
+          "data-cy": FIELDS.TRIED_PRIVATE_COVER.ID + "-error-message"
         }
       }
     }) }}

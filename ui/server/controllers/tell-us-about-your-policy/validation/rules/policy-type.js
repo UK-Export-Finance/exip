@@ -8,7 +8,7 @@ const policyTypeRules = (formBody, errors) => {
 
   if (!objectHasProperty(formBody, FIELD_IDS.POLICY_TYPE)) {
     updatedErrors = generateValidationErrors(
-      FIELD_IDS.POLICY_TYPE,
+      FIELD_IDS.SINGLE_POLICY_TYPE,
       CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE],
       errors,
     );

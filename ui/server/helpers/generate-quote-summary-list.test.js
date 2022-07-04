@@ -4,7 +4,7 @@ const {
   generateQuoteSummaryList,
 } = require('./generate-quote-summary-list');
 const mapQuoteToContent = require('./data-content-mappings/map-quote-to-content');
-const { QUOTE_TITLES } = require('../content-strings');
+const { QUOTE_TITLES, LINKS } = require('../content-strings');
 const {
   FIELD_IDS,
   ROUTES,
@@ -174,6 +174,35 @@ describe('sever/helpers/generate-quote-summary-list', () => {
 
       const expected = expectedObj(fields[1]);
       expect(result[1]).toEqual(expected);
+    });
+
+    describe('when a field has renderChangeLink', () => {
+      it('should add a link to action.itmes', () => {
+        const mockField = {
+          id: 'mock',
+          title: 'Test',
+          value: {
+            text: 'mock',
+          },
+          renderChangeLink: true,
+        };
+
+        const result = generateSummaryListRows([mockField]);
+
+        const expected = [
+          {
+            href: `${mockField.changeRoute}#${mockField.id}`,
+            text: LINKS.CHANGE,
+            visuallyHiddenText: mockField.title,
+            attributes: {
+              'data-cy': `${mockField.id}-change-link`,
+            },
+            classes: 'ukef-white-text govuk-link--no-visited-state',
+          },
+        ];
+
+        expect(result[0].actions.items).toEqual(expected);
+      });
     });
   });
 

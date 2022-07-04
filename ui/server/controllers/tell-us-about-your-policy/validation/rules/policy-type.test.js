@@ -10,7 +10,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/policy-type', (
   };
 
   describe(`when ${FIELD_IDS.POLICY_TYPE} is not provided`, () => {
-    it('should return validation error', () => {
+    it('should return validation error with first policy type field as ID', () => {
       const mockBody = {
         [FIELD_IDS.POLICY_TYPE]: '',
       };
@@ -18,7 +18,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/policy-type', (
       const result = rule(mockBody, mockErrors);
 
       const expected = generateValidationErrors(
-        FIELD_IDS.POLICY_TYPE,
+        FIELD_IDS.SINGLE_POLICY_TYPE,
         CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE],
         mockErrors,
       );

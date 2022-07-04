@@ -15,9 +15,14 @@ $govuk-new-link-styles: true;
 
 .ukef-list-item-dash {
   list-style-type: none;
-  margin-left: -20px;
+  position: relative;
+  padding: 0 25px;
   &::before {
     content: "—";
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+    width: 20px;
     color: govuk-colour('blue');
   }
 }

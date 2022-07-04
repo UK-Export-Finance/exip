@@ -13,14 +13,14 @@ const ERROR_MESSAGES = {
   },
   [FIELD_IDS.AMOUNT]: {
     IS_EMPTY: 'Enter how much you want to be insured for',
-    NOT_A_NUMBER: 'Maximum amount must be a number',
-    BELOW_MINIMUM: 'Maximum amount must be 1 or more',
+    NOT_A_NUMBER: 'Amount must be a number',
+    BELOW_MINIMUM: 'Amount must be 1 or more',
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
     IS_EMPTY: 'Enter the credit period you have with your buyer',
     NOT_A_NUMBER: 'Credit period must be a number',
     NOT_A_WHOLE_NUMBER: 'Credit period must be a whole number, like 10 - you cannot enter decimal points',
-    BELOW_MINIMUM: 'Credit period must be 1 month or more',
+    BELOW_MINIMUM: 'Credit period must be 1 day or more',
   },
   [FIELD_IDS.POLICY_TYPE]: 'Select a policy type',
   [FIELD_IDS.SINGLE_POLICY_LENGTH]: {

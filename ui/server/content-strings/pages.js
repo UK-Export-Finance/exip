@@ -7,7 +7,7 @@ const BEFORE_YOU_START = {
   INTRO_1: 'If you\'re an exporter and having problems getting export insurance, you may be able to get cover from UK Export Finance (UKEF).',
   INTRO_2: 'This is sometimes known as credit insurance.',
   USE_SERVICE_TO: {
-    INTRO: 'Use this service to',
+    INTRO: 'Use this service to:',
     LIST: [
       {
         text: 'get a non-binding quote to cover a single buyer for up to 9 months',
@@ -185,7 +185,7 @@ const YOUR_QUOTE_PAGE = {
           href: '#',
         },
         {
-          text: '.',
+          text: '. ',
         },
         {
           text: 'It takes about 2 weeks to get a decision from UKEF.',
@@ -202,7 +202,7 @@ const YOUR_QUOTE_PAGE = {
       ITEMS: [
         [
           {
-            text: 'They work for UKEF and are available in every region.They can give you free guidance when making a full application. Find your nearest',
+            text: 'They work for UKEF and are available in every region. They can give you free guidance when making a full application. Find your nearest',
           },
           {
             text: 'export finance manager',
@@ -231,7 +231,7 @@ const YOUR_QUOTE_PAGE = {
             href: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
           },
           {
-            text: 'to find a broker to help you.',
+            text: ' to find a broker to help you.',
           },
         ],
       ],
