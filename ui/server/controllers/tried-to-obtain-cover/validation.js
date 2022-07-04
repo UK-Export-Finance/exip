@@ -14,7 +14,7 @@ const validation = (formBody) => {
 
   if (hasErrors) {
     errors = generateValidationErrors(
-      FIELD_IDS.TRIED_PRIVATE_COVER,
+      FIELD_IDS.TRIED_PRIVATE_COVER_YES,
       CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.TRIED_PRIVATE_COVER],
     );
 

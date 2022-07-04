@@ -93,9 +93,11 @@ context('Tried to obtain private cover page', () => {
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
-      it('should render validation errors', () => {
+      beforeEach(() => {
         triedToObtainCoverPage.submitButton().click();
+      });
 
+      it('should render validation errors', () => {
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
@@ -108,6 +110,11 @@ context('Tried to obtain private cover page', () => {
         triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].errorMessage().invoke('text').then((text) => {
           expect(text.trim()).includes(expectedMessage);
         });
+      });
+
+      it('should focus on inputs when clicking summary error message', () => {
+        partials.errorSummaryListItemLinks().eq(0).click();
+        triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].yesInput().should('have.focus');
       });
     });
 

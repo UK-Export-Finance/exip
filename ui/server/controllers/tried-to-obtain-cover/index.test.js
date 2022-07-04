@@ -28,9 +28,15 @@ describe('controllers/tried-to-obtain-cover', () => {
           LINKS: CONTENT_STRINGS.LINKS,
           ...CONTENT_STRINGS.PAGES.TRIED_TO_OBTAIN_COVER_PAGE,
         },
-        FIELD: {
-          ID: FIELD_IDS.TRIED_PRIVATE_COVER,
-          ...CONTENT_STRINGS.FIELDS[FIELD_IDS.TRIED_PRIVATE_COVER],
+        FIELDS: {
+          TRIED_PRIVATE_COVER: {
+            ID: FIELD_IDS.TRIED_PRIVATE_COVER,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.TRIED_PRIVATE_COVER],
+          },
+          TRIED_PRIVATE_COVER_YES: {
+            ID: FIELD_IDS.TRIED_PRIVATE_COVER_YES,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.TRIED_PRIVATE_COVER_YES],
+          },
         },
       };
 

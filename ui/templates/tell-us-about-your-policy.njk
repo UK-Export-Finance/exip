@@ -172,11 +172,11 @@
 
 
         {% if validationErrors.errorList[FIELDS.POLICY_TYPE.ID] %}
-          {% set policyTypeValidationError = validationErrors.errorList[FIELDS.POLICY_TYPE.ID] %}
+          {% set validationError = validationErrors.errorList[FIELDS.POLICY_TYPE.ID] %}
         {% endif %}
 
         {% if validationErrors.errorList[FIELDS.SINGLE_POLICY_TYPE.ID] %}
-          {% set policyTypeValidationError = validationErrors.errorList[FIELDS.SINGLE_POLICY_TYPE.ID] %}
+          {% set validationError = validationErrors.errorList[FIELDS.SINGLE_POLICY_TYPE.ID] %}
         {% endif %}
 
         {{ govukRadios({
@@ -236,8 +236,8 @@
               }
             }
           ],
-          errorMessage: policyTypeValidationError and {
-            text: policyTypeValidationError.text,
+          errorMessage: validationError and {
+            text: validationError.text,
             attributes: {
               "data-cy": FIELDS.POLICY_TYPE.ID + "-error-message"
             }

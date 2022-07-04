@@ -51,7 +51,7 @@ const PAGE_VARIABLES = {
       ID: POLICY_TYPE,
       ...CONTENT_STRINGS.FIELDS[POLICY_TYPE],
     },
-    // note: single policy type is only required for scenario where
+    // note: "single policy type" is only required for scenario where
     // empty form is submitted. Then, error message link can link to
     // the first policy type radio button (single).
     SINGLE_POLICY_TYPE: {

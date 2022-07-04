@@ -9,7 +9,7 @@ describe('controllers/tried-to-obtain-cover/validation', () => {
       const result = validation({});
 
       const expected = generateValidationErrors(
-        FIELD_IDS.TRIED_PRIVATE_COVER,
+        FIELD_IDS.TRIED_PRIVATE_COVER_YES,
         CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.TRIED_PRIVATE_COVER],
       );
 
@@ -22,7 +22,7 @@ describe('controllers/tried-to-obtain-cover/validation', () => {
       const result = validation({});
 
       const expected = generateValidationErrors(
-        FIELD_IDS.TRIED_PRIVATE_COVER,
+        FIELD_IDS.TRIED_PRIVATE_COVER_YES,
         CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.TRIED_PRIVATE_COVER],
       );
 

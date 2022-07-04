@@ -16,9 +16,18 @@ const PAGE_VARIABLES = {
     LINKS: CONTENT_STRINGS.LINKS,
     ...CONTENT_STRINGS.PAGES.TRIED_TO_OBTAIN_COVER_PAGE,
   },
-  FIELD: {
-    ID: FIELD_IDS.TRIED_PRIVATE_COVER,
-    ...CONTENT_STRINGS.FIELDS[FIELD_IDS.TRIED_PRIVATE_COVER],
+  FIELDS: {
+    TRIED_PRIVATE_COVER: {
+      ID: FIELD_IDS.TRIED_PRIVATE_COVER,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.TRIED_PRIVATE_COVER],
+    },
+    // note: "tried private cover yes" is only required for scenario where
+    // empty form is submitted. Then, error message link can link to
+    // the first policy type radio button (single).
+    TRIED_PRIVATE_COVER_YES: {
+      ID: FIELD_IDS.TRIED_PRIVATE_COVER_YES,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.TRIED_PRIVATE_COVER_YES],
+    },
   },
 };
 
