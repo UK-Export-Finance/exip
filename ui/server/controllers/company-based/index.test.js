@@ -67,7 +67,7 @@ describe('controllers/company-based', () => {
       it('should add previousRoute and exitReason to req.flash', async () => {
         await controller.post(req, res);
 
-        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.BUYVALID_COMPANY_BASEER_BASED);
+        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.COMPANY_BASED);
 
         const expectedReason = CONTENT_STRINGS.PAGES.CANNOT_OBTAIN_COVER_PAGE.REASON.UNSUPPORTED_COMPANY_COUNTRY;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);

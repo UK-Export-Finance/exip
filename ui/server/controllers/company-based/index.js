@@ -36,7 +36,7 @@ const post = (req, res) => {
   const answer = req.body[FIELD_IDS.VALID_COMPANY_BASE];
 
   if (answer === 'false') {
-    req.flash('previousRoute', ROUTES.VALID_COMPANY_BASE);
+    req.flash('previousRoute', ROUTES.COMPANY_BASED);
 
     const { PAGES } = CONTENT_STRINGS;
     const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
