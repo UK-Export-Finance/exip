@@ -21,10 +21,8 @@
     "url": "https://github.com/UK-Export-Finance/exip/issues"
   },
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
-  "devDependencies": {
-    "cypress": "^9.6.1"
-  },
   "dependencies": {
+    "cypress": "^10.3.0",
     "cypress-audit": "^1.1.0",
     "eslint": "^8.15.0",
     "eslint-config-airbnb-base": "^15.0.0",
