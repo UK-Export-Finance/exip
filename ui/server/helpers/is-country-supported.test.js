@@ -7,6 +7,20 @@ describe('sever/helpers/is-country-supported', () => {
     active: true,
   };
 
+  describe('mock unsupported countries', () => {
+    describe('when country is `Angola`', () => {
+      it('should return false', () => {
+        const result = isCountrySupported({
+          ...mockCountry,
+          isoCode: 'AGO',
+          name: 'Angola',
+        });
+
+        expect(result).toEqual(false);
+      });
+    });
+  });
+
   describe('when a country has active flag', () => {
     it('should return true', () => {
       const result = isCountrySupported(mockCountry);
