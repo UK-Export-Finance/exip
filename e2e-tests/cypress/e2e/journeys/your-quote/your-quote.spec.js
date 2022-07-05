@@ -43,8 +43,6 @@ const submissionData = {
   [CREDIT_PERIOD]: '2',
 };
 
-// TODO: test user testing scenarios
-
 context('Your quote page', () => {
   before(() => {
     cy.login();
@@ -107,7 +105,7 @@ context('Your quote page', () => {
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
-      it('renders `percentage` key and value (no change link)', () => {
+      it('renders `premium rate` key and value (no change link)', () => {
         const row = summaryList[PREMIUM_RATE_PERCENTAGE];
         const expectedKeyText = QUOTE_TITLES[PREMIUM_RATE_PERCENTAGE];
 
