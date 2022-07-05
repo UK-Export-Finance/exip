@@ -2,6 +2,7 @@ import {
   companyBasedPage,
   cannotObtainCoverPage,
 } from '../../pages';
+import partials from '../../partials';
 import { PAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
 
@@ -25,6 +26,12 @@ context('Answering `no` to Company based inside the UK, Channel Islands and Isle
 
   it('redirects to exit page', () => {
     cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
+  });
+
+  it('renders a back button with correct link', () => {
+    partials.backLink().should('exist');
+
+    partials.backLink().should('have.attr', 'href', ROUTES.COMPANY_BASED);
   });
 
   it('renders a specific reason', () => {

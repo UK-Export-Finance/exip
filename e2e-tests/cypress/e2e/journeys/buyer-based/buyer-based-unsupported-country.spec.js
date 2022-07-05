@@ -2,6 +2,7 @@ import {
   buyerBasedPage,
   cannotObtainCoverPage,
 } from '../../pages';
+import partials from '../../partials';
 import { PAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
 
@@ -30,6 +31,12 @@ context('Which country is your buyer based page', () => {
 
   it('redirects to exit page', () => {
     cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
+  });
+
+  it('renders a back button with correct link', () => {
+    partials.backLink().should('exist');
+
+    partials.backLink().should('have.attr', 'href', ROUTES.BUYER_BASED);
   });
 
   it('renders a specific reason', () => {
