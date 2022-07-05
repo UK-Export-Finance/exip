@@ -46,6 +46,7 @@
           html: "<h1 class='govuk-heading-l' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1>"
         }
       },
+      value: submittedValues[FIELDS.TRIED_PRIVATE_COVER.ID],
       items: [
         {
           id: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.YES.ID,
@@ -58,8 +59,7 @@
           },
           attributes: {
             "data-cy": FIELDS.TRIED_PRIVATE_COVER.ID + "-yes-input"
-          },
-          checked: submittedValues[FIELDS.TRIED_PRIVATE_COVER.ID] === FIELDS.TRIED_PRIVATE_COVER.OPTIONS.YES.VALUE
+          }
         },
         {
           id: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.NO.ID,
@@ -72,8 +72,7 @@
           },
           attributes: {
             "data-cy": FIELDS.TRIED_PRIVATE_COVER.ID + "-no-input"
-          },
-          checked: submittedValues[FIELDS.TRIED_PRIVATE_COVER.ID] === FIELDS.TRIED_PRIVATE_COVER.OPTIONS.NO.VALUE
+          }
         }
       ],
       errorMessage: validationError and {

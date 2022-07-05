@@ -49,6 +49,7 @@
               html: "<h1 class='govuk-heading-l' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1>"
             }
           },
+          value: submittedValues[FIELD_NAME],
           items: [
             {
               value: true,
@@ -60,8 +61,7 @@
               },
               attributes: {
                 "data-cy": FIELD_NAME + "-yes-input"
-              },
-              checked: submittedValues[FIELD_NAME] === true
+              }
             },
             {
               value: false,
@@ -70,8 +70,7 @@
                 attributes: {
                   "data-cy": FIELD_NAME + "-no"
                 }
-              },
-              checked: submittedValues[FIELD_NAME] === false
+              }
             }
           ],
           errorMessage: validationErrors.errorList[FIELD_NAME]and {
