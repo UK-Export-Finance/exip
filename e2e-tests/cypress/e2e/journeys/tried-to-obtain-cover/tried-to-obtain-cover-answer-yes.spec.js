@@ -2,6 +2,7 @@ import {
   triedToObtainCoverPage,
   cannotObtainCoverPage,
 } from '../../pages';
+import partials from '../../partials';
 import { PAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
 
@@ -24,6 +25,12 @@ context('Tried to obtain private cover page - answer `yes`', () => {
 
   it('redirects to exit page', () => {
     cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
+  });
+
+  it('renders a back button with correct link', () => {
+    partials.backLink().should('exist');
+
+    partials.backLink().should('have.attr', 'href', ROUTES.TRIED_TO_OBTAIN_COVER);
   });
 
   it('renders a specific reason', () => {

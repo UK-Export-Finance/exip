@@ -1,17 +1,16 @@
 import {
   buyerBasedPage,
   cannotObtainCoverPage,
-} from '../../pages';
-import partials from '../../partials';
-import { PAGES } from '../../../../content-strings';
-import CONSTANTS from '../../../../constants';
+} from '../../../pages';
+import { PAGES } from '../../../../../content-strings';
+import CONSTANTS from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
 const { ROUTES } = CONSTANTS;
 
-const UNSUPPORTED_COUNTRY_NAME = 'Netherlands Antilles';
+const UNSUPPORTED_COUNTRY_NAME = 'Angola';
 
-context('Which country is your buyer based page', () => {
+context(`Which country is your buyer based page - user testing scenarios - submit ${UNSUPPORTED_COUNTRY_NAME}`, () => {
   before(() => {
     cy.visit(ROUTES.BUYER_BASED, {
       auth: {
@@ -21,7 +20,7 @@ context('Which country is your buyer based page', () => {
     });
     cy.url().should('include', ROUTES.BUYER_BASED);
 
-    buyerBasedPage.searchInput().type(UNSUPPORTED_COUNTRY_NAME);
+    buyerBasedPage.searchInput().type('Angola');
 
     const results = buyerBasedPage.results();
     results.first().click();
@@ -31,12 +30,6 @@ context('Which country is your buyer based page', () => {
 
   it('redirects to exit page', () => {
     cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
-  });
-
-  it('renders a back button with correct link', () => {
-    partials.backLink().should('exist');
-
-    partials.backLink().should('have.attr', 'href', ROUTES.BUYER_BASED);
   });
 
   it('renders a specific reason', () => {

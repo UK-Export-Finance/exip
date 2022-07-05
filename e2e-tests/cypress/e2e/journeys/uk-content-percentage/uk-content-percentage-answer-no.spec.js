@@ -2,6 +2,7 @@ import {
   ukContentPercentagePage,
   cannotObtainCoverPage,
 } from '../../pages';
+import partials from '../../partials';
 import {
   PAGES,
 } from '../../../../content-strings';
@@ -26,6 +27,12 @@ context('What percentage of your export is UK content page', () => {
 
   it('redirects to exit page', () => {
     cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
+  });
+
+  it('renders a back button with correct link', () => {
+    partials.backLink().should('exist');
+
+    partials.backLink().should('have.attr', 'href', ROUTES.UK_CONTENT_PERCENTAGE);
   });
 
   it('renders a specific reason', () => {
