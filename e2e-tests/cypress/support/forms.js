@@ -4,7 +4,7 @@ import {
   triedToObtainCoverPage,
   ukContentPercentagePage,
   tellUsAboutYourPolicyPage,
-} from '../integration/pages';
+} from '../e2e/pages';
 import { FIELD_IDS } from '../../constants';
 
 const {

@@ -1,4 +1,4 @@
-import { beforeYouStartPage } from '../integration/pages';
+import { beforeYouStartPage } from '../e2e/pages';
 import {
   completeAndSubmitBuyerForm,
   completeAndSubmitCompanyForm,
