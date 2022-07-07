@@ -18,5 +18,4 @@ module.exports = {
       premiumRate: 3.31,
     },
   ],
-  rating: 'TODO',
 };

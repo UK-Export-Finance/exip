@@ -9,8 +9,6 @@ const veryHighRiskRates = require('./data/multi-policy/very-high-risk');
  * months = The length of cover. AKA "HoR (horizon of risk)".
  * insuredFor = percentage of the export that will be insured.
  * premiumRate = percentage rate of the premium.
- * rating = TODO.
- * LGD = Loan Given Default. percentage TODO: meaning
  */
 const PRICING_GRID = {
   SINGLE_POLICY: {

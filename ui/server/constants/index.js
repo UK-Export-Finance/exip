@@ -7,8 +7,8 @@ const TEMPLATES = require('./templates');
 
 module.exports = {
   FIELD_IDS,
-  FIELD_VALUES,
   FIELD_GROUPS,
+  FIELD_VALUES,
   ROUTES,
   SUPPORTED_CURRENCIES,
   TEMPLATES,
