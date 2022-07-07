@@ -1,9 +1,9 @@
 const {
   PRICING_GRID_MAP,
   getPremiumRate,
-} = require('./get-premium-rate');
-const PRICING_GRID = require('./pricing-grid');
-const { FIELD_VALUES } = require('../constants');
+} = require('.');
+const { FIELD_VALUES } = require('../../constants');
+const PRICING_GRID = require('../pricing-grid');
 
 const expectedPremiumRate = (
   policyType,

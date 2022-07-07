@@ -1,5 +1,5 @@
-const { FIELD_VALUES } = require('../constants');
-const PRICING_GRID = require('./pricing-grid');
+const { FIELD_VALUES } = require('../../constants');
+const PRICING_GRID = require('../pricing-grid');
 
 const PRICING_GRID_MAP = {
   POLICY_TYPE: {

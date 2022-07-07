@@ -1,4 +1,4 @@
-const { FIELD_IDS } = require('../../constants');
+const { FIELD_IDS } = require('../constants');
 
 const {
   AMOUNT,

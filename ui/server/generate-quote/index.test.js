@@ -1,9 +1,9 @@
 const {
   mockCalculation,
   generateQuote,
-} = require('./generate-quote');
-const { FIELD_IDS } = require('../../constants');
-const { mockSession } = require('../../test-mocks');
+} = require('.');
+const { FIELD_IDS } = require('../constants');
+const { mockSession } = require('../test-mocks');
 
 const {
   AMOUNT,
@@ -14,7 +14,7 @@ const {
   QUOTE,
 } = FIELD_IDS;
 
-describe('controllers/your-quote/generate-quote', () => {
+describe('server/generate-quote/inde', () => {
   describe('mockCalculation', () => {
     describe('when `DZA` country code is provided', () => {
       it('should return a premium rate and estimated cost', () => {

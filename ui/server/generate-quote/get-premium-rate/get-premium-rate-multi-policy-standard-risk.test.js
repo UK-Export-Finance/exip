@@ -1,13 +1,13 @@
-const getResultAndExpected = require('./get-premium-rate.test');
-const { FIELD_VALUES } = require('../constants');
-const standardRisk2Months = require('./pricing-grid/data/multi-policy/standard-risk/2-months');
-const standardRisk3Months = require('./pricing-grid/data/multi-policy/standard-risk/3-months');
-const standardRisk4Months = require('./pricing-grid/data/multi-policy/standard-risk/4-months');
-const standardRisk5Months = require('./pricing-grid/data/multi-policy/standard-risk/5-months');
-const standardRisk6Months = require('./pricing-grid/data/multi-policy/standard-risk/6-months');
-const standardRisk7Months = require('./pricing-grid/data/multi-policy/standard-risk/7-months');
-const standardRisk8Months = require('./pricing-grid/data/multi-policy/standard-risk/8-months');
-const standardRisk9Months = require('./pricing-grid/data/multi-policy/standard-risk/9-months');
+const getResultAndExpected = require('./index.test');
+const { FIELD_VALUES } = require('../../constants');
+const standardRisk2Months = require('../pricing-grid/data/multi-policy/standard-risk/2-months');
+const standardRisk3Months = require('../pricing-grid/data/multi-policy/standard-risk/3-months');
+const standardRisk4Months = require('../pricing-grid/data/multi-policy/standard-risk/4-months');
+const standardRisk5Months = require('../pricing-grid/data/multi-policy/standard-risk/5-months');
+const standardRisk6Months = require('../pricing-grid/data/multi-policy/standard-risk/6-months');
+const standardRisk7Months = require('../pricing-grid/data/multi-policy/standard-risk/7-months');
+const standardRisk8Months = require('../pricing-grid/data/multi-policy/standard-risk/8-months');
+const standardRisk9Months = require('../pricing-grid/data/multi-policy/standard-risk/9-months');
 
 describe('server/generate-quote/get-premium-rate', () => {
   const mockBase = {
