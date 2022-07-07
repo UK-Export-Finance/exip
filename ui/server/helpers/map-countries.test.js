@@ -11,11 +11,13 @@ describe('server/helpers/map-countries', () => {
       marketName: 'Abu Dhabi',
       isoCode: 'XAD',
       active: 'Y',
+      oecdRiskCategory: 1,
     },
     {
       marketName: 'France',
       isoCode: 'FRA',
       active: 'N',
+      oecdRiskCategory: 2,
     },
   ];
 
@@ -54,6 +56,7 @@ describe('server/helpers/map-countries', () => {
         isoCode: mockCountries[0].isoCode,
         value: mockCountries[0].isoCode,
         active: mapActiveFlag(mockCountries[0].active),
+        riskCategory: mockCountries[0].oecdRiskCategory,
       };
 
       expect(result).toEqual(expected);
@@ -70,6 +73,7 @@ describe('server/helpers/map-countries', () => {
           isoCode: mockCountries[0].isoCode,
           value: mockCountries[0].isoCode,
           active: mapActiveFlag(mockCountries[0].active),
+          riskCategory: mockCountries[0].oecdRiskCategory,
           selected: true,
         };
 

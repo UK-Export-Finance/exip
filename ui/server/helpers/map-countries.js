@@ -14,6 +14,7 @@ const mapCountry = (country, selectedIsoCode) => {
     isoCode: country.isoCode,
     value: country.isoCode,
     active: mapActiveFlag(country.active),
+    riskCategory: country.oecdRiskCategory,
   };
 
   if (selectedIsoCode && country.isoCode === selectedIsoCode) {
