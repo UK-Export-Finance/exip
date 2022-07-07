@@ -1,6 +1,9 @@
-const standardRiskRates = require('./data/multi-policy/standard-risk');
-const highRiskRates = require('./data/multi-policy/high-risk');
-const veryHighRiskRates = require('./data/multi-policy/very-high-risk');
+const singlePolicyStandardRiskRates = require('./data/single-policy/standard-risk');
+const singlePolicyHighRiskRates = require('./data/single-policy/high-risk');
+const singlePolicyVeryHighRiskRates = require('./data/single-policy/very-high-risk');
+const multiPolicyStandardRiskRates = require('./data/multi-policy/standard-risk');
+const multiPolicyHighRiskRates = require('./data/multi-policy/high-risk');
+const multiPolicyVeryHighRiskRates = require('./data/multi-policy/very-high-risk');
 
 /*
  * Pricing grid dictionary
@@ -12,14 +15,14 @@ const veryHighRiskRates = require('./data/multi-policy/very-high-risk');
  */
 const PRICING_GRID = {
   SINGLE_POLICY: {
-    STANDARD_RISK: [],
-    HIGH_RISK: [],
-    VERY_HIGH_RISK: [],
+    STANDARD_RISK: singlePolicyStandardRiskRates,
+    HIGH_RISK: singlePolicyHighRiskRates,
+    VERY_HIGH_RISK: singlePolicyVeryHighRiskRates,
   },
   MULTI_POLICY: {
-    STANDARD_RISK: standardRiskRates,
-    HIGH_RISK: highRiskRates,
-    VERY_HIGH_RISK: veryHighRiskRates,
+    STANDARD_RISK: multiPolicyStandardRiskRates,
+    HIGH_RISK: multiPolicyHighRiskRates,
+    VERY_HIGH_RISK: multiPolicyVeryHighRiskRates,
   },
 };
 
