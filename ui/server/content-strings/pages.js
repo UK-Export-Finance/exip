@@ -97,25 +97,13 @@ const UK_CONTENT_PERCENTAGE_PAGE = {
     },
     NOT_SURE: {
       HEADING: 'If you\'re not sure',
-      ITEMS: [
-        [
-          {
-            text: 'You can speak with',
-          },
-          {
-            text: 'an export finance manager',
-            href: '#',
-          },
-          {
-            text: 'if you\'d like to check whether you\'re eligible around this criteria.',
-          },
-        ],
-        [
-          {
-            text: 'We\'ll also calculate this thoroughly if you go on to make a full application.',
-          },
-        ],
-      ],
+      BODY_1: 'You can speak with',
+      LINK: {
+        TEXT: 'an export finance manager',
+        HREF: '#',
+      },
+      BODY_2: 'if you\'d like to check whether you\'re eligible around this criteria.',
+      BODY_3: 'We\'ll also calculate this thoroughly if you go on to make a full application.',
     },
   },
 };

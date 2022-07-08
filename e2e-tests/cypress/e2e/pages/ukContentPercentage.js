@@ -36,9 +36,9 @@ const ukContentPercentagePage = {
     },
     notSure: {
       heading: () => cy.get('[data-cy="details-not-sure-heading"]'),
-      details1: () => cy.get('[data-cy="details-not-sure"]').children('[data-cy="details-1"]'),
-      details1Link: () => cy.get('[data-cy="details-not-sure"] a'),
-      details2: () => cy.get('[data-cy="details-not-sure"]').children('[data-cy="details-2"]'),
+      details: () => cy.get('[data-cy="details-not-sure"]'),
+      detailsLink: () => cy.get('[data-cy="details-not-sure-link"]'),
+      detailsLast: () => cy.get('[data-cy="details-not-sure-last"]'),
     },
   },
 };

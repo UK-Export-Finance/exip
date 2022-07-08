@@ -212,20 +212,19 @@ context('What percentage of your export is UK content page', () => {
         });
       });
 
-      it('renders list items', () => {
-        details.notSure.details1().invoke('text').then((text) => {
-          const stringItem = DETAILS.NOT_SURE.ITEMS[0];
+      it('renders copy', () => {
+        details.notSure.details().invoke('text').then((text) => {
+          const expected = `${DETAILS.NOT_SURE.BODY_1} ${DETAILS.NOT_SURE.LINK.TEXT} ${DETAILS.NOT_SURE.BODY_2}`;
 
-          expect(text.trim()).includes(stringItem[0].text);
-          expect(text.trim()).includes(stringItem[1].text);
-          expect(text.trim()).includes(stringItem[2].text);
+          expect(text.trim()).equal(expected);
         });
 
-        details.notSure.details1Link().should('have.attr', 'href', DETAILS.NOT_SURE.ITEMS[0][1].href);
-
-        details.notSure.details2().invoke('text').then((text) => {
-          expect(text.trim()).includes(DETAILS.NOT_SURE.ITEMS[1][0].text);
+        details.notSure.detailsLast().invoke('text').then((text) => {
+          const expected = DETAILS.NOT_SURE.BODY_3;
+          expect(text.trim()).equal(expected);
         });
+
+        details.notSure.detailsLink().should('have.attr', 'href', DETAILS.NOT_SURE.LINK.HREF);
       });
     });
   });
