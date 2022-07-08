@@ -3,7 +3,7 @@ const {
   objectHasProperty,
 } = require('./object');
 
-describe('sever/helpers/object', () => {
+describe('server/helpers/object', () => {
   describe('objectHasValues', () => {
     describe('when an object has values', () => {
       it('should return true', () => {

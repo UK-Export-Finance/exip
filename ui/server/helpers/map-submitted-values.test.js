@@ -8,7 +8,7 @@ const {
   POLICY_LENGTH,
 } = FIELD_IDS;
 
-describe('sever/helpers/map-submitted-values', () => {
+describe('server/helpers/map-submitted-values', () => {
   describe(`when ${POLICY_TYPE} is single`, () => {
     it(`should return ${SINGLE_POLICY_LENGTH} as ${POLICY_LENGTH}`, () => {
       const mockValues = {

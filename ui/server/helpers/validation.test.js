@@ -1,6 +1,6 @@
 const generateValidationErrors = require('./validation');
 
-describe('sever/helpers/validation', () => {
+describe('server/helpers/validation', () => {
   it('should return errorList and summary from given params', () => {
     const result = generateValidationErrors(
       'firstName',

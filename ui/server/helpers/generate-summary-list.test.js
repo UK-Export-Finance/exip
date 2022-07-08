@@ -29,7 +29,7 @@ const {
   CREDIT_PERIOD,
 } = FIELD_IDS;
 
-describe('sever/helpers/generate-summary-list', () => {
+describe('server/helpers/generate-summary-list', () => {
   const mockFields = [
     {
       ID: FIELD_IDS.BUYER_COUNTRY,

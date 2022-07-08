@@ -29,7 +29,7 @@ const {
   MULTI_POLICY_TYPE,
 } = FIELD_IDS;
 
-describe('sever/helpers/map-answers-to-content', () => {
+describe('server/helpers/map-answers-to-content', () => {
   describe('mapPolicyType', () => {
     describe('when policy type is single', () => {
       it(`should return an object with ${SINGLE_POLICY_TYPE}`, () => {

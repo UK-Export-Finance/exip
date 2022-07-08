@@ -2,7 +2,7 @@ const singleInputPageVariables = require('./single-input-page-variables');
 const CONTENT_STRINGS = require('../content-strings');
 const CONSTANTS = require('../constants');
 
-describe('sever/helpers/single-input-page-variables', () => {
+describe('server/helpers/single-input-page-variables', () => {
   const mock = {
     FIELD_NAME: 'test',
     PAGE_CONTENT_STRINGS: {

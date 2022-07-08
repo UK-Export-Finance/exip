@@ -1,6 +1,6 @@
 const formatCurrency = require('./format-currency');
 
-describe('sever/helpers/format-currency', () => {
+describe('server/helpers/format-currency', () => {
   it('shouild return a formatted currency', () => {
     const mock = 123456;
     const currencyCode = 'GBP';

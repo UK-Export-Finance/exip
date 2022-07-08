@@ -3,7 +3,7 @@ const {
   numberHasDecimal,
 } = require('./number');
 
-describe('sever/helpers/number', () => {
+describe('server/helpers/number', () => {
   describe('isNumber', () => {
     describe('when a string is provided', () => {
       it('should return false', () => {
