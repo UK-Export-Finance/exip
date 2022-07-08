@@ -1,8 +1,9 @@
 const {
-  mockCalculation,
+  calculateCost,
   generateQuote,
 } = require('.');
 const { FIELD_IDS } = require('../constants');
+const { getPremiumRate } = require('./get-premium-rate');
 const { mockSession } = require('../test-mocks');
 
 const {
@@ -14,41 +15,12 @@ const {
   QUOTE,
 } = FIELD_IDS;
 
-describe('server/generate-quote/inde', () => {
-  describe('mockCalculation', () => {
-    describe('when `DZA` country code is provided', () => {
-      it('should return a premium rate and estimated cost', () => {
-        const result = mockCalculation('DZA');
+describe('server/generate-quote/index', () => {
+  describe('calculateCost', () => {
+    it('should return a cost', () => {
+      const result = calculateCost();
 
-        const expected = {
-          [QUOTE.PREMIUM_RATE_PERCENTAGE]: 1.88,
-          [QUOTE.ESTIMATED_COST]: 1128,
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when `BHR` country code is provided', () => {
-      it('should return a premium rate and estimated cost', () => {
-        const result = mockCalculation('BHR');
-
-        const expected = {
-          [QUOTE.PREMIUM_RATE_PERCENTAGE]: 2.38,
-          [QUOTE.ESTIMATED_COST]: 1428,
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    it('should return a default premium rate and estimated cost', () => {
-      const result = mockCalculation('FRA');
-
-      const expected = {
-        [QUOTE.PREMIUM_RATE_PERCENTAGE]: 1.5,
-        [QUOTE.ESTIMATED_COST]: 1000,
-      };
+      const expected = 1000;
 
       expect(result).toEqual(expected);
     });
@@ -57,15 +29,30 @@ describe('server/generate-quote/inde', () => {
   describe('generateQuote', () => {
     it('should return a quote', () => {
       const mockSubmittedData = mockSession.submittedData;
+
       const result = generateQuote(mockSubmittedData);
+
+      const mockPercentageOfCover = 90;
+
+      const expectedPremiumRate = getPremiumRate(
+        mockSubmittedData[POLICY_TYPE],
+        mockSubmittedData[BUYER_COUNTRY].riskCategory,
+        mockSubmittedData[POLICY_LENGTH],
+        mockPercentageOfCover,
+      );
 
       const expected = {
         [AMOUNT]: mockSubmittedData[AMOUNT],
         [CURRENCY]: mockSubmittedData[CURRENCY],
-        ...mockCalculation(mockSubmittedData[BUYER_COUNTRY].isoCode),
         [QUOTE.BUYER_LOCATION]: mockSubmittedData[BUYER_COUNTRY],
         [POLICY_TYPE]: mockSubmittedData[POLICY_TYPE],
         [POLICY_LENGTH]: mockSubmittedData[POLICY_LENGTH],
+        [QUOTE.PREMIUM_RATE_PERCENTAGE]: expectedPremiumRate,
+        [QUOTE.ESTIMATED_COST]: calculateCost(
+          expectedPremiumRate,
+          mockSubmittedData[AMOUNT],
+          mockPercentageOfCover,
+        ),
       };
 
       expect(result).toEqual(expected);

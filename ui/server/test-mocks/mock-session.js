@@ -12,6 +12,7 @@ const mockSession = {
     [BUYER_COUNTRY]: {
       name: mockAnswers[BUYER_COUNTRY],
       isoCode: 'FRA',
+      riskCategory: 3,
     },
     [CURRENCY]: {
       name: 'UK Sterling',
