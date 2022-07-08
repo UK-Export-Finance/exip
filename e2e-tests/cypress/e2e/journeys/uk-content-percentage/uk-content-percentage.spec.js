@@ -247,6 +247,13 @@ context('What percentage of your export is UK content page', () => {
           expect(text.trim()).includes(expectedMessage);
         });
       });
+
+      it('should focus on input when clicking summary error message', () => {
+        ukContentPercentagePage.submitButton().click();
+
+        partials.errorSummaryListItemLinks().eq(0).click();
+        ukContentPercentagePage.yesInput().should('have.focus');
+      });
     });
 
     describe('when submitting the answer as `yes`', () => {

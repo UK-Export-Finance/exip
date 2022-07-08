@@ -143,7 +143,7 @@ context('Which country is your buyer based page', () => {
   });
 
   describe('form submission', () => {
-    describe('when submitting an empty form', () => {
+    describe.only('when submitting an empty form', () => {
       it('should render validation errors', () => {
         buyerBasedPage.submitButton().click();
 
@@ -159,6 +159,19 @@ context('Which country is your buyer based page', () => {
         buyerBasedPage.errorMessage().invoke('text').then((text) => {
           expect(text.trim()).includes(expectedMessage);
         });
+      });
+
+      it('should focus on input when clicking summary error message', () => {
+        buyerBasedPage.submitButton().click();
+
+        // autocomplete component does not have a focused attribute, instead it has a class.
+        // this is added with client side JS.
+        // we have to wait to ensure that client side js has been executed.
+        cy.wait(8000); // eslint-disable-line cypress/no-unnecessary-waiting
+
+        partials.errorSummaryListItemLinks().eq(0).click();
+
+        buyerBasedPage.searchInput().should('have.class', 'autocomplete__input--focused');
       });
     });
 

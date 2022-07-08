@@ -104,6 +104,13 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
           expect(text.trim()).includes(expectedMessage);
         });
       });
+
+      it('should focus on input when clicking summary error message', () => {
+        companyBasedPage.submitButton().click();
+
+        partials.errorSummaryListItemLinks().eq(0).click();
+        companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].yesInput().should('have.focus');
+      });
     });
 
     describe('when submitting the answer as `yes`', () => {
