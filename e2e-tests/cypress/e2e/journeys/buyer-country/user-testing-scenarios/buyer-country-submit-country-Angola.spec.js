@@ -1,5 +1,5 @@
 import {
-  buyerBasedPage,
+  buyerCountryPage,
   cannotObtainCoverPage,
 } from '../../../pages';
 import { PAGES } from '../../../../../content-strings';
@@ -12,20 +12,20 @@ const UNSUPPORTED_COUNTRY_NAME = 'Angola';
 
 context(`Which country is your buyer based page - user testing scenarios - submit ${UNSUPPORTED_COUNTRY_NAME}`, () => {
   before(() => {
-    cy.visit(ROUTES.BUYER_BASED, {
+    cy.visit(ROUTES.BUYER_COUNTRY, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
-    cy.url().should('include', ROUTES.BUYER_BASED);
+    cy.url().should('include', ROUTES.BUYER_COUNTRY);
 
-    buyerBasedPage.searchInput().type('Angola');
+    buyerCountryPage.searchInput().type('Angola');
 
-    const results = buyerBasedPage.results();
+    const results = buyerCountryPage.results();
     results.first().click();
 
-    buyerBasedPage.submitButton().click();
+    buyerCountryPage.submitButton().click();
   });
 
   it('redirects to exit page', () => {

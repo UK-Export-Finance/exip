@@ -16,7 +16,7 @@ const post = (req, res) => {
   // new submitted data session
   req.session.submittedData = {};
 
-  return res.redirect(ROUTES.BUYER_BASED);
+  return res.redirect(ROUTES.BUYER_COUNTRY);
 };
 
 module.exports = {

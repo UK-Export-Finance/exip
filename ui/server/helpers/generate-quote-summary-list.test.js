@@ -67,7 +67,7 @@ describe('server/helpers/generate-quote-summary-list', () => {
             text: mockQuoteContent[BUYER_COUNTRY].text,
           },
           renderChangeLink: true,
-          changeRoute: ROUTES.BUYER_BASED_CHANGE,
+          changeRoute: ROUTES.BUYER_COUNTRY_CHANGE,
         },
       ];
 

@@ -1,7 +1,7 @@
 import {
   yourQuotePage,
   beforeYouStartPage,
-  buyerBasedPage,
+  buyerCountryPage,
   tellUsAboutYourPolicyPage,
 } from '../../pages';
 import {
@@ -181,7 +181,7 @@ context('Your quote page', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.BUYER_BASED_CHANGE}#${BUYER_COUNTRY}`;
+        const expectedHref = `${ROUTES.BUYER_COUNTRY_CHANGE}#${BUYER_COUNTRY}`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
     });
@@ -239,7 +239,7 @@ context('Your quote page', () => {
 
         it('clears the session', () => {
           beforeYouStartPage.submitButton().click();
-          buyerBasedPage.hiddenInput().should('have.attr', 'value', '');
+          buyerCountryPage.hiddenInput().should('have.attr', 'value', '');
         });
       });
     });

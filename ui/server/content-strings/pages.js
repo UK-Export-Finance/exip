@@ -38,7 +38,7 @@ const COMPANY_BASED_PAGE = {
   HEADING: 'Is your company based inside the UK, Channel Islands and Isle of Man?',
 };
 
-const BUYER_BASED_PAGE = {
+const BUYER_COUNTRY_PAGE = {
   PAGE_TITLE: 'In which country is your buyer based?',
   HEADING: 'In which country is your buyer based?',
 };
@@ -242,7 +242,7 @@ const PROBLEM_WITH_SERVICE_PAGE = {
 module.exports = {
   BEFORE_YOU_START,
   COMPANY_BASED_PAGE,
-  BUYER_BASED_PAGE,
+  BUYER_COUNTRY_PAGE,
   TRIED_TO_OBTAIN_COVER_PAGE,
   UK_GOODS_OR_SERVICES_PAGE,
   TELL_US_ABOUT_YOUR_POLICY_PAGE,

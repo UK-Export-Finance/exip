@@ -34,7 +34,7 @@ describe('server/helpers/generate-summary-list', () => {
     {
       ID: FIELD_IDS.BUYER_COUNTRY,
       ...FIELDS[FIELD_IDS.BUYER_COUNTRY],
-      CHANGE_ROUTE: ROUTES.BUYER_BASED_CHANGE,
+      CHANGE_ROUTE: ROUTES.BUYER_COUNTRY_CHANGE,
     },
   ];
 

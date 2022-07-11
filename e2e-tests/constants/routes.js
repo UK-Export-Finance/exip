@@ -2,8 +2,8 @@ const ROUTES = {
   GUIDANCE: '/',
   BEFORE_YOU_START: '/before-you-start',
 
-  BUYER_BASED: '/buyer-country',
-  BUYER_BASED_CHANGE: '/buyer-country/change',
+  BUYER_COUNTRY: '/buyer-country',
+  BUYER_COUNTRY_CHANGE: '/buyer-country/change',
 
   COMPANY_BASED: '/is-exporter-in-UK',
   COMPANY_BASED_CHANGE: '/is-exporter-in-UK/change',

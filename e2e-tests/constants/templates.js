@@ -2,7 +2,7 @@ const TEMPLATES = {
   GUIDANCE: 'guidance.njk',
   BEFORE_YOU_START: 'before-you-start.njk',
   COMPANY_BASED: 'company-based.njk',
-  BUYER_BASED: 'buyer-based.njk',
+  BUYER_COUNTRY: 'buyer-country.njk',
   TRIED_TO_OBTAIN_COVER: 'tried-to-obtain-cover.njk',
   UK_GOODS_OR_SERVICES: 'uk-goods-or-services.njk',
   TELL_US_ABOUT_YOUR_POLICY: 'tell-us-about-your-policy.njk',

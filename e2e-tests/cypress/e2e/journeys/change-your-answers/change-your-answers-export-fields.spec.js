@@ -1,5 +1,5 @@
 import {
-  buyerBasedPage,
+  buyerCountryPage,
   companyBasedPage,
   triedToObtainCoverPage,
   ukGoodsOrServicesPage,
@@ -41,10 +41,10 @@ context('Change your answers after checking answers - Export fields', () => {
   describe('change `Buyer based`', () => {
     let row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
 
-    it(`clicking 'change' redirects to ${ROUTES.BUYER_BASED_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.BUYER_COUNTRY_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.BUYER_BASED_CHANGE}#${BUYER_COUNTRY}`;
+      const expectedUrl = `${ROUTES.BUYER_COUNTRY_CHANGE}#${BUYER_COUNTRY}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -58,7 +58,7 @@ context('Change your answers after checking answers - Export fields', () => {
     it('has originally submitted answer selected', () => {
       const expectedValue = submissionData[BUYER_COUNTRY];
 
-      buyerBasedPage.hiddenInput().should('have.attr', 'value', expectedValue);
+      buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
     });
 
     it('auto focuses the input', () => {
@@ -67,14 +67,14 @@ context('Change your answers after checking answers - Export fields', () => {
       // we have to wait to ensure that client side js has been executed.
       cy.wait(8000); // eslint-disable-line cypress/no-unnecessary-waiting
 
-      buyerBasedPage.searchInput().should('have.class', 'autocomplete__input--focused');
+      buyerCountryPage.searchInput().should('have.class', 'autocomplete__input--focused');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting a new answer`, () => {
-      buyerBasedPage.searchInput().type('Belg');
-      const results = buyerBasedPage.results();
+      buyerCountryPage.searchInput().type('Belg');
+      const results = buyerCountryPage.results();
       results.first().click();
-      buyerBasedPage.submitButton().click();
+      buyerCountryPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });

@@ -2,7 +2,7 @@ const express = require('express');
 const { ROUTES } = require('../constants');
 const guidanceController = require('../controllers/guidance');
 const beforeYouStartController = require('../controllers/before-you-start');
-const buyerBasedController = require('../controllers/buyer-based');
+const buyerBasedController = require('../controllers/buyer-country');
 const companyBasedController = require('../controllers/company-based');
 const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
 const ukGoodsOrServicesController = require('../controllers/uk-goods-or-services');
@@ -18,10 +18,10 @@ router.get(ROUTES.GUIDANCE, guidanceController);
 router.get(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
 router.post(ROUTES.BEFORE_YOU_START, beforeYouStartController.post);
 
-router.get(ROUTES.BUYER_BASED, buyerBasedController.get);
-router.post(ROUTES.BUYER_BASED, buyerBasedController.post);
-router.get(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.get);
-router.post(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.post);
+router.get(ROUTES.BUYER_COUNTRY, buyerBasedController.get);
+router.post(ROUTES.BUYER_COUNTRY, buyerBasedController.post);
+router.get(ROUTES.BUYER_COUNTRY_CHANGE, buyerBasedController.get);
+router.post(ROUTES.BUYER_COUNTRY_CHANGE, buyerBasedController.post);
 
 router.get(ROUTES.COMPANY_BASED, companyBasedController.get);
 router.post(ROUTES.COMPANY_BASED, companyBasedController.post);

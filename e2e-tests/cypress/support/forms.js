@@ -1,6 +1,6 @@
 import {
   companyBasedPage,
-  buyerBasedPage,
+  buyerCountryPage,
   triedToObtainCoverPage,
   ukGoodsOrServicesPage,
   tellUsAboutYourPolicyPage,
@@ -18,10 +18,10 @@ const {
 } = FIELD_IDS;
 
 export const completeAndSubmitBuyerForm = () => {
-  buyerBasedPage.searchInput().type('Fra');
-  const results = buyerBasedPage.results();
+  buyerCountryPage.searchInput().type('Fra');
+  const results = buyerCountryPage.results();
   results.first().click();
-  buyerBasedPage.submitButton().click();
+  buyerCountryPage.submitButton().click();
 };
 
 export const completeAndSubmitCompanyForm = () => {

@@ -6,7 +6,7 @@ const { ROUTES } = require('../constants');
 const guidanceController = require('../controllers/guidance');
 const beforeYouStartController = require('../controllers/before-you-start');
 const companyBasedController = require('../controllers/company-based');
-const buyerBasedController = require('../controllers/buyer-based');
+const buyerBasedController = require('../controllers/buyer-country');
 const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
 const ukGoodsOrServicesController = require('../controllers/uk-goods-or-services');
 const tellUsAboutYourPolicyController = require('../controllers/tell-us-about-your-policy');
@@ -33,10 +33,10 @@ describe('routes/index', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.post);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.BUYER_BASED, buyerBasedController.get);
-    expect(post).toHaveBeenCalledWith(ROUTES.BUYER_BASED, buyerBasedController.post);
-    expect(get).toHaveBeenCalledWith(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.get);
-    expect(post).toHaveBeenCalledWith(ROUTES.BUYER_BASED_CHANGE, buyerBasedController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.BUYER_COUNTRY, buyerBasedController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.BUYER_COUNTRY, buyerBasedController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.BUYER_COUNTRY_CHANGE, buyerBasedController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.BUYER_COUNTRY_CHANGE, buyerBasedController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.COMPANY_BASED, companyBasedController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.COMPANY_BASED, companyBasedController.post);

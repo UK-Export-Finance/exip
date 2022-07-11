@@ -11,7 +11,7 @@ const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 
 const PAGE_VARIABLES = {
   FIELD_NAME: FIELD_IDS.COUNTRY,
-  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.BUYER_BASED_PAGE,
+  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.BUYER_COUNTRY_PAGE,
 };
 
 const get = async (req, res) => {
@@ -25,7 +25,7 @@ const get = async (req, res) => {
     mappedCountries = mapCountries(countries);
   }
 
-  return res.render(TEMPLATES.BUYER_BASED, {
+  return res.render(TEMPLATES.BUYER_COUNTRY, {
     ...singleInputPageVariables(PAGE_VARIABLES),
     BACK_LINK: req.headers.referer,
     HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
@@ -42,7 +42,7 @@ const post = async (req, res) => {
   const mappedCountries = mapCountries(countries);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.BUYER_BASED, {
+    return res.render(TEMPLATES.BUYER_COUNTRY, {
       ...singleInputPageVariables(PAGE_VARIABLES),
       BACK_LINK: req.headers.referer,
       HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
@@ -57,7 +57,7 @@ const post = async (req, res) => {
   const countryIsSupported = isCountrySupported(country);
 
   if (!countryIsSupported) {
-    req.flash('previousRoute', ROUTES.BUYER_BASED);
+    req.flash('previousRoute', ROUTES.BUYER_COUNTRY);
 
     const { PAGES } = CONTENT_STRINGS;
     const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;

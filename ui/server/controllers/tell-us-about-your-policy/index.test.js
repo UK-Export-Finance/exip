@@ -9,7 +9,7 @@ const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const mapSubmittedValues = require('../../helpers/map-submitted-values');
 const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
 
-describe('controllers/buyer-based', () => {
+describe('controllers/buyer-country', () => {
   let req;
   let res;
   const mockCurrenciesResponse = [

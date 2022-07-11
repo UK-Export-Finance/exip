@@ -1,5 +1,5 @@
 import {
-  buyerBasedPage,
+  buyerCountryPage,
   checkYourAnswersPage,
   yourQuotePage,
 } from '../../../pages';
@@ -28,10 +28,10 @@ context(`Your quote page - user testing scenarios - ${COUNTRY_NAME} mock quote`,
     // change buyer country
     checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY].changeLink().click();
 
-    buyerBasedPage.searchInput().type(COUNTRY_NAME);
-    const results = buyerBasedPage.results();
+    buyerCountryPage.searchInput().type(COUNTRY_NAME);
+    const results = buyerCountryPage.results();
     results.first().click();
-    buyerBasedPage.submitButton().click();
+    buyerCountryPage.submitButton().click();
 
     checkYourAnswersPage.submitButton().click();
 

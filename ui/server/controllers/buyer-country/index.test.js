@@ -15,7 +15,7 @@ const {
   mockSession,
 } = require('../../test-mocks');
 
-describe('controllers/buyer-based', () => {
+describe('controllers/buyer-country', () => {
   let req;
   let res;
   const mockCountriesResponse = [
@@ -44,7 +44,7 @@ describe('controllers/buyer-based', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_NAME: FIELD_IDS.COUNTRY,
-        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.BUYER_BASED_PAGE,
+        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.BUYER_COUNTRY_PAGE,
       };
 
       expect(controller.PAGE_VARIABLES).toEqual(expected);
@@ -77,7 +77,7 @@ describe('controllers/buyer-based', () => {
         isChangeRoute: isChangeRoute(req.originalUrl),
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_COUNTRY, expectedVariables);
     });
 
     describe('when a country has been submitted', () => {
@@ -100,7 +100,7 @@ describe('controllers/buyer-based', () => {
           isChangeRoute: isChangeRoute(req.originalUrl),
         };
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED, expectedVariables);
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_COUNTRY, expectedVariables);
       });
     });
   });
@@ -116,7 +116,7 @@ describe('controllers/buyer-based', () => {
       it('should render template with validation errors', async () => {
         await controller.post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_BASED, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_COUNTRY, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
           BACK_LINK: req.headers.referer,
           HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
@@ -143,7 +143,7 @@ describe('controllers/buyer-based', () => {
       it('should add previousRoute and exitReason to req.flash', async () => {
         await controller.post(req, res);
 
-        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.BUYER_BASED);
+        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.BUYER_COUNTRY);
 
         const countryName = unsupportedCountry.marketName;
 
