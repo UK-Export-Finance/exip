@@ -10,12 +10,12 @@ const validation = (formBody) => {
   let errors;
 
   const hasErrors = (!objectHasValues(formBody)
-    || !objectHasProperty(formBody, FIELD_IDS.UK_CONTENT_PERCENTAGE));
+    || !objectHasProperty(formBody, FIELD_IDS.CAN_GET_PRIVATE_INSURANCE));
 
   if (hasErrors) {
     errors = generateValidationErrors(
-      FIELD_IDS.UK_CONTENT_PERCENTAGE,
-      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.UK_CONTENT_PERCENTAGE].IS_EMPTY,
+      FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_YES,
+      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE],
     );
 
     return errors;

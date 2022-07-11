@@ -27,7 +27,7 @@ const {
   BUYER_LOCATION,
 } = QUOTE;
 
-describe('sever/helpers/generate-quote-summary-list', () => {
+describe('server/helpers/generate-quote-summary-list', () => {
   describe('generateFields', () => {
     it('should map over each field group with value from submittedData', () => {
       const mockQuoteContent = mapQuoteToContent(mockQuote);
@@ -67,7 +67,7 @@ describe('sever/helpers/generate-quote-summary-list', () => {
             text: mockQuoteContent[BUYER_COUNTRY].text,
           },
           renderChangeLink: true,
-          changeRoute: ROUTES.BUYER_BASED_CHANGE,
+          changeRoute: ROUTES.BUYER_COUNTRY_CHANGE,
         },
       ];
 

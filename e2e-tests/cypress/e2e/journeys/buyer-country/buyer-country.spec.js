@@ -1,6 +1,6 @@
 import {
   beforeYouStartPage,
-  buyerBasedPage,
+  buyerCountryPage,
 } from '../../pages';
 import partials from '../../partials';
 import {
@@ -12,7 +12,7 @@ import {
 } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
 
-const CONTENT_STRINGS = PAGES.BUYER_BASED_PAGE;
+const CONTENT_STRINGS = PAGES.BUYER_COUNTRY_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Which country is your buyer based page', () => {
@@ -26,7 +26,7 @@ context('Which country is your buyer based page', () => {
 
     beforeYouStartPage.submitButton().click();
 
-    cy.url().should('include', ROUTES.BUYER_BASED);
+    cy.url().should('include', ROUTES.BUYER_COUNTRY);
   });
 
   it('passes the audits', () => {
@@ -53,20 +53,20 @@ context('Which country is your buyer based page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    buyerBasedPage.heading().invoke('text').then((text) => {
+    buyerCountryPage.heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
 
   describe('searchable autocomplete input', () => {
     it('renders an input', () => {
-      buyerBasedPage.searchInput().should('exist');
+      buyerCountryPage.searchInput().should('exist');
     });
 
     it('renders `no results` message when no results are found', () => {
-      buyerBasedPage.searchInput().type('test');
+      buyerCountryPage.searchInput().type('test');
 
-      const noResults = buyerBasedPage.noResults();
+      const noResults = buyerCountryPage.noResults();
       noResults.should('exist');
 
       noResults.invoke('text').then((text) => {
@@ -77,64 +77,64 @@ context('Which country is your buyer based page', () => {
 
     it('renders a single country result after searching', () => {
       // start searching for France
-      buyerBasedPage.searchInput().type('Fra');
+      buyerCountryPage.searchInput().type('Fra');
 
-      const noResults = buyerBasedPage.noResults();
+      const noResults = buyerCountryPage.noResults();
       noResults.should('not.exist');
 
-      const results = buyerBasedPage.results();
+      const results = buyerCountryPage.results();
 
       results.should('have.length', 1);
     });
 
     it('renders multiple country results after searching', () => {
-      buyerBasedPage.searchInput().type('Be');
+      buyerCountryPage.searchInput().type('Be');
 
-      const noResults = buyerBasedPage.noResults();
+      const noResults = buyerCountryPage.noResults();
       noResults.should('not.exist');
 
-      const results = buyerBasedPage.results();
+      const results = buyerCountryPage.results();
 
       results.should('have.length.greaterThan', 1);
     });
 
     it('adds the country name to a hidden input value after searching', () => {
-      buyerBasedPage.searchInput().type('Fra');
+      buyerCountryPage.searchInput().type('Fra');
 
-      const noResults = buyerBasedPage.noResults();
+      const noResults = buyerCountryPage.noResults();
       noResults.should('not.exist');
 
-      const results = buyerBasedPage.results();
+      const results = buyerCountryPage.results();
 
       // select the first result (France)
       results.first().click();
 
       // check hidden input value
       const expectedValue = 'France';
-      buyerBasedPage.hiddenInput().should('have.attr', 'value', expectedValue);
+      buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
     });
 
     it('allows user to remove a selected country and search again', () => {
-      buyerBasedPage.searchInput().type('Fra');
-      const results = buyerBasedPage.results();
+      buyerCountryPage.searchInput().type('Fra');
+      const results = buyerCountryPage.results();
 
       // select the first result (France)
       results.first().click();
 
       // clear the input
-      buyerBasedPage.searchInput().clear();
+      buyerCountryPage.searchInput().clear();
 
       // search for a different country, submit with enter key
-      buyerBasedPage.searchInput().type('Belg{enter}');
+      buyerCountryPage.searchInput().type('Belg{enter}');
 
       // check hidden input value
       const expectedValue = 'Belgium';
-      buyerBasedPage.hiddenInput().should('have.attr', 'value', expectedValue);
+      buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
     });
   });
 
   it('renders a submit button', () => {
-    const button = buyerBasedPage.submitButton();
+    const button = buyerCountryPage.submitButton();
     button.should('exist');
 
     button.invoke('text').then((text) => {
@@ -143,9 +143,9 @@ context('Which country is your buyer based page', () => {
   });
 
   describe('form submission', () => {
-    describe('when submitting an empty form', () => {
+    describe.only('when submitting an empty form', () => {
       it('should render validation errors', () => {
-        buyerBasedPage.submitButton().click();
+        buyerCountryPage.submitButton().click();
 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
@@ -156,20 +156,33 @@ context('Which country is your buyer based page', () => {
           expect(text.trim()).equal(expectedMessage);
         });
 
-        buyerBasedPage.errorMessage().invoke('text').then((text) => {
+        buyerCountryPage.errorMessage().invoke('text').then((text) => {
           expect(text.trim()).includes(expectedMessage);
         });
+      });
+
+      it('should focus on input when clicking summary error message', () => {
+        buyerCountryPage.submitButton().click();
+
+        // autocomplete component does not have a focused attribute, instead it has a class.
+        // this is added with client side JS.
+        // we have to wait to ensure that client side js has been executed.
+        cy.wait(8000); // eslint-disable-line cypress/no-unnecessary-waiting
+
+        partials.errorSummaryListItemLinks().eq(0).click();
+
+        buyerCountryPage.searchInput().should('have.class', 'autocomplete__input--focused');
       });
     });
 
     describe('when submitting with a supported country', () => {
       it(`should redirect to ${ROUTES.COMPANY_BASED}`, () => {
-        buyerBasedPage.searchInput().type('Fra');
+        buyerCountryPage.searchInput().type('Fra');
 
-        const results = buyerBasedPage.results();
+        const results = buyerCountryPage.results();
         results.first().click();
 
-        buyerBasedPage.submitButton().click();
+        buyerCountryPage.submitButton().click();
 
         cy.url().should('include', ROUTES.COMPANY_BASED);
       });

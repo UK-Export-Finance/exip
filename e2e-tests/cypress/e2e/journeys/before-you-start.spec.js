@@ -99,7 +99,7 @@ context('Before you start page', () => {
     it('clicking `start now` redirects to the `Buyer based` page', () => {
       beforeYouStartPage.submitButton().click();
 
-      cy.url().should('include', ROUTES.BUYER_BASED);
+      cy.url().should('include', ROUTES.BUYER_COUNTRY);
     });
   });
 });

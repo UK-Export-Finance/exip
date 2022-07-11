@@ -1,5 +1,5 @@
 import {
-  buyerBasedPage,
+  buyerCountryPage,
   tellUsAboutYourPolicyPage,
   checkYourAnswersPage,
   yourQuotePage,
@@ -119,10 +119,10 @@ context('Your quote page - change answers', () => {
   describe('change `buyer location`', () => {
     let row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
 
-    it(`clicking 'change' redirects to ${ROUTES.BUYER_BASED_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.BUYER_COUNTRY_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.BUYER_BASED_CHANGE}#${QUOTE.BUYER_LOCATION}`;
+      const expectedUrl = `${ROUTES.BUYER_COUNTRY_CHANGE}#${QUOTE.BUYER_LOCATION}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -139,14 +139,14 @@ context('Your quote page - change answers', () => {
       // we have to wait to ensure that client side js has been executed.
       cy.wait(8000); // eslint-disable-line cypress/no-unnecessary-waiting
 
-      buyerBasedPage.searchInput().should('have.class', 'autocomplete__input--focused');
+      buyerCountryPage.searchInput().should('have.class', 'autocomplete__input--focused');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      buyerBasedPage.searchInput().type('Belg');
-      const results = buyerBasedPage.results();
+      buyerCountryPage.searchInput().type('Belg');
+      const results = buyerCountryPage.results();
       results.first().click();
-      buyerBasedPage.submitButton().click();
+      buyerCountryPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });

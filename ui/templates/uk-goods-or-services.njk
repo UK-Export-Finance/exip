@@ -121,10 +121,11 @@
 
       <h2 class="govuk-heading-s" data-cy="details-not-sure-heading">{{ CONTENT_STRINGS.DETAILS.NOT_SURE.HEADING }}</h2>
 
-      <div data-cy="details-not-sure">
-        {{ detailsText.render({
-          items: CONTENT_STRINGS.DETAILS.NOT_SURE.ITEMS
-        }) }}
+      <div>
+        <p data-cy="details-not-sure">{{ CONTENT_STRINGS.DETAILS.NOT_SURE.BODY_1 }} <a class="govuk-link" data-cy="details-not-sure-link" href="{{ CONTENT_STRINGS.DETAILS.NOT_SURE.LINK.HREF }}">{{ CONTENT_STRINGS.DETAILS.NOT_SURE.LINK.TEXT }}</a> {{ CONTENT_STRINGS.DETAILS.NOT_SURE.BODY_2 }}</p>
+
+        <p data-cy="details-not-sure-last">{{ CONTENT_STRINGS.DETAILS.NOT_SURE.BODY_3 }}</p>
+
       </div>
     {% endset %}
 

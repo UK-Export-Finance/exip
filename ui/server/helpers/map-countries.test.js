@@ -5,7 +5,7 @@ const {
 } = require('./map-countries');
 const sortArrayAlphabetically = require('./sort-array-alphabetically');
 
-describe('sever/helpers/map-countries', () => {
+describe('server/helpers/map-countries', () => {
   const mockCountries = [
     {
       marketName: 'Abu Dhabi',

@@ -1,5 +1,5 @@
 import {
-  buyerBasedPage,
+  buyerCountryPage,
   companyBasedPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -17,17 +17,17 @@ const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Company based inside the UK, Channel Islands and Isle of Man page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.BUYER_BASED, {
+    cy.visit(ROUTES.BUYER_COUNTRY, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
-    buyerBasedPage.searchInput().type('Fra');
-    const results = buyerBasedPage.results();
+    buyerCountryPage.searchInput().type('Fra');
+    const results = buyerCountryPage.results();
     results.first().click();
-    buyerBasedPage.submitButton().click();
+    buyerCountryPage.submitButton().click();
 
     cy.url().should('include', ROUTES.COMPANY_BASED);
   });
@@ -49,7 +49,7 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.BUYER_BASED);
+    cy.url().should('include', ROUTES.BUYER_COUNTRY);
   });
 
   it('renders a page title and heading', () => {
@@ -104,14 +104,21 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
           expect(text.trim()).includes(expectedMessage);
         });
       });
+
+      it('should focus on input when clicking summary error message', () => {
+        companyBasedPage.submitButton().click();
+
+        partials.errorSummaryListItemLinks().eq(0).click();
+        companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].yesInput().should('have.focus');
+      });
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.TRIED_TO_OBTAIN_COVER}`, () => {
+      it(`should redirect to ${ROUTES.CAN_GET_PRIVATE_INSURANCE}`, () => {
         companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].yes().click();
         companyBasedPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
+        cy.url().should('include', ROUTES.CAN_GET_PRIVATE_INSURANCE);
       });
     });
   });

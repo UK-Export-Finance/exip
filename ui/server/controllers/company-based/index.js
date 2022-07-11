@@ -51,7 +51,7 @@ const post = (req, res) => {
     return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
   }
 
-  return res.redirect(ROUTES.TRIED_TO_OBTAIN_COVER);
+  return res.redirect(ROUTES.CAN_GET_PRIVATE_INSURANCE);
 };
 
 module.exports = {

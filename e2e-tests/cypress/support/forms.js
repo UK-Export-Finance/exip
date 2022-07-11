@@ -1,15 +1,15 @@
 import {
   companyBasedPage,
-  buyerBasedPage,
-  triedToObtainCoverPage,
-  ukContentPercentagePage,
+  buyerCountryPage,
+  canGetPrivateInsurancePage,
+  ukGoodsOrServicesPage,
   tellUsAboutYourPolicyPage,
 } from '../e2e/pages';
 import { FIELD_IDS } from '../../constants';
 
 const {
   VALID_COMPANY_BASE,
-  TRIED_PRIVATE_COVER,
+  CAN_GET_PRIVATE_INSURANCE,
   CURRENCY,
   AMOUNT,
   CREDIT_PERIOD,
@@ -18,10 +18,10 @@ const {
 } = FIELD_IDS;
 
 export const completeAndSubmitBuyerForm = () => {
-  buyerBasedPage.searchInput().type('Fra');
-  const results = buyerBasedPage.results();
+  buyerCountryPage.searchInput().type('Fra');
+  const results = buyerCountryPage.results();
   results.first().click();
-  buyerBasedPage.submitButton().click();
+  buyerCountryPage.submitButton().click();
 };
 
 export const completeAndSubmitCompanyForm = () => {
@@ -30,13 +30,13 @@ export const completeAndSubmitCompanyForm = () => {
 };
 
 export const completeAndSubmitTriedToObtainCoverForm = () => {
-  triedToObtainCoverPage[TRIED_PRIVATE_COVER].no().click();
-  triedToObtainCoverPage.submitButton().click();
+  canGetPrivateInsurancePage[CAN_GET_PRIVATE_INSURANCE].no().click();
+  canGetPrivateInsurancePage.submitButton().click();
 };
 
 export const completeAndSubmitUkContentForm = () => {
-  ukContentPercentagePage.yes().click();
-  ukContentPercentagePage.submitButton().click();
+  ukGoodsOrServicesPage.yes().click();
+  ukGoodsOrServicesPage.submitButton().click();
 };
 
 export const compmleteAndSubmitTellUsAboutYourPolicyForm = () => {

@@ -1,6 +1,6 @@
 const getCountryByName = require('./get-country-by-name');
 
-describe('sever/helpers/get-country-by-name', () => {
+describe('server/helpers/get-country-by-name', () => {
   it('should return a mapped object', () => {
     const mockCountries = [
       { isoCode: 'A', name: 'Mock A' },

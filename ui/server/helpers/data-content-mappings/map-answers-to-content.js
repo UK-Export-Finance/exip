@@ -11,10 +11,10 @@ const mapPolicyLength = require('./map-policy-length');
 const {
   VALID_COMPANY_BASE,
   BUYER_COUNTRY,
-  TRIED_PRIVATE_COVER,
-  TRIED_PRIVATE_COVER_YES,
-  TRIED_PRIVATE_COVER_NO,
-  UK_CONTENT_PERCENTAGE,
+  CAN_GET_PRIVATE_INSURANCE,
+  CAN_GET_PRIVATE_INSURANCE_YES,
+  CAN_GET_PRIVATE_INSURANCE_NO,
+  UK_GOODS_OR_SERVICES,
   AMOUNT,
   CURRENCY,
   CREDIT_PERIOD,
@@ -48,18 +48,18 @@ const mapPolicyType = (answer) => {
 const mapTriedPrivateCover = (answer) => {
   let mapped;
 
-  if (answer === FIELD_VALUES.TRIED_PRIVATE_COVER.YES) {
+  if (answer === FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.YES) {
     mapped = {
-      [TRIED_PRIVATE_COVER_YES]: {
-        text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER_YES],
+      [CAN_GET_PRIVATE_INSURANCE_YES]: {
+        text: SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_YES],
       },
     };
   }
 
-  if (answer === FIELD_VALUES.TRIED_PRIVATE_COVER.NO) {
+  if (answer === FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.NO) {
     mapped = {
-      [TRIED_PRIVATE_COVER_NO]: {
-        text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER_NO],
+      [CAN_GET_PRIVATE_INSURANCE_NO]: {
+        text: SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_NO],
       },
     };
   }
@@ -75,9 +75,9 @@ const mapAnswersToContent = (answers) => {
     [BUYER_COUNTRY]: {
       text: mapCountry(answers[BUYER_COUNTRY]),
     },
-    ...mapTriedPrivateCover(answers[TRIED_PRIVATE_COVER]),
-    [UK_CONTENT_PERCENTAGE]: {
-      text: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
+    ...mapTriedPrivateCover(answers[CAN_GET_PRIVATE_INSURANCE]),
+    [UK_GOODS_OR_SERVICES]: {
+      text: SUMMARY_ANSWERS[UK_GOODS_OR_SERVICES],
     },
     [AMOUNT]: {
       text: formatCurrency(answers[AMOUNT], answers[CURRENCY].isoCode),

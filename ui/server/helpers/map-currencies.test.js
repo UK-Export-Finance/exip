@@ -4,7 +4,7 @@ const {
 } = require('./map-currencies');
 const sortArrayAlphabetically = require('./sort-array-alphabetically');
 
-describe('sever/helpers/map-currencies', () => {
+describe('server/helpers/map-currencies', () => {
   const mockCurrencies = [
     {
       name: 'Euros',

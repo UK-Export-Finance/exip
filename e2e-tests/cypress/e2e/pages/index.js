@@ -1,9 +1,9 @@
 const guidancePage = require('./guidance');
 const beforeYouStartPage = require('./beforeYouStart');
 const companyBasedPage = require('./companyBased');
-const buyerBasedPage = require('./buyerBased');
-const triedToObtainCoverPage = require('./triedToObtainCover');
-const ukContentPercentagePage = require('./ukContentPercentage');
+const buyerCountryPage = require('./buyerCountry');
+const canGetPrivateInsurancePage = require('./canGetPrivateInsurance');
+const ukGoodsOrServicesPage = require('./ukGoodsOrServices');
 const tellUsAboutYourPolicyPage = require('./tellUsAboutYourPolicy');
 const checkYourAnswersPage = require('./checkYourAnswers');
 const yourQuotePage = require('./yourQuote');
@@ -14,9 +14,9 @@ module.exports = {
   guidancePage,
   beforeYouStartPage,
   companyBasedPage,
-  buyerBasedPage,
-  triedToObtainCoverPage,
-  ukContentPercentagePage,
+  buyerCountryPage,
+  canGetPrivateInsurancePage,
+  ukGoodsOrServicesPage,
   tellUsAboutYourPolicyPage,
   checkYourAnswersPage,
   yourQuotePage,

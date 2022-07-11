@@ -1,6 +1,6 @@
 import { FIELD_IDS } from '../../../constants';
 
-const buyerBasedPage = {
+const buyerCountryPage = {
   heading: () => cy.get('[data-cy="heading"]'),
   searchInput: () => cy.get(`#${FIELD_IDS.COUNTRY}`),
   hiddenInput: () => cy.get(`#${FIELD_IDS.BUYER_COUNTRY}`),
@@ -10,4 +10,4 @@ const buyerBasedPage = {
   submitButton: () => cy.get('[data-cy="submit-button"]'),
 };
 
-export default buyerBasedPage;
+export default buyerCountryPage;

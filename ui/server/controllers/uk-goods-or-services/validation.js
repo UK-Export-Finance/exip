@@ -10,12 +10,12 @@ const validation = (formBody) => {
   let errors;
 
   const hasErrors = (!objectHasValues(formBody)
-    || !objectHasProperty(formBody, FIELD_IDS.TRIED_PRIVATE_COVER));
+    || !objectHasProperty(formBody, FIELD_IDS.UK_GOODS_OR_SERVICES));
 
   if (hasErrors) {
     errors = generateValidationErrors(
-      FIELD_IDS.TRIED_PRIVATE_COVER_YES,
-      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.TRIED_PRIVATE_COVER],
+      FIELD_IDS.UK_GOODS_OR_SERVICES,
+      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.UK_GOODS_OR_SERVICES].IS_EMPTY,
     );
 
     return errors;

@@ -1,5 +1,5 @@
 import {
-  buyerBasedPage,
+  buyerCountryPage,
   cannotObtainCoverPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -11,22 +11,22 @@ const { ROUTES } = CONSTANTS;
 
 const UNSUPPORTED_COUNTRY_NAME = 'Netherlands Antilles';
 
-context('Which country is your buyer based page', () => {
+context('Which country is your buyer based page - unsupported country', () => {
   before(() => {
-    cy.visit(ROUTES.BUYER_BASED, {
+    cy.visit(ROUTES.BUYER_COUNTRY, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
-    cy.url().should('include', ROUTES.BUYER_BASED);
+    cy.url().should('include', ROUTES.BUYER_COUNTRY);
 
-    buyerBasedPage.searchInput().type(UNSUPPORTED_COUNTRY_NAME);
+    buyerCountryPage.searchInput().type(UNSUPPORTED_COUNTRY_NAME);
 
-    const results = buyerBasedPage.results();
+    const results = buyerCountryPage.results();
     results.first().click();
 
-    buyerBasedPage.submitButton().click();
+    buyerCountryPage.submitButton().click();
   });
 
   it('redirects to exit page', () => {
@@ -36,7 +36,7 @@ context('Which country is your buyer based page', () => {
   it('renders a back button with correct link', () => {
     partials.backLink().should('exist');
 
-    partials.backLink().should('have.attr', 'href', ROUTES.BUYER_BASED);
+    partials.backLink().should('have.attr', 'href', ROUTES.BUYER_COUNTRY);
   });
 
   it('renders a specific reason', () => {

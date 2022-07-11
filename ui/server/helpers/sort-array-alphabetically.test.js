@@ -1,6 +1,6 @@
 const sortArrayAlphabetically = require('./sort-array-alphabetically');
 
-describe('sever/helpers/sort-array-alphabetically', () => {
+describe('server/helpers/sort-array-alphabetically', () => {
   it('should sort an array of objects alphabetically', () => {
     const mockArray = [
       { name: 'c' },

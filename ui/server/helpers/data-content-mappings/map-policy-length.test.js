@@ -12,7 +12,7 @@ const {
   MULTI_POLICY_LENGTH,
 } = FIELD_IDS;
 
-describe('sever/helpers/map-policy-length', () => {
+describe('server/helpers/map-policy-length', () => {
   describe('when policy type is single', () => {
     it(`should return an object with mapped ${SINGLE_POLICY_LENGTH}`, () => {
       const mockAnswersSinglePolicyType = {

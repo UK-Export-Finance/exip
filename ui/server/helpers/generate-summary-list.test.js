@@ -19,9 +19,9 @@ const {
 const { mockAnswers } = require('../test-mocks');
 
 const {
-  TRIED_PRIVATE_COVER_YES,
-  TRIED_PRIVATE_COVER_NO,
-  UK_CONTENT_PERCENTAGE,
+  CAN_GET_PRIVATE_INSURANCE_YES,
+  CAN_GET_PRIVATE_INSURANCE_NO,
+  UK_GOODS_OR_SERVICES,
   SINGLE_POLICY_TYPE,
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -29,19 +29,19 @@ const {
   CREDIT_PERIOD,
 } = FIELD_IDS;
 
-describe('sever/helpers/generate-summary-list', () => {
+describe('server/helpers/generate-summary-list', () => {
   const mockFields = [
     {
       ID: FIELD_IDS.BUYER_COUNTRY,
       ...FIELDS[FIELD_IDS.BUYER_COUNTRY],
-      CHANGE_ROUTE: ROUTES.BUYER_BASED_CHANGE,
+      CHANGE_ROUTE: ROUTES.BUYER_COUNTRY_CHANGE,
     },
   ];
 
   describe('generateFieldGroups', () => {
     it('should map over each field group with value from submittedData', () => {
       const mockAnswersContent = mapAnswersToContent(mockAnswers);
-      delete mockAnswersContent[TRIED_PRIVATE_COVER_NO];
+      delete mockAnswersContent[CAN_GET_PRIVATE_INSURANCE_NO];
       delete mockAnswersContent[SINGLE_POLICY_TYPE];
       delete mockAnswersContent[SINGLE_POLICY_LENGTH];
 
@@ -63,15 +63,15 @@ describe('sever/helpers/generate-summary-list', () => {
         })),
       };
 
-      // UK_CONTENT_PERCENTAGE is dynamically added after a previous field.
+      // UK_GOODS_OR_SERVICES is dynamically added after a previous field.
       expected.EXPORT_DETAILS = [
         ...expected.EXPORT_DETAILS,
         {
-          ID: UK_CONTENT_PERCENTAGE,
-          ...FIELDS[UK_CONTENT_PERCENTAGE],
-          CHANGE_ROUTE: ROUTES.UK_CONTENT_PERCENTAGE_CHANGE,
+          ID: UK_GOODS_OR_SERVICES,
+          ...FIELDS[UK_GOODS_OR_SERVICES],
+          CHANGE_ROUTE: ROUTES.UK_GOODS_OR_SERVICES_CHANGE,
           value: {
-            text: mockAnswersContent[UK_CONTENT_PERCENTAGE].text,
+            text: mockAnswersContent[UK_GOODS_OR_SERVICES].text,
           },
         },
       ];
@@ -93,25 +93,25 @@ describe('sever/helpers/generate-summary-list', () => {
     });
 
     describe('when `unable to get private cover` is true', () => {
-      it(`should add a ${TRIED_PRIVATE_COVER_YES} object to EXPORT_DETAILS`, () => {
+      it(`should add a ${CAN_GET_PRIVATE_INSURANCE_YES} object to EXPORT_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockAnswers),
-          [TRIED_PRIVATE_COVER_YES]: {
-            text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER_YES],
+          [CAN_GET_PRIVATE_INSURANCE_YES]: {
+            text: SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_YES],
           },
         };
-        delete mockAnswersContent[TRIED_PRIVATE_COVER_NO];
+        delete mockAnswersContent[CAN_GET_PRIVATE_INSURANCE_NO];
 
         const result = generateFieldGroups(mockAnswersContent);
 
         const expectedField = result.EXPORT_DETAILS[result.EXPORT_DETAILS.length - 2];
 
         const expected = {
-          ID: TRIED_PRIVATE_COVER_YES,
-          ...FIELDS[TRIED_PRIVATE_COVER_YES],
-          CHANGE_ROUTE: ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE,
+          ID: CAN_GET_PRIVATE_INSURANCE_YES,
+          ...FIELDS[CAN_GET_PRIVATE_INSURANCE_YES],
+          CHANGE_ROUTE: ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE,
           value: {
-            text: mockAnswersContent[TRIED_PRIVATE_COVER_YES].text,
+            text: mockAnswersContent[CAN_GET_PRIVATE_INSURANCE_YES].text,
           },
         };
 
@@ -120,11 +120,11 @@ describe('sever/helpers/generate-summary-list', () => {
     });
 
     describe('when `unable to get private cover` is false', () => {
-      it(`should add a ${TRIED_PRIVATE_COVER_NO} object to EXPORT_DETAILS`, () => {
+      it(`should add a ${CAN_GET_PRIVATE_INSURANCE_NO} object to EXPORT_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockAnswers),
-          [TRIED_PRIVATE_COVER_NO]: {
-            text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER_NO],
+          [CAN_GET_PRIVATE_INSURANCE_NO]: {
+            text: SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_NO],
           },
         };
 
@@ -133,11 +133,11 @@ describe('sever/helpers/generate-summary-list', () => {
         const expectedField = result.EXPORT_DETAILS[result.EXPORT_DETAILS.length - 2];
 
         const expected = {
-          ID: TRIED_PRIVATE_COVER_NO,
-          ...FIELDS[TRIED_PRIVATE_COVER_NO],
-          CHANGE_ROUTE: ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE,
+          ID: CAN_GET_PRIVATE_INSURANCE_NO,
+          ...FIELDS[CAN_GET_PRIVATE_INSURANCE_NO],
+          CHANGE_ROUTE: ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE,
           value: {
-            text: mockAnswersContent[TRIED_PRIVATE_COVER_NO].text,
+            text: mockAnswersContent[CAN_GET_PRIVATE_INSURANCE_NO].text,
           },
         };
 

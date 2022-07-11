@@ -1,8 +1,8 @@
 import {
-  buyerBasedPage,
+  buyerCountryPage,
   companyBasedPage,
-  triedToObtainCoverPage,
-  ukContentPercentagePage,
+  canGetPrivateInsurancePage,
+  ukGoodsOrServicesPage,
   checkYourAnswersPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -16,14 +16,14 @@ const {
 const {
   BUYER_COUNTRY,
   VALID_COMPANY_BASE,
-  TRIED_PRIVATE_COVER,
-  TRIED_PRIVATE_COVER_NO,
-  UK_CONTENT_PERCENTAGE,
+  CAN_GET_PRIVATE_INSURANCE,
+  CAN_GET_PRIVATE_INSURANCE_NO,
+  UK_GOODS_OR_SERVICES,
 } = FIELD_IDS;
 
 const submissionData = {
   [BUYER_COUNTRY]: 'France',
-  [UK_CONTENT_PERCENTAGE]: '50',
+  [UK_GOODS_OR_SERVICES]: '50',
 };
 
 context('Change your answers after checking answers - Export fields', () => {
@@ -41,10 +41,10 @@ context('Change your answers after checking answers - Export fields', () => {
   describe('change `Buyer based`', () => {
     let row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
 
-    it(`clicking 'change' redirects to ${ROUTES.BUYER_BASED_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.BUYER_COUNTRY_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.BUYER_BASED_CHANGE}#${BUYER_COUNTRY}`;
+      const expectedUrl = `${ROUTES.BUYER_COUNTRY_CHANGE}#${BUYER_COUNTRY}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -58,7 +58,7 @@ context('Change your answers after checking answers - Export fields', () => {
     it('has originally submitted answer selected', () => {
       const expectedValue = submissionData[BUYER_COUNTRY];
 
-      buyerBasedPage.hiddenInput().should('have.attr', 'value', expectedValue);
+      buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
     });
 
     it('auto focuses the input', () => {
@@ -67,14 +67,14 @@ context('Change your answers after checking answers - Export fields', () => {
       // we have to wait to ensure that client side js has been executed.
       cy.wait(8000); // eslint-disable-line cypress/no-unnecessary-waiting
 
-      buyerBasedPage.searchInput().should('have.class', 'autocomplete__input--focused');
+      buyerCountryPage.searchInput().should('have.class', 'autocomplete__input--focused');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting a new answer`, () => {
-      buyerBasedPage.searchInput().type('Belg');
-      const results = buyerBasedPage.results();
+      buyerCountryPage.searchInput().type('Belg');
+      const results = buyerCountryPage.results();
       results.first().click();
-      buyerBasedPage.submitButton().click();
+      buyerCountryPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });
@@ -123,12 +123,12 @@ context('Change your answers after checking answers - Export fields', () => {
   });
 
   describe('change `Private insurance`', () => {
-    const row = checkYourAnswersPage.summaryLists.export[TRIED_PRIVATE_COVER_NO];
+    const row = checkYourAnswersPage.summaryLists.export[CAN_GET_PRIVATE_INSURANCE_NO];
 
-    it(`clicking 'change' redirects to ${ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE}#${TRIED_PRIVATE_COVER_NO}`;
+      const expectedUrl = `${ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE}#${CAN_GET_PRIVATE_INSURANCE_NO}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -140,27 +140,27 @@ context('Change your answers after checking answers - Export fields', () => {
     });
 
     it('has originally submitted answer selected', () => {
-      triedToObtainCoverPage[TRIED_PRIVATE_COVER].noInput().should('be.checked');
+      canGetPrivateInsurancePage[CAN_GET_PRIVATE_INSURANCE].noInput().should('be.checked');
     });
 
     it('auto focuses the input', () => {
-      triedToObtainCoverPage[TRIED_PRIVATE_COVER].noInput().should('have.focus');
+      canGetPrivateInsurancePage[CAN_GET_PRIVATE_INSURANCE].noInput().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      triedToObtainCoverPage.submitButton().click();
+      canGetPrivateInsurancePage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });
   });
 
   describe('change `UK goods`', () => {
-    const row = checkYourAnswersPage.summaryLists.export[UK_CONTENT_PERCENTAGE];
+    const row = checkYourAnswersPage.summaryLists.export[UK_GOODS_OR_SERVICES];
 
-    it(`clicking 'change' redirects to ${ROUTES.UK_CONTENT_PERCENTAGE_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.UK_CONTENT_PERCENTAGE_CHANGE}#${UK_CONTENT_PERCENTAGE}`;
+      const expectedUrl = `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#${UK_GOODS_OR_SERVICES}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -172,15 +172,15 @@ context('Change your answers after checking answers - Export fields', () => {
     });
 
     it('has originally submitted answer', () => {
-      ukContentPercentagePage.yesInput().should('be.checked');
+      ukGoodsOrServicesPage.yesInput().should('be.checked');
     });
 
     it('auto focuses the input', () => {
-      ukContentPercentagePage.yesInput().should('have.focus');
+      ukGoodsOrServicesPage.yesInput().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      ukContentPercentagePage.submitButton().click();
+      ukGoodsOrServicesPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });

@@ -1,5 +1,5 @@
 const FIELD_VALUES = {
-  TRIED_PRIVATE_COVER: {
+  CAN_GET_PRIVATE_INSURANCE: {
     YES: true,
     NO: false,
   },

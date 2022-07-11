@@ -2,7 +2,7 @@ const mapCountry = require('./map-country');
 const { FIELD_IDS } = require('../../constants');
 const { mockSession } = require('../../test-mocks');
 
-describe('sever/helpers/map-country', () => {
+describe('server/helpers/map-country', () => {
   it('should return country name', () => {
     const country = mockSession.submittedData[FIELD_IDS.BUYER_COUNTRY];
 

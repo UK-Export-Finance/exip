@@ -6,7 +6,7 @@ const { FIELD_IDS } = require('../../constants');
 const CONTENT_STRINGS = require('../../content-strings');
 const generateValidationErrors = require('../../helpers/validation');
 
-describe('controllers/buyer-based/validation', () => {
+describe('controllers/buyer-country/validation', () => {
   describe('hasErrors', () => {
     describe('when no properties are provided', () => {
       it('should return true', () => {

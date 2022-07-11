@@ -10,9 +10,9 @@ const {
 } = require('../constants');
 
 const {
-  TRIED_PRIVATE_COVER_YES,
-  TRIED_PRIVATE_COVER_NO,
-  UK_CONTENT_PERCENTAGE,
+  CAN_GET_PRIVATE_INSURANCE_YES,
+  CAN_GET_PRIVATE_INSURANCE_NO,
+  UK_GOODS_OR_SERVICES,
   SINGLE_POLICY_TYPE,
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -49,29 +49,29 @@ const generateFieldGroups = (submittedData) => {
     value: submittedData[field.ID],
   }));
 
-  if (submittedData[TRIED_PRIVATE_COVER_YES]) {
+  if (submittedData[CAN_GET_PRIVATE_INSURANCE_YES]) {
     fieldGroups.EXPORT_DETAILS = [
       ...fieldGroups.EXPORT_DETAILS,
       {
-        ID: TRIED_PRIVATE_COVER_YES,
-        ...FIELDS[TRIED_PRIVATE_COVER_YES],
-        CHANGE_ROUTE: ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE,
+        ID: CAN_GET_PRIVATE_INSURANCE_YES,
+        ...FIELDS[CAN_GET_PRIVATE_INSURANCE_YES],
+        CHANGE_ROUTE: ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE,
         value: {
-          text: submittedData[TRIED_PRIVATE_COVER_YES].text,
+          text: submittedData[CAN_GET_PRIVATE_INSURANCE_YES].text,
         },
       },
     ];
   }
 
-  if (submittedData[TRIED_PRIVATE_COVER_NO]) {
+  if (submittedData[CAN_GET_PRIVATE_INSURANCE_NO]) {
     fieldGroups.EXPORT_DETAILS = [
       ...fieldGroups.EXPORT_DETAILS,
       {
-        ID: TRIED_PRIVATE_COVER_NO,
-        ...FIELDS[TRIED_PRIVATE_COVER_NO],
-        CHANGE_ROUTE: ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE,
+        ID: CAN_GET_PRIVATE_INSURANCE_NO,
+        ...FIELDS[CAN_GET_PRIVATE_INSURANCE_NO],
+        CHANGE_ROUTE: ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE,
         value: {
-          text: submittedData[TRIED_PRIVATE_COVER_NO].text,
+          text: submittedData[CAN_GET_PRIVATE_INSURANCE_NO].text,
         },
       },
     ];
@@ -80,11 +80,11 @@ const generateFieldGroups = (submittedData) => {
   fieldGroups.EXPORT_DETAILS = [
     ...fieldGroups.EXPORT_DETAILS,
     {
-      ID: UK_CONTENT_PERCENTAGE,
-      ...FIELDS[UK_CONTENT_PERCENTAGE],
-      CHANGE_ROUTE: ROUTES.UK_CONTENT_PERCENTAGE_CHANGE,
+      ID: UK_GOODS_OR_SERVICES,
+      ...FIELDS[UK_GOODS_OR_SERVICES],
+      CHANGE_ROUTE: ROUTES.UK_GOODS_OR_SERVICES_CHANGE,
       value: {
-        text: submittedData[UK_CONTENT_PERCENTAGE].text,
+        text: submittedData[UK_GOODS_OR_SERVICES].text,
       },
     },
   ];

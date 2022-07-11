@@ -1,7 +1,7 @@
 import {
   yourQuotePage,
   beforeYouStartPage,
-  buyerBasedPage,
+  buyerCountryPage,
   tellUsAboutYourPolicyPage,
 } from '../../pages';
 import {
@@ -16,7 +16,7 @@ const { ROUTES, FIELD_IDS, FIELD_VALUES } = CONSTANTS;
 
 const {
   BUYER_COUNTRY,
-  UK_CONTENT_PERCENTAGE,
+  UK_GOODS_OR_SERVICES,
   CURRENCY,
   AMOUNT,
   CREDIT_PERIOD,
@@ -35,7 +35,7 @@ const {
 
 const submissionData = {
   [BUYER_COUNTRY]: 'France',
-  [UK_CONTENT_PERCENTAGE]: '50',
+  [UK_GOODS_OR_SERVICES]: '50',
   [AMOUNT]: '100',
   [CURRENCY]: 'GBP',
   [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
@@ -181,7 +181,7 @@ context('Your quote page', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.BUYER_BASED_CHANGE}#${BUYER_COUNTRY}`;
+        const expectedHref = `${ROUTES.BUYER_COUNTRY_CHANGE}#${BUYER_COUNTRY}`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
     });
@@ -239,7 +239,7 @@ context('Your quote page', () => {
 
         it('clears the session', () => {
           beforeYouStartPage.submitButton().click();
-          buyerBasedPage.hiddenInput().should('have.attr', 'value', '');
+          buyerCountryPage.hiddenInput().should('have.attr', 'value', '');
         });
       });
     });

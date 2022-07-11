@@ -9,7 +9,7 @@ const generateValidationErrors = require('./validation');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const { mockReq, mockRes } = require('../../test-mocks');
 
-describe('controllers/tried-to-obtain-cover', () => {
+describe('controllers/can-get-private-insurance', () => {
   let req;
   let res;
 
@@ -26,16 +26,16 @@ describe('controllers/tried-to-obtain-cover', () => {
           FOOTER: CONTENT_STRINGS.FOOTER,
           BUTTONS: CONTENT_STRINGS.BUTTONS,
           LINKS: CONTENT_STRINGS.LINKS,
-          ...CONTENT_STRINGS.PAGES.TRIED_TO_OBTAIN_COVER_PAGE,
+          ...CONTENT_STRINGS.PAGES.CAN_GET_PRIVATE_INSURANCE_PAGE,
         },
         FIELDS: {
-          TRIED_PRIVATE_COVER: {
-            ID: FIELD_IDS.TRIED_PRIVATE_COVER,
-            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.TRIED_PRIVATE_COVER],
+          CAN_GET_PRIVATE_INSURANCE: {
+            ID: FIELD_IDS.CAN_GET_PRIVATE_INSURANCE,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE],
           },
-          TRIED_PRIVATE_COVER_YES: {
-            ID: FIELD_IDS.TRIED_PRIVATE_COVER_YES,
-            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.TRIED_PRIVATE_COVER_YES],
+          CAN_GET_PRIVATE_INSURANCE_YES: {
+            ID: FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_YES,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_YES],
           },
         },
       };
@@ -48,7 +48,7 @@ describe('controllers/tried-to-obtain-cover', () => {
     it('should render template', () => {
       controller.get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.CAN_GET_PRIVATE_INSURANCE, {
         ...controller.PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData,
@@ -61,7 +61,7 @@ describe('controllers/tried-to-obtain-cover', () => {
       it('should render template with validation errors', () => {
         controller.post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.CAN_GET_PRIVATE_INSURANCE, {
           ...controller.PAGE_VARIABLES,
           BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(req.body),
@@ -71,7 +71,7 @@ describe('controllers/tried-to-obtain-cover', () => {
 
     describe('when the submitted answer is `yes`/true', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.TRIED_PRIVATE_COVER] = 'true';
+        req.body[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE] = 'true';
       });
 
       it(`should redirect to ${ROUTES.CANNOT_OBTAIN_COVER}`, () => {
@@ -83,7 +83,7 @@ describe('controllers/tried-to-obtain-cover', () => {
       it('should add previousRoute and exitReason to req.flash', () => {
         controller.post(req, res);
 
-        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.TRIED_TO_OBTAIN_COVER);
+        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.CAN_GET_PRIVATE_INSURANCE);
 
         const expectedReason = CONTENT_STRINGS.PAGES.CANNOT_OBTAIN_COVER_PAGE.REASON.CAN_GET_PRIVATE_INSURANCE;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
@@ -92,7 +92,7 @@ describe('controllers/tried-to-obtain-cover', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.TRIED_PRIVATE_COVER]: 'false',
+        [FIELD_IDS.CAN_GET_PRIVATE_INSURANCE]: 'false',
       };
 
       beforeEach(() => {
@@ -110,10 +110,10 @@ describe('controllers/tried-to-obtain-cover', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.UK_CONTENT_PERCENTAGE}`, () => {
+      it(`should redirect to ${ROUTES.UK_GOODS_OR_SERVICES}`, () => {
         controller.post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.UK_CONTENT_PERCENTAGE);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.UK_GOODS_OR_SERVICES);
       });
 
       describe('when the url\'s last substring is `change`', () => {

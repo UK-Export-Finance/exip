@@ -51,10 +51,10 @@ describe('controllers/index', () => {
       expect(req.session.submittedData).toEqual({});
     });
 
-    it(`should redirect to ${ROUTES.BUYER_BASED}`, () => {
+    it(`should redirect to ${ROUTES.BUYER_COUNTRY}`, () => {
       post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.BUYER_BASED);
+      expect(res.redirect).toHaveBeenCalledWith(ROUTES.BUYER_COUNTRY);
     });
   });
 });

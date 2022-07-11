@@ -18,16 +18,16 @@ const FIELDS = {
       TITLE: 'Buyer is based',
     },
   },
-  [FIELD_IDS.TRIED_PRIVATE_COVER]: {
+  [FIELD_IDS.CAN_GET_PRIVATE_INSURANCE]: {
     OPTIONS: {
       YES: {
-        ID: FIELD_IDS.TRIED_PRIVATE_COVER_YES,
-        VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.YES,
+        ID: FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_YES,
+        VALUE: FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.YES,
         TEXT: 'Yes',
       },
       NO: {
-        ID: FIELD_IDS.TRIED_PRIVATE_COVER_NO,
-        VALUE: FIELD_VALUES.TRIED_PRIVATE_COVER.NO,
+        ID: FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_NO,
+        VALUE: FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.NO,
         TEXT: 'No',
       },
     },
@@ -35,17 +35,17 @@ const FIELDS = {
       TITLE: 'Able to get private insurance?',
     },
   },
-  [FIELD_IDS.TRIED_PRIVATE_COVER_YES]: {
+  [FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_YES]: {
     SUMMARY: {
       TITLE: 'Able to get private insurance?',
     },
   },
-  [FIELD_IDS.TRIED_PRIVATE_COVER_NO]: {
+  [FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_NO]: {
     SUMMARY: {
       TITLE: 'Able to get private insurance?',
     },
   },
-  [FIELD_IDS.UK_CONTENT_PERCENTAGE]: {
+  [FIELD_IDS.UK_GOODS_OR_SERVICES]: {
     LABEL: 'Percentage of your export that is UK content',
     HINT: 'Enter the UK content of your export as a percentage.',
     SUMMARY: {

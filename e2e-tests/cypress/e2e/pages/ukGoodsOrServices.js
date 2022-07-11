@@ -1,12 +1,12 @@
 import { FIELD_IDS } from '../../../constants';
 
-const ukContentPercentagePage = {
+const ukGoodsOrServicesPage = {
   heading: () => cy.get('[data-cy="heading"]'),
-  yes: () => cy.get(`[data-cy="${FIELD_IDS.UK_CONTENT_PERCENTAGE}-yes"]`),
-  yesInput: () => cy.get(`[data-cy="${FIELD_IDS.UK_CONTENT_PERCENTAGE}-yes-input"]`),
-  no: () => cy.get(`[data-cy="${FIELD_IDS.UK_CONTENT_PERCENTAGE}-no"]`),
-  noInput: () => cy.get(`[data-cy="${FIELD_IDS.UK_CONTENT_PERCENTAGE}-no-input"]`),
-  errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.UK_CONTENT_PERCENTAGE}-error-message"]`),
+  yes: () => cy.get(`[data-cy="${FIELD_IDS.UK_GOODS_OR_SERVICES}-yes"]`),
+  yesInput: () => cy.get(`[data-cy="${FIELD_IDS.UK_GOODS_OR_SERVICES}-yes-input"]`),
+  no: () => cy.get(`[data-cy="${FIELD_IDS.UK_GOODS_OR_SERVICES}-no"]`),
+  noInput: () => cy.get(`[data-cy="${FIELD_IDS.UK_GOODS_OR_SERVICES}-no-input"]`),
+  errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.UK_GOODS_OR_SERVICES}-error-message"]`),
   submitButton: () => cy.get('[data-cy="submit-button"]'),
   details: {
     summary: () => cy.get('[data-cy="details"] summary'),
@@ -36,11 +36,11 @@ const ukContentPercentagePage = {
     },
     notSure: {
       heading: () => cy.get('[data-cy="details-not-sure-heading"]'),
-      details1: () => cy.get('[data-cy="details-not-sure"]').children('[data-cy="details-1"]'),
-      details1Link: () => cy.get('[data-cy="details-not-sure"] a'),
-      details2: () => cy.get('[data-cy="details-not-sure"]').children('[data-cy="details-2"]'),
+      details: () => cy.get('[data-cy="details-not-sure"]'),
+      detailsLink: () => cy.get('[data-cy="details-not-sure-link"]'),
+      detailsLast: () => cy.get('[data-cy="details-not-sure-last"]'),
     },
   },
 };
 
-export default ukContentPercentagePage;
+export default ukGoodsOrServicesPage;

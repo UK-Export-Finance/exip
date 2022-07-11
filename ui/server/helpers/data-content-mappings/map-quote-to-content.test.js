@@ -18,7 +18,7 @@ const {
   BUYER_LOCATION,
 } = QUOTE;
 
-describe('sever/helpers/map-quote-to-content', () => {
+describe('server/helpers/map-quote-to-content', () => {
   describe('mapQuoteToContent', () => {
     it('should return an object of fields with mapped/formatted answers', () => {
       const result = mapQuoteToContent(mockQuote);

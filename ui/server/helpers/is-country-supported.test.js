@@ -1,6 +1,6 @@
 const isCountrySupported = require('./is-country-supported');
 
-describe('sever/helpers/is-country-supported', () => {
+describe('server/helpers/is-country-supported', () => {
   const mockCountry = {
     name: 'Abu Dhabi',
     isoCode: 'XAD',

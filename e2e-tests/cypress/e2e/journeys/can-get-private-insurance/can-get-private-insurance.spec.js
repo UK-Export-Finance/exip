@@ -1,6 +1,6 @@
 import {
   companyBasedPage,
-  triedToObtainCoverPage,
+  canGetPrivateInsurancePage,
 } from '../../pages';
 import partials from '../../partials';
 import {
@@ -13,10 +13,10 @@ import {
 } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
 
-const CONTENT_STRINGS = PAGES.TRIED_TO_OBTAIN_COVER_PAGE;
+const CONTENT_STRINGS = PAGES.CAN_GET_PRIVATE_INSURANCE_PAGE;
 const { FIELD_IDS, ROUTES } = CONSTANTS;
 
-context('Tried to obtain private cover page', () => {
+context('Are you able to get private insurance page', () => {
   beforeEach(() => {
     cy.visit(ROUTES.COMPANY_BASED, {
       auth: {
@@ -28,7 +28,7 @@ context('Tried to obtain private cover page', () => {
     companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].yes().click();
     companyBasedPage.submitButton().click();
 
-    cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
+    cy.url().should('include', ROUTES.CAN_GET_PRIVATE_INSURANCE);
   });
 
   it('passes the audits', () => {
@@ -55,14 +55,14 @@ context('Tried to obtain private cover page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    triedToObtainCoverPage.heading().invoke('text').then((text) => {
+    canGetPrivateInsurancePage.heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
 
   it('renders `yes` radio button', () => {
-    const fieldId = FIELD_IDS.TRIED_PRIVATE_COVER;
-    const yesRadio = triedToObtainCoverPage[fieldId].yes();
+    const fieldId = FIELD_IDS.CAN_GET_PRIVATE_INSURANCE;
+    const yesRadio = canGetPrivateInsurancePage[fieldId].yes();
     yesRadio.should('exist');
 
     yesRadio.invoke('text').then((text) => {
@@ -72,8 +72,8 @@ context('Tried to obtain private cover page', () => {
   });
 
   it('renders `no` radio button', () => {
-    const fieldId = FIELD_IDS.TRIED_PRIVATE_COVER;
-    const noRadio = triedToObtainCoverPage[fieldId].no();
+    const fieldId = FIELD_IDS.CAN_GET_PRIVATE_INSURANCE;
+    const noRadio = canGetPrivateInsurancePage[fieldId].no();
     noRadio.should('exist');
 
     noRadio.invoke('text').then((text) => {
@@ -83,7 +83,7 @@ context('Tried to obtain private cover page', () => {
   });
 
   it('renders a submit button', () => {
-    const button = triedToObtainCoverPage.submitButton();
+    const button = canGetPrivateInsurancePage.submitButton();
     button.should('exist');
 
     button.invoke('text').then((text) => {
@@ -94,36 +94,36 @@ context('Tried to obtain private cover page', () => {
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       beforeEach(() => {
-        triedToObtainCoverPage.submitButton().click();
+        canGetPrivateInsurancePage.submitButton().click();
       });
 
       it('should render validation errors', () => {
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.TRIED_PRIVATE_COVER];
+        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE];
 
         partials.errorSummaryListItems().first().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedMessage);
         });
 
-        triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].errorMessage().invoke('text').then((text) => {
+        canGetPrivateInsurancePage[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE].errorMessage().invoke('text').then((text) => {
           expect(text.trim()).includes(expectedMessage);
         });
       });
 
       it('should focus on inputs when clicking summary error message', () => {
         partials.errorSummaryListItemLinks().eq(0).click();
-        triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].yesInput().should('have.focus');
+        canGetPrivateInsurancePage[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE].yesInput().should('have.focus');
       });
     });
 
     describe('when submitting the answer as `no`', () => {
-      it(`should redirect to ${ROUTES.UK_CONTENT_PERCENTAGE}`, () => {
-        triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].no().click();
-        triedToObtainCoverPage.submitButton().click();
+      it(`should redirect to ${ROUTES.UK_GOODS_OR_SERVICES}`, () => {
+        canGetPrivateInsurancePage[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE].no().click();
+        canGetPrivateInsurancePage.submitButton().click();
 
-        cy.url().should('include', ROUTES.UK_CONTENT_PERCENTAGE);
+        cy.url().should('include', ROUTES.UK_GOODS_OR_SERVICES);
       });
     });
   });

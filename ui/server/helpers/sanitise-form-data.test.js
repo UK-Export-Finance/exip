@@ -4,7 +4,7 @@ const {
   sanitiseFormData,
 } = require('./sanitise-form-data');
 
-describe('sever/helpers/sanitise-form-data', () => {
+describe('server/helpers/sanitise-form-data', () => {
   describe('shouldChangeStringToNumber', () => {
     describe('when the value is a string number', () => {
       it('should return true', () => {

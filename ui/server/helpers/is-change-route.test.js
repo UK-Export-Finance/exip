@@ -1,6 +1,6 @@
 const isChangeRoute = require('./is-change-route');
 
-describe('sever/helpers/is-change-route', () => {
+describe('server/helpers/is-change-route', () => {
   describe('when the url\'s last substring is `change`', () => {
     it('should return true', () => {
       const mockUrl = 'mock/change';

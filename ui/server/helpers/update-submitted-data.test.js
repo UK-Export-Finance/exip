@@ -12,7 +12,7 @@ const {
   POLICY_LENGTH,
 } = FIELD_IDS;
 
-describe('sever/helpers/update-submitted-data', () => {
+describe('server/helpers/update-submitted-data', () => {
   describe('mapSubmittedData', () => {
     describe(`when ${POLICY_TYPE} is 'single'`, () => {
       it('should return policy length field without single/multi specific fields', () => {

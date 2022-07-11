@@ -38,17 +38,17 @@ const COMPANY_BASED_PAGE = {
   HEADING: 'Is your company based inside the UK, Channel Islands and Isle of Man?',
 };
 
-const BUYER_BASED_PAGE = {
+const BUYER_COUNTRY_PAGE = {
   PAGE_TITLE: 'In which country is your buyer based?',
   HEADING: 'In which country is your buyer based?',
 };
 
-const TRIED_TO_OBTAIN_COVER_PAGE = {
+const CAN_GET_PRIVATE_INSURANCE_PAGE = {
   PAGE_TITLE: 'Are you able to get insurance for this export from companies in the private sector?',
   HEADING: 'Are you able to get insurance for this export from companies in the private sector?',
 };
 
-const UK_CONTENT_PERCENTAGE_PAGE = {
+const UK_GOODS_OR_SERVICES_PAGE = {
   PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
   HEADING: 'Is at least 20% of your export contract value made up from UK goods or services?',
   DETAILS: {
@@ -97,25 +97,13 @@ const UK_CONTENT_PERCENTAGE_PAGE = {
     },
     NOT_SURE: {
       HEADING: 'If you\'re not sure',
-      ITEMS: [
-        [
-          {
-            text: 'You can speak with',
-          },
-          {
-            text: 'an export finance manager',
-            href: '#',
-          },
-          {
-            text: 'if you\'d like to check whether you\'re eligible around this criteria.',
-          },
-        ],
-        [
-          {
-            text: 'We\'ll also calculate this thoroughly if you go on to make a full application.',
-          },
-        ],
-      ],
+      BODY_1: 'You can speak with',
+      LINK: {
+        TEXT: 'an export finance manager',
+        HREF: '#',
+      },
+      BODY_2: 'if you\'d like to check whether you\'re eligible around this criteria.',
+      BODY_3: 'We\'ll also calculate this thoroughly if you go on to make a full application.',
     },
   },
 };
@@ -231,7 +219,7 @@ const YOUR_QUOTE_PAGE = {
             href: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
           },
           {
-            text: 'to find a broker to help you.',
+            text: ' to find a broker to help you.',
           },
         ],
       ],
@@ -254,9 +242,9 @@ const PROBLEM_WITH_SERVICE_PAGE = {
 module.exports = {
   BEFORE_YOU_START,
   COMPANY_BASED_PAGE,
-  BUYER_BASED_PAGE,
-  TRIED_TO_OBTAIN_COVER_PAGE,
-  UK_CONTENT_PERCENTAGE_PAGE,
+  BUYER_COUNTRY_PAGE,
+  CAN_GET_PRIVATE_INSURANCE_PAGE,
+  UK_GOODS_OR_SERVICES_PAGE,
   TELL_US_ABOUT_YOUR_POLICY_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,
   CANNOT_OBTAIN_COVER_PAGE,
