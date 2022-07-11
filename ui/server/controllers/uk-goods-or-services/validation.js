@@ -10,12 +10,12 @@ const validation = (formBody) => {
   let errors;
 
   const hasErrors = (!objectHasValues(formBody)
-    || !objectHasProperty(formBody, FIELD_IDS.UK_CONTENT_PERCENTAGE));
+    || !objectHasProperty(formBody, FIELD_IDS.UK_GOODS_OR_SERVICES));
 
   if (hasErrors) {
     errors = generateValidationErrors(
-      FIELD_IDS.UK_CONTENT_PERCENTAGE,
-      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.UK_CONTENT_PERCENTAGE].IS_EMPTY,
+      FIELD_IDS.UK_GOODS_OR_SERVICES,
+      CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.UK_GOODS_OR_SERVICES].IS_EMPTY,
     );
 
     return errors;

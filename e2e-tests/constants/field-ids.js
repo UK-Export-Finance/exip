@@ -5,7 +5,7 @@ const FIELD_IDS = {
   TRIED_PRIVATE_COVER_YES: 'triedPrivateCoverYes',
   TRIED_PRIVATE_COVER_NO: 'triedPrivateCoverNo',
   COUNTRY: 'country',
-  UK_CONTENT_PERCENTAGE: 'ukContentPercentage',
+  UK_GOODS_OR_SERVICES: 'ukGoodsOrServices',
   AMOUNT_CURRENCY: 'amountAndCurrency',
   CURRENCY: 'currency',
   AMOUNT: 'amount',

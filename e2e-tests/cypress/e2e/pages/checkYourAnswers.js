@@ -4,7 +4,7 @@ const {
   VALID_COMPANY_BASE,
   BUYER_COUNTRY,
   TRIED_PRIVATE_COVER_NO,
-  UK_CONTENT_PERCENTAGE,
+  UK_GOODS_OR_SERVICES,
   AMOUNT,
   CREDIT_PERIOD,
   SINGLE_POLICY_TYPE,
@@ -35,10 +35,10 @@ const checkYourAnswersPage = {
         value: () => cy.get(`.${TRIED_PRIVATE_COVER_NO}-value`),
         changeLink: () => cy.get(`[data-cy="${TRIED_PRIVATE_COVER_NO}-change-link"]`),
       },
-      [UK_CONTENT_PERCENTAGE]: {
-        key: () => cy.get(`.${UK_CONTENT_PERCENTAGE}-key`),
-        value: () => cy.get(`.${UK_CONTENT_PERCENTAGE}-value`),
-        changeLink: () => cy.get(`[data-cy="${UK_CONTENT_PERCENTAGE}-change-link"]`),
+      [UK_GOODS_OR_SERVICES]: {
+        key: () => cy.get(`.${UK_GOODS_OR_SERVICES}-key`),
+        value: () => cy.get(`.${UK_GOODS_OR_SERVICES}-value`),
+        changeLink: () => cy.get(`[data-cy="${UK_GOODS_OR_SERVICES}-change-link"]`),
       },
     },
     policy: {

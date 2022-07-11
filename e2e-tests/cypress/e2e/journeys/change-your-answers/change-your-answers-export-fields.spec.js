@@ -2,7 +2,7 @@ import {
   buyerBasedPage,
   companyBasedPage,
   triedToObtainCoverPage,
-  ukContentPercentagePage,
+  ukGoodsOrServicesPage,
   checkYourAnswersPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -18,12 +18,12 @@ const {
   VALID_COMPANY_BASE,
   TRIED_PRIVATE_COVER,
   TRIED_PRIVATE_COVER_NO,
-  UK_CONTENT_PERCENTAGE,
+  UK_GOODS_OR_SERVICES,
 } = FIELD_IDS;
 
 const submissionData = {
   [BUYER_COUNTRY]: 'France',
-  [UK_CONTENT_PERCENTAGE]: '50',
+  [UK_GOODS_OR_SERVICES]: '50',
 };
 
 context('Change your answers after checking answers - Export fields', () => {
@@ -155,12 +155,12 @@ context('Change your answers after checking answers - Export fields', () => {
   });
 
   describe('change `UK goods`', () => {
-    const row = checkYourAnswersPage.summaryLists.export[UK_CONTENT_PERCENTAGE];
+    const row = checkYourAnswersPage.summaryLists.export[UK_GOODS_OR_SERVICES];
 
-    it(`clicking 'change' redirects to ${ROUTES.UK_CONTENT_PERCENTAGE_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.UK_CONTENT_PERCENTAGE_CHANGE}#${UK_CONTENT_PERCENTAGE}`;
+      const expectedUrl = `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#${UK_GOODS_OR_SERVICES}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -172,15 +172,15 @@ context('Change your answers after checking answers - Export fields', () => {
     });
 
     it('has originally submitted answer', () => {
-      ukContentPercentagePage.yesInput().should('be.checked');
+      ukGoodsOrServicesPage.yesInput().should('be.checked');
     });
 
     it('auto focuses the input', () => {
-      ukContentPercentagePage.yesInput().should('have.focus');
+      ukGoodsOrServicesPage.yesInput().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      ukContentPercentagePage.submitButton().click();
+      ukGoodsOrServicesPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });

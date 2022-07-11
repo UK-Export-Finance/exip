@@ -1,5 +1,5 @@
 import {
-  ukContentPercentagePage,
+  ukGoodsOrServicesPage,
   cannotObtainCoverPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -11,18 +11,18 @@ import CONSTANTS from '../../../../constants';
 const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
 const { ROUTES } = CONSTANTS;
 
-context('What percentage of your export is UK content page', () => {
+context('Is at least 20% of your export contract value made up from UK goods or services page - answer no', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.UK_CONTENT_PERCENTAGE, {
+    cy.visit(ROUTES.UK_GOODS_OR_SERVICES, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
-    cy.url().should('include', ROUTES.UK_CONTENT_PERCENTAGE);
+    cy.url().should('include', ROUTES.UK_GOODS_OR_SERVICES);
 
-    ukContentPercentagePage.no().click();
-    ukContentPercentagePage.submitButton().click();
+    ukGoodsOrServicesPage.no().click();
+    ukGoodsOrServicesPage.submitButton().click();
   });
 
   it('redirects to exit page', () => {
@@ -32,7 +32,7 @@ context('What percentage of your export is UK content page', () => {
   it('renders a back button with correct link', () => {
     partials.backLink().should('exist');
 
-    partials.backLink().should('have.attr', 'href', ROUTES.UK_CONTENT_PERCENTAGE);
+    partials.backLink().should('have.attr', 'href', ROUTES.UK_GOODS_OR_SERVICES);
   });
 
   it('renders a specific reason', () => {

@@ -8,7 +8,7 @@ const beforeYouStartController = require('../controllers/before-you-start');
 const companyBasedController = require('../controllers/company-based');
 const buyerBasedController = require('../controllers/buyer-based');
 const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
-const ukContentPercentageController = require('../controllers/uk-content-pecentage');
+const ukGoodsOrServicesController = require('../controllers/uk-goods-or-services');
 const tellUsAboutYourPolicyController = require('../controllers/tell-us-about-your-policy');
 const checkYourAnswersController = require('../controllers/check-your-answers');
 const cannotObtainCoverController = require('../controllers/cannot-obtain-cover');
@@ -48,10 +48,10 @@ describe('routes/index', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE, triedToObtainCoverController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE, triedToObtainCoverController.post);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.get);
-    expect(post).toHaveBeenCalledWith(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.post);
-    expect(get).toHaveBeenCalledWith(ROUTES.UK_CONTENT_PERCENTAGE_CHANGE, ukContentPercentageController.get);
-    expect(post).toHaveBeenCalledWith(ROUTES.UK_CONTENT_PERCENTAGE_CHANGE, ukContentPercentageController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_POLICY, tellUsAboutYourPolicyController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_POLICY, tellUsAboutYourPolicyController.post);

@@ -10,7 +10,7 @@ const {
   VALID_COMPANY_BASE,
   BUYER_COUNTRY,
   TRIED_PRIVATE_COVER,
-  UK_CONTENT_PERCENTAGE,
+  UK_GOODS_OR_SERVICES,
   CURRENCY,
   AMOUNT,
   CREDIT_PERIOD,
@@ -26,7 +26,7 @@ describe('controllers/check-your-answers', () => {
       isoCode: 'FRA',
     },
     [TRIED_PRIVATE_COVER]: true,
-    [UK_CONTENT_PERCENTAGE]: 30,
+    [UK_GOODS_OR_SERVICES]: 30,
     [CURRENCY]: {
       name: 'UK Sterling',
       isoCode: 'GBP',

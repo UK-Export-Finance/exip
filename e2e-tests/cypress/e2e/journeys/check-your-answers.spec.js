@@ -19,7 +19,7 @@ context('Check your answers page', () => {
     VALID_COMPANY_BASE,
     BUYER_COUNTRY,
     TRIED_PRIVATE_COVER_NO,
-    UK_CONTENT_PERCENTAGE,
+    UK_GOODS_OR_SERVICES,
     AMOUNT,
     CREDIT_PERIOD,
     SINGLE_POLICY_TYPE,
@@ -28,7 +28,7 @@ context('Check your answers page', () => {
 
   const submissionData = {
     [BUYER_COUNTRY]: 'France',
-    [UK_CONTENT_PERCENTAGE]: '50',
+    [UK_GOODS_OR_SERVICES]: '50',
     [AMOUNT]: '100',
     [CREDIT_PERIOD]: '2',
     [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
@@ -158,15 +158,15 @@ context('Check your answers page', () => {
     });
 
     it('renders `UK goods` key, value and change link', () => {
-      const row = list[UK_CONTENT_PERCENTAGE];
-      const expectedKeyText = FIELDS[UK_CONTENT_PERCENTAGE].SUMMARY.TITLE;
+      const row = list[UK_GOODS_OR_SERVICES];
+      const expectedKeyText = FIELDS[UK_GOODS_OR_SERVICES].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE]);
+        expect(text.trim()).equal(SUMMARY_ANSWERS[UK_GOODS_OR_SERVICES]);
       });
 
       row.changeLink().invoke('text').then((text) => {
@@ -174,7 +174,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.UK_CONTENT_PERCENTAGE_CHANGE}#${UK_CONTENT_PERCENTAGE}`;
+      const expectedHref = `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#${UK_GOODS_OR_SERVICES}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });

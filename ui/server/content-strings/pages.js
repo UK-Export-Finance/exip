@@ -48,7 +48,7 @@ const TRIED_TO_OBTAIN_COVER_PAGE = {
   HEADING: 'Are you able to get insurance for this export from companies in the private sector?',
 };
 
-const UK_CONTENT_PERCENTAGE_PAGE = {
+const UK_GOODS_OR_SERVICES_PAGE = {
   PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
   HEADING: 'Is at least 20% of your export contract value made up from UK goods or services?',
   DETAILS: {
@@ -244,7 +244,7 @@ module.exports = {
   COMPANY_BASED_PAGE,
   BUYER_BASED_PAGE,
   TRIED_TO_OBTAIN_COVER_PAGE,
-  UK_CONTENT_PERCENTAGE_PAGE,
+  UK_GOODS_OR_SERVICES_PAGE,
   TELL_US_ABOUT_YOUR_POLICY_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,
   CANNOT_OBTAIN_COVER_PAGE,

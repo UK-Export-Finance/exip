@@ -20,7 +20,7 @@ const {
   TRIED_PRIVATE_COVER,
   TRIED_PRIVATE_COVER_YES,
   TRIED_PRIVATE_COVER_NO,
-  UK_CONTENT_PERCENTAGE,
+  UK_GOODS_OR_SERVICES,
   AMOUNT,
   CURRENCY,
   CREDIT_PERIOD,
@@ -109,8 +109,8 @@ describe('server/helpers/map-answers-to-content', () => {
           text: mapCountry(mockAnswers[BUYER_COUNTRY]),
         },
         ...mapTriedPrivateCover(mockAnswers[TRIED_PRIVATE_COVER]),
-        [UK_CONTENT_PERCENTAGE]: {
-          text: SUMMARY_ANSWERS[UK_CONTENT_PERCENTAGE],
+        [UK_GOODS_OR_SERVICES]: {
+          text: SUMMARY_ANSWERS[UK_GOODS_OR_SERVICES],
         },
         [AMOUNT]: {
           text: formatCurrency(mockAnswers[AMOUNT], mockAnswers[CURRENCY].isoCode),

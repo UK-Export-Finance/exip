@@ -1,6 +1,6 @@
 import {
   triedToObtainCoverPage,
-  ukContentPercentagePage,
+  ukGoodsOrServicesPage,
 } from '../../pages';
 import partials from '../../partials';
 import {
@@ -12,10 +12,10 @@ import {
 } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
 
-const CONTENT_STRINGS = PAGES.UK_CONTENT_PERCENTAGE_PAGE;
+const CONTENT_STRINGS = PAGES.UK_GOODS_OR_SERVICES_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
-context('What percentage of your export is UK content page', () => {
+context('Is at least 20% of your export contract value made up from UK goods or services page', () => {
   before(() => {
     cy.visit(ROUTES.TRIED_TO_OBTAIN_COVER, {
       auth: {
@@ -27,7 +27,7 @@ context('What percentage of your export is UK content page', () => {
     triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].no().click();
     triedToObtainCoverPage.submitButton().click();
 
-    cy.url().should('include', ROUTES.UK_CONTENT_PERCENTAGE);
+    cy.url().should('include', ROUTES.UK_GOODS_OR_SERVICES);
   });
 
   beforeEach(() => {
@@ -55,7 +55,7 @@ context('What percentage of your export is UK content page', () => {
     cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
 
     // go back to page
-    cy.visit(ROUTES.UK_CONTENT_PERCENTAGE, {
+    cy.visit(ROUTES.UK_GOODS_OR_SERVICES, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
@@ -67,13 +67,13 @@ context('What percentage of your export is UK content page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    ukContentPercentagePage.heading().invoke('text').then((text) => {
+    ukGoodsOrServicesPage.heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
 
   it('renders `yes` radio button', () => {
-    const yesRadio = ukContentPercentagePage.yes();
+    const yesRadio = ukGoodsOrServicesPage.yes();
     yesRadio.should('exist');
 
     yesRadio.invoke('text').then((text) => {
@@ -82,7 +82,7 @@ context('What percentage of your export is UK content page', () => {
   });
 
   it('renders `no` radio button', () => {
-    const noRadio = ukContentPercentagePage.no();
+    const noRadio = ukGoodsOrServicesPage.no();
     noRadio.should('exist');
 
     noRadio.invoke('text').then((text) => {
@@ -91,7 +91,7 @@ context('What percentage of your export is UK content page', () => {
   });
 
   it('renders a submit button', () => {
-    const button = ukContentPercentagePage.submitButton();
+    const button = ukGoodsOrServicesPage.submitButton();
     button.should('exist');
 
     button.invoke('text').then((text) => {
@@ -100,7 +100,7 @@ context('What percentage of your export is UK content page', () => {
   });
 
   describe('expandable details', () => {
-    const { details } = ukContentPercentagePage;
+    const { details } = ukGoodsOrServicesPage;
     const { DETAILS } = CONTENT_STRINGS;
 
     it('renders a summary', () => {
@@ -232,34 +232,34 @@ context('What percentage of your export is UK content page', () => {
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
-        ukContentPercentagePage.submitButton().click();
+        ukGoodsOrServicesPage.submitButton().click();
 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.UK_CONTENT_PERCENTAGE].IS_EMPTY;
+        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.UK_GOODS_OR_SERVICES].IS_EMPTY;
 
         partials.errorSummaryListItems().first().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedMessage);
         });
 
-        ukContentPercentagePage.errorMessage().invoke('text').then((text) => {
+        ukGoodsOrServicesPage.errorMessage().invoke('text').then((text) => {
           expect(text.trim()).includes(expectedMessage);
         });
       });
 
       it('should focus on input when clicking summary error message', () => {
-        ukContentPercentagePage.submitButton().click();
+        ukGoodsOrServicesPage.submitButton().click();
 
         partials.errorSummaryListItemLinks().eq(0).click();
-        ukContentPercentagePage.yesInput().should('have.focus');
+        ukGoodsOrServicesPage.yesInput().should('have.focus');
       });
     });
 
     describe('when submitting the answer as `yes`', () => {
       it(`should redirect to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY}`, () => {
-        ukContentPercentagePage.yes().click();
-        ukContentPercentagePage.submitButton().click();
+        ukGoodsOrServicesPage.yes().click();
+        ukGoodsOrServicesPage.submitButton().click();
 
         cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
       });

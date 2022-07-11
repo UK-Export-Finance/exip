@@ -21,7 +21,7 @@ const { mockAnswers } = require('../test-mocks');
 const {
   TRIED_PRIVATE_COVER_YES,
   TRIED_PRIVATE_COVER_NO,
-  UK_CONTENT_PERCENTAGE,
+  UK_GOODS_OR_SERVICES,
   SINGLE_POLICY_TYPE,
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -63,15 +63,15 @@ describe('server/helpers/generate-summary-list', () => {
         })),
       };
 
-      // UK_CONTENT_PERCENTAGE is dynamically added after a previous field.
+      // UK_GOODS_OR_SERVICES is dynamically added after a previous field.
       expected.EXPORT_DETAILS = [
         ...expected.EXPORT_DETAILS,
         {
-          ID: UK_CONTENT_PERCENTAGE,
-          ...FIELDS[UK_CONTENT_PERCENTAGE],
-          CHANGE_ROUTE: ROUTES.UK_CONTENT_PERCENTAGE_CHANGE,
+          ID: UK_GOODS_OR_SERVICES,
+          ...FIELDS[UK_GOODS_OR_SERVICES],
+          CHANGE_ROUTE: ROUTES.UK_GOODS_OR_SERVICES_CHANGE,
           value: {
-            text: mockAnswersContent[UK_CONTENT_PERCENTAGE].text,
+            text: mockAnswersContent[UK_GOODS_OR_SERVICES].text,
           },
         },
       ];

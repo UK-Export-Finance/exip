@@ -11,8 +11,8 @@ const ROUTES = {
   TRIED_TO_OBTAIN_COVER: '/can-get-private-insurance',
   TRIED_TO_OBTAIN_COVER_CHANGE: '/can-get-private-insurance/change',
 
-  UK_CONTENT_PERCENTAGE: '/uk-goods-or-services',
-  UK_CONTENT_PERCENTAGE_CHANGE: '/uk-goods-or-services/change',
+  UK_GOODS_OR_SERVICES: '/uk-goods-or-services',
+  UK_GOODS_OR_SERVICES_CHANGE: '/uk-goods-or-services/change',
 
   TELL_US_ABOUT_YOUR_POLICY: '/tell-us-about-policy',
   TELL_US_ABOUT_YOUR_POLICY_CHANGE: '/tell-us-about-policy/change',

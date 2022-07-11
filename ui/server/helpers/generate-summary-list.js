@@ -12,7 +12,7 @@ const {
 const {
   TRIED_PRIVATE_COVER_YES,
   TRIED_PRIVATE_COVER_NO,
-  UK_CONTENT_PERCENTAGE,
+  UK_GOODS_OR_SERVICES,
   SINGLE_POLICY_TYPE,
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -80,11 +80,11 @@ const generateFieldGroups = (submittedData) => {
   fieldGroups.EXPORT_DETAILS = [
     ...fieldGroups.EXPORT_DETAILS,
     {
-      ID: UK_CONTENT_PERCENTAGE,
-      ...FIELDS[UK_CONTENT_PERCENTAGE],
-      CHANGE_ROUTE: ROUTES.UK_CONTENT_PERCENTAGE_CHANGE,
+      ID: UK_GOODS_OR_SERVICES,
+      ...FIELDS[UK_GOODS_OR_SERVICES],
+      CHANGE_ROUTE: ROUTES.UK_GOODS_OR_SERVICES_CHANGE,
       value: {
-        text: submittedData[UK_CONTENT_PERCENTAGE].text,
+        text: submittedData[UK_GOODS_OR_SERVICES].text,
       },
     },
   ];

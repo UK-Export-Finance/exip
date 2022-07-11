@@ -5,7 +5,7 @@ const beforeYouStartController = require('../controllers/before-you-start');
 const buyerBasedController = require('../controllers/buyer-based');
 const companyBasedController = require('../controllers/company-based');
 const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
-const ukContentPercentageController = require('../controllers/uk-content-pecentage');
+const ukGoodsOrServicesController = require('../controllers/uk-goods-or-services');
 const tellUsAboutYourPolicyController = require('../controllers/tell-us-about-your-policy');
 const checkYourAnswersController = require('../controllers/check-your-answers');
 const cannotObtainCoverController = require('../controllers/cannot-obtain-cover');
@@ -33,10 +33,10 @@ router.post(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.post);
 router.get(ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE, triedToObtainCoverController.get);
 router.post(ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE, triedToObtainCoverController.post);
 
-router.get(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.get);
-router.post(ROUTES.UK_CONTENT_PERCENTAGE, ukContentPercentageController.post);
-router.get(ROUTES.UK_CONTENT_PERCENTAGE_CHANGE, ukContentPercentageController.get);
-router.post(ROUTES.UK_CONTENT_PERCENTAGE_CHANGE, ukContentPercentageController.post);
+router.get(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.get);
+router.post(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.post);
+router.get(ROUTES.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.get);
+router.post(ROUTES.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.post);
 
 router.get(ROUTES.TELL_US_ABOUT_YOUR_POLICY, tellUsAboutYourPolicyController.get);
 router.post(ROUTES.TELL_US_ABOUT_YOUR_POLICY, tellUsAboutYourPolicyController.post);

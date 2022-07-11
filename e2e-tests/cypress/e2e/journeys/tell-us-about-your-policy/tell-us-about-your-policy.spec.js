@@ -1,5 +1,5 @@
 import {
-  ukContentPercentagePage,
+  ukGoodsOrServicesPage,
   tellUsAboutYourPolicyPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -22,15 +22,15 @@ const {
 context('Tell us about the policy you need page', () => {
   describe('rendering', () => {
     before(() => {
-      cy.visit(ROUTES.UK_CONTENT_PERCENTAGE, {
+      cy.visit(ROUTES.UK_GOODS_OR_SERVICES, {
         auth: {
           username: Cypress.config('basicAuthKey'),
           password: Cypress.config('basicAuthSecret'),
         },
       });
 
-      ukContentPercentagePage.yes().click();
-      ukContentPercentagePage.submitButton().click();
+      ukGoodsOrServicesPage.yes().click();
+      ukGoodsOrServicesPage.submitButton().click();
 
       cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
     });
@@ -58,7 +58,7 @@ context('Tell us about the policy you need page', () => {
         expect(text.trim()).equal(LINKS.BACK);
       });
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.UK_CONTENT_PERCENTAGE}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.UK_GOODS_OR_SERVICES}`;
 
       partials.backLink().should('have.attr', 'href', expected);
     });

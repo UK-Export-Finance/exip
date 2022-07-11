@@ -45,7 +45,7 @@ const FIELDS = {
       TITLE: 'Able to get private insurance?',
     },
   },
-  [FIELD_IDS.UK_CONTENT_PERCENTAGE]: {
+  [FIELD_IDS.UK_GOODS_OR_SERVICES]: {
     LABEL: 'Percentage of your export that is UK content',
     HINT: 'Enter the UK content of your export as a percentage.',
     SUMMARY: {

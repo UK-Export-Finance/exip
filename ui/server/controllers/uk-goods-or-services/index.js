@@ -6,12 +6,12 @@ const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
-  FIELD_NAME: FIELD_IDS.UK_CONTENT_PERCENTAGE,
-  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.UK_CONTENT_PERCENTAGE_PAGE,
+  FIELD_NAME: FIELD_IDS.UK_GOODS_OR_SERVICES,
+  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.UK_GOODS_OR_SERVICES_PAGE,
 };
 
 const get = (req, res) =>
-  res.render(TEMPLATES.UK_CONTENT_PERCENTAGE, {
+  res.render(TEMPLATES.UK_GOODS_OR_SERVICES, {
     ...singleInputPageVariables(PAGE_VARIABLES),
     BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData,
@@ -21,19 +21,19 @@ const post = (req, res) => {
   const validationErrors = generateValidationErrors(req.body);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.UK_CONTENT_PERCENTAGE, {
+    return res.render(TEMPLATES.UK_GOODS_OR_SERVICES, {
       ...singleInputPageVariables(PAGE_VARIABLES),
       BACK_LINK: req.headers.referer,
       validationErrors,
     });
   }
 
-  const answer = req.body[FIELD_IDS.UK_CONTENT_PERCENTAGE];
+  const answer = req.body[FIELD_IDS.UK_GOODS_OR_SERVICES];
 
   const redirectToExitPage = (answer === 'false');
 
   if (redirectToExitPage) {
-    req.flash('previousRoute', ROUTES.UK_CONTENT_PERCENTAGE);
+    req.flash('previousRoute', ROUTES.UK_GOODS_OR_SERVICES);
 
     const { PAGES } = CONTENT_STRINGS;
     const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;

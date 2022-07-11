@@ -2,7 +2,7 @@ import {
   companyBasedPage,
   buyerBasedPage,
   triedToObtainCoverPage,
-  ukContentPercentagePage,
+  ukGoodsOrServicesPage,
   tellUsAboutYourPolicyPage,
 } from '../e2e/pages';
 import { FIELD_IDS } from '../../constants';
@@ -35,8 +35,8 @@ export const completeAndSubmitTriedToObtainCoverForm = () => {
 };
 
 export const completeAndSubmitUkContentForm = () => {
-  ukContentPercentagePage.yes().click();
-  ukContentPercentagePage.submitButton().click();
+  ukGoodsOrServicesPage.yes().click();
+  ukGoodsOrServicesPage.submitButton().click();
 };
 
 export const compmleteAndSubmitTellUsAboutYourPolicyForm = () => {
