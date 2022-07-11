@@ -4,7 +4,7 @@ const FIELD_VALUES = require('../constants/field-values');
 const {
   VALID_COMPANY_BASE,
   BUYER_COUNTRY,
-  TRIED_PRIVATE_COVER,
+  CAN_GET_PRIVATE_INSURANCE,
   UK_GOODS_OR_SERVICES,
   CURRENCY,
   AMOUNT,
@@ -16,7 +16,7 @@ const {
 const mockAnswers = {
   [VALID_COMPANY_BASE]: true,
   [BUYER_COUNTRY]: 'France',
-  [TRIED_PRIVATE_COVER]: false,
+  [CAN_GET_PRIVATE_INSURANCE]: false,
   [UK_GOODS_OR_SERVICES]: 30,
   [CURRENCY]: 'GBP',
   [AMOUNT]: 123456,

@@ -43,7 +43,7 @@ const BUYER_COUNTRY_PAGE = {
   HEADING: 'In which country is your buyer based?',
 };
 
-const TRIED_TO_OBTAIN_COVER_PAGE = {
+const CAN_GET_PRIVATE_INSURANCE_PAGE = {
   PAGE_TITLE: 'Are you able to get insurance for this export from companies in the private sector?',
   HEADING: 'Are you able to get insurance for this export from companies in the private sector?',
 };
@@ -243,7 +243,7 @@ module.exports = {
   BEFORE_YOU_START,
   COMPANY_BASED_PAGE,
   BUYER_COUNTRY_PAGE,
-  TRIED_TO_OBTAIN_COVER_PAGE,
+  CAN_GET_PRIVATE_INSURANCE_PAGE,
   UK_GOODS_OR_SERVICES_PAGE,
   TELL_US_ABOUT_YOUR_POLICY_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,

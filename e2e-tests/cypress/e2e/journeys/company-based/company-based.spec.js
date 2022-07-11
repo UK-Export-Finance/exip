@@ -114,11 +114,11 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.TRIED_TO_OBTAIN_COVER}`, () => {
+      it(`should redirect to ${ROUTES.CAN_GET_PRIVATE_INSURANCE}`, () => {
         companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].yes().click();
         companyBasedPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
+        cy.url().should('include', ROUTES.CAN_GET_PRIVATE_INSURANCE);
       });
     });
   });

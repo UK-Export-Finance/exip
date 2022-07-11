@@ -1,7 +1,7 @@
 import {
   buyerCountryPage,
   companyBasedPage,
-  triedToObtainCoverPage,
+  canGetPrivateInsurancePage,
   ukGoodsOrServicesPage,
   checkYourAnswersPage,
 } from '../../pages';
@@ -16,8 +16,8 @@ const {
 const {
   BUYER_COUNTRY,
   VALID_COMPANY_BASE,
-  TRIED_PRIVATE_COVER,
-  TRIED_PRIVATE_COVER_NO,
+  CAN_GET_PRIVATE_INSURANCE,
+  CAN_GET_PRIVATE_INSURANCE_NO,
   UK_GOODS_OR_SERVICES,
 } = FIELD_IDS;
 
@@ -123,12 +123,12 @@ context('Change your answers after checking answers - Export fields', () => {
   });
 
   describe('change `Private insurance`', () => {
-    const row = checkYourAnswersPage.summaryLists.export[TRIED_PRIVATE_COVER_NO];
+    const row = checkYourAnswersPage.summaryLists.export[CAN_GET_PRIVATE_INSURANCE_NO];
 
-    it(`clicking 'change' redirects to ${ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE}#${TRIED_PRIVATE_COVER_NO}`;
+      const expectedUrl = `${ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE}#${CAN_GET_PRIVATE_INSURANCE_NO}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -140,15 +140,15 @@ context('Change your answers after checking answers - Export fields', () => {
     });
 
     it('has originally submitted answer selected', () => {
-      triedToObtainCoverPage[TRIED_PRIVATE_COVER].noInput().should('be.checked');
+      canGetPrivateInsurancePage[CAN_GET_PRIVATE_INSURANCE].noInput().should('be.checked');
     });
 
     it('auto focuses the input', () => {
-      triedToObtainCoverPage[TRIED_PRIVATE_COVER].noInput().should('have.focus');
+      canGetPrivateInsurancePage[CAN_GET_PRIVATE_INSURANCE].noInput().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      triedToObtainCoverPage.submitButton().click();
+      canGetPrivateInsurancePage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });

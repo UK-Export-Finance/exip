@@ -1,7 +1,7 @@
 import {
   companyBasedPage,
   buyerCountryPage,
-  triedToObtainCoverPage,
+  canGetPrivateInsurancePage,
   ukGoodsOrServicesPage,
   tellUsAboutYourPolicyPage,
 } from '../e2e/pages';
@@ -9,7 +9,7 @@ import { FIELD_IDS } from '../../constants';
 
 const {
   VALID_COMPANY_BASE,
-  TRIED_PRIVATE_COVER,
+  CAN_GET_PRIVATE_INSURANCE,
   CURRENCY,
   AMOUNT,
   CREDIT_PERIOD,
@@ -30,8 +30,8 @@ export const completeAndSubmitCompanyForm = () => {
 };
 
 export const completeAndSubmitTriedToObtainCoverForm = () => {
-  triedToObtainCoverPage[TRIED_PRIVATE_COVER].no().click();
-  triedToObtainCoverPage.submitButton().click();
+  canGetPrivateInsurancePage[CAN_GET_PRIVATE_INSURANCE].no().click();
+  canGetPrivateInsurancePage.submitButton().click();
 };
 
 export const completeAndSubmitUkContentForm = () => {

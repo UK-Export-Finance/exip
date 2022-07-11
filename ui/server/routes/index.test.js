@@ -7,7 +7,7 @@ const guidanceController = require('../controllers/guidance');
 const beforeYouStartController = require('../controllers/before-you-start');
 const companyBasedController = require('../controllers/company-based');
 const buyerBasedController = require('../controllers/buyer-country');
-const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
+const canGetPrivateInsuranceController = require('../controllers/can-get-private-insurance');
 const ukGoodsOrServicesController = require('../controllers/uk-goods-or-services');
 const tellUsAboutYourPolicyController = require('../controllers/tell-us-about-your-policy');
 const checkYourAnswersController = require('../controllers/check-your-answers');
@@ -43,10 +43,10 @@ describe('routes/index', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.post);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.get);
-    expect(post).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.post);
-    expect(get).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE, triedToObtainCoverController.get);
-    expect(post).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE, triedToObtainCoverController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.CAN_GET_PRIVATE_INSURANCE, canGetPrivateInsuranceController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.CAN_GET_PRIVATE_INSURANCE, canGetPrivateInsuranceController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE, canGetPrivateInsuranceController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE, canGetPrivateInsuranceController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.post);

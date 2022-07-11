@@ -10,8 +10,8 @@ const {
 } = require('../constants');
 
 const {
-  TRIED_PRIVATE_COVER_YES,
-  TRIED_PRIVATE_COVER_NO,
+  CAN_GET_PRIVATE_INSURANCE_YES,
+  CAN_GET_PRIVATE_INSURANCE_NO,
   UK_GOODS_OR_SERVICES,
   SINGLE_POLICY_TYPE,
   MULTI_POLICY_TYPE,
@@ -49,29 +49,29 @@ const generateFieldGroups = (submittedData) => {
     value: submittedData[field.ID],
   }));
 
-  if (submittedData[TRIED_PRIVATE_COVER_YES]) {
+  if (submittedData[CAN_GET_PRIVATE_INSURANCE_YES]) {
     fieldGroups.EXPORT_DETAILS = [
       ...fieldGroups.EXPORT_DETAILS,
       {
-        ID: TRIED_PRIVATE_COVER_YES,
-        ...FIELDS[TRIED_PRIVATE_COVER_YES],
-        CHANGE_ROUTE: ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE,
+        ID: CAN_GET_PRIVATE_INSURANCE_YES,
+        ...FIELDS[CAN_GET_PRIVATE_INSURANCE_YES],
+        CHANGE_ROUTE: ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE,
         value: {
-          text: submittedData[TRIED_PRIVATE_COVER_YES].text,
+          text: submittedData[CAN_GET_PRIVATE_INSURANCE_YES].text,
         },
       },
     ];
   }
 
-  if (submittedData[TRIED_PRIVATE_COVER_NO]) {
+  if (submittedData[CAN_GET_PRIVATE_INSURANCE_NO]) {
     fieldGroups.EXPORT_DETAILS = [
       ...fieldGroups.EXPORT_DETAILS,
       {
-        ID: TRIED_PRIVATE_COVER_NO,
-        ...FIELDS[TRIED_PRIVATE_COVER_NO],
-        CHANGE_ROUTE: ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE,
+        ID: CAN_GET_PRIVATE_INSURANCE_NO,
+        ...FIELDS[CAN_GET_PRIVATE_INSURANCE_NO],
+        CHANGE_ROUTE: ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE,
         value: {
-          text: submittedData[TRIED_PRIVATE_COVER_NO].text,
+          text: submittedData[CAN_GET_PRIVATE_INSURANCE_NO].text,
         },
       },
     ];

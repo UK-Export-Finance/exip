@@ -30,17 +30,17 @@
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-    {% if validationErrors.errorList[FIELDS.TRIED_PRIVATE_COVER.ID] %}
-      {% set validationError = validationErrors.errorList[FIELDS.TRIED_PRIVATE_COVER.ID] %}
+    {% if validationErrors.errorList[FIELDS.CAN_GET_PRIVATE_INSURANCE.ID] %}
+      {% set validationError = validationErrors.errorList[FIELDS.CAN_GET_PRIVATE_INSURANCE.ID] %}
     {% endif %}
 
-    {% if validationErrors.errorList[FIELDS.TRIED_PRIVATE_COVER_YES.ID] %}
-      {% set validationError = validationErrors.errorList[FIELDS.TRIED_PRIVATE_COVER_YES.ID] %}
+    {% if validationErrors.errorList[FIELDS.CAN_GET_PRIVATE_INSURANCE_YES.ID] %}
+      {% set validationError = validationErrors.errorList[FIELDS.CAN_GET_PRIVATE_INSURANCE_YES.ID] %}
     {% endif %}
 
     {{ govukRadios({
       classes: "govuk-radios--inline",
-      name: FIELDS.TRIED_PRIVATE_COVER.ID,
+      name: FIELDS.CAN_GET_PRIVATE_INSURANCE.ID,
       fieldset: {
         legend: {
           html: "<h1 class='govuk-heading-l' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1>"
@@ -48,38 +48,38 @@
       },
       items: [
         {
-          id: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.YES.ID,
-          value: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.YES.VALUE,
-          text: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.YES.TEXT,
+          id: FIELDS.CAN_GET_PRIVATE_INSURANCE.OPTIONS.YES.ID,
+          value: FIELDS.CAN_GET_PRIVATE_INSURANCE.OPTIONS.YES.VALUE,
+          text: FIELDS.CAN_GET_PRIVATE_INSURANCE.OPTIONS.YES.TEXT,
           label: {
             attributes: {
-              "data-cy": FIELDS.TRIED_PRIVATE_COVER.ID + "-yes"
+              "data-cy": FIELDS.CAN_GET_PRIVATE_INSURANCE.ID + "-yes"
             }
           },
           attributes: {
-            "data-cy": FIELDS.TRIED_PRIVATE_COVER.ID + "-yes-input"
+            "data-cy": FIELDS.CAN_GET_PRIVATE_INSURANCE.ID + "-yes-input"
           },
-          checked: submittedValues[FIELDS.TRIED_PRIVATE_COVER.ID] === FIELDS.TRIED_PRIVATE_COVER.OPTIONS.YES.VALUE
+          checked: submittedValues[FIELDS.CAN_GET_PRIVATE_INSURANCE.ID] === FIELDS.CAN_GET_PRIVATE_INSURANCE.OPTIONS.YES.VALUE
         },
         {
-          id: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.NO.ID,
-          value: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.NO.VALUE,
-          text: FIELDS.TRIED_PRIVATE_COVER.OPTIONS.NO.TEXT,
+          id: FIELDS.CAN_GET_PRIVATE_INSURANCE.OPTIONS.NO.ID,
+          value: FIELDS.CAN_GET_PRIVATE_INSURANCE.OPTIONS.NO.VALUE,
+          text: FIELDS.CAN_GET_PRIVATE_INSURANCE.OPTIONS.NO.TEXT,
           label: {
             attributes: {
-              "data-cy": FIELDS.TRIED_PRIVATE_COVER.ID + "-no"
+              "data-cy": FIELDS.CAN_GET_PRIVATE_INSURANCE.ID + "-no"
             }
           },
           attributes: {
-            "data-cy": FIELDS.TRIED_PRIVATE_COVER.ID + "-no-input"
+            "data-cy": FIELDS.CAN_GET_PRIVATE_INSURANCE.ID + "-no-input"
           },
-          checked: submittedValues[FIELDS.TRIED_PRIVATE_COVER.ID] === FIELDS.TRIED_PRIVATE_COVER.OPTIONS.NO.VALUE
+          checked: submittedValues[FIELDS.CAN_GET_PRIVATE_INSURANCE.ID] === FIELDS.CAN_GET_PRIVATE_INSURANCE.OPTIONS.NO.VALUE
         }
       ],
       errorMessage: validationError and {
         text: validationError.text,
         attributes: {
-          "data-cy": FIELDS.TRIED_PRIVATE_COVER.ID + "-error-message"
+          "data-cy": FIELDS.CAN_GET_PRIVATE_INSURANCE.ID + "-error-message"
         }
       }
     }) }}

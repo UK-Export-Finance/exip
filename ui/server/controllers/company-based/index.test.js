@@ -94,10 +94,10 @@ describe('controllers/company-based', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.TRIED_TO_OBTAIN_COVER}`, () => {
+      it(`should redirect to ${ROUTES.CAN_GET_PRIVATE_INSURANCE}`, () => {
         controller.post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.TRIED_TO_OBTAIN_COVER);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.CAN_GET_PRIVATE_INSURANCE);
       });
 
       describe('when the url\'s last substring is `change`', () => {

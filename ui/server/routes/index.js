@@ -4,7 +4,7 @@ const guidanceController = require('../controllers/guidance');
 const beforeYouStartController = require('../controllers/before-you-start');
 const buyerBasedController = require('../controllers/buyer-country');
 const companyBasedController = require('../controllers/company-based');
-const triedToObtainCoverController = require('../controllers/tried-to-obtain-cover');
+const canGetPrivateInsuranceController = require('../controllers/can-get-private-insurance');
 const ukGoodsOrServicesController = require('../controllers/uk-goods-or-services');
 const tellUsAboutYourPolicyController = require('../controllers/tell-us-about-your-policy');
 const checkYourAnswersController = require('../controllers/check-your-answers');
@@ -28,10 +28,10 @@ router.post(ROUTES.COMPANY_BASED, companyBasedController.post);
 router.get(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.get);
 router.post(ROUTES.COMPANY_BASED_CHANGE, companyBasedController.post);
 
-router.get(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.get);
-router.post(ROUTES.TRIED_TO_OBTAIN_COVER, triedToObtainCoverController.post);
-router.get(ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE, triedToObtainCoverController.get);
-router.post(ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE, triedToObtainCoverController.post);
+router.get(ROUTES.CAN_GET_PRIVATE_INSURANCE, canGetPrivateInsuranceController.get);
+router.post(ROUTES.CAN_GET_PRIVATE_INSURANCE, canGetPrivateInsuranceController.post);
+router.get(ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE, canGetPrivateInsuranceController.get);
+router.post(ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE, canGetPrivateInsuranceController.post);
 
 router.get(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.get);
 router.post(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.post);

@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../constants';
 const {
   VALID_COMPANY_BASE,
   BUYER_COUNTRY,
-  TRIED_PRIVATE_COVER_NO,
+  CAN_GET_PRIVATE_INSURANCE_NO,
   UK_GOODS_OR_SERVICES,
   AMOUNT,
   CREDIT_PERIOD,
@@ -30,10 +30,10 @@ const checkYourAnswersPage = {
         value: () => cy.get(`.${VALID_COMPANY_BASE}-value`),
         changeLink: () => cy.get(`[data-cy="${VALID_COMPANY_BASE}-change-link"]`),
       },
-      [TRIED_PRIVATE_COVER_NO]: {
-        key: () => cy.get(`.${TRIED_PRIVATE_COVER_NO}-key`),
-        value: () => cy.get(`.${TRIED_PRIVATE_COVER_NO}-value`),
-        changeLink: () => cy.get(`[data-cy="${TRIED_PRIVATE_COVER_NO}-change-link"]`),
+      [CAN_GET_PRIVATE_INSURANCE_NO]: {
+        key: () => cy.get(`.${CAN_GET_PRIVATE_INSURANCE_NO}-key`),
+        value: () => cy.get(`.${CAN_GET_PRIVATE_INSURANCE_NO}-value`),
+        changeLink: () => cy.get(`[data-cy="${CAN_GET_PRIVATE_INSURANCE_NO}-change-link"]`),
       },
       [UK_GOODS_OR_SERVICES]: {
         key: () => cy.get(`.${UK_GOODS_OR_SERVICES}-key`),

@@ -14,25 +14,25 @@ const PAGE_VARIABLES = {
     FOOTER: CONTENT_STRINGS.FOOTER,
     BUTTONS: CONTENT_STRINGS.BUTTONS,
     LINKS: CONTENT_STRINGS.LINKS,
-    ...CONTENT_STRINGS.PAGES.TRIED_TO_OBTAIN_COVER_PAGE,
+    ...CONTENT_STRINGS.PAGES.CAN_GET_PRIVATE_INSURANCE_PAGE,
   },
   FIELDS: {
-    TRIED_PRIVATE_COVER: {
-      ID: FIELD_IDS.TRIED_PRIVATE_COVER,
-      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.TRIED_PRIVATE_COVER],
+    CAN_GET_PRIVATE_INSURANCE: {
+      ID: FIELD_IDS.CAN_GET_PRIVATE_INSURANCE,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE],
     },
     // note: "tried private cover yes" is only required for scenario where
     // empty form is submitted. Then, error message link can link to
     // the first policy type radio button (single).
-    TRIED_PRIVATE_COVER_YES: {
-      ID: FIELD_IDS.TRIED_PRIVATE_COVER_YES,
-      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.TRIED_PRIVATE_COVER_YES],
+    CAN_GET_PRIVATE_INSURANCE_YES: {
+      ID: FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_YES,
+      ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_YES],
     },
   },
 };
 
 const get = (req, res) =>
-  res.render(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
+  res.render(TEMPLATES.CAN_GET_PRIVATE_INSURANCE, {
     ...PAGE_VARIABLES,
     BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData,
@@ -42,19 +42,19 @@ const post = (req, res) => {
   const validationErrors = generateValidationErrors(req.body);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.TRIED_TO_OBTAIN_COVER, {
+    return res.render(TEMPLATES.CAN_GET_PRIVATE_INSURANCE, {
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
       validationErrors,
     });
   }
 
-  const answer = req.body[FIELD_IDS.TRIED_PRIVATE_COVER];
+  const answer = req.body[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE];
 
   const redirectToExitPage = (answer === 'true');
 
   if (redirectToExitPage) {
-    req.flash('previousRoute', ROUTES.TRIED_TO_OBTAIN_COVER);
+    req.flash('previousRoute', ROUTES.CAN_GET_PRIVATE_INSURANCE);
 
     const { PAGES } = CONTENT_STRINGS;
     const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;

@@ -18,7 +18,7 @@ context('Check your answers page', () => {
   const {
     VALID_COMPANY_BASE,
     BUYER_COUNTRY,
-    TRIED_PRIVATE_COVER_NO,
+    CAN_GET_PRIVATE_INSURANCE_NO,
     UK_GOODS_OR_SERVICES,
     AMOUNT,
     CREDIT_PERIOD,
@@ -137,15 +137,15 @@ context('Check your answers page', () => {
     });
 
     it('renders `Private insurance` key, value and change link', () => {
-      const row = list[TRIED_PRIVATE_COVER_NO];
-      const expectedKeyText = FIELDS[TRIED_PRIVATE_COVER_NO].SUMMARY.TITLE;
+      const row = list[CAN_GET_PRIVATE_INSURANCE_NO];
+      const expectedKeyText = FIELDS[CAN_GET_PRIVATE_INSURANCE_NO].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_ANSWERS[TRIED_PRIVATE_COVER_NO]);
+        expect(text.trim()).equal(SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_NO]);
       });
 
       row.changeLink().invoke('text').then((text) => {
@@ -153,7 +153,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TRIED_TO_OBTAIN_COVER_CHANGE}#${TRIED_PRIVATE_COVER_NO}`;
+      const expectedHref = `${ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE}#${CAN_GET_PRIVATE_INSURANCE_NO}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 

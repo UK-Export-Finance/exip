@@ -1,5 +1,5 @@
 import {
-  triedToObtainCoverPage,
+  canGetPrivateInsurancePage,
   cannotObtainCoverPage,
 } from '../pages';
 import partials from '../partials';
@@ -15,16 +15,16 @@ const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 context('Cannot obtain UKEF cover exit page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.TRIED_TO_OBTAIN_COVER, {
+    cy.visit(ROUTES.CAN_GET_PRIVATE_INSURANCE, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
-    cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
+    cy.url().should('include', ROUTES.CAN_GET_PRIVATE_INSURANCE);
 
-    triedToObtainCoverPage[FIELD_IDS.TRIED_PRIVATE_COVER].yesInput().click();
-    triedToObtainCoverPage.submitButton().click();
+    canGetPrivateInsurancePage[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE].yesInput().click();
+    canGetPrivateInsurancePage.submitButton().click();
     cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
   });
 
@@ -45,7 +45,7 @@ context('Cannot obtain UKEF cover exit page', () => {
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.TRIED_TO_OBTAIN_COVER);
+    cy.url().should('include', ROUTES.CAN_GET_PRIVATE_INSURANCE);
   });
 
   it('renders a page title and heading', () => {

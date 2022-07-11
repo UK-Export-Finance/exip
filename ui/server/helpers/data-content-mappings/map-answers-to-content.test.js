@@ -17,9 +17,9 @@ const { mockAnswers } = require('../../test-mocks');
 const {
   VALID_COMPANY_BASE,
   BUYER_COUNTRY,
-  TRIED_PRIVATE_COVER,
-  TRIED_PRIVATE_COVER_YES,
-  TRIED_PRIVATE_COVER_NO,
+  CAN_GET_PRIVATE_INSURANCE,
+  CAN_GET_PRIVATE_INSURANCE_YES,
+  CAN_GET_PRIVATE_INSURANCE_NO,
   UK_GOODS_OR_SERVICES,
   AMOUNT,
   CURRENCY,
@@ -65,14 +65,14 @@ describe('server/helpers/map-answers-to-content', () => {
 
   describe('mapTriedPrivateCover', () => {
     describe('when answer is yes', () => {
-      it(`should return an object with ${TRIED_PRIVATE_COVER_YES} and mapped summary answer`, () => {
-        const mockAnswer = FIELD_VALUES.TRIED_PRIVATE_COVER.YES;
+      it(`should return an object with ${CAN_GET_PRIVATE_INSURANCE_YES} and mapped summary answer`, () => {
+        const mockAnswer = FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.YES;
 
         const result = mapTriedPrivateCover(mockAnswer);
 
         const expected = {
-          [TRIED_PRIVATE_COVER_YES]: {
-            text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER_YES],
+          [CAN_GET_PRIVATE_INSURANCE_YES]: {
+            text: SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_YES],
           },
         };
 
@@ -81,14 +81,14 @@ describe('server/helpers/map-answers-to-content', () => {
     });
 
     describe('when answer is no', () => {
-      it(`should return an object with ${TRIED_PRIVATE_COVER_NO} and mapped summary answer`, () => {
-        const mockAnswer = FIELD_VALUES.TRIED_PRIVATE_COVER.NO;
+      it(`should return an object with ${CAN_GET_PRIVATE_INSURANCE_NO} and mapped summary answer`, () => {
+        const mockAnswer = FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.NO;
 
         const result = mapTriedPrivateCover(mockAnswer);
 
         const expected = {
-          [TRIED_PRIVATE_COVER_NO]: {
-            text: SUMMARY_ANSWERS[TRIED_PRIVATE_COVER_NO],
+          [CAN_GET_PRIVATE_INSURANCE_NO]: {
+            text: SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_NO],
           },
         };
 
@@ -108,7 +108,7 @@ describe('server/helpers/map-answers-to-content', () => {
         [BUYER_COUNTRY]: {
           text: mapCountry(mockAnswers[BUYER_COUNTRY]),
         },
-        ...mapTriedPrivateCover(mockAnswers[TRIED_PRIVATE_COVER]),
+        ...mapTriedPrivateCover(mockAnswers[CAN_GET_PRIVATE_INSURANCE]),
         [UK_GOODS_OR_SERVICES]: {
           text: SUMMARY_ANSWERS[UK_GOODS_OR_SERVICES],
         },

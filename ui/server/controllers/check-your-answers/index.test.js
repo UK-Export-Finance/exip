@@ -9,7 +9,7 @@ const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
 const {
   VALID_COMPANY_BASE,
   BUYER_COUNTRY,
-  TRIED_PRIVATE_COVER,
+  CAN_GET_PRIVATE_INSURANCE,
   UK_GOODS_OR_SERVICES,
   CURRENCY,
   AMOUNT,
@@ -25,7 +25,7 @@ describe('controllers/check-your-answers', () => {
       name: mockAnswers[BUYER_COUNTRY],
       isoCode: 'FRA',
     },
-    [TRIED_PRIVATE_COVER]: true,
+    [CAN_GET_PRIVATE_INSURANCE]: true,
     [UK_GOODS_OR_SERVICES]: 30,
     [CURRENCY]: {
       name: 'UK Sterling',
