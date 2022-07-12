@@ -92,10 +92,10 @@ describe('controllers/uk-goods-or-services', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY}`, () => {
+      it(`should redirect to ${ROUTES.POLICY_TYPE}`, () => {
         controller.post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_POLICY);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.POLICY_TYPE);
       });
 
       describe('when the url\'s last substring is `change`', () => {

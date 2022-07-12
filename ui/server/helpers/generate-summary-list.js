@@ -95,7 +95,7 @@ const generateFieldGroups = (submittedData) => {
       {
         ID: SINGLE_POLICY_TYPE,
         ...FIELDS[SINGLE_POLICY_TYPE],
-        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+        CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
         value: {
           text: submittedData[SINGLE_POLICY_TYPE].text,
         },
@@ -103,7 +103,7 @@ const generateFieldGroups = (submittedData) => {
       {
         ID: SINGLE_POLICY_LENGTH,
         ...FIELDS[SINGLE_POLICY_LENGTH],
-        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+        CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
         value: {
           text: submittedData[SINGLE_POLICY_LENGTH].text,
         },
@@ -117,7 +117,7 @@ const generateFieldGroups = (submittedData) => {
       {
         ID: MULTI_POLICY_TYPE,
         ...FIELDS[MULTI_POLICY_TYPE],
-        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+        CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
         value: {
           text: submittedData[MULTI_POLICY_TYPE].text,
         },
@@ -125,7 +125,7 @@ const generateFieldGroups = (submittedData) => {
       {
         ID: MULTI_POLICY_LENGTH,
         ...FIELDS[MULTI_POLICY_LENGTH],
-        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+        CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
         value: {
           text: submittedData[MULTI_POLICY_LENGTH].text,
         },

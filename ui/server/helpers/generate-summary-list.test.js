@@ -161,7 +161,7 @@ describe('server/helpers/generate-summary-list', () => {
         const expected = {
           ID: SINGLE_POLICY_TYPE,
           ...FIELDS[SINGLE_POLICY_TYPE],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
           value: {
             text: mockAnswersContent[SINGLE_POLICY_TYPE].text,
           },
@@ -186,7 +186,7 @@ describe('server/helpers/generate-summary-list', () => {
         const expected = {
           ID: SINGLE_POLICY_LENGTH,
           ...FIELDS[SINGLE_POLICY_LENGTH],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
           value: {
             text: mockAnswersContent[SINGLE_POLICY_LENGTH].text,
           },
@@ -217,7 +217,7 @@ describe('server/helpers/generate-summary-list', () => {
         const expected = {
           ID: MULTI_POLICY_TYPE,
           ...FIELDS[MULTI_POLICY_TYPE],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
           value: {
             text: mockAnswersContent[MULTI_POLICY_TYPE].text,
           },
@@ -246,7 +246,7 @@ describe('server/helpers/generate-summary-list', () => {
         const expected = {
           ID: MULTI_POLICY_LENGTH,
           ...FIELDS[MULTI_POLICY_LENGTH],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
           value: {
             text: mockAnswersContent[MULTI_POLICY_LENGTH].text,
           },

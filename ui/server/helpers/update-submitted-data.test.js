@@ -15,12 +15,11 @@ const {
 describe('server/helpers/update-submitted-data', () => {
   describe('mapSubmittedData', () => {
     describe(`when ${POLICY_TYPE} is 'single'`, () => {
-      it('should return policy length field without single/multi specific fields', () => {
+      it('should return policy length field with single specific fields', () => {
         const mockFormData = {
           mock: '1',
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [SINGLE_POLICY_LENGTH]: '10',
-          [MULTI_POLICY_LENGTH]: '1',
         };
 
         const result = mapSubmittedData(mockFormData);
@@ -29,6 +28,7 @@ describe('server/helpers/update-submitted-data', () => {
           mock: '1',
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [POLICY_LENGTH]: '10',
+          [SINGLE_POLICY_LENGTH]: '10',
         };
 
         expect(result).toEqual(expected);
@@ -36,12 +36,12 @@ describe('server/helpers/update-submitted-data', () => {
     });
 
     describe(`when ${POLICY_TYPE} is 'multi'`, () => {
-      it('should return policy length field without single/multi specific fields', () => {
+      it('should return policy length field with multi specific fields', () => {
         const mockFormData = {
           mock: '1',
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [POLICY_LENGTH]: '10',
           [MULTI_POLICY_LENGTH]: '10',
-          [SINGLE_POLICY_LENGTH]: '1',
         };
 
         const result = mapSubmittedData(mockFormData);
@@ -50,6 +50,55 @@ describe('server/helpers/update-submitted-data', () => {
           mock: '1',
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
           [POLICY_LENGTH]: '10',
+          [MULTI_POLICY_LENGTH]: '10',
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${POLICY_TYPE} of 'single' is submitted  and 'multi' fields were previously provided`, () => {
+      it('should return policy length field with single specific fields', () => {
+        const mockFormData = {
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          [SINGLE_POLICY_LENGTH]: '10',
+        };
+
+        const mockExistingData = {
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [MULTI_POLICY_LENGTH]: '5',
+        };
+
+        const result = mapSubmittedData(mockFormData, mockExistingData);
+
+        const expected = {
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          [POLICY_LENGTH]: '10',
+          [SINGLE_POLICY_LENGTH]: '10',
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${POLICY_TYPE} of 'multi' is submitted  and 'single' fields were previously provided`, () => {
+      it('should return policy length field with single specific fields', () => {
+        const mockFormData = {
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [MULTI_POLICY_LENGTH]: '10',
+        };
+
+        const mockExistingData = {
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          [SINGLE_POLICY_LENGTH]: '5',
+        };
+
+        const result = mapSubmittedData(mockFormData, mockExistingData);
+
+        const expected = {
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [POLICY_LENGTH]: '10',
+          [MULTI_POLICY_LENGTH]: '10',
         };
 
         expect(result).toEqual(expected);
@@ -89,12 +138,12 @@ describe('server/helpers/update-submitted-data', () => {
           mockExistingData,
         );
 
-        const mappedFormData = mapSubmittedData(mockFormData);
-
-        const expected = {
+        const expectedSanitisedData = sanitiseFormData({
           ...mockExistingData,
-          ...sanitiseFormData(mappedFormData),
-        };
+          ...mockFormData,
+        });
+
+        const expected = mapSubmittedData(expectedSanitisedData);
 
         expect(result).toEqual(expected);
       });
@@ -113,9 +162,12 @@ describe('server/helpers/update-submitted-data', () => {
           mockExistingData,
         );
 
-        const mappedFormData = mapSubmittedData(mockFormData);
+        const expectedSanitisedData = sanitiseFormData({
+          ...mockExistingData,
+          ...mockFormData,
+        });
 
-        const expected = sanitiseFormData(mappedFormData);
+        const expected = mapSubmittedData(expectedSanitisedData);
 
         expect(result).toEqual(expected);
       });
@@ -134,9 +186,12 @@ describe('server/helpers/update-submitted-data', () => {
         mockExistingData,
       );
 
-      const expected = sanitiseFormData({
-        a: mockFormData.a,
+      const expectedSanitisedData = sanitiseFormData({
+        ...mockExistingData,
+        a: true,
       });
+
+      const expected = mapSubmittedData(expectedSanitisedData);
 
       expect(result).toEqual(expected);
     });

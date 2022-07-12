@@ -53,7 +53,7 @@ const post = (req, res) => {
     return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
   }
 
-  return res.redirect(ROUTES.TELL_US_ABOUT_YOUR_POLICY);
+  return res.redirect(ROUTES.POLICY_TYPE);
 };
 
 module.exports = {
