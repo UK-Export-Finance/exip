@@ -1,5 +1,5 @@
 const { FIELD_IDS, FIELD_VALUES } = require('../constants');
-const { sanitiseFormData } = require('./sanitise-form-data');
+const { sanitiseData } = require('./sanitise-data');
 
 const {
   POLICY_TYPE,
@@ -45,7 +45,7 @@ const updateSubmittedData = (formData, existingData) => {
     ...submittedFormData,
   };
 
-  const sanitised = sanitiseFormData(modifiedData);
+  const sanitised = sanitiseData(modifiedData);
 
   const mappedFormData = mapSubmittedData(sanitised);
 

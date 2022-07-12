@@ -3,7 +3,7 @@ const {
   updateSubmittedData,
 } = require('./update-submitted-data');
 const { FIELD_IDS, FIELD_VALUES } = require('../constants');
-const { sanitiseFormData } = require('./sanitise-form-data');
+const { sanitiseData } = require('./sanitise-data');
 
 const {
   POLICY_TYPE,
@@ -138,7 +138,7 @@ describe('server/helpers/update-submitted-data', () => {
           mockExistingData,
         );
 
-        const expectedSanitisedData = sanitiseFormData({
+        const expectedSanitisedData = sanitiseData({
           ...mockExistingData,
           ...mockFormData,
         });
@@ -162,7 +162,7 @@ describe('server/helpers/update-submitted-data', () => {
           mockExistingData,
         );
 
-        const expectedSanitisedData = sanitiseFormData({
+        const expectedSanitisedData = sanitiseData({
           ...mockExistingData,
           ...mockFormData,
         });
@@ -186,7 +186,7 @@ describe('server/helpers/update-submitted-data', () => {
         mockExistingData,
       );
 
-      const expectedSanitisedData = sanitiseFormData({
+      const expectedSanitisedData = sanitiseData({
         ...mockExistingData,
         a: true,
       });
