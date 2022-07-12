@@ -96,7 +96,7 @@ describe('server/helpers/generate-quote-summary-list', () => {
             text: mockQuoteContent[SINGLE_POLICY_LENGTH].text,
           },
           renderChangeLink: true,
-          changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          changeRoute: ROUTES.POLICY_TYPE_CHANGE,
         };
 
         expect(expectedField).toEqual(expected);
@@ -125,7 +125,7 @@ describe('server/helpers/generate-quote-summary-list', () => {
             text: mockQuoteContent[MULTI_POLICY_LENGTH].text,
           },
           renderChangeLink: true,
-          changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          changeRoute: ROUTES.POLICY_TYPE_CHANGE,
         };
 
         expect(expectedField).toEqual(expected);

@@ -1,5 +1,6 @@
 import {
   buyerCountryPage,
+  policyTypePage,
   tellUsAboutYourPolicyPage,
   checkYourAnswersPage,
   yourQuotePage,
@@ -94,13 +95,13 @@ context('Your quote page - change answers', () => {
     });
 
     it('auto focuses the input', () => {
-      tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().should('have.focus');
+      policyTypePage[SINGLE_POLICY_LENGTH].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().click();
-      tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().type('5');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      policyTypePage[POLICY_TYPE].multi.input().click();
+      policyTypePage[MULTI_POLICY_LENGTH].input().type('5');
+      policyTypePage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });

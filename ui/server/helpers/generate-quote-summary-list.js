@@ -66,7 +66,7 @@ const generateFields = (answers) => {
           text: answers[SINGLE_POLICY_LENGTH].text,
         },
         renderChangeLink: true,
-        changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+        changeRoute: ROUTES.POLICY_TYPE_CHANGE,
       },
     ];
   }
@@ -81,7 +81,7 @@ const generateFields = (answers) => {
           text: answers[MULTI_POLICY_LENGTH].text,
         },
         renderChangeLink: true,
-        changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+        changeRoute: ROUTES.POLICY_TYPE_CHANGE,
       },
     ];
   }
