@@ -62,7 +62,7 @@ context('Your quote page - multi policy type', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MULTI_POLICY_LENGTH}`;
+        const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
     });

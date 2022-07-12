@@ -143,7 +143,7 @@ context('Which country is your buyer based page', () => {
   });
 
   describe('form submission', () => {
-    describe.only('when submitting an empty form', () => {
+    describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
         buyerCountryPage.submitButton().click();
 

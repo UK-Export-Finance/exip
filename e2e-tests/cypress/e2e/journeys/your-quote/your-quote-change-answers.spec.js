@@ -79,10 +79,10 @@ context('Your quote page - change answers', () => {
   describe('change `policy length`', () => {
     let row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
 
-    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.POLICY_TYPE_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+      const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}`;
       cy.url().should('include', expectedUrl);
     });
 

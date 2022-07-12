@@ -228,7 +228,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${SINGLE_POLICY_TYPE}`;
+      const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_TYPE}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -251,7 +251,7 @@ context('Check your answers page', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+      const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
