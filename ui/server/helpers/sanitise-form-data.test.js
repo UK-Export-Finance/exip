@@ -46,6 +46,22 @@ describe('server/helpers/sanitise-form-data', () => {
       });
     });
 
+    describe('when value is a true boolean', () => {
+      it('should return boolean', () => {
+        const result = sanitiseValue(true);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('when value is a false boolean', () => {
+      it('should return boolean', () => {
+        const result = sanitiseValue(false);
+
+        expect(result).toEqual(false);
+      });
+    });
+
     describe('when value is a string number', () => {
       it('should return a number', () => {
         const result = sanitiseValue('123');

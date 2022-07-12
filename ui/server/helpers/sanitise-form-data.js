@@ -7,11 +7,11 @@ const shouldChangeStringToNumber = (value) => {
 };
 
 const sanitiseValue = (value) => {
-  if (value === 'true') {
+  if (value === 'true' || value === true) {
     return true;
   }
 
-  if (value === 'false') {
+  if (value === 'false' || value === false) {
     return false;
   }
 
