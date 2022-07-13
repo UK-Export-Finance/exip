@@ -6,10 +6,9 @@ const { mapCurrencies } = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
 const getCurrencyByCode = require('../../helpers/get-currency-by-code');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
-const mapSubmittedValues = require('../../helpers/map-submitted-values');
 const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
 
-describe('controllers/buyer-country', () => {
+describe('controllers/tell-us-about-your-policy', () => {
   let req;
   let res;
   const mockCurrenciesResponse = [
@@ -128,7 +127,7 @@ describe('controllers/buyer-country', () => {
           ...controller.PAGE_VARIABLES,
           BACK_LINK: req.headers.referer,
           currencies: expectedCurrencies,
-          submittedValues: mapSubmittedValues(mockAnswers),
+          submittedValues: mockAnswers,
         });
       });
     });

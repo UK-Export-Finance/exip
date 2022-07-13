@@ -14,6 +14,9 @@ const ROUTES = {
   UK_GOODS_OR_SERVICES: '/uk-goods-or-services',
   UK_GOODS_OR_SERVICES_CHANGE: '/uk-goods-or-services/change',
 
+  POLICY_TYPE: '/kind-of-policy',
+  POLICY_TYPE_CHANGE: '/kind-of-policy/change',
+
   TELL_US_ABOUT_YOUR_POLICY: '/tell-us-about-policy',
   TELL_US_ABOUT_YOUR_POLICY_CHANGE: '/tell-us-about-policy/change',
 

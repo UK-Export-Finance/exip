@@ -3,6 +3,7 @@ import {
   buyerCountryPage,
   canGetPrivateInsurancePage,
   ukGoodsOrServicesPage,
+  policyTypePage,
   tellUsAboutYourPolicyPage,
 } from '../e2e/pages';
 import { FIELD_IDS } from '../../constants';
@@ -39,11 +40,16 @@ export const completeAndSubmitUkContentForm = () => {
   ukGoodsOrServicesPage.submitButton().click();
 };
 
+export const completeAndSubmitPolicyTypeForm = () => {
+  policyTypePage[POLICY_TYPE].single.input().click();
+  policyTypePage[SINGLE_POLICY_LENGTH].input().type('9');
+
+  policyTypePage.submitButton().click();
+};
+
 export const compmleteAndSubmitTellUsAboutYourPolicyForm = () => {
   tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
   tellUsAboutYourPolicyPage[AMOUNT].input().type('100');
   tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('2');
-  tellUsAboutYourPolicyPage[POLICY_TYPE].single.input().click();
-  tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().type('9');
   tellUsAboutYourPolicyPage.submitButton().click();
 };

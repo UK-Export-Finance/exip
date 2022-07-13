@@ -1,5 +1,6 @@
 import {
   buyerCountryPage,
+  policyTypePage,
   tellUsAboutYourPolicyPage,
   checkYourAnswersPage,
   yourQuotePage,
@@ -79,10 +80,10 @@ context('Your quote page - change answers', () => {
   describe('change `policy length`', () => {
     let row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
 
-    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.POLICY_TYPE_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+      const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -94,13 +95,13 @@ context('Your quote page - change answers', () => {
     });
 
     it('auto focuses the input', () => {
-      tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().should('have.focus');
+      policyTypePage[SINGLE_POLICY_LENGTH].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().click();
-      tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().type('5');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      policyTypePage[POLICY_TYPE].multi.input().click();
+      policyTypePage[MULTI_POLICY_LENGTH].input().type('5');
+      policyTypePage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });

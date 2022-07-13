@@ -10,7 +10,6 @@ const generateValidationErrors = require('./validation');
 const getCurrencyByCode = require('../../helpers/get-currency-by-code');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
-const mapSubmittedValues = require('../../helpers/map-submitted-values');
 
 const {
   AMOUNT_CURRENCY,
@@ -84,7 +83,7 @@ const get = async (req, res) => {
     ...PAGE_VARIABLES,
     BACK_LINK: req.headers.referer,
     currencies: mappedCurrencies,
-    submittedValues: mapSubmittedValues(submittedData),
+    submittedValues: submittedData,
   });
 };
 

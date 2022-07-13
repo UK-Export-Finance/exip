@@ -4,6 +4,7 @@ const companyBasedPage = require('./companyBased');
 const buyerCountryPage = require('./buyerCountry');
 const canGetPrivateInsurancePage = require('./canGetPrivateInsurance');
 const ukGoodsOrServicesPage = require('./ukGoodsOrServices');
+const policyTypePage = require('./policyTypePage');
 const tellUsAboutYourPolicyPage = require('./tellUsAboutYourPolicy');
 const checkYourAnswersPage = require('./checkYourAnswers');
 const yourQuotePage = require('./yourQuote');
@@ -17,6 +18,7 @@ module.exports = {
   buyerCountryPage,
   canGetPrivateInsurancePage,
   ukGoodsOrServicesPage,
+  policyTypePage,
   tellUsAboutYourPolicyPage,
   checkYourAnswersPage,
   yourQuotePage,

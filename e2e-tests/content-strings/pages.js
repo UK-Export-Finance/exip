@@ -108,6 +108,11 @@ const UK_GOODS_OR_SERVICES_PAGE = {
   },
 };
 
+const POLICY_TYPE_PAGE = {
+  PAGE_TITLE: 'What kind of policy do you need?',
+  HEADING: 'What kind of policy do you need?',
+};
+
 const TELL_US_ABOUT_YOUR_POLICY_PAGE = {
   PAGE_TITLE: 'Tell us about the policy you need',
   HEADING: 'Tell us about the policy you need',
@@ -245,6 +250,7 @@ module.exports = {
   BUYER_COUNTRY_PAGE,
   CAN_GET_PRIVATE_INSURANCE_PAGE,
   UK_GOODS_OR_SERVICES_PAGE,
+  POLICY_TYPE_PAGE,
   TELL_US_ABOUT_YOUR_POLICY_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,
   CANNOT_OBTAIN_COVER_PAGE,

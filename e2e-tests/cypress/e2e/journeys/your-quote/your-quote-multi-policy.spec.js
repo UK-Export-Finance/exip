@@ -1,6 +1,6 @@
 import {
   checkYourAnswersPage,
-  tellUsAboutYourPolicyPage,
+  policyTypePage,
   yourQuotePage,
 } from '../../pages';
 import {
@@ -27,9 +27,10 @@ context('Your quote page - multi policy type', () => {
     // change policy type to multi
     checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE].changeLink().click();
 
-    tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().click();
-    tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().type('8');
-    tellUsAboutYourPolicyPage.submitButton().click();
+    policyTypePage[POLICY_TYPE].multi.input().click();
+    policyTypePage[MULTI_POLICY_LENGTH].input().type('8');
+    policyTypePage.submitButton().click();
+
     checkYourAnswersPage.submitButton().click();
 
     cy.url().should('include', ROUTES.YOUR_QUOTE);
@@ -62,7 +63,7 @@ context('Your quote page - multi policy type', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MULTI_POLICY_LENGTH}`;
+        const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
     });

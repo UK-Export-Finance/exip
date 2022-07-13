@@ -1,10 +1,10 @@
 const {
   shouldChangeStringToNumber,
   sanitiseValue,
-  sanitiseFormData,
-} = require('./sanitise-form-data');
+  sanitiseData,
+} = require('./sanitise-data');
 
-describe('server/helpers/sanitise-form-data', () => {
+describe('server/helpers/sanitise-data', () => {
   describe('shouldChangeStringToNumber', () => {
     describe('when the value is a string number', () => {
       it('should return true', () => {
@@ -46,6 +46,22 @@ describe('server/helpers/sanitise-form-data', () => {
       });
     });
 
+    describe('when value is a true boolean', () => {
+      it('should return boolean', () => {
+        const result = sanitiseValue(true);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('when value is a false boolean', () => {
+      it('should return boolean', () => {
+        const result = sanitiseValue(false);
+
+        expect(result).toEqual(false);
+      });
+    });
+
     describe('when value is a string number', () => {
       it('should return a number', () => {
         const result = sanitiseValue('123');
@@ -63,14 +79,14 @@ describe('server/helpers/sanitise-form-data', () => {
     });
   });
 
-  describe('sanitiseFormData', () => {
+  describe('sanitiseData', () => {
     const mockFormData = {
       a: 'mock',
       b: 'true',
       c: '100',
     };
 
-    const result = sanitiseFormData(mockFormData);
+    const result = sanitiseData(mockFormData);
 
     const expected = {
       a: mockFormData.a,

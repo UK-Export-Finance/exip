@@ -6,6 +6,7 @@ const buyerBasedController = require('../controllers/buyer-country');
 const companyBasedController = require('../controllers/company-based');
 const canGetPrivateInsuranceController = require('../controllers/can-get-private-insurance');
 const ukGoodsOrServicesController = require('../controllers/uk-goods-or-services');
+const policyTypeController = require('../controllers/policy-type');
 const tellUsAboutYourPolicyController = require('../controllers/tell-us-about-your-policy');
 const checkYourAnswersController = require('../controllers/check-your-answers');
 const cannotObtainCoverController = require('../controllers/cannot-obtain-cover');
@@ -37,6 +38,11 @@ router.get(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.get);
 router.post(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.post);
 router.get(ROUTES.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.get);
 router.post(ROUTES.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.post);
+
+router.get(ROUTES.POLICY_TYPE, policyTypeController.get);
+router.post(ROUTES.POLICY_TYPE, policyTypeController.post);
+router.get(ROUTES.POLICY_TYPE_CHANGE, policyTypeController.get);
+router.post(ROUTES.POLICY_TYPE_CHANGE, policyTypeController.post);
 
 router.get(ROUTES.TELL_US_ABOUT_YOUR_POLICY, tellUsAboutYourPolicyController.get);
 router.post(ROUTES.TELL_US_ABOUT_YOUR_POLICY, tellUsAboutYourPolicyController.post);

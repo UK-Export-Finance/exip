@@ -1,5 +1,5 @@
 import {
-  tellUsAboutYourPolicyPage,
+  policyTypePage,
   checkYourAnswersPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -40,10 +40,10 @@ context('Change your answers after checking answers - Policy type and length', (
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
+  it(`clicking 'change' redirects to ${ROUTES.POLICY_TYPE_CHANGE}`, () => {
     row.changeLink().click();
 
-    const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${SINGLE_POLICY_TYPE}`;
+    const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_TYPE}`;
     cy.url().should('include', expectedUrl);
   });
 
@@ -55,26 +55,26 @@ context('Change your answers after checking answers - Policy type and length', (
   });
 
   it('has originally submitted `policy type` (single)', () => {
-    tellUsAboutYourPolicyPage[POLICY_TYPE].single.input().should('be.checked');
+    policyTypePage[POLICY_TYPE].single.input().should('be.checked');
   });
 
   it('auto focuses the input', () => {
-    tellUsAboutYourPolicyPage[POLICY_TYPE].single.input().should('have.focus');
+    policyTypePage[POLICY_TYPE].single.input().should('have.focus');
   });
 
   it(`has originally submitted 'policy length' (${submissionData[POLICY_LENGTH]})`, () => {
-    tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().should('have.attr', 'value', submissionData[POLICY_LENGTH]);
+    policyTypePage[SINGLE_POLICY_LENGTH].input().should('have.attr', 'value', submissionData[POLICY_LENGTH]);
   });
 
   it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
-    tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().click();
-    tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().type('8');
-    tellUsAboutYourPolicyPage.submitButton().click();
+    policyTypePage[POLICY_TYPE].multi.input().click();
+    policyTypePage[MULTI_POLICY_LENGTH].input().type('8');
+    policyTypePage.submitButton().click();
 
     cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
   });
 
-  it('renders the new answers in `Check your answers` page (multi policy, 8 months)', () => {
+  it('renders the new answers in `Check your answers` page (multi, 8 months)', () => {
     row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_TYPE];
 
     row.value().invoke('text').then((text) => {
@@ -92,13 +92,13 @@ context('Change your answers after checking answers - Policy type and length', (
     });
   });
 
-  describe('change `Policy type` and `Policy length` for a second time', () => {
+  describe('change `Policy type` and `Policy length` for a second time (multi 8 months, to single 5 months)', () => {
     before(() => {
       row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_TYPE];
 
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MULTI_POLICY_TYPE}`;
+      const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_TYPE}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -110,21 +110,21 @@ context('Change your answers after checking answers - Policy type and length', (
     });
 
     it('has previously submitted `policy type` (multi)', () => {
-      tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().should('be.checked');
+      policyTypePage[POLICY_TYPE].multi.input().should('be.checked');
     });
 
     it('auto focuses the input', () => {
-      tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().should('have.focus');
+      policyTypePage[POLICY_TYPE].multi.input().should('have.focus');
     });
 
     it('has previously submitted `policy length` (8 months)', () => {
-      tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().should('have.attr', 'value', '8');
+      policyTypePage[MULTI_POLICY_LENGTH].input().should('have.attr', 'value', '8');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
-      tellUsAboutYourPolicyPage[POLICY_TYPE].single.input().click();
-      tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().clear().type('5');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      policyTypePage[POLICY_TYPE].single.input().click();
+      policyTypePage[SINGLE_POLICY_LENGTH].input().clear().type('5');
+      policyTypePage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });
@@ -148,12 +148,12 @@ context('Change your answers after checking answers - Policy type and length', (
     });
   });
 
-  describe('change only `Policy length` (single policy type)', () => {
+  describe('change only `Policy length` (single policy type, 5 months to 7 months)', () => {
     before(() => {
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_LENGTH];
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+      const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -165,32 +165,43 @@ context('Change your answers after checking answers - Policy type and length', (
     });
 
     it('auto focuses the input', () => {
-      tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().should('have.focus');
+      policyTypePage[SINGLE_POLICY_LENGTH].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
-      tellUsAboutYourPolicyPage[POLICY_TYPE].single.input().click();
-      tellUsAboutYourPolicyPage[SINGLE_POLICY_LENGTH].input().clear().type('7');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      policyTypePage[POLICY_TYPE].single.input().click();
+      policyTypePage[SINGLE_POLICY_LENGTH].input().clear().type('7');
+      policyTypePage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     });
+
+    it('renders the new answer in `Check your answers` page (single policy, 7 months)', () => {
+      row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_LENGTH];
+
+      row.value().invoke('text').then((text) => {
+        const expected = '7 months';
+
+        expect(text.trim()).equal(expected);
+      });
+    });
   });
 
-  describe('change only `Policy length` (multi policy type)', () => {
+  describe('change only `Policy length` (multi policy type, 7 months to 6 months)', () => {
     before(() => {
       // change back to multi policy
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
       row.changeLink().click();
 
-      tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().click();
-      tellUsAboutYourPolicyPage.submitButton().click();
+      policyTypePage[POLICY_TYPE].multi.input().click();
+      policyTypePage[MULTI_POLICY_LENGTH].input().type('4');
+      policyTypePage.submitButton().click();
 
       // click `change` (policy length)
       row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MULTI_POLICY_LENGTH}`;
+      const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}`;
       cy.url().should('include', expectedUrl);
     });
 
@@ -202,15 +213,25 @@ context('Change your answers after checking answers - Policy type and length', (
     });
 
     it('auto focuses the input', () => {
-      tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().should('have.focus');
+      policyTypePage[MULTI_POLICY_LENGTH].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting new answers`, () => {
-      tellUsAboutYourPolicyPage[POLICY_TYPE].multi.input().click();
-      tellUsAboutYourPolicyPage[MULTI_POLICY_LENGTH].input().clear().type('5');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      policyTypePage[POLICY_TYPE].multi.input().click();
+      policyTypePage[MULTI_POLICY_LENGTH].input().clear().type('6');
+      policyTypePage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+    });
+
+    it('renders the new answer in `Check your answers` page (multi policy, 6 months)', () => {
+      row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];
+
+      row.value().invoke('text').then((text) => {
+        const expected = '6 months';
+
+        expect(text.trim()).equal(expected);
+      });
     });
   });
 });

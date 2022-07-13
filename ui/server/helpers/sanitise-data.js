@@ -7,11 +7,11 @@ const shouldChangeStringToNumber = (value) => {
 };
 
 const sanitiseValue = (value) => {
-  if (value === 'true') {
+  if (value === 'true' || value === true) {
     return true;
   }
 
-  if (value === 'false') {
+  if (value === 'false' || value === false) {
     return false;
   }
 
@@ -22,7 +22,7 @@ const sanitiseValue = (value) => {
   return value;
 };
 
-const sanitiseFormData = (formData) => {
+const sanitiseData = (formData) => {
   const sanitised = {};
   const keys = Object.keys(formData);
 
@@ -38,5 +38,5 @@ const sanitiseFormData = (formData) => {
 module.exports = {
   shouldChangeStringToNumber,
   sanitiseValue,
-  sanitiseFormData,
+  sanitiseData,
 };

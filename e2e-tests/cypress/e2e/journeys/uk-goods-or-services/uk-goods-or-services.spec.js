@@ -257,11 +257,11 @@ context('Is at least 20% of your export contract value made up from UK goods or 
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY}`, () => {
+      it(`should redirect to ${ROUTES.POLICY_TYPE}`, () => {
         ukGoodsOrServicesPage.yes().click();
         ukGoodsOrServicesPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
+        cy.url().should('include', ROUTES.POLICY_TYPE);
       });
     });
   });

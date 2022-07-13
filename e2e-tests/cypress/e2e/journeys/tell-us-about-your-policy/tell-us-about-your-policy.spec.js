@@ -1,5 +1,5 @@
 import {
-  ukGoodsOrServicesPage,
+  policyTypePage,
   tellUsAboutYourPolicyPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -22,15 +22,17 @@ const {
 context('Tell us about the policy you need page', () => {
   describe('rendering', () => {
     before(() => {
-      cy.visit(ROUTES.UK_GOODS_OR_SERVICES, {
+      cy.visit(ROUTES.POLICY_TYPE, {
         auth: {
           username: Cypress.config('basicAuthKey'),
           password: Cypress.config('basicAuthSecret'),
         },
       });
 
-      ukGoodsOrServicesPage.yes().click();
-      ukGoodsOrServicesPage.submitButton().click();
+      policyTypePage[FIELD_IDS.POLICY_TYPE].single.input().click();
+      policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().type('8');
+
+      policyTypePage.submitButton().click();
 
       cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
     });
@@ -58,7 +60,7 @@ context('Tell us about the policy you need page', () => {
         expect(text.trim()).equal(LINKS.BACK);
       });
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.UK_GOODS_OR_SERVICES}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.POLICY_TYPE}`;
 
       partials.backLink().should('have.attr', 'href', expected);
     });
@@ -141,85 +143,6 @@ context('Tell us about the policy you need page', () => {
       field.input().should('exist');
     });
 
-    it('renders `policy type` legend and radio inputs with labels and hints', () => {
-      const fieldId = FIELD_IDS.POLICY_TYPE;
-      const field = tellUsAboutYourPolicyPage[fieldId];
-
-      field.legend().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LEGEND);
-      });
-
-      field.single.input().should('exist');
-      field.single.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.SINGLE.TEXT);
-      });
-
-      field.single.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.SINGLE.HINT);
-      });
-
-      field.multi.input().should('exist');
-      field.multi.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.MULTI.TEXT);
-      });
-
-      field.multi.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.MULTI.HINT);
-      });
-    });
-
-    it('should not render policy length inputs by default', () => {
-      const singlePolicyLength = tellUsAboutYourPolicyPage[FIELD_IDS.SINGLE_POLICY_LENGTH];
-      singlePolicyLength.input().should('not.be.visible');
-
-      const multiPolicyLength = tellUsAboutYourPolicyPage[FIELD_IDS.MULTI_POLICY_LENGTH];
-      multiPolicyLength.input().should('not.be.visible');
-    });
-
-    describe('when clicking `single` policy type', () => {
-      it('should reveal policy length input with label and hint', () => {
-        const singlePolicyType = tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].single;
-        singlePolicyType.label().click();
-
-        const singlePolicyLengthId = FIELD_IDS.SINGLE_POLICY_LENGTH;
-        const singlePolicyLength = tellUsAboutYourPolicyPage[singlePolicyLengthId];
-
-        singlePolicyLength.label().should('be.visible');
-        singlePolicyLength.hint().should('be.visible');
-        singlePolicyLength.input().should('be.visible');
-
-        singlePolicyLength.label().invoke('text').then((text) => {
-          expect(text.trim()).equal(FIELDS[singlePolicyLengthId].LABEL);
-        });
-
-        singlePolicyLength.hint().invoke('text').then((text) => {
-          expect(text.trim()).equal(FIELDS[singlePolicyLengthId].HINT);
-        });
-      });
-    });
-
-    describe('when clicking `single` policy type', () => {
-      it('should reveal policy length input with label and hint', () => {
-        const multiPolicyType = tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].multi;
-        multiPolicyType.label().click();
-
-        const multiPolicyLengthId = FIELD_IDS.MULTI_POLICY_LENGTH;
-        const multiPolicyLength = tellUsAboutYourPolicyPage[multiPolicyLengthId];
-
-        multiPolicyLength.label().should('be.visible');
-        multiPolicyLength.hint().should('be.visible');
-        multiPolicyLength.input().should('be.visible');
-
-        multiPolicyLength.label().invoke('text').then((text) => {
-          expect(text.trim()).equal(FIELDS[multiPolicyLengthId].LABEL);
-        });
-
-        multiPolicyLength.hint().invoke('text').then((text) => {
-          expect(text.trim()).equal(FIELDS[multiPolicyLengthId].HINT);
-        });
-      });
-    });
-
     it('renders a submit button', () => {
       const button = tellUsAboutYourPolicyPage.submitButton();
       button.should('exist');
@@ -235,8 +158,6 @@ context('Tell us about the policy you need page', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('100');
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('1');
-      tellUsAboutYourPolicyPage[FIELD_IDS.POLICY_TYPE].single.input().click();
-      tellUsAboutYourPolicyPage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().type('8');
 
       tellUsAboutYourPolicyPage.submitButton().click();
 
