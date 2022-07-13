@@ -72,7 +72,6 @@ const FIELDS = {
     },
   },
   [FIELD_IDS.POLICY_TYPE]: {
-    LEGEND: 'What kind of policy do you need?',
     OPTIONS: {
       SINGLE: {
         ID: FIELD_IDS.SINGLE_POLICY_TYPE,
