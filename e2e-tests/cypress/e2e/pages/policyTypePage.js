@@ -6,7 +6,6 @@ import {
 const policyTypePage = {
   heading: () => cy.get('[data-cy="heading"]'),
   [FIELD_IDS.POLICY_TYPE]: {
-    legend: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-legend"]`),
     single: {
       label: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.SINGLE}-label"]`),
       hint: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.SINGLE}-hint"]`),

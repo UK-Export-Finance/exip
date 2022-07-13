@@ -71,13 +71,9 @@ context('Policy type page', () => {
       });
     });
 
-    it('renders `policy type` legend and radio inputs with labels and hints', () => {
+    it('renders `policy type` radio inputs with labels and hints', () => {
       const fieldId = FIELD_IDS.POLICY_TYPE;
       const field = policyTypePage[fieldId];
-
-      field.legend().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LEGEND);
-      });
 
       field.single.input().should('exist');
       field.single.label().invoke('text').then((text) => {
