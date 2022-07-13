@@ -119,12 +119,7 @@
           name: FIELDS.POLICY_TYPE.ID,
           fieldset: {
             legend: {
-              text: CONTENT_STRINGS.HEADING,
-              isPageHeading: true,
-              classes: "govuk-fieldset__legend--l",
-              attributes: {
-                'data-cy': 'heading'
-              }
+              html: "<legend class='govuk-fieldset__legend govuk-fieldset__legend--l'><h1 class='govuk-fieldset__heading' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1></legend>"
             }
           },
           classes: "govuk-!-margin-bottom-4",
