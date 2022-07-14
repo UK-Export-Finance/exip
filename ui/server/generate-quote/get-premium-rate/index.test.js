@@ -28,20 +28,20 @@ const expectedPremiumRate = (
 const getResultAndExpected = (
   policyType,
   riskCategory,
-  policyLengthInMonths,
+  totalMonths,
   insuredFor,
 ) => {
   const result = getPremiumRate(
     policyType,
     riskCategory,
-    policyLengthInMonths,
+    totalMonths,
     insuredFor,
   );
 
   const expected = expectedPremiumRate(
     policyType,
     riskCategory,
-    policyLengthInMonths,
+    totalMonths,
     insuredFor,
   );
 
@@ -57,13 +57,13 @@ describe('server/generate-quote/get-premium-rate', () => {
       policyType: FIELD_VALUES.POLICY_TYPE.MULTI,
       insuredFor: 80,
       riskCategory: 2,
-      policyLengthInMonths: 2,
+      totalMonths: 2,
     };
 
     const result = getPremiumRate(
       mock.policyType,
       mock.riskCategory,
-      mock.policyLengthInMonths,
+      mock.totalMonths,
       mock.insuredFor,
     );
 

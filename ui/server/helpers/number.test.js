@@ -1,6 +1,7 @@
 const {
   isNumber,
   numberHasDecimal,
+  getPercentageOfNumber,
 } = require('./number');
 
 describe('server/helpers/number', () => {
@@ -37,6 +38,19 @@ describe('server/helpers/number', () => {
 
         expect(result).toEqual(false);
       });
+    });
+  });
+
+  describe('getPercentageOfNumber', () => {
+    it('should return percentage value of a number', () => {
+      const mockPercent = 20;
+      const mockTotal = 1000;
+
+      const result = getPercentageOfNumber(mockPercent, mockTotal);
+
+      const expected = '200.00';
+
+      expect(result).toEqual(expected);
     });
   });
 });

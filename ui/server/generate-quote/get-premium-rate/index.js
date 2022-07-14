@@ -29,7 +29,7 @@ const PRICING_GRID_MAP = {
 const getPremiumRate = (
   policyType,
   riskCategory,
-  policyLengthInMonths,
+  totalMonths,
   insuredFor,
 ) => {
   const policyTypeKey = PRICING_GRID_MAP.POLICY_TYPE[policyType];
@@ -38,7 +38,7 @@ const getPremiumRate = (
 
   const risk = PRICING_GRID[policyTypeKey][riskCategoryKey];
 
-  const month = risk.find(({ months }) => months === policyLengthInMonths);
+  const month = risk.find(({ months }) => months === totalMonths);
 
   const rateObj = month.rates.find((rate) =>
     rate.insuredFor === insuredFor);

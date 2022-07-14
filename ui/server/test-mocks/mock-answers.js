@@ -20,9 +20,9 @@ const mockAnswers = {
   [UK_GOODS_OR_SERVICES]: 30,
   [CURRENCY]: 'GBP',
   [AMOUNT]: 123456,
-  [CREDIT_PERIOD]: 24,
+  [CREDIT_PERIOD]: 1,
   [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-  [POLICY_LENGTH]: 9,
+  [POLICY_LENGTH]: 2,
 };
 
 module.exports = mockAnswers;
