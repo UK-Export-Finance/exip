@@ -22,12 +22,15 @@ describe('controllers/buyer-country', () => {
     {
       marketName: 'Abu Dhabi',
       isoCode: 'XAD',
-      active: 'N',
+      shortTermCoverAvailabilityDesc: 'No',
+      NBIIssue: 'N',
     },
     {
       marketName: 'France',
       isoCode: 'FRA',
-      active: 'Y',
+      shortTermCoverAvailabilityDesc: 'Yes',
+      ESRAClasificationDesc: 'Standard Risk',
+      NBIIssue: 'Y',
     },
   ];
 

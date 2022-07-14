@@ -1,7 +1,32 @@
 const sortArrayAlphabetically = require('./sort-array-alphabetically');
 
-const mapActiveFlag = (active) => {
-  if (active === 'Y') {
+const mapRiskCategory = (str) => {
+  if (str === 'Very High') {
+    return str;
+  }
+
+  if (str === 'High') {
+    return str;
+  }
+
+  if (str === 'Standard Risk') {
+    return 'Standard';
+  }
+
+  return null;
+};
+
+const mapIsSupported = (country) => {
+  if (!country.riskCategory) {
+    return false;
+  }
+
+  const shortTermCoverAvailable = (country.shortTermCoverAvailabilityDesc === 'Yes');
+  const nbiAvailable = (country.NBIIssue === 'Y');
+
+  const isSupported = (shortTermCoverAvailable && nbiAvailable);
+
+  if (isSupported) {
     return true;
   }
 
@@ -13,9 +38,14 @@ const mapCountry = (country, selectedIsoCode) => {
     name: country.marketName,
     isoCode: country.isoCode,
     value: country.isoCode,
-    active: mapActiveFlag(country.active),
-    riskCategory: country.oecdRiskCategory,
+    // active: mapActiveFlag(country.active),
+    riskCategory: mapRiskCategory(country.ESRAClasificationDesc),
   };
+
+  mapped.isSupported = mapIsSupported({
+    ...country,
+    riskCategory: mapped.riskCategory,
+  });
 
   if (selectedIsoCode && country.isoCode === selectedIsoCode) {
     mapped.selected = true;
@@ -33,7 +63,8 @@ const mapCountries = (countries, selectedIsoCode) => {
 };
 
 module.exports = {
-  mapActiveFlag,
+  mapRiskCategory,
+  mapIsSupported,
   mapCountry,
   mapCountries,
 };

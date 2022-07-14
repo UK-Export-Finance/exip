@@ -1,5 +1,6 @@
 const {
-  mapActiveFlag,
+  mapRiskCategory,
+  mapIsSupported,
   mapCountry,
   mapCountries,
 } = require('./map-countries');
@@ -21,29 +22,119 @@ describe('server/helpers/map-countries', () => {
     },
   ];
 
-  describe('mapActiveFlag', () => {
-    describe('when active is `Y`', () => {
+  describe('mapRiskCategory', () => {
+    describe('when the risk is `Very High`', () => {
+      it('should return the string', () => {
+        const str = 'Very High';
+
+        const result = mapRiskCategory(str);
+
+        expect(result).toEqual(str);
+      });
+    });
+
+    describe('when the risk is `High`', () => {
+      it('should return the string', () => {
+        const str = 'High';
+
+        const result = mapRiskCategory(str);
+
+        expect(result).toEqual(str);
+      });
+    });
+
+    describe('when the risk is `Standard Risk`', () => {
+      it('should return simplified string', () => {
+        const str = 'Standard Risk';
+
+        const result = mapRiskCategory(str);
+
+        const expected = 'Standard';
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    it('should return null', () => {
+      const str = 'None';
+
+      const result = mapRiskCategory(str);
+
+      expect(result).toEqual(null);
+    });
+  });
+
+  describe('mapIsSupported', () => {
+    describe('when a country has no riskCategory', () => {
+      it('should return false', () => {
+        const mockCountry = {};
+
+        const result = mapIsSupported(mockCountry);
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when a country has a null riskCategory', () => {
+      it('should return false', () => {
+        const mockCountry = {
+          riskCategory: null,
+        };
+
+        const result = mapIsSupported(mockCountry);
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when a country does not have shortTermCoverAvailabilityDesc', () => {
+      it('should return false', () => {
+        const mockCountry = {
+          riskCategory: 'Standard',
+          shortTermCoverAvailabilityDesc: 'No',
+        };
+
+        const result = mapIsSupported(mockCountry);
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when a country does not have NBIIssue', () => {
+      it('should return false', () => {
+        const mockCountry = {
+          riskCategory: 'Standard',
+          NBIIssue: 'N',
+        };
+
+        const result = mapIsSupported(mockCountry);
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when a country has shortTermCoverAvailabilityDesc and NBIIssue', () => {
       it('should return true', () => {
-        const result = mapActiveFlag('Y');
+        const mockCountry = {
+          riskCategory: 'Standard',
+          shortTermCoverAvailabilityDesc: 'Yes',
+          NBIIssue: 'Y',
+        };
+
+        const result = mapIsSupported(mockCountry);
 
         expect(result).toEqual(true);
       });
     });
 
-    describe('when active is `N`', () => {
-      it('should return false', () => {
-        const result = mapActiveFlag('N');
+    it('should otherwise return false', () => {
+      const mockCountry = {
+        riskCategory: 'Standard',
+      };
 
-        expect(result).toEqual(false);
-      });
-    });
+      const result = mapIsSupported(mockCountry);
 
-    describe('when there is no active value', () => {
-      it('should return false', () => {
-        const result = mapActiveFlag();
-
-        expect(result).toEqual(false);
-      });
+      expect(result).toEqual(false);
     });
   });
 
@@ -55,9 +146,10 @@ describe('server/helpers/map-countries', () => {
         name: mockCountries[0].marketName,
         isoCode: mockCountries[0].isoCode,
         value: mockCountries[0].isoCode,
-        active: mapActiveFlag(mockCountries[0].active),
-        riskCategory: mockCountries[0].oecdRiskCategory,
+        riskCategory: mapRiskCategory(mockCountries[0].ESRAClasificationDesc),
       };
+
+      expected.isSupported = mapIsSupported(expected);
 
       expect(result).toEqual(expected);
     });
@@ -72,10 +164,11 @@ describe('server/helpers/map-countries', () => {
           name: mockCountries[0].marketName,
           isoCode: mockCountries[0].isoCode,
           value: mockCountries[0].isoCode,
-          active: mapActiveFlag(mockCountries[0].active),
-          riskCategory: mockCountries[0].oecdRiskCategory,
+          riskCategory: mapRiskCategory(mockCountries[0].ESRAClasificationDesc),
           selected: true,
         };
+
+        expected.isSupported = mapIsSupported(expected);
 
         expect(result).toEqual(expected);
       });

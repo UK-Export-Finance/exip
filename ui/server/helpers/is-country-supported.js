@@ -17,7 +17,7 @@ const isCountrySupported = (country) => {
     return false;
   }
 
-  if (country.active === true) {
+  if (country.isSupported === true) {
     return true;
   }
 
