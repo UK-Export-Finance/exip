@@ -26,8 +26,8 @@ describe('controllers/buyer-country', () => {
       NBIIssue: 'N',
     },
     {
-      marketName: 'France',
-      isoCode: 'FRA',
+      marketName: 'Algeria',
+      isoCode: 'DZA',
       shortTermCoverAvailabilityDesc: 'Yes',
       ESRAClasificationDesc: 'Standard Risk',
       NBIIssue: 'Y',
@@ -182,6 +182,7 @@ describe('controllers/buyer-country', () => {
           [FIELD_IDS.BUYER_COUNTRY]: {
             name: selectedCountry.name,
             isoCode: selectedCountry.isoCode,
+            riskCategory: selectedCountry.riskCategory,
           },
         };
 

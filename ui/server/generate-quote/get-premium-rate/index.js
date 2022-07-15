@@ -1,4 +1,7 @@
-const { FIELD_VALUES } = require('../../constants');
+const {
+  API,
+  FIELD_VALUES,
+} = require('../../constants');
 const PRICING_GRID = require('../pricing-grid');
 
 const PRICING_GRID_MAP = {
@@ -7,14 +10,9 @@ const PRICING_GRID_MAP = {
     [FIELD_VALUES.POLICY_TYPE.MULTI]: 'MULTI_POLICY',
   },
   RISK_CATEGORY: {
-    // TODO - to be defined
-    // maybe map countries differently so risk level is not an ambiguous number
-    // otherwise, move these to constants
-    5: 'VERY_HIGH_RISK',
-    4: '',
-    3: 'HIGH_RISK',
-    2: 'STANDARD_RISK',
-    1: '',
+    [API.MAPPINGS.RISK.STANDARD]: 'STANDARD',
+    [API.MAPPINGS.RISK.HIGH]: 'HIGH',
+    [API.MAPPINGS.RISK.VERY_HIGH]: 'VERY_HIGH',
   },
 };
 

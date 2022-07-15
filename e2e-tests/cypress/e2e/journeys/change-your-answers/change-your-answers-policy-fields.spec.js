@@ -16,7 +16,7 @@ const {
 } = FIELD_IDS;
 
 const submissionData = {
-  [AMOUNT]: '100',
+  [AMOUNT]: '150000',
   [CREDIT_PERIOD]: '2',
 };
 

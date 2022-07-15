@@ -19,7 +19,7 @@ const {
 } = FIELD_IDS;
 
 export const completeAndSubmitBuyerForm = () => {
-  buyerCountryPage.searchInput().type('Fra');
+  buyerCountryPage.searchInput().type('Alg');
   const results = buyerCountryPage.results();
   results.first().click();
   buyerCountryPage.submitButton().click();
@@ -42,14 +42,14 @@ export const completeAndSubmitUkContentForm = () => {
 
 export const completeAndSubmitPolicyTypeForm = () => {
   policyTypePage[POLICY_TYPE].single.input().click();
-  policyTypePage[SINGLE_POLICY_LENGTH].input().type('9');
+  policyTypePage[SINGLE_POLICY_LENGTH].input().type('3');
 
   policyTypePage.submitButton().click();
 };
 
 export const compmleteAndSubmitTellUsAboutYourPolicyForm = () => {
   tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
-  tellUsAboutYourPolicyPage[AMOUNT].input().type('100');
+  tellUsAboutYourPolicyPage[AMOUNT].input().type('150000');
   tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('2');
   tellUsAboutYourPolicyPage.submitButton().click();
 };

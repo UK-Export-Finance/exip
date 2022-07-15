@@ -15,7 +15,7 @@ const {
 
 const mockAnswers = {
   [VALID_COMPANY_BASE]: true,
-  [BUYER_COUNTRY]: 'France',
+  [BUYER_COUNTRY]: 'Algeria',
   [CAN_GET_PRIVATE_INSURANCE]: false,
   [UK_GOODS_OR_SERVICES]: 30,
   [CURRENCY]: 'GBP',

@@ -1,16 +1,17 @@
+const { API } = require('../constants');
 const sortArrayAlphabetically = require('./sort-array-alphabetically');
 
 const mapRiskCategory = (str) => {
-  if (str === 'Very High') {
+  if (str === API.CIS.RISK.STANDARD) {
+    return API.MAPPINGS.RISK.STANDARD;
+  }
+
+  if (str === API.CIS.RISK.HIGH) {
     return str;
   }
 
-  if (str === 'High') {
+  if (str === API.CIS.RISK.VERY_HIGH) {
     return str;
-  }
-
-  if (str === 'Standard Risk') {
-    return 'Standard';
   }
 
   return null;
@@ -38,7 +39,6 @@ const mapCountry = (country, selectedIsoCode) => {
     name: country.marketName,
     isoCode: country.isoCode,
     value: country.isoCode,
-    // active: mapActiveFlag(country.active),
     riskCategory: mapRiskCategory(country.ESRAClasificationDesc),
   };
 

@@ -1,4 +1,7 @@
-const FIELD_IDS = require('../constants/field-ids');
+const {
+  FIELD_IDS,
+  API,
+} = require('../constants');
 const mockAnswers = require('./mock-answers');
 
 const {
@@ -12,7 +15,7 @@ const mockSession = {
     [BUYER_COUNTRY]: {
       name: mockAnswers[BUYER_COUNTRY],
       isoCode: 'FRA',
-      riskCategory: 3,
+      riskCategory: API.MAPPINGS.RISK.STANDARD,
     },
     [CURRENCY]: {
       name: 'UK Sterling',

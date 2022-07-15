@@ -2,7 +2,10 @@ const {
   PRICING_GRID_MAP,
   getPremiumRate,
 } = require('.');
-const { FIELD_VALUES } = require('../../constants');
+const {
+  API,
+  FIELD_VALUES,
+} = require('../../constants');
 const PRICING_GRID = require('../pricing-grid');
 
 const expectedPremiumRate = (
@@ -56,7 +59,7 @@ describe('server/generate-quote/get-premium-rate', () => {
     const mock = {
       policyType: FIELD_VALUES.POLICY_TYPE.MULTI,
       insuredFor: 80,
-      riskCategory: 2,
+      riskCategory: API.MAPPINGS.RISK.STANDARD,
       totalMonths: 2,
     };
 

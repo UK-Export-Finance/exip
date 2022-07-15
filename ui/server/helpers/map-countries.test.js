@@ -4,6 +4,7 @@ const {
   mapCountry,
   mapCountries,
 } = require('./map-countries');
+const { API } = require('../constants');
 const sortArrayAlphabetically = require('./sort-array-alphabetically');
 
 describe('server/helpers/map-countries', () => {
@@ -11,47 +12,45 @@ describe('server/helpers/map-countries', () => {
     {
       marketName: 'Abu Dhabi',
       isoCode: 'XAD',
-      active: 'Y',
       oecdRiskCategory: 1,
     },
     {
-      marketName: 'France',
-      isoCode: 'FRA',
-      active: 'N',
+      marketName: 'Algeria',
+      isoCode: 'DZA',
       oecdRiskCategory: 2,
     },
   ];
 
   describe('mapRiskCategory', () => {
-    describe('when the risk is `Very High`', () => {
-      it('should return the string', () => {
-        const str = 'Very High';
-
-        const result = mapRiskCategory(str);
-
-        expect(result).toEqual(str);
-      });
-    });
-
-    describe('when the risk is `High`', () => {
-      it('should return the string', () => {
-        const str = 'High';
-
-        const result = mapRiskCategory(str);
-
-        expect(result).toEqual(str);
-      });
-    });
-
-    describe('when the risk is `Standard Risk`', () => {
+    describe(`when the risk is '${API.CIS.RISK.STANDARD}'`, () => {
       it('should return simplified string', () => {
-        const str = 'Standard Risk';
+        const str = API.CIS.RISK.STANDARD;
 
         const result = mapRiskCategory(str);
 
-        const expected = 'Standard';
+        const expected = API.MAPPINGS.RISK.STANDARD;
 
         expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when the risk is '${API.CIS.RISK.HIGH}'`, () => {
+      it('should return the string', () => {
+        const str = API.CIS.RISK.HIGH;
+
+        const result = mapRiskCategory(str);
+
+        expect(result).toEqual(str);
+      });
+    });
+
+    describe(`when the risk is '${API.CIS.RISK.VERY_HIGH}'`, () => {
+      it('should return the string', () => {
+        const str = API.CIS.RISK.VERY_HIGH;
+
+        const result = mapRiskCategory(str);
+
+        expect(result).toEqual(str);
       });
     });
 
@@ -90,7 +89,7 @@ describe('server/helpers/map-countries', () => {
     describe('when a country does not have shortTermCoverAvailabilityDesc', () => {
       it('should return false', () => {
         const mockCountry = {
-          riskCategory: 'Standard',
+          riskCategory: API.CIS.RISK.STANDARD,
           shortTermCoverAvailabilityDesc: 'No',
         };
 
@@ -103,7 +102,7 @@ describe('server/helpers/map-countries', () => {
     describe('when a country does not have NBIIssue', () => {
       it('should return false', () => {
         const mockCountry = {
-          riskCategory: 'Standard',
+          riskCategory: API.CIS.RISK.STANDARD,
           NBIIssue: 'N',
         };
 
@@ -116,7 +115,7 @@ describe('server/helpers/map-countries', () => {
     describe('when a country has shortTermCoverAvailabilityDesc and NBIIssue', () => {
       it('should return true', () => {
         const mockCountry = {
-          riskCategory: 'Standard',
+          riskCategory: API.CIS.RISK.STANDARD,
           shortTermCoverAvailabilityDesc: 'Yes',
           NBIIssue: 'Y',
         };
@@ -129,7 +128,7 @@ describe('server/helpers/map-countries', () => {
 
     it('should otherwise return false', () => {
       const mockCountry = {
-        riskCategory: 'Standard',
+        riskCategory: API.CIS.RISK.STANDARD,
       };
 
       const result = mapIsSupported(mockCountry);

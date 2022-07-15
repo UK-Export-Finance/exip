@@ -87,8 +87,7 @@ const generateQuote = (submittedData) => {
 
   const premiumRate = getPremiumRate(
     mapped[POLICY_TYPE],
-    // mapped[BUYER_COUNTRY].riskCategory,
-    3,
+    mapped[BUYER_COUNTRY].riskCategory,
     totalMonths,
     mockPercentageOfCover,
   );

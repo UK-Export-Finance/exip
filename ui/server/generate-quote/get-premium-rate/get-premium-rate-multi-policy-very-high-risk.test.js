@@ -1,5 +1,8 @@
 const getResultAndExpected = require('./index.test');
-const { FIELD_VALUES } = require('../../constants');
+const {
+  API,
+  FIELD_VALUES,
+} = require('../../constants');
 const veryHighRisk2Months = require('../pricing-grid/data/multi-policy/very-high-risk/2-months');
 const veryHighRisk3Months = require('../pricing-grid/data/multi-policy/very-high-risk/3-months');
 const veryHighRisk4Months = require('../pricing-grid/data/multi-policy/very-high-risk/4-months');
@@ -16,7 +19,7 @@ describe('server/generate-quote/get-premium-rate', () => {
   };
 
   describe('multi policy - very high risk', () => {
-    const riskCategory = 5;
+    const riskCategory = API.MAPPINGS.RISK.VERY_HIGH;
     const mock = {
       ...mockBase,
       riskCategory,

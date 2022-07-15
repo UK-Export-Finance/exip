@@ -22,7 +22,7 @@ const {
 } = FIELD_IDS;
 
 const submissionData = {
-  [BUYER_COUNTRY]: 'France',
+  [BUYER_COUNTRY]: 'Algeria',
   [UK_GOODS_OR_SERVICES]: '50',
 };
 
@@ -71,7 +71,7 @@ context('Change your answers after checking answers - Export fields', () => {
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting a new answer`, () => {
-      buyerCountryPage.searchInput().type('Belg');
+      buyerCountryPage.searchInput().type('Brazil');
       const results = buyerCountryPage.results();
       results.first().click();
       buyerCountryPage.submitButton().click();
@@ -83,7 +83,7 @@ context('Change your answers after checking answers - Export fields', () => {
       row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
 
       row.value().invoke('text').then((text) => {
-        const expected = 'Belgium';
+        const expected = 'Brazil';
 
         expect(text.trim()).equal(expected);
       });

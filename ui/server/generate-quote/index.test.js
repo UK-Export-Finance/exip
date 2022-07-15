@@ -103,7 +103,7 @@ describe('server/generate-quote/index', () => {
 
       const expectedPremiumRate = getPremiumRate(
         mockSubmittedData[POLICY_TYPE],
-        3,
+        mockSubmittedData[BUYER_COUNTRY].riskCategory,
         expectedTotalMonths,
         mockPercentageOfCover,
       );

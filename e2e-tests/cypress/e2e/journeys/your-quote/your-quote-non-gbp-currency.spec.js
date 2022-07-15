@@ -23,7 +23,7 @@ const {
 } = QUOTE;
 
 const submissionData = {
-  [AMOUNT]: '100',
+  [AMOUNT]: '150000',
 };
 
 context('Your quote page - non GBP currency', () => {

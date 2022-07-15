@@ -53,7 +53,9 @@ const post = async (req, res) => {
   }
 
   const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY];
+
   const country = getCountryByName(mappedCountries, submittedCountryName);
+
   const countryIsSupported = isCountrySupported(country);
 
   if (!countryIsSupported) {
@@ -75,6 +77,7 @@ const post = async (req, res) => {
     [FIELD_IDS.BUYER_COUNTRY]: {
       name: country.name,
       isoCode: country.isoCode,
+      riskCategory: country.riskCategory,
     },
   };
 
