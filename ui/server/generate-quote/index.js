@@ -10,6 +10,7 @@ const {
   BUYER_COUNTRY,
   CREDIT_PERIOD,
   CURRENCY,
+  PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   POLICY_LENGTH,
   QUOTE,
@@ -59,7 +60,7 @@ const calculateCost = (
 ) => {
   const result = getPercentageOfNumber(premiumRate, amount);
 
-  return result;
+  return Number(result);
 };
 
 /**
@@ -68,13 +69,12 @@ const calculateCost = (
  * @returns {Object} Quote with premium rate and estimated cost
  */
 const generateQuote = (submittedData) => {
-  const mockPercentageOfCover = 90;
-
   const mapped = {
     [AMOUNT]: submittedData[AMOUNT],
     [CURRENCY]: submittedData[CURRENCY],
     [CREDIT_PERIOD]: submittedData[CREDIT_PERIOD],
     [QUOTE.BUYER_LOCATION]: submittedData[BUYER_COUNTRY],
+    [PERCENTAGE_OF_COVER]: submittedData[PERCENTAGE_OF_COVER],
     [POLICY_TYPE]: submittedData[POLICY_TYPE],
     [POLICY_LENGTH]: submittedData[POLICY_LENGTH],
   };
@@ -89,16 +89,13 @@ const generateQuote = (submittedData) => {
     mapped[POLICY_TYPE],
     mapped[BUYER_COUNTRY].riskCategory,
     totalMonths,
-    mockPercentageOfCover,
+    mapped[PERCENTAGE_OF_COVER],
   );
 
   const quote = {
     ...mapped,
     [QUOTE.PREMIUM_RATE_PERCENTAGE]: premiumRate,
-    [QUOTE.ESTIMATED_COST]: calculateCost(
-      premiumRate,
-      mapped[AMOUNT],
-    ),
+    [QUOTE.ESTIMATED_COST]: calculateCost(premiumRate, mapped[AMOUNT]),
   };
 
   return quote;

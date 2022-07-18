@@ -131,7 +131,7 @@ context('Your quote page', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '1710.00';
+          const expected = '£1710.00';
 
           expect(text.trim()).equal(expected);
         });

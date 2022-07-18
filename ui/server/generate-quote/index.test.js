@@ -16,6 +16,7 @@ const {
   BUYER_COUNTRY,
   CREDIT_PERIOD,
   CURRENCY,
+  PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   POLICY_LENGTH,
   QUOTE,
@@ -81,7 +82,7 @@ describe('server/generate-quote/index', () => {
 
       const result = calculateCost(mockPremiumRate, mockAmount);
 
-      const expected = getPercentageOfNumber(mockPremiumRate, mockAmount);
+      const expected = Number(getPercentageOfNumber(mockPremiumRate, mockAmount));
 
       expect(result).toEqual(expected);
     });
@@ -113,13 +114,11 @@ describe('server/generate-quote/index', () => {
         [CURRENCY]: mockSubmittedData[CURRENCY],
         [CREDIT_PERIOD]: mockSubmittedData[CREDIT_PERIOD],
         [QUOTE.BUYER_LOCATION]: mockSubmittedData[BUYER_COUNTRY],
+        [PERCENTAGE_OF_COVER]: mockSubmittedData[PERCENTAGE_OF_COVER],
         [POLICY_TYPE]: mockSubmittedData[POLICY_TYPE],
         [POLICY_LENGTH]: mockSubmittedData[POLICY_LENGTH],
         [QUOTE.PREMIUM_RATE_PERCENTAGE]: expectedPremiumRate,
-        [QUOTE.ESTIMATED_COST]: calculateCost(
-          expectedPremiumRate,
-          mockSubmittedData[AMOUNT],
-        ),
+        [QUOTE.ESTIMATED_COST]: calculateCost(expectedPremiumRate, mockSubmittedData[AMOUNT]),
       };
 
       expect(result).toEqual(expected);

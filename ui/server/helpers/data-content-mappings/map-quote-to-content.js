@@ -34,6 +34,7 @@ const mapQuoteToContent = (quote) => {
       text: mapCountry(quote[BUYER_COUNTRY]),
     },
   };
+
   return mapped;
 };
 
