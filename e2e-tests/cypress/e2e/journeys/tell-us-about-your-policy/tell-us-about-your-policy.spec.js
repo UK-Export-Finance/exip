@@ -7,8 +7,6 @@ import {
 } from '../../../support/forms';
 import {
   beforeYouStartPage,
-  policyTypePage,
-  checkYourAnswersPage,
   tellUsAboutYourPolicyPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -148,7 +146,6 @@ context('Tell us about the policy you need page', () => {
 
       field.input().should('exist');
     });
-
 
     it('renders `credit period` label, hint and input', () => {
       const fieldId = FIELD_IDS.CREDIT_PERIOD;

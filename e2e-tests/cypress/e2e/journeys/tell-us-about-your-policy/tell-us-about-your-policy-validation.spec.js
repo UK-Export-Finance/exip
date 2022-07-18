@@ -14,7 +14,7 @@ import { ERROR_MESSAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
 import checkText from '../../helpers/check-text';
 
-const { ROUTES, FIELD_IDS } = CONSTANTS;
+const { FIELD_IDS } = CONSTANTS;
 
 context('Tell us about the policy you need page - form validation', () => {
   beforeEach(() => {
@@ -73,7 +73,7 @@ context('Tell us about the policy you need page - form validation', () => {
 
       checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].errorMessage(),
-          `Error: ${ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY}`,
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY}`,
       );
 
       // credit period

@@ -73,7 +73,7 @@ const FIELDS = {
   },
   [FIELD_IDS.PERCENTAGE_OF_COVER]: {
     LABEL: 'What percentage of cover do you need for this export contract?',
-    HINT: 'Select the percentage of cover you need.'
+    HINT: 'Select the percentage of cover you need.',
   },
   [FIELD_IDS.POLICY_TYPE]: {
     OPTIONS: {
