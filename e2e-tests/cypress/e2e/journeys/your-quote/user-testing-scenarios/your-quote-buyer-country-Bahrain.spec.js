@@ -48,7 +48,7 @@ context(`Your quote page - user testing scenarios - ${COUNTRY_NAME} mock quote`,
     const premiumRateRow = summaryList[PREMIUM_RATE_PERCENTAGE];
 
     premiumRateRow.value().invoke('text').then((text) => {
-      const expected = '2.38%';
+      const expected = '1.44%';
 
       expect(text.trim()).equal(expected);
     });

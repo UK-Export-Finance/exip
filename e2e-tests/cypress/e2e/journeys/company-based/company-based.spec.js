@@ -24,7 +24,7 @@ context('Company based inside the UK, Channel Islands and Isle of Man page', () 
       },
     });
 
-    buyerCountryPage.searchInput().type('Fra');
+    buyerCountryPage.searchInput().type('Algeria');
     const results = buyerCountryPage.results();
     results.first().click();
     buyerCountryPage.submitButton().click();

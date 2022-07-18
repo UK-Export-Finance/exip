@@ -29,7 +29,6 @@ context('Check your answers page', () => {
   const submissionData = {
     [BUYER_COUNTRY]: 'Algeria',
     [UK_GOODS_OR_SERVICES]: '50',
-    [AMOUNT]: '150000',
     [CREDIT_PERIOD]: '2',
     [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
     [SINGLE_POLICY_LENGTH]: '3',
@@ -197,7 +196,7 @@ context('Check your answers page', () => {
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = `£${submissionData[AMOUNT]}.00`;
+        const expected = '£150,000.00';
 
         expect(text.trim()).equal(expected);
       });

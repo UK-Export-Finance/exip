@@ -48,7 +48,7 @@ context(`Your quote page - user testing scenarios - ${COUNTRY_NAME} mock quote`,
     const premiumRateRow = summaryList[PREMIUM_RATE_PERCENTAGE];
 
     premiumRateRow.value().invoke('text').then((text) => {
-      const expected = '1.88%';
+      const expected = '1.14%';
 
       expect(text.trim()).equal(expected);
     });
@@ -56,7 +56,7 @@ context(`Your quote page - user testing scenarios - ${COUNTRY_NAME} mock quote`,
     const estimatedCostRow = summaryList[ESTIMATED_COST];
 
     estimatedCostRow.value().invoke('text').then((text) => {
-      const expected = '£1,128.00';
+      const expected = '1710.00';
 
       expect(text.trim()).equal(expected);
     });
