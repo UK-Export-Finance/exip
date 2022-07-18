@@ -1,7 +1,7 @@
 const singlePolicyStandardRiskRates = require('./data/single-policy/standard-risk');
 const singlePolicyHighRiskRates = require('./data/single-policy/high-risk');
 const singlePolicyVeryHighRiskRates = require('./data/single-policy/very-high-risk');
-const multiPolicyStandardRiskRates = require('./data/multi-policy/standard-risk');
+const multiPolicyStandardRisk = require('./data/multi-policy/standard-risk');
 const multiPolicyHighRiskRates = require('./data/multi-policy/high-risk');
 const multiPolicyVeryHighRiskRates = require('./data/multi-policy/very-high-risk');
 
@@ -20,10 +20,11 @@ const PRICING_GRID = {
     VERY_HIGH: singlePolicyVeryHighRiskRates,
   },
   MULTI_POLICY: {
-    STANDARD: multiPolicyStandardRiskRates,
+    STANDARD: multiPolicyStandardRisk,
     HIGH: multiPolicyHighRiskRates,
     VERY_HIGH: multiPolicyVeryHighRiskRates,
   },
 };
 
 module.exports = PRICING_GRID;
+

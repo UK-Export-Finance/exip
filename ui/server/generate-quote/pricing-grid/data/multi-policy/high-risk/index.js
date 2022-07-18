@@ -7,7 +7,14 @@ const months7 = require('./7-months');
 const months8 = require('./8-months');
 const months9 = require('./9-months');
 
-const standardRisk = [
+const COVER_PERCENTAGES = [
+  70,
+  80,
+  85,
+  90,
+];
+
+const RATES = [
   months2,
   months3,
   months4,
@@ -18,4 +25,9 @@ const standardRisk = [
   months9,
 ];
 
-module.exports = standardRisk;
+const highRisk = {
+  COVER_PERCENTAGES,
+  RATES,
+};
+
+module.exports = highRisk;
