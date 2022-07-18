@@ -1,5 +1,14 @@
 import {
+  completeAndSubmitBuyerForm,
+  completeAndSubmitCompanyForm,
+  completeAndSubmitTriedToObtainCoverForm,
+  completeAndSubmitUkContentForm,
+  completeAndSubmitPolicyTypeForm,
+} from '../../../support/forms';
+import {
+  beforeYouStartPage,
   policyTypePage,
+  checkYourAnswersPage,
   tellUsAboutYourPolicyPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -22,17 +31,14 @@ const {
 context('Tell us about the policy you need page', () => {
   describe('rendering', () => {
     before(() => {
-      cy.visit(ROUTES.POLICY_TYPE, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
+      cy.login();
 
-      policyTypePage[FIELD_IDS.POLICY_TYPE].single.input().click();
-      policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().type('8');
-
-      policyTypePage.submitButton().click();
+      beforeYouStartPage.submitButton().click();
+      completeAndSubmitBuyerForm();
+      completeAndSubmitCompanyForm();
+      completeAndSubmitTriedToObtainCoverForm();
+      completeAndSubmitUkContentForm();
+      completeAndSubmitPolicyTypeForm();
 
       cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
     });
@@ -125,6 +131,25 @@ context('Tell us about the policy you need page', () => {
       field.input().should('exist');
     });
 
+    it('renders `percentage of cover` label, hint and input', () => {
+      const fieldId = FIELD_IDS.PERCENTAGE_OF_COVER;
+
+      const field = tellUsAboutYourPolicyPage[fieldId];
+
+      field.label().should('exist');
+      field.label().invoke('text').then((text) => {
+        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
+      });
+
+      field.hint().should('exist');
+      field.hint().invoke('text').then((text) => {
+        expect(text.trim()).equal(FIELDS[fieldId].HINT);
+      });
+
+      field.input().should('exist');
+    });
+
+
     it('renders `credit period` label, hint and input', () => {
       const fieldId = FIELD_IDS.CREDIT_PERIOD;
 
@@ -157,6 +182,7 @@ context('Tell us about the policy you need page', () => {
     it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('100');
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
+      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
       tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('1');
 
       tellUsAboutYourPolicyPage.submitButton().click();

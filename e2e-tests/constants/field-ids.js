@@ -16,6 +16,7 @@ const FIELD_IDS = {
   POLICY_LENGTH: 'policyLength',
   SINGLE_POLICY_LENGTH: 'singlePolicyLengthMonths',
   MULTI_POLICY_LENGTH: 'multiPolicyLengthMonths',
+  PERCENTAGE_OF_COVER: 'percentageOfCover',
   QUOTE: {
     INSURED_FOR: 'insuredFor',
     PREMIUM_RATE_PERCENTAGE: 'premiumRatePercentage',

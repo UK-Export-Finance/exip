@@ -34,7 +34,7 @@ const getPremiumRate = (
 
   const riskCategoryKey = PRICING_GRID_MAP.RISK_CATEGORY[riskCategory];
 
-  const risk = PRICING_GRID[policyTypeKey][riskCategoryKey];
+  const risk = PRICING_GRID[policyTypeKey][riskCategoryKey].RATES;
 
   const month = risk.find(({ months }) => months === totalMonths);
 

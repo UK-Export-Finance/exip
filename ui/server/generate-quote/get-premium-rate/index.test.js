@@ -17,7 +17,7 @@ const expectedPremiumRate = (
   const mappedPolicyType = PRICING_GRID_MAP.POLICY_TYPE[policyType];
   const mappedRiskCategory = PRICING_GRID_MAP.RISK_CATEGORY[riskCategory];
 
-  const risk = PRICING_GRID[mappedPolicyType][mappedRiskCategory];
+  const risk = PRICING_GRID[mappedPolicyType][mappedRiskCategory].RATES;
 
   const expectedMonth = risk.find(({ months }) => months === policyLengthInMonths);
 

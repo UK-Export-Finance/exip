@@ -9,13 +9,14 @@ import {
 import { FIELD_IDS } from '../../constants';
 
 const {
-  VALID_COMPANY_BASE,
+  AMOUNT,
   CAN_GET_PRIVATE_INSURANCE,
   CURRENCY,
-  AMOUNT,
   CREDIT_PERIOD,
+  PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
+  VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
 export const completeAndSubmitBuyerForm = () => {
@@ -50,6 +51,7 @@ export const completeAndSubmitPolicyTypeForm = () => {
 export const compmleteAndSubmitTellUsAboutYourPolicyForm = () => {
   tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
   tellUsAboutYourPolicyPage[AMOUNT].input().type('150000');
+  tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
   tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('2');
   tellUsAboutYourPolicyPage.submitButton().click();
 };

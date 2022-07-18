@@ -9,6 +9,7 @@ const {
   CURRENCY,
   AMOUNT,
   CREDIT_PERIOD,
+  PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   POLICY_LENGTH,
 } = FIELD_IDS;
@@ -23,6 +24,7 @@ const mockAnswers = {
   [CREDIT_PERIOD]: 1,
   [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
   [POLICY_LENGTH]: 2,
+  [PERCENTAGE_OF_COVER]: 90,
 };
 
 module.exports = mockAnswers;

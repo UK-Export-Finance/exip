@@ -25,7 +25,7 @@ const RATES = [
   months9,
 ];
 
-const = highRisk = {
+const highRisk = {
   COVER_PERCENTAGES,
   RATES,
 };
