@@ -40,15 +40,6 @@ context('Footer', () => {
       });
     });
 
-    it(`renders a link to ${FOOTER.MASTER_GUARANTEE_AGREEMENT.TEXT} and redirects to the correct URL`, () => {
-      footer.supportLinks.masterGuarantee().invoke('text').then((text) => {
-        expect(text.trim()).equal(FOOTER.MASTER_GUARANTEE_AGREEMENT.TEXT);
-      });
-
-      footer.supportLinks.masterGuarantee().click();
-      cy.url().should('include', FOOTER.MASTER_GUARANTEE_AGREEMENT.HREF);
-    });
-
     it(`renders a link to ${FOOTER.TERMS_AND_CONDITIONS.TEXT} and redirects to the correct URL`, () => {
       footer.supportLinks.termsAndConditions().invoke('text').then((text) => {
         expect(text.trim()).equal(FOOTER.TERMS_AND_CONDITIONS.TEXT);
