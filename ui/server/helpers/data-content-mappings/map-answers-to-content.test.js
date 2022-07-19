@@ -4,7 +4,7 @@ const {
   mapAnswersToContent,
 } = require('./map-answers-to-content');
 const mapCountry = require('./map-country');
-const mapPeriodDays = require('./map-period-days');
+const mapPeriodMonths = require('./map-period-months');
 const mapPolicyLength = require('./map-policy-length');
 const formatCurrency = require('../format-currency');
 const {
@@ -118,7 +118,7 @@ describe('server/helpers/map-answers-to-content', () => {
         ...mapPolicyType(mockAnswers[POLICY_TYPE]),
         ...mapPolicyLength(mockAnswers),
         [CREDIT_PERIOD]: {
-          text: mapPeriodDays(mockAnswers[CREDIT_PERIOD]),
+          text: mapPeriodMonths(mockAnswers[CREDIT_PERIOD]),
         },
       };
 

@@ -113,7 +113,7 @@ context('Change your answers after checking answers - Policy fields', () => {
       row = checkYourAnswersPage.summaryLists.policy[CREDIT_PERIOD];
 
       row.value().invoke('text').then((text) => {
-        const expected = '2 days';
+        const expected = '2 months';
 
         expect(text.trim()).equal(expected);
       });

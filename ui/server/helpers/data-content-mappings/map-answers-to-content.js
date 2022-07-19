@@ -5,7 +5,7 @@ const {
 const { SUMMARY_ANSWERS } = require('../../content-strings');
 const formatCurrency = require('../format-currency');
 const mapCountry = require('./map-country');
-const mapPeriodDays = require('./map-period-days');
+const mapPeriodMonths = require('./map-period-months');
 const mapPolicyLength = require('./map-policy-length');
 
 const {
@@ -85,7 +85,7 @@ const mapAnswersToContent = (answers) => {
     ...mapPolicyType(answers[POLICY_TYPE]),
     ...mapPolicyLength(answers),
     [CREDIT_PERIOD]: {
-      text: mapPeriodDays(answers[CREDIT_PERIOD]),
+      text: mapPeriodMonths(answers[CREDIT_PERIOD]),
     },
   };
 
