@@ -263,7 +263,7 @@ context('Check your answers page', () => {
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[CREDIT_PERIOD]} days`;
+        const expected = `${submissionData[CREDIT_PERIOD]} months`;
 
         expect(text.trim()).equal(expected);
       });
