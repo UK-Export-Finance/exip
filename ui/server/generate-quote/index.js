@@ -65,7 +65,7 @@ const calculateCost = (
 
 /**
  * generateQuote
- * @param {Object} Submitted data/answer
+ * @param {Object} Submitted data/answers
  * @returns {Object} Quote with premium rate and estimated cost
  */
 const generateQuote = (submittedData) => {

@@ -13,7 +13,6 @@ const PRICING_GRID_MAP = {
   },
 };
 
-// TODO: rename insuredFor to percentageOfCover
 /**
  * getPercentagesOfCover
  * Get all available percentages of cover for a policy's type and risk
