@@ -5,8 +5,15 @@ const api = require('../../api');
 const { mapCurrencies } = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
 const getCurrencyByCode = require('../../helpers/get-currency-by-code');
+const getPercentagesOfCover = require('../../helpers/get-percentages-of-cover');
+const mapPercentageOfCover = require('../../helpers/map-percentage-of-cover');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
-const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
+const {
+  mockReq,
+  mockRes,
+  mockAnswers,
+  mockSession,
+} = require('../../test-mocks');
 
 describe('controllers/tell-us-about-your-policy', () => {
   let req;
@@ -26,10 +33,26 @@ describe('controllers/tell-us-about-your-policy', () => {
     },
   ];
 
+  let percentagesOfCover;
+  let mappedPercentageOfCover;
+
+  const previousFlowSubmittedData = {
+    [FIELD_IDS.BUYER_COUNTRY]: mockSession.submittedData[FIELD_IDS.BUYER_COUNTRY],
+    [FIELD_IDS.POLICY_TYPE]: mockSession.submittedData[FIELD_IDS.POLICY_TYPE],
+    [FIELD_IDS.POLICY_LENGTH]: mockSession.submittedData[FIELD_IDS.POLICY_LENGTH],
+  };
+
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-    req.session.submittedData = mockAnswers;
+    req.session.submittedData = mockSession.submittedData;
+
+    percentagesOfCover = getPercentagesOfCover(
+      req.session.submittedData[FIELD_IDS.POLICY_TYPE],
+      req.session.submittedData[FIELD_IDS.BUYER_COUNTRY].riskCategory,
+    );
+
+    mappedPercentageOfCover = mapPercentageOfCover(percentagesOfCover);
   });
 
   afterAll(() => {
@@ -58,25 +81,13 @@ describe('controllers/tell-us-about-your-policy', () => {
             ID: FIELD_IDS.AMOUNT,
             ...CONTENT_STRINGS.FIELDS[FIELD_IDS.AMOUNT],
           },
+          PERCENTAGE_OF_COVER: {
+            ID: FIELD_IDS.PERCENTAGE_OF_COVER,
+            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.PERCENTAGE_OF_COVER],
+          },
           CREDIT_PERIOD: {
             ID: FIELD_IDS.CREDIT_PERIOD,
             ...CONTENT_STRINGS.FIELDS[FIELD_IDS.CREDIT_PERIOD],
-          },
-          POLICY_TYPE: {
-            ID: FIELD_IDS.POLICY_TYPE,
-            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.POLICY_TYPE],
-          },
-          SINGLE_POLICY_TYPE: {
-            ID: FIELD_IDS.SINGLE_POLICY_TYPE,
-            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.POLICY_TYPE],
-          },
-          SINGLE_POLICY_LENGTH: {
-            ID: FIELD_IDS.SINGLE_POLICY_LENGTH,
-            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.SINGLE_POLICY_LENGTH],
-          },
-          MULTI_POLICY_LENGTH: {
-            ID: FIELD_IDS.MULTI_POLICY_LENGTH,
-            ...CONTENT_STRINGS.FIELDS[FIELD_IDS.MULTI_POLICY_LENGTH],
           },
         },
       };
@@ -90,6 +101,12 @@ describe('controllers/tell-us-about-your-policy', () => {
 
     beforeEach(() => {
       delete req.session.submittedData;
+
+      req.session.submittedData = {
+        [FIELD_IDS.POLICY_TYPE]: mockSession.submittedData[FIELD_IDS.POLICY_TYPE],
+        [FIELD_IDS.BUYER_COUNTRY]: mockSession.submittedData[FIELD_IDS.BUYER_COUNTRY],
+      };
+
       api.getCurrencies = getCurrenciesSpy;
     });
 
@@ -102,20 +119,24 @@ describe('controllers/tell-us-about-your-policy', () => {
     it('should render template', async () => {
       await controller.get(req, res);
 
-      const expectedCurrencies = mapCurrencies(
-        mockCurrenciesResponse,
-      );
+      const expectedCurrencies = mapCurrencies(mockCurrenciesResponse);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
         ...controller.PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
         currencies: expectedCurrencies,
+        percentageOfCover: mappedPercentageOfCover,
+        submittedValues: req.session.submittedData,
       });
     });
 
     describe('when a currency has been submitted', () => {
+      beforeEach(() => {
+        req.session.submittedData = mockSession.submittedData;
+        delete req.session.submittedData[FIELD_IDS.PERCENTAGE_OF_COVER];
+      });
+
       it('should render template with currencies mapped to submitted currency and submittedValues', async () => {
-        req.session.submittedData = mockAnswers;
         await controller.get(req, res);
 
         const expectedCurrencies = mapCurrencies(
@@ -127,7 +148,37 @@ describe('controllers/tell-us-about-your-policy', () => {
           ...controller.PAGE_VARIABLES,
           BACK_LINK: req.headers.referer,
           currencies: expectedCurrencies,
-          submittedValues: mockAnswers,
+          percentageOfCover: mappedPercentageOfCover,
+          submittedValues: req.session.submittedData,
+        });
+      });
+    });
+
+    describe('when a percentage of cover has been submitted', () => {
+      beforeEach(() => {
+        req.session.submittedData = mockSession.submittedData;
+        req.session.submittedData[FIELD_IDS.PERCENTAGE_OF_COVER] = mockAnswers[FIELD_IDS.PERCENTAGE_OF_COVER];
+      });
+
+      it('should render template with percentage of cover mapped to submitted percentage and submittedValues', async () => {
+        await controller.get(req, res);
+
+        const expectedCurrencies = mapCurrencies(
+          mockCurrenciesResponse,
+          req.session.submittedData[FIELD_IDS.CURRENCY].isoCode,
+        );
+
+        const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(
+          percentagesOfCover,
+          req.session.submittedData[FIELD_IDS.PERCENTAGE_OF_COVER],
+        );
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
+          ...controller.PAGE_VARIABLES,
+          BACK_LINK: req.headers.referer,
+          currencies: expectedCurrencies,
+          percentageOfCover: mappedPercentageOfCoverWithSelected,
+          submittedValues: req.session.submittedData,
         });
       });
     });
@@ -138,11 +189,12 @@ describe('controllers/tell-us-about-your-policy', () => {
 
     beforeEach(() => {
       api.getCurrencies = getCurrenciesSpy;
+      req.body = mockAnswers;
+      req.session.submittedData = previousFlowSubmittedData;
     });
 
     describe('when a currency code has been submitted', () => {
       it('should call api.getCurrencies', async () => {
-        req.body[FIELD_IDS.CURRENCY] = mockAnswers[FIELD_IDS.CURRENCY];
         await controller.post(req, res);
 
         expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
@@ -150,6 +202,10 @@ describe('controllers/tell-us-about-your-policy', () => {
     });
 
     describe('when there are validation errors', () => {
+      beforeEach(() => {
+        req.body = {};
+      });
+
       it('should render template with validation errors and submitted values', async () => {
         await controller.post(req, res);
 
@@ -158,13 +214,18 @@ describe('controllers/tell-us-about-your-policy', () => {
           BACK_LINK: req.headers.referer,
           currencies: mapCurrencies(mockCurrenciesResponse),
           validationErrors: generateValidationErrors(req.body),
+          percentageOfCover: mappedPercentageOfCover,
           submittedValues: req.body,
         });
       });
 
       describe('when a currency code has been submitted', () => {
-        it('should render template with mapped submitted currency', async () => {
+        beforeEach(() => {
+          req.session.submittedData = previousFlowSubmittedData;
           req.body[FIELD_IDS.CURRENCY] = mockAnswers[FIELD_IDS.CURRENCY];
+        });
+
+        it('should render template with mapped submitted currency', async () => {
           await controller.post(req, res);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
@@ -172,6 +233,31 @@ describe('controllers/tell-us-about-your-policy', () => {
             BACK_LINK: req.headers.referer,
             currencies: mapCurrencies(mockCurrenciesResponse, req.body[FIELD_IDS.CURRENCY]),
             validationErrors: generateValidationErrors(req.body),
+            percentageOfCover: mappedPercentageOfCover,
+            submittedValues: req.body,
+          });
+        });
+      });
+
+      describe('when a percentage of cover has been submitted', () => {
+        beforeEach(() => {
+          req.body[FIELD_IDS.PERCENTAGE_OF_COVER] = mockAnswers[FIELD_IDS.PERCENTAGE_OF_COVER];
+        });
+
+        it('should render template with mapped submitted percentage', async () => {
+          await controller.post(req, res);
+
+          const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(
+            percentagesOfCover,
+            req.body[FIELD_IDS.PERCENTAGE_OF_COVER],
+          );
+
+          expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
+            ...controller.PAGE_VARIABLES,
+            BACK_LINK: req.headers.referer,
+            currencies: mapCurrencies(mockCurrenciesResponse, req.body[FIELD_IDS.CURRENCY]),
+            validationErrors: generateValidationErrors(req.body),
+            percentageOfCover: mappedPercentageOfCoverWithSelected,
             submittedValues: req.body,
           });
         });
@@ -182,9 +268,10 @@ describe('controllers/tell-us-about-your-policy', () => {
       const validBody = {
         [FIELD_IDS.CURRENCY]: mockAnswers[FIELD_IDS.CURRENCY],
         [FIELD_IDS.AMOUNT]: '10',
-        [FIELD_IDS.CREDIT_PERIOD]: '30',
+        [FIELD_IDS.CREDIT_PERIOD]: '2',
         [FIELD_IDS.POLICY_LENGTH]: '40',
         [FIELD_IDS.POLICY_TYPE]: 'mock',
+        [FIELD_IDS.PERCENTAGE_OF_COVER]: '95',
       };
 
       beforeEach(() => {
@@ -196,8 +283,13 @@ describe('controllers/tell-us-about-your-policy', () => {
 
         const expectedPopulatedData = {
           ...validBody,
-          [FIELD_IDS.CURRENCY]: getCurrencyByCode(mockCurrenciesResponse, mockAnswers[FIELD_IDS.CURRENCY]),
+          [FIELD_IDS.CURRENCY]: getCurrencyByCode(
+            mockCurrenciesResponse,
+            validBody[FIELD_IDS.CURRENCY],
+          ),
+          [FIELD_IDS.PERCENTAGE_OF_COVER]: validBody[FIELD_IDS.PERCENTAGE_OF_COVER],
         };
+
         const expected = updateSubmittedData(
           expectedPopulatedData,
           req.session.submittedData,

@@ -5,6 +5,7 @@ const { objectHasProperty } = require('../../../../helpers/object');
 const { isNumber, numberHasDecimal } = require('../../../../helpers/number');
 
 const MINIMUM = 1;
+const MAXIMUM = 2;
 
 const creditPeriodRules = (formBody, errors) => {
   let updatedErrors = errors;
@@ -43,6 +44,16 @@ const creditPeriodRules = (formBody, errors) => {
     updatedErrors = generateValidationErrors(
       FIELD_IDS.CREDIT_PERIOD,
       ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].BELOW_MINIMUM,
+      errors,
+    );
+
+    return updatedErrors;
+  }
+
+  if (Number(formBody[FIELD_IDS.CREDIT_PERIOD]) > MAXIMUM) {
+    updatedErrors = generateValidationErrors(
+      FIELD_IDS.CREDIT_PERIOD,
+      ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].ABOVE_MAXIMUM,
       errors,
     );
 

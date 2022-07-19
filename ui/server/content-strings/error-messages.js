@@ -19,8 +19,12 @@ const ERROR_MESSAGES = {
   [FIELD_IDS.CREDIT_PERIOD]: {
     IS_EMPTY: 'Enter the credit period you have with your buyer',
     NOT_A_NUMBER: 'Credit period must be a number',
-    NOT_A_WHOLE_NUMBER: 'Credit period must be a whole number, like 10 - you cannot enter decimal points',
+    NOT_A_WHOLE_NUMBER: 'Credit period must be a whole number, like 2 - you cannot enter decimal points',
     BELOW_MINIMUM: 'Credit period must be 1 day or more',
+    ABOVE_MAXIMUM: 'Enter Credit period of no more than 2 months',
+  },
+  [FIELD_IDS.PERCENTAGE_OF_COVER]: {
+    IS_EMPTY: 'Select the percentage of cover you need',
   },
   [FIELD_IDS.POLICY_TYPE]: 'Select what kind of policy you need',
   [FIELD_IDS.SINGLE_POLICY_LENGTH]: {

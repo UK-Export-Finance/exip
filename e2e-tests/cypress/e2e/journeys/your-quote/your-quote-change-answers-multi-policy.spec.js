@@ -28,7 +28,7 @@ context('Your quote page - multi policy type - change policy type and length to 
     checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE].changeLink().click();
 
     policyTypePage[POLICY_TYPE].multi.input().click();
-    policyTypePage[MULTI_POLICY_LENGTH].input().type('8');
+    policyTypePage[MULTI_POLICY_LENGTH].input().type('2');
     policyTypePage.submitButton().click();
 
     checkYourAnswersPage.submitButton().click();

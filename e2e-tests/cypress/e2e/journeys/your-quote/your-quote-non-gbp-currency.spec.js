@@ -22,10 +22,6 @@ const {
   ESTIMATED_COST,
 } = QUOTE;
 
-const submissionData = {
-  [AMOUNT]: '100',
-};
-
 context('Your quote page - non GBP currency', () => {
   before(() => {
     cy.login();
@@ -60,7 +56,7 @@ context('Your quote page - non GBP currency', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = `€${submissionData[AMOUNT]}`;
+          const expected = '€150,000.00';
           expect(text.trim()).includes(expected);
         });
 
@@ -82,7 +78,7 @@ context('Your quote page - non GBP currency', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '€1,000.00';
+          const expected = '€1,710.00';
 
           expect(text.trim()).equal(expected);
         });

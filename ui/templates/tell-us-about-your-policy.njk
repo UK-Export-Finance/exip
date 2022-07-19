@@ -95,6 +95,35 @@
 
         {% endcall %}
 
+        {{ govukSelect({
+          id: FIELDS.PERCENTAGE_OF_COVER.ID,
+          name: FIELDS.PERCENTAGE_OF_COVER.ID,
+          label: {
+            text: FIELDS.PERCENTAGE_OF_COVER.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              "data-cy": FIELDS.PERCENTAGE_OF_COVER.ID + "-label"
+            }
+          },
+          hint: {
+            text: FIELDS.PERCENTAGE_OF_COVER.HINT,
+            attributes: {
+              'data-cy': FIELDS.PERCENTAGE_OF_COVER.ID + '-hint'
+            }
+          },
+          items: percentageOfCover,
+          classes: "govuk-grid-column-one-quarter-from-desktop",
+          attributes: {
+            "data-cy": FIELDS.PERCENTAGE_OF_COVER.ID + "-input"
+          },
+          errorMessage: validationErrors.errorList[FIELDS.PERCENTAGE_OF_COVER.ID]and {
+            text: validationErrors.errorList[FIELDS.PERCENTAGE_OF_COVER.ID].text,
+            attributes: {
+              "data-cy": FIELDS.PERCENTAGE_OF_COVER.ID + "-error-message"
+            }
+          }
+        }) }}
+
         {{ govukInput({
           label: {
             text: FIELDS.CREDIT_PERIOD.LABEL,
@@ -118,7 +147,7 @@
           inputmode: "numeric",
           pattern: "[0-9]*",
           suffix: {
-            text: "days"
+            text: "months"
           },
           spellcheck: false,
           errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID]and {

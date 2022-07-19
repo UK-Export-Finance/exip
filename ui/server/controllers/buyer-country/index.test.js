@@ -22,12 +22,15 @@ describe('controllers/buyer-country', () => {
     {
       marketName: 'Abu Dhabi',
       isoCode: 'XAD',
-      active: 'N',
+      shortTermCoverAvailabilityDesc: 'No',
+      NBIIssue: 'N',
     },
     {
-      marketName: 'France',
-      isoCode: 'FRA',
-      active: 'Y',
+      marketName: 'Algeria',
+      isoCode: 'DZA',
+      shortTermCoverAvailabilityDesc: 'Yes',
+      ESRAClasificationDesc: 'Standard Risk',
+      NBIIssue: 'Y',
     },
   ];
 
@@ -179,6 +182,7 @@ describe('controllers/buyer-country', () => {
           [FIELD_IDS.BUYER_COUNTRY]: {
             name: selectedCountry.name,
             isoCode: selectedCountry.isoCode,
+            riskCategory: selectedCountry.riskCategory,
           },
         };
 

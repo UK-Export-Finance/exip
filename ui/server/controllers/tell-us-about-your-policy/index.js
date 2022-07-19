@@ -8,18 +8,19 @@ const api = require('../../api');
 const { mapCurrencies } = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
 const getCurrencyByCode = require('../../helpers/get-currency-by-code');
+const getPercentagesOfCover = require('../../helpers/get-percentages-of-cover');
+const mapPercentageOfCover = require('../../helpers/map-percentage-of-cover');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
 
 const {
-  AMOUNT_CURRENCY,
-  CURRENCY,
   AMOUNT,
+  AMOUNT_CURRENCY,
+  BUYER_COUNTRY,
   CREDIT_PERIOD,
+  CURRENCY,
+  PERCENTAGE_OF_COVER,
   POLICY_TYPE,
-  SINGLE_POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
-  MULTI_POLICY_LENGTH,
 } = FIELD_IDS;
 
 const PAGE_VARIABLES = {
@@ -42,28 +43,13 @@ const PAGE_VARIABLES = {
       ID: AMOUNT,
       ...CONTENT_STRINGS.FIELDS[AMOUNT],
     },
+    PERCENTAGE_OF_COVER: {
+      ID: PERCENTAGE_OF_COVER,
+      ...CONTENT_STRINGS.FIELDS[PERCENTAGE_OF_COVER],
+    },
     CREDIT_PERIOD: {
       ID: CREDIT_PERIOD,
       ...CONTENT_STRINGS.FIELDS[CREDIT_PERIOD],
-    },
-    POLICY_TYPE: {
-      ID: POLICY_TYPE,
-      ...CONTENT_STRINGS.FIELDS[POLICY_TYPE],
-    },
-    // note: "single policy type" is only required for scenario where
-    // empty form is submitted. Then, error message link can link to
-    // the first policy type radio button (single).
-    SINGLE_POLICY_TYPE: {
-      ID: SINGLE_POLICY_TYPE,
-      ...CONTENT_STRINGS.FIELDS[POLICY_TYPE],
-    },
-    SINGLE_POLICY_LENGTH: {
-      ID: SINGLE_POLICY_LENGTH,
-      ...CONTENT_STRINGS.FIELDS[SINGLE_POLICY_LENGTH],
-    },
-    MULTI_POLICY_LENGTH: {
-      ID: MULTI_POLICY_LENGTH,
-      ...CONTENT_STRINGS.FIELDS[MULTI_POLICY_LENGTH],
     },
   },
 };
@@ -79,15 +65,30 @@ const get = async (req, res) => {
     mappedCurrencies = mapCurrencies(currencies);
   }
 
+  const percentagesOfCover = getPercentagesOfCover(
+    submittedData[POLICY_TYPE],
+    submittedData[BUYER_COUNTRY].riskCategory,
+  );
+
+  let mappedPercentageOfCover;
+
+  if (submittedData && submittedData[PERCENTAGE_OF_COVER]) {
+    mappedPercentageOfCover = mapPercentageOfCover(percentagesOfCover, submittedData[PERCENTAGE_OF_COVER]);
+  } else {
+    mappedPercentageOfCover = mapPercentageOfCover(percentagesOfCover);
+  }
+
   return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
     ...PAGE_VARIABLES,
     BACK_LINK: req.headers.referer,
     currencies: mappedCurrencies,
+    percentageOfCover: mappedPercentageOfCover,
     submittedValues: submittedData,
   });
 };
 
 const post = async (req, res) => {
+  const { submittedData } = req.session;
   const validationErrors = generateValidationErrors(req.body);
 
   const submittedCurrencyCode = req.body[FIELD_IDS.CURRENCY];
@@ -103,11 +104,27 @@ const post = async (req, res) => {
       mappedCurrencies = mapCurrencies(currencies);
     }
 
+    const percentagesOfCover = getPercentagesOfCover(
+      submittedData[POLICY_TYPE],
+      submittedData[BUYER_COUNTRY].riskCategory,
+    );
+
+    const submittedPercentageOfCover = req.body[PERCENTAGE_OF_COVER];
+
+    let mappedPercentageOfCover;
+
+    if (submittedPercentageOfCover) {
+      mappedPercentageOfCover = mapPercentageOfCover(percentagesOfCover, submittedPercentageOfCover);
+    } else {
+      mappedPercentageOfCover = mapPercentageOfCover(percentagesOfCover);
+    }
+
     return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
       currencies: mappedCurrencies,
       validationErrors,
+      percentageOfCover: mappedPercentageOfCover,
       submittedValues: req.body,
     });
   }

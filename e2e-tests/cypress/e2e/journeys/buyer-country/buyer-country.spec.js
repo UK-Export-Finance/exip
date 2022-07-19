@@ -76,8 +76,8 @@ context('Which country is your buyer based page', () => {
     });
 
     it('renders a single country result after searching', () => {
-      // start searching for France
-      buyerCountryPage.searchInput().type('Fra');
+      // start searching for Algeria
+      buyerCountryPage.searchInput().type('Alg');
 
       const noResults = buyerCountryPage.noResults();
       noResults.should('not.exist');
@@ -99,36 +99,36 @@ context('Which country is your buyer based page', () => {
     });
 
     it('adds the country name to a hidden input value after searching', () => {
-      buyerCountryPage.searchInput().type('Fra');
+      buyerCountryPage.searchInput().type('Algeria');
 
       const noResults = buyerCountryPage.noResults();
       noResults.should('not.exist');
 
       const results = buyerCountryPage.results();
 
-      // select the first result (France)
+      // select the first result (Algeria)
       results.first().click();
 
       // check hidden input value
-      const expectedValue = 'France';
+      const expectedValue = 'Algeria';
       buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
     });
 
     it('allows user to remove a selected country and search again', () => {
-      buyerCountryPage.searchInput().type('Fra');
+      buyerCountryPage.searchInput().type('Algeria');
       const results = buyerCountryPage.results();
 
-      // select the first result (France)
+      // select the first result (Algeria)
       results.first().click();
 
       // clear the input
       buyerCountryPage.searchInput().clear();
 
       // search for a different country, submit with enter key
-      buyerCountryPage.searchInput().type('Belg{enter}');
+      buyerCountryPage.searchInput().type('Brazil{enter}');
 
       // check hidden input value
-      const expectedValue = 'Belgium';
+      const expectedValue = 'Brazil';
       buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
     });
   });
@@ -177,7 +177,7 @@ context('Which country is your buyer based page', () => {
 
     describe('when submitting with a supported country', () => {
       it(`should redirect to ${ROUTES.COMPANY_BASED}`, () => {
-        buyerCountryPage.searchInput().type('Fra');
+        buyerCountryPage.searchInput().type('Algeria');
 
         const results = buyerCountryPage.results();
         results.first().click();

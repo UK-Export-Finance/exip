@@ -144,7 +144,7 @@ context('Your quote page - change answers', () => {
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      buyerCountryPage.searchInput().type('Belg');
+      buyerCountryPage.searchInput().type('Bahrain');
       const results = buyerCountryPage.results();
       results.first().click();
       buyerCountryPage.submitButton().click();
@@ -158,7 +158,7 @@ context('Your quote page - change answers', () => {
       row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
 
       row.value().invoke('text').then((text) => {
-        const expected = 'Belgium';
+        const expected = 'Bahrain';
 
         expect(text.trim()).equal(expected);
       });

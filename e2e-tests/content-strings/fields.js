@@ -66,10 +66,14 @@ const FIELDS = {
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
     LABEL: 'What credit period do you have with your buyer?',
-    HINT: 'This starts from when you dispatch the goods to when you’re paid. For example, your buyer may have 30, 60 or 90 days to pay you.',
+    HINT: 'This starts from when you dispatch the goods to when you\'re paid. To get a quote, you need to select a credit period of 1 or 2 months, whichever is closest to your current credit period length.',
     SUMMARY: {
       TITLE: 'Credit period',
     },
+  },
+  [FIELD_IDS.PERCENTAGE_OF_COVER]: {
+    LABEL: 'What percentage of cover do you need for this export contract?',
+    HINT: 'Select the percentage of cover you need.',
   },
   [FIELD_IDS.POLICY_TYPE]: {
     OPTIONS: {

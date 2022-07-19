@@ -18,10 +18,17 @@ const tellUsAboutYourPolicyPage = {
     inputOption: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-input"] option`),
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-error-message"]`),
   },
+  [FIELD_IDS.PERCENTAGE_OF_COVER]: {
+    label: () => cy.get(`[data-cy="${FIELD_IDS.PERCENTAGE_OF_COVER}-label"]`),
+    hint: () => cy.get(`[data-cy="${FIELD_IDS.PERCENTAGE_OF_COVER}-hint"]`),
+    input: () => cy.get(`[data-cy="${FIELD_IDS.PERCENTAGE_OF_COVER}-input"]`),
+    inputOption: () => cy.get(`[data-cy="${FIELD_IDS.PERCENTAGE_OF_COVER}-input"] option`),
+    errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.PERCENTAGE_OF_COVER}-error-message"]`),
+  },
   [FIELD_IDS.CREDIT_PERIOD]: {
     label: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-label"]`),
     labelText: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-label"]`),
-    hint: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-hint"]`).first(),
+    hint: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-hint"]`),
     input: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-error-message"]`),
   },

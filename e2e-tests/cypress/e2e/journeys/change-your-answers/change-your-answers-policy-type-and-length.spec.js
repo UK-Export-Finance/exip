@@ -22,7 +22,7 @@ const {
 
 const submissionData = {
   [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-  [POLICY_LENGTH]: '9',
+  [POLICY_LENGTH]: '3',
 };
 
 context('Change your answers after checking answers - Policy type and length', () => {

@@ -1,25 +1,38 @@
-import { tellUsAboutYourPolicyPage } from '../../pages';
+import {
+  completeAndSubmitBuyerForm,
+  completeAndSubmitCompanyForm,
+  completeAndSubmitTriedToObtainCoverForm,
+  completeAndSubmitUkContentForm,
+  completeAndSubmitPolicyTypeForm,
+} from '../../../support/forms';
+import {
+  beforeYouStartPage,
+  tellUsAboutYourPolicyPage,
+} from '../../pages';
 import partials from '../../partials';
 import { ERROR_MESSAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
 import checkText from '../../helpers/check-text';
 
-const { ROUTES, FIELD_IDS } = CONSTANTS;
+const { FIELD_IDS } = CONSTANTS;
 
 context('Tell us about the policy you need page - form validation', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.TELL_US_ABOUT_YOUR_POLICY, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
-
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
   describe('when submitting an empty form', () => {
+    before(() => {
+      cy.login();
+      beforeYouStartPage.submitButton().click();
+      completeAndSubmitBuyerForm();
+      completeAndSubmitCompanyForm();
+      completeAndSubmitTriedToObtainCoverForm();
+      completeAndSubmitUkContentForm();
+      completeAndSubmitPolicyTypeForm();
+    });
+
     beforeEach(() => {
       tellUsAboutYourPolicyPage.submitButton().click();
     });
@@ -27,7 +40,7 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render validation errors for all required fields', () => {
       partials.errorSummaryListItems().should('exist');
 
-      const TOTAL_REQUIRED_FIELDS = 3;
+      const TOTAL_REQUIRED_FIELDS = 4;
       partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
       // currency
@@ -52,9 +65,20 @@ context('Tell us about the policy you need page - form validation', () => {
         `Error: ${ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY}`,
       );
 
-      // credit period
+      // percentage of cover
       checkText(
         partials.errorSummaryListItems().eq(2),
+        ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY,
+      );
+
+      checkText(
+        tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].errorMessage(),
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY}`,
+      );
+
+      // credit period
+      checkText(
+        partials.errorSummaryListItems().eq(3),
         ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY,
       );
 
@@ -73,15 +97,19 @@ context('Tell us about the policy you need page - form validation', () => {
       partials.errorSummaryListItemLinks().eq(1).click();
       tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().should('have.focus');
 
-      // credit period
+      // perecentage of cover
       partials.errorSummaryListItemLinks().eq(2).click();
+      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().should('have.focus');
+
+      // credit period
+      partials.errorSummaryListItemLinks().eq(3).click();
       tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().should('have.focus');
     });
   });
 
   describe('when `amount` has a non-numeric value', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('a');
+      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().clear().type('a');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
@@ -98,7 +126,7 @@ context('Tell us about the policy you need page - form validation', () => {
 
   describe('when `amount` has a value less than the minimum', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('0');
+      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().clear().type('0');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
@@ -119,7 +147,7 @@ context('Tell us about the policy you need page - form validation', () => {
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
-        partials.errorSummaryListItems().eq(2),
+        partials.errorSummaryListItems().eq(3),
         ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER,
       );
 
@@ -136,7 +164,7 @@ context('Tell us about the policy you need page - form validation', () => {
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
-        partials.errorSummaryListItems().eq(2),
+        partials.errorSummaryListItems().eq(3),
         ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_WHOLE_NUMBER,
       );
 
@@ -149,11 +177,11 @@ context('Tell us about the policy you need page - form validation', () => {
 
   describe('when `credit period` has a value less than the minimum', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('0');
+      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().clear().type('0');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
-        partials.errorSummaryListItems().eq(2),
+        partials.errorSummaryListItems().eq(3),
         ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].BELOW_MINIMUM,
       );
 
@@ -164,10 +192,27 @@ context('Tell us about the policy you need page - form validation', () => {
     });
   });
 
+  describe('when `credit period` has a value above the maximum', () => {
+    it('should render a validation error', () => {
+      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().clear().type('3');
+      tellUsAboutYourPolicyPage.submitButton().click();
+
+      checkText(
+        partials.errorSummaryListItems().eq(3),
+        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].ABOVE_MAXIMUM,
+      );
+
+      checkText(
+        tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].ABOVE_MAXIMUM}`,
+      );
+    });
+  });
+
   describe('with any validation error', () => {
     it('should render submitted values', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
-      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('10');
+      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().clear().type('10');
 
       tellUsAboutYourPolicyPage.submitButton().click();
 

@@ -9,17 +9,18 @@ import {
 import { FIELD_IDS } from '../../constants';
 
 const {
-  VALID_COMPANY_BASE,
+  AMOUNT,
   CAN_GET_PRIVATE_INSURANCE,
   CURRENCY,
-  AMOUNT,
   CREDIT_PERIOD,
+  PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
+  VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
 export const completeAndSubmitBuyerForm = () => {
-  buyerCountryPage.searchInput().type('Fra');
+  buyerCountryPage.searchInput().type('Alg');
   const results = buyerCountryPage.results();
   results.first().click();
   buyerCountryPage.submitButton().click();
@@ -42,14 +43,15 @@ export const completeAndSubmitUkContentForm = () => {
 
 export const completeAndSubmitPolicyTypeForm = () => {
   policyTypePage[POLICY_TYPE].single.input().click();
-  policyTypePage[SINGLE_POLICY_LENGTH].input().type('9');
+  policyTypePage[SINGLE_POLICY_LENGTH].input().type('3');
 
   policyTypePage.submitButton().click();
 };
 
 export const compmleteAndSubmitTellUsAboutYourPolicyForm = () => {
   tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
-  tellUsAboutYourPolicyPage[AMOUNT].input().type('100');
-  tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('2');
+  tellUsAboutYourPolicyPage[AMOUNT].input().type('150000');
+  tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
+  tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('1');
   tellUsAboutYourPolicyPage.submitButton().click();
 };

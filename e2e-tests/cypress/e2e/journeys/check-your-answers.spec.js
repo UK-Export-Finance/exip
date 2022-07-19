@@ -27,12 +27,11 @@ context('Check your answers page', () => {
   } = FIELD_IDS;
 
   const submissionData = {
-    [BUYER_COUNTRY]: 'France',
+    [BUYER_COUNTRY]: 'Algeria',
     [UK_GOODS_OR_SERVICES]: '50',
-    [AMOUNT]: '100',
-    [CREDIT_PERIOD]: '2',
+    [CREDIT_PERIOD]: '1',
     [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-    [SINGLE_POLICY_LENGTH]: '9',
+    [SINGLE_POLICY_LENGTH]: '3',
   };
 
   before(() => {
@@ -197,7 +196,7 @@ context('Check your answers page', () => {
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = `£${submissionData[AMOUNT]}.00`;
+        const expected = '£150,000.00';
 
         expect(text.trim()).equal(expected);
       });

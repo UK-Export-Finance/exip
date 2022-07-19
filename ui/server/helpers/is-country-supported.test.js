@@ -4,7 +4,7 @@ describe('server/helpers/is-country-supported', () => {
   const mockCountry = {
     name: 'Abu Dhabi',
     isoCode: 'XAD',
-    active: true,
+    isSupported: true,
   };
 
   describe('mock unsupported countries', () => {
@@ -21,7 +21,7 @@ describe('server/helpers/is-country-supported', () => {
     });
   });
 
-  describe('when a country has active flag', () => {
+  describe('when a country has isSupported flag', () => {
     it('should return true', () => {
       const result = isCountrySupported(mockCountry);
 
@@ -29,9 +29,9 @@ describe('server/helpers/is-country-supported', () => {
     });
   });
 
-  describe('when a country does NOT have active flag', () => {
+  describe('when a country does NOT have isSupported flag', () => {
     it('should return false', () => {
-      mockCountry.active = false;
+      mockCountry.isSupported = false;
 
       const result = isCountrySupported(mockCountry);
 

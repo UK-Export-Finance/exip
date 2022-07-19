@@ -34,13 +34,13 @@ const {
 } = QUOTE;
 
 const submissionData = {
-  [BUYER_COUNTRY]: 'France',
+  [BUYER_COUNTRY]: 'Algeria',
   [UK_GOODS_OR_SERVICES]: '50',
-  [AMOUNT]: '100',
+  [AMOUNT]: '150000',
   [CURRENCY]: 'GBP',
   [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-  [SINGLE_POLICY_LENGTH]: '9',
-  [CREDIT_PERIOD]: '2',
+  [SINGLE_POLICY_LENGTH]: '3',
+  [CREDIT_PERIOD]: '1',
 };
 
 context('Your quote page', () => {
@@ -91,7 +91,7 @@ context('Your quote page', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£100.00';
+          const expected = '£150,000.00';
 
           expect(text.trim()).equal(expected);
         });
@@ -114,7 +114,7 @@ context('Your quote page', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '1.5%';
+          const expected = '1.14%';
 
           expect(text.trim()).equal(expected);
         });
@@ -131,7 +131,7 @@ context('Your quote page', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£1,000.00';
+          const expected = '£1,710.00';
 
           expect(text.trim()).equal(expected);
         });
