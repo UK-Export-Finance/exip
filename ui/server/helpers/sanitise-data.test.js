@@ -22,6 +22,22 @@ describe('server/helpers/sanitise-data', () => {
       });
     });
 
+    describe('when the value is a string number with commas and translates to a number', () => {
+      it('should return true', () => {
+        const result = shouldChangeStringToNumber('123,456');
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('when the value is a string number with commas that does NOT translate to a number', () => {
+      it('should return true', () => {
+        const result = shouldChangeStringToNumber('£123,456');
+
+        expect(result).toEqual(false);
+      });
+    });
+
     it('should return false', () => {
       const result = shouldChangeStringToNumber('mock');
 
@@ -67,6 +83,14 @@ describe('server/helpers/sanitise-data', () => {
         const result = sanitiseValue('123');
 
         expect(result).toEqual(123);
+      });
+    });
+
+    describe('when value is a string number with commas', () => {
+      it('should return a number with commas removed', () => {
+        const result = sanitiseValue('1,234,567');
+
+        expect(result).toEqual(1234567);
       });
     });
 

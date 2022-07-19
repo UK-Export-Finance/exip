@@ -124,6 +124,23 @@ context('Tell us about the policy you need page - form validation', () => {
     });
   });
 
+  describe('when `amount` is not a whole number', () => {
+    it('should render a validation error', () => {
+      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().clear().type('1234.56');
+      tellUsAboutYourPolicyPage.submitButton().click();
+
+      checkText(
+        partials.errorSummaryListItems().eq(1),
+        ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_WHOLE_NUMBER,
+      );
+
+      checkText(
+        tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].errorMessage(),
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_WHOLE_NUMBER}`,
+      );
+    });
+  });
+
   describe('when `amount` has a value less than the minimum', () => {
     it('should render a validation error', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().clear().type('0');

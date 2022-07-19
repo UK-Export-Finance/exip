@@ -2,9 +2,20 @@ const { FIELD_IDS } = require('../../../../constants');
 const { ERROR_MESSAGES } = require('../../../../content-strings');
 const generateValidationErrors = require('../../../../helpers/validation');
 const { objectHasProperty } = require('../../../../helpers/object');
-const { isNumber } = require('../../../../helpers/number');
+const { numberHasDecimal } = require('../../../../helpers/number');
+const { stripCommas } = require('../../../../helpers/string');
 
 const MINIMUM = 1;
+
+const hasDisllowedCharacters = (str) => {
+  const disllowedValues = str.replace(/[0-9,]/g, '');
+
+  if (disllowedValues.length) {
+    return true;
+  }
+
+  return false;
+};
 
 const amountRules = (formBody, errors) => {
   let updatedErrors = errors;
@@ -19,7 +30,19 @@ const amountRules = (formBody, errors) => {
     return updatedErrors;
   }
 
-  if (!isNumber(Number(formBody[FIELD_IDS.AMOUNT]))) {
+  const submittedValue = formBody[FIELD_IDS.AMOUNT];
+
+  if (numberHasDecimal(submittedValue)) {
+    updatedErrors = generateValidationErrors(
+      FIELD_IDS.AMOUNT,
+      ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_WHOLE_NUMBER,
+      errors,
+    );
+
+    return updatedErrors;
+  }
+
+  if (hasDisllowedCharacters(submittedValue)) {
     updatedErrors = generateValidationErrors(
       FIELD_IDS.AMOUNT,
       ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_NUMBER,
@@ -29,7 +52,9 @@ const amountRules = (formBody, errors) => {
     return updatedErrors;
   }
 
-  if (Number(formBody[FIELD_IDS.AMOUNT]) < MINIMUM) {
+  const cleanString = stripCommas(submittedValue);
+
+  if (Number(cleanString) < MINIMUM) {
     updatedErrors = generateValidationErrors(
       FIELD_IDS.AMOUNT,
       ERROR_MESSAGES[FIELD_IDS.AMOUNT].BELOW_MINIMUM,
@@ -42,4 +67,7 @@ const amountRules = (formBody, errors) => {
   return updatedErrors;
 };
 
-module.exports = amountRules;
+module.exports = {
+  hasDisllowedCharacters,
+  amountRules,
+};

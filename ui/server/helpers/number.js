@@ -1,4 +1,4 @@
-const isNumber = (value) => Number.isInteger(value);
+const isNumber = (value) => !Number.isNaN(Number(value));
 
 const numberHasDecimal = (value) => String(value).includes('.');
 

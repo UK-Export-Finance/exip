@@ -5,6 +5,7 @@ const {
 const mockAnswers = require('./mock-answers');
 
 const {
+  AMOUNT,
   BUYER_COUNTRY,
   CURRENCY,
 } = FIELD_IDS;
@@ -12,6 +13,7 @@ const {
 const mockSession = {
   submittedData: {
     ...mockAnswers,
+    [AMOUNT]: Number(mockAnswers[AMOUNT]),
     [BUYER_COUNTRY]: {
       name: mockAnswers[BUYER_COUNTRY],
       isoCode: 'FRA',
