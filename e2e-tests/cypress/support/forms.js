@@ -52,6 +52,6 @@ export const compmleteAndSubmitTellUsAboutYourPolicyForm = () => {
   tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
   tellUsAboutYourPolicyPage[AMOUNT].input().type('150000');
   tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
-  tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('2');
+  tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('1');
   tellUsAboutYourPolicyPage.submitButton().click();
 };

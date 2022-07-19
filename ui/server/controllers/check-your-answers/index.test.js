@@ -32,7 +32,7 @@ describe('controllers/check-your-answers', () => {
       isoCode: 'GBP',
     },
     [AMOUNT]: 123456,
-    [CREDIT_PERIOD]: 24,
+    [CREDIT_PERIOD]: 2,
   };
 
   beforeEach(() => {

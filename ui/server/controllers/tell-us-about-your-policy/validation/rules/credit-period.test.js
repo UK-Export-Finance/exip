@@ -81,10 +81,28 @@ describe('controllers/tell-us-about-your-policy/validation/rules/credit-period',
     });
   });
 
+  describe(`when ${FIELD_IDS.CREDIT_PERIOD} is below the maximum`, () => {
+    it('should return validation error', () => {
+      const mockBody = {
+        [FIELD_IDS.CREDIT_PERIOD]: '3',
+      };
+
+      const result = rule(mockBody, mockErrors);
+
+      const expected = generateValidationErrors(
+        FIELD_IDS.CREDIT_PERIOD,
+        CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].ABOVE_MAXIMUM,
+        mockErrors,
+      );
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when there are no validation errors', () => {
     it('should return the already provided errors', () => {
       const mockBody = {
-        [FIELD_IDS.CREDIT_PERIOD]: '10',
+        [FIELD_IDS.CREDIT_PERIOD]: '1',
       };
 
       const result = rule(mockBody, mockErrors);

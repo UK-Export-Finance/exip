@@ -192,6 +192,23 @@ context('Tell us about the policy you need page - form validation', () => {
     });
   });
 
+  describe('when `credit period` has a value above the maximum', () => {
+    it('should render a validation error', () => {
+      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().clear().type('3');
+      tellUsAboutYourPolicyPage.submitButton().click();
+
+      checkText(
+        partials.errorSummaryListItems().eq(3),
+        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].ABOVE_MAXIMUM,
+      );
+
+      checkText(
+        tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].ABOVE_MAXIMUM}`,
+      );
+    });
+  });
+
   describe('with any validation error', () => {
     it('should render submitted values', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');

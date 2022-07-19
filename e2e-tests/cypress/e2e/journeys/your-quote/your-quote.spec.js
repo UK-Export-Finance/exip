@@ -40,7 +40,7 @@ const submissionData = {
   [CURRENCY]: 'GBP',
   [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
   [SINGLE_POLICY_LENGTH]: '3',
-  [CREDIT_PERIOD]: '2',
+  [CREDIT_PERIOD]: '1',
 };
 
 context('Your quote page', () => {

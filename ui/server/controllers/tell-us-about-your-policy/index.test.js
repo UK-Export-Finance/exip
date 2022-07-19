@@ -268,7 +268,7 @@ describe('controllers/tell-us-about-your-policy', () => {
       const validBody = {
         [FIELD_IDS.CURRENCY]: mockAnswers[FIELD_IDS.CURRENCY],
         [FIELD_IDS.AMOUNT]: '10',
-        [FIELD_IDS.CREDIT_PERIOD]: '30',
+        [FIELD_IDS.CREDIT_PERIOD]: '2',
         [FIELD_IDS.POLICY_LENGTH]: '40',
         [FIELD_IDS.POLICY_TYPE]: 'mock',
         [FIELD_IDS.PERCENTAGE_OF_COVER]: '95',

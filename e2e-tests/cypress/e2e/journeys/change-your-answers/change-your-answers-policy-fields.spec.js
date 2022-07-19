@@ -17,7 +17,7 @@ const {
 
 const submissionData = {
   [AMOUNT]: '150000',
-  [CREDIT_PERIOD]: '2',
+  [CREDIT_PERIOD]: '1',
 };
 
 context('Change your answers after checking answers - Policy fields', () => {
@@ -103,7 +103,7 @@ context('Change your answers after checking answers - Policy fields', () => {
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().clear().type('3');
+      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().clear().type('2');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
@@ -113,7 +113,7 @@ context('Change your answers after checking answers - Policy fields', () => {
       row = checkYourAnswersPage.summaryLists.policy[CREDIT_PERIOD];
 
       row.value().invoke('text').then((text) => {
-        const expected = '3 days';
+        const expected = '2 days';
 
         expect(text.trim()).equal(expected);
       });

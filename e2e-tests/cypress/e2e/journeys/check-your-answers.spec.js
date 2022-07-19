@@ -29,7 +29,7 @@ context('Check your answers page', () => {
   const submissionData = {
     [BUYER_COUNTRY]: 'Algeria',
     [UK_GOODS_OR_SERVICES]: '50',
-    [CREDIT_PERIOD]: '2',
+    [CREDIT_PERIOD]: '1',
     [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
     [SINGLE_POLICY_LENGTH]: '3',
   };
