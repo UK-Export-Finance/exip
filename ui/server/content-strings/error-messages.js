@@ -13,7 +13,8 @@ const ERROR_MESSAGES = {
   },
   [FIELD_IDS.AMOUNT]: {
     IS_EMPTY: 'Enter how much you want to be insured for',
-    NOT_A_NUMBER: 'Amount must be a number',
+    NOT_A_NUMBER: 'Enter your amount as a whole number, do not enter decimals',
+    NOT_A_WHOLE_NUMBER: 'Enter your amount as a whole number, do not enter decimals',
     BELOW_MINIMUM: 'Amount must be 1 or more',
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
