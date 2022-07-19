@@ -1,5 +1,11 @@
 import {
-  ukGoodsOrServicesPage,
+  completeAndSubmitBuyerForm,
+  completeAndSubmitCompanyForm,
+  completeAndSubmitTriedToObtainCoverForm,
+  completeAndSubmitUkContentForm,
+} from '../../../support/forms';
+import {
+  beforeYouStartPage,
   policyTypePage,
 } from '../../pages';
 import partials from '../../partials';
@@ -21,15 +27,13 @@ const {
 context('Policy type page', () => {
   describe('rendering', () => {
     before(() => {
-      cy.visit(ROUTES.UK_GOODS_OR_SERVICES, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
+      cy.login();
 
-      ukGoodsOrServicesPage.yes().click();
-      ukGoodsOrServicesPage.submitButton().click();
+      beforeYouStartPage.submitButton().click();
+      completeAndSubmitBuyerForm();
+      completeAndSubmitCompanyForm();
+      completeAndSubmitTriedToObtainCoverForm();
+      completeAndSubmitUkContentForm();
 
       cy.url().should('include', ROUTES.POLICY_TYPE);
     });
