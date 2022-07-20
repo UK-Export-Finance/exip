@@ -19,6 +19,7 @@ const ukGoodsOrServicesPage = {
       listItem4: () => cy.get('[data-cy="details-includes-item-4"]'),
       listItem4Link: () => cy.get('[data-cy="details-includes-item-4-link"]'),
     },
+    canAlsoCount: () => cy.get('[data-cy="details-can-also-count"]'),
     doesNotCount: {
       heading: () => cy.get('[data-cy="details-does-not-count-heading"]'),
       copy: () => cy.get('[data-cy="details-does-not-count-copy"]'),

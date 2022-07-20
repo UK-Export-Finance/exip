@@ -90,6 +90,7 @@ const UK_GOODS_OR_SERVICES_PAGE = {
         TEXT: 'that are produced in the UK',
       },
     },
+    CAN_ALSO_COUNT: 'If any of the above are from the Channel Islands or Isle of Man, you can also count them as UK goods or services.',
     DOES_NOT_COUNT: {
       HEADING: 'What does not count as UK goods and services',
       TEXT: 'Goods or services from outside the UK that you\'ll send directly to the buyer unprocessed or unaltered in the UK are classed as foreign goods and services.',
