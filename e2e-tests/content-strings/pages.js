@@ -57,8 +57,8 @@ const COMPANY_BASED_PAGE = {
 };
 
 const BUYER_COUNTRY_PAGE = {
-  PAGE_TITLE: 'In which country is your buyer based?',
-  HEADING: 'In which country is your buyer based?',
+  PAGE_TITLE: 'Where is your buyer based?',
+  HEADING: 'Where is your buyer based?',
 };
 
 const CAN_GET_PRIVATE_INSURANCE_PAGE = {
