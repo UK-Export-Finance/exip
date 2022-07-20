@@ -22,6 +22,7 @@ describe('controllers/index', () => {
         CONTENT_STRINGS: {
           PRODUCT: CONTENT_STRINGS.PRODUCT,
           FOOTER: CONTENT_STRINGS.FOOTER,
+          LINKS: CONTENT_STRINGS.LINKS,
           ...CONTENT_STRINGS.PAGES.BEFORE_YOU_START,
         },
       };
@@ -34,7 +35,10 @@ describe('controllers/index', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.BEFORE_YOU_START, PAGE_VARIABLES);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.BEFORE_YOU_START, {
+        ...PAGE_VARIABLES,
+        BACK_LINK: req.headers.referer,
+      });
     });
   });
 

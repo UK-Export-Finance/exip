@@ -5,12 +5,16 @@ const PAGE_VARIABLES = {
   CONTENT_STRINGS: {
     PRODUCT: CONTENT_STRINGS.PRODUCT,
     FOOTER: CONTENT_STRINGS.FOOTER,
+    LINKS: CONTENT_STRINGS.LINKS,
     ...CONTENT_STRINGS.PAGES.BEFORE_YOU_START,
   },
 };
 
 const get = (req, res) =>
-  res.render(TEMPLATES.BEFORE_YOU_START, PAGE_VARIABLES);
+  res.render(TEMPLATES.BEFORE_YOU_START, {
+    ...PAGE_VARIABLES,
+    BACK_LINK: req.headers.referer,
+  });
 
 const post = (req, res) => {
   // new submitted data session
