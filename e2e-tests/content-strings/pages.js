@@ -7,13 +7,21 @@ const BEFORE_YOU_START = {
   INTRO_1: 'If you\'re an exporter and having problems getting export insurance, you may be able to get cover from UK Export Finance (UKEF).',
   INTRO_2: 'This is sometimes known as credit insurance.',
   USE_SERVICE_TO: {
-    INTRO: 'Use this service to:',
+    INTRO: 'Use this service to get a non-binding quote for a:',
     LIST: [
       {
-        text: 'get a non-binding quote to cover a single buyer for up to 9 months',
+        text: 'single contract policy for up to 22 months',
       },
       {
-        text: 'check if your buyer country is covered',
+        text: 'multiple contract policy for up to 12 months',
+      },
+    ],
+  },
+  CAN_ALSO: {
+    INTRO: 'You can also use it to:',
+    LIST: [
+      {
+        text: 'check if your buyer\'s country is covered',
       },
       {
         text: 'complete a basic eligibility check',
@@ -22,14 +30,24 @@ const BEFORE_YOU_START = {
   },
   YOU_WILL_NEED: 'You`ll need to get a separate quote for each buyer you want to export to.',
   COMPLETION_TIME: 'It takes around 5 minutes.',
-  MORE_THAN_MAX_PERIOD: {
-    INTRO: 'If you need cover for more than 9 months,',
-    LINK: {
-      TEXT: 'fill in this form',
-      HREF: LINKS.EXTERNAL.NBI_FORM,
-    },
-    OUTRO: 'instead',
-  },
+  MORE_THAN_MAX_PERIOD: [
+    [
+      {
+        text: 'If you need cover for a single contract policy of more than 22 months,',
+      },
+      {
+        text: 'fill in this form',
+        href: LINKS.EXTERNAL.NBI_FORM,
+      },
+      {
+        text: ' instead. ',
+      },
+      {
+        text: 'You cannot usually get a multiple contract policy over 12 months.',
+      },
+    ],
+  ],
+
   SUBMIT_BUTTON: 'Start now',
 };
 

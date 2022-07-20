@@ -81,6 +81,19 @@ context('Before you start page', () => {
     });
   });
 
+  it('renders `you can also` content', () => {
+    beforeYouStartPage.canAlso.intro().invoke('text').then((text) => {
+      expect(text.trim()).equal(CONTENT_STRINGS.CAN_ALSO.INTRO);
+    });
+
+    const expectedLength = CONTENT_STRINGS.CAN_ALSO.LIST.length;
+    beforeYouStartPage.canAlso.listItems().should('have.length', expectedLength);
+
+    beforeYouStartPage.canAlso.listItems().each(($element, index) => {
+      expect($element.text().trim()).equal(CONTENT_STRINGS.CAN_ALSO.LIST[index].text);
+    });
+  });
+
   it('renders `you will need` copy', () => {
     beforeYouStartPage.youWillNeed().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.YOU_WILL_NEED);
@@ -93,20 +106,15 @@ context('Before you start page', () => {
     });
   });
 
-  it('renders `if you need cover for more than...` copy', () => {
+  it('renders `if you need cover for more than...` content', () => {
     beforeYouStartPage.moreThanMaxPeriod().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.MORE_THAN_MAX_PERIOD.INTRO} ${CONTENT_STRINGS.MORE_THAN_MAX_PERIOD.LINK.TEXT} ${CONTENT_STRINGS.MORE_THAN_MAX_PERIOD.OUTRO}`;
-
-      expect(text.trim()).equal(expected);
-    });
-  });
-
-  it('renders `if you need cover for more than...` link', () => {
-    beforeYouStartPage.moreThanMaxPeriodLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.MORE_THAN_MAX_PERIOD.LINK.TEXT);
+      expect(text.trim()).includes(CONTENT_STRINGS.MORE_THAN_MAX_PERIOD[0][0].text);
+      expect(text.trim()).includes(CONTENT_STRINGS.MORE_THAN_MAX_PERIOD[0][1].text);
+      expect(text.trim()).includes(CONTENT_STRINGS.MORE_THAN_MAX_PERIOD[0][2].text);
+      expect(text.trim()).includes(CONTENT_STRINGS.MORE_THAN_MAX_PERIOD[0][3].text);
     });
 
-    const expectedHref = CONTENT_STRINGS.MORE_THAN_MAX_PERIOD.LINK.HREF;
+    const expectedHref = CONTENT_STRINGS.MORE_THAN_MAX_PERIOD[0][1].href;
     beforeYouStartPage.moreThanMaxPeriodLink().should('have.attr', 'href', expectedHref);
   });
 
