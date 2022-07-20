@@ -13,10 +13,6 @@ const FOOTER = {
     VALUE: 'Monday to Friday, 9am to 5pm (excluding public holidays)',
   },
   SUPPORT_LINKS_HEADING: 'Support Links',
-  MASTER_GUARANTEE_AGREEMENT: {
-    TEXT: 'Master Guarantee Agreement',
-    HREF: '#',
-  },
   TERMS_AND_CONDITIONS: {
     TEXT: 'Terms and conditions',
     HREF: '#',

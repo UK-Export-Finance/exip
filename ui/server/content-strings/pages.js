@@ -34,8 +34,8 @@ const BEFORE_YOU_START = {
 };
 
 const COMPANY_BASED_PAGE = {
-  PAGE_TITLE: 'Is your company based inside the UK, Channel Islands and Isle of Man?',
-  HEADING: 'Is your company based inside the UK, Channel Islands and Isle of Man?',
+  PAGE_TITLE: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
+  HEADING: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
 };
 
 const BUYER_COUNTRY_PAGE = {
@@ -60,14 +60,14 @@ const UK_GOODS_OR_SERVICES_PAGE = {
       STAFFING_COSTS: {
         LINK: {
           TEXT: 'staffing costs',
-          HREF: '#',
+          HREF: '#staffing-costs',
         },
         TEXT: 'from services provided by UK companies',
       },
       NON_PHYSICAL_ASSETS: {
         LINK: {
           TEXT: 'non-physical assets',
-          HREF: '#',
+          HREF: '#non-physical-assets',
         },
         TEXT: 'that are produced in the UK',
       },

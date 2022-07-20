@@ -3,7 +3,6 @@
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from 'govuk/components/radios/macro.njk' import govukRadios %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
-{% import './components/details-text.njk' as detailsText %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 
@@ -106,7 +105,7 @@
       <h2 class="govuk-heading-s"  data-cy="details-does-not-count-heading">{{ CONTENT_STRINGS.DETAILS.DOES_NOT_COUNT.HEADING }}</h2>
       <p data-cy="details-does-not-count-copy">{{ CONTENT_STRINGS.DETAILS.DOES_NOT_COUNT.TEXT }}</p>
 
-      <h2 class="govuk-heading-s" data-cy="details-staffing-costs-heading">{{ CONTENT_STRINGS.DETAILS.STAFFING_COSTS.HEADING }}</h2>
+      <h2 class="govuk-heading-s" id="staffing-costs" data-cy="details-staffing-costs-heading">{{ CONTENT_STRINGS.DETAILS.STAFFING_COSTS.HEADING }}</h2>
       <p data-cy="details-staffing-costs-copy">{{ CONTENT_STRINGS.DETAILS.STAFFING_COSTS.TEXT }}</p>
 
       <ul>
@@ -115,7 +114,7 @@
         {% endfor %}
       </ul>
 
-      <h2 class="govuk-heading-s" data-cy="details-non-physical-assets-heading">{{ CONTENT_STRINGS.DETAILS.NON_PHYSICAL_ASSETS.HEADING }}</h2>
+      <h2 class="govuk-heading-s" id="non-physical-assets" data-cy="details-non-physical-assets-heading">{{ CONTENT_STRINGS.DETAILS.NON_PHYSICAL_ASSETS.HEADING }}</h2>
       <p data-cy="details-non-physical-assets-copy">{{ CONTENT_STRINGS.DETAILS.NON_PHYSICAL_ASSETS.TEXT }}</p>
 
 
