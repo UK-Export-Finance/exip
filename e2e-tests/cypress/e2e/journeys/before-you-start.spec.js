@@ -13,7 +13,7 @@ import CONSTANTS from '../../../constants';
 const CONTENT_STRINGS = PAGES.BEFORE_YOU_START;
 const { ROUTES } = CONSTANTS;
 
-context('Before you start page', () => {;
+context('Before you start page', () => {
   before(() => {
     cy.visit(ROUTES.GUIDANCE, {
       auth: {
