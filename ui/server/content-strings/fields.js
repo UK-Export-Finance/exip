@@ -1,5 +1,6 @@
 const FIELD_IDS = require('../constants/field-ids');
 const FIELD_VALUES = require('../constants/field-values');
+const LINKS = require('./links');
 
 const FIELDS = {
   [FIELD_IDS.COUNTRY]: {
@@ -81,13 +82,13 @@ const FIELDS = {
         ID: FIELD_IDS.SINGLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.SINGLE,
         TEXT: 'Single contract policy',
-        HINT: 'This covers a single export contract with a specific buyer with one or more shipments.',
+        HINT: 'This covers a single export contract with a single buyer for one or more shipments. You need to pay before the policy starts.',
       },
       MULTI: {
         ID: FIELD_IDS.MULTI_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTI,
         TEXT: 'Multiple contract policy (also known as a revolving policy)',
-        HINT: 'This covers multiple export contracts or orders with the same buyer. You\'ll need to be able to estimate the total value of the exports during the policy.',
+        HINT: 'This covers multiple export contracts with the same buyer. You do not need to pay before the policy starts. You\'ll pay each time you declare a new export sale.',
       },
     },
     SUMMARY: {
@@ -106,14 +107,27 @@ const FIELDS = {
   },
   [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
-    HINT: 'Calculate this from the date you start working on the contract until you receive final payment. The maximum is 9 months.',
+    HINT: [
+      [
+        {
+          text: 'You can get an online quote for up to 22 months. For over 22 months',
+        },
+        {
+          text: 'fill in this form',
+          href: LINKS.EXTERNAL.NBI_FORM,
+        },
+        {
+          text: ' and email it to UKEF.',
+        },
+      ],
+    ],
     SUMMARY: {
       TITLE: 'Policy length',
     },
   },
   [FIELD_IDS.MULTI_POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
-    HINT: 'Calculate this from the date you start working on the contract until you receive final payment. The maximum is 9 months.',
+    HINT: 'The maximum policy length is 12 months.',
     SUMMARY: {
       TITLE: 'Policy length',
     },

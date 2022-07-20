@@ -123,8 +123,13 @@ context('Policy type page', () => {
         });
 
         singlePolicyLength.hint().invoke('text').then((text) => {
-          expect(text.trim()).equal(FIELDS[singlePolicyLengthId].HINT);
+          expect(text.trim()).includes(FIELDS[singlePolicyLengthId].HINT[0][0].text);
+          expect(text.trim()).includes(FIELDS[singlePolicyLengthId].HINT[0][1].text);
+          expect(text.trim()).includes(FIELDS[singlePolicyLengthId].HINT[0][2].text);
         });
+
+        const expectedHref = LINKS.EXTERNAL.NBI_FORM;
+        singlePolicyLength.hintLink().should('have.attr', 'href', expectedHref);
       });
     });
 
