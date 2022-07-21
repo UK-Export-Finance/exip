@@ -5,7 +5,6 @@ const { FIELDS } = require('../content-strings');
 const {
   VALID_COMPANY_BASE,
   BUYER_COUNTRY,
-  AMOUNT,
 } = FIELD_IDS;
 
 const FIELD_GROUPS = {
@@ -21,13 +20,7 @@ const FIELD_GROUPS = {
       CHANGE_ROUTE: ROUTES.COMPANY_BASED_CHANGE,
     },
   ],
-  POLICY_DETAILS: [
-    {
-      ID: AMOUNT,
-      ...FIELDS[AMOUNT],
-      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
-    },
-  ],
+  POLICY_DETAILS: [],
 };
 
 module.exports = FIELD_GROUPS;

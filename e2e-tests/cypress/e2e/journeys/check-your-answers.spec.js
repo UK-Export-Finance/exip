@@ -187,29 +187,6 @@ context('Check your answers page', () => {
       });
     });
 
-    it('renders `Amount` key, value and change link', () => {
-      const row = list[AMOUNT];
-      const expectedKeyText = FIELDS[AMOUNT].SUMMARY.TITLE;
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
-
-      row.value().invoke('text').then((text) => {
-        const expected = '£150,000.00';
-
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
-
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
-    });
-
     it('renders `Policy type` key, value and change link', () => {
       const row = list[SINGLE_POLICY_TYPE];
       const expectedKeyText = FIELDS[SINGLE_POLICY_TYPE].SUMMARY.TITLE;
@@ -251,6 +228,29 @@ context('Check your answers page', () => {
       });
 
       const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
+    });
+
+    it('renders `Amount` key, value and change link', () => {
+      const row = list[AMOUNT];
+      const expectedKeyText = FIELDS[AMOUNT].SUMMARY.TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        const expected = '£150,000.00';
+
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 

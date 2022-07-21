@@ -16,7 +16,7 @@ const FIELDS = {
   },
   [FIELD_IDS.BUYER_COUNTRY]: {
     SUMMARY: {
-      TITLE: 'Buyer is based',
+      TITLE: 'Buyer is based in',
     },
   },
   [FIELD_IDS.CAN_GET_PRIVATE_INSURANCE]: {
@@ -50,7 +50,7 @@ const FIELDS = {
     LABEL: 'Percentage of your export that is UK content',
     HINT: 'Enter the UK content of your export as a percentage.',
     SUMMARY: {
-      TITLE: 'Value of UK goods or services',
+      TITLE: 'UK goods or services',
     },
   },
   [FIELD_IDS.AMOUNT_CURRENCY]: {
@@ -62,7 +62,7 @@ const FIELDS = {
   [FIELD_IDS.AMOUNT]: {
     LABEL: 'Amount',
     SUMMARY: {
-      TITLE: 'Amount insured for',
+      TITLE: 'Total value of contract',
     },
   },
   [FIELD_IDS.CREDIT_PERIOD]: {

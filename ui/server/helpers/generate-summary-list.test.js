@@ -19,14 +19,15 @@ const {
 const { mockAnswers } = require('../test-mocks');
 
 const {
+  AMOUNT,
   CAN_GET_PRIVATE_INSURANCE_YES,
   CAN_GET_PRIVATE_INSURANCE_NO,
-  UK_GOODS_OR_SERVICES,
-  SINGLE_POLICY_TYPE,
+  CREDIT_PERIOD,
+  MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
-  MULTI_POLICY_LENGTH,
-  CREDIT_PERIOD,
+  SINGLE_POLICY_TYPE,
+  UK_GOODS_OR_SERVICES,
 } = FIELD_IDS;
 
 describe('server/helpers/generate-summary-list', () => {
@@ -55,15 +56,9 @@ describe('server/helpers/generate-summary-list', () => {
             text: mockAnswersContent[field.ID].text,
           },
         })),
-        POLICY_DETAILS: fieldGroups.POLICY_DETAILS.map((field) => ({
-          ...field,
-          value: {
-            text: mockAnswersContent[field.ID].text,
-          },
-        })),
       };
 
-      // UK_GOODS_OR_SERVICES is dynamically added after a previous field.
+      // the following fields are dynamically added after previous fields.
       expected.EXPORT_DETAILS = [
         ...expected.EXPORT_DETAILS,
         {
@@ -76,9 +71,15 @@ describe('server/helpers/generate-summary-list', () => {
         },
       ];
 
-      // CREDIT_PERIOD is dynamically added after a previous field.
       expected.POLICY_DETAILS = [
-        ...expected.POLICY_DETAILS,
+        {
+          ID: AMOUNT,
+          ...FIELDS[AMOUNT],
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          value: {
+            text: mockAnswersContent[AMOUNT].text,
+          },
+        },
         {
           ID: CREDIT_PERIOD,
           ...FIELDS[CREDIT_PERIOD],
@@ -156,7 +157,7 @@ describe('server/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 3];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 4];
 
         const expected = {
           ID: SINGLE_POLICY_TYPE,
@@ -181,7 +182,7 @@ describe('server/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 2];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 3];
 
         const expected = {
           ID: SINGLE_POLICY_LENGTH,
@@ -212,7 +213,7 @@ describe('server/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 3];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 4];
 
         const expected = {
           ID: MULTI_POLICY_TYPE,
@@ -241,7 +242,7 @@ describe('server/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 2];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 3];
 
         const expected = {
           ID: MULTI_POLICY_LENGTH,

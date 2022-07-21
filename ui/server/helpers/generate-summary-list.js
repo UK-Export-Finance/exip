@@ -10,20 +10,18 @@ const {
 } = require('../constants');
 
 const {
+  AMOUNT,
   CAN_GET_PRIVATE_INSURANCE_YES,
   CAN_GET_PRIVATE_INSURANCE_NO,
-  UK_GOODS_OR_SERVICES,
-  SINGLE_POLICY_TYPE,
-  MULTI_POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
-  MULTI_POLICY_LENGTH,
   CREDIT_PERIOD,
+  MULTI_POLICY_LENGTH,
+  MULTI_POLICY_TYPE,
+  SINGLE_POLICY_TYPE,
+  SINGLE_POLICY_LENGTH,
+  UK_GOODS_OR_SERVICES,
 } = FIELD_IDS;
 
-const {
-  EXPORT_DETAILS,
-  POLICY_DETAILS,
-} = FIELD_GROUPS;
+const { EXPORT_DETAILS } = FIELD_GROUPS;
 
 /*
  * generateFieldGroups
@@ -33,18 +31,15 @@ const {
  * - UK goods/services
  * - Policy type depending on the Policy type (single/multi)
  * - Policy length depending on the Policy type (single/multi)
- * - Policy type & length (must have the correct single/multi input ID).
+ * - Amount
  * - Credit periood
  */
 const generateFieldGroups = (submittedData) => {
   const fieldGroups = { ...FIELD_GROUPS };
 
-  fieldGroups.EXPORT_DETAILS = EXPORT_DETAILS.map((field) => ({
-    ...field,
-    value: submittedData[field.ID],
-  }));
+  // TODO: update comment ^^
 
-  fieldGroups.POLICY_DETAILS = POLICY_DETAILS.map((field) => ({
+  fieldGroups.EXPORT_DETAILS = EXPORT_DETAILS.map((field) => ({
     ...field,
     value: submittedData[field.ID],
   }));
@@ -91,7 +86,6 @@ const generateFieldGroups = (submittedData) => {
 
   if (submittedData[SINGLE_POLICY_TYPE]) {
     fieldGroups.POLICY_DETAILS = [
-      ...fieldGroups.POLICY_DETAILS,
       {
         ID: SINGLE_POLICY_TYPE,
         ...FIELDS[SINGLE_POLICY_TYPE],
@@ -113,7 +107,6 @@ const generateFieldGroups = (submittedData) => {
 
   if (submittedData[MULTI_POLICY_TYPE]) {
     fieldGroups.POLICY_DETAILS = [
-      ...fieldGroups.POLICY_DETAILS,
       {
         ID: MULTI_POLICY_TYPE,
         ...FIELDS[MULTI_POLICY_TYPE],
@@ -135,6 +128,14 @@ const generateFieldGroups = (submittedData) => {
 
   fieldGroups.POLICY_DETAILS = [
     ...fieldGroups.POLICY_DETAILS,
+    {
+      ID: AMOUNT,
+      ...FIELDS[AMOUNT],
+      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+      value: {
+        text: submittedData[AMOUNT].text,
+      },
+    },
     {
       ID: CREDIT_PERIOD,
       ...FIELDS[CREDIT_PERIOD],
