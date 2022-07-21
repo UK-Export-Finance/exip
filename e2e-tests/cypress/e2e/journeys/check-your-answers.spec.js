@@ -16,22 +16,24 @@ const { ROUTES, FIELD_VALUES } = CONSTANTS;
 
 context('Check your answers page', () => {
   const {
-    VALID_COMPANY_BASE,
+    AMOUNT,
     BUYER_COUNTRY,
     CAN_GET_PRIVATE_INSURANCE_NO,
-    UK_GOODS_OR_SERVICES,
-    AMOUNT,
     CREDIT_PERIOD,
+    PERCENTAGE_OF_COVER,
     SINGLE_POLICY_TYPE,
     SINGLE_POLICY_LENGTH,
+    UK_GOODS_OR_SERVICES,
+    VALID_COMPANY_BASE,
   } = FIELD_IDS;
 
   const submissionData = {
     [BUYER_COUNTRY]: 'Algeria',
-    [UK_GOODS_OR_SERVICES]: '50',
     [CREDIT_PERIOD]: '1',
+    [PERCENTAGE_OF_COVER]: '90',
     [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
     [SINGLE_POLICY_LENGTH]: '3',
+    [UK_GOODS_OR_SERVICES]: '50',
   };
 
   before(() => {
@@ -251,6 +253,29 @@ context('Check your answers page', () => {
       });
 
       const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
+    });
+
+    it('renders `Percentage of cover` key, value and change link', () => {
+      const row = list[PERCENTAGE_OF_COVER];
+      const expectedKeyText = FIELDS[PERCENTAGE_OF_COVER].SUMMARY.TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        const expected = `${submissionData[PERCENTAGE_OF_COVER]}%`;
+
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 

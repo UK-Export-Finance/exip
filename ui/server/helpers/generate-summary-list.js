@@ -16,6 +16,7 @@ const {
   CREDIT_PERIOD,
   MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
+  PERCENTAGE_OF_COVER,
   SINGLE_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   UK_GOODS_OR_SERVICES,
@@ -27,11 +28,8 @@ const {
  * Create all field groups for govukSummaryList
  * The following fields depend on the submitted answers and design ordering requirements:
  * - Tried private cover (must have the correct yes/no input ID)
- * - UK goods/services
- * - Policy type depending on the Policy type (single/multi)
- * - Policy length depending on the Policy type (single/multi)
- * - Amount
- * - Credit periood
+ * - Policy type depending on the Policy type (must have single/multi input ID)
+ * - Policy length depending on the Policy type (must have single/multi input ID)
  */
 const generateFieldGroups = (submittedData) => {
   const fieldGroups = {
@@ -156,6 +154,14 @@ const generateFieldGroups = (submittedData) => {
       CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
       value: {
         text: submittedData[CREDIT_PERIOD].text,
+      },
+    },
+    {
+      ID: PERCENTAGE_OF_COVER,
+      ...FIELDS[PERCENTAGE_OF_COVER],
+      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+      value: {
+        text: submittedData[PERCENTAGE_OF_COVER].text,
       },
     },
   ];

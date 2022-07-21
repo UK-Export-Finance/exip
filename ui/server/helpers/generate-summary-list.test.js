@@ -25,6 +25,7 @@ const {
   CREDIT_PERIOD,
   MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
+  PERCENTAGE_OF_COVER,
   SINGLE_POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
   UK_GOODS_OR_SERVICES,
@@ -100,6 +101,14 @@ describe('server/helpers/generate-summary-list', () => {
             text: mockAnswersContent[CREDIT_PERIOD].text,
           },
         },
+        {
+          ID: PERCENTAGE_OF_COVER,
+          ...FIELDS[PERCENTAGE_OF_COVER],
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          value: {
+            text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
+          },
+        },
       ];
 
       expect(result).toEqual(expected);
@@ -169,7 +178,7 @@ describe('server/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 4];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 5];
 
         const expected = {
           ID: SINGLE_POLICY_TYPE,
@@ -194,7 +203,7 @@ describe('server/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 3];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 4];
 
         const expected = {
           ID: SINGLE_POLICY_LENGTH,
@@ -225,7 +234,7 @@ describe('server/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 4];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 5];
 
         const expected = {
           ID: MULTI_POLICY_TYPE,
@@ -254,7 +263,7 @@ describe('server/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 3];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 4];
 
         const expected = {
           ID: MULTI_POLICY_LENGTH,
