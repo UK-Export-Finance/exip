@@ -99,7 +99,7 @@ context('Is at least 20% of your export contract value made up from UK goods or 
     });
   });
 
-  describe('expandable details', () => {
+  describe.only('expandable details', () => {
     const { details } = ukGoodsOrServicesPage;
     const { DETAILS } = CONTENT_STRINGS;
 
