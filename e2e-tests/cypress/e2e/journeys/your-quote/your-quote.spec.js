@@ -66,6 +66,10 @@ context('Your quote page', () => {
     });
   });
 
+  it('renders a phase banner', () => {
+    cy.checkPhaseBanner();
+  });
+
   context('panel/quote', () => {
     it('renders `you can apply` heading', () => {
       yourQuotePage.panel.heading().invoke('text').then((text) => {

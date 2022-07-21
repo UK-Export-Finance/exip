@@ -44,6 +44,10 @@ context('Is at least 20% of your export contract value made up from UK goods or 
     });
   });
 
+  it('renders a phase banner', () => {
+    cy.checkPhaseBanner();
+  });
+
   it('renders a back button with correct link', () => {
     partials.backLink().should('exist');
     partials.backLink().invoke('text').then((text) => {

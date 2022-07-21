@@ -20,6 +20,10 @@ context('Guidance page', () => {
     });
   });
 
+  it('renders a phase banner', () => {
+    cy.checkPhaseBanner();
+  });
+
   describe('what it costs section - get a quote link', () => {
     it('clicking the link redirects to the `Before you start` page', () => {
       guidancePage.whatItCosts.getAQuote().click();
