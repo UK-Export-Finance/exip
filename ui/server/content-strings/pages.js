@@ -214,10 +214,10 @@ const YOUR_QUOTE_PAGE = {
       ITEMS: [
         [
           {
-            text: 'They work for UKEF and are available in every region. They can give you free guidance when making a full application. Find your nearest',
+            text: 'They work for UKEF and are available in every region. They can give you free guidance when making a full application. Find your',
           },
           {
-            text: 'export finance manager',
+            text: 'nearest export finance manager',
             href: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
           },
           {
