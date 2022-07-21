@@ -4,50 +4,57 @@ const {
   LINKS,
 } = require('../content-strings');
 const {
-  FIELD_GROUPS,
   FIELD_IDS,
   ROUTES,
 } = require('../constants');
 
 const {
+  AMOUNT,
+  BUYER_COUNTRY,
   CAN_GET_PRIVATE_INSURANCE_YES,
   CAN_GET_PRIVATE_INSURANCE_NO,
-  UK_GOODS_OR_SERVICES,
-  SINGLE_POLICY_TYPE,
-  MULTI_POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
-  MULTI_POLICY_LENGTH,
   CREDIT_PERIOD,
+  MULTI_POLICY_LENGTH,
+  MULTI_POLICY_TYPE,
+  PERCENTAGE_OF_COVER,
+  SINGLE_POLICY_TYPE,
+  SINGLE_POLICY_LENGTH,
+  UK_GOODS_OR_SERVICES,
+  VALID_COMPANY_BASE,
 } = FIELD_IDS;
-
-const {
-  EXPORT_DETAILS,
-  POLICY_DETAILS,
-} = FIELD_GROUPS;
 
 /*
  * generateFieldGroups
  * Create all field groups for govukSummaryList
- * Add additional fields depending on the submitted answers and design ordering requirements:
+ * The following fields depend on the submitted answers and design ordering requirements:
  * - Tried private cover (must have the correct yes/no input ID)
- * - UK goods/services
- * - Policy type depending on the Policy type (single/multi)
- * - Policy length depending on the Policy type (single/multi)
- * - Policy type & length (must have the correct single/multi input ID).
- * - Credit periood
+ * - Policy type depending on the Policy type (must have single/multi input ID)
+ * - Policy length depending on the Policy type (must have single/multi input ID)
  */
 const generateFieldGroups = (submittedData) => {
-  const fieldGroups = { ...FIELD_GROUPS };
+  const fieldGroups = {
+    EXPORT_DETAILS: [],
+    POLICY_DETAILS: [],
+  };
 
-  fieldGroups.EXPORT_DETAILS = EXPORT_DETAILS.map((field) => ({
-    ...field,
-    value: submittedData[field.ID],
-  }));
-
-  fieldGroups.POLICY_DETAILS = POLICY_DETAILS.map((field) => ({
-    ...field,
-    value: submittedData[field.ID],
-  }));
+  fieldGroups.EXPORT_DETAILS = [
+    {
+      ID: BUYER_COUNTRY,
+      ...FIELDS[BUYER_COUNTRY],
+      CHANGE_ROUTE: ROUTES.BUYER_COUNTRY_CHANGE,
+      value: {
+        text: submittedData[BUYER_COUNTRY].text,
+      },
+    },
+    {
+      ID: VALID_COMPANY_BASE,
+      ...FIELDS[VALID_COMPANY_BASE],
+      CHANGE_ROUTE: ROUTES.COMPANY_BASED_CHANGE,
+      value: {
+        text: submittedData[VALID_COMPANY_BASE].text,
+      },
+    },
+  ];
 
   if (submittedData[CAN_GET_PRIVATE_INSURANCE_YES]) {
     fieldGroups.EXPORT_DETAILS = [
@@ -91,7 +98,6 @@ const generateFieldGroups = (submittedData) => {
 
   if (submittedData[SINGLE_POLICY_TYPE]) {
     fieldGroups.POLICY_DETAILS = [
-      ...fieldGroups.POLICY_DETAILS,
       {
         ID: SINGLE_POLICY_TYPE,
         ...FIELDS[SINGLE_POLICY_TYPE],
@@ -113,7 +119,6 @@ const generateFieldGroups = (submittedData) => {
 
   if (submittedData[MULTI_POLICY_TYPE]) {
     fieldGroups.POLICY_DETAILS = [
-      ...fieldGroups.POLICY_DETAILS,
       {
         ID: MULTI_POLICY_TYPE,
         ...FIELDS[MULTI_POLICY_TYPE],
@@ -136,11 +141,27 @@ const generateFieldGroups = (submittedData) => {
   fieldGroups.POLICY_DETAILS = [
     ...fieldGroups.POLICY_DETAILS,
     {
+      ID: AMOUNT,
+      ...FIELDS[AMOUNT],
+      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+      value: {
+        text: submittedData[AMOUNT].text,
+      },
+    },
+    {
       ID: CREDIT_PERIOD,
       ...FIELDS[CREDIT_PERIOD],
       CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
       value: {
         text: submittedData[CREDIT_PERIOD].text,
+      },
+    },
+    {
+      ID: PERCENTAGE_OF_COVER,
+      ...FIELDS[PERCENTAGE_OF_COVER],
+      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+      value: {
+        text: submittedData[PERCENTAGE_OF_COVER].text,
       },
     },
   ];

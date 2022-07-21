@@ -13,6 +13,10 @@ context('Page not found', () => {
     });
   });
 
+  it('renders a phase banner', () => {
+    cy.checkPhaseBanner();
+  });
+
   it('renders a heading', () => {
     pageNotFoundPage.heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);

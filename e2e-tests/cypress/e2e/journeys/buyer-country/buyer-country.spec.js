@@ -38,6 +38,10 @@ context('Which country is your buyer based page', () => {
     });
   });
 
+  it('renders a phase banner', () => {
+    cy.checkPhaseBanner();
+  });
+
   it('renders a back button with correct link', () => {
     partials.backLink().should('exist');
     partials.backLink().invoke('text').then((text) => {

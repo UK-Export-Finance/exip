@@ -1,6 +1,7 @@
 const {
-  mapPolicyType,
   mapTriedPrivateCover,
+  mapPolicyType,
+  mapPercentageOfCover,
   mapAnswersToContent,
 } = require('./map-answers-to-content');
 const mapCountry = require('./map-country');
@@ -15,54 +16,22 @@ const { SUMMARY_ANSWERS } = require('../../content-strings');
 const { mockAnswers } = require('../../test-mocks');
 
 const {
-  VALID_COMPANY_BASE,
+  AMOUNT,
   BUYER_COUNTRY,
   CAN_GET_PRIVATE_INSURANCE,
   CAN_GET_PRIVATE_INSURANCE_YES,
   CAN_GET_PRIVATE_INSURANCE_NO,
-  UK_GOODS_OR_SERVICES,
-  AMOUNT,
   CURRENCY,
   CREDIT_PERIOD,
+  MULTI_POLICY_TYPE,
+  PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
-  MULTI_POLICY_TYPE,
+  UK_GOODS_OR_SERVICES,
+  VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
 describe('server/helpers/map-answers-to-content', () => {
-  describe('mapPolicyType', () => {
-    describe('when policy type is single', () => {
-      it(`should return an object with ${SINGLE_POLICY_TYPE}`, () => {
-        const mockAnswer = FIELD_VALUES.POLICY_TYPE.SINGLE;
-        const result = mapPolicyType(mockAnswer);
-
-        const expected = {
-          [SINGLE_POLICY_TYPE]: {
-            text: mockAnswer,
-          },
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when policy type is single', () => {
-      it(`should return an object with ${MULTI_POLICY_TYPE}`, () => {
-        const mockAnswer = FIELD_VALUES.POLICY_TYPE.MULTI;
-
-        const result = mapPolicyType(mockAnswer);
-
-        const expected = {
-          [MULTI_POLICY_TYPE]: {
-            text: mockAnswer,
-          },
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-  });
-
   describe('mapTriedPrivateCover', () => {
     describe('when answer is yes', () => {
       it(`should return an object with ${CAN_GET_PRIVATE_INSURANCE_YES} and mapped summary answer`, () => {
@@ -97,6 +66,51 @@ describe('server/helpers/map-answers-to-content', () => {
     });
   });
 
+  describe('mapPolicyType', () => {
+    describe('when policy type is single', () => {
+      it(`should return an object with ${SINGLE_POLICY_TYPE}`, () => {
+        const mockAnswer = FIELD_VALUES.POLICY_TYPE.SINGLE;
+        const result = mapPolicyType(mockAnswer);
+
+        const expected = {
+          [SINGLE_POLICY_TYPE]: {
+            text: mockAnswer,
+          },
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when policy type is single', () => {
+      it(`should return an object with ${MULTI_POLICY_TYPE}`, () => {
+        const mockAnswer = FIELD_VALUES.POLICY_TYPE.MULTI;
+
+        const result = mapPolicyType(mockAnswer);
+
+        const expected = {
+          [MULTI_POLICY_TYPE]: {
+            text: mockAnswer,
+          },
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
+
+  describe('mapPercentageOfCover', () => {
+    it('should return a string with percentage symbol', () => {
+      const mockAnswer = mockAnswers[PERCENTAGE_OF_COVER];
+
+      const result = mapPercentageOfCover(mockAnswer);
+
+      const expected = `${mockAnswers[PERCENTAGE_OF_COVER]}%`;
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('mapAnswersToContent', () => {
     it('should return an object of fields with mapped/formatted answers', () => {
       const result = mapAnswersToContent(mockAnswers);
@@ -117,6 +131,9 @@ describe('server/helpers/map-answers-to-content', () => {
         },
         ...mapPolicyType(mockAnswers[POLICY_TYPE]),
         ...mapPolicyLength(mockAnswers),
+        [PERCENTAGE_OF_COVER]: {
+          text: mapPercentageOfCover(mockAnswers[PERCENTAGE_OF_COVER]),
+        },
         [CREDIT_PERIOD]: {
           text: mapPeriodMonths(mockAnswers[CREDIT_PERIOD]),
         },

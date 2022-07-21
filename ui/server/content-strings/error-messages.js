@@ -2,9 +2,9 @@ const FIELD_IDS = require('../constants/field-ids');
 
 const ERROR_MESSAGES = {
   [FIELD_IDS.VALID_COMPANY_BASE]: 'Select if your company is based in the UK, Channel Islands, Isle of Man or not',
-  [FIELD_IDS.BUYER_COUNTRY]: 'Select the country your buyer is based in',
+  [FIELD_IDS.BUYER_COUNTRY]: 'Select where your buyer is based',
   [FIELD_IDS.CAN_GET_PRIVATE_INSURANCE]: 'Select if you are able to get private insurance for this export',
-  [FIELD_IDS.COUNTRY]: 'Select the country your buyer is based in',
+  [FIELD_IDS.COUNTRY]: 'Select where your buyer is based',
   [FIELD_IDS.UK_GOODS_OR_SERVICES]: {
     IS_EMPTY: 'Select whether at least 20% of your export contract value is made up from UK goods and services',
   },
@@ -21,7 +21,7 @@ const ERROR_MESSAGES = {
     IS_EMPTY: 'Enter the credit period you have with your buyer',
     NOT_A_NUMBER: 'Credit period must be a number',
     NOT_A_WHOLE_NUMBER: 'Credit period must be a whole number, like 2 - you cannot enter decimal points',
-    BELOW_MINIMUM: 'Credit period must be 1 day or more',
+    BELOW_MINIMUM: 'Credit period must be 1 month or more',
     ABOVE_MAXIMUM: 'Enter Credit period of no more than 2 months',
   },
   [FIELD_IDS.PERCENTAGE_OF_COVER]: {

@@ -1,16 +1,17 @@
 import { FIELD_IDS } from '../../../constants';
 
 const {
-  VALID_COMPANY_BASE,
+  AMOUNT,
   BUYER_COUNTRY,
   CAN_GET_PRIVATE_INSURANCE_NO,
-  UK_GOODS_OR_SERVICES,
-  AMOUNT,
   CREDIT_PERIOD,
-  SINGLE_POLICY_TYPE,
+  MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
-  MULTI_POLICY_LENGTH,
+  SINGLE_POLICY_TYPE,
+  PERCENTAGE_OF_COVER,
+  UK_GOODS_OR_SERVICES,
+  VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
 const checkYourAnswersPage = {
@@ -67,6 +68,11 @@ const checkYourAnswersPage = {
         key: () => cy.get(`.${MULTI_POLICY_LENGTH}-key`),
         value: () => cy.get(`.${MULTI_POLICY_LENGTH}-value`),
         changeLink: () => cy.get(`[data-cy="${MULTI_POLICY_LENGTH}-change-link"]`),
+      },
+      [PERCENTAGE_OF_COVER]: {
+        key: () => cy.get(`.${PERCENTAGE_OF_COVER}-key`),
+        value: () => cy.get(`.${PERCENTAGE_OF_COVER}-value`),
+        changeLink: () => cy.get(`[data-cy="${PERCENTAGE_OF_COVER}-change-link"]`),
       },
       [CREDIT_PERIOD]: {
         key: () => cy.get(`.${CREDIT_PERIOD}-key`),

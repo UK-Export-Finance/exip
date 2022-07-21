@@ -9,41 +9,20 @@ const mapPeriodMonths = require('./map-period-months');
 const mapPolicyLength = require('./map-policy-length');
 
 const {
-  VALID_COMPANY_BASE,
+  AMOUNT,
   BUYER_COUNTRY,
   CAN_GET_PRIVATE_INSURANCE,
   CAN_GET_PRIVATE_INSURANCE_YES,
   CAN_GET_PRIVATE_INSURANCE_NO,
-  UK_GOODS_OR_SERVICES,
-  AMOUNT,
   CURRENCY,
   CREDIT_PERIOD,
+  MULTI_POLICY_TYPE,
+  PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
-  MULTI_POLICY_TYPE,
+  UK_GOODS_OR_SERVICES,
+  VALID_COMPANY_BASE,
 } = FIELD_IDS;
-
-const mapPolicyType = (answer) => {
-  let mapped;
-
-  if (answer === FIELD_VALUES.POLICY_TYPE.SINGLE) {
-    mapped = {
-      [SINGLE_POLICY_TYPE]: {
-        text: answer,
-      },
-    };
-  }
-
-  if (answer === FIELD_VALUES.POLICY_TYPE.MULTI) {
-    mapped = {
-      [MULTI_POLICY_TYPE]: {
-        text: answer,
-      },
-    };
-  }
-
-  return mapped;
-};
 
 const mapTriedPrivateCover = (answer) => {
   let mapped;
@@ -67,6 +46,30 @@ const mapTriedPrivateCover = (answer) => {
   return mapped;
 };
 
+const mapPolicyType = (answer) => {
+  let mapped;
+
+  if (answer === FIELD_VALUES.POLICY_TYPE.SINGLE) {
+    mapped = {
+      [SINGLE_POLICY_TYPE]: {
+        text: answer,
+      },
+    };
+  }
+
+  if (answer === FIELD_VALUES.POLICY_TYPE.MULTI) {
+    mapped = {
+      [MULTI_POLICY_TYPE]: {
+        text: answer,
+      },
+    };
+  }
+
+  return mapped;
+};
+
+const mapPercentageOfCover = (answer) => `${answer}%`;
+
 const mapAnswersToContent = (answers) => {
   const mapped = {
     [VALID_COMPANY_BASE]: {
@@ -84,6 +87,9 @@ const mapAnswersToContent = (answers) => {
     },
     ...mapPolicyType(answers[POLICY_TYPE]),
     ...mapPolicyLength(answers),
+    [PERCENTAGE_OF_COVER]: {
+      text: mapPercentageOfCover(answers[PERCENTAGE_OF_COVER]),
+    },
     [CREDIT_PERIOD]: {
       text: mapPeriodMonths(answers[CREDIT_PERIOD]),
     },
@@ -93,7 +99,8 @@ const mapAnswersToContent = (answers) => {
 };
 
 module.exports = {
-  mapPolicyType,
   mapTriedPrivateCover,
+  mapPolicyType,
+  mapPercentageOfCover,
   mapAnswersToContent,
 };

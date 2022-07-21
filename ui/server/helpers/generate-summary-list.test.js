@@ -11,22 +11,25 @@ const {
   SUMMARY_ANSWERS,
 } = require('../content-strings');
 const {
-  FIELD_GROUPS,
   FIELD_IDS,
   FIELD_VALUES,
   ROUTES,
 } = require('../constants');
-const { mockAnswers } = require('../test-mocks');
+const { mockSession } = require('../test-mocks');
 
 const {
+  AMOUNT,
+  BUYER_COUNTRY,
   CAN_GET_PRIVATE_INSURANCE_YES,
   CAN_GET_PRIVATE_INSURANCE_NO,
-  UK_GOODS_OR_SERVICES,
-  SINGLE_POLICY_TYPE,
-  MULTI_POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
-  MULTI_POLICY_LENGTH,
   CREDIT_PERIOD,
+  MULTI_POLICY_LENGTH,
+  MULTI_POLICY_TYPE,
+  PERCENTAGE_OF_COVER,
+  SINGLE_POLICY_LENGTH,
+  SINGLE_POLICY_TYPE,
+  UK_GOODS_OR_SERVICES,
+  VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
 describe('server/helpers/generate-summary-list', () => {
@@ -40,30 +43,35 @@ describe('server/helpers/generate-summary-list', () => {
 
   describe('generateFieldGroups', () => {
     it('should map over each field group with value from submittedData', () => {
-      const mockAnswersContent = mapAnswersToContent(mockAnswers);
+      const mockAnswersContent = mapAnswersToContent(mockSession.submittedData);
       delete mockAnswersContent[CAN_GET_PRIVATE_INSURANCE_NO];
       delete mockAnswersContent[SINGLE_POLICY_TYPE];
       delete mockAnswersContent[SINGLE_POLICY_LENGTH];
 
       const result = generateFieldGroups(mockAnswersContent);
-      const fieldGroups = FIELD_GROUPS;
 
       const expected = {
-        EXPORT_DETAILS: fieldGroups.EXPORT_DETAILS.map((field) => ({
-          ...field,
-          value: {
-            text: mockAnswersContent[field.ID].text,
+        EXPORT_DETAILS: [
+          {
+            ID: BUYER_COUNTRY,
+            ...FIELDS[BUYER_COUNTRY],
+            CHANGE_ROUTE: ROUTES.BUYER_COUNTRY_CHANGE,
+            value: {
+              text: mockAnswersContent[BUYER_COUNTRY].text,
+            },
           },
-        })),
-        POLICY_DETAILS: fieldGroups.POLICY_DETAILS.map((field) => ({
-          ...field,
-          value: {
-            text: mockAnswersContent[field.ID].text,
+          {
+            ID: VALID_COMPANY_BASE,
+            ...FIELDS[VALID_COMPANY_BASE],
+            CHANGE_ROUTE: ROUTES.COMPANY_BASED_CHANGE,
+            value: {
+              text: mockAnswersContent[VALID_COMPANY_BASE].text,
+            },
           },
-        })),
+        ],
       };
 
-      // UK_GOODS_OR_SERVICES is dynamically added after a previous field.
+      // the following fields are dynamically added after previous fields.
       expected.EXPORT_DETAILS = [
         ...expected.EXPORT_DETAILS,
         {
@@ -76,15 +84,29 @@ describe('server/helpers/generate-summary-list', () => {
         },
       ];
 
-      // CREDIT_PERIOD is dynamically added after a previous field.
       expected.POLICY_DETAILS = [
-        ...expected.POLICY_DETAILS,
+        {
+          ID: AMOUNT,
+          ...FIELDS[AMOUNT],
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          value: {
+            text: mockAnswersContent[AMOUNT].text,
+          },
+        },
         {
           ID: CREDIT_PERIOD,
           ...FIELDS[CREDIT_PERIOD],
           CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
           value: {
             text: mockAnswersContent[CREDIT_PERIOD].text,
+          },
+        },
+        {
+          ID: PERCENTAGE_OF_COVER,
+          ...FIELDS[PERCENTAGE_OF_COVER],
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          value: {
+            text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
           },
         },
       ];
@@ -95,7 +117,7 @@ describe('server/helpers/generate-summary-list', () => {
     describe('when `unable to get private cover` is true', () => {
       it(`should add a ${CAN_GET_PRIVATE_INSURANCE_YES} object to EXPORT_DETAILS`, () => {
         const mockAnswersContent = {
-          ...mapAnswersToContent(mockAnswers),
+          ...mapAnswersToContent(mockSession.submittedData),
           [CAN_GET_PRIVATE_INSURANCE_YES]: {
             text: SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_YES],
           },
@@ -122,7 +144,7 @@ describe('server/helpers/generate-summary-list', () => {
     describe('when `unable to get private cover` is false', () => {
       it(`should add a ${CAN_GET_PRIVATE_INSURANCE_NO} object to EXPORT_DETAILS`, () => {
         const mockAnswersContent = {
-          ...mapAnswersToContent(mockAnswers),
+          ...mapAnswersToContent(mockSession.submittedData),
           [CAN_GET_PRIVATE_INSURANCE_NO]: {
             text: SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_NO],
           },
@@ -148,7 +170,7 @@ describe('server/helpers/generate-summary-list', () => {
     describe('when policy type is single', () => {
       it(`should add a ${SINGLE_POLICY_TYPE} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
-          ...mapAnswersToContent(mockAnswers),
+          ...mapAnswersToContent(mockSession.submittedData),
           [SINGLE_POLICY_TYPE]: {
             text: FIELD_VALUES.POLICY_TYPE.SINGLE,
           },
@@ -156,7 +178,7 @@ describe('server/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 3];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 5];
 
         const expected = {
           ID: SINGLE_POLICY_TYPE,
@@ -172,8 +194,8 @@ describe('server/helpers/generate-summary-list', () => {
 
       it(`should add a ${SINGLE_POLICY_LENGTH} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
-          ...mapAnswersToContent(mockAnswers),
-          ...mockAnswers,
+          ...mapAnswersToContent(mockSession.submittedData),
+          // ...mockAnswers,
           [SINGLE_POLICY_TYPE]: {
             text: FIELD_VALUES.POLICY_TYPE.SINGLE,
           },
@@ -181,7 +203,7 @@ describe('server/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 2];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 4];
 
         const expected = {
           ID: SINGLE_POLICY_LENGTH,
@@ -199,7 +221,7 @@ describe('server/helpers/generate-summary-list', () => {
     describe('when policy type is multi', () => {
       it(`should add a ${MULTI_POLICY_TYPE} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
-          ...mapAnswersToContent(mockAnswers),
+          ...mapAnswersToContent(mockSession.submittedData),
           [MULTI_POLICY_TYPE]: {
             text: FIELD_VALUES.POLICY_TYPE.MULTI,
           },
@@ -212,7 +234,7 @@ describe('server/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 3];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 5];
 
         const expected = {
           ID: MULTI_POLICY_TYPE,
@@ -228,7 +250,7 @@ describe('server/helpers/generate-summary-list', () => {
 
       it(`should add a ${MULTI_POLICY_LENGTH} object to POLICY_DETAILS with single policy length field values`, () => {
         const mockAnswersContent = {
-          ...mapAnswersToContent(mockAnswers),
+          ...mapAnswersToContent(mockSession.submittedData),
           [MULTI_POLICY_TYPE]: {
             text: FIELD_VALUES.POLICY_TYPE.MULTI,
           },
@@ -241,7 +263,7 @@ describe('server/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 2];
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 4];
 
         const expected = {
           ID: MULTI_POLICY_LENGTH,
@@ -259,11 +281,11 @@ describe('server/helpers/generate-summary-list', () => {
 
   describe('generateSummaryListRows', () => {
     it('returns an array of objects mapped to submitted data', () => {
-      const fieldGroups = generateFieldGroups(mockAnswers);
+      const fieldGroups = generateFieldGroups(mockSession.submittedData);
 
       const result = generateSummaryListRows(
         fieldGroups.EXPORT_DETAILS,
-        mockAnswers,
+        mockSession.submittedData,
       );
 
       const expectedObj = (field) => ({
@@ -272,7 +294,7 @@ describe('server/helpers/generate-summary-list', () => {
           classes: `${field.ID}-key`,
         },
         value: {
-          text: mockAnswers[field.ID].text,
+          text: mockSession.submittedData[field.ID].text,
           classes: `${field.ID}-value`,
         },
         actions: {
@@ -298,7 +320,7 @@ describe('server/helpers/generate-summary-list', () => {
 
   describe('generateSummaryList', () => {
     it('should return an object with multiple summary lists', () => {
-      const mockAnswersContent = mapAnswersToContent(mockAnswers);
+      const mockAnswersContent = mapAnswersToContent(mockSession.submittedData);
 
       const fieldGroups = generateFieldGroups(mockAnswersContent);
 
@@ -307,11 +329,11 @@ describe('server/helpers/generate-summary-list', () => {
       const expected = {
         EXPORT: {
           GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
-          ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, mockAnswers),
+          ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, mockSession.submittedData),
         },
         POLICY: {
           GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_POLICY,
-          ROWS: generateSummaryListRows(fieldGroups.POLICY_DETAILS, mockAnswers),
+          ROWS: generateSummaryListRows(fieldGroups.POLICY_DETAILS, mockSession.submittedData),
         },
       };
 
