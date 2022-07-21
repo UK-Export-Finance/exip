@@ -21,7 +21,7 @@ const ERROR_MESSAGES = {
     IS_EMPTY: 'Enter the credit period you have with your buyer',
     NOT_A_NUMBER: 'Credit period must be a number',
     NOT_A_WHOLE_NUMBER: 'Credit period must be a whole number, like 2 - you cannot enter decimal points',
-    BELOW_MINIMUM: 'Credit period must be 1 day or more',
+    BELOW_MINIMUM: 'Credit period must be 1 month or more',
     ABOVE_MAXIMUM: 'Enter Credit period of no more than 2 months',
   },
   [FIELD_IDS.PERCENTAGE_OF_COVER]: {
