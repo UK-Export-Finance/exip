@@ -4,13 +4,13 @@ const {
   LINKS,
 } = require('../content-strings');
 const {
-  FIELD_GROUPS,
   FIELD_IDS,
   ROUTES,
 } = require('../constants');
 
 const {
   AMOUNT,
+  BUYER_COUNTRY,
   CAN_GET_PRIVATE_INSURANCE_YES,
   CAN_GET_PRIVATE_INSURANCE_NO,
   CREDIT_PERIOD,
@@ -19,14 +19,13 @@ const {
   SINGLE_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   UK_GOODS_OR_SERVICES,
+  VALID_COMPANY_BASE,
 } = FIELD_IDS;
-
-const { EXPORT_DETAILS } = FIELD_GROUPS;
 
 /*
  * generateFieldGroups
  * Create all field groups for govukSummaryList
- * Add additional fields depending on the submitted answers and design ordering requirements:
+ * The following fields depend on the submitted answers and design ordering requirements:
  * - Tried private cover (must have the correct yes/no input ID)
  * - UK goods/services
  * - Policy type depending on the Policy type (single/multi)
@@ -35,14 +34,29 @@ const { EXPORT_DETAILS } = FIELD_GROUPS;
  * - Credit periood
  */
 const generateFieldGroups = (submittedData) => {
-  const fieldGroups = { ...FIELD_GROUPS };
+  const fieldGroups = {
+    EXPORT_DETAILS: [],
+    POLICY_DETAILS: [],
+  };
 
-  // TODO: update comment ^^
-
-  fieldGroups.EXPORT_DETAILS = EXPORT_DETAILS.map((field) => ({
-    ...field,
-    value: submittedData[field.ID],
-  }));
+  fieldGroups.EXPORT_DETAILS = [
+    {
+      ID: BUYER_COUNTRY,
+      ...FIELDS[BUYER_COUNTRY],
+      CHANGE_ROUTE: ROUTES.BUYER_COUNTRY_CHANGE,
+      value: {
+        text: submittedData[BUYER_COUNTRY].text,
+      },
+    },
+    {
+      ID: VALID_COMPANY_BASE,
+      ...FIELDS[VALID_COMPANY_BASE],
+      CHANGE_ROUTE: ROUTES.COMPANY_BASED_CHANGE,
+      value: {
+        text: submittedData[VALID_COMPANY_BASE].text,
+      },
+    },
+  ];
 
   if (submittedData[CAN_GET_PRIVATE_INSURANCE_YES]) {
     fieldGroups.EXPORT_DETAILS = [
