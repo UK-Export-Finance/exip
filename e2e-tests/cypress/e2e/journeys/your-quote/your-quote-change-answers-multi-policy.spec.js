@@ -15,7 +15,6 @@ const {
   MULTI_POLICY_LENGTH,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
-  SINGLE_POLICY_TYPE,
 } = FIELD_IDS;
 
 context('Your quote page - change policy type and length from multi single', () => {

@@ -10,10 +10,7 @@ const {
   ROUTES,
 } = CONSTANTS;
 
-const {
-  AMOUNT,
-  CREDIT_PERIOD,
-} = FIELD_IDS;
+const { AMOUNT } = FIELD_IDS;
 
 const submissionData = {
   [AMOUNT]: '150000',
