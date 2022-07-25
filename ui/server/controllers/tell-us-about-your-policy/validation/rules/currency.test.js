@@ -11,11 +11,11 @@ describe('controllers/tell-us-about-your-policy/validation/rules/currency', () =
 
   describe(`when ${FIELD_IDS.CURRENCY} is not provided`, () => {
     it('should return validation error', () => {
-      const mockBody = {
+      const mockSubmittedData = {
         [FIELD_IDS.CURRENCY]: '',
       };
 
-      const result = rule(mockBody, mockErrors);
+      const result = rule(mockSubmittedData, mockErrors);
 
       const expected = generateValidationErrors(
         FIELD_IDS.CURRENCY,
@@ -29,11 +29,11 @@ describe('controllers/tell-us-about-your-policy/validation/rules/currency', () =
 
   describe('when there are no validation errors', () => {
     it('should return the already provided errors', () => {
-      const mockBody = {
+      const mockSubmittedData = {
         [FIELD_IDS.CURRENCY]: 'GBP',
       };
 
-      const result = rule(mockBody, mockErrors);
+      const result = rule(mockSubmittedData, mockErrors);
 
       expect(result).toEqual(mockErrors);
     });

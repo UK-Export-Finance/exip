@@ -26,7 +26,7 @@ context('Your quote page - non GBP currency', () => {
   before(() => {
     cy.login();
 
-    cy.submitAnswersHappyPath();
+    cy.submitAnswersHappyPathSinglePolicy();
 
     // change currency to non-GBP
     checkYourAnswersPage.summaryLists.policy[AMOUNT].changeLink().click();

@@ -47,7 +47,7 @@ context('Your quote page', () => {
   before(() => {
     cy.login();
 
-    cy.submitAnswersHappyPath();
+    cy.submitAnswersHappyPathSinglePolicy();
     tellUsAboutYourPolicyPage.submitButton().click();
 
     cy.url().should('include', ROUTES.YOUR_QUOTE);

@@ -3,7 +3,7 @@ import {
   completeAndSubmitCompanyForm,
   completeAndSubmitTriedToObtainCoverForm,
   completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeForm,
+  completeAndSubmitPolicyTypeSingleForm,
 } from '../../../support/forms';
 import {
   yourQuotePage,
@@ -29,7 +29,7 @@ context('Get a quote - large contract value', () => {
     completeAndSubmitCompanyForm();
     completeAndSubmitTriedToObtainCoverForm();
     completeAndSubmitUkContentForm();
-    completeAndSubmitPolicyTypeForm();
+    completeAndSubmitPolicyTypeSingleForm();
   });
 
   beforeEach(() => {

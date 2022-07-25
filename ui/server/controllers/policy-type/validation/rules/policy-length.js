@@ -10,6 +10,7 @@ const MULTI_POLICY_MAX_MONTHS = 9;
 
 const policyLengthRules = (formBody, errors) => {
   let updatedErrors = errors;
+  // TODO: use new policy type helper functions
 
   if (objectHasProperty(formBody, FIELD_IDS.POLICY_TYPE)) {
     const isSinglePolicy = (formBody[FIELD_IDS.POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.SINGLE);

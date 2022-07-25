@@ -1,5 +1,9 @@
 const CONTENT_STRINGS = require('../../content-strings');
-const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
+const {
+  FIELD_IDS,
+  ROUTES,
+  TEMPLATES,
+} = require('../../constants');
 const generateValidationErrors = require('./validation');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');

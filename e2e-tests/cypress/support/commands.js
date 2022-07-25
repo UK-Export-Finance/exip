@@ -10,4 +10,5 @@ import 'cypress-audit/commands';
 
 Cypress.Commands.add('login', require('./login'));
 Cypress.Commands.add('checkPhaseBanner', require('./check-phase-banner'));
-Cypress.Commands.add('submitAnswersHappyPath', require('./submit-answers-happy-path'));
+Cypress.Commands.add('submitAnswersHappyPathSinglePolicy', require('./submit-answers-happy-path-single-policy'));
+Cypress.Commands.add('submitAnswersHappyPathMultiPolicy', require('./submit-answers-happy-path-multi-policy'));

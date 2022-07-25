@@ -38,7 +38,7 @@ context('Check your answers page', () => {
 
   before(() => {
     cy.login();
-    cy.submitAnswersHappyPath();
+    cy.submitAnswersHappyPathSinglePolicy();
     cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
   });
 

@@ -11,11 +11,11 @@ describe('controllers/tell-us-about-your-policy/validation/rules/percentage-of-c
 
   describe(`when ${FIELD_IDS.PERCENTAGE_OF_COVER} is not provided`, () => {
     it('should return validation error', () => {
-      const mockBody = {
+      const mockSubmittedData = {
         [FIELD_IDS.PERCENTAGE_OF_COVER]: '',
       };
 
-      const result = rule(mockBody, mockErrors);
+      const result = rule(mockSubmittedData, mockErrors);
 
       const expected = generateValidationErrors(
         FIELD_IDS.PERCENTAGE_OF_COVER,
