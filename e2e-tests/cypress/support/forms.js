@@ -51,12 +51,19 @@ export const completeAndSubmitPolicyTypeSingleForm = () => {
 
 export const completeAndSubmitPolicyTypeMultiForm = () => {
   policyTypePage[POLICY_TYPE].multi.input().click();
-  policyTypePage[MULTI_POLICY_LENGTH].input().type('3');
+  policyTypePage[MULTI_POLICY_LENGTH].input().type('2');
 
   policyTypePage.submitButton().click();
 };
 
-export const compmleteAndSubmitTellUsAboutYourPolicyForm = () => {
+export const completeAndSubmitTellUsAboutYourSinglePolicyForm = () => {
+  tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
+  tellUsAboutYourPolicyPage[AMOUNT].input().type('150000');
+  tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
+  tellUsAboutYourPolicyPage.submitButton().click();
+};
+
+export const completeAndSubmitTellUsAboutYourMultiPolicyForm = () => {
   tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
   tellUsAboutYourPolicyPage[AMOUNT].input().type('150000');
   tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');

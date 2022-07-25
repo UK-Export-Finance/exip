@@ -23,7 +23,7 @@ const submissionData = {
 context('Change your answers after checking answers - Policy fields', () => {
   before(() => {
     cy.login();
-    cy.submitAnswersHappyPathSinglePolicy();
+    cy.submitAnswersHappyPathMultiPolicy();
     cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
   });
 

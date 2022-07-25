@@ -12,25 +12,17 @@ const {
 } = CONSTANTS;
 
 const {
-  POLICY_TYPE,
-  SINGLE_POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
+  POLICY_TYPE,
+  SINGLE_POLICY_LENGTH,
+  SINGLE_POLICY_TYPE,
 } = FIELD_IDS;
 
-context('Your quote page - multi policy type - change policy type and length to single', () => {
+context('Your quote page - change policy type and length from multi single', () => {
   before(() => {
     cy.login();
 
-    cy.submitAnswersHappyPathSinglePolicy();
-
-    // change policy type to multi
-    checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE].changeLink().click();
-
-    policyTypePage[POLICY_TYPE].multi.input().click();
-    policyTypePage[MULTI_POLICY_LENGTH].input().type('2');
-    policyTypePage.submitButton().click();
-
+    cy.submitAnswersHappyPathMultiPolicy();
     checkYourAnswersPage.submitButton().click();
 
     cy.url().should('include', ROUTES.YOUR_QUOTE);
@@ -41,9 +33,8 @@ context('Your quote page - multi policy type - change policy type and length to 
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  let row = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
-
   it(`clicking 'change' redirects to ${ROUTES.POLICY_TYPE_CHANGE}`, () => {
+    const row = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
     row.changeLink().click();
 
     const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}`;
@@ -63,14 +54,17 @@ context('Your quote page - multi policy type - change policy type and length to 
 
   it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
     policyTypePage[POLICY_TYPE].single.input().click();
-    policyTypePage[SINGLE_POLICY_LENGTH].input().type('3');
+    policyTypePage[SINGLE_POLICY_LENGTH].input().clear().type('3');
     policyTypePage.submitButton().click();
 
     cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
   });
 
   it('renders the new answer in the quote', () => {
-    row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
+    checkYourAnswersPage.submitButton().click();
+    cy.url().should('include', ROUTES.YOUR_QUOTE);
+
+    const row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
 
     row.value().invoke('text').then((text) => {
       expect(text.trim()).equal('3 months');

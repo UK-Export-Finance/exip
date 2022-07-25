@@ -21,12 +21,12 @@ const {
   MULTI_POLICY_LENGTH,
 } = FIELD_IDS;
 
-context('Your quote page - change answers', () => {
+context('Your quote page - change answers (single policy type to multi policy type)', () => {
   before(() => {
     cy.login();
 
     cy.submitAnswersHappyPathSinglePolicy();
-    tellUsAboutYourPolicyPage.submitButton().click();
+    checkYourAnswersPage.submitButton().click();
 
     cy.url().should('include', ROUTES.YOUR_QUOTE);
   });
@@ -37,9 +37,9 @@ context('Your quote page - change answers', () => {
   });
 
   describe('change `insured for`', () => {
-    let row = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
-
     it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
+      const row = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
+
       row.changeLink().click();
 
       const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
@@ -67,7 +67,7 @@ context('Your quote page - change answers', () => {
     it('renders the new answer in the quote', () => {
       checkYourAnswersPage.submitButton().click();
 
-      row = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
+      const row = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
 
       row.value().invoke('text').then((text) => {
         const expected = '£200.00';
@@ -77,10 +77,10 @@ context('Your quote page - change answers', () => {
     });
   });
 
-  describe('change `policy length`', () => {
-    let row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
-
+  describe.only('change `policy length` and policy type to multi', () => {
     it(`clicking 'change' redirects to ${ROUTES.POLICY_TYPE_CHANGE}`, () => {
+      const row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
+
       row.changeLink().click();
 
       const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}`;
@@ -100,7 +100,7 @@ context('Your quote page - change answers', () => {
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       policyTypePage[POLICY_TYPE].multi.input().click();
-      policyTypePage[MULTI_POLICY_LENGTH].input().type('5');
+      policyTypePage[MULTI_POLICY_LENGTH].input().type('1');
       policyTypePage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
@@ -108,19 +108,20 @@ context('Your quote page - change answers', () => {
 
     it('renders the new answer in the quote', () => {
       checkYourAnswersPage.submitButton().click();
+      cy.url().should('include', ROUTES.YOUR_QUOTE);
 
-      row = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
+      const row = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal('5 months');
+        expect(text.trim()).equal('1 months');
       });
     });
   });
 
   describe('change `buyer location`', () => {
-    let row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
-
     it(`clicking 'change' redirects to ${ROUTES.BUYER_COUNTRY_CHANGE}`, () => {
+      const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
+
       row.changeLink().click();
 
       const expectedUrl = `${ROUTES.BUYER_COUNTRY_CHANGE}#${QUOTE.BUYER_LOCATION}`;
@@ -155,7 +156,7 @@ context('Your quote page - change answers', () => {
     it('renders the new answer in the quote', () => {
       checkYourAnswersPage.submitButton().click();
 
-      row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
+      const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
 
       row.value().invoke('text').then((text) => {
         const expected = 'Bahrain';
