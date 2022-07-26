@@ -41,7 +41,6 @@ context('Get a quote - large contract value', () => {
     tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('12,345,678');
     tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
     tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
-    tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('1');
 
     tellUsAboutYourPolicyPage.submitButton().click();
 
