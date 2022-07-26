@@ -11,6 +11,7 @@ const tellUsAboutYourPolicyController = require('../controllers/tell-us-about-yo
 const checkYourAnswersController = require('../controllers/check-your-answers');
 const cannotObtainCoverController = require('../controllers/cannot-obtain-cover');
 const yourQuoteController = require('../controllers/your-quote');
+const cookiesController = require('../controllers/cookies');
 const problemWithServiceController = require('../controllers/problem-with-service');
 
 const router = express.Router();
@@ -55,6 +56,8 @@ router.post(ROUTES.CHECK_YOUR_ANSWERS, checkYourAnswersController.post);
 router.get(ROUTES.CANNOT_OBTAIN_COVER, cannotObtainCoverController);
 
 router.get(ROUTES.YOUR_QUOTE, yourQuoteController);
+
+router.get(ROUTES.COOKIES, cookiesController);
 
 router.get(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceController);
 

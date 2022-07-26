@@ -27,6 +27,8 @@ const ROUTES = {
   YOUR_QUOTE: '/your-quote',
   FEEDBACK: '/give-feedback',
 
+  COOKIES: '/cookies',
+
   PROBLEM_WITH_SERVICE: '/problem-with-service',
 };
 

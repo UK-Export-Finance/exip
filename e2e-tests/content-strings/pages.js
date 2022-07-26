@@ -251,6 +251,34 @@ const YOUR_QUOTE_PAGE = {
   },
 };
 
+const COOKIES_PAGE = {
+  PAGE_TITLE: 'Cookies',
+  HEADING: 'Cookies',
+  BODY_1: 'UK Export Finance (UKEF) puts small files (known as \'cookies\') onto your computer to make this site work.',
+  BODY_2: 'Our cookies aren\'t used to identify you personally.',
+  TABLE_HEADINGS: {
+    NAME: 'Name',
+    PURPOSE: 'Purpose',
+    EXPIRES: 'Expires',
+  },
+  ESSENTIAL_COOKIES: {
+    HEADING: 'Essential Cookies',
+    INTRO: 'Essential cookies keep your information secure while you use this service. We do not need to ask permission to use them.',
+    ITEMS: [
+      {
+        NAME: 'Security',
+        PURPOSE: 'This is an essential security cookie, which authenticates your requests with our service.',
+        EXPIRES: '12 hours',
+      },
+      {
+        NAME: 'Session',
+        PURPOSE: 'This is an essential session cookie, necessary for basic web application operation.',
+        EXPIRES: '7 days',
+      },
+    ],
+  },
+};
+
 const PAGE_NOT_FOUND_PAGE = {
   PAGE_TITLE: 'Page not found',
   HEADING: 'Page not found',
@@ -274,6 +302,7 @@ module.exports = {
   CHECK_YOUR_ANSWERS_PAGE,
   CANNOT_OBTAIN_COVER_PAGE,
   YOUR_QUOTE_PAGE,
+  COOKIES_PAGE,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
 };

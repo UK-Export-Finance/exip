@@ -9,6 +9,7 @@ const tellUsAboutYourPolicyPage = require('./tellUsAboutYourPolicy');
 const checkYourAnswersPage = require('./checkYourAnswers');
 const yourQuotePage = require('./yourQuote');
 const cannotObtainCoverPage = require('./cannotObtainCover');
+const cookiesPage = require('./cookies');
 const pageNotFoundPage = require('./pageNotFound');
 
 module.exports = {
@@ -23,5 +24,6 @@ module.exports = {
   checkYourAnswersPage,
   yourQuotePage,
   cannotObtainCoverPage,
+  cookiesPage,
   pageNotFoundPage,
 };

@@ -40,6 +40,15 @@ context('Footer', () => {
       });
     });
 
+    it(`renders a link to ${FOOTER.COOKIES.TEXT} and redirects to the correct URL`, () => {
+      footer.supportLinks.cookies().invoke('text').then((text) => {
+        expect(text.trim()).equal(FOOTER.COOKIES.TEXT);
+      });
+
+      footer.supportLinks.cookies().click();
+      cy.url().should('include', FOOTER.COOKIES.HREF);
+    });
+
     it(`renders a link to ${FOOTER.TERMS_AND_CONDITIONS.TEXT} and redirects to the correct URL`, () => {
       footer.supportLinks.termsAndConditions().invoke('text').then((text) => {
         expect(text.trim()).equal(FOOTER.TERMS_AND_CONDITIONS.TEXT);
