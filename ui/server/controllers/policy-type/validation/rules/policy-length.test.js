@@ -13,7 +13,7 @@ describe('controllers/policy-type/validation/rules/policy-length', () => {
     [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
   };
 
-  describe(`when ${FIELD_IDS.POLICY_TYPE} is ${FIELD_VALUES.POLICY_TYPE.SINGLE}`, () => {
+  describe('when policy type is single', () => {
     beforeEach(() => {
       mockBody[FIELD_IDS.POLICY_TYPE] = FIELD_VALUES.POLICY_TYPE.SINGLE;
     });
@@ -99,7 +99,7 @@ describe('controllers/policy-type/validation/rules/policy-length', () => {
     });
   });
 
-  describe(`when ${FIELD_IDS.POLICY_TYPE} is ${FIELD_VALUES.POLICY_TYPE.MULTI}`, () => {
+  describe('when policy type is multi', () => {
     beforeEach(() => {
       mockBody[FIELD_IDS.POLICY_TYPE] = FIELD_VALUES.POLICY_TYPE.MULTI;
     });
