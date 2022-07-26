@@ -28,7 +28,7 @@ const {
  * @param {Number} Credit period
  * @returns {Number} Total months for the premium rate
  */
-const getTotalMonths = (policyType, policyLength, creditPeriod) => {
+const getTotalMonths = (policyType, policyLength, creditPeriod = 0) => {
   const BUSINESS_BUFFER_MONTHS = 1;
 
   if (policyType === FIELD_VALUES.POLICY_TYPE.SINGLE) {

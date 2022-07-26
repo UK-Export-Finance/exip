@@ -3,7 +3,7 @@ import {
   completeAndSubmitCompanyForm,
   completeAndSubmitTriedToObtainCoverForm,
   completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeForm,
+  completeAndSubmitPolicyTypeMultiForm,
 } from '../../../support/forms';
 import {
   beforeYouStartPage,
@@ -25,8 +25,7 @@ const {
   FIELD_IDS,
   SUPPORTED_CURRENCIES,
 } = CONSTANTS;
-
-context('Tell us about the policy you need page', () => {
+context('Tell us about the multi policy you need', () => {
   describe('rendering', () => {
     before(() => {
       cy.login();
@@ -36,7 +35,7 @@ context('Tell us about the policy you need page', () => {
       completeAndSubmitCompanyForm();
       completeAndSubmitTriedToObtainCoverForm();
       completeAndSubmitUkContentForm();
-      completeAndSubmitPolicyTypeForm();
+      completeAndSubmitPolicyTypeMultiForm();
 
       cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
     });
@@ -73,16 +72,12 @@ context('Tell us about the policy you need page', () => {
       partials.backLink().should('have.attr', 'href', expected);
     });
 
-    it('renders a page title, heading and description', () => {
-      const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
+    it('renders a page title and heading', () => {
+      const expectedPageTitle = `${CONTENT_STRINGS.MULTI_POLICY_PAGE_TITLE} - ${ORGANISATION}`;
       cy.title().should('eq', expectedPageTitle);
 
       tellUsAboutYourPolicyPage.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
-      });
-
-      tellUsAboutYourPolicyPage.description().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.DESCRIPTION);
+        expect(text.trim()).equal(CONTENT_STRINGS.MULTI_POLICY_HEADING);
       });
     });
 
@@ -93,7 +88,7 @@ context('Tell us about the policy you need page', () => {
 
       field.legend().should('exist');
       field.legend().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LEGEND);
+        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LEGEND);
       });
     });
 
@@ -127,7 +122,7 @@ context('Tell us about the policy you need page', () => {
 
       field.label().should('exist');
       field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
+        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LABEL);
       });
 
       field.input().should('exist');
@@ -140,12 +135,12 @@ context('Tell us about the policy you need page', () => {
 
       field.label().should('exist');
       field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
+        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LABEL);
       });
 
       field.hint().should('exist');
       field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].HINT);
+        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.HINT);
       });
 
       field.input().should('exist');

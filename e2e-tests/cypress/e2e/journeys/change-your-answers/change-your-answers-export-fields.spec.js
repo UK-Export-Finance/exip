@@ -29,7 +29,7 @@ const submissionData = {
 context('Change your answers after checking answers - Export fields', () => {
   before(() => {
     cy.login();
-    cy.submitAnswersHappyPath();
+    cy.submitAnswersHappyPathSinglePolicy();
     cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
   });
 

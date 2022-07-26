@@ -43,11 +43,11 @@ const submissionData = {
   [CREDIT_PERIOD]: '1',
 };
 
-context('Your quote page', () => {
+context('Your quote page (single policy)', () => {
   before(() => {
     cy.login();
 
-    cy.submitAnswersHappyPath();
+    cy.submitAnswersHappyPathSinglePolicy();
     tellUsAboutYourPolicyPage.submitButton().click();
 
     cy.url().should('include', ROUTES.YOUR_QUOTE);

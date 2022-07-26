@@ -30,7 +30,7 @@ context('Change your answers after checking answers - Policy type and length', (
 
   before(() => {
     cy.login();
-    cy.submitAnswersHappyPath();
+    cy.submitAnswersHappyPathSinglePolicy();
     cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
     row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
   });

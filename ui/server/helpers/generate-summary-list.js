@@ -31,7 +31,7 @@ const {
  * - Policy type depending on the Policy type (must have single/multi input ID)
  * - Policy length depending on the Policy type (must have single/multi input ID)
  */
-const generateFieldGroups = (submittedData) => {
+const generateFieldGroups = (answers) => {
   const fieldGroups = {
     EXPORT_DETAILS: [],
     POLICY_DETAILS: [],
@@ -43,7 +43,7 @@ const generateFieldGroups = (submittedData) => {
       ...FIELDS[BUYER_COUNTRY],
       CHANGE_ROUTE: ROUTES.BUYER_COUNTRY_CHANGE,
       value: {
-        text: submittedData[BUYER_COUNTRY].text,
+        text: answers[BUYER_COUNTRY].text,
       },
     },
     {
@@ -51,12 +51,12 @@ const generateFieldGroups = (submittedData) => {
       ...FIELDS[VALID_COMPANY_BASE],
       CHANGE_ROUTE: ROUTES.COMPANY_BASED_CHANGE,
       value: {
-        text: submittedData[VALID_COMPANY_BASE].text,
+        text: answers[VALID_COMPANY_BASE].text,
       },
     },
   ];
 
-  if (submittedData[CAN_GET_PRIVATE_INSURANCE_YES]) {
+  if (answers[CAN_GET_PRIVATE_INSURANCE_YES]) {
     fieldGroups.EXPORT_DETAILS = [
       ...fieldGroups.EXPORT_DETAILS,
       {
@@ -64,13 +64,13 @@ const generateFieldGroups = (submittedData) => {
         ...FIELDS[CAN_GET_PRIVATE_INSURANCE_YES],
         CHANGE_ROUTE: ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE,
         value: {
-          text: submittedData[CAN_GET_PRIVATE_INSURANCE_YES].text,
+          text: answers[CAN_GET_PRIVATE_INSURANCE_YES].text,
         },
       },
     ];
   }
 
-  if (submittedData[CAN_GET_PRIVATE_INSURANCE_NO]) {
+  if (answers[CAN_GET_PRIVATE_INSURANCE_NO]) {
     fieldGroups.EXPORT_DETAILS = [
       ...fieldGroups.EXPORT_DETAILS,
       {
@@ -78,7 +78,7 @@ const generateFieldGroups = (submittedData) => {
         ...FIELDS[CAN_GET_PRIVATE_INSURANCE_NO],
         CHANGE_ROUTE: ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE,
         value: {
-          text: submittedData[CAN_GET_PRIVATE_INSURANCE_NO].text,
+          text: answers[CAN_GET_PRIVATE_INSURANCE_NO].text,
         },
       },
     ];
@@ -91,19 +91,19 @@ const generateFieldGroups = (submittedData) => {
       ...FIELDS[UK_GOODS_OR_SERVICES],
       CHANGE_ROUTE: ROUTES.UK_GOODS_OR_SERVICES_CHANGE,
       value: {
-        text: submittedData[UK_GOODS_OR_SERVICES].text,
+        text: answers[UK_GOODS_OR_SERVICES].text,
       },
     },
   ];
 
-  if (submittedData[SINGLE_POLICY_TYPE]) {
+  if (answers[SINGLE_POLICY_TYPE]) {
     fieldGroups.POLICY_DETAILS = [
       {
         ID: SINGLE_POLICY_TYPE,
         ...FIELDS[SINGLE_POLICY_TYPE],
         CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
         value: {
-          text: submittedData[SINGLE_POLICY_TYPE].text,
+          text: answers[SINGLE_POLICY_TYPE].text,
         },
       },
       {
@@ -111,20 +111,20 @@ const generateFieldGroups = (submittedData) => {
         ...FIELDS[SINGLE_POLICY_LENGTH],
         CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
         value: {
-          text: submittedData[SINGLE_POLICY_LENGTH].text,
+          text: answers[SINGLE_POLICY_LENGTH].text,
         },
       },
     ];
   }
 
-  if (submittedData[MULTI_POLICY_TYPE]) {
+  if (answers[MULTI_POLICY_TYPE]) {
     fieldGroups.POLICY_DETAILS = [
       {
         ID: MULTI_POLICY_TYPE,
         ...FIELDS[MULTI_POLICY_TYPE],
         CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
         value: {
-          text: submittedData[MULTI_POLICY_TYPE].text,
+          text: answers[MULTI_POLICY_TYPE].text,
         },
       },
       {
@@ -132,7 +132,7 @@ const generateFieldGroups = (submittedData) => {
         ...FIELDS[MULTI_POLICY_LENGTH],
         CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
         value: {
-          text: submittedData[MULTI_POLICY_LENGTH].text,
+          text: answers[MULTI_POLICY_LENGTH].text,
         },
       },
     ];
@@ -145,23 +145,33 @@ const generateFieldGroups = (submittedData) => {
       ...FIELDS[AMOUNT],
       CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
       value: {
-        text: submittedData[AMOUNT].text,
+        text: answers[AMOUNT].text,
       },
     },
-    {
-      ID: CREDIT_PERIOD,
-      ...FIELDS[CREDIT_PERIOD],
-      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
-      value: {
-        text: submittedData[CREDIT_PERIOD].text,
+  ];
+
+  if (answers[MULTI_POLICY_TYPE]) {
+    fieldGroups.POLICY_DETAILS = [
+      ...fieldGroups.POLICY_DETAILS,
+      {
+        ID: CREDIT_PERIOD,
+        ...FIELDS[CREDIT_PERIOD],
+        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+        value: {
+          text: answers[CREDIT_PERIOD].text,
+        },
       },
-    },
+    ];
+  }
+
+  fieldGroups.POLICY_DETAILS = [
+    ...fieldGroups.POLICY_DETAILS,
     {
       ID: PERCENTAGE_OF_COVER,
       ...FIELDS[PERCENTAGE_OF_COVER],
       CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
       value: {
-        text: submittedData[PERCENTAGE_OF_COVER].text,
+        text: answers[PERCENTAGE_OF_COVER].text,
       },
     },
   ];

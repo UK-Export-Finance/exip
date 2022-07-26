@@ -54,27 +54,44 @@ const FIELDS = {
     },
   },
   [FIELD_IDS.AMOUNT_CURRENCY]: {
-    LEGEND: 'How much do you want to be insured for?',
+    SINGLE_POLICY: {
+      LEGEND: 'What\'s the total value of the contract you want to insure?',
+    },
+    MULTI_POLICY: {
+      LEGEND: 'What\'s the maximum amount your buyer will owe you at any single point during the policy?',
+    },
   },
   [FIELD_IDS.CURRENCY]: {
-    LABEL: 'Select currency (Pounds sterling, Euro or US dollars)',
+    LABEL: 'Select a currency (pounds sterling, euros or US dollars). You can send out your invoices in most currencies but UKEF only issues policies in these 3 currencies.',
   },
   [FIELD_IDS.AMOUNT]: {
-    LABEL: 'Amount',
+    SINGLE_POLICY: {
+      LABEL: 'Contract value',
+      HINT: 'Enter a whole number - do not enter decimals',
+    },
+    MULTI_POLICY: {
+      LABEL: 'Maximum amount owed at any single point',
+      HINT: 'Enter a whole number - do not enter decimals',
+    },
     SUMMARY: {
       TITLE: 'Total value of contract',
     },
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
     LABEL: 'What credit period do you have with your buyer?',
-    HINT: 'This starts from when you dispatch the goods to when you\'re paid. To get a quote, you need to select a credit period of 1 or 2 months, whichever is closest to your current credit period length.',
+    HINT: 'To get a quote, you need to enter a credit period of 1 or 2 months, whichever is closest to your current credit period length.',
     SUMMARY: {
       TITLE: 'Credit period',
     },
   },
   [FIELD_IDS.PERCENTAGE_OF_COVER]: {
-    LABEL: 'What percentage of cover do you need for this export contract?',
-    HINT: 'Select the percentage of cover you need.',
+    SINGLE_POLICY: {
+      LABEL: 'What percentage of your export contract value do you want to cover?',
+    },
+    MULTI_POLICY: {
+      LABEL: 'What percentage of cover do you need?',
+      HINT: 'Select a percentage of the maximum your buyer will owe at any single point.',
+    },
     SUMMARY: {
       TITLE: 'Percentage of cover',
     },

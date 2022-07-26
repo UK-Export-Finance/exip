@@ -13,6 +13,7 @@ const {
   CAN_GET_PRIVATE_INSURANCE,
   CURRENCY,
   CREDIT_PERIOD,
+  MULTI_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -41,14 +42,28 @@ export const completeAndSubmitUkContentForm = () => {
   ukGoodsOrServicesPage.submitButton().click();
 };
 
-export const completeAndSubmitPolicyTypeForm = () => {
+export const completeAndSubmitPolicyTypeSingleForm = () => {
   policyTypePage[POLICY_TYPE].single.input().click();
   policyTypePage[SINGLE_POLICY_LENGTH].input().type('3');
 
   policyTypePage.submitButton().click();
 };
 
-export const compmleteAndSubmitTellUsAboutYourPolicyForm = () => {
+export const completeAndSubmitPolicyTypeMultiForm = () => {
+  policyTypePage[POLICY_TYPE].multi.input().click();
+  policyTypePage[MULTI_POLICY_LENGTH].input().type('2');
+
+  policyTypePage.submitButton().click();
+};
+
+export const completeAndSubmitTellUsAboutYourSinglePolicyForm = () => {
+  tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
+  tellUsAboutYourPolicyPage[AMOUNT].input().type('150000');
+  tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
+  tellUsAboutYourPolicyPage.submitButton().click();
+};
+
+export const completeAndSubmitTellUsAboutYourMultiPolicyForm = () => {
   tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
   tellUsAboutYourPolicyPage[AMOUNT].input().type('150000');
   tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');

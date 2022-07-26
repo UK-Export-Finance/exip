@@ -1,7 +1,8 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/label/macro.njk" import govukLabel %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
@@ -28,147 +29,183 @@
     }) }}
   {% endif %}
 
-  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
 
-  <p class="govuk-body govuk-!-margin-bottom-7">
-    <span class="govuk-caption-m" data-cy="description">{{ CONTENT_STRINGS.DESCRIPTION }}</span>
-  </p>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-three-quarters-from-desktop">
+            <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+          </div>
+        </div>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters-from-desktop">
+      </div>
+    </div>
 
-      <form method="POST" novalidate>
+    <form method="POST" novalidate>
 
-        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-        {% call govukFieldset({
-          legend: {
-            html: "<span data-cy='" + FIELDS.AMOUNT_CURRENCY.ID + "-legend'>" + FIELDS.AMOUNT_CURRENCY.LEGEND + "</span>",
-            classes: "govuk-fieldset__legend--m"
-          }
-        }) %}
+      <fieldset class="govuk-fieldset">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds-from-desktop">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+              <span class="govuk-fieldset__legend--m" data-cy="{{ FIELDS.AMOUNT_CURRENCY.ID }}-legend">{{ FIELDS.AMOUNT_CURRENCY.LEGEND }}</span>
+            </legend>
+          </div>
+        </div>
 
-          {{ govukSelect({
-            id: FIELDS.CURRENCY.ID,
-            name: FIELDS.CURRENCY.ID,
-            label: {
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-three-quarters-from-desktop">
+            {{ govukLabel({
+              for: FIELDS.CURRENCY.ID,
+              classes: "govuk-heading-l",
               text: FIELDS.CURRENCY.LABEL,
               attributes: {
                 "data-cy": FIELDS.CURRENCY.ID + "-label"
               }
-            },
-            items: currencies,
-            classes: "govuk-grid-column-one-quarter-from-desktop",
-            attributes: {
-              "data-cy": FIELDS.CURRENCY.ID + "-input"
-            },
-            errorMessage: validationErrors.errorList[FIELDS.CURRENCY.ID]and {
-              text: validationErrors.errorList[FIELDS.CURRENCY.ID].text,
-              attributes: {
-                "data-cy": FIELDS.CURRENCY.ID + "-error-message"
-              }
-            }
-          }) }}
-
-          {{ govukInput({
-            label: {
-              text: FIELDS.AMOUNT.LABEL,
-              attributes: {
-                "data-cy": FIELDS.AMOUNT.ID + "-label"
-              }
-            },
-            id: FIELDS.AMOUNT.ID,
-            name: FIELDS.AMOUNT.ID,
-            spellcheck: false,
-            value: submittedValues[FIELDS.AMOUNT.ID],
-            classes: "govuk-!-width-one-third",
-            attributes: {
-              "data-cy": FIELDS.AMOUNT.ID + "-input"
-            },
-            errorMessage: validationErrors.errorList[FIELDS.AMOUNT.ID]and {
-              text: validationErrors.errorList[FIELDS.AMOUNT.ID].text,
-              attributes: {
-                "data-cy": FIELDS.AMOUNT.ID + "-error-message"
-              }
-            }
-          }) }}
-
-        {% endcall %}
+            }) }}
+          </div>
+        </div>
 
         {{ govukSelect({
-          id: FIELDS.PERCENTAGE_OF_COVER.ID,
-          name: FIELDS.PERCENTAGE_OF_COVER.ID,
-          label: {
-            text: FIELDS.PERCENTAGE_OF_COVER.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              "data-cy": FIELDS.PERCENTAGE_OF_COVER.ID + "-label"
-            }
-          },
-          hint: {
-            text: FIELDS.PERCENTAGE_OF_COVER.HINT,
-            attributes: {
-              'data-cy': FIELDS.PERCENTAGE_OF_COVER.ID + '-hint'
-            }
-          },
-          items: percentageOfCover,
+          id: FIELDS.CURRENCY.ID,
+          name: FIELDS.CURRENCY.ID,
+          items: currencies,
           classes: "govuk-grid-column-one-quarter-from-desktop",
           attributes: {
-            "data-cy": FIELDS.PERCENTAGE_OF_COVER.ID + "-input"
+            "data-cy": FIELDS.CURRENCY.ID + "-input"
           },
-          errorMessage: validationErrors.errorList[FIELDS.PERCENTAGE_OF_COVER.ID]and {
-            text: validationErrors.errorList[FIELDS.PERCENTAGE_OF_COVER.ID].text,
+          errorMessage: validationErrors.errorList[FIELDS.CURRENCY.ID] and {
+            text: validationErrors.errorList[FIELDS.CURRENCY.ID].text,
             attributes: {
-              "data-cy": FIELDS.PERCENTAGE_OF_COVER.ID + "-error-message"
+              "data-cy": FIELDS.CURRENCY.ID + "-error-message"
             }
           }
         }) }}
 
         {{ govukInput({
           label: {
-            text: FIELDS.CREDIT_PERIOD.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            text: FIELDS.AMOUNT.LABEL,
             attributes: {
-              'data-cy': FIELDS.CREDIT_PERIOD.ID + '-label'
+              "data-cy": FIELDS.AMOUNT.ID + "-label"
             }
           },
           hint: {
-            text: FIELDS.CREDIT_PERIOD.HINT,
+            text: FIELDS.AMOUNT.HINT,
             attributes: {
-              'data-cy': FIELDS.CREDIT_PERIOD.ID + '-hint'
+              'data-cy': FIELDS.AMOUNT.ID + '-hint'
             }
           },
-          classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
-          attributes: {
-            'data-cy': FIELDS.CREDIT_PERIOD.ID + '-input'
-          },
-          id: FIELDS.CREDIT_PERIOD.ID,
-          name: FIELDS.CREDIT_PERIOD.ID,
-          inputmode: "numeric",
-          pattern: "[0-9]*",
-          suffix: {
-            text: "months"
-          },
+          id: FIELDS.AMOUNT.ID,
+          name: FIELDS.AMOUNT.ID,
           spellcheck: false,
-          errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID]and {
-            text: validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID].text,
-            attributes: {
-              "data-cy": FIELDS.CREDIT_PERIOD.ID + "-error-message"
-            }
-          },
-          value: submittedValues[FIELDS.CREDIT_PERIOD.ID]
-        }) }}
-
-        {{ govukButton({
-          text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+          value: submittedValues[FIELDS.AMOUNT.ID],
+          classes: "govuk-!-width-one-third",
           attributes: {
-            'data-cy': 'submit-button'
+            "data-cy": FIELDS.AMOUNT.ID + "-input"
+          },
+          errorMessage: validationErrors.errorList[FIELDS.AMOUNT.ID] and {
+            text: validationErrors.errorList[FIELDS.AMOUNT.ID].text,
+            attributes: {
+              "data-cy": FIELDS.AMOUNT.ID + "-error-message"
+            }
           }
         }) }}
 
-      </form>
+      </fieldset>
 
-    </div>
-  </div>
+      {{ govukSelect({
+        id: FIELDS.PERCENTAGE_OF_COVER.ID,
+        name: FIELDS.PERCENTAGE_OF_COVER.ID,
+        label: {
+          text: FIELDS.PERCENTAGE_OF_COVER.LABEL,
+          classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+          attributes: {
+            "data-cy": FIELDS.PERCENTAGE_OF_COVER.ID + "-label"
+          }
+        },
+        hint: {
+          text: FIELDS.PERCENTAGE_OF_COVER.HINT,
+          attributes: {
+            'data-cy': FIELDS.PERCENTAGE_OF_COVER.ID + '-hint'
+          }
+        },
+        items: percentageOfCover,
+        classes: "govuk-grid-column-one-quarter-from-desktop",
+        attributes: {
+          "data-cy": FIELDS.PERCENTAGE_OF_COVER.ID + "-input"
+        },
+        errorMessage: validationErrors.errorList[FIELDS.PERCENTAGE_OF_COVER.ID] and {
+          text: validationErrors.errorList[FIELDS.PERCENTAGE_OF_COVER.ID].text,
+          attributes: {
+            "data-cy": FIELDS.PERCENTAGE_OF_COVER.ID + "-error-message"
+          }
+        }
+      }) }}
+
+      {% if FIELDS.CREDIT_PERIOD %}
+
+        {% if validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID] %}
+          <div class="govuk-form-group govuk-form-group--error">
+          {% else %}
+
+          <div class="govuk-form-group">
+        {% endif %}
+
+          {{ govukLabel({
+            for: FIELDS.CREDIT_PERIOD.ID,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            text: FIELDS.CREDIT_PERIOD.LABEL,
+            attributes: {
+              "data-cy": FIELDS.CREDIT_PERIOD.ID + "-label"
+            }
+          }) }}
+
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds-from-desktop">
+              {{ govukHint({
+                id: FIELDS.CREDIT_PERIOD.ID + "-hint",
+                text: FIELDS.CREDIT_PERIOD.HINT,
+                attributes: {
+                  "data-cy": FIELDS.CREDIT_PERIOD.ID + "-hint"
+                }
+              }) }}
+            </div>
+          </div>
+
+          {{ govukInput({
+            classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
+            attributes: {
+              'data-cy': FIELDS.CREDIT_PERIOD.ID + '-input'
+            },
+            id: FIELDS.CREDIT_PERIOD.ID,
+            name: FIELDS.CREDIT_PERIOD.ID,
+            inputmode: "numeric",
+            pattern: "[0-9]*",
+            suffix: {
+              text: "months"
+            },
+            spellcheck: false,
+            errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID] and {
+              text: validationErrors.errorList[FIELDS.CREDIT_PERIOD.ID].text,
+              attributes: {
+                "data-cy": FIELDS.CREDIT_PERIOD.ID + "-error-message"
+              }
+            },
+            value: submittedValues[FIELDS.CREDIT_PERIOD.ID]
+          }) }}
+
+        </div>
+
+      {% endif %}
+
+      {{ govukButton({
+        text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+        attributes: {
+          'data-cy': 'submit-button'
+        }
+      }) }}
+
+    </form>
 
 {% endblock %}

@@ -17,10 +17,10 @@ const hasDisllowedCharacters = (str) => {
   return false;
 };
 
-const amountRules = (formBody, errors) => {
+const amountRules = (submittedData, errors) => {
   let updatedErrors = errors;
 
-  if (!objectHasProperty(formBody, FIELD_IDS.AMOUNT)) {
+  if (!objectHasProperty(submittedData, FIELD_IDS.AMOUNT)) {
     updatedErrors = generateValidationErrors(
       FIELD_IDS.AMOUNT,
       ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY,
@@ -30,7 +30,7 @@ const amountRules = (formBody, errors) => {
     return updatedErrors;
   }
 
-  const submittedValue = formBody[FIELD_IDS.AMOUNT];
+  const submittedValue = submittedData[FIELD_IDS.AMOUNT];
 
   if (numberHasDecimal(submittedValue)) {
     updatedErrors = generateValidationErrors(

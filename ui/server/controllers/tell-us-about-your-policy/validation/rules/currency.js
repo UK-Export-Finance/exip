@@ -3,10 +3,10 @@ const CONTENT_STRINGS = require('../../../../content-strings');
 const generateValidationErrors = require('../../../../helpers/validation');
 const { objectHasProperty } = require('../../../../helpers/object');
 
-const currencyRules = (formBody, errors) => {
+const currencyRules = (submittedData, errors) => {
   let updatedErrors = errors;
 
-  if (!objectHasProperty(formBody, FIELD_IDS.CURRENCY)) {
+  if (!objectHasProperty(submittedData, FIELD_IDS.CURRENCY)) {
     updatedErrors = generateValidationErrors(
       FIELD_IDS.CURRENCY,
       CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,

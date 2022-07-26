@@ -3,7 +3,7 @@ import {
   completeAndSubmitCompanyForm,
   completeAndSubmitTriedToObtainCoverForm,
   completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeForm,
+  completeAndSubmitPolicyTypeMultiForm,
 } from '../../../support/forms';
 import {
   beforeYouStartPage,
@@ -16,7 +16,7 @@ import checkText from '../../helpers/check-text';
 
 const { FIELD_IDS } = CONSTANTS;
 
-context('Tell us about the policy you need page - form validation', () => {
+context('Tell us your multi policy you need - form validation', () => {
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');
@@ -30,14 +30,14 @@ context('Tell us about the policy you need page - form validation', () => {
       completeAndSubmitCompanyForm();
       completeAndSubmitTriedToObtainCoverForm();
       completeAndSubmitUkContentForm();
-      completeAndSubmitPolicyTypeForm();
+      completeAndSubmitPolicyTypeMultiForm();
     });
 
     beforeEach(() => {
       tellUsAboutYourPolicyPage.submitButton().click();
     });
 
-    it('should render validation errors for all required fields', () => {
+    it.only('should render validation errors for all required fields', () => {
       partials.errorSummaryListItems().should('exist');
 
       const TOTAL_REQUIRED_FIELDS = 4;

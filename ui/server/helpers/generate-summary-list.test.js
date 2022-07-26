@@ -26,6 +26,7 @@ const {
   MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
+  POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
   UK_GOODS_OR_SERVICES,
@@ -41,7 +42,7 @@ describe('server/helpers/generate-summary-list', () => {
     },
   ];
 
-  describe('generateFieldGroups', () => {
+  describe('generateFieldGroups - no policy type', () => {
     it('should map over each field group with value from submittedData', () => {
       const mockAnswersContent = mapAnswersToContent(mockSession.submittedData);
       delete mockAnswersContent[CAN_GET_PRIVATE_INSURANCE_NO];
@@ -91,14 +92,6 @@ describe('server/helpers/generate-summary-list', () => {
           CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
           value: {
             text: mockAnswersContent[AMOUNT].text,
-          },
-        },
-        {
-          ID: CREDIT_PERIOD,
-          ...FIELDS[CREDIT_PERIOD],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
-          value: {
-            text: mockAnswersContent[CREDIT_PERIOD].text,
           },
         },
         {
@@ -170,15 +163,15 @@ describe('server/helpers/generate-summary-list', () => {
     describe('when policy type is single', () => {
       it(`should add a ${SINGLE_POLICY_TYPE} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
-          ...mapAnswersToContent(mockSession.submittedData),
-          [SINGLE_POLICY_TYPE]: {
-            text: FIELD_VALUES.POLICY_TYPE.SINGLE,
-          },
+          ...mapAnswersToContent({
+            ...mockSession.submittedData,
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          }),
         };
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 5];
+        const expectedField = result.POLICY_DETAILS[0];
 
         const expected = {
           ID: SINGLE_POLICY_TYPE,
@@ -195,7 +188,6 @@ describe('server/helpers/generate-summary-list', () => {
       it(`should add a ${SINGLE_POLICY_LENGTH} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockSession.submittedData),
-          // ...mockAnswers,
           [SINGLE_POLICY_TYPE]: {
             text: FIELD_VALUES.POLICY_TYPE.SINGLE,
           },
@@ -203,7 +195,7 @@ describe('server/helpers/generate-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 4];
+        const expectedField = result.POLICY_DETAILS[1];
 
         const expected = {
           ID: SINGLE_POLICY_LENGTH,
@@ -219,8 +211,10 @@ describe('server/helpers/generate-summary-list', () => {
     });
 
     describe('when policy type is multi', () => {
-      it(`should add a ${MULTI_POLICY_TYPE} object to POLICY_DETAILS`, () => {
-        const mockAnswersContent = {
+      let mockAnswersContent;
+
+      beforeEach(() => {
+        mockAnswersContent = {
           ...mapAnswersToContent(mockSession.submittedData),
           [MULTI_POLICY_TYPE]: {
             text: FIELD_VALUES.POLICY_TYPE.MULTI,
@@ -231,10 +225,12 @@ describe('server/helpers/generate-summary-list', () => {
         };
 
         delete mockAnswersContent[SINGLE_POLICY_TYPE];
+      });
 
+      it(`should add a ${MULTI_POLICY_TYPE} object to POLICY_DETAILS`, () => {
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 5];
+        const expectedField = result.POLICY_DETAILS[0];
 
         const expected = {
           ID: MULTI_POLICY_TYPE,
@@ -249,21 +245,9 @@ describe('server/helpers/generate-summary-list', () => {
       });
 
       it(`should add a ${MULTI_POLICY_LENGTH} object to POLICY_DETAILS with single policy length field values`, () => {
-        const mockAnswersContent = {
-          ...mapAnswersToContent(mockSession.submittedData),
-          [MULTI_POLICY_TYPE]: {
-            text: FIELD_VALUES.POLICY_TYPE.MULTI,
-          },
-          [MULTI_POLICY_LENGTH]: {
-            text: 2,
-          },
-        };
-
-        delete mockAnswersContent[SINGLE_POLICY_TYPE];
-
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 4];
+        const expectedField = result.POLICY_DETAILS[1];
 
         const expected = {
           ID: MULTI_POLICY_LENGTH,
@@ -271,6 +255,23 @@ describe('server/helpers/generate-summary-list', () => {
           CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
           value: {
             text: mockAnswersContent[MULTI_POLICY_LENGTH].text,
+          },
+        };
+
+        expect(expectedField).toEqual(expected);
+      });
+
+      it(`should add ${CREDIT_PERIOD} object to POLICY_DETAILS`, () => {
+        const result = generateFieldGroups(mockAnswersContent);
+
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 2];
+
+        const expected = {
+          ID: CREDIT_PERIOD,
+          ...FIELDS[CREDIT_PERIOD],
+          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          value: {
+            text: mockAnswersContent[CREDIT_PERIOD].text,
           },
         };
 

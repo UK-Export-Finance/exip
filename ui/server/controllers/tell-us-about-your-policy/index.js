@@ -12,6 +12,7 @@ const getPercentagesOfCover = require('../../helpers/get-percentages-of-cover');
 const mapPercentageOfCover = require('../../helpers/map-percentage-of-cover');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
+const { isSinglePolicyType, isMultiPolicyType } = require('../../helpers/policy-type');
 
 const {
   AMOUNT,
@@ -23,35 +24,79 @@ const {
   POLICY_TYPE,
 } = FIELD_IDS;
 
-const PAGE_VARIABLES = {
-  CONTENT_STRINGS: {
-    PRODUCT: CONTENT_STRINGS.PRODUCT,
-    FOOTER: CONTENT_STRINGS.FOOTER,
-    BUTTONS: CONTENT_STRINGS.BUTTONS,
-    ...CONTENT_STRINGS.PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
-  },
-  FIELDS: {
-    AMOUNT_CURRENCY: {
+const generatePageVariables = (policyType) => {
+  const pageVariables = {
+    CONTENT_STRINGS: {
+      PRODUCT: CONTENT_STRINGS.PRODUCT,
+      FOOTER: CONTENT_STRINGS.FOOTER,
+      BUTTONS: CONTENT_STRINGS.BUTTONS,
+      ...CONTENT_STRINGS.PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
+    },
+    FIELDS: {
+      AMOUNT_CURRENCY: {
+        ID: AMOUNT_CURRENCY,
+      },
+      CURRENCY: {
+        ID: CURRENCY,
+        ...CONTENT_STRINGS.FIELDS[CURRENCY],
+      },
+      AMOUNT: {
+        ID: AMOUNT,
+      },
+      PERCENTAGE_OF_COVER: {
+        ID: PERCENTAGE_OF_COVER,
+      },
+    },
+  };
+
+  const { TELL_US_ABOUT_YOUR_POLICY_PAGE } = CONTENT_STRINGS.PAGES;
+
+  if (isSinglePolicyType(policyType)) {
+    pageVariables.CONTENT_STRINGS.PAGE_TITLE = TELL_US_ABOUT_YOUR_POLICY_PAGE.SINGLE_POLICY_PAGE_TITLE;
+    pageVariables.CONTENT_STRINGS.HEADING = TELL_US_ABOUT_YOUR_POLICY_PAGE.SINGLE_POLICY_HEADING;
+
+    pageVariables.FIELDS.AMOUNT_CURRENCY = {
       ID: AMOUNT_CURRENCY,
-      ...CONTENT_STRINGS.FIELDS[AMOUNT_CURRENCY],
-    },
-    CURRENCY: {
-      ID: CURRENCY,
-      ...CONTENT_STRINGS.FIELDS[CURRENCY],
-    },
-    AMOUNT: {
+      ...CONTENT_STRINGS.FIELDS[AMOUNT_CURRENCY].SINGLE_POLICY,
+    };
+
+    pageVariables.FIELDS.AMOUNT = {
       ID: AMOUNT,
-      ...CONTENT_STRINGS.FIELDS[AMOUNT],
-    },
-    PERCENTAGE_OF_COVER: {
+      ...CONTENT_STRINGS.FIELDS[AMOUNT].SINGLE_POLICY,
+    };
+
+    pageVariables.FIELDS.PERCENTAGE_OF_COVER = {
       ID: PERCENTAGE_OF_COVER,
-      ...CONTENT_STRINGS.FIELDS[PERCENTAGE_OF_COVER],
-    },
-    CREDIT_PERIOD: {
+      ...CONTENT_STRINGS.FIELDS[PERCENTAGE_OF_COVER].SINGLE_POLICY,
+    };
+  }
+
+  if (isMultiPolicyType(policyType)) {
+    pageVariables.CONTENT_STRINGS.PAGE_TITLE = TELL_US_ABOUT_YOUR_POLICY_PAGE.MULTI_POLICY_PAGE_TITLE;
+    pageVariables.CONTENT_STRINGS.HEADING = TELL_US_ABOUT_YOUR_POLICY_PAGE.MULTI_POLICY_HEADING;
+
+    pageVariables.FIELDS.AMOUNT_CURRENCY = {
+      ID: AMOUNT_CURRENCY,
+      ...CONTENT_STRINGS.FIELDS[AMOUNT_CURRENCY].MULTI_POLICY,
+    };
+
+    pageVariables.FIELDS.AMOUNT = {
+      ID: AMOUNT,
+      ...CONTENT_STRINGS.FIELDS[AMOUNT].MULTI_POLICY,
+    };
+
+    pageVariables.FIELDS.PERCENTAGE_OF_COVER = {
+      ID: PERCENTAGE_OF_COVER,
+      ...CONTENT_STRINGS.FIELDS[PERCENTAGE_OF_COVER].MULTI_POLICY,
+    };
+
+    pageVariables.FIELDS.CREDIT_PERIOD = {
       ID: CREDIT_PERIOD,
       ...CONTENT_STRINGS.FIELDS[CREDIT_PERIOD],
-    },
-  },
+    };
+  }
+
+  return pageVariables;
 };
 
 const get = async (req, res) => {
@@ -78,6 +123,8 @@ const get = async (req, res) => {
     mappedPercentageOfCover = mapPercentageOfCover(percentagesOfCover);
   }
 
+  const PAGE_VARIABLES = generatePageVariables(submittedData[POLICY_TYPE]);
+
   return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
     ...PAGE_VARIABLES,
     BACK_LINK: req.headers.referer,
@@ -89,7 +136,10 @@ const get = async (req, res) => {
 
 const post = async (req, res) => {
   const { submittedData } = req.session;
-  const validationErrors = generateValidationErrors(req.body);
+  const validationErrors = generateValidationErrors({
+    ...submittedData,
+    ...req.body,
+  });
 
   const submittedCurrencyCode = req.body[FIELD_IDS.CURRENCY];
 
@@ -119,6 +169,8 @@ const post = async (req, res) => {
       mappedPercentageOfCover = mapPercentageOfCover(percentagesOfCover);
     }
 
+    const PAGE_VARIABLES = generatePageVariables(submittedData[POLICY_TYPE]);
+
     return res.render(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
@@ -147,7 +199,8 @@ const post = async (req, res) => {
 };
 
 module.exports = {
-  PAGE_VARIABLES,
+  // BASE_PAGE_VARIABLES,
+  generatePageVariables,
   get,
   post,
 };

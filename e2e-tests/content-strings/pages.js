@@ -133,9 +133,10 @@ const POLICY_TYPE_PAGE = {
 };
 
 const TELL_US_ABOUT_YOUR_POLICY_PAGE = {
-  PAGE_TITLE: 'Tell us about the policy you need',
-  HEADING: 'Tell us about the policy you need',
-  DESCRIPTION: 'To give you a quote, we need some more information.',
+  SINGLE_POLICY_PAGE_TITLE: 'Tell us about the single contract policy you need',
+  SINGLE_POLICY_HEADING: 'Tell us about the single contract policy you need',
+  MULTI_POLICY_PAGE_TITLE: 'Tell us about the multiple policy you need',
+  MULTI_POLICY_HEADING: 'Tell us about the multiple policy you need',
 };
 
 const CHECK_YOUR_ANSWERS_PAGE = {
@@ -177,7 +178,6 @@ const CANNOT_OBTAIN_COVER_PAGE = {
 
 const YOUR_QUOTE_PAGE = {
   PAGE_TITLE: 'You can apply for UKEF export insurance',
-  DESCRIPTION: 'To give you a quote, we need some more information.',
   QUOTE: {
     HEADING: 'You can apply for UKEF export insurance',
     SUB_HEADING: 'Your quote',

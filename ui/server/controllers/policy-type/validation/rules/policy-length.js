@@ -1,5 +1,9 @@
-const { FIELD_IDS, FIELD_VALUES } = require('../../../../constants');
+const { FIELD_IDS } = require('../../../../constants');
 const { ERROR_MESSAGES } = require('../../../../content-strings');
+const {
+  isSinglePolicyType,
+  isMultiPolicyType,
+} = require('../../../../helpers/policy-type');
 const generateValidationErrors = require('../../../../helpers/validation');
 const { objectHasProperty } = require('../../../../helpers/object');
 const { isNumber, numberHasDecimal } = require('../../../../helpers/number');
@@ -12,10 +16,7 @@ const policyLengthRules = (formBody, errors) => {
   let updatedErrors = errors;
 
   if (objectHasProperty(formBody, FIELD_IDS.POLICY_TYPE)) {
-    const isSinglePolicy = (formBody[FIELD_IDS.POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.SINGLE);
-    const isMultiPolicy = (formBody[FIELD_IDS.POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.MULTI);
-
-    if (isSinglePolicy) {
+    if (isSinglePolicyType(formBody[FIELD_IDS.POLICY_TYPE])) {
       if (!objectHasProperty(formBody, FIELD_IDS.SINGLE_POLICY_LENGTH)) {
         const errorMessage = ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY;
 
@@ -69,7 +70,7 @@ const policyLengthRules = (formBody, errors) => {
       }
     }
 
-    if (isMultiPolicy) {
+    if (isMultiPolicyType(formBody[FIELD_IDS.POLICY_TYPE])) {
       if (!objectHasProperty(formBody, FIELD_IDS.MULTI_POLICY_LENGTH)) {
         const errorMessage = ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].IS_EMPTY;
 

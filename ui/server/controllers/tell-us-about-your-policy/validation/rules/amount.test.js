@@ -33,11 +33,11 @@ describe('controllers/tell-us-about-your-policy/validation/rules/amount', () => 
 
     describe(`when ${FIELD_IDS.AMOUNT} is not provided`, () => {
       it('should return validation error', () => {
-        const mockBody = {
+        const mockSubmittedData = {
           [FIELD_IDS.AMOUNT]: '',
         };
 
-        const result = amountRules(mockBody, mockErrors);
+        const result = amountRules(mockSubmittedData, mockErrors);
 
         const expected = generateValidationErrors(
           FIELD_IDS.AMOUNT,
@@ -51,11 +51,11 @@ describe('controllers/tell-us-about-your-policy/validation/rules/amount', () => 
 
     describe(`when ${FIELD_IDS.AMOUNT} is not a whole number`, () => {
       it('should return validation error', () => {
-        const mockBody = {
+        const mockSubmittedData = {
           [FIELD_IDS.AMOUNT]: '123,456.78',
         };
 
-        const result = amountRules(mockBody, mockErrors);
+        const result = amountRules(mockSubmittedData, mockErrors);
 
         const expected = generateValidationErrors(
           FIELD_IDS.AMOUNT,
@@ -69,11 +69,11 @@ describe('controllers/tell-us-about-your-policy/validation/rules/amount', () => 
 
     describe(`when ${FIELD_IDS.AMOUNT} has invalid characters`, () => {
       it('should return validation error', () => {
-        const mockBody = {
+        const mockSubmittedData = {
           [FIELD_IDS.AMOUNT]: '£123,456',
         };
 
-        const result = amountRules(mockBody, mockErrors);
+        const result = amountRules(mockSubmittedData, mockErrors);
 
         const expected = generateValidationErrors(
           FIELD_IDS.AMOUNT,
@@ -87,11 +87,11 @@ describe('controllers/tell-us-about-your-policy/validation/rules/amount', () => 
 
     describe(`when ${FIELD_IDS.AMOUNT} is not a number`, () => {
       it('should return validation error', () => {
-        const mockBody = {
+        const mockSubmittedData = {
           [FIELD_IDS.AMOUNT]: 'invalid',
         };
 
-        const result = amountRules(mockBody, mockErrors);
+        const result = amountRules(mockSubmittedData, mockErrors);
 
         const expected = generateValidationErrors(
           FIELD_IDS.AMOUNT,
@@ -105,11 +105,11 @@ describe('controllers/tell-us-about-your-policy/validation/rules/amount', () => 
 
     describe(`when ${FIELD_IDS.AMOUNT} is below the minimum`, () => {
       it('should return validation error', () => {
-        const mockBody = {
+        const mockSubmittedData = {
           [FIELD_IDS.AMOUNT]: '0',
         };
 
-        const result = amountRules(mockBody, mockErrors);
+        const result = amountRules(mockSubmittedData, mockErrors);
 
         const expected = generateValidationErrors(
           FIELD_IDS.AMOUNT,
@@ -123,11 +123,11 @@ describe('controllers/tell-us-about-your-policy/validation/rules/amount', () => 
 
     describe('when there are no validation errors', () => {
       it('should return the already provided errors', () => {
-        const mockBody = {
+        const mockSubmittedData = {
           [FIELD_IDS.AMOUNT]: '1,234,567',
         };
 
-        const result = amountRules(mockBody, mockErrors);
+        const result = amountRules(mockSubmittedData, mockErrors);
 
         expect(result).toEqual(mockErrors);
       });

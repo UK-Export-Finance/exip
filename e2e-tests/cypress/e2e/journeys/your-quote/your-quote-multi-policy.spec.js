@@ -22,7 +22,7 @@ context('Your quote page - multi policy type', () => {
   before(() => {
     cy.login();
 
-    cy.submitAnswersHappyPath();
+    cy.submitAnswersHappyPathSinglePolicy();
 
     // change policy type to multi
     checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE].changeLink().click();
