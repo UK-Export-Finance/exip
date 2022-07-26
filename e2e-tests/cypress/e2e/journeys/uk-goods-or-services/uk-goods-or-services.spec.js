@@ -40,7 +40,7 @@ context('Is at least 20% of your export contract value made up from UK goods or 
       accessibility: 100,
       performance: 80,
       'best-practices': 100,
-      seo: 75,
+      seo: 60,
     });
   });
 
