@@ -13,6 +13,7 @@ const tellUsAboutYourPolicyController = require('../controllers/tell-us-about-yo
 const checkYourAnswersController = require('../controllers/check-your-answers');
 const cannotObtainCoverController = require('../controllers/cannot-obtain-cover');
 const yourQuoteController = require('../controllers/your-quote');
+const cookiesController = require('../controllers/cookies');
 const problemWithServiceController = require('../controllers/problem-with-service');
 
 describe('routes/index', () => {
@@ -25,7 +26,7 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(18);
+    expect(get).toHaveBeenCalledTimes(19);
     expect(post).toHaveBeenCalledTimes(14);
 
     expect(get).toHaveBeenCalledWith(ROUTES.GUIDANCE, guidanceController);
@@ -64,6 +65,8 @@ describe('routes/index', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.CANNOT_OBTAIN_COVER, cannotObtainCoverController);
 
     expect(get).toHaveBeenCalledWith(ROUTES.YOUR_QUOTE, yourQuoteController);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.COOKIES, cookiesController);
 
     expect(get).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceController);
   });

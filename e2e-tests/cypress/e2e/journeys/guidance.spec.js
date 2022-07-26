@@ -16,7 +16,7 @@ context('Guidance page', () => {
       accessibility: 100,
       performance: 80,
       'best-practices': 100,
-      seo: 65,
+      seo: 60,
     });
   });
 

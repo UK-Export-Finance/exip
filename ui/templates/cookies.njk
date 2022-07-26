@@ -1,0 +1,89 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+
+  <p class="govuk-body" data-cy="body-1">{{ CONTENT_STRINGS.BODY_1 }}</p>
+  <p class="govuk-body" data-cy="body-2">{{ CONTENT_STRINGS.BODY_2 }}</p>
+
+  <h2 class="govuk-heading-m" data-cy="essential-cookies-heading">{{ CONTENT_STRINGS.ESSENTIAL_COOKIES.HEADING }}</h2>
+
+  <p class="govuk-body" data-cy="essential-cookies-intro">{{ CONTENT_STRINGS.ESSENTIAL_COOKIES.INTRO }}</p>
+
+  {{ govukTable({
+    firstCellIsHeader: true,
+    attributes: {
+      "data-cy": "essential-cookies-table"
+    },
+    head: [
+      {
+        text: CONTENT_STRINGS.TABLE_HEADINGS.NAME,
+        attributes: {
+          "data-cy": "essential-cookies-table-head-cell-1"
+        }
+      },
+      {
+        text: CONTENT_STRINGS.TABLE_HEADINGS.PURPOSE,
+        attributes: {
+          "data-cy": "essential-cookies-table-head-cell-2"
+        }
+      },
+      {
+        text: CONTENT_STRINGS.TABLE_HEADINGS.EXPIRES,
+        attributes: {
+          "data-cy": "essential-cookies-table-head-cell-3"
+        }
+      }
+    ],
+    rows: [
+      [
+        {
+          text: CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].NAME,
+          attributes: {
+            "data-cy": "essential-cookies-table-row-1-cell-1"
+          }
+        },
+        {
+          text: CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].PURPOSE,
+          attributes: {
+            "data-cy": "essential-cookies-table-row-1-cell-2"
+          }
+        },
+        {
+          text: CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].EXPIRES,
+          attributes: {
+            "data-cy": "essential-cookies-table-row-1-cell-3"
+          }
+        }
+      ],
+      [
+        {
+          text: CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].NAME,
+          attributes: {
+            "data-cy": "essential-cookies-table-row-2-cell-1"
+          }
+        },
+        {
+          text: CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].PURPOSE,
+          attributes: {
+            "data-cy": "essential-cookies-table-row-2-cell-2"
+          }
+        },
+        {
+          text: CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].EXPIRES,
+          attributes: {
+            "data-cy": "essential-cookies-table-row-2-cell-3"
+          }
+        }
+      ]
+    ]
+  }) }}
+
+
+{% endblock %}

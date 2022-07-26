@@ -51,7 +51,7 @@ context('Policy type page', () => {
         accessibility: 92,
         performance: 80,
         'best-practices': 100,
-        seo: 75,
+        seo: 60,
       });
     });
 
