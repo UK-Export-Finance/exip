@@ -133,7 +133,7 @@ context('Policy type page', () => {
       });
     });
 
-    describe('when clicking `single` policy type', () => {
+    describe('when clicking `multi` policy type', () => {
       it('should reveal policy length input with label and hint', () => {
         const multiPolicyType = policyTypePage[FIELD_IDS.POLICY_TYPE].multi;
         multiPolicyType.label().click();
@@ -148,10 +148,14 @@ context('Policy type page', () => {
         multiPolicyLength.label().invoke('text').then((text) => {
           expect(text.trim()).equal(FIELDS[multiPolicyLengthId].LABEL);
         });
-
         multiPolicyLength.hint().invoke('text').then((text) => {
-          expect(text.trim()).equal(FIELDS[multiPolicyLengthId].HINT);
+          expect(text.trim()).includes(FIELDS[multiPolicyLengthId].HINT[0][0].text);
+          expect(text.trim()).includes(FIELDS[multiPolicyLengthId].HINT[0][1].text);
+          expect(text.trim()).includes(FIELDS[multiPolicyLengthId].HINT[0][2].text);
         });
+
+        const expectedHref = LINKS.EXTERNAL.NBI_FORM;
+        multiPolicyLength.hintLink().should('have.attr', 'href', expectedHref);
       });
     });
 
