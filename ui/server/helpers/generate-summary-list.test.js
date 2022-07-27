@@ -1,5 +1,6 @@
 const {
   generateFieldGroups,
+  getKeyText,
   generateSummaryListRows,
   generateSummaryList,
 } = require('./generate-summary-list');
@@ -8,7 +9,6 @@ const {
   PAGES,
   FIELDS,
   LINKS,
-  SUMMARY_ANSWERS,
 } = require('../content-strings');
 const {
   FIELD_IDS,
@@ -20,8 +20,6 @@ const { mockSession } = require('../test-mocks');
 const {
   AMOUNT,
   BUYER_COUNTRY,
-  CAN_GET_PRIVATE_INSURANCE_YES,
-  CAN_GET_PRIVATE_INSURANCE_NO,
   CREDIT_PERIOD,
   MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
@@ -34,18 +32,9 @@ const {
 } = FIELD_IDS;
 
 describe('server/helpers/generate-summary-list', () => {
-  const mockFields = [
-    {
-      ID: FIELD_IDS.BUYER_COUNTRY,
-      ...FIELDS[FIELD_IDS.BUYER_COUNTRY],
-      CHANGE_ROUTE: ROUTES.BUYER_COUNTRY_CHANGE,
-    },
-  ];
-
   describe('generateFieldGroups - no policy type', () => {
     it('should map over each field group with value from submittedData', () => {
       const mockAnswersContent = mapAnswersToContent(mockSession.submittedData);
-      delete mockAnswersContent[CAN_GET_PRIVATE_INSURANCE_NO];
       delete mockAnswersContent[SINGLE_POLICY_TYPE];
       delete mockAnswersContent[SINGLE_POLICY_LENGTH];
 
@@ -105,59 +94,6 @@ describe('server/helpers/generate-summary-list', () => {
       ];
 
       expect(result).toEqual(expected);
-    });
-
-    describe('when `unable to get private cover` is true', () => {
-      it(`should add a ${CAN_GET_PRIVATE_INSURANCE_YES} object to EXPORT_DETAILS`, () => {
-        const mockAnswersContent = {
-          ...mapAnswersToContent(mockSession.submittedData),
-          [CAN_GET_PRIVATE_INSURANCE_YES]: {
-            text: SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_YES],
-          },
-        };
-        delete mockAnswersContent[CAN_GET_PRIVATE_INSURANCE_NO];
-
-        const result = generateFieldGroups(mockAnswersContent);
-
-        const expectedField = result.EXPORT_DETAILS[result.EXPORT_DETAILS.length - 2];
-
-        const expected = {
-          ID: CAN_GET_PRIVATE_INSURANCE_YES,
-          ...FIELDS[CAN_GET_PRIVATE_INSURANCE_YES],
-          CHANGE_ROUTE: ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE,
-          value: {
-            text: mockAnswersContent[CAN_GET_PRIVATE_INSURANCE_YES].text,
-          },
-        };
-
-        expect(expectedField).toEqual(expected);
-      });
-    });
-
-    describe('when `unable to get private cover` is false', () => {
-      it(`should add a ${CAN_GET_PRIVATE_INSURANCE_NO} object to EXPORT_DETAILS`, () => {
-        const mockAnswersContent = {
-          ...mapAnswersToContent(mockSession.submittedData),
-          [CAN_GET_PRIVATE_INSURANCE_NO]: {
-            text: SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_NO],
-          },
-        };
-
-        const result = generateFieldGroups(mockAnswersContent);
-
-        const expectedField = result.EXPORT_DETAILS[result.EXPORT_DETAILS.length - 2];
-
-        const expected = {
-          ID: CAN_GET_PRIVATE_INSURANCE_NO,
-          ...FIELDS[CAN_GET_PRIVATE_INSURANCE_NO],
-          CHANGE_ROUTE: ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE,
-          value: {
-            text: mockAnswersContent[CAN_GET_PRIVATE_INSURANCE_NO].text,
-          },
-        };
-
-        expect(expectedField).toEqual(expected);
-      });
     });
 
     describe('when policy type is single', () => {
@@ -280,22 +216,80 @@ describe('server/helpers/generate-summary-list', () => {
     });
   });
 
+  describe('getKeyText', () => {
+    describe('when a field has SINGLE_POLICY and MULTI_POLICY objects with SUMMARY objct', () => {
+      const fieldId = AMOUNT;
+
+      describe('when policy type is single', () => {
+        it('should return FIELD.SINGLE_POLICY.SUMMARY.TITLE', () => {
+          const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.SINGLE);
+
+          const expected = FIELDS[AMOUNT].SINGLE_POLICY.SUMMARY.TITLE;
+          expect(result).toEqual(expected);
+        });
+      });
+
+      describe('when policy type is multi', () => {
+        it('should return FIELD.MULTI_POLICY.SUMMARY.TITLE', () => {
+          const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.MULTI);
+
+          const expected = FIELDS[AMOUNT].MULTI_POLICY.SUMMARY.TITLE;
+          expect(result).toEqual(expected);
+        });
+      });
+    });
+
+    describe('when a field has SINGLE_POLICY and MULTI_POLICY objects but does NOT have SUMMARY object', () => {
+      const fieldId = BUYER_COUNTRY;
+
+      describe('when policy type is single', () => {
+        it('should return FIELD.SUMMARY.TITLE', () => {
+          const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.SINGLE);
+
+          const expected = FIELDS[BUYER_COUNTRY].SUMMARY.TITLE;
+          expect(result).toEqual(expected);
+        });
+      });
+
+      describe('when policy type is multi', () => {
+        it('should return FIELD.SUMMARY.TITLE', () => {
+          const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.MULTI);
+
+          const expected = FIELDS[BUYER_COUNTRY].SUMMARY.TITLE;
+          expect(result).toEqual(expected);
+        });
+      });
+    });
+
+    describe('when a field does NOT have SINGLE_POLICY and MULTI_POLICY objects', () => {
+      const fieldId = CREDIT_PERIOD;
+
+      it('should return FIELD.SUMMARY.TITLE', () => {
+        const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.MULTI);
+
+        const expected = FIELDS[CREDIT_PERIOD].SUMMARY.TITLE;
+        expect(result).toEqual(expected);
+      });
+    });
+  });
+
   describe('generateSummaryListRows', () => {
     it('returns an array of objects mapped to submitted data', () => {
-      const fieldGroups = generateFieldGroups(mockSession.submittedData);
+      const mockAnswersContent = mapAnswersToContent(mockSession.submittedData);
+      const fieldGroups = generateFieldGroups(mockAnswersContent);
 
       const result = generateSummaryListRows(
         fieldGroups.EXPORT_DETAILS,
-        mockSession.submittedData,
+        mockSession.submittedData[POLICY_TYPE],
       );
 
       const expectedObj = (field) => ({
         key: {
-          text: FIELDS[field.ID].SUMMARY.TITLE,
+          text: getKeyText(field.ID, mockSession.submittedData[POLICY_TYPE]),
           classes: `${field.ID}-key`,
         },
         value: {
-          text: mockSession.submittedData[field.ID].text,
+          text: field.value.text,
           classes: `${field.ID}-value`,
         },
         actions: {
@@ -303,7 +297,7 @@ describe('server/helpers/generate-summary-list', () => {
             {
               href: `${field.CHANGE_ROUTE}#${field.ID}`,
               text: LINKS.CHANGE,
-              visuallyHiddenText: FIELDS[field.ID].SUMMARY.TITLE,
+              visuallyHiddenText: getKeyText(field.ID, mockSession.submittedData[POLICY_TYPE]),
               attributes: {
                 'data-cy': `${field.ID}-change-link`,
               },
@@ -314,7 +308,7 @@ describe('server/helpers/generate-summary-list', () => {
 
       expect(result).toBeInstanceOf(Array);
 
-      const expected = expectedObj(mockFields[0]);
+      const expected = expectedObj(fieldGroups.EXPORT_DETAILS[0]);
       expect(result[0]).toEqual(expected);
     });
   });
@@ -325,16 +319,19 @@ describe('server/helpers/generate-summary-list', () => {
 
       const fieldGroups = generateFieldGroups(mockAnswersContent);
 
-      const result = generateSummaryList(mockAnswersContent);
+      const result = generateSummaryList(
+        mockAnswersContent,
+        mockSession.submittedData[POLICY_TYPE],
+      );
 
       const expected = {
         EXPORT: {
           GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
-          ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, mockSession.submittedData),
+          ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, mockSession.submittedData[POLICY_TYPE]),
         },
         POLICY: {
           GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_POLICY,
-          ROWS: generateSummaryListRows(fieldGroups.POLICY_DETAILS, mockSession.submittedData),
+          ROWS: generateSummaryListRows(fieldGroups.POLICY_DETAILS, mockSession.submittedData[POLICY_TYPE]),
         },
       };
 

@@ -3,7 +3,6 @@ import { FIELD_IDS } from '../../../constants';
 const {
   AMOUNT,
   BUYER_COUNTRY,
-  CAN_GET_PRIVATE_INSURANCE_NO,
   CREDIT_PERIOD,
   MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
@@ -30,11 +29,6 @@ const checkYourAnswersPage = {
         key: () => cy.get(`.${VALID_COMPANY_BASE}-key`),
         value: () => cy.get(`.${VALID_COMPANY_BASE}-value`),
         changeLink: () => cy.get(`[data-cy="${VALID_COMPANY_BASE}-change-link"]`),
-      },
-      [CAN_GET_PRIVATE_INSURANCE_NO]: {
-        key: () => cy.get(`.${CAN_GET_PRIVATE_INSURANCE_NO}-key`),
-        value: () => cy.get(`.${CAN_GET_PRIVATE_INSURANCE_NO}-value`),
-        changeLink: () => cy.get(`[data-cy="${CAN_GET_PRIVATE_INSURANCE_NO}-change-link"]`),
       },
       [UK_GOODS_OR_SERVICES]: {
         key: () => cy.get(`.${UK_GOODS_OR_SERVICES}-key`),

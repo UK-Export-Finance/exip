@@ -7,12 +7,14 @@ const {
   FIELD_IDS,
   ROUTES,
 } = require('../constants');
+const {
+  isSinglePolicyType,
+  isMultiPolicyType,
+} = require('./policy-type');
 
 const {
   AMOUNT,
   BUYER_COUNTRY,
-  CAN_GET_PRIVATE_INSURANCE_YES,
-  CAN_GET_PRIVATE_INSURANCE_NO,
   CREDIT_PERIOD,
   MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
@@ -54,38 +56,6 @@ const generateFieldGroups = (answers) => {
         text: answers[VALID_COMPANY_BASE].text,
       },
     },
-  ];
-
-  if (answers[CAN_GET_PRIVATE_INSURANCE_YES]) {
-    fieldGroups.EXPORT_DETAILS = [
-      ...fieldGroups.EXPORT_DETAILS,
-      {
-        ID: CAN_GET_PRIVATE_INSURANCE_YES,
-        ...FIELDS[CAN_GET_PRIVATE_INSURANCE_YES],
-        CHANGE_ROUTE: ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE,
-        value: {
-          text: answers[CAN_GET_PRIVATE_INSURANCE_YES].text,
-        },
-      },
-    ];
-  }
-
-  if (answers[CAN_GET_PRIVATE_INSURANCE_NO]) {
-    fieldGroups.EXPORT_DETAILS = [
-      ...fieldGroups.EXPORT_DETAILS,
-      {
-        ID: CAN_GET_PRIVATE_INSURANCE_NO,
-        ...FIELDS[CAN_GET_PRIVATE_INSURANCE_NO],
-        CHANGE_ROUTE: ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE,
-        value: {
-          text: answers[CAN_GET_PRIVATE_INSURANCE_NO].text,
-        },
-      },
-    ];
-  }
-
-  fieldGroups.EXPORT_DETAILS = [
-    ...fieldGroups.EXPORT_DETAILS,
     {
       ID: UK_GOODS_OR_SERVICES,
       ...FIELDS[UK_GOODS_OR_SERVICES],
@@ -180,14 +150,37 @@ const generateFieldGroups = (answers) => {
 };
 
 /*
+ * getKeyText
+ * Get the text to display in a key
+ * Depends on the field structure, design and policy type
+ * Some fields have different text depending on the policy type
+ * for govukSummaryList component
+ */
+const getKeyText = (fieldId, policyType) => {
+  const field = FIELDS[fieldId];
+
+  if (field.SINGLE_POLICY && field.MULTI_POLICY) {
+    if (isSinglePolicyType(policyType) && field.SINGLE_POLICY.SUMMARY) {
+      return field.SINGLE_POLICY.SUMMARY.TITLE;
+    }
+
+    if (isMultiPolicyType(policyType) && field.MULTI_POLICY.SUMMARY) {
+      return field.MULTI_POLICY.SUMMARY.TITLE;
+    }
+  }
+
+  return FIELDS[fieldId].SUMMARY.TITLE;
+};
+
+/*
  * generateSummaryListRows
  * Map an array of fields with values in submitted data object
  * for govukSummaryList component
  */
-const generateSummaryListRows = (fields) =>
+const generateSummaryListRows = (fields, policyType) =>
   fields.map((field) => ({
     key: {
-      text: FIELDS[field.ID].SUMMARY.TITLE,
+      text: getKeyText(field.ID, policyType),
       classes: `${field.ID}-key`,
     },
     value: {
@@ -199,7 +192,7 @@ const generateSummaryListRows = (fields) =>
         {
           href: `${field.CHANGE_ROUTE}#${field.ID}`,
           text: LINKS.CHANGE,
-          visuallyHiddenText: FIELDS[field.ID].SUMMARY.TITLE,
+          visuallyHiddenText: getKeyText(field.ID, policyType),
           attributes: {
             'data-cy': `${field.ID}-change-link`,
           },
@@ -212,17 +205,17 @@ const generateSummaryListRows = (fields) =>
  * generateSummaryList
  * Create multiple summary lists
  */
-const generateSummaryList = (submittedData) => {
+const generateSummaryList = (submittedData, policyType) => {
   const fieldGroups = generateFieldGroups(submittedData);
 
   const summaryList = {
     EXPORT: {
       GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
-      ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, submittedData),
+      ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS, policyType),
     },
     POLICY: {
       GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_POLICY,
-      ROWS: generateSummaryListRows(fieldGroups.POLICY_DETAILS, submittedData),
+      ROWS: generateSummaryListRows(fieldGroups.POLICY_DETAILS, policyType),
     },
   };
 
@@ -231,6 +224,7 @@ const generateSummaryList = (submittedData) => {
 
 module.exports = {
   generateFieldGroups,
+  getKeyText,
   generateSummaryListRows,
   generateSummaryList,
 };

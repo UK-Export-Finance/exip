@@ -15,7 +15,6 @@ context('Check your answers page (multi policy)', () => {
   const {
     AMOUNT,
     BUYER_COUNTRY,
-    CAN_GET_PRIVATE_INSURANCE_NO,
     CREDIT_PERIOD,
     PERCENTAGE_OF_COVER,
     MULTI_POLICY_TYPE,
@@ -97,27 +96,6 @@ context('Check your answers page (multi policy)', () => {
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
-    it('renders `Private insurance` key, value and change link', () => {
-      const row = list[CAN_GET_PRIVATE_INSURANCE_NO];
-      const expectedKeyText = FIELDS[CAN_GET_PRIVATE_INSURANCE_NO].SUMMARY.TITLE;
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
-
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_NO]);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
-
-      const expectedHref = `${ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE}#${CAN_GET_PRIVATE_INSURANCE_NO}`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
-    });
-
     it('renders `UK goods` key, value and change link', () => {
       const row = list[UK_GOODS_OR_SERVICES];
       const expectedKeyText = FIELDS[UK_GOODS_OR_SERVICES].SUMMARY.TITLE;
@@ -195,7 +173,7 @@ context('Check your answers page (multi policy)', () => {
 
     it('renders `Amount` key, value and change link', () => {
       const row = list[AMOUNT];
-      const expectedKeyText = FIELDS[AMOUNT].SUMMARY.TITLE;
+      const expectedKeyText = FIELDS[AMOUNT].MULTI_POLICY.SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
