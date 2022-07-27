@@ -1,55 +1,4 @@
-const PRODUCT = require('./product');
 const LINKS = require('./links');
-
-const BEFORE_YOU_START = {
-  PAGE_TITLE: PRODUCT.DESCRIPTION,
-  HEADING: PRODUCT.DESCRIPTION,
-  INTRO_1: 'If you\'re an exporter and having problems getting export insurance, you may be able to get cover from UK Export Finance (UKEF).',
-  INTRO_2: 'This is sometimes known as credit insurance.',
-  USE_SERVICE_TO: {
-    INTRO: 'Use this service to get a non-binding quote for a:',
-    LIST: [
-      {
-        text: 'single contract policy for up to 22 months',
-      },
-      {
-        text: 'multiple contract policy for up to 12 months',
-      },
-    ],
-  },
-  CAN_ALSO: {
-    INTRO: 'You can also use it to:',
-    LIST: [
-      {
-        text: 'check if your buyer\'s country is covered',
-      },
-      {
-        text: 'complete a basic eligibility check',
-      },
-    ],
-  },
-  YOU_WILL_NEED: 'You`ll need to get a separate quote for each buyer you want to export to.',
-  COMPLETION_TIME: 'It takes around 5 minutes.',
-  MORE_THAN_MAX_PERIOD: [
-    [
-      {
-        text: 'If you need cover for a single contract policy of more than 22 months,',
-      },
-      {
-        text: 'fill in this form',
-        href: LINKS.EXTERNAL.NBI_FORM,
-      },
-      {
-        text: ' instead. ',
-      },
-      {
-        text: 'You cannot usually get a multiple contract policy over 12 months.',
-      },
-    ],
-  ],
-
-  SUBMIT_BUTTON: 'Start now',
-};
 
 const COMPANY_BASED_PAGE = {
   PAGE_TITLE: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
@@ -292,7 +241,6 @@ const PROBLEM_WITH_SERVICE_PAGE = {
 };
 
 module.exports = {
-  BEFORE_YOU_START,
   COMPANY_BASED_PAGE,
   BUYER_COUNTRY_PAGE,
   CAN_GET_PRIVATE_INSURANCE_PAGE,

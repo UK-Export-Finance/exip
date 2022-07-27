@@ -1,7 +1,4 @@
-import {
-  beforeYouStartPage,
-  buyerCountryPage,
-} from '../../pages';
+import { buyerCountryPage } from '../../pages';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -17,14 +14,7 @@ const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Which country is your buyer based page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.BEFORE_YOU_START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
-
-    beforeYouStartPage.submitButton().click();
+    cy.login();
 
     cy.url().should('include', ROUTES.BUYER_COUNTRY);
   });

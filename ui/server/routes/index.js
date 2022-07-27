@@ -1,7 +1,6 @@
 const express = require('express');
 const { ROUTES } = require('../constants');
-const guidanceController = require('../controllers/guidance');
-const beforeYouStartController = require('../controllers/before-you-start');
+const rootController = require('../controllers/root');
 const buyerBasedController = require('../controllers/buyer-country');
 const companyBasedController = require('../controllers/company-based');
 const canGetPrivateInsuranceController = require('../controllers/can-get-private-insurance');
@@ -15,10 +14,8 @@ const cookiesController = require('../controllers/cookies');
 const problemWithServiceController = require('../controllers/problem-with-service');
 
 const router = express.Router();
-router.get(ROUTES.GUIDANCE, guidanceController);
 
-router.get(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
-router.post(ROUTES.BEFORE_YOU_START, beforeYouStartController.post);
+router.get(ROUTES.ROOT, rootController.get);
 
 router.get(ROUTES.BUYER_COUNTRY, buyerBasedController.get);
 router.post(ROUTES.BUYER_COUNTRY, buyerBasedController.post);

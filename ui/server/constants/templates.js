@@ -1,6 +1,4 @@
 const TEMPLATES = {
-  GUIDANCE: 'guidance.njk',
-  BEFORE_YOU_START: 'before-you-start.njk',
   COMPANY_BASED: 'company-based.njk',
   BUYER_COUNTRY: 'buyer-country.njk',
   CAN_GET_PRIVATE_INSURANCE: 'can-get-private-insurance.njk',

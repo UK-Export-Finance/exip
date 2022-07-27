@@ -1,6 +1,5 @@
 const ROUTES = {
-  GUIDANCE: '/',
-  BEFORE_YOU_START: '/before-you-start',
+  ROOT: '/',
 
   BUYER_COUNTRY: '/buyer-country',
   BUYER_COUNTRY_CHANGE: '/buyer-country/change',

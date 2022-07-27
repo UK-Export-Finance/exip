@@ -4,10 +4,7 @@ import {
   completeAndSubmitTriedToObtainCoverForm,
   completeAndSubmitUkContentForm,
 } from '../../../support/forms';
-import {
-  beforeYouStartPage,
-  policyTypePage,
-} from '../../pages';
+import { policyTypePage } from '../../pages';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -29,7 +26,6 @@ context('Policy type page', () => {
     before(() => {
       cy.login();
 
-      beforeYouStartPage.submitButton().click();
       completeAndSubmitBuyerForm();
       completeAndSubmitCompanyForm();
       completeAndSubmitTriedToObtainCoverForm();

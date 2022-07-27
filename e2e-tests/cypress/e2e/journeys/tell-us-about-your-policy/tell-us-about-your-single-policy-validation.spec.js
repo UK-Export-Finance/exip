@@ -5,10 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../support/forms';
-import {
-  beforeYouStartPage,
-  tellUsAboutYourPolicyPage,
-} from '../../pages';
+import { tellUsAboutYourPolicyPage } from '../../pages';
 import partials from '../../partials';
 import { ERROR_MESSAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
@@ -25,7 +22,7 @@ context('Tell us about the policy you need page - form validation', () => {
   describe('when submitting an empty form', () => {
     before(() => {
       cy.login();
-      beforeYouStartPage.submitButton().click();
+
       completeAndSubmitBuyerForm();
       completeAndSubmitCompanyForm();
       completeAndSubmitTriedToObtainCoverForm();

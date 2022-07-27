@@ -5,10 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
 } from '../../../support/forms';
-import {
-  beforeYouStartPage,
-  tellUsAboutYourPolicyPage,
-} from '../../pages';
+import { tellUsAboutYourPolicyPage } from '../../pages';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -30,7 +27,6 @@ context('Tell us about the multi policy you need', () => {
     before(() => {
       cy.login();
 
-      beforeYouStartPage.submitButton().click();
       completeAndSubmitBuyerForm();
       completeAndSubmitCompanyForm();
       completeAndSubmitTriedToObtainCoverForm();
