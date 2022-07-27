@@ -14,6 +14,34 @@ const PAGE_VARIABLES = {
   PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.BUYER_COUNTRY_PAGE,
 };
 
+/**
+ * getBackLink
+ * If the user has come from the base root of the application (which redirects to this route)
+ * Return the "Before you start" page, which is the original, external URL.
+ * An empty base root is required to refresh req.session data.
+ * This cannot be done in the first page (Buyer country) because there are scenarios/flows where the data needs to be populated.
+ * Otherwise:
+ * - if user has come from Check Answers page, return the same URL.
+ * - if it's Buyer country route, user has submitted the form and has validation errors.
+ * @param {referer} Previous URL
+ * @returns {String} URL
+ */
+const getBackLink = (referer) => {
+  if (!referer) {
+    return CONTENT_STRINGS.LINKS.EXTERNAL.BEFORE_YOU_START;
+  }
+
+  if (referer.includes(ROUTES.CHECK_YOUR_ANSWERS)) {
+    return referer;
+  }
+
+  if (referer.includes(ROUTES.BUYER_COUNTRY)) {
+    return referer;
+  }
+
+  return CONTENT_STRINGS.LINKS.EXTERNAL.BEFORE_YOU_START;
+};
+
 const get = async (req, res) => {
   const { submittedData } = req.session;
   const countries = await api.getCountries();
@@ -27,7 +55,7 @@ const get = async (req, res) => {
 
   return res.render(TEMPLATES.BUYER_COUNTRY, {
     ...singleInputPageVariables(PAGE_VARIABLES),
-    BACK_LINK: req.headers.referer,
+    BACK_LINK: getBackLink(req.headers.referer),
     HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
     submittedValues: req.session.submittedData,
@@ -44,7 +72,7 @@ const post = async (req, res) => {
   if (validationErrors) {
     return res.render(TEMPLATES.BUYER_COUNTRY, {
       ...singleInputPageVariables(PAGE_VARIABLES),
-      BACK_LINK: req.headers.referer,
+      BACK_LINK: getBackLink(req.headers.referer),
       HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
       countries: mappedCountries,
       validationErrors,
@@ -95,6 +123,7 @@ const post = async (req, res) => {
 
 module.exports = {
   PAGE_VARIABLES,
+  getBackLink,
   get,
   post,
 };

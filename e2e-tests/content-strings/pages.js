@@ -112,7 +112,7 @@ const CANNOT_OBTAIN_COVER_PAGE = {
       TEXT: 'read about',
       LINK: {
         TEXT: 'eligibility',
-        HREF: '/#eligibility',
+        HREF: `${LINKS.EXTERNAL.GUIDANCE}#eligibility`,
       },
     },
     CONTACT_APPROVED_BROKER: {

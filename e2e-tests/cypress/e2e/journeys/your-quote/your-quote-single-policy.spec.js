@@ -56,14 +56,14 @@ context('Your quote page (single policy)', () => {
     Cypress.Cookies.preserveOnce('_csrf');
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 80,
-  //     'best-practices': 100,
-  //     seo: 60,
-  //   });
-  // });
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 80,
+      'best-practices': 100,
+      seo: 60,
+    });
+  });
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();

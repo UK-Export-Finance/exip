@@ -38,9 +38,7 @@ context('Which country is your buyer based page', () => {
       expect(text.trim()).equal(LINKS.BACK);
     });
 
-    partials.backLink().click();
-
-    cy.url().should('include', ROUTES.BEFORE_YOU_START);
+    partials.backLink().should('have.attr', 'href', LINKS.EXTERNAL.BEFORE_YOU_START);
   });
 
   it('renders a page title and heading', () => {

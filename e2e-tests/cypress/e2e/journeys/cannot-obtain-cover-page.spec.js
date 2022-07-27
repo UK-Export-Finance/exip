@@ -90,10 +90,8 @@ context('Cannot obtain UKEF cover exit page', () => {
   });
 
   describe('when clicking `eligibility` link', () => {
-    it('redirects to guidance page with eligibility hash tag', () => {
-      cannotObtainCoverPage.actions.eligibilityLink().click();
-
-      cy.url().should('include', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
+    it('redirects to guidance page - eligibility section', () => {
+      cannotObtainCoverPage.actions.eligibilityLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
     });
   });
 });
