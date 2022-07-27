@@ -136,9 +136,11 @@ context('Which country is your buyer based page', () => {
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
-      it('should render validation errors', () => {
+      beforeEach(() => {
         buyerCountryPage.submitButton().click();
+      });
 
+      it('should render validation errors', () => {
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
@@ -153,9 +155,15 @@ context('Which country is your buyer based page', () => {
         });
       });
 
-      it('should focus on input when clicking summary error message', () => {
-        buyerCountryPage.submitButton().click();
+      it('renders a back button with correct link', () => {
+        partials.backLink().should('exist');
 
+        const expected = `${Cypress.config('baseUrl')}${ROUTES.BUYER_COUNTRY}`;
+
+        partials.backLink().should('have.attr', 'href', expected);
+      });
+
+      it('should focus on input when clicking summary error message', () => {
         // autocomplete component does not have a focused attribute, instead it has a class.
         // this is added with client side JS.
         // we have to wait to ensure that client side js has been executed.
