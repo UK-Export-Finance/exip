@@ -5,10 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../support/forms';
-import {
-  beforeYouStartPage,
-  tellUsAboutYourPolicyPage,
-} from '../../pages';
+import { tellUsAboutYourPolicyPage } from '../../pages';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -30,7 +27,6 @@ context('Tell us about the single policy you need', () => {
     before(() => {
       cy.login();
 
-      beforeYouStartPage.submitButton().click();
       completeAndSubmitBuyerForm();
       completeAndSubmitCompanyForm();
       completeAndSubmitTriedToObtainCoverForm();
@@ -61,7 +57,7 @@ context('Tell us about the single policy you need', () => {
       cy.checkPhaseBanner();
     });
 
-    it('renders a back button with correct link', () => {
+    it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
       partials.backLink().invoke('text').then((text) => {
         expect(text.trim()).equal(LINKS.BACK);

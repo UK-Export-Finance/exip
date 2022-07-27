@@ -7,7 +7,6 @@ import {
 } from '../../../support/forms';
 import {
   yourQuotePage,
-  beforeYouStartPage,
   tellUsAboutYourPolicyPage,
   checkYourAnswersPage,
 } from '../../pages';
@@ -24,7 +23,6 @@ context('Get a quote - large contract value', () => {
   before(() => {
     cy.login();
 
-    beforeYouStartPage.submitButton().click();
     completeAndSubmitBuyerForm();
     completeAndSubmitCompanyForm();
     completeAndSubmitTriedToObtainCoverForm();

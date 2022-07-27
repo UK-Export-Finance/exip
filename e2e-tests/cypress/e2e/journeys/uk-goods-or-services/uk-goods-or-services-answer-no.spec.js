@@ -29,7 +29,7 @@ context('Is at least 20% of your export contract value made up from UK goods or 
     cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
   });
 
-  it('renders a back button with correct link', () => {
+  it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
 
     partials.backLink().should('have.attr', 'href', ROUTES.UK_GOODS_OR_SERVICES);

@@ -48,7 +48,7 @@ context('Is at least 20% of your export contract value made up from UK goods or 
     cy.checkPhaseBanner();
   });
 
-  it('renders a back button with correct link', () => {
+  it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
     partials.backLink().invoke('text').then((text) => {
       expect(text.trim()).equal(LINKS.BACK);
@@ -150,12 +150,6 @@ context('Is at least 20% of your export contract value made up from UK goods or 
         });
 
         details.includes.listItem4Link().should('have.attr', 'href', DETAILS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.HREF);
-      });
-
-      it('renders `can also count` copy', () => {
-        details.canAlsoCount().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.CAN_ALSO_COUNT);
-        });
       });
     });
 

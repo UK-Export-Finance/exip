@@ -32,19 +32,6 @@ const FIELDS = {
         TEXT: 'No',
       },
     },
-    SUMMARY: {
-      TITLE: 'Able to get private insurance?',
-    },
-  },
-  [FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_YES]: {
-    SUMMARY: {
-      TITLE: 'Able to get private insurance?',
-    },
-  },
-  [FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_NO]: {
-    SUMMARY: {
-      TITLE: 'Able to get private insurance?',
-    },
   },
   [FIELD_IDS.UK_GOODS_OR_SERVICES]: {
     LABEL: 'Percentage of your export that is UK content',
@@ -68,13 +55,16 @@ const FIELDS = {
     SINGLE_POLICY: {
       LABEL: 'Contract value',
       HINT: 'Enter a whole number - do not enter decimals',
+      SUMMARY: {
+        TITLE: 'Total value of contract',
+      },
     },
     MULTI_POLICY: {
       LABEL: 'Maximum amount owed at any single point',
       HINT: 'Enter a whole number - do not enter decimals',
-    },
-    SUMMARY: {
-      TITLE: 'Total value of contract',
+      SUMMARY: {
+        TITLE: 'Maximum buyer will owe at any single point',
+      },
     },
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
@@ -147,7 +137,20 @@ const FIELDS = {
   },
   [FIELD_IDS.MULTI_POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
-    HINT: 'The maximum policy length is 12 months.',
+    HINT: [
+      [
+        {
+          text: 'You can get an online quote for up to 12 months. For over 12 months',
+        },
+        {
+          text: 'fill in this form',
+          href: LINKS.EXTERNAL.NBI_FORM,
+        },
+        {
+          text: ' and email it to UKEF.',
+        },
+      ],
+    ],
     SUMMARY: {
       TITLE: 'Policy length',
     },

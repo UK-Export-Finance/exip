@@ -1,5 +1,4 @@
 import {
-  beforeYouStartPage,
   policyTypePage,
   tellUsAboutYourPolicyPage,
 } from '../../pages';
@@ -28,7 +27,6 @@ const {
 context('Change your answers - change policy type multiple times via back button', () => {
   before(() => {
     cy.login();
-    beforeYouStartPage.submitButton().click();
 
     completeAndSubmitBuyerForm();
     completeAndSubmitCompanyForm();

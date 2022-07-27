@@ -46,7 +46,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
       cy.url().should('include', expectedUrl);
     });
 
-    it('renders a back button with correct link', () => {
+    it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.YOUR_QUOTE}`;
@@ -87,7 +87,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
       cy.url().should('include', expectedUrl);
     });
 
-    it('renders a back button with correct link', () => {
+    it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.YOUR_QUOTE}`;
@@ -128,7 +128,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
       cy.url().should('include', expectedUrl);
     });
 
-    it('renders a back button with correct link', () => {
+    it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.YOUR_QUOTE}`;

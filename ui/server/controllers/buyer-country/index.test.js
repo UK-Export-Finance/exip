@@ -54,6 +54,42 @@ describe('controllers/buyer-country', () => {
     });
   });
 
+  describe('getBackLink', () => {
+    describe('when there is no referer', () => {
+      it(`should return ${CONTENT_STRINGS.LINKS.EXTERNAL.BEFORE_YOU_START}`, () => {
+        const result = controller.getBackLink();
+
+        const expected = CONTENT_STRINGS.LINKS.EXTERNAL.BEFORE_YOU_START;
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when the referer Check your answers', () => {
+      it('should return the referer', () => {
+        const result = controller.getBackLink(ROUTES.CHECK_YOUR_ANSWERS);
+
+        const expected = ROUTES.CHECK_YOUR_ANSWERS;
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when the referer is buyer country without change route', () => {
+      it('should return the referer', () => {
+        const result = controller.getBackLink(ROUTES.BUYER_COUNTRY);
+
+        const expected = ROUTES.BUYER_COUNTRY;
+        expect(result).toEqual(expected);
+      });
+    });
+
+    it(`should return ${CONTENT_STRINGS.LINKS.EXTERNAL.BEFORE_YOU_START}`, () => {
+      const result = controller.getBackLink(CONTENT_STRINGS.LINKS.EXTERNAL.BEFORE_YOU_START);
+
+      const expected = CONTENT_STRINGS.LINKS.EXTERNAL.BEFORE_YOU_START;
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('get', () => {
     const getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
@@ -73,7 +109,7 @@ describe('controllers/buyer-country', () => {
 
       const expectedVariables = {
         ...singleInputPageVariables(controller.PAGE_VARIABLES),
-        BACK_LINK: req.headers.referer,
+        BACK_LINK: controller.getBackLink(req.headers.referer),
         HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
         countries: mapCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData,
@@ -96,7 +132,7 @@ describe('controllers/buyer-country', () => {
 
         const expectedVariables = {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
-          BACK_LINK: req.headers.referer,
+          BACK_LINK: controller.getBackLink(req.headers.referer),
           HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
           countries: expectedCountries,
           submittedValues: req.session.submittedData,
@@ -121,7 +157,7 @@ describe('controllers/buyer-country', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_COUNTRY, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
-          BACK_LINK: req.headers.referer,
+          BACK_LINK: controller.getBackLink(req.headers.referer),
           HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
           countries: mapCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),

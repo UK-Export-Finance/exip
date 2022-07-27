@@ -5,10 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
 } from '../../../support/forms';
-import {
-  beforeYouStartPage,
-  tellUsAboutYourPolicyPage,
-} from '../../pages';
+import { tellUsAboutYourPolicyPage } from '../../pages';
 import partials from '../../partials';
 import { ERROR_MESSAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
@@ -25,7 +22,7 @@ context('Tell us your multi policy you need - form validation', () => {
   describe('when submitting an empty form', () => {
     before(() => {
       cy.login();
-      beforeYouStartPage.submitButton().click();
+
       completeAndSubmitBuyerForm();
       completeAndSubmitCompanyForm();
       completeAndSubmitTriedToObtainCoverForm();

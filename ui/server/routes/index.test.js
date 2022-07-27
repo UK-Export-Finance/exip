@@ -3,8 +3,7 @@ const {
   post,
 } = require('../test-mocks/mock-router');
 const { ROUTES } = require('../constants');
-const guidanceController = require('../controllers/guidance');
-const beforeYouStartController = require('../controllers/before-you-start');
+const rootController = require('../controllers/root');
 const companyBasedController = require('../controllers/company-based');
 const buyerBasedController = require('../controllers/buyer-country');
 const canGetPrivateInsuranceController = require('../controllers/can-get-private-insurance');
@@ -26,13 +25,10 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(19);
-    expect(post).toHaveBeenCalledTimes(14);
+    expect(get).toHaveBeenCalledTimes(18);
+    expect(post).toHaveBeenCalledTimes(13);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.GUIDANCE, guidanceController);
-
-    expect(get).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.get);
-    expect(post).toHaveBeenCalledWith(ROUTES.BEFORE_YOU_START, beforeYouStartController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.ROOT, rootController.get);
 
     expect(get).toHaveBeenCalledWith(ROUTES.BUYER_COUNTRY, buyerBasedController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.BUYER_COUNTRY, buyerBasedController.post);

@@ -1,6 +1,5 @@
 import {
   yourQuotePage,
-  beforeYouStartPage,
   buyerCountryPage,
   tellUsAboutYourPolicyPage,
 } from '../../pages';
@@ -232,17 +231,16 @@ context('Your quote page (single policy)', () => {
     describe('start again', () => {
       it('renders', () => {
         yourQuotePage.links.startAgain().should('exist');
-        yourQuotePage.links.startAgain().should('have.attr', 'href', ROUTES.BEFORE_YOU_START);
+        yourQuotePage.links.startAgain().should('have.attr', 'href', ROUTES.ROOT);
       });
 
       context('clicking `start again`', () => {
-        it('redirects to the start page', () => {
+        it('redirects to the first page of the flow', () => {
           yourQuotePage.links.startAgain().click();
-          cy.url().should('include', ROUTES.BEFORE_YOU_START);
+          cy.url().should('include', ROUTES.BUYER_COUNTRY);
         });
 
         it('clears the session', () => {
-          beforeYouStartPage.submitButton().click();
           buyerCountryPage.hiddenInput().should('have.attr', 'value', '');
         });
       });

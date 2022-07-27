@@ -1,4 +1,3 @@
-import { beforeYouStartPage } from '../e2e/pages';
 import {
   completeAndSubmitBuyerForm,
   completeAndSubmitCompanyForm,
@@ -9,8 +8,6 @@ import {
 } from './forms';
 
 export default () => {
-  beforeYouStartPage.submitButton().click();
-
   completeAndSubmitBuyerForm();
   completeAndSubmitCompanyForm();
   completeAndSubmitTriedToObtainCoverForm();

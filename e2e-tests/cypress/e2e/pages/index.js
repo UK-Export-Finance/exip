@@ -1,5 +1,3 @@
-const guidancePage = require('./guidance');
-const beforeYouStartPage = require('./beforeYouStart');
 const companyBasedPage = require('./companyBased');
 const buyerCountryPage = require('./buyerCountry');
 const canGetPrivateInsurancePage = require('./canGetPrivateInsurance');
@@ -13,8 +11,6 @@ const cookiesPage = require('./cookies');
 const pageNotFoundPage = require('./pageNotFound');
 
 module.exports = {
-  guidancePage,
-  beforeYouStartPage,
   companyBasedPage,
   buyerCountryPage,
   canGetPrivateInsurancePage,

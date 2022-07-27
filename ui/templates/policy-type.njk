@@ -35,7 +35,7 @@
 
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-        {% set singlePolicyLengthLabelHintHtml %}
+        {% set singlePolicyLengthHintHtml %}
           <div data-cy="{{ FIELDS.SINGLE_POLICY_LENGTH.ID }}-hint">
             {{detailsText.render({
               items: FIELDS.SINGLE_POLICY_LENGTH.HINT
@@ -52,7 +52,7 @@
               }
             },
             hint: {
-              html: singlePolicyLengthLabelHintHtml
+              html: singlePolicyLengthHintHtml
             },
             classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
             attributes: {
@@ -76,6 +76,15 @@
           }) }}
         {% endset %}
 
+
+        {% set multiPolicyLengthHintHtml %}
+          <div data-cy="{{ FIELDS.MULTI_POLICY_LENGTH.ID }}-hint" class="ukef-multi-policy-length-hint">
+            {{detailsText.render({
+              items: FIELDS.MULTI_POLICY_LENGTH.HINT
+            }) }}
+          </div>
+        {% endset %}
+
         {% set multiPolicyLengthHtml %}
           {{ govukInput({
             label: {
@@ -85,10 +94,7 @@
               }
             },
             hint: {
-              text: FIELDS.MULTI_POLICY_LENGTH.HINT,
-              attributes: {
-                'data-cy': FIELDS.MULTI_POLICY_LENGTH.ID + '-hint'
-              }
+              html: multiPolicyLengthHintHtml
             },
             classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
             attributes: {

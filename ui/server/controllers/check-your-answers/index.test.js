@@ -1,38 +1,45 @@
 const controller = require('.');
 const CONTENT_STRINGS = require('../../content-strings');
-const { ROUTES, TEMPLATES, FIELD_IDS } = require('../../constants');
+const {
+  FIELD_IDS,
+  FIELD_VALUES,
+  ROUTES,
+  TEMPLATES,
+} = require('../../constants');
 const { mapAnswersToContent } = require('../../helpers/data-content-mappings/map-answers-to-content');
 const { generateSummaryList } = require('../../helpers/generate-summary-list');
 
 const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
 
 const {
-  VALID_COMPANY_BASE,
+  AMOUNT,
   BUYER_COUNTRY,
   CAN_GET_PRIVATE_INSURANCE,
-  UK_GOODS_OR_SERVICES,
-  CURRENCY,
-  AMOUNT,
   CREDIT_PERIOD,
+  CURRENCY,
+  POLICY_TYPE,
+  UK_GOODS_OR_SERVICES,
+  VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
 describe('controllers/check-your-answers', () => {
   let req;
   let res;
   const mockSessionData = {
-    [VALID_COMPANY_BASE]: true,
+    [AMOUNT]: 123456,
     [BUYER_COUNTRY]: {
       name: mockAnswers[BUYER_COUNTRY],
       isoCode: 'FRA',
     },
     [CAN_GET_PRIVATE_INSURANCE]: true,
-    [UK_GOODS_OR_SERVICES]: 30,
+    [CREDIT_PERIOD]: 2,
     [CURRENCY]: {
       name: 'UK Sterling',
       isoCode: 'GBP',
     },
-    [AMOUNT]: 123456,
-    [CREDIT_PERIOD]: 2,
+    [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+    [UK_GOODS_OR_SERVICES]: 30,
+    [VALID_COMPANY_BASE]: true,
   };
 
   beforeEach(() => {
@@ -65,7 +72,10 @@ describe('controllers/check-your-answers', () => {
       controller.get(req, res);
 
       const answers = mapAnswersToContent(mockSessionData);
-      const expectedSummaryList = generateSummaryList(answers);
+      const expectedSummaryList = generateSummaryList(
+        answers,
+        mockSessionData[POLICY_TYPE],
+      );
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.CHECK_YOUR_ANSWERS, {
         ...controller.PAGE_VARIABLES,

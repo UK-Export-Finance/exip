@@ -40,7 +40,7 @@ context('Your quote page - change policy type and length from multi single', () 
     cy.url().should('include', expectedUrl);
   });
 
-  it('renders a back button with correct link', () => {
+  it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
 
     const expected = `${Cypress.config('baseUrl')}${ROUTES.YOUR_QUOTE}`;

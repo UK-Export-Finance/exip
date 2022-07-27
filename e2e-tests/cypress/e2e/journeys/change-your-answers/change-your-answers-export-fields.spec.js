@@ -1,7 +1,6 @@
 import {
   buyerCountryPage,
   companyBasedPage,
-  canGetPrivateInsurancePage,
   ukGoodsOrServicesPage,
   checkYourAnswersPage,
 } from '../../pages';
@@ -16,8 +15,6 @@ const {
 const {
   BUYER_COUNTRY,
   VALID_COMPANY_BASE,
-  CAN_GET_PRIVATE_INSURANCE,
-  CAN_GET_PRIVATE_INSURANCE_NO,
   UK_GOODS_OR_SERVICES,
 } = FIELD_IDS;
 
@@ -48,7 +45,7 @@ context('Change your answers after checking answers - Export fields', () => {
       cy.url().should('include', expectedUrl);
     });
 
-    it('renders a back button with correct link', () => {
+    it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
@@ -100,7 +97,7 @@ context('Change your answers after checking answers - Export fields', () => {
       cy.url().should('include', expectedUrl);
     });
 
-    it('renders a back button with correct link', () => {
+    it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
@@ -122,38 +119,6 @@ context('Change your answers after checking answers - Export fields', () => {
     });
   });
 
-  describe('change `Private insurance`', () => {
-    const row = checkYourAnswersPage.summaryLists.export[CAN_GET_PRIVATE_INSURANCE_NO];
-
-    it(`clicking 'change' redirects to ${ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE}`, () => {
-      row.changeLink().click();
-
-      const expectedUrl = `${ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE}#${CAN_GET_PRIVATE_INSURANCE_NO}`;
-      cy.url().should('include', expectedUrl);
-    });
-
-    it('renders a back button with correct link', () => {
-      partials.backLink().should('exist');
-
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('has originally submitted answer selected', () => {
-      canGetPrivateInsurancePage[CAN_GET_PRIVATE_INSURANCE].noInput().should('be.checked');
-    });
-
-    it('auto focuses the input', () => {
-      canGetPrivateInsurancePage[CAN_GET_PRIVATE_INSURANCE].noInput().should('have.focus');
-    });
-
-    it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      canGetPrivateInsurancePage.submitButton().click();
-
-      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
-    });
-  });
-
   describe('change `UK goods`', () => {
     const row = checkYourAnswersPage.summaryLists.export[UK_GOODS_OR_SERVICES];
 
@@ -164,7 +129,7 @@ context('Change your answers after checking answers - Export fields', () => {
       cy.url().should('include', expectedUrl);
     });
 
-    it('renders a back button with correct link', () => {
+    it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;

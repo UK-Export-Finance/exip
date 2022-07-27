@@ -1,7 +1,4 @@
-import {
-  beforeYouStartPage,
-  buyerCountryPage,
-} from '../../pages';
+import { buyerCountryPage } from '../../pages';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -17,14 +14,7 @@ const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Which country is your buyer based page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.BEFORE_YOU_START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
-
-    beforeYouStartPage.submitButton().click();
+    cy.login();
 
     cy.url().should('include', ROUTES.BUYER_COUNTRY);
   });
@@ -42,15 +32,13 @@ context('Which country is your buyer based page', () => {
     cy.checkPhaseBanner();
   });
 
-  it('renders a back button with correct link', () => {
+  it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
     partials.backLink().invoke('text').then((text) => {
       expect(text.trim()).equal(LINKS.BACK);
     });
 
-    partials.backLink().click();
-
-    cy.url().should('include', ROUTES.BEFORE_YOU_START);
+    partials.backLink().should('have.attr', 'href', LINKS.EXTERNAL.BEFORE_YOU_START);
   });
 
   it('renders a page title and heading', () => {
@@ -148,9 +136,11 @@ context('Which country is your buyer based page', () => {
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
-      it('should render validation errors', () => {
+      beforeEach(() => {
         buyerCountryPage.submitButton().click();
+      });
 
+      it('should render validation errors', () => {
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
@@ -165,9 +155,15 @@ context('Which country is your buyer based page', () => {
         });
       });
 
-      it('should focus on input when clicking summary error message', () => {
-        buyerCountryPage.submitButton().click();
+      it('renders a back link with correct url', () => {
+        partials.backLink().should('exist');
 
+        const expected = `${Cypress.config('baseUrl')}${ROUTES.BUYER_COUNTRY}`;
+
+        partials.backLink().should('have.attr', 'href', expected);
+      });
+
+      it('should focus on input when clicking summary error message', () => {
         // autocomplete component does not have a focused attribute, instead it has a class.
         // this is added with client side JS.
         // we have to wait to ensure that client side js has been executed.
