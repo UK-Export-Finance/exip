@@ -28,7 +28,7 @@ context('Answering `no` to Company based inside the UK, Channel Islands and Isle
     cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
   });
 
-  it('renders a back button with correct link', () => {
+  it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
 
     partials.backLink().should('have.attr', 'href', ROUTES.COMPANY_BASED);

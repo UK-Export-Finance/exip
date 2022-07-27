@@ -38,7 +38,7 @@ context('Change your answers after checking answers - Policy fields (single poli
       cy.url().should('include', expectedUrl);
     });
 
-    it('renders a back button with correct link', () => {
+    it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;

@@ -32,7 +32,7 @@ context('Which country is your buyer based page', () => {
     cy.checkPhaseBanner();
   });
 
-  it('renders a back button with correct link', () => {
+  it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
     partials.backLink().invoke('text').then((text) => {
       expect(text.trim()).equal(LINKS.BACK);
@@ -155,7 +155,7 @@ context('Which country is your buyer based page', () => {
         });
       });
 
-      it('renders a back button with correct link', () => {
+      it('renders a back link with correct url', () => {
         partials.backLink().should('exist');
 
         const expected = `${Cypress.config('baseUrl')}${ROUTES.BUYER_COUNTRY}`;

@@ -27,7 +27,7 @@ context('Are you able to get private insurance page - answer `yes`', () => {
     cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
   });
 
-  it('renders a back button with correct link', () => {
+  it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
 
     partials.backLink().should('have.attr', 'href', ROUTES.CAN_GET_PRIVATE_INSURANCE);

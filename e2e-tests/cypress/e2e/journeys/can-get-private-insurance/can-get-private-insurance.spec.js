@@ -44,7 +44,7 @@ context('Are you able to get private insurance page', () => {
     cy.checkPhaseBanner();
   });
 
-  it('renders a back button with correct link', () => {
+  it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
     partials.backLink().invoke('text').then((text) => {
       expect(text.trim()).equal(LINKS.BACK);
