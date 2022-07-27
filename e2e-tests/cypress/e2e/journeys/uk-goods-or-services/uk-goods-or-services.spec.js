@@ -151,12 +151,6 @@ context('Is at least 20% of your export contract value made up from UK goods or 
 
         details.includes.listItem4Link().should('have.attr', 'href', DETAILS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.HREF);
       });
-
-      it('renders `can also count` copy', () => {
-        details.canAlsoCount().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.CAN_ALSO_COUNT);
-        });
-      });
     });
 
     describe('`does not count` section', () => {
