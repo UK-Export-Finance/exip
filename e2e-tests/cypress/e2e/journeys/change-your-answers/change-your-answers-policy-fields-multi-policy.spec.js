@@ -32,50 +32,6 @@ context('Change your answers after checking answers - Policy fields', () => {
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  describe('change `Amount`', () => {
-    let row = checkYourAnswersPage.summaryLists.policy[AMOUNT];
-
-    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
-      row.changeLink().click();
-
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
-      cy.url().should('include', expectedUrl);
-    });
-
-    it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
-
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('has originally submitted answer', () => {
-      const expectedValue = submissionData[AMOUNT];
-      tellUsAboutYourPolicyPage[AMOUNT].input().should('have.attr', 'value', expectedValue);
-    });
-
-    it('auto focuses the input', () => {
-      tellUsAboutYourPolicyPage[AMOUNT].input().should('have.focus');
-    });
-
-    it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourPolicyPage[AMOUNT].input().clear().type('200');
-      tellUsAboutYourPolicyPage.submitButton().click();
-
-      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
-    });
-
-    it('renders the new answer in `Check your answers` page', () => {
-      row = checkYourAnswersPage.summaryLists.policy[AMOUNT];
-
-      row.value().invoke('text').then((text) => {
-        const expected = '£200.00';
-
-        expect(text.trim()).equal(expected);
-      });
-    });
-  });
-
   describe('change `Credit period`', () => {
     let row = checkYourAnswersPage.summaryLists.policy[CREDIT_PERIOD];
 
