@@ -21,7 +21,7 @@ const PAGE_VARIABLES = {
  * An empty base root is required to refresh req.session data.
  * This cannot be done in the first page (Buyer country) because there are scenarios/flows where the data needs to be populated.
  * Otherwise:
- * - if user has come from Check Answers page, return the same URL.
+ * - if user has come from Check Answers or Quote page page, return the same URL.
  * - if it's Buyer country route, user has submitted the form and has validation errors.
  * @param {referer} Previous URL
  * @returns {String} URL
@@ -32,6 +32,10 @@ const getBackLink = (referer) => {
   }
 
   if (referer.includes(ROUTES.CHECK_YOUR_ANSWERS)) {
+    return referer;
+  }
+
+  if (referer.includes(ROUTES.YOUR_QUOTE)) {
     return referer;
   }
 

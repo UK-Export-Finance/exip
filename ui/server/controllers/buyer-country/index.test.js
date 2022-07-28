@@ -64,11 +64,20 @@ describe('controllers/buyer-country', () => {
       });
     });
 
-    describe('when the referer Check your answers', () => {
+    describe('when the referer is Check your answers', () => {
       it('should return the referer', () => {
         const result = controller.getBackLink(ROUTES.CHECK_YOUR_ANSWERS);
 
         const expected = ROUTES.CHECK_YOUR_ANSWERS;
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when the referer is Your quote', () => {
+      it('should return the referer', () => {
+        const result = controller.getBackLink(ROUTES.YOUR_QUOTE);
+
+        const expected = ROUTES.YOUR_QUOTE;
         expect(result).toEqual(expected);
       });
     });

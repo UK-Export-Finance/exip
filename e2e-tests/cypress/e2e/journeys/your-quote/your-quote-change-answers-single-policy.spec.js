@@ -14,11 +14,12 @@ const {
 } = CONSTANTS;
 
 const {
-  QUOTE,
   AMOUNT,
-  POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
+  PERCENTAGE_OF_COVER,
+  POLICY_TYPE,
+  QUOTE,
+  SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
 context('Your quote page - change answers (single policy type to multi policy type)', () => {
@@ -77,7 +78,48 @@ context('Your quote page - change answers (single policy type to multi policy ty
     });
   });
 
-  describe.only('change `policy length` and policy type to multi', () => {
+  describe('change `percentage of cover`', () => {
+    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
+      const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
+
+      row.changeLink().click();
+
+      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}`;
+      cy.url().should('include', expectedUrl);
+    });
+
+    it('renders a back link with correct url', () => {
+      partials.backLink().should('exist');
+
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.YOUR_QUOTE}`;
+      partials.backLink().should('have.attr', 'href', expected);
+    });
+
+    it('auto focuses the input', () => {
+      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().should('have.focus');
+    });
+
+    it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('85');
+      tellUsAboutYourPolicyPage.submitButton().click();
+
+      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+    });
+
+    it('renders the new answer in the quote', () => {
+      checkYourAnswersPage.submitButton().click();
+
+      const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
+
+      row.value().invoke('text').then((text) => {
+        const expected = '85%';
+
+        expect(text.trim()).equal(expected);
+      });
+    });
+  });
+
+  describe('change `policy length` and policy type to multi', () => {
     it(`clicking 'change' redirects to ${ROUTES.POLICY_TYPE_CHANGE}`, () => {
       const row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
 

@@ -19,6 +19,7 @@ const {
   CURRENCY,
   AMOUNT,
   CREDIT_PERIOD,
+  PERCENTAGE_OF_COVER,
   POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -105,6 +106,29 @@ context('Your quote page (single policy)', () => {
         });
 
         const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
+        row.changeLink().should('have.attr', 'href', expectedHref);
+      });
+
+      it('renders `percentage of cover` key, value and change link', () => {
+        const row = summaryList[PERCENTAGE_OF_COVER];
+        const expectedKeyText = QUOTE_TITLES[PERCENTAGE_OF_COVER];
+
+        row.key().invoke('text').then((text) => {
+          expect(text.trim()).equal(expectedKeyText);
+        });
+
+        row.value().invoke('text').then((text) => {
+          const expected = '90%';
+
+          expect(text.trim()).equal(expected);
+        });
+
+        row.changeLink().invoke('text').then((text) => {
+          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+          expect(text.trim()).equal(expected);
+        });
+
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 

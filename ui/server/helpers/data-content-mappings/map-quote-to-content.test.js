@@ -6,9 +6,10 @@ const formatCurrency = require('../format-currency');
 const { mockQuote } = require('../../test-mocks');
 
 const {
-  BUYER_COUNTRY,
   AMOUNT,
+  BUYER_COUNTRY,
   CURRENCY,
+  PERCENTAGE_OF_COVER,
   QUOTE,
 } = FIELD_IDS;
 
@@ -27,16 +28,19 @@ describe('server/helpers/map-quote-to-content', () => {
         [AMOUNT]: {
           text: formatCurrency(mockQuote[AMOUNT], mockQuote[CURRENCY].isoCode),
         },
-        [PREMIUM_RATE_PERCENTAGE]: {
-          text: `${mockQuote[PREMIUM_RATE_PERCENTAGE]}%`,
+        [BUYER_LOCATION]: {
+          text: mapCountry(mockQuote[BUYER_COUNTRY]),
         },
         [ESTIMATED_COST]: {
           text: formatCurrency(mockQuote[ESTIMATED_COST], mockQuote[CURRENCY].isoCode),
         },
-        ...mapPolicyLength(mockQuote),
-        [BUYER_LOCATION]: {
-          text: mapCountry(mockQuote[BUYER_COUNTRY]),
+        [PERCENTAGE_OF_COVER]: {
+          text: `${mockQuote[PERCENTAGE_OF_COVER]}%`,
         },
+        [PREMIUM_RATE_PERCENTAGE]: {
+          text: `${mockQuote[PREMIUM_RATE_PERCENTAGE]}%`,
+        },
+        ...mapPolicyLength(mockQuote),
       };
 
       expect(result).toEqual(expected);
