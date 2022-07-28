@@ -1,5 +1,6 @@
 import {
   policyTypePage,
+  tellUsAboutYourPolicyPage,
   checkYourAnswersPage,
   yourQuotePage,
 } from '../../pages';
@@ -51,15 +52,16 @@ context('Your quote page - change policy type and length from multi single', () 
     policyTypePage[MULTI_POLICY_LENGTH].input().should('have.focus');
   });
 
-  it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+  it(`redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
     policyTypePage[POLICY_TYPE].single.input().click();
     policyTypePage[SINGLE_POLICY_LENGTH].input().clear().type('3');
     policyTypePage.submitButton().click();
 
-    cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+    cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
   });
 
   it('renders the new answer in the quote', () => {
+    tellUsAboutYourPolicyPage.submitButton().click();
     checkYourAnswersPage.submitButton().click();
     cy.url().should('include', ROUTES.YOUR_QUOTE);
 
