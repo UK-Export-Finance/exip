@@ -49,15 +49,6 @@ context('Footer', () => {
       cy.url().should('include', FOOTER.COOKIES.HREF);
     });
 
-    it(`renders a link to ${FOOTER.TERMS_AND_CONDITIONS.TEXT} and redirects to the correct URL`, () => {
-      footer.supportLinks.termsAndConditions().invoke('text').then((text) => {
-        expect(text.trim()).equal(FOOTER.TERMS_AND_CONDITIONS.TEXT);
-      });
-
-      footer.supportLinks.termsAndConditions().click();
-      cy.url().should('include', FOOTER.TERMS_AND_CONDITIONS.HREF);
-    });
-
     it(`renders a link to ${FOOTER.REPORT_VULNERABILITY.TEXT} and redirects to the correct URL`, () => {
       footer.supportLinks.reportVulnerability().invoke('text').then((text) => {
         expect(text.trim()).equal(FOOTER.REPORT_VULNERABILITY.TEXT);

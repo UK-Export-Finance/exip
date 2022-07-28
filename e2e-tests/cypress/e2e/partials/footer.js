@@ -6,7 +6,6 @@ const footer = {
   supportLinks: {
     heading: () => cy.get('[data-cy="support-links-heading"]'),
     cookies: () => cy.get('[data-cy="cookies"]'),
-    termsAndConditions: () => cy.get('[data-cy="terms-and-conditions"]'),
     reportVulnerability: () => cy.get('[data-cy="report-vulnerability"]'),
     license: () => cy.get('[data-cy="license"]'),
     licenseLink: () => cy.get('[data-cy="license-link"]'),

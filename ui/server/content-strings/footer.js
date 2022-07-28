@@ -4,7 +4,7 @@ const FOOTER = {
   HEADING: 'Contact us',
   EMAIL: {
     HEADING: 'Email',
-    VALUE: 'DigitalService.TradeFinance@ukexportfinance.gov.uk',
+    VALUE: 'customer.service@ukexportfinance.gov.uk',
   },
   PHONE: {
     HEADING: 'Phone',
@@ -18,10 +18,6 @@ const FOOTER = {
   COOKIES: {
     TEXT: 'Cookies',
     HREF: ROUTES.COOKIES,
-  },
-  TERMS_AND_CONDITIONS: {
-    TEXT: 'Terms and conditions',
-    HREF: '#',
   },
   REPORT_VULNERABILITY: {
     TEXT: 'Report a vulnerability',
