@@ -6,7 +6,6 @@ const {
 } = require('../../constants');
 const generateValidationErrors = require('./validation');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
-const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
   CONTENT_STRINGS: {
@@ -58,10 +57,6 @@ const post = (req, res) => {
     req.body,
     req.session.submittedData,
   );
-
-  if (isChangeRoute(req.originalUrl)) {
-    return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
-  }
 
   return res.redirect(ROUTES.TELL_US_ABOUT_YOUR_POLICY);
 };
