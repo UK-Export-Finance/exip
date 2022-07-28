@@ -117,16 +117,6 @@ describe('controllers/policy-type', () => {
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_POLICY);
       });
-
-      describe('when the url\'s last substring is `change`', () => {
-        it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
-          req.originalUrl = 'mock/change';
-
-          controller.post(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS);
-        });
-      });
     });
   });
 });

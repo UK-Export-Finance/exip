@@ -15,6 +15,7 @@ const {
 
 const {
   AMOUNT,
+  CREDIT_PERIOD,
   MULTI_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
@@ -140,15 +141,19 @@ context('Your quote page - change answers (single policy type to multi policy ty
       policyTypePage[SINGLE_POLICY_LENGTH].input().should('have.focus');
     });
 
-    it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+    it(`redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
       policyTypePage[POLICY_TYPE].multi.input().click();
       policyTypePage[MULTI_POLICY_LENGTH].input().type('1');
       policyTypePage.submitButton().click();
 
-      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+      cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     it('renders the new answer in the quote', () => {
+      // credit period field is now required because it's a multi policy
+      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('1');
+      tellUsAboutYourPolicyPage.submitButton().click();
+
       checkYourAnswersPage.submitButton().click();
       cy.url().should('include', ROUTES.YOUR_QUOTE);
 

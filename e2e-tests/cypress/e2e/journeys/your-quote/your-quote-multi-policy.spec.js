@@ -1,6 +1,7 @@
 import {
   checkYourAnswersPage,
   policyTypePage,
+  tellUsAboutYourPolicyPage,
   yourQuotePage,
 } from '../../pages';
 import {
@@ -12,13 +13,14 @@ import CONSTANTS from '../../../../constants';
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 const {
-  BUYER_COUNTRY,
   AMOUNT,
+  BUYER_COUNTRY,
+  CREDIT_PERIOD,
+  MULTI_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   POLICY_LENGTH,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
-  MULTI_POLICY_LENGTH,
   QUOTE,
 } = FIELD_IDS;
 
@@ -45,6 +47,11 @@ context('Your quote page - multi policy type', () => {
     policyTypePage[POLICY_TYPE].multi.input().click();
     policyTypePage[MULTI_POLICY_LENGTH].input().type('3');
     policyTypePage.submitButton().click();
+
+    // credit period field is now required because it's a multi policy
+    tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('1');
+
+    tellUsAboutYourPolicyPage.submitButton().click();
 
     checkYourAnswersPage.submitButton().click();
 
@@ -114,7 +121,7 @@ context('Your quote page - multi policy type', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '1.42%';
+          const expected = '1.57%';
 
           expect(text.trim()).equal(expected);
         });
@@ -131,7 +138,7 @@ context('Your quote page - multi policy type', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£2,130.00';
+          const expected = '£2,355.00';
 
           expect(text.trim()).equal(expected);
         });
