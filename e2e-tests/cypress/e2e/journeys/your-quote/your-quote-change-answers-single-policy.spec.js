@@ -177,7 +177,6 @@ context('Your quote page - change answers (single policy type to multi policy ty
       partials.backLink().should('have.attr', 'href', expected);
     });
 
-
     it('auto focuses the input', () => {
       // autocomplete component does not have a focused attribute, instead it has a class.
       // this is added with client side JS.
