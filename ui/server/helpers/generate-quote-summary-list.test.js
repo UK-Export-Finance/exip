@@ -13,11 +13,12 @@ const { mockQuote } = require('../test-mocks');
 
 const {
   AMOUNT,
-  POLICY_LENGTH,
-  SINGLE_POLICY_LENGTH,
-  MULTI_POLICY_LENGTH,
   BUYER_COUNTRY,
+  MULTI_POLICY_LENGTH,
+  PERCENTAGE_OF_COVER,
+  POLICY_LENGTH,
   QUOTE,
+  SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
 const {
@@ -42,6 +43,15 @@ describe('server/helpers/generate-quote-summary-list', () => {
           title: QUOTE_TITLES[INSURED_FOR],
           value: {
             text: mockQuoteContent[AMOUNT].text,
+          },
+          renderChangeLink: true,
+          changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+        },
+        {
+          id: PERCENTAGE_OF_COVER,
+          title: QUOTE_TITLES[PERCENTAGE_OF_COVER],
+          value: {
+            text: mockQuoteContent[PERCENTAGE_OF_COVER].text,
           },
           renderChangeLink: true,
           changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
@@ -172,8 +182,8 @@ describe('server/helpers/generate-quote-summary-list', () => {
 
       expect(result).toBeInstanceOf(Array);
 
-      const expected = expectedObj(fields[1]);
-      expect(result[1]).toEqual(expected);
+      const expected = expectedObj(fields[2]);
+      expect(result[2]).toEqual(expected);
     });
 
     describe('when a field has renderChangeLink', () => {

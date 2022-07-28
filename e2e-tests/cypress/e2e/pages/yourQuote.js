@@ -2,9 +2,10 @@ import { FIELD_IDS } from '../../../constants';
 
 const {
   AMOUNT,
-  SINGLE_POLICY_LENGTH,
   MULTI_POLICY_LENGTH,
+  PERCENTAGE_OF_COVER,
   QUOTE,
+  SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
 const yourQuotePage = {
@@ -12,20 +13,25 @@ const yourQuotePage = {
     heading: () => cy.get('[data-cy="heading"]'),
     subHeading: () => cy.get('[data-cy="sub-heading"]'),
     summaryList: {
-      [QUOTE.INSURED_FOR]: {
-        key: () => cy.get(`.${AMOUNT}-key`),
-        value: () => cy.get(`.${AMOUNT}-value`),
-        changeLink: () => cy.get(`[data-cy="${AMOUNT}-change-link"]`),
-      },
-      [QUOTE.PREMIUM_RATE_PERCENTAGE]: {
-        key: () => cy.get(`.${QUOTE.PREMIUM_RATE_PERCENTAGE}-key`),
-        value: () => cy.get(`.${QUOTE.PREMIUM_RATE_PERCENTAGE}-value`),
-        changeLink: () => cy.get(`[data-cy="${QUOTE.PREMIUM_RATE_PERCENTAGE}-change-link"]`),
+      [QUOTE.BUYER_LOCATION]: {
+        key: () => cy.get(`.${QUOTE.BUYER_LOCATION}-key`),
+        value: () => cy.get(`.${QUOTE.BUYER_LOCATION}-value`),
+        changeLink: () => cy.get(`[data-cy="${QUOTE.BUYER_LOCATION}-change-link"]`),
       },
       [QUOTE.ESTIMATED_COST]: {
         key: () => cy.get(`.${QUOTE.ESTIMATED_COST}-key`),
         value: () => cy.get(`.${QUOTE.ESTIMATED_COST}-value`),
         changeLink: () => cy.get(`[data-cy="${QUOTE.ESTIMATED_COST}-change-link"]`),
+      },
+      [PERCENTAGE_OF_COVER]: {
+        key: () => cy.get(`.${PERCENTAGE_OF_COVER}-key`),
+        value: () => cy.get(`.${PERCENTAGE_OF_COVER}-value`),
+        changeLink: () => cy.get(`[data-cy="${PERCENTAGE_OF_COVER}-change-link"]`),
+      },
+      [QUOTE.INSURED_FOR]: {
+        key: () => cy.get(`.${AMOUNT}-key`),
+        value: () => cy.get(`.${AMOUNT}-value`),
+        changeLink: () => cy.get(`[data-cy="${AMOUNT}-change-link"]`),
       },
       [SINGLE_POLICY_LENGTH]: {
         key: () => cy.get(`.${SINGLE_POLICY_LENGTH}-key`),
@@ -37,10 +43,10 @@ const yourQuotePage = {
         value: () => cy.get(`.${MULTI_POLICY_LENGTH}-value`),
         changeLink: () => cy.get(`[data-cy="${MULTI_POLICY_LENGTH}-change-link"]`),
       },
-      [QUOTE.BUYER_LOCATION]: {
-        key: () => cy.get(`.${QUOTE.BUYER_LOCATION}-key`),
-        value: () => cy.get(`.${QUOTE.BUYER_LOCATION}-value`),
-        changeLink: () => cy.get(`[data-cy="${QUOTE.BUYER_LOCATION}-change-link"]`),
+      [QUOTE.PREMIUM_RATE_PERCENTAGE]: {
+        key: () => cy.get(`.${QUOTE.PREMIUM_RATE_PERCENTAGE}-key`),
+        value: () => cy.get(`.${QUOTE.PREMIUM_RATE_PERCENTAGE}-value`),
+        changeLink: () => cy.get(`[data-cy="${QUOTE.PREMIUM_RATE_PERCENTAGE}-change-link"]`),
       },
     },
   },

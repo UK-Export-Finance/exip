@@ -111,14 +111,14 @@ describe('server/generate-quote/index', () => {
 
       const expected = {
         [AMOUNT]: mockSubmittedData[AMOUNT],
+        [QUOTE.BUYER_LOCATION]: mockSubmittedData[BUYER_COUNTRY],
         [CURRENCY]: mockSubmittedData[CURRENCY],
         [CREDIT_PERIOD]: mockSubmittedData[CREDIT_PERIOD],
-        [QUOTE.BUYER_LOCATION]: mockSubmittedData[BUYER_COUNTRY],
+        [QUOTE.ESTIMATED_COST]: calculateCost(expectedPremiumRate, mockSubmittedData[AMOUNT]),
         [PERCENTAGE_OF_COVER]: mockSubmittedData[PERCENTAGE_OF_COVER],
         [POLICY_TYPE]: mockSubmittedData[POLICY_TYPE],
         [POLICY_LENGTH]: mockSubmittedData[POLICY_LENGTH],
         [QUOTE.PREMIUM_RATE_PERCENTAGE]: expectedPremiumRate,
-        [QUOTE.ESTIMATED_COST]: calculateCost(expectedPremiumRate, mockSubmittedData[AMOUNT]),
       };
 
       expect(result).toEqual(expected);

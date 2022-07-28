@@ -9,18 +9,19 @@ const {
 
 const {
   AMOUNT,
-  POLICY_LENGTH,
-  SINGLE_POLICY_LENGTH,
-  MULTI_POLICY_LENGTH,
   BUYER_COUNTRY,
+  MULTI_POLICY_LENGTH,
+  PERCENTAGE_OF_COVER,
+  POLICY_LENGTH,
   QUOTE,
+  SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
 const {
+  BUYER_LOCATION,
+  ESTIMATED_COST,
   INSURED_FOR,
   PREMIUM_RATE_PERCENTAGE,
-  ESTIMATED_COST,
-  BUYER_LOCATION,
 } = QUOTE;
 
 /*
@@ -36,6 +37,15 @@ const generateFields = (answers) => {
       title: QUOTE_TITLES[INSURED_FOR],
       value: {
         text: answers[AMOUNT].text,
+      },
+      renderChangeLink: true,
+      changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+    },
+    {
+      id: PERCENTAGE_OF_COVER,
+      title: QUOTE_TITLES[PERCENTAGE_OF_COVER],
+      value: {
+        text: answers[PERCENTAGE_OF_COVER].text,
       },
       renderChangeLink: true,
       changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,

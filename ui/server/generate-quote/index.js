@@ -71,9 +71,9 @@ const calculateCost = (
 const generateQuote = (submittedData) => {
   const mapped = {
     [AMOUNT]: submittedData[AMOUNT],
+    [QUOTE.BUYER_LOCATION]: submittedData[BUYER_COUNTRY],
     [CURRENCY]: submittedData[CURRENCY],
     [CREDIT_PERIOD]: submittedData[CREDIT_PERIOD],
-    [QUOTE.BUYER_LOCATION]: submittedData[BUYER_COUNTRY],
     [PERCENTAGE_OF_COVER]: submittedData[PERCENTAGE_OF_COVER],
     [POLICY_TYPE]: submittedData[POLICY_TYPE],
     [POLICY_LENGTH]: submittedData[POLICY_LENGTH],
