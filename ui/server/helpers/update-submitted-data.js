@@ -2,10 +2,11 @@ const { FIELD_IDS, FIELD_VALUES } = require('../constants');
 const { sanitiseData } = require('./sanitise-data');
 
 const {
-  POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
+  CREDIT_PERIOD,
   MULTI_POLICY_LENGTH,
   POLICY_LENGTH,
+  POLICY_TYPE,
+  SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
 /*
@@ -23,6 +24,7 @@ const mapSubmittedData = (submittedData) => {
   if (isSinglePolicy) {
     mapped[POLICY_LENGTH] = submittedData[SINGLE_POLICY_LENGTH];
     delete mapped[MULTI_POLICY_LENGTH];
+    delete mapped[CREDIT_PERIOD];
   }
 
   if (isMultiPolicy) {

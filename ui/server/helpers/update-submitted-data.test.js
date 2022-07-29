@@ -6,10 +6,11 @@ const { FIELD_IDS, FIELD_VALUES } = require('../constants');
 const { sanitiseData } = require('./sanitise-data');
 
 const {
-  POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
+  CREDIT_PERIOD,
   MULTI_POLICY_LENGTH,
   POLICY_LENGTH,
+  POLICY_TYPE,
+  SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
 describe('server/helpers/update-submitted-data', () => {
@@ -99,6 +100,29 @@ describe('server/helpers/update-submitted-data', () => {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
           [POLICY_LENGTH]: '10',
           [MULTI_POLICY_LENGTH]: '10',
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${POLICY_TYPE} of 'single' is submitted  and 'credit period' field was previously provided`, () => {
+      it('should delete the credit period', () => {
+        const mockFormData = {
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          [SINGLE_POLICY_LENGTH]: '10',
+        };
+
+        const mockExistingData = {
+          [CREDIT_PERIOD]: 2,
+        };
+
+        const result = mapSubmittedData(mockFormData, mockExistingData);
+
+        const expected = {
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          [POLICY_LENGTH]: '10',
+          [SINGLE_POLICY_LENGTH]: '10',
         };
 
         expect(result).toEqual(expected);
