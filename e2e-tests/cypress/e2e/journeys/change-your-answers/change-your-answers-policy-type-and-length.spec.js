@@ -45,8 +45,13 @@ context('Change your answers after checking answers - Policy type and length', (
   it(`clicking 'change' redirects to ${ROUTES.POLICY_TYPE_CHANGE}`, () => {
     row.changeLink().click();
 
-    const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_TYPE}`;
+    const expectedUrl = ROUTES.POLICY_TYPE_CHANGE;
     cy.url().should('include', expectedUrl);
+  });
+
+  it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+    const expected = `${ROUTES.POLICY_TYPE_CHANGE}#heading`;
+    cy.url().should('include', expected);
   });
 
   it('renders a back link with correct url', () => {
@@ -58,10 +63,6 @@ context('Change your answers after checking answers - Policy type and length', (
 
   it('has originally submitted `policy type` (single)', () => {
     policyTypePage[POLICY_TYPE].single.input().should('be.checked');
-  });
-
-  it('auto focuses the input', () => {
-    policyTypePage[POLICY_TYPE].single.input().should('have.focus');
   });
 
   it(`has originally submitted 'policy length' (${submissionData[POLICY_LENGTH]})`, () => {
@@ -104,8 +105,13 @@ context('Change your answers after checking answers - Policy type and length', (
 
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_TYPE}`;
+      const expectedUrl = ROUTES.POLICY_TYPE_CHANGE;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.POLICY_TYPE_CHANGE}#heading`;
+      cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -117,10 +123,6 @@ context('Change your answers after checking answers - Policy type and length', (
 
     it('has previously submitted `policy type` (multi)', () => {
       policyTypePage[POLICY_TYPE].multi.input().should('be.checked');
-    });
-
-    it('auto focuses the input', () => {
-      policyTypePage[POLICY_TYPE].multi.input().should('have.focus');
     });
 
     it('has previously submitted `policy length` (8 months)', () => {
@@ -162,16 +164,17 @@ context('Change your answers after checking answers - Policy type and length', (
 
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_TYPE}`;
+      const expectedUrl = ROUTES.POLICY_TYPE_CHANGE;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.POLICY_TYPE_CHANGE}#heading`;
+      cy.url().should('include', expected);
     });
 
     it('has previously submitted `policy type` (single)', () => {
       policyTypePage[POLICY_TYPE].single.input().should('be.checked');
-    });
-
-    it('auto focuses the input', () => {
-      policyTypePage[POLICY_TYPE].single.input().should('have.focus');
     });
 
     it('has previously submitted `policy length` (5 months)', () => {
@@ -199,8 +202,13 @@ context('Change your answers after checking answers - Policy type and length', (
       row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}`;
+      const expectedUrl = ROUTES.POLICY_TYPE_CHANGE;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
+      cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -208,10 +216,6 @@ context('Change your answers after checking answers - Policy type and length', (
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
       partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('auto focuses the input', () => {
-      policyTypePage[MULTI_POLICY_LENGTH].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
@@ -258,15 +262,16 @@ context('Change your answers after checking answers - Policy type and length', (
       cy.url().should('include', `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}`);
     });
 
+    it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
+      cy.url().should('include', expected);
+    });
+
     it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
       partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('auto focuses the input', () => {
-      policyTypePage[MULTI_POLICY_LENGTH].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {

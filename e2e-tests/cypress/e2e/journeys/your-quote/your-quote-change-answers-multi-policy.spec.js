@@ -37,8 +37,13 @@ context('Your quote page - change policy type and length from multi single', () 
     const row = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
     row.changeLink().click();
 
-    const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}`;
+    const expectedUrl = ROUTES.POLICY_TYPE_CHANGE;
     cy.url().should('include', expectedUrl);
+  });
+
+  it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+    const expected = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
+    cy.url().should('include', expected);
   });
 
   it('renders a back link with correct url', () => {
@@ -46,10 +51,6 @@ context('Your quote page - change policy type and length from multi single', () 
 
     const expected = `${Cypress.config('baseUrl')}${ROUTES.YOUR_QUOTE}`;
     partials.backLink().should('have.attr', 'href', expected);
-  });
-
-  it('auto focuses the input', () => {
-    policyTypePage[MULTI_POLICY_LENGTH].input().should('have.focus');
   });
 
   it(`redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {

@@ -44,8 +44,13 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
+      const expectedUrl = ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`;
+      cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -53,10 +58,6 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.YOUR_QUOTE}`;
       partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('auto focuses the input', () => {
-      tellUsAboutYourPolicyPage[AMOUNT].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -89,15 +90,16 @@ context('Your quote page - change answers (single policy type to multi policy ty
       cy.url().should('include', expectedUrl);
     });
 
+    it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
+      cy.url().should('include', expected);
+    });
+
     it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.YOUR_QUOTE}`;
       partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('auto focuses the input', () => {
-      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -126,8 +128,13 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+      const expectedUrl = ROUTES.POLICY_TYPE_CHANGE;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
+      cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -135,10 +142,6 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.YOUR_QUOTE}`;
       partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('auto focuses the input', () => {
-      policyTypePage[SINGLE_POLICY_LENGTH].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
@@ -171,8 +174,13 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.BUYER_COUNTRY_CHANGE}#${QUOTE.BUYER_LOCATION}`;
+      const expectedUrl = ROUTES.BUYER_COUNTRY_CHANGE;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`;
+      cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -180,15 +188,6 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.YOUR_QUOTE}`;
       partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('auto focuses the input', () => {
-      // autocomplete component does not have a focused attribute, instead it has a class.
-      // this is added with client side JS.
-      // we have to wait to ensure that client side js has been executed.
-      cy.wait(8000); // eslint-disable-line cypress/no-unnecessary-waiting
-
-      buyerCountryPage.searchInput().should('have.class', 'autocomplete__input--focused');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {

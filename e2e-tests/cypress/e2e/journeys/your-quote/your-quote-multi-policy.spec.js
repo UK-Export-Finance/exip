@@ -85,7 +85,7 @@ context('Your quote page - multi policy type', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
@@ -108,7 +108,7 @@ context('Your quote page - multi policy type', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
@@ -165,7 +165,7 @@ context('Your quote page - multi policy type', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}`;
+        const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
@@ -188,7 +188,7 @@ context('Your quote page - multi policy type', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.BUYER_COUNTRY_CHANGE}#${BUYER_COUNTRY}`;
+        const expectedHref = `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
     });

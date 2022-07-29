@@ -38,8 +38,13 @@ context('Change your answers after checking answers - Policy fields', () => {
     it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}`;
+      const expectedUrl = ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
+      cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -52,10 +57,6 @@ context('Change your answers after checking answers - Policy fields', () => {
     it('has originally submitted answer', () => {
       const expectedValue = submissionData[CREDIT_PERIOD];
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().should('have.attr', 'value', expectedValue);
-    });
-
-    it('auto focuses the input', () => {
-      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {

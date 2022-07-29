@@ -39,7 +39,7 @@ const generateFields = (answers) => {
         text: answers[AMOUNT].text,
       },
       renderChangeLink: true,
-      changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+      href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`,
     },
     {
       id: PERCENTAGE_OF_COVER,
@@ -48,7 +48,7 @@ const generateFields = (answers) => {
         text: answers[PERCENTAGE_OF_COVER].text,
       },
       renderChangeLink: true,
-      changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+      href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
     },
     {
       id: PREMIUM_RATE_PERCENTAGE,
@@ -76,7 +76,7 @@ const generateFields = (answers) => {
           text: answers[SINGLE_POLICY_LENGTH].text,
         },
         renderChangeLink: true,
-        changeRoute: ROUTES.POLICY_TYPE_CHANGE,
+        href: `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
       },
     ];
   }
@@ -91,7 +91,7 @@ const generateFields = (answers) => {
           text: answers[MULTI_POLICY_LENGTH].text,
         },
         renderChangeLink: true,
-        changeRoute: ROUTES.POLICY_TYPE_CHANGE,
+        href: `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
       },
     ];
   }
@@ -105,7 +105,7 @@ const generateFields = (answers) => {
         text: answers[BUYER_COUNTRY].text,
       },
       renderChangeLink: true,
-      changeRoute: ROUTES.BUYER_COUNTRY_CHANGE,
+      href: `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`,
     },
   ];
 
@@ -136,7 +136,7 @@ const generateSummaryListRows = (fields) =>
 
     if (field.renderChangeLink) {
       mapped.actions.items.push({
-        href: `${field.changeRoute}#${field.id}`,
+        href: field.href,
         text: LINKS.CHANGE,
         visuallyHiddenText: field.title,
         attributes: {

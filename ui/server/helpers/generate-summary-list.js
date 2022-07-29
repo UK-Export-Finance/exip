@@ -43,7 +43,7 @@ const generateFieldGroups = (answers) => {
     {
       ID: BUYER_COUNTRY,
       ...FIELDS[BUYER_COUNTRY],
-      CHANGE_ROUTE: ROUTES.BUYER_COUNTRY_CHANGE,
+      HREF: `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`,
       value: {
         text: answers[BUYER_COUNTRY].text,
       },
@@ -51,7 +51,7 @@ const generateFieldGroups = (answers) => {
     {
       ID: VALID_COMPANY_BASE,
       ...FIELDS[VALID_COMPANY_BASE],
-      CHANGE_ROUTE: ROUTES.COMPANY_BASED_CHANGE,
+      HREF: `${ROUTES.COMPANY_BASED_CHANGE}#heading`,
       value: {
         text: answers[VALID_COMPANY_BASE].text,
       },
@@ -59,7 +59,7 @@ const generateFieldGroups = (answers) => {
     {
       ID: UK_GOODS_OR_SERVICES,
       ...FIELDS[UK_GOODS_OR_SERVICES],
-      CHANGE_ROUTE: ROUTES.UK_GOODS_OR_SERVICES_CHANGE,
+      HREF: `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#heading`,
       value: {
         text: answers[UK_GOODS_OR_SERVICES].text,
       },
@@ -71,7 +71,7 @@ const generateFieldGroups = (answers) => {
       {
         ID: SINGLE_POLICY_TYPE,
         ...FIELDS[SINGLE_POLICY_TYPE],
-        CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
+        HREF: `${ROUTES.POLICY_TYPE_CHANGE}#heading`,
         value: {
           text: answers[SINGLE_POLICY_TYPE].text,
         },
@@ -79,7 +79,7 @@ const generateFieldGroups = (answers) => {
       {
         ID: SINGLE_POLICY_LENGTH,
         ...FIELDS[SINGLE_POLICY_LENGTH],
-        CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
+        HREF: `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
         value: {
           text: answers[SINGLE_POLICY_LENGTH].text,
         },
@@ -92,7 +92,7 @@ const generateFieldGroups = (answers) => {
       {
         ID: MULTI_POLICY_TYPE,
         ...FIELDS[MULTI_POLICY_TYPE],
-        CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
+        HREF: `${ROUTES.POLICY_TYPE_CHANGE}#heading`,
         value: {
           text: answers[MULTI_POLICY_TYPE].text,
         },
@@ -100,7 +100,7 @@ const generateFieldGroups = (answers) => {
       {
         ID: MULTI_POLICY_LENGTH,
         ...FIELDS[MULTI_POLICY_LENGTH],
-        CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
+        HREF: `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
         value: {
           text: answers[MULTI_POLICY_LENGTH].text,
         },
@@ -113,7 +113,7 @@ const generateFieldGroups = (answers) => {
     {
       ID: AMOUNT,
       ...FIELDS[AMOUNT],
-      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+      HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`,
       value: {
         text: answers[AMOUNT].text,
       },
@@ -126,7 +126,7 @@ const generateFieldGroups = (answers) => {
       {
         ID: CREDIT_PERIOD,
         ...FIELDS[CREDIT_PERIOD],
-        CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+        HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`,
         value: {
           text: answers[CREDIT_PERIOD].text,
         },
@@ -139,7 +139,7 @@ const generateFieldGroups = (answers) => {
     {
       ID: PERCENTAGE_OF_COVER,
       ...FIELDS[PERCENTAGE_OF_COVER],
-      CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+      HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
       value: {
         text: answers[PERCENTAGE_OF_COVER].text,
       },
@@ -190,7 +190,7 @@ const generateSummaryListRows = (fields, policyType) =>
     actions: {
       items: [
         {
-          href: `${field.CHANGE_ROUTE}#${field.ID}`,
+          href: field.HREF,
           text: LINKS.CHANGE,
           visuallyHiddenText: getKeyText(field.ID, policyType),
           attributes: {

@@ -45,7 +45,7 @@ describe('server/helpers/generate-quote-summary-list', () => {
             text: mockQuoteContent[AMOUNT].text,
           },
           renderChangeLink: true,
-          changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`,
         },
         {
           id: PERCENTAGE_OF_COVER,
@@ -54,7 +54,7 @@ describe('server/helpers/generate-quote-summary-list', () => {
             text: mockQuoteContent[PERCENTAGE_OF_COVER].text,
           },
           renderChangeLink: true,
-          changeRoute: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
         },
         {
           id: PREMIUM_RATE_PERCENTAGE,
@@ -77,7 +77,7 @@ describe('server/helpers/generate-quote-summary-list', () => {
             text: mockQuoteContent[BUYER_COUNTRY].text,
           },
           renderChangeLink: true,
-          changeRoute: ROUTES.BUYER_COUNTRY_CHANGE,
+          href: `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`,
         },
       ];
 
@@ -106,7 +106,7 @@ describe('server/helpers/generate-quote-summary-list', () => {
             text: mockQuoteContent[SINGLE_POLICY_LENGTH].text,
           },
           renderChangeLink: true,
-          changeRoute: ROUTES.POLICY_TYPE_CHANGE,
+          href: `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
         };
 
         expect(expectedField).toEqual(expected);
@@ -135,7 +135,7 @@ describe('server/helpers/generate-quote-summary-list', () => {
             text: mockQuoteContent[MULTI_POLICY_LENGTH].text,
           },
           renderChangeLink: true,
-          changeRoute: ROUTES.POLICY_TYPE_CHANGE,
+          href: `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
         };
 
         expect(expectedField).toEqual(expected);
@@ -195,13 +195,14 @@ describe('server/helpers/generate-quote-summary-list', () => {
             text: 'mock',
           },
           renderChangeLink: true,
+          href: '/page#field-label',
         };
 
         const result = generateSummaryListRows([mockField]);
 
         const expected = [
           {
-            href: `${mockField.changeRoute}#${mockField.id}`,
+            href: mockField.href,
             text: LINKS.CHANGE,
             visuallyHiddenText: mockField.title,
             attributes: {

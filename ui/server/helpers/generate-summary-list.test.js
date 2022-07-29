@@ -45,7 +45,7 @@ describe('server/helpers/generate-summary-list', () => {
           {
             ID: BUYER_COUNTRY,
             ...FIELDS[BUYER_COUNTRY],
-            CHANGE_ROUTE: ROUTES.BUYER_COUNTRY_CHANGE,
+            HREF: `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`,
             value: {
               text: mockAnswersContent[BUYER_COUNTRY].text,
             },
@@ -53,32 +53,27 @@ describe('server/helpers/generate-summary-list', () => {
           {
             ID: VALID_COMPANY_BASE,
             ...FIELDS[VALID_COMPANY_BASE],
-            CHANGE_ROUTE: ROUTES.COMPANY_BASED_CHANGE,
+            HREF: `${ROUTES.COMPANY_BASED_CHANGE}#heading`,
             value: {
               text: mockAnswersContent[VALID_COMPANY_BASE].text,
+            },
+          },
+          {
+            ID: UK_GOODS_OR_SERVICES,
+            ...FIELDS[UK_GOODS_OR_SERVICES],
+            HREF: `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#heading`,
+            value: {
+              text: mockAnswersContent[UK_GOODS_OR_SERVICES].text,
             },
           },
         ],
       };
 
-      // the following fields are dynamically added after previous fields.
-      expected.EXPORT_DETAILS = [
-        ...expected.EXPORT_DETAILS,
-        {
-          ID: UK_GOODS_OR_SERVICES,
-          ...FIELDS[UK_GOODS_OR_SERVICES],
-          CHANGE_ROUTE: ROUTES.UK_GOODS_OR_SERVICES_CHANGE,
-          value: {
-            text: mockAnswersContent[UK_GOODS_OR_SERVICES].text,
-          },
-        },
-      ];
-
       expected.POLICY_DETAILS = [
         {
           ID: AMOUNT,
           ...FIELDS[AMOUNT],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`,
           value: {
             text: mockAnswersContent[AMOUNT].text,
           },
@@ -86,7 +81,7 @@ describe('server/helpers/generate-summary-list', () => {
         {
           ID: PERCENTAGE_OF_COVER,
           ...FIELDS[PERCENTAGE_OF_COVER],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
           value: {
             text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
           },
@@ -112,7 +107,7 @@ describe('server/helpers/generate-summary-list', () => {
         const expected = {
           ID: SINGLE_POLICY_TYPE,
           ...FIELDS[SINGLE_POLICY_TYPE],
-          CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
+          HREF: `${ROUTES.POLICY_TYPE_CHANGE}#heading`,
           value: {
             text: mockAnswersContent[SINGLE_POLICY_TYPE].text,
           },
@@ -136,7 +131,7 @@ describe('server/helpers/generate-summary-list', () => {
         const expected = {
           ID: SINGLE_POLICY_LENGTH,
           ...FIELDS[SINGLE_POLICY_LENGTH],
-          CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
+          HREF: `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
           value: {
             text: mockAnswersContent[SINGLE_POLICY_LENGTH].text,
           },
@@ -171,7 +166,7 @@ describe('server/helpers/generate-summary-list', () => {
         const expected = {
           ID: MULTI_POLICY_TYPE,
           ...FIELDS[MULTI_POLICY_TYPE],
-          CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
+          HREF: `${ROUTES.POLICY_TYPE_CHANGE}#heading`,
           value: {
             text: mockAnswersContent[MULTI_POLICY_TYPE].text,
           },
@@ -188,7 +183,7 @@ describe('server/helpers/generate-summary-list', () => {
         const expected = {
           ID: MULTI_POLICY_LENGTH,
           ...FIELDS[MULTI_POLICY_LENGTH],
-          CHANGE_ROUTE: ROUTES.POLICY_TYPE_CHANGE,
+          HREF: `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
           value: {
             text: mockAnswersContent[MULTI_POLICY_LENGTH].text,
           },
@@ -205,7 +200,7 @@ describe('server/helpers/generate-summary-list', () => {
         const expected = {
           ID: CREDIT_PERIOD,
           ...FIELDS[CREDIT_PERIOD],
-          CHANGE_ROUTE: ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+          HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`,
           value: {
             text: mockAnswersContent[CREDIT_PERIOD].text,
           },
@@ -295,7 +290,7 @@ describe('server/helpers/generate-summary-list', () => {
         actions: {
           items: [
             {
-              href: `${field.CHANGE_ROUTE}#${field.ID}`,
+              href: field.HREF,
               text: LINKS.CHANGE,
               visuallyHiddenText: getKeyText(field.ID, mockSession.submittedData[POLICY_TYPE]),
               attributes: {
