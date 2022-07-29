@@ -41,7 +41,7 @@ context('Change your answers after checking answers - Export fields', () => {
     it(`clicking 'change' redirects to ${ROUTES.BUYER_COUNTRY_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.BUYER_COUNTRY_CHANGE}#${BUYER_COUNTRY}`;
+      const expectedUrl = ROUTES.BUYER_COUNTRY_CHANGE;
       cy.url().should('include', expectedUrl);
     });
 
@@ -58,13 +58,9 @@ context('Change your answers after checking answers - Export fields', () => {
       buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
     });
 
-    it('auto focuses the input', () => {
-      // autocomplete component does not have a focused attribute, instead it has a class.
-      // this is added with client side JS.
-      // we have to wait to ensure that client side js has been executed.
-      cy.wait(8000); // eslint-disable-line cypress/no-unnecessary-waiting
-
-      buyerCountryPage.searchInput().should('have.class', 'autocomplete__input--focused');
+    it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`;
+      cy.url().should('include', expected);
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting a new answer`, () => {
@@ -93,8 +89,13 @@ context('Change your answers after checking answers - Export fields', () => {
     it(`clicking 'change' redirects to ${ROUTES.COMPANY_BASED_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.COMPANY_BASED_CHANGE}#${VALID_COMPANY_BASE}`;
+      const expectedUrl = ROUTES.COMPANY_BASED_CHANGE;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.COMPANY_BASED_CHANGE}#heading`;
+      cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -106,10 +107,6 @@ context('Change your answers after checking answers - Export fields', () => {
 
     it('has originally submitted answer selected', () => {
       companyBasedPage[VALID_COMPANY_BASE].yesInput().should('be.checked');
-    });
-
-    it('auto focuses the input', () => {
-      companyBasedPage[VALID_COMPANY_BASE].yesInput().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
@@ -125,8 +122,13 @@ context('Change your answers after checking answers - Export fields', () => {
     it(`clicking 'change' redirects to ${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#${UK_GOODS_OR_SERVICES}`;
+      const expectedUrl = ROUTES.UK_GOODS_OR_SERVICES_CHANGE;
       cy.url().should('include', expectedUrl);
+    });
+
+    it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
+      cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -138,10 +140,6 @@ context('Change your answers after checking answers - Export fields', () => {
 
     it('has originally submitted answer', () => {
       ukGoodsOrServicesPage.yesInput().should('be.checked');
-    });
-
-    it('auto focuses the input', () => {
-      ukGoodsOrServicesPage.yesInput().should('have.focus');
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when resubmitting`, () => {

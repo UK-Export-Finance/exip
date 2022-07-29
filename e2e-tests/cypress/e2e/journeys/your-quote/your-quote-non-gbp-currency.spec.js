@@ -12,8 +12,8 @@ import CONSTANTS from '../../../../constants';
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 const {
-  CURRENCY,
   AMOUNT,
+  CURRENCY,
   QUOTE,
 } = FIELD_IDS;
 
@@ -65,7 +65,7 @@ context('Your quote page - non GBP currency', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 

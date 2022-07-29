@@ -14,16 +14,16 @@ const CONTENT_STRINGS = PAGES.YOUR_QUOTE_PAGE;
 const { ROUTES, FIELD_IDS, FIELD_VALUES } = CONSTANTS;
 
 const {
-  BUYER_COUNTRY,
-  UK_GOODS_OR_SERVICES,
-  CURRENCY,
   AMOUNT,
+  BUYER_COUNTRY,
+  CURRENCY,
   CREDIT_PERIOD,
   PERCENTAGE_OF_COVER,
   POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   QUOTE,
+  UK_GOODS_OR_SERVICES,
 } = FIELD_IDS;
 
 const {
@@ -105,7 +105,7 @@ context('Your quote page (single policy)', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
@@ -128,7 +128,7 @@ context('Your quote page (single policy)', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
@@ -185,7 +185,7 @@ context('Your quote page (single policy)', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}`;
+        const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
@@ -208,7 +208,7 @@ context('Your quote page (single policy)', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.BUYER_COUNTRY_CHANGE}#${BUYER_COUNTRY}`;
+        const expectedHref = `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
     });

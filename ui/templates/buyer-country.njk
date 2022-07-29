@@ -34,7 +34,7 @@
     {{ govukLabel({
       for: FIELD_NAME_COUNTRY,
       classes: "govuk-heading-l",
-      html: "<h1 class='govuk-heading-l'><label for='" + FIELD_NAME + "'>" + CONTENT_STRINGS.HEADING + "</label></h1>",
+      html: "<h1 class='govuk-heading-l' id='heading'><label for='" + FIELD_NAME + "'>" + CONTENT_STRINGS.HEADING + "</label></h1>",
       attributes: {
         "data-cy": "heading"
       }
@@ -57,7 +57,7 @@
             }
           }) }}
 
-          <select class="govuk-select" id="{{ FIELD_NAME }}" name="{{ FIELD_NAME }}" autofocus="true">
+          <select class="govuk-select" id="{{ FIELD_NAME }}" name="{{ FIELD_NAME }}">
             <option value="" disabled selected></option>
 
             {% for country in countries %}
@@ -95,15 +95,6 @@
         }
       }
     });
-
-    if ('{{ isChangeRoute }}' === 'true') {
-      setTimeout(function() {
-        var input = document.getElementById('{{ FIELD_NAME }}');
-        if (input) {
-         input.focus(); 
-        }
-      }, 0);
-    }
   </script>
 
 {% endblock %}

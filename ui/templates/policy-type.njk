@@ -48,6 +48,7 @@
             label: {
               text: FIELDS.SINGLE_POLICY_LENGTH.LABEL,
               attributes: {
+                id: FIELDS.SINGLE_POLICY_LENGTH.ID + '-label',
                 'data-cy': FIELDS.SINGLE_POLICY_LENGTH.ID + '-label'
               }
             },
@@ -90,6 +91,7 @@
             label: {
               text: FIELDS.MULTI_POLICY_LENGTH.LABEL,
               attributes: {
+                id: FIELDS.MULTI_POLICY_LENGTH.ID + '-label',
                 'data-cy': FIELDS.MULTI_POLICY_LENGTH.ID + '-label'
               }
             },
@@ -131,7 +133,7 @@
           name: FIELDS.POLICY_TYPE.ID,
           fieldset: {
             legend: {
-              html: "<legend class='govuk-fieldset__legend govuk-fieldset__legend--l'><h1 class='govuk-fieldset__heading' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1></legend>"
+              html: "<legend class='govuk-fieldset__legend govuk-fieldset__legend--l'><h1 class='govuk-fieldset__heading' id='heading' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1></legend>"
             }
           },
           classes: "govuk-!-margin-bottom-4",
