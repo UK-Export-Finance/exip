@@ -1,12 +1,3 @@
-const PERCENTAGE_FIELDS = {
-  70: '70percent',
-  75: '75percent',
-  80: '80percent',
-  85: '85percent',
-  90: '90percent',
-  95: '95percent',
-};
-
 const RISK = {
   HIGH: 'High Risk',
   STANDARD: 'Standard Risk',
@@ -20,7 +11,6 @@ const RISK_FIELDS = {
 };
 
 module.exports = {
-  PERCENTAGE_FIELDS,
   RISK,
   RISK_FIELDS,
 };

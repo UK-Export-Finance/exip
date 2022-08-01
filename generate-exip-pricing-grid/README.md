@@ -70,43 +70,123 @@ This is just an example with a very small amount of months.
     "STANDARD": [
       {
         "months":  2,
-        "70percent": 0.5,
-        "75percent": 0.6,
-        "80percent": 0.7,
-        "85percent": 0.8,
-        "90percent": 0.9,
-        "95percent": 0.10
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 0.5
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 0.6
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 0.7
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 0.8
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 0.9
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 0.10
+          }
+        ]
       },
       {
         "months":  3,
-        "70percent": 0.6,
-        "75percent": 0.7,
-        "80percent": 0.8,
-        "85percent": 0.9,
-        "90percent": 0.10,
-        "95percent": 0.11
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 0.6
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 0.7
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 0.8
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 0.9
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 0.10
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 0.11
+          }
+        ]
       }
     ],
     "HIGH": [
       {
         "months":  2,
-        "70percent": 1.1,
-        "75percent": 1.2,
-        "80percent": 1.3,
-        "85percent": 1.4,
-        "90percent": 1.5,
-        "95percent": 1.6
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.1
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.2
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 1.3
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 1.4
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 1.5
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 1.6
+          }
+        ]
       }
     ],
     "VERY_HIGH": [
       {
         "months":  2,
-        "70percent": 2.1,
-        "75percent": 2.2,
-        "80percent": 2.3,
-        "85percent": 2.4,
-        "90percent": 2.5,
-        "95percent": 2.6
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.1
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.2
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.3
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.4
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.5
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.6
+          }
+        ]
       }
     ],  
   }

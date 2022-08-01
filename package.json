@@ -9,7 +9,7 @@
   },
   "scripts": {
     "lint": "eslint ./ui/scripts ./ui/server ./e2e-tests ./generate-exip-pricing-grid",
-    "lint:fix": "eslint ./ui/scripts ./ui/server ./e2e-tests --fix"
+    "lint:fix": "eslint ./ui/scripts ./ui/server ./e2e-tests ./generate-exip-pricing-grid --fix"
   },
   "repository": {
     "type": "git",

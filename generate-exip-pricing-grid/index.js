@@ -1,14 +1,14 @@
 const args = require('minimist')(process.argv.slice(2));
 const xlsx = require('node-xlsx');
 const fs = require('fs');
-const { PERCENTAGE_FIELDS, RISK, RISK_FIELDS } = require('./constants');
+const { RISK, RISK_FIELDS } = require('./constants');
 
 const { spreadsheet, outputDirectory } = args;
 
 /**
  * getWorkSheets
  * Get Single and Multi policy sheets from spreadsheet (sheets 3 and 4).
- * @returns {Object} multiPolicy and singlePolicy from 
+ * @returns {Object} multiPolicy and singlePolicy from
  */
 const getWorkSheets = () => {
   console.info('getting worksheets');
@@ -24,33 +24,33 @@ const getWorkSheets = () => {
 };
 
 /**
- * getCellPercentString
- * index 2 is "70%" in the spreadsheet. Index 3 is "75%" and so on.a
- * @returns {String} '70percent', '75percent' etc
+ * getPercentage
+ * index 2 is "70%" in the spreadsheet. Index 3 is "75%" and so on.
+ * @returns {Number} 70, 75, 80 etc.
  */
-const getCellPercentString = (index) => {
+const getPercentage = (index) => {
   if (index === 2) {
-    return PERCENTAGE_FIELDS['70'];
+    return 70;
   }
 
   if (index === 3) {
-    return PERCENTAGE_FIELDS['75'];
+    return 75;
   }
 
   if (index === 4) {
-    return PERCENTAGE_FIELDS['80'];
+    return 80;
   }
 
   if (index === 5) {
-    return PERCENTAGE_FIELDS['85'];
+    return 85;
   }
 
   if (index === 6) {
-    return PERCENTAGE_FIELDS['90'];
+    return 90;
   }
 
   if (index === 7) {
-    return PERCENTAGE_FIELDS['95'];
+    return 95;
   }
 
   return null;
@@ -80,28 +80,58 @@ const createEmptyGrid = () => {
 };
 
 /**
- * mapRow
- * Map each column in a row.
+ * mapRowRates
+ * Map each rate in a row, transform into an object.
  * @param {Array} Array of objects (cells in a row).
- * @returns {Array}
+ * @returns {Array} e.g [ { insuredFor: 85, premiumRate: 1.3} ]
  */
-const mapRow = (row) => {
-  const cleanRow = {
-    months: row[1],
-  };
+const mapRowRates = (row) => {
+  const cleanRowRates = [];
 
-  row.forEach((cell, index) => {
-    if (index > 1) {
-      const propertyName = getCellPercentString(index);
+  const rowRates = [
+    {
+      rate: row[2],
+      cellIndex: 2,
+    },
+    {
+      rate: row[3],
+      cellIndex: 3,
+    },
+    {
+      rate: row[4],
+      cellIndex: 4,
+    },
+    {
+      rate: row[5],
+      cellIndex: 5,
+    },
+    {
+      rate: row[6],
+      cellIndex: 6,
+    },
+    {
+      rate: row[7],
+      cellIndex: 7,
+    },
+  ];
 
-      // Spreadsheet percentages are formatted with additional 0's.
-      // Therefore, multiply by 100 and use toFixed
-      // To transform into the correct javascript format.
-      cleanRow[propertyName] = Number((cell * 100).toFixed(2));
-    }
+  rowRates.forEach((cell) => {
+    const percentage = getPercentage(cell.cellIndex);
+
+    const insuredFor = percentage;
+
+    // Spreadsheet percentages are formatted with additional 0's.
+    // Therefore, multiply by 100 and use toFixed
+    // To transform into the correct javascript format.
+    const premiumRate = Number((cell.rate * 100).toFixed(2));
+
+    cleanRowRates.push({
+      insuredFor,
+      premiumRate,
+    });
   });
 
-  return cleanRow;
+  return cleanRowRates;
 };
 
 /**
@@ -110,7 +140,7 @@ const mapRow = (row) => {
  * @param {String} Risk category from spreadsheet, e.g "Standard Risk"
  * @returns {String} Risk category in the grid, e.g "STANDARD"
  */
-const mapRiskCategory = (riskCategory) =>{
+const mapRiskCategory = (riskCategory) => {
   if (riskCategory === RISK.STANDARD) {
     return RISK_FIELDS.STANDARD;
   }
@@ -124,25 +154,23 @@ const mapRiskCategory = (riskCategory) =>{
   }
 
   return null;
-}
+};
 
 /**
  * addRowToGrid
  * add a single row to the pricing grid.
  * @param {Object} Pricing grid
- * @param {Array} The row to add
+ * @param {Number} Months of cover for the row
+ * @param {Array} The rates to add
  * @param {String} Policy type
  * @param {String} Risk category
  * @returns {Object} Updated pricing grid
  */
-const addRowToGrid = (grid, row, policyType, riskCategory) => {
-  if (riskCategory === RISK_FIELDS.STANDARD) {
-    grid[policyType][riskCategory].push(row);
-  } else if (riskCategory === RISK_FIELDS.HIGH) {
-    grid[policyType][riskCategory].push(row);
-  } else if (riskCategory === RISK_FIELDS.VERY_HIGH) {
-    grid[policyType][riskCategory].push(row);
-  }
+const addRowToGrid = (grid, months, rates, policyType, riskCategory) => {
+  grid[policyType][riskCategory].push({
+    months,
+    rates,
+  });
 
   return grid;
 };
@@ -161,10 +189,12 @@ const addPolicyToGrid = (grid, policyType, rows) => {
   let updatedGrid;
 
   rows.forEach((row) => {
-    const cleanRow = mapRow(row);
+    const months = Number(row[1]);
+
+    const rates = mapRowRates(row);
     const riskCategory = mapRiskCategory(row[0]);
 
-    updatedGrid = addRowToGrid(grid, cleanRow, policyType, riskCategory);
+    updatedGrid = addRowToGrid(grid, months, rates, policyType, riskCategory);
   });
 
   return updatedGrid;
