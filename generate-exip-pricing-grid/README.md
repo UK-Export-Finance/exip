@@ -66,8 +66,8 @@ This is just an example with a very small amount of months.
 
 ```json
 {
-  "Single Policy": {
-    "Standard Risk": [
+  "SINGLE_POLICY": {
+    "STANDARD": [
       {
         "months":  2,
         "70percent": 0.5,
@@ -87,7 +87,7 @@ This is just an example with a very small amount of months.
         "95percent": 0.11
       }
     ],
-    "High Risk": [
+    "HIGH": [
       {
         "months":  2,
         "70percent": 1.1,
@@ -98,7 +98,7 @@ This is just an example with a very small amount of months.
         "95percent": 1.6
       }
     ],
-    "Very High Risk": [
+    "VERY_HIGH": [
       {
         "months":  2,
         "70percent": 2.1,
@@ -110,10 +110,10 @@ This is just an example with a very small amount of months.
       }
     ],  
   }
-  "Multi Policy": {
-    "Standard Risk": [],
-    "High Risk": [],
-    "Very High Risk": [],  
+  "MULTI_POLICY": {
+    "STANDARD": [],
+    "HIGH": [],
+    "VERY_HIGH": [],  
   }
 }
 ```
