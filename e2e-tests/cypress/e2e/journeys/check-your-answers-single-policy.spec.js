@@ -32,7 +32,7 @@ context('Check your answers page (single policy)', () => {
     [PERCENTAGE_OF_COVER]: '90',
     [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
     [SINGLE_POLICY_LENGTH]: '3',
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: '50',
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
   };
 
   before(() => {

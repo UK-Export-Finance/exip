@@ -29,7 +29,7 @@ context('Check your answers page (multi policy)', () => {
     [PERCENTAGE_OF_COVER]: '90',
     [MULTI_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
     [MULTI_POLICY_LENGTH]: '2',
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: '50',
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
   };
 
   before(() => {

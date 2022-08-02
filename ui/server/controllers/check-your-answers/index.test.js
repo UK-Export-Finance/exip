@@ -38,7 +38,7 @@ describe('controllers/check-your-answers', () => {
       isoCode: 'GBP',
     },
     [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 30,
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
     [VALID_COMPANY_BASE]: true,
   };
 

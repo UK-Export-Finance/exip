@@ -35,7 +35,7 @@ describe('controllers/uk-goods-or-services/validation', () => {
 
     it('should return null', () => {
       const result = validation({
-        [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: '50',
+        [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
       });
 
       expect(result).toEqual(null);

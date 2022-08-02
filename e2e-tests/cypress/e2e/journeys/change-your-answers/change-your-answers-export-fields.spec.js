@@ -20,7 +20,7 @@ const {
 
 const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
-  [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: '50',
+  [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
 };
 
 context('Change your answers after checking answers - Export fields', () => {
