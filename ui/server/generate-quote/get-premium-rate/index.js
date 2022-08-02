@@ -2,7 +2,7 @@ const {
   API,
   FIELD_VALUES,
 } = require('../../constants');
-const PRICING_GRID = require('../pricing-grid');
+const PRICING_GRID = require('../pricing-grid.json');
 
 const PRICING_GRID_MAP = {
   POLICY_TYPE: {
@@ -34,7 +34,7 @@ const getPremiumRate = (
 
   const riskCategoryKey = PRICING_GRID_MAP.RISK_CATEGORY[riskCategory];
 
-  const risk = PRICING_GRID[policyTypeKey][riskCategoryKey].RATES;
+  const risk = PRICING_GRID[policyTypeKey][riskCategoryKey];
 
   const month = risk.find(({ months }) => months === totalMonths);
 

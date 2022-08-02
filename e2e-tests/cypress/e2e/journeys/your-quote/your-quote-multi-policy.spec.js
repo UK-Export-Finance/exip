@@ -121,7 +121,7 @@ context('Your quote page - multi policy type', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '1.57%';
+          const expected = '1.63%';
 
           expect(text.trim()).equal(expected);
         });
@@ -138,7 +138,7 @@ context('Your quote page - multi policy type', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£2,355.00';
+          const expected = '£2,445.00';
 
           expect(text.trim()).equal(expected);
         });

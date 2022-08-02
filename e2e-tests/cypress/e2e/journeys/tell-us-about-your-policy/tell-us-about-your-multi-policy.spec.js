@@ -142,6 +142,31 @@ context('Tell us about the multi policy you need', () => {
       field.input().should('exist');
     });
 
+    it('renders `percentage of cover` label, hint and input with correct options', () => {
+      const fieldId = FIELD_IDS.PERCENTAGE_OF_COVER;
+
+      const field = tellUsAboutYourPolicyPage[fieldId];
+
+      field.label().should('exist');
+      field.label().invoke('text').then((text) => {
+        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LABEL);
+      });
+
+      field.hint().should('exist');
+      field.hint().invoke('text').then((text) => {
+        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.HINT);
+      });
+
+      field.input().should('exist');
+
+      field.inputOption().then((options) => {
+        const actual = [...options].map((o) => o.value);
+
+        const expected = ['', '70', '75', '80', '85', '90', '95'];
+        expect(actual).to.deep.eq(expected);
+      });
+    });
+
     it('renders `credit period` label, hint and input', () => {
       const fieldId = FIELD_IDS.CREDIT_PERIOD;
 

@@ -78,7 +78,7 @@ context('Your quote page - non GBP currency', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '€1,710.00';
+          const expected = '€1,770.00';
 
           expect(text.trim()).equal(expected);
         });

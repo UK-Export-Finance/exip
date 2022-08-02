@@ -124,7 +124,7 @@ context('Tell us about the single policy you need', () => {
       field.input().should('exist');
     });
 
-    it('renders `percentage of cover` label and input with no hint', () => {
+    it('renders `percentage of cover` label, no hint and input with correct options', () => {
       const fieldId = FIELD_IDS.PERCENTAGE_OF_COVER;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
@@ -139,6 +139,13 @@ context('Tell us about the single policy you need', () => {
       });
 
       field.input().should('exist');
+
+      field.inputOption().then((options) => {
+        const actual = [...options].map((o) => o.value);
+
+        const expected = ['', '70', '75', '80', '85', '90', '95'];
+        expect(actual).to.deep.eq(expected);
+      });
     });
 
     it('does NOT render `credit period` label, hint and input', () => {

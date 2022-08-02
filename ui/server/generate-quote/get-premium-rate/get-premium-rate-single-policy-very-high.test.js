@@ -1,21 +1,19 @@
-const getResultAndExpected = require('./index.test');
-const {
-  API,
-  FIELD_VALUES,
-} = require('../../constants');
-const veryHighRisk2Months = require('../pricing-grid/data/single-policy/very-high-risk/2-months');
-const veryHighRisk3Months = require('../pricing-grid/data/single-policy/very-high-risk/3-months');
-const veryHighRisk4Months = require('../pricing-grid/data/single-policy/very-high-risk/4-months');
-const veryHighRisk5Months = require('../pricing-grid/data/single-policy/very-high-risk/5-months');
-const veryHighRisk6Months = require('../pricing-grid/data/single-policy/very-high-risk/6-months');
-const veryHighRisk7Months = require('../pricing-grid/data/single-policy/very-high-risk/7-months');
-const veryHighRisk8Months = require('../pricing-grid/data/single-policy/very-high-risk/8-months');
-const veryHighRisk9Months = require('../pricing-grid/data/single-policy/very-high-risk/9-months');
+const { getAvailableCover, getResultAndExpected } = require('./index.test');
+const { API, FIELD_VALUES } = require('../../constants');
+
+const veryHighRisk2Months = getAvailableCover('SINGLE_POLICY', 'VERY_HIGH', 2);
+const veryHighRisk3Months = getAvailableCover('SINGLE_POLICY', 'VERY_HIGH', 3);
+const veryHighRisk4Months = getAvailableCover('SINGLE_POLICY', 'VERY_HIGH', 4);
+const veryHighRisk5Months = getAvailableCover('SINGLE_POLICY', 'VERY_HIGH', 5);
+const veryHighRisk6Months = getAvailableCover('SINGLE_POLICY', 'VERY_HIGH', 6);
+const veryHighRisk7Months = getAvailableCover('SINGLE_POLICY', 'VERY_HIGH', 7);
+const veryHighRisk8Months = getAvailableCover('SINGLE_POLICY', 'VERY_HIGH', 8);
+const veryHighRisk9Months = getAvailableCover('SINGLE_POLICY', 'VERY_HIGH', 9);
 
 describe('server/generate-quote/get-premium-rate', () => {
   const mockBase = {
     policyType: FIELD_VALUES.POLICY_TYPE.SINGLE,
-    insuredFor: 80,
+    insuredFor: 70,
   };
 
   describe('single policy - very high risk', () => {

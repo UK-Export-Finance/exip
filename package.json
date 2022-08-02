@@ -9,7 +9,7 @@
   },
   "scripts": {
     "lint": "eslint ./ui/scripts ./ui/server ./e2e-tests",
-    "lint:fix": "eslint ./ui/scripts ./ui/server ./e2e-tests --fix"
+    "lint:fix": "eslint ./ui/scripts ./ui/server ./e2e-tests"
   },
   "repository": {
     "type": "git",

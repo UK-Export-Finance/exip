@@ -6,7 +6,7 @@ const {
   API,
   FIELD_VALUES,
 } = require('../../constants');
-const PRICING_GRID = require('../pricing-grid');
+const PRICING_GRID = require('../pricing-grid.json');
 
 const expectedPremiumRate = (
   policyType,
@@ -17,7 +17,7 @@ const expectedPremiumRate = (
   const mappedPolicyType = PRICING_GRID_MAP.POLICY_TYPE[policyType];
   const mappedRiskCategory = PRICING_GRID_MAP.RISK_CATEGORY[riskCategory];
 
-  const risk = PRICING_GRID[mappedPolicyType][mappedRiskCategory].RATES;
+  const risk = PRICING_GRID[mappedPolicyType][mappedRiskCategory];
 
   const expectedMonth = risk.find(({ months }) => months === policyLengthInMonths);
 
@@ -54,6 +54,9 @@ const getResultAndExpected = (
   };
 };
 
+const getAvailableCover = (policyType, risk, coverMonths) =>
+  PRICING_GRID[policyType][risk].find(({ months }) => months === coverMonths);
+
 describe('server/generate-quote/get-premium-rate', () => {
   it('returns a number', () => {
     const mock = {
@@ -74,4 +77,7 @@ describe('server/generate-quote/get-premium-rate', () => {
   });
 });
 
-module.exports = getResultAndExpected;
+module.exports = {
+  getResultAndExpected,
+  getAvailableCover,
+};

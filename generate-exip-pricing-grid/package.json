@@ -1,0 +1,22 @@
+{
+  "name": "generate-exip-pricing-grid",
+  "versio": "1.0.0",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UK-Export-Finance/exip.git"
+  },
+  "author": "UK Export Finance",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UK-Export-Finance/exip/issues"
+  },
+  "homepage": "https://github.com/UK-Export-Finance/exip#readme",
+  "dependencies": {
+    "minimist": "^1.2.6",
+    "node-xlsx": "^0.21.0"
+  }
+}
