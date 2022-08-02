@@ -1,21 +1,19 @@
-const getResultAndExpected = require('./index.test');
-const {
-  API,
-  FIELD_VALUES,
-} = require('../../constants');
-const standardRisk2Months = require('../pricing-grid/data/single-policy/standard-risk/2-months');
-const standardRisk3Months = require('../pricing-grid/data/single-policy/standard-risk/3-months');
-const standardRisk4Months = require('../pricing-grid/data/single-policy/standard-risk/4-months');
-const standardRisk5Months = require('../pricing-grid/data/single-policy/standard-risk/5-months');
-const standardRisk6Months = require('../pricing-grid/data/single-policy/standard-risk/6-months');
-const standardRisk7Months = require('../pricing-grid/data/single-policy/standard-risk/7-months');
-const standardRisk8Months = require('../pricing-grid/data/single-policy/standard-risk/8-months');
-const standardRisk9Months = require('../pricing-grid/data/single-policy/standard-risk/9-months');
+const { getAvailableCover, getResultAndExpected } = require('./index.test');
+const { API, FIELD_VALUES } = require('../../constants');
+
+const standardRisk2Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 2);
+const standardRisk3Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 3);
+const standardRisk4Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 4);
+const standardRisk5Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 5);
+const standardRisk6Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 6);
+const standardRisk7Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 7);
+const standardRisk8Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 8);
+const standardRisk9Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 9);
 
 describe('server/generate-quote/get-premium-rate', () => {
   const mockBase = {
     policyType: FIELD_VALUES.POLICY_TYPE.SINGLE,
-    insuredFor: 80,
+    insuredFor: 70,
   };
 
   describe('single policy - standard risk', () => {

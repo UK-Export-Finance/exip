@@ -6,15 +6,15 @@ const {
 const CONTENT_STRINGS = require('../../content-strings');
 const {
   FIELD_IDS,
+  FIELD_VALUES,
+  PERCENTAGES_OF_COVER,
   ROUTES,
   TEMPLATES,
-  FIELD_VALUES,
 } = require('../../constants');
 const api = require('../../api');
 const { mapCurrencies } = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
 const getCurrencyByCode = require('../../helpers/get-currency-by-code');
-const getPercentagesOfCover = require('../../helpers/get-percentages-of-cover');
 const mapPercentageOfCover = require('../../helpers/map-percentage-of-cover');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const {
@@ -53,7 +53,6 @@ describe('controllers/tell-us-about-your-policy', () => {
     },
   ];
 
-  let percentagesOfCover;
   let mappedPercentageOfCover;
 
   const previousFlowSubmittedData = {
@@ -67,12 +66,7 @@ describe('controllers/tell-us-about-your-policy', () => {
     res = mockRes();
     req.session.submittedData = mockSession.submittedData;
 
-    percentagesOfCover = getPercentagesOfCover(
-      req.session.submittedData[POLICY_TYPE],
-      req.session.submittedData[BUYER_COUNTRY].riskCategory,
-    );
-
-    mappedPercentageOfCover = mapPercentageOfCover(percentagesOfCover);
+    mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER);
   });
 
   afterAll(() => {
@@ -293,7 +287,7 @@ describe('controllers/tell-us-about-your-policy', () => {
         );
 
         const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(
-          percentagesOfCover,
+          PERCENTAGES_OF_COVER,
           req.session.submittedData[PERCENTAGE_OF_COVER],
         );
 
@@ -378,7 +372,7 @@ describe('controllers/tell-us-about-your-policy', () => {
           await post(req, res);
 
           const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(
-            percentagesOfCover,
+            PERCENTAGES_OF_COVER,
             req.body[PERCENTAGE_OF_COVER],
           );
 

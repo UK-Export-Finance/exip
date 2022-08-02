@@ -1,14 +1,14 @@
 const CONTENT_STRINGS = require('../../content-strings');
 const {
-  TEMPLATES,
-  ROUTES,
   FIELD_IDS,
+  PERCENTAGES_OF_COVER,
+  ROUTES,
+  TEMPLATES,
 } = require('../../constants');
 const api = require('../../api');
 const { mapCurrencies } = require('../../helpers/map-currencies');
 const generateValidationErrors = require('./validation');
 const getCurrencyByCode = require('../../helpers/get-currency-by-code');
-const getPercentagesOfCover = require('../../helpers/get-percentages-of-cover');
 const mapPercentageOfCover = require('../../helpers/map-percentage-of-cover');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
@@ -17,7 +17,6 @@ const { isSinglePolicyType, isMultiPolicyType } = require('../../helpers/policy-
 const {
   AMOUNT,
   AMOUNT_CURRENCY,
-  BUYER_COUNTRY,
   CREDIT_PERIOD,
   CURRENCY,
   PERCENTAGE_OF_COVER,
@@ -110,17 +109,12 @@ const get = async (req, res) => {
     mappedCurrencies = mapCurrencies(currencies);
   }
 
-  const percentagesOfCover = getPercentagesOfCover(
-    submittedData[POLICY_TYPE],
-    submittedData[BUYER_COUNTRY].riskCategory,
-  );
-
   let mappedPercentageOfCover;
 
   if (submittedData && submittedData[PERCENTAGE_OF_COVER]) {
-    mappedPercentageOfCover = mapPercentageOfCover(percentagesOfCover, submittedData[PERCENTAGE_OF_COVER]);
+    mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER, Number(submittedData[PERCENTAGE_OF_COVER]));
   } else {
-    mappedPercentageOfCover = mapPercentageOfCover(percentagesOfCover);
+    mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER);
   }
 
   const PAGE_VARIABLES = generatePageVariables(submittedData[POLICY_TYPE]);
@@ -154,19 +148,14 @@ const post = async (req, res) => {
       mappedCurrencies = mapCurrencies(currencies);
     }
 
-    const percentagesOfCover = getPercentagesOfCover(
-      submittedData[POLICY_TYPE],
-      submittedData[BUYER_COUNTRY].riskCategory,
-    );
-
     const submittedPercentageOfCover = req.body[PERCENTAGE_OF_COVER];
 
     let mappedPercentageOfCover;
 
     if (submittedPercentageOfCover) {
-      mappedPercentageOfCover = mapPercentageOfCover(percentagesOfCover, submittedPercentageOfCover);
+      mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER, submittedPercentageOfCover);
     } else {
-      mappedPercentageOfCover = mapPercentageOfCover(percentagesOfCover);
+      mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER);
     }
 
     const PAGE_VARIABLES = generatePageVariables(submittedData[POLICY_TYPE]);
