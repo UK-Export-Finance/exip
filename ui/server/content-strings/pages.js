@@ -67,7 +67,7 @@ const UK_GOODS_OR_SERVICES_PAGE = {
       BODY_1: 'You can speak with',
       LINK: {
         TEXT: 'an export finance manager',
-        HREF: '#',
+        HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
       },
       BODY_2: 'if you\'d like to check whether you\'re eligible around this criteria.',
       BODY_3: 'We\'ll also calculate this thoroughly if you go on to make a full application.',
