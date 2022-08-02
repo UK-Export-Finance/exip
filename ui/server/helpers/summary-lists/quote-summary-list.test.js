@@ -12,8 +12,9 @@ const {
 const { mockQuote } = require('../../test-mocks');
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
+  CONTRACT_VALUE,
+  MAX_AMOUNT_OWED,
   MULTI_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   POLICY_LENGTH,
@@ -38,15 +39,6 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
       const result = generateFields(mockQuoteContent);
 
       const expected = [
-        {
-          id: AMOUNT,
-          title: QUOTE_TITLES[INSURED_FOR],
-          value: {
-            text: mockQuoteContent[AMOUNT].text,
-          },
-          renderChangeLink: true,
-          href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`,
-        },
         {
           id: PERCENTAGE_OF_COVER,
           title: QUOTE_TITLES[PERCENTAGE_OF_COVER],
@@ -84,12 +76,38 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
       expect(result).toEqual(expected);
     });
 
-    describe('when policy length is single', () => {
-      it(`should add a ${SINGLE_POLICY_LENGTH} object`, () => {
-        let mockQuoteContent = mapQuoteToContent(mockQuote);
+    describe('when policy/policy length is single', () => {
+      it(`should add an ${INSURED_FOR} object with ${CONTRACT_VALUE}`, () => {
+        const mockQuoteContent = {
+          ...mapQuoteToContent(mockQuote),
+          [SINGLE_POLICY_LENGTH]: {
+            text: 1,
+          },
+          [INSURED_FOR]: {
+            text: '£123',
+          },
+        };
 
-        mockQuoteContent = {
-          ...mockQuoteContent,
+        const result = generateFields(mockQuoteContent);
+
+        const expectedField = result[0];
+
+        const expected = {
+          id: FIELD_IDS.QUOTE.INSURED_FOR,
+          title: QUOTE_TITLES[INSURED_FOR],
+          value: {
+            text: mockQuoteContent[INSURED_FOR].text,
+          },
+          renderChangeLink: true,
+          href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
+        };
+
+        expect(expectedField).toEqual(expected);
+      });
+
+      it(`should add a ${SINGLE_POLICY_LENGTH} object`, () => {
+        const mockQuoteContent = {
+          ...mapQuoteToContent(mockQuote),
           [SINGLE_POLICY_LENGTH]: {
             text: 1,
           },
@@ -113,12 +131,38 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
       });
     });
 
-    describe('when policy length is multi', () => {
-      it(`should add a ${MULTI_POLICY_LENGTH} object`, () => {
-        let mockQuoteContent = mapQuoteToContent(mockQuote);
+    describe('when policy/policy length is multi', () => {
+      it(`should add an ${INSURED_FOR} object with ${MAX_AMOUNT_OWED}`, () => {
+        const mockQuoteContent = {
+          ...mapQuoteToContent(mockQuote),
+          [MULTI_POLICY_LENGTH]: {
+            text: 1,
+          },
+          [INSURED_FOR]: {
+            text: '£123',
+          },
+        };
 
-        mockQuoteContent = {
-          ...mockQuoteContent,
+        const result = generateFields(mockQuoteContent);
+
+        const expectedField = result[0];
+
+        const expected = {
+          id: FIELD_IDS.QUOTE.INSURED_FOR,
+          title: QUOTE_TITLES[INSURED_FOR],
+          value: {
+            text: mockQuoteContent[INSURED_FOR].text,
+          },
+          renderChangeLink: true,
+          href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
+        };
+
+        expect(expectedField).toEqual(expected);
+      });
+
+      it(`should add a ${MULTI_POLICY_LENGTH} object`, () => {
+        const mockQuoteContent = {
+          ...mapQuoteToContent(mockQuote),
           [MULTI_POLICY_LENGTH]: {
             text: 2,
           },

@@ -5,10 +5,11 @@ const FIELD_IDS = {
   CAN_GET_PRIVATE_INSURANCE_YES: 'canGetPrivateInsuranceYes',
   CAN_GET_PRIVATE_INSURANCE_NO: 'canGetPrivateInsuranceNo',
   COUNTRY: 'country',
-  HAS_MINIMUM_HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',
   AMOUNT_CURRENCY: 'amountAndCurrency',
   CURRENCY: 'currency',
-  AMOUNT: 'amount', // TODO: single policy is "contract value". Multi is "max amount owed"
+  CONTRACT_VALUE: 'contractValue',
+  MAX_AMOUNT_OWED: 'maximumContractAmountOwed',
   CREDIT_PERIOD: 'creditPeriodInMonths',
   POLICY_TYPE: 'policyType',
   SINGLE_POLICY_TYPE: 'singlePolicyType',

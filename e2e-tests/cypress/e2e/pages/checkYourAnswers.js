@@ -1,9 +1,11 @@
 import { FIELD_IDS } from '../../../constants';
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
+  CONTRACT_VALUE,
   CREDIT_PERIOD,
+  CURRENCY,
+  MAX_AMOUNT_OWED,
   MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -38,10 +40,20 @@ const checkYourAnswersPage = {
     },
     policy: {
       heading: () => cy.get('[data-cy="summaryList-heading-policy"]'),
-      [AMOUNT]: {
-        key: () => cy.get(`.${AMOUNT}-key`),
-        value: () => cy.get(`.${AMOUNT}-value`),
-        changeLink: () => cy.get(`[data-cy="${AMOUNT}-change-link"]`),
+      [CURRENCY]: {
+        key: () => cy.get(`.${CURRENCY}-key`),
+        value: () => cy.get(`.${CURRENCY}-value`),
+        changeLink: () => cy.get(`[data-cy="${CURRENCY}-change-link"]`),
+      },
+      [CONTRACT_VALUE]: {
+        key: () => cy.get(`.${CONTRACT_VALUE}-key`),
+        value: () => cy.get(`.${CONTRACT_VALUE}-value`),
+        changeLink: () => cy.get(`[data-cy="${CONTRACT_VALUE}-change-link"]`),
+      },
+      [MAX_AMOUNT_OWED]: {
+        key: () => cy.get(`.${MAX_AMOUNT_OWED}-key`),
+        value: () => cy.get(`.${MAX_AMOUNT_OWED}-value`),
+        changeLink: () => cy.get(`[data-cy="${MAX_AMOUNT_OWED}-change-link"]`),
       },
       [SINGLE_POLICY_TYPE]: {
         key: () => cy.get(`.${SINGLE_POLICY_TYPE}-key`),

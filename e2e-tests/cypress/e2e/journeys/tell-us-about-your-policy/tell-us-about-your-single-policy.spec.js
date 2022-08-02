@@ -111,14 +111,14 @@ context('Tell us about the single policy you need', () => {
       field.input().select(3).should('have.value', SUPPORTED_CURRENCIES[2]);
     });
 
-    it('renders `amount` label and input', () => {
-      const fieldId = FIELD_IDS.AMOUNT;
+    it('renders `contract value` label and input', () => {
+      const fieldId = FIELD_IDS.CONTRACT_VALUE;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
       field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].SINGLE_POLICY.LABEL);
+        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
       });
 
       field.input().should('exist');
@@ -172,7 +172,7 @@ context('Tell us about the single policy you need', () => {
 
   describe('when form is valid', () => {
     it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('100');
+      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().type('100');
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
 

@@ -13,13 +13,13 @@ const { ROUTES, FIELD_VALUES } = CONSTANTS;
 
 context('Check your answers page (multi policy)', () => {
   const {
-    AMOUNT,
     BUYER_COUNTRY,
     CREDIT_PERIOD,
-    PERCENTAGE_OF_COVER,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+    MAX_AMOUNT_OWED,
     MULTI_POLICY_TYPE,
     MULTI_POLICY_LENGTH,
-    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+    PERCENTAGE_OF_COVER,
     VALID_COMPANY_BASE,
   } = FIELD_IDS;
 
@@ -172,9 +172,9 @@ context('Check your answers page (multi policy)', () => {
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
-    it('renders `Amount` key, value and change link', () => {
-      const row = list[AMOUNT];
-      const expectedKeyText = FIELDS[AMOUNT].MULTI_POLICY.SUMMARY.TITLE;
+    it('renders `Max amount owed` key, value and change link', () => {
+      const row = list[MAX_AMOUNT_OWED];
+      const expectedKeyText = FIELDS[MAX_AMOUNT_OWED].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
@@ -191,7 +191,7 @@ context('Check your answers page (multi policy)', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`;
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 

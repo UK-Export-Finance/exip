@@ -11,7 +11,13 @@ const ERROR_MESSAGES = {
   [FIELD_IDS.CURRENCY]: {
     IS_EMPTY: 'Select currency',
   },
-  [FIELD_IDS.AMOUNT]: {
+  [FIELD_IDS.CONTRACT_VALUE]: {
+    IS_EMPTY: 'Enter how much you want to be insured for',
+    NOT_A_NUMBER: 'Enter your amount as a whole number, do not enter decimals',
+    NOT_A_WHOLE_NUMBER: 'Enter your amount as a whole number, do not enter decimals',
+    BELOW_MINIMUM: 'Amount must be 1 or more',
+  },
+  [FIELD_IDS.MAX_AMOUNT_OWED]: {
     IS_EMPTY: 'Enter how much you want to be insured for',
     NOT_A_NUMBER: 'Enter your amount as a whole number, do not enter decimals',
     NOT_A_WHOLE_NUMBER: 'Enter your amount as a whole number, do not enter decimals',

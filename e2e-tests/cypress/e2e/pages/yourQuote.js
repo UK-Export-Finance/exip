@@ -1,7 +1,6 @@
 import { FIELD_IDS } from '../../../constants';
 
 const {
-  AMOUNT,
   MULTI_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   QUOTE,
@@ -29,9 +28,9 @@ const yourQuotePage = {
         changeLink: () => cy.get(`[data-cy="${PERCENTAGE_OF_COVER}-change-link"]`),
       },
       [QUOTE.INSURED_FOR]: {
-        key: () => cy.get(`.${AMOUNT}-key`),
-        value: () => cy.get(`.${AMOUNT}-value`),
-        changeLink: () => cy.get(`[data-cy="${AMOUNT}-change-link"]`),
+        key: () => cy.get(`.${QUOTE.INSURED_FOR}-key`),
+        value: () => cy.get(`.${QUOTE.INSURED_FOR}-value`),
+        changeLink: () => cy.get(`[data-cy="${QUOTE.INSURED_FOR}-change-link"]`),
       },
       [SINGLE_POLICY_LENGTH]: {
         key: () => cy.get(`.${SINGLE_POLICY_LENGTH}-key`),

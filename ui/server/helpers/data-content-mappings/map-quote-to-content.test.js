@@ -6,7 +6,6 @@ const formatCurrency = require('../format-currency');
 const { mockQuote } = require('../../test-mocks');
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
   CURRENCY,
   PERCENTAGE_OF_COVER,
@@ -14,9 +13,10 @@ const {
 } = FIELD_IDS;
 
 const {
-  PREMIUM_RATE_PERCENTAGE,
-  ESTIMATED_COST,
   BUYER_LOCATION,
+  ESTIMATED_COST,
+  INSURED_FOR,
+  PREMIUM_RATE_PERCENTAGE,
 } = QUOTE;
 
 describe('server/helpers/map-quote-to-content', () => {
@@ -25,8 +25,8 @@ describe('server/helpers/map-quote-to-content', () => {
       const result = mapQuoteToContent(mockQuote);
 
       const expected = {
-        [AMOUNT]: {
-          text: formatCurrency(mockQuote[AMOUNT], mockQuote[CURRENCY].isoCode),
+        [INSURED_FOR]: {
+          text: formatCurrency(mockQuote[INSURED_FOR], mockQuote[CURRENCY].isoCode),
         },
         [BUYER_LOCATION]: {
           text: mapCountry(mockQuote[BUYER_COUNTRY]),

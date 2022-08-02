@@ -15,7 +15,7 @@ import CONSTANTS from '../../../../constants';
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 const {
-  AMOUNT,
+  CONTRACT_VALUE,
   QUOTE,
 } = FIELD_IDS;
 
@@ -36,7 +36,7 @@ context('Get a quote - large contract value', () => {
 
   it('should get a quote with a large contract value and render in the correct format', () => {
     // complete Tell us about your policy page, with large contract value
-    tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('12,345,678');
+    tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().type('12,345,678');
     tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
     tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
 
@@ -45,7 +45,7 @@ context('Get a quote - large contract value', () => {
     cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
 
     // Check contract value formatting in the answers page
-    const answersAmount = checkYourAnswersPage.summaryLists.policy[AMOUNT].value();
+    const answersAmount = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].value();
 
     answersAmount.invoke('text').then((text) => {
       const expected = '£12,345,678.00';

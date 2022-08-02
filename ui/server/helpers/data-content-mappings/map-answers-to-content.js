@@ -3,18 +3,16 @@ const {
   FIELD_VALUES,
 } = require('../../constants');
 const { SUMMARY_ANSWERS } = require('../../content-strings');
-const formatCurrency = require('../format-currency');
 const mapCountry = require('./map-country');
+const mapCost = require('./map-cost');
 const mapPeriodMonths = require('./map-period-months');
 const mapPolicyLength = require('./map-policy-length');
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
   CAN_GET_PRIVATE_INSURANCE,
   CAN_GET_PRIVATE_INSURANCE_YES,
   CAN_GET_PRIVATE_INSURANCE_NO,
-  CURRENCY,
   CREDIT_PERIOD,
   MULTI_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
@@ -82,9 +80,7 @@ const mapAnswersToContent = (answers) => {
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
       text: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
     },
-    [AMOUNT]: {
-      text: formatCurrency(answers[AMOUNT], answers[CURRENCY].isoCode),
-    },
+    ...mapCost(answers),
     ...mapPolicyType(answers[POLICY_TYPE]),
     ...mapPolicyLength(answers),
     [PERCENTAGE_OF_COVER]: {

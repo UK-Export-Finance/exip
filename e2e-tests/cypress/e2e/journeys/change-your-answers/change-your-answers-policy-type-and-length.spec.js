@@ -5,6 +5,7 @@ import {
 } from '../../pages';
 import partials from '../../partials';
 import CONSTANTS from '../../../../constants';
+import { CONTRACT_VALUE, MAX_AMOUNT_OWED } from '../../../../constants/field-ids';
 
 const {
   FIELD_IDS,
@@ -78,9 +79,18 @@ context('Change your answers after checking answers - Policy type and length', (
   });
 
   it('renders the new answers in `Check your answers` page (multi, 8 months)', () => {
-    // credit period field is now required because it's a multi policy
+    // max amount owed and credit period fields are now required because it's a multi policy
+    tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('120000');
     tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('1');
     tellUsAboutYourPolicyPage.submitButton().click();
+
+    row = checkYourAnswersPage.summaryLists.policy[MAX_AMOUNT_OWED];
+
+    row.value().invoke('text').then((text) => {
+      const expected = '£120,000.00';
+
+      expect(text.trim()).equal(expected);
+    });
 
     row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_TYPE];
 
@@ -138,7 +148,16 @@ context('Change your answers after checking answers - Policy type and length', (
     });
 
     it('renders the new answers in `Check your answers` page (single policy, 5 months)', () => {
+      tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().type('150');
       tellUsAboutYourPolicyPage.submitButton().click();
+
+      row = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE];
+
+      row.value().invoke('text').then((text) => {
+        const expected = '£150.00';
+
+        expect(text.trim()).equal(expected);
+      });
 
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
 
@@ -196,6 +215,7 @@ context('Change your answers after checking answers - Policy type and length', (
 
   describe('change only `Policy length` (single policy type, 1 month to 7 months)', () => {
     before(() => {
+      tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('100');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('2');
       tellUsAboutYourPolicyPage.submitButton().click();
 
@@ -227,6 +247,7 @@ context('Change your answers after checking answers - Policy type and length', (
     });
 
     it('renders the new answer in `Check your answers` page (single policy, 7 months)', () => {
+      tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().type('200');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_LENGTH];
@@ -250,7 +271,8 @@ context('Change your answers after checking answers - Policy type and length', (
       policyTypePage.submitButton().click();
       cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
 
-      // credit period field is now required because it's a multi policy
+      // max amount owed and credit period fields are now required because it's a multi policy
+      tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('100');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().clear().type('1');
       tellUsAboutYourPolicyPage.submitButton().click();
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
@@ -283,7 +305,7 @@ context('Change your answers after checking answers - Policy type and length', (
 
     it('renders the new answer in `Check your answers` page (multi policy, 6 months)', () => {
       // credit period field is now required because it's a multi policy
-      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().clear().type('1');
+      // tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().clear().type('1');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];

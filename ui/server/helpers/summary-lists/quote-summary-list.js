@@ -8,8 +8,9 @@ const {
 } = require('../../constants');
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
+  CONTRACT_VALUE,
+  MAX_AMOUNT_OWED,
   MULTI_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   POLICY_LENGTH,
@@ -32,15 +33,6 @@ const {
  */
 const generateFields = (answers) => {
   let fields = [
-    {
-      id: AMOUNT,
-      title: QUOTE_TITLES[INSURED_FOR],
-      value: {
-        text: answers[AMOUNT].text,
-      },
-      renderChangeLink: true,
-      href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`,
-    },
     {
       id: PERCENTAGE_OF_COVER,
       title: QUOTE_TITLES[PERCENTAGE_OF_COVER],
@@ -68,6 +60,15 @@ const generateFields = (answers) => {
 
   if (answers[SINGLE_POLICY_LENGTH]) {
     fields = [
+      {
+        id: INSURED_FOR,
+        title: QUOTE_TITLES[INSURED_FOR],
+        value: {
+          text: answers[INSURED_FOR].text,
+        },
+        renderChangeLink: true,
+        href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
+      },
       ...fields,
       {
         id: FIELD_IDS.SINGLE_POLICY_LENGTH,
@@ -83,6 +84,15 @@ const generateFields = (answers) => {
 
   if (answers[MULTI_POLICY_LENGTH]) {
     fields = [
+      {
+        id: INSURED_FOR,
+        title: QUOTE_TITLES[INSURED_FOR],
+        value: {
+          text: answers[INSURED_FOR].text,
+        },
+        renderChangeLink: true,
+        href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
+      },
       ...fields,
       {
         id: FIELD_IDS.MULTI_POLICY_LENGTH,

@@ -5,9 +5,9 @@ const {
   mapAnswersToContent,
 } = require('./map-answers-to-content');
 const mapCountry = require('./map-country');
+const mapCost = require('./map-cost');
 const mapPeriodMonths = require('./map-period-months');
 const mapPolicyLength = require('./map-policy-length');
-const formatCurrency = require('../format-currency');
 const {
   FIELD_IDS,
   FIELD_VALUES,
@@ -16,12 +16,10 @@ const { SUMMARY_ANSWERS } = require('../../content-strings');
 const { mockAnswers } = require('../../test-mocks');
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
   CAN_GET_PRIVATE_INSURANCE,
   CAN_GET_PRIVATE_INSURANCE_YES,
   CAN_GET_PRIVATE_INSURANCE_NO,
-  CURRENCY,
   CREDIT_PERIOD,
   MULTI_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
@@ -126,9 +124,7 @@ describe('server/helpers/map-answers-to-content', () => {
         [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
           text: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
         },
-        [AMOUNT]: {
-          text: formatCurrency(mockAnswers[AMOUNT], mockAnswers[CURRENCY].isoCode),
-        },
+        ...mapCost(mockAnswers),
         ...mapPolicyType(mockAnswers[POLICY_TYPE]),
         ...mapPolicyLength(mockAnswers),
         [PERCENTAGE_OF_COVER]: {

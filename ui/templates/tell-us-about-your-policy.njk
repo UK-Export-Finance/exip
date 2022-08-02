@@ -84,35 +84,70 @@
           }
         }) }}
 
-        {{ govukInput({
-          label: {
-            text: FIELDS.AMOUNT.LABEL,
+
+        {% if isSinglePolicyType %}
+          {{ govukInput({
+            label: {
+              text: FIELDS.CONTRACT_VALUE.LABEL,
+              attributes: {
+                id: FIELDS.CONTRACT_VALUE.ID + "-label",
+                "data-cy": FIELDS.CONTRACT_VALUE.ID + "-label"
+              }
+            },
+            hint: {
+              text: FIELDS.CONTRACT_VALUE.HINT,
+              attributes: {
+                'data-cy': FIELDS.CONTRACT_VALUE.ID + '-hint'
+              }
+            },
+            id: FIELDS.CONTRACT_VALUE.ID,
+            name: FIELDS.CONTRACT_VALUE.ID,
+            spellcheck: false,
+            value: submittedValues[FIELDS.CONTRACT_VALUE.ID],
+            classes: "govuk-!-width-one-third",
             attributes: {
-              id: FIELDS.AMOUNT.ID + "-label",
-              "data-cy": FIELDS.AMOUNT.ID + "-label"
+              "data-cy": FIELDS.CONTRACT_VALUE.ID + "-input"
+            },
+            errorMessage: validationErrors.errorList[FIELDS.CONTRACT_VALUE.ID] and {
+              text: validationErrors.errorList[FIELDS.CONTRACT_VALUE.ID].text,
+              attributes: {
+                "data-cy": FIELDS.CONTRACT_VALUE.ID + "-error-message"
+              }
             }
-          },
-          hint: {
-            text: FIELDS.AMOUNT.HINT,
+          }) }}
+        {% endif %}
+
+        {% if isMultiPolicyType %}
+          {{ govukInput({
+            label: {
+              text: FIELDS.MAX_AMOUNT_OWED.LABEL,
+              attributes: {
+                id: FIELDS.MAX_AMOUNT_OWED.ID + "-label",
+                "data-cy": FIELDS.MAX_AMOUNT_OWED.ID + "-label"
+              }
+            },
+            hint: {
+              text: FIELDS.MAX_AMOUNT_OWED.HINT,
+              attributes: {
+                'data-cy': FIELDS.MAX_AMOUNT_OWED.ID + '-hint'
+              }
+            },
+            id: FIELDS.MAX_AMOUNT_OWED.ID,
+            name: FIELDS.MAX_AMOUNT_OWED.ID,
+            spellcheck: false,
+            value: submittedValues[FIELDS.MAX_AMOUNT_OWED.ID],
+            classes: "govuk-!-width-one-third",
             attributes: {
-              'data-cy': FIELDS.AMOUNT.ID + '-hint'
+              "data-cy": FIELDS.MAX_AMOUNT_OWED.ID + "-input"
+            },
+            errorMessage: validationErrors.errorList[FIELDS.MAX_AMOUNT_OWED.ID] and {
+              text: validationErrors.errorList[FIELDS.MAX_AMOUNT_OWED.ID].text,
+              attributes: {
+                "data-cy": FIELDS.MAX_AMOUNT_OWED.ID + "-error-message"
+              }
             }
-          },
-          id: FIELDS.AMOUNT.ID,
-          name: FIELDS.AMOUNT.ID,
-          spellcheck: false,
-          value: submittedValues[FIELDS.AMOUNT.ID],
-          classes: "govuk-!-width-one-third",
-          attributes: {
-            "data-cy": FIELDS.AMOUNT.ID + "-input"
-          },
-          errorMessage: validationErrors.errorList[FIELDS.AMOUNT.ID] and {
-            text: validationErrors.errorList[FIELDS.AMOUNT.ID].text,
-            attributes: {
-              "data-cy": FIELDS.AMOUNT.ID + "-error-message"
-            }
-          }
-        }) }}
+          }) }}
+        {% endif %}
 
       </fieldset>
 

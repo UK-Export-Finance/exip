@@ -51,20 +51,18 @@ const FIELDS = {
   [FIELD_IDS.CURRENCY]: {
     LABEL: 'Select a currency (pounds sterling, euros or US dollars). You can send out your invoices in most currencies but UKEF only issues policies in these 3 currencies.',
   },
-  [FIELD_IDS.AMOUNT]: {
-    SINGLE_POLICY: {
-      LABEL: 'Contract value',
-      HINT: 'Enter a whole number - do not enter decimals',
-      SUMMARY: {
-        TITLE: 'Total value of contract',
-      },
+  [FIELD_IDS.CONTRACT_VALUE]: {
+    LABEL: 'Contract value',
+    HINT: 'Enter a whole number - do not enter decimals',
+    SUMMARY: {
+      TITLE: 'Total value of contract',
     },
-    MULTI_POLICY: {
-      LABEL: 'Maximum amount owed at any single point',
-      HINT: 'Enter a whole number - do not enter decimals',
-      SUMMARY: {
-        TITLE: 'Maximum buyer will owe at any single point',
-      },
+  },
+  [FIELD_IDS.MAX_AMOUNT_OWED]: {
+    LABEL: 'Maximum amount owed at any single point',
+    HINT: 'Enter a whole number - do not enter decimals',
+    SUMMARY: {
+      TITLE: 'Maximum buyer will owe at any single point',
     },
   },
   [FIELD_IDS.CREDIT_PERIOD]: {

@@ -12,7 +12,7 @@ import CONSTANTS from '../../../../constants';
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 const {
-  AMOUNT,
+  CONTRACT_VALUE,
   CURRENCY,
   QUOTE,
 } = FIELD_IDS;
@@ -29,7 +29,7 @@ context('Your quote page - non GBP currency', () => {
     cy.submitAnswersHappyPathSinglePolicy();
 
     // change currency to non-GBP
-    checkYourAnswersPage.summaryLists.policy[AMOUNT].changeLink().click();
+    checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].changeLink().click();
 
     tellUsAboutYourPolicyPage[CURRENCY].input().select('EUR');
     tellUsAboutYourPolicyPage.submitButton().click();
@@ -65,7 +65,7 @@ context('Your quote page - non GBP currency', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 

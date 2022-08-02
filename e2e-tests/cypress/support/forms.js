@@ -9,10 +9,11 @@ import {
 import { FIELD_IDS } from '../../constants';
 
 const {
-  AMOUNT,
   CAN_GET_PRIVATE_INSURANCE,
+  CONTRACT_VALUE,
   CURRENCY,
   CREDIT_PERIOD,
+  MAX_AMOUNT_OWED,
   MULTI_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
@@ -58,14 +59,14 @@ export const completeAndSubmitPolicyTypeMultiForm = () => {
 
 export const completeAndSubmitTellUsAboutYourSinglePolicyForm = () => {
   tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
-  tellUsAboutYourPolicyPage[AMOUNT].input().type('150000');
+  tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().type('150000');
   tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
   tellUsAboutYourPolicyPage.submitButton().click();
 };
 
 export const completeAndSubmitTellUsAboutYourMultiPolicyForm = () => {
   tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
-  tellUsAboutYourPolicyPage[AMOUNT].input().type('150000');
+  tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('150000');
   tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
   tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('1');
   tellUsAboutYourPolicyPage.submitButton().click();

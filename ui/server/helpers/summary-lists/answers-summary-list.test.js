@@ -18,9 +18,9 @@ const {
 const { mockSession } = require('../../test-mocks');
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
   CREDIT_PERIOD,
+  MAX_AMOUNT_OWED,
   MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
@@ -67,26 +67,17 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
             },
           },
         ],
+        POLICY_DETAILS: [
+          {
+            ID: PERCENTAGE_OF_COVER,
+            ...FIELDS[PERCENTAGE_OF_COVER],
+            HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
+            value: {
+              text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
+            },
+          },
+        ],
       };
-
-      expected.POLICY_DETAILS = [
-        {
-          ID: AMOUNT,
-          ...FIELDS[AMOUNT],
-          HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`,
-          value: {
-            text: mockAnswersContent[AMOUNT].text,
-          },
-        },
-        {
-          ID: PERCENTAGE_OF_COVER,
-          ...FIELDS[PERCENTAGE_OF_COVER],
-          HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
-          value: {
-            text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
-          },
-        },
-      ];
 
       expect(result).toEqual(expected);
     });
@@ -153,6 +144,9 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
           [MULTI_POLICY_LENGTH]: {
             text: 2,
           },
+          [MAX_AMOUNT_OWED]: {
+            text: '£12,345',
+          },
         };
 
         delete mockAnswersContent[SINGLE_POLICY_TYPE];
@@ -212,57 +206,13 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
   });
 
   describe('getKeyText', () => {
-    describe('when a field has SINGLE_POLICY and MULTI_POLICY objects with SUMMARY objct', () => {
-      const fieldId = AMOUNT;
-
-      describe('when policy type is single', () => {
-        it('should return FIELD.SINGLE_POLICY.SUMMARY.TITLE', () => {
-          const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-          const expected = FIELDS[AMOUNT].SINGLE_POLICY.SUMMARY.TITLE;
-          expect(result).toEqual(expected);
-        });
-      });
-
-      describe('when policy type is multi', () => {
-        it('should return FIELD.MULTI_POLICY.SUMMARY.TITLE', () => {
-          const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.MULTI);
-
-          const expected = FIELDS[AMOUNT].MULTI_POLICY.SUMMARY.TITLE;
-          expect(result).toEqual(expected);
-        });
-      });
-    });
-
-    describe('when a field has SINGLE_POLICY and MULTI_POLICY objects but does NOT have SUMMARY object', () => {
-      const fieldId = BUYER_COUNTRY;
-
-      describe('when policy type is single', () => {
-        it('should return FIELD.SUMMARY.TITLE', () => {
-          const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-          const expected = FIELDS[BUYER_COUNTRY].SUMMARY.TITLE;
-          expect(result).toEqual(expected);
-        });
-      });
-
-      describe('when policy type is multi', () => {
-        it('should return FIELD.SUMMARY.TITLE', () => {
-          const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.MULTI);
-
-          const expected = FIELDS[BUYER_COUNTRY].SUMMARY.TITLE;
-          expect(result).toEqual(expected);
-        });
-      });
-    });
-
-    describe('when a field does NOT have SINGLE_POLICY and MULTI_POLICY objects', () => {
-      const fieldId = CREDIT_PERIOD;
+    describe('when a field has SUMMARY objct', () => {
+      const fieldId = VALID_COMPANY_BASE;
 
       it('should return FIELD.SUMMARY.TITLE', () => {
-        const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.MULTI);
+        const result = getKeyText(fieldId);
 
-        const expected = FIELDS[CREDIT_PERIOD].SUMMARY.TITLE;
+        const expected = FIELDS[VALID_COMPANY_BASE].SUMMARY.TITLE;
         expect(result).toEqual(expected);
       });
     });

@@ -12,11 +12,17 @@ const tellUsAboutYourPolicyPage = {
     inputOptionSelected: () => cy.get(`[data-cy="${FIELD_IDS.CURRENCY}-input"]`).find(':selected'),
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.CURRENCY}-error-message"]`),
   },
-  [FIELD_IDS.AMOUNT]: {
-    label: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-label"]`),
-    input: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-input"]`),
-    inputOption: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-input"] option`),
-    errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT}-error-message"]`),
+  [FIELD_IDS.CONTRACT_VALUE]: {
+    label: () => cy.get(`[data-cy="${FIELD_IDS.CONTRACT_VALUE}-label"]`),
+    input: () => cy.get(`[data-cy="${FIELD_IDS.CONTRACT_VALUE}-input"]`),
+    inputOption: () => cy.get(`[data-cy="${FIELD_IDS.CONTRACT_VALUE}-input"] option`),
+    errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.CONTRACT_VALUE}-error-message"]`),
+  },
+  [FIELD_IDS.MAX_AMOUNT_OWED]: {
+    label: () => cy.get(`[data-cy="${FIELD_IDS.MAX_AMOUNT_OWED}-label"]`),
+    input: () => cy.get(`[data-cy="${FIELD_IDS.MAX_AMOUNT_OWED}-input"]`),
+    inputOption: () => cy.get(`[data-cy="${FIELD_IDS.MAX_AMOUNT_OWED}-input"] option`),
+    errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.MAX_AMOUNT_OWED}-error-message"]`),
   },
   [FIELD_IDS.PERCENTAGE_OF_COVER]: {
     label: () => cy.get(`[data-cy="${FIELD_IDS.PERCENTAGE_OF_COVER}-label"]`),

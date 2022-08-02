@@ -13,9 +13,9 @@ import CONSTANTS from '../../../../constants';
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
   CREDIT_PERIOD,
+  MAX_AMOUNT_OWED,
   MULTI_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   POLICY_LENGTH,
@@ -48,7 +48,8 @@ context('Your quote page - multi policy type', () => {
     policyTypePage[MULTI_POLICY_LENGTH].input().type('3');
     policyTypePage.submitButton().click();
 
-    // credit period field is now required because it's a multi policy
+    // max amount owed and credit period field are now required because it's a multi policy
+    tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('150000');
     tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('1');
 
     tellUsAboutYourPolicyPage.submitButton().click();
@@ -85,7 +86,7 @@ context('Your quote page - multi policy type', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 

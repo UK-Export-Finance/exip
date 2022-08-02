@@ -16,8 +16,8 @@ const { ROUTES, FIELD_VALUES } = CONSTANTS;
 
 context('Check your answers page (single policy)', () => {
   const {
-    AMOUNT,
     BUYER_COUNTRY,
+    CONTRACT_VALUE,
     CREDIT_PERIOD,
     PERCENTAGE_OF_COVER,
     SINGLE_POLICY_TYPE,
@@ -215,9 +215,9 @@ context('Check your answers page (single policy)', () => {
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
-    it('renders `Amount` key, value and change link', () => {
-      const row = list[AMOUNT];
-      const expectedKeyText = FIELDS[AMOUNT].SINGLE_POLICY.SUMMARY.TITLE;
+    it('renders `Contract value` key, value and change link', () => {
+      const row = list[CONTRACT_VALUE];
+      const expectedKeyText = FIELDS[CONTRACT_VALUE].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
@@ -234,7 +234,7 @@ context('Check your answers page (single policy)', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`;
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 

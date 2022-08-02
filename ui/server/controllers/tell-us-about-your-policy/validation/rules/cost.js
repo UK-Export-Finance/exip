@@ -1,5 +1,6 @@
 const { FIELD_IDS } = require('../../../../constants');
 const { ERROR_MESSAGES } = require('../../../../content-strings');
+const { isSinglePolicyType, isMultiPolicyType } = require('../../../../helpers/policy-type');
 const generateValidationErrors = require('../../../../helpers/validation');
 const { objectHasProperty } = require('../../../../helpers/object');
 const { numberHasDecimal } = require('../../../../helpers/number');
@@ -17,47 +18,55 @@ const hasDisllowedCharacters = (str) => {
   return false;
 };
 
-const amountRules = (submittedData, errors) => {
+const costRules = (submittedData, errors) => {
   let updatedErrors = errors;
 
-  if (!objectHasProperty(submittedData, FIELD_IDS.AMOUNT)) {
+  let fieldId;
+
+  if (isSinglePolicyType(submittedData[FIELD_IDS.POLICY_TYPE])) {
+    fieldId = FIELD_IDS.CONTRACT_VALUE;
+  }
+
+  if (isMultiPolicyType(submittedData[FIELD_IDS.POLICY_TYPE])) {
+    fieldId = FIELD_IDS.MAX_AMOUNT_OWED;
+  }
+
+  if (!objectHasProperty(submittedData, fieldId)) {
     updatedErrors = generateValidationErrors(
-      FIELD_IDS.AMOUNT,
-      ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY,
+      fieldId,
+      ERROR_MESSAGES[fieldId].IS_EMPTY,
       errors,
     );
 
     return updatedErrors;
   }
 
-  const submittedValue = submittedData[FIELD_IDS.AMOUNT];
-
-  if (numberHasDecimal(submittedValue)) {
+  if (numberHasDecimal(submittedData[fieldId])) {
     updatedErrors = generateValidationErrors(
-      FIELD_IDS.AMOUNT,
-      ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_WHOLE_NUMBER,
+      fieldId,
+      ERROR_MESSAGES[fieldId].NOT_A_WHOLE_NUMBER,
       errors,
     );
 
     return updatedErrors;
   }
 
-  if (hasDisllowedCharacters(submittedValue)) {
+  if (hasDisllowedCharacters(submittedData[fieldId])) {
     updatedErrors = generateValidationErrors(
-      FIELD_IDS.AMOUNT,
-      ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_NUMBER,
+      fieldId,
+      ERROR_MESSAGES[fieldId].NOT_A_NUMBER,
       errors,
     );
 
     return updatedErrors;
   }
 
-  const cleanString = stripCommas(submittedValue);
+  const cleanString = stripCommas(submittedData[fieldId]);
 
   if (Number(cleanString) < MINIMUM) {
     updatedErrors = generateValidationErrors(
-      FIELD_IDS.AMOUNT,
-      ERROR_MESSAGES[FIELD_IDS.AMOUNT].BELOW_MINIMUM,
+      fieldId,
+      ERROR_MESSAGES[fieldId].BELOW_MINIMUM,
       errors,
     );
 
@@ -69,5 +78,5 @@ const amountRules = (submittedData, errors) => {
 
 module.exports = {
   hasDisllowedCharacters,
-  amountRules,
+  costRules,
 };
