@@ -21,7 +21,7 @@ const {
   PERCENTAGE_OF_COVER,
   SINGLE_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
-  UK_GOODS_OR_SERVICES,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
@@ -57,11 +57,11 @@ const generateFieldGroups = (answers) => {
       },
     },
     {
-      ID: UK_GOODS_OR_SERVICES,
-      ...FIELDS[UK_GOODS_OR_SERVICES],
-      HREF: `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#heading`,
+      ID: HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+      ...FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
+      HREF: `${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`,
       value: {
-        text: answers[UK_GOODS_OR_SERVICES].text,
+        text: answers[HAS_MINIMUM_UK_GOODS_OR_SERVICES].text,
       },
     },
   ];

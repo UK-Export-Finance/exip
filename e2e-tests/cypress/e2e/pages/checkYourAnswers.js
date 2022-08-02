@@ -9,7 +9,7 @@ const {
   SINGLE_POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
-  UK_GOODS_OR_SERVICES,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
@@ -30,10 +30,10 @@ const checkYourAnswersPage = {
         value: () => cy.get(`.${VALID_COMPANY_BASE}-value`),
         changeLink: () => cy.get(`[data-cy="${VALID_COMPANY_BASE}-change-link"]`),
       },
-      [UK_GOODS_OR_SERVICES]: {
-        key: () => cy.get(`.${UK_GOODS_OR_SERVICES}-key`),
-        value: () => cy.get(`.${UK_GOODS_OR_SERVICES}-value`),
-        changeLink: () => cy.get(`[data-cy="${UK_GOODS_OR_SERVICES}-change-link"]`),
+      [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
+        key: () => cy.get(`.${HAS_MINIMUM_UK_GOODS_OR_SERVICES}-key`),
+        value: () => cy.get(`.${HAS_MINIMUM_UK_GOODS_OR_SERVICES}-value`),
+        changeLink: () => cy.get(`[data-cy="${HAS_MINIMUM_UK_GOODS_OR_SERVICES}-change-link"]`),
       },
     },
     policy: {

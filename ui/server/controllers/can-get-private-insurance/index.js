@@ -74,7 +74,7 @@ const post = (req, res) => {
     return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
   }
 
-  return res.redirect(ROUTES.UK_GOODS_OR_SERVICES);
+  return res.redirect(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 };
 
 module.exports = {

@@ -18,8 +18,8 @@ describe('controllers/uk-goods-or-services', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.UK_GOODS_OR_SERVICES,
-        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.UK_GOODS_OR_SERVICES_PAGE,
+        FIELD_ID: FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+        PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE,
       };
 
       expect(controller.PAGE_VARIABLES).toEqual(expected);
@@ -30,7 +30,7 @@ describe('controllers/uk-goods-or-services', () => {
     it('should render template', () => {
       controller.get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.UK_GOODS_OR_SERVICES, {
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
         ...singleInputPageVariables(controller.PAGE_VARIABLES),
         BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData,
@@ -43,7 +43,7 @@ describe('controllers/uk-goods-or-services', () => {
       it('should render template with validation errors', () => {
         controller.post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.UK_GOODS_OR_SERVICES, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
           BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(req.body),
@@ -53,7 +53,7 @@ describe('controllers/uk-goods-or-services', () => {
 
     describe('when the submitted answer is `false`', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.UK_GOODS_OR_SERVICES] = 'false';
+        req.body[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES] = 'false';
       });
 
       it(`should redirect to ${ROUTES.CANNOT_OBTAIN_COVER}`, () => {
@@ -65,16 +65,16 @@ describe('controllers/uk-goods-or-services', () => {
       it('should add previousRoute and exitReason to req.flash', () => {
         controller.post(req, res);
 
-        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.UK_GOODS_OR_SERVICES);
+        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 
-        const expectedReason = CONTENT_STRINGS.PAGES.CANNOT_OBTAIN_COVER_PAGE.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES;
+        const expectedReason = CONTENT_STRINGS.PAGES.CANNOT_OBTAIN_COVER_PAGE.REASON.NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.UK_GOODS_OR_SERVICES]: 'true',
+        [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'true',
       };
 
       beforeEach(() => {

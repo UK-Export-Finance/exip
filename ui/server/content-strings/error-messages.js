@@ -5,7 +5,7 @@ const ERROR_MESSAGES = {
   [FIELD_IDS.BUYER_COUNTRY]: 'Select where your buyer is based',
   [FIELD_IDS.CAN_GET_PRIVATE_INSURANCE]: 'Select if you are able to get private insurance for this export',
   [FIELD_IDS.COUNTRY]: 'Select where your buyer is based',
-  [FIELD_IDS.UK_GOODS_OR_SERVICES]: {
+  [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
     IS_EMPTY: 'Select whether at least 20% of your export contract value is made up from UK goods and services',
   },
   [FIELD_IDS.CURRENCY]: {

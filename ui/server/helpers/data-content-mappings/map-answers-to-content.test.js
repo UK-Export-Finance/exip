@@ -1,5 +1,5 @@
 const {
-  mapTriedPrivateCover,
+  mapCanGetPrivateInsurance,
   mapPolicyType,
   mapPercentageOfCover,
   mapAnswersToContent,
@@ -27,17 +27,17 @@ const {
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
-  UK_GOODS_OR_SERVICES,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
 describe('server/helpers/map-answers-to-content', () => {
-  describe('mapTriedPrivateCover', () => {
+  describe('mapCanGetPrivateInsurance', () => {
     describe('when answer is yes', () => {
       it(`should return an object with ${CAN_GET_PRIVATE_INSURANCE_YES} and mapped summary answer`, () => {
         const mockAnswer = FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.YES;
 
-        const result = mapTriedPrivateCover(mockAnswer);
+        const result = mapCanGetPrivateInsurance(mockAnswer);
 
         const expected = {
           [CAN_GET_PRIVATE_INSURANCE_YES]: {
@@ -53,7 +53,7 @@ describe('server/helpers/map-answers-to-content', () => {
       it(`should return an object with ${CAN_GET_PRIVATE_INSURANCE_NO} and mapped summary answer`, () => {
         const mockAnswer = FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.NO;
 
-        const result = mapTriedPrivateCover(mockAnswer);
+        const result = mapCanGetPrivateInsurance(mockAnswer);
 
         const expected = {
           [CAN_GET_PRIVATE_INSURANCE_NO]: {
@@ -122,9 +122,9 @@ describe('server/helpers/map-answers-to-content', () => {
         [BUYER_COUNTRY]: {
           text: mapCountry(mockAnswers[BUYER_COUNTRY]),
         },
-        ...mapTriedPrivateCover(mockAnswers[CAN_GET_PRIVATE_INSURANCE]),
-        [UK_GOODS_OR_SERVICES]: {
-          text: SUMMARY_ANSWERS[UK_GOODS_OR_SERVICES],
+        ...mapCanGetPrivateInsurance(mockAnswers[CAN_GET_PRIVATE_INSURANCE]),
+        [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
+          text: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
         },
         [AMOUNT]: {
           text: formatCurrency(mockAnswers[AMOUNT], mockAnswers[CURRENCY].isoCode),

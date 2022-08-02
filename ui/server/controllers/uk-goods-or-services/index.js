@@ -6,12 +6,12 @@ const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
-  FIELD_ID: FIELD_IDS.UK_GOODS_OR_SERVICES,
-  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.UK_GOODS_OR_SERVICES_PAGE,
+  FIELD_ID: FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+  PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE,
 };
 
 const get = (req, res) =>
-  res.render(TEMPLATES.UK_GOODS_OR_SERVICES, {
+  res.render(TEMPLATES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
     ...singleInputPageVariables(PAGE_VARIABLES),
     BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData,
@@ -21,25 +21,25 @@ const post = (req, res) => {
   const validationErrors = generateValidationErrors(req.body);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.UK_GOODS_OR_SERVICES, {
+    return res.render(TEMPLATES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
       ...singleInputPageVariables(PAGE_VARIABLES),
       BACK_LINK: req.headers.referer,
       validationErrors,
     });
   }
 
-  const answer = req.body[FIELD_IDS.UK_GOODS_OR_SERVICES];
+  const answer = req.body[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
   const redirectToExitPage = (answer === 'false');
 
   if (redirectToExitPage) {
-    req.flash('previousRoute', ROUTES.UK_GOODS_OR_SERVICES);
+    req.flash('previousRoute', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 
     const { PAGES } = CONTENT_STRINGS;
     const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
     const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
 
-    req.flash('exitReason', REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES);
+    req.flash('exitReason', REASON.NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 
     return res.redirect(ROUTES.CANNOT_OBTAIN_COVER);
   }

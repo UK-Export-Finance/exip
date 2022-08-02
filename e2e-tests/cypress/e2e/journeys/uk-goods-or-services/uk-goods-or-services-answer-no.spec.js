@@ -13,13 +13,13 @@ const { ROUTES } = CONSTANTS;
 
 context('Is at least 20% of your export contract value made up from UK goods or services page - answer no', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.UK_GOODS_OR_SERVICES, {
+    cy.visit(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
-    cy.url().should('include', ROUTES.UK_GOODS_OR_SERVICES);
+    cy.url().should('include', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 
     ukGoodsOrServicesPage.no().click();
     ukGoodsOrServicesPage.submitButton().click();
@@ -32,12 +32,12 @@ context('Is at least 20% of your export contract value made up from UK goods or 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
 
-    partials.backLink().should('have.attr', 'href', ROUTES.UK_GOODS_OR_SERVICES);
+    partials.backLink().should('have.attr', 'href', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
   });
 
   it('renders a specific reason', () => {
     cannotObtainCoverPage.reason().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES}`;
+      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES}`;
 
       expect(text.trim()).equal(expected);
     });

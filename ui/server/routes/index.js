@@ -32,10 +32,10 @@ router.post(ROUTES.CAN_GET_PRIVATE_INSURANCE, canGetPrivateInsuranceController.p
 router.get(ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE, canGetPrivateInsuranceController.get);
 router.post(ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE, canGetPrivateInsuranceController.post);
 
-router.get(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.get);
-router.post(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.post);
-router.get(ROUTES.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.get);
-router.post(ROUTES.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.post);
+router.get(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.get);
+router.post(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.post);
+router.get(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.get);
+router.post(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.post);
 
 router.get(ROUTES.POLICY_TYPE, policyTypeController.get);
 router.post(ROUTES.POLICY_TYPE, policyTypeController.post);

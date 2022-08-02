@@ -19,7 +19,7 @@ context('Check your answers page (multi policy)', () => {
     PERCENTAGE_OF_COVER,
     MULTI_POLICY_TYPE,
     MULTI_POLICY_LENGTH,
-    UK_GOODS_OR_SERVICES,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
     VALID_COMPANY_BASE,
   } = FIELD_IDS;
 
@@ -29,7 +29,7 @@ context('Check your answers page (multi policy)', () => {
     [PERCENTAGE_OF_COVER]: '90',
     [MULTI_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
     [MULTI_POLICY_LENGTH]: '2',
-    [UK_GOODS_OR_SERVICES]: '50',
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: '50',
   };
 
   before(() => {
@@ -98,15 +98,15 @@ context('Check your answers page (multi policy)', () => {
     });
 
     it('renders `UK goods` key, value and change link', () => {
-      const row = list[UK_GOODS_OR_SERVICES];
-      const expectedKeyText = FIELDS[UK_GOODS_OR_SERVICES].SUMMARY.TITLE;
+      const row = list[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+      const expectedKeyText = FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_ANSWERS[UK_GOODS_OR_SERVICES]);
+        expect(text.trim()).equal(SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]);
       });
 
       row.changeLink().invoke('text').then((text) => {
@@ -114,7 +114,7 @@ context('Check your answers page (multi policy)', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
+      const expectedHref = `${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });

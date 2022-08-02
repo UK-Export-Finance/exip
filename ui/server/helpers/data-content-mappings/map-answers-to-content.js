@@ -20,11 +20,11 @@ const {
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
-  UK_GOODS_OR_SERVICES,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
-const mapTriedPrivateCover = (answer) => {
+const mapCanGetPrivateInsurance = (answer) => {
   let mapped;
 
   if (answer === FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.YES) {
@@ -78,9 +78,9 @@ const mapAnswersToContent = (answers) => {
     [BUYER_COUNTRY]: {
       text: mapCountry(answers[BUYER_COUNTRY]),
     },
-    ...mapTriedPrivateCover(answers[CAN_GET_PRIVATE_INSURANCE]),
-    [UK_GOODS_OR_SERVICES]: {
-      text: SUMMARY_ANSWERS[UK_GOODS_OR_SERVICES],
+    ...mapCanGetPrivateInsurance(answers[CAN_GET_PRIVATE_INSURANCE]),
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
+      text: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
     },
     [AMOUNT]: {
       text: formatCurrency(answers[AMOUNT], answers[CURRENCY].isoCode),
@@ -99,7 +99,7 @@ const mapAnswersToContent = (answers) => {
 };
 
 module.exports = {
-  mapTriedPrivateCover,
+  mapCanGetPrivateInsurance,
   mapPolicyType,
   mapPercentageOfCover,
   mapAnswersToContent,

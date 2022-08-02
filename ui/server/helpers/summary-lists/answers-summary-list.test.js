@@ -27,7 +27,7 @@ const {
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
-  UK_GOODS_OR_SERVICES,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
@@ -59,11 +59,11 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
             },
           },
           {
-            ID: UK_GOODS_OR_SERVICES,
-            ...FIELDS[UK_GOODS_OR_SERVICES],
-            HREF: `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#heading`,
+            ID: HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+            ...FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
+            HREF: `${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`,
             value: {
-              text: mockAnswersContent[UK_GOODS_OR_SERVICES].text,
+              text: mockAnswersContent[HAS_MINIMUM_UK_GOODS_OR_SERVICES].text,
             },
           },
         ],

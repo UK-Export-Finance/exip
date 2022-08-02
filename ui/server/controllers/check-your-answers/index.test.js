@@ -18,7 +18,7 @@ const {
   CREDIT_PERIOD,
   CURRENCY,
   POLICY_TYPE,
-  UK_GOODS_OR_SERVICES,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
@@ -38,7 +38,7 @@ describe('controllers/check-your-answers', () => {
       isoCode: 'GBP',
     },
     [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-    [UK_GOODS_OR_SERVICES]: 30,
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 30,
     [VALID_COMPANY_BASE]: true,
   };
 

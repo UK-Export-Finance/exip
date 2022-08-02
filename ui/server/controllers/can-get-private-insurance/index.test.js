@@ -110,10 +110,10 @@ describe('controllers/can-get-private-insurance', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.UK_GOODS_OR_SERVICES}`, () => {
+      it(`should redirect to ${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`, () => {
         controller.post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.UK_GOODS_OR_SERVICES);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
       });
 
       describe('when the url\'s last substring is `change`', () => {
