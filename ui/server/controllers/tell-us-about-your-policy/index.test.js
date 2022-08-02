@@ -12,10 +12,10 @@ const {
   TEMPLATES,
 } = require('../../constants');
 const api = require('../../api');
-const { mapCurrencies } = require('../../helpers/map-currencies');
+const { mapCurrencies } = require('../../helpers/mappings/map-currencies');
 const generateValidationErrors = require('./validation');
 const getCurrencyByCode = require('../../helpers/get-currency-by-code');
-const mapPercentageOfCover = require('../../helpers/map-percentage-of-cover');
+const mapPercentageOfCover = require('../../helpers/mappings/map-percentage-of-cover');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const {
   mockReq,

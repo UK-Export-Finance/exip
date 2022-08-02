@@ -1,11 +1,11 @@
 const {
   LINKS,
   QUOTE_TITLES,
-} = require('../content-strings');
+} = require('../../content-strings');
 const {
   FIELD_IDS,
   ROUTES,
-} = require('../constants');
+} = require('../../constants');
 
 const {
   AMOUNT,
@@ -150,10 +150,10 @@ const generateSummaryListRows = (fields) =>
   });
 
 /*
- * generateQuoteSummaryList
+ * quoteSummaryList
  * Create a summary list
  */
-const generateQuoteSummaryList = (answers) => {
+const quoteSummaryList = (answers) => {
   const fields = generateFields(answers);
 
   const summaryList = generateSummaryListRows(fields);
@@ -164,5 +164,5 @@ const generateQuoteSummaryList = (answers) => {
 module.exports = {
   generateFields,
   generateSummaryListRows,
-  generateQuoteSummaryList,
+  quoteSummaryList,
 };

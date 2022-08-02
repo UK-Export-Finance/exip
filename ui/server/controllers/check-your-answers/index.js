@@ -1,7 +1,7 @@
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const { mapAnswersToContent } = require('../../helpers/data-content-mappings/map-answers-to-content');
-const { generateSummaryList } = require('../../helpers/generate-summary-list');
+const { answersSummaryList } = require('../../helpers/summary-lists/answers-summary-list');
 
 const PAGE_VARIABLES = {
   CONTENT_STRINGS: {
@@ -16,7 +16,7 @@ const PAGE_VARIABLES = {
 const get = (req, res) => {
   const answers = mapAnswersToContent(req.session.submittedData);
 
-  const summaryList = generateSummaryList(
+  const summaryList = answersSummaryList(
     answers,
     req.session.submittedData[FIELD_IDS.POLICY_TYPE],
   );

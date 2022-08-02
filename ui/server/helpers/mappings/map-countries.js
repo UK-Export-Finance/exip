@@ -1,5 +1,5 @@
-const { API } = require('../constants');
-const sortArrayAlphabetically = require('./sort-array-alphabetically');
+const { API } = require('../../constants');
+const sortArrayAlphabetically = require('../sort-array-alphabetically');
 
 const mapRiskCategory = (str) => {
   if (str === API.CIS.RISK.STANDARD) {

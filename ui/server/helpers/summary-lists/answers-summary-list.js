@@ -2,15 +2,15 @@ const {
   PAGES,
   FIELDS,
   LINKS,
-} = require('../content-strings');
+} = require('../../content-strings');
 const {
   FIELD_IDS,
   ROUTES,
-} = require('../constants');
+} = require('../../constants');
 const {
   isSinglePolicyType,
   isMultiPolicyType,
-} = require('./policy-type');
+} = require('../policy-type');
 
 const {
   AMOUNT,
@@ -202,10 +202,10 @@ const generateSummaryListRows = (fields, policyType) =>
   }));
 
 /*
- * generateSummaryList
+ * answersSummaryList
  * Create multiple summary lists
  */
-const generateSummaryList = (submittedData, policyType) => {
+const answersSummaryList = (submittedData, policyType) => {
   const fieldGroups = generateFieldGroups(submittedData);
 
   const summaryList = {
@@ -226,5 +226,5 @@ module.exports = {
   generateFieldGroups,
   getKeyText,
   generateSummaryListRows,
-  generateSummaryList,
+  answersSummaryList,
 };

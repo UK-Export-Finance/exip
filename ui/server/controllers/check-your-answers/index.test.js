@@ -7,7 +7,7 @@ const {
   TEMPLATES,
 } = require('../../constants');
 const { mapAnswersToContent } = require('../../helpers/data-content-mappings/map-answers-to-content');
-const { generateSummaryList } = require('../../helpers/generate-summary-list');
+const { answersSummaryList } = require('../../helpers/summary-lists/answers-summary-list');
 
 const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
 
@@ -72,7 +72,7 @@ describe('controllers/check-your-answers', () => {
       controller.get(req, res);
 
       const answers = mapAnswersToContent(mockSessionData);
-      const expectedSummaryList = generateSummaryList(
+      const expectedSummaryList = answersSummaryList(
         answers,
         mockSessionData[POLICY_TYPE],
       );

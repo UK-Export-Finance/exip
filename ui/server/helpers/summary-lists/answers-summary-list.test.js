@@ -2,20 +2,20 @@ const {
   generateFieldGroups,
   getKeyText,
   generateSummaryListRows,
-  generateSummaryList,
-} = require('./generate-summary-list');
-const { mapAnswersToContent } = require('./data-content-mappings/map-answers-to-content');
+  answersSummaryList,
+} = require('./answers-summary-list');
+const { mapAnswersToContent } = require('../data-content-mappings/map-answers-to-content');
 const {
   PAGES,
   FIELDS,
   LINKS,
-} = require('../content-strings');
+} = require('../../content-strings');
 const {
   FIELD_IDS,
   FIELD_VALUES,
   ROUTES,
-} = require('../constants');
-const { mockSession } = require('../test-mocks');
+} = require('../../constants');
+const { mockSession } = require('../../test-mocks');
 
 const {
   AMOUNT,
@@ -31,7 +31,7 @@ const {
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
-describe('server/helpers/generate-summary-list', () => {
+describe('server/helpers/summary-lists/answers-summary-list', () => {
   describe('generateFieldGroups - no policy type', () => {
     it('should map over each field group with value from submittedData', () => {
       const mockAnswersContent = mapAnswersToContent(mockSession.submittedData);
@@ -308,13 +308,13 @@ describe('server/helpers/generate-summary-list', () => {
     });
   });
 
-  describe('generateSummaryList', () => {
+  describe('answersSummaryList', () => {
     it('should return an object with multiple summary lists', () => {
       const mockAnswersContent = mapAnswersToContent(mockSession.submittedData);
 
       const fieldGroups = generateFieldGroups(mockAnswersContent);
 
-      const result = generateSummaryList(
+      const result = answersSummaryList(
         mockAnswersContent,
         mockSession.submittedData[POLICY_TYPE],
       );

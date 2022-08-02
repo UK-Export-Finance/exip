@@ -6,7 +6,7 @@ const { validation: generateValidationErrors } = require('./validation');
 const isChangeRoute = require('../../helpers/is-change-route');
 const getCountryByName = require('../../helpers/get-country-by-name');
 const api = require('../../api');
-const { mapCountries } = require('../../helpers/map-countries');
+const { mapCountries } = require('../../helpers/mappings/map-countries');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const {
   mockReq,

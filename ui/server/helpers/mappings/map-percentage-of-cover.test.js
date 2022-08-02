@@ -1,6 +1,6 @@
 const mapPercentageOfCover = require('./map-percentage-of-cover');
 
-describe('server/helpers/map-percentage-of-cover', () => {
+describe('server/helpers/mappings/map-percentage-of-cover', () => {
   const mockPercentages = [
     80,
     85,

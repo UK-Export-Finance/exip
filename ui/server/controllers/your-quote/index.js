@@ -1,7 +1,7 @@
 const CONTENT_STRINGS = require('../../content-strings');
 const { TEMPLATES } = require('../../constants');
 const { generateQuote } = require('../../generate-quote');
-const { generateQuoteSummaryList } = require('../../helpers/generate-quote-summary-list');
+const { quoteSummaryList } = require('../../helpers/summary-lists/quote-summary-list');
 const mapQuoteToContent = require('../../helpers/data-content-mappings/map-quote-to-content');
 
 const get = (req, res) => {
@@ -21,7 +21,7 @@ const get = (req, res) => {
       LINKS: CONTENT_STRINGS.LINKS,
       ...CONTENT_STRINGS.PAGES.YOUR_QUOTE_PAGE,
     },
-    SUMMARY_LIST: generateQuoteSummaryList(quoteContent),
+    SUMMARY_LIST: quoteSummaryList(quoteContent),
   });
 };
 

@@ -1,5 +1,5 @@
-const { SUPPORTED_CURRENCIES } = require('../constants');
-const sortArrayAlphabetically = require('./sort-array-alphabetically');
+const { SUPPORTED_CURRENCIES } = require('../../constants');
+const sortArrayAlphabetically = require('../sort-array-alphabetically');
 
 const getSupportedCurrencies = (currencies) => {
   const supported = currencies.filter((currency) =>

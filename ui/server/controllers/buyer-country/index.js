@@ -1,7 +1,7 @@
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const api = require('../../api');
-const { mapCountries } = require('../../helpers/map-countries');
+const { mapCountries } = require('../../helpers/mappings/map-countries');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const { validation: generateValidationErrors } = require('./validation');
 const isChangeRoute = require('../../helpers/is-change-route');

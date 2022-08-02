@@ -1,15 +1,15 @@
 const {
   generateFields,
   generateSummaryListRows,
-  generateQuoteSummaryList,
-} = require('./generate-quote-summary-list');
-const mapQuoteToContent = require('./data-content-mappings/map-quote-to-content');
-const { QUOTE_TITLES, LINKS } = require('../content-strings');
+  quoteSummaryList,
+} = require('./quote-summary-list');
+const mapQuoteToContent = require('../data-content-mappings/map-quote-to-content');
+const { QUOTE_TITLES, LINKS } = require('../../content-strings');
 const {
   FIELD_IDS,
   ROUTES,
-} = require('../constants');
-const { mockQuote } = require('../test-mocks');
+} = require('../../constants');
+const { mockQuote } = require('../../test-mocks');
 
 const {
   AMOUNT,
@@ -28,7 +28,7 @@ const {
   BUYER_LOCATION,
 } = QUOTE;
 
-describe('server/helpers/generate-quote-summary-list', () => {
+describe('server/helpers/summary-lists/quote-summary-list', () => {
   describe('generateFields', () => {
     it('should map over each field group with value from submittedData', () => {
       const mockQuoteContent = mapQuoteToContent(mockQuote);
@@ -221,7 +221,7 @@ describe('server/helpers/generate-quote-summary-list', () => {
     it('should return an object with multiple summary lists', () => {
       const mockQuoteContent = mapQuoteToContent(mockQuote);
 
-      const result = generateQuoteSummaryList(mockQuoteContent);
+      const result = quoteSummaryList(mockQuoteContent);
 
       const fields = generateFields(mockQuoteContent);
       const expected = generateSummaryListRows(fields);
