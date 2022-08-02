@@ -18,7 +18,7 @@ describe('controllers/uk-goods-or-services', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_NAME: FIELD_IDS.UK_GOODS_OR_SERVICES,
+        FIELD_ID: FIELD_IDS.UK_GOODS_OR_SERVICES,
         PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.UK_GOODS_OR_SERVICES_PAGE,
       };
 

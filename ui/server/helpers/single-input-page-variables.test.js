@@ -4,7 +4,7 @@ const CONSTANTS = require('../constants');
 
 describe('server/helpers/single-input-page-variables', () => {
   const mock = {
-    FIELD_NAME: 'test',
+    FIELD_ID: 'test',
     PAGE_CONTENT_STRINGS: {
       heading: 'Testing',
     },
@@ -23,19 +23,19 @@ describe('server/helpers/single-input-page-variables', () => {
         HINTS: CONTENT_STRINGS.HINTS,
         ...mock.PAGE_CONTENT_STRINGS,
       },
-      FIELD_NAME: mock.FIELD_NAME,
+      FIELD_ID: mock.FIELD_ID,
       BACK_LINK: mock.BACK_LINK,
     };
 
     expect(result).toEqual(expected);
   });
 
-  describe('when a FIELD_NAME exists in content string fields', () => {
+  describe('when a FIELD_ID exists in content string fields', () => {
     it('should also return FIELD_HINT', () => {
-      mock.FIELD_NAME = CONSTANTS.FIELD_IDS.COUNTRY;
+      mock.FIELD_ID = CONSTANTS.FIELD_IDS.COUNTRY;
       const result = singleInputPageVariables(mock);
 
-      const expected = CONTENT_STRINGS.FIELDS[mock.FIELD_NAME].HINT;
+      const expected = CONTENT_STRINGS.FIELDS[mock.FIELD_ID].HINT;
 
       expect(result.FIELD_HINT).toEqual(expected);
     });

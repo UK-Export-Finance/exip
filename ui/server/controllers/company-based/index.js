@@ -6,7 +6,7 @@ const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 const isChangeRoute = require('../../helpers/is-change-route');
 
 const PAGE_VARIABLES = {
-  FIELD_NAME: FIELD_IDS.VALID_COMPANY_BASE,
+  FIELD_ID: FIELD_IDS.VALID_COMPANY_BASE,
   PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.COMPANY_BASED_PAGE,
 };
 

@@ -46,7 +46,7 @@ describe('controllers/buyer-country', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_NAME: FIELD_IDS.COUNTRY,
+        FIELD_ID: FIELD_IDS.COUNTRY,
         PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.BUYER_COUNTRY_PAGE,
       };
 
@@ -119,7 +119,7 @@ describe('controllers/buyer-country', () => {
       const expectedVariables = {
         ...singleInputPageVariables(controller.PAGE_VARIABLES),
         BACK_LINK: controller.getBackLink(req.headers.referer),
-        HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
+        HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
         countries: mapCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData,
         isChangeRoute: isChangeRoute(req.originalUrl),
@@ -142,7 +142,7 @@ describe('controllers/buyer-country', () => {
         const expectedVariables = {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
           BACK_LINK: controller.getBackLink(req.headers.referer),
-          HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
+          HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
           countries: expectedCountries,
           submittedValues: req.session.submittedData,
           isChangeRoute: isChangeRoute(req.originalUrl),
@@ -167,7 +167,7 @@ describe('controllers/buyer-country', () => {
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.BUYER_COUNTRY, {
           ...singleInputPageVariables(controller.PAGE_VARIABLES),
           BACK_LINK: controller.getBackLink(req.headers.referer),
-          HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
+          HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
           countries: mapCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),
           isChangeRoute: isChangeRoute(req.originalUrl),
