@@ -74,7 +74,7 @@ context('Check your answers page (single policy)', () => {
     button.should('exist');
 
     button.invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.SUBMIT);
+      expect(text.trim()).equal(CONTENT_STRINGS.SUBMIT_BUTTON);
     });
   });
 

@@ -92,6 +92,7 @@ const CHECK_YOUR_ANSWERS_PAGE = {
   HEADING: 'Check your answers',
   GROUP_HEADING_EXPORT: 'Export details',
   GROUP_HEADING_POLICY: 'Policy details',
+  SUBMIT_BUTTON: 'Get your quote',
 };
 
 const CANNOT_OBTAIN_COVER_PAGE = {
