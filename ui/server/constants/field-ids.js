@@ -1,15 +1,16 @@
 const FIELD_IDS = {
   VALID_COMPANY_BASE: 'validCompanyBase',
   BUYER_COUNTRY: 'buyerCountry',
-  CAN_GET_PRIVATE_INSURANCE: 'triedPrivateCover',
-  CAN_GET_PRIVATE_INSURANCE_YES: 'triedPrivateCoverYes',
-  CAN_GET_PRIVATE_INSURANCE_NO: 'triedPrivateCoverNo',
+  CAN_GET_PRIVATE_INSURANCE: 'canGetPrivateInsurance',
+  CAN_GET_PRIVATE_INSURANCE_YES: 'canGetPrivateInsuranceYes',
+  CAN_GET_PRIVATE_INSURANCE_NO: 'canGetPrivateInsuranceNo',
   COUNTRY: 'country',
-  UK_GOODS_OR_SERVICES: 'ukGoodsOrServices',
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',
   AMOUNT_CURRENCY: 'amountAndCurrency',
   CURRENCY: 'currency',
-  AMOUNT: 'amount',
-  CREDIT_PERIOD: 'creditPeriodMonths',
+  CONTRACT_VALUE: 'contractValue',
+  MAX_AMOUNT_OWED: 'maximumContractAmountOwed',
+  CREDIT_PERIOD: 'creditPeriodInMonths',
   POLICY_TYPE: 'policyType',
   SINGLE_POLICY_TYPE: 'singlePolicyType',
   MULTI_POLICY_TYPE: 'multiPolicyType',
@@ -21,7 +22,7 @@ const FIELD_IDS = {
     INSURED_FOR: 'insuredFor',
     PREMIUM_RATE_PERCENTAGE: 'premiumRatePercentage',
     ESTIMATED_COST: 'estimatedCost',
-    BUYER_LOCATION: 'buyerCountry',
+    BUYER_LOCATION: 'buyerCountry', //  TODO: buyer location / buyer country?
   },
 };
 

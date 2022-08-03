@@ -2,7 +2,7 @@ module.exports = {
   collectCoverageFrom: [
     'server/controllers/**/*.{js,}',
     'server/routes/**/*.{js,}',
-    'server/helpers/*.{js,}',
+    'server/helpers/**/*.{js,}',
     'server/generate-quote/*.{js,}',
   ],
   coverageDirectory: 'generated_reports/coverage/unit',

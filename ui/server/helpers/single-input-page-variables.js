@@ -1,7 +1,7 @@
 const CONTENT_STRINGS = require('../content-strings');
 
 const singleInputPageVariables = ({
-  FIELD_NAME,
+  FIELD_ID,
   PAGE_CONTENT_STRINGS,
   BACK_LINK,
 }) => {
@@ -14,11 +14,11 @@ const singleInputPageVariables = ({
       HINTS: CONTENT_STRINGS.HINTS,
       ...PAGE_CONTENT_STRINGS,
     },
-    FIELD_NAME,
+    FIELD_ID,
     BACK_LINK,
   };
 
-  const fieldStrings = CONTENT_STRINGS.FIELDS[FIELD_NAME];
+  const fieldStrings = CONTENT_STRINGS.FIELDS[FIELD_ID];
 
   if (fieldStrings) {
     pageVariables.FIELD_LABEL = fieldStrings.LABEL;

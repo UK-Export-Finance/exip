@@ -12,7 +12,7 @@ import {
 } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
 
-const CONTENT_STRINGS = PAGES.UK_GOODS_OR_SERVICES_PAGE;
+const CONTENT_STRINGS = PAGES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Is at least 20% of your export contract value made up from UK goods or services page', () => {
@@ -27,7 +27,7 @@ context('Is at least 20% of your export contract value made up from UK goods or 
     canGetPrivateInsurancePage[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE].no().click();
     canGetPrivateInsurancePage.submitButton().click();
 
-    cy.url().should('include', ROUTES.UK_GOODS_OR_SERVICES);
+    cy.url().should('include', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
   });
 
   beforeEach(() => {
@@ -59,7 +59,7 @@ context('Is at least 20% of your export contract value made up from UK goods or 
     cy.url().should('include', ROUTES.CAN_GET_PRIVATE_INSURANCE);
 
     // go back to page
-    cy.visit(ROUTES.UK_GOODS_OR_SERVICES, {
+    cy.visit(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
@@ -241,7 +241,7 @@ context('Is at least 20% of your export contract value made up from UK goods or 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.UK_GOODS_OR_SERVICES].IS_EMPTY;
+        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES].IS_EMPTY;
 
         partials.errorSummaryListItems().first().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedMessage);

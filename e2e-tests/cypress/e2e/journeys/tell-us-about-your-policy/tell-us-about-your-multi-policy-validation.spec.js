@@ -51,15 +51,15 @@ context('Tell us your multi policy you need - form validation', () => {
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY}`,
       );
 
-      // amount
+      // max amount owed
       checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY,
+        ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].IS_EMPTY,
       );
 
       checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.AMOUNT].IS_EMPTY}`,
+        tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].errorMessage(),
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].IS_EMPTY}`,
       );
 
       // percentage of cover
@@ -90,9 +90,9 @@ context('Tell us your multi policy you need - form validation', () => {
       partials.errorSummaryListItemLinks().eq(0).click();
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().should('have.focus');
 
-      // amount
+      // max amount owed
       partials.errorSummaryListItemLinks().eq(1).click();
-      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().should('have.focus');
+      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().should('have.focus');
 
       // perecentage of cover
       partials.errorSummaryListItemLinks().eq(2).click();
@@ -104,53 +104,53 @@ context('Tell us your multi policy you need - form validation', () => {
     });
   });
 
-  describe('when `amount` has a non-numeric value', () => {
+  describe('when `max amount owed` has a non-numeric value', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().clear().type('a');
+      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('a');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_NUMBER,
+        ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_NUMBER,
       );
 
       checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_NUMBER}`,
+        tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].errorMessage(),
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_NUMBER}`,
       );
     });
   });
 
-  describe('when `amount` is not a whole number', () => {
+  describe('when `max amount owed` is not a whole number', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().clear().type('1234.56');
+      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('1234.56');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_WHOLE_NUMBER,
+        ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER,
       );
 
       checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.AMOUNT].NOT_A_WHOLE_NUMBER}`,
+        tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].errorMessage(),
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER}`,
       );
     });
   });
 
-  describe('when `amount` has a value less than the minimum', () => {
+  describe('when `max amount owed` has a value less than the minimum', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().clear().type('0');
+      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('0');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.AMOUNT].BELOW_MINIMUM,
+        ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].BELOW_MINIMUM,
       );
 
       checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.AMOUNT].BELOW_MINIMUM}`,
+        tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].errorMessage(),
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].BELOW_MINIMUM}`,
       );
     });
   });
@@ -226,13 +226,13 @@ context('Tell us your multi policy you need - form validation', () => {
   describe('with any validation error', () => {
     it('should render submitted values', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
-      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().clear().type('10');
+      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('10');
 
       tellUsAboutYourPolicyPage.submitButton().click();
 
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].inputOptionSelected().contains('GBP');
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input()
+      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input()
         .should('have.attr', 'value', '10');
     });
   });

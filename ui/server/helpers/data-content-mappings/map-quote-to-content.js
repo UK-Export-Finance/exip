@@ -4,7 +4,6 @@ const mapPolicyLength = require('./map-policy-length');
 const formatCurrency = require('../format-currency');
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
   CURRENCY,
   PERCENTAGE_OF_COVER,
@@ -12,17 +11,18 @@ const {
 } = FIELD_IDS;
 
 const {
-  PREMIUM_RATE_PERCENTAGE,
-  ESTIMATED_COST,
   BUYER_LOCATION,
+  ESTIMATED_COST,
+  INSURED_FOR,
+  PREMIUM_RATE_PERCENTAGE,
 } = QUOTE;
 
 const mapQuoteToContent = (quote) => {
   const currencyCode = quote[CURRENCY].isoCode;
 
   const mapped = {
-    [AMOUNT]: {
-      text: formatCurrency(quote[AMOUNT], currencyCode),
+    [INSURED_FOR]: {
+      text: formatCurrency(quote[INSURED_FOR], currencyCode),
     },
     [BUYER_LOCATION]: {
       text: mapCountry(quote[BUYER_COUNTRY]),

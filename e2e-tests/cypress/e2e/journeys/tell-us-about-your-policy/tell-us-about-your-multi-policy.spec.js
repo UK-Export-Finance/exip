@@ -111,14 +111,14 @@ context('Tell us about the multi policy you need', () => {
       field.input().select(3).should('have.value', SUPPORTED_CURRENCIES[2]);
     });
 
-    it('renders `amount` label and input', () => {
-      const fieldId = FIELD_IDS.AMOUNT;
+    it('renders `max amount owed` label and input', () => {
+      const fieldId = FIELD_IDS.MAX_AMOUNT_OWED;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
       field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LABEL);
+        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
       });
 
       field.input().should('exist');
@@ -197,7 +197,7 @@ context('Tell us about the multi policy you need', () => {
 
   describe('when form is valid', () => {
     it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.AMOUNT].input().type('100');
+      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().type('100');
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
       tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('1');

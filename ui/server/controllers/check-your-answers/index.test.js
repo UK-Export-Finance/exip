@@ -7,7 +7,7 @@ const {
   TEMPLATES,
 } = require('../../constants');
 const { mapAnswersToContent } = require('../../helpers/data-content-mappings/map-answers-to-content');
-const { generateSummaryList } = require('../../helpers/generate-summary-list');
+const { answersSummaryList } = require('../../helpers/summary-lists/answers-summary-list');
 
 const { mockReq, mockRes, mockAnswers } = require('../../test-mocks');
 
@@ -18,7 +18,7 @@ const {
   CREDIT_PERIOD,
   CURRENCY,
   POLICY_TYPE,
-  UK_GOODS_OR_SERVICES,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
@@ -38,7 +38,7 @@ describe('controllers/check-your-answers', () => {
       isoCode: 'GBP',
     },
     [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-    [UK_GOODS_OR_SERVICES]: 30,
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
     [VALID_COMPANY_BASE]: true,
   };
 
@@ -72,7 +72,7 @@ describe('controllers/check-your-answers', () => {
       controller.get(req, res);
 
       const answers = mapAnswersToContent(mockSessionData);
-      const expectedSummaryList = generateSummaryList(
+      const expectedSummaryList = answersSummaryList(
         answers,
         mockSessionData[POLICY_TYPE],
       );

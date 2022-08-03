@@ -61,7 +61,7 @@ context('Policy type page', () => {
         expect(text.trim()).equal(LINKS.BACK);
       });
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.UK_GOODS_OR_SERVICES}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`;
 
       partials.backLink().should('have.attr', 'href', expected);
     });

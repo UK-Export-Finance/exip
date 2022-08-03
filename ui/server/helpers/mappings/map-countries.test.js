@@ -4,10 +4,10 @@ const {
   mapCountry,
   mapCountries,
 } = require('./map-countries');
-const { API } = require('../constants');
-const sortArrayAlphabetically = require('./sort-array-alphabetically');
+const { API } = require('../../constants');
+const sortArrayAlphabetically = require('../sort-array-alphabetically');
 
-describe('server/helpers/map-countries', () => {
+describe('server/helpers/mappings/map-countries', () => {
   const mockCountries = [
     {
       marketName: 'Abu Dhabi',

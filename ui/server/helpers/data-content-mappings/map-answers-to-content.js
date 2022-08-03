@@ -3,28 +3,27 @@ const {
   FIELD_VALUES,
 } = require('../../constants');
 const { SUMMARY_ANSWERS } = require('../../content-strings');
-const formatCurrency = require('../format-currency');
+const { isSinglePolicyType, isMultiPolicyType } = require('../policy-type');
 const mapCountry = require('./map-country');
+const mapCost = require('./map-cost');
 const mapPeriodMonths = require('./map-period-months');
 const mapPolicyLength = require('./map-policy-length');
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
   CAN_GET_PRIVATE_INSURANCE,
   CAN_GET_PRIVATE_INSURANCE_YES,
   CAN_GET_PRIVATE_INSURANCE_NO,
-  CURRENCY,
   CREDIT_PERIOD,
   MULTI_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
-  UK_GOODS_OR_SERVICES,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
-const mapTriedPrivateCover = (answer) => {
+const mapCanGetPrivateInsurance = (answer) => {
   let mapped;
 
   if (answer === FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.YES) {
@@ -49,7 +48,7 @@ const mapTriedPrivateCover = (answer) => {
 const mapPolicyType = (answer) => {
   let mapped;
 
-  if (answer === FIELD_VALUES.POLICY_TYPE.SINGLE) {
+  if (isSinglePolicyType(answer)) {
     mapped = {
       [SINGLE_POLICY_TYPE]: {
         text: answer,
@@ -57,7 +56,7 @@ const mapPolicyType = (answer) => {
     };
   }
 
-  if (answer === FIELD_VALUES.POLICY_TYPE.MULTI) {
+  if (isMultiPolicyType(answer)) {
     mapped = {
       [MULTI_POLICY_TYPE]: {
         text: answer,
@@ -78,13 +77,11 @@ const mapAnswersToContent = (answers) => {
     [BUYER_COUNTRY]: {
       text: mapCountry(answers[BUYER_COUNTRY]),
     },
-    ...mapTriedPrivateCover(answers[CAN_GET_PRIVATE_INSURANCE]),
-    [UK_GOODS_OR_SERVICES]: {
-      text: SUMMARY_ANSWERS[UK_GOODS_OR_SERVICES],
+    ...mapCanGetPrivateInsurance(answers[CAN_GET_PRIVATE_INSURANCE]),
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
+      text: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
     },
-    [AMOUNT]: {
-      text: formatCurrency(answers[AMOUNT], answers[CURRENCY].isoCode),
-    },
+    ...mapCost(answers),
     ...mapPolicyType(answers[POLICY_TYPE]),
     ...mapPolicyLength(answers),
     [PERCENTAGE_OF_COVER]: {
@@ -99,7 +96,7 @@ const mapAnswersToContent = (answers) => {
 };
 
 module.exports = {
-  mapTriedPrivateCover,
+  mapCanGetPrivateInsurance,
   mapPolicyType,
   mapPercentageOfCover,
   mapAnswersToContent,

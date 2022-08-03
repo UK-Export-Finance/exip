@@ -14,8 +14,9 @@ const {
 } = CONSTANTS;
 
 const {
-  AMOUNT,
+  CONTRACT_VALUE,
   CREDIT_PERIOD,
+  MAX_AMOUNT_OWED,
   MULTI_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
@@ -49,7 +50,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`;
+      const expected = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
       cy.url().should('include', expected);
     });
 
@@ -61,7 +62,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourPolicyPage[AMOUNT].input().clear().type('200');
+      tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().clear().type('200');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
@@ -152,17 +153,24 @@ context('Your quote page - change answers (single policy type to multi policy ty
       cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
     });
 
-    it('renders the new answer in the quote', () => {
-      // credit period field is now required because it's a multi policy
+    it('renders the new answers in the quote', () => {
+      // max amount owed and credit period fields are now required because it's a multi policy
+      tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('120000');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('1');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkYourAnswersPage.submitButton().click();
       cy.url().should('include', ROUTES.YOUR_QUOTE);
 
-      const row = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
+      const insuredFor = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
 
-      row.value().invoke('text').then((text) => {
+      insuredFor.value().invoke('text').then((text) => {
+        expect(text.trim()).equal('£120,000.00');
+      });
+
+      const policyLength = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
+
+      policyLength.value().invoke('text').then((text) => {
         expect(text.trim()).equal('1 months');
       });
     });

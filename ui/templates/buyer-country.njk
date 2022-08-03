@@ -29,12 +29,12 @@
   <form method="POST" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-    <input type="hidden" name="{{ HIDDEN_FIELD_NAME }}" id="{{ HIDDEN_FIELD_NAME }}" value="{{ submittedValues[HIDDEN_FIELD_NAME].name }}">
+    <input type="hidden" name="{{ HIDDEN_FIELD_ID }}" id="{{ HIDDEN_FIELD_ID }}" value="{{ submittedValues[HIDDEN_FIELD_ID].name }}">
 
     {{ govukLabel({
-      for: FIELD_NAME_COUNTRY,
+      for: FIELD_ID_COUNTRY,
       classes: "govuk-heading-l",
-      html: "<h1 class='govuk-heading-l' id='heading'><label for='" + FIELD_NAME + "'>" + CONTENT_STRINGS.HEADING + "</label></h1>",
+      html: "<h1 class='govuk-heading-l' id='heading'><label for='" + FIELD_ID + "'>" + CONTENT_STRINGS.HEADING + "</label></h1>",
       attributes: {
         "data-cy": "heading"
       }
@@ -45,19 +45,19 @@
 
         {% set class = "govuk-form-group" %}
 
-        {% if validationErrors.errorList[FIELD_NAME] %}
+        {% if validationErrors.errorList[FIELD_ID] %}
           {% set class = "govuk-form-group govuk-form-group--error" %}
         {% endif %}
 
         <div class="{{ class }}">
           {{ govukErrorMessage({
-            text: validationErrors.errorList[FIELD_NAME].text,
+            text: validationErrors.errorList[FIELD_ID].text,
             attributes: {
-              "data-cy": FIELD_NAME + "-error-message"
+              "data-cy": FIELD_ID + "-error-message"
             }
           }) }}
 
-          <select class="govuk-select" id="{{ FIELD_NAME }}" name="{{ FIELD_NAME }}">
+          <select class="govuk-select" id="{{ FIELD_ID }}" name="{{ FIELD_ID }}">
             <option value="" disabled selected></option>
 
             {% for country in countries %}
@@ -85,13 +85,13 @@
   <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript"></script>
 
   <script type="text/javascript">
-    var element = document.getElementById('{{ FIELD_NAME }}');
+    var element = document.getElementById('{{ FIELD_ID }}');
     accessibleAutocomplete.enhanceSelectElement({
       selectElement: element,
       defaultValue: '',
       onConfirm: function(event) {
         if (event) {
-          document.getElementById('{{ HIDDEN_FIELD_NAME }}').value = event;
+          document.getElementById('{{ HIDDEN_FIELD_ID }}').value = event;
         }
       }
     });

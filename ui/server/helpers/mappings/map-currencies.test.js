@@ -2,9 +2,9 @@ const {
   getSupportedCurrencies,
   mapCurrencies,
 } = require('./map-currencies');
-const sortArrayAlphabetically = require('./sort-array-alphabetically');
+const sortArrayAlphabetically = require('../sort-array-alphabetically');
 
-describe('server/helpers/map-currencies', () => {
+describe('server/helpers/mappings/map-currencies', () => {
   const mockCurrencies = [
     {
       name: 'Euros',

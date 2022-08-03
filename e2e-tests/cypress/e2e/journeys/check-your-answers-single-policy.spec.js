@@ -16,13 +16,13 @@ const { ROUTES, FIELD_VALUES } = CONSTANTS;
 
 context('Check your answers page (single policy)', () => {
   const {
-    AMOUNT,
     BUYER_COUNTRY,
+    CONTRACT_VALUE,
     CREDIT_PERIOD,
     PERCENTAGE_OF_COVER,
     SINGLE_POLICY_TYPE,
     SINGLE_POLICY_LENGTH,
-    UK_GOODS_OR_SERVICES,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
     VALID_COMPANY_BASE,
   } = FIELD_IDS;
 
@@ -32,7 +32,7 @@ context('Check your answers page (single policy)', () => {
     [PERCENTAGE_OF_COVER]: '90',
     [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
     [SINGLE_POLICY_LENGTH]: '3',
-    [UK_GOODS_OR_SERVICES]: '50',
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
   };
 
   before(() => {
@@ -141,15 +141,15 @@ context('Check your answers page (single policy)', () => {
     });
 
     it('renders `UK goods` key, value and change link', () => {
-      const row = list[UK_GOODS_OR_SERVICES];
-      const expectedKeyText = FIELDS[UK_GOODS_OR_SERVICES].SUMMARY.TITLE;
+      const row = list[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+      const expectedKeyText = FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_ANSWERS[UK_GOODS_OR_SERVICES]);
+        expect(text.trim()).equal(SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]);
       });
 
       row.changeLink().invoke('text').then((text) => {
@@ -157,7 +157,7 @@ context('Check your answers page (single policy)', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
+      const expectedHref = `${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });
@@ -215,9 +215,9 @@ context('Check your answers page (single policy)', () => {
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
-    it('renders `Amount` key, value and change link', () => {
-      const row = list[AMOUNT];
-      const expectedKeyText = FIELDS[AMOUNT].SINGLE_POLICY.SUMMARY.TITLE;
+    it('renders `Contract value` key, value and change link', () => {
+      const row = list[CONTRACT_VALUE];
+      const expectedKeyText = FIELDS[CONTRACT_VALUE].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
@@ -234,7 +234,7 @@ context('Check your answers page (single policy)', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`;
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 

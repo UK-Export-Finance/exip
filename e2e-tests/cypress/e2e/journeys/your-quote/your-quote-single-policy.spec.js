@@ -14,8 +14,8 @@ const CONTENT_STRINGS = PAGES.YOUR_QUOTE_PAGE;
 const { ROUTES, FIELD_IDS, FIELD_VALUES } = CONSTANTS;
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
+  CONTRACT_VALUE,
   CURRENCY,
   CREDIT_PERIOD,
   PERCENTAGE_OF_COVER,
@@ -23,7 +23,7 @@ const {
   SINGLE_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   QUOTE,
-  UK_GOODS_OR_SERVICES,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
 } = FIELD_IDS;
 
 const {
@@ -35,8 +35,8 @@ const {
 
 const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
-  [UK_GOODS_OR_SERVICES]: '50',
-  [AMOUNT]: '150000',
+  [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
+  [CONTRACT_VALUE]: '150000',
   [CURRENCY]: 'GBP',
   [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
   [SINGLE_POLICY_LENGTH]: '3',
@@ -105,7 +105,7 @@ context('Your quote page (single policy)', () => {
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`;
+        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 

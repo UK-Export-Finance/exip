@@ -34,16 +34,16 @@ describe('server/helpers/map-policy-length', () => {
 
   describe('when policy type is multi', () => {
     it(`should return an object with mapped ${MULTI_POLICY_LENGTH}`, () => {
-      const mockAnswersSinglePolicyType = {
+      const mockAnswersMultiPolicyType = {
         [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
         [POLICY_LENGTH]: 10,
       };
 
-      const result = mapPolicyLength(mockAnswersSinglePolicyType);
+      const result = mapPolicyLength(mockAnswersMultiPolicyType);
 
       const expected = {
         [MULTI_POLICY_LENGTH]: {
-          text: mapPeriodMonths(mockAnswersSinglePolicyType[POLICY_LENGTH]),
+          text: mapPeriodMonths(mockAnswersMultiPolicyType[POLICY_LENGTH]),
         },
       };
 

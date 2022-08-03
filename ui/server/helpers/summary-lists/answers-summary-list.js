@@ -2,26 +2,23 @@ const {
   PAGES,
   FIELDS,
   LINKS,
-} = require('../content-strings');
+} = require('../../content-strings');
 const {
   FIELD_IDS,
   ROUTES,
-} = require('../constants');
-const {
-  isSinglePolicyType,
-  isMultiPolicyType,
-} = require('./policy-type');
+} = require('../../constants');
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
+  CONTRACT_VALUE,
   CREDIT_PERIOD,
+  MAX_AMOUNT_OWED,
   MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
   SINGLE_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
-  UK_GOODS_OR_SERVICES,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
@@ -57,11 +54,11 @@ const generateFieldGroups = (answers) => {
       },
     },
     {
-      ID: UK_GOODS_OR_SERVICES,
-      ...FIELDS[UK_GOODS_OR_SERVICES],
-      HREF: `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#heading`,
+      ID: HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+      ...FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
+      HREF: `${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`,
       value: {
-        text: answers[UK_GOODS_OR_SERVICES].text,
+        text: answers[HAS_MINIMUM_UK_GOODS_OR_SERVICES].text,
       },
     },
   ];
@@ -82,6 +79,14 @@ const generateFieldGroups = (answers) => {
         HREF: `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
         value: {
           text: answers[SINGLE_POLICY_LENGTH].text,
+        },
+      },
+      {
+        ID: CONTRACT_VALUE,
+        ...FIELDS[CONTRACT_VALUE],
+        HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
+        value: {
+          text: answers[CONTRACT_VALUE].text,
         },
       },
     ];
@@ -105,24 +110,14 @@ const generateFieldGroups = (answers) => {
           text: answers[MULTI_POLICY_LENGTH].text,
         },
       },
-    ];
-  }
-
-  fieldGroups.POLICY_DETAILS = [
-    ...fieldGroups.POLICY_DETAILS,
-    {
-      ID: AMOUNT,
-      ...FIELDS[AMOUNT],
-      HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`,
-      value: {
-        text: answers[AMOUNT].text,
+      {
+        ID: MAX_AMOUNT_OWED,
+        ...FIELDS[MAX_AMOUNT_OWED],
+        HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
+        value: {
+          text: answers[MAX_AMOUNT_OWED].text,
+        },
       },
-    },
-  ];
-
-  if (answers[MULTI_POLICY_TYPE]) {
-    fieldGroups.POLICY_DETAILS = [
-      ...fieldGroups.POLICY_DETAILS,
       {
         ID: CREDIT_PERIOD,
         ...FIELDS[CREDIT_PERIOD],
@@ -151,26 +146,10 @@ const generateFieldGroups = (answers) => {
 
 /*
  * getKeyText
- * Get the text to display in a key
- * Depends on the field structure, design and policy type
- * Some fields have different text depending on the policy type
+ * Get the summary text to display in a key
  * for govukSummaryList component
  */
-const getKeyText = (fieldId, policyType) => {
-  const field = FIELDS[fieldId];
-
-  if (field.SINGLE_POLICY && field.MULTI_POLICY) {
-    if (isSinglePolicyType(policyType) && field.SINGLE_POLICY.SUMMARY) {
-      return field.SINGLE_POLICY.SUMMARY.TITLE;
-    }
-
-    if (isMultiPolicyType(policyType) && field.MULTI_POLICY.SUMMARY) {
-      return field.MULTI_POLICY.SUMMARY.TITLE;
-    }
-  }
-
-  return FIELDS[fieldId].SUMMARY.TITLE;
-};
+const getKeyText = (fieldId) => FIELDS[fieldId].SUMMARY.TITLE;
 
 /*
  * generateSummaryListRows
@@ -202,10 +181,10 @@ const generateSummaryListRows = (fields, policyType) =>
   }));
 
 /*
- * generateSummaryList
+ * answersSummaryList
  * Create multiple summary lists
  */
-const generateSummaryList = (submittedData, policyType) => {
+const answersSummaryList = (submittedData, policyType) => {
   const fieldGroups = generateFieldGroups(submittedData);
 
   const summaryList = {
@@ -226,5 +205,5 @@ module.exports = {
   generateFieldGroups,
   getKeyText,
   generateSummaryListRows,
-  generateSummaryList,
+  answersSummaryList,
 };

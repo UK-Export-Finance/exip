@@ -1,4 +1,5 @@
 const {
+  getContractCost,
   getTotalMonths,
   calculateCost,
   generateQuote,
@@ -12,10 +13,11 @@ const { getPercentageOfNumber } = require('../helpers/number');
 const { mockSession } = require('../test-mocks');
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
+  CONTRACT_VALUE,
   CREDIT_PERIOD,
   CURRENCY,
+  MAX_AMOUNT_OWED,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   POLICY_LENGTH,
@@ -23,6 +25,42 @@ const {
 } = FIELD_IDS;
 
 describe('server/generate-quote/index', () => {
+  describe('getContractCost', () => {
+    describe('when policy type is single', () => {
+      it(`should return ${CONTRACT_VALUE} from submitted data`, () => {
+        const mockSubmittedData = {
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          [CONTRACT_VALUE]: 1234,
+        };
+
+        const result = getContractCost(mockSubmittedData);
+        const expected = mockSubmittedData[CONTRACT_VALUE];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when policy type is multi', () => {
+      it(`should return ${MAX_AMOUNT_OWED} from submitted data`, () => {
+        const mockSubmittedData = {
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [MAX_AMOUNT_OWED]: 1234,
+        };
+
+        const result = getContractCost(mockSubmittedData);
+        const expected = mockSubmittedData[MAX_AMOUNT_OWED];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    it('should return 0', () => {
+      const result = getContractCost({});
+
+      expect(result).toEqual(0);
+    });
+  });
+
   describe('getTotalMonths', () => {
     describe('when policy type is single', () => {
       it('should return the total of policy length + business buffer months', () => {
@@ -110,16 +148,17 @@ describe('server/generate-quote/index', () => {
       );
 
       const expected = {
-        [AMOUNT]: mockSubmittedData[AMOUNT],
+        [QUOTE.INSURED_FOR]: getContractCost(mockSubmittedData),
         [QUOTE.BUYER_LOCATION]: mockSubmittedData[BUYER_COUNTRY],
         [CURRENCY]: mockSubmittedData[CURRENCY],
         [CREDIT_PERIOD]: mockSubmittedData[CREDIT_PERIOD],
-        [QUOTE.ESTIMATED_COST]: calculateCost(expectedPremiumRate, mockSubmittedData[AMOUNT]),
         [PERCENTAGE_OF_COVER]: mockSubmittedData[PERCENTAGE_OF_COVER],
         [POLICY_TYPE]: mockSubmittedData[POLICY_TYPE],
         [POLICY_LENGTH]: mockSubmittedData[POLICY_LENGTH],
-        [QUOTE.PREMIUM_RATE_PERCENTAGE]: expectedPremiumRate,
       };
+
+      expected[QUOTE.PREMIUM_RATE_PERCENTAGE] = expectedPremiumRate;
+      expected[QUOTE.ESTIMATED_COST] = calculateCost(expectedPremiumRate, expected[QUOTE.INSURED_FOR]);
 
       expect(result).toEqual(expected);
     });

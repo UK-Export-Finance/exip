@@ -1,13 +1,13 @@
 const {
-  mapTriedPrivateCover,
+  mapCanGetPrivateInsurance,
   mapPolicyType,
   mapPercentageOfCover,
   mapAnswersToContent,
 } = require('./map-answers-to-content');
 const mapCountry = require('./map-country');
+const mapCost = require('./map-cost');
 const mapPeriodMonths = require('./map-period-months');
 const mapPolicyLength = require('./map-policy-length');
-const formatCurrency = require('../format-currency');
 const {
   FIELD_IDS,
   FIELD_VALUES,
@@ -16,28 +16,26 @@ const { SUMMARY_ANSWERS } = require('../../content-strings');
 const { mockAnswers } = require('../../test-mocks');
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
   CAN_GET_PRIVATE_INSURANCE,
   CAN_GET_PRIVATE_INSURANCE_YES,
   CAN_GET_PRIVATE_INSURANCE_NO,
-  CURRENCY,
   CREDIT_PERIOD,
   MULTI_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
-  UK_GOODS_OR_SERVICES,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
 describe('server/helpers/map-answers-to-content', () => {
-  describe('mapTriedPrivateCover', () => {
+  describe('mapCanGetPrivateInsurance', () => {
     describe('when answer is yes', () => {
       it(`should return an object with ${CAN_GET_PRIVATE_INSURANCE_YES} and mapped summary answer`, () => {
         const mockAnswer = FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.YES;
 
-        const result = mapTriedPrivateCover(mockAnswer);
+        const result = mapCanGetPrivateInsurance(mockAnswer);
 
         const expected = {
           [CAN_GET_PRIVATE_INSURANCE_YES]: {
@@ -53,7 +51,7 @@ describe('server/helpers/map-answers-to-content', () => {
       it(`should return an object with ${CAN_GET_PRIVATE_INSURANCE_NO} and mapped summary answer`, () => {
         const mockAnswer = FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.NO;
 
-        const result = mapTriedPrivateCover(mockAnswer);
+        const result = mapCanGetPrivateInsurance(mockAnswer);
 
         const expected = {
           [CAN_GET_PRIVATE_INSURANCE_NO]: {
@@ -122,13 +120,11 @@ describe('server/helpers/map-answers-to-content', () => {
         [BUYER_COUNTRY]: {
           text: mapCountry(mockAnswers[BUYER_COUNTRY]),
         },
-        ...mapTriedPrivateCover(mockAnswers[CAN_GET_PRIVATE_INSURANCE]),
-        [UK_GOODS_OR_SERVICES]: {
-          text: SUMMARY_ANSWERS[UK_GOODS_OR_SERVICES],
+        ...mapCanGetPrivateInsurance(mockAnswers[CAN_GET_PRIVATE_INSURANCE]),
+        [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
+          text: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
         },
-        [AMOUNT]: {
-          text: formatCurrency(mockAnswers[AMOUNT], mockAnswers[CURRENCY].isoCode),
-        },
+        ...mapCost(mockAnswers),
         ...mapPolicyType(mockAnswers[POLICY_TYPE]),
         ...mapPolicyLength(mockAnswers),
         [PERCENTAGE_OF_COVER]: {

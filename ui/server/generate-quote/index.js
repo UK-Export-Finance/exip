@@ -1,20 +1,36 @@
-const {
-  FIELD_IDS,
-  FIELD_VALUES,
-} = require('../constants');
+const { FIELD_IDS } = require('../constants');
+const { isSinglePolicyType, isMultiPolicyType } = require('../helpers/policy-type');
 const { getPremiumRate } = require('./get-premium-rate');
 const { getPercentageOfNumber } = require('../helpers/number');
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
+  CONTRACT_VALUE,
   CREDIT_PERIOD,
   CURRENCY,
+  MAX_AMOUNT_OWED,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   POLICY_LENGTH,
   QUOTE,
 } = FIELD_IDS;
+
+/**
+ * getContractCost
+ * @param {Object} Submitted data/answers
+ * @returns {Number} Contract value or max amount owed, depending on policy type
+ */
+const getContractCost = (submittedData) => {
+  if (isSinglePolicyType(submittedData[POLICY_TYPE])) {
+    return submittedData[CONTRACT_VALUE];
+  }
+
+  if (isMultiPolicyType(submittedData[POLICY_TYPE])) {
+    return submittedData[MAX_AMOUNT_OWED];
+  }
+
+  return 0;
+};
 
 /**
  * getTotalMonths
@@ -31,13 +47,13 @@ const {
 const getTotalMonths = (policyType, policyLength, creditPeriod = 0) => {
   const BUSINESS_BUFFER_MONTHS = 1;
 
-  if (policyType === FIELD_VALUES.POLICY_TYPE.SINGLE) {
+  if (isSinglePolicyType(policyType)) {
     const totalMonths = (policyLength + BUSINESS_BUFFER_MONTHS);
 
     return totalMonths;
   }
 
-  if (policyType === FIELD_VALUES.POLICY_TYPE.MULTI) {
+  if (isMultiPolicyType(policyType)) {
     const totalMonths = (policyLength + creditPeriod + BUSINESS_BUFFER_MONTHS);
 
     return totalMonths;
@@ -70,7 +86,7 @@ const calculateCost = (
  */
 const generateQuote = (submittedData) => {
   const mapped = {
-    [AMOUNT]: submittedData[AMOUNT],
+    [QUOTE.INSURED_FOR]: getContractCost(submittedData),
     [QUOTE.BUYER_LOCATION]: submittedData[BUYER_COUNTRY],
     [CURRENCY]: submittedData[CURRENCY],
     [CREDIT_PERIOD]: submittedData[CREDIT_PERIOD],
@@ -95,13 +111,14 @@ const generateQuote = (submittedData) => {
   const quote = {
     ...mapped,
     [QUOTE.PREMIUM_RATE_PERCENTAGE]: premiumRate,
-    [QUOTE.ESTIMATED_COST]: calculateCost(premiumRate, mapped[AMOUNT]),
+    [QUOTE.ESTIMATED_COST]: calculateCost(premiumRate, mapped[QUOTE.INSURED_FOR]),
   };
 
   return quote;
 };
 
 module.exports = {
+  getContractCost,
   getTotalMonths,
   calculateCost,
   generateQuote,

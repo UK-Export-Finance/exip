@@ -3,7 +3,7 @@ const CONTENT_STRINGS = require('../../content-strings');
 const { TEMPLATES } = require('../../constants');
 const { generateQuote } = require('../../generate-quote');
 const mapQuoteToContent = require('../../helpers/data-content-mappings/map-quote-to-content');
-const { generateQuoteSummaryList } = require('../../helpers/generate-quote-summary-list');
+const { quoteSummaryList } = require('../../helpers/summary-lists/quote-summary-list');
 const {
   mockReq,
   mockRes,
@@ -31,7 +31,7 @@ describe('controllers/your-quote', () => {
     const expectedQuote = generateQuote(req.session.submittedData);
 
     const quoteContent = mapQuoteToContent(expectedQuote);
-    const expectedSummaryList = generateQuoteSummaryList(quoteContent);
+    const expectedSummaryList = quoteSummaryList(quoteContent);
 
     const expectedVariables = {
       CONTENT_STRINGS: {

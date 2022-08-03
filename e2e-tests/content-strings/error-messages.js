@@ -5,13 +5,19 @@ const ERROR_MESSAGES = {
   [FIELD_IDS.BUYER_COUNTRY]: 'Select where your buyer is based',
   [FIELD_IDS.CAN_GET_PRIVATE_INSURANCE]: 'Select if you are able to get private insurance for this export',
   [FIELD_IDS.COUNTRY]: 'Select where your buyer is based',
-  [FIELD_IDS.UK_GOODS_OR_SERVICES]: {
+  [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
     IS_EMPTY: 'Select whether at least 20% of your export contract value is made up from UK goods and services',
   },
   [FIELD_IDS.CURRENCY]: {
     IS_EMPTY: 'Select currency',
   },
-  [FIELD_IDS.AMOUNT]: {
+  [FIELD_IDS.CONTRACT_VALUE]: {
+    IS_EMPTY: 'Enter how much you want to be insured for',
+    NOT_A_NUMBER: 'Enter your amount as a whole number, do not enter decimals',
+    NOT_A_WHOLE_NUMBER: 'Enter your amount as a whole number, do not enter decimals',
+    BELOW_MINIMUM: 'Amount must be 1 or more',
+  },
+  [FIELD_IDS.MAX_AMOUNT_OWED]: {
     IS_EMPTY: 'Enter how much you want to be insured for',
     NOT_A_NUMBER: 'Enter your amount as a whole number, do not enter decimals',
     NOT_A_WHOLE_NUMBER: 'Enter your amount as a whole number, do not enter decimals',

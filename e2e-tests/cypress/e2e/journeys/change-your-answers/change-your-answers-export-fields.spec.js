@@ -15,12 +15,12 @@ const {
 const {
   BUYER_COUNTRY,
   VALID_COMPANY_BASE,
-  UK_GOODS_OR_SERVICES,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
 } = FIELD_IDS;
 
 const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
-  [UK_GOODS_OR_SERVICES]: '50',
+  [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
 };
 
 context('Change your answers after checking answers - Export fields', () => {
@@ -117,17 +117,17 @@ context('Change your answers after checking answers - Export fields', () => {
   });
 
   describe('change `UK goods`', () => {
-    const row = checkYourAnswersPage.summaryLists.export[UK_GOODS_OR_SERVICES];
+    const row = checkYourAnswersPage.summaryLists.export[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
-    it(`clicking 'change' redirects to ${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = ROUTES.UK_GOODS_OR_SERVICES_CHANGE;
+      const expectedUrl = ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE;
       cy.url().should('include', expectedUrl);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
+      const expected = `${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`;
       cy.url().should('include', expected);
     });
 

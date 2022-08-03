@@ -45,10 +45,10 @@ describe('routes/index', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE, canGetPrivateInsuranceController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE, canGetPrivateInsuranceController.post);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.get);
-    expect(post).toHaveBeenCalledWith(ROUTES.UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.post);
-    expect(get).toHaveBeenCalledWith(ROUTES.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.get);
-    expect(post).toHaveBeenCalledWith(ROUTES.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, ukGoodsOrServicesController.post);
+    expect(get).toHaveBeenCalledWith(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.get);
+    expect(post).toHaveBeenCalledWith(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesController.post);
 
     expect(get).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_POLICY, tellUsAboutYourPolicyController.get);
     expect(post).toHaveBeenCalledWith(ROUTES.TELL_US_ABOUT_YOUR_POLICY, tellUsAboutYourPolicyController.post);

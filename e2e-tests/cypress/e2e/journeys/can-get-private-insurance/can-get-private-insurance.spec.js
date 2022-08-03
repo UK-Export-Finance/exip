@@ -123,11 +123,11 @@ context('Are you able to get private insurance page', () => {
     });
 
     describe('when submitting the answer as `no`', () => {
-      it(`should redirect to ${ROUTES.UK_GOODS_OR_SERVICES}`, () => {
+      it(`should redirect to ${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`, () => {
         canGetPrivateInsurancePage[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE].no().click();
         canGetPrivateInsurancePage.submitButton().click();
 
-        cy.url().should('include', ROUTES.UK_GOODS_OR_SERVICES);
+        cy.url().should('include', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
       });
     });
   });

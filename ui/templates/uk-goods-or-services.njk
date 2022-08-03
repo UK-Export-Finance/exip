@@ -29,7 +29,7 @@
 
   {% set class = "govuk-form-group" %}
 
-  {% if validationErrors.errorList[FIELD_NAME] %}
+  {% if validationErrors.errorList[FIELD_ID] %}
     {% set class = "govuk-form-group govuk-form-group--error" %}
   {% endif %}
 
@@ -41,8 +41,8 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
         {{ govukRadios({
           classes: "govuk-radios--inline",
-          idPrefix: FIELD_NAME,
-          name: FIELD_NAME,
+          idPrefix: FIELD_ID,
+          name: FIELD_ID,
           fieldset: {
             legend: {
               html: "<h1 class='govuk-heading-l' id='heading' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1>"
@@ -54,29 +54,29 @@
               text: "Yes",
               label: {
                 attributes: {
-                  "data-cy": FIELD_NAME + "-yes"
+                  "data-cy": FIELD_ID + "-yes"
                 }
               },
               attributes: {
-                "data-cy": FIELD_NAME + "-yes-input"
+                "data-cy": FIELD_ID + "-yes-input"
               },
-              checked: submittedValues[FIELD_NAME] === true
+              checked: submittedValues[FIELD_ID] === true
             },
             {
               value: false,
               text: "No",
               label: {
                 attributes: {
-                  "data-cy": FIELD_NAME + "-no"
+                  "data-cy": FIELD_ID + "-no"
                 }
               },
-              checked: submittedValues[FIELD_NAME] === false
+              checked: submittedValues[FIELD_ID] === false
             }
           ],
-          errorMessage: validationErrors.errorList[FIELD_NAME]and {
-            text: validationErrors.errorList[FIELD_NAME].text,
+          errorMessage: validationErrors.errorList[FIELD_ID]and {
+            text: validationErrors.errorList[FIELD_ID].text,
             attributes: {
-              "data-cy": FIELD_NAME + "-error-message"
+              "data-cy": FIELD_ID + "-error-message"
             }
           }
         }) }}

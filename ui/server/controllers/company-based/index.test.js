@@ -18,7 +18,7 @@ describe('controllers/company-based', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_NAME: FIELD_IDS.VALID_COMPANY_BASE,
+        FIELD_ID: FIELD_IDS.VALID_COMPANY_BASE,
         PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.COMPANY_BASED_PAGE,
       };
 

@@ -12,11 +12,12 @@ const {
   TEMPLATES,
 } = require('../../constants');
 const api = require('../../api');
-const { mapCurrencies } = require('../../helpers/map-currencies');
+const { mapCurrencies } = require('../../helpers/mappings/map-currencies');
 const generateValidationErrors = require('./validation');
 const getCurrencyByCode = require('../../helpers/get-currency-by-code');
-const mapPercentageOfCover = require('../../helpers/map-percentage-of-cover');
+const mapPercentageOfCover = require('../../helpers/mappings/map-percentage-of-cover');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
+const { isSinglePolicyType, isMultiPolicyType } = require('../../helpers/policy-type');
 const {
   mockReq,
   mockRes,
@@ -25,11 +26,12 @@ const {
 } = require('../../test-mocks');
 
 const {
-  AMOUNT,
   AMOUNT_CURRENCY,
   BUYER_COUNTRY,
+  CONTRACT_VALUE,
   CREDIT_PERIOD,
   CURRENCY,
+  MAX_AMOUNT_OWED,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   POLICY_LENGTH,
@@ -57,6 +59,7 @@ describe('controllers/tell-us-about-your-policy', () => {
 
   const previousFlowSubmittedData = {
     [BUYER_COUNTRY]: mockSession.submittedData[BUYER_COUNTRY],
+    [CONTRACT_VALUE]: mockSession.submittedData[CONTRACT_VALUE],
     [POLICY_TYPE]: mockSession.submittedData[POLICY_TYPE],
     [POLICY_LENGTH]: mockSession.submittedData[POLICY_LENGTH],
   };
@@ -97,9 +100,6 @@ describe('controllers/tell-us-about-your-policy', () => {
               ID: CURRENCY,
               ...CONTENT_STRINGS.FIELDS[CURRENCY],
             },
-            AMOUNT: {
-              ID: AMOUNT,
-            },
             PERCENTAGE_OF_COVER: {
               ID: PERCENTAGE_OF_COVER,
             },
@@ -111,9 +111,9 @@ describe('controllers/tell-us-about-your-policy', () => {
           ...CONTENT_STRINGS.FIELDS[AMOUNT_CURRENCY].SINGLE_POLICY,
         };
 
-        expected.FIELDS.AMOUNT = {
-          ID: AMOUNT,
-          ...CONTENT_STRINGS.FIELDS[AMOUNT].SINGLE_POLICY,
+        expected.FIELDS.CONTRACT_VALUE = {
+          ID: CONTRACT_VALUE,
+          ...CONTENT_STRINGS.FIELDS[CONTRACT_VALUE],
         };
 
         expected.FIELDS.PERCENTAGE_OF_COVER = {
@@ -148,9 +148,6 @@ describe('controllers/tell-us-about-your-policy', () => {
               ID: CURRENCY,
               ...CONTENT_STRINGS.FIELDS[CURRENCY],
             },
-            AMOUNT: {
-              ID: AMOUNT,
-            },
             PERCENTAGE_OF_COVER: {
               ID: PERCENTAGE_OF_COVER,
             },
@@ -162,9 +159,9 @@ describe('controllers/tell-us-about-your-policy', () => {
           ...CONTENT_STRINGS.FIELDS[AMOUNT_CURRENCY].MULTI_POLICY,
         };
 
-        expected.FIELDS.AMOUNT = {
-          ID: AMOUNT,
-          ...CONTENT_STRINGS.FIELDS[AMOUNT].MULTI_POLICY,
+        expected.FIELDS.MAX_AMOUNT_OWED = {
+          ID: MAX_AMOUNT_OWED,
+          ...CONTENT_STRINGS.FIELDS[MAX_AMOUNT_OWED],
         };
 
         expected.FIELDS.PERCENTAGE_OF_COVER = {
@@ -199,9 +196,6 @@ describe('controllers/tell-us-about-your-policy', () => {
             CURRENCY: {
               ID: CURRENCY,
               ...CONTENT_STRINGS.FIELDS[CURRENCY],
-            },
-            AMOUNT: {
-              ID: AMOUNT,
             },
             PERCENTAGE_OF_COVER: {
               ID: PERCENTAGE_OF_COVER,
@@ -242,6 +236,8 @@ describe('controllers/tell-us-about-your-policy', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
         ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
         BACK_LINK: req.headers.referer,
+        isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
+        isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
         currencies: expectedCurrencies,
         percentageOfCover: mappedPercentageOfCover,
         submittedValues: req.session.submittedData,
@@ -265,6 +261,8 @@ describe('controllers/tell-us-about-your-policy', () => {
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
           ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
+          isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
+          isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCover,
           submittedValues: req.session.submittedData,
@@ -294,6 +292,8 @@ describe('controllers/tell-us-about-your-policy', () => {
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
           ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
+          isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
+          isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCoverWithSelected,
           submittedValues: req.session.submittedData,
@@ -330,6 +330,8 @@ describe('controllers/tell-us-about-your-policy', () => {
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
           ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
+          isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
+          isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
           currencies: mapCurrencies(mockCurrenciesResponse),
           validationErrors: generateValidationErrors({
             ...req.session.submittedData,
@@ -352,6 +354,8 @@ describe('controllers/tell-us-about-your-policy', () => {
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
             ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
             BACK_LINK: req.headers.referer,
+            isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
+            isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
             currencies: mapCurrencies(mockCurrenciesResponse, req.body[CURRENCY]),
             validationErrors: generateValidationErrors({
               ...req.session.submittedData,
@@ -379,6 +383,8 @@ describe('controllers/tell-us-about-your-policy', () => {
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
             ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
             BACK_LINK: req.headers.referer,
+            isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
+            isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
             currencies: mapCurrencies(mockCurrenciesResponse, req.body[CURRENCY]),
             validationErrors: generateValidationErrors({
               ...req.session.submittedData,
@@ -394,10 +400,8 @@ describe('controllers/tell-us-about-your-policy', () => {
     describe('when there are no validation errors', () => {
       const validBody = {
         [CURRENCY]: mockAnswers[CURRENCY],
-        [AMOUNT]: '10',
-        [CREDIT_PERIOD]: '2',
+        [CONTRACT_VALUE]: '10',
         [POLICY_LENGTH]: '40',
-        [POLICY_TYPE]: 'mock',
         [PERCENTAGE_OF_COVER]: '95',
       };
 

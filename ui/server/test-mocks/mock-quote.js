@@ -2,7 +2,7 @@ const FIELD_IDS = require('../constants/field-ids');
 const mockAnswers = require('./mock-answers');
 
 const {
-  AMOUNT,
+  CONTRACT_VALUE,
   CURRENCY,
   BUYER_COUNTRY,
   POLICY_TYPE,
@@ -11,7 +11,7 @@ const {
 } = FIELD_IDS;
 
 const mockQuote = {
-  [AMOUNT]: mockAnswers[AMOUNT],
+  [QUOTE.INSURED_FOR]: mockAnswers[CONTRACT_VALUE],
   [CURRENCY]: {
     name: 'UK Sterling',
     isoCode: mockAnswers[CURRENCY],

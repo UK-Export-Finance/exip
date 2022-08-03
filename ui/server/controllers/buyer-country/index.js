@@ -1,7 +1,7 @@
 const CONTENT_STRINGS = require('../../content-strings');
 const { FIELD_IDS, ROUTES, TEMPLATES } = require('../../constants');
 const api = require('../../api');
-const { mapCountries } = require('../../helpers/map-countries');
+const { mapCountries } = require('../../helpers/mappings/map-countries');
 const singleInputPageVariables = require('../../helpers/single-input-page-variables');
 const { validation: generateValidationErrors } = require('./validation');
 const isChangeRoute = require('../../helpers/is-change-route');
@@ -10,7 +10,7 @@ const isCountrySupported = require('../../helpers/is-country-supported');
 const { updateSubmittedData } = require('../../helpers/update-submitted-data');
 
 const PAGE_VARIABLES = {
-  FIELD_NAME: FIELD_IDS.COUNTRY,
+  FIELD_ID: FIELD_IDS.COUNTRY,
   PAGE_CONTENT_STRINGS: CONTENT_STRINGS.PAGES.BUYER_COUNTRY_PAGE,
 };
 
@@ -60,7 +60,7 @@ const get = async (req, res) => {
   return res.render(TEMPLATES.BUYER_COUNTRY, {
     ...singleInputPageVariables(PAGE_VARIABLES),
     BACK_LINK: getBackLink(req.headers.referer),
-    HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
+    HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
     submittedValues: req.session.submittedData,
     isChangeRoute: isChangeRoute(req.originalUrl),
@@ -77,7 +77,7 @@ const post = async (req, res) => {
     return res.render(TEMPLATES.BUYER_COUNTRY, {
       ...singleInputPageVariables(PAGE_VARIABLES),
       BACK_LINK: getBackLink(req.headers.referer),
-      HIDDEN_FIELD_NAME: FIELD_IDS.BUYER_COUNTRY,
+      HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
       countries: mappedCountries,
       validationErrors,
       isChangeRoute: isChangeRoute(req.originalUrl),

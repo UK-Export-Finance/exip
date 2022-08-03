@@ -2,36 +2,36 @@ const {
   generateFieldGroups,
   getKeyText,
   generateSummaryListRows,
-  generateSummaryList,
-} = require('./generate-summary-list');
-const { mapAnswersToContent } = require('./data-content-mappings/map-answers-to-content');
+  answersSummaryList,
+} = require('./answers-summary-list');
+const { mapAnswersToContent } = require('../data-content-mappings/map-answers-to-content');
 const {
   PAGES,
   FIELDS,
   LINKS,
-} = require('../content-strings');
+} = require('../../content-strings');
 const {
   FIELD_IDS,
   FIELD_VALUES,
   ROUTES,
-} = require('../constants');
-const { mockSession } = require('../test-mocks');
+} = require('../../constants');
+const { mockSession } = require('../../test-mocks');
 
 const {
-  AMOUNT,
   BUYER_COUNTRY,
   CREDIT_PERIOD,
+  MAX_AMOUNT_OWED,
   MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
-  UK_GOODS_OR_SERVICES,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
-describe('server/helpers/generate-summary-list', () => {
+describe('server/helpers/summary-lists/answers-summary-list', () => {
   describe('generateFieldGroups - no policy type', () => {
     it('should map over each field group with value from submittedData', () => {
       const mockAnswersContent = mapAnswersToContent(mockSession.submittedData);
@@ -59,34 +59,25 @@ describe('server/helpers/generate-summary-list', () => {
             },
           },
           {
-            ID: UK_GOODS_OR_SERVICES,
-            ...FIELDS[UK_GOODS_OR_SERVICES],
-            HREF: `${ROUTES.UK_GOODS_OR_SERVICES_CHANGE}#heading`,
+            ID: HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+            ...FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
+            HREF: `${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`,
             value: {
-              text: mockAnswersContent[UK_GOODS_OR_SERVICES].text,
+              text: mockAnswersContent[HAS_MINIMUM_UK_GOODS_OR_SERVICES].text,
+            },
+          },
+        ],
+        POLICY_DETAILS: [
+          {
+            ID: PERCENTAGE_OF_COVER,
+            ...FIELDS[PERCENTAGE_OF_COVER],
+            HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
+            value: {
+              text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
             },
           },
         ],
       };
-
-      expected.POLICY_DETAILS = [
-        {
-          ID: AMOUNT,
-          ...FIELDS[AMOUNT],
-          HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${AMOUNT}-label`,
-          value: {
-            text: mockAnswersContent[AMOUNT].text,
-          },
-        },
-        {
-          ID: PERCENTAGE_OF_COVER,
-          ...FIELDS[PERCENTAGE_OF_COVER],
-          HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
-          value: {
-            text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
-          },
-        },
-      ];
 
       expect(result).toEqual(expected);
     });
@@ -153,6 +144,9 @@ describe('server/helpers/generate-summary-list', () => {
           [MULTI_POLICY_LENGTH]: {
             text: 2,
           },
+          [MAX_AMOUNT_OWED]: {
+            text: '£12,345',
+          },
         };
 
         delete mockAnswersContent[SINGLE_POLICY_TYPE];
@@ -212,57 +206,13 @@ describe('server/helpers/generate-summary-list', () => {
   });
 
   describe('getKeyText', () => {
-    describe('when a field has SINGLE_POLICY and MULTI_POLICY objects with SUMMARY objct', () => {
-      const fieldId = AMOUNT;
-
-      describe('when policy type is single', () => {
-        it('should return FIELD.SINGLE_POLICY.SUMMARY.TITLE', () => {
-          const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-          const expected = FIELDS[AMOUNT].SINGLE_POLICY.SUMMARY.TITLE;
-          expect(result).toEqual(expected);
-        });
-      });
-
-      describe('when policy type is multi', () => {
-        it('should return FIELD.MULTI_POLICY.SUMMARY.TITLE', () => {
-          const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.MULTI);
-
-          const expected = FIELDS[AMOUNT].MULTI_POLICY.SUMMARY.TITLE;
-          expect(result).toEqual(expected);
-        });
-      });
-    });
-
-    describe('when a field has SINGLE_POLICY and MULTI_POLICY objects but does NOT have SUMMARY object', () => {
-      const fieldId = BUYER_COUNTRY;
-
-      describe('when policy type is single', () => {
-        it('should return FIELD.SUMMARY.TITLE', () => {
-          const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-          const expected = FIELDS[BUYER_COUNTRY].SUMMARY.TITLE;
-          expect(result).toEqual(expected);
-        });
-      });
-
-      describe('when policy type is multi', () => {
-        it('should return FIELD.SUMMARY.TITLE', () => {
-          const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.MULTI);
-
-          const expected = FIELDS[BUYER_COUNTRY].SUMMARY.TITLE;
-          expect(result).toEqual(expected);
-        });
-      });
-    });
-
-    describe('when a field does NOT have SINGLE_POLICY and MULTI_POLICY objects', () => {
-      const fieldId = CREDIT_PERIOD;
+    describe('when a field has SUMMARY objct', () => {
+      const fieldId = VALID_COMPANY_BASE;
 
       it('should return FIELD.SUMMARY.TITLE', () => {
-        const result = getKeyText(fieldId, FIELD_VALUES.POLICY_TYPE.MULTI);
+        const result = getKeyText(fieldId);
 
-        const expected = FIELDS[CREDIT_PERIOD].SUMMARY.TITLE;
+        const expected = FIELDS[VALID_COMPANY_BASE].SUMMARY.TITLE;
         expect(result).toEqual(expected);
       });
     });
@@ -308,13 +258,13 @@ describe('server/helpers/generate-summary-list', () => {
     });
   });
 
-  describe('generateSummaryList', () => {
+  describe('answersSummaryList', () => {
     it('should return an object with multiple summary lists', () => {
       const mockAnswersContent = mapAnswersToContent(mockSession.submittedData);
 
       const fieldGroups = generateFieldGroups(mockAnswersContent);
 
-      const result = generateSummaryList(
+      const result = answersSummaryList(
         mockAnswersContent,
         mockSession.submittedData[POLICY_TYPE],
       );

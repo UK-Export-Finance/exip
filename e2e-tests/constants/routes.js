@@ -10,8 +10,8 @@ const ROUTES = {
   CAN_GET_PRIVATE_INSURANCE: '/can-get-private-insurance',
   CAN_GET_PRIVATE_INSURANCE_CHANGE: '/can-get-private-insurance/change',
 
-  UK_GOODS_OR_SERVICES: '/uk-goods-or-services',
-  UK_GOODS_OR_SERVICES_CHANGE: '/uk-goods-or-services/change',
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES: '/uk-goods-or-services',
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE: '/uk-goods-or-services/change',
 
   POLICY_TYPE: '/kind-of-policy',
   POLICY_TYPE_CHANGE: '/kind-of-policy/change',

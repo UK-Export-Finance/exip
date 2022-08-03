@@ -15,7 +15,7 @@ const CAN_GET_PRIVATE_INSURANCE_PAGE = {
   HEADING: 'Are you able to get insurance for this export from companies in the private sector?',
 };
 
-const UK_GOODS_OR_SERVICES_PAGE = {
+const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
   PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
   HEADING: 'Is at least 20% of your export contract value made up from UK goods or services?',
   DETAILS: {
@@ -103,7 +103,7 @@ const CANNOT_OBTAIN_COVER_PAGE = {
     UNSUPPORTED_BUYER_COUNTRY_1: 'your buyer is based in',
     UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
     CAN_GET_PRIVATE_INSURANCE: 'you\'re able to get insurance for this export from companies in the private sector.',
-    NOT_ENOUGH_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from  at least 20% UK goods or services.',
+    NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from  at least 20% UK goods or services.',
   },
   ACTIONS: {
     INTRO: 'You can:',
@@ -243,7 +243,7 @@ module.exports = {
   COMPANY_BASED_PAGE,
   BUYER_COUNTRY_PAGE,
   CAN_GET_PRIVATE_INSURANCE_PAGE,
-  UK_GOODS_OR_SERVICES_PAGE,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE,
   POLICY_TYPE_PAGE,
   TELL_US_ABOUT_YOUR_POLICY_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,
