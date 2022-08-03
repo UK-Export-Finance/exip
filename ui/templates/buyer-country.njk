@@ -2,6 +2,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from 'govuk/components/label/macro.njk' import govukLabel %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 
@@ -37,6 +38,14 @@
       html: "<h1 class='govuk-heading-l' id='heading'><label for='" + FIELD_ID + "'>" + CONTENT_STRINGS.HEADING + "</label></h1>",
       attributes: {
         "data-cy": "heading"
+      }
+    }) }}
+
+    {{ govukHint({
+      id: FIELD_ID + "-hint",
+      text: FIELD_HINT,
+      attributes: {
+        "data-cy": FIELD_ID + "-hint"
       }
     }) }}
 

@@ -4,10 +4,7 @@ const LINKS = require('./links');
 
 const FIELDS = {
   [FIELD_IDS.COUNTRY]: {
-    HINT: 'Some countries are not covered by UK Export Finance. If your chosen destination is not in the list, then we cannot provide cover for it.',
-    SUMMARY: {
-      TITLE: 'Your company',
-    },
+    HINT: 'Cover is based on the country your buyer is located in, not the destination of your goods or services.',
   },
   [FIELD_IDS.VALID_COMPANY_BASE]: {
     SUMMARY: {

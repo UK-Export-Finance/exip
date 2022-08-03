@@ -260,7 +260,7 @@ context('Change your answers after checking answers - Policy type and length', (
     });
   });
 
-  describe('change only `Policy length` (multi policy type, 3 months to 6 months)', () => {
+  describe('change only `Policy length` (multi policy type, 3 months to 1 month)', () => {
     before(() => {
       // change back to single policy
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
@@ -297,19 +297,19 @@ context('Change your answers after checking answers - Policy type and length', (
     });
 
     it(`redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
-      policyTypePage[MULTI_POLICY_LENGTH].input().clear().type('6');
+      policyTypePage[MULTI_POLICY_LENGTH].input().clear().type('1');
       policyTypePage.submitButton().click();
 
       cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
     });
 
-    it('renders the new answer in `Check your answers` page (multi policy, 6 months)', () => {
+    it('renders the new answer in `Check your answers` page (multi policy, 1 months)', () => {
       tellUsAboutYourPolicyPage.submitButton().click();
 
       row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];
 
       row.value().invoke('text').then((text) => {
-        const expected = '6 months';
+        const expected = '1 month';
 
         expect(text.trim()).equal(expected);
       });

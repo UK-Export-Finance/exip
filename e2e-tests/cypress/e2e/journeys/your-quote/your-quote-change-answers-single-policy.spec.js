@@ -171,7 +171,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
       const policyLength = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
 
       policyLength.value().invoke('text').then((text) => {
-        expect(text.trim()).equal('1 months');
+        expect(text.trim()).equal('1 month');
       });
     });
   });

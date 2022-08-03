@@ -118,12 +118,12 @@ context('Is at least 20% of your export contract value made up from UK goods or 
     it('clicking summary reveals details', () => {
       details.summary().click();
 
-      details.includes.copy().should('be.visible');
+      details.includes.intro().should('be.visible');
     });
 
     describe('`includes` section', () => {
-      it('renders copy', () => {
-        details.includes.copy().invoke('text').then((text) => {
+      it('renders intro', () => {
+        details.includes.intro().invoke('text').then((text) => {
           expect(text.trim()).equal(DETAILS.INCLUDES.INTRO);
         });
       });
@@ -150,6 +150,12 @@ context('Is at least 20% of your export contract value made up from UK goods or 
         });
 
         details.includes.listItem4Link().should('have.attr', 'href', DETAILS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.HREF);
+      });
+
+      it('renders `also count as` copy', () => {
+        details.includes.canCountAs().invoke('text').then((text) => {
+          expect(text.trim()).equal(DETAILS.INCLUDES.CAN_COUNT_AS);
+        });
       });
     });
 

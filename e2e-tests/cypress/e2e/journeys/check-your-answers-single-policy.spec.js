@@ -2,7 +2,6 @@ import { checkYourAnswersPage } from '../pages';
 import partials from '../partials';
 import {
   ORGANISATION,
-  BUTTONS,
   FIELDS,
   LINKS,
   PAGES,
@@ -74,7 +73,7 @@ context('Check your answers page (single policy)', () => {
     button.should('exist');
 
     button.invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.SUBMIT);
+      expect(text.trim()).equal(CONTENT_STRINGS.SUBMIT_BUTTON);
     });
   });
 

@@ -23,7 +23,7 @@ const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
     INCLUDES: {
       INTRO: 'UK goods and services includes:',
       PRODUCTS: 'products made in the UK',
-      MANUFACTURED: 'goods manufactured outside the UK but processed or modified here - they\'ll usually still have a certificate of UK origin',
+      MANUFACTURED: 'goods manufactured outside the UK but processed or modified in the UK, which would then be eligible for a certificate of UK origin',
       STAFFING_COSTS: {
         LINK: {
           TEXT: 'staffing costs',
@@ -38,14 +38,15 @@ const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
         },
         TEXT: 'that are produced in the UK',
       },
+      CAN_COUNT_AS: 'If any of the above are from the Channel Islands or Isle of Man, you can also count them as UK goods or services.',
     },
     DOES_NOT_COUNT: {
       HEADING: 'What does not count as UK goods and services',
-      TEXT: 'Goods or services from outside the UK that you\'ll send directly to the buyer unprocessed or unaltered in the UK are classed as foreign goods and services.',
+      TEXT: 'Goods or services from outside the UK that you\'ll send directly to the buyer unprocessed or unaltered in the UK do not count. Instead, they\'re classed as foreign goods and services.',
     },
     STAFFING_COSTS: {
-      HEADING: 'Staffing costs',
-      TEXT: 'You can treat the following staffing costs as UK services:',
+      HEADING: 'Staffing costs for this export contract',
+      TEXT: 'You can count the following (but only count the actual staffing costs incurred on this specific export contract):',
       LIST: [
         {
           TEXT: 'employees of your UK business',
@@ -54,7 +55,7 @@ const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
           TEXT: 'contractors supplied to work for you by a UK sub- contractor',
         },
         {
-          TEXT: 'staff seconded from abroad to work for you in the UK, on the export contract, and for whom you’re financially responsible',
+          TEXT: 'staff seconded from abroad to work for you in the UK, on the export contract, and for whom you\'re financially responsible',
         },
       ],
     },
@@ -83,8 +84,8 @@ const POLICY_TYPE_PAGE = {
 const TELL_US_ABOUT_YOUR_POLICY_PAGE = {
   SINGLE_POLICY_PAGE_TITLE: 'Tell us about the single contract policy you need',
   SINGLE_POLICY_HEADING: 'Tell us about the single contract policy you need',
-  MULTI_POLICY_PAGE_TITLE: 'Tell us about the multiple policy you need',
-  MULTI_POLICY_HEADING: 'Tell us about the multiple policy you need',
+  MULTI_POLICY_PAGE_TITLE: 'Tell us about the multiple policy contract you need',
+  MULTI_POLICY_HEADING: 'Tell us about the multiple policy contract you need',
 };
 
 const CHECK_YOUR_ANSWERS_PAGE = {
@@ -92,6 +93,7 @@ const CHECK_YOUR_ANSWERS_PAGE = {
   HEADING: 'Check your answers',
   GROUP_HEADING_EXPORT: 'Export details',
   GROUP_HEADING_POLICY: 'Policy details',
+  SUBMIT_BUTTON: 'Get your quote',
 };
 
 const CANNOT_OBTAIN_COVER_PAGE = {
@@ -99,7 +101,7 @@ const CANNOT_OBTAIN_COVER_PAGE = {
   HEADING: 'You cannot apply for UKEF export insurance',
   REASON: {
     INTRO: 'This is because',
-    UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man',
+    UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man.',
     UNSUPPORTED_BUYER_COUNTRY_1: 'your buyer is based in',
     UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
     CAN_GET_PRIVATE_INSURANCE: 'you\'re able to get insurance for this export from companies in the private sector.',
