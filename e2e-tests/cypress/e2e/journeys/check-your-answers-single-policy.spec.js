@@ -2,7 +2,6 @@ import { checkYourAnswersPage } from '../pages';
 import partials from '../partials';
 import {
   ORGANISATION,
-  BUTTONS,
   FIELDS,
   LINKS,
   PAGES,

@@ -195,29 +195,6 @@ context('Check your answers page (multi policy)', () => {
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
-    it('renders `Percentage of cover` key, value and change link', () => {
-      const row = list[PERCENTAGE_OF_COVER];
-      const expectedKeyText = FIELDS[PERCENTAGE_OF_COVER].SUMMARY.TITLE;
-
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
-
-      row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[PERCENTAGE_OF_COVER]}%`;
-
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
-
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
-    });
-
     it('renders `Credit period` key, value and change link', () => {
       const row = list[CREDIT_PERIOD];
       const expectedKeyText = FIELDS[CREDIT_PERIOD].SUMMARY.TITLE;
@@ -238,6 +215,29 @@ context('Check your answers page (multi policy)', () => {
       });
 
       const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
+    });
+
+    it('renders `Percentage of cover` key, value and change link', () => {
+      const row = list[PERCENTAGE_OF_COVER];
+      const expectedKeyText = FIELDS[PERCENTAGE_OF_COVER].SUMMARY.TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        const expected = `${submissionData[PERCENTAGE_OF_COVER]}%`;
+
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });

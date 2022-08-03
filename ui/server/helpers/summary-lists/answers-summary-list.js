@@ -29,6 +29,8 @@ const {
  * - Tried private cover (must have the correct yes/no input ID)
  * - Policy type depending on the Policy type (must have single/multi input ID)
  * - Policy length depending on the Policy type (must have single/multi input ID)
+ * - Contract value or Max contract value depending on the Policy type
+ * - Credit period if Policy type is multi
  */
 const generateFieldGroups = (answers) => {
   const fieldGroups = {
@@ -89,6 +91,14 @@ const generateFieldGroups = (answers) => {
           text: answers[CONTRACT_VALUE].text,
         },
       },
+      {
+        ID: PERCENTAGE_OF_COVER,
+        ...FIELDS[PERCENTAGE_OF_COVER],
+        HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
+        value: {
+          text: answers[PERCENTAGE_OF_COVER].text,
+        },
+      },
     ];
   }
 
@@ -119,6 +129,14 @@ const generateFieldGroups = (answers) => {
         },
       },
       {
+        ID: PERCENTAGE_OF_COVER,
+        ...FIELDS[PERCENTAGE_OF_COVER],
+        HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
+        value: {
+          text: answers[PERCENTAGE_OF_COVER].text,
+        },
+      },
+      {
         ID: CREDIT_PERIOD,
         ...FIELDS[CREDIT_PERIOD],
         HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`,
@@ -128,18 +146,6 @@ const generateFieldGroups = (answers) => {
       },
     ];
   }
-
-  fieldGroups.POLICY_DETAILS = [
-    ...fieldGroups.POLICY_DETAILS,
-    {
-      ID: PERCENTAGE_OF_COVER,
-      ...FIELDS[PERCENTAGE_OF_COVER],
-      HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
-      value: {
-        text: answers[PERCENTAGE_OF_COVER].text,
-      },
-    },
-  ];
 
   return fieldGroups;
 };

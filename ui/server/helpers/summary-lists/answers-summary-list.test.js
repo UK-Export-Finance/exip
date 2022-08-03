@@ -19,6 +19,7 @@ const { mockSession } = require('../../test-mocks');
 
 const {
   BUYER_COUNTRY,
+  CONTRACT_VALUE,
   CREDIT_PERIOD,
   MAX_AMOUNT_OWED,
   MULTI_POLICY_LENGTH,
@@ -67,16 +68,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
             },
           },
         ],
-        POLICY_DETAILS: [
-          {
-            ID: PERCENTAGE_OF_COVER,
-            ...FIELDS[PERCENTAGE_OF_COVER],
-            HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
-            value: {
-              text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
-            },
-          },
-        ],
+        POLICY_DETAILS: [],
       };
 
       expect(result).toEqual(expected);
@@ -125,6 +117,54 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
           HREF: `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
           value: {
             text: mockAnswersContent[SINGLE_POLICY_LENGTH].text,
+          },
+        };
+
+        expect(expectedField).toEqual(expected);
+      });
+
+      it(`should add ${CONTRACT_VALUE} object to POLICY_DETAILS`, () => {
+        const mockAnswersContent = {
+          ...mapAnswersToContent(mockSession.submittedData),
+          [SINGLE_POLICY_TYPE]: {
+            text: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          },
+        };
+
+        const result = generateFieldGroups(mockAnswersContent);
+
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 2];
+
+        const expected = {
+          ID: CONTRACT_VALUE,
+          ...FIELDS[CONTRACT_VALUE],
+          HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
+          value: {
+            text: mockAnswersContent[CONTRACT_VALUE].text,
+          },
+        };
+
+        expect(expectedField).toEqual(expected);
+      });
+
+      it(`should add ${PERCENTAGE_OF_COVER} object to POLICY_DETAILS`, () => {
+        const mockAnswersContent = {
+          ...mapAnswersToContent(mockSession.submittedData),
+          [SINGLE_POLICY_TYPE]: {
+            text: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          },
+        };
+
+        const result = generateFieldGroups(mockAnswersContent);
+
+        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 1];
+
+        const expected = {
+          ID: PERCENTAGE_OF_COVER,
+          ...FIELDS[PERCENTAGE_OF_COVER],
+          HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
+          value: {
+            text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
           },
         };
 
@@ -186,10 +226,44 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         expect(expectedField).toEqual(expected);
       });
 
+      it(`should add ${MAX_AMOUNT_OWED} object to POLICY_DETAILS`, () => {
+        const result = generateFieldGroups(mockAnswersContent);
+
+        const expectedField = result.POLICY_DETAILS[2];
+
+        const expected = {
+          ID: MAX_AMOUNT_OWED,
+          ...FIELDS[MAX_AMOUNT_OWED],
+          HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
+          value: {
+            text: mockAnswersContent[MAX_AMOUNT_OWED].text,
+          },
+        };
+
+        expect(expectedField).toEqual(expected);
+      });
+
+      it(`should add ${PERCENTAGE_OF_COVER} object to POLICY_DETAILS`, () => {
+        const result = generateFieldGroups(mockAnswersContent);
+
+        const expectedField = result.POLICY_DETAILS[3];
+
+        const expected = {
+          ID: PERCENTAGE_OF_COVER,
+          ...FIELDS[PERCENTAGE_OF_COVER],
+          HREF: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
+          value: {
+            text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
+          },
+        };
+
+        expect(expectedField).toEqual(expected);
+      });
+
       it(`should add ${CREDIT_PERIOD} object to POLICY_DETAILS`, () => {
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[result.POLICY_DETAILS.length - 2];
+        const expectedField = result.POLICY_DETAILS[4];
 
         const expected = {
           ID: CREDIT_PERIOD,
