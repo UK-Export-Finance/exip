@@ -304,8 +304,6 @@ context('Change your answers after checking answers - Policy type and length', (
     });
 
     it('renders the new answer in `Check your answers` page (multi policy, 6 months)', () => {
-      // credit period field is now required because it's a multi policy
-      // tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().clear().type('1');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];

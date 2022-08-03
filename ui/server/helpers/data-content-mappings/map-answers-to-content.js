@@ -3,6 +3,7 @@ const {
   FIELD_VALUES,
 } = require('../../constants');
 const { SUMMARY_ANSWERS } = require('../../content-strings');
+const { isSinglePolicyType, isMultiPolicyType } = require('../policy-type');
 const mapCountry = require('./map-country');
 const mapCost = require('./map-cost');
 const mapPeriodMonths = require('./map-period-months');
@@ -47,7 +48,7 @@ const mapCanGetPrivateInsurance = (answer) => {
 const mapPolicyType = (answer) => {
   let mapped;
 
-  if (answer === FIELD_VALUES.POLICY_TYPE.SINGLE) {
+  if (isSinglePolicyType(answer)) {
     mapped = {
       [SINGLE_POLICY_TYPE]: {
         text: answer,
@@ -55,7 +56,7 @@ const mapPolicyType = (answer) => {
     };
   }
 
-  if (answer === FIELD_VALUES.POLICY_TYPE.MULTI) {
+  if (isMultiPolicyType(answer)) {
     mapped = {
       [MULTI_POLICY_TYPE]: {
         text: answer,

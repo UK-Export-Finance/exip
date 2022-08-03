@@ -1,4 +1,5 @@
-const { FIELD_IDS, FIELD_VALUES } = require('../../constants');
+const { FIELD_IDS } = require('../../constants');
+const { isSinglePolicyType, isMultiPolicyType } = require('../policy-type');
 const formatCurrency = require('../format-currency');
 
 const {
@@ -13,7 +14,7 @@ const {
 const mapCost = (answers) => {
   let mapped;
 
-  if (answers[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.SINGLE) {
+  if (isSinglePolicyType(answers[POLICY_TYPE])) {
     mapped = {
       [CONTRACT_VALUE]: {
         text: formatCurrency(answers[CONTRACT_VALUE], answers[CURRENCY].isoCode),
@@ -21,7 +22,7 @@ const mapCost = (answers) => {
     };
   }
 
-  if (answers[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.MULTI) {
+  if (isMultiPolicyType(answers[POLICY_TYPE])) {
     mapped = {
       [MAX_AMOUNT_OWED]: {
         text: formatCurrency(answers[MAX_AMOUNT_OWED], answers[CURRENCY].isoCode),

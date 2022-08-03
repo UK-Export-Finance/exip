@@ -1,8 +1,6 @@
+const { isSinglePolicyType, isMultiPolicyType } = require('../policy-type');
 const mapPeriodMonths = require('./map-period-months');
-const {
-  FIELD_IDS,
-  FIELD_VALUES,
-} = require('../../constants');
+const { FIELD_IDS } = require('../../constants');
 
 const {
   POLICY_TYPE,
@@ -14,7 +12,7 @@ const {
 const mapPolicyLength = (answers) => {
   let mapped;
 
-  if (answers[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.SINGLE) {
+  if (isSinglePolicyType(answers[POLICY_TYPE])) {
     mapped = {
       [SINGLE_POLICY_LENGTH]: {
         text: mapPeriodMonths(answers[POLICY_LENGTH]),
@@ -22,7 +20,7 @@ const mapPolicyLength = (answers) => {
     };
   }
 
-  if (answers[POLICY_TYPE] === FIELD_VALUES.POLICY_TYPE.MULTI) {
+  if (isMultiPolicyType(answers[POLICY_TYPE])) {
     mapped = {
       [MULTI_POLICY_LENGTH]: {
         text: mapPeriodMonths(answers[POLICY_LENGTH]),

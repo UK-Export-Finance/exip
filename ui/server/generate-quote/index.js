@@ -1,10 +1,7 @@
-const {
-  FIELD_IDS,
-  FIELD_VALUES,
-} = require('../constants');
+const { FIELD_IDS } = require('../constants');
+const { isSinglePolicyType, isMultiPolicyType } = require('../helpers/policy-type');
 const { getPremiumRate } = require('./get-premium-rate');
 const { getPercentageOfNumber } = require('../helpers/number');
-const { isSinglePolicyType, isMultiPolicyType } = require('../helpers/policy-type');
 
 const {
   BUYER_COUNTRY,
@@ -50,13 +47,13 @@ const getContractCost = (submittedData) => {
 const getTotalMonths = (policyType, policyLength, creditPeriod = 0) => {
   const BUSINESS_BUFFER_MONTHS = 1;
 
-  if (policyType === FIELD_VALUES.POLICY_TYPE.SINGLE) {
+  if (isSinglePolicyType(policyType)) {
     const totalMonths = (policyLength + BUSINESS_BUFFER_MONTHS);
 
     return totalMonths;
   }
 
-  if (policyType === FIELD_VALUES.POLICY_TYPE.MULTI) {
+  if (isMultiPolicyType(policyType)) {
     const totalMonths = (policyLength + creditPeriod + BUSINESS_BUFFER_MONTHS);
 
     return totalMonths;
