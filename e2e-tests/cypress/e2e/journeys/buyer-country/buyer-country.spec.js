@@ -1,11 +1,12 @@
 import { buyerCountryPage } from '../../pages';
 import partials from '../../partials';
 import {
-  ORGANISATION,
   BUTTONS,
-  LINKS,
-  PAGES,
   ERROR_MESSAGES,
+  FIELDS,
+  LINKS,
+  ORGANISATION,
+  PAGES,
 } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
 
@@ -47,6 +48,12 @@ context('Which country is your buyer based page', () => {
 
     buyerCountryPage.heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
+    });
+  });
+
+  it('renders a hint', () => {
+    buyerCountryPage.hint().invoke('text').then((text) => {
+      expect(text.trim()).equal(FIELDS[FIELD_IDS.COUNTRY].HINT);
     });
   });
 
