@@ -93,7 +93,7 @@
 
 
     {% set detailsHtml %}
-      <p data-cy="details-includes">{{ CONTENT_STRINGS.DETAILS.INCLUDES.INTRO }}</p>
+      <p data-cy="details-includes-intro">{{ CONTENT_STRINGS.DETAILS.INCLUDES.INTRO }}</p>
 
       <ul class="govuk-!-margin-bottom-7">
         <li data-cy="details-includes-item-1">{{ CONTENT_STRINGS.DETAILS.INCLUDES.PRODUCTS }}</li>
@@ -101,6 +101,8 @@
         <li data-cy="details-includes-item-3"><a class="govuk-link" data-cy="details-includes-item-3-link" href="{{ CONTENT_STRINGS.DETAILS.INCLUDES.STAFFING_COSTS.LINK.HREF }}">{{ CONTENT_STRINGS.DETAILS.INCLUDES.STAFFING_COSTS.LINK.TEXT }}</a> {{ CONTENT_STRINGS.DETAILS.INCLUDES.STAFFING_COSTS.TEXT }}</li>
         <li data-cy="details-includes-item-4"><a class="govuk-link"  data-cy="details-includes-item-4-link" href="{{ CONTENT_STRINGS.DETAILS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.HREF }}">{{ CONTENT_STRINGS.DETAILS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.TEXT }}</a> {{ CONTENT_STRINGS.DETAILS.INCLUDES.NON_PHYSICAL_ASSETS.TEXT }}</li>
       </ul>
+
+      <p data-cy="details-includes-can-count-as">{{ CONTENT_STRINGS.DETAILS.INCLUDES.CAN_COUNT_AS }}</p>
 
       <h2 class="govuk-heading-s"  data-cy="details-does-not-count-heading">{{ CONTENT_STRINGS.DETAILS.DOES_NOT_COUNT.HEADING }}</h2>
       <p data-cy="details-does-not-count-copy">{{ CONTENT_STRINGS.DETAILS.DOES_NOT_COUNT.TEXT }}</p>

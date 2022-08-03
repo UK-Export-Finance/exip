@@ -11,13 +11,14 @@ const ukGoodsOrServicesPage = {
   details: {
     summary: () => cy.get('[data-cy="details"] summary'),
     includes: {
-      copy: () => cy.get('[data-cy="details-includes"]'),
+      intro: () => cy.get('[data-cy="details-includes-intro"]'),
       listItem1: () => cy.get('[data-cy="details-includes-item-1"]'),
       listItem2: () => cy.get('[data-cy="details-includes-item-2"]'),
       listItem3: () => cy.get('[data-cy="details-includes-item-3"]'),
       listItem3Link: () => cy.get('[data-cy="details-includes-item-3-link"]'),
       listItem4: () => cy.get('[data-cy="details-includes-item-4"]'),
       listItem4Link: () => cy.get('[data-cy="details-includes-item-4-link"]'),
+      canCountAs: () => cy.get('[data-cy="details-includes-can-count-as"]'),
     },
     canAlsoCount: () => cy.get('[data-cy="details-can-also-count-copy"]'),
     doesNotCount: {

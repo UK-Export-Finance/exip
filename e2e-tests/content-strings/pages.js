@@ -23,7 +23,7 @@ const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
     INCLUDES: {
       INTRO: 'UK goods and services includes:',
       PRODUCTS: 'products made in the UK',
-      MANUFACTURED: 'goods manufactured outside the UK but processed or modified here - they\'ll usually still have a certificate of UK origin',
+      MANUFACTURED: 'goods manufactured outside the UK but processed or modified in the UK, which would then be eligible for a certificate of UK origin',
       STAFFING_COSTS: {
         LINK: {
           TEXT: 'staffing costs',
@@ -38,14 +38,15 @@ const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
         },
         TEXT: 'that are produced in the UK',
       },
+      CAN_COUNT_AS: 'If any of the above are from the Channel Islands or Isle of Man, you can also count them as UK goods or services.',
     },
     DOES_NOT_COUNT: {
       HEADING: 'What does not count as UK goods and services',
-      TEXT: 'Goods or services from outside the UK that you\'ll send directly to the buyer unprocessed or unaltered in the UK are classed as foreign goods and services.',
+      TEXT: 'Goods or services from outside the UK that you\'ll send directly to the buyer unprocessed or unaltered in the UK do not count. Instead, they\'re classed as foreign goods and services.',
     },
     STAFFING_COSTS: {
-      HEADING: 'Staffing costs',
-      TEXT: 'You can treat the following staffing costs as UK services:',
+      HEADING: 'Staffing costs for this export contract',
+      TEXT: 'You can count the following (but only count the actual staffing costs incurred on this specific export contract):',
       LIST: [
         {
           TEXT: 'employees of your UK business',
@@ -54,7 +55,7 @@ const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
           TEXT: 'contractors supplied to work for you by a UK sub- contractor',
         },
         {
-          TEXT: 'staff seconded from abroad to work for you in the UK, on the export contract, and for whom you’re financially responsible',
+          TEXT: 'staff seconded from abroad to work for you in the UK, on the export contract, and for whom you\'re financially responsible',
         },
       ],
     },
