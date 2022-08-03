@@ -20,7 +20,7 @@ describe('server/helpers/map-period-months', () => {
       expect(result).toEqual(expected);
     });
   });
-  
+
   describe('when value is not 0 or 1', () => {
     it('should return a formatted string with `months`', () => {
       const result = mapPeriodMonths(2);
