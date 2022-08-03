@@ -1,7 +1,5 @@
 import {
   checkYourAnswersPage,
-  policyTypePage,
-  tellUsAboutYourPolicyPage,
   yourQuotePage,
 } from '../../pages';
 import {
@@ -14,13 +12,10 @@ const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 const {
   BUYER_COUNTRY,
-  CREDIT_PERIOD,
   MAX_AMOUNT_OWED,
   MULTI_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   POLICY_LENGTH,
-  POLICY_TYPE,
-  SINGLE_POLICY_TYPE,
   QUOTE,
 } = FIELD_IDS;
 
@@ -39,21 +34,7 @@ context('Your quote page - multi policy type', () => {
   before(() => {
     cy.login();
 
-    cy.submitAnswersHappyPathSinglePolicy();
-
-    // change policy type to multi
-    checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE].changeLink().click();
-
-    policyTypePage[POLICY_TYPE].multi.input().click();
-    policyTypePage[MULTI_POLICY_LENGTH].input().type('3');
-    policyTypePage.submitButton().click();
-
-    // max amount owed and credit period field are now required because it's a multi policy
-    tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('150000');
-    tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('1');
-
-    tellUsAboutYourPolicyPage.submitButton().click();
-
+    cy.submitAnswersHappyPathMultiPolicy();
     checkYourAnswersPage.submitButton().click();
 
     cy.url().should('include', ROUTES.YOUR_QUOTE);
@@ -122,7 +103,7 @@ context('Your quote page - multi policy type', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '1.63%';
+          const expected = '1.47%';
 
           expect(text.trim()).equal(expected);
         });
@@ -139,7 +120,7 @@ context('Your quote page - multi policy type', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£2,445.00';
+          const expected = '£2,205.00';
 
           expect(text.trim()).equal(expected);
         });
@@ -156,7 +137,7 @@ context('Your quote page - multi policy type', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '3 months';
+          const expected = '2 months';
 
           expect(text.trim()).equal(expected);
         });
