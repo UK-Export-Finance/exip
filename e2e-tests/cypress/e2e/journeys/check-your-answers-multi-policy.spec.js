@@ -204,7 +204,7 @@ context('Check your answers page (multi policy)', () => {
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[CREDIT_PERIOD]} months`;
+        const expected = `${submissionData[CREDIT_PERIOD]} month`;
 
         expect(text.trim()).equal(expected);
       });
