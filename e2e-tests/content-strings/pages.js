@@ -83,8 +83,8 @@ const POLICY_TYPE_PAGE = {
 const TELL_US_ABOUT_YOUR_POLICY_PAGE = {
   SINGLE_POLICY_PAGE_TITLE: 'Tell us about the single contract policy you need',
   SINGLE_POLICY_HEADING: 'Tell us about the single contract policy you need',
-  MULTI_POLICY_PAGE_TITLE: 'Tell us about the multiple policy you need',
-  MULTI_POLICY_HEADING: 'Tell us about the multiple policy you need',
+  MULTI_POLICY_PAGE_TITLE: 'Tell us about the multiple policy contract you need',
+  MULTI_POLICY_HEADING: 'Tell us about the multiple policy contract you need',
 };
 
 const CHECK_YOUR_ANSWERS_PAGE = {
