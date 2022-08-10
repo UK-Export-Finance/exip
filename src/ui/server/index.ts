@@ -106,7 +106,8 @@ app.use(
 );
 
 // @ts-ignore
-app.use((err, req, res) => { // eslint-disable-line no-unused-vars, prettier/prettier
+app.use((err, req, res) => {
+  // eslint-disable-line no-unused-vars, prettier/prettier
   res.redirect('/problem-with-service');
 });
 
