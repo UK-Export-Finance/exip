@@ -24,7 +24,7 @@ EXPOSE 80 ${SSH_PORT}
 # Node setup
 WORKDIR /app
 COPY package.json .
-RUN npm install --legacy-peer-deps
+RUN npm install --omit=dev --legacy-peer-deps
 RUN npm install -g typescript
 RUN npm cache clean --force
 COPY . .
