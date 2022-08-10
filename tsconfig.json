@@ -7,6 +7,7 @@
       "module": "ESNext",                       /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
       "declaration": true,                      /* Generates corresponding '.d.ts' file. */
       "outDir": "./lib/esm",                         /* Redirect output structure to the directory. */
+      "baseUrl": "./",
   
       /* Strict Type-Checking Options */
       "strict": true                            /* Enable all strict type-checking options. */,
