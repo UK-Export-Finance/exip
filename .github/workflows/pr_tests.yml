@@ -30,9 +30,9 @@ jobs:
       - name: Linting
         run: |
           npm install --legacy-peer-deps
-          cd ui
+          cd src ui
           npm install --legacy-peer-deps
-          cd ..
+          cd ../..
           npm run lint
       - uses: act10ns/slack@v1
         with:
@@ -55,7 +55,7 @@ jobs:
           node-version: '16'
       - name: Unit tests
         run: |
-          cd ui
+          cd src/ui
           npm install --legacy-peer-deps
           npm run test
       - uses: act10ns/slack@v1

@@ -1,15 +1,15 @@
 version: "3"
 services:
   ui:
-    build: ./ui
-    image: exip/ui
+    build: ./src/ui
+    image: exip/src/ui
     restart: always
     ports:
       - "5000:5000"
     volumes:
-      - ./ui/server:/app/server:ro
-      - ./ui/public:/app/public:ro
-      - ./ui/templates:/app/templates:ro
+      - ./src/ui/server:/app/server:ro
+      - ./src/ui/public:/app/public:ro
+      - ./src/ui/templates:/app/templates:ro
     environment:
       - PORT=5000
       - BASIC_AUTH_KEY
@@ -35,4 +35,5 @@ services:
         limits:
           cpus: "0.1"
           memory: 300M
-    command: npx nodemon server/index.js -L
+    # command: npx nodemon src/ui/server/index.ts -L
+    entrypoint: npx nodemon src/index.ts -L
