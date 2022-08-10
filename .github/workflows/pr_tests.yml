@@ -32,7 +32,7 @@ jobs:
           npm install --legacy-peer-deps
           cd src ui
           npm install --legacy-peer-deps
-          cd ../..
+          cd ../../
           npm run lint
       - uses: act10ns/slack@v1
         with:

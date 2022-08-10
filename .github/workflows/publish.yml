@@ -2,7 +2,7 @@ name: Release & Publish
 
 on:
   push:
-    branches: [ <%= branch %> ] # TODO: add branch name
+    branches: [ <%= main %> ]
 
 jobs:
   publish:
