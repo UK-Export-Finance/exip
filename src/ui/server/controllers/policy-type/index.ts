@@ -1,9 +1,5 @@
 import { BUTTONS, FIELDS, FOOTER, PAGES, PRODUCT } from '../../content-strings';
-import {
-  FIELD_IDS,
-  ROUTES,
-  TEMPLATES,
-} from '../../constants';
+import { FIELD_IDS, ROUTES, TEMPLATES } from '../../constants';
 import generateValidationErrors from './validation';
 import { updateSubmittedData } from '../../helpers/update-submitted-data';
 import { Request, Response } from '../../../types';
@@ -54,16 +50,9 @@ const post = (req: Request, res: Response) => {
     });
   }
 
-  req.session.submittedData = updateSubmittedData(
-    req.body,
-    req.session.submittedData,
-  );
+  req.session.submittedData = updateSubmittedData(req.body, req.session.submittedData);
 
   return res.redirect(ROUTES.TELL_US_ABOUT_YOUR_POLICY);
 };
 
-export {
-  PAGE_VARIABLES,
-  get,
-  post,
-};
+export { PAGE_VARIABLES, get, post };

@@ -1,8 +1,8 @@
-import {FIELD_IDS} from '../constants/field-ids';
+import { FIELD_IDS } from '../constants/field-ids';
 
 type ErrorMessage = {
-  [key: string]: any;
-}
+  [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+};
 
 export const ERROR_MESSAGES = {
   [FIELD_IDS.VALID_COMPANY_BASE]: 'Select if your company is based in the UK, Channel Islands, Isle of Man or not',
@@ -53,4 +53,3 @@ export const ERROR_MESSAGES = {
     ABOVE_MAXIMUM: 'Enter policy length of no more than 12 months',
   },
 } as ErrorMessage;
-

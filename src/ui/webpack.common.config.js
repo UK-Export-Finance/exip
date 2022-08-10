@@ -18,10 +18,7 @@ module.exports = {
   target: ['web', 'es5'],
   optimization: {
     minimize: true,
-    minimizer: [
-      new TerserPlugin(),
-      new OptimizeCSSAssetsPlugin({}),
-    ],
+    minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})],
   },
   module: {
     rules: [

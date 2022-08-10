@@ -1,6 +1,3 @@
-const stripCommas = (str: string) =>
-  str.replace(/[,]/g, '');
+const stripCommas = (str: string) => str.replace(/[,]/g, '');
 
-export {
-  stripCommas,
-};
+export { stripCommas };

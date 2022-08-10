@@ -1,14 +1,8 @@
 import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
 import mapPeriodMonths from './map-period-months';
 import { FIELD_IDS } from '../../constants';
-import { Quote } from '../../../types';
 
-const {
-  POLICY_TYPE,
-  POLICY_LENGTH,
-  SINGLE_POLICY_LENGTH,
-  MULTI_POLICY_LENGTH,
-} = FIELD_IDS;
+const { POLICY_TYPE, POLICY_LENGTH, SINGLE_POLICY_LENGTH, MULTI_POLICY_LENGTH } = FIELD_IDS;
 
 const mapPolicyLength = (data: object) => {
   let mapped;

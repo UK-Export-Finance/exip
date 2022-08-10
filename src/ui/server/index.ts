@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-
 import express from 'express';
 import compression from 'compression';
 import morgan from 'morgan';
@@ -55,12 +54,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
-app.use(csrf({
-  cookie: {
-    ...cookie,
-    maxAge: 43200, // 12 hours
-  },
-}));
+app.use(
+  csrf({
+    cookie: {
+      ...cookie,
+      maxAge: 43200, // 12 hours
+    },
+  }),
+);
 
 app.use(csrfToken());
 
@@ -72,22 +73,27 @@ configureNunjucks({
   noCache: true,
 });
 
-app.use(morgan('dev', {
-  // @ts-ignore
-  skip: (req) => req.url.startsWith('/assets'),
-}));
+app.use(
+  morgan('dev', {
+    // @ts-ignore
+    skip: (req) => req.url.startsWith('/assets'),
+  }),
+);
 
-app.use(basicAuth({
-  users: { // @ts-ignore
-    [process.env.BASIC_AUTH_KEY]: process.env.BASIC_AUTH_SECRET, // @ts-ignore
-    [process.env.USER_1_KEY]: process.env.USER_1_SECRET, // @ts-ignore
-    [process.env.USER_2_KEY]: process.env.USER_2_SECRET, // @ts-ignore
-    [process.env.USER_3_KEY]: process.env.USER_3_SECRET, // @ts-ignore
-    [process.env.USER_4_KEY]: process.env.USER_4_SECRET, // @ts-ignore
-    [process.env.USER_5_KEY]: process.env.USER_5_SECRET, // @ts-ignore
-  },
-  challenge: true,
-}));
+app.use(
+  basicAuth({
+    users: {
+      // @ts-ignore
+      [process.env.BASIC_AUTH_KEY]: process.env.BASIC_AUTH_SECRET, // @ts-ignore
+      [process.env.USER_1_KEY]: process.env.USER_1_SECRET, // @ts-ignore
+      [process.env.USER_2_KEY]: process.env.USER_2_SECRET, // @ts-ignore
+      [process.env.USER_3_KEY]: process.env.USER_3_SECRET, // @ts-ignore
+      [process.env.USER_4_KEY]: process.env.USER_4_SECRET, // @ts-ignore
+      [process.env.USER_5_KEY]: process.env.USER_5_SECRET, // @ts-ignore
+    },
+    challenge: true,
+  }),
+);
 
 app.use('/', routes);
 
@@ -100,17 +106,19 @@ app.use(
 );
 
 // @ts-ignore
-app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+app.use((err, req, res) => { // eslint-disable-line no-unused-vars, prettier/prettier
   res.redirect('/problem-with-service');
 });
 
-app.get('*', (req: Request, res: Response) => res.render('page-not-found.njk', {
-  CONTENT_STRINGS: {
-    PRODUCT,
-    FOOTER,
-    ...PAGES.PAGE_NOT_FOUND_PAGE,
-  },
-}));
+app.get('*', (req: Request, res: Response) =>
+  res.render('page-not-found.njk', {
+    CONTENT_STRINGS: {
+      PRODUCT,
+      FOOTER,
+      ...PAGES.PAGE_NOT_FOUND_PAGE,
+    },
+  }),
+);
 
 app.listen(PORT, () => console.info(`EXIP UI app listening on port ${PORT}!`));
 

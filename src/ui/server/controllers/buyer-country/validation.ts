@@ -1,10 +1,7 @@
 import { FIELD_IDS } from '../../constants';
 import { ERROR_MESSAGES } from '../../content-strings';
 import generateValidationErrors from '../../helpers/validation';
-import {
-  objectHasValues,
-  objectHasProperty,
-} from '../../helpers/object';
+import { objectHasValues, objectHasProperty } from '../../helpers/object';
 import { RequestBody } from '../../../types';
 
 const hasErrors = (formBody: RequestBody) => {
@@ -35,10 +32,7 @@ const validation = (formBody: RequestBody) => {
   let errors;
 
   if (hasErrors(formBody)) {
-    errors = generateValidationErrors(
-      FIELD_IDS.COUNTRY,
-      ERROR_MESSAGES[FIELD_IDS.COUNTRY],
-    );
+    errors = generateValidationErrors(FIELD_IDS.COUNTRY, ERROR_MESSAGES[FIELD_IDS.COUNTRY]);
 
     return errors;
   }
@@ -46,7 +40,4 @@ const validation = (formBody: RequestBody) => {
   return null;
 };
 
-export {
-  hasErrors,
-  validation,
-};
+export { hasErrors, validation };

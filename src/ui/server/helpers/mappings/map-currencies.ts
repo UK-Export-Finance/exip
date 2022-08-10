@@ -3,8 +3,7 @@ import sortArrayAlphabetically from '../sort-array-alphabetically';
 import { Currency } from '../../../types';
 
 const getSupportedCurrencies = (currencies: Array<Currency>) => {
-  const supported = currencies.filter((currency) =>
-    SUPPORTED_CURRENCIES.find((currencyCode: string) => currency.isoCode === currencyCode));
+  const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode: string) => currency.isoCode === currencyCode));
 
   return supported;
 };
@@ -36,10 +35,7 @@ const mapCurrencies = (currencies: Array<Currency>, selectedValue?: string) => {
       value: '',
     };
 
-    const result = [
-      defaultOption,
-      ...sorted,
-    ];
+    const result = [defaultOption, ...sorted];
 
     return result;
   }
@@ -49,7 +45,4 @@ const mapCurrencies = (currencies: Array<Currency>, selectedValue?: string) => {
   return result;
 };
 
-export {
-  getSupportedCurrencies,
-  mapCurrencies,
-};
+export { getSupportedCurrencies, mapCurrencies };

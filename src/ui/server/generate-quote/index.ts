@@ -4,17 +4,7 @@ import { getPremiumRate } from './get-premium-rate';
 import { getPercentageOfNumber } from '../helpers/number';
 import { Quote, SubmittedData } from '../../types';
 
-const {
-  BUYER_COUNTRY,
-  CONTRACT_VALUE,
-  CREDIT_PERIOD,
-  CURRENCY,
-  MAX_AMOUNT_OWED,
-  PERCENTAGE_OF_COVER,
-  POLICY_TYPE,
-  POLICY_LENGTH,
-  QUOTE,
-} = FIELD_IDS;
+const { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE, POLICY_LENGTH, QUOTE } = FIELD_IDS;
 
 /**
  * getContractCost
@@ -49,13 +39,13 @@ const getTotalMonths = (policyType: string, policyLength: number, creditPeriod =
   const BUSINESS_BUFFER_MONTHS = 1;
 
   if (isSinglePolicyType(policyType)) {
-    const totalMonths = (policyLength + BUSINESS_BUFFER_MONTHS);
+    const totalMonths = policyLength + BUSINESS_BUFFER_MONTHS;
 
     return totalMonths;
   }
 
   if (isMultiPolicyType(policyType)) {
-    const totalMonths = (policyLength + creditPeriod + BUSINESS_BUFFER_MONTHS);
+    const totalMonths = policyLength + creditPeriod + BUSINESS_BUFFER_MONTHS;
 
     return totalMonths;
   }
@@ -71,10 +61,7 @@ const getTotalMonths = (policyType: string, policyLength: number, creditPeriod =
  * @param {Number} Total amount of the export
  * @returns {Number} Total months for the premium rate
  */
-const calculateCost = (
-  premiumRate: number,
-  amount: number,
-) => {
+const calculateCost = (premiumRate: number, amount: number) => {
   const result = getPercentageOfNumber(premiumRate, amount);
 
   return Number(result);
@@ -96,18 +83,9 @@ const generateQuote = (submittedData: SubmittedData): Quote => {
     policyLength: submittedData[POLICY_LENGTH],
   };
 
-  const totalMonths = getTotalMonths(
-    mapped[POLICY_TYPE],
-    mapped[POLICY_LENGTH],
-    mapped[CREDIT_PERIOD],
-  );
+  const totalMonths = getTotalMonths(mapped[POLICY_TYPE], mapped[POLICY_LENGTH], mapped[CREDIT_PERIOD]);
 
-  const premiumRate = getPremiumRate(
-    mapped[POLICY_TYPE],
-    mapped[BUYER_COUNTRY].riskCategory,
-    totalMonths,
-    mapped[PERCENTAGE_OF_COVER],
-  );
+  const premiumRate = getPremiumRate(mapped[POLICY_TYPE], mapped[BUYER_COUNTRY].riskCategory, totalMonths, mapped[PERCENTAGE_OF_COVER]);
 
   const quote = {
     ...mapped,
@@ -118,9 +96,4 @@ const generateQuote = (submittedData: SubmittedData): Quote => {
   return quote;
 };
 
-export {
-  getContractCost,
-  getTotalMonths,
-  calculateCost,
-  generateQuote,
-};
+export { getContractCost, getTotalMonths, calculateCost, generateQuote };

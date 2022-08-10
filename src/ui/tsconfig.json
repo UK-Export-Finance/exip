@@ -3,22 +3,22 @@
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
     /* Basic Options */
-    "target": "ESNEXT"                        /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
-    "module": "CommonJS",                       /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
-    "declaration": true,                      /* Generates corresponding '.d.ts' file. */
-    "outDir": "./lib/esm",                         /* Redirect output structure to the directory. */
+    "target": "ESNEXT" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
+    "module": "CommonJS" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
+    "declaration": true /* Generates corresponding '.d.ts' file. */,
+    "outDir": "./lib/esm" /* Redirect output structure to the directory. */,
     "lib": ["dom", "esnext"],
 
     /* Strict Type-Checking Options */
-    "strict": true                            /* Enable all strict type-checking options. */,
+    "strict": true /* Enable all strict type-checking options. */,
 
     /* Module Resolution Options */
     "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
     "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
 
     /* Experimental Options */
-    "experimentalDecorators": true,           /* Enables experimental support for ES7 decorators. */
-    "forceConsistentCasingInFileNames": true, /* Disallow inconsistently-cased references to the same file. */
+    "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
+    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
 
     "noPropertyAccessFromIndexSignature": false,
     "suppressImplicitAnyIndexErrors": true,
@@ -28,10 +28,7 @@
     "paths": {
       "*": ["types/*", "node_modules/@types"]
     },
-    "types": [
-      "node",
-      "jest"
-    ],
+    "types": ["node", "jest"],
     "typeRoots": [
       // "types/index.d.ts",
       // "types",
@@ -40,11 +37,6 @@
     "allowJs": true,
     "importHelpers": true
   },
-  "include": [
-    "**/*.ts"
-  ],
-  "exclude": [
-    "./node_modules/*",
-    "node_modules"
-  ]
+  "include": ["**/*.ts"],
+  "exclude": ["./node_modules/*", "node_modules"]
 }

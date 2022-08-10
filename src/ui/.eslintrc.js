@@ -25,7 +25,7 @@ module.exports = {
       },
     ],
     'no-console': ['error', { allow: ['info', 'error'] }],
-    'no-underscore-dangle': ['error', { allow: ['_id'] }],
+    'no-underscore-dangle': ['error', { allow: ['_id', '_csrf'] }],
     'import/no-named-as-default': 0,
     'implicit-arrow-linebreak': 0,
     'object-curly-newline': [
@@ -35,6 +35,6 @@ module.exports = {
       },
     ],
     'no-unneeded-ternary': 0,
-    "@typescript-eslint/dot-notation": 0,
+    '@typescript-eslint/dot-notation': 0,
   },
 };

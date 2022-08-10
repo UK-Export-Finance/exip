@@ -1,8 +1,5 @@
 import { FIELDS, LINKS, PAGES } from '../../content-strings';
-import {
-  FIELD_IDS,
-  ROUTES,
-} from '../../constants';
+import { FIELD_IDS, ROUTES } from '../../constants';
 import { AnswersContent, AnswersFieldGroups, SummaryListItem, SummaryListItemData } from '../../../types';
 
 const {
@@ -160,28 +157,31 @@ const getKeyText = (fieldId: string) => FIELDS[fieldId]?.SUMMARY?.TITLE;
  * for govukSummaryList component
  */
 const generateSummaryListRows = (fields: Array<SummaryListItemData>): Array<SummaryListItem> =>
-  fields.map((field: SummaryListItemData): SummaryListItem => ({
-    key: {
-      text: getKeyText(field.id),
-      classes: `${field.id}-key`,
-    },
-    value: {
-      text: field.value.text,
-      classes: `${field.id}-value`,
-    },
-    actions: {
-      items: [
-        {
-          href: field.href,
-          text: LINKS.CHANGE,
-          visuallyHiddenText: getKeyText(field.id),
-          attributes: {
-            'data-cy': `${field.id}-change-link`,
-          },
+  fields.map(
+    (field: SummaryListItemData): SummaryListItem =>
+      ({
+        key: {
+          text: getKeyText(field.id),
+          classes: `${field.id}-key`,
         },
-      ],
-    },
-  }) as SummaryListItem);
+        value: {
+          text: field.value.text,
+          classes: `${field.id}-value`,
+        },
+        actions: {
+          items: [
+            {
+              href: field.href,
+              text: LINKS.CHANGE,
+              visuallyHiddenText: getKeyText(field.id),
+              attributes: {
+                'data-cy': `${field.id}-change-link`,
+              },
+            },
+          ],
+        },
+      } as SummaryListItem),
+  );
 
 /*
  * answersSummaryList
@@ -204,9 +204,4 @@ const answersSummaryList = (answersContent: AnswersContent) => {
   return summaryList;
 };
 
-export {
-  generateFieldGroups,
-  getKeyText,
-  generateSummaryListRows,
-  answersSummaryList,
-};
+export { generateFieldGroups, getKeyText, generateSummaryListRows, answersSummaryList };

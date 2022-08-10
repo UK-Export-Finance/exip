@@ -1,9 +1,4 @@
-import {
-  PAGE_VARIABLES,
-  getBackLink,
-  get,
-  post,
-} from '.';
+import { PAGE_VARIABLES, getBackLink, get, post } from '.';
 import { LINKS, PAGES } from '../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../constants';
 import singleInputPageVariables from '../../helpers/single-input-page-variables';
@@ -13,12 +8,7 @@ import getCountryByName from '../../helpers/get-country-by-name';
 import api from '../../api';
 import { mapCountries } from '../../helpers/mappings/map-countries';
 import { updateSubmittedData } from '../../helpers/update-submitted-data';
-import {
-  mockReq,
-  mockRes,
-  mockAnswers,
-  mockSession,
-} from '../../test-mocks';
+import { mockReq, mockRes, mockAnswers, mockSession } from '../../test-mocks';
 import { Request, Response } from '../../../types';
 
 describe('controllers/buyer-country', () => {
@@ -142,10 +132,7 @@ describe('controllers/buyer-country', () => {
 
         await get(req, res);
 
-        const expectedCountries = mapCountries(
-          mockCountriesResponse,
-          req.session.submittedData[FIELD_IDS.BUYER_COUNTRY].isoCode,
-        );
+        const expectedCountries = mapCountries(mockCountriesResponse, req.session.submittedData[FIELD_IDS.BUYER_COUNTRY].isoCode);
 
         const expectedVariables = {
           ...singleInputPageVariables(PAGE_VARIABLES),
@@ -238,10 +225,7 @@ describe('controllers/buyer-country', () => {
           },
         };
 
-        const expected = updateSubmittedData(
-          expectedPopulatedData,
-          req.session.submittedData,
-        );
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData);
 
         expect(req.session.submittedData).toEqual(expected);
       });
@@ -252,7 +236,7 @@ describe('controllers/buyer-country', () => {
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.COMPANY_BASED);
       });
 
-      describe('when the url\'s last substring is `change`', () => {
+      describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, async () => {
           req.originalUrl = 'mock/change';
 

@@ -29,12 +29,7 @@ describe('server/generate-quote/get-premium-rate', () => {
       });
 
       it('should return a premium rate from pricing grid', () => {
-        const { result, expected } = getResultAndExpected(
-          mock.policyType,
-          mock.riskCategory,
-          mock.policyLengthInMonths,
-          mock.insuredFor,
-        );
+        const { result, expected } = getResultAndExpected(mock.policyType, mock.riskCategory, mock.policyLengthInMonths, mock.insuredFor);
 
         expect(result).toEqual(expected);
 
@@ -50,12 +45,7 @@ describe('server/generate-quote/get-premium-rate', () => {
       });
 
       it('should return a premium rate from pricing grid', () => {
-        const { result, expected } = getResultAndExpected(
-          mock.policyType,
-          mock.riskCategory,
-          mock.policyLengthInMonths,
-          mock.insuredFor,
-        );
+        const { result, expected } = getResultAndExpected(mock.policyType, mock.riskCategory, mock.policyLengthInMonths, mock.insuredFor);
 
         expect(result).toEqual(expected);
 
@@ -71,12 +61,7 @@ describe('server/generate-quote/get-premium-rate', () => {
       });
 
       it('should return a premium rate from pricing grid', () => {
-        const { result, expected } = getResultAndExpected(
-          mock.policyType,
-          mock.riskCategory,
-          mock.policyLengthInMonths,
-          mock.insuredFor,
-        );
+        const { result, expected } = getResultAndExpected(mock.policyType, mock.riskCategory, mock.policyLengthInMonths, mock.insuredFor);
 
         expect(result).toEqual(expected);
 
@@ -92,12 +77,7 @@ describe('server/generate-quote/get-premium-rate', () => {
       });
 
       it('should return a premium rate from pricing grid', () => {
-        const { result, expected } = getResultAndExpected(
-          mock.policyType,
-          mock.riskCategory,
-          mock.policyLengthInMonths,
-          mock.insuredFor,
-        );
+        const { result, expected } = getResultAndExpected(mock.policyType, mock.riskCategory, mock.policyLengthInMonths, mock.insuredFor);
 
         expect(result).toEqual(expected);
 
@@ -113,12 +93,7 @@ describe('server/generate-quote/get-premium-rate', () => {
       });
 
       it('should return a premium rate from pricing grid', () => {
-        const { result, expected } = getResultAndExpected(
-          mock.policyType,
-          mock.riskCategory,
-          mock.policyLengthInMonths,
-          mock.insuredFor,
-        );
+        const { result, expected } = getResultAndExpected(mock.policyType, mock.riskCategory, mock.policyLengthInMonths, mock.insuredFor);
 
         expect(result).toEqual(expected);
 
@@ -134,12 +109,7 @@ describe('server/generate-quote/get-premium-rate', () => {
       });
 
       it('should return a premium rate from pricing grid', () => {
-        const { result, expected } = getResultAndExpected(
-          mock.policyType,
-          mock.riskCategory,
-          mock.policyLengthInMonths,
-          mock.insuredFor,
-        );
+        const { result, expected } = getResultAndExpected(mock.policyType, mock.riskCategory, mock.policyLengthInMonths, mock.insuredFor);
 
         expect(result).toEqual(expected);
 
@@ -155,12 +125,7 @@ describe('server/generate-quote/get-premium-rate', () => {
       });
 
       it('should return a premium rate from pricing grid', () => {
-        const { result, expected } = getResultAndExpected(
-          mock.policyType,
-          mock.riskCategory,
-          mock.policyLengthInMonths,
-          mock.insuredFor,
-        );
+        const { result, expected } = getResultAndExpected(mock.policyType, mock.riskCategory, mock.policyLengthInMonths, mock.insuredFor);
 
         expect(result).toEqual(expected);
 
@@ -176,12 +141,7 @@ describe('server/generate-quote/get-premium-rate', () => {
       });
 
       it('should return a premium rate from pricing grid', () => {
-        const { result, expected } = getResultAndExpected(
-          mock.policyType,
-          mock.riskCategory,
-          mock.policyLengthInMonths,
-          mock.insuredFor,
-        );
+        const { result, expected } = getResultAndExpected(mock.policyType, mock.riskCategory, mock.policyLengthInMonths, mock.insuredFor);
 
         expect(result).toEqual(expected);
 

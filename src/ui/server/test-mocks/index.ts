@@ -16,6 +16,7 @@ const mockReq = () => {
     headers: {
       referer: '/mock',
     },
+    csrfToken: () => 'mock',
   };
 
   return req;
@@ -30,10 +31,4 @@ const mockRes = () => {
   return res;
 };
 
-export {
-  mockAnswers,
-  mockSession,
-  mockQuote,
-  mockReq,
-  mockRes,
-}
+export { mockAnswers, mockSession, mockQuote, mockReq, mockRes };

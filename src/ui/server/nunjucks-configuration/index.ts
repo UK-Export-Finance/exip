@@ -2,15 +2,12 @@ import nunjucks from 'nunjucks';
 
 interface Opts {
   autoescape: boolean;
-  express: any;
+  express: object;
   noCache: boolean;
 }
 
 const configureNunjucks = (opts: Opts) => {
-  const appViews = [
-    'node_modules/govuk-frontend',
-    'templates',
-  ];
+  const appViews = ['node_modules/govuk-frontend', 'templates'];
 
   nunjucks.configure(appViews, opts);
 

@@ -1,11 +1,6 @@
 import { PAGE_VARIABLES, get, post } from '.';
 import { BUTTONS, FOOTER, LINKS, PAGES, PRODUCT } from '../../content-strings';
-import {
-  FIELD_IDS,
-  FIELD_VALUES,
-  ROUTES,
-  TEMPLATES,
-} from '../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../constants';
 import { mapAnswersToContent } from '../../helpers/data-content-mappings/map-answers-to-content';
 import { answersSummaryList } from '../../helpers/summary-lists/answers-summary-list';
 import { mockReq, mockRes } from '../../test-mocks';
@@ -74,7 +69,7 @@ describe('controllers/check-your-answers', () => {
 
       const answers = mapAnswersToContent(mockSessionData);
 
-      const expectedSummaryList = answersSummaryList(answers); 
+      const expectedSummaryList = answersSummaryList(answers);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.CHECK_YOUR_ANSWERS, {
         ...PAGE_VARIABLES,

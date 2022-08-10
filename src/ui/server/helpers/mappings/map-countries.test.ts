@@ -1,9 +1,4 @@
-import {
-  mapRiskCategory,
-  mapIsSupported,
-  mapCountry,
-  mapCountries,
-} from './map-countries';
+import { mapRiskCategory, mapIsSupported, mapCountry, mapCountries } from './map-countries';
 import { API } from '../../constants';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
 import { CisCountry, Country } from '../../../types';
@@ -70,7 +65,7 @@ describe('server/helpers/mappings/map-countries', () => {
   });
 
   describe('mapIsSupported', () => {
-    let mockCountry = {
+    const mockCountry = {
       marketName: 'A',
       isoCode: 'B',
       shortTermCoverAvailabilityDesc: 'C',
@@ -173,10 +168,7 @@ describe('server/helpers/mappings/map-countries', () => {
 
       const result = mapCountries(mockCountries, mockSelectedIsoCode);
 
-      const expected = sortArrayAlphabetically([
-        mapCountry(mockCountries[0], mockSelectedIsoCode),
-        mapCountry(mockCountries[1], mockSelectedIsoCode),
-      ], 'name');
+      const expected = sortArrayAlphabetically([mapCountry(mockCountries[0], mockSelectedIsoCode), mapCountry(mockCountries[1], mockSelectedIsoCode)], 'name');
 
       expect(result).toEqual(expected);
     });

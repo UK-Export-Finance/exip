@@ -1,16 +1,6 @@
-import {
-  generatePageVariables,
-  get,
-  post,
-} from '.';
+import { generatePageVariables, get, post } from '.';
 import { BUTTONS, FIELDS, FOOTER, PAGES, PRODUCT } from '../../content-strings';
-import {
-  FIELD_IDS,
-  FIELD_VALUES,
-  PERCENTAGES_OF_COVER,
-  ROUTES,
-  TEMPLATES,
-} from '../../constants';
+import { FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../constants';
 import api from '../../api';
 import { mapCurrencies } from '../../helpers/mappings/map-currencies';
 import generateValidationErrors from './validation';
@@ -18,25 +8,10 @@ import getCurrencyByCode from '../../helpers/get-currency-by-code';
 import mapPercentageOfCover from '../../helpers/mappings/map-percentage-of-cover';
 import { updateSubmittedData } from '../../helpers/update-submitted-data';
 import { isSinglePolicyType, isMultiPolicyType } from '../../helpers/policy-type';
-import {
-  mockReq,
-  mockRes,
-  mockAnswers,
-  mockSession,
-} from '../../test-mocks';
+import { mockReq, mockRes, mockAnswers, mockSession } from '../../test-mocks';
 import { Request, Response, TellUsAboutPolicyPageVariables } from '../../../types';
 
-const {
-  AMOUNT_CURRENCY,
-  BUYER_COUNTRY,
-  CONTRACT_VALUE,
-  CREDIT_PERIOD,
-  CURRENCY,
-  MAX_AMOUNT_OWED,
-  PERCENTAGE_OF_COVER,
-  POLICY_TYPE,
-  POLICY_LENGTH,
-} = FIELD_IDS;
+const { AMOUNT_CURRENCY, BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE, POLICY_LENGTH } = FIELD_IDS;
 
 describe('controllers/tell-us-about-your-policy', () => {
   let req: Request;
@@ -57,7 +32,7 @@ describe('controllers/tell-us-about-your-policy', () => {
     },
   ];
 
-  let mappedPercentageOfCover: Array<Object>;
+  let mappedPercentageOfCover: Array<object>;
 
   const previousFlowSubmittedData = {
     [BUYER_COUNTRY]: mockSession.submittedData[BUYER_COUNTRY],
@@ -139,8 +114,8 @@ describe('controllers/tell-us-about-your-policy', () => {
             FOOTER,
             BUTTONS,
             ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
-            PAGE_TITLE:PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.MULTI_POLICY_PAGE_TITLE,
-            HEADING:PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.MULTI_POLICY_HEADING,
+            PAGE_TITLE: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.MULTI_POLICY_PAGE_TITLE,
+            HEADING: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.MULTI_POLICY_HEADING,
           },
           FIELDS: {
             AMOUNT_CURRENCY: {
@@ -253,10 +228,7 @@ describe('controllers/tell-us-about-your-policy', () => {
       it('should render template with currencies mapped to submitted currency and submittedValues', async () => {
         await get(req, res);
 
-        const expectedCurrencies = mapCurrencies(
-          mockCurrenciesResponse,
-          req.session.submittedData[CURRENCY].isoCode,
-        );
+        const expectedCurrencies = mapCurrencies(mockCurrenciesResponse, req.session.submittedData[CURRENCY].isoCode);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
           ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
@@ -279,15 +251,9 @@ describe('controllers/tell-us-about-your-policy', () => {
       it('should render template with percentage of cover mapped to submitted percentage and submittedValues', async () => {
         await get(req, res);
 
-        const expectedCurrencies = mapCurrencies(
-          mockCurrenciesResponse,
-          req.session.submittedData[CURRENCY].isoCode,
-        );
+        const expectedCurrencies = mapCurrencies(mockCurrenciesResponse, req.session.submittedData[CURRENCY].isoCode);
 
-        const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(
-          PERCENTAGES_OF_COVER,
-          req.session.submittedData[PERCENTAGE_OF_COVER],
-        );
+        const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData[PERCENTAGE_OF_COVER]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
           ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
@@ -375,10 +341,7 @@ describe('controllers/tell-us-about-your-policy', () => {
         it('should render template with mapped submitted percentage', async () => {
           await post(req, res);
 
-          const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(
-            PERCENTAGES_OF_COVER,
-            req.body[PERCENTAGE_OF_COVER],
-          );
+          const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.body[PERCENTAGE_OF_COVER]);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.TELL_US_ABOUT_YOUR_POLICY, {
             ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
@@ -414,17 +377,11 @@ describe('controllers/tell-us-about-your-policy', () => {
 
         const expectedPopulatedData = {
           ...validBody,
-          [CURRENCY]: getCurrencyByCode(
-            mockCurrenciesResponse,
-            validBody[CURRENCY],
-          ),
+          [CURRENCY]: getCurrencyByCode(mockCurrenciesResponse, validBody[CURRENCY]),
           [PERCENTAGE_OF_COVER]: validBody[PERCENTAGE_OF_COVER],
         };
 
-        const expected = updateSubmittedData(
-          expectedPopulatedData,
-          req.session.submittedData,
-        );
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData);
 
         expect(req.session.submittedData).toEqual(expected);
       });
@@ -435,7 +392,7 @@ describe('controllers/tell-us-about-your-policy', () => {
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.CHECK_YOUR_ANSWERS);
       });
 
-      describe('when the url\'s last substring is `change`', () => {
+      describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, async () => {
           req.originalUrl = 'mock/change';
 

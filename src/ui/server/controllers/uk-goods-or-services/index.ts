@@ -31,7 +31,7 @@ const post = (req: Request, res: Response) => {
 
   const answer = req.body[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
-  const redirectToExitPage = (answer === 'false');
+  const redirectToExitPage = answer === 'false';
 
   if (redirectToExitPage) {
     req.flash('previousRoute', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
@@ -44,10 +44,7 @@ const post = (req: Request, res: Response) => {
     return res.redirect(ROUTES.CANNOT_OBTAIN_COVER);
   }
 
-  req.session.submittedData = updateSubmittedData(
-    req.body,
-    req.session.submittedData,
-  );
+  req.session.submittedData = updateSubmittedData(req.body, req.session.submittedData);
 
   if (isChangeRoute(req.originalUrl)) {
     return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
@@ -56,8 +53,4 @@ const post = (req: Request, res: Response) => {
   return res.redirect(ROUTES.POLICY_TYPE);
 };
 
-export {
-  PAGE_VARIABLES,
-  get,
-  post,
-};
+export { PAGE_VARIABLES, get, post };

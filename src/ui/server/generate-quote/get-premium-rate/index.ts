@@ -1,7 +1,4 @@
-import {
-  API,
-  FIELD_VALUES,
-} from '../../constants';
+import { API, FIELD_VALUES } from '../../constants';
 import PRICING_GRID from '../pricing-grid.json';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from '../../../types';
 
@@ -25,12 +22,7 @@ const PRICING_GRID_MAP = {
  * @param {Number} Percentage of the export that will be insured
  * @returns {Number} Premium rate percentage
  */
-const getPremiumRate = (
-  policyType: string,
-  riskCategory: string,
-  totalMonths: number,
-  insuredFor: number,
-): number => {
+const getPremiumRate = (policyType: string, riskCategory: string, totalMonths: number, insuredFor: number): number => {
   const policyTypeKey = PRICING_GRID_MAP.POLICY_TYPE[policyType];
 
   const riskCategoryKey = PRICING_GRID_MAP.RISK_CATEGORY[riskCategory];
@@ -42,13 +34,9 @@ const getPremiumRate = (
   // const month = risk.find(({ months }) => months === totalMonths);
   const month = risk.find((month: PricingGridMonth) => month.months === totalMonths);
 
-  const rateObj = month.rates.find((rate: PricingGridRate) =>
-    rate.insuredFor === insuredFor);
+  const rateObj = month.rates.find((rate: PricingGridRate) => rate.insuredFor === insuredFor);
 
   return rateObj.premiumRate;
 };
 
-export {
-  PRICING_GRID_MAP,
-  getPremiumRate,
-};
+export { PRICING_GRID_MAP, getPremiumRate };

@@ -16,7 +16,7 @@ const PAGE_VARIABLES = {
 
 const get = async (req: Request, res: Response) => {
   const answers = mapAnswersToContent(req.session.submittedData);
-  
+
   const summaryList = answersSummaryList(answers);
 
   return res.render(TEMPLATES.CHECK_YOUR_ANSWERS, {

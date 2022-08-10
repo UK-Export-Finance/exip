@@ -1,9 +1,9 @@
-import { PAGES } from'../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from'../../constants';
-import singleInputPageVariables from'../../helpers/single-input-page-variables';
-import generateValidationErrors from'./validation';
-import { updateSubmittedData } from'../../helpers/update-submitted-data';
-import isChangeRoute from'../../helpers/is-change-route';
+import { PAGES } from '../../content-strings';
+import { FIELD_IDS, ROUTES, TEMPLATES } from '../../constants';
+import singleInputPageVariables from '../../helpers/single-input-page-variables';
+import generateValidationErrors from './validation';
+import { updateSubmittedData } from '../../helpers/update-submitted-data';
+import isChangeRoute from '../../helpers/is-change-route';
 import { Request, Response } from '../../../types';
 
 const PAGE_VARIABLES = {
@@ -29,10 +29,7 @@ const post = (req: Request, res: Response) => {
     });
   }
 
-  req.session.submittedData = updateSubmittedData(
-    req.body,
-    req.session.submittedData,
-  );
+  req.session.submittedData = updateSubmittedData(req.body, req.session.submittedData);
 
   const answer = req.body[FIELD_IDS.VALID_COMPANY_BASE];
 

@@ -1,5 +1,5 @@
 type Quote = {
-  buyerCountry:  Country;
+  buyerCountry: Country;
   currency: Currency;
   creditPeriodInMonths?: number;
   estimatedCost: number;
@@ -8,7 +8,7 @@ type Quote = {
   policyLength: number;
   policyType: number;
   premiumRatePercentage: number;
-}
+};
 
 interface AxiosHeaders {
   'Content-Type': string;
@@ -32,17 +32,22 @@ interface RequestSession {
 }
 
 interface RequestBody {
-  [key: string]: any;
+  [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 interface RequestHeaders {
   referer?: string;
 }
 
+interface ResponseLocals {
+  csrfToken: string;
+}
+
 interface Request {
   body: RequestBody;
+  csrfToken: () => string;
   headers: RequestHeaders;
-  flash: Function;
+  flash: (str1: string, str2?: string) => string;
   originalUrl: string;
   session: RequestSession;
 }
@@ -54,8 +59,11 @@ declare module 'express-session' {
 }
 
 interface Response {
-  render: Function;
-  redirect: Function;
+  redirect: (str: string) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  render: (str: string, object: any) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  locals: ResponseLocals;
+  setHeader: (str1: string, str2?: string) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  removeHeader: (str1: string) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 interface CisCountry {
@@ -93,7 +101,7 @@ type SubmittedData = {
   percentageOfCover?: number;
   policyType?: string;
   policyLength?: number;
-}
+};
 
 interface SummaryListField {
   text: string;
@@ -119,7 +127,7 @@ interface AnswersContent {
 
 type SummaryListItemDataValue = {
   text: string;
-}
+};
 
 type SummaryListItemData = {
   id: string;
@@ -127,21 +135,21 @@ type SummaryListItemData = {
   renderChangeLink?: boolean;
   title?: string;
   value: SummaryListItemDataValue;
-}
+};
 
 type SummaryListItemKey = {
   text: string;
   classes: string;
-}
+};
 
-type SummaryListItemValue =  {
+type SummaryListItemValue = {
   text: string;
   classes: string;
-}
+};
 
 type SummaryListItemActionsItemAttributes = {
   'data-cy': string;
-}
+};
 
 type SummaryListItemActionsItem = {
   attributes?: SummaryListItemActionsItemAttributes;
@@ -149,11 +157,11 @@ type SummaryListItemActionsItem = {
   href?: string;
   text?: string;
   visuallyHiddenText?: string;
-}
+};
 
 type SummaryListItemActions = {
-  items: Array<SummaryListItemActionsItem>
-}
+  items: Array<SummaryListItemActionsItem>;
+};
 
 interface SummaryListItem {
   actions: SummaryListItemActions;
@@ -180,35 +188,35 @@ interface QuoteContent {
 type ValidationErrorsSummaryItem = {
   text: string;
   href: string;
-}
+};
 
 interface ValidationErrors {
   count?: number;
-  errorList?: any;
+  errorList?: object;
   summary?: Array<ValidationErrorsSummaryItem>;
 }
 
 type PricingGridRate = {
   insuredFor: number;
   premiumRate: number;
-}
+};
 
 type PricingGridMonth = {
   months: number;
   rates: Array<PricingGridRate>;
-}
+};
 
 type PricingGridSinglePolicy = {
   HIGH: Array<PricingGridMonth>;
   STANDARD: Array<PricingGridMonth>;
   VERY_HIGH: Array<PricingGridMonth>;
-}
+};
 
 type PricingGridMultiPolicy = {
   HIGH: Array<PricingGridMonth>;
   STANDARD: Array<PricingGridMonth>;
   VERY_HIGH: Array<PricingGridMonth>;
-}
+};
 
 interface PricingGrid {
   SINGLE_POLICY: PricingGridSinglePolicy;
@@ -221,7 +229,7 @@ type TellUsAboutPolicyPageVariablesContentStrings = {
   BUTTONS: object;
   PAGE_TITLE?: string;
   HEADING?: string;
-}
+};
 
 type TellUsAboutPolicyPageVariablesFields = {
   AMOUNT_CURRENCY: object;
@@ -230,7 +238,7 @@ type TellUsAboutPolicyPageVariablesFields = {
   CURRENCY: object;
   PERCENTAGE_OF_COVER: object;
   MAX_AMOUNT_OWED?: object;
-}
+};
 
 interface TellUsAboutPolicyPageVariables {
   CONTENT_STRINGS: TellUsAboutPolicyPageVariablesContentStrings;

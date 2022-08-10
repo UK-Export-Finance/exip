@@ -29,11 +29,7 @@ interface PageVariables {
   BACK_LINK?: string;
 }
 
-const singleInputPageVariables = ({
-  FIELD_ID,
-  PAGE_CONTENT_STRINGS,
-  BACK_LINK,
-}: SingleInputPageVariables) => {
+const singleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK }: SingleInputPageVariables) => {
   const pageVariables: PageVariables = {
     CONTENT_STRINGS: {
       ...PAGE_CONTENT_STRINGS,

@@ -1,27 +1,10 @@
 import { LINKS, QUOTE_TITLES } from '../../content-strings';
-import {
-  FIELD_IDS,
-  ROUTES,
-} from '../../constants';
+import { FIELD_IDS, ROUTES } from '../../constants';
 import { QuoteContent, SummaryListItemData, SummaryListItem } from '../../../types';
 
-const {
-  BUYER_COUNTRY,
-  CONTRACT_VALUE,
-  MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
-  PERCENTAGE_OF_COVER,
-  POLICY_LENGTH,
-  QUOTE,
-  SINGLE_POLICY_LENGTH,
-} = FIELD_IDS;
+const { BUYER_COUNTRY, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, PERCENTAGE_OF_COVER, POLICY_LENGTH, QUOTE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
 
-const {
-  BUYER_LOCATION,
-  ESTIMATED_COST,
-  INSURED_FOR,
-  PREMIUM_RATE_PERCENTAGE,
-} = QUOTE;
+const { BUYER_LOCATION, ESTIMATED_COST, INSURED_FOR, PREMIUM_RATE_PERCENTAGE } = QUOTE;
 
 /*
  * generateFields
@@ -148,7 +131,7 @@ const generateSummaryListRows = (fields: Array<SummaryListItemData>): Array<Summ
         text: LINKS.CHANGE,
         visuallyHiddenText: field.title,
         attributes: {
-          'data-cy': `${field.id}-change-link`
+          'data-cy': `${field.id}-change-link`,
         },
         classes: 'ukef-white-text govuk-link--no-visited-state',
       });
@@ -169,8 +152,4 @@ const quoteSummaryList = (quoteContent: QuoteContent) => {
   return summaryList;
 };
 
-export {
-  generateFields,
-  generateSummaryListRows,
-  quoteSummaryList,
-};
+export { generateFields, generateSummaryListRows, quoteSummaryList };

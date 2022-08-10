@@ -87,10 +87,7 @@ describe('controllers/company-based', () => {
       it('should update the session with submitted data', () => {
         post(req, res);
 
-        const expected = updateSubmittedData(
-          req.body,
-          req.session.submittedData,
-        );
+        const expected = updateSubmittedData(req.body, req.session.submittedData);
 
         expect(req.session.submittedData).toEqual(expected);
       });
@@ -101,7 +98,7 @@ describe('controllers/company-based', () => {
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.CAN_GET_PRIVATE_INSURANCE);
       });
 
-      describe('when the url\'s last substring is `change`', () => {
+      describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
           req.originalUrl = 'mock/change';
 

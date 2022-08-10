@@ -1,8 +1,4 @@
-import {
-  isNumber,
-  numberHasDecimal,
-  getPercentageOfNumber,
-} from './number';
+import { isNumber, numberHasDecimal, getPercentageOfNumber } from './number';
 
 describe('server/helpers/number', () => {
   describe('isNumber', () => {

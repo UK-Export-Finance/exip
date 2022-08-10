@@ -3,15 +3,7 @@ import { isSinglePolicyType, isMultiPolicyType } from './policy-type';
 import { sanitiseData } from './sanitise-data';
 import { RequestBody, SubmittedData } from '../../types';
 
-const {
-  CREDIT_PERIOD,
-  CONTRACT_VALUE,
-  MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
-  POLICY_LENGTH,
-  POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
-} = FIELD_IDS;
+const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
 
 /*
  * mapSubmittedData
@@ -45,7 +37,8 @@ const mapSubmittedData = (submittedData: SubmittedData) => {
  * update session data with sanitised form data
  */
 const updateSubmittedData = (formData: RequestBody, existingData: SubmittedData) => {
-  const { _csrf, ...submittedFormData } = formData;
+  const submittedFormData = formData;
+  delete submittedFormData._csrf;
 
   const modifiedData = {
     ...existingData,
@@ -59,7 +52,4 @@ const updateSubmittedData = (formData: RequestBody, existingData: SubmittedData)
   return mappedFormData;
 };
 
-export {
-  mapSubmittedData,
-  updateSubmittedData,
-};
+export { mapSubmittedData, updateSubmittedData };

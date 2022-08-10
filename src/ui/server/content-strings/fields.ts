@@ -38,14 +38,15 @@ export const FIELDS = {
   },
   [FIELD_IDS.AMOUNT_CURRENCY]: {
     SINGLE_POLICY: {
-      LEGEND: 'What\'s the total value of the contract you want to insure?',
+      LEGEND: "What's the total value of the contract you want to insure?",
     },
     MULTI_POLICY: {
-      LEGEND: 'What\'s the maximum amount your buyer will owe you at any single point during the policy?',
+      LEGEND: "What's the maximum amount your buyer will owe you at any single point during the policy?",
     },
   },
   [FIELD_IDS.CURRENCY]: {
-    LABEL: 'Select a currency (pounds sterling, euros or US dollars). You can send out your invoices in most currencies but UKEF only issues policies in these 3 currencies.',
+    LABEL:
+      'Select a currency (pounds sterling, euros or US dollars). You can send out your invoices in most currencies but UKEF only issues policies in these 3 currencies.',
   },
   [FIELD_IDS.CONTRACT_VALUE]: {
     LABEL: 'Contract value',
@@ -92,7 +93,7 @@ export const FIELDS = {
         ID: FIELD_IDS.MULTI_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTI,
         TEXT: 'Multiple contract policy (also known as a revolving policy)',
-        HINT: 'This covers multiple export contracts with the same buyer. You do not need to pay before the policy starts. You\'ll pay each time you declare a new export sale.',
+        HINT: "This covers multiple export contracts with the same buyer. You do not need to pay before the policy starts. You'll pay each time you declare a new export sale.",
       },
     },
     SUMMARY: {

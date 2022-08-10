@@ -1,7 +1,4 @@
-import {
-  getSupportedCurrencies,
-  mapCurrencies,
-} from './map-currencies';
+import { getSupportedCurrencies, mapCurrencies } from './map-currencies';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
 
 describe('server/helpers/mappings/map-currencies', () => {
@@ -28,11 +25,7 @@ describe('server/helpers/mappings/map-currencies', () => {
     it('should only return supported currencies (GBP, EUR, USD)', () => {
       const result = getSupportedCurrencies(mockCurrencies);
 
-      const expected = [
-        mockCurrencies[0],
-        mockCurrencies[1],
-        mockCurrencies[2],
-      ];
+      const expected = [mockCurrencies[0], mockCurrencies[1], mockCurrencies[2]];
 
       expect(result).toEqual(expected);
     });
@@ -43,20 +36,23 @@ describe('server/helpers/mappings/map-currencies', () => {
       const supportedCurrencies = getSupportedCurrencies(mockCurrencies);
       const result = mapCurrencies(supportedCurrencies);
 
-      const expectedSorted = sortArrayAlphabetically([
-        {
-          text: `${mockCurrencies[0].isoCode} - ${mockCurrencies[0].name}`,
-          value: mockCurrencies[0].isoCode,
-        },
-        {
-          text: `${mockCurrencies[1].isoCode} - ${mockCurrencies[1].name}`,
-          value: mockCurrencies[1].isoCode,
-        },
-        {
-          text: `${mockCurrencies[2].isoCode} - ${mockCurrencies[2].name}`,
-          value: mockCurrencies[2].isoCode,
-        },
-      ], 'text');
+      const expectedSorted = sortArrayAlphabetically(
+        [
+          {
+            text: `${mockCurrencies[0].isoCode} - ${mockCurrencies[0].name}`,
+            value: mockCurrencies[0].isoCode,
+          },
+          {
+            text: `${mockCurrencies[1].isoCode} - ${mockCurrencies[1].name}`,
+            value: mockCurrencies[1].isoCode,
+          },
+          {
+            text: `${mockCurrencies[2].isoCode} - ${mockCurrencies[2].name}`,
+            value: mockCurrencies[2].isoCode,
+          },
+        ],
+        'text',
+      );
 
       const expected = [
         {
@@ -76,21 +72,24 @@ describe('server/helpers/mappings/map-currencies', () => {
 
         const result = mapCurrencies(mockCurrencies, mockSelectedValue);
 
-        const expected = sortArrayAlphabetically([
-          {
-            text: `${mockCurrencies[0].isoCode} - ${mockCurrencies[0].name}`,
-            value: mockCurrencies[0].isoCode,
-          },
-          {
-            text: `${mockCurrencies[1].isoCode} - ${mockCurrencies[1].name}`,
-            value: mockCurrencies[1].isoCode,
-            selected: true,
-          },
-          {
-            text: `${mockCurrencies[2].isoCode} - ${mockCurrencies[2].name}`,
-            value: mockCurrencies[2].isoCode,
-          },
-        ], 'text');
+        const expected = sortArrayAlphabetically(
+          [
+            {
+              text: `${mockCurrencies[0].isoCode} - ${mockCurrencies[0].name}`,
+              value: mockCurrencies[0].isoCode,
+            },
+            {
+              text: `${mockCurrencies[1].isoCode} - ${mockCurrencies[1].name}`,
+              value: mockCurrencies[1].isoCode,
+              selected: true,
+            },
+            {
+              text: `${mockCurrencies[2].isoCode} - ${mockCurrencies[2].name}`,
+              value: mockCurrencies[2].isoCode,
+            },
+          ],
+          'text',
+        );
 
         expect(result).toEqual(expected);
       });

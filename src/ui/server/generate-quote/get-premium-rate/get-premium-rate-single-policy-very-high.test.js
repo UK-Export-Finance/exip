@@ -1,5 +1,5 @@
-import { getAvailableCover, getResultAndExpected } = from './index.test';
-import { API, FIELD_VALUES } = from '../../constants';
+import { getAvailableCover, getResultAndExpected } from './index.test';
+import { API, FIELD_VALUES } from '../../constants';
 
 const veryHighRisk2Months = getAvailableCover('SINGLE_POLICY', 'VERY_HIGH', 2);
 const veryHighRisk3Months = getAvailableCover('SINGLE_POLICY', 'VERY_HIGH', 3);

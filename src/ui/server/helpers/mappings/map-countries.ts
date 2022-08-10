@@ -23,10 +23,10 @@ const mapIsSupported = (country: CisCountry) => {
     return false;
   }
 
-  const shortTermCoverAvailable = (country.shortTermCoverAvailabilityDesc === 'Yes');
-  const nbiAvailable = (country.NBIIssue === 'Y');
+  const shortTermCoverAvailable = country.shortTermCoverAvailabilityDesc === 'Yes';
+  const nbiAvailable = country.NBIIssue === 'Y';
 
-  const isSupported = (shortTermCoverAvailable && nbiAvailable);
+  const isSupported = shortTermCoverAvailable && nbiAvailable;
 
   if (isSupported) {
     return true;
@@ -63,9 +63,4 @@ const mapCountries = (countries: Array<CisCountry>, selectedIsoCode?: string) =>
   return sorted;
 };
 
-export {
-  mapRiskCategory,
-  mapIsSupported,
-  mapCountry,
-  mapCountries,
-};
+export { mapRiskCategory, mapIsSupported, mapCountry, mapCountries };

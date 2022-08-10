@@ -49,13 +49,7 @@ const getCurrencies = async () => {
   }
 };
 
-interface Api {
-  getCountries: Function;
-  getCurrencies: Function;
-}
-
-
-const api: Api = {
+const api = {
   getCountries,
   getCurrencies,
 };

@@ -13,8 +13,10 @@ import yourQuoteGet from '../controllers/your-quote';
 import cookiesGet from '../controllers/cookies';
 import problemWithServiceGet from '../controllers/problem-with-service';
 
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 const router = express.Router();
+/* eslint-enable @typescript-eslint/ban-ts-comment */
 
 router.get(ROUTES.ROOT, rootGet);
 

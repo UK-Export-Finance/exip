@@ -1,17 +1,9 @@
-import {
-  mapCanGetPrivateInsurance,
-  mapPolicyType,
-  mapPercentageOfCover,
-  mapAnswersToContent,
-} from './map-answers-to-content';
+import { mapCanGetPrivateInsurance, mapPolicyType, mapPercentageOfCover, mapAnswersToContent } from './map-answers-to-content';
 import mapCountry from './map-country';
 import mapCost from './map-cost';
 import mapPeriodMonths from './map-period-months';
 import mapPolicyLength from './map-policy-length';
-import {
-  FIELD_IDS,
-  FIELD_VALUES,
-} from '../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { SUMMARY_ANSWERS } from '../../content-strings';
 import { mockAnswers } from '../../test-mocks';
 

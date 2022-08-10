@@ -53,7 +53,7 @@ export const get = async (req: Request, res: Response) => {
   let countryValue;
 
   if (submittedData && submittedData[FIELD_IDS.BUYER_COUNTRY]) {
-    countryValue = submittedData[FIELD_IDS.BUYER_COUNTRY]; 
+    countryValue = submittedData[FIELD_IDS.BUYER_COUNTRY];
   }
 
   let mappedCountries;

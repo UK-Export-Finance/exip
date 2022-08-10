@@ -8,11 +8,7 @@ const currencyRules = (formBody: RequestBody, errors: object) => {
   let updatedErrors = errors;
 
   if (!objectHasProperty(formBody, FIELD_IDS.CURRENCY)) {
-    updatedErrors = generateValidationErrors(
-      FIELD_IDS.CURRENCY,
-      ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,
-      errors,
-    );
+    updatedErrors = generateValidationErrors(FIELD_IDS.CURRENCY, ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY, errors);
   }
 
   return updatedErrors;

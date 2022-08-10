@@ -8,11 +8,7 @@ const amountRules = (formBody: RequestBody, errors: object) => {
   let updatedErrors = errors;
 
   if (!objectHasProperty(formBody, FIELD_IDS.PERCENTAGE_OF_COVER)) {
-    updatedErrors = generateValidationErrors(
-      FIELD_IDS.PERCENTAGE_OF_COVER,
-      ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY,
-      errors,
-    );
+    updatedErrors = generateValidationErrors(FIELD_IDS.PERCENTAGE_OF_COVER, ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY, errors);
 
     return updatedErrors;
   }

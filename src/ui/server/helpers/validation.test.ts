@@ -2,10 +2,7 @@ import generateValidationErrors from './validation';
 
 describe('server/helpers/validation', () => {
   it('should return errorList and summary from given params', () => {
-    const result = generateValidationErrors(
-      'firstName',
-      'Enter first name',
-    );
+    const result = generateValidationErrors('firstName', 'Enter first name');
 
     expect(result).toEqual({
       count: 1,
@@ -15,32 +12,23 @@ describe('server/helpers/validation', () => {
           order: 1,
         },
       },
-      summary: [{
-        text: 'Enter first name',
-        href: '#firstName',
-      }],
+      summary: [
+        {
+          text: 'Enter first name',
+          href: '#firstName',
+        },
+      ],
     });
   });
 
   it('should return errorList and summary with multiple errors, incrementing the order and count', () => {
-    const firstNameErrors = generateValidationErrors(
-      'firstName',
-      'Enter first name',
-    );
+    const firstNameErrors = generateValidationErrors('firstName', 'Enter first name');
 
-    const middleNameErrors = generateValidationErrors(
-      'middleName',
-      'Enter middle name',
-      firstNameErrors,
-    );
+    const middleNameErrors = generateValidationErrors('middleName', 'Enter middle name', firstNameErrors);
 
     const previousErrors = middleNameErrors;
 
-    const result = generateValidationErrors(
-      'lastName',
-      'Enter last name',
-      previousErrors,
-    );
+    const result = generateValidationErrors('lastName', 'Enter last name', previousErrors);
 
     expect(result).toEqual({
       count: 3,

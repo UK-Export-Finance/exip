@@ -8,10 +8,7 @@ describe('controllers/can-get-private-insurance/validation', () => {
     it('should return validation errors', () => {
       const result = validation({});
 
-      const expected = generateValidationErrors(
-        FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_YES,
-        ERROR_MESSAGES[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE],
-      );
+      const expected = generateValidationErrors(FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_YES, ERROR_MESSAGES[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE]);
 
       expect(result).toEqual(expected);
     });
@@ -21,10 +18,7 @@ describe('controllers/can-get-private-insurance/validation', () => {
     it('should return validation errors', () => {
       const result = validation({});
 
-      const expected = generateValidationErrors(
-        FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_YES,
-        ERROR_MESSAGES[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE],
-      );
+      const expected = generateValidationErrors(FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_YES, ERROR_MESSAGES[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE]);
 
       expect(result).toEqual(expected);
     });

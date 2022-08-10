@@ -1,9 +1,6 @@
 import { FIELD_IDS } from '../../../../constants';
 import { ERROR_MESSAGES } from '../../../../content-strings';
-import {
-  isSinglePolicyType,
-  isMultiPolicyType,
-} from '../../../../helpers/policy-type';
+import { isSinglePolicyType, isMultiPolicyType } from '../../../../helpers/policy-type';
 import generateValidationErrors from '../../../../helpers/validation';
 import { objectHasProperty } from '../../../../helpers/object';
 import { isNumber, numberHasDecimal } from '../../../../helpers/number';
@@ -21,11 +18,7 @@ const policyLengthRules = (formBody: RequestBody, errors: object) => {
       if (!objectHasProperty(formBody, FIELD_IDS.SINGLE_POLICY_LENGTH)) {
         const errorMessage = ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY;
 
-        updatedErrors = generateValidationErrors(
-          FIELD_IDS.SINGLE_POLICY_LENGTH,
-          errorMessage,
-          errors,
-        );
+        updatedErrors = generateValidationErrors(FIELD_IDS.SINGLE_POLICY_LENGTH, errorMessage, errors);
 
         return updatedErrors;
       }
@@ -41,31 +34,19 @@ const policyLengthRules = (formBody: RequestBody, errors: object) => {
       }
 
       if (!isNumber(Number(formBody[FIELD_IDS.SINGLE_POLICY_LENGTH]))) {
-        updatedErrors = generateValidationErrors(
-          FIELD_IDS.SINGLE_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER,
-          updatedErrors,
-        );
+        updatedErrors = generateValidationErrors(FIELD_IDS.SINGLE_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER, updatedErrors);
 
         return updatedErrors;
       }
 
       if (Number(formBody[FIELD_IDS.SINGLE_POLICY_LENGTH]) < MINIMUM) {
-        updatedErrors = generateValidationErrors(
-          FIELD_IDS.SINGLE_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM,
-          updatedErrors,
-        );
+        updatedErrors = generateValidationErrors(FIELD_IDS.SINGLE_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM, updatedErrors);
 
         return updatedErrors;
       }
 
       if (Number(formBody[FIELD_IDS.SINGLE_POLICY_LENGTH]) > SINGLE_POLICY_MAX_MONTHS) {
-        updatedErrors = generateValidationErrors(
-          FIELD_IDS.SINGLE_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM,
-          updatedErrors,
-        );
+        updatedErrors = generateValidationErrors(FIELD_IDS.SINGLE_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM, updatedErrors);
 
         return updatedErrors;
       }
@@ -75,11 +56,7 @@ const policyLengthRules = (formBody: RequestBody, errors: object) => {
       if (!objectHasProperty(formBody, FIELD_IDS.MULTI_POLICY_LENGTH)) {
         const errorMessage = ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].IS_EMPTY;
 
-        updatedErrors = generateValidationErrors(
-          FIELD_IDS.MULTI_POLICY_LENGTH,
-          errorMessage,
-          errors,
-        );
+        updatedErrors = generateValidationErrors(FIELD_IDS.MULTI_POLICY_LENGTH, errorMessage, errors);
 
         return updatedErrors;
       }
@@ -95,31 +72,19 @@ const policyLengthRules = (formBody: RequestBody, errors: object) => {
       }
 
       if (!isNumber(Number(formBody[FIELD_IDS.MULTI_POLICY_LENGTH]))) {
-        updatedErrors = generateValidationErrors(
-          FIELD_IDS.MULTI_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_NUMBER,
-          updatedErrors,
-        );
+        updatedErrors = generateValidationErrors(FIELD_IDS.MULTI_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_NUMBER, updatedErrors);
 
         return updatedErrors;
       }
 
       if (Number(formBody[FIELD_IDS.MULTI_POLICY_LENGTH]) < MINIMUM) {
-        updatedErrors = generateValidationErrors(
-          FIELD_IDS.MULTI_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].BELOW_MINIMUM,
-          updatedErrors,
-        );
+        updatedErrors = generateValidationErrors(FIELD_IDS.MULTI_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].BELOW_MINIMUM, updatedErrors);
 
         return updatedErrors;
       }
 
       if (Number(formBody[FIELD_IDS.MULTI_POLICY_LENGTH]) > MULTI_POLICY_MAX_MONTHS) {
-        updatedErrors = generateValidationErrors(
-          FIELD_IDS.MULTI_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].ABOVE_MAXIMUM,
-          updatedErrors,
-        );
+        updatedErrors = generateValidationErrors(FIELD_IDS.MULTI_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].ABOVE_MAXIMUM, updatedErrors);
 
         return updatedErrors;
       }

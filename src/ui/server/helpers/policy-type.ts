@@ -16,7 +16,4 @@ const isMultiPolicyType = (policyType: string) => {
   return false;
 };
 
-export {
-  isSinglePolicyType,
-  isMultiPolicyType,
-};
+export { isSinglePolicyType, isMultiPolicyType };

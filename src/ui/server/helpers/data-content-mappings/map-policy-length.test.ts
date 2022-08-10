@@ -1,18 +1,10 @@
 import mapPolicyLength from './map-policy-length';
 import mapPeriodMonths from './map-period-months';
-import {
-  FIELD_IDS,
-  FIELD_VALUES,
-} from '../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { Quote } from '../../../types';
 import { mockQuote } from '../../test-mocks';
 
-const {
-  POLICY_TYPE,
-  POLICY_LENGTH,
-  SINGLE_POLICY_LENGTH,
-  MULTI_POLICY_LENGTH,
-} = FIELD_IDS;
+const { POLICY_TYPE, POLICY_LENGTH, SINGLE_POLICY_LENGTH, MULTI_POLICY_LENGTH } = FIELD_IDS;
 
 describe('server/helpers/map-policy-length', () => {
   describe('when policy type is single', () => {

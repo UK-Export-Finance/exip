@@ -17,11 +17,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/percentage-of-c
 
       const result = rule(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(
-        FIELD_IDS.PERCENTAGE_OF_COVER,
-        ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY,
-        mockErrors,
-      );
+      const expected = generateValidationErrors(FIELD_IDS.PERCENTAGE_OF_COVER, ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY, mockErrors);
 
       expect(result).toEqual(expected);
     });

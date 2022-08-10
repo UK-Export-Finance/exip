@@ -1,19 +1,8 @@
-import {
-  mapSubmittedData,
-  updateSubmittedData,
-} = from'./update-submitted-data';
+import { mapSubmittedData, updateSubmittedData } from './update-submitted-data';
 import { FIELD_IDS, FIELD_VALUES } from '../constants';
 import { sanitiseData } from './sanitise-data';
 
-const {
-  CREDIT_PERIOD,
-  CONTRACT_VALUE,
-  MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
-  POLICY_LENGTH,
-  POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
-} = FIELD_IDS;
+const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
 
 describe('server/helpers/update-submitted-data', () => {
   describe('mapSubmittedData', () => {
@@ -165,10 +154,7 @@ describe('server/helpers/update-submitted-data', () => {
           mock: true,
         };
 
-        const result = updateSubmittedData(
-          mockFormData,
-          mockExistingData,
-        );
+        const result = updateSubmittedData(mockFormData, mockExistingData);
 
         const expectedSanitisedData = sanitiseData({
           ...mockExistingData,
@@ -189,10 +175,7 @@ describe('server/helpers/update-submitted-data', () => {
 
         const mockExistingData = {};
 
-        const result = updateSubmittedData(
-          mockFormData,
-          mockExistingData,
-        );
+        const result = updateSubmittedData(mockFormData, mockExistingData);
 
         const expectedSanitisedData = sanitiseData({
           ...mockExistingData,
@@ -213,10 +196,7 @@ describe('server/helpers/update-submitted-data', () => {
 
       const mockExistingData = {};
 
-      const result = updateSubmittedData(
-        mockFormData,
-        mockExistingData,
-      );
+      const result = updateSubmittedData(mockFormData, mockExistingData);
 
       const expectedSanitisedData = sanitiseData({
         ...mockExistingData,

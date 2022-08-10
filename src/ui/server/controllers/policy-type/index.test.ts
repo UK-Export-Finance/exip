@@ -105,10 +105,7 @@ describe('controllers/policy-type', () => {
       it('should update the session with submitted data', () => {
         post(req, res);
 
-        const expected = updateSubmittedData(
-          req.body,
-          req.session.submittedData,
-        );
+        const expected = updateSubmittedData(req.body, req.session.submittedData);
 
         expect(req.session.submittedData).toEqual(expected);
       });

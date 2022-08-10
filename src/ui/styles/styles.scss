@@ -1,7 +1,7 @@
 $govuk-new-link-styles: true;
 
-@import "node_modules/govuk-frontend/govuk/all";
-@import "./accessible-autocomplete.min.scss";
+@import 'node_modules/govuk-frontend/govuk/all';
+@import './accessible-autocomplete.min.scss';
 
 .ukef-white-text {
   color: govuk-colour('white');
@@ -18,7 +18,7 @@ $govuk-new-link-styles: true;
   position: relative;
   padding: 0 25px;
   &::before {
-    content: "—";
+    content: '—';
     position: absolute;
     left: 0;
     overflow: hidden;

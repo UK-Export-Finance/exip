@@ -1,12 +1,7 @@
 import mapPercentageOfCover from './map-percentage-of-cover';
 
 describe('server/helpers/mappings/map-percentage-of-cover', () => {
-  const mockPercentages = [
-    80,
-    85,
-    90,
-    95,
-  ];
+  const mockPercentages = [80, 85, 90, 95];
 
   describe('mapCurrencies', () => {
     it('should return an array of mapped objects with a default option', () => {

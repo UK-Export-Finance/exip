@@ -1,7 +1,4 @@
-import {
-  hasDisllowedCharacters,
-  costRules,
-} from './cost';
+import { hasDisllowedCharacters, costRules } from './cost';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../constants';
 import { ERROR_MESSAGES } from '../../../../content-strings';
 import generateValidationErrors from '../../../../helpers/validation';
@@ -41,11 +38,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/cost', () => {
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(
-            FIELD_IDS.CONTRACT_VALUE,
-            ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].IS_EMPTY,
-            mockErrors,
-          );
+          const expected = generateValidationErrors(FIELD_IDS.CONTRACT_VALUE, ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].IS_EMPTY, mockErrors);
 
           expect(result).toEqual(expected);
         });
@@ -60,11 +53,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/cost', () => {
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(
-            FIELD_IDS.CONTRACT_VALUE,
-            ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_WHOLE_NUMBER,
-            mockErrors,
-          );
+          const expected = generateValidationErrors(FIELD_IDS.CONTRACT_VALUE, ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_WHOLE_NUMBER, mockErrors);
 
           expect(result).toEqual(expected);
         });
@@ -79,11 +68,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/cost', () => {
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(
-            FIELD_IDS.CONTRACT_VALUE,
-            ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER,
-            mockErrors,
-          );
+          const expected = generateValidationErrors(FIELD_IDS.CONTRACT_VALUE, ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER, mockErrors);
 
           expect(result).toEqual(expected);
         });
@@ -98,11 +83,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/cost', () => {
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(
-            FIELD_IDS.CONTRACT_VALUE,
-            ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER,
-            mockErrors,
-          );
+          const expected = generateValidationErrors(FIELD_IDS.CONTRACT_VALUE, ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER, mockErrors);
 
           expect(result).toEqual(expected);
         });
@@ -117,11 +98,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/cost', () => {
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(
-            FIELD_IDS.CONTRACT_VALUE,
-            ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].BELOW_MINIMUM,
-            mockErrors,
-          );
+          const expected = generateValidationErrors(FIELD_IDS.CONTRACT_VALUE, ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].BELOW_MINIMUM, mockErrors);
 
           expect(result).toEqual(expected);
         });
@@ -151,11 +128,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/cost', () => {
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(
-            FIELD_IDS.MAX_AMOUNT_OWED,
-            ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].IS_EMPTY,
-            mockErrors,
-          );
+          const expected = generateValidationErrors(FIELD_IDS.MAX_AMOUNT_OWED, ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].IS_EMPTY, mockErrors);
 
           expect(result).toEqual(expected);
         });
@@ -170,11 +143,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/cost', () => {
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(
-            FIELD_IDS.MAX_AMOUNT_OWED,
-            ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER,
-            mockErrors,
-          );
+          const expected = generateValidationErrors(FIELD_IDS.MAX_AMOUNT_OWED, ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER, mockErrors);
 
           expect(result).toEqual(expected);
         });
@@ -189,11 +158,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/cost', () => {
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(
-            FIELD_IDS.MAX_AMOUNT_OWED,
-            ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_NUMBER,
-            mockErrors,
-          );
+          const expected = generateValidationErrors(FIELD_IDS.MAX_AMOUNT_OWED, ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_NUMBER, mockErrors);
 
           expect(result).toEqual(expected);
         });
@@ -208,11 +173,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/cost', () => {
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(
-            FIELD_IDS.MAX_AMOUNT_OWED,
-            ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_NUMBER,
-            mockErrors,
-          );
+          const expected = generateValidationErrors(FIELD_IDS.MAX_AMOUNT_OWED, ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_NUMBER, mockErrors);
 
           expect(result).toEqual(expected);
         });
@@ -227,11 +188,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/cost', () => {
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(
-            FIELD_IDS.MAX_AMOUNT_OWED,
-            ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].BELOW_MINIMUM,
-            mockErrors,
-          );
+          const expected = generateValidationErrors(FIELD_IDS.MAX_AMOUNT_OWED, ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].BELOW_MINIMUM, mockErrors);
 
           expect(result).toEqual(expected);
         });

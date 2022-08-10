@@ -1,7 +1,4 @@
-import {
-  FIELD_IDS,
-  FIELD_VALUES,
-} from '../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { SUMMARY_ANSWERS } from '../../content-strings';
 import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
 import mapCountry from './map-country';
@@ -92,9 +89,4 @@ const mapAnswersToContent = (answers: SubmittedData) => {
   return mapped;
 };
 
-export {
-  mapCanGetPrivateInsurance,
-  mapPolicyType,
-  mapPercentageOfCover,
-  mapAnswersToContent,
-};
+export { mapCanGetPrivateInsurance, mapPolicyType, mapPercentageOfCover, mapAnswersToContent };

@@ -8,10 +8,7 @@ describe('controllers/company-based/validation', () => {
     it('should return validation errors', () => {
       const result = validation({});
 
-      const expected = generateValidationErrors(
-        FIELD_IDS.VALID_COMPANY_BASE,
-        ERROR_MESSAGES[FIELD_IDS.VALID_COMPANY_BASE],
-      );
+      const expected = generateValidationErrors(FIELD_IDS.VALID_COMPANY_BASE, ERROR_MESSAGES[FIELD_IDS.VALID_COMPANY_BASE]);
 
       expect(result).toEqual(expected);
     });
@@ -21,10 +18,7 @@ describe('controllers/company-based/validation', () => {
     it('should return validation errors', () => {
       const result = validation({});
 
-      const expected = generateValidationErrors(
-        FIELD_IDS.VALID_COMPANY_BASE,
-        ERROR_MESSAGES[FIELD_IDS.VALID_COMPANY_BASE],
-      );
+      const expected = generateValidationErrors(FIELD_IDS.VALID_COMPANY_BASE, ERROR_MESSAGES[FIELD_IDS.VALID_COMPANY_BASE]);
 
       expect(result).toEqual(expected);
     });

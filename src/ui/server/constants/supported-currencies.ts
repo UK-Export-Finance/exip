@@ -1,5 +1,1 @@
-export const SUPPORTED_CURRENCIES = [
-  'EUR',
-  'GBP',
-  'USD',
-];
+export const SUPPORTED_CURRENCIES = ['EUR', 'GBP', 'USD'];

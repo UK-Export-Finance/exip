@@ -1,7 +1,4 @@
-import {
-  isSinglePolicyType,
-  isMultiPolicyType,
-} from './policy-type';
+import { isSinglePolicyType, isMultiPolicyType } from './policy-type';
 import { FIELD_VALUES } from '../constants';
 
 describe('server/helpers/policy-type', () => {

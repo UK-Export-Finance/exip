@@ -53,8 +53,4 @@ const sanitiseData = (formData: RequestBody) => {
   return sanitised;
 };
 
-export {
-  shouldChangeToNumber,
-  sanitiseValue,
-  sanitiseData,
-};
+export { shouldChangeToNumber, sanitiseValue, sanitiseData };

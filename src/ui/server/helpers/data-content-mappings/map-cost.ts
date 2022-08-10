@@ -3,12 +3,7 @@ import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
 import formatCurrency from '../format-currency';
 import { SubmittedData } from '../../../types';
 
-const {
-  CONTRACT_VALUE,
-  CURRENCY,
-  POLICY_TYPE,
-  MAX_AMOUNT_OWED,
-} = FIELD_IDS;
+const { CONTRACT_VALUE, CURRENCY, POLICY_TYPE, MAX_AMOUNT_OWED } = FIELD_IDS;
 
 const mapCost = (answers: SubmittedData) => {
   let mapped;

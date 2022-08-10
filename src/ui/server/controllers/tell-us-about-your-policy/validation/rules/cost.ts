@@ -33,31 +33,19 @@ const costRules = (formBody: RequestBody, errors: object) => {
   }
 
   if (!objectHasProperty(formBody, fieldId)) {
-    updatedErrors = generateValidationErrors(
-      fieldId,
-      ERROR_MESSAGES[fieldId].IS_EMPTY,
-      errors,
-    );
+    updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES[fieldId].IS_EMPTY, errors);
 
     return updatedErrors;
   }
 
   if (numberHasDecimal(formBody[fieldId])) {
-    updatedErrors = generateValidationErrors(
-      fieldId,
-      ERROR_MESSAGES[fieldId].NOT_A_WHOLE_NUMBER,
-      errors,
-    );
+    updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES[fieldId].NOT_A_WHOLE_NUMBER, errors);
 
     return updatedErrors;
   }
 
   if (hasDisllowedCharacters(formBody[fieldId])) {
-    updatedErrors = generateValidationErrors(
-      fieldId,
-      ERROR_MESSAGES[fieldId].NOT_A_NUMBER,
-      errors,
-    );
+    updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES[fieldId].NOT_A_NUMBER, errors);
 
     return updatedErrors;
   }
@@ -65,11 +53,7 @@ const costRules = (formBody: RequestBody, errors: object) => {
   const cleanString = stripCommas(formBody[fieldId]);
 
   if (Number(cleanString) < MINIMUM) {
-    updatedErrors = generateValidationErrors(
-      fieldId,
-      ERROR_MESSAGES[fieldId].BELOW_MINIMUM,
-      errors,
-    );
+    updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES[fieldId].BELOW_MINIMUM, errors);
 
     return updatedErrors;
   }
@@ -77,7 +61,4 @@ const costRules = (formBody: RequestBody, errors: object) => {
   return updatedErrors;
 };
 
-export {
-  hasDisllowedCharacters,
-  costRules,
-};
+export { hasDisllowedCharacters, costRules };

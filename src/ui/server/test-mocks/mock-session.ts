@@ -1,10 +1,7 @@
 import { API, FIELD_IDS } from '../constants';
 import mockAnswers from './mock-answers';
 
-const {
-  BUYER_COUNTRY,
-  CURRENCY,
-} = FIELD_IDS;
+const { BUYER_COUNTRY, CURRENCY } = FIELD_IDS;
 
 const mockSession = {
   submittedData: {

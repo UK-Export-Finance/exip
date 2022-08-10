@@ -12,17 +12,10 @@
 //   },
 // };
 
-
-
 module.exports = {
   clearMocks: true,
   collectCoverage: true,
-  collectCoverageFrom: [
-    'server/controllers/**/*.{ts,}',
-    'server/routes/**/*.{ts,}',
-    'server/helpers/*.{ts,}',
-    'server/generate-quote/*.{ts,}',
-  ],
+  collectCoverageFrom: ['server/controllers/**/*.{ts,}', 'server/routes/**/*.{ts,}', 'server/helpers/*.{ts,}', 'server/generate-quote/*.{ts,}'],
   coverageDirectory: 'generated_reports/coverage/tests',
   coveragePathIgnorePatterns: ['/node_modules/'],
   testMatch: ['**/*.test.ts'],

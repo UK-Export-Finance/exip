@@ -25,4 +25,3 @@ export const FIELD_IDS = {
     BUYER_LOCATION: 'buyerCountry', //  TODO: buyer location / buyer country?
   },
 };
-

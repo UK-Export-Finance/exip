@@ -1,10 +1,5 @@
 import { BUTTONS, FIELDS, FOOTER, PAGES, PRODUCT } from '../../content-strings';
-import {
-  FIELD_IDS,
-  PERCENTAGES_OF_COVER,
-  ROUTES,
-  TEMPLATES,
-} from '../../constants';
+import { FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../constants';
 import api from '../../api';
 import { mapCurrencies } from '../../helpers/mappings/map-currencies';
 import generateValidationErrors from './validation';
@@ -15,15 +10,7 @@ import isChangeRoute from '../../helpers/is-change-route';
 import { isSinglePolicyType, isMultiPolicyType } from '../../helpers/policy-type';
 import { Request, Response, TellUsAboutPolicyPageVariables } from '../../../types';
 
-const {
-  AMOUNT_CURRENCY,
-  CONTRACT_VALUE,
-  CREDIT_PERIOD,
-  CURRENCY,
-  MAX_AMOUNT_OWED,
-  PERCENTAGE_OF_COVER,
-  POLICY_TYPE,
-} = FIELD_IDS;
+const { AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE } = FIELD_IDS;
 
 const generatePageVariables = (policyType: string) => {
   const pageVariables: TellUsAboutPolicyPageVariables = {
@@ -179,10 +166,7 @@ const post = async (req: Request, res: Response) => {
     [FIELD_IDS.CURRENCY]: getCurrencyByCode(currencies, submittedCurrencyCode),
   };
 
-  req.session.submittedData = updateSubmittedData(
-    populatedData,
-    req.session.submittedData,
-  );
+  req.session.submittedData = updateSubmittedData(populatedData, req.session.submittedData);
 
   if (isChangeRoute(req.originalUrl)) {
     return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
@@ -191,8 +175,4 @@ const post = async (req: Request, res: Response) => {
   return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
 };
 
-export {
-  generatePageVariables,
-  get,
-  post,
-};
+export { generatePageVariables, get, post };

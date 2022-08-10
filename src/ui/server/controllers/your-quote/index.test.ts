@@ -1,14 +1,10 @@
-import controller from'.';
+import controller from '.';
 import { PRODUCT, FOOTER, BUTTONS, LINKS, PAGES } from '../../content-strings';
-import { TEMPLATES } from'../../constants';
-import { generateQuote } from'../../generate-quote';
-import mapQuoteToContent from'../../helpers/data-content-mappings/map-quote-to-content';
-import { quoteSummaryList } from'../../helpers/summary-lists/quote-summary-list';
-import {
-  mockReq,
-  mockRes,
-  mockSession,
-} from'../../test-mocks';
+import { TEMPLATES } from '../../constants';
+import { generateQuote } from '../../generate-quote';
+import mapQuoteToContent from '../../helpers/data-content-mappings/map-quote-to-content';
+import { quoteSummaryList } from '../../helpers/summary-lists/quote-summary-list';
+import { mockReq, mockRes, mockSession } from '../../test-mocks';
 import { Request, Response } from '../../../types';
 
 describe('controllers/your-quote', () => {

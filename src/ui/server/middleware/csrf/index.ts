@@ -1,5 +1,7 @@
-// @ts-ignore
-export const csrf = () => function csrfToken(req, res, next) {
-  res.locals.csrfToken = req.csrfToken();
-  next();
-};
+import { Request, Response } from '../../../types';
+
+export const csrf = () =>
+  function csrfToken(req: Request, res: Response, next: () => void) {
+    res.locals.csrfToken = req.csrfToken();
+    next();
+  };

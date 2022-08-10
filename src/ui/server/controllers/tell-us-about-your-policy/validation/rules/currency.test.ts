@@ -17,11 +17,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/currency', () =
 
       const result = rule(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(
-        FIELD_IDS.CURRENCY,
-        ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,
-        mockErrors,
-      );
+      const expected = generateValidationErrors(FIELD_IDS.CURRENCY, ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY, mockErrors);
 
       expect(result).toEqual(expected);
     });

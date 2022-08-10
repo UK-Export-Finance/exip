@@ -1,16 +1,7 @@
-import {
-  generateFieldGroups,
-  getKeyText,
-  generateSummaryListRows,
-  answersSummaryList,
-} from './answers-summary-list';
+import { generateFieldGroups, getKeyText, generateSummaryListRows, answersSummaryList } from './answers-summary-list';
 import { mapAnswersToContent } from '../data-content-mappings/map-answers-to-content';
 import { FIELDS, LINKS, PAGES } from '../../content-strings';
-import {
-  FIELD_IDS,
-  FIELD_VALUES,
-  ROUTES,
-} from '../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../constants';
 import { mockSession } from '../../test-mocks';
 import { SummaryListItemData } from '../../..//types';
 

@@ -4,18 +4,9 @@ import mapPolicyLength from './map-policy-length';
 import formatCurrency from '../format-currency';
 import { Quote, QuoteContent } from '../../../types';
 
-const {
-  BUYER_COUNTRY,
-  CURRENCY,
-  PERCENTAGE_OF_COVER,
-  QUOTE,
-} = FIELD_IDS;
+const { BUYER_COUNTRY, CURRENCY, PERCENTAGE_OF_COVER, QUOTE } = FIELD_IDS;
 
-const {
-  ESTIMATED_COST,
-  INSURED_FOR,
-  PREMIUM_RATE_PERCENTAGE,
-} = QUOTE;
+const { ESTIMATED_COST, INSURED_FOR, PREMIUM_RATE_PERCENTAGE } = QUOTE;
 
 const mapQuoteToContent = (quote: Quote): QuoteContent => {
   const currencyCode = quote[CURRENCY].isoCode;

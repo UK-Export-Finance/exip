@@ -3,4 +3,3 @@ export const BUTTONS = {
   SUBMIT: 'Submit',
   START_APPLICATION: 'Start an application',
 };
-

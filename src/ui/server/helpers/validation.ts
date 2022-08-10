@@ -1,10 +1,6 @@
 import { ValidationErrors } from '../../types';
 
-const generateValidationErrors = (
-  fieldId: string,
-  errorText: string,
-  errors: ValidationErrors = { errorList: {}, summary: [] },
-) => {
+const generateValidationErrors = (fieldId: string, errorText: string, errors: ValidationErrors = { errorList: {}, summary: [] }) => {
   let summary = [
     {
       text: errorText,
@@ -22,13 +18,15 @@ const generateValidationErrors = (
     ];
   }
 
+  const keys = Object.keys(errors.errorList || {});
+
   const result = {
-    count: Object.keys(errors.errorList).length + 1,
+    count: keys.length + 1,
     errorList: {
       ...errors.errorList,
       [fieldId]: {
         text: errorText,
-        order: Object.keys(errors.errorList).length + 1,
+        order: keys.length + 1,
       },
     },
     summary,

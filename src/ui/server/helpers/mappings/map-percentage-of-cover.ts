@@ -1,4 +1,4 @@
-const mapPercentageOfCover = (percentages: Array<Number>, selectedValue?: number) => {
+const mapPercentageOfCover = (percentages: Array<number>, selectedValue?: number) => {
   const mapped = percentages.map((percentage) => {
     if (selectedValue && selectedValue === percentage) {
       return {
@@ -21,10 +21,7 @@ const mapPercentageOfCover = (percentages: Array<Number>, selectedValue?: number
       value: '',
     };
 
-    const result = [
-      defaultOption,
-      ...mapped,
-    ];
+    const result = [defaultOption, ...mapped];
 
     return result;
   }

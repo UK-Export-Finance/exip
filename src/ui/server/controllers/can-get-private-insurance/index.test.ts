@@ -1,14 +1,6 @@
-import {
-  PAGE_VARIABLES,
-  get,
-  post,
-} from '.';
+import { PAGE_VARIABLES, get, post } from '.';
 import { BUTTONS, FIELDS, FOOTER, LINKS, PAGES, PRODUCT } from '../../content-strings';
-import {
-  FIELD_IDS,
-  ROUTES,
-  TEMPLATES,
-} from '../../constants';
+import { FIELD_IDS, ROUTES, TEMPLATES } from '../../constants';
 import generateValidationErrors from './validation';
 import { updateSubmittedData } from '../../helpers/update-submitted-data';
 import { mockReq, mockRes } from '../../test-mocks';
@@ -107,10 +99,7 @@ describe('controllers/can-get-private-insurance', () => {
       it('should update the session with submitted data', () => {
         post(req, res);
 
-        const expected = updateSubmittedData(
-          req.body,
-          req.session.submittedData,
-        );
+        const expected = updateSubmittedData(req.body, req.session.submittedData);
 
         expect(req.session.submittedData).toEqual(expected);
       });
@@ -121,7 +110,7 @@ describe('controllers/can-get-private-insurance', () => {
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
       });
 
-      describe('when the url\'s last substring is `change`', () => {
+      describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
           req.originalUrl = 'mock/change';
 

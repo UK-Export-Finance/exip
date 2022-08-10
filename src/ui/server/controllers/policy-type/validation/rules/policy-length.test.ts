@@ -24,11 +24,7 @@ describe('controllers/policy-type/validation/rules/policy-length', () => {
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.SINGLE_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.SINGLE_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -56,11 +52,7 @@ describe('controllers/policy-type/validation/rules/policy-length', () => {
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.SINGLE_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.SINGLE_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -72,11 +64,7 @@ describe('controllers/policy-type/validation/rules/policy-length', () => {
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.SINGLE_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.SINGLE_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -88,11 +76,7 @@ describe('controllers/policy-type/validation/rules/policy-length', () => {
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.SINGLE_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.SINGLE_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -110,11 +94,7 @@ describe('controllers/policy-type/validation/rules/policy-length', () => {
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.MULTI_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].IS_EMPTY,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.MULTI_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].IS_EMPTY, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -126,11 +106,7 @@ describe('controllers/policy-type/validation/rules/policy-length', () => {
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.MULTI_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_WHOLE_NUMBER,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.MULTI_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_WHOLE_NUMBER, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -142,11 +118,7 @@ describe('controllers/policy-type/validation/rules/policy-length', () => {
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.MULTI_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_NUMBER,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.MULTI_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].NOT_A_NUMBER, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -158,11 +130,7 @@ describe('controllers/policy-type/validation/rules/policy-length', () => {
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.MULTI_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].BELOW_MINIMUM,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.MULTI_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].BELOW_MINIMUM, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -174,11 +142,7 @@ describe('controllers/policy-type/validation/rules/policy-length', () => {
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.MULTI_POLICY_LENGTH,
-          ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].ABOVE_MAXIMUM,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.MULTI_POLICY_LENGTH, ERROR_MESSAGES[FIELD_IDS.MULTI_POLICY_LENGTH].ABOVE_MAXIMUM, mockErrors);
 
         expect(result).toEqual(expected);
       });

@@ -19,11 +19,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/credit-period',
 
         const result = rule(mockSubmittedData, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.CREDIT_PERIOD,
-          ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.CREDIT_PERIOD, ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -38,11 +34,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/credit-period',
 
         const result = rule(mockSubmittedData, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.CREDIT_PERIOD,
-          ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_WHOLE_NUMBER,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.CREDIT_PERIOD, ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_WHOLE_NUMBER, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -57,11 +49,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/credit-period',
 
         const result = rule(mockSubmittedData, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.CREDIT_PERIOD,
-          ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.CREDIT_PERIOD, ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -76,11 +64,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/credit-period',
 
         const result = rule(mockSubmittedData, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.CREDIT_PERIOD,
-          ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].BELOW_MINIMUM,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.CREDIT_PERIOD, ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].BELOW_MINIMUM, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -95,11 +79,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/credit-period',
 
         const result = rule(mockSubmittedData, mockErrors);
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.CREDIT_PERIOD,
-          ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].ABOVE_MAXIMUM,
-          mockErrors,
-        );
+        const expected = generateValidationErrors(FIELD_IDS.CREDIT_PERIOD, ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].ABOVE_MAXIMUM, mockErrors);
 
         expect(result).toEqual(expected);
       });

@@ -1,9 +1,5 @@
 import { BUTTONS, FIELDS, FOOTER, LINKS, PAGES, PRODUCT } from '../../content-strings';
-import {
-  FIELD_IDS,
-  ROUTES,
-  TEMPLATES,
-} from '../../constants';
+import { FIELD_IDS, ROUTES, TEMPLATES } from '../../constants';
 import generateValidationErrors from './validation';
 import { updateSubmittedData } from '../../helpers/update-submitted-data';
 import isChangeRoute from '../../helpers/is-change-route';
@@ -52,7 +48,7 @@ const post = (req: Request, res: Response) => {
 
   const answer = req.body[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE];
 
-  const redirectToExitPage = (answer === 'true');
+  const redirectToExitPage = answer === 'true';
 
   if (redirectToExitPage) {
     req.flash('previousRoute', ROUTES.CAN_GET_PRIVATE_INSURANCE);
@@ -65,10 +61,7 @@ const post = (req: Request, res: Response) => {
     return res.redirect(ROUTES.CANNOT_OBTAIN_COVER);
   }
 
-  req.session.submittedData = updateSubmittedData(
-    req.body,
-    req.session.submittedData,
-  );
+  req.session.submittedData = updateSubmittedData(req.body, req.session.submittedData);
 
   if (isChangeRoute(req.originalUrl)) {
     return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);

@@ -5,19 +5,9 @@ import mapPolicyLength from './map-policy-length';
 import formatCurrency from '../format-currency';
 import { mockQuote } from '../../test-mocks';
 
-const {
-  BUYER_COUNTRY,
-  CURRENCY,
-  PERCENTAGE_OF_COVER,
-  QUOTE,
-} = FIELD_IDS;
+const { BUYER_COUNTRY, CURRENCY, PERCENTAGE_OF_COVER, QUOTE } = FIELD_IDS;
 
-const {
-  BUYER_LOCATION,
-  ESTIMATED_COST,
-  INSURED_FOR,
-  PREMIUM_RATE_PERCENTAGE,
-} = QUOTE;
+const { BUYER_LOCATION, ESTIMATED_COST, INSURED_FOR, PREMIUM_RATE_PERCENTAGE } = QUOTE;
 
 describe('server/helpers/map-quote-to-content', () => {
   describe('mapQuoteToContent', () => {

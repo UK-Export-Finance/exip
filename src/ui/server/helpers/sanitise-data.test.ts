@@ -1,8 +1,4 @@
-import {
-  shouldChangeToNumber,
-  sanitiseValue,
-  sanitiseData,
-} from './sanitise-data';
+import { shouldChangeToNumber, sanitiseValue, sanitiseData } from './sanitise-data';
 
 describe('server/helpers/sanitise-data', () => {
   describe('shouldChangeToNumber', () => {

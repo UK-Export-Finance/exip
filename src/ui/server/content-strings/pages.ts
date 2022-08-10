@@ -42,7 +42,7 @@ const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
     },
     DOES_NOT_COUNT: {
       HEADING: 'What does not count as UK goods and services',
-      TEXT: 'Goods or services from outside the UK that you\'ll send directly to the buyer unprocessed or unaltered in the UK do not count. Instead, they\'re classed as foreign goods and services.',
+      TEXT: "Goods or services from outside the UK that you'll send directly to the buyer unprocessed or unaltered in the UK do not count. Instead, they're classed as foreign goods and services.",
     },
     STAFFING_COSTS: {
       HEADING: 'Staffing costs for this export contract',
@@ -55,23 +55,23 @@ const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
           TEXT: 'contractors supplied to work for you by a UK sub- contractor',
         },
         {
-          TEXT: 'staff seconded from abroad to work for you in the UK, on the export contract, and for whom you\'re financially responsible',
+          TEXT: "staff seconded from abroad to work for you in the UK, on the export contract, and for whom you're financially responsible",
         },
       ],
     },
     NON_PHYSICAL_ASSETS: {
       HEADING: 'Non-physical assets',
-      TEXT: 'Some assets cannot have a certificate of origin as they\'re not physical goods, for example, a licence to manufacture goods in another country. But they still count as UK goods or services if they originate from the UK.',
+      TEXT: "Some assets cannot have a certificate of origin as they're not physical goods, for example, a licence to manufacture goods in another country. But they still count as UK goods or services if they originate from the UK.",
     },
     NOT_SURE: {
-      HEADING: 'If you\'re not sure',
+      HEADING: "If you're not sure",
       BODY_1: 'You can speak with',
       LINK: {
         TEXT: 'an export finance manager',
         HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
       },
-      BODY_2: 'if you\'d like to check whether you\'re eligible around this criteria.',
-      BODY_3: 'We\'ll also calculate this thoroughly if you go on to make a full application.',
+      BODY_2: "if you'd like to check whether you're eligible around this criteria.",
+      BODY_3: "We'll also calculate this thoroughly if you go on to make a full application.",
     },
   },
 };
@@ -104,7 +104,7 @@ const CANNOT_OBTAIN_COVER_PAGE = {
     UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man.',
     UNSUPPORTED_BUYER_COUNTRY_1: 'your buyer is based in',
     UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
-    CAN_GET_PRIVATE_INSURANCE: 'you\'re able to get insurance for this export from companies in the private sector.',
+    CAN_GET_PRIVATE_INSURANCE: "you're able to get insurance for this export from companies in the private sector.",
     NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from  at least 20% UK goods or services.',
   },
   ACTIONS: {
@@ -204,8 +204,8 @@ const YOUR_QUOTE_PAGE = {
 const COOKIES_PAGE = {
   PAGE_TITLE: 'Cookies',
   HEADING: 'Cookies',
-  BODY_1: 'UK Export Finance (UKEF) puts small files (known as \'cookies\') onto your computer to make this site work.',
-  BODY_2: 'Our cookies aren\'t used to identify you personally.',
+  BODY_1: "UK Export Finance (UKEF) puts small files (known as 'cookies') onto your computer to make this site work.",
+  BODY_2: "Our cookies aren't used to identify you personally.",
   TABLE_HEADINGS: {
     NAME: 'Name',
     PURPOSE: 'Purpose',

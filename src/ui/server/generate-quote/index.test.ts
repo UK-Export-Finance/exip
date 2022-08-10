@@ -1,28 +1,10 @@
-import {
-  getContractCost,
-  getTotalMonths,
-  calculateCost,
-  generateQuote,
-} from '.';
-import {
-  FIELD_IDS,
-  FIELD_VALUES,
-} from '../constants';
+import { getContractCost, getTotalMonths, calculateCost, generateQuote } from '.';
+import { FIELD_IDS, FIELD_VALUES } from '../constants';
 import { getPremiumRate } from './get-premium-rate';
 import { getPercentageOfNumber } from '../helpers/number';
 import { mockSession } from '../test-mocks';
 
-const {
-  BUYER_COUNTRY,
-  CONTRACT_VALUE,
-  CREDIT_PERIOD,
-  CURRENCY,
-  MAX_AMOUNT_OWED,
-  PERCENTAGE_OF_COVER,
-  POLICY_TYPE,
-  POLICY_LENGTH,
-  QUOTE,
-} = FIELD_IDS;
+const { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE, POLICY_LENGTH, QUOTE } = FIELD_IDS;
 
 describe('server/generate-quote/index', () => {
   describe('getContractCost', () => {
@@ -67,12 +49,9 @@ describe('server/generate-quote/index', () => {
         const mockPolicyType = FIELD_VALUES.POLICY_TYPE.SINGLE;
         const mockPolicyLength = 5;
 
-        const result = getTotalMonths(
-          mockPolicyType,
-          mockPolicyLength,
-        );
+        const result = getTotalMonths(mockPolicyType, mockPolicyLength);
 
-        const expected = (mockPolicyLength + 1);
+        const expected = mockPolicyLength + 1;
 
         expect(result).toEqual(expected);
       });
@@ -84,13 +63,9 @@ describe('server/generate-quote/index', () => {
         const mockPolicyLength = 6;
         const mockCreditPeriod = 2;
 
-        const result = getTotalMonths(
-          mockPolicyType,
-          mockPolicyLength,
-          mockCreditPeriod,
-        );
+        const result = getTotalMonths(mockPolicyType, mockPolicyLength, mockCreditPeriod);
 
-        const expected = (mockPolicyLength + mockCreditPeriod + 1);
+        const expected = mockPolicyLength + mockCreditPeriod + 1;
 
         expect(result).toEqual(expected);
       });
@@ -102,11 +77,7 @@ describe('server/generate-quote/index', () => {
         const mockPolicyLength = 1;
         const mockCreditPeriod = 2;
 
-        const result = getTotalMonths(
-          mockPolicyType,
-          mockPolicyLength,
-          mockCreditPeriod,
-        );
+        const result = getTotalMonths(mockPolicyType, mockPolicyLength, mockCreditPeriod);
 
         expect(result).toEqual(0);
       });
@@ -134,11 +105,7 @@ describe('server/generate-quote/index', () => {
 
       const mockPercentageOfCover = 90;
 
-      const expectedTotalMonths = getTotalMonths(
-        mockSubmittedData[POLICY_TYPE],
-        mockSubmittedData[POLICY_LENGTH],
-        mockSubmittedData[CREDIT_PERIOD],
-      );
+      const expectedTotalMonths = getTotalMonths(mockSubmittedData[POLICY_TYPE], mockSubmittedData[POLICY_LENGTH], mockSubmittedData[CREDIT_PERIOD]);
 
       const expectedPremiumRate = getPremiumRate(
         mockSubmittedData[POLICY_TYPE],

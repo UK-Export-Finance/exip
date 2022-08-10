@@ -1,7 +1,4 @@
-import {
-  hasErrors,
-  validation,
-} from './validation';
+import { hasErrors, validation } from './validation';
 import { FIELD_IDS } from '../../constants';
 import CONTENT_STRINGS from '../../content-strings';
 import generateValidationErrors from '../../helpers/validation';
@@ -72,10 +69,7 @@ describe('controllers/buyer-country/validation', () => {
       it('should return validation errors', () => {
         const result = validation({});
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.COUNTRY,
-          CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.COUNTRY],
-        );
+        const expected = generateValidationErrors(FIELD_IDS.COUNTRY, CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.COUNTRY]);
 
         expect(result).toEqual(expected);
       });
@@ -85,10 +79,7 @@ describe('controllers/buyer-country/validation', () => {
       it('should return validation errors', () => {
         const result = validation({});
 
-        const expected = generateValidationErrors(
-          FIELD_IDS.COUNTRY,
-          CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.COUNTRY],
-        );
+        const expected = generateValidationErrors(FIELD_IDS.COUNTRY, CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.COUNTRY]);
 
         expect(result).toEqual(expected);
       });

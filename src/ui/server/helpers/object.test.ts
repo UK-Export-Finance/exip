@@ -1,7 +1,4 @@
-import {
-  objectHasValues,
-  objectHasProperty,
-} from './object';
+import { objectHasValues, objectHasProperty } from './object';
 
 describe('server/helpers/object', () => {
   describe('objectHasValues', () => {

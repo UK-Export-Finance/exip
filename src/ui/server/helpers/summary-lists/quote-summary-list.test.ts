@@ -1,34 +1,13 @@
-import {
-  generateFields,
-  generateSummaryListRows,
-  quoteSummaryList,
-} from './quote-summary-list';
+import { generateFields, generateSummaryListRows, quoteSummaryList } from './quote-summary-list';
 import mapQuoteToContent from '../data-content-mappings/map-quote-to-content';
 import { LINKS, QUOTE_TITLES } from '../../content-strings';
-import {
-  FIELD_IDS,
-  ROUTES,
-} from '../../constants';
+import { FIELD_IDS, ROUTES } from '../../constants';
 import { mockQuote } from '../../test-mocks';
 import { SummaryListItemData } from '../../../types';
 
-const {
-  BUYER_COUNTRY,
-  CONTRACT_VALUE,
-  MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
-  PERCENTAGE_OF_COVER,
-  POLICY_LENGTH,
-  QUOTE,
-  SINGLE_POLICY_LENGTH,
-} = FIELD_IDS;
+const { BUYER_COUNTRY, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, PERCENTAGE_OF_COVER, POLICY_LENGTH, QUOTE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
 
-const {
-  INSURED_FOR,
-  PREMIUM_RATE_PERCENTAGE,
-  ESTIMATED_COST,
-  BUYER_LOCATION,
-} = QUOTE;
+const { INSURED_FOR, PREMIUM_RATE_PERCENTAGE, ESTIMATED_COST, BUYER_LOCATION } = QUOTE;
 
 describe('server/helpers/summary-lists/quote-summary-list', () => {
   describe('generateFields', () => {

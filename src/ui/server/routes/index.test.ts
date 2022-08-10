@@ -1,7 +1,4 @@
-import {
-  get,
-  post,
-} from '../test-mocks/mock-router';
+import { get, post } from '../test-mocks/mock-router';
 import { ROUTES } from '../constants';
 import rootGet from '../controllers/root';
 import { get as buyerBasedGet, post as buyerBasedPost } from '../controllers/buyer-country';
@@ -18,9 +15,9 @@ import problemWithServiceGet from '../controllers/problem-with-service';
 
 describe('routes/index', () => {
   beforeEach(() => {
-    require('.'); // eslint-disable-line global-require   
+    require('.'); // eslint-disable-line global-require
   });
- 
+
   afterEach(() => {
     jest.resetAllMocks();
   });

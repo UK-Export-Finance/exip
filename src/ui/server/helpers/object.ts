@@ -1,8 +1,8 @@
-type Object = {
-  [key: string]: any;
-}
+type ObjectType = {
+  [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+};
 
-const objectHasValues = (obj: Object) => {
+const objectHasValues = (obj: ObjectType) => {
   if (obj && Object.keys(obj).length > 0) {
     return true;
   }
@@ -10,7 +10,7 @@ const objectHasValues = (obj: Object) => {
   return false;
 };
 
-const objectHasProperty = (obj: Object, propertyName: string) => {
+const objectHasProperty = (obj: ObjectType, propertyName: string) => {
   if (obj[propertyName]) {
     return true;
   }
@@ -18,7 +18,4 @@ const objectHasProperty = (obj: Object, propertyName: string) => {
   return false;
 };
 
-export {
-  objectHasValues,
-  objectHasProperty,
-};
+export { objectHasValues, objectHasProperty };

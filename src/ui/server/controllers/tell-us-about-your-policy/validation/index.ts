@@ -1,7 +1,6 @@
 import validationRules from './rules';
 import { SubmittedData } from '../../../../types';
 
-
 const validation = (submittedData: SubmittedData) => {
   let errors!: object;
 
