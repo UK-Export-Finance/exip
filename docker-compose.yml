@@ -30,10 +30,4 @@ services:
       - MULESOFT_API_MDM_EA_URL
       - MULESOFT_API_MDM_EA_KEY
       - MULESOFT_API_MDM_EA_SECRET
-    deploy:
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 300M
-    # command: npx nodemon src/ui/server/index.ts -L
     entrypoint: npx nodemon src/index.ts -L
