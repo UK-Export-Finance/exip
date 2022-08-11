@@ -73,7 +73,7 @@ context('Your quote page - change policy type and length from multi single', () 
       const row = yourQuotePage.panel.summaryList[MAX_AMOUNT_OWED];
 
       row.value().invoke('text').then((text) => {
-        const expected = '£200.00';
+        const expected = '£200';
 
         expect(text.trim()).equal(expected);
       });

@@ -5,11 +5,13 @@ describe('server/helpers/format-currency', () => {
     const mock = 123456;
     const currencyCode = 'GBP';
 
-    const result = formatCurrency(mock, currencyCode);
+    const result = formatCurrency(mock, currencyCode, 2);
 
     const expected = mock.toLocaleString('en', {
       style: 'currency',
       currency: currencyCode,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     });
 
     expect(result).toEqual(expected);

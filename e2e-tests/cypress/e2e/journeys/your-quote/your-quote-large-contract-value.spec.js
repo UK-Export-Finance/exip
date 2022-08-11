@@ -48,7 +48,7 @@ context('Get a quote - large contract value', () => {
     const answersAmount = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].value();
 
     answersAmount.invoke('text').then((text) => {
-      const expected = '£12,345,678.00';
+      const expected = '£12,345,678';
 
       expect(text.trim()).equal(expected);
     });

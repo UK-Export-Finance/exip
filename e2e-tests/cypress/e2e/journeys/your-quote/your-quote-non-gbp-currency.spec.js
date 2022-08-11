@@ -47,7 +47,7 @@ context('Your quote page - non GBP currency', () => {
     context('summary list', () => {
       const { summaryList } = yourQuotePage.panel;
 
-      it('renders `insured for` key and value (no change link)', () => {
+      it('renders `insured for` key and value with decimal points (no change link)', () => {
         const row = summaryList[INSURED_FOR];
         const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_SINGLE_POLICY`];
 

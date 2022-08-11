@@ -87,7 +87,7 @@ context('Your quote page (single policy)', () => {
     context('summary list', () => {
       const { summaryList } = yourQuotePage.panel;
 
-      it('renders `contract value` key, value and change link', () => {
+      it('renders `contract value` key, value with no decimal points and change link', () => {
         const row = summaryList[CONTRACT_VALUE];
         const expectedKeyText = QUOTE_TITLES[CONTRACT_VALUE];
 
@@ -96,7 +96,7 @@ context('Your quote page (single policy)', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£150,000.00';
+          const expected = '£150,000';
 
           expect(text.trim()).equal(expected);
         });
@@ -133,7 +133,7 @@ context('Your quote page (single policy)', () => {
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
-      it('renders `insured for` key and value (no change link)', () => {
+      it('renders `insured for` key and value with decimal points (no change link)', () => {
         const row = summaryList[INSURED_FOR];
         const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_SINGLE_POLICY`];
 

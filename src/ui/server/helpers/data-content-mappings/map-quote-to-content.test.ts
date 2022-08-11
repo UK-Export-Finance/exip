@@ -21,13 +21,13 @@ describe('server/helpers/map-quote-to-content', () => {
           text: `${mockQuote[PERCENTAGE_OF_COVER]}%`,
         },
         [INSURED_FOR]: {
-          text: formatCurrency(mockQuote[INSURED_FOR], mockQuote[CURRENCY].isoCode),
+          text: formatCurrency(mockQuote[INSURED_FOR], mockQuote[CURRENCY].isoCode, 2),
         },
         [PREMIUM_RATE_PERCENTAGE]: {
           text: `${mockQuote[PREMIUM_RATE_PERCENTAGE]}%`,
         },
         [ESTIMATED_COST]: {
-          text: formatCurrency(mockQuote[ESTIMATED_COST], mockQuote[CURRENCY].isoCode),
+          text: formatCurrency(mockQuote[ESTIMATED_COST], mockQuote[CURRENCY].isoCode, 2),
         },
         ...mapPolicyLength(mockQuote),
         [BUYER_LOCATION]: {

@@ -214,7 +214,7 @@ context('Check your answers page (single policy)', () => {
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
-    it('renders `Contract value` key, value and change link', () => {
+    it('renders `Contract value` key, value with no decimal points and change link', () => {
       const row = list[CONTRACT_VALUE];
       const expectedKeyText = FIELDS[CONTRACT_VALUE].SUMMARY.TITLE;
 
@@ -223,7 +223,7 @@ context('Check your answers page (single policy)', () => {
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = '£150,000.00';
+        const expected = '£150,000';
 
         expect(text.trim()).equal(expected);
       });

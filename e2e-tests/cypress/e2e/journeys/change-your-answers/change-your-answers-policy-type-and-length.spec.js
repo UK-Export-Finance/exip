@@ -87,7 +87,7 @@ context('Change your answers after checking answers - Policy type and length', (
     row = checkYourAnswersPage.summaryLists.policy[MAX_AMOUNT_OWED];
 
     row.value().invoke('text').then((text) => {
-      const expected = '£120,000.00';
+      const expected = '£120,000';
 
       expect(text.trim()).equal(expected);
     });
@@ -154,7 +154,7 @@ context('Change your answers after checking answers - Policy type and length', (
       row = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE];
 
       row.value().invoke('text').then((text) => {
-        const expected = '£150.00';
+        const expected = '£150';
 
         expect(text.trim()).equal(expected);
       });
