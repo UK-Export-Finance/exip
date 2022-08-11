@@ -20,7 +20,6 @@ export const ROUTES = {
   CANNOT_OBTAIN_COVER: '/cannot-obtain-cover',
 
   YOUR_QUOTE: '/your-quote',
-  FEEDBACK: '/give-feedback',
 
   COOKIES: '/cookies',
 
