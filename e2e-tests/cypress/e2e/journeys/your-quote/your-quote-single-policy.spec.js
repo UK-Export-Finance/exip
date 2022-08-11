@@ -266,13 +266,23 @@ context('Your quote page (single policy)', () => {
     describe('feedback', () => {
       it('renders', () => {
         yourQuotePage.links.feedback().should('exist');
-        yourQuotePage.links.feedback().should('have.attr', 'href', ROUTES.FEEDBACK);
+
+        yourQuotePage.links.feedback().invoke('text').then((text) => {
+          expect(text.trim()).equal(LINKS.GIVE_FEEDBACK);
+        });
+
+        yourQuotePage.links.feedback().should('have.attr', 'href', LINKS.EXTERNAL.FEEDBACK);
       });
     });
 
     describe('start again', () => {
       it('renders', () => {
         yourQuotePage.links.startAgain().should('exist');
+
+        yourQuotePage.links.startAgain().invoke('text').then((text) => {
+          expect(text.trim()).equal(LINKS.START_AGAIN.TEXT);
+        });
+
         yourQuotePage.links.startAgain().should('have.attr', 'href', ROUTES.ROOT);
       });
 

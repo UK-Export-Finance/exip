@@ -7,13 +7,13 @@ export const LINKS = {
     TEXT: 'Start again',
     HREF: ROUTES.ROOT,
   },
-  GIVE_FEEDBACK: {
-    TEXT: 'Give feedback',
-    HREF: ROUTES.FEEDBACK,
-  },
+  FEEDBACK: 'feedback',
+  GIVE_FEEDBACK: 'Give feedback',
   EXTERNAL: {
     GUIDANCE: 'http://localhost:1234/mock/guidance',
     BEFORE_YOU_START: 'http://localhost:1234/mock/before-you-start',
+    PRIVACY: 'https://www.gov.uk/government/publications/ukef-privacy-notice/ukef-privacy-notice',
+    FEEDBACK: 'https://forms.office.com/r/TacytrRCgJ',
     EXPORT_FINANCE_MANAGERS: 'https://www.gov.uk/government/publications/find-an-export-finance-manager',
     APPROVED_BROKER_LIST: 'https://www.gov.uk/government/publications/uk-export-finance-insurance-list-of-approved-brokers',
     NBI_FORM:
