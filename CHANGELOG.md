@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/UK-Export-Finance/exip/compare/v1.1.1...v1.2.0) (2022-08-11)
+
+
+### Features
+
+* **EMS-279:** do not render decimal points in 'contract value' and 'max amount owed' summary list rows ([55b7adb](https://github.com/UK-Export-Finance/exip/commit/55b7adb8a07ba1fe66f8818d3d2285f402ed7333))
+* **EMS-281:** remove 'able to get private cover' page ([66e6751](https://github.com/UK-Export-Finance/exip/commit/66e6751044dcdb388fbeac9f275a17804b610c4e))
+
 ## 1.1.1 (2022-08-11)
 
 ### Bug Fixes
