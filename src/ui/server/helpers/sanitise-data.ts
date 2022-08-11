@@ -28,13 +28,9 @@ const sanitiseValue = (value: string | number | boolean) => {
   }
 
   if (shouldChangeToNumber(value)) {
-    if (typeof value === 'string') {
-      const stripped = stripCommas(value);
+    const stripped = stripCommas(String(value));
 
-      return Number(stripped);
-    }
-
-    return Number(value);
+    return Number(stripped);
   }
 
   return value;

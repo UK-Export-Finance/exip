@@ -1,6 +1,7 @@
 import { mapSubmittedData, updateSubmittedData } from './update-submitted-data';
 import { FIELD_IDS, FIELD_VALUES } from '../constants';
 import { sanitiseData } from './sanitise-data';
+import { RequestBody, SubmittedData } from '../../types';
 
 const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
 
@@ -12,7 +13,7 @@ describe('server/helpers/update-submitted-data', () => {
           mock: '1',
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [SINGLE_POLICY_LENGTH]: '10',
-        };
+        } as RequestBody;
 
         const result = mapSubmittedData(mockFormData);
 
@@ -34,7 +35,7 @@ describe('server/helpers/update-submitted-data', () => {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
           [POLICY_LENGTH]: '10',
           [MULTI_POLICY_LENGTH]: '10',
-        };
+        } as RequestBody;
 
         const result = mapSubmittedData(mockFormData);
 
@@ -55,15 +56,15 @@ describe('server/helpers/update-submitted-data', () => {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [SINGLE_POLICY_LENGTH]: '10',
           [CONTRACT_VALUE]: 100,
-        };
+        } as RequestBody;
 
         const mockExistingData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
           [MULTI_POLICY_LENGTH]: '5',
           [MAX_AMOUNT_OWED]: 200,
-        };
+        } as SubmittedData;
 
-        const result = mapSubmittedData(mockFormData, mockExistingData);
+        const result = mapSubmittedData({ ...mockExistingData, ...mockFormData });
 
         const expected = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
@@ -82,7 +83,7 @@ describe('server/helpers/update-submitted-data', () => {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
           [MULTI_POLICY_LENGTH]: '10',
           [MAX_AMOUNT_OWED]: 200,
-        };
+        } as RequestBody;
 
         const mockExistingData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
@@ -90,7 +91,7 @@ describe('server/helpers/update-submitted-data', () => {
           [CONTRACT_VALUE]: 100,
         };
 
-        const result = mapSubmittedData(mockFormData, mockExistingData);
+        const result = mapSubmittedData({ ...mockExistingData, ...mockFormData });
 
         const expected = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
@@ -108,13 +109,13 @@ describe('server/helpers/update-submitted-data', () => {
         const mockFormData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [SINGLE_POLICY_LENGTH]: '10',
-        };
+        } as RequestBody;
 
         const mockExistingData = {
           [CREDIT_PERIOD]: 2,
         };
 
-        const result = mapSubmittedData(mockFormData, mockExistingData);
+        const result = mapSubmittedData({ ...mockExistingData, ...mockFormData });
 
         const expected = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
@@ -130,7 +131,7 @@ describe('server/helpers/update-submitted-data', () => {
       it('should return all fields', () => {
         const mockFormData = {
           mock: '1',
-        };
+        } as RequestBody;
 
         const result = mapSubmittedData(mockFormData);
 
@@ -148,11 +149,11 @@ describe('server/helpers/update-submitted-data', () => {
       it('should return an object with existing and new, sanitised form data', () => {
         const mockFormData = {
           a: true,
-        };
+        } as RequestBody;
 
         const mockExistingData = {
           mock: true,
-        };
+        } as SubmittedData;
 
         const result = updateSubmittedData(mockFormData, mockExistingData);
 
@@ -171,7 +172,7 @@ describe('server/helpers/update-submitted-data', () => {
       it('should return an object with new, sanitised form data', () => {
         const mockFormData = {
           a: true,
-        };
+        } as RequestBody;
 
         const mockExistingData = {};
 
@@ -192,7 +193,7 @@ describe('server/helpers/update-submitted-data', () => {
       const mockFormData = {
         _csrf: '123',
         a: true,
-      };
+      } as RequestBody;
 
       const mockExistingData = {};
 
@@ -212,9 +213,9 @@ describe('server/helpers/update-submitted-data', () => {
       it('should return empty object', () => {
         const mockFormData = {
           _csrf: '123',
-        };
+        } as RequestBody;
 
-        const result = updateSubmittedData(mockFormData);
+        const result = updateSubmittedData(mockFormData, {});
 
         expect(result).toEqual({});
       });
