@@ -1,3 +1,31 @@
+/* eslint-disable no-unused-vars */
+interface Currency {
+  name: string;
+  isoCode: string;
+}
+interface Country {
+  name: string;
+  isoCode: string;
+  isSupported: boolean;
+  riskCategory: string;
+  selected: boolean;
+  value: string;
+}
+
+type SubmittedData = {
+  amount?: number;
+  buyerCountry?: Country;
+  canGetPrivateInsurance?: boolean;
+  contractValue?: number;
+  creditPeriodInMonths?: number;
+  currency?: Currency;
+  hasMinimumUkGoodsOrServices?: boolean;
+  maximumContractAmountOwed?: number;
+  percentageOfCover?: number;
+  policyType?: string;
+  policyLength?: number;
+};
+
 type Quote = {
   buyerCountry: Country;
   currency: Currency;
@@ -74,34 +102,6 @@ interface CisCountry {
   NBIIssue: string;
   riskCategory?: string;
 }
-
-interface Country {
-  name: string;
-  isoCode: string;
-  isSupported: boolean;
-  riskCategory: string;
-  selected: boolean;
-  value: string;
-}
-
-interface Currency {
-  name: string;
-  isoCode: string;
-}
-
-type SubmittedData = {
-  amount?: number;
-  buyerCountry?: Country;
-  canGetPrivateInsurance?: boolean;
-  contractValue?: number;
-  creditPeriodInMonths?: number;
-  currency?: Currency;
-  hasMinimumUkGoodsOrServices?: boolean;
-  maximumContractAmountOwed?: number;
-  percentageOfCover?: number;
-  policyType?: string;
-  policyLength?: number;
-};
 
 interface SummaryListField {
   text: string;
