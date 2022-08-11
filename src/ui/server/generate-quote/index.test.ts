@@ -1,4 +1,4 @@
-import { getContractCost, getTotalMonths, calculateCost, generateQuote } from '.';
+import { getInsuredFor, getContractValue, getTotalMonths, calculateCost, generateQuote } from '.';
 import { FIELD_IDS, FIELD_VALUES } from '../constants';
 import { getPremiumRate } from './get-premium-rate';
 import { getPercentageOfNumber } from '../helpers/number';
@@ -7,37 +7,79 @@ import { mockSession } from '../test-mocks';
 const { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE, POLICY_LENGTH, QUOTE } = FIELD_IDS;
 
 describe('server/generate-quote/index', () => {
-  describe('getContractCost', () => {
+  describe('getContractValue', () => {
     describe('when policy type is single', () => {
-      it(`should return ${CONTRACT_VALUE} from submitted data`, () => {
+      it('should return contract value', () => {
         const mockSubmittedData = {
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [CONTRACT_VALUE]: 1234,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
         };
 
-        const result = getContractCost(mockSubmittedData);
-        const expected = mockSubmittedData[CONTRACT_VALUE];
+        const result = getContractValue(mockSubmittedData);
+        const expected = {
+          [CONTRACT_VALUE]: mockSubmittedData[CONTRACT_VALUE],
+        };
 
         expect(result).toEqual(expected);
       });
     });
 
     describe('when policy type is multi', () => {
-      it(`should return ${MAX_AMOUNT_OWED} from submitted data`, () => {
+      it('should return max amount owed', () => {
         const mockSubmittedData = {
+          [MAX_AMOUNT_OWED]: 5678,
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [MAX_AMOUNT_OWED]: 1234,
         };
 
-        const result = getContractCost(mockSubmittedData);
-        const expected = mockSubmittedData[MAX_AMOUNT_OWED];
+        const result = getContractValue(mockSubmittedData);
+        const expected = {
+          [MAX_AMOUNT_OWED]: mockSubmittedData[MAX_AMOUNT_OWED],
+        };
 
         expect(result).toEqual(expected);
       });
     });
 
     it('should return 0', () => {
-      const result = getContractCost({});
+      const result = getContractValue({});
+
+      expect(result).toEqual(0);
+    });
+  });
+
+  describe('getInsuredFor', () => {
+    describe('when policy type is single', () => {
+      it('should return pecentage of contract value', () => {
+        const mockSubmittedData = {
+          [CONTRACT_VALUE]: 1234,
+          [PERCENTAGE_OF_COVER]: 80,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+        };
+
+        const result = getInsuredFor(mockSubmittedData);
+        const expected = Number(getPercentageOfNumber(80, 1234));
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when policy type is multi', () => {
+      it('should return pecentage of max amount owed', () => {
+        const mockSubmittedData = {
+          [MAX_AMOUNT_OWED]: 5678,
+          [PERCENTAGE_OF_COVER]: 80,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+        };
+
+        const result = getInsuredFor(mockSubmittedData);
+        const expected = Number(getPercentageOfNumber(80, 5678));
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    it('should return 0', () => {
+      const result = getContractValue({});
 
       expect(result).toEqual(0);
     });
@@ -115,11 +157,12 @@ describe('server/generate-quote/index', () => {
       );
 
       const expected = {
-        [QUOTE.INSURED_FOR]: getContractCost(mockSubmittedData),
+        ...getContractValue(mockSubmittedData),
+        [PERCENTAGE_OF_COVER]: mockSubmittedData[PERCENTAGE_OF_COVER],
+        [QUOTE.INSURED_FOR]: getInsuredFor(mockSubmittedData),
         [QUOTE.BUYER_LOCATION]: mockSubmittedData[BUYER_COUNTRY],
         [CURRENCY]: mockSubmittedData[CURRENCY],
         [CREDIT_PERIOD]: mockSubmittedData[CREDIT_PERIOD],
-        [PERCENTAGE_OF_COVER]: mockSubmittedData[PERCENTAGE_OF_COVER],
         [POLICY_TYPE]: mockSubmittedData[POLICY_TYPE],
         [POLICY_LENGTH]: mockSubmittedData[POLICY_LENGTH],
       };

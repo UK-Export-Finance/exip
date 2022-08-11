@@ -47,26 +47,20 @@ context('Your quote page - non GBP currency', () => {
     context('summary list', () => {
       const { summaryList } = yourQuotePage.panel;
 
-      it('renders `insured for` key, value and change link with unconverted value and currency', () => {
+      it('renders `insured for` key and value (no change link)', () => {
         const row = summaryList[INSURED_FOR];
-        const expectedKeyText = QUOTE_TITLES[INSURED_FOR];
+        const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_SINGLE_POLICY`];
 
         row.key().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedKeyText);
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '€150,000.00';
+          const expected = '€135,000.00';
           expect(text.trim()).includes(expected);
         });
 
-        row.changeLink().invoke('text').then((text) => {
-          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-          expect(text.trim()).equal(expected);
-        });
-
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
-        row.changeLink().should('have.attr', 'href', expectedHref);
+        row.changeLink().should('not.exist');
       });
 
       it('renders `estimated cost` key and value (no change link)', () => {
@@ -78,7 +72,7 @@ context('Your quote page - non GBP currency', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '€1,770.00';
+          const expected = '€1,593.00';
 
           expect(text.trim()).equal(expected);
         });

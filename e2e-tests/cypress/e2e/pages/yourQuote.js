@@ -1,8 +1,11 @@
 import { FIELD_IDS } from '../../../constants';
 
 const {
+  CONTRACT_VALUE,
+  MAX_AMOUNT_OWED,
   MULTI_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
+  PREMIUM_RATE_PERCENTAGE,
   QUOTE,
   SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
@@ -12,6 +15,21 @@ const yourQuotePage = {
     heading: () => cy.get('[data-cy="heading"]'),
     subHeading: () => cy.get('[data-cy="sub-heading"]'),
     summaryList: {
+      [CONTRACT_VALUE]: {
+        key: () => cy.get(`.${CONTRACT_VALUE}-key`),
+        value: () => cy.get(`.${CONTRACT_VALUE}-value`),
+        changeLink: () => cy.get(`[data-cy="${CONTRACT_VALUE}-change-link"]`),
+      },
+      [MAX_AMOUNT_OWED]: {
+        key: () => cy.get(`.${MAX_AMOUNT_OWED}-key`),
+        value: () => cy.get(`.${MAX_AMOUNT_OWED}-value`),
+        changeLink: () => cy.get(`[data-cy="${MAX_AMOUNT_OWED}-change-link"]`),
+      },
+      [PREMIUM_RATE_PERCENTAGE]: {
+        key: () => cy.get(`.${PREMIUM_RATE_PERCENTAGE}-key`),
+        value: () => cy.get(`.${PREMIUM_RATE_PERCENTAGE}-value`),
+        changeLink: () => cy.get(`[data-cy="${PREMIUM_RATE_PERCENTAGE}-change-link"]`),
+      },
       [QUOTE.BUYER_LOCATION]: {
         key: () => cy.get(`.${QUOTE.BUYER_LOCATION}-key`),
         value: () => cy.get(`.${QUOTE.BUYER_LOCATION}-value`),

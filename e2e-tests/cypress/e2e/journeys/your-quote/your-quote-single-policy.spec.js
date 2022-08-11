@@ -18,6 +18,7 @@ const {
   CONTRACT_VALUE,
   CURRENCY,
   CREDIT_PERIOD,
+  MAX_AMOUNT_OWED,
   PERCENTAGE_OF_COVER,
   POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
@@ -86,9 +87,9 @@ context('Your quote page (single policy)', () => {
     context('summary list', () => {
       const { summaryList } = yourQuotePage.panel;
 
-      it('renders `insured for` key, value and change link', () => {
-        const row = summaryList[INSURED_FOR];
-        const expectedKeyText = QUOTE_TITLES[INSURED_FOR];
+      it('renders `contract value` key, value and change link', () => {
+        const row = summaryList[CONTRACT_VALUE];
+        const expectedKeyText = QUOTE_TITLES[CONTRACT_VALUE];
 
         row.key().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedKeyText);
@@ -132,6 +133,23 @@ context('Your quote page (single policy)', () => {
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
+      it('renders `insured for` key and value (no change link)', () => {
+        const row = summaryList[INSURED_FOR];
+        const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_SINGLE_POLICY`];
+
+        row.key().invoke('text').then((text) => {
+          expect(text.trim()).equal(expectedKeyText);
+        });
+
+        row.value().invoke('text').then((text) => {
+          const expected = '£135,000.00';
+
+          expect(text.trim()).equal(expected);
+        });
+
+        row.changeLink().should('not.exist');
+      });
+
       it('renders `premium rate` key and value (no change link)', () => {
         const row = summaryList[PREMIUM_RATE_PERCENTAGE];
         const expectedKeyText = QUOTE_TITLES[PREMIUM_RATE_PERCENTAGE];
@@ -158,7 +176,7 @@ context('Your quote page (single policy)', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£1,770.00';
+          const expected = '£1,593.00';
 
           expect(text.trim()).equal(expected);
         });
@@ -166,7 +184,7 @@ context('Your quote page (single policy)', () => {
         row.changeLink().should('not.exist');
       });
 
-      it('renders `policy length` key, value and change link (single policy)', () => {
+      it('renders `policy length` key, value and change link', () => {
         const row = summaryList[SINGLE_POLICY_LENGTH];
         const expectedKeyText = QUOTE_TITLES[POLICY_LENGTH];
 

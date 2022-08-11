@@ -39,9 +39,9 @@ context('Your quote page - change answers (single policy type to multi policy ty
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  describe('change `insured for`', () => {
+  describe('change `contract value`', () => {
     it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
-      const row = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
+      const row = yourQuotePage.panel.summaryList[CONTRACT_VALUE];
 
       row.changeLink().click();
 
@@ -62,7 +62,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
     });
 
     it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().clear().type('200');
+      tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().clear().type('1000');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
@@ -71,10 +71,10 @@ context('Your quote page - change answers (single policy type to multi policy ty
     it('renders the new answer in the quote', () => {
       checkYourAnswersPage.submitButton().click();
 
-      const row = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
+      const row = yourQuotePage.panel.summaryList[CONTRACT_VALUE];
 
       row.value().invoke('text').then((text) => {
-        const expected = '£200.00';
+        const expected = '£1,000.00';
 
         expect(text.trim()).equal(expected);
       });
@@ -165,7 +165,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
       const insuredFor = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
 
       insuredFor.value().invoke('text').then((text) => {
-        expect(text.trim()).equal('£120,000.00');
+        expect(text.trim()).equal('£102,000.00');
       });
 
       const policyLength = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
@@ -216,6 +216,49 @@ context('Your quote page - change answers (single policy type to multi policy ty
         const expected = 'Bahrain';
 
         expect(text.trim()).equal(expected);
+      });
+    });
+  });
+
+  describe('change `buyer location`', () => {
+    it(`clicking 'change' redirects to ${ROUTES.BUYER_COUNTRY_CHANGE}`, () => {
+      const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
+
+      row.changeLink().click();
+
+      const expectedUrl = ROUTES.BUYER_COUNTRY_CHANGE;
+      cy.url().should('include', expectedUrl);
+    });
+
+    it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`;
+      cy.url().should('include', expected);
+    });
+
+    it('renders a back link with correct url', () => {
+      partials.backLink().should('exist');
+
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.YOUR_QUOTE}`;
+      partials.backLink().should('have.attr', 'href', expected);
+    });
+
+    it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+      buyerCountryPage.searchInput().type('Brazil');
+      const results = buyerCountryPage.results();
+      results.first().click();
+      buyerCountryPage.submitButton().click();
+
+      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+    });
+
+    it('renders the new answers in the quote', () => {
+      checkYourAnswersPage.submitButton().click();
+      cy.url().should('include', ROUTES.YOUR_QUOTE);
+
+      const buyerLocation = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
+
+      buyerLocation.value().invoke('text').then((text) => {
+        expect(text.trim()).equal('Brazil');
       });
     });
   });
