@@ -105,11 +105,14 @@ app.use(
   express.static(path.join(__dirname, '..', 'public')),
 );
 
+/* eslint-disable no-unused-vars, prettier/prettier */
 // @ts-ignore
-app.use((err, req, res) => {
-  // eslint-disable-line no-unused-vars, prettier/prettier
+const errorHandler: express.ErrorRequestHandler = (err, req, res, next) => {
   res.redirect('/problem-with-service');
-});
+};
+/* eslint-enable no-unused-vars, prettier/prettier */
+
+app.use(errorHandler);
 
 app.get('*', (req: Request, res: Response) =>
   res.render('page-not-found.njk', {
