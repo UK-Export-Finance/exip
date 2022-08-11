@@ -52,7 +52,7 @@ const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
           TEXT: 'employees of your UK business',
         },
         {
-          TEXT: 'contractors supplied to work for you by a UK sub- contractor',
+          TEXT: 'contractors supplied to work for you by a UK sub-contractor',
         },
         {
           TEXT: "staff seconded from abroad to work for you in the UK, on the export contract, and for whom you're financially responsible",
