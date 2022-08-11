@@ -2,7 +2,6 @@ import { SummaryListField, SummaryListItemData } from './summary-list';
 
 interface AnswersContent {
   buyerCountry?: SummaryListField;
-  canGetPrivateInsurance?: SummaryListField;
   contractValue?: SummaryListField;
   creditPeriodInMonths?: SummaryListField;
   currency?: SummaryListField;

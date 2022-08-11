@@ -1,7 +1,6 @@
 import {
   completeAndSubmitBuyerForm,
   completeAndSubmitCompanyForm,
-  completeAndSubmitTriedToObtainCoverForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
   completeAndSubmitTellUsAboutYourMultiPolicyForm,
@@ -10,7 +9,6 @@ import {
 export default () => {
   completeAndSubmitBuyerForm();
   completeAndSubmitCompanyForm();
-  completeAndSubmitTriedToObtainCoverForm();
   completeAndSubmitUkContentForm();
   completeAndSubmitPolicyTypeMultiForm();
   completeAndSubmitTellUsAboutYourMultiPolicyForm();

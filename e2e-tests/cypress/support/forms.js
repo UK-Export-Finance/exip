@@ -1,7 +1,6 @@
 import {
   companyBasedPage,
   buyerCountryPage,
-  canGetPrivateInsurancePage,
   ukGoodsOrServicesPage,
   policyTypePage,
   tellUsAboutYourPolicyPage,
@@ -9,7 +8,6 @@ import {
 import { FIELD_IDS } from '../../constants';
 
 const {
-  CAN_GET_PRIVATE_INSURANCE,
   CONTRACT_VALUE,
   CURRENCY,
   CREDIT_PERIOD,
@@ -31,11 +29,6 @@ export const completeAndSubmitBuyerForm = () => {
 export const completeAndSubmitCompanyForm = () => {
   companyBasedPage[VALID_COMPANY_BASE].yes().click();
   companyBasedPage.submitButton().click();
-};
-
-export const completeAndSubmitTriedToObtainCoverForm = () => {
-  canGetPrivateInsurancePage[CAN_GET_PRIVATE_INSURANCE].no().click();
-  canGetPrivateInsurancePage.submitButton().click();
 };
 
 export const completeAndSubmitUkContentForm = () => {

@@ -1,7 +1,6 @@
 import {
   completeAndSubmitBuyerForm,
   completeAndSubmitCompanyForm,
-  completeAndSubmitTriedToObtainCoverForm,
   completeAndSubmitUkContentForm,
 } from '../../../support/forms';
 import { policyTypePage } from '../../pages';
@@ -28,7 +27,6 @@ context('Policy type page', () => {
 
       completeAndSubmitBuyerForm();
       completeAndSubmitCompanyForm();
-      completeAndSubmitTriedToObtainCoverForm();
       completeAndSubmitUkContentForm();
 
       cy.url().should('include', ROUTES.POLICY_TYPE);

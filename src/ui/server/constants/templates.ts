@@ -1,7 +1,6 @@
 export const TEMPLATES = {
   COMPANY_BASED: 'company-based.njk',
   BUYER_COUNTRY: 'buyer-country.njk',
-  CAN_GET_PRIVATE_INSURANCE: 'can-get-private-insurance.njk',
   HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'uk-goods-or-services.njk',
   POLICY_TYPE: 'policy-type.njk',
   TELL_US_ABOUT_YOUR_POLICY: 'tell-us-about-your-policy.njk',

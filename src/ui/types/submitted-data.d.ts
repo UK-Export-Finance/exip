@@ -4,7 +4,6 @@ import { Currency } from './currency';
 type SubmittedData = {
   amount?: number;
   buyerCountry?: Country;
-  canGetPrivateInsurance?: boolean;
   contractValue?: number;
   creditPeriodInMonths?: number;
   currency?: Currency;

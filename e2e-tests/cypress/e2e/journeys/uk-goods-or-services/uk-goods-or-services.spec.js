@@ -1,5 +1,5 @@
 import {
-  canGetPrivateInsurancePage,
+  companyBasedPage,
   ukGoodsOrServicesPage,
 } from '../../pages';
 import partials from '../../partials';
@@ -17,15 +17,15 @@ const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Is at least 20% of your export contract value made up from UK goods or services page', () => {
   before(() => {
-    cy.visit(ROUTES.CAN_GET_PRIVATE_INSURANCE, {
+    cy.visit(ROUTES.COMPANY_BASED, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
-    canGetPrivateInsurancePage[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE].no().click();
-    canGetPrivateInsurancePage.submitButton().click();
+    companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].yes().click();
+    companyBasedPage.submitButton().click();
 
     cy.url().should('include', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
   });
@@ -56,7 +56,7 @@ context('Is at least 20% of your export contract value made up from UK goods or 
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.CAN_GET_PRIVATE_INSURANCE);
+    cy.url().should('include', ROUTES.COMPANY_BASED);
 
     // go back to page
     cy.visit(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {

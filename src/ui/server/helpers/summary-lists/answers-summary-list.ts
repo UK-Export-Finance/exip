@@ -20,7 +20,6 @@ const {
  * generateFieldGroups
  * Create all field groups for govukSummaryList
  * The following fields depend on the submitted answers and design ordering requirements:
- * - Tried private cover (must have the correct yes/no input ID)
  * - Policy type depending on the Policy type (must have single/multi input ID)
  * - Policy length depending on the Policy type (must have single/multi input ID)
  * - Contract value or Max contract value depending on the Policy type

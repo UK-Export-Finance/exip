@@ -1,7 +1,4 @@
-import {
-  canGetPrivateInsurancePage,
-  cannotObtainCoverPage,
-} from '../pages';
+import { cannotObtainCoverPage, ukGoodsOrServicesPage } from '../pages';
 import partials from '../partials';
 import {
   ORGANISATION,
@@ -15,16 +12,17 @@ const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 context('Cannot obtain UKEF cover exit page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.CAN_GET_PRIVATE_INSURANCE, {
+    cy.visit(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
-    cy.url().should('include', ROUTES.CAN_GET_PRIVATE_INSURANCE);
+    cy.url().should('include', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 
-    canGetPrivateInsurancePage[FIELD_IDS.CAN_GET_PRIVATE_INSURANCE].yesInput().click();
-    canGetPrivateInsurancePage.submitButton().click();
+    ukGoodsOrServicesPage.no().click();
+    ukGoodsOrServicesPage.submitButton().click();
+
     cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
   });
 
@@ -49,7 +47,7 @@ context('Cannot obtain UKEF cover exit page', () => {
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.CAN_GET_PRIVATE_INSURANCE);
+    cy.url().should('include', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
   });
 
   it('renders a page title and heading', () => {

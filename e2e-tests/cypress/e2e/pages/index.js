@@ -1,6 +1,5 @@
 const companyBasedPage = require('./companyBased');
 const buyerCountryPage = require('./buyerCountry');
-const canGetPrivateInsurancePage = require('./canGetPrivateInsurance');
 const ukGoodsOrServicesPage = require('./ukGoodsOrServices');
 const policyTypePage = require('./policyTypePage');
 const tellUsAboutYourPolicyPage = require('./tellUsAboutYourPolicy');
@@ -13,7 +12,6 @@ const pageNotFoundPage = require('./pageNotFound');
 module.exports = {
   companyBasedPage,
   buyerCountryPage,
-  canGetPrivateInsurancePage,
   ukGoodsOrServicesPage,
   policyTypePage,
   tellUsAboutYourPolicyPage,

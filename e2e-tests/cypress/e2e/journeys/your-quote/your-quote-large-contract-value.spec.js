@@ -1,7 +1,6 @@
 import {
   completeAndSubmitBuyerForm,
   completeAndSubmitCompanyForm,
-  completeAndSubmitTriedToObtainCoverForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../support/forms';
@@ -25,7 +24,6 @@ context('Get a quote - large contract value', () => {
 
     completeAndSubmitBuyerForm();
     completeAndSubmitCompanyForm();
-    completeAndSubmitTriedToObtainCoverForm();
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeSingleForm();
   });

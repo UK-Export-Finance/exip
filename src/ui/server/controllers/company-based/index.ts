@@ -48,7 +48,7 @@ const post = (req: Request, res: Response) => {
     return res.redirect(ROUTES.CHECK_YOUR_ANSWERS);
   }
 
-  return res.redirect(ROUTES.CAN_GET_PRIVATE_INSURANCE);
+  return res.redirect(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 };
 
 export { PAGE_VARIABLES, get, post };
