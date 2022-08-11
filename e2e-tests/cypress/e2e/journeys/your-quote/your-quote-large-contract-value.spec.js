@@ -57,7 +57,7 @@ context('Get a quote - large contract value', () => {
 
     // Check contract value formatting in the quote
     yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR].value().invoke('text').then((text) => {
-      const expected = '£12,345,678.00';
+      const expected = '£11,111,110.20';
 
       expect(text.trim()).equal(expected);
     });

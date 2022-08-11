@@ -13,7 +13,38 @@ const { BUYER_LOCATION, ESTIMATED_COST, INSURED_FOR, PREMIUM_RATE_PERCENTAGE } =
  * - Policy length depending on the Policy type (single/multi)
  */
 const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
-  let fields = [
+  let fields = [] as Array<SummaryListItemData>;
+
+  if (quote[SINGLE_POLICY_LENGTH]) {
+    fields = [
+      {
+        id: CONTRACT_VALUE,
+        title: QUOTE_TITLES[CONTRACT_VALUE],
+        value: {
+          text: quote[CONTRACT_VALUE].text,
+        },
+        renderChangeLink: true,
+        href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
+      },
+    ];
+  }
+
+  if (quote[MULTI_POLICY_LENGTH]) {
+    fields = [
+      {
+        id: MAX_AMOUNT_OWED,
+        title: QUOTE_TITLES[MAX_AMOUNT_OWED],
+        value: {
+          text: quote[MAX_AMOUNT_OWED].text,
+        },
+        renderChangeLink: true,
+        href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
+      },
+    ];
+  }
+
+  fields = [
+    ...fields,
     {
       id: PERCENTAGE_OF_COVER,
       title: QUOTE_TITLES[PERCENTAGE_OF_COVER],
@@ -23,6 +54,36 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
       renderChangeLink: true,
       href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
     },
+  ];
+
+  if (quote[SINGLE_POLICY_LENGTH]) {
+    fields = [
+      ...fields,
+      {
+        id: INSURED_FOR,
+        title: QUOTE_TITLES[`${INSURED_FOR}_SINGLE_POLICY`],
+        value: {
+          text: quote[INSURED_FOR].text,
+        },
+      },
+    ];
+  }
+
+  if (quote[MULTI_POLICY_LENGTH]) {
+    fields = [
+      ...fields,
+      {
+        id: INSURED_FOR,
+        title: QUOTE_TITLES[`${INSURED_FOR}_MULTI_POLICY`],
+        value: {
+          text: quote[INSURED_FOR].text,
+        },
+      },
+    ];
+  }
+
+  fields = [
+    ...fields,
     {
       id: PREMIUM_RATE_PERCENTAGE,
       title: QUOTE_TITLES[PREMIUM_RATE_PERCENTAGE],
@@ -41,15 +102,6 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
 
   if (quote[SINGLE_POLICY_LENGTH]) {
     fields = [
-      {
-        id: INSURED_FOR,
-        title: QUOTE_TITLES[INSURED_FOR],
-        value: {
-          text: quote[INSURED_FOR].text,
-        },
-        renderChangeLink: true,
-        href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
-      },
       ...fields,
       {
         id: SINGLE_POLICY_LENGTH,
@@ -65,15 +117,6 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
 
   if (quote[MULTI_POLICY_LENGTH]) {
     fields = [
-      {
-        id: INSURED_FOR,
-        title: QUOTE_TITLES[INSURED_FOR],
-        value: {
-          text: quote[INSURED_FOR].text,
-        },
-        renderChangeLink: true,
-        href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
-      },
       ...fields,
       {
         id: MULTI_POLICY_LENGTH,

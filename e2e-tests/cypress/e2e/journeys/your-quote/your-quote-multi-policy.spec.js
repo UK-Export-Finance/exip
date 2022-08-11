@@ -48,9 +48,9 @@ context('Your quote page - multi policy type', () => {
     context('summary list', () => {
       const { summaryList } = yourQuotePage.panel;
 
-      it('renders `insured for` key, value and change link', () => {
-        const row = summaryList[INSURED_FOR];
-        const expectedKeyText = QUOTE_TITLES[INSURED_FOR];
+      it('renders `max amount owed` key, value and change link', () => {
+        const row = summaryList[MAX_AMOUNT_OWED];
+        const expectedKeyText = QUOTE_TITLES[MAX_AMOUNT_OWED];
 
         row.key().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedKeyText);
@@ -94,6 +94,23 @@ context('Your quote page - multi policy type', () => {
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
+      it('renders `insured for` key and value (no change link)', () => {
+        const row = summaryList[INSURED_FOR];
+        const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_MULTI_POLICY`];
+
+        row.key().invoke('text').then((text) => {
+          expect(text.trim()).equal(expectedKeyText);
+        });
+
+        row.value().invoke('text').then((text) => {
+          const expected = '£135,000.00';
+
+          expect(text.trim()).equal(expected);
+        });
+
+        row.changeLink().should('not.exist');
+      });
+
       it('renders `premium rate` key and value (no change link)', () => {
         const row = summaryList[PREMIUM_RATE_PERCENTAGE];
         const expectedKeyText = QUOTE_TITLES[PREMIUM_RATE_PERCENTAGE];
@@ -120,7 +137,7 @@ context('Your quote page - multi policy type', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£2,205.00';
+          const expected = '£1,984.50';
 
           expect(text.trim()).equal(expected);
         });

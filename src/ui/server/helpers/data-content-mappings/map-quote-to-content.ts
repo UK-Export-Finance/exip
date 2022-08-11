@@ -3,6 +3,7 @@ import mapCountry from './map-country';
 import mapPolicyLength from './map-policy-length';
 import formatCurrency from '../format-currency';
 import { Quote, QuoteContent } from '../../../types';
+import mapCost from './map-cost';
 
 const { BUYER_COUNTRY, CURRENCY, PERCENTAGE_OF_COVER, QUOTE } = FIELD_IDS;
 
@@ -12,22 +13,23 @@ const mapQuoteToContent = (quote: Quote): QuoteContent => {
   const currencyCode = quote[CURRENCY].isoCode;
 
   const mapped = {
-    insuredFor: {
-      text: formatCurrency(quote[INSURED_FOR], currencyCode),
-    },
-    buyerCountry: {
-      text: mapCountry(quote[BUYER_COUNTRY]),
-    },
-    estimatedCost: {
-      text: formatCurrency(quote[ESTIMATED_COST], currencyCode),
-    },
+    ...mapCost(quote),
     percentageOfCover: {
       text: `${quote[PERCENTAGE_OF_COVER]}%`,
+    },
+    insuredFor: {
+      text: formatCurrency(quote[INSURED_FOR], currencyCode),
     },
     premiumRatePercentage: {
       text: `${quote[PREMIUM_RATE_PERCENTAGE]}%`,
     },
+    estimatedCost: {
+      text: formatCurrency(quote[ESTIMATED_COST], currencyCode),
+    },
     ...mapPolicyLength(quote),
+    buyerCountry: {
+      text: mapCountry(quote[BUYER_COUNTRY]),
+    },
   };
 
   return mapped;
