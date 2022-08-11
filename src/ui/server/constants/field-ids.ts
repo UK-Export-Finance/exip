@@ -1,9 +1,6 @@
 export const FIELD_IDS = {
   VALID_COMPANY_BASE: 'validCompanyBase',
   BUYER_COUNTRY: 'buyerCountry',
-  CAN_GET_PRIVATE_INSURANCE: 'canGetPrivateInsurance',
-  CAN_GET_PRIVATE_INSURANCE_YES: 'canGetPrivateInsuranceYes',
-  CAN_GET_PRIVATE_INSURANCE_NO: 'canGetPrivateInsuranceNo',
   COUNTRY: 'country',
   HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',
   AMOUNT_CURRENCY: 'amountAndCurrency',

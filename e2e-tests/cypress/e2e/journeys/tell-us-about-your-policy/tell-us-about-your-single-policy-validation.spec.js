@@ -1,7 +1,6 @@
 import {
   completeAndSubmitBuyerForm,
   completeAndSubmitCompanyForm,
-  completeAndSubmitTriedToObtainCoverForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../support/forms';
@@ -25,7 +24,6 @@ context('Tell us about the policy you need page - form validation', () => {
 
       completeAndSubmitBuyerForm();
       completeAndSubmitCompanyForm();
-      completeAndSubmitTriedToObtainCoverForm();
       completeAndSubmitUkContentForm();
       completeAndSubmitPolicyTypeSingleForm();
     });

@@ -1,7 +1,6 @@
 import {
   completeAndSubmitBuyerForm,
   completeAndSubmitCompanyForm,
-  completeAndSubmitTriedToObtainCoverForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../support/forms';
@@ -29,7 +28,6 @@ context('Tell us about the single policy you need', () => {
 
       completeAndSubmitBuyerForm();
       completeAndSubmitCompanyForm();
-      completeAndSubmitTriedToObtainCoverForm();
       completeAndSubmitUkContentForm();
       completeAndSubmitPolicyTypeSingleForm();
 

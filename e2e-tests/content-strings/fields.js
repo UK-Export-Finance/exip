@@ -16,20 +16,6 @@ const FIELDS = {
       TITLE: 'Buyer is based in',
     },
   },
-  [FIELD_IDS.CAN_GET_PRIVATE_INSURANCE]: {
-    OPTIONS: {
-      YES: {
-        ID: FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_YES,
-        VALUE: FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.YES,
-        TEXT: 'Yes',
-      },
-      NO: {
-        ID: FIELD_IDS.CAN_GET_PRIVATE_INSURANCE_NO,
-        VALUE: FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.NO,
-        TEXT: 'No',
-      },
-    },
-  },
   [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
     LABEL: 'Percentage of your export that is UK content',
     HINT: 'Enter the UK content of your export as a percentage.',

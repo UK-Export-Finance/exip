@@ -1,4 +1,4 @@
-import { FIELD_IDS, FIELD_VALUES } from '../../constants';
+import { FIELD_IDS } from '../../constants';
 import { SUMMARY_ANSWERS } from '../../content-strings';
 import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
 import mapCountry from './map-country';
@@ -9,9 +9,6 @@ import { SubmittedData } from '../../../types';
 
 const {
   BUYER_COUNTRY,
-  CAN_GET_PRIVATE_INSURANCE,
-  CAN_GET_PRIVATE_INSURANCE_YES,
-  CAN_GET_PRIVATE_INSURANCE_NO,
   CREDIT_PERIOD,
   MULTI_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
@@ -20,26 +17,6 @@ const {
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
-
-const mapCanGetPrivateInsurance = (answer: boolean) => {
-  if (answer === FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.YES) {
-    return {
-      [CAN_GET_PRIVATE_INSURANCE_YES]: {
-        text: SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_YES],
-      },
-    };
-  }
-
-  if (answer === FIELD_VALUES.CAN_GET_PRIVATE_INSURANCE.NO) {
-    return {
-      [CAN_GET_PRIVATE_INSURANCE_NO]: {
-        text: SUMMARY_ANSWERS[CAN_GET_PRIVATE_INSURANCE_NO],
-      },
-    };
-  }
-
-  return {};
-};
 
 const mapPolicyType = (answer: string) => {
   if (isSinglePolicyType(answer)) {
@@ -71,7 +48,6 @@ const mapAnswersToContent = (answers: SubmittedData) => {
     [BUYER_COUNTRY]: {
       text: mapCountry(answers[BUYER_COUNTRY]),
     },
-    ...mapCanGetPrivateInsurance(answers[CAN_GET_PRIVATE_INSURANCE]),
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
       text: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
     },
@@ -89,4 +65,4 @@ const mapAnswersToContent = (answers: SubmittedData) => {
   return mapped;
 };
 
-export { mapCanGetPrivateInsurance, mapPolicyType, mapPercentageOfCover, mapAnswersToContent };
+export { mapPolicyType, mapPercentageOfCover, mapAnswersToContent };

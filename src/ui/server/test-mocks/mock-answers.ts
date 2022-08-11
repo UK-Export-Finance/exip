@@ -4,7 +4,6 @@ import { SubmittedData } from '../../types';
 const {
   VALID_COMPANY_BASE,
   BUYER_COUNTRY,
-  CAN_GET_PRIVATE_INSURANCE,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   CONTRACT_VALUE,
   CURRENCY,
@@ -17,7 +16,6 @@ const {
 const mockAnswers = {
   [VALID_COMPANY_BASE]: true,
   [BUYER_COUNTRY]: 'Algeria',
-  [CAN_GET_PRIVATE_INSURANCE]: false,
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
   [CURRENCY]: 'GBP',
   [CONTRACT_VALUE]: '123456',

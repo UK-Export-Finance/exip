@@ -7,7 +7,6 @@ import CONSTANTS from '../../../../constants';
 import {
   completeAndSubmitBuyerForm,
   completeAndSubmitCompanyForm,
-  completeAndSubmitTriedToObtainCoverForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../support/forms';
@@ -30,7 +29,6 @@ context('Change your answers - change policy type multiple times via back button
 
     completeAndSubmitBuyerForm();
     completeAndSubmitCompanyForm();
-    completeAndSubmitTriedToObtainCoverForm();
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeSingleForm();
     cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);

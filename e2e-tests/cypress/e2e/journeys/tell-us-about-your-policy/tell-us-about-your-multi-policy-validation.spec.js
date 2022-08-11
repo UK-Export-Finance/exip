@@ -1,7 +1,6 @@
 import {
   completeAndSubmitBuyerForm,
   completeAndSubmitCompanyForm,
-  completeAndSubmitTriedToObtainCoverForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
 } from '../../../support/forms';
@@ -25,7 +24,6 @@ context('Tell us your multi policy you need - form validation', () => {
 
       completeAndSubmitBuyerForm();
       completeAndSubmitCompanyForm();
-      completeAndSubmitTriedToObtainCoverForm();
       completeAndSubmitUkContentForm();
       completeAndSubmitPolicyTypeMultiForm();
     });

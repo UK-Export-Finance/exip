@@ -3,7 +3,6 @@ import { ROUTES } from '../constants';
 import rootGet from '../controllers/root';
 import { get as buyerBasedGet, post as buyerBasedPost } from '../controllers/buyer-country';
 import { get as companyBasedGet, post as companyBasedPost } from '../controllers/company-based';
-import { get as canGetPrivateInsuranceGet, post as canGetPrivateInsurancePost } from '../controllers/can-get-private-insurance';
 import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../controllers/uk-goods-or-services';
 import { get as policyTypeGet, post as policyTypePost } from '../controllers/policy-type';
 import { get as tellUsAboutYourPolicyGet, post as tellUsAboutYourPolicyPost } from '../controllers/tell-us-about-your-policy';
@@ -23,8 +22,8 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(18);
-    expect(post).toHaveBeenCalledTimes(13);
+    expect(get).toHaveBeenCalledTimes(16);
+    expect(post).toHaveBeenCalledTimes(11);
 
     expect(get).toHaveBeenCalledWith(ROUTES.ROOT, rootGet);
 
@@ -37,11 +36,6 @@ describe('routes/index', () => {
     expect(post).toHaveBeenCalledWith(ROUTES.COMPANY_BASED, companyBasedPost);
     expect(get).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_CHANGE, companyBasedGet);
     expect(post).toHaveBeenCalledWith(ROUTES.COMPANY_BASED_CHANGE, companyBasedPost);
-
-    expect(get).toHaveBeenCalledWith(ROUTES.CAN_GET_PRIVATE_INSURANCE, canGetPrivateInsuranceGet);
-    expect(post).toHaveBeenCalledWith(ROUTES.CAN_GET_PRIVATE_INSURANCE, canGetPrivateInsurancePost);
-    expect(get).toHaveBeenCalledWith(ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE, canGetPrivateInsuranceGet);
-    expect(post).toHaveBeenCalledWith(ROUTES.CAN_GET_PRIVATE_INSURANCE_CHANGE, canGetPrivateInsurancePost);
 
     expect(get).toHaveBeenCalledWith(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, ukGoodsOrServicesGet);
     expect(post).toHaveBeenCalledWith(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, ukGoodsOrServicesPost);

@@ -6,16 +6,7 @@ import { answersSummaryList } from '../../helpers/summary-lists/answers-summary-
 import { mockAnswers, mockReq, mockRes } from '../../test-mocks';
 import { Request, Response } from '../../../types';
 
-const {
-  BUYER_COUNTRY,
-  CAN_GET_PRIVATE_INSURANCE,
-  CREDIT_PERIOD,
-  CURRENCY,
-  MAX_AMOUNT_OWED,
-  POLICY_TYPE,
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  VALID_COMPANY_BASE,
-} = FIELD_IDS;
+const { BUYER_COUNTRY, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, POLICY_TYPE, HAS_MINIMUM_UK_GOODS_OR_SERVICES, VALID_COMPANY_BASE } = FIELD_IDS;
 
 describe('controllers/check-your-answers', () => {
   let req: Request;
@@ -26,7 +17,6 @@ describe('controllers/check-your-answers', () => {
       name: mockAnswers[BUYER_COUNTRY],
       isoCode: 'FRA',
     },
-    [CAN_GET_PRIVATE_INSURANCE]: true,
     [CREDIT_PERIOD]: 2,
     [CURRENCY]: {
       name: 'UK Sterling',
