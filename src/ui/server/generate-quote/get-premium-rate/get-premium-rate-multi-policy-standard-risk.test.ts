@@ -1,26 +1,27 @@
 import { getAvailableCover, getResultAndExpected } from './index.test';
 import { API, FIELD_VALUES } from '../../constants';
 
-const standardRisk2Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 2);
-const standardRisk3Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 3);
-const standardRisk4Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 4);
-const standardRisk5Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 5);
-const standardRisk6Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 6);
-const standardRisk7Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 7);
-const standardRisk8Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 8);
-const standardRisk9Months = getAvailableCover('SINGLE_POLICY', 'STANDARD', 9);
+const standardRisk2Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 2);
+const standardRisk3Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 3);
+const standardRisk4Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 4);
+const standardRisk5Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 5);
+const standardRisk6Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 6);
+const standardRisk7Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 7);
+const standardRisk8Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 8);
+const standardRisk9Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 9);
 
 describe('server/generate-quote/get-premium-rate', () => {
   const mockBase = {
-    policyType: FIELD_VALUES.POLICY_TYPE.SINGLE,
+    policyType: FIELD_VALUES.POLICY_TYPE.MULTI,
     insuredFor: 70,
   };
 
-  describe('single policy - standard risk', () => {
+  describe('multi policy - standard risk', () => {
     const riskCategory = API.MAPPINGS.RISK.STANDARD;
     const mock = {
       ...mockBase,
       riskCategory,
+      policyLengthInMonths: 2,
     };
 
     describe('2 months policy length', () => {

@@ -1,6 +1,6 @@
 import { hasErrors, validation } from './validation';
 import { FIELD_IDS } from '../../constants';
-import CONTENT_STRINGS from '../../content-strings';
+import * as CONTENT_STRINGS from '../../content-strings';
 import generateValidationErrors from '../../helpers/validation';
 
 describe('controllers/buyer-country/validation', () => {

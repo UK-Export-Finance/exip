@@ -30,12 +30,10 @@
     },
     "types": ["node", "jest"],
     "typeRoots": [
-      // "types/index.d.ts",
-      // "types",
       "node_modules/@types"
     ],
     "allowJs": true,
-    "importHelpers": true
+    "importHelpers": true,
   },
   "include": ["**/*.ts"],
   "exclude": ["./node_modules/*", "node_modules"]

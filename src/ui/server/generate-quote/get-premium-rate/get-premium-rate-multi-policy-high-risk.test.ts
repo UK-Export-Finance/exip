@@ -1,14 +1,14 @@
 import { getAvailableCover, getResultAndExpected } from './index.test';
 import { API, FIELD_VALUES } from '../../constants';
 
-const standardRisk2Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 2);
-const standardRisk3Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 3);
-const standardRisk4Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 4);
-const standardRisk5Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 5);
-const standardRisk6Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 6);
-const standardRisk7Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 7);
-const standardRisk8Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 8);
-const standardRisk9Months = getAvailableCover('MULTI_POLICY', 'STANDARD', 9);
+const highRisk2Months = getAvailableCover('MULTI_POLICY', 'HIGH', 2);
+const highRisk3Months = getAvailableCover('MULTI_POLICY', 'HIGH', 3);
+const highRisk4Months = getAvailableCover('MULTI_POLICY', 'HIGH', 4);
+const highRisk5Months = getAvailableCover('MULTI_POLICY', 'HIGH', 5);
+const highRisk6Months = getAvailableCover('MULTI_POLICY', 'HIGH', 6);
+const highRisk7Months = getAvailableCover('MULTI_POLICY', 'HIGH', 7);
+const highRisk8Months = getAvailableCover('MULTI_POLICY', 'HIGH', 8);
+const highRisk9Months = getAvailableCover('MULTI_POLICY', 'HIGH', 9);
 
 describe('server/generate-quote/get-premium-rate', () => {
   const mockBase = {
@@ -16,11 +16,12 @@ describe('server/generate-quote/get-premium-rate', () => {
     insuredFor: 70,
   };
 
-  describe('multi policy - standard risk', () => {
-    const riskCategory = API.MAPPINGS.RISK.STANDARD;
+  describe('multi policy - high risk', () => {
+    const riskCategory = API.MAPPINGS.RISK.HIGH;
     const mock = {
       ...mockBase,
       riskCategory,
+      policyLengthInMonths: 2,
     };
 
     describe('2 months policy length', () => {
@@ -33,7 +34,7 @@ describe('server/generate-quote/get-premium-rate', () => {
 
         expect(result).toEqual(expected);
 
-        const manualDataCheck = standardRisk2Months.rates[0].premiumRate;
+        const manualDataCheck = highRisk2Months.rates[0].premiumRate;
 
         expect(result).toEqual(manualDataCheck);
       });
@@ -49,7 +50,7 @@ describe('server/generate-quote/get-premium-rate', () => {
 
         expect(result).toEqual(expected);
 
-        const manualDataCheck = standardRisk3Months.rates[0].premiumRate;
+        const manualDataCheck = highRisk3Months.rates[0].premiumRate;
 
         expect(result).toEqual(manualDataCheck);
       });
@@ -65,7 +66,7 @@ describe('server/generate-quote/get-premium-rate', () => {
 
         expect(result).toEqual(expected);
 
-        const manualDataCheck = standardRisk4Months.rates[0].premiumRate;
+        const manualDataCheck = highRisk4Months.rates[0].premiumRate;
 
         expect(result).toEqual(manualDataCheck);
       });
@@ -81,7 +82,7 @@ describe('server/generate-quote/get-premium-rate', () => {
 
         expect(result).toEqual(expected);
 
-        const manualDataCheck = standardRisk5Months.rates[0].premiumRate;
+        const manualDataCheck = highRisk5Months.rates[0].premiumRate;
 
         expect(result).toEqual(manualDataCheck);
       });
@@ -97,7 +98,7 @@ describe('server/generate-quote/get-premium-rate', () => {
 
         expect(result).toEqual(expected);
 
-        const manualDataCheck = standardRisk6Months.rates[0].premiumRate;
+        const manualDataCheck = highRisk6Months.rates[0].premiumRate;
 
         expect(result).toEqual(manualDataCheck);
       });
@@ -113,7 +114,7 @@ describe('server/generate-quote/get-premium-rate', () => {
 
         expect(result).toEqual(expected);
 
-        const manualDataCheck = standardRisk7Months.rates[0].premiumRate;
+        const manualDataCheck = highRisk7Months.rates[0].premiumRate;
 
         expect(result).toEqual(manualDataCheck);
       });
@@ -129,7 +130,7 @@ describe('server/generate-quote/get-premium-rate', () => {
 
         expect(result).toEqual(expected);
 
-        const manualDataCheck = standardRisk8Months.rates[0].premiumRate;
+        const manualDataCheck = highRisk8Months.rates[0].premiumRate;
 
         expect(result).toEqual(manualDataCheck);
       });
@@ -145,7 +146,7 @@ describe('server/generate-quote/get-premium-rate', () => {
 
         expect(result).toEqual(expected);
 
-        const manualDataCheck = standardRisk9Months.rates[0].premiumRate;
+        const manualDataCheck = highRisk9Months.rates[0].premiumRate;
 
         expect(result).toEqual(manualDataCheck);
       });

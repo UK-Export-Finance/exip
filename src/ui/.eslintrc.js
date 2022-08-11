@@ -1,8 +1,19 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  extends: ['plugin:@typescript-eslint/recommended', 'prettier'],
-  plugins: ['@typescript-eslint', 'prettier'],
+  extends: [
+    'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:@typescript-eslint/recommended',
+    'airbnb',
+    'prettier/prettier',
+  ],
+  plugins: ['@typescript-eslint', 'import', 'prettier'],
+
   parserOptions: {
+    project: './tsconfig.eslint.json',
+    tsconfigRootDir: __dirname,
+    ecmaVersion: 2020,
     sourceType: 'module',
   },
   env: {
@@ -10,8 +21,25 @@ module.exports = {
     browser: true,
   },
   root: true,
+  settings: {
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+        paths: './tsconfig.json',
+      },
+    },
+  },
   rules: {
-    'prettier/prettier': 'error',
+    'import/no-unresolved': 'error',
+    '@typescript-eslint/indent': ['error', 2],
+    'prettier/prettier': [
+      'error',
+      {
+        printWidth: 160,
+        endOfLine: 'auto',
+        parser: 'typescript',
+      },
+    ],
     'max-len': [
       'error',
       160,
@@ -26,15 +54,25 @@ module.exports = {
     ],
     'no-console': ['error', { allow: ['info', 'error'] }],
     'no-underscore-dangle': ['error', { allow: ['_id', '_csrf'] }],
-    'import/no-named-as-default': 0,
-    'implicit-arrow-linebreak': 0,
+    'import/no-named-as-default': 'off',
+    'implicit-arrow-linebreak': 'off',
     'object-curly-newline': [
       'error',
       {
         consistent: true,
       },
     ],
-    'no-unneeded-ternary': 0,
-    '@typescript-eslint/dot-notation': 0,
+    'no-unneeded-ternary': 'off',
+    '@typescript-eslint/dot-notation': 'off',
+    'import/extensions': 'off',
+    'import/newline-after-import': 'off',
+    'import/first': 'off',
+    'import/prefer-default-export': 'off',
+    'consistent-return': 'off',
+    'import/order': 'off',
+    'function-paren-newline': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 };

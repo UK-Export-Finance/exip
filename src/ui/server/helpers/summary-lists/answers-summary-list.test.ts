@@ -3,7 +3,7 @@ import { mapAnswersToContent } from '../data-content-mappings/map-answers-to-con
 import { FIELDS, LINKS, PAGES } from '../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../constants';
 import { mockSession } from '../../test-mocks';
-import { SummaryListItemData } from '../../..//types';
+import { SummaryListItemData } from '../../../types';
 
 const {
   BUYER_COUNTRY,

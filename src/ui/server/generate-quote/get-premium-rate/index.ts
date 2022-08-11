@@ -27,14 +27,14 @@ const getPremiumRate = (policyType: string, riskCategory: string, totalMonths: n
 
   const riskCategoryKey = PRICING_GRID_MAP.RISK_CATEGORY[riskCategory];
 
-  const pricingGrid = PRICING_GRID as PricingGrid;
+  const pricingGrid: any = PRICING_GRID as PricingGrid;
 
   const risk = pricingGrid[policyTypeKey][riskCategoryKey];
 
   // const month = risk.find(({ months }) => months === totalMonths);
-  const month = risk.find((month: PricingGridMonth) => month.months === totalMonths);
+  const pricingGridMonth = risk.find((month: PricingGridMonth) => month.months === totalMonths);
 
-  const rateObj = month.rates.find((rate: PricingGridRate) => rate.insuredFor === insuredFor);
+  const rateObj = pricingGridMonth.rates.find((rate: PricingGridRate) => rate.insuredFor === insuredFor);
 
   return rateObj.premiumRate;
 };
