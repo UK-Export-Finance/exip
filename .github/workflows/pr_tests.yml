@@ -28,11 +28,11 @@ jobs:
         with:
           node-version: '16'
       - name: Linting
+        working-directory: ./src/ui
         run: |
           npm install --legacy-peer-deps
-          cd ui
+          cd ../../
           npm install --legacy-peer-deps
-          cd ..
           npm run lint
       - uses: act10ns/slack@v1
         with:
@@ -54,8 +54,8 @@ jobs:
         with:
           node-version: '16'
       - name: Unit tests
+        working-directory: ./src/ui
         run: |
-          cd ui
           npm install --legacy-peer-deps
           npm run test
       - uses: act10ns/slack@v1
@@ -101,7 +101,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Start Docker Compose
-        run: docker-compose up -d
+        run: docker-compose up --build -d
       - name: Run e2e tests
         uses: cypress-io/github-action@v4
         with:

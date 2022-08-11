@@ -1,0 +1,8 @@
+node_modules
+Dockerfile
+generated_reports
+*.md
+.env
+.prettierrc.json
+.env.sample
+.eslintignore
