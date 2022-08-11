@@ -80,20 +80,17 @@ app.use(
   }),
 );
 
-app.use(
-  basicAuth({
-    users: {
-      // @ts-ignore
-      [process.env.BASIC_AUTH_KEY]: process.env.BASIC_AUTH_SECRET, // @ts-ignore
-      [process.env.USER_1_KEY]: process.env.USER_1_SECRET, // @ts-ignore
-      [process.env.USER_2_KEY]: process.env.USER_2_SECRET, // @ts-ignore
-      [process.env.USER_3_KEY]: process.env.USER_3_SECRET, // @ts-ignore
-      [process.env.USER_4_KEY]: process.env.USER_4_SECRET, // @ts-ignore
-      [process.env.USER_5_KEY]: process.env.USER_5_SECRET, // @ts-ignore
-    },
-    challenge: true,
-  }),
-);
+if (process.env.NODE_ENV !== 'production') {
+  app.use(
+    basicAuth({
+      users: {
+        // @ts-ignore
+        [process.env.BASIC_AUTH_KEY]: process.env.BASIC_AUTH_SECRET, // @ts-ignore
+      },
+      challenge: true,
+    }),
+  );
+}
 
 app.use('/', routes);
 
