@@ -111,7 +111,7 @@ export const post = async (req: Request, res: Response) => {
 
     req.flash('exitReason', reason);
 
-    return res.redirect('/cannot-obtain-cover');
+    return res.redirect(ROUTES.CANNOT_OBTAIN_COVER);
   }
 
   const populatedData = {

@@ -3,7 +3,7 @@ import { BUTTONS, FOOTER, LINKS, PAGES, PRODUCT } from '../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../constants';
 import { mapAnswersToContent } from '../../helpers/data-content-mappings/map-answers-to-content';
 import { answersSummaryList } from '../../helpers/summary-lists/answers-summary-list';
-import { mockReq, mockRes } from '../../test-mocks';
+import { mockAnswers, mockReq, mockRes } from '../../test-mocks';
 import { Request, Response } from '../../../types';
 
 const {
@@ -23,7 +23,7 @@ describe('controllers/check-your-answers', () => {
 
   const mockSessionData = {
     [BUYER_COUNTRY]: {
-      name: 'Algeria',
+      name: mockAnswers[BUYER_COUNTRY],
       isoCode: 'FRA',
     },
     [CAN_GET_PRIVATE_INSURANCE]: true,

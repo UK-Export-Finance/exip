@@ -31,7 +31,6 @@ const getPremiumRate = (policyType: string, riskCategory: string, totalMonths: n
 
   const risk = pricingGrid[policyTypeKey][riskCategoryKey];
 
-  // const month = risk.find(({ months }) => months === totalMonths);
   const pricingGridMonth = risk.find((month: PricingGridMonth) => month.months === totalMonths);
 
   const rateObj = pricingGridMonth.rates.find((rate: PricingGridRate) => rate.insuredFor === insuredFor);
