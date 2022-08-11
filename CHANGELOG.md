@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/UK-Export-Finance/exip/compare/v1.0.0...v1.1.0) (2022-08-11)
+
+
+### Features
+
+* EMS-240 - quote 'insured for' using percentage of cover. Additional fields and reordering of Quote summary list items ([51a9675](https://github.com/UK-Export-Finance/exip/commit/51a9675105cdfcde2e83f2756413e92aa244957e))
+
 ## 1.0.0 (2022-08-11)
 
 
