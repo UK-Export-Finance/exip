@@ -29,11 +29,9 @@
       "*": ["types/*", "node_modules/@types"]
     },
     "types": ["node", "jest"],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "typeRoots": ["node_modules/@types"],
     "allowJs": true,
-    "importHelpers": true,
+    "importHelpers": true
   },
   "include": ["**/*.ts"],
   "exclude": ["./node_modules/*", "node_modules"]
