@@ -48,7 +48,7 @@ context('Your quote page - multi policy type', () => {
     context('summary list', () => {
       const { summaryList } = yourQuotePage.panel;
 
-      it('renders `max amount owed` key, value and change link', () => {
+      it('renders `max amount owed` key, value with no decimal points and change link', () => {
         const row = summaryList[MAX_AMOUNT_OWED];
         const expectedKeyText = QUOTE_TITLES[MAX_AMOUNT_OWED];
 
@@ -57,7 +57,7 @@ context('Your quote page - multi policy type', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£150,000.00';
+          const expected = '£150,000';
 
           expect(text.trim()).equal(expected);
         });
@@ -94,7 +94,7 @@ context('Your quote page - multi policy type', () => {
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
-      it('renders `insured for` key and value (no change link)', () => {
+      it('renders `insured for` key and value with decimal points (no change link)', () => {
         const row = summaryList[INSURED_FOR];
         const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_MULTI_POLICY`];
 

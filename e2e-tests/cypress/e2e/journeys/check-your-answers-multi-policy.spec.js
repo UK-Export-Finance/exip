@@ -172,7 +172,7 @@ context('Check your answers page (multi policy)', () => {
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
-    it('renders `Max amount owed` key, value and change link', () => {
+    it('renders `Max amount owed` key, value with no decimal points and change link', () => {
       const row = list[MAX_AMOUNT_OWED];
       const expectedKeyText = FIELDS[MAX_AMOUNT_OWED].SUMMARY.TITLE;
 
@@ -181,7 +181,7 @@ context('Check your answers page (multi policy)', () => {
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = '£150,000.00';
+        const expected = '£150,000';
 
         expect(text.trim()).equal(expected);
       });

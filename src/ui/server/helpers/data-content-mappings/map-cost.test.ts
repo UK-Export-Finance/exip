@@ -20,7 +20,7 @@ describe('server/helpers/data-content-mappings/map-cost', () => {
 
       const expected = {
         [CONTRACT_VALUE]: {
-          text: formatCurrency(mockDataSinglePolicyType[CONTRACT_VALUE], mockDataSinglePolicyType[CURRENCY].isoCode),
+          text: formatCurrency(mockDataSinglePolicyType[CONTRACT_VALUE], mockDataSinglePolicyType[CURRENCY].isoCode, 0),
         },
       };
 
@@ -42,7 +42,7 @@ describe('server/helpers/data-content-mappings/map-cost', () => {
 
       const expected = {
         [MAX_AMOUNT_OWED]: {
-          text: formatCurrency(mockDataMultiPolicyType[MAX_AMOUNT_OWED], mockDataMultiPolicyType[CURRENCY].isoCode),
+          text: formatCurrency(mockDataMultiPolicyType[MAX_AMOUNT_OWED], mockDataMultiPolicyType[CURRENCY].isoCode, 0),
         },
       };
 

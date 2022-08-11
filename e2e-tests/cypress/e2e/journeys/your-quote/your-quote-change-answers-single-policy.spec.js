@@ -74,7 +74,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
       const row = yourQuotePage.panel.summaryList[CONTRACT_VALUE];
 
       row.value().invoke('text').then((text) => {
-        const expected = '£1,000.00';
+        const expected = '£1,000';
 
         expect(text.trim()).equal(expected);
       });

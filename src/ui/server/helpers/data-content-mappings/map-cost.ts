@@ -11,7 +11,7 @@ const mapCost = (answers: SubmittedData | Quote) => {
   if (isSinglePolicyType(answers[POLICY_TYPE])) {
     mapped = {
       [CONTRACT_VALUE]: {
-        text: formatCurrency(answers[CONTRACT_VALUE], answers[CURRENCY].isoCode),
+        text: formatCurrency(answers[CONTRACT_VALUE], answers[CURRENCY].isoCode, 0),
       },
     };
   }
@@ -19,7 +19,7 @@ const mapCost = (answers: SubmittedData | Quote) => {
   if (isMultiPolicyType(answers[POLICY_TYPE])) {
     mapped = {
       [MAX_AMOUNT_OWED]: {
-        text: formatCurrency(answers[MAX_AMOUNT_OWED], answers[CURRENCY].isoCode),
+        text: formatCurrency(answers[MAX_AMOUNT_OWED], answers[CURRENCY].isoCode, 0),
       },
     };
   }
