@@ -28,8 +28,10 @@ jobs:
         with:
           node-version: '16'
       - name: Linting
-        working-directory: ./
+        working-directory: ./src/ui
         run: |
+          npm install --legacy-peer-deps
+          cd ../../
           npm install --legacy-peer-deps
           npm run lint
       - uses: act10ns/slack@v1
