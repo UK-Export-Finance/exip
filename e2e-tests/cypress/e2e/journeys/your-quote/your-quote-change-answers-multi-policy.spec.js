@@ -23,7 +23,7 @@ const {
   SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
-context('Your quote page - change policy type and length from multi single', () => {
+context('Your quote page - change answers (policy type and length from multi to single) - as an exporter, I want to get an Export insurance quote', () => {
   before(() => {
     cy.login();
 

@@ -30,7 +30,7 @@ const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
 };
 
-context('Your quote page - multi policy type', () => {
+context('Get a quote/your quote page (multi policy) - as an exporter, I want to get an Export insurance quote', () => {
   before(() => {
     cy.login();
 

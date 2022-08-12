@@ -15,7 +15,7 @@ import CONSTANTS from '../../../../constants';
 const CONTENT_STRINGS = PAGES.COMPANY_BASED_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
-context('Company based inside the UK, Channel Islands and Isle of Man page', () => {
+context('Company based page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
   beforeEach(() => {
     cy.visit(ROUTES.BUYER_COUNTRY, {
       auth: {

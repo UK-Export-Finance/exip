@@ -23,7 +23,7 @@ const {
   SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
-context('Change your answers - change policy type multiple times via back button', () => {
+context('Change your answers (policy type) - multiple times via back button - as an exporter, I want to change the details before submitting the proposal', () => {
   before(() => {
     cy.login();
 

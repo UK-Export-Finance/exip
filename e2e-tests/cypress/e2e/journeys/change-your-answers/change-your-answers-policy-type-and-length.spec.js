@@ -28,7 +28,7 @@ const submissionData = {
   [POLICY_LENGTH]: '3',
 };
 
-context('Change your answers after checking answers - Policy type and length', () => {
+context('Change your answers (policy type and length fields) - as an exporter, I want to change the details before submitting the proposal', () => {
   let row;
 
   before(() => {

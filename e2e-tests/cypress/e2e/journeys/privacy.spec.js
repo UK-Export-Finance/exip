@@ -2,7 +2,7 @@ import { cookiesPage } from '../pages';
 import partials from '../partials';
 import { LINKS } from '../../../content-strings';
 
-context('Privacy link', () => {
+context('Privacy link - as en exporter, I want to read the privacy policy', () => {
   before(() => {
     cy.login();
 
@@ -10,7 +10,6 @@ context('Privacy link', () => {
   });
 
   it('redirects to an external UKEF privacy policy page ', () => {
-    // microsoft forms generates a new URL from the short URL we provide.
     cy.url().should('include', LINKS.EXTERNAL.PRIVACY);
   });
 });

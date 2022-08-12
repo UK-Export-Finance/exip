@@ -11,7 +11,7 @@ import CONSTANTS from '../../../../constants';
 const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
 const { ROUTES } = CONSTANTS;
 
-context('Is at least 20% of your export contract value made up from UK goods or services page - answer no', () => {
+context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover - submit `no - UK goods/services is below the minimum`', () => {
   beforeEach(() => {
     cy.visit(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
       auth: {

@@ -20,7 +20,7 @@ const {
   FIELD_IDS,
 } = CONSTANTS;
 
-context('Policy type page', () => {
+context('Policy type page - as an exporter, I want to get UKEF export insurance quote based on the export policy - provide policy type', () => {
   describe('rendering', () => {
     before(() => {
       cy.login();

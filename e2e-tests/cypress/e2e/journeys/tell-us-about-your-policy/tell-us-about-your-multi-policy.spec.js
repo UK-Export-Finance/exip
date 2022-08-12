@@ -21,7 +21,8 @@ const {
   FIELD_IDS,
   SUPPORTED_CURRENCIES,
 } = CONSTANTS;
-context('Tell us about the multi policy you need', () => {
+
+context('Tell us about your multi policy page - as an exporter, I want to provide my Export insurance policy details', () => {
   describe('rendering', () => {
     before(() => {
       cy.login();

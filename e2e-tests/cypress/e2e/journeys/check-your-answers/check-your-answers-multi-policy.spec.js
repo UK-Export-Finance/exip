@@ -1,27 +1,25 @@
-import { checkYourAnswersPage } from '../pages';
-import partials from '../partials';
+import { checkYourAnswersPage } from '../../pages';
 import {
-  ORGANISATION,
   FIELDS,
   LINKS,
   PAGES,
   SUMMARY_ANSWERS,
-} from '../../../content-strings';
-import CONSTANTS from '../../../constants';
-import FIELD_IDS from '../../../constants/field-ids';
+} from '../../../../content-strings';
+import CONSTANTS from '../../../../constants';
+import FIELD_IDS from '../../../../constants/field-ids';
 
 const CONTENT_STRINGS = PAGES.CHECK_YOUR_ANSWERS_PAGE;
 const { ROUTES, FIELD_VALUES } = CONSTANTS;
 
-context('Check your answers page (single policy)', () => {
+context('Check your answers page (multi policy) - as an exporter, I want to review the details before submitting the proposal', () => {
   const {
     BUYER_COUNTRY,
-    CONTRACT_VALUE,
     CREDIT_PERIOD,
-    PERCENTAGE_OF_COVER,
-    SINGLE_POLICY_TYPE,
-    SINGLE_POLICY_LENGTH,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+    MAX_AMOUNT_OWED,
+    MULTI_POLICY_TYPE,
+    MULTI_POLICY_LENGTH,
+    PERCENTAGE_OF_COVER,
     VALID_COMPANY_BASE,
   } = FIELD_IDS;
 
@@ -29,61 +27,20 @@ context('Check your answers page (single policy)', () => {
     [BUYER_COUNTRY]: 'Algeria',
     [CREDIT_PERIOD]: '1',
     [PERCENTAGE_OF_COVER]: '90',
-    [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-    [SINGLE_POLICY_LENGTH]: '3',
+    [MULTI_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+    [MULTI_POLICY_LENGTH]: '2',
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
   };
 
   before(() => {
     cy.login();
-    cy.submitAnswersHappyPathSinglePolicy();
+    cy.submitAnswersHappyPathMultiPolicy();
     cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
   });
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');
-  });
-
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 80,
-      'best-practices': 100,
-      seo: 60,
-    });
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
-
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.TELL_US_ABOUT_YOUR_POLICY}`;
-    partials.backLink().should('have.attr', 'href', expected);
-  });
-
-  it('renders a submit button', () => {
-    const button = checkYourAnswersPage.submitButton();
-    button.should('exist');
-
-    button.invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.SUBMIT_BUTTON);
-    });
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    checkYourAnswersPage.heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
-    });
   });
 
   context('export summary list', () => {
@@ -115,6 +72,7 @@ context('Check your answers page (single policy)', () => {
       });
 
       const expectedHref = `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`;
+
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -171,15 +129,15 @@ context('Check your answers page (single policy)', () => {
     });
 
     it('renders `Policy type` key, value and change link', () => {
-      const row = list[SINGLE_POLICY_TYPE];
-      const expectedKeyText = FIELDS[SINGLE_POLICY_TYPE].SUMMARY.TITLE;
+      const row = list[MULTI_POLICY_TYPE];
+      const expectedKeyText = FIELDS[MULTI_POLICY_TYPE].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(submissionData[SINGLE_POLICY_TYPE]);
+        expect(text.trim()).equal(submissionData[MULTI_POLICY_TYPE]);
       });
 
       row.changeLink().invoke('text').then((text) => {
@@ -192,15 +150,15 @@ context('Check your answers page (single policy)', () => {
     });
 
     it('renders `Policy length` key, value and change link', () => {
-      const row = list[SINGLE_POLICY_LENGTH];
-      const expectedKeyText = FIELDS[SINGLE_POLICY_LENGTH].SUMMARY.TITLE;
+      const row = list[MULTI_POLICY_LENGTH];
+      const expectedKeyText = FIELDS[MULTI_POLICY_LENGTH].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
+        const expected = `${submissionData[MULTI_POLICY_LENGTH]} months`;
 
         expect(text.trim()).equal(expected);
       });
@@ -210,13 +168,13 @@ context('Check your answers page (single policy)', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
+      const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
-    it('renders `Contract value` key, value with no decimal points and change link', () => {
-      const row = list[CONTRACT_VALUE];
-      const expectedKeyText = FIELDS[CONTRACT_VALUE].SUMMARY.TITLE;
+    it('renders `Max amount owed` key, value with no decimal points and change link', () => {
+      const row = list[MAX_AMOUNT_OWED];
+      const expectedKeyText = FIELDS[MAX_AMOUNT_OWED].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
@@ -233,7 +191,30 @@ context('Check your answers page (single policy)', () => {
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
+      row.changeLink().should('have.attr', 'href', expectedHref);
+    });
+
+    it('renders `Credit period` key, value and change link', () => {
+      const row = list[CREDIT_PERIOD];
+      const expectedKeyText = FIELDS[CREDIT_PERIOD].SUMMARY.TITLE;
+
+      row.key().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedKeyText);
+      });
+
+      row.value().invoke('text').then((text) => {
+        const expected = `${submissionData[CREDIT_PERIOD]} month`;
+
+        expect(text.trim()).equal(expected);
+      });
+
+      row.changeLink().invoke('text').then((text) => {
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        expect(text.trim()).equal(expected);
+      });
+
+      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -258,14 +239,6 @@ context('Check your answers page (single policy)', () => {
 
       const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
-    });
-
-    it('does NOT render `Credit period` key, value or change link', () => {
-      const row = list[CREDIT_PERIOD];
-
-      row.key().should('not.exist');
-      row.value().should('not.exist');
-      row.changeLink().should('not.exist');
     });
   });
 

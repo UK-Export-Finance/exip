@@ -18,7 +18,7 @@ const {
   QUOTE,
 } = FIELD_IDS;
 
-context('Get a quote - large contract value', () => {
+context('Get a quote/your quote page (large contract value) - as an exporter, I want to get an Export insurance quote', () => {
   before(() => {
     cy.login();
 
