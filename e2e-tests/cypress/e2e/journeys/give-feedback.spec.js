@@ -1,6 +1,6 @@
 import partials from '../partials';
 
-context('Give feedback link', () => {
+context('Give feedback link - As an exporter, I want to provide feedback about this service', () => {
   before(() => {
     cy.login();
 

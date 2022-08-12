@@ -12,7 +12,7 @@ import checkText from '../../helpers/check-text';
 
 const { FIELD_IDS } = CONSTANTS;
 
-context('Tell us your multi policy you need - form validation', () => {
+context('Tell us about the multi policy you need - form validation', () => {
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');

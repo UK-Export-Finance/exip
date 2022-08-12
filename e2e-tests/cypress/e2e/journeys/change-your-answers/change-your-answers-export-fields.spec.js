@@ -23,7 +23,7 @@ const submissionData = {
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
 };
 
-context('Change your answers after checking answers - Export fields', () => {
+context('Change your answers (export fields) - as an exporter, I want to change the details before submitting the proposal', () => {
   before(() => {
     cy.login();
     cy.submitAnswersHappyPathSinglePolicy();

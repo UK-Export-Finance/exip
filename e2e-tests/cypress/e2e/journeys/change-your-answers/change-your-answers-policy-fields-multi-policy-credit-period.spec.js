@@ -20,7 +20,7 @@ const submissionData = {
   [CREDIT_PERIOD]: '1',
 };
 
-context('Change your answers after checking answers - Policy fields', () => {
+context('Change your answers (policy fields) - as an exporter, I want to change the details before submitting the proposal', () => {
   before(() => {
     cy.login();
     cy.submitAnswersHappyPathMultiPolicy();

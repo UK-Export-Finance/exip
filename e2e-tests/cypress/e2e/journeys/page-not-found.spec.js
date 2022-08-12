@@ -3,7 +3,7 @@ import { PAGES } from '../../../content-strings';
 
 const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
 
-context('Page not found', () => {
+context('404 Page not found', () => {
   before(() => {
     cy.visit('/test', {
       auth: {

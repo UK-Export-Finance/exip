@@ -22,7 +22,7 @@ const {
   SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
-context('Get a quote - Kenya, single policy, USD', () => {
+context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporter, I want to get an Export insurance quote', () => {
   before(() => {
     cy.login();
 

@@ -22,7 +22,7 @@ const {
   ESTIMATED_COST,
 } = QUOTE;
 
-context('Your quote page - non GBP currency', () => {
+context('Get a quote/your quote page (non GBP currency) - as an exporter, I want to get an Export insurance quote', () => {
   before(() => {
     cy.login();
 
