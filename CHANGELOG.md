@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/UK-Export-Finance/exip/compare/v1.4.0...v1.4.1) (2022-08-12)
+
+
+### Bug Fixes
+
+* **EMS-240:** estimated cost calculation ([f1c8552](https://github.com/UK-Export-Finance/exip/commit/f1c8552798778374a18f4de9ddb27edf75ce097a))
+
 ## [1.4.0](https://github.com/UK-Export-Finance/exip/compare/v1.3.0...v1.4.0) (2022-08-11)
 
 
