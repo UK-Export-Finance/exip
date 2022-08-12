@@ -137,7 +137,7 @@ context('Your quote page - multi policy type', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£1,984.50';
+          const expected = '£2,205.00';
 
           expect(text.trim()).equal(expected);
         });

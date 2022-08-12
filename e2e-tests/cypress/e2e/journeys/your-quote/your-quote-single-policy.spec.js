@@ -176,7 +176,7 @@ context('Your quote page (single policy)', () => {
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£1,593.00';
+          const expected = '£1,770.00';
 
           expect(text.trim()).equal(expected);
         });

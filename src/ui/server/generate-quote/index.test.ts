@@ -1,4 +1,4 @@
-import { getInsuredFor, getContractValue, getTotalMonths, calculateCost, generateQuote } from '.';
+import { getInsuredFor, getContractValue, getTotalMonths, calculateEstimatedCost, generateQuote } from '.';
 import { FIELD_IDS, FIELD_VALUES } from '../constants';
 import { getPremiumRate } from './get-premium-rate';
 import { getPercentageOfNumber } from '../helpers/number';
@@ -126,14 +126,14 @@ describe('server/generate-quote/index', () => {
     });
   });
 
-  describe('calculateCost', () => {
-    it('should return a percentage of a number', () => {
+  describe('calculateEstimatedCost', () => {
+    it('should return premium rate * contract value', () => {
       const mockPremiumRate = 2.3;
-      const mockAmount = 1000;
+      const mockContractValue = 1000;
 
-      const result = calculateCost(mockPremiumRate, mockAmount);
+      const result = calculateEstimatedCost(mockPremiumRate, mockContractValue);
 
-      const expected = Number(getPercentageOfNumber(mockPremiumRate, mockAmount));
+      const expected = Number(getPercentageOfNumber(mockPremiumRate, mockContractValue));
 
       expect(result).toEqual(expected);
     });
@@ -168,7 +168,10 @@ describe('server/generate-quote/index', () => {
       };
 
       expected[QUOTE.PREMIUM_RATE_PERCENTAGE] = expectedPremiumRate;
-      expected[QUOTE.ESTIMATED_COST] = calculateCost(expectedPremiumRate, expected[QUOTE.INSURED_FOR]);
+
+      const contractValueAmount = Object.values(getContractValue(mockSubmittedData))[0];
+
+      expected[QUOTE.ESTIMATED_COST] = calculateEstimatedCost(expectedPremiumRate, contractValueAmount);
 
       expect(result).toEqual(expected);
     });
