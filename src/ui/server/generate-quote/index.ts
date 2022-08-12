@@ -4,7 +4,7 @@ import { getPremiumRate } from './get-premium-rate';
 import { getPercentageOfNumber } from '../helpers/number';
 import { Quote, SubmittedData } from '../../types';
 
-const { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE, POLICY_LENGTH, QUOTE } = FIELD_IDS;
+const { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE, POLICY_LENGTH } = FIELD_IDS;
 
 /**
  * getContractValue
@@ -77,18 +77,12 @@ const getTotalMonths = (policyType: string, policyLength: number, creditPeriod =
 };
 
 /**
- * calculateCost
- * Generate estimated cost
- * This is x% of the total amount of insurance.
+ * calculateEstimatedCost
  * @param {Number} Premium rate percentage
- * @param {Number} Total amount of the export
- * @returns {Number} Total months for the premium rate
+ * @param {Number} Contract value/Maximum amount owed
+ * @returns {Number} Premium rate percentage of the contract value/maximum amount owed
  */
-const calculateCost = (premiumRate: number, amount: number) => {
-  const result = getPercentageOfNumber(premiumRate, amount);
-
-  return Number(result);
-};
+const calculateEstimatedCost = (premiumRate: number, contractValue: number) => Number(getPercentageOfNumber(premiumRate, contractValue));
 
 /**
  * generateQuote
@@ -96,8 +90,10 @@ const calculateCost = (premiumRate: number, amount: number) => {
  * @returns {Object} Quote with premium rate and estimated cost
  */
 const generateQuote = (submittedData: SubmittedData): Quote => {
+  const contractValue = getContractValue(submittedData);
+
   const mapped = {
-    ...getContractValue(submittedData),
+    ...contractValue,
     percentageOfCover: submittedData[PERCENTAGE_OF_COVER],
     insuredFor: getInsuredFor(submittedData),
     buyerCountry: submittedData[BUYER_COUNTRY],
@@ -111,13 +107,15 @@ const generateQuote = (submittedData: SubmittedData): Quote => {
 
   const premiumRate = getPremiumRate(mapped[POLICY_TYPE], mapped[BUYER_COUNTRY].riskCategory, totalMonths, mapped[PERCENTAGE_OF_COVER]);
 
+  const contractValueAmount = Object.values(contractValue)[0];
+
   const quote = {
     ...mapped,
     premiumRatePercentage: premiumRate,
-    estimatedCost: calculateCost(premiumRate, mapped[QUOTE.INSURED_FOR]),
+    estimatedCost: calculateEstimatedCost(premiumRate, contractValueAmount),
   };
 
   return quote;
 };
 
-export { getContractValue, getInsuredFor, getTotalMonths, calculateCost, generateQuote };
+export { getContractValue, getInsuredFor, getTotalMonths, calculateEstimatedCost, generateQuote };
