@@ -7,6 +7,7 @@ const checkYourAnswersPage = require('./checkYourAnswers');
 const yourQuotePage = require('./yourQuote');
 const cannotObtainCoverPage = require('./cannotObtainCover');
 const cookiesPage = require('./cookies');
+const needToStartAgainPage = require('./needToStartAgain');
 const pageNotFoundPage = require('./pageNotFound');
 
 module.exports = {
@@ -19,5 +20,6 @@ module.exports = {
   yourQuotePage,
   cannotObtainCoverPage,
   cookiesPage,
+  needToStartAgainPage,
   pageNotFoundPage,
 };

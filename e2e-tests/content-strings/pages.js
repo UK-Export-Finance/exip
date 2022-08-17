@@ -223,6 +223,12 @@ const COOKIES_PAGE = {
   },
 };
 
+const NEED_TO_START_AGAIN = {
+  PAGE_TITLE: 'You need to start again',
+  HEADING: 'You need to start again',
+  REASON: 'This is because you have not yet answered all the eligibility questions.',
+};
+
 const PAGE_NOT_FOUND_PAGE = {
   PAGE_TITLE: 'Page not found',
   HEADING: 'Page not found',
@@ -245,6 +251,7 @@ module.exports = {
   CANNOT_OBTAIN_COVER_PAGE,
   YOUR_QUOTE_PAGE,
   COOKIES_PAGE,
+  NEED_TO_START_AGAIN,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
 };

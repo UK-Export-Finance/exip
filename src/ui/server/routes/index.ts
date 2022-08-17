@@ -10,6 +10,7 @@ import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../con
 import cannotObtainCoverGet from '../controllers/cannot-obtain-cover';
 import yourQuoteGet from '../controllers/your-quote';
 import cookiesGet from '../controllers/cookies';
+import { get as needToStartAgainGet, post as needToStartAgainPost } from '../controllers/need-to-start-again';
 import problemWithServiceGet from '../controllers/problem-with-service';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
@@ -52,6 +53,9 @@ router.get(ROUTES.CANNOT_OBTAIN_COVER, cannotObtainCoverGet);
 router.get(ROUTES.YOUR_QUOTE, yourQuoteGet);
 
 router.get(ROUTES.COOKIES, cookiesGet);
+
+router.get(ROUTES.NEED_TO_START_AGAIN, needToStartAgainGet);
+router.post(ROUTES.NEED_TO_START_AGAIN, needToStartAgainPost);
 
 router.get(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceGet);
 

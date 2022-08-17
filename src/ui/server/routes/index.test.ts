@@ -10,6 +10,7 @@ import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../con
 import cannotObtainCoverGet from '../controllers/cannot-obtain-cover';
 import yourQuoteGet from '../controllers/your-quote';
 import cookiesGet from '../controllers/cookies';
+import { get as needToStartAgainGet, post as needToStartAgainPost } from '../controllers/need-to-start-again';
 import problemWithServiceGet from '../controllers/problem-with-service';
 
 describe('routes/index', () => {
@@ -22,8 +23,8 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(16);
-    expect(post).toHaveBeenCalledTimes(11);
+    expect(get).toHaveBeenCalledTimes(17);
+    expect(post).toHaveBeenCalledTimes(12);
 
     expect(get).toHaveBeenCalledWith(ROUTES.ROOT, rootGet);
 
@@ -60,6 +61,9 @@ describe('routes/index', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.YOUR_QUOTE, yourQuoteGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.COOKIES, cookiesGet);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.NEED_TO_START_AGAIN, needToStartAgainGet);
+    expect(post).toHaveBeenCalledWith(ROUTES.NEED_TO_START_AGAIN, needToStartAgainPost);
 
     expect(get).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceGet);
   });

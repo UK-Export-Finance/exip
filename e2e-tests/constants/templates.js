@@ -8,6 +8,7 @@ const TEMPLATES = {
   CANNOT_OBTAIN_COVER: 'cannot-obtain-cover.njk',
   YOUR_QUOTE: 'your-quote.njk',
   COOKIES: 'cookies.njk',
+  NEED_TO_START_AGAIN: 'need-to-start-again.njk',
   PROBLEM_WITH_SERVICE: 'problem-with-service.njk',
 };
 

@@ -7,16 +7,18 @@ const mockReq = () => {
   let req = {} as Request;
 
   req = {
-    session: {
-      submittedData: {},
-    },
     body: {},
-    originalUrl: 'mock',
+    csrfToken: () => 'mock',
     flash: jest.fn(),
     headers: {
       referer: '/mock',
     },
-    csrfToken: () => 'mock',
+    method: 'GET',
+    originalUrl: 'mock',
+    redirect: jest.fn(),
+    session: {
+      submittedData: {},
+    },
   };
 
   return req;
