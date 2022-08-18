@@ -25,10 +25,10 @@ describe('controllers/root', () => {
       expect(req.session.submittedData).toEqual({});
     });
 
-    it(`should redirect to ${ROUTES.BUYER_COUNTRY}`, () => {
+    it(`should redirect to ${ROUTES.QUOTE.BUYER_COUNTRY}`, () => {
       get(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.BUYER_COUNTRY);
+      expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_COUNTRY);
     });
   });
 });

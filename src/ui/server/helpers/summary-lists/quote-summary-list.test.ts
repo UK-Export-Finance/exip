@@ -26,7 +26,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
             text: mockQuoteContent[PERCENTAGE_OF_COVER].text,
           },
           renderChangeLink: true,
-          href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
+          href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
         },
         {
           id: PREMIUM_RATE_PERCENTAGE,
@@ -49,7 +49,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
             text: mockQuoteContent[BUYER_COUNTRY].text,
           },
           renderChangeLink: true,
-          href: `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`,
+          href: `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`,
         },
       ];
 
@@ -82,7 +82,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
             text: mockQuoteContent[CONTRACT_VALUE].text,
           },
           renderChangeLink: true,
-          href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
+          href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
         };
 
         expect(expectedField).toEqual(expected);
@@ -133,7 +133,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
             text: mockQuoteContent[SINGLE_POLICY_LENGTH].text,
           },
           renderChangeLink: true,
-          href: `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
+          href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
         };
 
         expect(expectedField).toEqual(expected);
@@ -166,7 +166,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
             text: mockQuoteContent[MAX_AMOUNT_OWED].text,
           },
           renderChangeLink: true,
-          href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
+          href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
         };
 
         expect(expectedField).toEqual(expected);
@@ -225,7 +225,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
             text: mockQuoteContent[MULTI_POLICY_LENGTH].text,
           },
           renderChangeLink: true,
-          href: `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
+          href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
         };
 
         expect(expectedField).toEqual(expected);

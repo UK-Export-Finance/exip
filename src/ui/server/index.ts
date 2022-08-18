@@ -19,7 +19,7 @@ dotenv.config();
 
 import configureNunjucks from './nunjucks-configuration';
 
-import routes from './routes/index';
+import { rootRoute, quoteRoutes, applicationRoutes } from './routes';
 import { PRODUCT, FOOTER, PAGES } from './content-strings';
 import { requiredDataProvided } from './middleware/required-data-provided';
 
@@ -95,7 +95,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(requiredDataProvided);
 
-app.use('/', routes);
+app.use('/', rootRoute);
+app.use('/', quoteRoutes);
+app.use('/', applicationRoutes);
 
 app.use(
   '/assets',

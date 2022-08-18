@@ -3,6 +3,8 @@ import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../constants';
 import { mockReq, mockRes, mockSession } from '../test-mocks';
 import { Request, Response } from '../../types';
 
+const { ROOT, COOKIES, QUOTE } = ROUTES;
+
 const {
   BUYER_COUNTRY,
   BUYER_COUNTRY_CHANGE,
@@ -10,7 +12,6 @@ const {
   COMPANY_BASED,
   COMPANY_BASED_CHANGE,
   CANNOT_OBTAIN_COVER,
-  COOKIES,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE,
   NEED_TO_START_AGAIN,
@@ -19,7 +20,7 @@ const {
   TELL_US_ABOUT_YOUR_POLICY,
   TELL_US_ABOUT_YOUR_POLICY_CHANGE,
   YOUR_QUOTE,
-} = ROUTES;
+} = QUOTE;
 
 describe('middleware/required-data-provided', () => {
   let req: Request;
@@ -29,7 +30,11 @@ describe('middleware/required-data-provided', () => {
     it('should return all routes as an array of strings', () => {
       const result = getRoutesAsArray();
 
-      const expected = Object.values(ROUTES);
+      const expected = Object.values({
+        ROOT,
+        COOKIES,
+        ...QUOTE,
+      });
 
       expect(result).toEqual(expected);
     });
