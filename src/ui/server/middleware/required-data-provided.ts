@@ -2,6 +2,8 @@ import { FIELD_IDS, ROUTES } from '../constants';
 import { Request, RequiredDataState, Response, SubmittedData } from '../../types';
 import { isSinglePolicyType, isMultiPolicyType } from '../helpers/policy-type';
 
+const { ROOT, COOKIES, QUOTE } = ROUTES;
+
 const {
   BUYER_COUNTRY,
   BUYER_COUNTRY_CHANGE,
@@ -9,24 +11,30 @@ const {
   CHECK_YOUR_ANSWERS,
   COMPANY_BASED,
   COMPANY_BASED_CHANGE,
-  COOKIES,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE,
   NEED_TO_START_AGAIN,
   POLICY_TYPE,
   POLICY_TYPE_CHANGE,
-  ROOT,
   TELL_US_ABOUT_YOUR_POLICY,
   TELL_US_ABOUT_YOUR_POLICY_CHANGE,
   YOUR_QUOTE,
-} = ROUTES;
+} = QUOTE;
 
 /**
  * getRoutesAsArray
  * transform all routes into an array of strings
  * @returns {Array}
  */
-export const getRoutesAsArray = (): Array<string> => Object.values(ROUTES);
+export const getRoutesAsArray = (): Array<string> => {
+  const routes = {
+    ROOT,
+    COOKIES,
+    ...QUOTE,
+  };
+
+  return Object.values(routes);
+};
 
 /**
  * routeIsKnown
