@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/UK-Export-Finance/exip/compare/v1.4.2...v1.5.0) (2022-08-18)
+
+
+### Features
+
+* **EMS-95:** prevent users from manually navigating to a page if the previous, required forms have not been completed ([#84](https://github.com/UK-Export-Finance/exip/issues/84)) ([8ffac35](https://github.com/UK-Export-Finance/exip/commit/8ffac356d507bcbef8564b475ecb9cbcff247b13))
+
 ## [1.4.1](https://github.com/UK-Export-Finance/exip/compare/v1.4.0...v1.4.1) (2022-08-12)
 
 
