@@ -18,20 +18,20 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     completeAndSubmitBuyerForm();
     completeAndSubmitCompanyForm();
 
-    cy.url().should('include', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 
     ukGoodsOrServicesPage.no().click();
     ukGoodsOrServicesPage.submitButton().click();
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
+    cy.url().should('include', ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
   });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
 
-    partials.backLink().should('have.attr', 'href', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    partials.backLink().should('have.attr', 'href', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
   });
 
   it('renders a specific reason', () => {

@@ -22,7 +22,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     completeAndSubmitBuyerForm();
     completeAndSubmitCompanyForm();
 
-    cy.url().should('include', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
   });
 
   beforeEach(() => {
@@ -51,10 +51,10 @@ context('UK goods or services page - as an exporter, I want to check if my expor
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.COMPANY_BASED);
+    cy.url().should('include', ROUTES.QUOTE.COMPANY_BASED);
 
     // go back to page
-    cy.visit(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
+    cy.visit(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
@@ -262,11 +262,11 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.POLICY_TYPE}`, () => {
+      it(`should redirect to ${ROUTES.QUOTE.POLICY_TYPE}`, () => {
         ukGoodsOrServicesPage.yes().click();
         ukGoodsOrServicesPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.POLICY_TYPE);
+        cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
       });
     });
   });

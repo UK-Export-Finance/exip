@@ -32,7 +32,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       completeAndSubmitUkContentForm();
       completeAndSubmitPolicyTypeMultiForm();
 
-      cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
+      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     beforeEach(() => {
@@ -62,7 +62,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
         expect(text.trim()).equal(LINKS.BACK);
       });
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.POLICY_TYPE}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.POLICY_TYPE}`;
 
       partials.backLink().should('have.attr', 'href', expected);
     });
@@ -195,7 +195,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
   });
 
   describe('when form is valid', () => {
-    it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().type('100');
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
@@ -203,7 +203,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
 
       tellUsAboutYourPolicyPage.submitButton().click();
 
-      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
   });
 });

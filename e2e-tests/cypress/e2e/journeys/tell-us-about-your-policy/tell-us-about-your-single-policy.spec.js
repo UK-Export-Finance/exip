@@ -32,7 +32,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       completeAndSubmitUkContentForm();
       completeAndSubmitPolicyTypeSingleForm();
 
-      cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
+      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     beforeEach(() => {
@@ -62,7 +62,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
         expect(text.trim()).equal(LINKS.BACK);
       });
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.POLICY_TYPE}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.POLICY_TYPE}`;
 
       partials.backLink().should('have.attr', 'href', expected);
     });
@@ -170,14 +170,14 @@ context('Tell us about your single policy page - as an exporter, I want to provi
   });
 
   describe('when form is valid', () => {
-    it(`should redirect to ${ROUTES.CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().type('100');
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
 
       tellUsAboutYourPolicyPage.submitButton().click();
 
-      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
   });
 });

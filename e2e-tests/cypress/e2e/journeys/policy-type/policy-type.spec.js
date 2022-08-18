@@ -29,7 +29,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       completeAndSubmitCompanyForm();
       completeAndSubmitUkContentForm();
 
-      cy.url().should('include', ROUTES.POLICY_TYPE);
+      cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
     });
 
     beforeEach(() => {
@@ -59,7 +59,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
         expect(text.trim()).equal(LINKS.BACK);
       });
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`;
 
       partials.backLink().should('have.attr', 'href', expected);
     });
@@ -168,13 +168,13 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
   });
 
   describe('when form is valid', () => {
-    it(`should redirect to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY}`, () => {
+    it(`should redirect to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY}`, () => {
       policyTypePage[FIELD_IDS.POLICY_TYPE].single.input().click();
       policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().type('8');
 
       policyTypePage.submitButton().click();
 
-      cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
+      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
   });
 });

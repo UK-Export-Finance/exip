@@ -35,7 +35,7 @@ const generateFieldGroups = (answers: AnswersContent) => {
     {
       id: BUYER_COUNTRY,
       ...FIELDS[BUYER_COUNTRY],
-      href: `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`,
+      href: `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`,
       value: {
         text: answers[BUYER_COUNTRY].text,
       },
@@ -43,7 +43,7 @@ const generateFieldGroups = (answers: AnswersContent) => {
     {
       id: VALID_COMPANY_BASE,
       ...FIELDS[VALID_COMPANY_BASE],
-      href: `${ROUTES.COMPANY_BASED_CHANGE}#heading`,
+      href: `${ROUTES.QUOTE.COMPANY_BASED_CHANGE}#heading`,
       value: {
         text: answers[VALID_COMPANY_BASE].text,
       },
@@ -51,7 +51,7 @@ const generateFieldGroups = (answers: AnswersContent) => {
     {
       id: HAS_MINIMUM_UK_GOODS_OR_SERVICES,
       ...FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
-      href: `${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`,
+      href: `${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`,
       value: {
         text: answers[HAS_MINIMUM_UK_GOODS_OR_SERVICES].text,
       },
@@ -63,7 +63,7 @@ const generateFieldGroups = (answers: AnswersContent) => {
       {
         id: SINGLE_POLICY_TYPE,
         ...FIELDS[SINGLE_POLICY_TYPE],
-        href: `${ROUTES.POLICY_TYPE_CHANGE}#heading`,
+        href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
         value: {
           text: answers[SINGLE_POLICY_TYPE].text,
         },
@@ -71,7 +71,7 @@ const generateFieldGroups = (answers: AnswersContent) => {
       {
         id: SINGLE_POLICY_LENGTH,
         ...FIELDS[SINGLE_POLICY_LENGTH],
-        href: `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
+        href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
         value: {
           text: answers[SINGLE_POLICY_LENGTH].text,
         },
@@ -79,7 +79,7 @@ const generateFieldGroups = (answers: AnswersContent) => {
       {
         id: CONTRACT_VALUE,
         ...FIELDS[CONTRACT_VALUE],
-        href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
+        href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
         value: {
           text: answers[CONTRACT_VALUE].text,
         },
@@ -87,7 +87,7 @@ const generateFieldGroups = (answers: AnswersContent) => {
       {
         id: PERCENTAGE_OF_COVER,
         ...FIELDS[PERCENTAGE_OF_COVER],
-        href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
+        href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
         value: {
           text: answers[PERCENTAGE_OF_COVER].text,
         },
@@ -100,7 +100,7 @@ const generateFieldGroups = (answers: AnswersContent) => {
       {
         id: MULTI_POLICY_TYPE,
         ...FIELDS[MULTI_POLICY_TYPE],
-        href: `${ROUTES.POLICY_TYPE_CHANGE}#heading`,
+        href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
         value: {
           text: answers[MULTI_POLICY_TYPE].text,
         },
@@ -108,7 +108,7 @@ const generateFieldGroups = (answers: AnswersContent) => {
       {
         id: MULTI_POLICY_LENGTH,
         ...FIELDS[MULTI_POLICY_LENGTH],
-        href: `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
+        href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
         value: {
           text: answers[MULTI_POLICY_LENGTH].text,
         },
@@ -116,7 +116,7 @@ const generateFieldGroups = (answers: AnswersContent) => {
       {
         id: MAX_AMOUNT_OWED,
         ...FIELDS[MAX_AMOUNT_OWED],
-        href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
+        href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
         value: {
           text: answers[MAX_AMOUNT_OWED].text,
         },
@@ -124,7 +124,7 @@ const generateFieldGroups = (answers: AnswersContent) => {
       {
         id: PERCENTAGE_OF_COVER,
         ...FIELDS[PERCENTAGE_OF_COVER],
-        href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
+        href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
         value: {
           text: answers[PERCENTAGE_OF_COVER].text,
         },
@@ -132,7 +132,7 @@ const generateFieldGroups = (answers: AnswersContent) => {
       {
         id: CREDIT_PERIOD,
         ...FIELDS[CREDIT_PERIOD],
-        href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`,
+        href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`,
         value: {
           text: answers[CREDIT_PERIOD].text,
         },

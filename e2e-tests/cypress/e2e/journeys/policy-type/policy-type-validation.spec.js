@@ -14,7 +14,7 @@ context('Policy type page - policy type & length validation', () => {
     completeAndSubmitCompanyForm();
     completeAndSubmitUkContentForm();
 
-    cy.url().should('include', ROUTES.POLICY_TYPE);
+    cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
   });
 
   beforeEach(() => {

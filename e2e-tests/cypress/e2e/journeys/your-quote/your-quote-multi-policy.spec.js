@@ -37,7 +37,7 @@ context('Get a quote/your quote page (multi policy) - as an exporter, I want to 
     cy.submitAnswersHappyPathMultiPolicy();
     checkYourAnswersPage.submitButton().click();
 
-    cy.url().should('include', ROUTES.YOUR_QUOTE);
+    cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
   });
 
   beforeEach(() => {
@@ -67,7 +67,7 @@ context('Get a quote/your quote page (multi policy) - as an exporter, I want to 
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
+        const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
@@ -90,7 +90,7 @@ context('Get a quote/your quote page (multi policy) - as an exporter, I want to 
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
+        const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
@@ -164,7 +164,7 @@ context('Get a quote/your quote page (multi policy) - as an exporter, I want to 
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
+        const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
 
@@ -187,7 +187,7 @@ context('Get a quote/your quote page (multi policy) - as an exporter, I want to 
           expect(text.trim()).equal(expected);
         });
 
-        const expectedHref = `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`;
+        const expectedHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
         row.changeLink().should('have.attr', 'href', expectedHref);
       });
     });

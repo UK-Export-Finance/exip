@@ -1,0 +1,52 @@
+import { FIELD_IDS } from '../../../../../constants';
+import { ERROR_MESSAGES } from '../../../../../content-strings';
+import generateValidationErrors from '../../../../../helpers/validation';
+import { isMultiPolicyType } from '../../../../../helpers/policy-type';
+import { objectHasProperty } from '../../../../../helpers/object';
+import { isNumber, numberHasDecimal } from '../../../../../helpers/number';
+import { RequestBody } from '../../../../../../types';
+
+const { CREDIT_PERIOD, POLICY_TYPE } = FIELD_IDS;
+
+const MINIMUM = 1;
+const MAXIMUM = 2;
+
+const creditPeriodRules = (formBody: RequestBody, errors: object) => {
+  let updatedErrors = errors;
+
+  if (isMultiPolicyType(formBody[POLICY_TYPE])) {
+    if (!objectHasProperty(formBody, CREDIT_PERIOD)) {
+      updatedErrors = generateValidationErrors(CREDIT_PERIOD, ERROR_MESSAGES[CREDIT_PERIOD].IS_EMPTY, errors);
+
+      return updatedErrors;
+    }
+
+    if (numberHasDecimal(formBody[CREDIT_PERIOD])) {
+      updatedErrors = generateValidationErrors(CREDIT_PERIOD, ERROR_MESSAGES[CREDIT_PERIOD].NOT_A_WHOLE_NUMBER, updatedErrors);
+
+      return updatedErrors;
+    }
+
+    if (!isNumber(Number(formBody[CREDIT_PERIOD]))) {
+      updatedErrors = generateValidationErrors(CREDIT_PERIOD, ERROR_MESSAGES[CREDIT_PERIOD].NOT_A_NUMBER, updatedErrors);
+
+      return updatedErrors;
+    }
+
+    if (Number(formBody[CREDIT_PERIOD]) < MINIMUM) {
+      updatedErrors = generateValidationErrors(CREDIT_PERIOD, ERROR_MESSAGES[CREDIT_PERIOD].BELOW_MINIMUM, errors);
+
+      return updatedErrors;
+    }
+
+    if (Number(formBody[CREDIT_PERIOD]) > MAXIMUM) {
+      updatedErrors = generateValidationErrors(CREDIT_PERIOD, ERROR_MESSAGES[CREDIT_PERIOD].ABOVE_MAXIMUM, errors);
+
+      return updatedErrors;
+    }
+  }
+
+  return updatedErrors;
+};
+
+export default creditPeriodRules;

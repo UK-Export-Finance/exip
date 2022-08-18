@@ -15,20 +15,20 @@ context('Company based page - as an exporter, I want to check if my company can 
     cy.login();
     completeAndSubmitBuyerForm();
 
-    cy.url().should('include', ROUTES.COMPANY_BASED);
+    cy.url().should('include', ROUTES.QUOTE.COMPANY_BASED);
 
     companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].no().click();
     companyBasedPage.submitButton().click();
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
+    cy.url().should('include', ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
   });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
 
-    partials.backLink().should('have.attr', 'href', ROUTES.COMPANY_BASED);
+    partials.backLink().should('have.attr', 'href', ROUTES.QUOTE.COMPANY_BASED);
   });
 
   it('renders a specific reason', () => {

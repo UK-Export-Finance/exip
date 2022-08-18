@@ -36,7 +36,7 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
 
     checkYourAnswersPage.submitButton().click();
 
-    cy.url().should('include', ROUTES.YOUR_QUOTE);
+    cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
   });
 
   beforeEach(() => {

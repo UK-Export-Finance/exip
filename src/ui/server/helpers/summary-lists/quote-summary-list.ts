@@ -24,7 +24,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
           text: quote[CONTRACT_VALUE].text,
         },
         renderChangeLink: true,
-        href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
+        href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
       },
     ];
   }
@@ -38,7 +38,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
           text: quote[MAX_AMOUNT_OWED].text,
         },
         renderChangeLink: true,
-        href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
+        href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
       },
     ];
   }
@@ -52,7 +52,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
         text: quote[PERCENTAGE_OF_COVER].text,
       },
       renderChangeLink: true,
-      href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
+      href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
     },
   ];
 
@@ -110,7 +110,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
           text: quote[SINGLE_POLICY_LENGTH].text,
         },
         renderChangeLink: true,
-        href: `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
+        href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
       },
     ];
   }
@@ -125,7 +125,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
           text: quote[MULTI_POLICY_LENGTH].text,
         },
         renderChangeLink: true,
-        href: `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
+        href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
       },
     ];
   }
@@ -139,7 +139,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
         text: quote[BUYER_COUNTRY].text,
       },
       renderChangeLink: true,
-      href: `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`,
+      href: `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`,
     },
   ];
 

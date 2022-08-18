@@ -34,7 +34,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
   before(() => {
     cy.login();
     cy.submitAnswersHappyPathSinglePolicy();
-    cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+    cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
   });
 
@@ -43,22 +43,22 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it(`clicking 'change' redirects to ${ROUTES.POLICY_TYPE_CHANGE}`, () => {
+  it(`clicking 'change' redirects to ${ROUTES.QUOTE.POLICY_TYPE_CHANGE}`, () => {
     row.changeLink().click();
 
-    const expectedUrl = ROUTES.POLICY_TYPE_CHANGE;
+    const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;
     cy.url().should('include', expectedUrl);
   });
 
   it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-    const expected = `${ROUTES.POLICY_TYPE_CHANGE}#heading`;
+    const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
     cy.url().should('include', expected);
   });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
+    const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
     partials.backLink().should('have.attr', 'href', expected);
   });
 
@@ -70,12 +70,12 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     policyTypePage[SINGLE_POLICY_LENGTH].input().should('have.attr', 'value', submissionData[POLICY_LENGTH]);
   });
 
-  it(`redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
+  it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
     policyTypePage[POLICY_TYPE].multi.input().click();
     policyTypePage[MULTI_POLICY_LENGTH].input().type('8');
     policyTypePage.submitButton().click();
 
-    cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
+    cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
   });
 
   it('renders the new answers in `Check your answers` page (multi, 8 months)', () => {
@@ -115,19 +115,19 @@ context('Change your answers (policy type and length fields) - as an exporter, I
 
       row.changeLink().click();
 
-      const expectedUrl = ROUTES.POLICY_TYPE_CHANGE;
+      const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;
       cy.url().should('include', expectedUrl);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.POLICY_TYPE_CHANGE}#heading`;
+      const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
       cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
       partials.backLink().should('have.attr', 'href', expected);
     });
 
@@ -139,12 +139,12 @@ context('Change your answers (policy type and length fields) - as an exporter, I
       policyTypePage[MULTI_POLICY_LENGTH].input().should('have.attr', 'value', '8');
     });
 
-    it(`redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
+    it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
       policyTypePage[POLICY_TYPE].single.input().click();
       policyTypePage[SINGLE_POLICY_LENGTH].input().clear().type('5');
       policyTypePage.submitButton().click();
 
-      cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
+      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     it('renders the new answers in `Check your answers` page (single policy, 5 months)', () => {
@@ -183,12 +183,12 @@ context('Change your answers (policy type and length fields) - as an exporter, I
 
       row.changeLink().click();
 
-      const expectedUrl = ROUTES.POLICY_TYPE_CHANGE;
+      const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;
       cy.url().should('include', expectedUrl);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.POLICY_TYPE_CHANGE}#heading`;
+      const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
       cy.url().should('include', expected);
     });
 
@@ -200,12 +200,12 @@ context('Change your answers (policy type and length fields) - as an exporter, I
       policyTypePage[SINGLE_POLICY_LENGTH].input().should('have.attr', 'value', '5');
     });
 
-    it(`redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
+    it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
       policyTypePage[POLICY_TYPE].multi.input().click();
       policyTypePage[MULTI_POLICY_LENGTH].input().clear().type('1');
       policyTypePage.submitButton().click();
 
-      cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
+      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     it('should have wiped previously submitted credit period field', () => {
@@ -222,28 +222,28 @@ context('Change your answers (policy type and length fields) - as an exporter, I
       row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];
       row.changeLink().click();
 
-      const expectedUrl = ROUTES.POLICY_TYPE_CHANGE;
+      const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;
       cy.url().should('include', expectedUrl);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
+      const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
       cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
       partials.backLink().should('have.attr', 'href', expected);
     });
 
-    it(`redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
+    it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
       policyTypePage[POLICY_TYPE].single.input().click();
       policyTypePage[SINGLE_POLICY_LENGTH].input().clear().type('7');
       policyTypePage.submitButton().click();
 
-      cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
+      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     it('renders the new answer in `Check your answers` page (single policy, 7 months)', () => {
@@ -269,38 +269,38 @@ context('Change your answers (policy type and length fields) - as an exporter, I
       policyTypePage[POLICY_TYPE].multi.input().click();
       policyTypePage[MULTI_POLICY_LENGTH].input().type('3');
       policyTypePage.submitButton().click();
-      cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
+      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
 
       // max amount owed and credit period fields are now required because it's a multi policy
       tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('100');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().clear().type('1');
       tellUsAboutYourPolicyPage.submitButton().click();
-      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
 
       // click `change` (policy length)
       row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];
       row.changeLink().click();
 
-      cy.url().should('include', `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}`);
+      cy.url().should('include', `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}`);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
+      const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
       cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
       partials.backLink().should('have.attr', 'href', expected);
     });
 
-    it(`redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
+    it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
       policyTypePage[MULTI_POLICY_LENGTH].input().clear().type('1');
       policyTypePage.submitButton().click();
 
-      cy.url().should('include', ROUTES.TELL_US_ABOUT_YOUR_POLICY);
+      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     it('renders the new answer in `Check your answers` page (multi policy, 1 months)', () => {

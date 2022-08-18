@@ -24,7 +24,7 @@ context('Change your answers (policy fields) - as an exporter, I want to change 
   before(() => {
     cy.login();
     cy.submitAnswersHappyPathMultiPolicy();
-    cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+    cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
   });
 
   beforeEach(() => {
@@ -35,22 +35,22 @@ context('Change your answers (policy fields) - as an exporter, I want to change 
   describe('change `Credit period`', () => {
     let row = checkYourAnswersPage.summaryLists.policy[CREDIT_PERIOD];
 
-    it(`clicking 'change' redirects to ${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE;
+      const expectedUrl = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE;
       cy.url().should('include', expectedUrl);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
+      const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
       cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.CHECK_YOUR_ANSWERS}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
       partials.backLink().should('have.attr', 'href', expected);
     });
 
@@ -59,11 +59,11 @@ context('Change your answers (policy fields) - as an exporter, I want to change 
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().should('have.attr', 'value', expectedValue);
     });
 
-    it(`redirects to ${ROUTES.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+    it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().clear().type('2');
       tellUsAboutYourPolicyPage.submitButton().click();
 
-      cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in `Check your answers` page', () => {

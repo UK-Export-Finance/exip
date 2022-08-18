@@ -21,7 +21,7 @@ context('Company based page - as an exporter, I want to check if my company can 
     cy.login();
     completeAndSubmitBuyerForm();
 
-    cy.url().should('include', ROUTES.COMPANY_BASED);
+    cy.url().should('include', ROUTES.QUOTE.COMPANY_BASED);
   });
 
   it('passes the audits', () => {
@@ -45,7 +45,7 @@ context('Company based page - as an exporter, I want to check if my company can 
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.BUYER_COUNTRY);
+    cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
   });
 
   it('renders a page title and heading', () => {
@@ -110,11 +110,11 @@ context('Company based page - as an exporter, I want to check if my company can 
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`, () => {
+      it(`should redirect to ${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`, () => {
         companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].yes().click();
         companyBasedPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+        cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
       });
     });
   });

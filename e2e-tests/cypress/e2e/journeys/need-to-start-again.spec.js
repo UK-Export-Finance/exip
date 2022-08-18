@@ -13,7 +13,7 @@ const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 context('Need to start again exit page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.BUYER_COUNTRY, {
+    cy.visit(ROUTES.QUOTE.BUYER_COUNTRY, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
@@ -27,16 +27,16 @@ context('Need to start again exit page', () => {
 
     buyerCountryPage.submitButton().click();
 
-    cy.url().should('include', ROUTES.COMPANY_BASED);
+    cy.url().should('include', ROUTES.QUOTE.COMPANY_BASED);
 
-    cy.visit(ROUTES.TELL_US_ABOUT_YOUR_POLICY, {
+    cy.visit(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
-    cy.url().should('include', ROUTES.NEED_TO_START_AGAIN);
+    cy.url().should('include', ROUTES.QUOTE.NEED_TO_START_AGAIN);
   });
 
   it('passes the audits', () => {
@@ -75,10 +75,10 @@ context('Need to start again exit page', () => {
   });
 
   describe('clicking the submit button', () => {
-    it(`should redirect to ${ROUTES.BUYER_COUNTRY}`, () => {
+    it(`should redirect to ${ROUTES.QUOTE.BUYER_COUNTRY}`, () => {
       needToStartAgainPage.submitButton().click();
 
-      cy.url().should('include', ROUTES.BUYER_COUNTRY);
+      cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
     });
   });  
 });

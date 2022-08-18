@@ -17,12 +17,12 @@ context('Cannot obtain UKEF cover exit page', () => {
     completeAndSubmitBuyerForm();
     completeAndSubmitCompanyForm();
 
-    cy.url().should('include', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 
     ukGoodsOrServicesPage.no().click();
     ukGoodsOrServicesPage.submitButton().click();
 
-    cy.url().should('include', ROUTES.CANNOT_OBTAIN_COVER);
+    cy.url().should('include', ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
   });
 
   it('passes the audits', () => {
@@ -46,7 +46,7 @@ context('Cannot obtain UKEF cover exit page', () => {
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
   });
 
   it('renders a page title and heading', () => {

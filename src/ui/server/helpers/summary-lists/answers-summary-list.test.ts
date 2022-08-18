@@ -34,7 +34,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
           {
             id: BUYER_COUNTRY,
             ...FIELDS[BUYER_COUNTRY],
-            href: `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`,
+            href: `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`,
             value: {
               text: mockAnswersContent[BUYER_COUNTRY].text,
             },
@@ -42,7 +42,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
           {
             id: VALID_COMPANY_BASE,
             ...FIELDS[VALID_COMPANY_BASE],
-            href: `${ROUTES.COMPANY_BASED_CHANGE}#heading`,
+            href: `${ROUTES.QUOTE.COMPANY_BASED_CHANGE}#heading`,
             value: {
               text: mockAnswersContent[VALID_COMPANY_BASE].text,
             },
@@ -50,7 +50,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
           {
             id: HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             ...FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
-            href: `${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`,
+            href: `${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`,
             value: {
               text: mockAnswersContent[HAS_MINIMUM_UK_GOODS_OR_SERVICES].text,
             },
@@ -78,7 +78,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: SINGLE_POLICY_TYPE,
           ...FIELDS[SINGLE_POLICY_TYPE],
-          href: `${ROUTES.POLICY_TYPE_CHANGE}#heading`,
+          href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
           value: {
             text: mockAnswersContent[SINGLE_POLICY_TYPE].text,
           },
@@ -102,7 +102,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: SINGLE_POLICY_LENGTH,
           ...FIELDS[SINGLE_POLICY_LENGTH],
-          href: `${ROUTES.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
+          href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
           value: {
             text: mockAnswersContent[SINGLE_POLICY_LENGTH].text,
           },
@@ -126,7 +126,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: CONTRACT_VALUE,
           ...FIELDS[CONTRACT_VALUE],
-          href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
+          href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
           value: {
             text: mockAnswersContent[CONTRACT_VALUE].text,
           },
@@ -150,7 +150,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: PERCENTAGE_OF_COVER,
           ...FIELDS[PERCENTAGE_OF_COVER],
-          href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
+          href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
           value: {
             text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
           },
@@ -188,7 +188,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: MULTI_POLICY_TYPE,
           ...FIELDS[MULTI_POLICY_TYPE],
-          href: `${ROUTES.POLICY_TYPE_CHANGE}#heading`,
+          href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
           value: {
             text: mockAnswersContent[MULTI_POLICY_TYPE].text,
           },
@@ -205,7 +205,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: MULTI_POLICY_LENGTH,
           ...FIELDS[MULTI_POLICY_LENGTH],
-          href: `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
+          href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
           value: {
             text: mockAnswersContent[MULTI_POLICY_LENGTH].text,
           },
@@ -222,7 +222,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: MAX_AMOUNT_OWED,
           ...FIELDS[MAX_AMOUNT_OWED],
-          href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
+          href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
           value: {
             text: mockAnswersContent[MAX_AMOUNT_OWED].text,
           },
@@ -239,7 +239,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: PERCENTAGE_OF_COVER,
           ...FIELDS[PERCENTAGE_OF_COVER],
-          href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
+          href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
           value: {
             text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
           },
@@ -256,7 +256,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: CREDIT_PERIOD,
           ...FIELDS[CREDIT_PERIOD],
-          href: `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`,
+          href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`,
           value: {
             text: mockAnswersContent[CREDIT_PERIOD].text,
           },

@@ -39,7 +39,7 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
 
     tellUsAboutYourPolicyPage.submitButton().click();
 
-    cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+    cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
 
     // Check contract value formatting in the answers page
     const answersAmount = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].value();

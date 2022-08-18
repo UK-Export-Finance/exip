@@ -17,7 +17,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   beforeEach(() => {
     cy.login();
 
-    cy.url().should('include', ROUTES.BUYER_COUNTRY);
+    cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
   });
 
   it('passes the audits', () => {
@@ -165,7 +165,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       it('renders a back link with correct url', () => {
         partials.backLink().should('exist');
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.BUYER_COUNTRY}`;
+        const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
 
         partials.backLink().should('have.attr', 'href', expected);
       });
@@ -183,7 +183,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     });
 
     describe('when submitting with a supported country', () => {
-      it(`should redirect to ${ROUTES.COMPANY_BASED}`, () => {
+      it(`should redirect to ${ROUTES.QUOTE.COMPANY_BASED}`, () => {
         buyerCountryPage.searchInput().type('Algeria');
 
         const results = buyerCountryPage.results();
@@ -191,7 +191,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
         buyerCountryPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.COMPANY_BASED);
+        cy.url().should('include', ROUTES.QUOTE.COMPANY_BASED);
       });
     });
   });

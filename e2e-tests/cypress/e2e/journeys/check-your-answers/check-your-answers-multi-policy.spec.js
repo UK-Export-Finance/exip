@@ -35,7 +35,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
   before(() => {
     cy.login();
     cy.submitAnswersHappyPathMultiPolicy();
-    cy.url().should('include', ROUTES.CHECK_YOUR_ANSWERS);
+    cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
   });
 
   beforeEach(() => {
@@ -71,7 +71,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.BUYER_COUNTRY_CHANGE}#heading`;
+      const expectedHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
 
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
@@ -93,7 +93,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.COMPANY_BASED_CHANGE}#heading`;
+      const expectedHref = `${ROUTES.QUOTE.COMPANY_BASED_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -114,7 +114,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`;
+      const expectedHref = `${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });
@@ -145,7 +145,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#heading`;
+      const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -168,7 +168,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
+      const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -191,7 +191,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
+      const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -214,7 +214,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
+      const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -237,16 +237,16 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
+      const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });
 
   context('form submission', () => {
-    it(`should redirect to ${ROUTES.YOUR_QUOTE}`, () => {
+    it(`should redirect to ${ROUTES.QUOTE.YOUR_QUOTE}`, () => {
       checkYourAnswersPage.submitButton().click();
 
-      cy.url().should('include', ROUTES.YOUR_QUOTE);
+      cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
     });
   });
 });

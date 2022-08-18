@@ -5,7 +5,7 @@ const get = (req: Request, res: Response) => {
   // new submitted data session
   req.session.submittedData = {};
 
-  return res.redirect(ROUTES.BUYER_COUNTRY);
+  return res.redirect(ROUTES.QUOTE.BUYER_COUNTRY);
 };
 
 export default get;
