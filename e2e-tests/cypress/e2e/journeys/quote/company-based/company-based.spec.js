@@ -11,7 +11,7 @@ import {
   ERROR_MESSAGES,
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerForm } from '../../../../support/forms';
+import { completeAndSubmitBuyerForm } from '../../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.COMPANY_BASED_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;

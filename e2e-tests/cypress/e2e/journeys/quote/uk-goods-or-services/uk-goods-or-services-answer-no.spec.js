@@ -7,7 +7,7 @@ import {
   PAGES,
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerForm, completeAndSubmitCompanyForm } from '../../../../support/forms';
+import { completeAndSubmitBuyerForm, completeAndSubmitCompanyForm } from '../../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
 const { ROUTES } = CONSTANTS;

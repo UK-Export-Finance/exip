@@ -3,7 +3,7 @@ import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 import checkText from '../../../helpers/check-text';
-import { completeAndSubmitBuyerForm, completeAndSubmitCompanyForm, completeAndSubmitUkContentForm } from '../../../../support/forms';
+import { completeAndSubmitBuyerForm, completeAndSubmitCompanyForm, completeAndSubmitUkContentForm } from '../../../../support/quote/forms';
 
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 

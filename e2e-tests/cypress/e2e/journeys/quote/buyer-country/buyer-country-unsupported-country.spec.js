@@ -1,7 +1,7 @@
 import {
   buyerCountryPage,
   cannotObtainCoverPage,
-} from '../../quote/pages';
+} from '../../../pages/quote';
 import partials from '../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';

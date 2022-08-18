@@ -3,7 +3,7 @@ import {
   completeAndSubmitCompanyForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
-} from '../../../../support/forms';
+} from '../../../../support/quote/forms';
 import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import {

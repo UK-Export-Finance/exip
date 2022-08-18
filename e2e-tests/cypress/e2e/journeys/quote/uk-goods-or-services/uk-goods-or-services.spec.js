@@ -11,7 +11,7 @@ import {
   ERROR_MESSAGES,
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerForm, completeAndSubmitCompanyForm } from '../../../../support/forms';
+import { completeAndSubmitBuyerForm, completeAndSubmitCompanyForm } from '../../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;

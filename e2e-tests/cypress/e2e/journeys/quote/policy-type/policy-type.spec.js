@@ -2,7 +2,7 @@ import {
   completeAndSubmitBuyerForm,
   completeAndSubmitCompanyForm,
   completeAndSubmitUkContentForm,
-} from '../../../../support/forms';
+} from '../../../../support/quote/forms';
 import { policyTypePage } from '../../../pages/quote';
 import partials from '../../../partials';
 import {
