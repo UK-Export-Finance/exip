@@ -11,23 +11,15 @@ import {
   ERROR_MESSAGES,
 } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
+import { completeAndSubmitBuyerForm } from '../../../support/forms';
 
 const CONTENT_STRINGS = PAGES.COMPANY_BASED_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Company based page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.BUYER_COUNTRY, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
-
-    buyerCountryPage.searchInput().type('Algeria');
-    const results = buyerCountryPage.results();
-    results.first().click();
-    buyerCountryPage.submitButton().click();
+    cy.login();
+    completeAndSubmitBuyerForm();
 
     cy.url().should('include', ROUTES.COMPANY_BASED);
   });

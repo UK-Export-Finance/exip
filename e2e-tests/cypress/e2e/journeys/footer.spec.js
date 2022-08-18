@@ -4,6 +4,9 @@ import { FOOTER } from '../../../content-strings';
 context('Footer', () => {
   beforeEach(() => {
     cy.login();
+
+    Cypress.Cookies.preserveOnce('_csrf');
+    Cypress.Cookies.preserveOnce('connect.sid');
   });
 
   it('renders a heading', () => {

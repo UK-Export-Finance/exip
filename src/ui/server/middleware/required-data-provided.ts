@@ -5,10 +5,11 @@ import { isSinglePolicyType, isMultiPolicyType } from '../helpers/policy-type';
 const {
   BUYER_COUNTRY,
   BUYER_COUNTRY_CHANGE,
+  CANNOT_OBTAIN_COVER,
   CHECK_YOUR_ANSWERS,
   COMPANY_BASED,
   COMPANY_BASED_CHANGE,
-  CANNOT_OBTAIN_COVER,
+  COOKIES,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE,
   NEED_TO_START_AGAIN,
@@ -141,7 +142,9 @@ export const requiredDataProvided = (req: Request, res: Response, next: () => vo
   // This business logic is irrelevant for these routes, assets and any request that is not a GET request.
   const routesArray = getRoutesAsArray();
 
-  const isIrrelevantRoute = (route: string) => route === ROOT || route === BUYER_COUNTRY || route === NEED_TO_START_AGAIN || route === CANNOT_OBTAIN_COVER;
+  const irrelevantRoutes = [ROOT, BUYER_COUNTRY, CANNOT_OBTAIN_COVER, COOKIES, NEED_TO_START_AGAIN];
+
+  const isIrrelevantRoute = (route: string) => irrelevantRoutes.includes(route);
 
   if (isIrrelevantRoute(url) || url.includes('/assets') || !routeIsKnown(routesArray, url) || method !== 'GET') {
     return next();

@@ -3,17 +3,17 @@ import partials from '../../partials';
 import { ERROR_MESSAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
 import checkText from '../../helpers/check-text';
+import { completeAndSubmitBuyerForm, completeAndSubmitCompanyForm, completeAndSubmitUkContentForm } from '../../../support/forms';
 
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Policy type page - policy type & length validation', () => {
   before(() => {
-    cy.visit(ROUTES.POLICY_TYPE, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.login();
+    completeAndSubmitBuyerForm();
+    completeAndSubmitCompanyForm();
+    completeAndSubmitUkContentForm();
+
     cy.url().should('include', ROUTES.POLICY_TYPE);
   });
 
