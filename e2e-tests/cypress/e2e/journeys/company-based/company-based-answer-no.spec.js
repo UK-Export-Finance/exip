@@ -5,18 +5,15 @@ import {
 import partials from '../../partials';
 import { PAGES } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
+import { completeAndSubmitBuyerForm } from '../../../support/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Company based page - as an exporter, I want to check if my company can get UKEF issue export insurance cover - submit `not based inside the UK`', () => {
   before(() => {
-    cy.visit(ROUTES.COMPANY_BASED, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.login();
+    completeAndSubmitBuyerForm();
 
     cy.url().should('include', ROUTES.COMPANY_BASED);
 

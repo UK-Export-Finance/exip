@@ -24,6 +24,8 @@ const ROUTES = {
 
   COOKIES: '/cookies',
 
+  NEED_TO_START_AGAIN: '/need-to-start-again',
+
   PROBLEM_WITH_SERVICE: '/problem-with-service',
 };
 

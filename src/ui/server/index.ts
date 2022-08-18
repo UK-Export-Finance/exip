@@ -21,6 +21,7 @@ import configureNunjucks from './nunjucks-configuration';
 
 import routes from './routes/index';
 import { PRODUCT, FOOTER, PAGES } from './content-strings';
+import { requiredDataProvided } from './middleware/required-data-provided';
 
 // @ts-ignore
 const app = express();
@@ -91,6 +92,8 @@ if (process.env.NODE_ENV !== 'production') {
     }),
   );
 }
+
+app.use(requiredDataProvided);
 
 app.use('/', routes);
 

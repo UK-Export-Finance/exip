@@ -23,9 +23,11 @@ interface ResponseLocals {
 interface Request {
   body: RequestBody;
   csrfToken: () => string;
-  headers: RequestHeaders;
   flash: (str1: string, str2?: string) => string;
+  headers: RequestHeaders;
+  method: string;
   originalUrl: string;
+  redirect: () => string;
   session: RequestSession;
 }
 

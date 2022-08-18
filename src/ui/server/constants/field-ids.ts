@@ -19,6 +19,6 @@ export const FIELD_IDS = {
     INSURED_FOR: 'insuredFor',
     PREMIUM_RATE_PERCENTAGE: 'premiumRatePercentage',
     ESTIMATED_COST: 'estimatedCost',
-    BUYER_LOCATION: 'buyerCountry', //  TODO: buyer location / buyer country?
+    BUYER_LOCATION: 'buyerCountry',
   },
 };

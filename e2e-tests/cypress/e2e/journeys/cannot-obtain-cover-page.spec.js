@@ -6,18 +6,17 @@ import {
   PAGES,
 } from '../../../content-strings';
 import CONSTANTS from '../../../constants';
+import { completeAndSubmitBuyerForm, completeAndSubmitCompanyForm } from '../../support/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
 const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 context('Cannot obtain UKEF cover exit page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.login();
+    completeAndSubmitBuyerForm();
+    completeAndSubmitCompanyForm();
+
     cy.url().should('include', ROUTES.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 
     ukGoodsOrServicesPage.no().click();
