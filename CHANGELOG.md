@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/UK-Export-Finance/exip/compare/v1.5.0...v1.6.0) (2022-08-19)
+
+
+### Features
+
+* **EMS-232:** 'get a quote by email' exit page for countries with certain fields/flags. Refactor the way country support is checked ([74478b0](https://github.com/UK-Export-Finance/exip/commit/74478b0842948725f9896e9afd5f30f376ca876b))
+
 ## [1.5.0](https://github.com/UK-Export-Finance/exip/compare/v1.4.2...v1.5.0) (2022-08-18)
 
 
