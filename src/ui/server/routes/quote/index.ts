@@ -7,6 +7,7 @@ import { get as policyTypeGet, post as policyTypePost } from '../../controllers/
 import { get as tellUsAboutYourPolicyGet, post as tellUsAboutYourPolicyPost } from '../../controllers/quote/tell-us-about-your-policy';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../controllers/quote/check-your-answers';
 import cannotObtainCoverGet from '../../controllers/quote/cannot-obtain-cover';
+import getAQuoteByEmailGet from '../../controllers/quote/get-a-quote-by-email';
 import yourQuoteGet from '../../controllers/quote/your-quote';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../controllers/quote/need-to-start-again';
 
@@ -44,6 +45,8 @@ quoteRouter.get(ROUTES.QUOTE.CHECK_YOUR_ANSWERS, checkYourAnswersGet);
 quoteRouter.post(ROUTES.QUOTE.CHECK_YOUR_ANSWERS, checkYourAnswersPost);
 
 quoteRouter.get(ROUTES.QUOTE.CANNOT_OBTAIN_COVER, cannotObtainCoverGet);
+
+quoteRouter.get(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL, getAQuoteByEmailGet);
 
 quoteRouter.get(ROUTES.QUOTE.YOUR_QUOTE, yourQuoteGet);
 

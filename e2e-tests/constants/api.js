@@ -7,6 +7,16 @@ const API = {
       HIGH: 'High',
       STANDARD: 'Standard Risk',
     },
+    SHORT_TERM_COVER_AVAILABLE: {
+      YES: 'Yes',
+      ILC: 'ILC Only',
+      CILC: 'CILC Only',
+      REFER: 'Refer',
+    },
+    NBI_ISSUE_AVAILABLE: {
+      YES: 'Y',
+      NO: 'N',
+    },
   },
   MAPPINGS: {
     RISK: {

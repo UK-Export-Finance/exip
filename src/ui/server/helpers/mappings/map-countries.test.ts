@@ -1,4 +1,4 @@
-import { mapRiskCategory, mapIsSupported, mapCountry, mapCountries } from './map-countries';
+import { mapRiskCategory, mapShortTermCoverAvailable, mapNbiIssueAvailable, mapCountry, mapCountries } from './map-countries';
 import { API } from '../../constants';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
 import { CisCountry, Country } from '../../../types';
@@ -64,62 +64,57 @@ describe('server/helpers/mappings/map-countries', () => {
     });
   });
 
-  describe('mapIsSupported', () => {
-    const mockCountry = {
-      marketName: 'A',
-      isoCode: 'B',
-      shortTermCoverAvailabilityDesc: 'C',
-      ESRAClasificationDesc: 'D',
-      NBIIssue: 'E',
-    } as CisCountry;
-
-    describe('when a country has no riskCategory', () => {
-      it('should return false', () => {
-        const result = mapIsSupported(mockCountry);
-
-        expect(result).toEqual(false);
-      });
-    });
-
-    describe('when a country does not have shortTermCoverAvailabilityDesc', () => {
-      it('should return false', () => {
-        mockCountry.riskCategory = API.CIS.RISK.STANDARD;
-        mockCountry.shortTermCoverAvailabilityDesc = 'No';
-
-        const result = mapIsSupported(mockCountry);
-
-        expect(result).toEqual(false);
-      });
-    });
-
-    describe('when a country does not have NBIIssue', () => {
-      it('should return false', () => {
-        mockCountry.riskCategory = API.CIS.RISK.STANDARD;
-        mockCountry.NBIIssue = 'N';
-
-        const result = mapIsSupported(mockCountry);
-
-        expect(result).toEqual(false);
-      });
-    });
-
-    describe('when a country has shortTermCoverAvailabilityDesc and NBIIssue', () => {
+  describe('mapShortTermCoverAvailable', () => {
+    describe(`when the short term cover field is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.YES}`, () => {
       it('should return true', () => {
-        mockCountry.riskCategory = API.CIS.RISK.STANDARD;
-        mockCountry.shortTermCoverAvailabilityDesc = 'Yes';
-        mockCountry.NBIIssue = 'Y';
-
-        const result = mapIsSupported(mockCountry);
+        const result = mapShortTermCoverAvailable(API.CIS.SHORT_TERM_COVER_AVAILABLE.YES);
 
         expect(result).toEqual(true);
       });
     });
 
-    it('should otherwise return false', () => {
-      mockCountry.shortTermCoverAvailabilityDesc = '';
-      mockCountry.NBIIssue = '';
+    describe(`when the short term cover field is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.ILC}`, () => {
+      it('should return true', () => {
+        const result = mapShortTermCoverAvailable(API.CIS.SHORT_TERM_COVER_AVAILABLE.ILC);
 
-      const result = mapIsSupported(mockCountry);
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe(`when the short term cover field is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.CILC}`, () => {
+      it('should return true', () => {
+        const result = mapShortTermCoverAvailable(API.CIS.SHORT_TERM_COVER_AVAILABLE.CILC);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe(`when the short term cover field is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.REFER}`, () => {
+      it('should return true', () => {
+        const result = mapShortTermCoverAvailable(API.CIS.SHORT_TERM_COVER_AVAILABLE.REFER);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    it('should return false', () => {
+      const result = mapShortTermCoverAvailable('something else');
+
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('mapNbiIssueAvailable', () => {
+    describe(`when the NBI issue field is ${API.CIS.NBI_ISSUE_AVAILABLE.YES}`, () => {
+      it('should return true', () => {
+        const result = mapNbiIssueAvailable(API.CIS.NBI_ISSUE_AVAILABLE.YES);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    it('should return false', () => {
+      const result = mapNbiIssueAvailable(API.CIS.NBI_ISSUE_AVAILABLE.NO);
 
       expect(result).toEqual(false);
     });
@@ -134,10 +129,9 @@ describe('server/helpers/mappings/map-countries', () => {
         isoCode: mockCountries[0].isoCode,
         value: mockCountries[0].isoCode,
         riskCategory: mapRiskCategory(mockCountries[0].ESRAClasificationDesc),
-        isSupported: mapIsSupported(mockCountries[0]),
+        shortTermCoverAvailable: mapShortTermCoverAvailable(mockCountries[0].shortTermCoverAvailabilityDesc),
+        nbiIssueAvailable: mapNbiIssueAvailable(mockCountries[0].NBIIssue),
       } as Country;
-
-      // expected.isSupported = mapIsSupported(mockCountries[0]);
 
       expect(result).toEqual(expected);
     });
@@ -153,7 +147,8 @@ describe('server/helpers/mappings/map-countries', () => {
           isoCode: mockCountries[0].isoCode,
           value: mockCountries[0].isoCode,
           riskCategory: mapRiskCategory(mockCountries[0].ESRAClasificationDesc),
-          isSupported: mapIsSupported(mockCountries[0]),
+          shortTermCoverAvailable: mapShortTermCoverAvailable(mockCountries[0].shortTermCoverAvailabilityDesc),
+          nbiIssueAvailable: mapNbiIssueAvailable(mockCountries[0].NBIIssue),
           selected: true,
         } as Country;
 

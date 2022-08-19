@@ -18,6 +18,8 @@ export const QUOTE_ROUTES = {
 
   CANNOT_OBTAIN_COVER: '/quote/cannot-obtain-cover',
 
+  GET_A_QUOTE_BY_EMAIL: '/quote/get-quote-by-email',
+
   YOUR_QUOTE: '/quote/your-quote',
 
   NEED_TO_START_AGAIN: '/quote/need-to-start-again',

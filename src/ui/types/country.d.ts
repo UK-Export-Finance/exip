@@ -1,10 +1,11 @@
 interface Country {
   name: string;
   isoCode: string;
-  isSupported: boolean;
   riskCategory: string;
-  selected: boolean;
+  selected?: boolean;
   value: string;
+  shortTermCoverAvailable: boolean;
+  nbiIssueAvailable: boolean;
 }
 
 export { Country };

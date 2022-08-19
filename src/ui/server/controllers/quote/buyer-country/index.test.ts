@@ -30,7 +30,17 @@ describe('controllers/buyer-country', () => {
       ESRAClasificationDesc: 'Standard Risk',
       NBIIssue: 'Y',
     },
+    {
+      marketName: 'Egypt',
+      isoCode: 'EGY',
+      shortTermCoverAvailabilityDesc: 'Yes',
+      ESRAClasificationDesc: 'Standard Risk',
+      NBIIssue: 'N',
+    },
   ];
+
+  const countryUnsupported = mockCountriesResponse[0];
+  const countrySupportedViaEmailOnly = mockCountriesResponse[2];
 
   beforeEach(() => {
     req = mockReq();
@@ -170,11 +180,33 @@ describe('controllers/buyer-country', () => {
       });
     });
 
-    describe('when the submitted country is not supported', () => {
-      const unsupportedCountry = mockCountriesResponse[0];
-
+    describe('when the submitted country can only get a quote via email', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.BUYER_COUNTRY] = unsupportedCountry.marketName;
+        req.body[FIELD_IDS.BUYER_COUNTRY] = countrySupportedViaEmailOnly.marketName;
+      });
+
+      it(`should redirect to ${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
+      });
+    });
+
+    describe('when the submitted country is not found', () => {
+      beforeEach(() => {
+        req.body[FIELD_IDS.BUYER_COUNTRY] = 'Country not in the mock response';
+      });
+
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_OBTAIN_COVER}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+      });
+    });
+
+    describe('when the submitted country is not supported', () => {
+      beforeEach(() => {
+        req.body[FIELD_IDS.BUYER_COUNTRY] = countryUnsupported.marketName;
       });
 
       it(`should redirect to ${ROUTES.QUOTE.CANNOT_OBTAIN_COVER}`, async () => {
@@ -188,7 +220,7 @@ describe('controllers/buyer-country', () => {
 
         expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
 
-        const countryName = unsupportedCountry.marketName;
+        const countryName = countryUnsupported.marketName;
 
         const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
         const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
@@ -199,7 +231,7 @@ describe('controllers/buyer-country', () => {
       });
     });
 
-    describe('when there are no validation errors', () => {
+    describe('when the country is supported for an online quote and there are no validation errors', () => {
       const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
       const mappedCountries = mapCountries(mockCountriesResponse);
 
