@@ -120,6 +120,33 @@ const CANNOT_OBTAIN_COVER_PAGE = {
   },
 };
 
+const GET_A_QUOTE_BY_EMAIL_PAGE = {
+  PAGE_TITLE: 'You need to get a quote by email',
+  HEADING: 'You need to get a quote by email',
+  REASON: {
+    BODY_1: 'We cannot give you a quote online because of the country where your buyer is based.',
+    BODY_2: "We can still give you a quote but may need extra information from you to assess the risks around your buyer's country first.",
+  },
+  ACTION: [
+    [
+      {
+        text: 'Download this form',
+        href: '#',
+      },
+      {
+        text: ' and fill it in. ',
+      },
+      {
+        text: 'Email it to',
+      },
+      {
+        text: 'exipunderwriting@ukexportfinance.gov.uk',
+        href: 'mailto:exipunderwriting@ukexportfinance.gov.uk',
+      },
+    ],
+  ],
+};
+
 const YOUR_QUOTE_PAGE = {
   PAGE_TITLE: 'You can apply for UKEF export insurance',
   QUOTE: {
@@ -249,6 +276,7 @@ export const PAGES = {
   TELL_US_ABOUT_YOUR_POLICY_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,
   CANNOT_OBTAIN_COVER_PAGE,
+  GET_A_QUOTE_BY_EMAIL_PAGE,
   YOUR_QUOTE_PAGE,
   COOKIES_PAGE,
   NEED_TO_START_AGAIN,

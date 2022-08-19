@@ -6,6 +6,7 @@ const tellUsAboutYourPolicyPage = require('./tellUsAboutYourPolicy');
 const checkYourAnswersPage = require('./checkYourAnswers');
 const yourQuotePage = require('./yourQuote');
 const cannotObtainCoverPage = require('./cannotObtainCover');
+const getAQuoteByEmailPage = require('./getAQuoteByEmail');
 const needToStartAgainPage = require('./needToStartAgain');
 
 
@@ -18,5 +19,6 @@ module.exports = {
   checkYourAnswersPage,
   yourQuotePage,
   cannotObtainCoverPage,
+  getAQuoteByEmailPage,
   needToStartAgainPage,
 };

@@ -7,6 +7,7 @@ import { get as policyTypeGet, post as policyTypePost } from '../../controllers/
 import { get as tellUsAboutYourPolicyGet, post as tellUsAboutYourPolicyPost } from '../../controllers/quote/tell-us-about-your-policy';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../controllers/quote/check-your-answers';
 import cannotObtainCoverGet from '../../controllers/quote/cannot-obtain-cover';
+import getAQuoteByEmailGet from '../../controllers/quote/get-a-quote-by-email';
 import yourQuoteGet from '../../controllers/quote/your-quote';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../controllers/quote/need-to-start-again';
 
@@ -20,7 +21,7 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(14);
+    expect(get).toHaveBeenCalledTimes(15);
     expect(post).toHaveBeenCalledTimes(12);
 
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_COUNTRY, buyerBasedGet);
@@ -52,6 +53,8 @@ describe('routes/index', () => {
     expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.CHECK_YOUR_ANSWERS, checkYourAnswersPost);
 
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_OBTAIN_COVER, cannotObtainCoverGet);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL, getAQuoteByEmailGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.YOUR_QUOTE, yourQuoteGet);
 

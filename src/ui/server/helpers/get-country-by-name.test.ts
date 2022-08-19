@@ -1,4 +1,5 @@
 import getCountryByName from './get-country-by-name';
+import { Country } from '../../types';
 
 describe('server/helpers/get-country-by-name', () => {
   it('should return a mapped object', () => {
@@ -6,20 +7,21 @@ describe('server/helpers/get-country-by-name', () => {
       {
         isoCode: 'A',
         name: 'Mock A',
-        isSupported: true,
         riskCategory: 'Standard',
+        shortTermCoverAvailable: true,
+        nbiIssueAvailable: true,
         selected: false,
         value: 'A',
       },
       {
         isoCode: 'B',
         name: 'Mock B',
-        isSupported: true,
-        riskCategory: 'Standard',
+        shortTermCoverAvailable: true,
+        nbiIssueAvailable: true,
         selected: false,
         value: 'B',
       },
-    ];
+    ] as Array<Country>;
 
     const result = getCountryByName(mockCountries, 'Mock B');
 

@@ -6,7 +6,7 @@ import singleInputPageVariables from '../../../helpers/single-input-page-variabl
 import { validation as generateValidationErrors } from './validation';
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
-import isCountrySupported from '../../../helpers/is-country-supported';
+import { canGetAQuoteOnline, canGetAQuoteByEmail, cannotGetAQuote } from '../../../helpers/country-support';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data';
 import { Request, Response } from '../../../../types';
 
@@ -99,9 +99,30 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
   }
 
-  const countryIsSupported = isCountrySupported(country);
+  if (canGetAQuoteOnline(country)) {
+    const populatedData = {
+      ...req.body,
+      [FIELD_IDS.BUYER_COUNTRY]: {
+        name: country.name,
+        isoCode: country.isoCode,
+        riskCategory: country.riskCategory,
+      },
+    };
 
-  if (!countryIsSupported) {
+    req.session.submittedData = updateSubmittedData(populatedData, req.session.submittedData);
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+    }
+
+    return res.redirect(ROUTES.QUOTE.COMPANY_BASED);
+  }
+
+  if (canGetAQuoteByEmail(country)) {
+    return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
+  }
+
+  if (cannotGetAQuote(country)) {
     req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
 
     const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
@@ -114,20 +135,5 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
   }
 
-  const populatedData = {
-    ...req.body,
-    [FIELD_IDS.BUYER_COUNTRY]: {
-      name: country.name,
-      isoCode: country.isoCode,
-      riskCategory: country.riskCategory,
-    },
-  };
-
-  req.session.submittedData = updateSubmittedData(populatedData, req.session.submittedData);
-
-  if (isChangeRoute(req.originalUrl)) {
-    return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
-  }
-
-  return res.redirect(ROUTES.QUOTE.COMPANY_BASED);
+  return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
 };

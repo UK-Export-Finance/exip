@@ -12,6 +12,7 @@ const {
   COMPANY_BASED,
   COMPANY_BASED_CHANGE,
   CANNOT_OBTAIN_COVER,
+  GET_A_QUOTE_BY_EMAIL,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE,
   NEED_TO_START_AGAIN,
@@ -226,6 +227,15 @@ describe('middleware/required-data-provided', () => {
     describe(`when req.originalUrl is root ${CANNOT_OBTAIN_COVER}`, () => {
       it('should call req.next', () => {
         req.originalUrl = CANNOT_OBTAIN_COVER;
+        requiredDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is root ${GET_A_QUOTE_BY_EMAIL}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = GET_A_QUOTE_BY_EMAIL;
         requiredDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
