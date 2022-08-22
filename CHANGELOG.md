@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.2](https://github.com/UK-Export-Finance/exip/compare/v1.6.1...v1.6.2) (2022-08-22)
+
+
+### Bug Fixes
+
+* **deps:** bump govuk-frontend ([1145bbd](https://github.com/UK-Export-Finance/exip/commit/1145bbdafda94a6cebb5837b4627a5fd727e180d))
+
 ## [1.6.1](https://github.com/UK-Export-Finance/exip/compare/v1.6.0...v1.6.1) (2022-08-22)
 
 
