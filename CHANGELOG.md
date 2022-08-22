@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/UK-Export-Finance/exip/compare/v1.6.0...v1.6.1) (2022-08-22)
+
+
+### Bug Fixes
+
+* **EMS-95:** add 'problem with service' page to list of routes that do not require session data checks ([ac76d7d](https://github.com/UK-Export-Finance/exip/commit/ac76d7dbe1462746ce617a85b0be5930068c9dcf))
+
 ## [1.6.0](https://github.com/UK-Export-Finance/exip/compare/v1.5.0...v1.6.0) (2022-08-19)
 
 
