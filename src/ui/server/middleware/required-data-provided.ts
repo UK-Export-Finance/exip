@@ -2,7 +2,7 @@ import { FIELD_IDS, ROUTES } from '../constants';
 import { Request, RequiredDataState, Response, SubmittedData } from '../../types';
 import { isSinglePolicyType, isMultiPolicyType } from '../helpers/policy-type';
 
-const { ROOT, COOKIES, QUOTE } = ROUTES;
+const { ROOT, COOKIES, PROBLEM_WITH_SERVICE, QUOTE } = ROUTES;
 
 const {
   BUYER_COUNTRY,
@@ -31,6 +31,7 @@ export const getRoutesAsArray = (): Array<string> => {
   const routes = {
     ROOT,
     COOKIES,
+    PROBLEM_WITH_SERVICE,
     ...QUOTE,
   };
 
@@ -148,13 +149,19 @@ export const hasRequiredData = (route: string, submittedData: SubmittedData) => 
 export const requiredDataProvided = (req: Request, res: Response, next: () => void) => {
   const { originalUrl: url, method } = req;
 
-  // This business logic is irrelevant for these routes, assets and any request that is not a GET request.
+  // get all defined routes as an array
   const routesArray = getRoutesAsArray();
 
-  const irrelevantRoutes = [ROOT, BUYER_COUNTRY, CANNOT_OBTAIN_COVER, GET_A_QUOTE_BY_EMAIL, COOKIES, NEED_TO_START_AGAIN];
+  // array of routes that do not require any data checks.
+  const irrelevantRoutes = [ROOT, BUYER_COUNTRY, CANNOT_OBTAIN_COVER, GET_A_QUOTE_BY_EMAIL, COOKIES, NEED_TO_START_AGAIN, PROBLEM_WITH_SERVICE];
 
   const isIrrelevantRoute = (route: string) => irrelevantRoutes.includes(route);
 
+  // do not run any data checks if the requested route is one of the following:
+  // is a route that does nout require any data checks
+  // is assets
+  // is 404 page or 'problem with service' page
+  // or the request is not a GET request.
   if (isIrrelevantRoute(url) || url.includes('/assets') || !routeIsKnown(routesArray, url) || method !== 'GET') {
     return next();
   }

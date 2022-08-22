@@ -3,7 +3,7 @@ import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../constants';
 import { mockReq, mockRes, mockSession } from '../test-mocks';
 import { Request, Response } from '../../types';
 
-const { ROOT, COOKIES, QUOTE } = ROUTES;
+const { ROOT, COOKIES, PROBLEM_WITH_SERVICE, QUOTE } = ROUTES;
 
 const {
   BUYER_COUNTRY,
@@ -34,6 +34,7 @@ describe('middleware/required-data-provided', () => {
       const expected = Object.values({
         ROOT,
         COOKIES,
+        PROBLEM_WITH_SERVICE,
         ...QUOTE,
       });
 
@@ -206,7 +207,7 @@ describe('middleware/required-data-provided', () => {
       });
     });
 
-    describe(`when req.originalUrl is root ${BUYER_COUNTRY}`, () => {
+    describe(`when req.originalUrl is ${BUYER_COUNTRY}`, () => {
       it('should call req.next', () => {
         req.originalUrl = BUYER_COUNTRY;
         requiredDataProvided(req, res, nextSpy);
@@ -215,7 +216,7 @@ describe('middleware/required-data-provided', () => {
       });
     });
 
-    describe(`when req.originalUrl is root ${NEED_TO_START_AGAIN}`, () => {
+    describe(`when req.originalUrl is ${NEED_TO_START_AGAIN}`, () => {
       it('should call req.next', () => {
         req.originalUrl = NEED_TO_START_AGAIN;
         requiredDataProvided(req, res, nextSpy);
@@ -224,7 +225,7 @@ describe('middleware/required-data-provided', () => {
       });
     });
 
-    describe(`when req.originalUrl is root ${CANNOT_OBTAIN_COVER}`, () => {
+    describe(`when req.originalUrl is ${CANNOT_OBTAIN_COVER}`, () => {
       it('should call req.next', () => {
         req.originalUrl = CANNOT_OBTAIN_COVER;
         requiredDataProvided(req, res, nextSpy);
@@ -233,7 +234,7 @@ describe('middleware/required-data-provided', () => {
       });
     });
 
-    describe(`when req.originalUrl is root ${GET_A_QUOTE_BY_EMAIL}`, () => {
+    describe(`when req.originalUrl is ${GET_A_QUOTE_BY_EMAIL}`, () => {
       it('should call req.next', () => {
         req.originalUrl = GET_A_QUOTE_BY_EMAIL;
         requiredDataProvided(req, res, nextSpy);
@@ -242,9 +243,18 @@ describe('middleware/required-data-provided', () => {
       });
     });
 
-    describe(`when req.originalUrl is root ${COOKIES}`, () => {
+    describe(`when req.originalUrl is ${COOKIES}`, () => {
       it('should call req.next', () => {
         req.originalUrl = COOKIES;
+        requiredDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${PROBLEM_WITH_SERVICE}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = PROBLEM_WITH_SERVICE;
         requiredDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
