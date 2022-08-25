@@ -1,13 +1,23 @@
 import { LINKS } from './links';
 
-const COMPANY_BASED_PAGE = {
-  PAGE_TITLE: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
-  HEADING: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
-};
-
 const BUYER_COUNTRY_PAGE = {
   PAGE_TITLE: 'Where is your buyer based?',
   HEADING: 'Where is your buyer based?',
+};
+
+const BUYER_BODY_PAGE = {
+  PAGE_TITLE: 'Is your buyer a government or public sector body?',
+  HEADING: 'Is your buyer a government or public sector body?',
+  DETAILS: {
+    INTRO: 'What counts as a government or public sector body?',
+    BODY_1: 'This means a formally established organisation that is, at least in part, publicly funded to deliver a public or government service.',
+    BODY_2: 'For example, a central government department, a local authority or a public utlity company.',
+  },
+};
+
+const COMPANY_BASED_PAGE = {
+  PAGE_TITLE: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
+  HEADING: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
 };
 
 const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
@@ -124,6 +134,7 @@ const GET_A_QUOTE_BY_EMAIL_PAGE = {
   PAGE_TITLE: 'You need to get a quote by email',
   HEADING: 'You need to get a quote by email',
   REASON: {
+    BUYER_BODY: 'We cannot give you a quote online because your buyer is a government or public sector body.',
     BODY_1: 'We cannot give you a quote online because of the country where your buyer is based.',
     BODY_2: "We can still give you a quote but may need extra information from you to assess the risks around your buyer's country first.",
   },
@@ -269,8 +280,9 @@ const PROBLEM_WITH_SERVICE_PAGE = {
 };
 
 export const PAGES = {
-  COMPANY_BASED_PAGE,
   BUYER_COUNTRY_PAGE,
+  BUYER_BODY_PAGE,
+  COMPANY_BASED_PAGE,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE,
   POLICY_TYPE_PAGE,
   TELL_US_ABOUT_YOUR_POLICY_PAGE,

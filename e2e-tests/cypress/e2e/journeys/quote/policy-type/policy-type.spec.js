@@ -1,5 +1,5 @@
 import {
-  completeAndSubmitBuyerForm,
+  completeAndSubmitBuyerCountryForm,
   completeAndSubmitCompanyForm,
   completeAndSubmitUkContentForm,
 } from '../../../../support/quote/forms';
@@ -25,7 +25,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
     before(() => {
       cy.login();
 
-      completeAndSubmitBuyerForm();
+      completeAndSubmitBuyerCountryForm();
       completeAndSubmitCompanyForm();
       completeAndSubmitUkContentForm();
 

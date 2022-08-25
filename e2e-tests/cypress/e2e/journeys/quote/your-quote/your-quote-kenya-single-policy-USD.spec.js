@@ -1,5 +1,6 @@
 import {
-  completeAndSubmitBuyerForm,
+  completeAndSubmitBuyerCountryForm,
+  completeAndSubmitBuyerBodyForm,
   completeAndSubmitCompanyForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
@@ -31,9 +32,9 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     results.first().click();
     buyerCountryPage.submitButton().click();
 
+    completeAndSubmitBuyerBodyForm();
     completeAndSubmitCompanyForm();
     completeAndSubmitUkContentForm();
-    // completeAndSubmitPolicyTypeSingleForm();
 
     policyTypePage[POLICY_TYPE].single.input().click();
     policyTypePage[SINGLE_POLICY_LENGTH].input().type('18');

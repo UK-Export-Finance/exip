@@ -1,5 +1,6 @@
-const companyBasedPage = require('./companyBased');
 const buyerCountryPage = require('./buyerCountry');
+const buyerBodyPage = require('./buyerBody');
+const companyBasedPage = require('./companyBased');
 const ukGoodsOrServicesPage = require('./ukGoodsOrServices');
 const policyTypePage = require('./policyTypePage');
 const tellUsAboutYourPolicyPage = require('./tellUsAboutYourPolicy');
@@ -11,8 +12,9 @@ const needToStartAgainPage = require('./needToStartAgain');
 
 
 module.exports = {
-  companyBasedPage,
   buyerCountryPage,
+  buyerBodyPage,
+  companyBasedPage,
   ukGoodsOrServicesPage,
   policyTypePage,
   tellUsAboutYourPolicyPage,

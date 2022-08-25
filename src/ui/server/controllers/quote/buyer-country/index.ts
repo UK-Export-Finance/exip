@@ -115,7 +115,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     }
 
-    return res.redirect(ROUTES.QUOTE.COMPANY_BASED);
+    return res.redirect(ROUTES.QUOTE.BUYER_BODY);
   }
 
   if (canGetAQuoteByEmail(country)) {

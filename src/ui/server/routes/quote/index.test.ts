@@ -1,6 +1,7 @@
 import { get, post } from '../../test-mocks/mock-router';
 import { ROUTES } from '../../constants';
 import { get as buyerBasedGet, post as buyerBasedPost } from '../../controllers/quote/buyer-country';
+import { get as buyerBodyGet, post as buyerBodyPost } from '../../controllers/quote/buyer-body';
 import { get as companyBasedGet, post as companyBasedPost } from '../../controllers/quote/company-based';
 import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../../controllers/quote/uk-goods-or-services';
 import { get as policyTypeGet, post as policyTypePost } from '../../controllers/quote/policy-type';
@@ -21,13 +22,16 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(15);
-    expect(post).toHaveBeenCalledTimes(12);
+    expect(get).toHaveBeenCalledTimes(16);
+    expect(post).toHaveBeenCalledTimes(13);
 
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_COUNTRY, buyerBasedGet);
     expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_COUNTRY, buyerBasedPost);
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_COUNTRY_CHANGE, buyerBasedGet);
     expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_COUNTRY_CHANGE, buyerBasedPost);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_BODY, buyerBodyGet);
+    expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_BODY, buyerBodyPost);
 
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.COMPANY_BASED, companyBasedGet);
     expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.COMPANY_BASED, companyBasedPost);

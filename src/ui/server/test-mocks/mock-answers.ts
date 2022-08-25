@@ -2,6 +2,7 @@ import { FIELD_IDS, FIELD_VALUES } from '../constants';
 import { SubmittedData } from '../../types';
 
 const {
+  VALID_BUYER_BODY,
   VALID_COMPANY_BASE,
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
@@ -14,6 +15,7 @@ const {
 } = FIELD_IDS;
 
 const mockAnswers = {
+  [VALID_BUYER_BODY]: true,
   [VALID_COMPANY_BASE]: true,
   [BUYER_COUNTRY]: 'Algeria',
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,

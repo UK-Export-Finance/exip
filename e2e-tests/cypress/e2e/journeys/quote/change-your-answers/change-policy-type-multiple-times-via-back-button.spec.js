@@ -5,7 +5,7 @@ import {
 import partials from '../../../partials';
 import CONSTANTS from '../../../../../constants';
 import {
-  completeAndSubmitBuyerForm,
+  completeAndSubmitBuyerCountryForm,
   completeAndSubmitCompanyForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
@@ -27,7 +27,7 @@ context('Change your answers (policy type) - multiple times via back button - as
   before(() => {
     cy.login();
 
-    completeAndSubmitBuyerForm();
+    completeAndSubmitBuyerCountryForm();
     completeAndSubmitCompanyForm();
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeSingleForm();

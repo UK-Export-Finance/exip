@@ -1,5 +1,5 @@
 import {
-  completeAndSubmitBuyerForm,
+  completeAndSubmitBuyerCountryForm,
   completeAndSubmitCompanyForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
@@ -22,7 +22,7 @@ context('Tell us about the policy you need page - form validation', () => {
     before(() => {
       cy.login();
 
-      completeAndSubmitBuyerForm();
+      completeAndSubmitBuyerCountryForm();
       completeAndSubmitCompanyForm();
       completeAndSubmitUkContentForm();
       completeAndSubmitPolicyTypeSingleForm();

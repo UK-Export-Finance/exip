@@ -5,6 +5,7 @@ import { isSinglePolicyType, isMultiPolicyType } from '../helpers/policy-type';
 const { ROOT, COOKIES, PROBLEM_WITH_SERVICE, QUOTE } = ROUTES;
 
 const {
+  BUYER_BODY,
   BUYER_COUNTRY,
   BUYER_COUNTRY_CHANGE,
   CANNOT_OBTAIN_COVER,
@@ -63,11 +64,13 @@ export const allRequiredData = (submittedData: SubmittedData): RequiredDataState
 
   requiredDataState[BUYER_COUNTRY] = [];
 
-  requiredDataState[COMPANY_BASED] = [FIELD_IDS.BUYER_COUNTRY];
+  requiredDataState[BUYER_BODY] = [FIELD_IDS.BUYER_COUNTRY];
+
+  requiredDataState[COMPANY_BASED] = [...requiredDataState[BUYER_BODY], FIELD_IDS.VALID_BUYER_BODY];
 
   requiredDataState[HAS_MINIMUM_UK_GOODS_OR_SERVICES] = [...requiredDataState[COMPANY_BASED], FIELD_IDS.VALID_COMPANY_BASE];
 
-  requiredDataState[POLICY_TYPE] = [...requiredDataState[HAS_MINIMUM_UK_GOODS_OR_SERVICES]];
+  requiredDataState[POLICY_TYPE] = [...requiredDataState[HAS_MINIMUM_UK_GOODS_OR_SERVICES], FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
   requiredDataState[TELL_US_ABOUT_YOUR_POLICY] = [...requiredDataState[POLICY_TYPE], FIELD_IDS.POLICY_TYPE, FIELD_IDS.POLICY_LENGTH];
 
@@ -93,6 +96,7 @@ export const generateRequiredDataState = (submittedData: SubmittedData): Require
 
   requiredDataState[BUYER_COUNTRY] = required[BUYER_COUNTRY];
   requiredDataState[BUYER_COUNTRY_CHANGE] = required[BUYER_COUNTRY];
+  requiredDataState[BUYER_BODY] = required[BUYER_BODY];
   requiredDataState[COMPANY_BASED] = required[COMPANY_BASED];
   requiredDataState[COMPANY_BASED_CHANGE] = required[COMPANY_BASED];
   requiredDataState[HAS_MINIMUM_UK_GOODS_OR_SERVICES] = required[HAS_MINIMUM_UK_GOODS_OR_SERVICES];

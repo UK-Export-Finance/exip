@@ -1,0 +1,69 @@
+import { PAGES } from '../../../content-strings';
+import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
+import singleInputPageVariables from '../../../helpers/single-input-page-variables';
+import generateValidationErrors from './validation';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import { Request, Response } from '../../../../types';
+
+const PAGE_VARIABLES = {
+  FIELD_ID: FIELD_IDS.VALID_BUYER_BODY,
+  PAGE_CONTENT_STRINGS: PAGES.BUYER_BODY_PAGE,
+};
+
+/**
+ * mapAnswer
+ * Map yes/no answer to true/false boolean.
+ * The saved field ID includes 'valid' so we need to reverse the answer to save it correctly.
+ * If the answer is 'false', the 'buyer body' is valid. Return true.
+ * If the answer is 'true', the 'buyer body' is invalid. Return false.
+ * @returns {boolean}
+ */
+const mapAnswer = (answer: string) => {
+  if (answer === 'false') {
+    return true;
+  }
+
+  return false;
+};
+
+const get = (req: Request, res: Response) =>
+  res.render(TEMPLATES.QUOTE.BUYER_BODY, {
+    ...singleInputPageVariables(PAGE_VARIABLES),
+    BACK_LINK: req.headers.referer,
+    submittedValues: req.session.submittedData,
+  });
+
+const post = (req: Request, res: Response) => {
+  const validationErrors = generateValidationErrors(req.body);
+
+  if (validationErrors) {
+    return res.render(TEMPLATES.QUOTE.BUYER_BODY, {
+      ...singleInputPageVariables(PAGE_VARIABLES),
+      BACK_LINK: req.headers.referer,
+      validationErrors,
+    });
+  }
+
+  const answer = req.body[FIELD_IDS.VALID_BUYER_BODY];
+
+  const mappedAnswer = mapAnswer(req.body[FIELD_IDS.VALID_BUYER_BODY]);
+
+  req.session.submittedData = updateSubmittedData({ [FIELD_IDS.VALID_BUYER_BODY]: mappedAnswer }, req.session.submittedData);
+
+  if (answer === 'true') {
+    req.flash('previousRoute', ROUTES.QUOTE.BUYER_BODY);
+
+    const { GET_A_QUOTE_BY_EMAIL_PAGE } = PAGES;
+    const { REASON } = GET_A_QUOTE_BY_EMAIL_PAGE;
+
+    const reason = REASON.BUYER_BODY;
+
+    req.flash('exitReason', reason);
+
+    return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
+  }
+
+  return res.redirect(ROUTES.QUOTE.COMPANY_BASED);
+};
+
+export { PAGE_VARIABLES, mapAnswer, get, post };

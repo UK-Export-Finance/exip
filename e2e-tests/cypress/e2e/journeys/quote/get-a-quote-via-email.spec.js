@@ -6,7 +6,7 @@ import {
   PAGES,
 } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
-import { completeAndSubmitBuyerForm, completeAndSubmitCompanyForm } from '../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm, completeAndSubmitCompanyForm } from '../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.GET_A_QUOTE_BY_EMAIL_PAGE;
 const { FIELD_IDS, ROUTES } = CONSTANTS;
