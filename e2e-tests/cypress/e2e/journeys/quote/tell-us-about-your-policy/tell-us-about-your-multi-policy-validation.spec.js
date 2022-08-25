@@ -1,5 +1,6 @@
 import {
   completeAndSubmitBuyerCountryForm,
+  completeAndSubmitBuyerBodyForm,
   completeAndSubmitCompanyForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
@@ -23,6 +24,7 @@ context('Tell us about the multi policy you need - form validation', () => {
       cy.login();
 
       completeAndSubmitBuyerCountryForm();
+      completeAndSubmitBuyerBodyForm();
       completeAndSubmitCompanyForm();
       completeAndSubmitUkContentForm();
       completeAndSubmitPolicyTypeMultiForm();

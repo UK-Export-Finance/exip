@@ -1,5 +1,6 @@
 import {
   completeAndSubmitBuyerCountryForm,
+  completeAndSubmitBuyerBodyForm,
   completeAndSubmitCompanyForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
@@ -23,6 +24,7 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
     cy.login();
 
     completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerBodyForm();
     completeAndSubmitCompanyForm();
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeSingleForm();

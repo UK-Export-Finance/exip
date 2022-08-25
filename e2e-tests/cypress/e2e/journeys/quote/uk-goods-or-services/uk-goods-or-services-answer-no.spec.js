@@ -7,7 +7,7 @@ import {
   PAGES,
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm, completeAndSubmitCompanyForm } from '../../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm, completeAndSubmitCompanyForm } from '../../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
 const { ROUTES } = CONSTANTS;
@@ -16,6 +16,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   beforeEach(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerBodyForm();
     completeAndSubmitCompanyForm();
 
     cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);

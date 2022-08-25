@@ -5,7 +5,7 @@ import {
 import partials from '../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
@@ -14,6 +14,7 @@ context('Company based page - as an exporter, I want to check if my company can 
   before(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerBodyForm();
 
     cy.url().should('include', ROUTES.QUOTE.COMPANY_BASED);
 

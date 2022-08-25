@@ -183,7 +183,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     });
 
     describe('when submitting with a supported country', () => {
-      it(`should redirect to ${ROUTES.QUOTE.COMPANY_BASED}`, () => {
+      it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, () => {
         buyerCountryPage.searchInput().type('Algeria');
 
         const results = buyerCountryPage.results();
@@ -191,7 +191,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
         buyerCountryPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.COMPANY_BASED);
+        cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
       });
     });
   });

@@ -11,7 +11,7 @@ import {
   ERROR_MESSAGES,
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.COMPANY_BASED_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
@@ -20,6 +20,7 @@ context('Company based page - as an exporter, I want to check if my company can 
   beforeEach(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerBodyForm();
 
     cy.url().should('include', ROUTES.QUOTE.COMPANY_BASED);
   });
@@ -45,7 +46,7 @@ context('Company based page - as an exporter, I want to check if my company can 
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+    cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
   });
 
   it('renders a page title and heading', () => {

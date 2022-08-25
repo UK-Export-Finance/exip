@@ -1,4 +1,5 @@
 import {
+  completeAndSubmitBuyerBodyForm,
   completeAndSubmitBuyerCountryForm,
   completeAndSubmitCompanyForm,
   completeAndSubmitUkContentForm,
@@ -26,6 +27,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       cy.login();
 
       completeAndSubmitBuyerCountryForm();
+      completeAndSubmitBuyerBodyForm();
       completeAndSubmitCompanyForm();
       completeAndSubmitUkContentForm();
 
