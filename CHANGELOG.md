@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/UK-Export-Finance/exip/compare/v1.6.2...v1.7.0) (2022-08-25)
+
+
+### Features
+
+* **EMS-289:** add "buyer body" page/flow ([#93](https://github.com/UK-Export-Finance/exip/issues/93)) ([071e3f1](https://github.com/UK-Export-Finance/exip/commit/071e3f17ff6f5a29abe1522929ef522f56a214a1))
+
 ## [1.6.2](https://github.com/UK-Export-Finance/exip/compare/v1.6.1...v1.6.2) (2022-08-22)
 
 
