@@ -1,5 +1,6 @@
 import {
-  completeAndSubmitBuyerForm,
+  completeAndSubmitBuyerCountryForm,
+  completeAndSubmitBuyerBodyForm,
   completeAndSubmitCompanyForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
@@ -27,7 +28,8 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
     before(() => {
       cy.login();
 
-      completeAndSubmitBuyerForm();
+      completeAndSubmitBuyerCountryForm();
+      completeAndSubmitBuyerBodyForm();
       completeAndSubmitCompanyForm();
       completeAndSubmitUkContentForm();
       completeAndSubmitPolicyTypeMultiForm();

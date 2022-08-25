@@ -1,6 +1,7 @@
 import {
-  companyBasedPage,
   buyerCountryPage,
+  buyerBodyPage,
+  companyBasedPage,
   ukGoodsOrServicesPage,
   policyTypePage,
   tellUsAboutYourPolicyPage,
@@ -19,11 +20,16 @@ const {
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
-export const completeAndSubmitBuyerForm = () => {
+export const completeAndSubmitBuyerCountryForm = () => {
   buyerCountryPage.searchInput().type('Alg');
   const results = buyerCountryPage.results();
   results.first().click();
   buyerCountryPage.submitButton().click();
+};
+
+export const completeAndSubmitBuyerBodyForm = () => {
+  buyerBodyPage[FIELD_IDS.VALID_BUYER_BODY].no().click();
+  buyerBodyPage.submitButton().click();
 };
 
 export const completeAndSubmitCompanyForm = () => {

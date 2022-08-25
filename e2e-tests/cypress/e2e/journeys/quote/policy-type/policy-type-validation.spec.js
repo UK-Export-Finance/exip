@@ -3,14 +3,15 @@ import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 import checkText from '../../../helpers/check-text';
-import { completeAndSubmitBuyerForm, completeAndSubmitCompanyForm, completeAndSubmitUkContentForm } from '../../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm, completeAndSubmitCompanyForm, completeAndSubmitUkContentForm } from '../../../../support/quote/forms';
 
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Policy type page - policy type & length validation', () => {
   before(() => {
     cy.login();
-    completeAndSubmitBuyerForm();
+    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerBodyForm();
     completeAndSubmitCompanyForm();
     completeAndSubmitUkContentForm();
 

@@ -1,4 +1,6 @@
 const QUOTE_ROUTES = {
+  BUYER_BODY: '/quote/type-of-buyer',
+
   BUYER_COUNTRY: '/quote/buyer-country',
   BUYER_COUNTRY_CHANGE: '/quote/buyer-country/change',
 

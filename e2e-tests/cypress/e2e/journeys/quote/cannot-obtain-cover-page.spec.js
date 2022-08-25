@@ -6,7 +6,7 @@ import {
   PAGES,
 } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
-import { completeAndSubmitBuyerForm, completeAndSubmitCompanyForm } from '../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm, completeAndSubmitCompanyForm } from '../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
 const { FIELD_IDS, ROUTES } = CONSTANTS;
@@ -14,7 +14,8 @@ const { FIELD_IDS, ROUTES } = CONSTANTS;
 context('Cannot obtain UKEF cover exit page', () => {
   beforeEach(() => {
     cy.login();
-    completeAndSubmitBuyerForm();
+    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerBodyForm();
     completeAndSubmitCompanyForm();
 
     cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);

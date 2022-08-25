@@ -5,7 +5,8 @@ import {
 import partials from '../../../partials';
 import CONSTANTS from '../../../../../constants';
 import {
-  completeAndSubmitBuyerForm,
+  completeAndSubmitBuyerCountryForm,
+  completeAndSubmitBuyerBodyForm,
   completeAndSubmitCompanyForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
@@ -27,10 +28,12 @@ context('Change your answers (policy type) - multiple times via back button - as
   before(() => {
     cy.login();
 
-    completeAndSubmitBuyerForm();
+    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerBodyForm();
     completeAndSubmitCompanyForm();
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeSingleForm();
+
     cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
   });
 

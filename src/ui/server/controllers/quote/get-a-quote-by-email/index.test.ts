@@ -7,9 +7,21 @@ import { Request, Response } from '../../../../types';
 describe('controllers/get-a-quote-by-email', () => {
   let req: Request;
   let res: Response;
+  const mockExitReason = 'mock';
+  const mockPreviousRoute = '/test';
 
   beforeEach(() => {
     req = mockReq();
+
+    req.flash = (property: string) => {
+      const obj = {
+        exitReason: mockExitReason,
+        previousRoute: mockPreviousRoute,
+      };
+
+      return obj[property];
+    };
+
     res = mockRes();
   });
 
@@ -23,7 +35,8 @@ describe('controllers/get-a-quote-by-email', () => {
         LINKS,
         ...PAGES.GET_A_QUOTE_BY_EMAIL_PAGE,
       },
-      BACK_LINK: req.headers.referer,
+      BACK_LINK: mockPreviousRoute,
+      EXIT_REASON: mockExitReason,
     });
   });
 });

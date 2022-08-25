@@ -42,8 +42,12 @@ describe('controllers/buyer-country', () => {
   const countryUnsupported = mockCountriesResponse[0];
   const countrySupportedViaEmailOnly = mockCountriesResponse[2];
 
+  const mockFlash = jest.fn();
+
   beforeEach(() => {
     req = mockReq();
+    req.flash = mockFlash;
+
     res = mockRes();
   });
 
@@ -185,6 +189,20 @@ describe('controllers/buyer-country', () => {
         req.body[FIELD_IDS.BUYER_COUNTRY] = countrySupportedViaEmailOnly.marketName;
       });
 
+      it('should add previousRoute, exitReason and exitDescription to req.flash', async () => {
+        await post(req, res);
+
+        expect(mockFlash).toHaveBeenCalledTimes(3);
+
+        expect(mockFlash.mock.calls[0]).toEqual(['previousRoute', ROUTES.QUOTE.BUYER_COUNTRY]);
+
+        const { GET_A_QUOTE_BY_EMAIL_PAGE } = PAGES;
+        const { REASON } = GET_A_QUOTE_BY_EMAIL_PAGE;
+
+        expect(mockFlash.mock.calls[1]).toEqual(['exitReason', REASON.BUYER_COUNTRY]);
+        expect(mockFlash.mock.calls[2]).toEqual(['exitDescription', REASON.BUYER_COUNTRY_DESCRIPTION]);
+      });
+
       it(`should redirect to ${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`, async () => {
         await post(req, res);
 
@@ -209,12 +227,6 @@ describe('controllers/buyer-country', () => {
         req.body[FIELD_IDS.BUYER_COUNTRY] = countryUnsupported.marketName;
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.CANNOT_OBTAIN_COVER}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
-      });
-
       it('should add previousRoute and exitReason to req.flash', async () => {
         await post(req, res);
 
@@ -228,6 +240,12 @@ describe('controllers/buyer-country', () => {
         const expectedReason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${countryName}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
+      });
+
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_OBTAIN_COVER}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
       });
     });
 
@@ -262,10 +280,10 @@ describe('controllers/buyer-country', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.COMPANY_BASED}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.COMPANY_BASED);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_BODY);
       });
 
       describe("when the url's last substring is `change`", () => {

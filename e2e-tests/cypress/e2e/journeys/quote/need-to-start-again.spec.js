@@ -7,27 +7,19 @@ import {
   PAGES,
 } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
+import {
+  completeAndSubmitBuyerCountryForm,
+  completeAndSubmitBuyerBodyForm,
+} from '../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN;
 const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 context('Need to start again exit page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.QUOTE.BUYER_COUNTRY, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
-
-    buyerCountryPage.searchInput().type('Algeria');
-
-    const results = buyerCountryPage.results();
-    results.first().click();
-
-    buyerCountryPage.submitButton().click();
-
-    cy.url().should('include', ROUTES.QUOTE.COMPANY_BASED);
+    cy.login();
+    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerBodyForm();
 
     cy.visit(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
       auth: {

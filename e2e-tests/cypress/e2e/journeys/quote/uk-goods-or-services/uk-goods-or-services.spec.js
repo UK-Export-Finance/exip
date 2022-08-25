@@ -11,7 +11,7 @@ import {
   ERROR_MESSAGES,
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerForm, completeAndSubmitCompanyForm } from '../../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm, completeAndSubmitCompanyForm } from '../../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
@@ -19,7 +19,8 @@ const { ROUTES, FIELD_IDS } = CONSTANTS;
 context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
   before(() => {
     cy.login();
-    completeAndSubmitBuyerForm();
+    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerBodyForm();
     completeAndSubmitCompanyForm();
 
     cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
