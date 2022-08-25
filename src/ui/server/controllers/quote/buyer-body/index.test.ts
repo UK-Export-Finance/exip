@@ -11,8 +11,12 @@ describe('controllers/buyer-body', () => {
   let req: Request;
   let res: Response;
 
+  const mockFlash = jest.fn();
+
   beforeEach(() => {
     req = mockReq();
+    req.flash = mockFlash;
+
     res = mockRes();
   });
 
@@ -76,22 +80,23 @@ describe('controllers/buyer-body', () => {
       });
     });
 
-    describe('when the submitted country can only get a quote via email', () => {
+    describe('when the submitted answer is `yes`', () => {
       beforeEach(() => {
         req.body[FIELD_IDS.VALID_BUYER_BODY] = 'true';
       });
 
-      it('should add previousRoute and exitReason to req.flash', async () => {
+      it('should add previousRoute, exitReason and exitDescription to req.flash', async () => {
         await post(req, res);
 
-        expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.QUOTE.BUYER_BODY);
+        expect(mockFlash).toHaveBeenCalledTimes(3);
+
+        expect(mockFlash.mock.calls[0]).toEqual(['previousRoute', ROUTES.QUOTE.BUYER_BODY]);
 
         const { GET_A_QUOTE_BY_EMAIL_PAGE } = PAGES;
         const { REASON } = GET_A_QUOTE_BY_EMAIL_PAGE;
 
-        const expectedReason = REASON.BUYER_BODY;
-
-        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
+        expect(mockFlash.mock.calls[1]).toEqual(['exitReason', REASON.BUYER_BODY]);
+        expect(mockFlash.mock.calls[2]).toEqual(['exitDescription', REASON.BUYER_BODY_DESCRIPTION]);
       });
 
       it(`should redirect to ${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`, async () => {

@@ -33,7 +33,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
+    const expected = ROUTES.QUOTE.BUYER_COUNTRY;
 
     partials.backLink().should('have.attr', 'href', expected);
   });

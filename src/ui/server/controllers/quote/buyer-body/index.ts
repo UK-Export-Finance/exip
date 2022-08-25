@@ -56,9 +56,8 @@ const post = (req: Request, res: Response) => {
     const { GET_A_QUOTE_BY_EMAIL_PAGE } = PAGES;
     const { REASON } = GET_A_QUOTE_BY_EMAIL_PAGE;
 
-    const reason = REASON.BUYER_BODY;
-
-    req.flash('exitReason', reason);
+    req.flash('exitReason', REASON.BUYER_BODY);
+    req.flash('exitDescription', REASON.BUYER_BODY_DESCRIPTION);
 
     return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
   }

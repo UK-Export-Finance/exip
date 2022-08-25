@@ -119,6 +119,14 @@ export const post = async (req: Request, res: Response) => {
   }
 
   if (canGetAQuoteByEmail(country)) {
+    req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
+
+    const { GET_A_QUOTE_BY_EMAIL_PAGE } = PAGES;
+    const { REASON } = GET_A_QUOTE_BY_EMAIL_PAGE;
+
+    req.flash('exitReason', REASON.BUYER_COUNTRY);
+    req.flash('exitDescription', REASON.BUYER_COUNTRY_DESCRIPTION);
+
     return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
   }
 

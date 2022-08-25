@@ -22,9 +22,9 @@
     <p class="govuk-body" data-cy="reason">{{ CONTENT_STRINGS.REASON.INTRO }} {{ EXIT_REASON }}</p>
   {% endif %}
 
-  {# <p class="govuk-body" data-cy="body-1">{{ CONTENT_STRINGS.REASON.BODY_1 }}</p> #}
-
-  <p class="govuk-body" data-cy="body-2">{{ CONTENT_STRINGS.REASON.BODY_2 }}</p>
+  {% if EXIT_DESCRIPTION %}
+    <p class="govuk-body" data-cy="description">{{ EXIT_DESCRIPTION }}</p>
+  {% endif %}
 
   {{detailsText.render({
     items: CONTENT_STRINGS.ACTION

@@ -42,8 +42,12 @@ describe('controllers/buyer-country', () => {
   const countryUnsupported = mockCountriesResponse[0];
   const countrySupportedViaEmailOnly = mockCountriesResponse[2];
 
+  const mockFlash = jest.fn();
+
   beforeEach(() => {
     req = mockReq();
+    req.flash = mockFlash;
+
     res = mockRes();
   });
 
@@ -183,6 +187,20 @@ describe('controllers/buyer-country', () => {
     describe('when the submitted country can only get a quote via email', () => {
       beforeEach(() => {
         req.body[FIELD_IDS.BUYER_COUNTRY] = countrySupportedViaEmailOnly.marketName;
+      });
+
+      it('should add previousRoute, exitReason and exitDescription to req.flash', async () => {
+        await post(req, res);
+
+        expect(mockFlash).toHaveBeenCalledTimes(3);
+
+        expect(mockFlash.mock.calls[0]).toEqual(['previousRoute', ROUTES.QUOTE.BUYER_COUNTRY]);
+
+        const { GET_A_QUOTE_BY_EMAIL_PAGE } = PAGES;
+        const { REASON } = GET_A_QUOTE_BY_EMAIL_PAGE;
+
+        expect(mockFlash.mock.calls[1]).toEqual(['exitReason', REASON.BUYER_COUNTRY]);
+        expect(mockFlash.mock.calls[2]).toEqual(['exitDescription', REASON.BUYER_COUNTRY_DESCRIPTION]);
       });
 
       it(`should redirect to ${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`, async () => {

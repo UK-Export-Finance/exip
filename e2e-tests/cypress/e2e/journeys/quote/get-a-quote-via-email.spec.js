@@ -58,13 +58,13 @@ context('Get a quote via email exit page', () => {
     });
   });
 
-  it('renders a reason/body content ', () => {
-    getAQuoteByEmailPage.body1().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.REASON.BODY_1);
+  it('renders a reason and description ', () => {
+    getAQuoteByEmailPage.reason().invoke('text').then((text) => {
+      expect(text.trim()).equal(CONTENT_STRINGS.REASON.BUYER_COUNTRY);
     });
 
-    getAQuoteByEmailPage.body2().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.REASON.BODY_2);
+    getAQuoteByEmailPage.description().invoke('text').then((text) => {
+      expect(text.trim()).equal(CONTENT_STRINGS.REASON.BUYER_COUNTRY_DESCRIPTION);
     });
   });
 

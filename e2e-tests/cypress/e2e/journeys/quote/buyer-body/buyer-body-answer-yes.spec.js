@@ -36,9 +36,15 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     partials.backLink().should('have.attr', 'href', ROUTES.QUOTE.BUYER_BODY);
   });
 
-  it('renders a specific reason', () => {
+  it('renders a specific reason and description', () => {
     getAQuoteByEmailPage.reason().invoke('text').then((text) => {
       const expected = PAGES.GET_A_QUOTE_BY_EMAIL_PAGE.REASON.BUYER_BODY;
+
+      expect(text.trim()).equal(expected);
+    });
+
+    getAQuoteByEmailPage.description().invoke('text').then((text) => {
+      const expected = PAGES.GET_A_QUOTE_BY_EMAIL_PAGE.REASON.BUYER_BODY_DESCRIPTION;
 
       expect(text.trim()).equal(expected);
     });
