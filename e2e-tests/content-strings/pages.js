@@ -143,7 +143,7 @@ const GET_A_QUOTE_BY_EMAIL_PAGE = {
     [
       {
         text: 'Download this form',
-        href: '#',
+        href: LINKS.EXTERNAL.NBI_FORM,
       },
       {
         text: ' and fill it in. ',
