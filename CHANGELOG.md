@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.1](https://github.com/UK-Export-Finance/exip/compare/v1.7.0...v1.7.1) (2022-08-30)
+
+
+### Bug Fixes
+
+* **EMS-289:** fix NBI link in 'get a quote by email' page ([bf07eef](https://github.com/UK-Export-Finance/exip/commit/bf07eef575fb056275046bb62cfdd63c2e658e2b))
+
 ## [1.7.0](https://github.com/UK-Export-Finance/exip/compare/v1.6.2...v1.7.0) (2022-08-25)
 
 
