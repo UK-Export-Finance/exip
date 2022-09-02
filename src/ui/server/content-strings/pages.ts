@@ -117,7 +117,7 @@ const CANNOT_OBTAIN_COVER_PAGE = {
       TEXT: 'read about',
       LINK: {
         TEXT: 'eligibility',
-        HREF: `${LINKS.EXTERNAL.GUIDANCE}#eligibility`,
+        HREF: LINKS.EXTERNAL.GUIDANCE,
       },
     },
     CONTACT_APPROVED_BROKER: {
@@ -177,7 +177,7 @@ const YOUR_QUOTE_PAGE = {
         },
         {
           text: 'full application',
-          href: '#',
+          href: LINKS.EXTERNAL.FULL_APPLICATION,
         },
         {
           text: '. ',
