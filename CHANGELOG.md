@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.2](https://github.com/UK-Export-Finance/exip/compare/v1.7.1...v1.7.2) (2022-09-02)
+
+
+### Bug Fixes
+
+* **EMS-248:** update external guidance/application links ([92887c3](https://github.com/UK-Export-Finance/exip/commit/92887c358ca9a1c69a6ca627b279b382cecc9d46))
+
 ## [1.7.1](https://github.com/UK-Export-Finance/exip/compare/v1.7.0...v1.7.1) (2022-08-30)
 
 
