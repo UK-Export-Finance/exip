@@ -6,6 +6,8 @@
 ### Bug Fixes
 
 * **EMS-248:** update external guidance/application links ([92887c3](https://github.com/UK-Export-Finance/exip/commit/92887c358ca9a1c69a6ca627b279b382cecc9d46))
+* **Accessibility:** Add complementary aria role/landmark to the phase banner ([ac9c3a1](https://github.com/UK-Export-Finance/exip/commit/ac9c3a10756a9ae77180340e0bb8e97ff5cef0ad))
+* **Accessibility:** Remove empty/outdated "company group" details being generated on the Answers page ([c8bfc12](https://github.com/UK-Export-Finance/exip/commit/c8bfc1276d2cdfb42ce2af2c2d24a79ae3d2d30f))
 
 ## [1.7.1](https://github.com/UK-Export-Finance/exip/compare/v1.7.0...v1.7.1) (2022-08-30)
 
