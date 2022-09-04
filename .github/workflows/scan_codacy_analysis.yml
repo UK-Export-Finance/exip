@@ -1,7 +1,8 @@
-name: Codacy Static Code Analysis
+name: "Codacy - SCA"
 
 on:
   pull_request:
+    branches: '**' # Matches every branch
 
 jobs:
   codacy-analysis-cli:
