@@ -14,17 +14,17 @@ jobs:
     steps:
     - uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_DIGITAL_PROD }}
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Defaults
       uses: azure/cli@v1.0.0
       with:
         inlineScript: |
-          az configure --defaults location=uksouth
-          az configure --defaults group=${{ secrets.PROD_RESOURCE_GROUP }}
+          az configure --defaults location=${{ secrets.AZURE_REGION }}
+          az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
 
     - name: ACR
       uses: azure/cli@v1.0.0
       with:
         inlineScript: |
-          az acr create --name exipsproduction --sku Standard --admin-enabled true
+          az acr create --name ${{ secrets.ACR }} --sku Standard --admin-enabled true
