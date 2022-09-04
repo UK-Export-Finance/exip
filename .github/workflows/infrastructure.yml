@@ -9,9 +9,10 @@ on:
 jobs:
 
   prod:
-    name: Azure Production RG
+    name: Production
     runs-on: [self-hosted, linux, deployment, infrastructure]
     steps:
+
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
