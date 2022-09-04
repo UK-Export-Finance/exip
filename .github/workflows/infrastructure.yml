@@ -6,13 +6,13 @@ on:
     paths: 
     - '.github/workflows/infrastructure.yml'
 
-    env:
-      environment: production
-
 jobs:
 
   prod:
     name: Production
+    env:
+      environment: prod
+  
     environment: ${{ env.environment }}
     runs-on: [self-hosted, linux, deployment, infrastructure]
     steps:
