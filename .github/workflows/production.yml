@@ -8,27 +8,24 @@ on:
   
 env:
   environment: prod
-  credentials: ${{ secrets.AZURE_DIGITAL_PROD }}
+  credentials: ${{ secrets.AZURE_CREDENTIALS }}
   from: latest
-  acr: ${{ secrets.ACR_REGISTRY_PROD }}
-  acr_username: ${{ secrets.ACR_USERNAME_PROD }}
-  acr_password: ${{ secrets.ACR_PASSWORD_PROD }}
+  acr: ${{ secrets.ACR_SERVER }}
+  acr_username: ${{ secrets.ACR_USERNAME }}
+  acr_password: ${{ secrets.ACR_PASSWORD }}
 
 jobs:
   production-environment:
     name: Environment setup
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, deployment]
     outputs:
       environment: ${{ env.environment }}
-    steps:
-    - name: Initialise Environment
-      run: echo "Setting up ${{ env.environment }} environment"
 
   #################### 1. GET-A-QUOTE ####################
   get-a-quote:
     needs: production-environment
     name: Get a quote
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, deployment]
     environment:
       name: ${{ needs.production-environment.outputs.environment }}
     env:
