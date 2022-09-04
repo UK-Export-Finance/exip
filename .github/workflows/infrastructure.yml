@@ -1,0 +1,30 @@
+name: EXIPS - Base Infrastructure
+
+on:
+  push:
+    branches: [ infrastructure ]
+    paths: 
+    - '.github/workflows/infrastructure.yml'
+
+jobs:
+
+  prod:
+    name: Azure Production RG
+    runs-on: ubuntu-latest
+    steps:
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_DIGITAL_PROD }}
+
+    - name: Defaults
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az configure --defaults location=uksouth
+          az configure --defaults group=${{ secrets.PROD_RESOURCE_GROUP }}
+
+    - name: ACR
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az acr create --name exipsproduction --sku Standard --admin-enabled true
