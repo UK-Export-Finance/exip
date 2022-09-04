@@ -8,8 +8,8 @@ on:
 
 jobs:
 
-  prod-rg:
-    name: 3. Production resource group
+  prod:
+    name: Azure Production RG
     runs-on: ubuntu-latest
     steps:
     - uses: azure/login@v1
