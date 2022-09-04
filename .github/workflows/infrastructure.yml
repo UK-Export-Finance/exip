@@ -9,11 +9,8 @@ on:
 jobs:
 
   prod:
-    name: Production
-    env:
-      environment: prod
-  
-    environment: ${{ env.environment }}
+    name: Production  
+    environment: prod
     runs-on: [self-hosted, linux, deployment, infrastructure]
     steps:
 
