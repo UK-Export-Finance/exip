@@ -10,7 +10,7 @@ jobs:
 
   prod:
     name: Azure Production RG
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, deployment, infrastructure]
     steps:
     - uses: azure/login@v1
       with:
