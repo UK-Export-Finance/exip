@@ -15,6 +15,7 @@ env:
   acr_password: ${{ secrets.ACR_PASSWORD }}
 
 jobs:
+#################### 0. ENVIRONMENT ####################
   production-environment:
     name: Environment setup
     runs-on: [self-hosted, linux, deployment]
@@ -45,7 +46,7 @@ jobs:
         username: ${{ env.acr_username }}
         password: ${{ env.acr_password }}
         repository: ${{ env.repository }}
-        path: ${{ env.repository }}
+        path: src
         tags: latest
         build_args: GITHUB_SHA=${{ github.sha }}
         add_git_labels: true
