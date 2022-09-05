@@ -15,7 +15,7 @@ env:
   acr_password: ${{ secrets.ACR_PASSWORD }}
 
 jobs:
-#################### 0. ENVIRONMENT ####################
+  #################### 0. ENVIRONMENT ####################
   production-environment:
     name: Environment setup
     runs-on: [self-hosted, linux, deployment]
