@@ -11,7 +11,7 @@ export const LINKS = {
   GIVE_FEEDBACK: 'Give feedback',
   EXTERNAL: {
     GUIDANCE: 'https://www.gov.uk/guidance/export-insurance-policy#eligibility',
-    BEFORE_YOU_START: 'http://localhost:1234/mock/before-you-start',
+    BEFORE_YOU_START: 'https://www.gov.uk/government/publications/get-a-quote-for-ukef-export-insurance',
     PRIVACY: 'https://www.gov.uk/government/publications/ukef-privacy-notice/ukef-privacy-notice',
     FEEDBACK: 'https://forms.office.com/r/TacytrRCgJ',
     EXPORT_FINANCE_MANAGERS: 'https://www.gov.uk/government/publications/find-an-export-finance-manager',
