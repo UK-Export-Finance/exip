@@ -8,7 +8,7 @@ on:
   
 env:
   environment: prod
-  webapp: get-a-quote-export-insurance
+  webapp: get-quote-export-insurance
   credentials: ${{ secrets.AZURE_CREDENTIALS }}
   from: latest
   acr: ${{ secrets.ACR_SERVER }}
