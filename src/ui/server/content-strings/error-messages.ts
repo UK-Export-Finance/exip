@@ -45,11 +45,4 @@ export const ERROR_MESSAGES = {
     IS_EMPTY: 'Enter how many months you need the policy for',
     ABOVE_MAXIMUM: 'Enter policy length of no more than 22 months',
   },
-  [FIELD_IDS.MULTI_POLICY_LENGTH]: {
-    NOT_A_NUMBER: 'Policy length must be a number',
-    NOT_A_WHOLE_NUMBER: 'Policy length must be a whole number, like 10 - you cannot enter decimal points',
-    BELOW_MINIMUM: 'Policy length must be 1 month or more',
-    IS_EMPTY: 'Enter how many months you need the policy for',
-    ABOVE_MAXIMUM: 'Enter policy length of no more than 12 months',
-  },
 } as ErrorMessage;

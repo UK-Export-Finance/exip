@@ -6,6 +6,7 @@
 {% import '../components/details-text.njk' as detailsText %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% import '../components/details-text.njk' as detailsText %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -73,51 +74,16 @@
                 "data-cy": FIELDS.SINGLE_POLICY_LENGTH.ID + "-error-message"
               }
             },
-            value: submittedValues[FIELDS.SINGLE_POLICY_LENGTH.ID]
+            value: submittedValues[FIELDS.POLICY_LENGTH.ID]
           }) }}
         {% endset %}
 
-
-        {% set multiPolicyLengthHintHtml %}
-          <div data-cy="{{ FIELDS.MULTI_POLICY_LENGTH.ID }}-hint" class="ukef-multi-policy-length-hint">
-            {{detailsText.render({
-              items: FIELDS.MULTI_POLICY_LENGTH.HINT
+        {% set multiPolicyTypeInsetHtml %}
+          <div data-cy="multi-policy-inset">
+            {{ detailsText.render({
+              items: FIELDS.POLICY_TYPE.OPTIONS.MULTI.INSET
             }) }}
           </div>
-        {% endset %}
-
-        {% set multiPolicyLengthHtml %}
-          {{ govukInput({
-            label: {
-              text: FIELDS.MULTI_POLICY_LENGTH.LABEL,
-              attributes: {
-                id: FIELDS.MULTI_POLICY_LENGTH.ID + '-label',
-                'data-cy': FIELDS.MULTI_POLICY_LENGTH.ID + '-label'
-              }
-            },
-            hint: {
-              html: multiPolicyLengthHintHtml
-            },
-            classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
-            attributes: {
-              'data-cy': FIELDS.MULTI_POLICY_LENGTH.ID + '-input'
-            },
-            id: FIELDS.MULTI_POLICY_LENGTH.ID,
-            name: FIELDS.MULTI_POLICY_LENGTH.ID,
-            inputmode: "numeric",
-            pattern: "[0-9]*",
-            suffix: {
-              text: "months"
-            },
-            spellcheck: false,
-            errorMessage: validationErrors.errorList[FIELDS.MULTI_POLICY_LENGTH.ID]and {
-              text: validationErrors.errorList[FIELDS.MULTI_POLICY_LENGTH.ID].text,
-              attributes: {
-                "data-cy": FIELDS.MULTI_POLICY_LENGTH.ID + "-error-message"
-              }
-            },
-            value: submittedValues[FIELDS.MULTI_POLICY_LENGTH.ID]
-          }) }}
         {% endset %}
 
         {% if validationErrors.errorList[FIELDS.POLICY_TYPE.ID] %}
@@ -181,7 +147,7 @@
               },
               checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE,
               conditional: {
-                html: multiPolicyLengthHtml
+                html: multiPolicyTypeInsetHtml
               }
             }
           ],

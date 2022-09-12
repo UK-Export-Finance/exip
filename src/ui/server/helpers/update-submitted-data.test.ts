@@ -3,7 +3,7 @@ import { FIELD_IDS, FIELD_VALUES } from '../constants';
 import { sanitiseData } from './sanitise-data';
 import { RequestBody, SubmittedData } from '../../types';
 
-const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
+const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE } = FIELD_IDS;
 
 describe('server/helpers/update-submitted-data', () => {
   describe('mapSubmittedData', () => {
@@ -12,7 +12,7 @@ describe('server/helpers/update-submitted-data', () => {
         const mockFormData = {
           mock: '1',
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-          [SINGLE_POLICY_LENGTH]: '10',
+          [POLICY_LENGTH]: '10',
         } as RequestBody;
 
         const result = mapSubmittedData(mockFormData);
@@ -21,7 +21,6 @@ describe('server/helpers/update-submitted-data', () => {
           mock: '1',
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [POLICY_LENGTH]: '10',
-          [SINGLE_POLICY_LENGTH]: '10',
         };
 
         expect(result).toEqual(expected);
@@ -29,12 +28,11 @@ describe('server/helpers/update-submitted-data', () => {
     });
 
     describe(`when ${POLICY_TYPE} is 'multi'`, () => {
-      it('should return policy length field with multi specific fields', () => {
+      it('should return policy length field with multi specific fields and default multi policy length', () => {
         const mockFormData = {
           mock: '1',
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [POLICY_LENGTH]: '10',
-          [MULTI_POLICY_LENGTH]: '10',
+          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
         } as RequestBody;
 
         const result = mapSubmittedData(mockFormData);
@@ -42,8 +40,7 @@ describe('server/helpers/update-submitted-data', () => {
         const expected = {
           mock: '1',
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [POLICY_LENGTH]: '10',
-          [MULTI_POLICY_LENGTH]: '10',
+          [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
         };
 
         expect(result).toEqual(expected);
@@ -54,13 +51,12 @@ describe('server/helpers/update-submitted-data', () => {
       it('should return policy length field with only single specific fields', () => {
         const mockFormData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-          [SINGLE_POLICY_LENGTH]: '10',
+          [POLICY_LENGTH]: '10',
           [CONTRACT_VALUE]: 100,
         } as RequestBody;
 
         const mockExistingData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [MULTI_POLICY_LENGTH]: '5',
           [MAX_AMOUNT_OWED]: 200,
         } as SubmittedData;
 
@@ -69,7 +65,6 @@ describe('server/helpers/update-submitted-data', () => {
         const expected = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [POLICY_LENGTH]: '10',
-          [SINGLE_POLICY_LENGTH]: '10',
           [CONTRACT_VALUE]: 100,
         };
 
@@ -78,16 +73,16 @@ describe('server/helpers/update-submitted-data', () => {
     });
 
     describe(`when ${POLICY_TYPE} of 'multi' is submitted  and 'single' fields were previously provided`, () => {
-      it('should return policy length field with only multi specific fields', () => {
+      it('should return policy length field with only multi specific fields and default multi policy length', () => {
         const mockFormData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [MULTI_POLICY_LENGTH]: '10',
+          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
           [MAX_AMOUNT_OWED]: 200,
         } as RequestBody;
 
         const mockExistingData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-          [SINGLE_POLICY_LENGTH]: '5',
+          [POLICY_LENGTH]: '5',
           [CONTRACT_VALUE]: 100,
         };
 
@@ -95,8 +90,7 @@ describe('server/helpers/update-submitted-data', () => {
 
         const expected = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [POLICY_LENGTH]: '10',
-          [MULTI_POLICY_LENGTH]: '10',
+          [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
           [MAX_AMOUNT_OWED]: 200,
         };
 
@@ -108,7 +102,7 @@ describe('server/helpers/update-submitted-data', () => {
       it('should delete the credit period', () => {
         const mockFormData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-          [SINGLE_POLICY_LENGTH]: '10',
+          [POLICY_LENGTH]: '10',
         } as RequestBody;
 
         const mockExistingData = {
@@ -120,7 +114,6 @@ describe('server/helpers/update-submitted-data', () => {
         const expected = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [POLICY_LENGTH]: '10',
-          [SINGLE_POLICY_LENGTH]: '10',
         };
 
         expect(result).toEqual(expected);

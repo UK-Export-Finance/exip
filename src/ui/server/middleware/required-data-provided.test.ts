@@ -138,7 +138,6 @@ describe('middleware/required-data-provided', () => {
             FIELD_IDS.VALID_COMPANY_BASE,
             FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
-            FIELD_IDS.POLICY_LENGTH,
           ],
           [CHECK_YOUR_ANSWERS]: [
             FIELD_IDS.BUYER_COUNTRY,
@@ -146,7 +145,6 @@ describe('middleware/required-data-provided', () => {
             FIELD_IDS.VALID_COMPANY_BASE,
             FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
-            FIELD_IDS.POLICY_LENGTH,
             FIELD_IDS.CURRENCY,
             FIELD_IDS.PERCENTAGE_OF_COVER,
             FIELD_IDS.CREDIT_PERIOD,
@@ -158,7 +156,6 @@ describe('middleware/required-data-provided', () => {
             FIELD_IDS.VALID_COMPANY_BASE,
             FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
-            FIELD_IDS.POLICY_LENGTH,
             FIELD_IDS.CURRENCY,
             FIELD_IDS.PERCENTAGE_OF_COVER,
             FIELD_IDS.CREDIT_PERIOD,

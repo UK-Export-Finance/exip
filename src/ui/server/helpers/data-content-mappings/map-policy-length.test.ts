@@ -32,7 +32,7 @@ describe('server/helpers/map-policy-length', () => {
       const mockData = {
         ...mockQuote,
         [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-        [POLICY_LENGTH]: 10,
+        [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
       } as Quote;
 
       const result = mapPolicyLength(mockData);
