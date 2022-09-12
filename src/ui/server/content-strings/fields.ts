@@ -50,7 +50,28 @@ export const FIELDS = {
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
     LABEL: 'What credit period do you have with your buyer?',
-    HINT: 'To get a quote, you need to enter a credit period of 1 or 2 months, whichever is closest to your current credit period length.',
+    HINT: [
+      {
+        text: 'You can get an online quote for credit periods up to 2 months.  If you need a credit period of over 2 months',
+      },
+      {
+        text: 'fill in this form',
+        href: LINKS.EXTERNAL.NBI_FORM,
+      },
+      {
+        text: 'and email it to UKEF.',
+      },
+    ],
+    OPTIONS: [
+      {
+        value: '1',
+        text: '1 month',
+      },
+      {
+        value: '2',
+        text: '2 months',
+      },
+    ],
     SUMMARY: {
       TITLE: 'Credit period',
     },

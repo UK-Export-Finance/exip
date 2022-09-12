@@ -156,7 +156,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
     it('renders the new answers in the quote', () => {
       // max amount owed and credit period fields are now required because it's a multi policy
       tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('120000');
-      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('1');
+      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkYourAnswersPage.submitButton().click();

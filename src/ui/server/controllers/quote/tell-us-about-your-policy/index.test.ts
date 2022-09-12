@@ -6,10 +6,11 @@ import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
 import generateValidationErrors from './validation';
 import getCurrencyByCode from '../../../helpers/get-currency-by-code';
 import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-cover';
+import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data';
 import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-type';
 import { mockReq, mockRes, mockAnswers, mockSession } from '../../../test-mocks';
-import { Request, Response, TellUsAboutPolicyPageVariables } from '../../../../types';
+import { Request, Response, SelectOption, TellUsAboutPolicyPageVariables } from '../../../../types';
 
 const { AMOUNT_CURRENCY, BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE, POLICY_LENGTH } = FIELD_IDS;
 
@@ -33,6 +34,8 @@ describe('controllers/tell-us-about-your-policy', () => {
   ];
 
   let mappedPercentageOfCover: Array<object>;
+  const creditPeriodOptions = FIELDS[FIELD_IDS.CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
+  let mappedCreditPeriod: Array<SelectOption>;
 
   const previousFlowSubmittedData = {
     [BUYER_COUNTRY]: mockSession.submittedData[BUYER_COUNTRY],
@@ -47,6 +50,7 @@ describe('controllers/tell-us-about-your-policy', () => {
     req.session.submittedData = mockSession.submittedData;
 
     mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER);
+    mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);
   });
 
   afterAll(() => {
@@ -215,6 +219,7 @@ describe('controllers/tell-us-about-your-policy', () => {
         isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
         currencies: expectedCurrencies,
         percentageOfCover: mappedPercentageOfCover,
+        creditPeriod: mappedCreditPeriod,
         submittedValues: req.session.submittedData,
       });
     });
@@ -223,6 +228,7 @@ describe('controllers/tell-us-about-your-policy', () => {
       beforeEach(() => {
         req.session.submittedData = mockSession.submittedData;
         delete req.session.submittedData[PERCENTAGE_OF_COVER];
+        delete req.session.submittedData[CREDIT_PERIOD];
       });
 
       it('should render template with currencies mapped to submitted currency and submittedValues', async () => {
@@ -237,6 +243,7 @@ describe('controllers/tell-us-about-your-policy', () => {
           isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCover,
+          creditPeriod: mappedCreditPeriod,
           submittedValues: req.session.submittedData,
         });
       });
@@ -246,6 +253,7 @@ describe('controllers/tell-us-about-your-policy', () => {
       beforeEach(() => {
         req.session.submittedData = mockSession.submittedData;
         req.session.submittedData[PERCENTAGE_OF_COVER] = mockAnswers[PERCENTAGE_OF_COVER];
+        delete req.session.submittedData[CREDIT_PERIOD];
       });
 
       it('should render template with percentage of cover mapped to submitted percentage and submittedValues', async () => {
@@ -262,6 +270,35 @@ describe('controllers/tell-us-about-your-policy', () => {
           isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCoverWithSelected,
+          creditPeriod: mappedCreditPeriod,
+          submittedValues: req.session.submittedData,
+        });
+      });
+    });
+
+    describe('when a credit period has been submitted', () => {
+      beforeEach(() => {
+        req.session.submittedData = mockSession.submittedData;
+        req.session.submittedData[CREDIT_PERIOD] = 2;
+      });
+
+      it('should render template with credit period mapped to submitted credit period and submittedValues', async () => {
+        await get(req, res);
+
+        const expectedCurrencies = mapCurrencies(mockCurrenciesResponse, req.session.submittedData[CURRENCY].isoCode);
+
+        const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData[PERCENTAGE_OF_COVER]);
+
+        const mappedCreditPeriodWithSelected = mapCreditPeriod(creditPeriodOptions, String(req.session.submittedData[CREDIT_PERIOD]));
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+          ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
+          BACK_LINK: req.headers.referer,
+          isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
+          isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
+          currencies: expectedCurrencies,
+          percentageOfCover: mappedPercentageOfCoverWithSelected,
+          creditPeriod: mappedCreditPeriodWithSelected,
           submittedValues: req.session.submittedData,
         });
       });
@@ -304,6 +341,7 @@ describe('controllers/tell-us-about-your-policy', () => {
             ...req.body,
           }),
           percentageOfCover: mappedPercentageOfCover,
+          creditPeriod: mappedCreditPeriod,
           submittedValues: req.body,
         });
       });
@@ -328,6 +366,7 @@ describe('controllers/tell-us-about-your-policy', () => {
               ...req.body,
             }),
             percentageOfCover: mappedPercentageOfCover,
+            creditPeriod: mappedCreditPeriod,
             submittedValues: req.body,
           });
         });
@@ -354,6 +393,34 @@ describe('controllers/tell-us-about-your-policy', () => {
               ...req.body,
             }),
             percentageOfCover: mappedPercentageOfCoverWithSelected,
+            creditPeriod: mappedCreditPeriod,
+            submittedValues: req.body,
+          });
+        });
+      });
+
+      describe('when a credit period has been submitted', () => {
+        beforeEach(() => {
+          req.body[CREDIT_PERIOD] = mockAnswers[CREDIT_PERIOD];
+        });
+
+        it('should render template with mapped submitted credit period', async () => {
+          await post(req, res);
+
+          const mappedCreditPeriodWithSelected = mapCreditPeriod(creditPeriodOptions, String(req.session.submittedData[CREDIT_PERIOD]));
+
+          expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+            ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
+            BACK_LINK: req.headers.referer,
+            isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
+            isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
+            currencies: mapCurrencies(mockCurrenciesResponse, req.body[CURRENCY]),
+            validationErrors: generateValidationErrors({
+              ...req.session.submittedData,
+              ...req.body,
+            }),
+            percentageOfCover: mappedPercentageOfCover,
+            creditPeriod: mappedCreditPeriodWithSelected,
             submittedValues: req.body,
           });
         });

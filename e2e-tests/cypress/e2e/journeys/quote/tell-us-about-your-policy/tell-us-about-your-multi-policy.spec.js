@@ -168,7 +168,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       });
     });
 
-    it('renders `credit period` label, hint and input', () => {
+    it('renders `credit period` label, hint and input with correct options', () => {
       const fieldId = FIELD_IDS.CREDIT_PERIOD;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
@@ -179,11 +179,27 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       });
 
       field.hint().should('exist');
+
+      const { HINT } = FIELDS[fieldId];
+
       field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].HINT);
+        const expectedHintText = `${HINT[0].text} ${HINT[1].text} ${HINT[2].text}`;
+
+        expect(text.trim()).equal(expectedHintText);
       });
 
+      const expectedHintHref = HINT[1].href;
+
+      field.hintLink().should('have.attr', 'href', expectedHintHref);
+
       field.input().should('exist');
+
+      field.inputOption().then((options) => {
+        const actual = [...options].map((o) => o.value);
+
+        const expected = ['', '1', '2'];
+        expect(actual).to.deep.eq(expected);
+      });
     });
 
     it('renders a submit button', () => {
@@ -201,7 +217,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().type('100');
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
-      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('1');
+      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().select('1');
 
       tellUsAboutYourPolicyPage.submitButton().click();
 

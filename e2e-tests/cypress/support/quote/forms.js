@@ -65,6 +65,6 @@ export const completeAndSubmitTellUsAboutYourMultiPolicyForm = () => {
   tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
   tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('150000');
   tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
-  tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('1');
+  tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
   tellUsAboutYourPolicyPage.submitButton().click();
 };

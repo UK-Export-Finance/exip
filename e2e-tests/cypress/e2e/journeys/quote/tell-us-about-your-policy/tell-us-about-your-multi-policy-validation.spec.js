@@ -155,70 +155,18 @@ context('Tell us about the multi policy you need - form validation', () => {
     });
   });
 
-  describe('when `credit period` has a non-numeric value', () => {
+  describe('when `credit period` is not selected', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('a');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(3),
-        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER,
+        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY,
       );
 
       checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER}`,
-      );
-    });
-  });
-
-  describe('when `credit period` contains a decimal', () => {
-    it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().type('1.2');
-      tellUsAboutYourPolicyPage.submitButton().click();
-
-      checkText(
-        partials.errorSummaryListItems().eq(3),
-        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_WHOLE_NUMBER,
-      );
-
-      checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_WHOLE_NUMBER}`,
-      );
-    });
-  });
-
-  describe('when `credit period` has a value less than the minimum', () => {
-    it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().clear().type('0');
-      tellUsAboutYourPolicyPage.submitButton().click();
-
-      checkText(
-        partials.errorSummaryListItems().eq(3),
-        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].BELOW_MINIMUM,
-      );
-
-      checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].BELOW_MINIMUM}`,
-      );
-    });
-  });
-
-  describe('when `credit period` has a value above the maximum', () => {
-    it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().clear().type('3');
-      tellUsAboutYourPolicyPage.submitButton().click();
-
-      checkText(
-        partials.errorSummaryListItems().eq(3),
-        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].ABOVE_MAXIMUM,
-      );
-
-      checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].ABOVE_MAXIMUM}`,
+        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY}`,
       );
     });
   });

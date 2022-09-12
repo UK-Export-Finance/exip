@@ -25,36 +25,6 @@ describe('controllers/tell-us-about-your-policy/validation/rules/credit-period',
       });
     });
 
-    describe(`when ${FIELD_IDS.CREDIT_PERIOD} has a decimal`, () => {
-      it('should return validation error', () => {
-        const mockSubmittedData = {
-          [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [FIELD_IDS.CREDIT_PERIOD]: '1.2',
-        };
-
-        const result = rule(mockSubmittedData, mockErrors);
-
-        const expected = generateValidationErrors(FIELD_IDS.CREDIT_PERIOD, ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_WHOLE_NUMBER, mockErrors);
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe(`when ${FIELD_IDS.CREDIT_PERIOD} is not a number`, () => {
-      it('should return validation error', () => {
-        const mockSubmittedData = {
-          [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [FIELD_IDS.CREDIT_PERIOD]: 'invalid',
-        };
-
-        const result = rule(mockSubmittedData, mockErrors);
-
-        const expected = generateValidationErrors(FIELD_IDS.CREDIT_PERIOD, ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].NOT_A_NUMBER, mockErrors);
-
-        expect(result).toEqual(expected);
-      });
-    });
-
     describe(`when ${FIELD_IDS.CREDIT_PERIOD} is below the minimum`, () => {
       it('should return validation error', () => {
         const mockSubmittedData = {
@@ -70,7 +40,7 @@ describe('controllers/tell-us-about-your-policy/validation/rules/credit-period',
       });
     });
 
-    describe(`when ${FIELD_IDS.CREDIT_PERIOD} is below the maximum`, () => {
+    describe(`when ${FIELD_IDS.CREDIT_PERIOD} is above the maximum`, () => {
       it('should return validation error', () => {
         const mockSubmittedData = {
           [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
