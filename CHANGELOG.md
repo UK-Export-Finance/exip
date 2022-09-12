@@ -7,6 +7,8 @@
 
 * **EMS-304:** update tell us about your policy page - credit period hint text ([4b53c9c](https://github.com/UK-Export-Finance/exip/commit/4b53c9c411a13945ab99e90b20a1436214857bd0))
 
+* **EMS-304:** change Credit period text input to a select drop down ([4b53c9c](https://github.com/UK-Export-Finance/exip/commit/5d879e8529c34f8e5cfae56f5b847963a10f6c85))
+
 ## [1.8.0](https://github.com/UK-Export-Finance/exip/compare/v1.7.4...v1.8.0) (2022-09-12)
 
 
