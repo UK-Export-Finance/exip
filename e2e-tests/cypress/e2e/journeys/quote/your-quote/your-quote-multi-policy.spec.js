@@ -8,7 +8,7 @@ import {
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 
-const { ROUTES, FIELD_IDS } = CONSTANTS;
+const { ROUTES, FIELD_IDS, FIELD_VALUES } = CONSTANTS;
 
 const {
   BUYER_COUNTRY,
@@ -120,7 +120,7 @@ context('Get a quote/your quote page (multi policy) - as an exporter, I want to 
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '1.47%';
+          const expected = '3.16%';
 
           expect(text.trim()).equal(expected);
         });
@@ -137,7 +137,7 @@ context('Get a quote/your quote page (multi policy) - as an exporter, I want to 
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£2,205.00';
+          const expected = '£4,740.00';
 
           expect(text.trim()).equal(expected);
         });
@@ -145,7 +145,7 @@ context('Get a quote/your quote page (multi policy) - as an exporter, I want to 
         row.changeLink().should('not.exist');
       });
 
-      it('renders `policy length` key, value and change link (multi policy)', () => {
+      it('renders `policy length` key, value and no change link (multi policy)', () => {
         const row = summaryList[MULTI_POLICY_LENGTH];
         const expectedKeyText = QUOTE_TITLES[POLICY_LENGTH];
 
@@ -154,18 +154,12 @@ context('Get a quote/your quote page (multi policy) - as an exporter, I want to 
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '2 months';
+          const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTI} months`;
 
           expect(text.trim()).equal(expected);
         });
 
-        row.changeLink().invoke('text').then((text) => {
-          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-          expect(text.trim()).equal(expected);
-        });
-
-        const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
-        row.changeLink().should('have.attr', 'href', expectedHref);
+        row.changeLink().should('not.exist');
       });
 
       it('renders `buyer location` key, value and change link', () => {

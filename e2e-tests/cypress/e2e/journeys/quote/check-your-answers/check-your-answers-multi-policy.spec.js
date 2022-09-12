@@ -6,10 +6,9 @@ import {
   SUMMARY_ANSWERS,
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
-import FIELD_IDS from '../../../../../constants/field-ids';
 
 const CONTENT_STRINGS = PAGES.CHECK_YOUR_ANSWERS_PAGE;
-const { ROUTES, FIELD_VALUES } = CONSTANTS;
+const { FIELD_IDS, FIELD_VALUES, ROUTES } = CONSTANTS;
 
 context('Check your answers page (multi policy) - as an exporter, I want to review the details before submitting the proposal', () => {
   const {
@@ -17,8 +16,8 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
     CREDIT_PERIOD,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
     MAX_AMOUNT_OWED,
-    MULTI_POLICY_TYPE,
     MULTI_POLICY_LENGTH,
+    MULTI_POLICY_TYPE,
     PERCENTAGE_OF_COVER,
     VALID_COMPANY_BASE,
   } = FIELD_IDS;
@@ -28,7 +27,6 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
     [CREDIT_PERIOD]: '1',
     [PERCENTAGE_OF_COVER]: '90',
     [MULTI_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-    [MULTI_POLICY_LENGTH]: '2',
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
   };
 
@@ -149,7 +147,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
-    it('renders `Policy length` key, value and change link', () => {
+    it('renders `Policy length` key and value (no change link)', () => {
       const row = list[MULTI_POLICY_LENGTH];
       const expectedKeyText = FIELDS[MULTI_POLICY_LENGTH].SUMMARY.TITLE;
 
@@ -158,18 +156,12 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[MULTI_POLICY_LENGTH]} months`;
+        const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTI} months`;
 
         expect(text.trim()).equal(expected);
       });
 
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
-
-      const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
+      row.changeLink().should('not.exist');
     });
 
     it('renders `Max amount owed` key, value with no decimal points and change link', () => {

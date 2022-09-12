@@ -122,56 +122,6 @@ context('Your quote page - change answers (policy type and length from multi to 
     });
   });
 
-  describe('change `policy length` and policy type to single', () => {
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.POLICY_TYPE_CHANGE}`, () => {
-      const row = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
-      row.changeLink().click();
-
-      const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;
-      cy.url().should('include', expectedUrl);
-    });
-
-    it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
-      cy.url().should('include', expected);
-    });
-
-    it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
-
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
-      policyTypePage[POLICY_TYPE].single.input().click();
-      policyTypePage[SINGLE_POLICY_LENGTH].input().clear().type('3');
-      policyTypePage.submitButton().click();
-
-      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
-
-      tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().type('900');
-      tellUsAboutYourPolicyPage.submitButton().click();
-    });
-
-    it('renders the new answers in the quote', () => {
-      checkYourAnswersPage.submitButton().click();
-      cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
-
-      const insuredFor = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
-
-      insuredFor.value().invoke('text').then((text) => {
-        expect(text.trim()).equal('£855.00');
-      });
-
-      const policyLength = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
-
-      policyLength.value().invoke('text').then((text) => {
-        expect(text.trim()).equal('3 months');
-      });
-    });
-  });
-
   describe('change `buyer location`', () => {
     it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
       const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
