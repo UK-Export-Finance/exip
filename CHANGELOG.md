@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/UK-Export-Finance/exip/compare/v1.8.0...v1.9.0) (2022-09-12)
+
+
+### Features
+
+* **EMS-304:** update tell us about your policy page - credit period hint text ([4b53c9c](https://github.com/UK-Export-Finance/exip/commit/4b53c9c411a13945ab99e90b20a1436214857bd0))
+
 ## [1.8.0](https://github.com/UK-Export-Finance/exip/compare/v1.7.4...v1.8.0) (2022-09-12)
 
 
