@@ -28,9 +28,7 @@ export const ERROR_MESSAGES = {
     BELOW_MINIMUM: 'Maximum amount owed must be 1 or more',
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
-    IS_EMPTY: 'Enter a credit period',
-    NOT_A_NUMBER: 'Credit period must be a number',
-    NOT_A_WHOLE_NUMBER: 'Credit period must be a whole number, like 2 - you cannot enter decimal points',
+    IS_EMPTY: 'Select credit period',
     BELOW_MINIMUM: 'Credit period must be 1 month or more',
     ABOVE_MAXIMUM: 'Enter Credit period of no more than 2 months',
   },

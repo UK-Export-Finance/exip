@@ -5,10 +5,11 @@ import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
 import generateValidationErrors from './validation';
 import getCurrencyByCode from '../../../helpers/get-currency-by-code';
 import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-cover';
+import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data';
 import isChangeRoute from '../../../helpers/is-change-route';
 import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-type';
-import { Request, Response, TellUsAboutPolicyPageVariables } from '../../../../types';
+import { Request, Response, SelectOption, TellUsAboutPolicyPageVariables } from '../../../../types';
 
 const { AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE } = FIELD_IDS;
 
@@ -103,6 +104,15 @@ const get = async (req: Request, res: Response) => {
     mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER);
   }
 
+  const creditPeriodOptions = FIELDS[FIELD_IDS.CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
+  let mappedCreditPeriod;
+
+  if (submittedData && submittedData[CREDIT_PERIOD]) {
+    mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions, String(submittedData[CREDIT_PERIOD]));
+  } else {
+    mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);
+  }
+
   const PAGE_VARIABLES = generatePageVariables(submittedData[POLICY_TYPE]);
 
   return res.render(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
@@ -112,6 +122,7 @@ const get = async (req: Request, res: Response) => {
     isMultiPolicyType: isMultiPolicyType(submittedData[POLICY_TYPE]),
     currencies: mappedCurrencies,
     percentageOfCover: mappedPercentageOfCover,
+    creditPeriod: mappedCreditPeriod,
     submittedValues: submittedData,
   });
 };
@@ -124,11 +135,12 @@ const post = async (req: Request, res: Response) => {
     ...req.body,
   });
 
-  const submittedCurrencyCode = req.body[FIELD_IDS.CURRENCY];
-
   const currencies = await api.getCurrencies();
 
+  const submittedCurrencyCode = req.body[FIELD_IDS.CURRENCY];
+
   if (validationErrors) {
+    // map currencies drop down options
     let mappedCurrencies = [];
 
     if (submittedCurrencyCode) {
@@ -137,14 +149,26 @@ const post = async (req: Request, res: Response) => {
       mappedCurrencies = mapCurrencies(currencies);
     }
 
+    // map percentage of cover drop down options
+    let mappedPercentageOfCover = [];
     const submittedPercentageOfCover = req.body[PERCENTAGE_OF_COVER];
-
-    let mappedPercentageOfCover;
 
     if (submittedPercentageOfCover) {
       mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER, submittedPercentageOfCover);
     } else {
       mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER);
+    }
+
+    // map credit period drop down options
+    let mappedCreditPeriod = [];
+    const submittedCreditPeriod = req.body[CREDIT_PERIOD];
+
+    const creditPeriodOptions = FIELDS[FIELD_IDS.CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
+
+    if (submittedCreditPeriod) {
+      mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions, submittedCreditPeriod);
+    } else {
+      mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);
     }
 
     const PAGE_VARIABLES = generatePageVariables(submittedData[POLICY_TYPE]);
@@ -157,6 +181,7 @@ const post = async (req: Request, res: Response) => {
       currencies: mappedCurrencies,
       validationErrors,
       percentageOfCover: mappedPercentageOfCover,
+      creditPeriod: mappedCreditPeriod,
       submittedValues: req.body,
     });
   }

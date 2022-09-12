@@ -37,6 +37,7 @@ const tellUsAboutYourPolicyPage = {
     hint: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-hint"]`),
     hintLink: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-hint-link"]`),
     input: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-input"]`),
+    inputOption: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-input"] option`),
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-error-message"]`),
   },
   submitButton: () => cy.get('[data-cy="submit-button"]'),

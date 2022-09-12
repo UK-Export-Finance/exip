@@ -6,6 +6,7 @@ import { Request, RequestBody, RequestSession, Response } from './express';
 import { RequiredDataState } from './required-data-state';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
 import { Quote, QuoteContent } from './quote';
+import { SelectOption } from './select-option';
 import { SubmittedData } from './submitted-data';
 import { SummaryListItem, SummaryListItemData } from './summary-list';
 import {
@@ -31,6 +32,7 @@ export {
   RequestSession,
   RequiredDataState,
   Response,
+  SelectOption,
   SubmittedData,
   SummaryListItemData,
   SummaryListItem,

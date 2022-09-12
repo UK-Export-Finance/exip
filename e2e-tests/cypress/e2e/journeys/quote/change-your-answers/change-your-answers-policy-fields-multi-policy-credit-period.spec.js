@@ -56,11 +56,16 @@ context('Change your answers (policy fields) - as an exporter, I want to change 
 
     it('has originally submitted answer', () => {
       const expectedValue = submissionData[CREDIT_PERIOD];
-      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().should('have.attr', 'value', expectedValue);
+
+      const firstOption = tellUsAboutYourPolicyPage[CREDIT_PERIOD].inputOption().eq(0);
+      firstOption.should('have.attr', 'selected', 'selected');
+
+      const secondOption = tellUsAboutYourPolicyPage[CREDIT_PERIOD].inputOption().eq(1);
+      secondOption.should('not.have.attr', 'selected');
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().clear().type('2');
+      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('2');
       tellUsAboutYourPolicyPage.submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);

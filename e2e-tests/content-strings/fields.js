@@ -62,6 +62,16 @@ const FIELDS = {
         text: 'and email it to UKEF.',
       },
     ],
+    OPTIONS: [
+      {
+        value: '1',
+        text: '1 month',
+      },
+      {
+        value: '2',
+        text: '2 months',
+      },
+    ],
     SUMMARY: {
       TITLE: 'Credit period',
     },
