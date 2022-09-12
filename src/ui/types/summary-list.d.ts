@@ -42,7 +42,7 @@ type SummaryListItemActions = {
 
 interface SummaryListItem {
   actions: SummaryListItemActions;
-  classes: string;
+  classes?: string;
   key: SummaryListItemKey;
   value: SummaryListItemValue;
 }

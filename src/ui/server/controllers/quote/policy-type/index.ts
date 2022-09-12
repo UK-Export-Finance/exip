@@ -1,8 +1,11 @@
 import { BUTTONS, FIELDS, FOOTER, PAGES, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import generateValidationErrors from './validation';
+import { isSinglePolicyType } from '../../../helpers/policy-type';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data';
 import { Request, Response } from '../../../../types';
+
+const { MULTI_POLICY_TYPE, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH, SINGLE_POLICY_TYPE } = FIELD_IDS;
 
 const PAGE_VARIABLES = {
   CONTENT_STRINGS: {
@@ -12,21 +15,25 @@ const PAGE_VARIABLES = {
     ...PAGES.POLICY_TYPE_PAGE,
   },
   FIELDS: {
+    MULTI_POLICY_TYPE: {
+      ID: MULTI_POLICY_TYPE,
+      ...FIELDS[POLICY_TYPE],
+    },
+    POLICY_LENGTH: {
+      ID: POLICY_LENGTH,
+      ...FIELDS[POLICY_LENGTH],
+    },
     POLICY_TYPE: {
-      ID: FIELD_IDS.POLICY_TYPE,
-      ...FIELDS[FIELD_IDS.POLICY_TYPE],
+      ID: POLICY_TYPE,
+      ...FIELDS[POLICY_TYPE],
     },
     SINGLE_POLICY_TYPE: {
-      ID: FIELD_IDS.SINGLE_POLICY_TYPE,
-      ...FIELDS[FIELD_IDS.POLICY_TYPE],
+      ID: SINGLE_POLICY_TYPE,
+      ...FIELDS[POLICY_TYPE],
     },
     SINGLE_POLICY_LENGTH: {
-      ID: FIELD_IDS.SINGLE_POLICY_LENGTH,
-      ...FIELDS[FIELD_IDS.SINGLE_POLICY_LENGTH],
-    },
-    MULTI_POLICY_LENGTH: {
-      ID: FIELD_IDS.MULTI_POLICY_LENGTH,
-      ...FIELDS[FIELD_IDS.MULTI_POLICY_LENGTH],
+      ID: SINGLE_POLICY_LENGTH,
+      ...FIELDS[SINGLE_POLICY_LENGTH],
     },
   },
 };
@@ -50,7 +57,16 @@ const post = (req: Request, res: Response) => {
     });
   }
 
-  req.session.submittedData = updateSubmittedData(req.body, req.session.submittedData);
+  let populatedData = req.body;
+
+  if (isSinglePolicyType(req.body[POLICY_TYPE])) {
+    populatedData = {
+      [POLICY_TYPE]: req.body[POLICY_TYPE],
+      [POLICY_LENGTH]: req.body[SINGLE_POLICY_LENGTH],
+    };
+  }
+
+  req.session.submittedData = updateSubmittedData(populatedData, req.session.submittedData);
 
   return res.redirect(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
 };

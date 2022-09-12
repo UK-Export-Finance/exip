@@ -34,7 +34,7 @@ context('Tell us about the multi policy you need - form validation', () => {
       tellUsAboutYourPolicyPage.submitButton().click();
     });
 
-    it.only('should render validation errors for all required fields', () => {
+    it('should render validation errors for all required fields', () => {
       partials.errorSummaryListItems().should('exist');
 
       const TOTAL_REQUIRED_FIELDS = 4;

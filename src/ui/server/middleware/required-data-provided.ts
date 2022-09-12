@@ -72,7 +72,11 @@ export const allRequiredData = (submittedData: SubmittedData): RequiredDataState
 
   requiredDataState[POLICY_TYPE] = [...requiredDataState[HAS_MINIMUM_UK_GOODS_OR_SERVICES], FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
-  requiredDataState[TELL_US_ABOUT_YOUR_POLICY] = [...requiredDataState[POLICY_TYPE], FIELD_IDS.POLICY_TYPE, FIELD_IDS.POLICY_LENGTH];
+  requiredDataState[TELL_US_ABOUT_YOUR_POLICY] = [...requiredDataState[POLICY_TYPE], FIELD_IDS.POLICY_TYPE];
+
+  if (isSinglePolicyType(submittedData[FIELD_IDS.POLICY_TYPE])) {
+    requiredDataState[TELL_US_ABOUT_YOUR_POLICY] = [...requiredDataState[TELL_US_ABOUT_YOUR_POLICY], FIELD_IDS.POLICY_LENGTH];
+  }
 
   requiredDataState[CHECK_YOUR_ANSWERS] = [...requiredDataState[TELL_US_ABOUT_YOUR_POLICY], FIELD_IDS.CURRENCY, FIELD_IDS.PERCENTAGE_OF_COVER];
 

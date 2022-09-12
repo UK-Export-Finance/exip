@@ -21,6 +21,8 @@ const {
   FIELD_IDS,
 } = CONSTANTS;
 
+const { POLICY_TYPE } = FIELD_IDS;
+
 context('Policy type page - as an exporter, I want to get UKEF export insurance quote based on the export policy - provide policy type', () => {
   describe('rendering', () => {
     before(() => {
@@ -76,7 +78,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
     });
 
     it('renders `policy type` radio inputs with labels and hints', () => {
-      const fieldId = FIELD_IDS.POLICY_TYPE;
+      const fieldId = POLICY_TYPE;
       const field = policyTypePage[fieldId];
 
       field.single.input().should('exist');
@@ -101,14 +103,11 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
     it('should not render policy length inputs by default', () => {
       const singlePolicyLength = policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH];
       singlePolicyLength.input().should('not.be.visible');
-
-      const multiPolicyLength = policyTypePage[FIELD_IDS.MULTI_POLICY_LENGTH];
-      multiPolicyLength.input().should('not.be.visible');
     });
 
     describe('when clicking `single` policy type', () => {
       it('should reveal policy length input with label and hint', () => {
-        const singlePolicyType = policyTypePage[FIELD_IDS.POLICY_TYPE].single;
+        const singlePolicyType = policyTypePage[POLICY_TYPE].single;
         singlePolicyType.label().click();
 
         const singlePolicyLengthId = FIELD_IDS.SINGLE_POLICY_LENGTH;
@@ -134,28 +133,23 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
     });
 
     describe('when clicking `multi` policy type', () => {
-      it('should reveal policy length input with label and hint', () => {
-        const multiPolicyType = policyTypePage[FIELD_IDS.POLICY_TYPE].multi;
+      it('should reveal inset text and link', () => {
+        const multiPolicyType = policyTypePage[POLICY_TYPE].multi;
         multiPolicyType.label().click();
 
-        const multiPolicyLengthId = FIELD_IDS.MULTI_POLICY_LENGTH;
-        const multiPolicyLength = policyTypePage[multiPolicyLengthId];
 
-        multiPolicyLength.label().should('be.visible');
-        multiPolicyLength.hint().should('be.visible');
-        multiPolicyLength.input().should('be.visible');
+        const field = FIELDS[POLICY_TYPE];
 
-        multiPolicyLength.label().invoke('text').then((text) => {
-          expect(text.trim()).equal(FIELDS[multiPolicyLengthId].LABEL);
-        });
-        multiPolicyLength.hint().invoke('text').then((text) => {
-          expect(text.trim()).includes(FIELDS[multiPolicyLengthId].HINT[0][0].text);
-          expect(text.trim()).includes(FIELDS[multiPolicyLengthId].HINT[0][1].text);
-          expect(text.trim()).includes(FIELDS[multiPolicyLengthId].HINT[0][2].text);
+        const insetText = field.OPTIONS.MULTI.INSET[0];
+
+        multiPolicyType.inset.text().invoke('text').then((text) => {
+          expect(text.trim()).includes(insetText[0].text);
+          expect(text.trim()).includes(insetText[1].text);
+          expect(text.trim()).includes(insetText[2].text);
         });
 
         const expectedHref = LINKS.EXTERNAL.NBI_FORM;
-        multiPolicyLength.hintLink().should('have.attr', 'href', expectedHref);
+        multiPolicyType.inset.link().should('have.attr', 'href', expectedHref);
       });
     });
 
@@ -171,7 +165,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
 
   describe('when form is valid', () => {
     it(`should redirect to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY}`, () => {
-      policyTypePage[FIELD_IDS.POLICY_TYPE].single.input().click();
+      policyTypePage[POLICY_TYPE].single.input().click();
       policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().type('8');
 
       policyTypePage.submitButton().click();

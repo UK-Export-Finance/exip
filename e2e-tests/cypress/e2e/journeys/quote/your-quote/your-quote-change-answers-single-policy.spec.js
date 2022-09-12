@@ -11,6 +11,7 @@ import CONSTANTS from '../../../../../constants';
 const {
   ROUTES,
   FIELD_IDS,
+  FIELD_VALUES,
 } = CONSTANTS;
 
 const {
@@ -123,7 +124,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
     });
   });
 
-  describe('change `policy length` and policy type to multi', () => {
+  describe('change policy type to multi', () => {
     it(`clicking 'change' redirects to ${ROUTES.QUOTE.POLICY_TYPE_CHANGE}`, () => {
       const row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
 
@@ -147,7 +148,6 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
       policyTypePage[POLICY_TYPE].multi.input().click();
-      policyTypePage[MULTI_POLICY_LENGTH].input().type('1');
       policyTypePage.submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
@@ -171,7 +171,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
       const policyLength = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
 
       policyLength.value().invoke('text').then((text) => {
-        expect(text.trim()).equal('1 month');
+        expect(text.trim()).equal(`${FIELD_VALUES.POLICY_LENGTH.MULTI} months`);
       });
     });
   });

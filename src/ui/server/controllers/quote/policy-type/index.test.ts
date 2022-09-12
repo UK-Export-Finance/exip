@@ -29,6 +29,14 @@ describe('controllers/policy-type', () => {
           ...PAGES.POLICY_TYPE_PAGE,
         },
         FIELDS: {
+          MULTI_POLICY_TYPE: {
+            ID: FIELD_IDS.MULTI_POLICY_TYPE,
+            ...FIELDS[FIELD_IDS.POLICY_TYPE],
+          },
+          POLICY_LENGTH: {
+            ID: FIELD_IDS.POLICY_LENGTH,
+            ...FIELDS[FIELD_IDS.POLICY_LENGTH],
+          },
           POLICY_TYPE: {
             ID: FIELD_IDS.POLICY_TYPE,
             ...FIELDS[FIELD_IDS.POLICY_TYPE],
@@ -40,10 +48,6 @@ describe('controllers/policy-type', () => {
           SINGLE_POLICY_LENGTH: {
             ID: FIELD_IDS.SINGLE_POLICY_LENGTH,
             ...FIELDS[FIELD_IDS.SINGLE_POLICY_LENGTH],
-          },
-          MULTI_POLICY_LENGTH: {
-            ID: FIELD_IDS.MULTI_POLICY_LENGTH,
-            ...FIELDS[FIELD_IDS.MULTI_POLICY_LENGTH],
           },
         },
       };

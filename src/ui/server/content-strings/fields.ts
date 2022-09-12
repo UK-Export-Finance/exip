@@ -79,7 +79,21 @@ export const FIELDS = {
         ID: FIELD_IDS.MULTI_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTI,
         TEXT: 'Multiple contract policy (also known as a revolving policy)',
-        HINT: "This covers multiple export contracts with the same buyer. You do not need to pay before the policy starts. You'll pay each time you declare a new export sale.",
+        HINT: "This covers multiple export contracts with the same buyer for a policy period of 12 months. You do not need to pay before the policy starts. You'll pay each time you declare a new export sale.",
+        INSET: [
+          [
+            {
+              text: 'If you need a policy of over 12 months',
+            },
+            {
+              text: 'fill in this form',
+              href: LINKS.EXTERNAL.NBI_FORM,
+            },
+            {
+              text: ' and email it to UKEF.',
+            },
+          ],
+        ],
       },
     },
     SUMMARY: {
@@ -117,21 +131,6 @@ export const FIELDS = {
     },
   },
   [FIELD_IDS.MULTI_POLICY_LENGTH]: {
-    LABEL: 'How long do you need the policy for?',
-    HINT: [
-      [
-        {
-          text: 'You can get an online quote for up to 12 months. For over 12 months',
-        },
-        {
-          text: 'fill in this form',
-          href: LINKS.EXTERNAL.NBI_FORM,
-        },
-        {
-          text: ' and email it to UKEF.',
-        },
-      ],
-    ],
     SUMMARY: {
       TITLE: 'Policy length',
     },

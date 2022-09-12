@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../constants';
 import { isSinglePolicyType, isMultiPolicyType } from './policy-type';
 import { sanitiseData } from './sanitise-data';
 import { RequestBody, SubmittedData } from '../../types';
@@ -17,15 +17,19 @@ const mapSubmittedData = (submittedData: SubmittedData) => {
   const mapped = submittedData;
 
   if (isSinglePolicyType(submittedData[POLICY_TYPE])) {
-    mapped[POLICY_LENGTH] = submittedData[SINGLE_POLICY_LENGTH];
+    mapped[POLICY_LENGTH] = submittedData[POLICY_LENGTH];
+
+    delete mapped[SINGLE_POLICY_LENGTH];
     delete mapped[MULTI_POLICY_LENGTH];
     delete mapped[CREDIT_PERIOD];
     delete mapped[MAX_AMOUNT_OWED];
   }
 
   if (isMultiPolicyType(submittedData[POLICY_TYPE])) {
-    mapped[POLICY_LENGTH] = submittedData[MULTI_POLICY_LENGTH];
+    mapped[POLICY_LENGTH] = FIELD_VALUES.POLICY_LENGTH.MULTI;
+
     delete mapped[SINGLE_POLICY_LENGTH];
+    delete mapped[MULTI_POLICY_LENGTH];
     delete mapped[CONTRACT_VALUE];
   }
 

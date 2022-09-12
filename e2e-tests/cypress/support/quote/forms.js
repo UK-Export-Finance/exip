@@ -13,7 +13,6 @@ const {
   CURRENCY,
   CREDIT_PERIOD,
   MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -51,7 +50,6 @@ export const completeAndSubmitPolicyTypeSingleForm = () => {
 
 export const completeAndSubmitPolicyTypeMultiForm = () => {
   policyTypePage[POLICY_TYPE].multi.input().click();
-  policyTypePage[MULTI_POLICY_LENGTH].input().type('2');
 
   policyTypePage.submitButton().click();
 };

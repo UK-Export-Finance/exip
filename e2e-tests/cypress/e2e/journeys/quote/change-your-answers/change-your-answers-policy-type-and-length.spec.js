@@ -19,8 +19,8 @@ const {
   MULTI_POLICY_TYPE,
   POLICY_LENGTH,
   POLICY_TYPE,
-  SINGLE_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
+  SINGLE_POLICY_TYPE,
 } = FIELD_IDS;
 
 const submissionData = {
@@ -72,7 +72,6 @@ context('Change your answers (policy type and length fields) - as an exporter, I
 
   it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
     policyTypePage[POLICY_TYPE].multi.input().click();
-    policyTypePage[MULTI_POLICY_LENGTH].input().type('8');
     policyTypePage.submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
@@ -103,13 +102,13 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];
 
     row.value().invoke('text').then((text) => {
-      const expected = '8 months';
+      const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTI} months`;
 
       expect(text.trim()).equal(expected);
     });
   });
 
-  describe('change `Policy type` and `Policy length` for a second time (multi 8 months to single 5 months)', () => {
+  describe('change `Policy type` and `Policy length` for a second time (multi to single 5 months)', () => {
     before(() => {
       row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_TYPE];
 
@@ -133,10 +132,6 @@ context('Change your answers (policy type and length fields) - as an exporter, I
 
     it('has previously submitted `policy type` (multi)', () => {
       policyTypePage[POLICY_TYPE].multi.input().should('be.checked');
-    });
-
-    it('has previously submitted `policy length` (8 months)', () => {
-      policyTypePage[MULTI_POLICY_LENGTH].input().should('have.attr', 'value', '8');
     });
 
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
@@ -177,7 +172,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     });
   });
 
-  describe('change `Policy type` and `Policy length` for a third time (single 5 months to multi 1 month)', () => {
+  describe('change `Policy type` and `Policy length` for a third time (single 5 months to multi)', () => {
     before(() => {
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
 
@@ -202,7 +197,6 @@ context('Change your answers (policy type and length fields) - as an exporter, I
 
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
       policyTypePage[POLICY_TYPE].multi.input().click();
-      policyTypePage[MULTI_POLICY_LENGTH].input().clear().type('1');
       policyTypePage.submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
@@ -213,21 +207,21 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     });
   });
 
-  describe('change only `Policy length` (single policy type, 1 month to 7 months)', () => {
+  describe('change `Policy type` and `Policy length` for a fourth time (multi to single 7 months)', () => {
     before(() => {
       tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('100');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().type('2');
       tellUsAboutYourPolicyPage.submitButton().click();
 
-      row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];
+      row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_TYPE];
       row.changeLink().click();
 
       const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;
       cy.url().should('include', expectedUrl);
     });
 
-    it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
+    it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+      const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
       cy.url().should('include', expected);
     });
 
@@ -254,62 +248,6 @@ context('Change your answers (policy type and length fields) - as an exporter, I
 
       row.value().invoke('text').then((text) => {
         const expected = '7 months';
-
-        expect(text.trim()).equal(expected);
-      });
-    });
-  });
-
-  describe('change only `Policy length` (multi policy type, 3 months to 1 month)', () => {
-    before(() => {
-      // change back to single policy
-      row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
-      row.changeLink().click();
-
-      policyTypePage[POLICY_TYPE].multi.input().click();
-      policyTypePage[MULTI_POLICY_LENGTH].input().type('3');
-      policyTypePage.submitButton().click();
-      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
-
-      // max amount owed and credit period fields are now required because it's a multi policy
-      tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('100');
-      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().clear().type('1');
-      tellUsAboutYourPolicyPage.submitButton().click();
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
-
-      // click `change` (policy length)
-      row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];
-      row.changeLink().click();
-
-      cy.url().should('include', `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}`);
-    });
-
-    it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`;
-      cy.url().should('include', expected);
-    });
-
-    it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
-
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
-      policyTypePage[MULTI_POLICY_LENGTH].input().clear().type('1');
-      policyTypePage.submitButton().click();
-
-      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
-    });
-
-    it('renders the new answer in `Check your answers` page (multi policy, 1 months)', () => {
-      tellUsAboutYourPolicyPage.submitButton().click();
-
-      row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];
-
-      row.value().invoke('text').then((text) => {
-        const expected = '1 month';
 
         expect(text.trim()).equal(expected);
       });

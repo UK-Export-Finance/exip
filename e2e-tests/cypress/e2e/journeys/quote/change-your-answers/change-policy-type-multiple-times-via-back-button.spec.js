@@ -19,7 +19,6 @@ const {
 
 const {
   CREDIT_PERIOD,
-  MULTI_POLICY_LENGTH,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
@@ -49,7 +48,6 @@ context('Change your answers (policy type) - multiple times via back button - as
 
   it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
     policyTypePage[POLICY_TYPE].multi.input().click();
-    policyTypePage[MULTI_POLICY_LENGTH].input().type('2');
     policyTypePage.submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
@@ -69,7 +67,7 @@ context('Change your answers (policy type) - multiple times via back button - as
       cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
 
       policyTypePage[POLICY_TYPE].single.input().click();
-      policyTypePage[SINGLE_POLICY_LENGTH].input().type('2');
+      policyTypePage[SINGLE_POLICY_LENGTH].input().clear().type('2');
       policyTypePage.submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
@@ -90,7 +88,6 @@ context('Change your answers (policy type) - multiple times via back button - as
       cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
 
       policyTypePage[POLICY_TYPE].multi.input().click();
-      policyTypePage[MULTI_POLICY_LENGTH].input().type('2');
       policyTypePage.submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
