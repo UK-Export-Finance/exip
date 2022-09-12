@@ -1,7 +1,6 @@
 import {
   buyerCountryPage,
   checkYourAnswersPage,
-  policyTypePage,
   tellUsAboutYourPolicyPage,
   yourQuotePage,
 } from '../../../pages/quote';
