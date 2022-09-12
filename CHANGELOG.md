@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/UK-Export-Finance/exip/compare/v1.9.0...v1.10.0) (2022-09-12)
+
+
+### Features
+
+* **EMS-302:** update pricing grid. Do not use policy length in multi policy calculation ([df26d55](https://github.com/UK-Export-Finance/exip/commit/df26d553749ab5a9876f1eeb7d49897836fc2a26))
+
 ## [1.9.0](https://github.com/UK-Export-Finance/exip/compare/v1.8.0...v1.9.0) (2022-09-12)
 
 
