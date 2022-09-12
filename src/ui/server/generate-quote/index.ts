@@ -50,9 +50,14 @@ const getInsuredFor = (submittedData: SubmittedData): number => {
  * getTotalMonths
  * Business requirement:
  * The premium rate (obtained via the grid) should select a month that is the total of:
- * - policy length
- * - and additional months for business buffer
- * If the policy type is multi, credit period is also included.
+ * - If policy type is single:
+ *   - policy length
+ *   - an additional month for business buffer
+ * - If the policy type is multi:
+ *   - credit period
+ *   - an additional month for business buffer
+ *   - Note: the policy length is not used for a multi policy
+ *     - the multi policy length default is 12 months. The grid only goes up to 3 months.
  * @param {String} Policy type
  * @param {Number} Policy length
  * @param {Number} Credit period
@@ -68,7 +73,7 @@ const getTotalMonths = (policyType: string, policyLength: number, creditPeriod =
   }
 
   if (isMultiPolicyType(policyType)) {
-    const totalMonths = policyLength + creditPeriod + BUSINESS_BUFFER_MONTHS;
+    const totalMonths = creditPeriod + BUSINESS_BUFFER_MONTHS;
 
     return totalMonths;
   }

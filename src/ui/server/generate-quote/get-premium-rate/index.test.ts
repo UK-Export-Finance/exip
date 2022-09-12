@@ -3,13 +3,13 @@ import { API, FIELD_VALUES } from '../../constants';
 import PRICING_GRID from '../pricing-grid.json';
 import { PricingGridMonth, PricingGridRate } from '../../../types';
 
-const expectedPremiumRate = (policyType: string, riskCategory: string, policyLengthInMonths: number, insuredFor: number) => {
+const expectedPremiumRate = (policyType: string, riskCategory: string, totalMonths: number, insuredFor: number) => {
   const mappedPolicyType = PRICING_GRID_MAP.POLICY_TYPE[policyType];
   const mappedRiskCategory = PRICING_GRID_MAP.RISK_CATEGORY[riskCategory];
 
   const risk = PRICING_GRID[mappedPolicyType][mappedRiskCategory];
 
-  const expectedMonth = risk.find((month: PricingGridMonth) => month.months === policyLengthInMonths);
+  const expectedMonth = risk.find((month: PricingGridMonth) => month.months === totalMonths);
 
   const expectedRateObj = expectedMonth.rates.find((rate: PricingGridRate) => rate.insuredFor === insuredFor);
 
