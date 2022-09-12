@@ -67,7 +67,7 @@ context('Change your answers (policy type) - multiple times via back button - as
       cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
 
       policyTypePage[POLICY_TYPE].single.input().click();
-      policyTypePage[SINGLE_POLICY_LENGTH].input().type('2');
+      policyTypePage[SINGLE_POLICY_LENGTH].input().clear().type('2');
       policyTypePage.submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
