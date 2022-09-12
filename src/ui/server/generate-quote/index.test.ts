@@ -102,12 +102,12 @@ describe('server/generate-quote/index', () => {
     describe('when policy type is multi', () => {
       it('should return the total of credit period + policy length + business buffer months', () => {
         const mockPolicyType = FIELD_VALUES.POLICY_TYPE.MULTI;
-        const mockPolicyLength = 6;
+        const mockPolicyLength = FIELD_VALUES.POLICY_LENGTH.MULTI;
         const mockCreditPeriod = 2;
 
         const result = getTotalMonths(mockPolicyType, mockPolicyLength, mockCreditPeriod);
 
-        const expected = mockPolicyLength + mockCreditPeriod + 1;
+        const expected = mockCreditPeriod + 1;
 
         expect(result).toEqual(expected);
       });
