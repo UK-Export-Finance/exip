@@ -200,14 +200,15 @@
             }
           }) }}
 
+        {% set creditPeriodHintHtml %}
+          <p data-cy="{{ FIELDS.CREDIT_PERIOD.ID }}-hint">{{ FIELDS.CREDIT_PERIOD.HINT[0].text }} <a class="govuk-link" href="{{ FIELDS.CREDIT_PERIOD.HINT[1].href }}" data-cy="{{ FIELDS.CREDIT_PERIOD.ID }}-hint-link">{{ FIELDS.CREDIT_PERIOD.HINT[1].text }}</a> {{ FIELDS.CREDIT_PERIOD.HINT[2].text }}</p>
+        {% endset %}
+
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds-from-desktop">
               {{ govukHint({
                 id: FIELDS.CREDIT_PERIOD.ID + "-hint",
-                text: FIELDS.CREDIT_PERIOD.HINT,
-                attributes: {
-                  "data-cy": FIELDS.CREDIT_PERIOD.ID + "-hint"
-                }
+                html: creditPeriodHintHtml
               }) }}
             </div>
           </div>

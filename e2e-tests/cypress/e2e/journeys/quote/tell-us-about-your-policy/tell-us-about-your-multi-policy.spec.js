@@ -179,9 +179,18 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       });
 
       field.hint().should('exist');
+
+      const { HINT } = FIELDS[fieldId];
+
       field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].HINT);
+        const expectedHintText = `${HINT[0].text} ${HINT[1].text} ${HINT[2].text}`;
+
+        expect(text.trim()).equal(expectedHintText);
       });
+
+      const expectedHintHref = HINT[1].href;
+
+      field.hintLink().should('have.attr', 'href', expectedHintHref);
 
       field.input().should('exist');
     });
