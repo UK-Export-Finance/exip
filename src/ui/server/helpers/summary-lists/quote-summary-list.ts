@@ -124,8 +124,6 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
         value: {
           text: quote[MULTI_POLICY_LENGTH].text,
         },
-        renderChangeLink: true,
-        href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
       },
     ];
   }

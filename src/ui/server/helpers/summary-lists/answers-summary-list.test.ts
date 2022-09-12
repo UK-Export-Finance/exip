@@ -13,6 +13,7 @@ const {
   MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
+  POLICY_LENGTH,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
@@ -34,6 +35,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
           {
             id: BUYER_COUNTRY,
             ...FIELDS[BUYER_COUNTRY],
+            renderChangeLink: true,
             href: `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`,
             value: {
               text: mockAnswersContent[BUYER_COUNTRY].text,
@@ -42,6 +44,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
           {
             id: VALID_COMPANY_BASE,
             ...FIELDS[VALID_COMPANY_BASE],
+            renderChangeLink: true,
             href: `${ROUTES.QUOTE.COMPANY_BASED_CHANGE}#heading`,
             value: {
               text: mockAnswersContent[VALID_COMPANY_BASE].text,
@@ -50,6 +53,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
           {
             id: HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             ...FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
+            renderChangeLink: true,
             href: `${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`,
             value: {
               text: mockAnswersContent[HAS_MINIMUM_UK_GOODS_OR_SERVICES].text,
@@ -78,6 +82,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: SINGLE_POLICY_TYPE,
           ...FIELDS[SINGLE_POLICY_TYPE],
+          renderChangeLink: true,
           href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
           value: {
             text: mockAnswersContent[SINGLE_POLICY_TYPE].text,
@@ -102,6 +107,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: SINGLE_POLICY_LENGTH,
           ...FIELDS[SINGLE_POLICY_LENGTH],
+          renderChangeLink: true,
           href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
           value: {
             text: mockAnswersContent[SINGLE_POLICY_LENGTH].text,
@@ -126,6 +132,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: CONTRACT_VALUE,
           ...FIELDS[CONTRACT_VALUE],
+          renderChangeLink: true,
           href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
           value: {
             text: mockAnswersContent[CONTRACT_VALUE].text,
@@ -150,6 +157,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: PERCENTAGE_OF_COVER,
           ...FIELDS[PERCENTAGE_OF_COVER],
+          renderChangeLink: true,
           href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
           value: {
             text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
@@ -188,6 +196,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: MULTI_POLICY_TYPE,
           ...FIELDS[MULTI_POLICY_TYPE],
+          renderChangeLink: true,
           href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
           value: {
             text: mockAnswersContent[MULTI_POLICY_TYPE].text,
@@ -205,7 +214,6 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: MULTI_POLICY_LENGTH,
           ...FIELDS[MULTI_POLICY_LENGTH],
-          href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
           value: {
             text: mockAnswersContent[MULTI_POLICY_LENGTH].text,
           },
@@ -222,6 +230,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: MAX_AMOUNT_OWED,
           ...FIELDS[MAX_AMOUNT_OWED],
+          renderChangeLink: true,
           href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
           value: {
             text: mockAnswersContent[MAX_AMOUNT_OWED].text,
@@ -239,6 +248,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: PERCENTAGE_OF_COVER,
           ...FIELDS[PERCENTAGE_OF_COVER],
+          renderChangeLink: true,
           href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
           value: {
             text: mockAnswersContent[PERCENTAGE_OF_COVER].text,
@@ -256,6 +266,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const expected = {
           id: CREDIT_PERIOD,
           ...FIELDS[CREDIT_PERIOD],
+          renderChangeLink: true,
           href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`,
           value: {
             text: mockAnswersContent[CREDIT_PERIOD].text,
@@ -281,13 +292,36 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
   });
 
   describe('generateSummaryListRows', () => {
+    const expectedObjBase = (field: SummaryListItemData) => ({
+      key: {
+        text: getKeyText(field.id),
+        classes: `${field.id}-key`,
+      },
+      value: {
+        text: field.value.text,
+        classes: `${field.id}-value`,
+      },
+      actions: {
+        items: [],
+      },
+    });
+
     it('returns an array of objects mapped to submitted data', () => {
-      const mockAnswersContent = mapAnswersToContent(mockSession.submittedData);
+      const mockMultiPolicySubmittedData = {
+        ...mockSession.submittedData,
+        [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+        [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+        [MAX_AMOUNT_OWED]: 1234,
+      };
+
+      const mockAnswersContent = mapAnswersToContent(mockMultiPolicySubmittedData);
+
       const fieldGroups = generateFieldGroups(mockAnswersContent);
 
-      const result = generateSummaryListRows(fieldGroups.EXPORT_DETAILS);
+      const result = generateSummaryListRows(fieldGroups.POLICY_DETAILS);
 
       const expectedObj = (field: SummaryListItemData) => ({
+        ...expectedObjBase(field),
         key: {
           text: getKeyText(field.id),
           classes: `${field.id}-key`,
@@ -296,24 +330,43 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
           text: field.value.text,
           classes: `${field.id}-value`,
         },
-        actions: {
-          items: [
-            {
-              href: field.href,
-              text: LINKS.CHANGE,
-              visuallyHiddenText: getKeyText(field.id),
-              attributes: {
-                'data-cy': `${field.id}-change-link`,
-              },
-            },
-          ],
-        },
       });
 
       expect(result).toBeInstanceOf(Array);
 
-      const expected = expectedObj(fieldGroups.EXPORT_DETAILS[0]);
-      expect(result[0]).toEqual(expected);
+      const fieldWithNoChangeLink = fieldGroups.POLICY_DETAILS[1];
+
+      const expected = expectedObj(fieldWithNoChangeLink);
+      expect(result[1]).toEqual(expected);
+    });
+
+    describe('when a field has renderChangeLink', () => {
+      it('should add a link to action.itmes', () => {
+        const mockField = {
+          id: 'mock',
+          title: 'Test',
+          value: {
+            text: 'mock',
+          },
+          renderChangeLink: true,
+          href: '/page#field-label',
+        };
+
+        const result = generateSummaryListRows([mockField]);
+
+        const expected = [
+          {
+            href: mockField.href,
+            text: LINKS.CHANGE,
+            visuallyHiddenText: getKeyText(mockField.id),
+            attributes: {
+              'data-cy': `${mockField.id}-change-link`,
+            },
+          },
+        ];
+
+        expect(result[0].actions.items).toEqual(expected);
+      });
     });
   });
 

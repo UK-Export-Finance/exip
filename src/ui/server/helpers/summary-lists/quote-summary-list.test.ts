@@ -1,7 +1,7 @@
 import { generateFields, generateSummaryListRows, quoteSummaryList } from './quote-summary-list';
 import mapQuoteToContent from '../data-content-mappings/map-quote-to-content';
 import { LINKS, QUOTE_TITLES } from '../../content-strings';
-import { FIELD_IDS, ROUTES } from '../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../constants';
 import { mockQuote } from '../../test-mocks';
 import { SummaryListItemData } from '../../../types';
 
@@ -145,7 +145,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const mockQuoteContent = {
           ...mapQuoteToContent(mockQuote),
           [MULTI_POLICY_LENGTH]: {
-            text: 1,
+            text: FIELD_VALUES.POLICY_LENGTH.MULTI,
           },
           [INSURED_FOR]: {
             text: '£123',
@@ -176,7 +176,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const mockQuoteContent = {
           ...mapQuoteToContent(mockQuote),
           [MULTI_POLICY_LENGTH]: {
-            text: 1,
+            text: FIELD_VALUES.POLICY_LENGTH.MULTI,
           },
           [INSURED_FOR]: {
             text: '£123',
@@ -207,7 +207,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const mockQuoteContent = {
           ...mapQuoteToContent(mockQuote),
           [MULTI_POLICY_LENGTH]: {
-            text: 1,
+            text: FIELD_VALUES.POLICY_LENGTH.MULTI,
           },
           [MAX_AMOUNT_OWED]: {
             text: '£567',
@@ -224,8 +224,6 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
           value: {
             text: mockQuoteContent[MULTI_POLICY_LENGTH].text,
           },
-          renderChangeLink: true,
-          href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${MULTI_POLICY_LENGTH}-label`,
         };
 
         expect(expectedField).toEqual(expected);
