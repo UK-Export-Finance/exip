@@ -1,0 +1,34 @@
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+{% macro render(params) %}
+
+  {% set insetTextHtml %}
+    <ul class="govuk-list">
+      {% for child in params.content %}
+        <li>
+
+          {% for grandChild in child.children %}
+
+            {% if grandChild.type === 'link' %}
+              <a class="govuk-link" href={{ grandChild.href }}>
+                {% for child in grandChild.children %}
+                  {{ child.text }}
+                {% endfor %}
+              </a>
+
+              {% else %}
+              {{ grandChild.text }}
+            {% endif %}
+
+          {% endfor %}
+
+        </li>
+      {% endfor %}
+    </ul>
+  {% endset %}
+
+  {{ govukInsetText({
+    html: insetTextHtml
+  }) }}
+
+{% endmacro %}
