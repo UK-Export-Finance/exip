@@ -1,7 +1,7 @@
 import { list } from '@keystone-6/core';
 import { text, password } from '@keystone-6/core/fields';
 import { document } from '@keystone-6/fields-document';
-import { Lists } from '.keystone/types'; // eslint-disable-line import/no-extraneous-dependencies
+import { Lists } from '.keystone/types'; // eslint-disable-line
 
 export const lists: Lists = {
   User: list({
