@@ -1,4 +1,5 @@
 import { AnswersContent, AnswersFieldGroups } from './answers';
+import { ApolloResponse } from './apollo';
 import { CisCountry } from './cis-country';
 import { Country } from './country';
 import { Currency } from './currency';
@@ -19,6 +20,7 @@ import { ValidationErrors } from './validation-errors';
 export {
   AnswersContent,
   AnswersFieldGroups,
+  ApolloResponse,
   CisCountry,
   Country,
   Currency,
