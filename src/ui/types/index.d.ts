@@ -11,11 +11,20 @@ import { SelectOption } from './select-option';
 import { SubmittedData } from './submitted-data';
 import { SummaryListItem, SummaryListItemData } from './summary-list';
 import {
+  TaskListData,
+  TaskListDataTask,
+  TaskListDataGroupTasksInitialChecks,
+  TaskListDataGroupTasksPrepareApplication,
+  TaskListGroup,
+  TaskListTask,
+} from './task-list';
+import {
   TellUsAboutPolicyPageVariablesContentStrings,
   TellUsAboutPolicyPageVariablesFields,
   TellUsAboutPolicyPageVariables,
 } from './pages/tell-us-about-your-policy';
 import { ValidationErrors } from './validation-errors';
+
 
 export {
   AnswersContent,
@@ -38,6 +47,12 @@ export {
   SubmittedData,
   SummaryListItemData,
   SummaryListItem,
+  TaskListData,
+  TaskListDataTask,
+  TaskListDataGroupTasksInitialChecks,
+  TaskListDataGroupTasksPrepareApplication,
+  TaskListGroup,
+  TaskListTask,
   TellUsAboutPolicyPageVariablesContentStrings,
   TellUsAboutPolicyPageVariablesFields,
   TellUsAboutPolicyPageVariables,

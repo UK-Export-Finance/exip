@@ -8,5 +8,6 @@ export * from './pages';
 export * from './product';
 export * from './quote-titles';
 export * from './summary-answers';
+export * from './tasks';
 
 export const ORGANISATION = 'UK Export Finance';
