@@ -1,10 +1,27 @@
 # Task list generation
 
-:warning: WIP
+This function consumes groups of tasks and submitted answers and returns a data structure ready for a [GOV design task list](https://design-system.service.gov.uk/patterns/task-list-pages/) UI component.
 
-This function can consume an object of task groups, add status tags and return a simplified data structure ready to consume in a custom nunjuck component that renders a [GOV design task list](https://design-system.service.gov.uk/patterns/task-list-pages/).
+## How to use
 
-Each task has the following structure:
+1) Create an object of groups and tasks for your app.
+2) Call the function with your groups and submitted answers. e.g `generateTaskList(groupsAndTasks, submittedAnswers);`
+
+The function will:
+
+- Map your tasks with submitted answers and any of the defined dependencies.
+- Depending on the mappings/definition, a status will be added to each task.
+- Return a simplified data structure.
+
+The end result can then be consumed in a component (example below).
+
+## Required data structure
+
+Groups, tasks and answers expect a certain format.
+
+### Task
+
+Each task expects the following structure:
 
 ```js
 {
@@ -16,10 +33,12 @@ Each task has the following structure:
 };
 ```
 
-- `fields` is a list of field IDs required for the task to be marked as "completed".
-- `dependencies` is a list of field IDs required for the task to be unlocked and marked as "ready to start"/"start now".
+- `fields` is a list of field IDs required for the task to be marked as "Completed".
+- `dependencies` is a list of field IDs required for the task to be unlocked and marked as "Ready to start"/"Start now".
 
-With this in mind, a complete task list structure with multiple groups and tasks can be as follows:
+### Group(s)
+
+A complete task list structure with multiple groups should be as follows:
 
 ```js
 const exampleTaskList = {
@@ -31,6 +50,7 @@ const exampleTaskList = {
         title: 'Eligibility',
         id: 'eligibility',
         fields: ['fieldA', 'fieldB'],
+        dependencies: [],
       },
       ACCOUNT: {
         href: '/account/create',
@@ -63,9 +83,27 @@ const exampleTaskList = {
 };
 ```
 
-This data structure generation can be split up (examples in the helpers directory) for easier maintenance.
+### Submitted answers
 
-The returned data structure is simpler and contains added statuses depending on the `fields` and `dependencies` checks. E.g:
+Submitted answers requires a flat structure - it does not currently handle nested structures.
+
+:warning: The function assumes that any fields in submitted answers are valid. In other words, validate your field before saving it or passing to `generateTaskList`.
+
+```js
+{
+  fieldA: true,
+  fieldB: 'example',
+  country: { name: 'United Kingdom' isoCode: 'GBR'},
+}
+```
+
+### Data generation recommendation
+
+The larger your tasks and groups become, the trickier management becomes. For easier maintenance, your data structure could be split up into single files/functions for each group. There are examples of this [here](/src/ui/server/helpers/task-list/generate-groups-and-tasks/index.ts).
+
+### Returned data structure
+
+The returned data structure is simpler - only contains the data that a UI needs, including automatically generated status tags:
 
 ```js
 [
@@ -100,21 +138,50 @@ The returned data structure is simpler and contains added statuses depending on 
 ]
 ```
 
-With the original data structure, we can call `generateTaskList` in a controller and consume the simplified data (in an array type format) like so:
+## Example usage
+
+Create groups and tasks, passing the result to a page/template:
 
 ```js
 // controller/task-list.js
+// const generateTaskList = require './task-list';
 
 const getTaskList = (req, res) => {
-  const taskList = generateTaskList(exampleTaskList);
+  const groupsAndTasks = {
+    INITIAL_CHECKS: {
+      title: 'Initial checks',
+      tasks: {
+        ELIGIBILITY: {
+          href: '/root-to-form',
+          title: 'Eligibility',
+          id: 'eligibility',
+          fields: ['fieldA', 'fieldB'],
+          dependencies: [],
+        },
+        ACCOUNT: {
+          href: '/account/create',
+          title: 'Create account',
+          id: 'create-account',
+          fields: ['userId', 'firstName', 'lastName'],
+          dependencies: ['fieldA', 'fieldB'],
+        },
+      },
+    },
+    APPLICATION: { ... }
+  };
+
+  // generate task list statuses and structure for UI component.
+  const taskListData = generateTaskList(groupsAndTasks, req.session.submittedAnswers);
 
   return res.render('template.njk', {
-    taskList,
+    taskListData,
   });
 };
 ```
 
-In this repository there is a [task-list nunjuck component](/src/ui/templates/components/task-list.njk) that can automatically render this data into a GOV design list. E.g:
+Now, a task list can be rendered in a UI template or component.
+
+In this repository there is a [task-list nunjuck component](/src/ui/templates/components/task-list.njk) that can automatically render the data into a GOV design list. Example:
 
 ```html
 // template.njk
@@ -122,11 +189,8 @@ In this repository there is a [task-list nunjuck component](/src/ui/templates/co
 {% import '../components/task-list.njk' as taskList %}
 
 {{ taskList.render({
-  groups: taskList
+  groups: taskListData
 }) }}
 ```
 
-## TODO
 
-- Review
-- Investigate the capability of checking a field's validation from submitted data instead of just checking that data exists.
