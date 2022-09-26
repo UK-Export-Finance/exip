@@ -3,7 +3,7 @@ interface TaskListDataTask {
   title: string;
   id: string;
   fields: Array<string>;
-  dependencies?: Array<string>;
+  dependencies: Array<string>;
   status?: string;
 }
 

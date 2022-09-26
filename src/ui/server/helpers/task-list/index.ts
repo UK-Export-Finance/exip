@@ -1,4 +1,3 @@
-import generateGroupsAndTasks from './generate-groups-and-tasks';
 import { taskStatus } from './task-helpers';
 import { TaskListData, TaskListDataTask, TaskListGroup, SubmittedData } from '../../../types';
 
@@ -62,13 +61,11 @@ const generateSimplifiedTaskList = (taskList: TaskListData): Array<TaskListGroup
 
 /**
  * generateTaskList
+ * @param {Object} groupsAndTasks Initial groups with tasks
  * @param {Object} submittedData Submitted application data
  * @returns {Array} generateSimplifiedTaskList- Array of groups and tasks with only the data required for UI consumption.
  */
-const generateTaskList = (submittedData: SubmittedData): Array<TaskListGroup> => {
-  // generate groups and tasks objects
-  const groupsAndTasks = generateGroupsAndTasks();
-
+const generateTaskList = (groupsAndTasks: TaskListData, submittedData: SubmittedData): Array<TaskListGroup> => {
   // add task states (status etc)
   const withState = generateTaskStates(groupsAndTasks, submittedData);
 
