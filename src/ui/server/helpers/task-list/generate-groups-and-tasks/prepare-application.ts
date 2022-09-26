@@ -1,5 +1,5 @@
 import { TaskListDataTask, TaskListData, TaskListDataGroupTasksPrepareApplication } from '../../../../types';
-import { FIELD_IDS, ROUTES } from '../../../constants';
+import { ROUTES } from '../../../constants';
 import { TASKS } from '../../../content-strings';
 
 const createPrepareApplicationTasks = (otherGroups: TaskListData): TaskListDataGroupTasksPrepareApplication => {
@@ -7,7 +7,7 @@ const createPrepareApplicationTasks = (otherGroups: TaskListData): TaskListDataG
     href: ROUTES.QUOTE.POLICY_TYPE,
     title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE,
     id: 'mock',
-    fields: [FIELD_IDS.POLICY_TYPE, FIELD_IDS.POLICY_LENGTH],
+    fields: [],
     dependencies: [...otherGroups.INITIAL_CHECKS.tasks.ELIGIBILITY.fields, ...otherGroups.INITIAL_CHECKS.tasks.CONTACT_DETAILS.fields],
   } as TaskListDataTask;
 

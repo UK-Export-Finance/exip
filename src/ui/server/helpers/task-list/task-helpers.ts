@@ -10,22 +10,24 @@ import { TASKS } from '../../content-strings';
 export const getSubmittedFields = (fields: Array<string>, submittedData: SubmittedData): Array<string> => {
   const submittedFields = [] as Array<string>;
 
-  fields.forEach((fieldId) => {
-    if (submittedData && submittedData[fieldId]) {
-      submittedFields.push(fieldId);
-    }
-  });
+  if (fields) {
+    fields.forEach((fieldId) => {
+      if (submittedData && submittedData[fieldId]) {
+        submittedFields.push(fieldId);
+      }
+    });
+  }
 
   return submittedFields;
 };
 
 /**
- * taskIsInProgess
+ * taskIsInProgress
  * @param {Array} taskFields Array of field ids associated with the tak
  * @param {Object} submittedData Submitted application data
  * @returns {Boolean}
  */
-export const taskIsInProgess = (taskFields: Array<string>, submittedData: SubmittedData) => {
+export const taskIsInProgress = (taskFields: Array<string>, submittedData: SubmittedData) => {
   const submittedFields = getSubmittedFields(taskFields, submittedData);
 
   if (submittedFields.length > 0 && submittedFields.length < taskFields.length) {
@@ -44,8 +46,10 @@ export const taskIsInProgess = (taskFields: Array<string>, submittedData: Submit
 export const taskIsComplete = (taskFields: Array<string>, submittedData: SubmittedData): boolean => {
   const submittedFields = getSubmittedFields(taskFields, submittedData);
 
-  if (submittedFields.length === taskFields.length) {
-    return true;
+  if (submittedFields && submittedFields.length && taskFields && taskFields.length) {
+    if (submittedFields.length === taskFields.length) {
+      return true;
+    }
   }
 
   return false;
@@ -58,13 +62,12 @@ export const taskIsComplete = (taskFields: Array<string>, submittedData: Submitt
  * @returns {Boolean}
  */
 export const areTaskDependenciesMet = (dependencies: Array<string>, submittedData: SubmittedData): boolean => {
-  const totalDependencies = dependencies.length;
+  const totalDependencies = (dependencies && dependencies.length) || 0;
 
   let validDependencies = [];
 
   if (dependencies) {
     validDependencies = dependencies.filter((fieldId: string) => {
-      // TODO: extra validation i.e, validate the field with form validation rules.
       if (submittedData && submittedData[fieldId]) {
         return fieldId;
       }
@@ -91,7 +94,7 @@ export const taskStatus = (task: TaskListDataTask, submittedData: SubmittedData)
   const { dependencies, fields } = task;
 
   const dependenciesMet = areTaskDependenciesMet(dependencies, submittedData);
-  const isInProgress = taskIsInProgess(fields, submittedData);
+  const isInProgress = taskIsInProgress(fields, submittedData);
   const isComplete = taskIsComplete(fields, submittedData);
 
   if (!dependenciesMet) {

@@ -7,7 +7,7 @@ import { TaskListData, TaskListDataTask, TaskListGroup, SubmittedData } from '..
  * @param {Object} submittedData Submitted application data
  * @returns {Object} Task lists groups and tasks with added task statuses.
  */
-const generateTaskStates = (taskListData: TaskListData, submittedData: SubmittedData): TaskListData => {
+export const generateTaskStates = (taskListData: TaskListData, submittedData: SubmittedData): TaskListData => {
   const tasksList = taskListData;
 
   const groupKeys = Object.keys(tasksList);
@@ -39,7 +39,7 @@ const generateTaskStates = (taskListData: TaskListData, submittedData: Submitted
  * @param {Object} taskList Task lists groups and tasks
  * @returns {Array} Array of groups and tasks with only the data required for UI consumption.
  */
-const generateSimplifiedTaskList = (taskList: TaskListData): Array<TaskListGroup> => {
+export const generateSimplifiedTaskList = (taskList: TaskListData): Array<TaskListGroup> => {
   const groups = Object.values(taskList);
 
   return groups.map((group) => {
