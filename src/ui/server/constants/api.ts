@@ -17,6 +17,7 @@ export const API = {
       YES: 'Y',
       NO: 'N',
     },
+    INVALID_COUNTRIES: ['EC Market n/k', 'Non EC Market n/k', 'Non UK', 'Third Country'],
   },
   MAPPINGS: {
     RISK: {
