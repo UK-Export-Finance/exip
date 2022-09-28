@@ -12,7 +12,7 @@ const LINKS = {
   EXTERNAL: {
     GUIDANCE: 'https://www.gov.uk/guidance/export-insurance-policy#eligibility',
     BEFORE_YOU_START: 'https://www.gov.uk/guidance/get-a-quote-for-ukef-export-insurance',
-    PRIVACY: 'https://www.gov.uk/government/publications/ukef-privacy-notice/ukef-privacy-notice',
+    PRIVACY: 'https://www.gov.uk/government/publications/ukef-privacy-notice',
     FEEDBACK: 'https://forms.office.com/r/TacytrRCgJ',
     EXPORT_FINANCE_MANAGERS: 'https://www.gov.uk/government/publications/find-an-export-finance-manager',
     APPROVED_BROKER_LIST: 'https://www.gov.uk/government/publications/uk-export-finance-insurance-list-of-approved-brokers',
