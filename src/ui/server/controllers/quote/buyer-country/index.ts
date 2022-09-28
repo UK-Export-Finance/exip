@@ -91,7 +91,7 @@ export const post = async (req: Request, res: Response) => {
     });
   }
 
-  const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY];
+  const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY] || req.body[FIELD_IDS.COUNTRY];
 
   const country = getCountryByName(mappedCountries, submittedCountryName);
 
