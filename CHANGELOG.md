@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.1](https://github.com/UK-Export-Finance/exip/compare/v1.10.0...v1.10.1) (2022-09-28)
+
+
+### Bug Fixes
+
+* **EMS-379:** fix issue where buyer country form would fail if JS is disabled ([f9e5357](https://github.com/UK-Export-Finance/exip/commit/f9e5357ab7857cd4310bc2365f3d190eedc8dd98))
+
 ## [1.10.0](https://github.com/UK-Export-Finance/exip/compare/v1.9.0...v1.10.0) (2022-09-12)
 
 
