@@ -1,4 +1,4 @@
-import { mapRiskCategory, mapShortTermCoverAvailable, mapNbiIssueAvailable, mapCountry, mapCountries } from './map-countries';
+import { mapRiskCategory, mapShortTermCoverAvailable, mapNbiIssueAvailable, filterCisCountries, mapCountry, mapCountries } from './map-countries';
 import { API } from '../../constants';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
 import { CisCountry, Country } from '../../../types';
@@ -120,6 +120,36 @@ describe('server/helpers/mappings/map-countries', () => {
     });
   });
 
+  describe('filterCisCountries', () => {
+    it('should return a list of countries without invalid countries defined in INVALID_CIS_COUNTRIES', () => {
+      const mockCountriesWithInvalid = [
+        mockCountries[0],
+        {
+          ...mockCountries[0],
+          marketName: 'EC Market n/k',
+        },
+        {
+          ...mockCountries[0],
+          marketName: 'Non EC Market n/k',
+        },
+        {
+          ...mockCountries[0],
+          marketName: 'Non UK',
+        },
+        {
+          ...mockCountries[0],
+          marketName: 'Third Country',
+        },
+      ];
+
+      const result = filterCisCountries(mockCountriesWithInvalid);
+
+      const expected = [mockCountries[0]];
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('mapCountry', () => {
     it('should return an object', () => {
       const result = mapCountry(mockCountries[0]);
@@ -158,10 +188,12 @@ describe('server/helpers/mappings/map-countries', () => {
   });
 
   describe('mapCountries', () => {
-    it('should returns array of mapped, sorted objects', () => {
+    it('should returns array of filtered, mapped and sorted objects', () => {
       const mockSelectedIsoCode = mockCountries[0].isoCode;
 
-      const result = mapCountries(mockCountries, mockSelectedIsoCode);
+      const filteredCountries = filterCisCountries(mockCountries);
+
+      const result = mapCountries(filteredCountries, mockSelectedIsoCode);
 
       const expected = sortArrayAlphabetically([mapCountry(mockCountries[0], mockSelectedIsoCode), mapCountry(mockCountries[1], mockSelectedIsoCode)], 'name');
 
