@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/UK-Export-Finance/exip/compare/v1.10.1...v1.11.0) (2022-09-28)
+
+
+### Features
+
+* **EMS-380:** filter out invalid country names from CIS API ([2290f5a](https://github.com/UK-Export-Finance/exip/commit/2290f5a9a18ad3cda41581c85a0679bcd9e15a18))
+
 ## [1.10.1](https://github.com/UK-Export-Finance/exip/compare/v1.10.0...v1.10.1) (2022-09-28)
 
 
