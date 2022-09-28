@@ -17,7 +17,7 @@ export const FOOTER = {
   SUPPORT_LINKS_HEADING: 'Support Links',
   PRIVACY: {
     TEXT: 'Privacy',
-    HREF: 'https://www.gov.uk/government/publications/ukef-privacy-notice/ukef-privacy-notice',
+    HREF: 'https://www.gov.uk/government/publications/ukef-privacy-notice',
   },
   COOKIES: {
     TEXT: 'Cookies',
