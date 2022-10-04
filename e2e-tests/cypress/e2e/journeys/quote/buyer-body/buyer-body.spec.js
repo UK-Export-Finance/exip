@@ -25,7 +25,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   it('passes the audits', () => {
     cy.lighthouse({
       accessibility: 100,
-      performance: 80,
+      performance: 75,
       'best-practices': 100,
       seo: 60,
     });
