@@ -1,6 +1,8 @@
+import * as dotenv from 'dotenv';
 import { Request, Response } from '../../../types';
 
-// export const cookiesConsent = (req: Request, res: Response, next: () => void) => {
+dotenv.config();
+
 export const cookiesConsent = (req: Request, res: Response, next: () => void) => {
   if (req.cookies) {
     if (req.cookies.optionalCookies) {
@@ -9,6 +11,7 @@ export const cookiesConsent = (req: Request, res: Response, next: () => void) =>
 
     if (req.cookies.optionalCookies === 'true') {
       res.locals.cookieConsent = true;
+      res.locals.googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID;
     } else {
       res.locals.cookieConsent = false;
     }

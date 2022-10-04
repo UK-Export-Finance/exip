@@ -1,6 +1,9 @@
+import * as dotenv from 'dotenv';
 import { mockNext, mockReq, mockRes } from '../../test-mocks';
 import { Request, Response } from '../../../types';
 import { cookiesConsent } from '.';
+
+dotenv.config();
 
 describe('middleware/cookies-consent', () => {
   const req: Request = mockReq();
@@ -28,6 +31,12 @@ describe('middleware/cookies-consent', () => {
       cookiesConsent(req, res, next);
 
       expect(res.locals.cookieConsent).toEqual(true);
+    });
+
+    it('should add process.env.GOOGLE_ANALYTICS_ID to res.locals.googleAnalyticsId', () => {
+      cookiesConsent(req, res, next);
+
+      expect(res.locals.googleAnalyticsId).toEqual(process.env.GOOGLE_ANALYTICS_ID);
     });
   });
 

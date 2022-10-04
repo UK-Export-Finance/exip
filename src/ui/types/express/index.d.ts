@@ -26,6 +26,7 @@ interface ResponseLocals {
   cookieConsent?: Boolean;
   cookieConsentDecision?: Boolean;
   cookieConsentNewDecision?: Boolean;
+  googleAnalyticsId?: string;
 }
 
 interface Request {
