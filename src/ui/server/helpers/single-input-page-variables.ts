@@ -1,4 +1,4 @@
-import { BUTTONS, FIELDS, FOOTER, LINKS, PRODUCT } from '../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PRODUCT } from '../content-strings';
 
 interface PageContentStrings {
   PAGE_TITLE: string;
@@ -15,10 +15,11 @@ interface SingleInputPageVariables {
 }
 
 interface PageVariablesContentStrings {
-  PRODUCT: object;
-  FOOTER: object;
   BUTTONS: object;
+  COOKIES_CONSENT: object;
+  FOOTER: object;
   LINKS: object;
+  PRODUCT: object;
 }
 
 interface PageVariables {
@@ -33,10 +34,11 @@ const singleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK }:
   const pageVariables: PageVariables = {
     CONTENT_STRINGS: {
       ...PAGE_CONTENT_STRINGS,
-      PRODUCT,
-      FOOTER,
       BUTTONS,
+      COOKIES_CONSENT,
+      FOOTER,
       LINKS,
+      PRODUCT,
     },
     FIELD_ID,
     BACK_LINK,

@@ -12,15 +12,7 @@ interface Opts {
 const configureNunjucks = (opts: Opts) => {
   const appViews = ['node_modules/govuk-frontend', 'templates'];
 
-  const nunjucksEnvironment = nunjucks.configure(appViews, opts);
-
-  nunjucksEnvironment.addGlobal('runAnalytics', () => {
-    if (process.env.NODE_ENV === 'production') {
-      return true;
-    }
-
-    return false;
-  });
+  nunjucks.configure(appViews, opts);
 
   return nunjucks;
 };

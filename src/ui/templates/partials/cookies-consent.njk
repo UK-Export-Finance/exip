@@ -1,0 +1,109 @@
+{% from "govuk/components/cookie-banner/macro.njk" import govukCookieBanner %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+
+{% set headingHtml %}
+  <span data-cy="cookies-banner-heading">{{ CONTENT_STRINGS.COOKIES_CONSENT.HEADING }}</span>
+{% endset %}
+
+{% set questionBannerHtml %}
+  <p class="govuk-body" data-cy="cookies-question-banner-copy-1">{{ CONTENT_STRINGS.COOKIES_CONSENT.QUESTION.COPY_1 }}</p>
+  <p class="govuk-body" data-cy="cookies-question-banner-copy-2">{{ CONTENT_STRINGS.COOKIES_CONSENT.QUESTION.COPY_2 }}</p>
+{% endset %}
+
+{% set acceptHtml %}
+  <p class="govuk-body" data-cy="cookies-accepted-banner-copy">{{ CONTENT_STRINGS.COOKIES_CONSENT.ACCEPTED.COPY_1 }} <a class="govuk-link" href="/cookies" role="button" data-cy="cookies-banner-cookies-link">{{ CONTENT_STRINGS.COOKIES_CONSENT.COOKIES_LINK }}</a> {{ CONTENT_STRINGS.COOKIES_CONSENT.ACCEPTED.COPY_2 }}</p>
+
+  {{ govukButton({
+    text: CONTENT_STRINGS.COOKIES_CONSENT.HIDE_BUTTON,
+    classes: "js-hide",
+    attributes: {
+      "data-cy": "cookies-banner-hide-button"
+    }
+  }) }}
+{% endset %}
+
+{% set rejectHtml %}
+  <p class="govuk-body" data-cy="cookies-rejected-banner-copy">{{ CONTENT_STRINGS.COOKIES_CONSENT.REJECTED.COPY_1 }} <a class="govuk-link" href="/cookies" role="button" data-cy="cookies-banner-cookies-link">{{ CONTENT_STRINGS.COOKIES_CONSENT.COOKIES_LINK }}</a> {{ CONTENT_STRINGS.COOKIES_CONSENT.REJECTED.COPY_2 }}</p>
+
+  {{ govukButton({
+    text: CONTENT_STRINGS.COOKIES_CONSENT.HIDE_BUTTON,
+    classes: "js-hide",
+    attributes: {
+      "data-cy": "cookies-banner-hide-button"
+    }
+  }) }}
+{% endset %}
+
+{% if cookieConsentNewDecision %}
+  {% if cookieConsent %}
+    {{ govukCookieBanner({
+        ariaLabel: CONTENT_STRINGS.COOKIES_CONSENT.HEADING,
+        "messages": [
+          {
+            "headingHtml": headingHtml,
+            "html": acceptHtml
+          }
+        ]
+    }) }}
+  {% endif %}
+
+  {% if not cookieConsent %}
+    {{ govukCookieBanner({
+        ariaLabel: CONTENT_STRINGS.COOKIES_CONSENT.HEADING,
+        "messages": [
+          {
+            "headingHtml": headingHtml,
+            "html": rejectHtml
+          }
+        ]
+    }) }}
+  {% endif %}
+{% endif %}
+
+{% if not cookieConsentDecision %}
+  <form method="POST" action="/cookies-consent">
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {{ govukCookieBanner({
+      "attributes":  {
+        "hidden": "hidden"
+      },
+      "messages": [
+        {
+          "headingHtml": headingHtml,
+          "html": questionBannerHtml,
+          "actions": [
+            {
+              text: CONTENT_STRINGS.COOKIES_CONSENT.QUESTION.ACCEPT_BUTTON,
+              type: "submit",
+              name: "cookies",
+              value: "accept",
+              classes: "js-cookies-button-accept",
+              attributes: {
+                "data-cy": "cookies-question-banner-accept-button"
+              }
+            },
+            {
+              text: CONTENT_STRINGS.COOKIES_CONSENT.QUESTION.REJECT_BUTTON,
+              type: "submit",
+              name: "cookies",
+              value: "reject",
+              classes: "js-cookies-button-reject",
+              attributes: {
+                "data-cy": "cookies-question-banner-reject-button"
+              }
+            },
+            {
+              "text": CONTENT_STRINGS.COOKIES_CONSENT.QUESTION.VIEW_COOKIES,
+              "href": "/cookies",
+              attributes: {
+                "data-cy": "cookies-banner-cookies-link"
+              }
+            }
+          ]
+        }
+      ]
+    }) }}
+  </form>
+{% endif %}

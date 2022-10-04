@@ -6,28 +6,37 @@ import { Quote } from '../quote';
 interface RequestSession {
   submittedData: SubmittedData;
   quote?: Quote;
+  cookieConsentNewDecision?: Boolean;
 }
 
 interface RequestBody {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
+interface RequestCookies {
+  optionalCookies?: string;
+}
+
 interface RequestHeaders {
-  referer?: string;
+  referer: string;
 }
 
 interface ResponseLocals {
   csrfToken: string;
+  cookieConsent?: Boolean;
+  cookieConsentDecision?: Boolean;
+  cookieConsentNewDecision?: Boolean;
 }
 
 interface Request {
   body: RequestBody;
+  cookies: RequestCookies;
   csrfToken: () => string;
   flash: (str1: string, str2?: string) => string;
   headers: RequestHeaders;
   method: string;
   originalUrl: string;
-  redirect: () => string;
+  redirect: (str: string) => any;
   session: RequestSession;
 }
 
