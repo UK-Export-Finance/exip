@@ -19,8 +19,3 @@ Cypress.Commands.add('checkAnalyticsCookieIsFalse', analytics.checkAnalyticsCook
 Cypress.Commands.add('checkAnalyticsCookieIsTrue', analytics.checkAnalyticsCookieIsTrue);
 Cypress.Commands.add('checkAnalyticsScriptsAreNotRendered', analytics.checkAnalyticsScriptsAreNotRendered);
 Cypress.Commands.add('checkAnalyticsScriptsAreRendered', analytics.checkAnalyticsScriptsAreRendered);
-
-// analytics.checkAnalyticsCookieIsFalse,
-// analytics.checkAnalyticsCookieIsTrue,
-// analytics.checkAnalyticsScriptsAreNotRendered,
-// analytics.checkAnalyticsScriptsAreRendered,
