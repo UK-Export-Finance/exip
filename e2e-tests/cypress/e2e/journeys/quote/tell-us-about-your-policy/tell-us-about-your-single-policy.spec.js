@@ -54,10 +54,6 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       });
     });
 
-    it('renders a phase banner', () => {
-      cy.checkPhaseBanner();
-    });
-
     it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
       partials.backLink().invoke('text').then((text) => {
@@ -67,6 +63,18 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.POLICY_TYPE}`;
 
       partials.backLink().should('have.attr', 'href', expected);
+    });
+
+    it('renders an analytics cookies consent banner that can be accepted', () => {
+      cy.checkAnalyticsCookiesConsentAndAccept();
+    });
+
+    it('renders an analytics cookies consent banner that can be rejected', () => {
+      cy.rejectAnalyticsCookies();
+    });
+
+    it('renders a phase banner', () => {
+      cy.checkPhaseBanner();
     });
 
     it('renders a page title and heading', () => {

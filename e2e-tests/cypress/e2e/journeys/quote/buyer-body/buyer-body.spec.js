@@ -31,6 +31,14 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     });
   });
 
+  it('renders an analytics cookies consent banner that can be accepted', () => {
+    cy.checkAnalyticsCookiesConsentAndAccept();
+  });
+
+  it('renders an analytics cookies consent banner that can be rejected', () => {
+    cy.rejectAnalyticsCookies();
+  });
+
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
   });

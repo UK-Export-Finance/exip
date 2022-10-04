@@ -54,10 +54,6 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
     });
   });
 
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
     partials.backLink().invoke('text').then((text) => {
@@ -66,6 +62,18 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
 
     const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY}`;
     partials.backLink().should('have.attr', 'href', expected);
+  });
+
+  it('renders an analytics cookies consent banner that can be accepted', () => {
+    cy.checkAnalyticsCookiesConsentAndAccept();
+  });
+
+  it('renders an analytics cookies consent banner that can be rejected', () => {
+    cy.rejectAnalyticsCookies();
+  });
+
+  it('renders a phase banner', () => {
+    cy.checkPhaseBanner();
   });
 
   it('renders a submit button', () => {

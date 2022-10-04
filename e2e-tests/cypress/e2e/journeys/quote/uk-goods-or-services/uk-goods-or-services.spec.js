@@ -40,10 +40,6 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     });
   });
 
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
     partials.backLink().invoke('text').then((text) => {
@@ -61,6 +57,18 @@ context('UK goods or services page - as an exporter, I want to check if my expor
         password: Cypress.config('basicAuthSecret'),
       },
     });
+  });
+
+  it('renders an analytics cookies consent banner that can be accepted', () => {
+    cy.checkAnalyticsCookiesConsentAndAccept();
+  });
+
+  it('renders an analytics cookies consent banner that can be rejected', () => {
+    cy.rejectAnalyticsCookies();
+  });
+
+  it('renders a phase banner', () => {
+    cy.checkPhaseBanner();
   });
 
   it('renders a page title and heading', () => {

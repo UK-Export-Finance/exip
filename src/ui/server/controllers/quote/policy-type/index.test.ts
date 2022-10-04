@@ -1,5 +1,5 @@
 import { PAGE_VARIABLES, get, post } from '.';
-import { BUTTONS, FIELDS, FOOTER, PAGES, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, PAGES, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import generateValidationErrors from './validation';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data';
@@ -23,9 +23,10 @@ describe('controllers/policy-type', () => {
     it('should have correct properties', () => {
       const expected = {
         CONTENT_STRINGS: {
-          PRODUCT,
-          FOOTER,
           BUTTONS,
+          COOKIES_CONSENT,
+          FOOTER,
+          PRODUCT,
           ...PAGES.POLICY_TYPE_PAGE,
         },
         FIELDS: {

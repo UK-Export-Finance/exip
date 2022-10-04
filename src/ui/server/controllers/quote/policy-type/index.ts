@@ -1,4 +1,4 @@
-import { BUTTONS, FIELDS, FOOTER, PAGES, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, PAGES, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import generateValidationErrors from './validation';
 import { isSinglePolicyType } from '../../../helpers/policy-type';
@@ -9,9 +9,10 @@ const { MULTI_POLICY_TYPE, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH, SIN
 
 const PAGE_VARIABLES = {
   CONTENT_STRINGS: {
-    PRODUCT,
-    FOOTER,
     BUTTONS,
+    COOKIES_CONSENT,
+    FOOTER,
+    PRODUCT,
     ...PAGES.POLICY_TYPE_PAGE,
   },
   FIELDS: {

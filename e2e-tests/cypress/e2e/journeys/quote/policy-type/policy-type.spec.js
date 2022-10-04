@@ -53,10 +53,6 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       });
     });
 
-    it('renders a phase banner', () => {
-      cy.checkPhaseBanner();
-    });
-
     it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
       partials.backLink().invoke('text').then((text) => {
@@ -66,6 +62,18 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`;
 
       partials.backLink().should('have.attr', 'href', expected);
+    });
+
+    it('renders an analytics cookies consent banner that can be accepted', () => {
+      cy.checkAnalyticsCookiesConsentAndAccept();
+    });
+
+    it('renders an analytics cookies consent banner that can be rejected', () => {
+      cy.rejectAnalyticsCookies();
+    });
+
+    it('renders a phase banner', () => {
+      cy.checkPhaseBanner();
     });
 
     it('renders a page title and heading', () => {

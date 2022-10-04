@@ -35,6 +35,14 @@ context('Cannot obtain UKEF cover exit page', () => {
     });
   });
 
+  it('renders an analytics cookies consent banner that can be accepted', () => {
+    cy.checkAnalyticsCookiesConsentAndAccept();
+  });
+
+  it('renders an analytics cookies consent banner that can be rejected', () => {
+    cy.rejectAnalyticsCookies();
+  });
+
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
   });
