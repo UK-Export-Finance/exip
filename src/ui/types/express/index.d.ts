@@ -6,7 +6,7 @@ import { Quote } from '../quote';
 interface RequestSession {
   submittedData: SubmittedData;
   quote?: Quote;
-  cookieConsentNewDecision?: Boolean;
+  cookieConsentNewDecision?: boolean;
 }
 
 interface RequestBody {
@@ -23,9 +23,9 @@ interface RequestHeaders {
 
 interface ResponseLocals {
   csrfToken: string;
-  cookieConsent?: Boolean;
-  cookieConsentDecision?: Boolean;
-  cookieConsentNewDecision?: Boolean;
+  cookieConsent?: boolean;
+  cookieConsentDecision?: boolean;
+  cookieConsentNewDecision?: boolean;
   googleAnalyticsId?: string;
 }
 
