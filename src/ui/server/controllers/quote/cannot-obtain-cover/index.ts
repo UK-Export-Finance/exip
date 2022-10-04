@@ -1,4 +1,4 @@
-import { FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import { Request, Response } from '../../../../types';
 
@@ -8,9 +8,10 @@ const get = (req: Request, res: Response) => {
 
   return res.render(TEMPLATES.QUOTE.CANNOT_OBTAIN_COVER, {
     CONTENT_STRINGS: {
-      PRODUCT,
+      COOKIES_CONSENT,
       FOOTER,
       LINKS,
+      PRODUCT,
       ...PAGES.CANNOT_OBTAIN_COVER_PAGE,
     },
     BACK_LINK: previousRoute,

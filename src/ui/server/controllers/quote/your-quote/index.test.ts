@@ -1,5 +1,5 @@
 import controller from '.';
-import { PRODUCT, FOOTER, BUTTONS, LINKS, PAGES } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import { generateQuote } from '../../../generate-quote';
 import mapQuoteToContent from '../../../helpers/data-content-mappings/map-quote-to-content';
@@ -32,10 +32,11 @@ describe('controllers/your-quote', () => {
 
     const expectedVariables = {
       CONTENT_STRINGS: {
-        PRODUCT,
-        FOOTER,
         BUTTONS,
+        COOKIES_CONSENT,
+        FOOTER,
         LINKS,
+        PRODUCT,
         ...PAGES.YOUR_QUOTE_PAGE,
       },
       SUMMARY_LIST: expectedSummaryList,

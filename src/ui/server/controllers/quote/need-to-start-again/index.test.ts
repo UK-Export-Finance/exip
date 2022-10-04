@@ -1,5 +1,5 @@
 import { get, post } from '.';
-import { FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
@@ -23,9 +23,10 @@ describe('controllers/need-to-start-again', () => {
 
       const expectedVariables = {
         CONTENT_STRINGS: {
+          COOKIES_CONSENT,
+          FOOTER,
           LINKS,
           PRODUCT,
-          FOOTER,
           ...PAGES.NEED_TO_START_AGAIN,
         },
       };

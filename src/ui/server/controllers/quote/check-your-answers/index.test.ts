@@ -1,5 +1,5 @@
 import { PAGE_VARIABLES, get, post } from '.';
-import { BUTTONS, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../constants';
 import { mapAnswersToContent } from '../../../helpers/data-content-mappings/map-answers-to-content';
 import { answersSummaryList } from '../../../helpers/summary-lists/answers-summary-list';
@@ -41,10 +41,11 @@ describe('controllers/check-your-answers', () => {
     it('should have correct properties', () => {
       const expected = {
         CONTENT_STRINGS: {
-          PRODUCT,
+          BUTTONS,
+          COOKIES_CONSENT,
           FOOTER,
           LINKS,
-          BUTTONS,
+          PRODUCT,
           ...PAGES.CHECK_YOUR_ANSWERS_PAGE,
         },
       };
