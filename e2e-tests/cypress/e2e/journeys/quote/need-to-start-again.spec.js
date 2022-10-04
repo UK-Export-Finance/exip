@@ -34,7 +34,7 @@ context('Need to start again exit page', () => {
   it('passes the audits', () => {
     cy.lighthouse({
       accessibility: 100,
-      performance: 80,
+      performance: 75,
       'best-practices': 100,
       seo: 60,
     });
