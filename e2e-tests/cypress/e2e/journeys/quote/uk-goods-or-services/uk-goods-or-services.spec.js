@@ -99,7 +99,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     });
   });
 
-  describe.only('expandable details', () => {
+  describe('expandable details', () => {
     const { details } = ukGoodsOrServicesPage;
     const { DETAILS } = CONTENT_STRINGS;
 

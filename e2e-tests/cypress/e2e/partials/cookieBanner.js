@@ -1,7 +1,4 @@
 const cookieBanner = {
-  // tag: () => cy.get('.govuk-phase-banner__content__tag'),
-  // text: () => cy.get('[data-cy="phase-banner-text"]'),
-  // feedbackLink: () => cy.get('[data-cy="phase-banner-feedback-link"]'),
   heading: () => cy.get('[data-cy="cookies-banner-heading"]'),
   hideButton: () => cy.get('[data-cy="cookies-banner-hide-button"]'),
   cookiesLink: () => cy.get('[data-cy="cookies-banner-cookies-link"]'),
