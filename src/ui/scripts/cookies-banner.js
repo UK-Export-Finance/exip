@@ -30,11 +30,11 @@ if (!document.cookie.includes('optionalCookies')) {
   cookieBanner.removeAttribute('hidden');
 
   // Shift focus to the banner
-  cookieBanner.setAttribute('tabindex', '-1')
-  cookieBanner.focus()
+  cookieBanner.setAttribute('tabindex', '-1');
+  cookieBanner.focus();
   cookieBanner.addEventListener('blur', function () {
-    cookieBanner.removeAttribute('tabindex')
-  })
+    cookieBanner.removeAttribute('tabindex');
+  });
 }
 
 if (hideButton) {
