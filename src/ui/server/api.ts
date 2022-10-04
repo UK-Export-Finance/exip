@@ -1,8 +1,5 @@
 import axios, { AxiosBasicCredentials, AxiosResponse, AxiosRequestConfig } from 'axios';
 import dotenv from 'dotenv';
-import { ApolloResponse } from '../types';
-import apollo from './graphql/apollo';
-import pageQuery from './graphql/queries/page';
 
 dotenv.config();
 
@@ -52,35 +49,9 @@ const getCurrencies = async () => {
   }
 };
 
-const keystone = {
-  getPage: async (pageId: string) => {
-    const queryParams = {
-      id: pageId,
-    };
-
-    const query = pageQuery;
-    const response = (await apollo('GET', query, queryParams)) as ApolloResponse;
-
-    if (response.errors) {
-      console.error('GraphQL error querying keystone page ', response.errors);
-    }
-
-    if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error querying keystone page ', response.networkError.result.errors);
-    }
-
-    if (response?.data?.page) {
-      return response.data.page;
-    }
-
-    return {};
-  },
-};
-
 const api = {
   getCountries,
   getCurrencies,
-  keystone,
 };
 
 export default api;
