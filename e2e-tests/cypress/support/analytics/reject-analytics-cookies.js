@@ -6,6 +6,17 @@ const clearCookies = () => {
   cy.clearCookie('optionalCookies');
 };
 
+const refreshPage = () => {
+  cy.url().then((currentUrl) => {
+    cy.visit(currentUrl, {
+      auth: {
+        username: Cypress.config('basicAuthKey'),
+        password: Cypress.config('basicAuthSecret'),
+      },
+    });
+  });
+};
+
 const reject = () => {
   partials.cookieBanner.question.rejectButton().click();
   partials.cookieBanner.hideButton().click();
@@ -26,6 +37,7 @@ const checkHidden = () => {
 
 const rejectAnalyticsCookies = () => {
   clearCookies();
+  refreshPage();
   reject();
   checkHidden();
 };
