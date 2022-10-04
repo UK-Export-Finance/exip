@@ -1,7 +1,4 @@
 import nunjucks from 'nunjucks';
-import * as dotenv from 'dotenv';
-
-dotenv.config();
 
 interface Opts {
   autoescape: boolean;
