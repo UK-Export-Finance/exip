@@ -1,4 +1,5 @@
 const BUTTONS = require('./buttons');
+const COOKIES_CONSENT = require('./cookies-consent');
 const ERROR_MESSAGES = require('./error-messages');
 const FOOTER = require('./footer');
 const FIELDS = require('./fields');
@@ -12,6 +13,7 @@ const ORGANISATION = 'UK Export Finance';
 
 module.exports = {
   BUTTONS,
+  COOKIES_CONSENT,
   ERROR_MESSAGES,
   FIELDS,
   FOOTER,

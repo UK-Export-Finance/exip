@@ -44,7 +44,7 @@ var DTFS;
   t.r(e),
     t.d(e, {
       default: function () {
-        return S;
+        return L;
       },
     }),
     function (t) {
@@ -113,32 +113,32 @@ var DTFS;
               return e === d || e === h;
             };
             var p = s.slice,
-              f = s.concat,
-              m = s.push,
-              v = Math.max,
-              b = this;
-            if (!e(b)) throw new TypeError('Function.prototype.bind called on incompatible ' + b);
+              m = s.concat,
+              f = s.push,
+              b = Math.max,
+              v = this;
+            if (!e(v)) throw new TypeError('Function.prototype.bind called on incompatible ' + v);
             for (
-              var g,
-                y = p.call(arguments, 1),
+              var y,
+                g = p.call(arguments, 1),
                 w = function () {
-                  if (this instanceof g) {
-                    var e = b.apply(this, f.call(y, p.call(arguments)));
+                  if (this instanceof y) {
+                    var e = v.apply(this, m.call(g, p.call(arguments)));
                     return o(e) === e ? e : this;
                   }
-                  return b.apply(t, f.call(y, p.call(arguments)));
+                  return v.apply(t, m.call(g, p.call(arguments)));
                 },
-                E = v(0, b.length - y.length),
+                E = b(0, v.length - g.length),
                 k = [],
                 C = 0;
               C < E;
               C++
             )
-              m.call(k, '$' + C);
+              f.call(k, '$' + C);
             return (
-              (g = Function('binder', 'return function (' + k.join(',') + '){ return binder.apply(this, arguments); }')(w)),
-              b.prototype && ((r.prototype = b.prototype), (g.prototype = new r()), (r.prototype = null)),
-              g
+              (y = Function('binder', 'return function (' + k.join(',') + '){ return binder.apply(this, arguments); }')(w)),
+              v.prototype && ((r.prototype = v.prototype), (y.prototype = new r()), (r.prototype = null)),
+              y
             );
           },
         });
@@ -443,15 +443,15 @@ var DTFS;
         s.appendChild(this.getButtonPunctuationEl()),
         null != i)
       ) {
-        var f = document.createElement('span'),
-          m = document.createElement('span');
-        m.classList.add(this.sectionSummaryFocusClass), f.appendChild(m);
-        for (var v = 0, b = i.attributes.length; v < b; ++v) {
-          var g = i.attributes.item(v).nodeName,
-            y = i.attributes.item(v).nodeValue;
-          f.setAttribute(g, y);
+        var m = document.createElement('span'),
+          f = document.createElement('span');
+        f.classList.add(this.sectionSummaryFocusClass), m.appendChild(f);
+        for (var b = 0, v = i.attributes.length; b < v; ++b) {
+          var y = i.attributes.item(b).nodeName,
+            g = i.attributes.item(b).nodeValue;
+          m.setAttribute(y, g);
         }
-        (m.innerHTML = i.innerHTML), i.parentNode.replaceChild(f, i), s.appendChild(f), s.appendChild(this.getButtonPunctuationEl());
+        (f.innerHTML = i.innerHTML), i.parentNode.replaceChild(m, i), s.appendChild(m), s.appendChild(this.getButtonPunctuationEl());
       }
       s.appendChild(u), o.removeChild(n), o.appendChild(s);
     }),
@@ -506,7 +506,7 @@ var DTFS;
       try {
         return window.sessionStorage.setItem(e, e), (t = window.sessionStorage.getItem(e) === e.toString()), window.sessionStorage.removeItem(e), t;
       } catch (t) {
-        ('undefined' != typeof console && void 0 !== console.log) || console.log('Notice: sessionStorage not available.');
+        return !1;
       }
     },
   };
@@ -516,13 +516,7 @@ var DTFS;
       if (e) {
         var n = e.getAttribute('aria-controls'),
           o = e.getAttribute('aria-expanded');
-        void 0 !== n ||
-          ('undefined' != typeof console && void 0 !== console.log) ||
-          console.error(new Error('No aria controls present in accordion section heading.')),
-          void 0 !== o ||
-            ('undefined' != typeof console && void 0 !== console.log) ||
-            console.error(new Error('No aria expanded present in accordion section heading.')),
-          n && o && window.sessionStorage.setItem(n, o);
+        n && o && window.sessionStorage.setItem(n, o);
       }
     }
   }),
@@ -748,22 +742,14 @@ var DTFS;
         n.setAttribute('role', 'button'),
         n.setAttribute('aria-controls', o.id),
         (n.tabIndex = 0),
-        !0 === (null !== e.getAttribute('open'))
-          ? (n.setAttribute('aria-expanded', 'true'), o.setAttribute('aria-hidden', 'false'))
-          : (n.setAttribute('aria-expanded', 'false'), o.setAttribute('aria-hidden', 'true'), (o.style.display = 'none')),
+        this.$module.hasAttribute('open') ? n.setAttribute('aria-expanded', 'true') : (n.setAttribute('aria-expanded', 'false'), (o.style.display = 'none')),
         this.polyfillHandleInputs(n, this.polyfillSetAttributes.bind(this)));
     }),
     (l.prototype.polyfillSetAttributes = function () {
-      var t = this.$module,
-        e = this.$summary,
-        n = this.$content,
-        o = 'true' === e.getAttribute('aria-expanded'),
-        i = 'true' === n.getAttribute('aria-hidden');
       return (
-        e.setAttribute('aria-expanded', o ? 'false' : 'true'),
-        n.setAttribute('aria-hidden', i ? 'false' : 'true'),
-        (n.style.display = o ? 'none' : ''),
-        null !== t.getAttribute('open') ? t.removeAttribute('open') : t.setAttribute('open', 'open'),
+        this.$module.hasAttribute('open')
+          ? (this.$module.removeAttribute('open'), this.$summary.setAttribute('aria-expanded', 'false'), (this.$content.style.display = 'none'))
+          : (this.$module.setAttribute('open', 'open'), this.$summary.setAttribute('aria-expanded', 'true'), (this.$content.style.display = '')),
         !0
       );
     }),
@@ -940,7 +926,7 @@ var DTFS;
         e.checked && ('exclusive' === e.getAttribute('data-behaviour') ? this.unCheckAllInputsExcept(e) : this.unCheckExclusiveInputs(e)));
     });
   var p = h;
-  function f(t) {
+  function m(t) {
     this.$module = t;
   }
   (function (t) {
@@ -965,11 +951,11 @@ var DTFS;
           return null;
         });
     }.call(('object' == typeof window && window) || ('object' == typeof self && self) || ('object' == typeof global && global) || {}),
-    (f.prototype.init = function () {
+    (m.prototype.init = function () {
       var t = this.$module;
       t && (this.setFocus(), t.addEventListener('click', this.handleClick.bind(this)));
     }),
-    (f.prototype.setFocus = function () {
+    (m.prototype.setFocus = function () {
       var t = this.$module;
       'true' !== t.getAttribute('data-disable-auto-focus') &&
         (t.setAttribute('tabindex', '-1'),
@@ -978,11 +964,11 @@ var DTFS;
         }),
         t.focus());
     }),
-    (f.prototype.handleClick = function (t) {
+    (m.prototype.handleClick = function (t) {
       var e = t.target;
       this.focusTarget(e) && t.preventDefault();
     }),
-    (f.prototype.focusTarget = function (t) {
+    (m.prototype.focusTarget = function (t) {
       if ('A' !== t.tagName || !1 === t.href) return !1;
       var e = this.getFragmentFromUrl(t.href),
         n = document.getElementById(e);
@@ -990,10 +976,10 @@ var DTFS;
       var o = this.getAssociatedLegendOrLabel(n);
       return !!o && (o.scrollIntoView(), n.focus({ preventScroll: !0 }), !0);
     }),
-    (f.prototype.getFragmentFromUrl = function (t) {
+    (m.prototype.getFragmentFromUrl = function (t) {
       return -1 !== t.indexOf('#') && t.split('#').pop();
     }),
-    (f.prototype.getAssociatedLegendOrLabel = function (t) {
+    (m.prototype.getAssociatedLegendOrLabel = function (t) {
       var e = t.closest('fieldset');
       if (e) {
         var n = e.getElementsByTagName('legend');
@@ -1007,14 +993,14 @@ var DTFS;
       }
       return document.querySelector("label[for='" + t.getAttribute('id') + "']") || t.closest('label');
     }));
-  var m = f;
-  function v(t) {
+  var f = m;
+  function b(t) {
     this.$module = t;
   }
-  (v.prototype.init = function () {
+  (b.prototype.init = function () {
     this.$module && this.setFocus();
   }),
-    (v.prototype.setFocus = function () {
+    (b.prototype.setFocus = function () {
       var t = this.$module;
       'true' !== t.getAttribute('data-disable-auto-focus') &&
         'alert' === t.getAttribute('role') &&
@@ -1025,27 +1011,36 @@ var DTFS;
           })),
         t.focus());
     });
-  var b = v;
-  function g(t) {
+  var v = b;
+  function y(t) {
     (this.$module = t),
       (this.$menuButton = t && t.querySelector('.govuk-js-header-toggle')),
-      (this.$menu = this.$menuButton && t.querySelector('#' + this.$menuButton.getAttribute('aria-controls')));
+      (this.$menu = this.$menuButton && t.querySelector('#' + this.$menuButton.getAttribute('aria-controls'))),
+      (this.menuIsOpen = !1),
+      (this.mql = null);
   }
-  (g.prototype.init = function () {
+  (y.prototype.init = function () {
     this.$module &&
       this.$menuButton &&
       this.$menu &&
-      (this.syncState(this.$menu.classList.contains('govuk-header__navigation-list--open')),
-      this.$menuButton.addEventListener('click', this.handleMenuButtonClick.bind(this)));
+      ('matchMedia' in window
+        ? ((this.mql = window.matchMedia('(min-width: 48.0625em)')),
+          'addEventListener' in this.mql ? this.mql.addEventListener('change', this.syncState.bind(this)) : this.mql.addListener(this.syncState.bind(this)),
+          this.syncState(),
+          this.$menuButton.addEventListener('click', this.handleMenuButtonClick.bind(this)))
+        : this.$menuButton.setAttribute('hidden', ''));
   }),
-    (g.prototype.syncState = function (t) {
-      this.$menuButton.classList.toggle('govuk-header__menu-button--open', t), this.$menuButton.setAttribute('aria-expanded', t);
+    (y.prototype.syncState = function () {
+      this.mql.matches
+        ? (this.$menu.removeAttribute('hidden'), this.$menuButton.setAttribute('hidden', ''))
+        : (this.$menuButton.removeAttribute('hidden'),
+          this.$menuButton.setAttribute('aria-expanded', this.menuIsOpen),
+          this.menuIsOpen ? this.$menu.removeAttribute('hidden') : this.$menu.setAttribute('hidden', ''));
     }),
-    (g.prototype.handleMenuButtonClick = function () {
-      var t = this.$menu.classList.toggle('govuk-header__navigation-list--open');
-      this.syncState(t);
+    (y.prototype.handleMenuButtonClick = function () {
+      (this.menuIsOpen = !this.menuIsOpen), this.syncState();
     });
-  var y = g;
+  var g = y;
   function w(t) {
     (this.$module = t), (this.$inputs = t.querySelectorAll('input[type="radio"]'));
   }
@@ -1278,8 +1273,8 @@ var DTFS;
       var e = t.getAttribute('href');
       return e.slice(e.indexOf('#'), e.length);
     }));
-  var L = A;
-  var S = (function (t) {
+  var S = A;
+  var L = (function (t) {
     var e = void 0 !== (t = void 0 !== t ? t : {}).scope ? t.scope : document;
     n(e.querySelectorAll('[data-module="govuk-button"]'), function (t) {
       new a(t).init();
@@ -1297,11 +1292,11 @@ var DTFS;
         new p(t).init();
       });
     var o = e.querySelector('[data-module="govuk-error-summary"]');
-    new m(o).init();
+    new f(o).init();
     var i = e.querySelector('[data-module="govuk-header"]');
-    new y(i).init(),
+    new g(i).init(),
       n(e.querySelectorAll('[data-module="govuk-notification-banner"]'), function (t) {
-        new b(t).init();
+        new v(t).init();
       }),
       n(e.querySelectorAll('[data-module="govuk-radios"]'), function (t) {
         new E(t).init();
@@ -1309,7 +1304,7 @@ var DTFS;
     var r = e.querySelector('[data-module="govuk-skip-link"]');
     new C(r).init(),
       n(e.querySelectorAll('[data-module="govuk-tabs"]'), function (t) {
-        new L(t).init();
+        new S(t).init();
       });
   })();
   (DTFS = void 0 === DTFS ? {} : DTFS).govukFrontend = e;

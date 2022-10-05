@@ -1,5 +1,5 @@
 import { generatePageVariables, get, post } from '.';
-import { BUTTONS, FIELDS, FOOTER, PAGES, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, PAGES, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
@@ -66,12 +66,13 @@ describe('controllers/tell-us-about-your-policy', () => {
 
         const expected = {
           CONTENT_STRINGS: {
-            PRODUCT,
-            FOOTER,
             BUTTONS,
-            ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
-            PAGE_TITLE: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.SINGLE_POLICY_PAGE_TITLE,
+            COOKIES_CONSENT,
+            FOOTER,
             HEADING: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.SINGLE_POLICY_HEADING,
+            PAGE_TITLE: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.SINGLE_POLICY_PAGE_TITLE,
+            PRODUCT,
+            ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
           },
           FIELDS: {
             AMOUNT_CURRENCY: {
@@ -114,12 +115,13 @@ describe('controllers/tell-us-about-your-policy', () => {
 
         const expected = {
           CONTENT_STRINGS: {
-            PRODUCT,
-            FOOTER,
             BUTTONS,
-            ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
-            PAGE_TITLE: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.MULTI_POLICY_PAGE_TITLE,
+            COOKIES_CONSENT,
+            FOOTER,
             HEADING: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.MULTI_POLICY_HEADING,
+            PAGE_TITLE: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.MULTI_POLICY_PAGE_TITLE,
+            PRODUCT,
+            ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
           },
           FIELDS: {
             AMOUNT_CURRENCY: {
@@ -168,6 +170,7 @@ describe('controllers/tell-us-about-your-policy', () => {
             PRODUCT,
             FOOTER,
             BUTTONS,
+            COOKIES_CONSENT,
             ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
           },
           FIELDS: {

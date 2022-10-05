@@ -1,4 +1,4 @@
-import { BUTTONS, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import { mapAnswersToContent } from '../../../helpers/data-content-mappings/map-answers-to-content';
 import { answersSummaryList } from '../../../helpers/summary-lists/answers-summary-list';
@@ -6,10 +6,11 @@ import { Request, Response } from '../../../../types';
 
 const PAGE_VARIABLES = {
   CONTENT_STRINGS: {
-    PRODUCT,
+    BUTTONS,
+    COOKIES_CONSENT,
     FOOTER,
     LINKS,
-    BUTTONS,
+    PRODUCT,
     ...PAGES.CHECK_YOUR_ANSWERS_PAGE,
   },
 };

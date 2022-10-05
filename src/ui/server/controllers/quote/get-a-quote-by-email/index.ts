@@ -1,4 +1,4 @@
-import { FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import { Request, Response } from '../../../../types';
 
@@ -9,9 +9,10 @@ const get = (req: Request, res: Response) => {
 
   return res.render(TEMPLATES.QUOTE.GET_A_QUOTE_BY_EMAIL, {
     CONTENT_STRINGS: {
-      PRODUCT,
+      COOKIES_CONSENT,
       FOOTER,
       LINKS,
+      PRODUCT,
       ...PAGES.GET_A_QUOTE_BY_EMAIL_PAGE,
     },
     BACK_LINK: previousRoute,

@@ -1,4 +1,4 @@
-import { BUTTONS, FIELDS, FOOTER, PAGES, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, PAGES, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
@@ -19,6 +19,7 @@ const generatePageVariables = (policyType: string) => {
       PRODUCT,
       FOOTER,
       BUTTONS,
+      COOKIES_CONSENT,
       ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
     },
     FIELDS: {

@@ -1,9 +1,10 @@
 type TellUsAboutPolicyPageVariablesContentStrings = {
-  PRODUCT: object;
-  FOOTER: object;
   BUTTONS: object;
-  PAGE_TITLE?: string;
+  COOKIES_CONSENT: object;
+  FOOTER: object;
   HEADING?: string;
+  PAGE_TITLE?: string;
+  PRODUCT: object;
 };
 
 type TellUsAboutPolicyPageVariablesFields = {

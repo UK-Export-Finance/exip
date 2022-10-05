@@ -8,6 +8,7 @@ const mockReq = () => {
 
   req = {
     body: {},
+    cookies: {},
     csrfToken: () => 'mock',
     flash: jest.fn(),
     headers: {
@@ -30,7 +31,13 @@ const mockRes = () => {
   res.redirect = jest.fn();
   res.render = jest.fn();
 
+  res.locals = {
+    csrfToken: 'mock',
+  };
+
   return res;
 };
 
-export { mockAnswers, mockSession, mockQuote, mockReq, mockRes };
+const mockNext = jest.fn();
+
+export { mockAnswers, mockNext, mockSession, mockQuote, mockReq, mockRes };

@@ -34,10 +34,18 @@ context('Need to start again exit page', () => {
   it('passes the audits', () => {
     cy.lighthouse({
       accessibility: 100,
-      performance: 80,
+      performance: 75,
       'best-practices': 100,
       seo: 60,
     });
+  });
+
+  it('renders an analytics cookies consent banner that can be accepted', () => {
+    cy.checkAnalyticsCookiesConsentAndAccept();
+  });
+
+  it('renders an analytics cookies consent banner that can be rejected', () => {
+    cy.rejectAnalyticsCookies();
   });
 
   it('renders a phase banner', () => {

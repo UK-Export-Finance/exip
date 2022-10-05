@@ -34,14 +34,10 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   it('passes the audits', () => {
     cy.lighthouse({
       accessibility: 100,
-      performance: 80,
+      performance: 75,
       'best-practices': 100,
       seo: 60,
     });
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
   });
 
   it('renders a back link with correct url', () => {
@@ -61,6 +57,18 @@ context('UK goods or services page - as an exporter, I want to check if my expor
         password: Cypress.config('basicAuthSecret'),
       },
     });
+  });
+
+  it('renders an analytics cookies consent banner that can be accepted', () => {
+    cy.checkAnalyticsCookiesConsentAndAccept();
+  });
+
+  it('renders an analytics cookies consent banner that can be rejected', () => {
+    cy.rejectAnalyticsCookies();
+  });
+
+  it('renders a phase banner', () => {
+    cy.checkPhaseBanner();
   });
 
   it('renders a page title and heading', () => {
@@ -99,7 +107,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     });
   });
 
-  describe.only('expandable details', () => {
+  describe('expandable details', () => {
     const { details } = ukGoodsOrServicesPage;
     const { DETAILS } = CONTENT_STRINGS;
 

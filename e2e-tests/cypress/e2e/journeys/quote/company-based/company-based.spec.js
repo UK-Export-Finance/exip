@@ -28,7 +28,7 @@ context('Company based page - as an exporter, I want to check if my company can 
   it('passes the audits', () => {
     cy.lighthouse({
       accessibility: 100,
-      performance: 80,
+      performance: 75,
       'best-practices': 100,
       seo: 60,
     });
@@ -36,6 +36,14 @@ context('Company based page - as an exporter, I want to check if my company can 
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
+  });
+
+  it('renders an analytics cookies consent banner that can be accepted', () => {
+    cy.checkAnalyticsCookiesConsentAndAccept();
+  });
+
+  it('renders an analytics cookies consent banner that can be rejected', () => {
+    cy.rejectAnalyticsCookies();
   });
 
   it('renders a back link with correct url', () => {

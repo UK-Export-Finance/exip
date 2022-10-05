@@ -1,5 +1,5 @@
 import get from '.';
-import { FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
@@ -30,9 +30,10 @@ describe('controllers/get-a-quote-by-email', () => {
 
     expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.GET_A_QUOTE_BY_EMAIL, {
       CONTENT_STRINGS: {
-        PRODUCT,
+        COOKIES_CONSENT,
         FOOTER,
         LINKS,
+        PRODUCT,
         ...PAGES.GET_A_QUOTE_BY_EMAIL_PAGE,
       },
       BACK_LINK: mockPreviousRoute,

@@ -13,6 +13,14 @@ context('Cookies page', () => {
     cy.url().should('include', ROUTES.COOKIES);
   });
 
+  it('renders an analytics cookies consent banner that can be accepted', () => {
+    cy.checkAnalyticsCookiesConsentAndAccept();
+  });
+
+  it('renders an analytics cookies consent banner that can be rejected', () => {
+    cy.rejectAnalyticsCookies();
+  });
+
   it('renders a heading', () => {
     cookiesPage.heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);

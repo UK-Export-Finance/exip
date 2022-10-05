@@ -10,7 +10,7 @@ import path from 'path';
 import flash from 'connect-flash';
 import basicAuth from 'express-basic-auth';
 
-import { csrf as csrfToken, security, seo } from './middleware';
+import { csrf as csrfToken, cookiesConsent, security, seo } from './middleware';
 import { Request, Response } from '../types';
 
 import * as dotenv from 'dotenv';
@@ -19,8 +19,8 @@ dotenv.config();
 
 import configureNunjucks from './nunjucks-configuration';
 
-import { rootRoute, quoteRoutes, applicationRoutes } from './routes';
-import { PRODUCT, FOOTER, PAGES } from './content-strings';
+import { rootRoute, cookiesConsentRoute, quoteRoutes, applicationRoutes } from './routes';
+import { COOKIES_CONSENT, FOOTER, PAGES, PRODUCT } from './content-strings';
 import { requiredDataProvided } from './middleware/required-data-provided';
 
 // @ts-ignore
@@ -64,6 +64,8 @@ app.use(
   }),
 );
 
+app.use(cookiesConsent);
+
 app.use(csrfToken());
 
 app.use(flash());
@@ -96,6 +98,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(requiredDataProvided);
 
 app.use('/', rootRoute);
+app.use('/', cookiesConsentRoute);
 app.use('/', quoteRoutes);
 app.use('/', applicationRoutes);
 
@@ -119,8 +122,9 @@ app.use(errorHandler);
 app.get('*', (req: Request, res: Response) =>
   res.render('page-not-found.njk', {
     CONTENT_STRINGS: {
-      PRODUCT,
+      COOKIES_CONSENT,
       FOOTER,
+      PRODUCT,
       ...PAGES.PAGE_NOT_FOUND_PAGE,
     },
   }),

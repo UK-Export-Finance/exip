@@ -8,6 +8,7 @@ module.exports = {
     jsEnabled: './scripts/js-enabled.js',
     govukFrontend: './scripts/govuk-frontend.js',
     accessibleAutocomplete: './scripts/accessible-autocomplete.js',
+    cookiesBanner: './scripts/cookies-banner.js',
   },
   output: {
     path: path.join(__dirname, 'public/js'),
