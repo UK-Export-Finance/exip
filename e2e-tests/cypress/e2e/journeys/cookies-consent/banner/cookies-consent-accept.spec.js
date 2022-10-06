@@ -51,7 +51,7 @@ context('Cookies consent - accept', () => {
     });
 
     it('should render a google tag manager script and data layer script', () => {
-      cy.checkAnalyticsScriptsAreRendered();
+      cy.checkAnalyticsScriptsAreNotRendered();
     });
 
     it('should add an EXIP analytics consent cookie with a value of true', () => {
