@@ -16,11 +16,11 @@ var expiryDate = function () {
 };
 
 var createRejectCookie = function () {
-  document.cookie = 'optionalCookies=false; SameSite=Lax; expires=' + expiryDate();
+  document.cookie = 'optionalCookies=false; path=/; SameSite=Lax; expires=' + expiryDate();
 };
 
 var createAcceptCookie = function () {
-  document.cookie = 'optionalCookies=true; SameSite=Lax; expires=' + expiryDate();
+  document.cookie = 'optionalCookies=true; path=/; SameSite=Lax; expires=' + expiryDate();
 };
 
 if (rejectButton) {
