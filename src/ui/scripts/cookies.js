@@ -10,17 +10,21 @@ var expiryDate = function () {
   // 1 day.
   date.setDate(date.getDate() + 1);
 
-  date.toGMTString();
+  date.toUTCString();
 
-  return date;
+  return 'expires=' + date + '; ';
+};
+
+const domain = function () {
+  return 'domain=' + window.location.hostname;
 };
 
 var createRejectCookie = function () {
-  document.cookie = 'optionalCookies=false; path=/; SameSite=Lax; expires=' + expiryDate();
+  document.cookie = 'optionalCookies=false; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
 };
 
 var createAcceptCookie = function () {
-  document.cookie = 'optionalCookies=true; path=/; SameSite=Lax; expires=' + expiryDate();
+  document.cookie = 'optionalCookies=true; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
 };
 
 if (rejectButton) {

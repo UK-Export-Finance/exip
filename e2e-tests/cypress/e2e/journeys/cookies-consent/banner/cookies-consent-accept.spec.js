@@ -1,4 +1,5 @@
 import partials from '../../../partials';
+import { buyerBodyPage } from '../../../pages/quote';
 import { COOKIES_CONSENT, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/quote/forms';
@@ -51,7 +52,7 @@ context('Cookies consent - accept', () => {
     });
 
     it('should render a google tag manager script and data layer script', () => {
-      cy.checkAnalyticsScriptsAreNotRendered();
+      cy.checkAnalyticsScriptsAreRendered();
     });
 
     it('should add an EXIP analytics consent cookie with a value of true', () => {
@@ -106,41 +107,5 @@ context('Cookies consent - accept', () => {
     it('should retain an EXIP analytics consent cookie with a value of true', () => {
       cy.checkAnalyticsCookieIsTrue();
     });
-  });
-
-  describe('after accepting cookies and manually navigating to another page via URL', () => {
-    beforeEach(() => {
-      partials.cookieBanner.question.acceptButton().click();
-      partials.cookieBanner.hideButton().click();
-
-      completeAndSubmitBuyerCountryForm();
-      cy.visit(ROUTES.QUOTE.BUYER_COUNTRY, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
-    });
-
-    it('should not render any banner elements', () => {
-      partials.cookieBanner.heading().should('not.exist');
-      partials.cookieBanner.hideButton().should('not.exist');
-      partials.cookieBanner.cookiesLink().should('not.exist');
-
-      partials.cookieBanner.question.copy1().should('not.exist');
-      partials.cookieBanner.question.copy2().should('not.exist');
-      partials.cookieBanner.question.acceptButton().should('not.exist');
-      partials.cookieBanner.question.rejectButton().should('not.exist');
-
-      partials.cookieBanner.accepted.copy().should('not.exist');
-    });
-
-    it('should render a google tag manager script and data layer script', () => {
-      cy.checkAnalyticsScriptsAreRendered();
-    });
-
-    it('should retain an EXIP analytics consent cookie with a value of true', () => {
-      cy.checkAnalyticsCookieIsTrue();
-    }); 
   });
 });
