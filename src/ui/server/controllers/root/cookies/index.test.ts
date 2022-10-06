@@ -6,7 +6,7 @@ import { Request, Response } from '../../../../types';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
 import generateValidationErrors from './validation';
 
-describe('controllers/cookies', () => {
+describe('controllers/root/cookies', () => {
   let req: Request;
   let res: Response;
 

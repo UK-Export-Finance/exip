@@ -11,7 +11,7 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data';
 import { mockReq, mockRes, mockAnswers, mockSession } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-describe('controllers/buyer-country', () => {
+describe('controllers/quote/buyer-country', () => {
   let req: Request;
   let res: Response;
 

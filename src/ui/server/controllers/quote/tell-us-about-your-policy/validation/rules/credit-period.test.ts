@@ -3,7 +3,7 @@ import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 
-describe('controllers/tell-us-about-your-policy/validation/rules/credit-period', () => {
+describe('controllers/quote/tell-us-about-your-policy/validation/rules/credit-period', () => {
   const mockErrors = {
     summary: [],
     errorList: {},

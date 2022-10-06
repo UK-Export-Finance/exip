@@ -14,7 +14,7 @@ import { Request, Response, SelectOption, TellUsAboutPolicyPageVariables } from 
 
 const { AMOUNT_CURRENCY, BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE, POLICY_LENGTH } = FIELD_IDS;
 
-describe('controllers/tell-us-about-your-policy', () => {
+describe('controllers/quote/tell-us-about-your-policy', () => {
   let req: Request;
   let res: Response;
 

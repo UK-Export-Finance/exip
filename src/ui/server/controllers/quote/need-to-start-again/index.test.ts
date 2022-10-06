@@ -4,7 +4,7 @@ import { ROUTES, TEMPLATES } from '../../../constants';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-describe('controllers/need-to-start-again', () => {
+describe('controllers/quote/need-to-start-again', () => {
   let req: Request;
   let res: Response;
 

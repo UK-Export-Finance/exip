@@ -7,7 +7,7 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-describe('controllers/company-based', () => {
+describe('controllers/quote/company-based', () => {
   let req: Request;
   let res: Response;
 

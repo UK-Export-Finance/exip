@@ -4,7 +4,7 @@ import { TEMPLATES } from '../../../constants';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-describe('controllers/cannot-obtain-cover', () => {
+describe('controllers/quote/cannot-obtain-cover', () => {
   let req: Request;
   let res: Response;
   const mockExitReason = 'mock';

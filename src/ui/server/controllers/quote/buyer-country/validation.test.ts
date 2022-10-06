@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../constants';
 import * as CONTENT_STRINGS from '../../../content-strings';
 import generateValidationErrors from '../../../helpers/validation';
 
-describe('controllers/buyer-country/validation', () => {
+describe('controllers/quote/buyer-country/validation', () => {
   describe('hasErrors', () => {
     describe('when no properties are provided', () => {
       it('should return true', () => {

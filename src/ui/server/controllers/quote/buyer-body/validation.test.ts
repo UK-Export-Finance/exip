@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../constants';
 import { ERROR_MESSAGES } from '../../../content-strings';
 import generateValidationErrors from '../../../helpers/validation';
 
-describe('controllers/buyer-body/validation', () => {
+describe('controllers/quote/buyer-body/validation', () => {
   describe('when no values are provided', () => {
     it('should return validation errors', () => {
       const result = validation({});

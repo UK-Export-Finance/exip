@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../constants';
 import { ERROR_MESSAGES } from '../../../content-strings';
 import generateValidationErrors from '../../../helpers/validation';
 
-describe('controllers/cookies/validation', () => {
+describe('controllers/root/cookies/validation', () => {
   describe('when no values are provided', () => {
     it('should return validation errors', () => {
       const result = validation({});

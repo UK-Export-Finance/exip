@@ -2,7 +2,7 @@ import post from '.';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-describe('controllers/cookies-consentt', () => {
+describe('controllers/root/cookies-consent', () => {
   let req: Request;
   let res: Response;
 
