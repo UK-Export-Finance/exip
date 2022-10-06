@@ -1,6 +1,6 @@
-import partials from '../../partials';
-import { COOKIES_CONSENT, PAGES } from '../../../../content-strings';
-import { ROUTES } from '../../../../constants';
+import partials from '../../../partials';
+import { COOKIES_CONSENT, PAGES } from '../../../../../content-strings';
+import { ROUTES } from '../../../../../constants';
 
 context('Cookies consent - initial/default', () => {
   beforeEach(() => {
