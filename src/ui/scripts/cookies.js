@@ -15,7 +15,6 @@ var expiryDate = function () {
   return date;
 };
 
-
 var createRejectCookie = function () {
   document.cookie = 'optionalCookies=false; SameSite=Lax; expires=' + expiryDate();
 };
@@ -26,14 +25,12 @@ var createAcceptCookie = function () {
 
 if (rejectButton) {
   rejectButton.addEventListener('click', function (event) {
-    // document.cookie = 'optionalCookies=false; SameSite=Lax; expires=' + expiryDate();
     createRejectCookie();
   });
 }
 
 if (acceptButton) {
   acceptButton.addEventListener('click', function (event) {
-    // document.cookie = 'optionalCookies=true; SameSite=Lax; expires=' + expiryDate();
     createAcceptCookie();
   });
 }
@@ -63,12 +60,10 @@ if (changeCookiesSubmitButton) {
       const answer = document.querySelector('input[name="optionalCookies"]:checked').value;
 
       if (answer === 'reject') {
-        console.log('======== rejecting');
         createRejectCookie();
       }
 
       if (answer === 'accept') {
-        console.log('======== accepting');
         createAcceptCookie();
       }
     }

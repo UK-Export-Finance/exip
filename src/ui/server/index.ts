@@ -19,7 +19,7 @@ dotenv.config();
 
 import configureNunjucks from './nunjucks-configuration';
 
-import { rootRoute, cookiesConsentRoute, quoteRoutes, applicationRoutes } from './routes';
+import { rootRoute, quoteRoutes, applicationRoutes } from './routes';
 import { COOKIES_CONSENT, FOOTER, PAGES, PRODUCT } from './content-strings';
 import { requiredDataProvided } from './middleware/required-data-provided';
 
@@ -98,7 +98,6 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(requiredDataProvided);
 
 app.use('/', rootRoute);
-app.use('/', cookiesConsentRoute);
 app.use('/', quoteRoutes);
 app.use('/', applicationRoutes);
 
