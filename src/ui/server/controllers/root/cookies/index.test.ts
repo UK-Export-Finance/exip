@@ -1,6 +1,6 @@
 import { PAGE_VARIABLES, get, post } from '.';
 import { FIELDS, PAGES } from '../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../constants';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
@@ -67,7 +67,7 @@ describe('controllers/root/cookies', () => {
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.OPTIONAL_COOKIES] = 'accept';
+        req.body[FIELD_IDS.OPTIONAL_COOKIES] = FIELD_VALUES.OPTIONAL_COOKIES.ACCEPT;
         req.cookies.optionalCookies = 'true';
       });
 

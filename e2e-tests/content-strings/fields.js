@@ -159,14 +159,13 @@ const FIELDS = {
   [FIELD_IDS.OPTIONAL_COOKIES]: {
     OPTIONS: {
       ACCEPT: {
-        ID: 'accept',
-        VALUE: 'accept',
-        // todo: move to field-values
+        ID: FIELD_VALUES.OPTIONAL_COOKIES.ACCEPT,
+        VALUE: FIELD_VALUES.OPTIONAL_COOKIES.ACCEPT,
         TEXT: 'Use cookies that measure your use of this service',
       },
       REJECT: {
-        ID: 'reject',
-        VALUE: 'reject',
+        ID: FIELD_VALUES.OPTIONAL_COOKIES.REJECT,
+        VALUE: FIELD_VALUES.OPTIONAL_COOKIES.REJECT,
         TEXT: 'Do not use cookies that measure your use of this service',
       },
     },

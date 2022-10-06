@@ -52,4 +52,5 @@ const post = (req: Request, res: Response) => {
     showSuccessMessageGoBackLink,
   });
 };
+
 export { PAGE_VARIABLES, get, post };
