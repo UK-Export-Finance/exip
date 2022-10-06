@@ -260,6 +260,29 @@ const COOKIES_PAGE = {
       },
     ],
   },
+  OPTIONAL_COOKIES: {
+    HEADING: 'Optional Cookies',
+    BODY_1:
+      'With your permission, we use Google Analytics to collect how you use this service and your web performance experience while visiting so we can improve it based on user needs.',
+    BODY_2: 'We do not allow Google to use or share the data about how you use this service.',
+    BODY_3: 'Google Analytics stores anonymised information about:',
+    ANALYTICS_INFO_LIST: [
+      {
+        text: 'how you got to this service',
+      },
+      {
+        text: 'the pages you visit on GOV.UK and government digital services, and how long you spend on each page',
+      },
+      {
+        text: "what you click on while you're visiting the site",
+      },
+    ],
+  },
+  SUCCESS_BANNER: {
+    HEADING: 'Your cookie settings were saved',
+    BODY: 'Government services may set additional cookies and, if so, will have their own cookie policy and banner.',
+    GO_BACK: 'Go back to the page you were looking at',
+  },
 };
 
 const NEED_TO_START_AGAIN = {

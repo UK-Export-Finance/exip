@@ -39,6 +39,7 @@ const ERROR_MESSAGES = {
     IS_EMPTY: 'Enter how many months you need the policy for',
     ABOVE_MAXIMUM: 'Enter policy length of no more than 22 months',
   },
+  [FIELD_IDS.OPTIONAL_COOKIES]: 'Select whether you want to accept analytics cookies',
 };
 
 module.exports = ERROR_MESSAGES;
