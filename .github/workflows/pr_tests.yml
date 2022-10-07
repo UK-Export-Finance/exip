@@ -69,6 +69,9 @@ jobs:
 
   e2e-tests:
     name: Run e2e tests
+    needs: set-environment
+    environment:
+      name: ${{ needs.set-environment.outputs.environment }}
     runs-on: ubuntu-latest
     strategy:
       # when one test fails, DO NOT cancel the other
@@ -78,6 +81,12 @@ jobs:
       fail-fast: false
       matrix:
         machines: [ 1, 2, 3, 4 ]
+
+    # Cancel Previous runs
+    concurrency:
+      group: gef-${{ github.workflow }}-${{ github.ref }}-${{ matrix.containers }}
+      cancel-in-progress: true
+
     env:
       BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
       BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
