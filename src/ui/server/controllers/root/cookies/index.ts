@@ -10,7 +10,8 @@ const PAGE_VARIABLES = {
 };
 
 const get = (req: Request, res: Response) => {
-  // store the previous URL so that we can use this in the POST return.
+  // store the previous URL so that we can use this in the POST res.render.
+
   req.flash('previousUrl', req.headers.referer);
 
   return res.render(TEMPLATES.COOKIES, {
@@ -40,7 +41,7 @@ const post = (req: Request, res: Response) => {
   let backLink = req.headers.referer;
 
   if (previousUrl) {
-    backLink = previousUrl;
+    backLink = previousUrl[previousUrl.length - 1];
   }
 
   return res.render(TEMPLATES.COOKIES, {

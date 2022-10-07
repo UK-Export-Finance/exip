@@ -92,7 +92,7 @@ describe('controllers/root/cookies', () => {
 
           req.flash = (property: string) => {
             const obj = {
-              previousUrl: mockPreviousUrl,
+              previousUrl: [mockPreviousUrl],
             };
 
             return obj[property];
@@ -121,7 +121,7 @@ describe('controllers/root/cookies', () => {
 
           req.flash = (property: string) => {
             const obj = {
-              previousUrl: mockPreviousUrl,
+              previousUrl: [mockPreviousUrl],
             };
 
             return obj[property];
