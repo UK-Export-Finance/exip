@@ -87,3 +87,4 @@ Currently, there is only a single staging environment.
 A docker image needs to be built, tagged and pushed to docker hub. Then the azure app can be restarted to pick up the latest.
 
 Contact the team for more information.
+
