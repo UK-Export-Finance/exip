@@ -1,7 +1,5 @@
 import checkAnalyticsCookieProperties from './check-analytics-cookie-properties';
 
-// TODO, rename
-
 const checkAnalyticsCookieIsFalse = () => {
   cy.getCookie('optionalCookies').should('exist');
 
