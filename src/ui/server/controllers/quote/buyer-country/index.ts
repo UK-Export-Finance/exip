@@ -50,6 +50,10 @@ export const get = async (req: Request, res: Response) => {
   const { submittedData } = req.session;
   const countries = await api.getCountries();
 
+  if (!countries || !countries.length) {
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+
   let countryValue;
 
   if (submittedData && submittedData[FIELD_IDS.BUYER_COUNTRY]) {
@@ -78,6 +82,11 @@ export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body);
 
   const countries = await api.getCountries();
+
+  if (!countries || !countries.length) {
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+
   const mappedCountries = mapCountries(countries);
 
   if (validationErrors) {
