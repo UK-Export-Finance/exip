@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.13.0](https://github.com/UK-Export-Finance/exip/compare/v1.12.0...v1.13.0) (2022-10-10)
+
+### Features
+
+* **EMS-458:** add skip to main content link ([#122](https://github.com/UK-Export-Finance/exip/issues/122)) ([dbbdfe5](https://github.com/UK-Export-Finance/exip/commit/dbbdfe583966c45585b90223feeb0f060fe4c2dd))
+
+* **EMS-459:** add back link to cookies page ([#122](https://github.com/UK-Export-Finance/exip/issues/122)) ([dbbdfe5](https://github.com/UK-Export-Finance/exip/commit/dbbdfe583966c45585b90223feeb0f060fe4c2dd))
+
 ## [1.12.0](https://github.com/UK-Export-Finance/exip/compare/v1.11.0...v1.12.0) (2022-10-10)
 
 
