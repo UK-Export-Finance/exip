@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.0](https://github.com/UK-Export-Finance/exip/compare/v1.13.0...v1.14.0) (2022-10-10)
+
+
+### Features
+
+* **EMS-462:** in buyer country page, redirect to problem-with-service page if no countries are returned from CIS API ([734f9a1](https://github.com/UK-Export-Finance/exip/commit/734f9a1e972f77dbac686988530c2477912ffb3a))
+
 ## [1.13.0](https://github.com/UK-Export-Finance/exip/compare/v1.12.0...v1.13.0) (2022-10-10)
 
 ### Features
