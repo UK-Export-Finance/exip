@@ -20,7 +20,7 @@ dotenv.config();
 import configureNunjucks from './nunjucks-configuration';
 
 import { rootRoute, quoteRoutes, applicationRoutes } from './routes';
-import { COOKIES_CONSENT, FOOTER, PAGES, PRODUCT } from './content-strings';
+import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from './content-strings';
 import { requiredDataProvided } from './middleware/required-data-provided';
 
 // @ts-ignore
@@ -123,6 +123,7 @@ app.get('*', (req: Request, res: Response) =>
     CONTENT_STRINGS: {
       COOKIES_CONSENT,
       FOOTER,
+      LINKS,
       PRODUCT,
       ...PAGES.PAGE_NOT_FOUND_PAGE,
     },
