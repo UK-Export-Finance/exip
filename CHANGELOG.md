@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.0](https://github.com/UK-Export-Finance/exip/compare/v1.11.0...v1.12.0) (2022-10-10)
+
+
+### Features
+
+* **EMS-382:** cookies page updates for optional/analytics cookies ([#119](https://github.com/UK-Export-Finance/exip/issues/119)) ([56a105f](https://github.com/UK-Export-Finance/exip/commit/56a105f76301474b5a32b39b54d412e20953777b))
+
 ## [1.11.0](https://github.com/UK-Export-Finance/exip/compare/v1.10.1...v1.11.0) (2022-09-28)
 
 
