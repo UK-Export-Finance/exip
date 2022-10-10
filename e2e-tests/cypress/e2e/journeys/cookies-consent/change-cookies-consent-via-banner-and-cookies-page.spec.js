@@ -47,7 +47,14 @@ context('Cookies consent - change via banner and cookies page', () => {
         },
       });
 
-      cy.checkCookiesConsentBannerDoesNotExist();
+      partials.cookieBanner.heading().should('not.be.visible');
+      partials.cookieBanner.hideButton().should('not.exist');
+      partials.cookieBanner.cookiesLink().should('not.be.visible');
+
+      partials.cookieBanner.question.copy1().should('not.be.visible');
+      partials.cookieBanner.question.copy2().should('not.be.visible');
+      partials.cookieBanner.question.acceptButton().should('not.be.visible');
+      partials.cookieBanner.question.rejectButton().should('not.be.visible');
     });
   });
 
@@ -91,7 +98,14 @@ context('Cookies consent - change via banner and cookies page', () => {
         },
       });
 
-      cy.checkCookiesConsentBannerDoesNotExist();
+      partials.cookieBanner.heading().should('not.be.visible');
+      partials.cookieBanner.hideButton().should('not.exist');
+      partials.cookieBanner.cookiesLink().should('not.be.visible');
+
+      partials.cookieBanner.question.copy1().should('not.be.visible');
+      partials.cookieBanner.question.copy2().should('not.be.visible');
+      partials.cookieBanner.question.acceptButton().should('not.be.visible');
+      partials.cookieBanner.question.rejectButton().should('not.be.visible');
     });
   });
 });
