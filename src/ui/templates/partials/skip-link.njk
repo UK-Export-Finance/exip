@@ -1,0 +1,9 @@
+{% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
+
+{{ govukSkipLink({
+  text: CONTENT_STRINGS.LINKS.SKIP_TO_MAIN_CONTENT,
+  href: "#main-content",
+  attributes: {
+    'data-cy': 'skip-link'
+  }
+}) }}

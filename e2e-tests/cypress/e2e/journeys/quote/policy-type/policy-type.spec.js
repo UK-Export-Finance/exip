@@ -46,7 +46,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.
         // this is out of our control
-        accessibility: 92,
+        accessibility: 90,
         performance: 75,
         'best-practices': 100,
         seo: 60,

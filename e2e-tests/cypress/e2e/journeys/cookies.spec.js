@@ -1,6 +1,6 @@
 import { cookiesPage } from '../pages';
 import partials from '../partials';
-import { BUTTONS, ERROR_MESSAGES, FIELDS, PAGES } from '../../../content-strings';
+import { BUTTONS, ERROR_MESSAGES, FIELDS, LINKS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../constants';
 
 const CONTENT_STRINGS = PAGES.COOKIES_PAGE;
@@ -31,6 +31,17 @@ context('Cookies page', () => {
 
   it('renders an analytics cookies consent banner that can be rejected', () => {
     cy.rejectAnalyticsCookies();
+  });
+
+  it('renders a back link with correct url', () => {
+    partials.backLink().should('exist');
+    partials.backLink().invoke('text').then((text) => {
+      expect(text.trim()).equal(LINKS.BACK);
+    });
+
+    const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
+
+    partials.backLink().should('have.attr', 'href', expected);
   });
 
   it('renders a heading', () => {
@@ -218,7 +229,7 @@ context('Cookies page', () => {
         beforeEach(() => {
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
           cookiesPage.optionalCookies.submitButton().click();
-        });        
+        });
 
         it(`should redirect to ${ROUTES.COOKIES}`, () => {
           cy.url().should('include', ROUTES.COOKIES);

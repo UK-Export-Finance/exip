@@ -9,6 +9,7 @@ const partials = {
   errorSummaryListItemLinks: () => cy.get('.govuk-error-summary li a'),
   footer,
   phaseBanner,
+  skipLink: () => cy.get('[data-cy="skip-link"]'),
 };
 
 export default partials;

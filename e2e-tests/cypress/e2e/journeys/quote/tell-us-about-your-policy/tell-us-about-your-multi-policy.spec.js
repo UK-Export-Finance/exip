@@ -48,7 +48,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
         // the radio component from design system has an invalid aria attribute.
         // this is out of our control
         accessibility: 92,
-        performance: 80,
+        performance: 76,
         'best-practices': 100,
         seo: 60,
       });

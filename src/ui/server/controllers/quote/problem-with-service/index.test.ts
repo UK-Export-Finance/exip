@@ -1,5 +1,5 @@
 import get from '.';
-import { COOKIES_CONSENT, FOOTER, PAGES, PRODUCT } from '../../../content-strings';
+import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
@@ -21,6 +21,7 @@ describe('controllers/problem-with-service', () => {
         CONTENT_STRINGS: {
           COOKIES_CONSENT,
           FOOTER,
+          LINKS,
           PRODUCT,
           ...PAGES.PROBLEM_WITH_SERVICE_PAGE,
         },

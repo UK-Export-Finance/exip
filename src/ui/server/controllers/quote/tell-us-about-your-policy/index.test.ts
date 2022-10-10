@@ -1,5 +1,5 @@
 import { generatePageVariables, get, post } from '.';
-import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, PAGES, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
@@ -70,6 +70,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             COOKIES_CONSENT,
             FOOTER,
             HEADING: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.SINGLE_POLICY_HEADING,
+            LINKS,
             PAGE_TITLE: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.SINGLE_POLICY_PAGE_TITLE,
             PRODUCT,
             ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
@@ -119,6 +120,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             COOKIES_CONSENT,
             FOOTER,
             HEADING: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.MULTI_POLICY_HEADING,
+            LINKS,
             PAGE_TITLE: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.MULTI_POLICY_PAGE_TITLE,
             PRODUCT,
             ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
@@ -169,6 +171,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           CONTENT_STRINGS: {
             PRODUCT,
             FOOTER,
+            LINKS,
             BUTTONS,
             COOKIES_CONSENT,
             ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
