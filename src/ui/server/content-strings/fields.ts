@@ -156,4 +156,18 @@ export const FIELDS = {
       TITLE: 'Policy length',
     },
   },
+  [FIELD_IDS.OPTIONAL_COOKIES]: {
+    OPTIONS: {
+      ACCEPT: {
+        ID: FIELD_VALUES.OPTIONAL_COOKIES.ACCEPT,
+        VALUE: FIELD_VALUES.OPTIONAL_COOKIES.ACCEPT,
+        TEXT: 'Use cookies that measure your use of this service',
+      },
+      REJECT: {
+        ID: FIELD_VALUES.OPTIONAL_COOKIES.REJECT,
+        VALUE: FIELD_VALUES.OPTIONAL_COOKIES.REJECT,
+        TEXT: 'Do not use cookies that measure your use of this service',
+      },
+    },
+  },
 };

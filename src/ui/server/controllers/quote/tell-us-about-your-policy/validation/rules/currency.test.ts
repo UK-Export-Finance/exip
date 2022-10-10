@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 
-describe('controllers/tell-us-about-your-policy/validation/rules/currency', () => {
+describe('controllers/quote/tell-us-about-your-policy/validation/rules/currency', () => {
   const mockErrors = {
     summary: [],
     errorList: {},

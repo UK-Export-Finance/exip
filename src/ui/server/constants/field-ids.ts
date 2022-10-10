@@ -1,4 +1,5 @@
 export const FIELD_IDS = {
+  OPTIONAL_COOKIES: 'optionalCookies',
   VALID_BUYER_BODY: 'validBuyerBody',
   VALID_COMPANY_BASE: 'validCompanyBase',
   BUYER_COUNTRY: 'buyerCountry',

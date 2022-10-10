@@ -61,7 +61,7 @@
 {% endif %}
 
 {% if not cookieConsentDecision %}
-  <form method="POST" action="/cookies-consent">
+  <form method="POST" action="/cookies-consent" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 

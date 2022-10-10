@@ -7,7 +7,7 @@ import { quoteSummaryList } from '../../../helpers/summary-lists/quote-summary-l
 import { mockReq, mockRes, mockSession } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-describe('controllers/your-quote', () => {
+describe('controllers/quote/your-quote', () => {
   let req: Request;
   let res: Response;
 

@@ -7,7 +7,7 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-describe('controllers/buyer-body', () => {
+describe('controllers/quote/buyer-body', () => {
   let req: Request;
   let res: Response;
 

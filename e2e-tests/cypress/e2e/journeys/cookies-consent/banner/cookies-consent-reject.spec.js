@@ -1,7 +1,7 @@
-import partials from '../../partials';
-import { COOKIES_CONSENT, PAGES } from '../../../../content-strings';
-import { ROUTES } from '../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../support/quote/forms';
+import partials from '../../../partials';
+import { COOKIES_CONSENT, PAGES } from '../../../../../content-strings';
+import { ROUTES } from '../../../../../constants';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/quote/forms';
 
 context('Cookies consent - reject', () => {
   beforeEach(() => {
@@ -84,42 +84,6 @@ context('Cookies consent - reject', () => {
       partials.cookieBanner.question.rejectButton().click();
       partials.cookieBanner.hideButton().click();
       completeAndSubmitBuyerCountryForm();
-    });
-
-    it('should not render any banner elements', () => {
-      partials.cookieBanner.heading().should('not.exist');
-      partials.cookieBanner.hideButton().should('not.exist');
-      partials.cookieBanner.cookiesLink().should('not.exist');
-
-      partials.cookieBanner.question.copy1().should('not.exist');
-      partials.cookieBanner.question.copy2().should('not.exist');
-      partials.cookieBanner.question.rejectButton().should('not.exist');
-      partials.cookieBanner.question.rejectButton().should('not.exist');
-
-      partials.cookieBanner.rejected.copy().should('not.exist');
-    });
-
-    it('should NOT render a google tag manager script and data layer script', () => {
-      cy.checkAnalyticsScriptsAreNotRendered();
-    });
-
-    it('should retain an EXIP analytics consent cookie with a value of false', () => {
-      cy.checkAnalyticsCookieIsFalse();
-    });
-  });
-
-  describe('after rejecting cookies and manually navigating to another page via URL', () => {
-    beforeEach(() => {
-      partials.cookieBanner.question.rejectButton().click();
-      partials.cookieBanner.hideButton().click();
-
-      completeAndSubmitBuyerCountryForm();
-      cy.visit(ROUTES.QUOTE.BUYER_COUNTRY, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
     });
 
     it('should not render any banner elements', () => {

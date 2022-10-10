@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 
-describe('controllers/policy-type/validation/rules/policy-type', () => {
+describe('controllers/quote/policy-type/validation/rules/policy-type', () => {
   const mockErrors = {
     summary: [],
     errorList: {},

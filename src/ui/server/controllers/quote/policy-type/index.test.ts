@@ -6,7 +6,7 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data';
 import { mockReq, mockRes, mockAnswers } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-describe('controllers/policy-type', () => {
+describe('controllers/quote/policy-type', () => {
   let req: Request;
   let res: Response;
 

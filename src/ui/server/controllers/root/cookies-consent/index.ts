@@ -1,4 +1,4 @@
-import { Request, Response } from '../../../types';
+import { Request, Response } from '../../../../types';
 
 const post = (req: Request, res: Response) => {
   req.session.cookieConsentNewDecision = true;

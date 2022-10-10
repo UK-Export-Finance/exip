@@ -1,7 +1,7 @@
 import validation from '.';
 import validationRules from './rules';
 
-describe('controllers/policy-type/validation', () => {
+describe('controllers/quote/policy-type/validation', () => {
   it('should return an array of results from rule functions', () => {
     const mockBody = {};
 

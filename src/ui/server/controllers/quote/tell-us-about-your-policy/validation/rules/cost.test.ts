@@ -3,7 +3,7 @@ import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 
-describe('controllers/tell-us-about-your-policy/validation/rules/cost', () => {
+describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', () => {
   describe('hasDisllowedCharacters', () => {
     describe('with character that is not a number or comma', () => {
       it('should return true', () => {
