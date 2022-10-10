@@ -9,6 +9,7 @@ export const LINKS = {
   },
   FEEDBACK: 'feedback',
   GIVE_FEEDBACK: 'Give feedback',
+  SKIP_TO_MAIN_CONTENT: 'Skip to main content',
   EXTERNAL: {
     GUIDANCE: 'https://www.gov.uk/guidance/export-insurance-policy#eligibility',
     BEFORE_YOU_START: 'https://www.gov.uk/guidance/get-a-quote-for-ukef-export-insurance',
