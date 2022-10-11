@@ -1,4 +1,5 @@
-import { getSubmittedFields, taskIsInProgress, taskIsComplete, areTaskDependenciesMet, taskStatus } from './task-helpers';
+import { getGroupById, getTaskById, getSubmittedFields, taskIsInProgress, taskIsComplete, areTaskDependenciesMet, taskStatus } from './task-helpers';
+import { TaskListData, TaskListDataTask } from '../../../types';
 import { TASKS } from '../../content-strings';
 
 describe('server/helpers/task-helpers', () => {
@@ -6,6 +7,42 @@ describe('server/helpers/task-helpers', () => {
     amount: 1234,
     policyType: 'mock',
   };
+
+  describe('getGroupById', () => {
+    it('should return a group that matches the provided id', () => {
+      const mockGroups = [
+        { title: 'Group A', id: 'groupA', tasks: [] },
+        { title: 'Group B', id: 'groupB', tasks: [] },
+        { title: 'Group C', id: 'groupC', tasks: [] },
+      ] as TaskListData;
+
+      const mockGroupId = 'groupB';
+
+      const result = getGroupById(mockGroups, mockGroupId);
+
+      const expected = mockGroups[1];
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('getTaskById', () => {
+    it('should return a task that matches the provided id', () => {
+      const mockGroupTasks = [
+        { title: 'Task A', id: 'taskA' },
+        { title: 'Task B', id: 'taskB' },
+        { title: 'Task C', id: 'taskC' },
+      ] as Array<TaskListDataTask>;
+
+      const mockTaskId = 'taskB';
+
+      const result = getTaskById(mockGroupTasks, mockTaskId);
+
+      const expected = mockGroupTasks[1];
+
+      expect(result).toEqual(expected);
+    });
+  });
 
   describe('getSubmittedFields', () => {
     it('should return fields that are provided and also in provided submitted fields', () => {

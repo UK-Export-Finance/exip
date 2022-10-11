@@ -1,24 +1,30 @@
 import { TaskListData } from '../../../../types';
 import initialChecksTasks from './initial-checks';
-import prepeApplicationTasks from './prepare-application';
+import prepareApplicationTasks from './prepare-application';
 import { TASKS } from '../../../content-strings';
+import { GROUP_IDS } from '../../../constants';
 
 /**
  * generateGroupsAndTasks
- * @returns {Object} Task lists groups and tasks
+ * @returns {Array} Task list groups and tasks
  */
 const generateGroupsAndTasks = (): TaskListData => {
-  const groups = {} as TaskListData;
+  let groups = [
+    {
+      title: TASKS.LIST.INITIAL_CHECKS.TITLE,
+      id: GROUP_IDS.INITIAL_CHECKS,
+      tasks: initialChecksTasks(),
+    },
+  ] as TaskListData;
 
-  groups.INITIAL_CHECKS = {
-    title: TASKS.LIST.INITIAL_CHECKS.TITLE,
-    tasks: initialChecksTasks(),
-  };
-
-  groups.PREPARE_APPLICATION = {
-    title: TASKS.LIST.PREPARE_APPLICATION.TITLE,
-    tasks: prepeApplicationTasks(groups),
-  };
+  groups = [
+    ...groups,
+    {
+      title: TASKS.LIST.PREPARE_APPLICATION.TITLE,
+      id: GROUP_IDS.PREPARE_APPLICATION,
+      tasks: prepareApplicationTasks(groups),
+    },
+  ] as TaskListData;
 
   return groups;
 };

@@ -14,32 +14,10 @@ type TaskListTask = {
   status: string;
 };
 
-type TaskListDataGroupTasksPrepareApplication = {
-  POLICY_TYPE: TaskListDataTask;
-  EXPORTS_TO_INSURE: TaskListDataTask;
-  ABOUT_BUSINESS: TaskListDataTask;
-  BUYER: TaskListDataTask;
-};
-
-type TaskListDataGroupTasksInitialChecks = {
-  ELIGIBILITY: TaskListDataTask;
-  CONTACT_DETAILS: TaskListDataTask;
-};
-
-interface TaskListGroupInitialChecks {
+type TaskListDataGroup = {
   title: string;
-  tasks: TaskListDataGroupTasksInitialChecks;
-}
-
-interface TaskListGroupPrepareApplication {
-  title: string;
-  tasks: TaskListDataGroupTasksPrepareApplication;
-}
-
-type TaskListData = {
-  INITIAL_CHECKS: TaskListGroupInitialChecks;
-  PREPARE_APPLICATION: TaskListGroupPrepareApplication;
-  // SUBMIT_APPLICATION: string;
+  id: string;
+  tasks: Array<TaskListDataTask>;
 };
 
 type TaskListGroup = {
@@ -47,4 +25,8 @@ type TaskListGroup = {
   tasks: Array<TaskListTask>;
 };
 
-export { TaskListData, TaskListDataTask, TaskListGroup, TaskListDataGroupTasksInitialChecks, TaskListDataGroupTasksPrepareApplication, TaskListTask };
+type TaskListData = Array<TaskListDataGroup>;
+
+type TaskList = Array<TaskListGroup>;
+
+export { TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask, TaskList };

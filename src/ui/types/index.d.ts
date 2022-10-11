@@ -11,10 +11,10 @@ import { SelectOption } from './select-option';
 import { SubmittedData } from './submitted-data';
 import { SummaryListItem, SummaryListItemData } from './summary-list';
 import {
+  TaskList,
   TaskListData,
   TaskListDataTask,
-  TaskListDataGroupTasksInitialChecks,
-  TaskListDataGroupTasksPrepareApplication,
+  TaskListDataGroup,
   TaskListGroup,
   TaskListTask,
 } from './task-list';
@@ -46,10 +46,10 @@ export {
   SubmittedData,
   SummaryListItemData,
   SummaryListItem,
+  TaskList,
   TaskListData,
   TaskListDataTask,
-  TaskListDataGroupTasksInitialChecks,
-  TaskListDataGroupTasksPrepareApplication,
+  TaskListDataGroup,
   TaskListGroup,
   TaskListTask,
   TellUsAboutPolicyPageVariablesContentStrings,

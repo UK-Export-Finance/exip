@@ -41,46 +41,46 @@ Each task expects the following structure:
 A complete task list structure with multiple groups should be as follows:
 
 ```js
-const exampleTaskList = {
-  INITIAL_CHECKS: {
+const exampleTaskList = [
+  {
     title: 'Initial checks',
-    tasks: {
-      ELIGIBILITY: {
+    tasks: [
+      {
         href: '/root-to-form',
         title: 'Eligibility',
         id: 'eligibility',
         fields: ['fieldA', 'fieldB'],
         dependencies: [],
       },
-      ACCOUNT: {
+      {
         href: '/account/create',
         title: 'Create account',
         id: 'create-account',
         fields: ['userId', 'firstName', 'lastName'],
         dependencies: ['fieldA', 'fieldB'],
       },
-    },
+    ],
   },
-  APPLICATION: {
+  {
     title: 'Prepare application',
-    tasks: {
-      COMPANY: {
+    tasks: [
+      {
         href: '/company',
         title: 'Company information',
         id: 'company',
         fields: ['companyName', 'companyId'],
         dependencies: ['fieldA', 'fieldB', 'userId', 'firstName', 'lastName'],
       },
-      HISTORY: {
+      {
         href: '/historical-information',
         title: 'Historical information',
         id: 'historical',
         fields: ['companyName', 'companyId'],
         dependencies: [],
       },
-    }
+    ],
   },
-};
+];
 ```
 
 ### Submitted answers
@@ -103,7 +103,7 @@ The larger your tasks and groups become, the trickier management becomes. For ea
 
 ### Returned data structure
 
-The returned data structure is simpler - only contains the data that a UI needs, including automatically generated status tags:
+The returned data structure is simpler and only contains the data that a UI needs, including automatically generated status tags:
 
 ```js
 [
@@ -147,28 +147,31 @@ Create groups and tasks, passing the result to a page/template:
 // const generateTaskList = require './task-list';
 
 const getTaskList = (req, res) => {
-  const groupsAndTasks = {
-    INITIAL_CHECKS: {
+  const groupsAndTasks = [
+    {
       title: 'Initial checks',
-      tasks: {
-        ELIGIBILITY: {
+      tasks: [
+        {
           href: '/root-to-form',
           title: 'Eligibility',
           id: 'eligibility',
           fields: ['fieldA', 'fieldB'],
           dependencies: [],
         },
-        ACCOUNT: {
+        {
           href: '/account/create',
           title: 'Create account',
           id: 'create-account',
           fields: ['userId', 'firstName', 'lastName'],
           dependencies: ['fieldA', 'fieldB'],
         },
-      },
+      ],
     },
-    APPLICATION: { ... }
-  };
+    {
+      title: 'Second group',
+      tasks: [ ... ],
+    },
+  ];
 
   // generate task list statuses and structure for UI component.
   const taskListData = generateTaskList(groupsAndTasks, req.session.submittedAnswers);

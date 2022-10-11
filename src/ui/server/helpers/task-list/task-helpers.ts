@@ -1,5 +1,23 @@
-import { SubmittedData, TaskListDataTask } from '../../../types';
+import { SubmittedData, TaskListData, TaskListDataGroup, TaskListDataTask } from '../../../types';
 import { TASKS } from '../../content-strings';
+
+/**
+ * getTaskById
+ * @param {Array} groups Task list groups
+ * @param {String} groupId ID of the group to get
+ * @returns {Object} Group
+ */
+export const getGroupById = (groups: TaskListData, groupId: string): TaskListDataGroup =>
+  groups.find((group: TaskListDataGroup) => group.id === groupId) as TaskListDataGroup;
+
+/**
+ * getTaskById
+ * @param {Array} groupTasks Tasks in a group
+ * @param {String} taskId ID of the task to get
+ * @returns {Object} Task
+ */
+export const getTaskById = (groupTasks: Array<TaskListDataTask>, taskId: string): TaskListDataTask =>
+  groupTasks.find((task: TaskListDataTask) => task.id === taskId) as TaskListDataTask;
 
 /**
  * getSubmittedFields
@@ -113,5 +131,5 @@ export const taskStatus = (task: TaskListDataTask, submittedData: SubmittedData)
     return TASKS.STATUS.COMPLETED;
   }
 
-  return '';
+  return '-';
 };

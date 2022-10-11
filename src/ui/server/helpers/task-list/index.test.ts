@@ -1,61 +1,43 @@
-import generateTaskList, { generateTaskStates, generateSimplifiedTaskList } from '.';
+import generateTaskList, { generateTaskStatuses, generateSimplifiedTaskList } from '.';
 import { taskStatus } from './task-helpers';
 import generateGroupsAndTasks from './generate-groups-and-tasks';
+import { TaskListDataTask, SubmittedData } from '../../../types';
 
 describe('server/helpers/task-list', () => {
   const mockSubmittedData = {};
 
-  describe('generateTaskStates', () => {
-    it('should return an object of groups and tasks with task statuses', () => {
+  describe('generateTaskStatuses', () => {
+    it('should return an array of groups and tasks with task statuses', () => {
       const mockTaskListData = generateGroupsAndTasks();
 
-      const result = generateTaskStates(mockTaskListData, mockSubmittedData);
+      const result = generateTaskStatuses(mockTaskListData, mockSubmittedData);
 
-      const taskStateMapper = (groupKey: string, taskKey: string) => {
-        // const task = mockTaskListData.INITIAL_CHECKS.tasks[taskKey];
-        const task = mockTaskListData[groupKey].tasks[taskKey];
-
-        return {
-          href: task.href,
-          title: task.title,
-          id: task.id,
-          status: taskStatus(task, mockSubmittedData),
-        };
-      };
+      const mapTask = (task: TaskListDataTask, submittedData: SubmittedData) => ({
+        ...task,
+        status: taskStatus(task, submittedData),
+      });
 
       const expectedTasks = {
         initialChecks: () => {
-          const mapped = {};
-          const taskKeys = Object.keys(mockTaskListData.INITIAL_CHECKS.tasks);
-
-          taskKeys.forEach((taskKey: string) => {
-            mapped[taskKey] = taskStateMapper('INITIAL_CHECKS', taskKey);
-          });
-
-          return mapped;
+          const { tasks } = mockTaskListData[0];
+          return tasks.map((task) => mapTask(task, mockSubmittedData));
         },
         prepareApplication: () => {
-          const mapped = {};
-          const taskKeys = Object.keys(mockTaskListData.PREPARE_APPLICATION.tasks);
-
-          taskKeys.forEach((taskKey: string) => {
-            mapped[taskKey] = taskStateMapper('PREPARE_APPLICATION', taskKey);
-          });
-
-          return mapped;
+          const { tasks } = mockTaskListData[1];
+          return tasks.map((task) => mapTask(task, mockSubmittedData));
         },
       };
 
-      const expected = {
-        INITIAL_CHECKS: {
-          ...mockTaskListData.INITIAL_CHECKS,
+      const expected = [
+        {
+          ...mockTaskListData[0],
           tasks: expectedTasks.initialChecks(),
         },
-        PREPARE_APPLICATION: {
-          ...mockTaskListData.PREPARE_APPLICATION,
+        {
+          ...mockTaskListData[1],
           tasks: expectedTasks.prepareApplication(),
         },
-      };
+      ];
 
       expect(result).toEqual(expected);
     });
@@ -64,14 +46,14 @@ describe('server/helpers/task-list', () => {
   describe('generateSimplifiedTaskList', () => {
     it('should return a simplified task list in an array of objects structure', () => {
       const mockTaskListData = generateGroupsAndTasks();
-      const taskListDataWithStates = generateTaskStates(mockTaskListData, mockSubmittedData);
+      const taskListDataWithStates = generateTaskStatuses(mockTaskListData, mockSubmittedData);
 
       const result = generateSimplifiedTaskList(taskListDataWithStates);
 
       const expected = [
         {
-          title: mockTaskListData.INITIAL_CHECKS.title,
-          tasks: Object.values(mockTaskListData.INITIAL_CHECKS.tasks).map((task) => ({
+          title: taskListDataWithStates[0].title,
+          tasks: Object.values(taskListDataWithStates[0].tasks).map((task) => ({
             id: task.id,
             href: task.href,
             status: task.status,
@@ -79,8 +61,8 @@ describe('server/helpers/task-list', () => {
           })),
         },
         {
-          title: mockTaskListData.PREPARE_APPLICATION.title,
-          tasks: Object.values(mockTaskListData.PREPARE_APPLICATION.tasks).map((task) => ({
+          title: taskListDataWithStates[1].title,
+          tasks: Object.values(taskListDataWithStates[1].tasks).map((task) => ({
             id: task.id,
             href: task.href,
             status: task.status,
@@ -99,7 +81,7 @@ describe('server/helpers/task-list', () => {
 
       const result = generateTaskList(mockTaskListData, mockSubmittedData);
 
-      const withStatuses = generateTaskStates(mockTaskListData, mockSubmittedData);
+      const withStatuses = generateTaskStatuses(mockTaskListData, mockSubmittedData);
 
       const expected = generateSimplifiedTaskList(withStatuses);
 

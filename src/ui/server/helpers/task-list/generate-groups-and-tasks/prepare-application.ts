@@ -1,48 +1,57 @@
-import { TaskListDataTask, TaskListData, TaskListDataGroupTasksPrepareApplication } from '../../../../types';
-import { ROUTES } from '../../../constants';
+import { TaskListDataTask, TaskListData } from '../../../../types';
+import { GROUP_IDS, ROUTES, TASK_IDS } from '../../../constants';
 import { TASKS } from '../../../content-strings';
+import { getGroupById, getTaskById } from '../task-helpers';
 
-const createPrepareApplicationTasks = (otherGroups: TaskListData): TaskListDataGroupTasksPrepareApplication => {
+// NOTE: task list structure is temporary until design is final.
+// This is just an example.
+/**
+ * createPrepareApplicationTasks
+ * @param {Array} otherGroups Task list groups
+ * @returns {Array} Tasks
+ */
+const createPrepareApplicationTasks = (otherGroups: TaskListData): Array<TaskListDataTask> => {
+  const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
+
   const POLICY_TYPE = {
     href: ROUTES.QUOTE.POLICY_TYPE,
     title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE,
-    id: 'mock',
+    id: TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE,
     fields: [],
-    dependencies: [...otherGroups.INITIAL_CHECKS.tasks.ELIGIBILITY.fields, ...otherGroups.INITIAL_CHECKS.tasks.CONTACT_DETAILS.fields],
-  } as TaskListDataTask;
-
-  const EXPORTS_TO_INSURE = {
-    href: '/mock',
-    title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTS_TO_INSURE,
-    id: 'mock',
-    fields: [],
-    dependencies: POLICY_TYPE.fields,
-  } as TaskListDataTask;
-
-  const ABOUT_BUSINESS = {
-    href: '/mock',
-    title: TASKS.LIST.PREPARE_APPLICATION.TASKS.ABOUT_BUSINESS,
-    id: 'mock',
-    fields: [],
-    dependencies: [...EXPORTS_TO_INSURE.dependencies!, ...EXPORTS_TO_INSURE.fields!],
-  } as TaskListDataTask;
-
-  const BUYER = {
-    href: '/mock',
-    title: TASKS.LIST.PREPARE_APPLICATION.TASKS.BUYER,
-    id: 'mock',
-    fields: [],
-    dependencies: [],
-  } as TaskListDataTask;
-
-  const sections = {
-    POLICY_TYPE,
-    EXPORTS_TO_INSURE,
-    ABOUT_BUSINESS,
-    BUYER,
+    dependencies: [
+      ...getTaskById(initialChecksGroup.tasks, TASK_IDS.INITIAL_CHECKS.ELIGIBILITY).fields,
+      ...getTaskById(initialChecksGroup.tasks, TASK_IDS.INITIAL_CHECKS.CONTACT_DETAILS).fields,
+    ],
   };
 
-  return sections;
+  const EXPORTS_TO_INSURE = {
+    href: '#',
+    title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTS_TO_INSURE,
+    id: TASK_IDS.PREPARE_APPLICATION.EXPORTS_TO_INSURE,
+    fields: [],
+    dependencies: [...POLICY_TYPE.fields, ...POLICY_TYPE.dependencies],
+  };
+
+  const tasks = [
+    POLICY_TYPE,
+    EXPORTS_TO_INSURE,
+    {
+      href: '#',
+      title: TASKS.LIST.PREPARE_APPLICATION.TASKS.ABOUT_BUSINESS,
+      id: TASK_IDS.PREPARE_APPLICATION.ABOUT_BUSINESS,
+      fields: [],
+      dependencies: [...EXPORTS_TO_INSURE.dependencies, ...EXPORTS_TO_INSURE.fields],
+    },
+    {
+      href: '#',
+      title: TASKS.LIST.PREPARE_APPLICATION.TASKS.BUYER,
+      id: TASK_IDS.PREPARE_APPLICATION.BUYER,
+      fields: [],
+      dependencies: [],
+    },
+  ] as Array<TaskListDataTask>;
+
+  return tasks;
 };
 
 export default createPrepareApplicationTasks;

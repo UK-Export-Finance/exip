@@ -1,23 +1,29 @@
-import { TaskListDataTask, TaskListDataGroupTasksInitialChecks } from '../../../../types';
+import { TaskListDataTask } from '../../../../types';
 import { TASKS } from '../../../content-strings';
+import { TASK_IDS } from '../../../constants';
 
-const createInitialChecksTasks = (): TaskListDataGroupTasksInitialChecks => ({
-  ELIGIBILITY: {
-    href: 'mock',
+// NOTE: task list structure is temporary until design is final.
+// This is just an example.
+
+/**
+ * createInitialChecksTasks
+ * @returns {Array} Tasks
+ */
+const createInitialChecksTasks = (): Array<TaskListDataTask> => [
+  {
+    href: '#',
     title: TASKS.LIST.INITIAL_CHECKS.TASKS.ELIGIBILITY,
-    id: 'mock',
-    fields: [
-      // 'buyerCountry',
-    ],
+    id: TASK_IDS.INITIAL_CHECKS.ELIGIBILITY,
+    fields: ['a'],
     dependencies: [],
   } as TaskListDataTask,
-  CONTACT_DETAILS: {
-    href: 'mock',
+  {
+    href: '#',
     title: TASKS.LIST.INITIAL_CHECKS.TASKS.CONTACT_DETAILS,
-    id: 'mock',
-    fields: [],
+    id: TASK_IDS.INITIAL_CHECKS.CONTACT_DETAILS,
+    fields: ['b', 'c'],
     dependencies: [],
   } as TaskListDataTask,
-});
+];
 
 export default createInitialChecksTasks;
