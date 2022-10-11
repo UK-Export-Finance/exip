@@ -4,4 +4,5 @@ export * from './field-values';
 export * from './percentages-of-cover';
 export * from './routes';
 export * from './supported-currencies';
+export * from './task-ids';
 export * from './templates';

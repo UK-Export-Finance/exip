@@ -5,7 +5,7 @@ module.exports = {
     'server/controllers/**/*.{ts,}',
     'server/middleware/**/*.{ts,}',
     'server/routes/**/*.{ts,}',
-    'server/helpers/*.{ts,}',
+    'server/helpers/**/*.{ts,}',
     'server/generate-quote/*.{ts,}',
   ],
   coverageDirectory: 'generated_reports/coverage/tests',

@@ -1,0 +1,32 @@
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+
+{% macro render(params) %}
+
+  {% set status = params.status %}
+  {% set href = params.href %}
+ 
+  {% set classes %}
+  {% endset %}
+
+  {% if status  === "Cannot start yet" %}
+    {% set classes = "govuk-tag--grey" %}
+  {% endif %}
+
+  {% if status  === "In progress" %}
+    {% set classes = "govuk-tag--blue" %}
+  {% endif %}
+
+  {% if status === "Start now" %}
+
+    <a href="{{ href }}" class="govuk-button govuk-link govuk-!-margin-bottom-0">{{ status }}</a>
+
+    {% else %}
+
+    {{ govukTag({
+      text: status,
+      classes: classes
+    }) }}
+
+  {% endif %}
+
+{% endmacro %}
