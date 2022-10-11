@@ -10,6 +10,7 @@ import { Quote, QuoteContent } from './quote';
 import { SelectOption } from './select-option';
 import { SubmittedData } from './submitted-data';
 import { SummaryListItem, SummaryListItemData } from './summary-list';
+import { TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
 import {
   TellUsAboutPolicyPageVariablesContentStrings,
   TellUsAboutPolicyPageVariablesFields,
@@ -38,6 +39,12 @@ export {
   SubmittedData,
   SummaryListItemData,
   SummaryListItem,
+  TaskList,
+  TaskListData,
+  TaskListDataTask,
+  TaskListDataGroup,
+  TaskListGroup,
+  TaskListTask,
   TellUsAboutPolicyPageVariablesContentStrings,
   TellUsAboutPolicyPageVariablesFields,
   TellUsAboutPolicyPageVariables,

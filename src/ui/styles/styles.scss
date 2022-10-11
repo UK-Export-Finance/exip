@@ -2,6 +2,7 @@ $govuk-new-link-styles: true;
 
 @import 'node_modules/govuk-frontend/govuk/all';
 @import './accessible-autocomplete.min.scss';
+@import './task-list.scss';
 
 .ukef-white-text {
   color: govuk-colour('white');
