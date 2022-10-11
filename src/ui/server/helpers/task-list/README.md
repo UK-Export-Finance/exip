@@ -44,6 +44,7 @@ A complete task list structure with multiple groups should be as follows:
 const exampleTaskList = [
   {
     title: 'Initial checks',
+    id: 'initialChecks',
     tasks: [
       {
         href: '/root-to-form',
@@ -63,6 +64,7 @@ const exampleTaskList = [
   },
   {
     title: 'Prepare application',
+    id: 'prepareApplication',
     tasks: [
       {
         href: '/company',
@@ -150,6 +152,7 @@ const getTaskList = (req, res) => {
   const groupsAndTasks = [
     {
       title: 'Initial checks',
+      id: 'initialChecks',
       tasks: [
         {
           href: '/root-to-form',
@@ -169,6 +172,7 @@ const getTaskList = (req, res) => {
     },
     {
       title: 'Second group',
+      id: 'groupB',
       tasks: [ ... ],
     },
   ];
