@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.1](https://github.com/UK-Export-Finance/exip/compare/v1.14.0...v1.14.1) (2022-10-12)
+
+
+### Bug Fixes
+
+* **EMS-465:** when currencies API does not return data, redirect to problem-with-service page ([1438b44](https://github.com/UK-Export-Finance/exip/commit/1438b44abca884e46678e1d159f9f0babeb63b99))
+
 ## [1.14.0](https://github.com/UK-Export-Finance/exip/compare/v1.13.0...v1.14.0) (2022-10-10)
 
 
