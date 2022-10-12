@@ -161,7 +161,7 @@ describe('controllers/quote/buyer-country', () => {
       });
     });
 
-    describe('when the CIS API has no data', () => {
+    describe('when the CIS (country information system) API has no data', () => {
       beforeEach(() => {
         // @ts-ignore
         getCountriesSpy = jest.fn(() => Promise.resolve());
@@ -174,7 +174,7 @@ describe('controllers/quote/buyer-country', () => {
       });
     });
 
-    describe('when the CIS API does not return an array', () => {
+    describe('when the CIS (country information system) API does not return an array', () => {
       beforeEach(() => {
         // @ts-ignore
         getCountriesSpy = jest.fn(() => Promise.resolve({}));
@@ -187,7 +187,7 @@ describe('controllers/quote/buyer-country', () => {
       });
     });
 
-    describe('when the CIS API does not return a populated array', () => {
+    describe('when the CIS (country information system) API does not return a populated array', () => {
       beforeEach(() => {
         getCountriesSpy = jest.fn(() => Promise.resolve([]));
         api.getCountries = getCountriesSpy;
@@ -384,7 +384,7 @@ describe('controllers/quote/buyer-country', () => {
       });
     });
 
-    describe('when the CIS API has no data', () => {
+    describe('when the CIS (country information system) API has no data', () => {
       beforeEach(() => {
         // @ts-ignore
         getCountriesSpy = jest.fn(() => Promise.resolve());
@@ -397,7 +397,7 @@ describe('controllers/quote/buyer-country', () => {
       });
     });
 
-    describe('when the CIS API does not return an array', () => {
+    describe('when the CIS (country information system) API does not return an array', () => {
       beforeEach(() => {
         // @ts-ignore
         getCountriesSpy = jest.fn(() => Promise.resolve({}));
@@ -410,7 +410,7 @@ describe('controllers/quote/buyer-country', () => {
       });
     });
 
-    describe('when the CIS API does not return a populated array', () => {
+    describe('when the CIS (country information system) API does not return a populated array', () => {
       beforeEach(() => {
         getCountriesSpy = jest.fn(() => Promise.resolve([]));
         api.getCountries = getCountriesSpy;

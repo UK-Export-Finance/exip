@@ -196,7 +196,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
   });
 
   describe('get', () => {
-    const getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+    let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
     beforeEach(() => {
       req.session.submittedData = {
@@ -309,10 +309,48 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         });
       });
     });
+
+    describe('when the currencies API has no data', () => {
+      beforeEach(() => {
+        // @ts-ignore
+        getCurrenciesSpy = jest.fn(() => Promise.resolve());
+        api.getCurrencies = getCurrenciesSpy;
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when the currencies API does not return an array', () => {
+      beforeEach(() => {
+        // @ts-ignore
+        getCurrenciesSpy = jest.fn(() => Promise.resolve({}));
+        api.getCurrencies = getCurrenciesSpy;
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when the currencies API does not return a populated array', () => {
+      beforeEach(() => {
+        getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+        api.getCurrencies = getCurrenciesSpy;
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
   });
 
   describe('post', () => {
-    const getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+    let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
     beforeEach(() => {
       api.getCurrencies = getCurrenciesSpy;
@@ -473,6 +511,44 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
           expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
         });
+      });
+    });
+
+    describe('when the currencies API has no data', () => {
+      beforeEach(() => {
+        // @ts-ignore
+        getCurrenciesSpy = jest.fn(() => Promise.resolve());
+        api.getCurrencies = getCurrenciesSpy;
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when the currencies API does not return an array', () => {
+      beforeEach(() => {
+        // @ts-ignore
+        getCurrenciesSpy = jest.fn(() => Promise.resolve({}));
+        api.getCurrencies = getCurrenciesSpy;
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when the currencies API does not return a populated array', () => {
+      beforeEach(() => {
+        getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+        api.getCurrencies = getCurrenciesSpy;
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });
     });
   });
