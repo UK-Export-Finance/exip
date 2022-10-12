@@ -91,6 +91,10 @@ const get = async (req: Request, res: Response) => {
   const { submittedData } = req.session;
   const currencies = await api.getCurrencies();
 
+  if (!currencies || !currencies.length) {
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+
   let mappedCurrencies;
   if (submittedData && submittedData[FIELD_IDS.CURRENCY]) {
     mappedCurrencies = mapCurrencies(currencies, submittedData[FIELD_IDS.CURRENCY].isoCode);
@@ -138,6 +142,10 @@ const post = async (req: Request, res: Response) => {
   });
 
   const currencies = await api.getCurrencies();
+
+  if (!currencies || !currencies.length) {
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
 
   const submittedCurrencyCode = req.body[FIELD_IDS.CURRENCY];
 
