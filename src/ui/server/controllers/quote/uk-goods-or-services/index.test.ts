@@ -20,7 +20,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID: FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-        PAGE_CONTENT_STRINGS: PAGES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE,
+        PAGE_CONTENT_STRINGS: PAGES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -68,7 +68,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
 
         expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 
-        const expectedReason = PAGES.CANNOT_OBTAIN_COVER_PAGE.REASON.NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES;
+        const expectedReason = PAGES.QUOTE.CANNOT_OBTAIN_COVER.REASON.NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });

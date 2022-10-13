@@ -1,11 +1,11 @@
-const LINKS = require('./links');
+import { LINKS } from '../links';
 
-const BUYER_COUNTRY_PAGE = {
+const BUYER_COUNTRY = {
   PAGE_TITLE: 'Where is your buyer based?',
   HEADING: 'Where is your buyer based?',
 };
 
-const BUYER_BODY_PAGE = {
+const BUYER_BODY = {
   PAGE_TITLE: 'Is your buyer a government or public sector body?',
   HEADING: 'Is your buyer a government or public sector body?',
   DETAILS: {
@@ -15,12 +15,12 @@ const BUYER_BODY_PAGE = {
   },
 };
 
-const COMPANY_BASED_PAGE = {
+const COMPANY_BASED = {
   PAGE_TITLE: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
   HEADING: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
 };
 
-const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
+const HAS_MINIMUM_UK_GOODS_OR_SERVICES = {
   PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
   HEADING: 'Is at least 20% of your export contract value made up from UK goods or services?',
   DETAILS: {
@@ -47,7 +47,7 @@ const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
     },
     DOES_NOT_COUNT: {
       HEADING: 'What does not count as UK goods and services',
-      TEXT: 'Goods or services from outside the UK that you\'ll send directly to the buyer unprocessed or unaltered in the UK do not count. Instead, they\'re classed as foreign goods and services.',
+      TEXT: "Goods or services from outside the UK that you'll send directly to the buyer unprocessed or unaltered in the UK do not count. Instead, they're classed as foreign goods and services.",
     },
     STAFFING_COSTS: {
       HEADING: 'Staffing costs for this export contract',
@@ -60,40 +60,40 @@ const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
           TEXT: 'contractors supplied to work for you by a UK sub-contractor',
         },
         {
-          TEXT: 'staff seconded from abroad to work for you in the UK, on the export contract, and for whom you\'re financially responsible',
+          TEXT: "staff seconded from abroad to work for you in the UK, on the export contract, and for whom you're financially responsible",
         },
       ],
     },
     NON_PHYSICAL_ASSETS: {
       HEADING: 'Non-physical assets',
-      TEXT: 'Some assets cannot have a certificate of origin as they\'re not physical goods, for example, a licence to manufacture goods in another country. But they still count as UK goods or services if they originate from the UK.',
+      TEXT: "Some assets cannot have a certificate of origin as they're not physical goods, for example, a licence to manufacture goods in another country. But they still count as UK goods or services if they originate from the UK.",
     },
     NOT_SURE: {
-      HEADING: 'If you\'re not sure',
+      HEADING: "If you're not sure",
       BODY_1: 'You can speak with',
       LINK: {
         TEXT: 'an export finance manager',
         HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
       },
-      BODY_2: 'if you\'d like to check whether you\'re eligible around this criteria.',
-      BODY_3: 'We\'ll also calculate this thoroughly if you go on to make a full application.',
+      BODY_2: "if you'd like to check whether you're eligible around this criteria.",
+      BODY_3: "We'll also calculate this thoroughly if you go on to make a full application.",
     },
   },
 };
 
-const POLICY_TYPE_PAGE = {
+const POLICY_TYPE = {
   PAGE_TITLE: 'What kind of policy do you need?',
   HEADING: 'What kind of policy do you need?',
 };
 
-const TELL_US_ABOUT_YOUR_POLICY_PAGE = {
+const TELL_US_ABOUT_YOUR_POLICY = {
   SINGLE_POLICY_PAGE_TITLE: 'Tell us about the single contract policy you need',
   SINGLE_POLICY_HEADING: 'Tell us about the single contract policy you need',
   MULTI_POLICY_PAGE_TITLE: 'Tell us about the multiple contract policy you need',
   MULTI_POLICY_HEADING: 'Tell us about the multiple contract policy you need',
 };
 
-const CHECK_YOUR_ANSWERS_PAGE = {
+const CHECK_YOUR_ANSWERS = {
   PAGE_TITLE: 'Check your answers',
   HEADING: 'Check your answers',
   GROUP_HEADING_EXPORT: 'Export details',
@@ -101,7 +101,7 @@ const CHECK_YOUR_ANSWERS_PAGE = {
   SUBMIT_BUTTON: 'Get your quote',
 };
 
-const CANNOT_OBTAIN_COVER_PAGE = {
+const CANNOT_OBTAIN_COVER = {
   PAGE_TITLE: 'You cannot apply for UKEF export insurance',
   HEADING: 'You cannot apply for UKEF export insurance',
   REASON: {
@@ -130,12 +130,12 @@ const CANNOT_OBTAIN_COVER_PAGE = {
   },
 };
 
-const GET_A_QUOTE_BY_EMAIL_PAGE = {
+const GET_A_QUOTE_BY_EMAIL = {
   PAGE_TITLE: 'You need to get a quote by email',
   HEADING: 'You need to get a quote by email',
   REASON: {
     BUYER_BODY: 'We cannot give you a quote online because your buyer is a government or public sector body.',
-    BUYER_BODY_DESCRIPTION: "We can still give you a quote but may need extra information from you to assess the risks around your buyer first.",
+    BUYER_BODY_DESCRIPTION: 'We can still give you a quote but may need extra information from you to assess the risks around your buyer first.',
     BUYER_COUNTRY: 'We cannot give you a quote online because of the country where your buyer is based.',
     BUYER_COUNTRY_DESCRIPTION: "We can still give you a quote but may need extra information from you to assess the risks around your buyer's country first.",
   },
@@ -159,7 +159,7 @@ const GET_A_QUOTE_BY_EMAIL_PAGE = {
   ],
 };
 
-const YOUR_QUOTE_PAGE = {
+const YOUR_QUOTE = {
   PAGE_TITLE: 'You can apply for UKEF export insurance',
   QUOTE: {
     HEADING: 'You can apply for UKEF export insurance',
@@ -234,88 +234,22 @@ const YOUR_QUOTE_PAGE = {
   },
 };
 
-const COOKIES_PAGE = {
-  PAGE_TITLE: 'Cookies',
-  HEADING: 'Cookies',
-  BODY_1: 'UK Export Finance (UKEF) puts small files (known as \'cookies\') onto your computer to make this site work.',
-  BODY_2: 'Our cookies aren\'t used to identify you personally.',
-  TABLE_HEADINGS: {
-    NAME: 'Name',
-    PURPOSE: 'Purpose',
-    EXPIRES: 'Expires',
-  },
-  ESSENTIAL_COOKIES: {
-    HEADING: 'Essential Cookies',
-    INTRO: 'Essential cookies keep your information secure while you use this service. We do not need to ask permission to use them.',
-    ITEMS: [
-      {
-        NAME: 'Security',
-        PURPOSE: 'This is an essential security cookie, which authenticates your requests with our service.',
-        EXPIRES: '12 hours',
-      },
-      {
-        NAME: 'Session',
-        PURPOSE: 'This is an essential session cookie, necessary for basic web application operation.',
-        EXPIRES: '7 days',
-      },
-    ],
-  },
-  OPTIONAL_COOKIES: {
-    HEADING: 'Optional Cookies',
-    BODY_1:
-      'With your permission, we use Google Analytics to collect how you use this service and your web performance experience while visiting so we can improve it based on user needs.',
-    BODY_2: 'We do not allow Google to use or share the data about how you use this service.',
-    BODY_3: 'Google Analytics stores anonymised information about:',
-    ANALYTICS_INFO_LIST: [
-      {
-        text: 'how you got to this service',
-      },
-      {
-        text: 'the pages you visit on GOV.UK and government digital services, and how long you spend on each page',
-      },
-      {
-        text: "what you click on while you're visiting the site",
-      },
-    ],
-  },
-  SUCCESS_BANNER: {
-    HEADING: 'Your cookie settings were saved',
-    BODY: 'Government services may set additional cookies and, if so, will have their own cookie policy and banner.',
-    GO_BACK: 'Go back to the page you were looking at',
-  },
-};
-
 const NEED_TO_START_AGAIN = {
   PAGE_TITLE: 'You need to start again',
   HEADING: 'You need to start again',
   REASON: 'This is because you have not yet answered all the eligibility questions.',
 };
 
-const PAGE_NOT_FOUND_PAGE = {
-  PAGE_TITLE: 'Page not found',
-  HEADING: 'Page not found',
-  BODY_1: 'If you typed the web address, check it is correct.',
-  BODY_2: 'If you pasted the web address, check you copied the entire address.',
-};
-
-const PROBLEM_WITH_SERVICE_PAGE = {
-  PAGE_TITLE: 'Problem with the service',
-  HEADING: 'Sorry, there is a problem with the service',
-};
-
-module.exports = {
-  BUYER_COUNTRY_PAGE,
-  BUYER_BODY_PAGE,
-  COMPANY_BASED_PAGE,
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE,
-  POLICY_TYPE_PAGE,
-  TELL_US_ABOUT_YOUR_POLICY_PAGE,
-  CHECK_YOUR_ANSWERS_PAGE,
-  CANNOT_OBTAIN_COVER_PAGE,
-  GET_A_QUOTE_BY_EMAIL_PAGE,
-  YOUR_QUOTE_PAGE,
-  COOKIES_PAGE,
+export default {
+  BUYER_COUNTRY,
+  BUYER_BODY,
+  COMPANY_BASED,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+  POLICY_TYPE,
+  TELL_US_ABOUT_YOUR_POLICY,
+  CHECK_YOUR_ANSWERS,
+  CANNOT_OBTAIN_COVER,
+  GET_A_QUOTE_BY_EMAIL,
+  YOUR_QUOTE,
   NEED_TO_START_AGAIN,
-  PAGE_NOT_FOUND_PAGE,
-  PROBLEM_WITH_SERVICE_PAGE,
 };

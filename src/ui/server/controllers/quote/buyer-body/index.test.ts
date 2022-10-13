@@ -28,7 +28,7 @@ describe('controllers/quote/buyer-body', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID: FIELD_IDS.VALID_BUYER_BODY,
-        PAGE_CONTENT_STRINGS: PAGES.BUYER_BODY_PAGE,
+        PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -92,8 +92,8 @@ describe('controllers/quote/buyer-body', () => {
 
         expect(mockFlash.mock.calls[0]).toEqual(['previousRoute', ROUTES.QUOTE.BUYER_BODY]);
 
-        const { GET_A_QUOTE_BY_EMAIL_PAGE } = PAGES;
-        const { REASON } = GET_A_QUOTE_BY_EMAIL_PAGE;
+        const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
+        const { REASON } = GET_A_QUOTE_BY_EMAIL;
 
         expect(mockFlash.mock.calls[1]).toEqual(['exitReason', REASON.BUYER_BODY]);
         expect(mockFlash.mock.calls[2]).toEqual(['exitDescription', REASON.BUYER_BODY_DESCRIPTION]);

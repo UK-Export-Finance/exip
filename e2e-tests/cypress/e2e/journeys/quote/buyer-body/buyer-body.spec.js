@@ -11,7 +11,7 @@ import {
 import CONSTANTS from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/quote/forms';
 
-const CONTENT_STRINGS = PAGES.BUYER_BODY_PAGE;
+const CONTENT_STRINGS = PAGES.QUOTE.BUYER_BODY;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country', () => {

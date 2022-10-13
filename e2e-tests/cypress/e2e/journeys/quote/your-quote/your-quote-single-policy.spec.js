@@ -10,7 +10,7 @@ import {
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.YOUR_QUOTE_PAGE;
+const CONTENT_STRINGS = PAGES.QUOTE.YOUR_QUOTE;
 const { ROUTES, FIELD_IDS, FIELD_VALUES } = CONSTANTS;
 
 const {

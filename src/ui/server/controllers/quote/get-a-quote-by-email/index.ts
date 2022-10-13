@@ -13,7 +13,7 @@ const get = (req: Request, res: Response) => {
       FOOTER,
       LINKS,
       PRODUCT,
-      ...PAGES.GET_A_QUOTE_BY_EMAIL_PAGE,
+      ...PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL,
     },
     BACK_LINK: previousRoute,
     EXIT_REASON,

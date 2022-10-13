@@ -12,7 +12,7 @@ const get = (req: Request, res: Response) => {
       FOOTER,
       LINKS,
       PRODUCT,
-      ...PAGES.CANNOT_OBTAIN_COVER_PAGE,
+      ...PAGES.QUOTE.CANNOT_OBTAIN_COVER,
     },
     BACK_LINK: previousRoute,
     EXIT_REASON,
