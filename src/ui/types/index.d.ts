@@ -17,7 +17,14 @@ import {
   TellUsAboutPolicyPageVariables,
 } from './pages/tell-us-about-your-policy';
 import { ValidationErrors } from './validation-errors';
-import { CorePageVariablesInput, CorePageVariables, PageContentStrings, PageVariablesContentStrings, SingleInputPageVariablesInput, SingleInputPageVariables } from './page-variables';
+import {
+  CorePageVariablesInput,
+  CorePageVariables,
+  PageContentStrings,
+  PageVariablesContentStrings,
+  SingleInputPageVariablesInput,
+  SingleInputPageVariables,
+} from './page-variables';
 
 export {
   AnswersContent,
