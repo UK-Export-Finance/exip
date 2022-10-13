@@ -12,7 +12,7 @@ import getAQuoteByEmailGet from '../../controllers/quote/get-a-quote-by-email';
 import yourQuoteGet from '../../controllers/quote/your-quote';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../controllers/quote/need-to-start-again';
 
-describe('routes/index', () => {
+describe('routes/quote', () => {
   beforeEach(() => {
     require('.'); // eslint-disable-line global-require
   });
