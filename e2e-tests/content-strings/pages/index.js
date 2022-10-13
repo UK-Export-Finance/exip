@@ -1,4 +1,5 @@
 const QUOTE_PAGES = require('./quote');
+const INSURANCE_PAGES = require('./insurance');
 
 const COOKIES_PAGE = {
   PAGE_TITLE: 'Cookies',
@@ -68,4 +69,5 @@ module.exports = {
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
   QUOTE: QUOTE_PAGES,
+  INSURANCE: INSURANCE_PAGES,
 };

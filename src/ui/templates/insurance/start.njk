@@ -1,0 +1,56 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from 'govuk/components/radios/macro.njk' import govukRadios %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+
+  <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+
+  <p class="govuk-body" data-cy="list-intro">{{ CONTENT_STRINGS.LIST.INTRO }}</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    {% for item in CONTENT_STRINGS.LIST.ITEMS %}
+      <li data-cy="list-item-{{ loop.index }}">{{ item }}</li>
+    {% endfor %}
+  </ul> 
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <p class="govuk-body" data-cy="body-1">{{ CONTENT_STRINGS.BODY_1 }}</p>
+      <p class="govuk-body" data-cy="body-2">{{ CONTENT_STRINGS.BODY_2 }}</p>
+      <p class="govuk-body" data-cy="body-3">{{ CONTENT_STRINGS.BODY_3 }}</p>
+      <p class="govuk-body" data-cy="body-4">{{ CONTENT_STRINGS.BODY_4 }}</p>
+    </div>
+  </div>
+
+  <form method="POST" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {{ govukButton({
+      text: CONTENT_STRINGS.BUTTONS.START_NOW,
+      isStartButton: true,
+      attributes: {
+        'data-cy': 'submit-button'
+      }
+    }) }}
+
+  </form>
+
+{% endblock %}
