@@ -7,7 +7,7 @@ import { PAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms';
 
-const CONTENT_STRINGS = PAGES.PAGES.QUOTE.CANNOT_OBTAIN_COVER;
+const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_OBTAIN_COVER;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Company based page - as an exporter, I want to check if my company can get UKEF issue export insurance cover - submit `not based inside the UK`', () => {
