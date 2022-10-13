@@ -1,3 +1,4 @@
+import INSURANCE_PAGES from './insurance';
 import QUOTE_PAGES from './quote';
 
 const COOKIES_PAGE = {
@@ -68,4 +69,5 @@ export const PAGES = {
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
   QUOTE: QUOTE_PAGES,
+  INSURANCE: INSURANCE_PAGES,
 };
