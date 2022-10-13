@@ -13,7 +13,7 @@ import {
 import CONSTANTS from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms';
 
-const CONTENT_STRINGS = PAGES.COMPANY_BASED_PAGE;
+const CONTENT_STRINGS = PAGES.QUOTE.COMPANY_BASED;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Company based page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {

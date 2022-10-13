@@ -12,7 +12,7 @@ import { Request, Response } from '../../../../types';
 
 export const PAGE_VARIABLES = {
   FIELD_ID: FIELD_IDS.COUNTRY,
-  PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY_PAGE,
+  PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_COUNTRY,
 };
 
 /**
@@ -130,8 +130,8 @@ export const post = async (req: Request, res: Response) => {
   if (canGetAQuoteByEmail(country)) {
     req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
 
-    const { GET_A_QUOTE_BY_EMAIL_PAGE } = PAGES;
-    const { REASON } = GET_A_QUOTE_BY_EMAIL_PAGE;
+    const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
+    const { REASON } = GET_A_QUOTE_BY_EMAIL;
 
     req.flash('exitReason', REASON.BUYER_COUNTRY);
     req.flash('exitDescription', REASON.BUYER_COUNTRY_DESCRIPTION);
@@ -142,8 +142,8 @@ export const post = async (req: Request, res: Response) => {
   if (cannotGetAQuote(country)) {
     req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
 
-    const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
-    const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
+    const { CANNOT_OBTAIN_COVER } = PAGES.QUOTE;
+    const { REASON } = CANNOT_OBTAIN_COVER;
 
     const reason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${country.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 

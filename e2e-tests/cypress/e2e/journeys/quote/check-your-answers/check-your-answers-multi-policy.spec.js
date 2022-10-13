@@ -7,7 +7,7 @@ import {
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.CHECK_YOUR_ANSWERS_PAGE;
+const CONTENT_STRINGS = PAGES.QUOTE.CHECK_YOUR_ANSWERS;
 const { FIELD_IDS, FIELD_VALUES, ROUTES } = CONSTANTS;
 
 context('Check your answers page (multi policy) - as an exporter, I want to review the details before submitting the proposal', () => {

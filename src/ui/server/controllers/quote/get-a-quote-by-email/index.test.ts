@@ -34,7 +34,7 @@ describe('controllers/quote/get-a-quote-by-email', () => {
         FOOTER,
         LINKS,
         PRODUCT,
-        ...PAGES.GET_A_QUOTE_BY_EMAIL_PAGE,
+        ...PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL,
       },
       BACK_LINK: mockPreviousRoute,
       EXIT_REASON: mockExitReason,

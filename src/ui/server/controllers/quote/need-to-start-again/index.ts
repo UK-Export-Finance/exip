@@ -9,7 +9,7 @@ export const get = (req: Request, res: Response) =>
       FOOTER,
       LINKS,
       PRODUCT,
-      ...PAGES.NEED_TO_START_AGAIN,
+      ...PAGES.QUOTE.NEED_TO_START_AGAIN,
     },
   });
 

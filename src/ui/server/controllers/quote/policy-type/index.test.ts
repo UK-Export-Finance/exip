@@ -27,7 +27,7 @@ describe('controllers/quote/policy-type', () => {
           COOKIES_CONSENT,
           FOOTER,
           PRODUCT,
-          ...PAGES.POLICY_TYPE_PAGE,
+          ...PAGES.QUOTE.POLICY_TYPE,
         },
         FIELDS: {
           MULTI_POLICY_TYPE: {

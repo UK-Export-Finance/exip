@@ -34,7 +34,7 @@ describe('controllers/quote/cannot-obtain-cover', () => {
         FOOTER,
         LINKS,
         PRODUCT,
-        ...PAGES.CANNOT_OBTAIN_COVER_PAGE,
+        ...PAGES.QUOTE.CANNOT_OBTAIN_COVER,
       },
       BACK_LINK: mockPreviousRoute,
       EXIT_REASON: mockExitReason,

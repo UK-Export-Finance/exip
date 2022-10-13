@@ -10,7 +10,7 @@ import {
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.BUYER_COUNTRY_PAGE;
+const CONTENT_STRINGS = PAGES.QUOTE.BUYER_COUNTRY;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based', () => {

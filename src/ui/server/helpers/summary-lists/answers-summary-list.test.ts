@@ -380,11 +380,11 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
 
       const expected = {
         EXPORT: {
-          GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_EXPORT,
+          GROUP_TITLE: PAGES.QUOTE.CHECK_YOUR_ANSWERS.GROUP_HEADING_EXPORT,
           ROWS: generateSummaryListRows(fieldGroups.EXPORT_DETAILS),
         },
         POLICY: {
-          GROUP_TITLE: PAGES.CHECK_YOUR_ANSWERS_PAGE.GROUP_HEADING_POLICY,
+          GROUP_TITLE: PAGES.QUOTE.CHECK_YOUR_ANSWERS.GROUP_HEADING_POLICY,
           ROWS: generateSummaryListRows(fieldGroups.POLICY_DETAILS),
         },
       };

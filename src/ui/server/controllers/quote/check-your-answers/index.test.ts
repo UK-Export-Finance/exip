@@ -46,7 +46,7 @@ describe('controllers/quote/check-your-answers', () => {
           FOOTER,
           LINKS,
           PRODUCT,
-          ...PAGES.CHECK_YOUR_ANSWERS_PAGE,
+          ...PAGES.QUOTE.CHECK_YOUR_ANSWERS,
         },
       };
 

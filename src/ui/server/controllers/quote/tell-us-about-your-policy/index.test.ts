@@ -69,11 +69,11 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             BUTTONS,
             COOKIES_CONSENT,
             FOOTER,
-            HEADING: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.SINGLE_POLICY_HEADING,
+            HEADING: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.SINGLE_POLICY_HEADING,
             LINKS,
-            PAGE_TITLE: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.SINGLE_POLICY_PAGE_TITLE,
+            PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.SINGLE_POLICY_PAGE_TITLE,
             PRODUCT,
-            ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
+            ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
           },
           FIELDS: {
             AMOUNT_CURRENCY: {
@@ -119,11 +119,11 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             BUTTONS,
             COOKIES_CONSENT,
             FOOTER,
-            HEADING: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.MULTI_POLICY_HEADING,
+            HEADING: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.MULTI_POLICY_HEADING,
             LINKS,
-            PAGE_TITLE: PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE.MULTI_POLICY_PAGE_TITLE,
+            PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.MULTI_POLICY_PAGE_TITLE,
             PRODUCT,
-            ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
+            ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
           },
           FIELDS: {
             AMOUNT_CURRENCY: {
@@ -174,7 +174,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             LINKS,
             BUTTONS,
             COOKIES_CONSENT,
-            ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
+            ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
           },
           FIELDS: {
             AMOUNT_CURRENCY: {
