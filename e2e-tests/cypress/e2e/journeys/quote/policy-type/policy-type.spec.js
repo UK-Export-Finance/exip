@@ -15,7 +15,7 @@ import {
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.POLICY_TYPE_PAGE;
+const CONTENT_STRINGS = PAGES.PAGES.QUOTE.POLICY_TYPE;
 const {
   ROUTES,
   FIELD_IDS,

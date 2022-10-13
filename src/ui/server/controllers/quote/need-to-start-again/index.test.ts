@@ -27,7 +27,7 @@ describe('controllers/quote/need-to-start-again', () => {
           FOOTER,
           LINKS,
           PRODUCT,
-          ...PAGES.NEED_TO_START_AGAIN,
+          ...PAGES.QUOTE.NEED_TO_START_AGAIN,
         },
       };
 

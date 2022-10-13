@@ -37,7 +37,7 @@ describe('controllers/quote/your-quote', () => {
         FOOTER,
         LINKS,
         PRODUCT,
-        ...PAGES.YOUR_QUOTE_PAGE,
+        ...PAGES.QUOTE.YOUR_QUOTE,
       },
       SUMMARY_LIST: expectedSummaryList,
     };

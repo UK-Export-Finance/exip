@@ -59,7 +59,7 @@ describe('controllers/quote/buyer-country', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID: FIELD_IDS.COUNTRY,
-        PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY_PAGE,
+        PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_COUNTRY,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -234,8 +234,8 @@ describe('controllers/quote/buyer-country', () => {
 
         expect(mockFlash.mock.calls[0]).toEqual(['previousRoute', ROUTES.QUOTE.BUYER_COUNTRY]);
 
-        const { GET_A_QUOTE_BY_EMAIL_PAGE } = PAGES;
-        const { REASON } = GET_A_QUOTE_BY_EMAIL_PAGE;
+        const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
+        const { REASON } = GET_A_QUOTE_BY_EMAIL;
 
         expect(mockFlash.mock.calls[1]).toEqual(['exitReason', REASON.BUYER_COUNTRY]);
         expect(mockFlash.mock.calls[2]).toEqual(['exitDescription', REASON.BUYER_COUNTRY_DESCRIPTION]);
@@ -272,8 +272,8 @@ describe('controllers/quote/buyer-country', () => {
 
         const countryName = countryUnsupported.marketName;
 
-        const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
-        const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
+        const { CANNOT_OBTAIN_COVER } = PAGES.QUOTE;
+        const { REASON } = CANNOT_OBTAIN_COVER;
 
         const expectedReason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${countryName}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 

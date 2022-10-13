@@ -21,7 +21,7 @@ const get = (req: Request, res: Response) => {
       FOOTER,
       LINKS,
       PRODUCT,
-      ...PAGES.YOUR_QUOTE_PAGE,
+      ...PAGES.QUOTE.YOUR_QUOTE,
     },
     SUMMARY_LIST: quoteSummaryList(quoteContent),
   });

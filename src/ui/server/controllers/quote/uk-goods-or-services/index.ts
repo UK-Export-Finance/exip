@@ -8,7 +8,7 @@ import { Request, Response } from '../../../../types';
 
 const PAGE_VARIABLES = {
   FIELD_ID: FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  PAGE_CONTENT_STRINGS: PAGES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE,
+  PAGE_CONTENT_STRINGS: PAGES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
 };
 
 const get = (req: Request, res: Response) =>
@@ -36,8 +36,8 @@ const post = (req: Request, res: Response) => {
   if (redirectToExitPage) {
     req.flash('previousRoute', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 
-    const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
-    const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
+    const { CANNOT_OBTAIN_COVER } = PAGES.QUOTE;
+    const { REASON } = CANNOT_OBTAIN_COVER;
 
     req.flash('exitReason', REASON.NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 

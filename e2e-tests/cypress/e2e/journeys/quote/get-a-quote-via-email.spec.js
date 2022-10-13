@@ -8,7 +8,7 @@ import {
 import CONSTANTS from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm, completeAndSubmitCompanyForm } from '../../../support/quote/forms';
 
-const CONTENT_STRINGS = PAGES.GET_A_QUOTE_BY_EMAIL_PAGE;
+const CONTENT_STRINGS = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL;
 const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';

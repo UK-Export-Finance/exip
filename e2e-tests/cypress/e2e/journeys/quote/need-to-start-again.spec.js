@@ -12,7 +12,7 @@ import {
   completeAndSubmitBuyerBodyForm,
 } from '../../../support/quote/forms';
 
-const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN;
+const CONTENT_STRINGS = PAGES.QUOTE.NEED_TO_START_AGAIN;
 const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 context('Need to start again exit page', () => {

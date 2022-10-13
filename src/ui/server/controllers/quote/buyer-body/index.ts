@@ -7,7 +7,7 @@ import { Request, Response } from '../../../../types';
 
 const PAGE_VARIABLES = {
   FIELD_ID: FIELD_IDS.VALID_BUYER_BODY,
-  PAGE_CONTENT_STRINGS: PAGES.BUYER_BODY_PAGE,
+  PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
 };
 
 /**
@@ -53,8 +53,8 @@ const post = (req: Request, res: Response) => {
   if (answer === 'true') {
     req.flash('previousRoute', ROUTES.QUOTE.BUYER_BODY);
 
-    const { GET_A_QUOTE_BY_EMAIL_PAGE } = PAGES;
-    const { REASON } = GET_A_QUOTE_BY_EMAIL_PAGE;
+    const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
+    const { REASON } = GET_A_QUOTE_BY_EMAIL;
 
     req.flash('exitReason', REASON.BUYER_BODY);
     req.flash('exitDescription', REASON.BUYER_BODY_DESCRIPTION);

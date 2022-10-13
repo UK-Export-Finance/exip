@@ -20,7 +20,7 @@ describe('controllers/quote/company-based', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID: FIELD_IDS.VALID_COMPANY_BASE,
-        PAGE_CONTENT_STRINGS: PAGES.COMPANY_BASED_PAGE,
+        PAGE_CONTENT_STRINGS: PAGES.QUOTE.COMPANY_BASED,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -70,7 +70,7 @@ describe('controllers/quote/company-based', () => {
 
         expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.QUOTE.COMPANY_BASED);
 
-        const expectedReason = PAGES.CANNOT_OBTAIN_COVER_PAGE.REASON.UNSUPPORTED_COMPANY_COUNTRY;
+        const expectedReason = PAGES.QUOTE.CANNOT_OBTAIN_COVER.REASON.UNSUPPORTED_COMPANY_COUNTRY;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });

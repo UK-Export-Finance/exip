@@ -8,7 +8,7 @@ import { Request, Response } from '../../../../types';
 
 const PAGE_VARIABLES = {
   FIELD_ID: FIELD_IDS.VALID_COMPANY_BASE,
-  PAGE_CONTENT_STRINGS: PAGES.COMPANY_BASED_PAGE,
+  PAGE_CONTENT_STRINGS: PAGES.QUOTE.COMPANY_BASED,
 };
 
 const get = (req: Request, res: Response) =>
@@ -36,8 +36,8 @@ const post = (req: Request, res: Response) => {
   if (answer === 'false') {
     req.flash('previousRoute', ROUTES.QUOTE.COMPANY_BASED);
 
-    const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
-    const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
+    const { CANNOT_OBTAIN_COVER } = PAGES.QUOTE;
+    const { REASON } = CANNOT_OBTAIN_COVER;
 
     req.flash('exitReason', REASON.UNSUPPORTED_COMPANY_COUNTRY);
 

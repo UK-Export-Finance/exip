@@ -8,7 +8,7 @@ import {
 import CONSTANTS from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm, completeAndSubmitCompanyForm } from '../../../support/quote/forms';
 
-const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
+const CONTENT_STRINGS = PAGES.PAGES.QUOTE.CANNOT_OBTAIN_COVER;
 const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 context('Cannot obtain UKEF cover exit page', () => {
