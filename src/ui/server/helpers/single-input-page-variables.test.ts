@@ -1,5 +1,6 @@
 import singleInputPageVariables from './single-input-page-variables';
-import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PRODUCT } from '../content-strings';
+import corePageVariables from './core-page-variables';
+import { FIELDS } from '../content-strings';
 import { FIELD_IDS } from '../constants';
 
 describe('server/helpers/single-input-page-variables', () => {
@@ -16,16 +17,8 @@ describe('server/helpers/single-input-page-variables', () => {
     const result = singleInputPageVariables(mock);
 
     const expected = {
-      CONTENT_STRINGS: {
-        ...mock.PAGE_CONTENT_STRINGS,
-        BUTTONS,
-        COOKIES_CONSENT,
-        FOOTER,
-        LINKS,
-        PRODUCT,
-      },
       FIELD_ID: mock.FIELD_ID,
-      BACK_LINK: mock.BACK_LINK,
+      ...corePageVariables(mock),
     };
 
     expect(result).toEqual(expected);

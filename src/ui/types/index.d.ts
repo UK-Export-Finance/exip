@@ -17,14 +17,19 @@ import {
   TellUsAboutPolicyPageVariables,
 } from './pages/tell-us-about-your-policy';
 import { ValidationErrors } from './validation-errors';
+import { CorePageVariablesInput, CorePageVariables, PageContentStrings, PageVariablesContentStrings, SingleInputPageVariablesInput, SingleInputPageVariables } from './page-variables';
 
 export {
   AnswersContent,
   AnswersFieldGroups,
   ApolloResponse,
   CisCountry,
+  CorePageVariablesInput,
+  CorePageVariables,
   Country,
   Currency,
+  PageContentStrings,
+  PageVariablesContentStrings,
   PricingGrid,
   PricingGridMonth,
   PricingGridRate,
@@ -36,6 +41,8 @@ export {
   RequiredDataState,
   Response,
   SelectOption,
+  SingleInputPageVariablesInput,
+  SingleInputPageVariables,
   SubmittedData,
   SummaryListItemData,
   SummaryListItem,
