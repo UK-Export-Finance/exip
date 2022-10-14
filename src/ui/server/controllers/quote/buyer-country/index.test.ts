@@ -115,7 +115,7 @@ describe('controllers/quote/buyer-country', () => {
         isChangeRoute: isChangeRoute(req.originalUrl),
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_COUNTRY, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, expectedVariables);
     });
 
     describe('when a country has been submitted', () => {
@@ -135,7 +135,7 @@ describe('controllers/quote/buyer-country', () => {
           isChangeRoute: isChangeRoute(req.originalUrl),
         };
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_COUNTRY, expectedVariables);
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, expectedVariables);
       });
     });
 
@@ -189,7 +189,7 @@ describe('controllers/quote/buyer-country', () => {
       it('should render template with validation errors', async () => {
         await post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_COUNTRY, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: getBackLink(req.headers.referer),
           HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,

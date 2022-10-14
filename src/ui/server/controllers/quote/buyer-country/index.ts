@@ -68,7 +68,7 @@ export const get = async (req: Request, res: Response) => {
     mappedCountries = mapCountries(countries);
   }
 
-  return res.render(TEMPLATES.QUOTE.BUYER_COUNTRY, {
+  return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
     ...singleInputPageVariables(PAGE_VARIABLES),
     BACK_LINK: getBackLink(req.headers.referer),
     HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
@@ -90,7 +90,7 @@ export const post = async (req: Request, res: Response) => {
   const mappedCountries = mapCountries(countries);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.QUOTE.BUYER_COUNTRY, {
+    return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
       ...singleInputPageVariables(PAGE_VARIABLES),
       BACK_LINK: getBackLink(req.headers.referer),
       HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
