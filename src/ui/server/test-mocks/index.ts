@@ -2,6 +2,8 @@ import { Request, Response } from '../../types';
 import mockAnswers from './mock-answers';
 import mockSession from './mock-session';
 import mockQuote from './mock-quote';
+import mockCisCountries from './mock-cis-countries';
+import mockCountries from './mock-countries';
 
 const mockReq = () => {
   let req = {} as Request;
@@ -40,4 +42,4 @@ const mockRes = () => {
 
 const mockNext = jest.fn();
 
-export { mockAnswers, mockNext, mockSession, mockQuote, mockReq, mockRes };
+export { mockAnswers, mockCisCountries, mockCountries, mockNext, mockSession, mockQuote, mockReq, mockRes };

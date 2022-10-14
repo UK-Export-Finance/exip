@@ -1,28 +1,8 @@
 import getCountryByName from './get-country-by-name';
-import { Country } from '../../types';
+import { mockCountries } from '../test-mocks';
 
 describe('server/helpers/get-country-by-name', () => {
   it('should return a mapped object', () => {
-    const mockCountries = [
-      {
-        isoCode: 'A',
-        name: 'Mock A',
-        riskCategory: 'Standard',
-        shortTermCoverAvailable: true,
-        nbiIssueAvailable: true,
-        selected: false,
-        value: 'A',
-      },
-      {
-        isoCode: 'B',
-        name: 'Mock B',
-        shortTermCoverAvailable: true,
-        nbiIssueAvailable: true,
-        selected: false,
-        value: 'B',
-      },
-    ] as Array<Country>;
-
     const result = getCountryByName(mockCountries, 'Mock B');
 
     const expected = mockCountries[1];
