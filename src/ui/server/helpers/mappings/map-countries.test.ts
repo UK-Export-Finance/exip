@@ -1,4 +1,4 @@
-import { mapRiskCategory, mapShortTermCoverAvailable, mapNbiIssueAvailable, filterCisCountries, mapCountry, mapCountries } from './map-countries';
+import { mapRiskCategory, mapNbiIssueAvailable, filterCisCountries, mapCountry, mapCountries } from './map-countries';
 import { API } from '../../constants';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
 import { CisCountry, Country } from '../../../types';
@@ -64,46 +64,6 @@ describe('server/helpers/mappings/map-countries', () => {
     });
   });
 
-  describe('mapShortTermCoverAvailable', () => {
-    describe(`when the short term cover field is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.YES}`, () => {
-      it('should return true', () => {
-        const result = mapShortTermCoverAvailable(API.CIS.SHORT_TERM_COVER_AVAILABLE.YES);
-
-        expect(result).toEqual(true);
-      });
-    });
-
-    describe(`when the short term cover field is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.ILC}`, () => {
-      it('should return true', () => {
-        const result = mapShortTermCoverAvailable(API.CIS.SHORT_TERM_COVER_AVAILABLE.ILC);
-
-        expect(result).toEqual(true);
-      });
-    });
-
-    describe(`when the short term cover field is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.CILC}`, () => {
-      it('should return true', () => {
-        const result = mapShortTermCoverAvailable(API.CIS.SHORT_TERM_COVER_AVAILABLE.CILC);
-
-        expect(result).toEqual(true);
-      });
-    });
-
-    describe(`when the short term cover field is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.REFER}`, () => {
-      it('should return true', () => {
-        const result = mapShortTermCoverAvailable(API.CIS.SHORT_TERM_COVER_AVAILABLE.REFER);
-
-        expect(result).toEqual(true);
-      });
-    });
-
-    it('should return false', () => {
-      const result = mapShortTermCoverAvailable('something else');
-
-      expect(result).toEqual(false);
-    });
-  });
-
   describe('mapNbiIssueAvailable', () => {
     describe(`when the NBI issue field is ${API.CIS.NBI_ISSUE_AVAILABLE.YES}`, () => {
       it('should return true', () => {
@@ -159,7 +119,7 @@ describe('server/helpers/mappings/map-countries', () => {
         isoCode: mockCountries[0].isoCode,
         value: mockCountries[0].isoCode,
         riskCategory: mapRiskCategory(mockCountries[0].ESRAClasificationDesc),
-        shortTermCoverAvailable: mapShortTermCoverAvailable(mockCountries[0].shortTermCoverAvailabilityDesc),
+        shortTermCover: mockCountries[0].shortTermCoverAvailabilityDesc,
         nbiIssueAvailable: mapNbiIssueAvailable(mockCountries[0].NBIIssue),
       } as Country;
 
@@ -177,7 +137,7 @@ describe('server/helpers/mappings/map-countries', () => {
           isoCode: mockCountries[0].isoCode,
           value: mockCountries[0].isoCode,
           riskCategory: mapRiskCategory(mockCountries[0].ESRAClasificationDesc),
-          shortTermCoverAvailable: mapShortTermCoverAvailable(mockCountries[0].shortTermCoverAvailabilityDesc),
+          shortTermCover: mockCountries[0].shortTermCoverAvailabilityDesc,
           nbiIssueAvailable: mapNbiIssueAvailable(mockCountries[0].NBIIssue),
           selected: true,
         } as Country;
