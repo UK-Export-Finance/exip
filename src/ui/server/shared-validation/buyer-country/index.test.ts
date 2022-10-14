@@ -1,9 +1,9 @@
-import { hasErrors, validation } from './validation';
-import { FIELD_IDS } from '../../../constants';
-import * as CONTENT_STRINGS from '../../../content-strings';
-import generateValidationErrors from '../../../helpers/validation';
+import { hasErrors, validation } from '.';
+import { FIELD_IDS } from '../../constants';
+import * as CONTENT_STRINGS from '../../content-strings';
+import generateValidationErrors from '../../helpers/validation';
 
-describe('controllers/quote/buyer-country/validation', () => {
+describe('shared-validation/buyer-country', () => {
   describe('hasErrors', () => {
     describe('when no properties are provided', () => {
       it('should return true', () => {
