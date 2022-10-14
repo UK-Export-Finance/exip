@@ -8,36 +8,14 @@ import getCountryByName from '../../../helpers/get-country-by-name';
 import api from '../../../api';
 import { mapCountries } from '../../../helpers/mappings/map-countries';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data';
-import { mockReq, mockRes, mockAnswers, mockSession } from '../../../test-mocks';
+import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
 describe('controllers/quote/buyer-country', () => {
   let req: Request;
   let res: Response;
 
-  const mockCountriesResponse = [
-    {
-      marketName: 'Abu Dhabi',
-      isoCode: 'XAD',
-      shortTermCoverAvailabilityDesc: 'No',
-      ESRAClasificationDesc: 'Standard risk',
-      NBIIssue: 'N',
-    },
-    {
-      marketName: 'Algeria',
-      isoCode: 'DZA',
-      shortTermCoverAvailabilityDesc: 'Yes',
-      ESRAClasificationDesc: 'Standard Risk',
-      NBIIssue: 'Y',
-    },
-    {
-      marketName: 'Egypt',
-      isoCode: 'EGY',
-      shortTermCoverAvailabilityDesc: 'Yes',
-      ESRAClasificationDesc: 'Standard Risk',
-      NBIIssue: 'N',
-    },
-  ];
+  const mockCountriesResponse = mockCisCountries;
 
   const countryUnsupported = mockCountriesResponse[0];
   const countrySupportedViaEmailOnly = mockCountriesResponse[2];
