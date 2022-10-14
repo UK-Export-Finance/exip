@@ -6,14 +6,16 @@ import { ROUTES } from '../../../../constants';
 const CONTENT_STRINGS = PAGES.INSURANCE.START;
 
 context('Insurance - start page', () => {
-  beforeEach(() => {
+  before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
+  });
 
+  beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');
   });
@@ -105,6 +107,16 @@ context('Insurance - start page', () => {
 
     button.invoke('text').then((text) => {
       expect(text.trim()).equal(BUTTONS.START_NOW);
+    });
+  });
+
+  context('form submission', () => {
+    it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE}`, () => {
+      insurance.startPage.submitButton().click();
+
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE}`;
+
+      cy.url().should('eq', expected);
     });
   });
 });

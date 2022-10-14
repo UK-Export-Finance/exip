@@ -1,3 +1,5 @@
+const ELIGIBILITY = require('./eligibility');
+
 const START = {
   PAGE_TITLE: 'Apply for UKEF export insurance',
   HEADING: 'Apply for UKEF export insurance',
@@ -19,4 +21,5 @@ const START = {
 
 module.exports = {
   START,
+  ELIGIBILITY,
 };
