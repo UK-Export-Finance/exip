@@ -1,5 +1,5 @@
+import { buyerCountryPage } from '../../../pages/shared';
 import {
-  buyerCountryPage,
   checkYourAnswersPage,
   tellUsAboutYourPolicyPage,
   yourQuotePage,
