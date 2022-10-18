@@ -2,7 +2,7 @@ import {
   yourQuotePage,
   tellUsAboutYourPolicyPage,
 } from '../../../pages/quote';
-import { buyerCountryPage } from '../../pages/shared';
+import { buyerCountryPage } from '../../../pages/shared';
 import {
   LINKS,
   PAGES,

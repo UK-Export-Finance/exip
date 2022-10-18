@@ -1,4 +1,4 @@
-import { buyerCountryPage } from '../../pages/shared';
+import { buyerCountryPage } from '../../../pages/shared';
 import { companyBasedPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import {
