@@ -22,6 +22,13 @@ const mockCisCountries = [
     ESRAClasificationDesc: 'Standard Risk',
     NBIIssue: 'N',
   },
+  {
+    marketName: 'Gabon',
+    isoCode: 'GAB',
+    shortTermCoverAvailabilityDesc: 'ILC Only',
+    ESRAClasificationDesc: 'Very High',
+    NBIIssue: 'N',
+  },
 ] as Array<CisCountry>;
 
 export default mockCisCountries;

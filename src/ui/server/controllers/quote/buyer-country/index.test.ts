@@ -37,7 +37,7 @@ describe('controllers/quote/buyer-country', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID: FIELD_IDS.COUNTRY,
-        PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_COUNTRY,
+        PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -250,8 +250,8 @@ describe('controllers/quote/buyer-country', () => {
 
         const countryName = countryUnsupported.marketName;
 
-        const { CANNOT_OBTAIN_COVER } = PAGES.QUOTE;
-        const { REASON } = CANNOT_OBTAIN_COVER;
+        const { CANNOT_APPLY } = PAGES;
+        const { REASON } = CANNOT_APPLY;
 
         const expectedReason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${countryName}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 

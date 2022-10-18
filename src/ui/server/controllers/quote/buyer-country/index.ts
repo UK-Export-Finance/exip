@@ -12,7 +12,7 @@ import { Request, Response } from '../../../../types';
 
 export const PAGE_VARIABLES = {
   FIELD_ID: FIELD_IDS.COUNTRY,
-  PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_COUNTRY,
+  PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
 };
 
 /**
@@ -142,8 +142,8 @@ export const post = async (req: Request, res: Response) => {
   if (cannotGetAQuote(country)) {
     req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
 
-    const { CANNOT_OBTAIN_COVER } = PAGES.QUOTE;
-    const { REASON } = CANNOT_OBTAIN_COVER;
+    const { CANNOT_APPLY } = PAGES;
+    const { REASON } = CANNOT_APPLY;
 
     const reason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${country.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 

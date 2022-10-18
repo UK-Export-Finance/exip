@@ -30,10 +30,10 @@ describe('controllers/insurance/eligibility/check-if-eligible', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.BUYER_LOCATION}`, () => {
+    it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`, () => {
       post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.BUYER_LOCATION);
+      expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
     });
   });
 });

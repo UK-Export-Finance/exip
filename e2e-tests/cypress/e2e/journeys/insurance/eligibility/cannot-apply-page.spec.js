@@ -1,30 +1,39 @@
-import { ukGoodsOrServicesPage } from '../../pages/quote';
-import { cannotApplyPage } from '../../pages/shared';
-import partials from '../../partials';
+import { buyerCountryPage, cannotApplyPage } from '../../../pages/shared';
+import { insurance } from '../../../pages';
+import partials from '../../../partials';
 import {
   ORGANISATION,
   LINKS,
   PAGES,
-} from '../../../../content-strings';
-import CONSTANTS from '../../../../constants';
-import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm, completeAndSubmitCompanyForm } from '../../../support/quote/forms';
+} from '../../../../../content-strings';
+import CONSTANTS from '../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_OBTAIN_COVER;
+const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
+const { ACTIONS } = CONTENT_STRINGS;
+
 const { FIELD_IDS, ROUTES } = CONSTANTS;
 
-context('Cannot obtain UKEF cover exit page', () => {
+const COUNTRY_NAME_UNSUPPORTED = 'France';
+
+context('Cannot apply exit page', () => {
   beforeEach(() => {
-    cy.login();
-    completeAndSubmitBuyerCountryForm();
-    completeAndSubmitBuyerBodyForm();
-    completeAndSubmitCompanyForm();
+    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+      auth: {
+        username: Cypress.config('basicAuthKey'),
+        password: Cypress.config('basicAuthSecret'),
+      },
+    });
 
-    cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
 
-    ukGoodsOrServicesPage.no().click();
-    ukGoodsOrServicesPage.submitButton().click();
+    buyerCountryPage.searchInput().type(COUNTRY_NAME_UNSUPPORTED);
 
-    cy.url().should('include', ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    const results = buyerCountryPage.results();
+    results.first().click();
+
+    buyerCountryPage.submitButton().click();
+
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
   });
 
   it('passes the audits', () => {
@@ -56,7 +65,7 @@ context('Cannot obtain UKEF cover exit page', () => {
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
   });
 
   it('renders a page title and heading', () => {

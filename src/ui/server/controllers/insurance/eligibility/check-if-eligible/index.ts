@@ -12,7 +12,7 @@ const get = (req: Request, res: Response) =>
   });
 
 const post = (req: Request, res: Response) => {
-  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.BUYER_LOCATION);
+  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
 };
 
 export { get, post };

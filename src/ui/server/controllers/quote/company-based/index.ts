@@ -36,8 +36,8 @@ const post = (req: Request, res: Response) => {
   if (answer === 'false') {
     req.flash('previousRoute', ROUTES.QUOTE.COMPANY_BASED);
 
-    const { CANNOT_OBTAIN_COVER } = PAGES.QUOTE;
-    const { REASON } = CANNOT_OBTAIN_COVER;
+    const { CANNOT_APPLY } = PAGES;
+    const { REASON } = CANNOT_APPLY;
 
     req.flash('exitReason', REASON.UNSUPPORTED_COMPANY_COUNTRY);
 

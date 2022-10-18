@@ -70,7 +70,7 @@ describe('controllers/quote/company-based', () => {
 
         expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.QUOTE.COMPANY_BASED);
 
-        const expectedReason = PAGES.QUOTE.CANNOT_OBTAIN_COVER.REASON.UNSUPPORTED_COMPANY_COUNTRY;
+        const expectedReason = PAGES.CANNOT_APPLY.REASON.UNSUPPORTED_COMPANY_COUNTRY;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });

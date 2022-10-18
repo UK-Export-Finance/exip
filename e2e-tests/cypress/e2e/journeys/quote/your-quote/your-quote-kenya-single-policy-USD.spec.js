@@ -5,8 +5,8 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
+import { buyerCountryPage } from '../../pages/shared';
 import {
-  buyerCountryPage,
   checkYourAnswersPage,
   policyTypePage,
   tellUsAboutYourPolicyPage,

@@ -5,12 +5,12 @@ import { mapCountries } from '../../../../helpers/mappings/map-countries';
 import singleInputPageVariables from '../../../../helpers/single-input-page-variables';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import getCountryByName from '../../../../helpers/get-country-by-name';
-import { canGetAQuoteOnline, canGetAQuoteByEmail, cannotGetAQuote } from '../../../../helpers/country-support';
+import { canApplyOnline, canApplyOffline, cannotApply } from '../../../../helpers/country-support';
 import { Request, Response } from '../../../../../types';
 
 export const PAGE_VARIABLES = {
   FIELD_ID: FIELD_IDS.COUNTRY,
-  PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_COUNTRY,
+  PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
 };
 
 export const get = async (req: Request, res: Response) => {
@@ -60,61 +60,27 @@ export const post = async (req: Request, res: Response) => {
   const country = getCountryByName(mappedCountries, submittedCountryName);
 
   if (!country) {
-    return res.redirect(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
   }
 
-  // TODO:
-  // cannotGetAQuote
-  // need to apply using a form
-
-  if (needToApplyUsingOfflineForm(country)) {
-    //  return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
-    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_APPLY_USING_OFFLINE_FORM);
+  if (canApplyOnline(country)) {
+    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
   }
 
-  // if (canGetAQuoteOnline(country)) {
-  //   const populatedData = {
-  //     ...req.body,
-  //     [FIELD_IDS.BUYER_COUNTRY]: {
-  //       name: country.name,
-  //       isoCode: country.isoCode,
-  //       riskCategory: country.riskCategory,
-  //     },
-  //   };
+  if (canApplyOffline(country)) {
+    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
+  }
 
-  //   req.session.submittedData = updateSubmittedData(populatedData, req.session.submittedData);
+  if (cannotApply(country)) {
+    const { CANNOT_APPLY } = PAGES;
+    const { REASON } = CANNOT_APPLY;
 
-  //   if (isChangeRoute(req.originalUrl)) {
-  //     return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
-  //   }
+    const reason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${country.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 
-  //   return res.redirect(ROUTES.QUOTE.BUYER_BODY);
-  // }
+    req.flash('exitReason', reason);
 
-  // if (canGetAQuoteByEmail(country)) {
-  //   req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
-
-  //   const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
-  //   const { REASON } = GET_A_QUOTE_BY_EMAIL;
-
-  //   req.flash('exitReason', REASON.BUYER_COUNTRY);
-  //   req.flash('exitDescription', REASON.BUYER_COUNTRY_DESCRIPTION);
-
-  //   return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
-  // }
-
-  // if (cannotGetAQuote(country)) {
-  //   req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
-
-  //   const { CANNOT_OBTAIN_COVER } = PAGES.INSURANCE.ELIGIBILITY;
-  //   const { REASON } = CANNOT_OBTAIN_COVER;
-
-  //   const reason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${country.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
-
-  //   req.flash('exitReason', reason);
-
-  //   return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_OBTAIN_COVER);
-  // }
+    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+  }
 
   return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
 };

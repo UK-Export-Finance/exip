@@ -1,4 +1,12 @@
-import { isCoverQuoteAvailable, canGetAQuoteOnline, canGetAQuoteByEmail, cannotGetAQuote, canApplyOnline, canApplyOffline, cannotApply } from './country-support';
+import {
+  isCoverQuoteAvailable,
+  canGetAQuoteOnline,
+  canGetAQuoteByEmail,
+  cannotGetAQuote,
+  canApplyOnline,
+  canApplyOffline,
+  cannotApply,
+} from './country-support';
 import { API } from '../constants';
 
 describe('server/helpers/country-support', () => {

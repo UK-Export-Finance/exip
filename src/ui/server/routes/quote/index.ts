@@ -1,7 +1,7 @@
 import express from 'express';
 import { ROUTES } from '../../constants';
-import { get as buyerBasedGet, post as buyerBasedPost } from '../../controllers/quote/buyer-country/index';
-import { get as buyerBodyGet, post as buyerBodyPost } from '../../controllers/quote/buyer-body/index';
+import { get as buyerCountryGet, post as buyerCountryPost } from '../../controllers/quote/buyer-country';
+import { get as buyerBodyGet, post as buyerBodyPost } from '../../controllers/quote/buyer-body';
 import { get as companyBasedGet, post as companyBasedPost } from '../../controllers/quote/company-based';
 import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../../controllers/quote/uk-goods-or-services';
 import { get as policyTypeGet, post as policyTypePost } from '../../controllers/quote/policy-type';
@@ -17,10 +17,10 @@ import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../
 const quoteRouter = express.Router();
 /* eslint-enable @typescript-eslint/ban-ts-comment */
 
-quoteRouter.get(ROUTES.QUOTE.BUYER_COUNTRY, buyerBasedGet);
-quoteRouter.post(ROUTES.QUOTE.BUYER_COUNTRY, buyerBasedPost);
-quoteRouter.get(ROUTES.QUOTE.BUYER_COUNTRY_CHANGE, buyerBasedGet);
-quoteRouter.post(ROUTES.QUOTE.BUYER_COUNTRY_CHANGE, buyerBasedPost);
+quoteRouter.get(ROUTES.QUOTE.BUYER_COUNTRY, buyerCountryGet);
+quoteRouter.post(ROUTES.QUOTE.BUYER_COUNTRY, buyerCountryPost);
+quoteRouter.get(ROUTES.QUOTE.BUYER_COUNTRY_CHANGE, buyerCountryGet);
+quoteRouter.post(ROUTES.QUOTE.BUYER_COUNTRY_CHANGE, buyerCountryPost);
 
 quoteRouter.get(ROUTES.QUOTE.BUYER_BODY, buyerBodyGet);
 quoteRouter.post(ROUTES.QUOTE.BUYER_BODY, buyerBodyPost);

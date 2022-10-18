@@ -1,7 +1,7 @@
 import { Country } from '../../types';
 
-const getCountryByName = (countries: Array<Country>, countryName: string) => {
-  const country = countries.find((c) => c.name === countryName);
+const getCountryByName = (countries: Array<Country>, countryName: string): Country => {
+  const country = countries.find((c) => c.name === countryName) as Country;
 
   return country;
 };

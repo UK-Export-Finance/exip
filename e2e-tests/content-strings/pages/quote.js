@@ -1,10 +1,5 @@
 const LINKS = require('../links');
 
-const BUYER_COUNTRY = {
-  PAGE_TITLE: 'Where is your buyer based?',
-  HEADING: 'Where is your buyer based?',
-};
-
 const BUYER_BODY = {
   PAGE_TITLE: 'Is your buyer a government or public sector body?',
   HEADING: 'Is your buyer a government or public sector body?',
@@ -241,7 +236,6 @@ const NEED_TO_START_AGAIN = {
 };
 
 module.exports = {
-  BUYER_COUNTRY,
   BUYER_BODY,
   COMPANY_BASED,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,

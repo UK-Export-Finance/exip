@@ -1,5 +1,6 @@
-import { buyerCountryPage } from '../../../pages/shared';
-import partials from '../../../partials';
+import { insurance } from '../../../../pages';
+import { buyerCountryPage } from '../../../../pages/shared';
+import partials from '../../../../partials';
 import {
   BUTTONS,
   ERROR_MESSAGES,
@@ -7,8 +8,8 @@ import {
   LINKS,
   ORGANISATION,
   PAGES,
-} from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+} from '../../../../../../content-strings';
+import CONSTANTS from '../../../../../../constants';
 import {
   checkPageTitleAndHeading,
   checkInputHint,
@@ -16,16 +17,23 @@ import {
   checkSubmitButton,
   checkValidationErrors,
   checkFocusOnInputWhenClickingSummaryErrorMessage,
-} from '../../../../support/buyer-country-form';
+} from '../../../../../support/buyer-country-form';
 
-const CONTENT_STRINGS = PAGES.QUOTE.BUYER_COUNTRY;
+const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
-context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based', () => {
+context('Insurance - Buyer location page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based', () => {
   beforeEach(() => {
-    cy.login();
+    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, {
+      auth: {
+        username: Cypress.config('basicAuthKey'),
+        password: Cypress.config('basicAuthSecret'),
+      },
+    });
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+    insurance.eligibility.checkIfEligiblePage.submitButton().click();
+
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
   });
 
   it('passes the audits', () => {
@@ -47,7 +55,9 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       expect(text.trim()).equal(LINKS.BACK);
     });
 
-    partials.backLink().should('have.attr', 'href', LINKS.EXTERNAL.BEFORE_YOU_START);
+    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE}`;
+
+    partials.backLink().should('have.attr', 'href', expected);
   });
 
   it('renders a page title and heading', () => {
@@ -101,7 +111,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       it('renders a back link with correct url', () => {
         partials.backLink().should('exist');
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
+        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
 
         partials.backLink().should('have.attr', 'href', expected);
       });
@@ -112,7 +122,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     });
 
     describe('when submitting with a supported country', () => {
-      it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION}`, () => {
         buyerCountryPage.searchInput().type('Algeria');
 
         const results = buyerCountryPage.results();
@@ -120,7 +130,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
         buyerCountryPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
+        cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
       });
     });
   });
