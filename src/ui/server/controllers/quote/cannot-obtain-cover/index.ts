@@ -6,13 +6,13 @@ const get = (req: Request, res: Response) => {
   const EXIT_REASON = req.flash('exitReason');
   const previousRoute = req.flash('previousRoute');
 
-  return res.render(TEMPLATES.QUOTE.CANNOT_OBTAIN_COVER, {
+  return res.render(TEMPLATES.CANNOT_APPLY, {
     CONTENT_STRINGS: {
       COOKIES_CONSENT,
       FOOTER,
       LINKS,
       PRODUCT,
-      ...PAGES.QUOTE.CANNOT_OBTAIN_COVER,
+      ...PAGES.CANNOT_APPLY,
     },
     BACK_LINK: previousRoute,
     EXIT_REASON,

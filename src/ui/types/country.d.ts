@@ -4,7 +4,7 @@ interface Country {
   riskCategory: string;
   selected?: boolean;
   value: string;
-  shortTermCoverAvailable: boolean;
+  shortTermCover: string;
   nbiIssueAvailable: boolean;
 }
 

@@ -18,26 +18,6 @@ export const mapRiskCategory = (str: string) => {
   return null;
 };
 
-export const mapShortTermCoverAvailable = (str: string): boolean => {
-  if (str === API.CIS.SHORT_TERM_COVER_AVAILABLE.YES) {
-    return true;
-  }
-
-  if (str === API.CIS.SHORT_TERM_COVER_AVAILABLE.ILC) {
-    return true;
-  }
-
-  if (str === API.CIS.SHORT_TERM_COVER_AVAILABLE.CILC) {
-    return true;
-  }
-
-  if (str === API.CIS.SHORT_TERM_COVER_AVAILABLE.REFER) {
-    return true;
-  }
-
-  return false;
-};
-
 export const mapNbiIssueAvailable = (str: string): boolean => {
   if (str === API.CIS.NBI_ISSUE_AVAILABLE.YES) {
     return true;
@@ -54,7 +34,7 @@ export const mapCountry = (country: CisCountry, selectedIsoCode?: string): Count
     isoCode: country.isoCode,
     value: country.isoCode,
     riskCategory: mapRiskCategory(country.ESRAClasificationDesc),
-    shortTermCoverAvailable: mapShortTermCoverAvailable(country.shortTermCoverAvailabilityDesc),
+    shortTermCover: country.shortTermCoverAvailabilityDesc,
     nbiIssueAvailable: mapNbiIssueAvailable(country.NBIIssue),
   } as Country;
 

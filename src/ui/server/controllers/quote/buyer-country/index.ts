@@ -3,7 +3,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { mapCountries } from '../../../helpers/mappings/map-countries';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
-import { validation as generateValidationErrors } from './validation';
+import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
 import { canGetAQuoteOnline, canGetAQuoteByEmail, cannotGetAQuote } from '../../../helpers/country-support';
@@ -12,7 +12,7 @@ import { Request, Response } from '../../../../types';
 
 export const PAGE_VARIABLES = {
   FIELD_ID: FIELD_IDS.COUNTRY,
-  PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_COUNTRY,
+  PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
 };
 
 /**
@@ -68,7 +68,7 @@ export const get = async (req: Request, res: Response) => {
     mappedCountries = mapCountries(countries);
   }
 
-  return res.render(TEMPLATES.QUOTE.BUYER_COUNTRY, {
+  return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
     ...singleInputPageVariables(PAGE_VARIABLES),
     BACK_LINK: getBackLink(req.headers.referer),
     HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
@@ -90,7 +90,7 @@ export const post = async (req: Request, res: Response) => {
   const mappedCountries = mapCountries(countries);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.QUOTE.BUYER_COUNTRY, {
+    return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
       ...singleInputPageVariables(PAGE_VARIABLES),
       BACK_LINK: getBackLink(req.headers.referer),
       HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
@@ -142,8 +142,8 @@ export const post = async (req: Request, res: Response) => {
   if (cannotGetAQuote(country)) {
     req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
 
-    const { CANNOT_OBTAIN_COVER } = PAGES.QUOTE;
-    const { REASON } = CANNOT_OBTAIN_COVER;
+    const { CANNOT_APPLY } = PAGES;
+    const { REASON } = CANNOT_APPLY;
 
     const reason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${country.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 
