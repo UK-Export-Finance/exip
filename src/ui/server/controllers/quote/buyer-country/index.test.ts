@@ -2,42 +2,20 @@ import { PAGE_VARIABLES, getBackLink, get, post } from '.';
 import { LINKS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
-import { validation as generateValidationErrors } from './validation';
+import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
 import api from '../../../api';
 import { mapCountries } from '../../../helpers/mappings/map-countries';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data';
-import { mockReq, mockRes, mockAnswers, mockSession } from '../../../test-mocks';
+import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
 describe('controllers/quote/buyer-country', () => {
   let req: Request;
   let res: Response;
 
-  const mockCountriesResponse = [
-    {
-      marketName: 'Abu Dhabi',
-      isoCode: 'XAD',
-      shortTermCoverAvailabilityDesc: 'No',
-      ESRAClasificationDesc: 'Standard risk',
-      NBIIssue: 'N',
-    },
-    {
-      marketName: 'Algeria',
-      isoCode: 'DZA',
-      shortTermCoverAvailabilityDesc: 'Yes',
-      ESRAClasificationDesc: 'Standard Risk',
-      NBIIssue: 'Y',
-    },
-    {
-      marketName: 'Egypt',
-      isoCode: 'EGY',
-      shortTermCoverAvailabilityDesc: 'Yes',
-      ESRAClasificationDesc: 'Standard Risk',
-      NBIIssue: 'N',
-    },
-  ];
+  const mockCountriesResponse = mockCisCountries;
 
   const countryUnsupported = mockCountriesResponse[0];
   const countrySupportedViaEmailOnly = mockCountriesResponse[2];
@@ -59,7 +37,7 @@ describe('controllers/quote/buyer-country', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID: FIELD_IDS.COUNTRY,
-        PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_COUNTRY,
+        PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -137,7 +115,7 @@ describe('controllers/quote/buyer-country', () => {
         isChangeRoute: isChangeRoute(req.originalUrl),
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_COUNTRY, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, expectedVariables);
     });
 
     describe('when a country has been submitted', () => {
@@ -157,7 +135,7 @@ describe('controllers/quote/buyer-country', () => {
           isChangeRoute: isChangeRoute(req.originalUrl),
         };
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_COUNTRY, expectedVariables);
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, expectedVariables);
       });
     });
 
@@ -211,7 +189,7 @@ describe('controllers/quote/buyer-country', () => {
       it('should render template with validation errors', async () => {
         await post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_COUNTRY, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: getBackLink(req.headers.referer),
           HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
@@ -272,8 +250,8 @@ describe('controllers/quote/buyer-country', () => {
 
         const countryName = countryUnsupported.marketName;
 
-        const { CANNOT_OBTAIN_COVER } = PAGES.QUOTE;
-        const { REASON } = CANNOT_OBTAIN_COVER;
+        const { CANNOT_APPLY } = PAGES;
+        const { REASON } = CANNOT_APPLY;
 
         const expectedReason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${countryName}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 

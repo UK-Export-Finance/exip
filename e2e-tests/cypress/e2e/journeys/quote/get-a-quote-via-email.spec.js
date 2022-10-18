@@ -1,4 +1,5 @@
-import { buyerCountryPage, getAQuoteByEmailPage } from '../../pages/quote';
+import { buyerCountryPage } from '../../pages/shared';
+import { getAQuoteByEmailPage } from '../../pages/quote';
 import partials from '../../partials';
 import {
   ORGANISATION,

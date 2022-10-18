@@ -1,4 +1,4 @@
-const cannotObtainCoverPage = {
+const cannotApply = {
   heading: () => cy.get('[data-cy="heading"]'),
   reason: () => cy.get('[data-cy="reason"]'),
   actions: {
@@ -11,4 +11,4 @@ const cannotObtainCoverPage = {
   },
 };
 
-export default cannotObtainCoverPage;
+export default cannotApply;

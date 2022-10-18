@@ -1,10 +1,5 @@
 import { LINKS } from '../links';
 
-const BUYER_COUNTRY = {
-  PAGE_TITLE: 'Where is your buyer based?',
-  HEADING: 'Where is your buyer based?',
-};
-
 const BUYER_BODY = {
   PAGE_TITLE: 'Is your buyer a government or public sector body?',
   HEADING: 'Is your buyer a government or public sector body?',
@@ -99,35 +94,6 @@ const CHECK_YOUR_ANSWERS = {
   GROUP_HEADING_EXPORT: 'Export details',
   GROUP_HEADING_POLICY: 'Policy details',
   SUBMIT_BUTTON: 'Get your quote',
-};
-
-const CANNOT_OBTAIN_COVER = {
-  PAGE_TITLE: 'You cannot apply for UKEF export insurance',
-  HEADING: 'You cannot apply for UKEF export insurance',
-  REASON: {
-    INTRO: 'This is because',
-    UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man.',
-    UNSUPPORTED_BUYER_COUNTRY_1: 'your buyer is based in',
-    UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
-    NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from  at least 20% UK goods or services.',
-  },
-  ACTIONS: {
-    INTRO: 'You can:',
-    ELIGIBILITY: {
-      TEXT: 'read about',
-      LINK: {
-        TEXT: 'eligibility',
-        HREF: LINKS.EXTERNAL.GUIDANCE,
-      },
-    },
-    CONTACT_APPROVED_BROKER: {
-      LINK: {
-        TEXT: 'contact an approved broker',
-        HREF: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
-      },
-      TEXT: 'who may be able to help you get insurance from the private sector, if you`ve not tried already',
-    },
-  },
 };
 
 const GET_A_QUOTE_BY_EMAIL = {
@@ -241,14 +207,12 @@ const NEED_TO_START_AGAIN = {
 };
 
 export default {
-  BUYER_COUNTRY,
   BUYER_BODY,
   COMPANY_BASED,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   POLICY_TYPE,
   TELL_US_ABOUT_YOUR_POLICY,
   CHECK_YOUR_ANSWERS,
-  CANNOT_OBTAIN_COVER,
   GET_A_QUOTE_BY_EMAIL,
   YOUR_QUOTE,
   NEED_TO_START_AGAIN,

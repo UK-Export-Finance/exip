@@ -1,5 +1,40 @@
 const QUOTE_PAGES = require('./quote');
 const INSURANCE_PAGES = require('./insurance');
+const LINKS = require('../links');
+
+const BUYER_COUNTRY = {
+  PAGE_TITLE: 'Where is your buyer based?',
+  HEADING: 'Where is your buyer based?',
+};
+
+const CANNOT_APPLY = {
+  PAGE_TITLE: 'You cannot apply for UKEF export insurance',
+  HEADING: 'You cannot apply for UKEF export insurance',
+  REASON: {
+    INTRO: 'This is because',
+    UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man.',
+    UNSUPPORTED_BUYER_COUNTRY_1: 'your buyer is based in',
+    UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
+    NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from  at least 20% UK goods or services.',
+  },
+  ACTIONS: {
+    INTRO: 'You can:',
+    ELIGIBILITY: {
+      TEXT: 'read about',
+      LINK: {
+        TEXT: 'eligibility',
+        HREF: LINKS.EXTERNAL.GUIDANCE,
+      },
+    },
+    CONTACT_APPROVED_BROKER: {
+      LINK: {
+        TEXT: 'contact an approved broker',
+        HREF: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
+      },
+      TEXT: 'who may be able to help you get insurance from the private sector, if you`ve not tried already',
+    },
+  },
+};
 
 const COOKIES_PAGE = {
   PAGE_TITLE: 'Cookies',
@@ -65,6 +100,8 @@ const PROBLEM_WITH_SERVICE_PAGE = {
 };
 
 module.exports = {
+  BUYER_COUNTRY,
+  CANNOT_APPLY,
   COOKIES_PAGE,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,

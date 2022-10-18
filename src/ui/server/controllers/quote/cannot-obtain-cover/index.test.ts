@@ -28,13 +28,13 @@ describe('controllers/quote/cannot-obtain-cover', () => {
   it('should render template with values from req.flash', () => {
     get(req, res);
 
-    expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.CANNOT_OBTAIN_COVER, {
+    expect(res.render).toHaveBeenCalledWith(TEMPLATES.CANNOT_APPLY, {
       CONTENT_STRINGS: {
         COOKIES_CONSENT,
         FOOTER,
         LINKS,
         PRODUCT,
-        ...PAGES.QUOTE.CANNOT_OBTAIN_COVER,
+        ...PAGES.CANNOT_APPLY,
       },
       BACK_LINK: mockPreviousRoute,
       EXIT_REASON: mockExitReason,

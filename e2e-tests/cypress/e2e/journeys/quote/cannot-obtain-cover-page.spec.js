@@ -1,4 +1,5 @@
-import { cannotObtainCoverPage, ukGoodsOrServicesPage } from '../../pages/quote';
+import { ukGoodsOrServicesPage } from '../../pages/quote';
+import { cannotApplyPage } from '../../pages/shared';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -62,42 +63,42 @@ context('Cannot obtain UKEF cover exit page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    cannotObtainCoverPage.heading().invoke('text').then((text) => {
+    cannotApplyPage.heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
 
   it('renders a reason', () => {
-    cannotObtainCoverPage.reason().should('exist');
+    cannotApplyPage.reason().should('exist');
   });
 
   it('renders `actions` content', () => {
-    cannotObtainCoverPage.actions.intro().invoke('text').then((text) => {
+    cannotApplyPage.actions.intro().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.ACTIONS.INTRO);
     });
 
-    const listItems = cannotObtainCoverPage.actions.listItems();
+    const listItems = cannotApplyPage.actions.listItems();
 
     listItems.should('have.length', 2);
 
-    cannotObtainCoverPage.actions.eligibility().invoke('text').then((text) => {
+    cannotApplyPage.actions.eligibility().invoke('text').then((text) => {
       const expected = `${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.TEXT} ${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT}`;
       expect(text.trim()).equal(expected);
     });
 
-    cannotObtainCoverPage.actions.eligibilityLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
+    cannotApplyPage.actions.eligibilityLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
 
-    cannotObtainCoverPage.actions.approvedBroker().invoke('text').then((text) => {
+    cannotApplyPage.actions.approvedBroker().invoke('text').then((text) => {
       const expected = `${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT} ${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.TEXT}`;
       expect(text.trim()).equal(expected);
     });
 
-    cannotObtainCoverPage.actions.approvedBrokerLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF);
+    cannotApplyPage.actions.approvedBrokerLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF);
   });
 
   describe('when clicking `eligibility` link', () => {
     it('redirects to guidance page - eligibility section', () => {
-      cannotObtainCoverPage.actions.eligibilityLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
+      cannotApplyPage.actions.eligibilityLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
     });
   });
 });

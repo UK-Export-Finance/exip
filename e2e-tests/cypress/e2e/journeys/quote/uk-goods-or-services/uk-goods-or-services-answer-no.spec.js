@@ -1,7 +1,5 @@
-import {
-  ukGoodsOrServicesPage,
-  cannotObtainCoverPage,
-} from '../../../pages/quote';
+import { ukGoodsOrServicesPage } from '../../../pages/quote';
+import { cannotApplyPage } from '../../../pages/shared';
 import partials from '../../../partials';
 import {
   PAGES,
@@ -36,7 +34,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   });
 
   it('renders a specific reason', () => {
-    cannotObtainCoverPage.reason().invoke('text').then((text) => {
+    cannotApplyPage.reason().invoke('text').then((text) => {
       const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES}`;
 
       expect(text.trim()).equal(expected);

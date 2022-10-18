@@ -71,10 +71,10 @@ context('Insurance - start page', () => {
   });
 
   context('form submission', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.BUYER_LOCATION}`, () => {
+    it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`, () => {
       insurance.eligibility.checkIfEligiblePage.submitButton().click();
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_LOCATION}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
 
       cy.url().should('eq', expected);
     });

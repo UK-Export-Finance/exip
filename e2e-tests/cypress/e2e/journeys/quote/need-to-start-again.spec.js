@@ -1,4 +1,5 @@
-import { buyerCountryPage, needToStartAgainPage } from '../../pages/quote';
+import { buyerCountryPage } from '../../pages/shared';
+import { needToStartAgainPage } from '../../pages/quote';
 import partials from '../../partials';
 import {
   BUTTONS,

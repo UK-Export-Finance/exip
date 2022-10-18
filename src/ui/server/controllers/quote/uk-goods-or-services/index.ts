@@ -36,8 +36,8 @@ const post = (req: Request, res: Response) => {
   if (redirectToExitPage) {
     req.flash('previousRoute', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 
-    const { CANNOT_OBTAIN_COVER } = PAGES.QUOTE;
-    const { REASON } = CANNOT_OBTAIN_COVER;
+    const { CANNOT_APPLY } = PAGES;
+    const { REASON } = CANNOT_APPLY;
 
     req.flash('exitReason', REASON.NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 

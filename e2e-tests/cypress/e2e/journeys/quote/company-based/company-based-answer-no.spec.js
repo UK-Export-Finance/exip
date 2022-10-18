@@ -1,7 +1,5 @@
-import {
-  companyBasedPage,
-  cannotObtainCoverPage,
-} from '../../../pages/quote';
+import { cannotApplyPage } from '../../../pages/shared';
+import { companyBasedPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
@@ -33,7 +31,7 @@ context('Company based page - as an exporter, I want to check if my company can 
   });
 
   it('renders a specific reason', () => {
-    cannotObtainCoverPage.reason().invoke('text').then((text) => {
+    cannotApplyPage.reason().invoke('text').then((text) => {
       const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.UNSUPPORTED_COMPANY_COUNTRY}`;
 
       expect(text.trim()).equal(expected);

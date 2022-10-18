@@ -1,14 +1,14 @@
-import { buyerCountryPage } from '../../../pages/quote';
+import { buyerCountryPage } from '../../../pages/shared';
 import partials from '../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_OBTAIN_COVER;
+const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 const { ROUTES } = CONSTANTS;
 
 const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
 
-context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based - submit country that can only get an email offline/via email', () => {
+context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based - submit country that can only get a quote offline/via email', () => {
   before(() => {
     cy.visit(ROUTES.QUOTE.BUYER_COUNTRY, {
       auth: {

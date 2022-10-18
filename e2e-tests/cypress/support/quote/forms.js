@@ -1,5 +1,5 @@
+import { buyerCountryPage } from '../../e2e/pages/shared';
 import {
-  buyerCountryPage,
   buyerBodyPage,
   companyBasedPage,
   ukGoodsOrServicesPage,

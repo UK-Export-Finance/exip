@@ -1,6 +1,5 @@
 export const QUOTE_TEMPLATES = {
   BUYER_BODY: 'quote/buyer-body.njk',
-  BUYER_COUNTRY: 'quote/buyer-country.njk',
   COMPANY_BASED: 'quote/company-based.njk',
   HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'quote/uk-goods-or-services.njk',
   POLICY_TYPE: 'quote/policy-type.njk',

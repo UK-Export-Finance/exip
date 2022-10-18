@@ -1,8 +1,8 @@
 import {
   yourQuotePage,
-  buyerCountryPage,
   tellUsAboutYourPolicyPage,
 } from '../../../pages/quote';
+import { buyerCountryPage } from '../../../pages/shared';
 import {
   LINKS,
   PAGES,
