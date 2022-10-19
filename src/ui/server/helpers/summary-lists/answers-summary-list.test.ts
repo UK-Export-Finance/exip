@@ -18,7 +18,7 @@ const {
   SINGLE_POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  VALID_COMPANY_BASE,
+  VALID_EXPORTER_LOCATION,
 } = FIELD_IDS;
 
 describe('server/helpers/summary-lists/answers-summary-list', () => {
@@ -42,12 +42,12 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
             },
           },
           {
-            id: VALID_COMPANY_BASE,
-            ...FIELDS[VALID_COMPANY_BASE],
+            id: VALID_EXPORTER_LOCATION,
+            ...FIELDS[VALID_EXPORTER_LOCATION],
             renderChangeLink: true,
-            href: `${ROUTES.QUOTE.COMPANY_BASED_CHANGE}#heading`,
+            href: `${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}#heading`,
             value: {
-              text: mockAnswersContent[VALID_COMPANY_BASE].text,
+              text: mockAnswersContent[VALID_EXPORTER_LOCATION].text,
             },
           },
           {
@@ -280,12 +280,12 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
 
   describe('getKeyText', () => {
     describe('when a field has SUMMARY objct', () => {
-      const fieldId = VALID_COMPANY_BASE;
+      const fieldId = VALID_EXPORTER_LOCATION;
 
       it('should return FIELD.SUMMARY.TITLE', () => {
         const result = getKeyText(fieldId);
 
-        const expected = FIELDS[VALID_COMPANY_BASE].SUMMARY?.TITLE;
+        const expected = FIELDS[VALID_EXPORTER_LOCATION].SUMMARY?.TITLE;
         expect(result).toEqual(expected);
       });
     });

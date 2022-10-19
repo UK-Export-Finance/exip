@@ -7,6 +7,11 @@ const BUYER_COUNTRY = {
   HEADING: 'Where is your buyer based?',
 };
 
+const EXPORTER_LOCATION = {
+  PAGE_TITLE: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
+  HEADING: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
+};
+
 const CANNOT_APPLY = {
   PAGE_TITLE: 'You cannot apply for UKEF export insurance',
   HEADING: 'You cannot apply for UKEF export insurance',
@@ -101,6 +106,7 @@ const PROBLEM_WITH_SERVICE_PAGE = {
 
 export const PAGES = {
   BUYER_COUNTRY,
+  EXPORTER_LOCATION,
   CANNOT_APPLY,
   COOKIES_PAGE,
   PAGE_NOT_FOUND_PAGE,

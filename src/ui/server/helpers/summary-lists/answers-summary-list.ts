@@ -13,7 +13,7 @@ const {
   SINGLE_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  VALID_COMPANY_BASE,
+  VALID_EXPORTER_LOCATION,
 } = FIELD_IDS;
 
 /*
@@ -42,12 +42,12 @@ const generateFieldGroups = (answers: AnswersContent) => {
       },
     },
     {
-      id: VALID_COMPANY_BASE,
-      ...FIELDS[VALID_COMPANY_BASE],
+      id: VALID_EXPORTER_LOCATION,
+      ...FIELDS[VALID_EXPORTER_LOCATION],
       renderChangeLink: true,
-      href: `${ROUTES.QUOTE.COMPANY_BASED_CHANGE}#heading`,
+      href: `${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}#heading`,
       value: {
-        text: answers[VALID_COMPANY_BASE].text,
+        text: answers[VALID_EXPORTER_LOCATION].text,
       },
     },
     {

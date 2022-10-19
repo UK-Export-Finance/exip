@@ -10,8 +10,8 @@ const {
   BUYER_COUNTRY,
   BUYER_COUNTRY_CHANGE,
   CHECK_YOUR_ANSWERS,
-  COMPANY_BASED,
-  COMPANY_BASED_CHANGE,
+  EXPORTER_LOCATION,
+  EXPORTER_LOCATION_CHANGE,
   CANNOT_OBTAIN_COVER,
   GET_A_QUOTE_BY_EMAIL,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
@@ -79,13 +79,13 @@ describe('middleware/required-data-provided', () => {
         const expected = {
           [BUYER_COUNTRY]: [],
           [BUYER_BODY]: [FIELD_IDS.BUYER_COUNTRY],
-          [COMPANY_BASED]: [FIELD_IDS.BUYER_COUNTRY, FIELD_IDS.VALID_BUYER_BODY],
-          [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: [FIELD_IDS.BUYER_COUNTRY, FIELD_IDS.VALID_BUYER_BODY, FIELD_IDS.VALID_COMPANY_BASE],
-          [POLICY_TYPE]: [FIELD_IDS.BUYER_COUNTRY, FIELD_IDS.VALID_BUYER_BODY, FIELD_IDS.VALID_COMPANY_BASE, FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES],
+          [EXPORTER_LOCATION]: [FIELD_IDS.BUYER_COUNTRY, FIELD_IDS.VALID_BUYER_BODY],
+          [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: [FIELD_IDS.BUYER_COUNTRY, FIELD_IDS.VALID_BUYER_BODY, FIELD_IDS.VALID_EXPORTER_LOCATION],
+          [POLICY_TYPE]: [FIELD_IDS.BUYER_COUNTRY, FIELD_IDS.VALID_BUYER_BODY, FIELD_IDS.VALID_EXPORTER_LOCATION, FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES],
           [TELL_US_ABOUT_YOUR_POLICY]: [
             FIELD_IDS.BUYER_COUNTRY,
             FIELD_IDS.VALID_BUYER_BODY,
-            FIELD_IDS.VALID_COMPANY_BASE,
+            FIELD_IDS.VALID_EXPORTER_LOCATION,
             FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
             FIELD_IDS.POLICY_LENGTH,
@@ -93,7 +93,7 @@ describe('middleware/required-data-provided', () => {
           [CHECK_YOUR_ANSWERS]: [
             FIELD_IDS.BUYER_COUNTRY,
             FIELD_IDS.VALID_BUYER_BODY,
-            FIELD_IDS.VALID_COMPANY_BASE,
+            FIELD_IDS.VALID_EXPORTER_LOCATION,
             FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
             FIELD_IDS.POLICY_LENGTH,
@@ -104,7 +104,7 @@ describe('middleware/required-data-provided', () => {
           [YOUR_QUOTE]: [
             FIELD_IDS.BUYER_COUNTRY,
             FIELD_IDS.VALID_BUYER_BODY,
-            FIELD_IDS.VALID_COMPANY_BASE,
+            FIELD_IDS.VALID_EXPORTER_LOCATION,
             FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
             FIELD_IDS.POLICY_LENGTH,
@@ -129,20 +129,20 @@ describe('middleware/required-data-provided', () => {
         const expected = {
           [BUYER_COUNTRY]: [],
           [BUYER_BODY]: [FIELD_IDS.BUYER_COUNTRY],
-          [COMPANY_BASED]: [FIELD_IDS.BUYER_COUNTRY, FIELD_IDS.VALID_BUYER_BODY],
-          [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: [FIELD_IDS.BUYER_COUNTRY, FIELD_IDS.VALID_BUYER_BODY, FIELD_IDS.VALID_COMPANY_BASE],
-          [POLICY_TYPE]: [FIELD_IDS.BUYER_COUNTRY, FIELD_IDS.VALID_BUYER_BODY, FIELD_IDS.VALID_COMPANY_BASE, FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES],
+          [EXPORTER_LOCATION]: [FIELD_IDS.BUYER_COUNTRY, FIELD_IDS.VALID_BUYER_BODY],
+          [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: [FIELD_IDS.BUYER_COUNTRY, FIELD_IDS.VALID_BUYER_BODY, FIELD_IDS.VALID_EXPORTER_LOCATION],
+          [POLICY_TYPE]: [FIELD_IDS.BUYER_COUNTRY, FIELD_IDS.VALID_BUYER_BODY, FIELD_IDS.VALID_EXPORTER_LOCATION, FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES],
           [TELL_US_ABOUT_YOUR_POLICY]: [
             FIELD_IDS.BUYER_COUNTRY,
             FIELD_IDS.VALID_BUYER_BODY,
-            FIELD_IDS.VALID_COMPANY_BASE,
+            FIELD_IDS.VALID_EXPORTER_LOCATION,
             FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
           ],
           [CHECK_YOUR_ANSWERS]: [
             FIELD_IDS.BUYER_COUNTRY,
             FIELD_IDS.VALID_BUYER_BODY,
-            FIELD_IDS.VALID_COMPANY_BASE,
+            FIELD_IDS.VALID_EXPORTER_LOCATION,
             FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
             FIELD_IDS.CURRENCY,
@@ -153,7 +153,7 @@ describe('middleware/required-data-provided', () => {
           [YOUR_QUOTE]: [
             FIELD_IDS.BUYER_COUNTRY,
             FIELD_IDS.VALID_BUYER_BODY,
-            FIELD_IDS.VALID_COMPANY_BASE,
+            FIELD_IDS.VALID_EXPORTER_LOCATION,
             FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
             FIELD_IDS.CURRENCY,
@@ -176,8 +176,8 @@ describe('middleware/required-data-provided', () => {
         [BUYER_COUNTRY]: allRequiredData({})[BUYER_COUNTRY],
         [BUYER_COUNTRY_CHANGE]: allRequiredData({})[BUYER_COUNTRY],
         [BUYER_BODY]: allRequiredData({})[BUYER_BODY],
-        [COMPANY_BASED]: allRequiredData({})[COMPANY_BASED],
-        [COMPANY_BASED_CHANGE]: allRequiredData({})[COMPANY_BASED],
+        [EXPORTER_LOCATION]: allRequiredData({})[EXPORTER_LOCATION],
+        [EXPORTER_LOCATION_CHANGE]: allRequiredData({})[EXPORTER_LOCATION],
         [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: allRequiredData({})[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
         [HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE]: allRequiredData({})[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
         [POLICY_TYPE]: allRequiredData({})[POLICY_TYPE],
@@ -195,7 +195,7 @@ describe('middleware/required-data-provided', () => {
   describe('hasRequiredData', () => {
     describe('when total amount of submitted fields matches the total of required fields', () => {
       it('should return true', () => {
-        const result = hasRequiredData(COMPANY_BASED_CHANGE, mockSession.submittedData);
+        const result = hasRequiredData(EXPORTER_LOCATION_CHANGE, mockSession.submittedData);
 
         expect(result).toEqual(true);
       });
@@ -203,7 +203,7 @@ describe('middleware/required-data-provided', () => {
 
     describe('when total amount of submitted fields does NOT match the total of required fields', () => {
       it('should return false', () => {
-        const result = hasRequiredData(COMPANY_BASED_CHANGE, {});
+        const result = hasRequiredData(EXPORTER_LOCATION_CHANGE, {});
 
         expect(result).toEqual(false);
       });
@@ -316,7 +316,7 @@ describe('middleware/required-data-provided', () => {
         req.originalUrl = TELL_US_ABOUT_YOUR_POLICY;
         req.session = {
           submittedData: {
-            [FIELD_IDS.VALID_COMPANY_BASE]: true,
+            [FIELD_IDS.VALID_EXPORTER_LOCATION]: true,
           },
         };
 

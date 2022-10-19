@@ -2,7 +2,7 @@ import express from 'express';
 import { ROUTES } from '../../constants';
 import { get as buyerCountryGet, post as buyerCountryPost } from '../../controllers/quote/buyer-country';
 import { get as buyerBodyGet, post as buyerBodyPost } from '../../controllers/quote/buyer-body';
-import { get as companyBasedGet, post as companyBasedPost } from '../../controllers/quote/company-based';
+import { get as companyBasedGet, post as companyBasedPost } from '../../controllers/quote/exporter-location';
 import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../../controllers/quote/uk-goods-or-services';
 import { get as policyTypeGet, post as policyTypePost } from '../../controllers/quote/policy-type';
 import { get as tellUsAboutYourPolicyGet, post as tellUsAboutYourPolicyPost } from '../../controllers/quote/tell-us-about-your-policy';
@@ -25,10 +25,10 @@ quoteRouter.post(ROUTES.QUOTE.BUYER_COUNTRY_CHANGE, buyerCountryPost);
 quoteRouter.get(ROUTES.QUOTE.BUYER_BODY, buyerBodyGet);
 quoteRouter.post(ROUTES.QUOTE.BUYER_BODY, buyerBodyPost);
 
-quoteRouter.get(ROUTES.QUOTE.COMPANY_BASED, companyBasedGet);
-quoteRouter.post(ROUTES.QUOTE.COMPANY_BASED, companyBasedPost);
-quoteRouter.get(ROUTES.QUOTE.COMPANY_BASED_CHANGE, companyBasedGet);
-quoteRouter.post(ROUTES.QUOTE.COMPANY_BASED_CHANGE, companyBasedPost);
+quoteRouter.get(ROUTES.QUOTE.EXPORTER_LOCATION, companyBasedGet);
+quoteRouter.post(ROUTES.QUOTE.EXPORTER_LOCATION, companyBasedPost);
+quoteRouter.get(ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE, companyBasedGet);
+quoteRouter.post(ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE, companyBasedPost);
 
 quoteRouter.get(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, ukGoodsOrServicesGet);
 quoteRouter.post(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, ukGoodsOrServicesPost);

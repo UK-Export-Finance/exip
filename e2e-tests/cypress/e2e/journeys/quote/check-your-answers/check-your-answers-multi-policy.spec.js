@@ -19,7 +19,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
     MULTI_POLICY_LENGTH,
     MULTI_POLICY_TYPE,
     PERCENTAGE_OF_COVER,
-    VALID_COMPANY_BASE,
+    VALID_EXPORTER_LOCATION,
   } = FIELD_IDS;
 
   const submissionData = {
@@ -75,15 +75,15 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
     });
 
     it('renders `Company` key, value and change link', () => {
-      const row = list[VALID_COMPANY_BASE];
-      const expectedKeyText = FIELDS[VALID_COMPANY_BASE].SUMMARY.TITLE;
+      const row = list[VALID_EXPORTER_LOCATION];
+      const expectedKeyText = FIELDS[VALID_EXPORTER_LOCATION].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_ANSWERS[VALID_COMPANY_BASE]);
+        expect(text.trim()).equal(SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION]);
       });
 
       row.changeLink().invoke('text').then((text) => {
@@ -91,7 +91,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.QUOTE.COMPANY_BASED_CHANGE}#heading`;
+      const expectedHref = `${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 

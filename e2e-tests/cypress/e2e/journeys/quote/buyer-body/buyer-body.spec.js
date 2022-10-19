@@ -115,11 +115,11 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     });
 
     describe('when submitting the answer as `no`', () => {
-      it(`should redirect to ${ROUTES.QUOTE.COMPANY_BASED}`, () => {
+      it(`should redirect to ${ROUTES.QUOTE.EXPORTER_LOCATION}`, () => {
         buyerBodyPage[FIELD_IDS.VALID_BUYER_BODY].no().click();
         buyerBodyPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.COMPANY_BASED);
+        cy.url().should('include', ROUTES.QUOTE.EXPORTER_LOCATION);
       });
     });
   });

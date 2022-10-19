@@ -15,7 +15,7 @@ const {
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  VALID_COMPANY_BASE,
+  VALID_EXPORTER_LOCATION,
 } = FIELD_IDS;
 
 const mapPolicyType = (answer: string) => {
@@ -42,8 +42,8 @@ const mapPercentageOfCover = (answer: number) => `${answer}%`;
 
 const mapAnswersToContent = (answers: SubmittedData) => {
   const mapped = {
-    [VALID_COMPANY_BASE]: {
-      text: SUMMARY_ANSWERS[VALID_COMPANY_BASE],
+    [VALID_EXPORTER_LOCATION]: {
+      text: SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION],
     },
     [BUYER_COUNTRY]: {
       text: mapCountry(answers[BUYER_COUNTRY]),

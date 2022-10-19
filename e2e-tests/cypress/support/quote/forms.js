@@ -16,7 +16,7 @@ const {
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
-  VALID_COMPANY_BASE,
+  VALID_EXPORTER_LOCATION,
 } = FIELD_IDS;
 
 export const completeAndSubmitBuyerCountryForm = () => {
@@ -32,7 +32,7 @@ export const completeAndSubmitBuyerBodyForm = () => {
 };
 
 export const completeAndSubmitCompanyForm = () => {
-  companyBasedPage[VALID_COMPANY_BASE].yes().click();
+  companyBasedPage[VALID_EXPORTER_LOCATION].yes().click();
   companyBasedPage.submitButton().click();
 };
 

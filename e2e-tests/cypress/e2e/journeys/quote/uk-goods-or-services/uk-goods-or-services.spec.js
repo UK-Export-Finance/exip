@@ -48,7 +48,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.QUOTE.COMPANY_BASED);
+    cy.url().should('include', ROUTES.QUOTE.EXPORTER_LOCATION);
 
     // go back to page
     cy.visit(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
