@@ -5,7 +5,8 @@ import {
   PAGES,
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm, completeAndSubmitCompanyForm } from '../../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
+import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_OBTAIN_COVER;
 const { ROUTES } = CONSTANTS;
@@ -15,7 +16,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     cy.login();
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
-    completeAndSubmitCompanyForm();
+    completeAndSubmitExporterLocationForm();
 
     cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 

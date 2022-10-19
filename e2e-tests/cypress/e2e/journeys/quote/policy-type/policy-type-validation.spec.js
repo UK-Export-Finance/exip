@@ -3,7 +3,8 @@ import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 import checkText from '../../../helpers/check-text';
-import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm, completeAndSubmitCompanyForm, completeAndSubmitUkContentForm } from '../../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
+import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, completeAndSubmitUkContentForm } from '../../../../support/quote/forms';
 
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
@@ -12,7 +13,7 @@ context('Policy type page - policy type & length validation', () => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
-    completeAndSubmitCompanyForm();
+    completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
 
     cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);

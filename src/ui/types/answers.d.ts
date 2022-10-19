@@ -14,7 +14,7 @@ interface AnswersContent {
   percentageOfCover?: SummaryListField;
   policyType?: SummaryListField;
   policyLength?: SummaryListField;
-  validCompanyBase?: SummaryListField;
+  validExporterLocation?: SummaryListField;
 }
 
 interface AnswersFieldGroups {

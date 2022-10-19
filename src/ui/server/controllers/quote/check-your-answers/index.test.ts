@@ -6,7 +6,7 @@ import { answersSummaryList } from '../../../helpers/summary-lists/answers-summa
 import { mockAnswers, mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-const { BUYER_COUNTRY, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, POLICY_TYPE, HAS_MINIMUM_UK_GOODS_OR_SERVICES, VALID_COMPANY_BASE } = FIELD_IDS;
+const { BUYER_COUNTRY, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, POLICY_TYPE, HAS_MINIMUM_UK_GOODS_OR_SERVICES, VALID_EXPORTER_LOCATION } = FIELD_IDS;
 
 describe('controllers/quote/check-your-answers', () => {
   let req: Request;
@@ -25,7 +25,7 @@ describe('controllers/quote/check-your-answers', () => {
     [MAX_AMOUNT_OWED]: 1234,
     [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
-    [VALID_COMPANY_BASE]: true,
+    [VALID_EXPORTER_LOCATION]: true,
   };
 
   beforeEach(() => {

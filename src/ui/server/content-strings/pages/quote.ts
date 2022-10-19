@@ -10,11 +10,6 @@ const BUYER_BODY = {
   },
 };
 
-const COMPANY_BASED = {
-  PAGE_TITLE: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
-  HEADING: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
-};
-
 const HAS_MINIMUM_UK_GOODS_OR_SERVICES = {
   PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
   HEADING: 'Is at least 20% of your export contract value made up from UK goods or services?',
@@ -208,7 +203,6 @@ const NEED_TO_START_AGAIN = {
 
 export default {
   BUYER_BODY,
-  COMPANY_BASED,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   POLICY_TYPE,
   TELL_US_ABOUT_YOUR_POLICY,

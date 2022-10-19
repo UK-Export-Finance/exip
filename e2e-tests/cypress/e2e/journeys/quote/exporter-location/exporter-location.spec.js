@@ -1,25 +1,26 @@
-import { buyerBodyPage } from '../../../pages/quote';
+import { buyerCountryPage, exporterLocationPage } from '../../../pages/shared';
 import partials from '../../../partials';
 import {
-  BUTTONS,
-  ERROR_MESSAGES,
-  FIELDS,
-  LINKS,
   ORGANISATION,
+  BUTTONS,
+  LINKS,
   PAGES,
+  ERROR_MESSAGES,
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
+import { completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms';
 
-const CONTENT_STRINGS = PAGES.QUOTE.BUYER_BODY;
+const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
-context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country', () => {
+context('Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
   beforeEach(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerBodyForm();
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
+    cy.url().should('include', ROUTES.QUOTE.EXPORTER_LOCATION);
   });
 
   it('passes the audits', () => {
@@ -31,6 +32,10 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     });
   });
 
+  it('renders a phase banner', () => {
+    cy.checkPhaseBanner();
+  });
+
   it('renders an analytics cookies consent banner that can be accepted', () => {
     cy.checkAnalyticsCookiesConsentAndAccept();
   });
@@ -39,38 +44,35 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     cy.rejectAnalyticsCookies();
   });
 
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
     partials.backLink().invoke('text').then((text) => {
       expect(text.trim()).equal(LINKS.BACK);
     });
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
-    partials.backLink().should('have.attr', 'href', expected);
+    partials.backLink().click();
+
+    cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
   });
 
   it('renders a page title and heading', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    buyerBodyPage.heading().invoke('text').then((text) => {
+    exporterLocationPage.heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
 
   it('renders yes and no radio buttons', () => {
-    const yesRadio = buyerBodyPage[FIELD_IDS.VALID_BUYER_BODY].yes();
+    const yesRadio = exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yes();
     yesRadio.should('exist');
 
     yesRadio.invoke('text').then((text) => {
       expect(text.trim()).equal('Yes');
     });
 
-    const noRadio = buyerBodyPage[FIELD_IDS.VALID_BUYER_BODY].no();
+    const noRadio = exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].no();
     noRadio.should('exist');
 
     noRadio.invoke('text').then((text) => {
@@ -79,7 +81,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   });
 
   it('renders a submit button', () => {
-    const button = buyerBodyPage.submitButton();
+    const button = exporterLocationPage.submitButton();
     button.should('exist');
 
     button.invoke('text').then((text) => {
@@ -90,36 +92,36 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
-        buyerBodyPage.submitButton().click();
+        exporterLocationPage.submitButton().click();
 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.VALID_BUYER_BODY];
+        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.VALID_EXPORTER_LOCATION];
 
         partials.errorSummaryListItems().first().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedMessage);
         });
 
-        buyerBodyPage[FIELD_IDS.VALID_BUYER_BODY].errorMessage().invoke('text').then((text) => {
+        exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].errorMessage().invoke('text').then((text) => {
           expect(text.trim()).includes(expectedMessage);
         });
       });
 
       it('should focus on input when clicking summary error message', () => {
-        buyerBodyPage.submitButton().click();
+        exporterLocationPage.submitButton().click();
 
         partials.errorSummaryListItemLinks().eq(0).click();
-        buyerBodyPage[FIELD_IDS.VALID_BUYER_BODY].yesInput().should('have.focus');
+        exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yesInput().should('have.focus');
       });
     });
 
-    describe('when submitting the answer as `no`', () => {
-      it(`should redirect to ${ROUTES.QUOTE.EXPORTER_LOCATION}`, () => {
-        buyerBodyPage[FIELD_IDS.VALID_BUYER_BODY].no().click();
-        buyerBodyPage.submitButton().click();
+    describe('when submitting the answer as `yes`', () => {
+      it(`should redirect to ${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`, () => {
+        exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yes().click();
+        exporterLocationPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.EXPORTER_LOCATION);
+        cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
       });
     });
   });

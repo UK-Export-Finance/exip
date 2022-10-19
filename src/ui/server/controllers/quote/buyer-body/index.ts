@@ -62,7 +62,7 @@ const post = (req: Request, res: Response) => {
     return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
   }
 
-  return res.redirect(ROUTES.QUOTE.COMPANY_BASED);
+  return res.redirect(ROUTES.QUOTE.EXPORTER_LOCATION);
 };
 
 export { PAGE_VARIABLES, mapAnswer, get, post };

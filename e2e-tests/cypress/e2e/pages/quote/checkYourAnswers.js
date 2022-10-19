@@ -12,7 +12,7 @@ const {
   SINGLE_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  VALID_COMPANY_BASE,
+  VALID_EXPORTER_LOCATION,
 } = FIELD_IDS;
 
 const checkYourAnswersPage = {
@@ -27,10 +27,10 @@ const checkYourAnswersPage = {
         value: () => cy.get(`.${BUYER_COUNTRY}-value`),
         changeLink: () => cy.get(`[data-cy="${BUYER_COUNTRY}-change-link"]`),
       },
-      [VALID_COMPANY_BASE]: {
-        key: () => cy.get(`.${VALID_COMPANY_BASE}-key`),
-        value: () => cy.get(`.${VALID_COMPANY_BASE}-value`),
-        changeLink: () => cy.get(`[data-cy="${VALID_COMPANY_BASE}-change-link"]`),
+      [VALID_EXPORTER_LOCATION]: {
+        key: () => cy.get(`.${VALID_EXPORTER_LOCATION}-key`),
+        value: () => cy.get(`.${VALID_EXPORTER_LOCATION}-value`),
+        changeLink: () => cy.get(`[data-cy="${VALID_EXPORTER_LOCATION}-change-link"]`),
       },
       [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
         key: () => cy.get(`.${HAS_MINIMUM_UK_GOODS_OR_SERVICES}-key`),

@@ -1,7 +1,7 @@
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import {
-  completeAndSubmitBuyerCountryForm,
   completeAndSubmitBuyerBodyForm,
-  completeAndSubmitCompanyForm,
+  completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
 } from '../../../../support/quote/forms';
@@ -25,7 +25,7 @@ context('Tell us about the multi policy you need - form validation', () => {
 
       completeAndSubmitBuyerCountryForm();
       completeAndSubmitBuyerBodyForm();
-      completeAndSubmitCompanyForm();
+      completeAndSubmitExporterLocationForm();
       completeAndSubmitUkContentForm();
       completeAndSubmitPolicyTypeMultiForm();
     });

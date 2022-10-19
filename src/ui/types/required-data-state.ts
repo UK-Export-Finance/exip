@@ -2,8 +2,8 @@ type RequiredDataState = {
   'buyer-country': Array<string>;
   'buyer-country/change': Array<string>;
   'buyer-body': Array<string>;
-  'is-exporter-in-UK': Array<string>;
-  'is-exporter-in-UK/change': Array<string>;
+  'exporter-location': Array<string>;
+  'exporter-location/change': Array<string>;
   'uk-goods-or-services': Array<string>;
   'uk-goods-or-services/change': Array<string>;
   'kind-of-policy': Array<string>;

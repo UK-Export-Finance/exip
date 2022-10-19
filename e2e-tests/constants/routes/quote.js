@@ -4,8 +4,8 @@ const QUOTE_ROUTES = {
   BUYER_COUNTRY: '/quote/buyer-country',
   BUYER_COUNTRY_CHANGE: '/quote/buyer-country/change',
 
-  COMPANY_BASED: '/quote/is-exporter-in-UK',
-  COMPANY_BASED_CHANGE: '/quote/is-exporter-in-UK/change',
+  EXPORTER_LOCATION: '/quote/exporter-location',
+  EXPORTER_LOCATION_CHANGE: '/quote/exporter-location/change',
 
   HAS_MINIMUM_UK_GOODS_OR_SERVICES: '/quote/uk-goods-or-services',
   HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE: '/quote/uk-goods-or-services/change',

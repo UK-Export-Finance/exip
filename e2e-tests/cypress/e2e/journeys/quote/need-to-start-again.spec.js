@@ -8,10 +8,8 @@ import {
   PAGES,
 } from '../../../../content-strings';
 import CONSTANTS from '../../../../constants';
-import {
-  completeAndSubmitBuyerCountryForm,
-  completeAndSubmitBuyerBodyForm,
-} from '../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
+import { completeAndSubmitBuyerBodyForm } from '../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.NEED_TO_START_AGAIN;
 const { FIELD_IDS, ROUTES } = CONSTANTS;

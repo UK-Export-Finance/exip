@@ -1,6 +1,5 @@
-import { buyerCountryPage } from '../../../pages/shared';
+import { buyerCountryPage, exporterLocationPage } from '../../../pages/shared';
 import {
-  companyBasedPage,
   ukGoodsOrServicesPage,
   checkYourAnswersPage,
 } from '../../../pages/quote';
@@ -14,7 +13,7 @@ const {
 
 const {
   BUYER_COUNTRY,
-  VALID_COMPANY_BASE,
+  VALID_EXPORTER_LOCATION,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
 } = FIELD_IDS;
 
@@ -84,17 +83,17 @@ context('Change your answers (export fields) - as an exporter, I want to change 
   });
 
   describe('change `Company`', () => {
-    const row = checkYourAnswersPage.summaryLists.export[VALID_COMPANY_BASE];
+    const row = checkYourAnswersPage.summaryLists.export[VALID_EXPORTER_LOCATION];
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.COMPANY_BASED_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = ROUTES.QUOTE.COMPANY_BASED_CHANGE;
+      const expectedUrl = ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE;
       cy.url().should('include', expectedUrl);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.COMPANY_BASED_CHANGE}#heading`;
+      const expected = `${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}#heading`;
       cy.url().should('include', expected);
     });
 
@@ -106,11 +105,11 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('has originally submitted answer selected', () => {
-      companyBasedPage[VALID_COMPANY_BASE].yesInput().should('be.checked');
+      exporterLocationPage[VALID_EXPORTER_LOCATION].yesInput().should('be.checked');
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      companyBasedPage.submitButton().click();
+      exporterLocationPage.submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
