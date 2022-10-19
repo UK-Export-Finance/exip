@@ -1,7 +1,7 @@
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import {
-  completeAndSubmitBuyerCountryForm,
   completeAndSubmitBuyerBodyForm,
-  completeAndSubmitCompanyForm,
+  completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
@@ -33,7 +33,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     buyerCountryPage.submitButton().click();
 
     completeAndSubmitBuyerBodyForm();
-    completeAndSubmitCompanyForm();
+    completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
 
     policyTypePage[POLICY_TYPE].single.input().click();

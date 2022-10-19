@@ -1,6 +1,5 @@
-import { buyerCountryPage } from '../../../pages/shared';
+import { buyerCountryPage, exporterLocationPage } from '../../../pages/shared';
 import {
-  companyBasedPage,
   ukGoodsOrServicesPage,
   checkYourAnswersPage,
 } from '../../../pages/quote';
@@ -106,11 +105,11 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('has originally submitted answer selected', () => {
-      companyBasedPage[VALID_EXPORTER_LOCATION].yesInput().should('be.checked');
+      exporterLocationPage[VALID_EXPORTER_LOCATION].yesInput().should('be.checked');
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      companyBasedPage.submitButton().click();
+      exporterLocationPage.submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });

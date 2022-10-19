@@ -2,7 +2,7 @@ import partials from '../../../partials';
 import { buyerBodyPage } from '../../../pages/quote';
 import { COOKIES_CONSENT, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 context('Cookies consent - accept', () => {
   beforeEach(() => {

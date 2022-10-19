@@ -1,26 +1,30 @@
-import { buyerCountryPage, exporterLocationPage } from '../../../pages/shared';
-import partials from '../../../partials';
+import { buyerCountryPage, exporterLocationPage } from '../../../../pages/shared';
+import partials from '../../../../partials';
 import {
   ORGANISATION,
   BUTTONS,
   LINKS,
   PAGES,
   ERROR_MESSAGES,
-} from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
-import { completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms';
+} from '../../../../../../content-strings';
+import CONSTANTS from '../../../../../../constants';
+import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 
 const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
-context('Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
+context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
   beforeEach(() => {
-    cy.login();
-    completeAndSubmitBuyerCountryForm();
-    completeAndSubmitBuyerBodyForm();
+    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+      auth: {
+        username: Cypress.config('basicAuthKey'),
+        password: Cypress.config('basicAuthSecret'),
+      },
+    });
 
-    cy.url().should('include', ROUTES.QUOTE.EXPORTER_LOCATION);
+    completeAndSubmitBuyerCountryForm();
+
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
   });
 
   it('passes the audits', () => {
@@ -28,7 +32,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
       accessibility: 100,
       performance: 75,
       'best-practices': 100,
-      seo: 60,
+      seo: 70,
     });
   });
 
@@ -52,7 +56,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
   });
 
   it('renders a page title and heading', () => {
@@ -117,11 +121,11 @@ context('Exporter location page - as an exporter, I want to check if my company 
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`, () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`, () => {
         exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yes().click();
         exporterLocationPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+        cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
       });
     });
   });

@@ -1,7 +1,7 @@
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import {
   completeAndSubmitBuyerBodyForm,
-  completeAndSubmitBuyerCountryForm,
-  completeAndSubmitCompanyForm,
+  completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
 } from '../../../../support/quote/forms';
 import { policyTypePage } from '../../../pages/quote';
@@ -30,7 +30,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
 
       completeAndSubmitBuyerCountryForm();
       completeAndSubmitBuyerBodyForm();
-      completeAndSubmitCompanyForm();
+      completeAndSubmitExporterLocationForm();
       completeAndSubmitUkContentForm();
 
       cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);

@@ -1,6 +1,6 @@
 import { FIELD_IDS } from '../../../../constants';
 
-const companyBasedPage = {
+const exporterLocationPage = {
   heading: () => cy.get('[data-cy="heading"]'),
   [FIELD_IDS.VALID_EXPORTER_LOCATION]: {
     yes: () => cy.get(`[data-cy="${FIELD_IDS.VALID_EXPORTER_LOCATION}-yes"]`),
@@ -11,4 +11,4 @@ const companyBasedPage = {
   submitButton: () => cy.get('[data-cy="submit-button"]'),
 };
 
-export default companyBasedPage;
+export default exporterLocationPage;

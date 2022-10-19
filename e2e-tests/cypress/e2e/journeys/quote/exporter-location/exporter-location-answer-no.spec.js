@@ -1,9 +1,9 @@
-import { cannotApplyPage } from '../../../pages/shared';
-import { companyBasedPage } from '../../../pages/quote';
+import { cannotApplyPage, exporterLocationPage } from '../../../pages/shared';
 import partials from '../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
+import { completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_OBTAIN_COVER;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
@@ -16,8 +16,8 @@ context('Exporter location page - as an exporter, I want to check if my company 
 
     cy.url().should('include', ROUTES.QUOTE.EXPORTER_LOCATION);
 
-    companyBasedPage[FIELD_IDS.VALID_EXPORTER_LOCATION].no().click();
-    companyBasedPage.submitButton().click();
+    exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].no().click();
+    exporterLocationPage.submitButton().click();
   });
 
   it('redirects to exit page', () => {

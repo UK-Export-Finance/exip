@@ -1,7 +1,6 @@
-import { buyerCountryPage } from '../../e2e/pages/shared';
+import { buyerCountryPage, exporterLocationPage } from '../../e2e/pages/shared';
 import {
   buyerBodyPage,
-  companyBasedPage,
   ukGoodsOrServicesPage,
   policyTypePage,
   tellUsAboutYourPolicyPage,
@@ -19,21 +18,14 @@ const {
   VALID_EXPORTER_LOCATION,
 } = FIELD_IDS;
 
-export const completeAndSubmitBuyerCountryForm = () => {
-  buyerCountryPage.searchInput().type('Alg');
-  const results = buyerCountryPage.results();
-  results.first().click();
-  buyerCountryPage.submitButton().click();
-};
-
 export const completeAndSubmitBuyerBodyForm = () => {
   buyerBodyPage[FIELD_IDS.VALID_BUYER_BODY].no().click();
   buyerBodyPage.submitButton().click();
 };
 
-export const completeAndSubmitCompanyForm = () => {
-  companyBasedPage[VALID_EXPORTER_LOCATION].yes().click();
-  companyBasedPage.submitButton().click();
+export const completeAndSubmitExporterLocationForm = () => {
+  exporterLocationPage[VALID_EXPORTER_LOCATION].yes().click();
+  exporterLocationPage.submitButton().click();
 };
 
 export const completeAndSubmitUkContentForm = () => {
