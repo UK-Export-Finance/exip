@@ -125,10 +125,10 @@ describe('controllers/quote/buyer-body', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.COMPANY_BASED}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.EXPORTER_LOCATION}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.COMPANY_BASED);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.EXPORTER_LOCATION);
       });
     });
   });

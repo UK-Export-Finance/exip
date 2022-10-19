@@ -6,7 +6,7 @@ const FIELDS = {
   [FIELD_IDS.COUNTRY]: {
     HINT: 'Cover is based on the country your buyer is located in, not the destination of your goods or services.',
   },
-  [FIELD_IDS.VALID_COMPANY_BASE]: {
+  [FIELD_IDS.VALID_EXPORTER_LOCATION]: {
     SUMMARY: {
       TITLE: 'Your company',
     },

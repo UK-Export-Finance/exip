@@ -1,7 +1,7 @@
 export const FIELD_IDS = {
   OPTIONAL_COOKIES: 'optionalCookies',
   VALID_BUYER_BODY: 'validBuyerBody',
-  VALID_COMPANY_BASE: 'validCompanyBase',
+  VALID_EXPORTER_LOCATION: 'validExporterLocation',
   BUYER_COUNTRY: 'buyerCountry',
   COUNTRY: 'country',
   HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',

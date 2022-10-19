@@ -1,26 +1,30 @@
-import { buyerCountryPage } from '../../../pages/shared';
-import { companyBasedPage } from '../../../pages/quote';
-import partials from '../../../partials';
+import { buyerCountryPage, exporterLocationPage } from '../../../../pages/shared';
+import partials from '../../../../partials';
 import {
   ORGANISATION,
   BUTTONS,
   LINKS,
   PAGES,
   ERROR_MESSAGES,
-} from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms';
+} from '../../../../../../content-strings';
+import CONSTANTS from '../../../../../../constants';
+import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 
-const CONTENT_STRINGS = PAGES.QUOTE.COMPANY_BASED;
+const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
-context('Company based page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
+context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
   beforeEach(() => {
-    cy.login();
-    completeAndSubmitBuyerCountryForm();
-    completeAndSubmitBuyerBodyForm();
+    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+      auth: {
+        username: Cypress.config('basicAuthKey'),
+        password: Cypress.config('basicAuthSecret'),
+      },
+    });
 
-    cy.url().should('include', ROUTES.QUOTE.COMPANY_BASED);
+    completeAndSubmitBuyerCountryForm();
+
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
   });
 
   it('passes the audits', () => {
@@ -28,7 +32,7 @@ context('Company based page - as an exporter, I want to check if my company can 
       accessibility: 100,
       performance: 75,
       'best-practices': 100,
-      seo: 60,
+      seo: 70,
     });
   });
 
@@ -52,27 +56,27 @@ context('Company based page - as an exporter, I want to check if my company can 
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
   });
 
   it('renders a page title and heading', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    companyBasedPage.heading().invoke('text').then((text) => {
+    exporterLocationPage.heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
 
   it('renders yes and no radio buttons', () => {
-    const yesRadio = companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].yes();
+    const yesRadio = exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yes();
     yesRadio.should('exist');
 
     yesRadio.invoke('text').then((text) => {
       expect(text.trim()).equal('Yes');
     });
 
-    const noRadio = companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].no();
+    const noRadio = exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].no();
     noRadio.should('exist');
 
     noRadio.invoke('text').then((text) => {
@@ -81,7 +85,7 @@ context('Company based page - as an exporter, I want to check if my company can 
   });
 
   it('renders a submit button', () => {
-    const button = companyBasedPage.submitButton();
+    const button = exporterLocationPage.submitButton();
     button.should('exist');
 
     button.invoke('text').then((text) => {
@@ -92,36 +96,36 @@ context('Company based page - as an exporter, I want to check if my company can 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
-        companyBasedPage.submitButton().click();
+        exporterLocationPage.submitButton().click();
 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.VALID_COMPANY_BASE];
+        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.VALID_EXPORTER_LOCATION];
 
         partials.errorSummaryListItems().first().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedMessage);
         });
 
-        companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].errorMessage().invoke('text').then((text) => {
+        exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].errorMessage().invoke('text').then((text) => {
           expect(text.trim()).includes(expectedMessage);
         });
       });
 
       it('should focus on input when clicking summary error message', () => {
-        companyBasedPage.submitButton().click();
+        exporterLocationPage.submitButton().click();
 
         partials.errorSummaryListItemLinks().eq(0).click();
-        companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].yesInput().should('have.focus');
+        exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yesInput().should('have.focus');
       });
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`, () => {
-        companyBasedPage[FIELD_IDS.VALID_COMPANY_BASE].yes().click();
-        companyBasedPage.submitButton().click();
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`, () => {
+        exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yes().click();
+        exporterLocationPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+        cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
       });
     });
   });

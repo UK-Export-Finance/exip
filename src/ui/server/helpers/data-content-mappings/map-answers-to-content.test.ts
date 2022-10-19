@@ -15,7 +15,7 @@ const {
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  VALID_COMPANY_BASE,
+  VALID_EXPORTER_LOCATION,
 } = FIELD_IDS;
 
 describe('server/helpers/map-answers-to-content', () => {
@@ -69,8 +69,8 @@ describe('server/helpers/map-answers-to-content', () => {
       const result = mapAnswersToContent(mockAnswers);
 
       const expected = {
-        [VALID_COMPANY_BASE]: {
-          text: SUMMARY_ANSWERS[VALID_COMPANY_BASE],
+        [VALID_EXPORTER_LOCATION]: {
+          text: SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION],
         },
         [BUYER_COUNTRY]: {
           text: mapCountry(mockAnswers[BUYER_COUNTRY]),

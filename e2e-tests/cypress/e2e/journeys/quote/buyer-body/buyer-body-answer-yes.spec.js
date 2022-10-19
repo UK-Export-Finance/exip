@@ -5,7 +5,7 @@ import {
 import partials from '../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.BUYER_BODY;
 const { ROUTES, FIELD_IDS } = CONSTANTS;

@@ -1,7 +1,7 @@
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import {
-  completeAndSubmitBuyerCountryForm,
   completeAndSubmitBuyerBodyForm,
-  completeAndSubmitCompanyForm,
+  completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
@@ -30,7 +30,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
       completeAndSubmitBuyerCountryForm();
       completeAndSubmitBuyerBodyForm();
-      completeAndSubmitCompanyForm();
+      completeAndSubmitExporterLocationForm();
       completeAndSubmitUkContentForm();
       completeAndSubmitPolicyTypeSingleForm();
 

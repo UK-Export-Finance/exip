@@ -1,7 +1,7 @@
 import partials from '../../../partials';
 import { COOKIES_CONSENT, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 context('Cookies consent - reject', () => {
   beforeEach(() => {

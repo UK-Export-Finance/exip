@@ -4,10 +4,10 @@ import {
 } from '../../../pages/quote';
 import partials from '../../../partials';
 import CONSTANTS from '../../../../../constants';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import {
-  completeAndSubmitBuyerCountryForm,
   completeAndSubmitBuyerBodyForm,
-  completeAndSubmitCompanyForm,
+  completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
@@ -29,7 +29,7 @@ context('Change your answers (policy type) - multiple times via back button - as
 
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
-    completeAndSubmitCompanyForm();
+    completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeSingleForm();
 

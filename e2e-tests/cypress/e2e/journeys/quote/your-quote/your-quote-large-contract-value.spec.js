@@ -1,7 +1,7 @@
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import {
-  completeAndSubmitBuyerCountryForm,
   completeAndSubmitBuyerBodyForm,
-  completeAndSubmitCompanyForm,
+  completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
@@ -25,7 +25,7 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
 
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
-    completeAndSubmitCompanyForm();
+    completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeSingleForm();
   });

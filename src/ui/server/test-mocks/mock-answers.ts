@@ -3,7 +3,7 @@ import { SubmittedData } from '../../types';
 
 const {
   VALID_BUYER_BODY,
-  VALID_COMPANY_BASE,
+  VALID_EXPORTER_LOCATION,
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   CONTRACT_VALUE,
@@ -16,7 +16,7 @@ const {
 
 const mockAnswers = {
   [VALID_BUYER_BODY]: true,
-  [VALID_COMPANY_BASE]: true,
+  [VALID_EXPORTER_LOCATION]: true,
   [BUYER_COUNTRY]: 'Algeria',
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
   [CURRENCY]: 'GBP',
