@@ -1,7 +1,7 @@
 import CONSTANTS from '../../../../../constants';
 const { ROUTES } = CONSTANTS;
 
-context('Manually going to the `Company based` page via URL without completing the previous forms', () => {
+context('Manually going to the `Exporter location` page via URL without completing the previous forms', () => {
   beforeEach(() => {
     cy.visit(ROUTES.QUOTE.EXPORTER_LOCATION, {
       auth: {
