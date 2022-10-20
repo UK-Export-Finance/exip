@@ -1,5 +1,4 @@
-import { exporterLocationPage } from '../../../pages/shared';
-import { ukGoodsOrServicesPage } from '../../../pages/quote';
+import { exporterLocationPage, ukGoodsOrServicesPage } from '../../../pages/shared';
 import partials from '../../../partials';
 import {
   ORGANISATION,

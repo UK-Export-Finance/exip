@@ -1,7 +1,6 @@
-import { buyerCountryPage, exporterLocationPage } from '../../e2e/pages/shared';
+import { buyerCountryPage, exporterLocationPage, ukGoodsOrServicesPage } from '../../e2e/pages/shared';
 import {
   buyerBodyPage,
-  ukGoodsOrServicesPage,
   policyTypePage,
   tellUsAboutYourPolicyPage,
 } from '../../e2e/pages/quote';

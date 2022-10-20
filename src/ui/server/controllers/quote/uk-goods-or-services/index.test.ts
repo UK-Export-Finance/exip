@@ -2,7 +2,7 @@ import { PAGE_VARIABLES, get, post } from '.';
 import { PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
-import generateValidationErrors from './validation';
+import generateValidationErrors from '../../../shared-validation/uk-goods-or-services';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
@@ -20,7 +20,10 @@ describe('controllers/quote/uk-goods-or-services', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID: FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-        PAGE_CONTENT_STRINGS: PAGES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+        PAGE_CONTENT_STRINGS: {
+          ...PAGES.UK_GOODS_OR_SERVICES,
+          ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
+        },
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -31,7 +34,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES, {
         ...singleInputPageVariables(PAGE_VARIABLES),
         BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData,
@@ -44,7 +47,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
       it('should render template with validation errors', () => {
         post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES, {
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(req.body),

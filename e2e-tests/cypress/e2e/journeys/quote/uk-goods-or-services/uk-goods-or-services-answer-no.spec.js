@@ -1,5 +1,4 @@
-import { ukGoodsOrServicesPage } from '../../../pages/quote';
-import { cannotApplyPage } from '../../../pages/shared';
+import { cannotApplyPage, ukGoodsOrServicesPage } from '../../../pages/shared';
 import partials from '../../../partials';
 import {
   PAGES,

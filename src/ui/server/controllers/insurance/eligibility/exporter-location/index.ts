@@ -33,7 +33,7 @@ const post = (req: Request, res: Response) => {
     return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
   }
 
-  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
 };
 
 export { PAGE_VARIABLES, get, post };
