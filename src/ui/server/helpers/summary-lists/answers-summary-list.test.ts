@@ -54,7 +54,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
             id: HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             ...FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
             renderChangeLink: true,
-            href: `${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`,
+            href: `${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}#heading`,
             value: {
               text: mockAnswersContent[HAS_MINIMUM_UK_GOODS_OR_SERVICES].text,
             },

@@ -48,7 +48,7 @@ const post = (req: Request, res: Response) => {
     return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
   }
 
-  return res.redirect(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+  return res.redirect(ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 };
 
 export { PAGE_VARIABLES, get, post };

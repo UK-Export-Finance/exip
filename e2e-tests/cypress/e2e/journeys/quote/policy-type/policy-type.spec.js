@@ -59,7 +59,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
         expect(text.trim()).equal(LINKS.BACK);
       });
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.UK_GOODS_OR_SERVICES}`;
 
       partials.backLink().should('have.attr', 'href', expected);
     });

@@ -37,12 +37,12 @@ const post = (req: Request, res: Response) => {
   const redirectToExitPage = answer === 'false';
 
   if (redirectToExitPage) {
-    req.flash('previousRoute', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    req.flash('previousRoute', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 
     const { CANNOT_APPLY } = PAGES;
     const { REASON } = CANNOT_APPLY;
 
-    req.flash('exitReason', REASON.NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    req.flash('exitReason', REASON.NOT_ENOUGH_MINIMUM_UK_GOODS_OR_SERVICES);
 
     return res.redirect(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
   }

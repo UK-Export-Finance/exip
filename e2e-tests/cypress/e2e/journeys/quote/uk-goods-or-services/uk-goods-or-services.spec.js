@@ -25,7 +25,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
-    cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
   });
 
   beforeEach(() => {
@@ -53,7 +53,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     cy.url().should('include', ROUTES.QUOTE.EXPORTER_LOCATION);
 
     // go back to page
-    cy.visit(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
+    cy.visit(ROUTES.QUOTE.UK_GOODS_OR_SERVICES, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),

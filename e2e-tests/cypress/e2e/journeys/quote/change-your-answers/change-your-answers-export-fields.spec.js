@@ -115,15 +115,15 @@ context('Change your answers (export fields) - as an exporter, I want to change 
   describe('change `UK goods`', () => {
     const row = checkYourAnswersPage.summaryLists.export[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}`, () => {
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}`, () => {
       row.changeLink().click();
 
-      const expectedUrl = ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE;
+      const expectedUrl = ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE;
       cy.url().should('include', expectedUrl);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`;
+      const expected = `${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
       cy.url().should('include', expected);
     });
 

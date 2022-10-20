@@ -112,7 +112,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
         expect(text.trim()).equal(expected);
       });
 
-      const expectedHref = `${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`;
+      const expectedHref = `${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });

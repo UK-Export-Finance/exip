@@ -92,10 +92,10 @@ describe('controllers/quote/exporter-location', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`, () => {
+      it(`should redirect to ${ROUTES.QUOTE.UK_GOODS_OR_SERVICES}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
       });
 
       describe("when the url's last substring is `change`", () => {
