@@ -16,11 +16,11 @@ const { AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWE
 const generatePageVariables = (policyType: string) => {
   const pageVariables: TellUsAboutPolicyPageVariables = {
     CONTENT_STRINGS: {
-      PRODUCT,
-      FOOTER,
       BUTTONS,
-      LINKS,
       COOKIES_CONSENT,
+      LINKS,
+      FOOTER,
+      PRODUCT,
       ...PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE,
     },
     FIELDS: {
