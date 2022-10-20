@@ -1,5 +1,4 @@
-import { ukGoodsOrServicesPage } from '../../../pages/quote';
-import { cannotApplyPage } from '../../../pages/shared';
+import { cannotApplyPage, ukGoodsOrServicesPage } from '../../../pages/shared';
 import partials from '../../../partials';
 import {
   PAGES,
@@ -18,7 +17,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
-    cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 
     ukGoodsOrServicesPage.no().click();
     ukGoodsOrServicesPage.submitButton().click();
@@ -31,12 +30,12 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
 
-    partials.backLink().should('have.attr', 'href', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    partials.backLink().should('have.attr', 'href', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
   });
 
   it('renders a specific reason', () => {
     cannotApplyPage.reason().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES}`;
+      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES}`;
 
       expect(text.trim()).equal(expected);
     });

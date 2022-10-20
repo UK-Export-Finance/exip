@@ -7,8 +7,8 @@ const QUOTE_ROUTES = {
   EXPORTER_LOCATION: '/quote/exporter-location',
   EXPORTER_LOCATION_CHANGE: '/quote/exporter-location/change',
 
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES: '/quote/uk-goods-or-services',
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE: '/quote/uk-goods-or-services/change',
+  UK_GOODS_OR_SERVICES: '/quote/uk-goods-services',
+  UK_GOODS_OR_SERVICES_CHANGE: '/quote/uk-goods-services/change',
 
   POLICY_TYPE: '/quote/kind-of-policy',
   POLICY_TYPE_CHANGE: '/quote/kind-of-policy/change',

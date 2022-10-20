@@ -1,9 +1,9 @@
-import validation from './validation';
-import { FIELD_IDS } from '../../../constants';
-import { ERROR_MESSAGES } from '../../../content-strings';
-import generateValidationErrors from '../../../helpers/validation';
+import validation from '.';
+import { FIELD_IDS } from '../../constants';
+import { ERROR_MESSAGES } from '../../content-strings';
+import generateValidationErrors from '../../helpers/validation';
 
-describe('controllers/quote/uk-goods-or-services/validation', () => {
+describe('shared-validation/uk-goods-or-services', () => {
   describe('validation', () => {
     describe('when no values are provided', () => {
       it('should return validation errors', () => {

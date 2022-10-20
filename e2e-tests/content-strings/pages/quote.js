@@ -10,9 +10,7 @@ const BUYER_BODY = {
   },
 };
 
-const HAS_MINIMUM_UK_GOODS_OR_SERVICES = {
-  PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
-  HEADING: 'Is at least 20% of your export contract value made up from UK goods or services?',
+const UK_GOODS_OR_SERVICES = {
   DETAILS: {
     INTRO: 'What counts as UK goods and services?',
     INCLUDES: {
@@ -99,7 +97,7 @@ const CANNOT_OBTAIN_COVER = {
     UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man.',
     UNSUPPORTED_BUYER_COUNTRY_1: 'your buyer is based in',
     UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
-    NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from  at least 20% UK goods or services.',
+    NOT_ENOUGH_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from at least 20% UK goods or services.',
   },
   ACTIONS: {
     INTRO: 'You can:',
@@ -232,7 +230,7 @@ const NEED_TO_START_AGAIN = {
 
 module.exports = {
   BUYER_BODY,
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+  UK_GOODS_OR_SERVICES,
   POLICY_TYPE,
   TELL_US_ABOUT_YOUR_POLICY,
   CHECK_YOUR_ANSWERS,

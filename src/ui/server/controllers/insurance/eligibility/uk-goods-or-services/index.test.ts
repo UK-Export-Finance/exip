@@ -2,11 +2,11 @@ import { PAGE_VARIABLES, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/single-input-page-variables';
-import generateValidationErrors from '../../../../shared-validation/exporter-location';
+import generateValidationErrors from '../../../../shared-validation/uk-goods-or-services';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
-describe('controllers/insurance/eligibility/exporter-location', () => {
+describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
   let req: Request;
   let res: Response;
 
@@ -18,8 +18,8 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.VALID_EXPORTER_LOCATION,
-        PAGE_CONTENT_STRINGS: PAGES.EXPORTER_LOCATION,
+        FIELD_ID: FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+        PAGE_CONTENT_STRINGS: PAGES.UK_GOODS_OR_SERVICES,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -31,7 +31,7 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(
-        TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION,
+        TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES,
         singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
       );
     });
@@ -42,7 +42,7 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
       it('should render template with validation errors', () => {
         post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
           validationErrors: generateValidationErrors(req.body),
         });
@@ -52,7 +52,7 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
     describe('when submitted answer is false', () => {
       beforeEach(() => {
         req.body = {
-          [FIELD_IDS.VALID_EXPORTER_LOCATION]: 'false',
+          [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'false',
         };
       });
 
@@ -65,24 +65,24 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
       it('should add exitReason to req.flash', async () => {
         await post(req, res);
 
-        const expectedReason = PAGES.CANNOT_APPLY.REASON.UNSUPPORTED_COMPANY_COUNTRY;
+        const expectedReason = PAGES.CANNOT_APPLY.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.VALID_EXPORTER_LOCATION]: 'true',
+        [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'true',
       };
 
       beforeEach(() => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES}`, () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
       });
     });
   });

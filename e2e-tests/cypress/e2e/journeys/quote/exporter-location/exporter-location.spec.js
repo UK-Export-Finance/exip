@@ -117,11 +117,11 @@ context('Exporter location page - as an exporter, I want to check if my company 
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`, () => {
+      it(`should redirect to ${ROUTES.QUOTE.UK_GOODS_OR_SERVICES}`, () => {
         exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yes().click();
         exporterLocationPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+        cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
       });
     });
   });

@@ -30,10 +30,10 @@ quoteRouter.post(ROUTES.QUOTE.EXPORTER_LOCATION, companyBasedPost);
 quoteRouter.get(ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE, companyBasedGet);
 quoteRouter.post(ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE, companyBasedPost);
 
-quoteRouter.get(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, ukGoodsOrServicesGet);
-quoteRouter.post(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, ukGoodsOrServicesPost);
-quoteRouter.get(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesGet);
-quoteRouter.post(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesPost);
+quoteRouter.get(ROUTES.QUOTE.UK_GOODS_OR_SERVICES, ukGoodsOrServicesGet);
+quoteRouter.post(ROUTES.QUOTE.UK_GOODS_OR_SERVICES, ukGoodsOrServicesPost);
+quoteRouter.get(ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesGet);
+quoteRouter.post(ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesPost);
 
 quoteRouter.get(ROUTES.QUOTE.POLICY_TYPE, policyTypeGet);
 quoteRouter.post(ROUTES.QUOTE.POLICY_TYPE, policyTypePost);

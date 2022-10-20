@@ -38,10 +38,10 @@ describe('routes/quote', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE, companyBasedGet);
     expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE, companyBasedPost);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, ukGoodsOrServicesGet);
-    expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, ukGoodsOrServicesPost);
-    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesGet);
-    expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesPost);
+    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.UK_GOODS_OR_SERVICES, ukGoodsOrServicesGet);
+    expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.UK_GOODS_OR_SERVICES, ukGoodsOrServicesPost);
+    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesGet);
+    expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesPost);
 
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.POLICY_TYPE, policyTypeGet);
     expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.POLICY_TYPE, policyTypePost);

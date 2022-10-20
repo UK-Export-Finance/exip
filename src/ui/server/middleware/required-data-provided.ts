@@ -13,8 +13,8 @@ const {
   EXPORTER_LOCATION,
   EXPORTER_LOCATION_CHANGE,
   GET_A_QUOTE_BY_EMAIL,
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE,
+  UK_GOODS_OR_SERVICES,
+  UK_GOODS_OR_SERVICES_CHANGE,
   NEED_TO_START_AGAIN,
   POLICY_TYPE,
   POLICY_TYPE_CHANGE,
@@ -68,9 +68,9 @@ export const allRequiredData = (submittedData: SubmittedData): RequiredDataState
 
   requiredDataState[EXPORTER_LOCATION] = [...requiredDataState[BUYER_BODY], FIELD_IDS.VALID_BUYER_BODY];
 
-  requiredDataState[HAS_MINIMUM_UK_GOODS_OR_SERVICES] = [...requiredDataState[EXPORTER_LOCATION], FIELD_IDS.VALID_EXPORTER_LOCATION];
+  requiredDataState[UK_GOODS_OR_SERVICES] = [...requiredDataState[EXPORTER_LOCATION], FIELD_IDS.VALID_EXPORTER_LOCATION];
 
-  requiredDataState[POLICY_TYPE] = [...requiredDataState[HAS_MINIMUM_UK_GOODS_OR_SERVICES], FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+  requiredDataState[POLICY_TYPE] = [...requiredDataState[UK_GOODS_OR_SERVICES], FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
   requiredDataState[TELL_US_ABOUT_YOUR_POLICY] = [...requiredDataState[POLICY_TYPE], FIELD_IDS.POLICY_TYPE];
 
@@ -103,8 +103,8 @@ export const generateRequiredDataState = (submittedData: SubmittedData): Require
   requiredDataState[BUYER_BODY] = required[BUYER_BODY];
   requiredDataState[EXPORTER_LOCATION] = required[EXPORTER_LOCATION];
   requiredDataState[EXPORTER_LOCATION_CHANGE] = required[EXPORTER_LOCATION];
-  requiredDataState[HAS_MINIMUM_UK_GOODS_OR_SERVICES] = required[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
-  requiredDataState[HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE] = required[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+  requiredDataState[UK_GOODS_OR_SERVICES] = required[UK_GOODS_OR_SERVICES];
+  requiredDataState[UK_GOODS_OR_SERVICES_CHANGE] = required[UK_GOODS_OR_SERVICES];
   requiredDataState[POLICY_TYPE] = required[POLICY_TYPE];
   requiredDataState[POLICY_TYPE_CHANGE] = required[POLICY_TYPE];
   requiredDataState[TELL_US_ABOUT_YOUR_POLICY] = required[TELL_US_ABOUT_YOUR_POLICY];

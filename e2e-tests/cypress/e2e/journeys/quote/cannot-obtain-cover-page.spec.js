@@ -1,5 +1,4 @@
-import { ukGoodsOrServicesPage } from '../../pages/quote';
-import { cannotApplyPage } from '../../pages/shared';
+import { cannotApplyPage, ukGoodsOrServicesPage } from '../../pages/shared';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -20,7 +19,7 @@ context('Cannot obtain UKEF cover exit page', () => {
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
-    cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 
     ukGoodsOrServicesPage.no().click();
     ukGoodsOrServicesPage.submitButton().click();
@@ -57,7 +56,7 @@ context('Cannot obtain UKEF cover exit page', () => {
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
   });
 
   it('renders a page title and heading', () => {
