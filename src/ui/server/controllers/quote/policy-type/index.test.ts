@@ -1,5 +1,5 @@
 import { PAGE_VARIABLES, get, post } from '.';
-import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, PAGES, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import generateValidationErrors from './validation';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data';
@@ -25,6 +25,7 @@ describe('controllers/quote/policy-type', () => {
         CONTENT_STRINGS: {
           BUTTONS,
           COOKIES_CONSENT,
+          LINKS,
           FOOTER,
           PRODUCT,
           ...PAGES.POLICY_TYPE_PAGE,
