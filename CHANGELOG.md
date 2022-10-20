@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.2](https://github.com/UK-Export-Finance/exip/compare/v1.14.1...v1.14.2) (2022-10-20)
+
+
+### Bug Fixes
+
+* **EMS-458:** fix issue where skip content partial would not render text/link ([#132](https://github.com/UK-Export-Finance/exip/issues/132)) ([6cc0554](https://github.com/UK-Export-Finance/exip/commit/6cc05543a9f0529a8653971d555d7f2f918df5ea))
+
 ## [1.14.1](https://github.com/UK-Export-Finance/exip/compare/v1.14.0...v1.14.1) (2022-10-12)
 
 
