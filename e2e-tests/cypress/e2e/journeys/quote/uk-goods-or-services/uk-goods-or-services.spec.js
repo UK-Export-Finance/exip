@@ -11,7 +11,11 @@ import CONSTANTS from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../support/quote/forms';
 
-const CONTENT_STRINGS = PAGES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
+const CONTENT_STRINGS = {
+  ...PAGES.UK_GOODS_OR_SERVICES,
+  ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
+};
+
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {

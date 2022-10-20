@@ -1,8 +1,5 @@
-import { buyerCountryPage, exporterLocationPage } from '../../../pages/shared';
-import {
-  ukGoodsOrServicesPage,
-  checkYourAnswersPage,
-} from '../../../pages/quote';
+import { buyerCountryPage, exporterLocationPage, ukGoodsOrServicesPage } from '../../../pages/shared';
+import { checkYourAnswersPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import CONSTANTS from '../../../../../constants';
 

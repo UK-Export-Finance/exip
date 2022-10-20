@@ -121,11 +121,11 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES}`, () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES}`, () => {
         exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yes().click();
         exporterLocationPage.submitButton().click();
 
-        cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+        cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
       });
     });
   });
