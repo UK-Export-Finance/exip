@@ -65,7 +65,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
       it('should add exitReason to req.flash', async () => {
         await post(req, res);
 
-        const expectedReason = PAGES.CANNOT_APPLY.REASON.NOT_ENOUGH_MINIMUM_UK_GOODS_OR_SERVICES;
+        const expectedReason = PAGES.CANNOT_APPLY.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });

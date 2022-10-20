@@ -71,7 +71,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
 
         expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 
-        const expectedReason = PAGES.CANNOT_APPLY.REASON.NOT_ENOUGH_MINIMUM_UK_GOODS_OR_SERVICES;
+        const expectedReason = PAGES.CANNOT_APPLY.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });

@@ -31,7 +31,7 @@ const post = (req: Request, res: Response) => {
     const { CANNOT_APPLY } = PAGES;
     const { REASON } = CANNOT_APPLY;
 
-    req.flash('exitReason', REASON.NOT_ENOUGH_MINIMUM_UK_GOODS_OR_SERVICES);
+    req.flash('exitReason', REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES);
 
     return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
   }

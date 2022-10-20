@@ -25,7 +25,7 @@ const CANNOT_APPLY = {
     UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man.',
     UNSUPPORTED_BUYER_COUNTRY_1: 'your buyer is based in',
     UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
-    NOT_ENOUGH_MINIMUM_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from  at least 20% UK goods or services.',
+    NOT_ENOUGH_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from at least 20% UK goods or services.',
   },
   ACTIONS: {
     INTRO: 'You can:',
