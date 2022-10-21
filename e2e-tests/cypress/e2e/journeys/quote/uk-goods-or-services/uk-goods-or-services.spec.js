@@ -10,6 +10,7 @@ import {
 import CONSTANTS from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../support/quote/forms';
+import { checkSummaryText, checkSummaryClickRevealsContent, checkDescriptionContent } from '../../../../support/check-uk-goods-and-services-description';
 
 const CONTENT_STRINGS = {
   ...PAGES.UK_GOODS_OR_SERVICES,
@@ -100,148 +101,33 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     });
   });
 
+  describe('expandable details', () => {
+    it('renders summary text', () => {
+      checkSummaryText();
+    });
+
+    it('clicking summary text reveals details', () => {
+      checkSummaryClickRevealsContent();
+    });
+
+    it('renders expanded content', () => {
+      checkDescriptionContent();
+    });
+
+    it('renders `will calculate thoroughly` copy ', () => {
+      partials.ukGoodsOrServicesDescription.calculateThoroughly().invoke('text').then((text) => {
+        const expected = CONTENT_STRINGS.WILL_CALCULATE_THOROUGHLY;
+        expect(text.trim()).equal(expected);
+      });
+    });
+  });
+
   it('renders a submit button', () => {
     const button = ukGoodsOrServicesPage.submitButton();
     button.should('exist');
 
     button.invoke('text').then((text) => {
       expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
-  });
-
-  describe('expandable details', () => {
-    const { details } = ukGoodsOrServicesPage;
-    const { DETAILS } = CONTENT_STRINGS;
-
-    it('renders a summary', () => {
-      details.summary().should('exist');
-
-      details.summary().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.DETAILS.INTRO);
-      });
-    });
-
-    it('clicking summary reveals details', () => {
-      details.summary().click();
-
-      details.includes.intro().should('be.visible');
-    });
-
-    describe('`includes` section', () => {
-      it('renders intro', () => {
-        details.includes.intro().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.INCLUDES.INTRO);
-        });
-      });
-
-      it('renders list items', () => {
-        details.includes.listItem1().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.INCLUDES.PRODUCTS);
-        });
-
-        details.includes.listItem2().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.INCLUDES.MANUFACTURED);
-        });
-
-        details.includes.listItem3().invoke('text').then((text) => {
-          const expected = `${DETAILS.INCLUDES.STAFFING_COSTS.LINK.TEXT} ${DETAILS.INCLUDES.STAFFING_COSTS.TEXT}`;
-          expect(text.trim()).equal(expected);
-        });
-
-        details.includes.listItem3Link().should('have.attr', 'href', DETAILS.INCLUDES.STAFFING_COSTS.LINK.HREF);
-
-        details.includes.listItem4().invoke('text').then((text) => {
-          const expected = `${DETAILS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.TEXT} ${DETAILS.INCLUDES.NON_PHYSICAL_ASSETS.TEXT}`;
-          expect(text.trim()).equal(expected);
-        });
-
-        details.includes.listItem4Link().should('have.attr', 'href', DETAILS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.HREF);
-      });
-
-      it('renders `also count as` copy', () => {
-        details.includes.canCountAs().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.INCLUDES.CAN_COUNT_AS);
-        });
-      });
-    });
-
-    describe('`does not count` section', () => {
-      it('renders a heading', () => {
-        details.doesNotCount.heading().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.DOES_NOT_COUNT.HEADING);
-        });
-      });
-
-      it('renders copy', () => {
-        details.doesNotCount.copy().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.DOES_NOT_COUNT.TEXT);
-        });
-      });
-    });
-
-    describe('`staffing costs` section', () => {
-      it('renders a heading', () => {
-        details.staffingCosts.heading().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.STAFFING_COSTS.HEADING);
-        });
-      });
-
-      it('renders copy', () => {
-        details.staffingCosts.copy().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.STAFFING_COSTS.TEXT);
-        });
-      });
-
-      it('renders list items', () => {
-        details.staffingCosts.listItem1().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.STAFFING_COSTS.LIST[0].TEXT);
-        });
-
-        details.staffingCosts.listItem2().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.STAFFING_COSTS.LIST[1].TEXT);
-        });
-
-        details.staffingCosts.listItem3().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.STAFFING_COSTS.LIST[2].TEXT);
-        });
-      });
-    });
-
-    describe('`non physical assets` section', () => {
-      it('renders a heading', () => {
-        details.nonPhysicalAssets.heading().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.NON_PHYSICAL_ASSETS.HEADING);
-        });
-      });
-
-      it('renders copy', () => {
-        details.nonPhysicalAssets.copy().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.NON_PHYSICAL_ASSETS.TEXT);
-        });
-      });
-    });
-
-    describe('`not sure` section', () => {
-      it('renders a heading', () => {
-        details.notSure.heading().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.NOT_SURE.HEADING);
-        });
-      });
-
-      it('renders copy', () => {
-        details.notSure.details().invoke('text').then((text) => {
-          const expected = `${DETAILS.NOT_SURE.BODY_1} ${DETAILS.NOT_SURE.LINK.TEXT} ${DETAILS.NOT_SURE.BODY_2}`;
-
-          expect(text.trim()).equal(expected);
-        });
-
-        details.notSure.detailsLast().invoke('text').then((text) => {
-          const expected = DETAILS.NOT_SURE.BODY_3;
-          expect(text.trim()).equal(expected);
-        });
-
-        details.notSure.detailsLink().should('have.attr', 'href', DETAILS.NOT_SURE.LINK.HREF);
-      });
     });
   });
 

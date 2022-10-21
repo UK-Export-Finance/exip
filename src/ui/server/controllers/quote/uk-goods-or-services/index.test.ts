@@ -1,5 +1,5 @@
 import { PAGE_VARIABLES, get, post } from '.';
-import { PAGES } from '../../../content-strings';
+import { PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
 import generateValidationErrors from '../../../shared-validation/uk-goods-or-services';
@@ -23,6 +23,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
         PAGE_CONTENT_STRINGS: {
           ...PAGES.UK_GOODS_OR_SERVICES,
           ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
+          UK_GOODS_AND_SERVICES_DESCRIPTION,
         },
       };
 

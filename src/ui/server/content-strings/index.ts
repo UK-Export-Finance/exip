@@ -9,5 +9,6 @@ export * from './product';
 export * from './quote-titles';
 export * from './summary-answers';
 export * from './tasks';
+export * from './uk-goods-and-services-description';
 
 export const ORGANISATION = 'UK Export Finance';
