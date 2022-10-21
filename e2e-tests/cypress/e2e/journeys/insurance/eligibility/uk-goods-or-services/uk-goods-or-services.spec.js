@@ -9,6 +9,7 @@ import {
 } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
+import { checkSummaryText, checkSummaryClickRevealsContent, checkDescriptionContent } from '../../../../../support/check-uk-goods-and-services-description';
 
 const CONTENT_STRINGS = PAGES.UK_GOODS_OR_SERVICES;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
@@ -110,6 +111,24 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
 
     button.invoke('text').then((text) => {
       expect(text.trim()).equal(BUTTONS.CONTINUE);
+    });
+  });
+
+  describe('expandable details', () => {
+    it('renders summary text', () => {
+      checkSummaryText();
+    });
+
+    it('clicking summary text reveals details', () => {
+      checkSummaryClickRevealsContent();
+    });
+
+    it('renders expanded content', () => {
+      checkDescriptionContent();
+    });
+
+    it('does NOT render `will calculate thoroughly` copy ', () => {
+      partials.ukGoodsOrServicesDescription.calculateThoroughly().should('not.exist');
     });
   });
 
