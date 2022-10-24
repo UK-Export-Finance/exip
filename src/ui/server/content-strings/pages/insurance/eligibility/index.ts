@@ -1,8 +1,16 @@
 import { LINKS } from '../../../links';
+import { PRODUCT } from '../../../../constants';
+import formatCurrency from '../../../../helpers/format-currency';
+
+const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, 'GBP', 0);
 
 const APPLY_OFFLINE = {
   PAGE_TITLE: 'You need to apply using our form',
   HEADING: 'You need to apply using our form',
+  REASON: {
+    INTRO: 'This is because',
+    WANT_COVER_OVER_MAX_PERIOD: `you want to be insured for more than ${MAX_COVER_AMOUNT} and we need to make extra checks.`,
+  },
   ACTIONS: {
     DOWNLOAD_FORM: {
       LINK: {
@@ -27,7 +35,13 @@ const CHECK_IF_ELIGIBLE = {
   BODY: 'This will take a couple of minutes. If your export is eligible, you can start the application immediately.',
 };
 
+const INSURED_AMOUNT = {
+  PAGE_TITLE: `Do you want to be insured for ${MAX_COVER_AMOUNT} or more?`,
+  HEADING: `Do you want to be insured for ${MAX_COVER_AMOUNT} or more?`,
+};
+
 export default {
   APPLY_OFFLINE,
   CHECK_IF_ELIGIBLE,
+  INSURED_AMOUNT,
 };

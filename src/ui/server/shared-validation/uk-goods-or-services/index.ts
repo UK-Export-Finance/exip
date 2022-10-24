@@ -7,6 +7,7 @@ import { RequestBody } from '../../../types';
 const validation = (formBody: RequestBody) => {
   let errors;
 
+  // TODO: generic validation checker for a "single property form validation" / yes-no form validation
   const hasErrors = !objectHasValues(formBody) || !objectHasProperty(formBody, FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 
   if (hasErrors) {

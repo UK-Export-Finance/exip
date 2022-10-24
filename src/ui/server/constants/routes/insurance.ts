@@ -11,5 +11,6 @@ export const INSURANCE_ROUTES = {
     EXPORTER_LOCATION: `${INSURANCE}${ELIGIBILITY}/exporter-location`,
     UK_GOODS_OR_SERVICES: `${INSURANCE}${ELIGIBILITY}/uk-goods-services`,
     INSURED_AMOUNT: `${INSURANCE}${ELIGIBILITY}/insured-amount`,
+    WANT_INSURANCE_OVER_MAX_PERIOD: `${INSURANCE}${ELIGIBILITY}/insured-over-2-years`,
   },
 };

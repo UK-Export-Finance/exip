@@ -19,7 +19,7 @@ context('Cookies page', () => {
   it('passes the audits', () => {
     cy.lighthouse({
       accessibility: 100,
-      performance: 75,
+      performance: 65,
       'best-practices': 100,
       seo: 60,
     });
