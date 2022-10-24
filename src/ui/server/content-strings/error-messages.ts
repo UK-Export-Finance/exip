@@ -1,8 +1,11 @@
-import { FIELD_IDS } from '../constants/field-ids';
+import { FIELD_IDS, PRODUCT } from '../constants';
+import formatCurrency from '../helpers/format-currency';
 
 type ErrorMessage = {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 };
+
+const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, 'GBP', 0);
 
 export const ERROR_MESSAGES = {
   [FIELD_IDS.BUYER_COUNTRY]: 'Select where your buyer is based',
@@ -44,4 +47,11 @@ export const ERROR_MESSAGES = {
     ABOVE_MAXIMUM: 'Enter policy length of no more than 22 months',
   },
   [FIELD_IDS.OPTIONAL_COOKIES]: 'Select whether you want to accept analytics cookies',
+  INSURANCE: {
+    ELIGIBILITY: {
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_FOR_MORE_THAN_MAX_PERIOD]: {
+        IS_EMPTY: `Select whether you want to be insured for ${MAX_COVER_AMOUNT} or more`,
+      },
+    },
+  },
 } as ErrorMessage;

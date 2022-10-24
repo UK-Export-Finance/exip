@@ -1,4 +1,11 @@
-const FIELD_IDS = require('../constants/field-ids');
+import { FIELD_IDS, PRODUCT } from '../constants';
+
+const MAX_COVER_AMOUNT = PRODUCT.MAX_COVER_AMOUNT_IN_GBP.toLocaleString('en', {
+  style: 'currency',
+  currency: 'GBP',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+});
 
 const ERROR_MESSAGES = {
   [FIELD_IDS.BUYER_COUNTRY]: 'Select where your buyer is based',
@@ -40,6 +47,13 @@ const ERROR_MESSAGES = {
     ABOVE_MAXIMUM: 'Enter policy length of no more than 22 months',
   },
   [FIELD_IDS.OPTIONAL_COOKIES]: 'Select whether you want to accept analytics cookies',
+  INSURANCE: {
+    ELIGIBILITY: {
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_FOR_MORE_THAN_MAX_PERIOD]: {
+        IS_EMPTY: `Select whether you want to be insured for ${MAX_COVER_AMOUNT} or more`,
+      },
+    },
+  },
 };
 
 module.exports = ERROR_MESSAGES;

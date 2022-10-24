@@ -23,6 +23,11 @@ const FIELD_IDS = {
     ESTIMATED_COST: 'estimatedCost',
     BUYER_LOCATION: 'buyerCountry',
   },
+  INSURANCE: {
+    ELIGIBILITY: {
+      WANT_COVER_FOR_MORE_THAN_MAX_PERIOD: 'wantCoverForMoreThanMaxPeriod',
+    },
+  },
 };
 
 module.exports = FIELD_IDS;
