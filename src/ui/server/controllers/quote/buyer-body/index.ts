@@ -28,11 +28,37 @@ const mapAnswer = (answer: string) => {
   return false;
 };
 
-const get = (req: Request, res: Response) =>
-  res.render(TEMPLATES.QUOTE.BUYER_BODY, {
+/**
+ * mapSubmittedAnswer
+ * Map yes/no answer to true/false boolean.
+ * The saved field ID includes 'valid' so we need to reverse the answer in order to render correctly.
+ * If the answer is 'false', the 'buyer body' is valid and saved as true. Return false.
+ * If the answer is 'true', the 'buyer body' is invalid and saved as false. Return true.
+ * @returns {boolean}
+ */
+const mapSubmittedAnswer = (answer?: boolean) => {
+  if (answer === false) {
+    return true;
+  }
+
+  if (answer === true) {
+    return false;
+  }
+
+  return null;
+};
+
+const get = (req: Request, res: Response) => {
+  const mappedAnswer = mapSubmittedAnswer(req.session.submittedData[FIELD_IDS.VALID_BUYER_BODY]);
+
+  return res.render(TEMPLATES.QUOTE.BUYER_BODY, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
-    submittedValues: req.session.submittedData,
+    submittedValues: {
+      ...req.session.submittedData,
+      [FIELD_ID]: mappedAnswer,
+    },
   });
+};
 
 const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
@@ -65,4 +91,4 @@ const post = (req: Request, res: Response) => {
   return res.redirect(ROUTES.QUOTE.EXPORTER_LOCATION);
 };
 
-export { PAGE_VARIABLES, mapAnswer, get, post };
+export { PAGE_VARIABLES, mapAnswer, mapSubmittedAnswer, get, post };

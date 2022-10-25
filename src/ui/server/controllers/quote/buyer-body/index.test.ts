@@ -1,4 +1,4 @@
-import { PAGE_VARIABLES, mapAnswer, get, post } from '.';
+import { PAGE_VARIABLES, mapAnswer, mapSubmittedAnswer, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
@@ -53,13 +53,42 @@ describe('controllers/quote/buyer-body', () => {
     });
   });
 
+  describe('mapSubmittedAnswer', () => {
+    describe('when the submitted answer is false', () => {
+      it('should return true', () => {
+        const result = mapSubmittedAnswer(false);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('when the submitted answer is true', () => {
+      it('should return false', () => {
+        const result = mapSubmittedAnswer(true);
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when is no submitted answer', () => {
+      it('should return null', () => {
+        const result = mapSubmittedAnswer();
+
+        expect(result).toEqual(null);
+      });
+    });
+  });
+
   describe('get', () => {
     it('should render template', async () => {
       await get(req, res);
 
       const expectedVariables = {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
-        submittedValues: req.session.submittedData,
+        submittedValues: {
+          ...req.session.submittedData,
+          [PAGE_VARIABLES.FIELD_ID]: mapSubmittedAnswer(req.session.submittedData[FIELD_IDS.VALID_BUYER_BODY]),
+        },
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_BODY, expectedVariables);
