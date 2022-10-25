@@ -1,8 +1,6 @@
-import { cannotApplyPage, ukGoodsOrServicesPage, noRadio, submitButton } from '../../../pages/shared';
+import { cannotApplyPage, noRadio, submitButton } from '../../../pages/shared';
 import partials from '../../../partials';
-import {
-  PAGES,
-} from '../../../../../content-strings';
+import { PAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../support/quote/forms';
