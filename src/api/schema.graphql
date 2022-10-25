@@ -64,18 +64,14 @@ input ApplicationRelateToOneForCreateInput {
 
 type Application {
   id: ID!
-  createdBy: Exporter
   createdAt: DateTime
   updatedAt: DateTime
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
-  eligibility: Eligibility
-  exporter: Exporter
 }
 
-scalar DateTime
-  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
+scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
 input ApplicationWhereUniqueInput {
   id: ID
@@ -86,14 +82,11 @@ input ApplicationWhereInput {
   OR: [ApplicationWhereInput!]
   NOT: [ApplicationWhereInput!]
   id: IDFilter
-  createdBy: ExporterWhereInput
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   referenceNumber: IntNullableFilter
   submissionDeadline: DateTimeNullableFilter
   submissionType: StringNullableFilter
-  eligibility: EligibilityWhereInput
-  exporter: ExporterWhereInput
 }
 
 input DateTimeNullableFilter {
@@ -156,26 +149,11 @@ input ApplicationOrderByInput {
 }
 
 input ApplicationUpdateInput {
-  createdBy: ExporterRelateToOneForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
-  eligibility: EligibilityRelateToOneForUpdateInput
-  exporter: ExporterRelateToOneForUpdateInput
-}
-
-input ExporterRelateToOneForUpdateInput {
-  create: ExporterCreateInput
-  connect: ExporterWhereUniqueInput
-  disconnect: Boolean
-}
-
-input EligibilityRelateToOneForUpdateInput {
-  create: EligibilityCreateInput
-  connect: EligibilityWhereUniqueInput
-  disconnect: Boolean
 }
 
 input ApplicationUpdateArgs {
@@ -184,45 +162,35 @@ input ApplicationUpdateArgs {
 }
 
 input ApplicationCreateInput {
-  createdBy: ExporterRelateToOneForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
-  eligibility: EligibilityRelateToOneForCreateInput
-  exporter: ExporterRelateToOneForCreateInput
 }
 
-input ExporterRelateToOneForCreateInput {
-  create: ExporterCreateInput
-  connect: ExporterWhereUniqueInput
-}
-
-input EligibilityRelateToOneForCreateInput {
-  create: EligibilityCreateInput
-  connect: EligibilityWhereUniqueInput
-}
-
-type BuyerIndividual {
+type Page {
   id: ID!
-  firstName: String
-  lastName: String
-  address: BuyerAddress
+  heading: String
+  metaTitle: String
+  content: Page_content_Document
 }
 
-input BuyerIndividualWhereUniqueInput {
+type Page_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input PageWhereUniqueInput {
   id: ID
 }
 
-input BuyerIndividualWhereInput {
-  AND: [BuyerIndividualWhereInput!]
-  OR: [BuyerIndividualWhereInput!]
-  NOT: [BuyerIndividualWhereInput!]
+input PageWhereInput {
+  AND: [PageWhereInput!]
+  OR: [PageWhereInput!]
+  NOT: [PageWhereInput!]
   id: IDFilter
-  firstName: StringFilter
-  lastName: StringFilter
-  address: BuyerAddressWhereInput
+  heading: StringFilter
+  metaTitle: StringFilter
 }
 
 input StringFilter {
@@ -253,711 +221,6 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
-input BuyerIndividualOrderByInput {
-  id: OrderDirection
-  firstName: OrderDirection
-  lastName: OrderDirection
-}
-
-input BuyerIndividualUpdateInput {
-  firstName: String
-  lastName: String
-  address: BuyerAddressRelateToOneForUpdateInput
-}
-
-input BuyerAddressRelateToOneForUpdateInput {
-  create: BuyerAddressCreateInput
-  connect: BuyerAddressWhereUniqueInput
-  disconnect: Boolean
-}
-
-input BuyerIndividualUpdateArgs {
-  where: BuyerIndividualWhereUniqueInput!
-  data: BuyerIndividualUpdateInput!
-}
-
-input BuyerIndividualCreateInput {
-  firstName: String
-  lastName: String
-  address: BuyerAddressRelateToOneForCreateInput
-}
-
-input BuyerAddressRelateToOneForCreateInput {
-  create: BuyerAddressCreateInput
-  connect: BuyerAddressWhereUniqueInput
-}
-
-type BuyerContact {
-  id: ID!
-  company: BuyerCompany
-  firstName: String
-  lastName: String
-  email: String
-  position: String
-}
-
-input BuyerContactWhereUniqueInput {
-  id: ID
-  email: String
-}
-
-input BuyerContactWhereInput {
-  AND: [BuyerContactWhereInput!]
-  OR: [BuyerContactWhereInput!]
-  NOT: [BuyerContactWhereInput!]
-  id: IDFilter
-  company: BuyerCompanyWhereInput
-  firstName: StringFilter
-  lastName: StringFilter
-  email: StringFilter
-  position: StringFilter
-}
-
-input BuyerContactOrderByInput {
-  id: OrderDirection
-  firstName: OrderDirection
-  lastName: OrderDirection
-  email: OrderDirection
-  position: OrderDirection
-}
-
-input BuyerContactUpdateInput {
-  company: BuyerCompanyRelateToOneForUpdateInput
-  firstName: String
-  lastName: String
-  email: String
-  position: String
-}
-
-input BuyerCompanyRelateToOneForUpdateInput {
-  create: BuyerCompanyCreateInput
-  connect: BuyerCompanyWhereUniqueInput
-  disconnect: Boolean
-}
-
-input BuyerContactUpdateArgs {
-  where: BuyerContactWhereUniqueInput!
-  data: BuyerContactUpdateInput!
-}
-
-input BuyerContactCreateInput {
-  company: BuyerCompanyRelateToOneForCreateInput
-  firstName: String
-  lastName: String
-  email: String
-  position: String
-}
-
-input BuyerCompanyRelateToOneForCreateInput {
-  create: BuyerCompanyCreateInput
-  connect: BuyerCompanyWhereUniqueInput
-}
-
-type BuyerCompany {
-  id: ID!
-  address: BuyerAddress
-  registrationNumber: String
-  websiteUrl: String
-}
-
-input BuyerCompanyWhereUniqueInput {
-  id: ID
-}
-
-input BuyerCompanyWhereInput {
-  AND: [BuyerCompanyWhereInput!]
-  OR: [BuyerCompanyWhereInput!]
-  NOT: [BuyerCompanyWhereInput!]
-  id: IDFilter
-  address: BuyerAddressWhereInput
-  registrationNumber: StringFilter
-  websiteUrl: StringFilter
-}
-
-input BuyerCompanyOrderByInput {
-  id: OrderDirection
-  registrationNumber: OrderDirection
-  websiteUrl: OrderDirection
-}
-
-input BuyerCompanyUpdateInput {
-  address: BuyerAddressRelateToOneForUpdateInput
-  registrationNumber: String
-  websiteUrl: String
-}
-
-input BuyerCompanyUpdateArgs {
-  where: BuyerCompanyWhereUniqueInput!
-  data: BuyerCompanyUpdateInput!
-}
-
-input BuyerCompanyCreateInput {
-  address: BuyerAddressRelateToOneForCreateInput
-  registrationNumber: String
-  websiteUrl: String
-}
-
-type BuyerAddress {
-  id: ID!
-  address: String
-  country: Country
-}
-
-input BuyerAddressWhereUniqueInput {
-  id: ID
-}
-
-input BuyerAddressWhereInput {
-  AND: [BuyerAddressWhereInput!]
-  OR: [BuyerAddressWhereInput!]
-  NOT: [BuyerAddressWhereInput!]
-  id: IDFilter
-  address: StringFilter
-  country: CountryWhereInput
-}
-
-input BuyerAddressOrderByInput {
-  id: OrderDirection
-  address: OrderDirection
-}
-
-input BuyerAddressUpdateInput {
-  address: String
-  country: CountryRelateToOneForUpdateInput
-}
-
-input CountryRelateToOneForUpdateInput {
-  create: CountryCreateInput
-  connect: CountryWhereUniqueInput
-  disconnect: Boolean
-}
-
-input BuyerAddressUpdateArgs {
-  where: BuyerAddressWhereUniqueInput!
-  data: BuyerAddressUpdateInput!
-}
-
-input BuyerAddressCreateInput {
-  address: String
-  country: CountryRelateToOneForCreateInput
-}
-
-input CountryRelateToOneForCreateInput {
-  create: CountryCreateInput
-  connect: CountryWhereUniqueInput
-}
-
-type ExporterBuyerCompanyContact {
-  id: ID!
-  contacts(
-    where: BuyerContactWhereInput! = {}
-    orderBy: [BuyerContactOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [BuyerContact!]
-  contactsCount(where: BuyerContactWhereInput! = {}): Int
-}
-
-input ExporterBuyerCompanyContactWhereUniqueInput {
-  id: ID
-}
-
-input ExporterBuyerCompanyContactWhereInput {
-  AND: [ExporterBuyerCompanyContactWhereInput!]
-  OR: [ExporterBuyerCompanyContactWhereInput!]
-  NOT: [ExporterBuyerCompanyContactWhereInput!]
-  id: IDFilter
-  contacts: BuyerContactManyRelationFilter
-}
-
-input BuyerContactManyRelationFilter {
-  every: BuyerContactWhereInput
-  some: BuyerContactWhereInput
-  none: BuyerContactWhereInput
-}
-
-input ExporterBuyerCompanyContactOrderByInput {
-  id: OrderDirection
-}
-
-input ExporterBuyerCompanyContactUpdateInput {
-  contacts: BuyerContactRelateToManyForUpdateInput
-}
-
-input BuyerContactRelateToManyForUpdateInput {
-  disconnect: [BuyerContactWhereUniqueInput!]
-  set: [BuyerContactWhereUniqueInput!]
-  create: [BuyerContactCreateInput!]
-  connect: [BuyerContactWhereUniqueInput!]
-}
-
-input ExporterBuyerCompanyContactUpdateArgs {
-  where: ExporterBuyerCompanyContactWhereUniqueInput!
-  data: ExporterBuyerCompanyContactUpdateInput!
-}
-
-input ExporterBuyerCompanyContactCreateInput {
-  contacts: BuyerContactRelateToManyForCreateInput
-}
-
-input BuyerContactRelateToManyForCreateInput {
-  create: [BuyerContactCreateInput!]
-  connect: [BuyerContactWhereUniqueInput!]
-}
-
-type ExporterBuyerRelationship {
-  id: ID!
-  application: Application
-  exporter: Exporter
-  buyerCompany: BuyerCompany
-  buyerIndividual: BuyerIndividual
-  connectedWithBuyer: Boolean
-  ukefCanDiscloseExporterNameToBuyer: Boolean
-  tradedWithBuyerBefore: Boolean
-}
-
-input ExporterBuyerRelationshipWhereUniqueInput {
-  id: ID
-}
-
-input ExporterBuyerRelationshipWhereInput {
-  AND: [ExporterBuyerRelationshipWhereInput!]
-  OR: [ExporterBuyerRelationshipWhereInput!]
-  NOT: [ExporterBuyerRelationshipWhereInput!]
-  id: IDFilter
-  application: ApplicationWhereInput
-  exporter: ExporterWhereInput
-  buyerCompany: BuyerCompanyWhereInput
-  buyerIndividual: BuyerIndividualWhereInput
-  connectedWithBuyer: BooleanFilter
-  ukefCanDiscloseExporterNameToBuyer: BooleanFilter
-  tradedWithBuyerBefore: BooleanFilter
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
-}
-
-input ExporterBuyerRelationshipOrderByInput {
-  id: OrderDirection
-  connectedWithBuyer: OrderDirection
-  ukefCanDiscloseExporterNameToBuyer: OrderDirection
-  tradedWithBuyerBefore: OrderDirection
-}
-
-input ExporterBuyerRelationshipUpdateInput {
-  application: ApplicationRelateToOneForUpdateInput
-  exporter: ExporterRelateToOneForUpdateInput
-  buyerCompany: BuyerCompanyRelateToOneForUpdateInput
-  buyerIndividual: BuyerIndividualRelateToOneForUpdateInput
-  connectedWithBuyer: Boolean
-  ukefCanDiscloseExporterNameToBuyer: Boolean
-  tradedWithBuyerBefore: Boolean
-}
-
-input BuyerIndividualRelateToOneForUpdateInput {
-  create: BuyerIndividualCreateInput
-  connect: BuyerIndividualWhereUniqueInput
-  disconnect: Boolean
-}
-
-input ExporterBuyerRelationshipUpdateArgs {
-  where: ExporterBuyerRelationshipWhereUniqueInput!
-  data: ExporterBuyerRelationshipUpdateInput!
-}
-
-input ExporterBuyerRelationshipCreateInput {
-  application: ApplicationRelateToOneForCreateInput
-  exporter: ExporterRelateToOneForCreateInput
-  buyerCompany: BuyerCompanyRelateToOneForCreateInput
-  buyerIndividual: BuyerIndividualRelateToOneForCreateInput
-  connectedWithBuyer: Boolean
-  ukefCanDiscloseExporterNameToBuyer: Boolean
-  tradedWithBuyerBefore: Boolean
-}
-
-input BuyerIndividualRelateToOneForCreateInput {
-  create: BuyerIndividualCreateInput
-  connect: BuyerIndividualWhereUniqueInput
-}
-
-type ExporterCompany {
-  id: ID!
-  application: Application
-  registrationNumber: Int
-  exporter: Exporter
-  address: ExporterCompanyAddress
-}
-
-input ExporterCompanyWhereUniqueInput {
-  id: ID
-}
-
-input ExporterCompanyWhereInput {
-  AND: [ExporterCompanyWhereInput!]
-  OR: [ExporterCompanyWhereInput!]
-  NOT: [ExporterCompanyWhereInput!]
-  id: IDFilter
-  application: ApplicationWhereInput
-  registrationNumber: IntNullableFilter
-  exporter: ExporterWhereInput
-  address: ExporterCompanyAddressWhereInput
-}
-
-input ExporterCompanyOrderByInput {
-  id: OrderDirection
-  registrationNumber: OrderDirection
-}
-
-input ExporterCompanyUpdateInput {
-  application: ApplicationRelateToOneForUpdateInput
-  registrationNumber: Int
-  exporter: ExporterRelateToOneForUpdateInput
-  address: ExporterCompanyAddressRelateToOneForUpdateInput
-}
-
-input ExporterCompanyAddressRelateToOneForUpdateInput {
-  create: ExporterCompanyAddressCreateInput
-  connect: ExporterCompanyAddressWhereUniqueInput
-  disconnect: Boolean
-}
-
-input ExporterCompanyUpdateArgs {
-  where: ExporterCompanyWhereUniqueInput!
-  data: ExporterCompanyUpdateInput!
-}
-
-input ExporterCompanyCreateInput {
-  application: ApplicationRelateToOneForCreateInput
-  registrationNumber: Int
-  exporter: ExporterRelateToOneForCreateInput
-  address: ExporterCompanyAddressRelateToOneForCreateInput
-}
-
-input ExporterCompanyAddressRelateToOneForCreateInput {
-  create: ExporterCompanyAddressCreateInput
-  connect: ExporterCompanyAddressWhereUniqueInput
-}
-
-type TEST_table_name {
-  id: ID!
-  testing: String
-}
-
-input TEST_table_nameWhereUniqueInput {
-  id: ID
-}
-
-input TEST_table_nameWhereInput {
-  AND: [TEST_table_nameWhereInput!]
-  OR: [TEST_table_nameWhereInput!]
-  NOT: [TEST_table_nameWhereInput!]
-  id: IDFilter
-  testing: StringFilter
-}
-
-input TEST_table_nameOrderByInput {
-  id: OrderDirection
-  testing: OrderDirection
-}
-
-input TEST_table_nameUpdateInput {
-  testing: String
-}
-
-input TEST_table_nameUpdateArgs {
-  where: TEST_table_nameWhereUniqueInput!
-  data: TEST_table_nameUpdateInput!
-}
-
-input TEST_table_nameCreateInput {
-  testing: String
-}
-
-type ExporterCompanyAddress {
-  id: ID!
-  company: ExporterCompany
-  line1: String
-  line2: String
-  line3: String
-  townOrCity: String
-  county: String
-  country: Country
-}
-
-input ExporterCompanyAddressWhereUniqueInput {
-  id: ID
-}
-
-input ExporterCompanyAddressWhereInput {
-  AND: [ExporterCompanyAddressWhereInput!]
-  OR: [ExporterCompanyAddressWhereInput!]
-  NOT: [ExporterCompanyAddressWhereInput!]
-  id: IDFilter
-  company: ExporterCompanyWhereInput
-  line1: StringFilter
-  line2: StringFilter
-  line3: StringFilter
-  townOrCity: StringFilter
-  county: StringFilter
-  country: CountryWhereInput
-}
-
-input ExporterCompanyAddressOrderByInput {
-  id: OrderDirection
-  line1: OrderDirection
-  line2: OrderDirection
-  line3: OrderDirection
-  townOrCity: OrderDirection
-  county: OrderDirection
-}
-
-input ExporterCompanyAddressUpdateInput {
-  company: ExporterCompanyRelateToOneForUpdateInput
-  line1: String
-  line2: String
-  line3: String
-  townOrCity: String
-  county: String
-  country: CountryRelateToOneForUpdateInput
-}
-
-input ExporterCompanyRelateToOneForUpdateInput {
-  create: ExporterCompanyCreateInput
-  connect: ExporterCompanyWhereUniqueInput
-  disconnect: Boolean
-}
-
-input ExporterCompanyAddressUpdateArgs {
-  where: ExporterCompanyAddressWhereUniqueInput!
-  data: ExporterCompanyAddressUpdateInput!
-}
-
-input ExporterCompanyAddressCreateInput {
-  company: ExporterCompanyRelateToOneForCreateInput
-  line1: String
-  line2: String
-  line3: String
-  townOrCity: String
-  county: String
-  country: CountryRelateToOneForCreateInput
-}
-
-input ExporterCompanyRelateToOneForCreateInput {
-  create: ExporterCompanyCreateInput
-  connect: ExporterCompanyWhereUniqueInput
-}
-
-type Eligibility {
-  id: ID!
-  application: Application
-  validBuyerBody: Boolean
-  validCompanyBase: Boolean
-  buyerCountry: Country
-  hasMinimumUkGoodsOrServices: Boolean
-  buyerPaymentDepedencyTOCONFIRM: Boolean
-}
-
-input EligibilityWhereUniqueInput {
-  id: ID
-}
-
-input EligibilityWhereInput {
-  AND: [EligibilityWhereInput!]
-  OR: [EligibilityWhereInput!]
-  NOT: [EligibilityWhereInput!]
-  id: IDFilter
-  application: ApplicationWhereInput
-  validBuyerBody: BooleanFilter
-  validCompanyBase: BooleanFilter
-  buyerCountry: CountryWhereInput
-  hasMinimumUkGoodsOrServices: BooleanFilter
-  buyerPaymentDepedencyTOCONFIRM: BooleanFilter
-}
-
-input EligibilityOrderByInput {
-  id: OrderDirection
-  validBuyerBody: OrderDirection
-  validCompanyBase: OrderDirection
-  hasMinimumUkGoodsOrServices: OrderDirection
-  buyerPaymentDepedencyTOCONFIRM: OrderDirection
-}
-
-input EligibilityUpdateInput {
-  application: ApplicationRelateToOneForUpdateInput
-  validBuyerBody: Boolean
-  validCompanyBase: Boolean
-  buyerCountry: CountryRelateToOneForUpdateInput
-  hasMinimumUkGoodsOrServices: Boolean
-  buyerPaymentDepedencyTOCONFIRM: Boolean
-}
-
-input EligibilityUpdateArgs {
-  where: EligibilityWhereUniqueInput!
-  data: EligibilityUpdateInput!
-}
-
-input EligibilityCreateInput {
-  application: ApplicationRelateToOneForCreateInput
-  validBuyerBody: Boolean
-  validCompanyBase: Boolean
-  buyerCountry: CountryRelateToOneForCreateInput
-  hasMinimumUkGoodsOrServices: Boolean
-  buyerPaymentDepedencyTOCONFIRM: Boolean
-}
-
-type Country {
-  id: ID!
-  name: String
-  isoCode: String
-}
-
-input CountryWhereUniqueInput {
-  id: ID
-  name: String
-  isoCode: String
-}
-
-input CountryWhereInput {
-  AND: [CountryWhereInput!]
-  OR: [CountryWhereInput!]
-  NOT: [CountryWhereInput!]
-  id: IDFilter
-  name: StringFilter
-  isoCode: StringFilter
-}
-
-input CountryOrderByInput {
-  id: OrderDirection
-  name: OrderDirection
-  isoCode: OrderDirection
-}
-
-input CountryUpdateInput {
-  name: String
-  isoCode: String
-}
-
-input CountryUpdateArgs {
-  where: CountryWhereUniqueInput!
-  data: CountryUpdateInput!
-}
-
-input CountryCreateInput {
-  name: String
-  isoCode: String
-}
-
-type Exporter {
-  id: ID!
-  applications(
-    where: ApplicationWhereInput! = {}
-    orderBy: [ApplicationOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Application!]
-  applicationsCount(where: ApplicationWhereInput! = {}): Int
-  company: ExporterCompany
-  firstName: String
-  lastName: String
-  email: String
-  password: PasswordState
-}
-
-type PasswordState {
-  isSet: Boolean!
-}
-
-input ExporterWhereUniqueInput {
-  id: ID
-  email: String
-}
-
-input ExporterWhereInput {
-  AND: [ExporterWhereInput!]
-  OR: [ExporterWhereInput!]
-  NOT: [ExporterWhereInput!]
-  id: IDFilter
-  applications: ApplicationManyRelationFilter
-  company: ExporterCompanyWhereInput
-  firstName: StringFilter
-  lastName: StringFilter
-  email: StringFilter
-}
-
-input ApplicationManyRelationFilter {
-  every: ApplicationWhereInput
-  some: ApplicationWhereInput
-  none: ApplicationWhereInput
-}
-
-input ExporterOrderByInput {
-  id: OrderDirection
-  firstName: OrderDirection
-  lastName: OrderDirection
-  email: OrderDirection
-}
-
-input ExporterUpdateInput {
-  applications: ApplicationRelateToManyForUpdateInput
-  company: ExporterCompanyRelateToOneForUpdateInput
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-}
-
-input ApplicationRelateToManyForUpdateInput {
-  disconnect: [ApplicationWhereUniqueInput!]
-  set: [ApplicationWhereUniqueInput!]
-  create: [ApplicationCreateInput!]
-  connect: [ApplicationWhereUniqueInput!]
-}
-
-input ExporterUpdateArgs {
-  where: ExporterWhereUniqueInput!
-  data: ExporterUpdateInput!
-}
-
-input ExporterCreateInput {
-  applications: ApplicationRelateToManyForCreateInput
-  company: ExporterCompanyRelateToOneForCreateInput
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-}
-
-input ApplicationRelateToManyForCreateInput {
-  create: [ApplicationCreateInput!]
-  connect: [ApplicationWhereUniqueInput!]
-}
-
-type Page {
-  id: ID!
-  heading: String
-  metaTitle: String
-  content: Page_content_Document
-}
-
-type Page_content_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
-}
-
-input PageWhereUniqueInput {
-  id: ID
-}
-
-input PageWhereInput {
-  AND: [PageWhereInput!]
-  OR: [PageWhereInput!]
-  NOT: [PageWhereInput!]
-  id: IDFilter
-  heading: StringFilter
-  metaTitle: StringFilter
-}
-
 input PageOrderByInput {
   id: OrderDirection
   heading: OrderDirection
@@ -986,6 +249,10 @@ type User {
   name: String
   email: String
   password: PasswordState
+}
+
+type PasswordState {
+  isSet: Boolean!
 }
 
 input UserWhereUniqueInput {
@@ -1028,192 +295,21 @@ input UserCreateInput {
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
-scalar JSON
-  @specifiedBy(
-    url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
-  )
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
 
 type Mutation {
   createReferenceNumber(data: ReferenceNumberCreateInput!): ReferenceNumber
-  createReferenceNumbers(
-    data: [ReferenceNumberCreateInput!]!
-  ): [ReferenceNumber]
-  updateReferenceNumber(
-    where: ReferenceNumberWhereUniqueInput!
-    data: ReferenceNumberUpdateInput!
-  ): ReferenceNumber
+  createReferenceNumbers(data: [ReferenceNumberCreateInput!]!): [ReferenceNumber]
+  updateReferenceNumber(where: ReferenceNumberWhereUniqueInput!, data: ReferenceNumberUpdateInput!): ReferenceNumber
   updateReferenceNumbers(data: [ReferenceNumberUpdateArgs!]!): [ReferenceNumber]
-  deleteReferenceNumber(
-    where: ReferenceNumberWhereUniqueInput!
-  ): ReferenceNumber
-  deleteReferenceNumbers(
-    where: [ReferenceNumberWhereUniqueInput!]!
-  ): [ReferenceNumber]
+  deleteReferenceNumber(where: ReferenceNumberWhereUniqueInput!): ReferenceNumber
+  deleteReferenceNumbers(where: [ReferenceNumberWhereUniqueInput!]!): [ReferenceNumber]
   createApplication(data: ApplicationCreateInput!): Application
   createApplications(data: [ApplicationCreateInput!]!): [Application]
-  updateApplication(
-    where: ApplicationWhereUniqueInput!
-    data: ApplicationUpdateInput!
-  ): Application
+  updateApplication(where: ApplicationWhereUniqueInput!, data: ApplicationUpdateInput!): Application
   updateApplications(data: [ApplicationUpdateArgs!]!): [Application]
   deleteApplication(where: ApplicationWhereUniqueInput!): Application
   deleteApplications(where: [ApplicationWhereUniqueInput!]!): [Application]
-  createBuyerIndividual(data: BuyerIndividualCreateInput!): BuyerIndividual
-  createBuyerIndividuals(
-    data: [BuyerIndividualCreateInput!]!
-  ): [BuyerIndividual]
-  updateBuyerIndividual(
-    where: BuyerIndividualWhereUniqueInput!
-    data: BuyerIndividualUpdateInput!
-  ): BuyerIndividual
-  updateBuyerIndividuals(data: [BuyerIndividualUpdateArgs!]!): [BuyerIndividual]
-  deleteBuyerIndividual(
-    where: BuyerIndividualWhereUniqueInput!
-  ): BuyerIndividual
-  deleteBuyerIndividuals(
-    where: [BuyerIndividualWhereUniqueInput!]!
-  ): [BuyerIndividual]
-  createBuyerContact(data: BuyerContactCreateInput!): BuyerContact
-  createBuyerContacts(data: [BuyerContactCreateInput!]!): [BuyerContact]
-  updateBuyerContact(
-    where: BuyerContactWhereUniqueInput!
-    data: BuyerContactUpdateInput!
-  ): BuyerContact
-  updateBuyerContacts(data: [BuyerContactUpdateArgs!]!): [BuyerContact]
-  deleteBuyerContact(where: BuyerContactWhereUniqueInput!): BuyerContact
-  deleteBuyerContacts(where: [BuyerContactWhereUniqueInput!]!): [BuyerContact]
-  createBuyerCompany(data: BuyerCompanyCreateInput!): BuyerCompany
-  createBuyerCompanies(data: [BuyerCompanyCreateInput!]!): [BuyerCompany]
-  updateBuyerCompany(
-    where: BuyerCompanyWhereUniqueInput!
-    data: BuyerCompanyUpdateInput!
-  ): BuyerCompany
-  updateBuyerCompanies(data: [BuyerCompanyUpdateArgs!]!): [BuyerCompany]
-  deleteBuyerCompany(where: BuyerCompanyWhereUniqueInput!): BuyerCompany
-  deleteBuyerCompanies(where: [BuyerCompanyWhereUniqueInput!]!): [BuyerCompany]
-  createBuyerAddress(data: BuyerAddressCreateInput!): BuyerAddress
-  createBuyerAddresses(data: [BuyerAddressCreateInput!]!): [BuyerAddress]
-  updateBuyerAddress(
-    where: BuyerAddressWhereUniqueInput!
-    data: BuyerAddressUpdateInput!
-  ): BuyerAddress
-  updateBuyerAddresses(data: [BuyerAddressUpdateArgs!]!): [BuyerAddress]
-  deleteBuyerAddress(where: BuyerAddressWhereUniqueInput!): BuyerAddress
-  deleteBuyerAddresses(where: [BuyerAddressWhereUniqueInput!]!): [BuyerAddress]
-  createExporterBuyerCompanyContact(
-    data: ExporterBuyerCompanyContactCreateInput!
-  ): ExporterBuyerCompanyContact
-  createExporterBuyerCompanyContacts(
-    data: [ExporterBuyerCompanyContactCreateInput!]!
-  ): [ExporterBuyerCompanyContact]
-  updateExporterBuyerCompanyContact(
-    where: ExporterBuyerCompanyContactWhereUniqueInput!
-    data: ExporterBuyerCompanyContactUpdateInput!
-  ): ExporterBuyerCompanyContact
-  updateExporterBuyerCompanyContacts(
-    data: [ExporterBuyerCompanyContactUpdateArgs!]!
-  ): [ExporterBuyerCompanyContact]
-  deleteExporterBuyerCompanyContact(
-    where: ExporterBuyerCompanyContactWhereUniqueInput!
-  ): ExporterBuyerCompanyContact
-  deleteExporterBuyerCompanyContacts(
-    where: [ExporterBuyerCompanyContactWhereUniqueInput!]!
-  ): [ExporterBuyerCompanyContact]
-  createExporterBuyerRelationship(
-    data: ExporterBuyerRelationshipCreateInput!
-  ): ExporterBuyerRelationship
-  createExporterBuyerRelationships(
-    data: [ExporterBuyerRelationshipCreateInput!]!
-  ): [ExporterBuyerRelationship]
-  updateExporterBuyerRelationship(
-    where: ExporterBuyerRelationshipWhereUniqueInput!
-    data: ExporterBuyerRelationshipUpdateInput!
-  ): ExporterBuyerRelationship
-  updateExporterBuyerRelationships(
-    data: [ExporterBuyerRelationshipUpdateArgs!]!
-  ): [ExporterBuyerRelationship]
-  deleteExporterBuyerRelationship(
-    where: ExporterBuyerRelationshipWhereUniqueInput!
-  ): ExporterBuyerRelationship
-  deleteExporterBuyerRelationships(
-    where: [ExporterBuyerRelationshipWhereUniqueInput!]!
-  ): [ExporterBuyerRelationship]
-  createExporterCompany(data: ExporterCompanyCreateInput!): ExporterCompany
-  createExporterCompanies(
-    data: [ExporterCompanyCreateInput!]!
-  ): [ExporterCompany]
-  updateExporterCompany(
-    where: ExporterCompanyWhereUniqueInput!
-    data: ExporterCompanyUpdateInput!
-  ): ExporterCompany
-  updateExporterCompanies(
-    data: [ExporterCompanyUpdateArgs!]!
-  ): [ExporterCompany]
-  deleteExporterCompany(
-    where: ExporterCompanyWhereUniqueInput!
-  ): ExporterCompany
-  deleteExporterCompanies(
-    where: [ExporterCompanyWhereUniqueInput!]!
-  ): [ExporterCompany]
-  createTEST_table_name(data: TEST_table_nameCreateInput!): TEST_table_name
-  createTESTTableNames(data: [TEST_table_nameCreateInput!]!): [TEST_table_name]
-  updateTEST_table_name(
-    where: TEST_table_nameWhereUniqueInput!
-    data: TEST_table_nameUpdateInput!
-  ): TEST_table_name
-  updateTESTTableNames(data: [TEST_table_nameUpdateArgs!]!): [TEST_table_name]
-  deleteTEST_table_name(
-    where: TEST_table_nameWhereUniqueInput!
-  ): TEST_table_name
-  deleteTESTTableNames(
-    where: [TEST_table_nameWhereUniqueInput!]!
-  ): [TEST_table_name]
-  createExporterCompanyAddress(
-    data: ExporterCompanyAddressCreateInput!
-  ): ExporterCompanyAddress
-  createExporterCompanyAddresses(
-    data: [ExporterCompanyAddressCreateInput!]!
-  ): [ExporterCompanyAddress]
-  updateExporterCompanyAddress(
-    where: ExporterCompanyAddressWhereUniqueInput!
-    data: ExporterCompanyAddressUpdateInput!
-  ): ExporterCompanyAddress
-  updateExporterCompanyAddresses(
-    data: [ExporterCompanyAddressUpdateArgs!]!
-  ): [ExporterCompanyAddress]
-  deleteExporterCompanyAddress(
-    where: ExporterCompanyAddressWhereUniqueInput!
-  ): ExporterCompanyAddress
-  deleteExporterCompanyAddresses(
-    where: [ExporterCompanyAddressWhereUniqueInput!]!
-  ): [ExporterCompanyAddress]
-  createEligibility(data: EligibilityCreateInput!): Eligibility
-  createEligibilities(data: [EligibilityCreateInput!]!): [Eligibility]
-  updateEligibility(
-    where: EligibilityWhereUniqueInput!
-    data: EligibilityUpdateInput!
-  ): Eligibility
-  updateEligibilities(data: [EligibilityUpdateArgs!]!): [Eligibility]
-  deleteEligibility(where: EligibilityWhereUniqueInput!): Eligibility
-  deleteEligibilities(where: [EligibilityWhereUniqueInput!]!): [Eligibility]
-  createCountry(data: CountryCreateInput!): Country
-  createCountries(data: [CountryCreateInput!]!): [Country]
-  updateCountry(
-    where: CountryWhereUniqueInput!
-    data: CountryUpdateInput!
-  ): Country
-  updateCountries(data: [CountryUpdateArgs!]!): [Country]
-  deleteCountry(where: CountryWhereUniqueInput!): Country
-  deleteCountries(where: [CountryWhereUniqueInput!]!): [Country]
-  createExporter(data: ExporterCreateInput!): Exporter
-  createExporters(data: [ExporterCreateInput!]!): [Exporter]
-  updateExporter(
-    where: ExporterWhereUniqueInput!
-    data: ExporterUpdateInput!
-  ): Exporter
-  updateExporters(data: [ExporterUpdateArgs!]!): [Exporter]
-  deleteExporter(where: ExporterWhereUniqueInput!): Exporter
-  deleteExporters(where: [ExporterWhereUniqueInput!]!): [Exporter]
   createPage(data: PageCreateInput!): Page
   createPages(data: [PageCreateInput!]!): [Page]
   updatePage(where: PageWhereUniqueInput!, data: PageUpdateInput!): Page
@@ -1227,18 +323,16 @@ type Mutation {
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
   endSession: Boolean!
-  authenticateUserWithPassword(
-    email: String!
-    password: String!
-  ): UserAuthenticationWithPasswordResult
-  createInitialUser(
-    data: CreateInitialUserInput!
-  ): UserAuthenticationWithPasswordSuccess!
+  authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
+  createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
+
+  """
+  send an email
+  """
+  sendEmail(templateId: String!): Boolean
 }
 
-union UserAuthenticationWithPasswordResult =
-    UserAuthenticationWithPasswordSuccess
-  | UserAuthenticationWithPasswordFailure
+union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
 
 type UserAuthenticationWithPasswordSuccess {
   sessionToken: String!
@@ -1256,144 +350,16 @@ input CreateInitialUserInput {
 }
 
 type Query {
-  referenceNumbers(
-    where: ReferenceNumberWhereInput! = {}
-    orderBy: [ReferenceNumberOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [ReferenceNumber!]
+  referenceNumbers(where: ReferenceNumberWhereInput! = {}, orderBy: [ReferenceNumberOrderByInput!]! = [], take: Int, skip: Int! = 0): [ReferenceNumber!]
   referenceNumber(where: ReferenceNumberWhereUniqueInput!): ReferenceNumber
   referenceNumbersCount(where: ReferenceNumberWhereInput! = {}): Int
-  applications(
-    where: ApplicationWhereInput! = {}
-    orderBy: [ApplicationOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Application!]
+  applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0): [Application!]
   application(where: ApplicationWhereUniqueInput!): Application
   applicationsCount(where: ApplicationWhereInput! = {}): Int
-  buyerIndividuals(
-    where: BuyerIndividualWhereInput! = {}
-    orderBy: [BuyerIndividualOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [BuyerIndividual!]
-  buyerIndividual(where: BuyerIndividualWhereUniqueInput!): BuyerIndividual
-  buyerIndividualsCount(where: BuyerIndividualWhereInput! = {}): Int
-  buyerContacts(
-    where: BuyerContactWhereInput! = {}
-    orderBy: [BuyerContactOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [BuyerContact!]
-  buyerContact(where: BuyerContactWhereUniqueInput!): BuyerContact
-  buyerContactsCount(where: BuyerContactWhereInput! = {}): Int
-  buyerCompanies(
-    where: BuyerCompanyWhereInput! = {}
-    orderBy: [BuyerCompanyOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [BuyerCompany!]
-  buyerCompany(where: BuyerCompanyWhereUniqueInput!): BuyerCompany
-  buyerCompaniesCount(where: BuyerCompanyWhereInput! = {}): Int
-  buyerAddresses(
-    where: BuyerAddressWhereInput! = {}
-    orderBy: [BuyerAddressOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [BuyerAddress!]
-  buyerAddress(where: BuyerAddressWhereUniqueInput!): BuyerAddress
-  buyerAddressesCount(where: BuyerAddressWhereInput! = {}): Int
-  exporterBuyerCompanyContacts(
-    where: ExporterBuyerCompanyContactWhereInput! = {}
-    orderBy: [ExporterBuyerCompanyContactOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [ExporterBuyerCompanyContact!]
-  exporterBuyerCompanyContact(
-    where: ExporterBuyerCompanyContactWhereUniqueInput!
-  ): ExporterBuyerCompanyContact
-  exporterBuyerCompanyContactsCount(
-    where: ExporterBuyerCompanyContactWhereInput! = {}
-  ): Int
-  exporterBuyerRelationships(
-    where: ExporterBuyerRelationshipWhereInput! = {}
-    orderBy: [ExporterBuyerRelationshipOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [ExporterBuyerRelationship!]
-  exporterBuyerRelationship(
-    where: ExporterBuyerRelationshipWhereUniqueInput!
-  ): ExporterBuyerRelationship
-  exporterBuyerRelationshipsCount(
-    where: ExporterBuyerRelationshipWhereInput! = {}
-  ): Int
-  exporterCompanies(
-    where: ExporterCompanyWhereInput! = {}
-    orderBy: [ExporterCompanyOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [ExporterCompany!]
-  exporterCompany(where: ExporterCompanyWhereUniqueInput!): ExporterCompany
-  exporterCompaniesCount(where: ExporterCompanyWhereInput! = {}): Int
-  tESTTableNames(
-    where: TEST_table_nameWhereInput! = {}
-    orderBy: [TEST_table_nameOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [TEST_table_name!]
-  tEST_table_name(where: TEST_table_nameWhereUniqueInput!): TEST_table_name
-  tESTTableNamesCount(where: TEST_table_nameWhereInput! = {}): Int
-  exporterCompanyAddresses(
-    where: ExporterCompanyAddressWhereInput! = {}
-    orderBy: [ExporterCompanyAddressOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [ExporterCompanyAddress!]
-  exporterCompanyAddress(
-    where: ExporterCompanyAddressWhereUniqueInput!
-  ): ExporterCompanyAddress
-  exporterCompanyAddressesCount(
-    where: ExporterCompanyAddressWhereInput! = {}
-  ): Int
-  eligibilities(
-    where: EligibilityWhereInput! = {}
-    orderBy: [EligibilityOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Eligibility!]
-  eligibility(where: EligibilityWhereUniqueInput!): Eligibility
-  eligibilitiesCount(where: EligibilityWhereInput! = {}): Int
-  countries(
-    where: CountryWhereInput! = {}
-    orderBy: [CountryOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Country!]
-  country(where: CountryWhereUniqueInput!): Country
-  countriesCount(where: CountryWhereInput! = {}): Int
-  exporters(
-    where: ExporterWhereInput! = {}
-    orderBy: [ExporterOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Exporter!]
-  exporter(where: ExporterWhereUniqueInput!): Exporter
-  exportersCount(where: ExporterWhereInput! = {}): Int
-  pages(
-    where: PageWhereInput! = {}
-    orderBy: [PageOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Page!]
+  pages(where: PageWhereInput! = {}, orderBy: [PageOrderByInput!]! = [], take: Int, skip: Int! = 0): [Page!]
   page(where: PageWhereUniqueInput!): Page
   pagesCount(where: PageWhereInput! = {}): Int
-  users(
-    where: UserWhereInput! = {}
-    orderBy: [UserOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [User!]
+  users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
   keystone: KeystoneMeta!

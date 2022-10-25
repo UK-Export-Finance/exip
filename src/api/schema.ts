@@ -2,10 +2,10 @@ import { list } from '@keystone-6/core';
 import { integer, relationship, select, text, timestamp, password } from '@keystone-6/core/fields';
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
-import { Lists } from '.keystone/types';
+import { Lists } from '.keystone/types'; // eslint-disable-line import/no-extraneous-dependencies
 import { APPLICATION } from './constants';
 
-export const lists: Lists = {
+export const lists = {
   ReferenceNumber: {
     db: {
       idField: { kind: 'autoincrement' },
@@ -16,23 +16,15 @@ export const lists: Lists = {
   },
   Application: {
     fields: {
-      createdBy: relationship({ ref: 'Exporter.applications' }),
       createdAt: timestamp(),
       updatedAt: timestamp(),
       referenceNumber: integer({
-        isIndexed: true
+        isIndexed: true,
       }),
       submissionDeadline: timestamp(),
       submissionType: select({
-        options: [
-          { label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA },
-        ],
+        options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA,
-      }),
-      eligibility: relationship({ ref: 'Eligibility' }),
-      exporter: relationship({
-        ref: 'Exporter',
-        many: false,
       }),
     },
     hooks: {
@@ -93,4 +85,4 @@ export const lists: Lists = {
       },
     },
   }),
-};
+} as Lists;

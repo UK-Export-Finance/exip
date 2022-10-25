@@ -19,7 +19,6 @@ module.exports = {
   },
   env: {
     jest: true,
-    browser: true,
   },
   settings: {
     'import/resolver': {
