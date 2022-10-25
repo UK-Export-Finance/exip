@@ -1,5 +1,5 @@
-import { submitButton } from '../../../pages/shared';
-import { checkYourAnswersPage, heading } from '../../../pages/quote';
+import { heading, submitButton } from '../../../pages/shared';
+import { checkYourAnswersPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import {
   ORGANISATION,

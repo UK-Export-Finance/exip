@@ -18,7 +18,7 @@ const get = (req: Request, res: Response) =>
   res.render(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }));
 
 const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
+  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
     return res.render(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {

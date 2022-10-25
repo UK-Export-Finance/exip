@@ -1,4 +1,4 @@
-import { heading, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../pages/shared';
+import { heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../pages/shared';
 import { buyerBodyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import {
@@ -64,10 +64,9 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   });
 
   it('renders yes and no radio buttons', () => {
-    yesRadio();
-    yesRadio.should('exist');
+    yesRadio().should('exist');
 
-    yesRadio.invoke('text').then((text) => {
+    yesRadio().invoke('text').then((text) => {
       expect(text.trim()).equal('Yes');
     });
 

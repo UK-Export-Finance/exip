@@ -1,4 +1,4 @@
-import { exporterLocationPage, ukGoodsOrServicesPage, heading, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../pages/shared';
+import { exporterLocationPage, ukGoodsOrServicesPage, heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../pages/shared';
 import partials from '../../../partials';
 import {
   ORGANISATION,
