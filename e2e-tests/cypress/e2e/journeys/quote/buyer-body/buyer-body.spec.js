@@ -1,5 +1,5 @@
-import { yesRadioInput, inlineErrorMessage, submitButton } from '../../../pages/shared';
-import { buyerBodyPage, heading, noRadio } from '../../../pages/quote';
+import { heading, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../pages/shared';
+import { buyerBodyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import {
   BUTTONS,

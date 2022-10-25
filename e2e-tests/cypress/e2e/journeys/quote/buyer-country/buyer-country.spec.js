@@ -16,7 +16,7 @@ import {
   checkSubmitButton,
   checkValidationErrors,
   checkFocusOnInputWhenClickingSummaryErrorMessage,
-} from '../../../../support/buyer-country-form';
+} from '../../../../support/check-buyer-country-form';
 
 const CONTENT_STRINGS = PAGES.QUOTE.BUYER_COUNTRY;
 const { ROUTES, FIELD_IDS } = CONSTANTS;

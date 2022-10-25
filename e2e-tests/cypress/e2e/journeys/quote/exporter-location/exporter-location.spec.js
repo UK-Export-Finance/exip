@@ -1,4 +1,4 @@
-import { buyerCountryPage, exporterLocationPage, heading, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../pages/shared';
+import { buyerCountryPage, exporterLocationPage, heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../pages/shared';
 import partials from '../../../partials';
 import {
   ORGANISATION,
@@ -65,10 +65,9 @@ context('Exporter location page - as an exporter, I want to check if my company 
   });
 
   it('renders yes and no radio buttons', () => {
-    yesRadio();
-    yesRadio.should('exist');
+    yesRadio().should('exist');
 
-    yesRadio.invoke('text').then((text) => {
+    yesRadio().invoke('text').then((text) => {
       expect(text.trim()).equal('Yes');
     });
 

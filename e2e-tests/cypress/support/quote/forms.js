@@ -1,4 +1,4 @@
-import { buyerCountryPage, exporterLocationPage, ukGoodsOrServicesPage, noRadio, submitButton } from '../../e2e/pages/shared';
+import { buyerCountryPage, exporterLocationPage, ukGoodsOrServicesPage, yesRadio, noRadio, submitButton } from '../../e2e/pages/shared';
 import {
   buyerBodyPage,
   policyTypePage,

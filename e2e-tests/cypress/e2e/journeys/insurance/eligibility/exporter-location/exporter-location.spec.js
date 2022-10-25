@@ -1,4 +1,4 @@
-import { buyerCountryPage, exporterLocationPage, heading, yesRadio, yesRadioInput, noRadio, submitButton } from '../../../../pages/shared';
+import { buyerCountryPage, exporterLocationPage, heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import {
   ORGANISATION,
@@ -104,7 +104,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
           expect(text.trim()).equal(expectedMessage);
         });
 
-        exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].errorMessage().invoke('text').then((text) => {
+        inlineErrorMessage().invoke('text').then((text) => {
           expect(text.trim()).includes(expectedMessage);
         });
       });
