@@ -1,4 +1,4 @@
-import { cannotApplyPage, exporterLocationPage } from '../../../../pages/shared';
+import { cannotApplyPage, exporterLocationPage, noRadio, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
@@ -20,8 +20,8 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
 
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
 
-    exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].no().click();
-    exporterLocationPage.submitButton().click();
+    noRadio().click();
+    submitButton().click();
   });
 
   it('redirects to exit page', () => {

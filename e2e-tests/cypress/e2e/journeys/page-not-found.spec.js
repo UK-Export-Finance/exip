@@ -1,3 +1,4 @@
+import { heading } from '../pages/shared';
 import { pageNotFoundPage } from '../pages';
 import { PAGES } from '../../../content-strings';
 
@@ -26,7 +27,7 @@ context('404 Page not found', () => {
   });
 
   it('renders a heading', () => {
-    pageNotFoundPage.heading().invoke('text').then((text) => {
+    heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });

@@ -1,4 +1,4 @@
-import { buyerCountryPage, cannotApplyPage } from '../../../../pages/shared';
+import { buyerCountryPage, cannotApplyPage, submitButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
@@ -27,7 +27,7 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
     const results = buyerCountryPage.results();
     results.first().click();
 
-    buyerCountryPage.submitButton().click();
+    submitButton().click();
   });
 
   it('redirects to `cannot apply` exit page', () => {

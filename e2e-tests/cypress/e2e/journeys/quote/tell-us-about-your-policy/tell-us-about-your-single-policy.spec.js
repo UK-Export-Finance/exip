@@ -5,6 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
+import { heading, submitButton } from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import {
@@ -81,7 +82,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       const expectedPageTitle = `${CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE} - ${ORGANISATION}`;
       cy.title().should('eq', expectedPageTitle);
 
-      tellUsAboutYourPolicyPage.heading().invoke('text').then((text) => {
+      heading().invoke('text').then((text) => {
         expect(text.trim()).equal(CONTENT_STRINGS.SINGLE_POLICY_HEADING);
       });
     });
@@ -170,10 +171,9 @@ context('Tell us about your single policy page - as an exporter, I want to provi
     });
 
     it('renders a submit button', () => {
-      const button = tellUsAboutYourPolicyPage.submitButton();
-      button.should('exist');
+      submitButton().should('exist');
 
-      button.invoke('text').then((text) => {
+      submitButton().invoke('text').then((text) => {
         expect(text.trim()).equal(BUTTONS.CONTINUE);
       });
     });
@@ -185,7 +185,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
 
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });

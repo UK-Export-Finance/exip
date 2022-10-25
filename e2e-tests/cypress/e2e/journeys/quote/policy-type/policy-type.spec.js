@@ -4,6 +4,7 @@ import {
   completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
 } from '../../../../support/quote/forms';
+import { heading, submitButton } from '../../../pages/shared';
 import { policyTypePage } from '../../../pages/quote';
 import partials from '../../../partials';
 import {
@@ -80,7 +81,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
       cy.title().should('eq', expectedPageTitle);
 
-      policyTypePage.heading().invoke('text').then((text) => {
+      heading().invoke('text').then((text) => {
         expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
       });
     });
@@ -162,10 +163,9 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
     });
 
     it('renders a submit button', () => {
-      const button = policyTypePage.submitButton();
-      button.should('exist');
+      submitButton().should('exist');
 
-      button.invoke('text').then((text) => {
+      submitButton().invoke('text').then((text) => {
         expect(text.trim()).equal(BUTTONS.CONTINUE);
       });
     });
@@ -176,7 +176,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       policyTypePage[POLICY_TYPE].single.input().click();
       policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().type('8');
 
-      policyTypePage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });

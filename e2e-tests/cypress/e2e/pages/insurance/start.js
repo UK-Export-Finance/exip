@@ -1,5 +1,4 @@
 const startPage = {
-  heading: () => cy.get('[data-cy="heading"]'),  
   intro: () => cy.get('[data-cy="intro"]'),
   list: {
     intro: () => cy.get('[data-cy="list-intro"]'),
@@ -12,7 +11,6 @@ const startPage = {
   body2: () => cy.get('[data-cy="body-2"]'),
   body3: () => cy.get('[data-cy="body-3"]'),
   body4: () => cy.get('[data-cy="body-4"]'),
-  submitButton: () => cy.get('[data-cy="submit-button"]'),
 };
 
 export default startPage;

@@ -1,4 +1,4 @@
-import { buyerCountryPage } from '../../pages/shared';
+import { buyerCountryPage, heading, submitButton } from '../../pages/shared';
 import { getAQuoteByEmailPage } from '../../pages/quote';
 import partials from '../../partials';
 import {
@@ -24,7 +24,7 @@ context('Get a quote via email exit page', () => {
     const results = buyerCountryPage.results();
     results.first().click();
 
-    buyerCountryPage.submitButton().click();
+    submitButton().click();
   });
 
   it('passes the audits', () => {
@@ -63,7 +63,7 @@ context('Get a quote via email exit page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    getAQuoteByEmailPage.heading().invoke('text').then((text) => {
+    heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });

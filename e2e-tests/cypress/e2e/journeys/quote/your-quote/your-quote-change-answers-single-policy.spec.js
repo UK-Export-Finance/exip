@@ -1,4 +1,4 @@
-import { buyerCountryPage } from '../../../pages/shared';
+import { buyerCountryPage, submitButton } from '../../../pages/shared';
 import {
   policyTypePage,
   tellUsAboutYourPolicyPage,
@@ -30,7 +30,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
     cy.login();
 
     cy.submitAnswersHappyPathSinglePolicy();
-    checkYourAnswersPage.submitButton().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
   });
@@ -64,13 +64,13 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().clear().type('1000');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in the quote', () => {
-      checkYourAnswersPage.submitButton().click();
+      submitButton().click();
 
       const row = yourQuotePage.panel.summaryList[CONTRACT_VALUE];
 
@@ -106,13 +106,13 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('85');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in the quote', () => {
-      checkYourAnswersPage.submitButton().click();
+      submitButton().click();
 
       const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
 
@@ -148,7 +148,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
       policyTypePage[POLICY_TYPE].multi.input().click();
-      policyTypePage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
@@ -157,9 +157,9 @@ context('Your quote page - change answers (single policy type to multi policy ty
       // max amount owed and credit period fields are now required because it's a multi policy
       tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('120000');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
-      checkYourAnswersPage.submitButton().click();
+      submitButton().click();
       cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
 
       const insuredFor = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
@@ -202,13 +202,13 @@ context('Your quote page - change answers (single policy type to multi policy ty
       buyerCountryPage.searchInput().type('Bahrain');
       const results = buyerCountryPage.results();
       results.first().click();
-      buyerCountryPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in the quote', () => {
-      checkYourAnswersPage.submitButton().click();
+      submitButton().click();
 
       const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
 
@@ -246,13 +246,13 @@ context('Your quote page - change answers (single policy type to multi policy ty
       buyerCountryPage.searchInput().type('Brazil');
       const results = buyerCountryPage.results();
       results.first().click();
-      buyerCountryPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answers in the quote', () => {
-      checkYourAnswersPage.submitButton().click();
+      submitButton().click();
       cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
 
       const buyerLocation = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];

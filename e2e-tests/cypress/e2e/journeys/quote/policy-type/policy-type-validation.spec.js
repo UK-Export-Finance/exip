@@ -1,3 +1,4 @@
+import { submitButton } from '../../../pages/shared';
 import { policyTypePage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
@@ -31,7 +32,7 @@ context('Policy type page - policy type & length validation', () => {
       });
 
       it('should render a validation error', () => {
-        policyTypePage.submitButton().click();
+        submitButton().click();
 
         checkText(
           partials.errorSummaryListItems().eq(0),
@@ -47,7 +48,7 @@ context('Policy type page - policy type & length validation', () => {
       describe('when `single policy length` has a non-numeric value', () => {
         it('should render a validation error', () => {
           policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('a');
-          policyTypePage.submitButton().click();
+          submitButton().click();
 
           checkText(
             partials.errorSummaryListItems().eq(0),
@@ -64,7 +65,7 @@ context('Policy type page - policy type & length validation', () => {
       describe('when `single policy length` contains a decimal', () => {
         it('should render a validation error', () => {
           policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('1.2');
-          policyTypePage.submitButton().click();
+          submitButton().click();
 
           checkText(
             partials.errorSummaryListItems().eq(0),
@@ -81,7 +82,7 @@ context('Policy type page - policy type & length validation', () => {
       describe('when `single policy length` is less than the minimum', () => {
         it('should render a validation error', () => {
           policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('0');
-          policyTypePage.submitButton().click();
+          submitButton().click();
 
           checkText(
             partials.errorSummaryListItems().eq(0),
@@ -98,7 +99,7 @@ context('Policy type page - policy type & length validation', () => {
       describe('when `single policy length` is greater than the maximum', () => {
         it('should render a validation error', () => {
           policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('23');
-          policyTypePage.submitButton().click();
+          submitButton().click();
 
           checkText(
             partials.errorSummaryListItems().eq(0),

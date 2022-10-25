@@ -1,4 +1,4 @@
-import { cannotApplyPage, ukGoodsOrServicesPage } from '../../../pages/shared';
+import { cannotApplyPage, ukGoodsOrServicesPage, noRadio, submitButton } from '../../../pages/shared';
 import partials from '../../../partials';
 import {
   PAGES,
@@ -19,8 +19,8 @@ context('UK goods or services page - as an exporter, I want to check if my expor
 
     cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 
-    ukGoodsOrServicesPage.no().click();
-    ukGoodsOrServicesPage.submitButton().click();
+    noRadio().click();
+    submitButton().click();
   });
 
   it('redirects to exit page', () => {

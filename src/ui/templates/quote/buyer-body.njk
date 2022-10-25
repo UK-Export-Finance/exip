@@ -47,11 +47,11 @@
               text: "Yes",
               label: {
                 attributes: {
-                  "data-cy": FIELD_ID + "-yes"
+                  "data-cy": "yes"
                 }
               },
               attributes: {
-                "data-cy": FIELD_ID + "-yes-input"
+                "data-cy": "yes-input"
               },
               checked: submittedValues[FIELD_ID] === false
             },
@@ -60,7 +60,7 @@
               text: "No",
               label: {
                 attributes: {
-                  "data-cy": FIELD_ID + "-no"
+                  "data-cy": "no"
                 }
               },
               checked: submittedValues[FIELD_ID] === true
@@ -69,7 +69,7 @@
           errorMessage: validationErrors.errorList[FIELD_ID]and {
             text: validationErrors.errorList[FIELD_ID].text,
             attributes: {
-              "data-cy": FIELD_ID + "-error-message"
+              "data-cy": "inline-error-message"
             }
           }
         }) }}

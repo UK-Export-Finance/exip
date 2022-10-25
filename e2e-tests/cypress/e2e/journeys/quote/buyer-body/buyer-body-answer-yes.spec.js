@@ -1,3 +1,4 @@
+import { yesRadio, yesRadioInput, submitButton } from '../../../pages/shared';
 import {
   buyerBodyPage,
   getAQuoteByEmailPage,
@@ -17,8 +18,8 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
 
     cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
 
-    buyerBodyPage[FIELD_IDS.VALID_BUYER_BODY].yes().click();
-    buyerBodyPage.submitButton().click();
+    yesRadio().click();
+    submitButton().click();
   });
 
   beforeEach(() => {
@@ -54,8 +55,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     it('auto checks the previously submitted answer', () => {
       partials.backLink().click();
 
-      const yesRadio = buyerBodyPage[FIELD_IDS.VALID_BUYER_BODY].yesInput();
-      yesRadio.should('be.checked');
+      yesRadioInput().should('be.checked');
     });
   });
 });

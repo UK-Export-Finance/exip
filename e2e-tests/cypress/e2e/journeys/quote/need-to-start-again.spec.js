@@ -1,4 +1,4 @@
-import { buyerCountryPage } from '../../pages/shared';
+import { buyerCountryPage, heading, submitButton } from '../../pages/shared';
 import { needToStartAgainPage } from '../../pages/quote';
 import partials from '../../partials';
 import {
@@ -55,7 +55,7 @@ context('Need to start again exit page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    needToStartAgainPage.heading().invoke('text').then((text) => {
+    heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
@@ -65,17 +65,16 @@ context('Need to start again exit page', () => {
   });
 
   it('renders a submit button', () => {
-    const button = needToStartAgainPage.submitButton();
-    button.should('exist');
+    submitButton().should('exist');
 
-    button.invoke('text').then((text) => {
+    submitButton().invoke('text').then((text) => {
       expect(text.trim()).equal(LINKS.START_AGAIN.TEXT);
     });
   });
 
   describe('clicking the submit button', () => {
     it(`should redirect to ${ROUTES.QUOTE.BUYER_COUNTRY}`, () => {
-      needToStartAgainPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
     });

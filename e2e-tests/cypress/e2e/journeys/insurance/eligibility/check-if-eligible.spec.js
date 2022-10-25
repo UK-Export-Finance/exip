@@ -1,3 +1,4 @@
+import { heading, submitButton } from '../../../pages/shared';
 import { insurance } from '../../../pages';
 import partials from '../../../partials';
 import { BUTTONS, LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
@@ -14,7 +15,7 @@ context('Insurance - start page', () => {
       },
     });
 
-    insurance.startPage.submitButton().click();
+    submitButton().click();
   });
 
   beforeEach(() => {
@@ -50,7 +51,7 @@ context('Insurance - start page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    insurance.eligibility.checkIfEligiblePage.heading().invoke('text').then((text) => {
+    heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
@@ -62,17 +63,16 @@ context('Insurance - start page', () => {
   });
 
   it('renders a submit button', () => {
-    const button = insurance.eligibility.checkIfEligiblePage.submitButton();
-    button.should('exist');
+    submitButton().should('exist');
 
-    button.invoke('text').then((text) => {
+    submitButton().invoke('text').then((text) => {
       expect(text.trim()).equal(BUTTONS.CONTINUE);
     });
   });
 
   context('form submission', () => {
     it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`, () => {
-      insurance.eligibility.checkIfEligiblePage.submitButton().click();
+      submitButton().click();
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
 

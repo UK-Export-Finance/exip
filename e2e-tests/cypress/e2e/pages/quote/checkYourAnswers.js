@@ -16,9 +16,6 @@ const {
 } = FIELD_IDS;
 
 const checkYourAnswersPage = {
-  heading: () => cy.get('[data-cy="heading"]'),
-  submitButton: () => cy.get('[data-cy="submit-button"]'),
-
   summaryLists: {
     export: {
       heading: () => cy.get('[data-cy="summaryList-heading-export"]'),

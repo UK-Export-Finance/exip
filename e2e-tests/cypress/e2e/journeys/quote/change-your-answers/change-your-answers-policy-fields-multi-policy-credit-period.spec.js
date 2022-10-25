@@ -1,3 +1,4 @@
+import { submitButton } from '../../../pages/shared';
 import {
   tellUsAboutYourPolicyPage,
   checkYourAnswersPage,
@@ -66,7 +67,7 @@ context('Change your answers (policy fields) - as an exporter, I want to change 
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('2');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });

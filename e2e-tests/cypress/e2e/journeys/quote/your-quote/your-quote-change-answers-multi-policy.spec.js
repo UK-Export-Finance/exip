@@ -1,4 +1,4 @@
-import { buyerCountryPage } from '../../../pages/shared';
+import { buyerCountryPage, submitButton } from '../../../pages/shared';
 import {
   checkYourAnswersPage,
   tellUsAboutYourPolicyPage,
@@ -27,7 +27,7 @@ context('Your quote page - change answers (policy type and length from multi to 
     cy.login();
 
     cy.submitAnswersHappyPathMultiPolicy();
-    checkYourAnswersPage.submitButton().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
   });
@@ -61,13 +61,13 @@ context('Your quote page - change answers (policy type and length from multi to 
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().clear().type('200');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in the quote', () => {
-      checkYourAnswersPage.submitButton().click();
+      submitButton().click();
 
       const row = yourQuotePage.panel.summaryList[MAX_AMOUNT_OWED];
 
@@ -103,13 +103,13 @@ context('Your quote page - change answers (policy type and length from multi to 
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('95');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in the quote', () => {
-      checkYourAnswersPage.submitButton().click();
+      submitButton().click();
 
       const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
 
@@ -147,13 +147,13 @@ context('Your quote page - change answers (policy type and length from multi to 
       buyerCountryPage.searchInput().type('Brazil');
       const results = buyerCountryPage.results();
       results.first().click();
-      buyerCountryPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answers in the quote', () => {
-      checkYourAnswersPage.submitButton().click();
+      submitButton().click();
       cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
 
       const buyerLocation = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];

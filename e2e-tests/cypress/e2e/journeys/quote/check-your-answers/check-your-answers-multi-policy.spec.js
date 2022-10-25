@@ -1,3 +1,4 @@
+import { submitButton } from '../../../pages/shared';
 import { checkYourAnswersPage } from '../../../pages/quote';
 import {
   FIELDS,
@@ -236,7 +237,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
 
   context('form submission', () => {
     it(`should redirect to ${ROUTES.QUOTE.YOUR_QUOTE}`, () => {
-      checkYourAnswersPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
     });

@@ -1,4 +1,4 @@
-import { buyerCountryPage } from '../e2e/pages/shared';
+import { buyerCountryPage, heading, inlineErrorMessage, submitButton } from '../e2e/pages/shared';
 import partials from '../e2e/partials';
 import { BUTTONS, ERROR_MESSAGES, FIELDS, ORGANISATION, PAGES } from '../../content-strings';
 import { FIELD_IDS } from '../../constants';
@@ -9,7 +9,7 @@ const checkPageTitleAndHeading = () => {
   const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
   cy.title().should('eq', expectedPageTitle);
 
-  buyerCountryPage.heading().invoke('text').then((text) => {
+  heading().invoke('text').then((text) => {
     expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
   });
 };
@@ -91,10 +91,9 @@ const checkAutocompleteInput = {
 };
 
 const checkSubmitButton = () => {
-  const button = buyerCountryPage.submitButton();
-  button.should('exist');
+  submitButton().should('exist');
 
-  button.invoke('text').then((text) => {
+  submitButton().invoke('text').then((text) => {
     expect(text.trim()).equal(BUTTONS.CONTINUE);
   });
 };
@@ -109,7 +108,7 @@ const checkValidationErrors = () => {
     expect(text.trim()).equal(expectedMessage);
   });
 
-  buyerCountryPage.errorMessage().invoke('text').then((text) => {
+  inlineErrorMessage().invoke('text').then((text) => {
     expect(text.trim()).includes(expectedMessage);
   });
 };

@@ -1,8 +1,8 @@
+import { buyerCountryPage, submitButton } from '../../../pages/shared';
 import {
   yourQuotePage,
   tellUsAboutYourPolicyPage,
 } from '../../../pages/quote';
-import { buyerCountryPage } from '../../../pages/shared';
 import {
   LINKS,
   PAGES,
@@ -49,7 +49,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
     cy.login();
 
     cy.submitAnswersHappyPathSinglePolicy();
-    tellUsAboutYourPolicyPage.submitButton().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
   });

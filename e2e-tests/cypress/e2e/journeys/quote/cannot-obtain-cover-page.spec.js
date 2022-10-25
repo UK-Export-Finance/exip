@@ -1,4 +1,4 @@
-import { cannotApplyPage, ukGoodsOrServicesPage } from '../../pages/shared';
+import { cannotApplyPage, ukGoodsOrServicesPage, heading, noRadio, submitButton } from '../../pages/shared';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -21,8 +21,8 @@ context('Cannot obtain UKEF cover exit page', () => {
 
     cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 
-    ukGoodsOrServicesPage.no().click();
-    ukGoodsOrServicesPage.submitButton().click();
+    noRadio().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
   });
@@ -63,7 +63,7 @@ context('Cannot obtain UKEF cover exit page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    cannotApplyPage.heading().invoke('text').then((text) => {
+    heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });

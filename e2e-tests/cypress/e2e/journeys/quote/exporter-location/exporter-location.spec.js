@@ -1,4 +1,4 @@
-import { buyerCountryPage, exporterLocationPage } from '../../../pages/shared';
+import { buyerCountryPage, exporterLocationPage, heading, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../pages/shared';
 import partials from '../../../partials';
 import {
   ORGANISATION,
@@ -59,32 +59,30 @@ context('Exporter location page - as an exporter, I want to check if my company 
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    exporterLocationPage.heading().invoke('text').then((text) => {
+    heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
 
   it('renders yes and no radio buttons', () => {
-    const yesRadio = exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yes();
+    yesRadio();
     yesRadio.should('exist');
 
     yesRadio.invoke('text').then((text) => {
       expect(text.trim()).equal('Yes');
     });
 
-    const noRadio = exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].no();
-    noRadio.should('exist');
+    noRadio().should('exist');
 
-    noRadio.invoke('text').then((text) => {
+    noRadio().invoke('text').then((text) => {
       expect(text.trim()).equal('No');
     });
   });
 
   it('renders a submit button', () => {
-    const button = exporterLocationPage.submitButton();
-    button.should('exist');
+    submitButton().should('exist');
 
-    button.invoke('text').then((text) => {
+    submitButton().invoke('text').then((text) => {
       expect(text.trim()).equal(BUTTONS.CONTINUE);
     });
   });
@@ -92,7 +90,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
-        exporterLocationPage.submitButton().click();
+        submitButton().click();
 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
@@ -103,23 +101,23 @@ context('Exporter location page - as an exporter, I want to check if my company 
           expect(text.trim()).equal(expectedMessage);
         });
 
-        exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].errorMessage().invoke('text').then((text) => {
+        inlineErrorMessage().invoke('text').then((text) => {
           expect(text.trim()).includes(expectedMessage);
         });
       });
 
       it('should focus on input when clicking summary error message', () => {
-        exporterLocationPage.submitButton().click();
+        submitButton().click();
 
         partials.errorSummaryListItemLinks().eq(0).click();
-        exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yesInput().should('have.focus');
+        yesRadioInput().should('have.focus');
       });
     });
 
     describe('when submitting the answer as `yes`', () => {
       it(`should redirect to ${ROUTES.QUOTE.UK_GOODS_OR_SERVICES}`, () => {
-        exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yes().click();
-        exporterLocationPage.submitButton().click();
+        yesRadio().click();
+        submitButton().click();
 
         cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
       });

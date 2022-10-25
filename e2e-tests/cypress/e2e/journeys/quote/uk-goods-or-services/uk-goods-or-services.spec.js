@@ -1,4 +1,4 @@
-import { exporterLocationPage, ukGoodsOrServicesPage } from '../../../pages/shared';
+import { exporterLocationPage, ukGoodsOrServicesPage, heading, yesRadioInput, inlineErrorMessage, submitButton } from '../../../pages/shared';
 import partials from '../../../partials';
 import {
   ORGANISATION,
@@ -78,25 +78,23 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    ukGoodsOrServicesPage.heading().invoke('text').then((text) => {
+    heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
 
   it('renders `yes` radio button', () => {
-    const yesRadio = ukGoodsOrServicesPage.yes();
-    yesRadio.should('exist');
+    yesRadio().should('exist');
 
-    yesRadio.invoke('text').then((text) => {
+    yesRadio().invoke('text').then((text) => {
       expect(text.trim()).equal('Yes');
     });
   });
 
   it('renders `no` radio button', () => {
-    const noRadio = ukGoodsOrServicesPage.no();
-    noRadio.should('exist');
+    noRadio().should('exist');
 
-    noRadio.invoke('text').then((text) => {
+    noRadio().invoke('text').then((text) => {
       expect(text.trim()).equal('No');
     });
   });
@@ -123,10 +121,9 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   });
 
   it('renders a submit button', () => {
-    const button = ukGoodsOrServicesPage.submitButton();
-    button.should('exist');
+    submitButton().should('exist');
 
-    button.invoke('text').then((text) => {
+    submitButton().invoke('text').then((text) => {
       expect(text.trim()).equal(BUTTONS.CONTINUE);
     });
   });
@@ -134,7 +131,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
-        ukGoodsOrServicesPage.submitButton().click();
+        submitButton().click();
 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
@@ -145,23 +142,23 @@ context('UK goods or services page - as an exporter, I want to check if my expor
           expect(text.trim()).equal(expectedMessage);
         });
 
-        ukGoodsOrServicesPage.errorMessage().invoke('text').then((text) => {
+        inlineErrorMessage().invoke('text').then((text) => {
           expect(text.trim()).includes(expectedMessage);
         });
       });
 
       it('should focus on input when clicking summary error message', () => {
-        ukGoodsOrServicesPage.submitButton().click();
+        submitButton().click();
 
         partials.errorSummaryListItemLinks().eq(0).click();
-        ukGoodsOrServicesPage.yesInput().should('have.focus');
+        yesRadioInput().should('have.focus');
       });
     });
 
     describe('when submitting the answer as `yes`', () => {
       it(`should redirect to ${ROUTES.QUOTE.POLICY_TYPE}`, () => {
-        ukGoodsOrServicesPage.yes().click();
-        ukGoodsOrServicesPage.submitButton().click();
+        yesRadio().click();
+        submitButton().click();
 
         cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
       });

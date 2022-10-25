@@ -1,5 +1,5 @@
 import { insurance } from '../../../../pages';
-import { buyerCountryPage } from '../../../../pages/shared';
+import { buyerCountryPage, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import {
   BUTTONS,
@@ -31,7 +31,7 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
       },
     });
 
-    insurance.eligibility.checkIfEligiblePage.submitButton().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
   });
@@ -101,7 +101,7 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       beforeEach(() => {
-        buyerCountryPage.submitButton().click();
+        submitButton().click();
       });
 
       it('should render validation errors', () => {
@@ -128,7 +128,7 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
         const results = buyerCountryPage.results();
         results.first().click();
 
-        buyerCountryPage.submitButton().click();
+        submitButton().click();
 
         cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
       });

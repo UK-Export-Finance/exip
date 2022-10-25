@@ -5,7 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
-import { buyerCountryPage } from '../../../pages/shared';
+import { buyerCountryPage, submitButton } from '../../../pages/shared';
 import {
   checkYourAnswersPage,
   policyTypePage,
@@ -30,7 +30,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     buyerCountryPage.searchInput().type('Kenya');
     const results = buyerCountryPage.results();
     results.first().click();
-    buyerCountryPage.submitButton().click();
+    submitButton().click();
 
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
@@ -39,7 +39,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     policyTypePage[POLICY_TYPE].single.input().click();
     policyTypePage[SINGLE_POLICY_LENGTH].input().type('18');
 
-    policyTypePage.submitButton().click();
+    submitButton().click();
   });
 
   beforeEach(() => {
@@ -51,7 +51,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('USD');
     tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('80');
 
-    tellUsAboutYourPolicyPage.submitButton().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
 
@@ -64,7 +64,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
       expect(text.trim()).equal(expected);
     });
 
-    checkYourAnswersPage.submitButton().click();
+    submitButton().click();
 
     // Check contract value formatting in the quote
     yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR].value().invoke('text').then((text) => {

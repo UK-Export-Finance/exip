@@ -1,4 +1,5 @@
-import { checkYourAnswersPage } from '../../../pages/quote';
+import { submitButton } from '../../../pages/shared';
+import { checkYourAnswersPage, heading } from '../../../pages/quote';
 import partials from '../../../partials';
 import {
   ORGANISATION,
@@ -77,10 +78,9 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
   });
 
   it('renders a submit button', () => {
-    const button = checkYourAnswersPage.submitButton();
-    button.should('exist');
+    submitButton().should('exist');
 
-    button.invoke('text').then((text) => {
+    submitButton().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.SUBMIT_BUTTON);
     });
   });
@@ -89,7 +89,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    checkYourAnswersPage.heading().invoke('text').then((text) => {
+    heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
@@ -279,7 +279,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
 
   context('form submission', () => {
     it(`should redirect to ${ROUTES.QUOTE.YOUR_QUOTE}`, () => {
-      checkYourAnswersPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
     });

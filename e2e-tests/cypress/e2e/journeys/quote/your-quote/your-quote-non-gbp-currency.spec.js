@@ -1,3 +1,4 @@
+import { submitButton } from '../../../pages/shared';
 import {
   checkYourAnswersPage,
   tellUsAboutYourPolicyPage,
@@ -32,9 +33,9 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
     checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].changeLink().click();
 
     tellUsAboutYourPolicyPage[CURRENCY].input().select('EUR');
-    tellUsAboutYourPolicyPage.submitButton().click();
+    submitButton().click();
 
-    checkYourAnswersPage.submitButton().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
   });

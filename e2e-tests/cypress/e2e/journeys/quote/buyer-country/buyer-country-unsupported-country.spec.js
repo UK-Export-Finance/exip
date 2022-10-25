@@ -1,4 +1,4 @@
-import { buyerCountryPage, cannotApplyPage } from '../../../pages/shared';
+import { buyerCountryPage, cannotApplyPage, submitButton } from '../../../pages/shared';
 import partials from '../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
@@ -23,7 +23,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     const results = buyerCountryPage.results();
     results.first().click();
 
-    buyerCountryPage.submitButton().click();
+    submitButton().click();
   });
 
   it('redirects to `cannot obtain cover` exit page', () => {
