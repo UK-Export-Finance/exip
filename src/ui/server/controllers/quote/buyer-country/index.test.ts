@@ -228,10 +228,10 @@ describe('controllers/quote/buyer-country', () => {
         req.body[FIELD_IDS.BUYER_COUNTRY] = 'Country not in the mock response';
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.CANNOT_OBTAIN_COVER}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY);
       });
     });
 
@@ -255,10 +255,10 @@ describe('controllers/quote/buyer-country', () => {
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.CANNOT_OBTAIN_COVER}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY);
       });
     });
 

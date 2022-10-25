@@ -9,10 +9,10 @@ import CONSTANTS from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../support/quote/forms';
 
-const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_OBTAIN_COVER;
+const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 const { FIELD_IDS, ROUTES } = CONSTANTS;
 
-context('Cannot obtain UKEF cover exit page', () => {
+context('Cannot apply exit page', () => {
   beforeEach(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
@@ -24,7 +24,7 @@ context('Cannot obtain UKEF cover exit page', () => {
     noRadio().click();
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    cy.url().should('include', ROUTES.QUOTE.CANNOT_APPLY);
   });
 
   it('passes the audits', () => {

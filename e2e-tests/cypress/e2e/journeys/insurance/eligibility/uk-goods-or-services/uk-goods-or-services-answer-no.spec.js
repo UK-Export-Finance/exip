@@ -4,7 +4,7 @@ import { PAGES } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 
-const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_OBTAIN_COVER;
+const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 const { ROUTES } = CONSTANTS;
 
 context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover - submit `no - UK goods/services is below the minimum`', () => {

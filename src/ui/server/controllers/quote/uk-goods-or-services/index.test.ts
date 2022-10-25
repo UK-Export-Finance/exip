@@ -61,10 +61,10 @@ describe('controllers/quote/uk-goods-or-services', () => {
         req.body[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES] = 'false';
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.CANNOT_OBTAIN_COVER}`, () => {
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY);
       });
 
       it('should add previousRoute and exitReason to req.flash', () => {

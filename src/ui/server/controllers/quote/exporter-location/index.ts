@@ -47,7 +47,7 @@ const post = (req: Request, res: Response) => {
 
     req.flash('exitReason', REASON.UNSUPPORTED_COMPANY_COUNTRY);
 
-    return res.redirect(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
   }
 
   if (isChangeRoute(req.originalUrl)) {

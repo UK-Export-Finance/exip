@@ -12,7 +12,7 @@ const {
   CHECK_YOUR_ANSWERS,
   EXPORTER_LOCATION,
   EXPORTER_LOCATION_CHANGE,
-  CANNOT_OBTAIN_COVER,
+  CANNOT_APPLY,
   GET_A_QUOTE_BY_EMAIL,
   UK_GOODS_OR_SERVICES,
   UK_GOODS_OR_SERVICES_CHANGE,
@@ -248,9 +248,9 @@ describe('middleware/required-data-provided', () => {
       });
     });
 
-    describe(`when req.originalUrl is ${CANNOT_OBTAIN_COVER}`, () => {
+    describe(`when req.originalUrl is ${CANNOT_APPLY}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = CANNOT_OBTAIN_COVER;
+        req.originalUrl = CANNOT_APPLY;
         requiredDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

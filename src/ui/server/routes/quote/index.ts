@@ -7,7 +7,7 @@ import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../.
 import { get as policyTypeGet, post as policyTypePost } from '../../controllers/quote/policy-type';
 import { get as tellUsAboutYourPolicyGet, post as tellUsAboutYourPolicyPost } from '../../controllers/quote/tell-us-about-your-policy';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../controllers/quote/check-your-answers';
-import cannotObtainCoverGet from '../../controllers/quote/cannot-obtain-cover';
+import cannotObtainCoverGet from '../../controllers/quote/cannot-apply';
 import getAQuoteByEmailGet from '../../controllers/quote/get-a-quote-by-email';
 import yourQuoteGet from '../../controllers/quote/your-quote';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../controllers/quote/need-to-start-again';
@@ -48,7 +48,7 @@ quoteRouter.post(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE, tellUsAboutYourP
 quoteRouter.get(ROUTES.QUOTE.CHECK_YOUR_ANSWERS, checkYourAnswersGet);
 quoteRouter.post(ROUTES.QUOTE.CHECK_YOUR_ANSWERS, checkYourAnswersPost);
 
-quoteRouter.get(ROUTES.QUOTE.CANNOT_OBTAIN_COVER, cannotObtainCoverGet);
+quoteRouter.get(ROUTES.QUOTE.CANNOT_APPLY, cannotObtainCoverGet);
 
 quoteRouter.get(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL, getAQuoteByEmailGet);
 

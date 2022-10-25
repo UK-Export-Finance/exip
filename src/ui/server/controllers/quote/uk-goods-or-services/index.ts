@@ -47,7 +47,7 @@ const post = (req: Request, res: Response) => {
 
     req.flash('exitReason', REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES);
 
-    return res.redirect(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
   }
 
   req.session.submittedData = updateSubmittedData(req.body, req.session.submittedData);

@@ -7,7 +7,7 @@ import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../.
 import { get as policyTypeGet, post as policyTypePost } from '../../controllers/quote/policy-type';
 import { get as tellUsAboutYourPolicyGet, post as tellUsAboutYourPolicyPost } from '../../controllers/quote/tell-us-about-your-policy';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../controllers/quote/check-your-answers';
-import cannotObtainCoverGet from '../../controllers/quote/cannot-obtain-cover';
+import cannotObtainCoverGet from '../../controllers/quote/cannot-apply';
 import getAQuoteByEmailGet from '../../controllers/quote/get-a-quote-by-email';
 import yourQuoteGet from '../../controllers/quote/your-quote';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../controllers/quote/need-to-start-again';
@@ -56,7 +56,7 @@ describe('routes/quote', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.CHECK_YOUR_ANSWERS, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.CHECK_YOUR_ANSWERS, checkYourAnswersPost);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_OBTAIN_COVER, cannotObtainCoverGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY, cannotObtainCoverGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL, getAQuoteByEmailGet);
 

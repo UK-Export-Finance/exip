@@ -59,10 +59,10 @@ describe('controllers/quote/exporter-location', () => {
         };
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.CANNOT_OBTAIN_COVER}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY);
       });
 
       it('should add previousRoute and exitReason to req.flash', async () => {

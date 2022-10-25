@@ -5,7 +5,7 @@ import CONSTANTS from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import { completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms';
 
-const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_OBTAIN_COVER;
+const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover - submit `not based inside the UK`', () => {
@@ -21,7 +21,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    cy.url().should('include', ROUTES.QUOTE.CANNOT_APPLY);
   });
 
   it('renders a back link with correct url', () => {

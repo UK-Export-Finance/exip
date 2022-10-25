@@ -5,7 +5,7 @@ import corePageVariables from '../../../helpers/core-page-variables';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-describe('controllers/quote/cannot-obtain-cover', () => {
+describe('controllers/quote/cannot-apply', () => {
   let req: Request;
   let res: Response;
   const mockExitReason = 'mock';

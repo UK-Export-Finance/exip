@@ -103,7 +103,7 @@ export const post = async (req: Request, res: Response) => {
   const country = getCountryByName(mappedCountries, submittedCountryName);
 
   if (!country) {
-    return res.redirect(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
   }
 
   if (canGetAQuoteOnline(country)) {
@@ -147,7 +147,7 @@ export const post = async (req: Request, res: Response) => {
 
     req.flash('exitReason', reason);
 
-    return res.redirect(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
   }
 
   return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
