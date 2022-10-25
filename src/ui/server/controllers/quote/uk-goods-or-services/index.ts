@@ -25,7 +25,7 @@ const get = (req: Request, res: Response) =>
   });
 
 const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
+  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
     return res.render(TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES, {
