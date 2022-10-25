@@ -12,7 +12,7 @@ const {
 
 const yourQuotePage = {
   panel: {
-    heading: () => cy.get('[data-cy="heading"]'),
+    headingText: () => cy.get('[data-cy="heading-text"]'),
     subHeading: () => cy.get('[data-cy="sub-heading"]'),
     summaryList: {
       [CONTRACT_VALUE]: {

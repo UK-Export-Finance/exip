@@ -1,11 +1,13 @@
-import { PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION } from '../../../../content-strings';
+import { PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/single-input-page-variables';
-import generateValidationErrors from '../../../../shared-validation/uk-goods-or-services';
+import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../types';
 
+const FIELD_ID = FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
+
 const PAGE_VARIABLES = {
-  FIELD_ID: FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+  FIELD_ID,
   PAGE_CONTENT_STRINGS: {
     ...PAGES.UK_GOODS_OR_SERVICES,
     UK_GOODS_AND_SERVICES_DESCRIPTION,
@@ -16,7 +18,7 @@ const get = (req: Request, res: Response) =>
   res.render(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }));
 
 const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body);
+  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
     return res.render(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {

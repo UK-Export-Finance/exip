@@ -1,10 +1,11 @@
 import get from '.';
-import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
+import corePageVariables from '../../../helpers/core-page-variables';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-describe('controllers/quote/cannot-obtain-cover', () => {
+describe('controllers/quote/cannot-apply', () => {
   let req: Request;
   let res: Response;
   const mockExitReason = 'mock';
@@ -29,14 +30,7 @@ describe('controllers/quote/cannot-obtain-cover', () => {
     get(req, res);
 
     expect(res.render).toHaveBeenCalledWith(TEMPLATES.CANNOT_APPLY, {
-      CONTENT_STRINGS: {
-        COOKIES_CONSENT,
-        FOOTER,
-        LINKS,
-        PRODUCT,
-        ...PAGES.CANNOT_APPLY,
-      },
-      BACK_LINK: mockPreviousRoute,
+      ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY, BACK_LINK: mockPreviousRoute }),
       EXIT_REASON: mockExitReason,
     });
   });

@@ -69,8 +69,7 @@ export const get = async (req: Request, res: Response) => {
   }
 
   return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
-    ...singleInputPageVariables(PAGE_VARIABLES),
-    BACK_LINK: getBackLink(req.headers.referer),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
     HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
     submittedValues: req.session.submittedData,
@@ -91,8 +90,7 @@ export const post = async (req: Request, res: Response) => {
 
   if (validationErrors) {
     return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
-      ...singleInputPageVariables(PAGE_VARIABLES),
-      BACK_LINK: getBackLink(req.headers.referer),
+      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
       HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
       countries: mappedCountries,
       validationErrors,
@@ -105,7 +103,7 @@ export const post = async (req: Request, res: Response) => {
   const country = getCountryByName(mappedCountries, submittedCountryName);
 
   if (!country) {
-    return res.redirect(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
   }
 
   if (canGetAQuoteOnline(country)) {
@@ -149,7 +147,7 @@ export const post = async (req: Request, res: Response) => {
 
     req.flash('exitReason', reason);
 
-    return res.redirect(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
   }
 
   return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

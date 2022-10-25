@@ -1,4 +1,4 @@
-import { exporterLocationPage, ukGoodsOrServicesPage } from '../../../../pages/shared';
+import { exporterLocationPage, ukGoodsOrServicesPage, heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import {
@@ -25,11 +25,11 @@ context('Insurance - Insured amount page - I want to check if I can use online s
 
     completeAndSubmitBuyerCountryForm();
 
-    exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yes().click();
-    exporterLocationPage.submitButton().click();
+    yesRadio().click();
+    submitButton().click();
 
-    ukGoodsOrServicesPage.yes().click();
-    ukGoodsOrServicesPage.submitButton().click();
+    yesRadio().click();
+    submitButton().click();
 
     const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`;
 
@@ -85,34 +85,31 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    insurance.eligibility.insuredAmountPage.heading().invoke('text').then((text) => {
+    heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
 
   it('renders `yes` radio button', () => {
-    const yesRadio = insurance.eligibility.insuredAmountPage.yes();
-    yesRadio.should('exist');
+    yesRadio().should('exist');
 
-    yesRadio.invoke('text').then((text) => {
+    yesRadio().invoke('text').then((text) => {
       expect(text.trim()).equal('Yes');
     });
   });
 
   it('renders `no` radio button', () => {
-    const noRadio = insurance.eligibility.insuredAmountPage.no();
-    noRadio.should('exist');
+    noRadio().should('exist');
 
-    noRadio.invoke('text').then((text) => {
+    noRadio().invoke('text').then((text) => {
       expect(text.trim()).equal('No');
     });
   });
 
   it('renders a submit button', () => {
-    const button = insurance.eligibility.insuredAmountPage.submitButton();
-    button.should('exist');
+    submitButton().should('exist');
 
-    button.invoke('text').then((text) => {
+    submitButton().invoke('text').then((text) => {
       expect(text.trim()).equal(BUTTONS.CONTINUE);
     });
   });
@@ -120,7 +117,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
-        insurance.eligibility.insuredAmountPage.submitButton().click();
+        submitButton().click();
 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
@@ -131,23 +128,23 @@ context('Insurance - Insured amount page - I want to check if I can use online s
           expect(text.trim()).equal(expectedMessage);
         });
 
-        insurance.eligibility.insuredAmountPage.errorMessage().invoke('text').then((text) => {
+        inlineErrorMessage().invoke('text').then((text) => {
           expect(text.trim()).includes(expectedMessage);
         });
       });
 
       it('should focus on input when clicking summary error message', () => {
-        insurance.eligibility.insuredAmountPage.submitButton().click();
+        submitButton().click();
 
         partials.errorSummaryListItemLinks().eq(0).click();
-        insurance.eligibility.insuredAmountPage.yesInput().should('have.focus');
+        yesRadioInput().should('have.focus');
       });
     });
 
     describe('when submitting the answer as `no`', () => {
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.WANT_INSURANCE_OVER_MAX_PERIOD}`, () => {
-        insurance.eligibility.insuredAmountPage.no().click();
-        insurance.eligibility.insuredAmountPage.submitButton().click();
+        noRadio().click();
+        submitButton().click();
 
         const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.WANT_INSURANCE_OVER_MAX_PERIOD}`;
 

@@ -1,3 +1,4 @@
+import { submitButton } from '../../../pages/shared';
 import {
   checkYourAnswersPage,
   yourQuotePage,
@@ -35,7 +36,7 @@ context('Get a quote/your quote page (multi policy) - as an exporter, I want to 
     cy.login();
 
     cy.submitAnswersHappyPathMultiPolicy();
-    checkYourAnswersPage.submitButton().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
   });

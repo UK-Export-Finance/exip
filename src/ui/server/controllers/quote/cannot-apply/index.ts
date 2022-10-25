@@ -1,5 +1,6 @@
-import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
+import corePageVariables from '../../../helpers/core-page-variables';
 import { Request, Response } from '../../../../types';
 
 const get = (req: Request, res: Response) => {
@@ -7,14 +8,7 @@ const get = (req: Request, res: Response) => {
   const previousRoute = req.flash('previousRoute');
 
   return res.render(TEMPLATES.CANNOT_APPLY, {
-    CONTENT_STRINGS: {
-      COOKIES_CONSENT,
-      FOOTER,
-      LINKS,
-      PRODUCT,
-      ...PAGES.CANNOT_APPLY,
-    },
-    BACK_LINK: previousRoute,
+    ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY, BACK_LINK: previousRoute }),
     EXIT_REASON,
   });
 };

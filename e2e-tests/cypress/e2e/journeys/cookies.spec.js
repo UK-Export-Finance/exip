@@ -1,3 +1,4 @@
+import { heading, inlineErrorMessage, submitButton } from '../pages/shared';
 import { cookiesPage } from '../pages';
 import partials from '../partials';
 import { BUTTONS, ERROR_MESSAGES, FIELDS, LINKS, PAGES } from '../../../content-strings';
@@ -45,7 +46,7 @@ context('Cookies page', () => {
   });
 
   it('renders a heading', () => {
-    cookiesPage.heading().invoke('text').then((text) => {
+    heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
@@ -190,10 +191,9 @@ context('Cookies page', () => {
     });
 
     it('renders a submit button', () => {
-      const button = cookiesPage.optionalCookies.submitButton();
-      button.should('exist');
+      submitButton().should('exist');
 
-      button.invoke('text').then((text) => {
+      submitButton().invoke('text').then((text) => {
         expect(text.trim()).equal(BUTTONS.SAVE_CHANGES);
       });
     });
@@ -201,7 +201,7 @@ context('Cookies page', () => {
     describe('form submission', () => {
       describe('when submitting an empty form', () => {
         it('should render validation errors', () => {
-          cookiesPage.optionalCookies.submitButton().click();
+          submitButton().click();
 
           partials.errorSummaryListItems().should('exist');
           partials.errorSummaryListItems().should('have.length', 1);
@@ -212,13 +212,13 @@ context('Cookies page', () => {
             expect(text.trim()).equal(expectedMessage);
           });
 
-          cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].errorMessage().invoke('text').then((text) => {
+          inlineErrorMessage().invoke('text').then((text) => {
             expect(text.trim()).includes(expectedMessage);
           });
         });
 
         it('should focus on input when clicking summary error message', () => {
-          cookiesPage.optionalCookies.submitButton().click();
+          submitButton().click();
 
           partials.errorSummaryListItemLinks().eq(0).click();
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().should('have.focus');
@@ -228,7 +228,7 @@ context('Cookies page', () => {
       describe('when submitting the answer as `accept`', () => {
         beforeEach(() => {
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
-          cookiesPage.optionalCookies.submitButton().click();
+          submitButton().click();
         });
 
         it(`should redirect to ${ROUTES.COOKIES}`, () => {
@@ -269,7 +269,7 @@ context('Cookies page', () => {
       describe('when submitting the answer as `reject`', () => {
         beforeEach(() => {
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
-          cookiesPage.optionalCookies.submitButton().click();
+          submitButton().click();
         });
 
         it(`should redirect to ${ROUTES.COOKIES}`, () => {
@@ -317,7 +317,7 @@ context('Cookies page', () => {
           });
 
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
-          cookiesPage.optionalCookies.submitButton().click();
+          submitButton().click();
         });
 
         it('should render a success message with correct content and no `go back` link', () => {
@@ -343,7 +343,7 @@ context('Cookies page', () => {
           });
 
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
-          cookiesPage.optionalCookies.submitButton().click();
+          submitButton().click();
         });
 
         it('should render a success message with correct content and no `go back` link', () => {

@@ -1,5 +1,4 @@
 const cannotApply = {
-  heading: () => cy.get('[data-cy="heading"]'),
   reason: () => cy.get('[data-cy="reason"]'),
   actions: {
     intro: () => cy.get('[data-cy="actions-intro"]'),

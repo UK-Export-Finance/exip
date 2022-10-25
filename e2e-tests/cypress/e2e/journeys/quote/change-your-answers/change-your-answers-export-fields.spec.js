@@ -1,4 +1,4 @@
-import { buyerCountryPage, exporterLocationPage, ukGoodsOrServicesPage } from '../../../pages/shared';
+import { buyerCountryPage, exporterLocationPage, ukGoodsOrServicesPage, yesRadioInput, submitButton } from '../../../pages/shared';
 import { checkYourAnswersPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import CONSTANTS from '../../../../../constants';
@@ -63,7 +63,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
       buyerCountryPage.searchInput().type('Brazil');
       const results = buyerCountryPage.results();
       results.first().click();
-      buyerCountryPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
@@ -102,11 +102,11 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('has originally submitted answer selected', () => {
-      exporterLocationPage[VALID_EXPORTER_LOCATION].yesInput().should('be.checked');
+      yesRadioInput().should('be.checked');
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      exporterLocationPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
@@ -135,11 +135,11 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('has originally submitted answer', () => {
-      ukGoodsOrServicesPage.yesInput().should('be.checked');
+      yesRadioInput().should('be.checked');
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      ukGoodsOrServicesPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });

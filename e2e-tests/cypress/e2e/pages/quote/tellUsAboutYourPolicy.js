@@ -1,7 +1,6 @@
 import { FIELD_IDS } from '../../../../constants';
 
 const tellUsAboutYourPolicyPage = {
-  heading: () => cy.get('[data-cy="heading"]'),
   description: () => cy.get('[data-cy="description"]'),
   [FIELD_IDS.AMOUNT_CURRENCY]: {
     legend: () => cy.get(`[data-cy="${FIELD_IDS.AMOUNT_CURRENCY}-legend"]`),
@@ -40,7 +39,6 @@ const tellUsAboutYourPolicyPage = {
     inputOption: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-input"] option`),
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.CREDIT_PERIOD}-error-message"]`),
   },
-  submitButton: () => cy.get('[data-cy="submit-button"]'),
 };
 
 export default tellUsAboutYourPolicyPage;

@@ -1,4 +1,4 @@
-import { buyerCountryPage, cannotApplyPage } from '../../../pages/shared';
+import { buyerCountryPage, cannotApplyPage, heading, submitButton } from '../../../pages/shared';
 import { insurance } from '../../../pages';
 import partials from '../../../partials';
 import {
@@ -31,7 +31,7 @@ context('Cannot apply exit page', () => {
     const results = buyerCountryPage.results();
     results.first().click();
 
-    buyerCountryPage.submitButton().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
   });
@@ -72,7 +72,7 @@ context('Cannot apply exit page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    cannotApplyPage.heading().invoke('text').then((text) => {
+    heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });

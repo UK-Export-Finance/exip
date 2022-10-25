@@ -1,3 +1,4 @@
+import { submitButton } from '../../../pages/shared';
 import {
   policyTypePage,
   tellUsAboutYourPolicyPage,
@@ -48,7 +49,7 @@ context('Change your answers (policy type) - multiple times via back button - as
 
   it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
     policyTypePage[POLICY_TYPE].multi.input().click();
-    policyTypePage.submitButton().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
   });
@@ -68,7 +69,7 @@ context('Change your answers (policy type) - multiple times via back button - as
 
       policyTypePage[POLICY_TYPE].single.input().click();
       policyTypePage[SINGLE_POLICY_LENGTH].input().clear().type('2');
-      policyTypePage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
@@ -88,7 +89,7 @@ context('Change your answers (policy type) - multiple times via back button - as
       cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
 
       policyTypePage[POLICY_TYPE].multi.input().click();
-      policyTypePage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });

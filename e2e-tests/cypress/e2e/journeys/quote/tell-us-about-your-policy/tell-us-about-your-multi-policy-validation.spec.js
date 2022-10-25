@@ -5,6 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
 } from '../../../../support/quote/forms';
+import { submitButton } from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
@@ -31,7 +32,7 @@ context('Tell us about the multi policy you need - form validation', () => {
     });
 
     beforeEach(() => {
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
     });
 
     it('should render validation errors for all required fields', () => {
@@ -107,7 +108,7 @@ context('Tell us about the multi policy you need - form validation', () => {
   describe('when `max amount owed` has a non-numeric value', () => {
     it('should render a validation error', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('a');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(1),
@@ -124,7 +125,7 @@ context('Tell us about the multi policy you need - form validation', () => {
   describe('when `max amount owed` is not a whole number', () => {
     it('should render a validation error', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('1234.56');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(1),
@@ -141,7 +142,7 @@ context('Tell us about the multi policy you need - form validation', () => {
   describe('when `max amount owed` has a value less than the minimum', () => {
     it('should render a validation error', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('0');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(1),
@@ -157,7 +158,7 @@ context('Tell us about the multi policy you need - form validation', () => {
 
   describe('when `credit period` is not selected', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(3),
@@ -176,7 +177,7 @@ context('Tell us about the multi policy you need - form validation', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('10');
 
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].inputOptionSelected().contains('GBP');
 

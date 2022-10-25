@@ -1,4 +1,4 @@
-import { cannotApplyPage, exporterLocationPage, ukGoodsOrServicesPage } from '../../../../pages/shared';
+import { cannotApplyPage, exporterLocationPage, ukGoodsOrServicesPage, yesRadio, submitButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
@@ -19,14 +19,14 @@ context('Insurance - Insured amount page - I want to check if I can use online s
 
     completeAndSubmitBuyerCountryForm();
 
-    exporterLocationPage[FIELD_IDS.VALID_EXPORTER_LOCATION].yes().click();
-    exporterLocationPage.submitButton().click();
+    yesRadio().click();
+    submitButton().click();
 
-    ukGoodsOrServicesPage.yes().click();
-    ukGoodsOrServicesPage.submitButton().click();
+    yesRadio().click();
+    submitButton().click();
 
-    insurance.eligibility.insuredAmountPage.yes().click();
-    insurance.eligibility.insuredAmountPage.submitButton().click();
+    yesRadio().click();
+    submitButton().click();
   });
 
   it('redirects to exit page', () => {

@@ -1,4 +1,5 @@
 import partials from '../../partials';
+import { submitButton } from '../../pages/shared';
 import { cookiesPage } from '../../pages';
 import { FIELD_IDS, ROUTES } from '../../../../constants';
 
@@ -33,7 +34,7 @@ context('Cookies consent - change via banner and cookies page', () => {
 
     it('should allow user to immediately change their answer to `reject` and have scripts & cookies changed via the cookies page', () => {
       cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
-      cookiesPage.optionalCookies.submitButton().click();
+      submitButton().click();
 
       cy.checkAnalyticsScriptsAreNotRendered();
       cy.checkAnalyticsCookieIsFalse();
@@ -84,7 +85,7 @@ context('Cookies consent - change via banner and cookies page', () => {
 
     it('should allow user to immediately change their answer to `approve` and have scripts & cookies changed via the cookies page', () => {
       cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
-      cookiesPage.optionalCookies.submitButton().click();
+      submitButton().click();
 
       cy.checkAnalyticsScriptsAreRendered();
       cy.checkAnalyticsCookieIsTrue();

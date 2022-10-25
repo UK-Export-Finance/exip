@@ -5,6 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
+import { submitButton } from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
@@ -31,7 +32,7 @@ context('Tell us about the policy you need page - form validation', () => {
     });
 
     beforeEach(() => {
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
     });
 
     it('should render validation errors for all required fields', () => {
@@ -92,7 +93,7 @@ context('Tell us about the policy you need page - form validation', () => {
   describe('when `contract value` has a non-numeric value', () => {
     it('should render a validation error', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('a');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(1),
@@ -109,7 +110,7 @@ context('Tell us about the policy you need page - form validation', () => {
   describe('when `contract value` is not a whole number', () => {
     it('should render a validation error', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('1234.56');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(1),
@@ -126,7 +127,7 @@ context('Tell us about the policy you need page - form validation', () => {
   describe('when `contract value` has a value less than the minimum', () => {
     it('should render a validation error', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('0');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       checkText(
         partials.errorSummaryListItems().eq(1),
@@ -145,7 +146,7 @@ context('Tell us about the policy you need page - form validation', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('10');
 
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].inputOptionSelected().contains('GBP');
 

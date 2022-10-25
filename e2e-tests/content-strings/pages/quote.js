@@ -34,7 +34,7 @@ const CHECK_YOUR_ANSWERS = {
   SUBMIT_BUTTON: 'Get your quote',
 };
 
-const CANNOT_OBTAIN_COVER = {
+const CANNOT_APPLY = {
   PAGE_TITLE: 'You cannot apply for UKEF export insurance',
   HEADING: 'You cannot apply for UKEF export insurance',
   REASON: {
@@ -179,7 +179,7 @@ module.exports = {
   POLICY_TYPE,
   TELL_US_ABOUT_YOUR_POLICY,
   CHECK_YOUR_ANSWERS,
-  CANNOT_OBTAIN_COVER,
+  CANNOT_APPLY,
   GET_A_QUOTE_BY_EMAIL,
   YOUR_QUOTE,
   NEED_TO_START_AGAIN,

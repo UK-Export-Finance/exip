@@ -1,3 +1,4 @@
+import { submitButton } from '../../../pages/shared';
 import {
   policyTypePage,
   checkYourAnswersPage,
@@ -72,7 +73,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
 
   it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
     policyTypePage[POLICY_TYPE].multi.input().click();
-    policyTypePage.submitButton().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
   });
@@ -81,7 +82,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     // max amount owed and credit period fields are now required because it's a multi policy
     tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('120000');
     tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
-    tellUsAboutYourPolicyPage.submitButton().click();
+    submitButton().click();
 
     row = checkYourAnswersPage.summaryLists.policy[MAX_AMOUNT_OWED];
 
@@ -137,14 +138,14 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
       policyTypePage[POLICY_TYPE].single.input().click();
       policyTypePage[SINGLE_POLICY_LENGTH].input().clear().type('5');
-      policyTypePage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     it('renders the new answers in `Check your answers` page (single policy, 5 months)', () => {
       tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().type('150');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       row = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE];
 
@@ -197,7 +198,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
 
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
       policyTypePage[POLICY_TYPE].multi.input().click();
-      policyTypePage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
@@ -211,7 +212,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     before(() => {
       tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('100');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('2');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_TYPE];
       row.changeLink().click();
@@ -235,14 +236,14 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
       policyTypePage[POLICY_TYPE].single.input().click();
       policyTypePage[SINGLE_POLICY_LENGTH].input().clear().type('7');
-      policyTypePage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     it('renders the new answer in `Check your answers` page (single policy, 7 months)', () => {
       tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().type('200');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_LENGTH];
 

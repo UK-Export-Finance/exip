@@ -5,6 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
+import { submitButton } from '../../../pages/shared';
 import {
   yourQuotePage,
   tellUsAboutYourPolicyPage,
@@ -39,7 +40,7 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
     tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
     tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
 
-    tellUsAboutYourPolicyPage.submitButton().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
 
@@ -52,7 +53,7 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
       expect(text.trim()).equal(expected);
     });
 
-    checkYourAnswersPage.submitButton().click();
+    submitButton().click();
 
     // Check contract value formatting in the quote
     yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR].value().invoke('text').then((text) => {

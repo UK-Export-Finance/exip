@@ -1,8 +1,8 @@
 import { PAGE_VARIABLES, get, post } from '.';
-import { PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION } from '../../../../content-strings';
+import { PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/single-input-page-variables';
-import generateValidationErrors from '../../../../shared-validation/uk-goods-or-services';
+import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
@@ -47,7 +47,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
-          validationErrors: generateValidationErrors(req.body),
+          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });
       });
     });

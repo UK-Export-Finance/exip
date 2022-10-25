@@ -1,6 +1,7 @@
 import { get, post } from '.';
-import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
+import corePageVariables from '../../../helpers/core-page-variables';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
@@ -21,15 +22,7 @@ describe('controllers/quote/need-to-start-again', () => {
     it('should render template', async () => {
       await get(req, res);
 
-      const expectedVariables = {
-        CONTENT_STRINGS: {
-          COOKIES_CONSENT,
-          FOOTER,
-          LINKS,
-          PRODUCT,
-          ...PAGES.QUOTE.NEED_TO_START_AGAIN,
-        },
-      };
+      const expectedVariables = corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.NEED_TO_START_AGAIN, BACK_LINK: req.headers.referer });
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.NEED_TO_START_AGAIN, expectedVariables);
     });

@@ -11,7 +11,7 @@ type RequiredDataState = {
   'tell-us-about-policy': Array<string>;
   'tell-us-about-policy/change': Array<string>;
   'check-your-answers': Array<string>;
-  'cannot-obtain-cover': Array<string>;
+  'cannot-apply': Array<string>;
   'your-quote': Array<string>;
 };
 

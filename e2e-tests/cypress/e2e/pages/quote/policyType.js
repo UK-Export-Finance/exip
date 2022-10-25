@@ -4,7 +4,6 @@ import {
 } from '../../../../constants';
 
 const policyTypePage = {
-  heading: () => cy.get('[data-cy="heading"]'),
   [FIELD_IDS.POLICY_TYPE]: {
     single: {
       label: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.SINGLE}-label"]`),
@@ -29,7 +28,6 @@ const policyTypePage = {
     input: () => cy.get(`[data-cy="${FIELD_IDS.SINGLE_POLICY_LENGTH}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.SINGLE_POLICY_LENGTH}-error-message"]`),
   },
-  submitButton: () => cy.get('[data-cy="submit-button"]'),
 };
 
 export default policyTypePage;

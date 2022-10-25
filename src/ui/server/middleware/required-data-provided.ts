@@ -8,7 +8,7 @@ const {
   BUYER_BODY,
   BUYER_COUNTRY,
   BUYER_COUNTRY_CHANGE,
-  CANNOT_OBTAIN_COVER,
+  CANNOT_APPLY,
   CHECK_YOUR_ANSWERS,
   EXPORTER_LOCATION,
   EXPORTER_LOCATION_CHANGE,
@@ -161,7 +161,7 @@ export const requiredDataProvided = (req: Request, res: Response, next: () => vo
   const routesArray = getRoutesAsArray();
 
   // array of routes that do not require any data checks.
-  const irrelevantRoutes = [ROOT, BUYER_COUNTRY, CANNOT_OBTAIN_COVER, GET_A_QUOTE_BY_EMAIL, COOKIES, NEED_TO_START_AGAIN, PROBLEM_WITH_SERVICE];
+  const irrelevantRoutes = [ROOT, BUYER_COUNTRY, CANNOT_APPLY, GET_A_QUOTE_BY_EMAIL, COOKIES, NEED_TO_START_AGAIN, PROBLEM_WITH_SERVICE];
 
   const isIrrelevantRoute = (route: string) => irrelevantRoutes.includes(route);
 

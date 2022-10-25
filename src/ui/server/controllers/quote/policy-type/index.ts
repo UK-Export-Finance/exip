@@ -1,5 +1,6 @@
-import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
+import corePageVariables from '../../../helpers/core-page-variables';
 import generateValidationErrors from './validation';
 import { isSinglePolicyType } from '../../../helpers/policy-type';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data';
@@ -8,14 +9,6 @@ import { Request, Response } from '../../../../types';
 const { MULTI_POLICY_TYPE, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH, SINGLE_POLICY_TYPE } = FIELD_IDS;
 
 const PAGE_VARIABLES = {
-  CONTENT_STRINGS: {
-    BUTTONS,
-    COOKIES_CONSENT,
-    LINKS,
-    FOOTER,
-    PRODUCT,
-    ...PAGES.QUOTE.POLICY_TYPE,
-  },
   FIELDS: {
     MULTI_POLICY_TYPE: {
       ID: MULTI_POLICY_TYPE,
@@ -42,8 +35,8 @@ const PAGE_VARIABLES = {
 
 const get = (req: Request, res: Response) =>
   res.render(TEMPLATES.QUOTE.POLICY_TYPE, {
+    ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
     ...PAGE_VARIABLES,
-    BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData,
   });
 
@@ -52,8 +45,8 @@ const post = (req: Request, res: Response) => {
 
   if (validationErrors) {
     return res.render(TEMPLATES.QUOTE.POLICY_TYPE, {
+      ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
       ...PAGE_VARIABLES,
-      BACK_LINK: req.headers.referer,
       validationErrors,
       submittedValues: req.body,
     });

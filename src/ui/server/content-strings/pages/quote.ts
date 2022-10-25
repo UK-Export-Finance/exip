@@ -65,6 +65,7 @@ const GET_A_QUOTE_BY_EMAIL = {
 
 const YOUR_QUOTE = {
   PAGE_TITLE: 'You can apply for UKEF export insurance',
+  HEADING: 'You can apply for UKEF export insurance',
   QUOTE: {
     HEADING: 'You can apply for UKEF export insurance',
     SUB_HEADING: 'Your quote',

@@ -1,4 +1,4 @@
-import { cannotApplyPage, ukGoodsOrServicesPage } from '../../pages/shared';
+import { cannotApplyPage, ukGoodsOrServicesPage, heading, noRadio, submitButton } from '../../pages/shared';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -9,10 +9,10 @@ import CONSTANTS from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../support/quote/forms';
 
-const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_OBTAIN_COVER;
+const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 const { FIELD_IDS, ROUTES } = CONSTANTS;
 
-context('Cannot obtain UKEF cover exit page', () => {
+context('Cannot apply exit page', () => {
   beforeEach(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
@@ -21,10 +21,10 @@ context('Cannot obtain UKEF cover exit page', () => {
 
     cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 
-    ukGoodsOrServicesPage.no().click();
-    ukGoodsOrServicesPage.submitButton().click();
+    noRadio().click();
+    submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    cy.url().should('include', ROUTES.QUOTE.CANNOT_APPLY);
   });
 
   it('passes the audits', () => {
@@ -63,7 +63,7 @@ context('Cannot obtain UKEF cover exit page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    cannotApplyPage.heading().invoke('text').then((text) => {
+    heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });

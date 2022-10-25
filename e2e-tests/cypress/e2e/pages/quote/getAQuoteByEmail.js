@@ -1,5 +1,4 @@
 const getAQuoteByEmailPage = {
-  heading: () => cy.get('[data-cy="heading"]'),
   reason: () => cy.get('[data-cy="reason"]'),
   description: () => cy.get('[data-cy="description"]'),
   action: {

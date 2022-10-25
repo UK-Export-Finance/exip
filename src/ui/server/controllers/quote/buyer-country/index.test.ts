@@ -107,8 +107,7 @@ describe('controllers/quote/buyer-country', () => {
       await get(req, res);
 
       const expectedVariables = {
-        ...singleInputPageVariables(PAGE_VARIABLES),
-        BACK_LINK: getBackLink(req.headers.referer),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
         HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
         countries: mapCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData,
@@ -127,8 +126,7 @@ describe('controllers/quote/buyer-country', () => {
         const expectedCountries = mapCountries(mockCountriesResponse, req.session.submittedData[FIELD_IDS.BUYER_COUNTRY].isoCode);
 
         const expectedVariables = {
-          ...singleInputPageVariables(PAGE_VARIABLES),
-          BACK_LINK: getBackLink(req.headers.referer),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
           HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
           countries: expectedCountries,
           submittedValues: req.session.submittedData,
@@ -190,8 +188,7 @@ describe('controllers/quote/buyer-country', () => {
         await post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
-          ...singleInputPageVariables(PAGE_VARIABLES),
-          BACK_LINK: getBackLink(req.headers.referer),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
           HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
           countries: mapCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),
@@ -231,10 +228,10 @@ describe('controllers/quote/buyer-country', () => {
         req.body[FIELD_IDS.BUYER_COUNTRY] = 'Country not in the mock response';
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.CANNOT_OBTAIN_COVER}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY);
       });
     });
 
@@ -258,10 +255,10 @@ describe('controllers/quote/buyer-country', () => {
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.CANNOT_OBTAIN_COVER}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY);
       });
     });
 

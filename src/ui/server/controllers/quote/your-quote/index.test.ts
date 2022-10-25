@@ -1,6 +1,8 @@
 import controller from '.';
-import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
+import corePageVariables from '../../../helpers/core-page-variables';
+
 import { generateQuote } from '../../../generate-quote';
 import mapQuoteToContent from '../../../helpers/data-content-mappings/map-quote-to-content';
 import { quoteSummaryList } from '../../../helpers/summary-lists/quote-summary-list';
@@ -31,14 +33,7 @@ describe('controllers/quote/your-quote', () => {
     const expectedSummaryList = quoteSummaryList(quoteContent);
 
     const expectedVariables = {
-      CONTENT_STRINGS: {
-        BUTTONS,
-        COOKIES_CONSENT,
-        FOOTER,
-        LINKS,
-        PRODUCT,
-        ...PAGES.QUOTE.YOUR_QUOTE,
-      },
+      ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.YOUR_QUOTE, BACK_LINK: req.headers.referer }),
       SUMMARY_LIST: expectedSummaryList,
     };
 

@@ -1,3 +1,4 @@
+import { heading, submitButton } from '../../pages/shared';
 import { insurance } from '../../pages';
 import partials from '../../partials';
 import { BUTTONS, LINKS, ORGANISATION, PAGES } from '../../../../content-strings';
@@ -46,7 +47,7 @@ context('Insurance - start page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    insurance.startPage.heading().invoke('text').then((text) => {
+    heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
     });
   });
@@ -102,17 +103,16 @@ context('Insurance - start page', () => {
   });
 
   it('renders a start now button', () => {
-    const button = insurance.startPage.submitButton();
-    button.should('exist');
+    submitButton().should('exist');
 
-    button.invoke('text').then((text) => {
+    submitButton().invoke('text').then((text) => {
       expect(text.trim()).equal(BUTTONS.START_NOW);
     });
   });
 
   context('form submission', () => {
     it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE}`, () => {
-      insurance.startPage.submitButton().click();
+      submitButton().click();
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE}`;
 

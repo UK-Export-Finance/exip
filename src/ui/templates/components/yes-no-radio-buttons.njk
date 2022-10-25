@@ -1,0 +1,52 @@
+{% from 'govuk/components/radios/macro.njk' import govukRadios %}
+
+{% macro render(params) %}
+
+  {% set fieldId = params.fieldId %}
+  {% set heading = params.heading %}
+  {% set submittedAnswer = params.submittedAnswer %}
+  {% set errorMessage = params.errorMessage %}
+
+  {{ govukRadios({
+    classes: "govuk-radios--inline",
+    idPrefix: fieldId,
+    name: fieldId,
+    fieldset: {
+      legend: {
+        html: "<h1 class='govuk-heading-l' id='heading' data-cy='heading'>" + heading + "</h1>"
+      }
+    },
+    items: [
+      {
+        value: true,
+        text: "Yes",
+        label: {
+          attributes: {
+            "data-cy": "yes"
+          }
+        },
+        attributes: {
+          "data-cy": "yes-input"
+        },
+        checked: submittedAnswer === true
+      },
+      {
+        value: false,
+        text: "No",
+        label: {
+          attributes: {
+            "data-cy": "no"
+          }
+        },
+        checked: submittedAnswer === false
+      }
+    ],
+    errorMessage: errorMessage and {
+      text: errorMessage.text,
+      attributes: {
+        "data-cy": "inline-error-message"
+      }
+    }
+  }) }}
+
+{% endmacro %}

@@ -1,30 +1,36 @@
-import { PAGES } from '../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
-import generateValidationErrors from '../../../shared-validation/exporter-location';
+import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data';
 import isChangeRoute from '../../../helpers/is-change-route';
 import { Request, Response } from '../../../../types';
 
+const FIELD_ID = FIELD_IDS.VALID_EXPORTER_LOCATION;
+
 const PAGE_VARIABLES = {
-  FIELD_ID: FIELD_IDS.VALID_EXPORTER_LOCATION,
+  FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.EXPORTER_LOCATION,
 };
 
 const get = (req: Request, res: Response) =>
   res.render(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, {
-    ...singleInputPageVariables(PAGE_VARIABLES),
-    BACK_LINK: req.headers.referer,
+    ...singleInputPageVariables({
+      ...PAGE_VARIABLES,
+      BACK_LINK: req.headers.referer,
+    }),
     submittedValues: req.session.submittedData,
   });
 
 const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body);
+  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
 
   if (validationErrors) {
     return res.render(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, {
-      ...singleInputPageVariables(PAGE_VARIABLES),
-      BACK_LINK: req.headers.referer,
+      ...singleInputPageVariables({
+        ...PAGE_VARIABLES,
+        BACK_LINK: req.headers.referer,
+      }),
       validationErrors,
     });
   }
@@ -41,7 +47,7 @@ const post = (req: Request, res: Response) => {
 
     req.flash('exitReason', REASON.UNSUPPORTED_COMPANY_COUNTRY);
 
-    return res.redirect(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
   }
 
   if (isChangeRoute(req.originalUrl)) {
