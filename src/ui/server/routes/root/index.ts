@@ -3,7 +3,7 @@ import { ROUTES } from '../../constants';
 import rootGet from '../../controllers/root';
 import { get as cookiesGet, post as cookiesPost } from '../../controllers/root/cookies';
 import cookiesConsentPost from '../../controllers/root/cookies-consent';
-import problemWithServiceGet from '../../controllers/quote/problem-with-service';
+import problemWithServiceGet from '../../controllers/root/problem-with-service';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
