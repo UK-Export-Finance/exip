@@ -1,12 +1,14 @@
-import { PAGES } from '../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
-import generateValidationErrors from './validation';
+import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data';
 import { Request, Response } from '../../../../types';
 
+const FIELD_ID = FIELD_IDS.VALID_BUYER_BODY;
+
 const PAGE_VARIABLES = {
-  FIELD_ID: FIELD_IDS.VALID_BUYER_BODY,
+  FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
 };
 
@@ -34,7 +36,7 @@ const get = (req: Request, res: Response) =>
   });
 
 const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body);
+  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
 
   if (validationErrors) {
     return res.render(TEMPLATES.QUOTE.BUYER_BODY, {

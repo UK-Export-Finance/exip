@@ -1,7 +1,7 @@
-import { PAGES } from '../../../../content-strings';
+import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/single-input-page-variables';
-import generateValidationErrors from './validation';
+import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_FOR_MORE_THAN_MAX_PERIOD;
@@ -15,7 +15,7 @@ const get = (req: Request, res: Response) =>
   res.render(TEMPLATES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT, singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }));
 
 const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body);
+  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
     return res.render(TEMPLATES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT, {

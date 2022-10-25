@@ -1,10 +1,10 @@
 import { PAGE_VARIABLES, get, post } from '.';
-import { FIELDS, PAGES } from '../../../content-strings';
+import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../constants';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
-import generateValidationErrors from './validation';
+import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 
 describe('controllers/root/cookies', () => {
   let req: Request;
@@ -60,7 +60,7 @@ describe('controllers/root/cookies', () => {
           ...singleInputPageVariables(PAGE_VARIABLES),
           FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
           BACK_LINK: req.headers.referer,
-          validationErrors: generateValidationErrors(req.body),
+          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),
         });
       });
     });
