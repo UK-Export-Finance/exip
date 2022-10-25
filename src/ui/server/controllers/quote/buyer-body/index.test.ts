@@ -58,8 +58,7 @@ describe('controllers/quote/buyer-body', () => {
       await get(req, res);
 
       const expectedVariables = {
-        ...singleInputPageVariables(PAGE_VARIABLES),
-        BACK_LINK: req.headers.referer,
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
         submittedValues: req.session.submittedData,
       };
 
@@ -73,8 +72,7 @@ describe('controllers/quote/buyer-body', () => {
         await post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_BODY, {
-          ...singleInputPageVariables(PAGE_VARIABLES),
-          BACK_LINK: req.headers.referer,
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
           validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),
         });
       });

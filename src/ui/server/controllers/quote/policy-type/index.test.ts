@@ -1,6 +1,7 @@
 import { PAGE_VARIABLES, get, post } from '.';
-import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
+import corePageVariables from '../../../helpers/core-page-variables';
 import generateValidationErrors from './validation';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data';
 import { mockReq, mockRes, mockAnswers } from '../../../test-mocks';
@@ -22,14 +23,6 @@ describe('controllers/quote/policy-type', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        CONTENT_STRINGS: {
-          BUTTONS,
-          COOKIES_CONSENT,
-          LINKS,
-          FOOTER,
-          PRODUCT,
-          ...PAGES.QUOTE.POLICY_TYPE,
-        },
         FIELDS: {
           MULTI_POLICY_TYPE: {
             ID: FIELD_IDS.MULTI_POLICY_TYPE,
@@ -63,8 +56,8 @@ describe('controllers/quote/policy-type', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.POLICY_TYPE, {
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
         ...PAGE_VARIABLES,
-        BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData,
       });
     });
@@ -76,8 +69,8 @@ describe('controllers/quote/policy-type', () => {
         post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.POLICY_TYPE, {
+          ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
           ...PAGE_VARIABLES,
-          BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(req.body),
           submittedValues: req.body,
         });
@@ -89,8 +82,8 @@ describe('controllers/quote/policy-type', () => {
           post(req, res);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.POLICY_TYPE, {
+            ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
             ...PAGE_VARIABLES,
-            BACK_LINK: req.headers.referer,
             validationErrors: generateValidationErrors(req.body),
             submittedValues: req.body,
           });

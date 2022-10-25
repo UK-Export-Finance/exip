@@ -69,8 +69,7 @@ export const get = async (req: Request, res: Response) => {
   }
 
   return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
-    ...singleInputPageVariables(PAGE_VARIABLES),
-    BACK_LINK: getBackLink(req.headers.referer),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
     HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
     submittedValues: req.session.submittedData,
@@ -91,8 +90,7 @@ export const post = async (req: Request, res: Response) => {
 
   if (validationErrors) {
     return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
-      ...singleInputPageVariables(PAGE_VARIABLES),
-      BACK_LINK: getBackLink(req.headers.referer),
+      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
       HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
       countries: mappedCountries,
       validationErrors,

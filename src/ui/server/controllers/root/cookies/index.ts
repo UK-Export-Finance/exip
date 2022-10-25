@@ -13,13 +13,11 @@ const PAGE_VARIABLES = {
 
 const get = (req: Request, res: Response) => {
   // store the previous URL so that we can use this in the POST res.render.
-
   req.flash('previousUrl', req.headers.referer);
 
   return res.render(TEMPLATES.COOKIES, {
-    ...singleInputPageVariables(PAGE_VARIABLES),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
-    BACK_LINK: req.headers.referer,
     submittedValue: req.cookies.optionalCookies,
   });
 };
@@ -47,9 +45,8 @@ const post = (req: Request, res: Response) => {
   }
 
   return res.render(TEMPLATES.COOKIES, {
-    ...singleInputPageVariables(PAGE_VARIABLES),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: backLink }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
-    BACK_LINK: backLink,
     submittedValue: req.cookies.optionalCookies,
     showSuccessMessage: true,
     showSuccessMessageGoBackLink,

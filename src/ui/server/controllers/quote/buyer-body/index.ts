@@ -30,8 +30,7 @@ const mapAnswer = (answer: string) => {
 
 const get = (req: Request, res: Response) =>
   res.render(TEMPLATES.QUOTE.BUYER_BODY, {
-    ...singleInputPageVariables(PAGE_VARIABLES),
-    BACK_LINK: req.headers.referer,
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
     submittedValues: req.session.submittedData,
   });
 
@@ -40,8 +39,7 @@ const post = (req: Request, res: Response) => {
 
   if (validationErrors) {
     return res.render(TEMPLATES.QUOTE.BUYER_BODY, {
-      ...singleInputPageVariables(PAGE_VARIABLES),
-      BACK_LINK: req.headers.referer,
+      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
       validationErrors,
     });
   }

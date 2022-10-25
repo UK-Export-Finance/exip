@@ -1,6 +1,7 @@
 import get from '.';
-import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
+import corePageVariables from '../../../helpers/core-page-variables';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
@@ -17,15 +18,10 @@ describe('controllers/problem-with-service', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.PROBLEM_WITH_SERVICE, {
-        CONTENT_STRINGS: {
-          COOKIES_CONSENT,
-          FOOTER,
-          LINKS,
-          PRODUCT,
-          ...PAGES.PROBLEM_WITH_SERVICE_PAGE,
-        },
-      });
+      expect(res.render).toHaveBeenCalledWith(
+        TEMPLATES.PROBLEM_WITH_SERVICE,
+        corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.PROBLEM_WITH_SERVICE_PAGE, BACK_LINK: req.headers.referer }),
+      );
     });
   });
 });

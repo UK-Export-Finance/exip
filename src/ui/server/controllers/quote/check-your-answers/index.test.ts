@@ -1,8 +1,9 @@
-import { PAGE_VARIABLES, get, post } from '.';
-import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { get, post } from '.';
+import { PAGES } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../constants';
 import { mapAnswersToContent } from '../../../helpers/data-content-mappings/map-answers-to-content';
 import { answersSummaryList } from '../../../helpers/summary-lists/answers-summary-list';
+import corePageVariables from '../../../helpers/core-page-variables';
 import { mockAnswers, mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
@@ -37,23 +38,6 @@ describe('controllers/quote/check-your-answers', () => {
     res = mockRes();
   });
 
-  describe('PAGE_VARIABLES', () => {
-    it('should have correct properties', () => {
-      const expected = {
-        CONTENT_STRINGS: {
-          BUTTONS,
-          COOKIES_CONSENT,
-          FOOTER,
-          LINKS,
-          PRODUCT,
-          ...PAGES.QUOTE.CHECK_YOUR_ANSWERS,
-        },
-      };
-
-      expect(PAGE_VARIABLES).toEqual(expected);
-    });
-  });
-
   describe('get', () => {
     it('should render template', () => {
       get(req, res);
@@ -63,8 +47,7 @@ describe('controllers/quote/check-your-answers', () => {
       const expectedSummaryList = answersSummaryList(answers);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS, {
-        ...PAGE_VARIABLES,
-        BACK_LINK: req.headers.referer,
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.CHECK_YOUR_ANSWERS, BACK_LINK: req.headers.referer }),
         SUMMARY_LIST: expectedSummaryList,
       });
     });
