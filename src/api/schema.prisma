@@ -12,11 +12,188 @@ generator client {
   output   = "node_modules/.prisma/client"
 }
 
-model User {
-  id       String @id @default(cuid())
-  name     String @default("")
-  email    String @unique @default("")
-  password String
+model ReferenceNumber {
+  id            Int          @id @default(autoincrement())
+  application   Application? @relation("ReferenceNumber_application", fields: [applicationId], references: [id])
+  applicationId String?      @map("application")
+
+  @@index([applicationId])
+}
+
+model Application {
+  id                                         String                      @id @default(cuid())
+  createdBy                                  Exporter?                   @relation("Application_createdBy", fields: [createdById], references: [id])
+  createdById                                String?                     @map("createdBy")
+  createdAt                                  DateTime?
+  updatedAt                                  DateTime?
+  referenceNumber                            Int?
+  submissionDeadline                         DateTime?
+  submissionType                             String?                     @default("Manual Inclusion Application")
+  eligibility                                Eligibility?                @relation("Application_eligibility", fields: [eligibilityId], references: [id])
+  eligibilityId                              String?                     @map("eligibility")
+  exporter                                   Exporter?                   @relation("Application_exporter", fields: [exporterId], references: [id])
+  exporterId                                 String?                     @map("exporter")
+  from_ReferenceNumber_application           ReferenceNumber[]           @relation("ReferenceNumber_application")
+  from_ExporterBuyerRelationship_application ExporterBuyerRelationship[] @relation("ExporterBuyerRelationship_application")
+  from_ExporterCompany_application           ExporterCompany[]           @relation("ExporterCompany_application")
+  from_Eligibility_application               Eligibility[]               @relation("Eligibility_application")
+
+  @@index([createdById])
+  @@index([referenceNumber])
+  @@index([eligibilityId])
+  @@index([exporterId])
+}
+
+model BuyerIndividual {
+  id                                             String                      @id @default(cuid())
+  firstName                                      String                      @default("")
+  lastName                                       String                      @default("")
+  address                                        BuyerAddress?               @relation("BuyerIndividual_address", fields: [addressId], references: [id])
+  addressId                                      String?                     @map("address")
+  from_ExporterBuyerRelationship_buyerIndividual ExporterBuyerRelationship[] @relation("ExporterBuyerRelationship_buyerIndividual")
+
+  @@index([addressId])
+}
+
+model BuyerContact {
+  id                                        String                        @id @default(cuid())
+  company                                   BuyerCompany?                 @relation("BuyerContact_company", fields: [companyId], references: [id])
+  companyId                                 String?                       @map("company")
+  firstName                                 String                        @default("")
+  lastName                                  String                        @default("")
+  email                                     String                        @unique @default("")
+  position                                  String                        @default("")
+  from_ExporterBuyerCompanyContact_contacts ExporterBuyerCompanyContact[] @relation("ExporterBuyerCompanyContact_contacts")
+
+  @@index([companyId])
+}
+
+model BuyerCompany {
+  id                                          String                      @id @default(cuid())
+  address                                     BuyerAddress?               @relation("BuyerCompany_address", fields: [addressId], references: [id])
+  addressId                                   String?                     @map("address")
+  registrationNumber                          String                      @default("")
+  websiteUrl                                  String                      @default("")
+  from_BuyerContact_company                   BuyerContact[]              @relation("BuyerContact_company")
+  from_ExporterBuyerRelationship_buyerCompany ExporterBuyerRelationship[] @relation("ExporterBuyerRelationship_buyerCompany")
+
+  @@index([addressId])
+}
+
+model BuyerAddress {
+  id                           String            @id @default(cuid())
+  address                      String            @default("")
+  country                      Country?          @relation("BuyerAddress_country", fields: [countryId], references: [id])
+  countryId                    String?           @map("country")
+  from_BuyerIndividual_address BuyerIndividual[] @relation("BuyerIndividual_address")
+  from_BuyerCompany_address    BuyerCompany[]    @relation("BuyerCompany_address")
+
+  @@index([countryId])
+}
+
+model ExporterBuyerCompanyContact {
+  id       String         @id @default(cuid())
+  contacts BuyerContact[] @relation("ExporterBuyerCompanyContact_contacts")
+}
+
+model ExporterBuyerRelationship {
+  id                                 String           @id @default(cuid())
+  application                        Application?     @relation("ExporterBuyerRelationship_application", fields: [applicationId], references: [id])
+  applicationId                      String?          @map("application")
+  exporter                           Exporter?        @relation("ExporterBuyerRelationship_exporter", fields: [exporterId], references: [id])
+  exporterId                         String?          @map("exporter")
+  buyerCompany                       BuyerCompany?    @relation("ExporterBuyerRelationship_buyerCompany", fields: [buyerCompanyId], references: [id])
+  buyerCompanyId                     String?          @map("buyerCompany")
+  buyerIndividual                    BuyerIndividual? @relation("ExporterBuyerRelationship_buyerIndividual", fields: [buyerIndividualId], references: [id])
+  buyerIndividualId                  String?          @map("buyerIndividual")
+  connectedWithBuyer                 Boolean          @default(false)
+  ukefCanDiscloseExporterNameToBuyer Boolean          @default(false)
+  tradedWithBuyerBefore              Boolean          @default(false)
+
+  @@index([applicationId])
+  @@index([exporterId])
+  @@index([buyerCompanyId])
+  @@index([buyerIndividualId])
+}
+
+model ExporterCompany {
+  id                                  String                   @id @default(cuid())
+  application                         Application?             @relation("ExporterCompany_application", fields: [applicationId], references: [id])
+  applicationId                       String?                  @map("application")
+  registrationNumber                  Int?
+  exporter                            Exporter?                @relation("ExporterCompany_exporter", fields: [exporterId], references: [id])
+  exporterId                          String?                  @map("exporter")
+  address                             ExporterCompanyAddress?  @relation("ExporterCompany_address", fields: [addressId], references: [id])
+  addressId                           String?                  @map("address")
+  from_ExporterCompanyAddress_company ExporterCompanyAddress[] @relation("ExporterCompanyAddress_company")
+  from_Exporter_company               Exporter[]               @relation("Exporter_company")
+
+  @@index([applicationId])
+  @@index([exporterId])
+  @@index([addressId])
+}
+
+model TEST_table_name {
+  id      String @id @default(cuid())
+  testing String @default("")
+}
+
+model ExporterCompanyAddress {
+  id                           String            @id @default(cuid())
+  company                      ExporterCompany?  @relation("ExporterCompanyAddress_company", fields: [companyId], references: [id])
+  companyId                    String?           @map("company")
+  line1                        String            @default("")
+  line2                        String            @default("")
+  line3                        String            @default("")
+  townOrCity                   String            @default("")
+  county                       String            @default("")
+  country                      Country?          @relation("ExporterCompanyAddress_country", fields: [countryId], references: [id])
+  countryId                    String?           @map("country")
+  from_ExporterCompany_address ExporterCompany[] @relation("ExporterCompany_address")
+
+  @@index([companyId])
+  @@index([countryId])
+}
+
+model Eligibility {
+  id                             String        @id @default(cuid())
+  application                    Application?  @relation("Eligibility_application", fields: [applicationId], references: [id])
+  applicationId                  String?       @map("application")
+  validBuyerBody                 Boolean       @default(false)
+  validCompanyBase               Boolean       @default(false)
+  buyerCountry                   Country?      @relation("Eligibility_buyerCountry", fields: [buyerCountryId], references: [id])
+  buyerCountryId                 String?       @map("buyerCountry")
+  hasMinimumUkGoodsOrServices    Boolean       @default(false)
+  buyerPaymentDepedencyTOCONFIRM Boolean       @default(false)
+  from_Application_eligibility   Application[] @relation("Application_eligibility")
+
+  @@index([applicationId])
+  @@index([buyerCountryId])
+}
+
+model Country {
+  id                                  String                   @id @default(cuid())
+  name                                String                   @unique @default("")
+  isoCode                             String                   @unique @default("")
+  from_BuyerAddress_country           BuyerAddress[]           @relation("BuyerAddress_country")
+  from_ExporterCompanyAddress_country ExporterCompanyAddress[] @relation("ExporterCompanyAddress_country")
+  from_Eligibility_buyerCountry       Eligibility[]            @relation("Eligibility_buyerCountry")
+}
+
+model Exporter {
+  id                                      String                      @id @default(cuid())
+  applications                            Application[]               @relation("Application_createdBy")
+  company                                 ExporterCompany?            @relation("Exporter_company", fields: [companyId], references: [id])
+  companyId                               String?                     @map("company")
+  firstName                               String                      @default("")
+  lastName                                String                      @default("")
+  email                                   String                      @unique @default("")
+  password                                String
+  from_Application_exporter               Application[]               @relation("Application_exporter")
+  from_ExporterBuyerRelationship_exporter ExporterBuyerRelationship[] @relation("ExporterBuyerRelationship_exporter")
+  from_ExporterCompany_exporter           ExporterCompany[]           @relation("ExporterCompany_exporter")
+
+  @@index([companyId])
 }
 
 model Page {
@@ -24,4 +201,11 @@ model Page {
   heading   String @default("")
   metaTitle String @default("")
   content   Json   @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+}
+
+model User {
+  id       String @id @default(cuid())
+  name     String @default("")
+  email    String @unique @default("")
+  password String
 }
