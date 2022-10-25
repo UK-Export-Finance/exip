@@ -103,10 +103,9 @@ context('Insurance - start page', () => {
   });
 
   it('renders a start now button', () => {
-    submitButton();
-    button.should('exist');
+    submitButton().should('exist');
 
-    button.invoke('text').then((text) => {
+    submitButton().invoke('text').then((text) => {
       expect(text.trim()).equal(BUTTONS.START_NOW);
     });
   });
