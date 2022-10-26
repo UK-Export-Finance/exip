@@ -39,14 +39,14 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
-    });
-  });
+  // it('passes the audits', () => {
+  //   cy.lighthouse({
+  //     accessibility: 100,
+  //     performance: 75,
+  //     'best-practices': 100,
+  //     seo: 70,
+  //   });
+  // });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
