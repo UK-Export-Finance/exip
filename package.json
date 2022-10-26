@@ -12,8 +12,8 @@
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "postinstall": "husky install",
     "prepublishOnly": "npm run build",
-    "lint": "eslint --ext .ts src/",
-    "lint:fix": "prettier --write src/ && eslint --ext .ts src/ --fix",
+    "lint": "eslint --ext .ts src/ui",
+    "lint:fix": "prettier --write src/ui && eslint --ext .ts src/ui --fix",
     "prepare": "husky install"
   },
   "repository": {

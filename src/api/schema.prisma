@@ -12,11 +12,24 @@ generator client {
   output   = "node_modules/.prisma/client"
 }
 
-model User {
-  id       String @id @default(cuid())
-  name     String @default("")
-  email    String @unique @default("")
-  password String
+model ReferenceNumber {
+  id            Int          @id @default(autoincrement())
+  application   Application? @relation("ReferenceNumber_application", fields: [applicationId], references: [id])
+  applicationId String?      @map("application")
+
+  @@index([applicationId])
+}
+
+model Application {
+  id                               String            @id @default(cuid())
+  createdAt                        DateTime?
+  updatedAt                        DateTime?
+  referenceNumber                  Int?
+  submissionDeadline               DateTime?
+  submissionType                   String?           @default("Manual Inclusion Application")
+  from_ReferenceNumber_application ReferenceNumber[] @relation("ReferenceNumber_application")
+
+  @@index([referenceNumber])
 }
 
 model Page {
@@ -24,4 +37,11 @@ model Page {
   heading   String @default("")
   metaTitle String @default("")
   content   Json   @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+}
+
+model User {
+  id       String @id @default(cuid())
+  name     String @default("")
+  email    String @unique @default("")
+  password String
 }

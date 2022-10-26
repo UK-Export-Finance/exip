@@ -22,3 +22,14 @@ services:
       - MULESOFT_API_MDM_EA_SECRET
       - GOOGLE_ANALYTICS_ID
     entrypoint: npx nodemon src/index.ts -L
+  api:
+    build: ./src/api
+    image: exip/src/api
+    restart: always
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./api/src:/app/src:ro
+    environment:
+      - PORT=5005
+    entrypoint: npx nodemon src/index.js -L

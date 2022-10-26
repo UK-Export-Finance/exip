@@ -24,12 +24,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: '16'
       - name: Linting
         working-directory: ./src/ui
         run: |
+          npm install --legacy-peer-deps
+          cd ../api
           npm install --legacy-peer-deps
           cd ../../
           npm install --legacy-peer-deps
@@ -50,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: '16'
       - name: Unit tests
