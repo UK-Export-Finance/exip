@@ -1,5 +1,5 @@
 import { PAGE_VARIABLES, get, post } from '.';
-import { PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
+import { PAGES, UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/single-input-page-variables';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
@@ -21,6 +21,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
         FIELD_ID: FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
         PAGE_CONTENT_STRINGS: {
           ...PAGES.UK_GOODS_OR_SERVICES,
+          UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
           UK_GOODS_AND_SERVICES_DESCRIPTION,
         },
       };

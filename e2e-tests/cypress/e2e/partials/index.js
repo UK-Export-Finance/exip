@@ -1,10 +1,12 @@
 import cookieBanner from './cookieBanner';
 import footer from './footer';
 import phaseBanner from './phaseBanner';
+import ukGoodsOrServicesCalculateDescription from './ukGoodsOrServicesCalculateDescription';
 import ukGoodsOrServicesDescription from './ukGoodsAndServicesDescription';
 
 const partials = {
   backLink: () => cy.get('[data-cy="back-link"]'),
+  ukGoodsOrServicesCalculateDescription,
   cookieBanner,
   errorSummaryListItems: () => cy.get('.govuk-error-summary li'),
   errorSummaryListItemLinks: () => cy.get('.govuk-error-summary li a'),

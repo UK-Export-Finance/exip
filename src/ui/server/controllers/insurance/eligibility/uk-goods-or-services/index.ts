@@ -1,4 +1,4 @@
-import { PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
+import { PAGES, UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/single-input-page-variables';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
@@ -10,6 +10,7 @@ const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: {
     ...PAGES.UK_GOODS_OR_SERVICES,
+    UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
     UK_GOODS_AND_SERVICES_DESCRIPTION,
   },
 };

@@ -50,7 +50,25 @@
       </div>
     </div>
 
-    {% set detailsHtml %}
+    {% set calculateContractValuePercentageHtml %}
+      {% include "partials/uk-goods-and-services-calculate-description.njk" %}
+    {% endset %}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {{ govukDetails({
+          summaryText: CONTENT_STRINGS.CALCULATE_CONTRACT_VALUE_PERCENTAGE.INTRO,
+          html: calculateContractValuePercentageHtml,
+          attributes: {
+            "data-cy": "goods-and-services-calculate"
+          }
+        }) }}
+
+      </div>
+    </div>
+
+    {% set ukGoodsAndServicesHtml %}
       {% include "partials/uk-goods-and-services-description.njk" %}
     {% endset %}
 
@@ -59,7 +77,7 @@
 
         {{ govukDetails({
           summaryText: CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.INTRO,
-          html: detailsHtml,
+          html: ukGoodsAndServicesHtml,
           attributes: {
             "data-cy": "goods-services"
           }
