@@ -30,6 +30,7 @@
     "@keystone-6/fields-document": "^4.0.0",
     "date-fns": "^2.29.3",
     "dotenv": "16.0.2",
+    "notifications-node-client": "^5.2.0",
     "typescript": "^4.7.4"
   },
   "devDependencies": {
