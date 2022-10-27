@@ -44,7 +44,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
   it('renders a specific reason', () => {
     cannotApplyPage.reason().invoke('text').then((text) => {
       console.log('-- CONTENT_STRINGS', CONTENT_STRINGS);
-      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.WANT_COVER_OVER_MAX_PERIOD}`;
+      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.WANT_COVER_OVER_MAX_AMOUNT}`;
 
       expect(text.trim()).equal(expected);
     });

@@ -1,17 +1,18 @@
-import { buyerCountryPage, heading, submitButton } from '../../../pages/shared';
+import { heading, yesRadio, noRadio } from '../../../pages/shared';
 import { insurance } from '../../../pages';
 import partials from '../../../partials';
 import { LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM;
 const { ACTIONS } = CONTENT_STRINGS;
 
-const { FIELD_IDS, ROUTES } = CONSTANTS;
+const { ROUTES } = CONSTANTS;
 
 const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
 
-context('Insurance Eligibility - apply offline exit page', () => {
+context('Insurance Eligibility - speak to UKEF EFM exit page', () => {
   beforeEach(() => {
     cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
       auth: {
@@ -20,16 +21,21 @@ context('Insurance Eligibility - apply offline exit page', () => {
       },
     });
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
+    completeAndSubmitBuyerCountryForm();
 
-    buyerCountryPage.searchInput().type(COUNTRY_NAME_APPLY_OFFLINE_ONLY);
-
-    const results = buyerCountryPage.results();
-    results.first().click();
-
+    yesRadio().click();
     submitButton().click();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
+    yesRadio().click();
+    submitButton().click();
+
+    noRadio().click();
+    submitButton().click();
+
+    yesRadio().click();
+    submitButton().click();
+
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM);
   });
 
   it('passes the audits', () => {
@@ -55,11 +61,12 @@ context('Insurance Eligibility - apply offline exit page', () => {
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
+
     partials.backLink().invoke('text').then((text) => {
       expect(text.trim()).equal(LINKS.BACK);
     });
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
+    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`;
 
     partials.backLink().should('have.attr', 'href', expected);
   });
@@ -73,27 +80,21 @@ context('Insurance Eligibility - apply offline exit page', () => {
     });
   });
 
-  it('renders `download form` copy with link', () => {
-    insurance.eligibility.applyOfflinePage.downloadFormCopy().invoke('text').then((text) => {
-      const expected = `${ACTIONS.DOWNLOAD_FORM.LINK.TEXT} ${ACTIONS.DOWNLOAD_FORM.TEXT}`;
+  it('renders `find your nearest EFM` copy with link', () => {
+    insurance.eligibility.speakToUkefEfmPage.action.text().invoke('text').then((text) => {
+      const expected = `${ACTIONS.FIND_EFM[0][0].text} ${ACTIONS.FIND_EFM[0][1].text}${ACTIONS.FIND_EFM[0][2].text}`;
 
       expect(text.trim()).equal(expected);
     });
 
-    insurance.eligibility.applyOfflinePage.downloadFormLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(ACTIONS.DOWNLOAD_FORM.LINK.TEXT);
-    });
-
-    insurance.eligibility.applyOfflinePage.downloadFormLink().should('have.attr', 'href', ACTIONS.DOWNLOAD_FORM.LINK.HREF);
-  });
-
-  it('renders `contact` copy with link', () => {
-    insurance.eligibility.applyOfflinePage.contactCopy().invoke('text').then((text) => {
-      const expected = `${ACTIONS.CONTACT.TEXT} ${ACTIONS.CONTACT.LINK.TEXT}`;
+    insurance.eligibility.speakToUkefEfmPage.action.link().invoke('text').then((text) => {
+      const expected = `${ACTIONS.FIND_EFM[0][1].text}`;
 
       expect(text.trim()).equal(expected);
     });
 
-    insurance.eligibility.applyOfflinePage.contactLink().should('have.attr', 'href', ACTIONS.CONTACT.LINK.HREF);
+    const expectedHref = ACTIONS.FIND_EFM[0][1].href;
+
+    insurance.eligibility.speakToUkefEfmPage.action.link().should('have.attr', 'href', expectedHref);
   });
 });

@@ -122,7 +122,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_FOR_MORE_THAN_MAX_PERIOD].IS_EMPTY;
+        const expectedMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT].IS_EMPTY;
 
         partials.errorSummaryListItems().first().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedMessage);
@@ -142,11 +142,11 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     });
 
     describe('when submitting the answer as `no`', () => {
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.WANT_INSURANCE_OVER_MAX_PERIOD}`, () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {
         noRadio().click();
         submitButton().click();
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.WANT_INSURANCE_OVER_MAX_PERIOD}`;
+        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`;
 
         cy.url().should('eq', expected);
       });
