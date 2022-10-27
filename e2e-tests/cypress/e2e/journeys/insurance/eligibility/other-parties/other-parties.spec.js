@@ -1,4 +1,4 @@
-import { exporterLocationPage, ukGoodsOrServicesPage, heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../../pages/shared';
+import { heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import {
@@ -111,6 +111,48 @@ context('Insurance - Other parties page - I want to check if I can use online se
 
     noRadio().invoke('text').then((text) => {
       expect(text.trim()).equal('No');
+    });
+  });
+
+  describe('expandable details', () => {
+    it('renders summary text', () => {
+      insurance.eligibility.otherPartiesPage.description.summary().should('exist');
+
+      insurance.eligibility.otherPartiesPage.description.summary().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.INTRO);
+      });
+    });
+
+    it('clicking summary text reveals details', () => {
+      insurance.eligibility.otherPartiesPage.description.summary().click();
+
+      insurance.eligibility.otherPartiesPage.description.list.intro().should('be.visible');
+    });
+
+    it('renders expanded content', () => {
+      insurance.eligibility.otherPartiesPage.description.list.intro().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST_INTRO);
+      });
+
+      insurance.eligibility.otherPartiesPage.description.list.item1().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[0].TEXT);
+      });
+
+      insurance.eligibility.otherPartiesPage.description.list.item2().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[1].TEXT);
+      });
+
+      insurance.eligibility.otherPartiesPage.description.list.item3().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[2].TEXT);
+      });
+
+      insurance.eligibility.otherPartiesPage.description.list.item4().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[3].TEXT);
+      });
+
+      insurance.eligibility.otherPartiesPage.description.list.item5().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[4].TEXT);
+      });
     });
   });
 

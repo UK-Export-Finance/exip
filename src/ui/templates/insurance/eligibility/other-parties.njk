@@ -1,6 +1,7 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 {% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
@@ -44,6 +45,35 @@
           heading: CONTENT_STRINGS.HEADING,
           submittedAnswer: submittedValues[FIELD_ID],
           errorMessage: validationErrors.errorList[FIELD_ID]
+        }) }}
+
+      </div>
+    </div>
+
+
+    {% set detailsHtml %}
+      <p data-cy="other-parties-list-intro">{{ CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST_INTRO }}</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+
+        {% for item in CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST %}
+          <li data-cy="other-parties-list-item-{{ loop.index }}">
+            {{ item.TEXT }}
+          </li>
+        {% endfor %}
+
+      </ul>
+    {% endset %}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {{ govukDetails({
+          summaryText: CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.INTRO,
+          html: detailsHtml,
+          attributes: {
+            "data-cy": "other-parties"
+          }
         }) }}
 
       </div>

@@ -74,6 +74,27 @@ const INSURED_PERIOD = {
 const OTHER_PARTIES_INVOLVED = {
   PAGE_TITLE: 'Are there any other parties involved, apart from you and the buyer?',
   HEADING: 'Are there any other parties involved, apart from you and the buyer?',
+  OTHER_PARTIES_DESCRIPTION: {
+    INTRO: 'What counts as another party?',
+    LIST_INTRO: 'This includes any:',
+    LIST: [
+      {
+        TEXT: 'agents or third parties',
+      },
+      {
+        TEXT: "companies who'll be jointly insured on the policy",
+      },
+      {
+        TEXT: "'loss payees' who'll be paid in the event of a claim",
+      },
+      {
+        TEXT: "other parties in your buyer's supply chain, who your buyer will depend on for payment before they can pay you - for example, an end-buyer",
+      },
+      {
+        TEXT: "consortium or group you're involved in that has a significant role in these exports",
+      },
+    ],
+  },
 };
 
 export default {
