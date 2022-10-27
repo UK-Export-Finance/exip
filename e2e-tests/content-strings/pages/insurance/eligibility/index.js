@@ -14,6 +14,7 @@ const APPLY_OFFLINE = {
   REASON: {
     INTRO: 'This is because',
     WANT_COVER_OVER_MAX_AMOUNT: `you want to be insured for more than ${MAX_COVER_AMOUNT} and we need to make extra checks.`,
+    OTHER_PARTIES_INVOLVED: 'there are other parties involved in your exports and we need to make extra checks.',
   },
   ACTIONS: {
     DOWNLOAD_FORM: {
@@ -74,10 +75,16 @@ const INSURED_PERIOD = {
   HEADING: `Do you want to be insured for longer than ${PRODUCT.MAX_COVER_PERIOD_YEARS} years?`,
 };
 
+const OTHER_PARTIES_INVOLVED = {
+  PAGE_TITLE: 'Are there any other parties involved, apart from you and the buyer?',
+  HEADING: 'Are there any other parties involved, apart from you and the buyer?',
+};
+
 module.exports = {
   APPLY_OFFLINE,
   SPEAK_TO_UKEF_EFM,
   CHECK_IF_ELIGIBLE,
   INSURED_AMOUNT,
   INSURED_PERIOD,
+  OTHER_PARTIES_INVOLVED,
 };

@@ -1,4 +1,4 @@
-import { cannotApplyPage, exporterLocationPage, ukGoodsOrServicesPage, yesRadio, submitButton } from '../../../../pages/shared';
+import { cannotApplyPage, exporterLocationPage, ukGoodsOrServicesPage, yesRadio, noRadio, submitButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
@@ -25,6 +25,12 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     yesRadio().click();
     submitButton().click();
 
+    noRadio().click();
+    submitButton().click();
+
+    noRadio().click();
+    submitButton().click();
+
     yesRadio().click();
     submitButton().click();
   });
@@ -36,14 +42,14 @@ context('Insurance - Insured amount page - I want to check if I can use online s
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`;
+    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED}`;
 
     partials.backLink().should('have.attr', 'href', expectedUrl);
   });
 
   it('renders a specific reason', () => {
     cannotApplyPage.reason().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.WANT_COVER_OVER_MAX_AMOUNT}`;
+      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.OTHER_PARTIES_INVOLVED}`;
 
       expect(text.trim()).equal(expected);
     });

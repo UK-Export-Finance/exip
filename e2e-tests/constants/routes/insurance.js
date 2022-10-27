@@ -13,6 +13,8 @@ const INSURANCE_ROUTES = {
     UK_GOODS_OR_SERVICES: `${INSURANCE}${ELIGIBILITY}/uk-goods-services`,
     INSURED_AMOUNT: `${INSURANCE}${ELIGIBILITY}/insured-amount`,
     INSURED_PERIOD: `${INSURANCE}${ELIGIBILITY}/insured-over-2-years`,
+    OTHER_PARTIES_INVOLVED: `${INSURANCE}${ELIGIBILITY}/other-parties`,
+    LETTER_OF_CREDIT: `${INSURANCE}${ELIGIBILITY}/letter-of-credit`,
   },
 };
 

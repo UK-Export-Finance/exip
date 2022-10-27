@@ -55,6 +55,9 @@ const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: {
         IS_EMPTY: `Select whether you want to be insured for longer than ${PRODUCT.MAX_COVER_PERIOD_YEARS} years`,
       },
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED]: {
+        IS_EMPTY: 'Select whether there are any other parties involved, apart from you and the buyer',
+      },
     },
   },
 };
