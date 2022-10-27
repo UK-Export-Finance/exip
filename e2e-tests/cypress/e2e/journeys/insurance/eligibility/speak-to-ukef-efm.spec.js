@@ -1,4 +1,4 @@
-import { heading, yesRadio, noRadio } from '../../../pages/shared';
+import { heading, yesRadio, noRadio, submitButton } from '../../../pages/shared';
 import { insurance } from '../../../pages';
 import partials from '../../../partials';
 import { LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
