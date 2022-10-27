@@ -15,7 +15,7 @@ const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 const COUNTRY_NAME_UNSUPPORTED = 'France';
 
-context('Cannot apply exit page', () => {
+context('Insurance Eligibility - Cannot apply exit page', () => {
   beforeEach(() => {
     cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
       auth: {

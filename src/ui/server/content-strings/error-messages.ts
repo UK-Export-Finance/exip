@@ -49,8 +49,11 @@ export const ERROR_MESSAGES = {
   [FIELD_IDS.OPTIONAL_COOKIES]: 'Select whether you want to accept analytics cookies',
   INSURANCE: {
     ELIGIBILITY: {
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_FOR_MORE_THAN_MAX_PERIOD]: {
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT]: {
         IS_EMPTY: `Select whether you want to be insured for ${MAX_COVER_AMOUNT} or more`,
+      },
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: {
+        IS_EMPTY: `Select whether you want to be insured for longer than ${PRODUCT.MAX_COVER_PERIOD_YEARS} years`,
       },
     },
   },

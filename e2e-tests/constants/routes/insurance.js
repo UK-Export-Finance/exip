@@ -8,10 +8,11 @@ const INSURANCE_ROUTES = {
     BUYER_COUNTRY: `${INSURANCE}${ELIGIBILITY}/buyer-location`,
     CANNOT_APPLY: `${INSURANCE}${ELIGIBILITY}/cannot-apply`,
     APPLY_OFFLINE: `${INSURANCE}${ELIGIBILITY}/apply-using-our-form`,
+    SPEAK_TO_UKEF_EFM: `${INSURANCE}${ELIGIBILITY}/speak-to-UKEF-EFM`,
     EXPORTER_LOCATION: `${INSURANCE}${ELIGIBILITY}/exporter-location`,
     UK_GOODS_OR_SERVICES: `${INSURANCE}${ELIGIBILITY}/uk-goods-services`,
     INSURED_AMOUNT: `${INSURANCE}${ELIGIBILITY}/insured-amount`,
-    WANT_INSURANCE_OVER_MAX_PERIOD: `${INSURANCE}${ELIGIBILITY}/insured-over-2-years`,
+    INSURED_PERIOD: `${INSURANCE}${ELIGIBILITY}/insured-over-2-years`,
   },
 };
 

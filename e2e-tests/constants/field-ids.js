@@ -25,7 +25,7 @@ const FIELD_IDS = {
   },
   INSURANCE: {
     ELIGIBILITY: {
-      WANT_COVER_FOR_MORE_THAN_MAX_PERIOD: 'wantCoverForMoreThanMaxPeriod',
+      WANT_COVER_OVER_MAX_AMOUNT: 'wantCoverForMoreThanMaxPeriod',
     },
   },
 };

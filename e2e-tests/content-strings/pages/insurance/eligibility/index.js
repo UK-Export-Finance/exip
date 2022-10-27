@@ -13,7 +13,7 @@ const APPLY_OFFLINE = {
   HEADING: 'You need to apply using our form',
   REASON: {
     INTRO: 'This is because',
-    WANT_COVER_OVER_MAX_PERIOD: `you want to be insured for more than ${MAX_COVER_AMOUNT} and we need to make extra checks.`,
+    WANT_COVER_OVER_MAX_AMOUNT: `you want to be insured for more than ${MAX_COVER_AMOUNT} and we need to make extra checks.`,
   },
   ACTIONS: {
     DOWNLOAD_FORM: {
@@ -33,6 +33,31 @@ const APPLY_OFFLINE = {
   },
 };
 
+const SPEAK_TO_UKEF_EFM = {
+  PAGE_TITLE: 'You need to speak with a UKEF export finance manager',
+  HEADING: 'You need to speak with a UKEF export finance manager',
+  REASON: {
+    INTRO: 'This is because',
+    WANT_COVER_OVER_MAX_PERIOD: `you want to be insured for longer than ${PRODUCT.MAX_COVER_PERIOD_YEARS} years.`,
+  },
+  ACTIONS: {
+    FIND_EFM: [
+      [
+        {
+          text: 'Find ',
+        },
+        {
+          text: 'your nearest export finance manager',
+          href: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
+        },
+        {
+          text: ' to discuss this.',
+        },
+      ],
+    ],
+  },
+};
+
 const CHECK_IF_ELIGIBLE = {
   PAGE_TITLE: 'Check you can apply for UKEF insurance for your export',
   HEADING: 'Check you can apply for UKEF insurance for your export',
@@ -44,8 +69,15 @@ const INSURED_AMOUNT = {
   HEADING: `Do you want to be insured for ${MAX_COVER_AMOUNT} or more?`,
 };
 
+const INSURED_PERIOD = {
+  PAGE_TITLE: `Do you want to be insured for longer than ${PRODUCT.MAX_COVER_PERIOD_YEARS} years?`,
+  HEADING: `Do you want to be insured for longer than ${PRODUCT.MAX_COVER_PERIOD_YEARS} years?`,
+};
+
 module.exports = {
   APPLY_OFFLINE,
+  SPEAK_TO_UKEF_EFM,
   CHECK_IF_ELIGIBLE,
   INSURED_AMOUNT,
+  INSURED_PERIOD,
 };
