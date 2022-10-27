@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.3](https://github.com/UK-Export-Finance/exip/compare/v1.14.2...v1.14.3) (2022-10-27)
+
+
+### Bug Fixes
+
+* **EMS-379:** fix issue where buyer country would not update when JS is disabled ([#141](https://github.com/UK-Export-Finance/exip/issues/141)) ([397378b](https://github.com/UK-Export-Finance/exip/commit/397378b18638f8a14e579437a0a4ad966c2bfb8e))
+
 ## [1.14.2](https://github.com/UK-Export-Finance/exip/compare/v1.14.1...v1.14.2) (2022-10-20)
 
 
