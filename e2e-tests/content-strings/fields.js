@@ -3,17 +3,15 @@ const FIELD_VALUES = require('../constants/field-values');
 const LINKS = require('./links');
 
 const FIELDS = {
-  [FIELD_IDS.COUNTRY]: {
+  [FIELD_IDS.BUYER_COUNTRY]: {
     HINT: 'Cover is based on the country your buyer is located in, not the destination of your goods or services.',
+    SUMMARY: {
+      TITLE: 'Buyer is based in',
+    },
   },
   [FIELD_IDS.VALID_COMPANY_BASE]: {
     SUMMARY: {
       TITLE: 'Your company',
-    },
-  },
-  [FIELD_IDS.BUYER_COUNTRY]: {
-    SUMMARY: {
-      TITLE: 'Buyer is based in',
     },
   },
   [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {

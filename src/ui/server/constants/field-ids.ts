@@ -3,7 +3,6 @@ export const FIELD_IDS = {
   VALID_BUYER_BODY: 'validBuyerBody',
   VALID_COMPANY_BASE: 'validCompanyBase',
   BUYER_COUNTRY: 'buyerCountry',
-  COUNTRY: 'country',
   HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',
   AMOUNT_CURRENCY: 'amountAndCurrency',
   CURRENCY: 'currency',

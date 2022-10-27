@@ -58,7 +58,7 @@ describe('controllers/quote/buyer-country', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.COUNTRY,
+        FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
         PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY_PAGE,
       };
 
@@ -131,7 +131,6 @@ describe('controllers/quote/buyer-country', () => {
       const expectedVariables = {
         ...singleInputPageVariables(PAGE_VARIABLES),
         BACK_LINK: getBackLink(req.headers.referer),
-        HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
         countries: mapCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData,
         isChangeRoute: isChangeRoute(req.originalUrl),
@@ -151,7 +150,6 @@ describe('controllers/quote/buyer-country', () => {
         const expectedVariables = {
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: getBackLink(req.headers.referer),
-          HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
           countries: expectedCountries,
           submittedValues: req.session.submittedData,
           isChangeRoute: isChangeRoute(req.originalUrl),
@@ -214,7 +212,6 @@ describe('controllers/quote/buyer-country', () => {
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_COUNTRY, {
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: getBackLink(req.headers.referer),
-          HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
           countries: mapCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),
           isChangeRoute: isChangeRoute(req.originalUrl),
@@ -335,15 +332,14 @@ describe('controllers/quote/buyer-country', () => {
       });
     });
 
-    describe(`when the country is supported for an online quote, submitted with ${FIELD_IDS.COUNTRY} (no JS) and there are no validation errors`, () => {
+    describe(`when the country is supported for an online quote, submitted with ${FIELD_IDS.BUYER_COUNTRY} (no JS) and there are no validation errors`, () => {
       const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
       const mappedCountries = mapCountries(mockCountriesResponse);
 
       const selectedCountry = getCountryByName(mappedCountries, selectedCountryName);
 
       const validBody = {
-        [FIELD_IDS.BUYER_COUNTRY]: '',
-        [FIELD_IDS.COUNTRY]: selectedCountryName,
+        [FIELD_IDS.BUYER_COUNTRY]: selectedCountryName,
       };
 
       beforeEach(() => {

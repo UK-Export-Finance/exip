@@ -53,7 +53,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
   it('renders a hint', () => {
     buyerCountryPage.hint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_IDS.COUNTRY].HINT);
+      expect(text.trim()).equal(FIELDS[FIELD_IDS.BUYER_COUNTRY].HINT);
     });
   });
 
@@ -97,22 +97,6 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       results.should('have.length.greaterThan', 1);
     });
 
-    it('adds the country name to a hidden input value after searching', () => {
-      buyerCountryPage.searchInput().type('Algeria');
-
-      const noResults = buyerCountryPage.noResults();
-      noResults.should('not.exist');
-
-      const results = buyerCountryPage.results();
-
-      // select the first result (Algeria)
-      results.first().click();
-
-      // check hidden input value
-      const expectedValue = 'Algeria';
-      buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
-    });
-
     it('allows user to remove a selected country and search again', () => {
       buyerCountryPage.searchInput().type('Algeria');
       const results = buyerCountryPage.results();
@@ -126,9 +110,12 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       // search for a different country, submit with enter key
       buyerCountryPage.searchInput().type('Brazil{enter}');
 
-      // check hidden input value
+      // check selected value in autocomplete 
       const expectedValue = 'Brazil';
-      buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
+
+      buyerCountryPage.results().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedValue);
+      });
     });
   });
 

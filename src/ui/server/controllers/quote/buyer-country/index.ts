@@ -11,7 +11,7 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data';
 import { Request, Response } from '../../../../types';
 
 export const PAGE_VARIABLES = {
-  FIELD_ID: FIELD_IDS.COUNTRY,
+  FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
   PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY_PAGE,
 };
 
@@ -71,7 +71,6 @@ export const get = async (req: Request, res: Response) => {
   return res.render(TEMPLATES.QUOTE.BUYER_COUNTRY, {
     ...singleInputPageVariables(PAGE_VARIABLES),
     BACK_LINK: getBackLink(req.headers.referer),
-    HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
     submittedValues: req.session.submittedData,
     isChangeRoute: isChangeRoute(req.originalUrl),
@@ -93,14 +92,13 @@ export const post = async (req: Request, res: Response) => {
     return res.render(TEMPLATES.QUOTE.BUYER_COUNTRY, {
       ...singleInputPageVariables(PAGE_VARIABLES),
       BACK_LINK: getBackLink(req.headers.referer),
-      HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
       countries: mappedCountries,
       validationErrors,
       isChangeRoute: isChangeRoute(req.originalUrl),
     });
   }
 
-  const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY] || req.body[FIELD_IDS.COUNTRY];
+  const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY];
 
   const country = getCountryByName(mappedCountries, submittedCountryName);
 

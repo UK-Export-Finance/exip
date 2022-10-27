@@ -97,12 +97,7 @@
     var element = document.getElementById('{{ FIELD_ID }}');
     accessibleAutocomplete.enhanceSelectElement({
       selectElement: element,
-      defaultValue: '',
-      onConfirm: function(event) {
-        if (event) {
-          document.getElementById('{{ HIDDEN_FIELD_ID }}').value = event;
-        }
-      }
+      defaultValue: ''
     });
   </script>
 
