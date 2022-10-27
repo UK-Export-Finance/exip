@@ -1,5 +1,4 @@
-import { cannotApplyPage, exporterLocationPage, ukGoodsOrServicesPage, yesRadio, submitButton } from '../../../../pages/shared';
-import { insurance } from '../../../../pages';
+import { cannotApplyPage, yesRadio, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';

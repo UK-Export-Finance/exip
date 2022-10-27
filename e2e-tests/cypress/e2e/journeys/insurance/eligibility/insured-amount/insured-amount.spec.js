@@ -1,5 +1,4 @@
-import { exporterLocationPage, ukGoodsOrServicesPage, heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../../pages/shared';
-import { insurance } from '../../../../pages';
+import { heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import {
   ORGANISATION,
