@@ -1,4 +1,5 @@
 import { heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../../pages/shared';
+import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import {
   ORGANISATION,
@@ -10,10 +11,10 @@ import {
 import CONSTANTS from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
-context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maxium amount of cover available online', () => {
+context('Insurance - Other parties page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if there are other parties involved in the export', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
       auth: {
@@ -30,7 +31,13 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     yesRadio().click();
     submitButton().click();
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`;
+    noRadio().click();
+    submitButton().click();
+
+    noRadio().click();
+    submitButton().click();
+
+    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED}`;
 
     cy.url().should('eq', expected);
   });
@@ -40,14 +47,14 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
-    });
-  });
+  // it('passes the audits', () => {
+  //   cy.lighthouse({
+  //     accessibility: 100,
+  //     performance: 75,
+  //     'best-practices': 100,
+  //     seo: 70,
+  //   });
+  // });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
@@ -57,10 +64,12 @@ context('Insurance - Insured amount page - I want to check if I can use online s
 
     partials.backLink().click();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`;
+
+    cy.url().should('include', expectedUrl);
 
     // go back to page
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT, {
+    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
@@ -105,6 +114,48 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     });
   });
 
+  describe('expandable details', () => {
+    it('renders summary text', () => {
+      insurance.eligibility.otherPartiesPage.description.summary().should('exist');
+
+      insurance.eligibility.otherPartiesPage.description.summary().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.INTRO);
+      });
+    });
+
+    it('clicking summary text reveals details', () => {
+      insurance.eligibility.otherPartiesPage.description.summary().click();
+
+      insurance.eligibility.otherPartiesPage.description.list.intro().should('be.visible');
+    });
+
+    it('renders expanded content', () => {
+      insurance.eligibility.otherPartiesPage.description.list.intro().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST_INTRO);
+      });
+
+      insurance.eligibility.otherPartiesPage.description.list.item1().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[0].TEXT);
+      });
+
+      insurance.eligibility.otherPartiesPage.description.list.item2().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[1].TEXT);
+      });
+
+      insurance.eligibility.otherPartiesPage.description.list.item3().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[2].TEXT);
+      });
+
+      insurance.eligibility.otherPartiesPage.description.list.item4().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[3].TEXT);
+      });
+
+      insurance.eligibility.otherPartiesPage.description.list.item5().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[4].TEXT);
+      });
+    });
+  });
+
   it('renders a submit button', () => {
     submitButton().should('exist');
 
@@ -121,7 +172,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT].IS_EMPTY;
+        const expectedMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED].IS_EMPTY;
 
         partials.errorSummaryListItems().first().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedMessage);
@@ -141,11 +192,11 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     });
 
     describe('when submitting the answer as `no`', () => {
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`, () => {
         noRadio().click();
         submitButton().click();
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`;
+        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
 
         cy.url().should('eq', expected);
       });

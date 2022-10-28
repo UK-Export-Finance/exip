@@ -5,4 +5,5 @@ export const ELIGIBILITY_TEMPLATES = {
   UK_GOODS_OR_SERVICES: 'insurance/eligibility/uk-goods-or-services.njk',
   INSURED_AMOUNT: 'insurance/eligibility/insured-amount.njk',
   INSURED_PERIOD: 'insurance/eligibility/insured-period.njk',
+  OTHER_PARTIES_INVOLVED: 'insurance/eligibility/other-parties.njk',
 };

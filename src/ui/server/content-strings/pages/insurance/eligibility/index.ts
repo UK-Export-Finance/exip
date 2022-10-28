@@ -10,6 +10,7 @@ const APPLY_OFFLINE = {
   REASON: {
     INTRO: 'This is because',
     WANT_COVER_OVER_MAX_AMOUNT: `you want to be insured for more than ${MAX_COVER_AMOUNT} and we need to make extra checks.`,
+    OTHER_PARTIES_INVOLVED: 'there are other parties involved in your exports and we need to make extra checks.',
   },
   ACTIONS: {
     DOWNLOAD_FORM: {
@@ -70,10 +71,37 @@ const INSURED_PERIOD = {
   HEADING: `Do you want to be insured for longer than ${PRODUCT.MAX_COVER_PERIOD_YEARS} years?`,
 };
 
+const OTHER_PARTIES_INVOLVED = {
+  PAGE_TITLE: 'Are there any other parties involved, apart from you and the buyer?',
+  HEADING: 'Are there any other parties involved, apart from you and the buyer?',
+  OTHER_PARTIES_DESCRIPTION: {
+    INTRO: 'What counts as another party?',
+    LIST_INTRO: 'This includes any:',
+    LIST: [
+      {
+        TEXT: 'agents or third parties',
+      },
+      {
+        TEXT: "companies who'll be jointly insured on the policy",
+      },
+      {
+        TEXT: "'loss payees' who'll be paid in the event of a claim",
+      },
+      {
+        TEXT: "other parties in your buyer's supply chain, who your buyer will depend on for payment before they can pay you - for example, an end-buyer",
+      },
+      {
+        TEXT: "consortium or group you're involved in that has a significant role in these exports",
+      },
+    ],
+  },
+};
+
 export default {
   APPLY_OFFLINE,
   SPEAK_TO_UKEF_EFM,
   CHECK_IF_ELIGIBLE,
   INSURED_AMOUNT,
   INSURED_PERIOD,
+  OTHER_PARTIES_INVOLVED,
 };

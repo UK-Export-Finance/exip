@@ -27,6 +27,7 @@ export const FIELD_IDS = {
     ELIGIBILITY: {
       WANT_COVER_OVER_MAX_AMOUNT: 'wantCoverOverMaxAmount',
       WANT_COVER_OVER_MAX_PERIOD: 'wantCoverOverMaxPeriod',
+      OTHER_PARTIES_INVOLVED: 'otherPartiesInvolved',
     },
   },
 };
