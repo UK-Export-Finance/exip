@@ -7,4 +7,5 @@ export const ELIGIBILITY_TEMPLATES = {
   INSURED_PERIOD: 'insurance/eligibility/insured-period.njk',
   OTHER_PARTIES_INVOLVED: 'insurance/eligibility/other-parties.njk',
   LETTER_OF_CREDIT: 'insurance/eligibility/letter-of-credit.njk',
+  PRE_CREDIT_PERIOD: 'insurance/eligibility/pre-credit-period.njk',
 };

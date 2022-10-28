@@ -61,6 +61,9 @@ const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT]: {
         IS_EMPTY: "Select whether you'll be paid by a letter of credit or not",
       },
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
+        IS_EMPTY: 'Select whether you need cover for a period before you supply the goods or services to the buyer',
+      },
     },
   },
 };

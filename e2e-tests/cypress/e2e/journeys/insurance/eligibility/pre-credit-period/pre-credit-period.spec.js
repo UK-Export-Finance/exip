@@ -11,10 +11,10 @@ import {
 import CONSTANTS from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
-context('Insurance - Other parties page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if there are other parties involved in the export', () => {
+context('Insurance - Eligibility - Pre-credit period page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
       auth: {
@@ -37,7 +37,13 @@ context('Insurance - Other parties page - I want to check if I can use online se
     noRadio().click();
     submitButton().click();
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED}`;
+    noRadio().click();
+    submitButton().click();
+
+    noRadio().click();
+    submitButton().click();
+
+    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD}`;
 
     cy.url().should('eq', expected);
   });
@@ -47,14 +53,14 @@ context('Insurance - Other parties page - I want to check if I can use online se
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
-    });
-  });
+  // it('passes the audits', () => {
+  //   cy.lighthouse({
+  //     accessibility: 100,
+  //     performance: 75,
+  //     'best-practices': 100,
+  //     seo: 70,
+  //   });
+  // });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
@@ -64,12 +70,12 @@ context('Insurance - Other parties page - I want to check if I can use online se
 
     partials.backLink().click();
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`;
+    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
 
     cy.url().should('include', expectedUrl);
 
     // go back to page
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED, {
+    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
@@ -114,48 +120,6 @@ context('Insurance - Other parties page - I want to check if I can use online se
     });
   });
 
-  describe('expandable details', () => {
-    it('renders summary text', () => {
-      insurance.eligibility.otherPartiesPage.description.summary().should('exist');
-
-      insurance.eligibility.otherPartiesPage.description.summary().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.INTRO);
-      });
-    });
-
-    it('clicking summary text reveals details', () => {
-      insurance.eligibility.otherPartiesPage.description.summary().click();
-
-      insurance.eligibility.otherPartiesPage.description.list.intro().should('be.visible');
-    });
-
-    it('renders expanded content', () => {
-      insurance.eligibility.otherPartiesPage.description.list.intro().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST_INTRO);
-      });
-
-      insurance.eligibility.otherPartiesPage.description.list.item1().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[0].TEXT);
-      });
-
-      insurance.eligibility.otherPartiesPage.description.list.item2().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[1].TEXT);
-      });
-
-      insurance.eligibility.otherPartiesPage.description.list.item3().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[2].TEXT);
-      });
-
-      insurance.eligibility.otherPartiesPage.description.list.item4().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[3].TEXT);
-      });
-
-      insurance.eligibility.otherPartiesPage.description.list.item5().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[4].TEXT);
-      });
-    });
-  });
-
   it('renders a submit button', () => {
     submitButton().should('exist');
 
@@ -172,7 +136,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED].IS_EMPTY;
+        const expectedMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD].IS_EMPTY;
 
         partials.errorSummaryListItems().first().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedMessage);
@@ -192,11 +156,11 @@ context('Insurance - Other parties page - I want to check if I can use online se
     });
 
     describe('when submitting the answer as `no`', () => {
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`, () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`, () => {
         noRadio().click();
         submitButton().click();
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
+        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
         cy.url().should('eq', expected);
       });
