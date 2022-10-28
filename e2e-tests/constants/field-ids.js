@@ -28,6 +28,7 @@ const FIELD_IDS = {
       WANT_COVER_OVER_MAX_AMOUNT: 'wantCoverOverMaxAmount',
       WANT_COVER_OVER_MAX_PERIOD: 'wantCoverOverMaxPeriod',
       OTHER_PARTIES_INVOLVED: 'otherPartiesInvolved',
+      LETTER_OF_CREDIT: 'paidByLetterOfCredit',
     },
   },
 };

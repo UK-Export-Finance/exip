@@ -15,6 +15,7 @@ const APPLY_OFFLINE = {
     INTRO: 'This is because',
     WANT_COVER_OVER_MAX_AMOUNT: `you want to be insured for more than ${MAX_COVER_AMOUNT} and we need to make extra checks.`,
     OTHER_PARTIES_INVOLVED: 'there are other parties involved in your exports and we need to make extra checks.',
+    WILL_BE_PAID_BY_LETTER_OF_CREDIT: "you'll be paid by a letter of credit.",
   },
   ACTIONS: {
     DOWNLOAD_FORM: {
@@ -101,6 +102,11 @@ const OTHER_PARTIES_INVOLVED = {
   },
 };
 
+const LETTER_OF_CREDIT = {
+  PAGE_TITLE: 'Will you be paid by a letter of credit?',
+  HEADING: 'Will you be paid by a letter of credit?',
+};
+
 module.exports = {
   APPLY_OFFLINE,
   SPEAK_TO_UKEF_EFM,
@@ -108,4 +114,5 @@ module.exports = {
   INSURED_AMOUNT,
   INSURED_PERIOD,
   OTHER_PARTIES_INVOLVED,
+  LETTER_OF_CREDIT,
 };
