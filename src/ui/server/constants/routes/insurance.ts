@@ -1,3 +1,5 @@
+import { PRODUCT } from '../product';
+
 const INSURANCE = '/insurance';
 const ELIGIBILITY = '/eligibility';
 
@@ -12,7 +14,7 @@ export const INSURANCE_ROUTES = {
     EXPORTER_LOCATION: `${INSURANCE}${ELIGIBILITY}/exporter-location`,
     UK_GOODS_OR_SERVICES: `${INSURANCE}${ELIGIBILITY}/uk-goods-services`,
     INSURED_AMOUNT: `${INSURANCE}${ELIGIBILITY}/insured-amount`,
-    INSURED_PERIOD: `${INSURANCE}${ELIGIBILITY}/insured-over-2-years`,
+    INSURED_PERIOD: `${INSURANCE}${ELIGIBILITY}/insured-over-${PRODUCT.MAX_COVER_PERIOD_YEARS}-years`,
     OTHER_PARTIES_INVOLVED: `${INSURANCE}${ELIGIBILITY}/other-parties`,
     LETTER_OF_CREDIT: `${INSURANCE}${ELIGIBILITY}/letter-of-credit`,
   },
