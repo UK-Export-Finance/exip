@@ -58,6 +58,9 @@ const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED]: {
         IS_EMPTY: 'Select whether there are any other parties involved, apart from you and the buyer',
       },
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT]: {
+        IS_EMPTY: "Select whether you'll be paid by a letter of credit or not",
+      },
     },
   },
 };
