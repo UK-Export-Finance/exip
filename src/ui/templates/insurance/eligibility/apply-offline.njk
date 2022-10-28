@@ -20,7 +20,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters-from-desktop">
 
-      {% if EXIT_REASON %}
+      {% if EXIT_REASON.length %}
         <p class="govuk-body" data-cy="reason">{{ CONTENT_STRINGS.REASON.INTRO }} {{ EXIT_REASON }}</p>
       {% endif %}
 

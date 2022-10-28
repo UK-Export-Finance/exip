@@ -87,3 +87,32 @@ Currently, there is only a single staging environment.
 A docker image needs to be built, tagged and pushed to docker hub. Then the azure app can be restarted to pick up the latest.
 
 Contact the team for more information.
+
+### Product definitions for eligibility
+
+The EXIP product has a series of rules/questions that determine if an exporter can apply for cover.
+
+These questions are asked in the eligibility sections of the user flow. The product has 2 eligibility sections:
+
+- In the "Get a quote" flow: `/quote/*`
+- In the beginning of the application flow, before an application can be created: `/insurance/eligibility/*`
+
+Key points and differences:
+
+- An Exporter must pass eligibility before they can obtain a quote or begin to create an application to apply for cover. 
+- The application eligibility is a lot more comprehensive than the quote eligibility. Both eligibility flows share a few questions.
+- The majority of the eligibility questions are "yes or no" answers.
+
+#### "Maximum" definitions
+
+The application eligibility has two questions asking if the exporter's desired cover period and cover amount is over X.
+
+If an exporter would like a cover period or cover amount that exceeds the maximum, they cannot apply online and must either apply offline or speak to UKEF.
+
+These maximum definitions could change in the future. Therefore, they are stored and rendered in the UI dynamically. These can be found in the [product constants](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/constants/product.ts).
+
+If these definitions need to change, only the product constants need to be updated.
+
+Note that the cover period URL references the maximum cover period. The route is created dynamically by referencing the cover period definition.
+
+Also note that the field IDs that we use for the answers to these questions are generic and do not refer to the actual maximum. I.e, `wantCoverOverMaxPeriod` instead of `wantCoverOver2Years`.
