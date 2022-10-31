@@ -10,9 +10,12 @@ const checkAnalyticsCookieProperties = () => {
     const month = new Date(date).getMonth();
     const year = new Date(date).getFullYear();
 
-    const expectedDay = new Date().getDate() + 1;
-    const expectedMonth = new Date().getMonth();
-    const expectedYear = new Date().getFullYear();
+    const today = new Date();
+    const tomorrow = today.setDate(today.getDate() + 1)
+
+    const expectedDay = new Date(tomorrow).getDate();
+    const expectedMonth = new Date(tomorrow).getMonth();
+    const expectedYear = new Date(tomorrow).getFullYear();
 
     expect(day).to.equal(expectedDay);
     expect(month).to.equal(expectedMonth);

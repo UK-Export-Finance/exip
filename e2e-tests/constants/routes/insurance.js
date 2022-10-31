@@ -18,6 +18,7 @@ const INSURANCE_ROUTES = {
     OTHER_PARTIES_INVOLVED: `${INSURANCE}${ELIGIBILITY}/other-parties`,
     LETTER_OF_CREDIT: `${INSURANCE}${ELIGIBILITY}/letter-of-credit`,
     PRE_CREDIT_PERIOD: `${INSURANCE}${ELIGIBILITY}/pre-credit-period`,
+    COMPANIES_HOUSE_NUMBER: `${INSURANCE}${ELIGIBILITY}/companies-house-number`,
   },
 };
 

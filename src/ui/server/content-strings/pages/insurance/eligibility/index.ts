@@ -12,6 +12,7 @@ const APPLY_OFFLINE = {
     WANT_COVER_OVER_MAX_AMOUNT: `you want to be insured for more than ${MAX_COVER_AMOUNT} and we need to make extra checks.`,
     OTHER_PARTIES_INVOLVED: 'there are other parties involved in your exports and we need to make extra checks.',
     WILL_BE_PAID_BY_LETTER_OF_CREDIT: "you'll be paid by a letter of credit.",
+    NEED_PRE_CREDIT_PERIOD_COVER: 'you need pre-credit cover.',
   },
   ACTIONS: {
     DOWNLOAD_FORM: {
@@ -103,6 +104,11 @@ const LETTER_OF_CREDIT = {
   HEADING: 'Will you be paid by a letter of credit?',
 };
 
+const PRE_CREDIT_PERIOD = {
+  PAGE_TITLE: 'Do you need cover for a period before you supply the goods or services to the buyer?',
+  HEADING: 'Do you need cover for a period before you supply the goods or services to the buyer?',
+};
+
 export default {
   APPLY_OFFLINE,
   SPEAK_TO_UKEF_EFM,
@@ -111,4 +117,5 @@ export default {
   INSURED_PERIOD,
   OTHER_PARTIES_INVOLVED,
   LETTER_OF_CREDIT,
+  PRE_CREDIT_PERIOD,
 };

@@ -8,6 +8,7 @@ import { get as insuredAmountGet, post as insuredAmountPost } from '../../../con
 import { get as insuredPeriodGet, post as insuredPeriodPost } from '../../../controllers/insurance/eligibility/insured-period';
 import { get as otherPartiesInvolvedGet, post as otherPartiesInvolvedPost } from '../../../controllers/insurance/eligibility/other-parties';
 import { get as letterOfCreditGet, post as letterOfCreditPost } from '../../../controllers/insurance/eligibility/letter-of-credit';
+import { get as preCreditPeriodGet, post as preCreditPeriodPost } from '../../../controllers/insurance/eligibility/pre-credit-period';
 import cannotApplyGet from '../../../controllers/insurance/eligibility/cannot-apply';
 import applyOfflineGet from '../../../controllers/insurance/eligibility/apply-offline';
 import speakToUkefEfmGet from '../../../controllers/insurance/eligibility/speak-to-ukef-efm';
@@ -40,6 +41,9 @@ insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOL
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT, letterOfCreditGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT, letterOfCreditPost);
+
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD, preCreditPeriodGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD, preCreditPeriodPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY, cannotApplyGet);
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE, applyOfflineGet);
