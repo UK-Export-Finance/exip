@@ -7,7 +7,7 @@ import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms'
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
-context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I do not have UK Companies House Registration Number - submit `no companies house number`, () => {
+context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I do not have UK Companies House Registration Number - submit `no companies house number`', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
       auth: {
