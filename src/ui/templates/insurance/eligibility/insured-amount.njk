@@ -26,12 +26,6 @@
     }) }}
   {% endif %}
 
-  {% set class = "govuk-form-group" %}
-
-  {% if validationErrors.errorList[FIELD_ID] %}
-    {% set class = "govuk-form-group govuk-form-group--error" %}
-  {% endif %}
-
   <form method="POST" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
