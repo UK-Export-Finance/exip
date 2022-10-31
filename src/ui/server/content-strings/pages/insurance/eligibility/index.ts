@@ -108,6 +108,21 @@ const LETTER_OF_CREDIT = {
 const PRE_CREDIT_PERIOD = {
   PAGE_TITLE: 'Do you need cover for a period before you supply the goods or services to the buyer?',
   HEADING: 'Do you need cover for a period before you supply the goods or services to the buyer?',
+  PRE_CREDIT_PERIOD_DESCRIPTION: {
+    INTRO: 'What is the pre-credit period?',
+    BODY_1: 'This insures you for when you start working on the exports but before you send goods or extend any credit to your buyer.',
+    LIST_INTRO: 'For example, you may incur costs when:',
+    LIST: [
+      {
+        TEXT: 'manufacturing goods',
+      },
+      {
+        TEXT: 'preparing services',
+      },
+    ],
+    BODY_2: "But it's too early to invoice the buyer and recover these costs.",
+    BODY_3: 'This is considered the pre-credit period.',
+  },
 };
 
 const COMPANIES_HOUSE_NUMBER = {

@@ -120,6 +120,58 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     });
   });
 
+  describe('expandable details', () => {
+    it('renders summary text', () => {
+      insurance.eligibility.preCreditPeriodPage.description.summary().should('exist');
+
+      insurance.eligibility.preCreditPeriodPage.description.summary().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.INTRO);
+      });
+    });
+
+    it('clicking summary text reveals details', () => {
+      insurance.eligibility.preCreditPeriodPage.description.summary().click();
+
+      insurance.eligibility.preCreditPeriodPage.description.list.intro().should('be.visible');
+    });
+
+    it('renders body text', () => {
+      insurance.eligibility.preCreditPeriodPage.description.body1().should('exist');
+
+      insurance.eligibility.preCreditPeriodPage.description.body1().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_1);
+      });
+    });
+
+    it('renders expanded content', () => {
+      insurance.eligibility.preCreditPeriodPage.description.list.intro().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST_INTRO);
+      });
+
+      insurance.eligibility.preCreditPeriodPage.description.list.item1().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST[0].TEXT);
+      });
+
+      insurance.eligibility.preCreditPeriodPage.description.list.item2().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST[1].TEXT);
+      });
+    });
+
+    it('renders outro body text', () => {
+      insurance.eligibility.preCreditPeriodPage.description.body2().should('exist');
+
+      insurance.eligibility.preCreditPeriodPage.description.body2().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_2);
+      });
+
+      insurance.eligibility.preCreditPeriodPage.description.body3().should('exist');
+
+      insurance.eligibility.preCreditPeriodPage.description.body3().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_3);
+      });
+    });
+  });
+
   it('renders a submit button', () => {
     submitButton().should('exist');
 
