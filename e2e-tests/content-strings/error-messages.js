@@ -64,6 +64,9 @@ const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
         IS_EMPTY: 'Select whether you need cover for a period before you supply the goods or services to the buyer',
       },
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: {
+        IS_EMPTY: 'Select whether you have a UK Companies House registration number or not',
+      },
     },
   },
 };

@@ -9,6 +9,7 @@ import { get as insuredPeriodGet, post as insuredPeriodPost } from '../../../con
 import { get as otherPartiesInvolvedGet, post as otherPartiesInvolvedPost } from '../../../controllers/insurance/eligibility/other-parties';
 import { get as letterOfCreditGet, post as letterOfCreditPost } from '../../../controllers/insurance/eligibility/letter-of-credit';
 import { get as preCreditPeriodGet, post as preCreditPeriodPost } from '../../../controllers/insurance/eligibility/pre-credit-period';
+import { get as companiesHouseNumberGet, post as companiesHouseNumberPost } from '../../../controllers/insurance/eligibility/companies-house-number';
 import cannotApplyGet from '../../../controllers/insurance/eligibility/cannot-apply';
 import applyOfflineGet from '../../../controllers/insurance/eligibility/apply-offline';
 import speakToUkefEfmGet from '../../../controllers/insurance/eligibility/speak-to-ukef-efm';
@@ -44,6 +45,9 @@ insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT, l
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD, preCreditPeriodGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD, preCreditPeriodPost);
+
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, companiesHouseNumberGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, companiesHouseNumberPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY, cannotApplyGet);
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE, applyOfflineGet);

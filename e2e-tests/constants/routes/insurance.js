@@ -19,6 +19,8 @@ const INSURANCE_ROUTES = {
     LETTER_OF_CREDIT: `${INSURANCE}${ELIGIBILITY}/letter-of-credit`,
     PRE_CREDIT_PERIOD: `${INSURANCE}${ELIGIBILITY}/pre-credit-period`,
     COMPANIES_HOUSE_NUMBER: `${INSURANCE}${ELIGIBILITY}/companies-house-number`,
+    COMPANIES_HOUSE_NUMBER: `${INSURANCE}${ELIGIBILITY}/companies-house-number`,
+    ELIGIBLE_TO_APPLY_ONLINE: `${INSURANCE}${ELIGIBILITY}/eligible-to-apply-online`,
   },
 };
 
