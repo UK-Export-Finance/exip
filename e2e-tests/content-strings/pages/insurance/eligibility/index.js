@@ -119,6 +119,14 @@ const COMPANIES_HOUSE_NUMBER = {
   HEADING: 'Do you have a UK Companies House registration number?',
 };
 
+const ELIGIBLE_TO_APPLY_ONLINE = {
+  PAGE_TITLE: "You're eligible to apply online",
+  HEADING: "You're eligible to apply online",
+  INSET: 'This does not automatically guarantee cover.',
+  BODY: 'You now need to fill in the application so we can assess the risks around your exports and your buyer.',
+  SUBMIT_BUTTON: 'Continue to application',
+}; 
+
 module.exports = {
   APPLY_OFFLINE,
   SPEAK_TO_UKEF_EFM,
@@ -129,4 +137,5 @@ module.exports = {
   LETTER_OF_CREDIT,
   PRE_CREDIT_PERIOD,
   COMPANIES_HOUSE_NUMBER,
+  ELIGIBLE_TO_APPLY_ONLINE,
 };

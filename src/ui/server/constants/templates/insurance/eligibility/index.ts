@@ -9,4 +9,5 @@ export const ELIGIBILITY_TEMPLATES = {
   LETTER_OF_CREDIT: 'insurance/eligibility/letter-of-credit.njk',
   PRE_CREDIT_PERIOD: 'insurance/eligibility/pre-credit-period.njk',
   COMPANIES_HOUSE_NUMBER: 'insurance/eligibility/companies-house-number.njk',
+  ELIGIBLE_TO_APPLY_ONLINE: 'insurance/eligibility/eligible-to-apply-online.njk',
 };
