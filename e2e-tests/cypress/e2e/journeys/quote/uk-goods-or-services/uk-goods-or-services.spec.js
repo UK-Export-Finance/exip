@@ -79,7 +79,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     cy.title().should('eq', expectedPageTitle);
 
     heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
+      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
     });
   });
 

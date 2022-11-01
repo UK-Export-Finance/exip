@@ -1,6 +1,5 @@
 interface PageContentStrings {
   PAGE_TITLE: string;
-  HEADING: string;
 }
 
 interface PageVariablesContentStrings {

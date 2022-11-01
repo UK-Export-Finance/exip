@@ -47,7 +47,7 @@ context('Cookies page', () => {
 
   it('renders a heading', () => {
     heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
+      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
     });
   });
 

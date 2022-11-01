@@ -2,7 +2,6 @@ import { LINKS } from '../links';
 
 const BUYER_BODY = {
   PAGE_TITLE: 'Is your buyer a government or public sector body?',
-  HEADING: 'Is your buyer a government or public sector body?',
   DETAILS: {
     INTRO: 'What counts as a government or public sector body?',
     BODY_1: 'This means a formally established organisation that is, at least in part, publicly funded to deliver a public or government service.',
@@ -16,19 +15,15 @@ const UK_GOODS_OR_SERVICES = {
 
 const POLICY_TYPE = {
   PAGE_TITLE: 'What kind of policy do you need?',
-  HEADING: 'What kind of policy do you need?',
 };
 
 const TELL_US_ABOUT_YOUR_POLICY = {
   SINGLE_POLICY_PAGE_TITLE: 'Tell us about the single contract policy you need',
-  SINGLE_POLICY_HEADING: 'Tell us about the single contract policy you need',
   MULTI_POLICY_PAGE_TITLE: 'Tell us about the multiple contract policy you need',
-  MULTI_POLICY_HEADING: 'Tell us about the multiple contract policy you need',
 };
 
 const CHECK_YOUR_ANSWERS = {
   PAGE_TITLE: 'Check your answers',
-  HEADING: 'Check your answers',
   GROUP_HEADING_EXPORT: 'Export details',
   GROUP_HEADING_POLICY: 'Policy details',
   SUBMIT_BUTTON: 'Get your quote',
@@ -36,7 +31,6 @@ const CHECK_YOUR_ANSWERS = {
 
 const GET_A_QUOTE_BY_EMAIL = {
   PAGE_TITLE: 'You need to get a quote by email',
-  HEADING: 'You need to get a quote by email',
   REASON: {
     BUYER_BODY: 'We cannot give you a quote online because your buyer is a government or public sector body.',
     BUYER_BODY_DESCRIPTION: 'We can still give you a quote but may need extra information from you to assess the risks around your buyer first.',
@@ -65,9 +59,7 @@ const GET_A_QUOTE_BY_EMAIL = {
 
 const YOUR_QUOTE = {
   PAGE_TITLE: 'You can apply for UKEF export insurance',
-  HEADING: 'You can apply for UKEF export insurance',
   QUOTE: {
-    HEADING: 'You can apply for UKEF export insurance',
     SUB_HEADING: 'Your quote',
   },
   NOTICE_1: 'This quote is not binding and does not commit UKEF to providing cover.',
@@ -141,7 +133,6 @@ const YOUR_QUOTE = {
 
 const NEED_TO_START_AGAIN = {
   PAGE_TITLE: 'You need to start again',
-  HEADING: 'You need to start again',
   REASON: 'This is because you have not yet answered all the eligibility questions.',
 };
 

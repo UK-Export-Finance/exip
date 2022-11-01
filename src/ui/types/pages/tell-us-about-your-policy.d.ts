@@ -2,7 +2,6 @@ type TellUsAboutPolicyPageVariablesContentStrings = {
   BUTTONS: object;
   COOKIES_CONSENT: object;
   FOOTER: object;
-  HEADING?: string;
   LINKS: object;
   PAGE_TITLE?: string;
   PRODUCT: object;

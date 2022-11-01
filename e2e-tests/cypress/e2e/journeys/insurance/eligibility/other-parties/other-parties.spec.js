@@ -94,7 +94,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
     cy.title().should('eq', expectedPageTitle);
 
     heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
+      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
     });
   });
 

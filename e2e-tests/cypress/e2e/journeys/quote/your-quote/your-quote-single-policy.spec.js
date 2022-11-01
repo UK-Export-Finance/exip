@@ -83,7 +83,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
   context('panel/quote', () => {
     it('renders `you can apply` heading', () => {
       yourQuotePage.panel.headingText().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.QUOTE.HEADING);
+        expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
       });
     });
 
