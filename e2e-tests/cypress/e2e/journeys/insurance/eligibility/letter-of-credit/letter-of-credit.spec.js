@@ -97,7 +97,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
     cy.title().should('eq', expectedPageTitle);
 
     heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
+      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
     });
   });
 

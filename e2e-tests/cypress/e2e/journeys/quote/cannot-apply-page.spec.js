@@ -64,7 +64,7 @@ context('Cannot apply exit page', () => {
     cy.title().should('eq', expectedPageTitle);
 
     heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
+      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
     });
   });
 

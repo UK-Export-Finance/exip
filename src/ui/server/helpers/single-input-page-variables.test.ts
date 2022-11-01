@@ -8,7 +8,6 @@ describe('server/helpers/single-input-page-variables', () => {
     FIELD_ID: 'test',
     PAGE_CONTENT_STRINGS: {
       PAGE_TITLE: 'Testing',
-      HEADING: 'Testing',
     },
     BACK_LINK: '/mock',
   };

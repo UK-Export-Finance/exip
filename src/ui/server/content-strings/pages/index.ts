@@ -4,22 +4,18 @@ import { LINKS } from '../links';
 
 const BUYER_COUNTRY = {
   PAGE_TITLE: 'Where is your buyer based?',
-  HEADING: 'Where is your buyer based?',
 };
 
 const EXPORTER_LOCATION = {
   PAGE_TITLE: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
-  HEADING: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
 };
 
 const UK_GOODS_OR_SERVICES = {
   PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
-  HEADING: 'Is at least 20% of your export contract value made up from UK goods or services?',
 };
 
 const CANNOT_APPLY = {
   PAGE_TITLE: 'You cannot apply for UKEF export insurance',
-  HEADING: 'You cannot apply for UKEF export insurance',
   REASON: {
     INTRO: 'This is because',
     UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man.',
@@ -48,7 +44,6 @@ const CANNOT_APPLY = {
 
 const COOKIES_PAGE = {
   PAGE_TITLE: 'Cookies',
-  HEADING: 'Cookies',
   BODY_1: "UK Export Finance (UKEF) puts small files (known as 'cookies') onto your computer to make this site work.",
   BODY_2: "Our cookies aren't used to identify you personally.",
   TABLE_HEADINGS: {
@@ -99,14 +94,12 @@ const COOKIES_PAGE = {
 
 const PAGE_NOT_FOUND_PAGE = {
   PAGE_TITLE: 'Page not found',
-  HEADING: 'Page not found',
   BODY_1: 'If you typed the web address, check it is correct.',
   BODY_2: 'If you pasted the web address, check you copied the entire address.',
 };
 
 const PROBLEM_WITH_SERVICE_PAGE = {
   PAGE_TITLE: 'Problem with the service',
-  HEADING: 'Sorry, there is a problem with the service',
 };
 
 export const PAGES = {

@@ -83,7 +83,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       cy.title().should('eq', expectedPageTitle);
 
       heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.SINGLE_POLICY_HEADING);
+        expect(text.trim()).equal(CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE);
       });
     });
 

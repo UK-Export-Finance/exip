@@ -41,7 +41,6 @@ const generatePageVariables = (policyType: string) => {
 
   if (isSinglePolicyType(policyType)) {
     pageVariables.CONTENT_STRINGS.PAGE_TITLE = TELL_US_ABOUT_YOUR_POLICY.SINGLE_POLICY_PAGE_TITLE;
-    pageVariables.CONTENT_STRINGS.HEADING = TELL_US_ABOUT_YOUR_POLICY.SINGLE_POLICY_HEADING;
 
     pageVariables.FIELDS.AMOUNT_CURRENCY = {
       ID: AMOUNT_CURRENCY,
@@ -61,7 +60,6 @@ const generatePageVariables = (policyType: string) => {
 
   if (isMultiPolicyType(policyType)) {
     pageVariables.CONTENT_STRINGS.PAGE_TITLE = TELL_US_ABOUT_YOUR_POLICY.MULTI_POLICY_PAGE_TITLE;
-    pageVariables.CONTENT_STRINGS.HEADING = TELL_US_ABOUT_YOUR_POLICY.MULTI_POLICY_HEADING;
 
     pageVariables.FIELDS.AMOUNT_CURRENCY = {
       ID: AMOUNT_CURRENCY,

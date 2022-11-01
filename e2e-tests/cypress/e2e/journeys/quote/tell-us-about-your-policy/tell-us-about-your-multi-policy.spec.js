@@ -75,7 +75,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       cy.title().should('eq', expectedPageTitle);
 
       heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.MULTI_POLICY_HEADING);
+        expect(text.trim()).equal(CONTENT_STRINGS.MULTI_POLICY_PAGE_TITLE);
       });
     });
 

@@ -2,7 +2,6 @@ import ELIGIBILITY from './eligibility';
 
 const START = {
   PAGE_TITLE: 'Apply for UKEF export insurance',
-  HEADING: 'Apply for UKEF export insurance',
   INTRO: 'Use this service to make a full application for export insurance from UK Export Finance (UKEF).',
   LIST: {
     INTRO: "You'll need your:",
