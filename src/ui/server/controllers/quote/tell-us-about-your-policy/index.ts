@@ -6,7 +6,7 @@ import generateValidationErrors from './validation';
 import getCurrencyByCode from '../../../helpers/get-currency-by-code';
 import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-cover';
 import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import isChangeRoute from '../../../helpers/is-change-route';
 import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-type';
 import { Request, Response, SelectOption, TellUsAboutPolicyPageVariables } from '../../../../types';
@@ -94,16 +94,16 @@ const get = async (req: Request, res: Response) => {
   }
 
   let mappedCurrencies;
-  if (submittedData && submittedData[FIELD_IDS.CURRENCY]) {
-    mappedCurrencies = mapCurrencies(currencies, submittedData[FIELD_IDS.CURRENCY].isoCode);
+  if (submittedData && submittedData.quoteEligibility && submittedData.quoteEligibility[FIELD_IDS.CURRENCY]) {
+    mappedCurrencies = mapCurrencies(currencies, submittedData.quoteEligibility[FIELD_IDS.CURRENCY].isoCode);
   } else {
     mappedCurrencies = mapCurrencies(currencies);
   }
 
   let mappedPercentageOfCover;
 
-  if (submittedData && submittedData[PERCENTAGE_OF_COVER]) {
-    mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER, Number(submittedData[PERCENTAGE_OF_COVER]));
+  if (submittedData && submittedData.quoteEligibility && submittedData.quoteEligibility[PERCENTAGE_OF_COVER]) {
+    mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER, Number(submittedData.quoteEligibility[PERCENTAGE_OF_COVER]));
   } else {
     mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER);
   }
@@ -111,19 +111,19 @@ const get = async (req: Request, res: Response) => {
   const creditPeriodOptions = FIELDS[FIELD_IDS.CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
   let mappedCreditPeriod;
 
-  if (submittedData && submittedData[CREDIT_PERIOD]) {
-    mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions, String(submittedData[CREDIT_PERIOD]));
+  if (submittedData && submittedData.quoteEligibility && submittedData.quoteEligibility[CREDIT_PERIOD]) {
+    mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions, String(submittedData.quoteEligibility[CREDIT_PERIOD]));
   } else {
     mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);
   }
 
-  const PAGE_VARIABLES = generatePageVariables(submittedData[POLICY_TYPE]);
+  const PAGE_VARIABLES = generatePageVariables(submittedData.quoteEligibility[POLICY_TYPE]);
 
   return res.render(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
     ...PAGE_VARIABLES,
     BACK_LINK: req.headers.referer,
-    isSinglePolicyType: isSinglePolicyType(submittedData[POLICY_TYPE]),
-    isMultiPolicyType: isMultiPolicyType(submittedData[POLICY_TYPE]),
+    isSinglePolicyType: isSinglePolicyType(submittedData.quoteEligibility[POLICY_TYPE]),
+    isMultiPolicyType: isMultiPolicyType(submittedData.quoteEligibility[POLICY_TYPE]),
     currencies: mappedCurrencies,
     percentageOfCover: mappedPercentageOfCover,
     creditPeriod: mappedCreditPeriod,
@@ -135,7 +135,7 @@ const post = async (req: Request, res: Response) => {
   const { submittedData } = req.session;
 
   const validationErrors = generateValidationErrors({
-    ...submittedData,
+    ...submittedData.quoteEligibility,
     ...req.body,
   });
 
@@ -179,13 +179,13 @@ const post = async (req: Request, res: Response) => {
       mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);
     }
 
-    const PAGE_VARIABLES = generatePageVariables(submittedData[POLICY_TYPE]);
+    const PAGE_VARIABLES = generatePageVariables(submittedData.quoteEligibility[POLICY_TYPE]);
 
     return res.render(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
-      isSinglePolicyType: isSinglePolicyType(submittedData[POLICY_TYPE]),
-      isMultiPolicyType: isMultiPolicyType(submittedData[POLICY_TYPE]),
+      isSinglePolicyType: isSinglePolicyType(submittedData.quoteEligibility[POLICY_TYPE]),
+      isMultiPolicyType: isMultiPolicyType(submittedData.quoteEligibility[POLICY_TYPE]),
       currencies: mappedCurrencies,
       validationErrors,
       percentageOfCover: mappedPercentageOfCover,
@@ -199,7 +199,7 @@ const post = async (req: Request, res: Response) => {
     [FIELD_IDS.CURRENCY]: getCurrencyByCode(currencies, submittedCurrencyCode),
   };
 
-  req.session.submittedData = updateSubmittedData(populatedData, req.session.submittedData);
+  req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
   if (isChangeRoute(req.originalUrl)) {
     return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);

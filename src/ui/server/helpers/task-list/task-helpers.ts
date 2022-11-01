@@ -1,4 +1,4 @@
-import { SubmittedData, TaskListData, TaskListDataGroup, TaskListDataTask } from '../../../types';
+import { SubmittedDataInsuranceEligibility, TaskListData, TaskListDataGroup, TaskListDataTask } from '../../../types';
 import { TASKS } from '../../content-strings';
 
 /**
@@ -25,7 +25,7 @@ export const getTaskById = (groupTasks: Array<TaskListDataTask>, taskId: string)
  * @param {Object} submittedData Submitted application data
  * @returns {Array} array of submitted field ids.
  */
-export const getSubmittedFields = (fields: Array<string>, submittedData: SubmittedData): Array<string> => {
+export const getSubmittedFields = (fields: Array<string>, submittedData: SubmittedDataInsuranceEligibility): Array<string> => {
   const submittedFields = [] as Array<string>;
 
   if (fields) {
@@ -45,7 +45,7 @@ export const getSubmittedFields = (fields: Array<string>, submittedData: Submitt
  * @param {Object} submittedData Submitted application data
  * @returns {Boolean}
  */
-export const taskIsInProgress = (taskFields: Array<string>, submittedData: SubmittedData) => {
+export const taskIsInProgress = (taskFields: Array<string>, submittedData: SubmittedDataInsuranceEligibility) => {
   const submittedFields = getSubmittedFields(taskFields, submittedData);
 
   if (submittedFields.length > 0 && submittedFields.length < taskFields.length) {
@@ -61,7 +61,7 @@ export const taskIsInProgress = (taskFields: Array<string>, submittedData: Submi
  * @param {Object} submittedData Submitted application data
  * @returns {Boolean}
  */
-export const taskIsComplete = (taskFields: Array<string>, submittedData: SubmittedData): boolean => {
+export const taskIsComplete = (taskFields: Array<string>, submittedData: SubmittedDataInsuranceEligibility): boolean => {
   const submittedFields = getSubmittedFields(taskFields, submittedData);
 
   if (submittedFields && submittedFields.length && taskFields && taskFields.length) {
@@ -79,7 +79,7 @@ export const taskIsComplete = (taskFields: Array<string>, submittedData: Submitt
  * @param {Object} submittedData Submitted application data
  * @returns {Boolean}
  */
-export const areTaskDependenciesMet = (dependencies: Array<string>, submittedData: SubmittedData): boolean => {
+export const areTaskDependenciesMet = (dependencies: Array<string>, submittedData: SubmittedDataInsuranceEligibility): boolean => {
   const totalDependencies = (dependencies && dependencies.length) || 0;
 
   let validDependencies = [];
@@ -108,7 +108,7 @@ export const areTaskDependenciesMet = (dependencies: Array<string>, submittedDat
  * @param {Object} submittedData Submitted application data
  * @returns {String} Task status - cannot start/start now/in progress/completed
  */
-export const taskStatus = (task: TaskListDataTask, submittedData: SubmittedData): string => {
+export const taskStatus = (task: TaskListDataTask, submittedData: SubmittedDataInsuranceEligibility): string => {
   const { dependencies, fields } = task;
 
   const dependenciesMet = areTaskDependenciesMet(dependencies, submittedData);

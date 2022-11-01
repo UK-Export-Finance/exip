@@ -24,7 +24,7 @@ const {
 describe('server/helpers/summary-lists/answers-summary-list', () => {
   describe('generateFieldGroups - no policy type', () => {
     it('should map over each field group with value from submittedData', () => {
-      const mockAnswersContent = mapAnswersToContent(mockSession.submittedData);
+      const mockAnswersContent = mapAnswersToContent(mockSession.submittedData.quoteEligibility);
       delete mockAnswersContent[SINGLE_POLICY_TYPE];
       delete mockAnswersContent[SINGLE_POLICY_LENGTH];
 
@@ -70,7 +70,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
       it(`should add a ${SINGLE_POLICY_TYPE} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent({
-            ...mockSession.submittedData,
+            ...mockSession.submittedData.quoteEligibility,
             [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           }),
         };
@@ -94,7 +94,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
 
       it(`should add a ${SINGLE_POLICY_LENGTH} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
-          ...mapAnswersToContent(mockSession.submittedData),
+          ...mapAnswersToContent(mockSession.submittedData.quoteEligibility),
           [SINGLE_POLICY_TYPE]: {
             text: FIELD_VALUES.POLICY_TYPE.SINGLE,
           },
@@ -119,7 +119,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
 
       it(`should add ${CONTRACT_VALUE} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
-          ...mapAnswersToContent(mockSession.submittedData),
+          ...mapAnswersToContent(mockSession.submittedData.quoteEligibility),
           [SINGLE_POLICY_TYPE]: {
             text: FIELD_VALUES.POLICY_TYPE.SINGLE,
           },
@@ -144,7 +144,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
 
       it(`should add ${PERCENTAGE_OF_COVER} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
-          ...mapAnswersToContent(mockSession.submittedData),
+          ...mapAnswersToContent(mockSession.submittedData.quoteEligibility),
           [SINGLE_POLICY_TYPE]: {
             text: FIELD_VALUES.POLICY_TYPE.SINGLE,
           },
@@ -173,7 +173,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
 
       beforeEach(() => {
         mockAnswersContent = {
-          ...mapAnswersToContent(mockSession.submittedData),
+          ...mapAnswersToContent(mockSession.submittedData.quoteEligibility),
           [MULTI_POLICY_TYPE]: {
             text: FIELD_VALUES.POLICY_TYPE.MULTI,
           },
@@ -308,7 +308,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
 
     it('returns an array of objects mapped to submitted data', () => {
       const mockMultiPolicySubmittedData = {
-        ...mockSession.submittedData,
+        ...mockSession.submittedData.quoteEligibility,
         [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
         [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
         [MAX_AMOUNT_OWED]: 1234,
@@ -372,7 +372,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
 
   describe('answersSummaryList', () => {
     it('should return an object with multiple summary lists', () => {
-      const mockAnswersContent = mapAnswersToContent(mockSession.submittedData);
+      const mockAnswersContent = mapAnswersToContent(mockSession.submittedData.quoteEligibility);
 
       const fieldGroups = generateFieldGroups(mockAnswersContent);
 

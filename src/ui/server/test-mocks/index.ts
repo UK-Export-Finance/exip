@@ -20,7 +20,10 @@ const mockReq = () => {
     originalUrl: 'mock',
     redirect: jest.fn(),
     session: {
-      submittedData: {},
+      submittedData: {
+        quoteEligibility: {},
+        insuranceEligibility: {},
+      },
     },
   };
 

@@ -2,7 +2,7 @@ import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
 
 const FIELD_ID = FIELD_IDS.VALID_BUYER_BODY;
@@ -74,7 +74,7 @@ const post = (req: Request, res: Response) => {
 
   const mappedAnswer = mapAnswer(req.body[FIELD_IDS.VALID_BUYER_BODY]);
 
-  req.session.submittedData = updateSubmittedData({ [FIELD_IDS.VALID_BUYER_BODY]: mappedAnswer }, req.session.submittedData);
+  req.session.submittedData.quoteEligibility = updateSubmittedData({ [FIELD_IDS.VALID_BUYER_BODY]: mappedAnswer }, req.session.submittedData.quoteEligibility);
 
   if (answer === 'true') {
     req.flash('previousRoute', ROUTES.QUOTE.BUYER_BODY);

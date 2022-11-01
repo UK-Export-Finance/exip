@@ -46,7 +46,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
     let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
     beforeEach(() => {
-      delete req.session.submittedData[FIELD_IDS.BUYER_COUNTRY];
+      delete req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY];
       api.getCountries = getCountriesSpy;
     });
 
@@ -75,7 +75,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
         await get(req, res);
 
-        const expectedCountries = mapCountries(mockCountriesResponse, req.session.submittedData[FIELD_IDS.BUYER_COUNTRY].isoCode);
+        const expectedCountries = mapCountries(mockCountriesResponse, req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY].isoCode);
 
         const expectedVariables = {
           ...singleInputPageVariables(PAGE_VARIABLES),

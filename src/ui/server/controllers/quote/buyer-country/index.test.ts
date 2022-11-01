@@ -7,7 +7,7 @@ import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
 import api from '../../../api';
 import { mapCountries } from '../../../helpers/mappings/map-countries';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
@@ -93,7 +93,7 @@ describe('controllers/quote/buyer-country', () => {
     let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
     beforeEach(() => {
-      delete req.session.submittedData[FIELD_IDS.BUYER_COUNTRY];
+      delete req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY];
       api.getCountries = getCountriesSpy;
     });
 
@@ -110,7 +110,7 @@ describe('controllers/quote/buyer-country', () => {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
         HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
         countries: mapCountries(mockCountriesResponse),
-        submittedValues: req.session.submittedData,
+        submittedValues: req.session.submittedData.quoteEligibility,
         isChangeRoute: isChangeRoute(req.originalUrl),
       };
 
@@ -123,13 +123,13 @@ describe('controllers/quote/buyer-country', () => {
 
         await get(req, res);
 
-        const expectedCountries = mapCountries(mockCountriesResponse, req.session.submittedData[FIELD_IDS.BUYER_COUNTRY].isoCode);
+        const expectedCountries = mapCountries(mockCountriesResponse, req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY].isoCode);
 
         const expectedVariables = {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
           HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
           countries: expectedCountries,
-          submittedValues: req.session.submittedData,
+          submittedValues: req.session.submittedData.quoteEligibility,
           isChangeRoute: isChangeRoute(req.originalUrl),
         };
 
@@ -288,9 +288,9 @@ describe('controllers/quote/buyer-country', () => {
           },
         };
 
-        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData);
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
 
-        expect(req.session.submittedData).toEqual(expected);
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
       it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, async () => {
@@ -337,9 +337,9 @@ describe('controllers/quote/buyer-country', () => {
           },
         };
 
-        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData);
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
 
-        expect(req.session.submittedData).toEqual(expected);
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
       it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, async () => {

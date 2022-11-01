@@ -1,7 +1,7 @@
-import { FIELD_IDS, FIELD_VALUES } from '../constants';
-import { isSinglePolicyType, isMultiPolicyType } from './policy-type';
-import { sanitiseData } from './sanitise-data';
-import { RequestBody, SubmittedData } from '../../types';
+import { FIELD_IDS, FIELD_VALUES } from '../../../constants';
+import { isSinglePolicyType, isMultiPolicyType } from '../../policy-type';
+import { sanitiseData } from '../../sanitise-data';
+import { RequestBody, SubmittedDataQuoteEligibility } from '../../../../types';
 
 const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
 
@@ -13,7 +13,7 @@ const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, POL
  * Delete contract value if policy type is multi.
  * Delete maximum amount owed if policy type is single.
  */
-const mapSubmittedData = (submittedData: SubmittedData) => {
+const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): SubmittedDataQuoteEligibility => {
   const mapped = submittedData;
 
   if (isSinglePolicyType(submittedData[POLICY_TYPE])) {
@@ -40,7 +40,7 @@ const mapSubmittedData = (submittedData: SubmittedData) => {
  * updateSubmittedData
  * update session data with sanitised form data
  */
-const updateSubmittedData = (formData: RequestBody, existingData: SubmittedData) => {
+const updateSubmittedData = (formData: RequestBody, existingData?: SubmittedDataQuoteEligibility): SubmittedDataQuoteEligibility => {
   const submittedFormData = formData;
   delete submittedFormData._csrf;
 

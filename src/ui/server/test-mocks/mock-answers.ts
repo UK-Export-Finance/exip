@@ -1,5 +1,5 @@
 import { FIELD_IDS, FIELD_VALUES } from '../constants';
-import { SubmittedData } from '../../types';
+import { SubmittedDataQuoteEligibility } from '../../types';
 
 const {
   VALID_BUYER_BODY,
@@ -25,6 +25,6 @@ const mockAnswers = {
   [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
   [POLICY_LENGTH]: 2,
   [PERCENTAGE_OF_COVER]: 90,
-} as SubmittedData;
+} as SubmittedDataQuoteEligibility;
 
 export default mockAnswers;

@@ -1,7 +1,7 @@
 import validationRules from './rules';
-import { SubmittedData } from '../../../../../types';
+import { SubmittedDataQuoteEligibility } from '../../../../../types';
 
-const validation = (submittedData: SubmittedData) => {
+const validation = (submittedData: SubmittedDataQuoteEligibility) => {
   let errors!: object;
 
   for (let i = 0; i < validationRules.length; i += 1) {

@@ -3,7 +3,7 @@ import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
@@ -147,9 +147,9 @@ describe('controllers/quote/buyer-body', () => {
 
         const expectedMappedAnswer = mapAnswer(req.body[FIELD_IDS.VALID_BUYER_BODY]);
 
-        const expected = updateSubmittedData({ [FIELD_IDS.VALID_BUYER_BODY]: expectedMappedAnswer }, req.session.submittedData);
+        const expected = updateSubmittedData({ [FIELD_IDS.VALID_BUYER_BODY]: expectedMappedAnswer }, req.session.submittedData.quoteEligibility);
 
-        expect(req.session.submittedData).toEqual(expected);
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
       it(`should redirect to ${ROUTES.QUOTE.EXPORTER_LOCATION}`, async () => {

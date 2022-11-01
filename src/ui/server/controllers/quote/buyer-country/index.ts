@@ -7,7 +7,7 @@ import { validation as generateValidationErrors } from '../../../shared-validati
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
 import { canGetAQuoteOnline, canGetAQuoteByEmail, cannotGetAQuote } from '../../../helpers/country-support';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
 
 export const PAGE_VARIABLES = {
@@ -56,8 +56,8 @@ export const get = async (req: Request, res: Response) => {
 
   let countryValue;
 
-  if (submittedData && submittedData[FIELD_IDS.BUYER_COUNTRY]) {
-    countryValue = submittedData[FIELD_IDS.BUYER_COUNTRY];
+  if (submittedData && submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY]) {
+    countryValue = submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY];
   }
 
   let mappedCountries;
@@ -72,7 +72,7 @@ export const get = async (req: Request, res: Response) => {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
     HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
-    submittedValues: req.session.submittedData,
+    submittedValues: req.session.submittedData.quoteEligibility,
     isChangeRoute: isChangeRoute(req.originalUrl),
   });
 };
@@ -116,7 +116,7 @@ export const post = async (req: Request, res: Response) => {
       },
     };
 
-    req.session.submittedData = updateSubmittedData(populatedData, req.session.submittedData);
+    req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
     if (isChangeRoute(req.originalUrl)) {
       return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);

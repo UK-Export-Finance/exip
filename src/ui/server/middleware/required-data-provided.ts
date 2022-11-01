@@ -1,5 +1,5 @@
 import { FIELD_IDS, ROUTES } from '../constants';
-import { Request, RequiredDataState, Response, SubmittedData } from '../../types';
+import { Request, RequiredDataState, Response, SubmittedDataQuoteEligibility } from '../../types';
 import { isSinglePolicyType, isMultiPolicyType } from '../helpers/policy-type';
 
 const { ROOT, COOKIES, PROBLEM_WITH_SERVICE, QUOTE } = ROUTES;
@@ -59,7 +59,7 @@ export const routeIsKnown = (knownRoutes: Array<string>, route: string): boolean
  * @param {Object} all submitted data
  * @returns {Object}
  */
-export const allRequiredData = (submittedData: SubmittedData): RequiredDataState => {
+export const allRequiredData = (submittedData: SubmittedDataQuoteEligibility): RequiredDataState => {
   const requiredDataState = {} as RequiredDataState;
 
   requiredDataState[BUYER_COUNTRY] = [];
@@ -93,7 +93,7 @@ export const allRequiredData = (submittedData: SubmittedData): RequiredDataState
   return requiredDataState;
 };
 
-export const generateRequiredDataState = (submittedData: SubmittedData): RequiredDataState => {
+export const generateRequiredDataState = (submittedData: SubmittedDataQuoteEligibility): RequiredDataState => {
   const requiredDataState = {} as RequiredDataState;
 
   const required = allRequiredData(submittedData);
@@ -123,7 +123,7 @@ export const generateRequiredDataState = (submittedData: SubmittedData): Require
  * @param {Object} all submitted data
  * @returns {Boolean}
  */
-export const hasRequiredData = (route: string, submittedData: SubmittedData) => {
+export const hasRequiredData = (route: string, submittedData: SubmittedDataQuoteEligibility) => {
   const requiredDataState = generateRequiredDataState(submittedData);
 
   const requiredData = requiredDataState[route];
@@ -177,7 +177,7 @@ export const requiredDataProvided = (req: Request, res: Response, next: () => vo
   if (req.session && req.session.submittedData) {
     const { submittedData } = req.session;
 
-    if (!hasRequiredData(url, submittedData)) {
+    if (!hasRequiredData(url, submittedData.quoteEligibility)) {
       return res.redirect(NEED_TO_START_AGAIN);
     }
   } else if (!hasRequiredData(url, {})) {

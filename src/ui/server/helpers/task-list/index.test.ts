@@ -4,7 +4,10 @@ import generateGroupsAndTasks from './generate-groups-and-tasks';
 import { TaskListDataTask, SubmittedData } from '../../../types';
 
 describe('server/helpers/task-list', () => {
-  const mockSubmittedData = {};
+  const mockSubmittedData = {
+    quoteEligibility: {},
+    insuranceEligibility: {},
+  };
 
   describe('generateTaskStatuses', () => {
     it('should return an array of groups and tasks with task statuses', () => {

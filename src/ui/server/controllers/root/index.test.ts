@@ -16,13 +16,19 @@ describe('controllers/root', () => {
     it('should add an empty submittedData object to the session', () => {
       req.session = {
         submittedData: {
-          [FIELD_IDS.CREDIT_PERIOD]: 1,
+          quoteEligibility: {
+            [FIELD_IDS.CREDIT_PERIOD]: 1,
+          },
+          insuranceEligibility: {},
         },
       };
 
       get(req, res);
 
-      expect(req.session.submittedData).toEqual({});
+      expect(req.session.submittedData).toEqual({
+        quoteEligibility: {},
+        insuranceEligibility: {},
+      });
     });
 
     it(`should redirect to ${ROUTES.QUOTE.BUYER_COUNTRY}`, () => {

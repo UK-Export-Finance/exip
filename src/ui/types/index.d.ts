@@ -8,7 +8,7 @@ import { RequiredDataState } from './required-data-state';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
 import { Quote, QuoteContent } from './quote';
 import { SelectOption } from './select-option';
-import { SubmittedData } from './submitted-data';
+import { SubmittedDataQuoteEligibility, SubmittedDataInsuranceEligibility, SubmittedData } from './submitted-data';
 import { SummaryListItem, SummaryListItemData } from './summary-list';
 import { TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
 import {
@@ -50,6 +50,8 @@ export {
   SelectOption,
   SingleInputPageVariablesInput,
   SingleInputPageVariables,
+  SubmittedDataQuoteEligibility,
+  SubmittedDataInsuranceEligibility,
   SubmittedData,
   SummaryListItemData,
   SummaryListItem,

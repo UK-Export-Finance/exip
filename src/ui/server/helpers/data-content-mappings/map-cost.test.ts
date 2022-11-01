@@ -1,7 +1,7 @@
 import mapCost from './map-cost';
 import formatCurrency from '../format-currency';
 import { FIELD_IDS, FIELD_VALUES } from '../../constants';
-import { SubmittedData } from '../../../types';
+import { SubmittedDataQuoteEligibility } from '../../../types';
 
 const { CONTRACT_VALUE, CURRENCY, MAX_AMOUNT_OWED, POLICY_TYPE } = FIELD_IDS;
 
@@ -14,7 +14,7 @@ describe('server/helpers/data-content-mappings/map-cost', () => {
           isoCode: 'GBP',
         },
         [CONTRACT_VALUE]: 10,
-      } as SubmittedData;
+      } as SubmittedDataQuoteEligibility;
 
       const result = mapCost(mockDataSinglePolicyType);
 
@@ -36,7 +36,7 @@ describe('server/helpers/data-content-mappings/map-cost', () => {
           isoCode: 'GBP',
         },
         [MAX_AMOUNT_OWED]: 10,
-      } as SubmittedData;
+      } as SubmittedDataQuoteEligibility;
 
       const result = mapCost(mockDataMultiPolicyType);
 
