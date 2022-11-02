@@ -1,5 +1,5 @@
 const COOKIES_CONSENT = {
-  HEADING: 'Cookies on Get a quote for UKEF export insurance',
+  HEADING_INTRO: 'Cookies on',
   HIDE_BUTTON: 'Hide this message',
   COOKIES_LINK: 'cookies link',
   QUESTION: {
