@@ -45,4 +45,13 @@ interface SingleInputPageVariables extends CorePageVariables {
   FIELD_HINT?: string | object;
 }
 
-export { CorePageVariablesInitialInput, CorePageVariablesInput, CorePageVariables, PageContentStrings, PageVariablesContentStrings, SingleInputPageVariablesInitialInput, SingleInputPageVariablesInput, SingleInputPageVariables };
+export {
+  CorePageVariablesInitialInput,
+  CorePageVariablesInput,
+  CorePageVariables,
+  PageContentStrings,
+  PageVariablesContentStrings,
+  SingleInputPageVariablesInitialInput,
+  SingleInputPageVariablesInput,
+  SingleInputPageVariables,
+};
