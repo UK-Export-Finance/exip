@@ -1,18 +1,21 @@
-import singleInputPageVariables from './single-input-page-variables';
-import corePageVariables from './core-page-variables';
-import { FIELDS } from '../content-strings';
-import { FIELD_IDS } from '../constants';
+import singleInputPageVariables from '.';
+import corePageVariables from '../core';
+import { FIELDS, PRODUCT } from '../../../content-strings';
+import { FIELD_IDS } from '../../../constants';
 
-describe('server/helpers/single-input-page-variables', () => {
+describe('server/helpers/page-variables/single-input', () => {
   const mock = {
     FIELD_ID: 'test',
     PAGE_CONTENT_STRINGS: {
       PAGE_TITLE: 'Testing',
     },
+    PRODUCT: {
+      DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
+    },
     BACK_LINK: '/mock',
   };
 
-  it('should return an object with provided data and additional content strings', () => {
+  it('should return corePageVariables with BACK_LINK, quote product description and FIELD_ID', () => {
     const result = singleInputPageVariables(mock);
 
     const expected = {

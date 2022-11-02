@@ -10,9 +10,17 @@ interface PageVariablesContentStrings {
   PRODUCT: object;
 }
 
-interface CorePageVariablesInput {
+interface PageVariablesProduct {
+  DESCRIPTION: string;
+}
+
+interface CorePageVariablesInitialInput {
   PAGE_CONTENT_STRINGS: PageContentStrings;
   BACK_LINK?: string;
+}
+
+interface CorePageVariablesInput extends CorePageVariablesInitialInput {
+  PRODUCT: PageVariablesProduct;
 }
 
 interface CorePageVariables {
@@ -20,8 +28,15 @@ interface CorePageVariables {
   BACK_LINK?: string;
 }
 
-interface SingleInputPageVariablesInput extends CorePageVariablesInput {
+interface SingleInputPageVariablesInitialInput {
+  PAGE_CONTENT_STRINGS: PageContentStrings;
+  BACK_LINK?: string;
   FIELD_ID: string;
+}
+
+interface SingleInputPageVariablesInput extends SingleInputPageVariablesInitialInput {
+  FIELD_ID: string;
+  PRODUCT: PageVariablesProduct;
 }
 
 interface SingleInputPageVariables extends CorePageVariables {
@@ -30,4 +45,4 @@ interface SingleInputPageVariables extends CorePageVariables {
   FIELD_HINT?: string | object;
 }
 
-export { CorePageVariablesInput, CorePageVariables, PageContentStrings, PageVariablesContentStrings, SingleInputPageVariablesInput, SingleInputPageVariables };
+export { CorePageVariablesInitialInput, CorePageVariablesInput, CorePageVariables, PageContentStrings, PageVariablesContentStrings, SingleInputPageVariablesInitialInput, SingleInputPageVariablesInput, SingleInputPageVariables };

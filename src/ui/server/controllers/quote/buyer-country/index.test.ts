@@ -1,7 +1,7 @@
 import { PAGE_VARIABLES, getBackLink, get, post } from '.';
 import { LINKS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
-import singleInputPageVariables from '../../../helpers/single-input-page-variables';
+import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';

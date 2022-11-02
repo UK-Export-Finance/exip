@@ -1,7 +1,7 @@
 import controller from '.';
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
-import corePageVariables from '../../../helpers/core-page-variables';
+import corePageVariables from '../../../helpers/page-variables/core/quote';
 
 import { generateQuote } from '../../../generate-quote';
 import mapQuoteToContent from '../../../helpers/data-content-mappings/map-quote-to-content';

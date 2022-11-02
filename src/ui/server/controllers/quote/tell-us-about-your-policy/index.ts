@@ -20,7 +20,9 @@ const generatePageVariables = (policyType: string) => {
       COOKIES_CONSENT,
       LINKS,
       FOOTER,
-      PRODUCT,
+      PRODUCT: {
+        DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
+      },
       ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
     },
     FIELDS: {

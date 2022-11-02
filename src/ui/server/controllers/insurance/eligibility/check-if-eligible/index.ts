@@ -1,7 +1,7 @@
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import { Request, Response } from '../../../../../types';
-import corePageVariables from '../../../../helpers/core-page-variables';
+import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 
 const get = (req: Request, res: Response) =>
   res.render(TEMPLATES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, {

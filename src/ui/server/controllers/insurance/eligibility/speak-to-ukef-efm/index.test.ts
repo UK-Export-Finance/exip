@@ -1,7 +1,7 @@
 import get from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
-import corePageVariables from '../../../../helpers/core-page-variables';
+import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 

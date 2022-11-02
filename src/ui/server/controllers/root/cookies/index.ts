@@ -1,7 +1,7 @@
-import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../content-strings';
+import { ERROR_MESSAGES, FIELDS, PAGES, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import { Request, Response } from '../../../../types';
-import singleInputPageVariables from '../../../helpers/single-input-page-variables';
+import singleInputPageVariables from '../../../helpers/page-variables/single-input';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 
 const FIELD_ID = FIELD_IDS.OPTIONAL_COOKIES;
@@ -9,6 +9,7 @@ const FIELD_ID = FIELD_IDS.OPTIONAL_COOKIES;
 const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.COOKIES_PAGE,
+  PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
 };
 
 const get = (req: Request, res: Response) => {
@@ -27,7 +28,7 @@ const post = (req: Request, res: Response) => {
 
   if (validationErrors) {
     return res.render(TEMPLATES.COOKIES, {
-      ...singleInputPageVariables(PAGE_VARIABLES),
+      ...singleInputPageVariables({ ...PAGE_VARIABLES }),
       FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
       BACK_LINK: req.headers.referer,
       validationErrors,

@@ -71,7 +71,9 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             FOOTER,
             LINKS,
             PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.SINGLE_POLICY_PAGE_TITLE,
-            PRODUCT,
+            PRODUCT: {
+              DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
+            },
             ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
           },
           FIELDS: {
@@ -120,7 +122,9 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             FOOTER,
             LINKS,
             PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.MULTI_POLICY_PAGE_TITLE,
-            PRODUCT,
+            PRODUCT: {
+              DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
+            },
             ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
           },
           FIELDS: {
@@ -167,7 +171,9 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
         const expected = {
           CONTENT_STRINGS: {
-            PRODUCT,
+            PRODUCT: {
+              DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
+            },
             FOOTER,
             LINKS,
             BUTTONS,

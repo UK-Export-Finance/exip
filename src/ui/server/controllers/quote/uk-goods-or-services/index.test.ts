@@ -1,7 +1,7 @@
 import { PAGE_VARIABLES, get, post } from '.';
 import { ERROR_MESSAGES, PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
-import singleInputPageVariables from '../../../helpers/single-input-page-variables';
+import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { mockReq, mockRes } from '../../../test-mocks';

@@ -1,11 +1,14 @@
-import corePageVariables from './core-page-variables';
-import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PRODUCT } from '../content-strings';
+import corePageVariables from '.';
+import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PRODUCT } from '../../../content-strings';
 
-describe('server/helpers/core-page-variables', () => {
+describe('server/helpers/page-variables/core', () => {
   const mock = {
     PAGE_CONTENT_STRINGS: {
       PAGE_TITLE: 'Testing',
       HEADING: 'Testing',
+    },
+    PRODUCT: {
+      DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
     },
     BACK_LINK: '/mock',
   };
@@ -20,7 +23,7 @@ describe('server/helpers/core-page-variables', () => {
         COOKIES_CONSENT,
         FOOTER,
         LINKS,
-        PRODUCT,
+        PRODUCT: mock.PRODUCT,
       },
       BACK_LINK: mock.BACK_LINK,
     };

@@ -2,7 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import api from '../../../../api';
 import { mapCountries } from '../../../../helpers/mappings/map-countries';
-import singleInputPageVariables from '../../../../helpers/single-input-page-variables';
+import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import getCountryByName from '../../../../helpers/get-country-by-name';
 import { canApplyOnline, canApplyOffline, cannotApply } from '../../../../helpers/country-support';
