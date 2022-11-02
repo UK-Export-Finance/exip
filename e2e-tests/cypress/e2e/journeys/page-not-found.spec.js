@@ -1,6 +1,7 @@
 import { heading } from '../pages/shared';
 import { pageNotFoundPage } from '../pages';
-import { PAGES } from '../../../content-strings';
+import partials from '../partials';
+import { PAGES, PRODUCT } from '../../../content-strings';
 
 const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
 
@@ -20,6 +21,27 @@ context('404 Page not found', () => {
 
   it('renders an analytics cookies consent banner that can be rejected', () => {
     cy.rejectAnalyticsCookies();
+  });
+
+  describe('header', () => {
+    it('renders a GOV home link and SVG', () => {
+      partials.header.govHomeLink().should('exist');
+      partials.header.govCrownText().invoke('text').then((text) => {
+        expect(text.trim()).equal('GOV.UK');
+      });
+
+      partials.header.govHomeLink().should('have.attr', 'href', 'https://www.gov.uk');
+
+      partials.header.govCrownSvg().should('exist');
+    });
+
+    it('renders service name link', () => {
+      partials.header.serviceName().invoke('text').then((text) => {
+        expect(text.trim()).equal(PRODUCT.DESCRIPTION.GENERIC);
+      });
+
+      partials.header.serviceName().should('have.attr', 'href', '/');
+    });
   });
 
   it('renders a phase banner', () => {
