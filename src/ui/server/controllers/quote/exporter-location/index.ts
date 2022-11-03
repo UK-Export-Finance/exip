@@ -19,7 +19,7 @@ const get = (req: Request, res: Response) =>
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
     }),
-    submittedValues: req.session.submittedData,
+    submittedValues: req.session.submittedData.quoteEligibility,
   });
 
 const post = (req: Request, res: Response) => {

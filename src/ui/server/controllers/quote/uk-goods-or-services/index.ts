@@ -21,7 +21,7 @@ const get = (req: Request, res: Response) =>
   res.render(TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES, {
     ...singleInputPageVariables(PAGE_VARIABLES),
     BACK_LINK: req.headers.referer,
-    submittedValues: req.session.submittedData,
+    submittedValues: req.session.submittedData.quoteEligibility,
   });
 
 const post = (req: Request, res: Response) => {

@@ -72,7 +72,7 @@ export const get = async (req: Request, res: Response) => {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
     HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
-    submittedValues: req.session.submittedData.quoteEligibility,
+    submittedValues: req.session.submittedData?.quoteEligibility,
     isChangeRoute: isChangeRoute(req.originalUrl),
   });
 };

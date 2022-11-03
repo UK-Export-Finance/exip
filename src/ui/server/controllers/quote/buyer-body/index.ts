@@ -54,7 +54,7 @@ const get = (req: Request, res: Response) => {
   return res.render(TEMPLATES.QUOTE.BUYER_BODY, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
     submittedValues: {
-      ...req.session.submittedData,
+      ...req.session.submittedData.quoteEligibility,
       [FIELD_ID]: mappedAnswer,
     },
   });

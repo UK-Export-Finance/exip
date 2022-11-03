@@ -86,7 +86,7 @@ describe('controllers/quote/buyer-body', () => {
       const expectedVariables = {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
         submittedValues: {
-          ...req.session.submittedData,
+          ...req.session.submittedData.quoteEligibility,
           [PAGE_VARIABLES.FIELD_ID]: mapSubmittedAnswer(req.session.submittedData[FIELD_IDS.VALID_BUYER_BODY]),
         },
       };
