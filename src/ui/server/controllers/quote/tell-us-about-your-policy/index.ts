@@ -127,7 +127,7 @@ const get = async (req: Request, res: Response) => {
     currencies: mappedCurrencies,
     percentageOfCover: mappedPercentageOfCover,
     creditPeriod: mappedCreditPeriod,
-    submittedValues: submittedData,
+    submittedValues: submittedData.quoteEligibility,
   });
 };
 

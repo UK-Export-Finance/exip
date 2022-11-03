@@ -15,7 +15,8 @@ type SubmittedDataQuoteEligibility = {
 };
 
 type SubmittedDataInsuranceEligibility = {
-  
+  wantCoverOverMaxAmount?: boolean;
+  wantCoverOverMaxPeriod?: boolean;
 };
 
 type SubmittedData = {

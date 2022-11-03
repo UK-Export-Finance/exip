@@ -1,12 +1,12 @@
 import generateTaskList, { generateTaskStatuses, generateSimplifiedTaskList } from '.';
 import { taskStatus } from './task-helpers';
 import generateGroupsAndTasks from './generate-groups-and-tasks';
-import { TaskListDataTask, SubmittedData } from '../../../types';
+import { TaskListDataTask, SubmittedDataInsuranceEligibility } from '../../../types';
 
 describe('server/helpers/task-list', () => {
   const mockSubmittedData = {
-    quoteEligibility: {},
-    insuranceEligibility: {},
+    wantCoverOverMaxAmount: false,
+    wantCoverOverMaxPeriod: false,
   };
 
   describe('generateTaskStatuses', () => {
@@ -15,7 +15,7 @@ describe('server/helpers/task-list', () => {
 
       const result = generateTaskStatuses(mockTaskListData, mockSubmittedData);
 
-      const mapTask = (task: TaskListDataTask, submittedData: SubmittedData) => ({
+      const mapTask = (task: TaskListDataTask, submittedData: SubmittedDataInsuranceEligibility) => ({
         ...task,
         status: taskStatus(task, submittedData),
       });

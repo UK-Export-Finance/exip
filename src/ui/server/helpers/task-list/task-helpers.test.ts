@@ -4,8 +4,8 @@ import { TASKS } from '../../content-strings';
 
 describe('server/helpers/task-helpers', () => {
   const mockSubmittedData = {
-    amount: 1234,
-    policyType: 'mock',
+    wantCoverOverMaxAmount: true,
+    wantCoverOverMaxPeriod: true,
   };
 
   describe('getGroupById', () => {
@@ -46,11 +46,11 @@ describe('server/helpers/task-helpers', () => {
 
   describe('getSubmittedFields', () => {
     it('should return fields that are provided and also in provided submitted fields', () => {
-      const mockFields = ['amount', 'contractValue', 'policyType'];
+      const mockFields = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod', 'mockField'];
 
       const result = getSubmittedFields(mockFields, mockSubmittedData);
 
-      const expected = ['amount', 'policyType'];
+      const expected = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'];
 
       expect(result).toEqual(expected);
     });
@@ -67,10 +67,10 @@ describe('server/helpers/task-helpers', () => {
   describe('taskIsInProgress', () => {
     describe('when all relevant fields have NOT been submitted', () => {
       it('should return true', () => {
-        const mockFields = ['amount', 'policyType'];
+        const mockFields = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'];
 
         const mockSubmittedDataIncomplete = {
-          amount: mockSubmittedData.amount,
+          wantCoverOverMaxAmount: mockSubmittedData.wantCoverOverMaxAmount,
         };
 
         const result = taskIsInProgress(mockFields, mockSubmittedDataIncomplete);
@@ -81,7 +81,7 @@ describe('server/helpers/task-helpers', () => {
 
     describe('when all relevant fields have been submitted', () => {
       it('should return false', () => {
-        const mockFields = ['amount', 'policyType'];
+        const mockFields = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'];
 
         const result = taskIsInProgress(mockFields, mockSubmittedData);
 
@@ -93,7 +93,7 @@ describe('server/helpers/task-helpers', () => {
   describe('taskIsComplete', () => {
     describe('when all relevant fields have been submitted', () => {
       it('should return true', () => {
-        const mockFields = ['amount', 'policyType'];
+        const mockFields = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'];
 
         const result = taskIsComplete(mockFields, mockSubmittedData);
 
@@ -103,7 +103,7 @@ describe('server/helpers/task-helpers', () => {
 
     describe('when all relevant fields have NOT been submitted', () => {
       it('should return false', () => {
-        const mockFields = ['amount', 'policyType', 'mockField'];
+        const mockFields = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod', 'mockField'];
 
         const result = taskIsComplete(mockFields, mockSubmittedData);
 
@@ -115,7 +115,7 @@ describe('server/helpers/task-helpers', () => {
   describe('areTaskDependenciesMet', () => {
     describe('when all dependencies are in submitted data', () => {
       it('should return true', () => {
-        const mockDeps = ['amount', 'policyType'];
+        const mockDeps = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'];
 
         const result = areTaskDependenciesMet(mockDeps, mockSubmittedData);
 
@@ -156,7 +156,7 @@ describe('server/helpers/task-helpers', () => {
           title: 'Mock',
           id: 'mock',
           fields: ['fieldA', 'fieldB'],
-          dependencies: ['amount', 'policyType'],
+          dependencies: ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'],
         };
 
         const result = taskStatus(mockTask, mockSubmittedData);
@@ -171,11 +171,11 @@ describe('server/helpers/task-helpers', () => {
           title: 'Mock',
           id: 'mock',
           fields: ['fieldA', 'fieldB'],
-          dependencies: ['amount'],
+          dependencies: ['wantCoverOverMaxAmount'],
         };
 
         const mockSubmittedDataHalfComplete = {
-          amount: mockSubmittedData.amount,
+          wantCoverOverMaxAmount: mockSubmittedData.wantCoverOverMaxAmount,
           fieldA: 'mock',
         };
 
@@ -190,7 +190,7 @@ describe('server/helpers/task-helpers', () => {
         const mockTask = {
           title: 'Mock',
           id: 'mock',
-          fields: ['amount', 'policyType'],
+          fields: ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'],
           dependencies: [],
         };
 

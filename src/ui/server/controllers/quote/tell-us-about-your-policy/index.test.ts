@@ -227,7 +227,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         currencies: expectedCurrencies,
         percentageOfCover: mappedPercentageOfCover,
         creditPeriod: mappedCreditPeriod,
-        submittedValues: req.session.submittedData,
+        submittedValues: req.session.submittedData.quoteEligibility,
       });
     });
 
@@ -251,7 +251,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCover,
           creditPeriod: mappedCreditPeriod,
-          submittedValues: req.session.submittedData,
+          submittedValues: req.session.submittedData.quoteEligibility,
         });
       });
     });
@@ -278,7 +278,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCoverWithSelected,
           creditPeriod: mappedCreditPeriod,
-          submittedValues: req.session.submittedData,
+          submittedValues: req.session.submittedData.quoteEligibility,
         });
       });
     });
@@ -307,7 +307,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCoverWithSelected,
           creditPeriod: mappedCreditPeriodWithSelected,
-          submittedValues: req.session.submittedData,
+          submittedValues: req.session.submittedData.quoteEligibility,
         });
       });
     });
