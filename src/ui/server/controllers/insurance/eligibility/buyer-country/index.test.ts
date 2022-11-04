@@ -188,9 +188,12 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
           },
         };
 
-        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility);
+        const expected = {
+          ...req.session.submittedData,
+          insuranceEligibility: updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility),
+        };
 
-        expect(req.session.submittedData.insuranceEligibility).toEqual(expected);
+        expect(req.session.submittedData).toEqual(expected);
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION}`, async () => {

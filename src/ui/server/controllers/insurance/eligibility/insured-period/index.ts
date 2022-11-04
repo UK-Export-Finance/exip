@@ -40,7 +40,10 @@ const post = (req: Request, res: Response) => {
     return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM);
   }
 
-  req.session.submittedData.insuranceEligibility = updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility);
+  req.session.submittedData = {
+    ...req.session.submittedData,
+    insuranceEligibility: updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility),
+  };
 
   return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED);
 };

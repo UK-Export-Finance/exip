@@ -75,7 +75,10 @@ export const post = async (req: Request, res: Response) => {
       },
     };
 
-    req.session.submittedData.insuranceEligibility = updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility);
+    req.session.submittedData = {
+      ...req.session.submittedData,
+      insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
+    };
 
     return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
   }

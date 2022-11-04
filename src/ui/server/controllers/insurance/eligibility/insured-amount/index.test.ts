@@ -87,9 +87,12 @@ describe('controllers/insurance/eligibility/insured-amount', () => {
           [PAGE_VARIABLES.FIELD_ID]: validBody[PAGE_VARIABLES.FIELD_ID],
         };
 
-        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility);
+        const expected = {
+          ...req.session.submittedData,
+          insuranceEligibility: updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility),
+        };
 
-        expect(req.session.submittedData.insuranceEligibility).toEqual(expected);
+        expect(req.session.submittedData).toEqual(expected);
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {

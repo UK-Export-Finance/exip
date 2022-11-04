@@ -1,7 +1,7 @@
 import { get, post } from '.';
 import { PAGES } from '../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
+import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
@@ -15,6 +15,28 @@ describe('controllers/insurance/start', () => {
   });
 
   describe('get', () => {
+    it('should add an empty submittedData object to the session', () => {
+      req.session = {
+        submittedData: {
+          quoteEligibility: {
+            [FIELD_IDS.CREDIT_PERIOD]: 1,
+          },
+          insuranceEligibility: {
+            [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: true,
+          },
+        },
+      };
+
+      get(req, res);
+
+      expect(req.session.submittedData).toEqual({
+        quoteEligibility: {
+          [FIELD_IDS.CREDIT_PERIOD]: 1,
+        },
+        insuranceEligibility: {},
+      });
+    });
+
     it('should render template', () => {
       get(req, res);
 

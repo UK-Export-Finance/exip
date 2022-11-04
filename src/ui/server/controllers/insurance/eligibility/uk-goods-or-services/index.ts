@@ -43,7 +43,10 @@ const post = (req: Request, res: Response) => {
     return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
   }
 
-  req.session.submittedData.insuranceEligibility = updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility);
+  req.session.submittedData = {
+    ...req.session.submittedData,
+    insuranceEligibility: updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility),
+  };
 
   return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
 };
