@@ -14,19 +14,22 @@ describe('controllers/quote/check-your-answers', () => {
   let res: Response;
 
   const mockSessionData = {
-    [BUYER_COUNTRY]: {
-      name: mockAnswers[BUYER_COUNTRY],
-      isoCode: 'FRA',
+    quoteEligibility: {
+      [BUYER_COUNTRY]: {
+        name: mockAnswers[BUYER_COUNTRY],
+        isoCode: 'FRA',
+      },
+      [CREDIT_PERIOD]: 2,
+      [CURRENCY]: {
+        name: 'UK Sterling',
+        isoCode: 'GBP',
+      },
+      [MAX_AMOUNT_OWED]: 1234,
+      [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+      [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
+      [VALID_EXPORTER_LOCATION]: true,
     },
-    [CREDIT_PERIOD]: 2,
-    [CURRENCY]: {
-      name: 'UK Sterling',
-      isoCode: 'GBP',
-    },
-    [MAX_AMOUNT_OWED]: 1234,
-    [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
-    [VALID_EXPORTER_LOCATION]: true,
+    insuranceEligibility: {},
   };
 
   beforeEach(() => {
@@ -42,7 +45,7 @@ describe('controllers/quote/check-your-answers', () => {
     it('should render template', () => {
       get(req, res);
 
-      const answers = mapAnswersToContent(mockSessionData);
+      const answers = mapAnswersToContent(mockSessionData.quoteEligibility);
 
       const expectedSummaryList = answersSummaryList(answers);
 

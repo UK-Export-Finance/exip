@@ -1,5 +1,5 @@
 import { taskStatus } from './task-helpers';
-import { TaskListData, TaskListDataTask, TaskListGroup, SubmittedData } from '../../../types';
+import { TaskListData, TaskListDataTask, TaskListGroup, SubmittedDataInsuranceEligibility } from '../../../types';
 
 /**
  * generateTaskStatuses
@@ -7,7 +7,7 @@ import { TaskListData, TaskListDataTask, TaskListGroup, SubmittedData } from '..
  * @param {Object} submittedData Submitted application data
  * @returns {Object} Task list groups and tasks with added task statuses.
  */
-export const generateTaskStatuses = (taskListData: TaskListData, submittedData: SubmittedData): TaskListData => {
+export const generateTaskStatuses = (taskListData: TaskListData, submittedData: SubmittedDataInsuranceEligibility): TaskListData => {
   const tasksList = taskListData.map((group) => {
     return {
       ...group,
@@ -47,7 +47,7 @@ export const generateSimplifiedTaskList = (taskList: TaskListData): Array<TaskLi
  * @param {Object} submittedData Submitted application data
  * @returns {Array} generateSimplifiedTaskList- Array of groups and tasks with only the data required for UI consumption.
  */
-const generateTaskList = (groupsAndTasks: TaskListData, submittedData: SubmittedData): Array<TaskListGroup> => {
+const generateTaskList = (groupsAndTasks: TaskListData, submittedData: SubmittedDataInsuranceEligibility): Array<TaskListGroup> => {
   // add task statuses
   const withStatuses = generateTaskStatuses(groupsAndTasks, submittedData);
 

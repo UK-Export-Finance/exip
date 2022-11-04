@@ -7,7 +7,7 @@ import generateValidationErrors from './validation';
 import getCurrencyByCode from '../../../helpers/get-currency-by-code';
 import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-cover';
 import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-type';
 import { mockReq, mockRes, mockAnswers, mockSession } from '../../../test-mocks';
 import { Request, Response, SelectOption, TellUsAboutPolicyPageVariables } from '../../../../types';
@@ -38,10 +38,10 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
   let mappedCreditPeriod: Array<SelectOption>;
 
   const previousFlowSubmittedData = {
-    [BUYER_COUNTRY]: mockSession.submittedData[BUYER_COUNTRY],
-    [CONTRACT_VALUE]: mockSession.submittedData[CONTRACT_VALUE],
-    [POLICY_TYPE]: mockSession.submittedData[POLICY_TYPE],
-    [POLICY_LENGTH]: mockSession.submittedData[POLICY_LENGTH],
+    [BUYER_COUNTRY]: mockSession.submittedData.quoteEligibility[BUYER_COUNTRY],
+    [CONTRACT_VALUE]: mockSession.submittedData.quoteEligibility[CONTRACT_VALUE],
+    [POLICY_TYPE]: mockSession.submittedData.quoteEligibility[POLICY_TYPE],
+    [POLICY_LENGTH]: mockSession.submittedData.quoteEligibility[POLICY_LENGTH],
   };
 
   beforeEach(() => {
@@ -198,8 +198,11 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
     beforeEach(() => {
       req.session.submittedData = {
-        [POLICY_TYPE]: mockSession.submittedData[POLICY_TYPE],
-        [BUYER_COUNTRY]: mockSession.submittedData[BUYER_COUNTRY],
+        quoteEligibility: {
+          [POLICY_TYPE]: mockSession.submittedData.quoteEligibility[POLICY_TYPE],
+          [BUYER_COUNTRY]: mockSession.submittedData.quoteEligibility[BUYER_COUNTRY],
+        },
+        insuranceEligibility: {},
       };
 
       api.getCurrencies = getCurrenciesSpy;
@@ -217,38 +220,38 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       const expectedCurrencies = mapCurrencies(mockCurrenciesResponse);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
-        ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
+        ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
         BACK_LINK: req.headers.referer,
-        isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
-        isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
+        isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+        isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
         currencies: expectedCurrencies,
         percentageOfCover: mappedPercentageOfCover,
         creditPeriod: mappedCreditPeriod,
-        submittedValues: req.session.submittedData,
+        submittedValues: req.session.submittedData.quoteEligibility,
       });
     });
 
     describe('when a currency has been submitted', () => {
       beforeEach(() => {
         req.session.submittedData = mockSession.submittedData;
-        delete req.session.submittedData[PERCENTAGE_OF_COVER];
-        delete req.session.submittedData[CREDIT_PERIOD];
+        delete req.session.submittedData.quoteEligibility[PERCENTAGE_OF_COVER];
+        delete req.session.submittedData.quoteEligibility[CREDIT_PERIOD];
       });
 
       it('should render template with currencies mapped to submitted currency and submittedValues', async () => {
         await get(req, res);
 
-        const expectedCurrencies = mapCurrencies(mockCurrenciesResponse, req.session.submittedData[CURRENCY].isoCode);
+        const expectedCurrencies = mapCurrencies(mockCurrenciesResponse, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
-          ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
+          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
-          isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
-          isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
+          isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+          isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCover,
           creditPeriod: mappedCreditPeriod,
-          submittedValues: req.session.submittedData,
+          submittedValues: req.session.submittedData.quoteEligibility,
         });
       });
     });
@@ -256,26 +259,26 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     describe('when a percentage of cover has been submitted', () => {
       beforeEach(() => {
         req.session.submittedData = mockSession.submittedData;
-        req.session.submittedData[PERCENTAGE_OF_COVER] = mockAnswers[PERCENTAGE_OF_COVER];
-        delete req.session.submittedData[CREDIT_PERIOD];
+        req.session.submittedData.quoteEligibility[PERCENTAGE_OF_COVER] = mockAnswers[PERCENTAGE_OF_COVER];
+        delete req.session.submittedData.quoteEligibility[CREDIT_PERIOD];
       });
 
       it('should render template with percentage of cover mapped to submitted percentage and submittedValues', async () => {
         await get(req, res);
 
-        const expectedCurrencies = mapCurrencies(mockCurrenciesResponse, req.session.submittedData[CURRENCY].isoCode);
+        const expectedCurrencies = mapCurrencies(mockCurrenciesResponse, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
 
-        const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData[PERCENTAGE_OF_COVER]);
+        const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData.quoteEligibility[PERCENTAGE_OF_COVER]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
-          ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
+          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
-          isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
-          isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
+          isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+          isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCoverWithSelected,
           creditPeriod: mappedCreditPeriod,
-          submittedValues: req.session.submittedData,
+          submittedValues: req.session.submittedData.quoteEligibility,
         });
       });
     });
@@ -283,27 +286,28 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     describe('when a credit period has been submitted', () => {
       beforeEach(() => {
         req.session.submittedData = mockSession.submittedData;
-        req.session.submittedData[CREDIT_PERIOD] = 2;
+        // @ts-ignore
+        req.session.submittedData.quoteEligibility[CREDIT_PERIOD] = 2;
       });
 
       it('should render template with credit period mapped to submitted credit period and submittedValues', async () => {
         await get(req, res);
 
-        const expectedCurrencies = mapCurrencies(mockCurrenciesResponse, req.session.submittedData[CURRENCY].isoCode);
+        const expectedCurrencies = mapCurrencies(mockCurrenciesResponse, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
 
-        const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData[PERCENTAGE_OF_COVER]);
+        const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData.quoteEligibility[PERCENTAGE_OF_COVER]);
 
-        const mappedCreditPeriodWithSelected = mapCreditPeriod(creditPeriodOptions, String(req.session.submittedData[CREDIT_PERIOD]));
+        const mappedCreditPeriodWithSelected = mapCreditPeriod(creditPeriodOptions, String(req.session.submittedData.quoteEligibility[CREDIT_PERIOD]));
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
-          ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
+          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
-          isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
-          isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
+          isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+          isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCoverWithSelected,
           creditPeriod: mappedCreditPeriodWithSelected,
-          submittedValues: req.session.submittedData,
+          submittedValues: req.session.submittedData.quoteEligibility,
         });
       });
     });
@@ -353,7 +357,10 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     beforeEach(() => {
       api.getCurrencies = getCurrenciesSpy;
       req.body = mockAnswers;
-      req.session.submittedData = previousFlowSubmittedData;
+      req.session.submittedData = {
+        quoteEligibility: previousFlowSubmittedData,
+        insuranceEligibility: {},
+      };
     });
 
     describe('when a currency code has been submitted', () => {
@@ -373,13 +380,13 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         await post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
-          ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
+          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
-          isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
-          isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
+          isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+          isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           currencies: mapCurrencies(mockCurrenciesResponse),
           validationErrors: generateValidationErrors({
-            ...req.session.submittedData,
+            ...req.session.submittedData.quoteEligibility,
             ...req.body,
           }),
           percentageOfCover: mappedPercentageOfCover,
@@ -390,7 +397,10 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
       describe('when a currency code has been submitted', () => {
         beforeEach(() => {
-          req.session.submittedData = previousFlowSubmittedData;
+          req.session.submittedData = {
+            quoteEligibility: previousFlowSubmittedData,
+            insuranceEligibility: {},
+          };
           req.body[CURRENCY] = mockAnswers[CURRENCY];
         });
 
@@ -398,13 +408,13 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           await post(req, res);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
-            ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
+            ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             BACK_LINK: req.headers.referer,
-            isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
-            isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
+            isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+            isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             currencies: mapCurrencies(mockCurrenciesResponse, req.body[CURRENCY]),
             validationErrors: generateValidationErrors({
-              ...req.session.submittedData,
+              ...req.session.submittedData.quoteEligibility,
               ...req.body,
             }),
             percentageOfCover: mappedPercentageOfCover,
@@ -425,13 +435,13 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.body[PERCENTAGE_OF_COVER]);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
-            ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
+            ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             BACK_LINK: req.headers.referer,
-            isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
-            isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
+            isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+            isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             currencies: mapCurrencies(mockCurrenciesResponse, req.body[CURRENCY]),
             validationErrors: generateValidationErrors({
-              ...req.session.submittedData,
+              ...req.session.submittedData.quoteEligibility,
               ...req.body,
             }),
             percentageOfCover: mappedPercentageOfCoverWithSelected,
@@ -449,16 +459,16 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         it('should render template with mapped submitted credit period', async () => {
           await post(req, res);
 
-          const mappedCreditPeriodWithSelected = mapCreditPeriod(creditPeriodOptions, String(req.session.submittedData[CREDIT_PERIOD]));
+          const mappedCreditPeriodWithSelected = mapCreditPeriod(creditPeriodOptions, String(req.session.submittedData.quoteEligibility[CREDIT_PERIOD]));
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
-            ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),
+            ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             BACK_LINK: req.headers.referer,
-            isSinglePolicyType: isSinglePolicyType(req.session.submittedData[POLICY_TYPE]),
-            isMultiPolicyType: isMultiPolicyType(req.session.submittedData[POLICY_TYPE]),
+            isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+            isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             currencies: mapCurrencies(mockCurrenciesResponse, req.body[CURRENCY]),
             validationErrors: generateValidationErrors({
-              ...req.session.submittedData,
+              ...req.session.submittedData.quoteEligibility,
               ...req.body,
             }),
             percentageOfCover: mappedPercentageOfCover,
@@ -490,9 +500,9 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           [PERCENTAGE_OF_COVER]: validBody[PERCENTAGE_OF_COVER],
         };
 
-        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData);
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
 
-        expect(req.session.submittedData).toEqual(expected);
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
       it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, async () => {

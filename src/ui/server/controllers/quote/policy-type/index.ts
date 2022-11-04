@@ -3,7 +3,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/core-page-variables';
 import generateValidationErrors from './validation';
 import { isSinglePolicyType } from '../../../helpers/policy-type';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
 
 const { MULTI_POLICY_TYPE, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH, SINGLE_POLICY_TYPE } = FIELD_IDS;
@@ -37,7 +37,7 @@ const get = (req: Request, res: Response) =>
   res.render(TEMPLATES.QUOTE.POLICY_TYPE, {
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
     ...PAGE_VARIABLES,
-    submittedValues: req.session.submittedData,
+    submittedValues: req.session.submittedData.quoteEligibility,
   });
 
 const post = (req: Request, res: Response) => {
@@ -61,7 +61,7 @@ const post = (req: Request, res: Response) => {
     };
   }
 
-  req.session.submittedData = updateSubmittedData(populatedData, req.session.submittedData);
+  req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
   return res.redirect(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
 };

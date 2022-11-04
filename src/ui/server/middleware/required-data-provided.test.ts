@@ -71,10 +71,13 @@ describe('middleware/required-data-provided', () => {
     describe('when policy type is single', () => {
       it('should return an array of all required fields with single policy specific fields', () => {
         const mockSubmittedData = {
-          [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          quoteEligibility: {
+            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          },
+          insuranceEligibility: {},
         };
 
-        const result = allRequiredData(mockSubmittedData);
+        const result = allRequiredData(mockSubmittedData.quoteEligibility);
 
         const expected = {
           [BUYER_COUNTRY]: [],
@@ -121,10 +124,13 @@ describe('middleware/required-data-provided', () => {
     describe('when policy type is multi', () => {
       it('should return an array of all required fields with single policy specific fields', () => {
         const mockSubmittedData = {
-          [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          quoteEligibility: {
+            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          },
+          insuranceEligibility: {},
         };
 
-        const result = allRequiredData(mockSubmittedData);
+        const result = allRequiredData(mockSubmittedData.quoteEligibility);
 
         const expected = {
           [BUYER_COUNTRY]: [],
@@ -195,7 +201,7 @@ describe('middleware/required-data-provided', () => {
   describe('hasRequiredData', () => {
     describe('when total amount of submitted fields matches the total of required fields', () => {
       it('should return true', () => {
-        const result = hasRequiredData(EXPORTER_LOCATION_CHANGE, mockSession.submittedData);
+        const result = hasRequiredData(EXPORTER_LOCATION_CHANGE, mockSession.submittedData.quoteEligibility);
 
         expect(result).toEqual(true);
       });
@@ -316,7 +322,10 @@ describe('middleware/required-data-provided', () => {
         req.originalUrl = TELL_US_ABOUT_YOUR_POLICY;
         req.session = {
           submittedData: {
-            [FIELD_IDS.VALID_EXPORTER_LOCATION]: true,
+            quoteEligibility: {
+              [FIELD_IDS.VALID_EXPORTER_LOCATION]: true,
+            },
+            insuranceEligibility: {},
           },
         };
 
@@ -330,7 +339,12 @@ describe('middleware/required-data-provided', () => {
     describe('when there is no submittedData in session', () => {
       it(`should redirect to ${NEED_TO_START_AGAIN}`, () => {
         req.originalUrl = TELL_US_ABOUT_YOUR_POLICY;
-        req.session = { submittedData: {} };
+        req.session = {
+          submittedData: {
+            quoteEligibility: {},
+            insuranceEligibility: {},
+          },
+        };
 
         requiredDataProvided(req, res, nextSpy);
 

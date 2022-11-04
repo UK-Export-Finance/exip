@@ -3,7 +3,7 @@ import { ERROR_MESSAGES, PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION } from '../../
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
@@ -38,7 +38,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES, {
         ...singleInputPageVariables(PAGE_VARIABLES),
         BACK_LINK: req.headers.referer,
-        submittedValues: req.session.submittedData,
+        submittedValues: req.session.submittedData.quoteEligibility,
       });
     });
   });
@@ -89,9 +89,9 @@ describe('controllers/quote/uk-goods-or-services', () => {
       it('should update the session with submitted data', () => {
         post(req, res);
 
-        const expected = updateSubmittedData(req.body, req.session.submittedData);
+        const expected = updateSubmittedData(req.body, req.session.submittedData.quoteEligibility);
 
-        expect(req.session.submittedData).toEqual(expected);
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
       it(`should redirect to ${ROUTES.QUOTE.POLICY_TYPE}`, () => {

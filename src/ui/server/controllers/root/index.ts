@@ -3,7 +3,10 @@ import { Request, Response } from '../../../types';
 
 const get = (req: Request, res: Response) => {
   // new submitted data session
-  req.session.submittedData = {};
+  req.session.submittedData = {
+    quoteEligibility: {},
+    insuranceEligibility: {},
+  };
 
   return res.redirect(ROUTES.QUOTE.BUYER_COUNTRY);
 };

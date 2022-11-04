@@ -1,7 +1,7 @@
-import { mapSubmittedData, updateSubmittedData } from './update-submitted-data';
-import { FIELD_IDS, FIELD_VALUES } from '../constants';
-import { sanitiseData } from './sanitise-data';
-import { RequestBody, SubmittedData } from '../../types';
+import { mapSubmittedData, updateSubmittedData } from '.';
+import { FIELD_IDS, FIELD_VALUES } from '../../../constants';
+import { sanitiseData } from '../../sanitise-data';
+import { RequestBody, SubmittedDataQuoteEligibility } from '../../../../types';
 
 const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE } = FIELD_IDS;
 
@@ -58,7 +58,7 @@ describe('server/helpers/update-submitted-data', () => {
         const mockExistingData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
           [MAX_AMOUNT_OWED]: 200,
-        } as SubmittedData;
+        } as SubmittedDataQuoteEligibility;
 
         const result = mapSubmittedData({ ...mockExistingData, ...mockFormData });
 
@@ -146,7 +146,7 @@ describe('server/helpers/update-submitted-data', () => {
 
         const mockExistingData = {
           mock: true,
-        } as SubmittedData;
+        } as SubmittedDataQuoteEligibility;
 
         const result = updateSubmittedData(mockFormData, mockExistingData);
 

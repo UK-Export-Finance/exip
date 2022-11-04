@@ -2,7 +2,7 @@ import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import isChangeRoute from '../../../helpers/is-change-route';
 import { Request, Response } from '../../../../types';
 
@@ -19,7 +19,7 @@ const get = (req: Request, res: Response) =>
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
     }),
-    submittedValues: req.session.submittedData,
+    submittedValues: req.session.submittedData.quoteEligibility,
   });
 
 const post = (req: Request, res: Response) => {
@@ -35,7 +35,10 @@ const post = (req: Request, res: Response) => {
     });
   }
 
-  req.session.submittedData = updateSubmittedData(req.body, req.session.submittedData);
+  req.session.submittedData = {
+    quoteEligibility: updateSubmittedData(req.body, req.session.submittedData.quoteEligibility),
+    insuranceEligibility: {},
+  };
 
   const answer = req.body[FIELD_IDS.VALID_EXPORTER_LOCATION];
 

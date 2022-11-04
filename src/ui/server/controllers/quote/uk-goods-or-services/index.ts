@@ -2,7 +2,7 @@ import { PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import isChangeRoute from '../../../helpers/is-change-route';
 import { Request, Response } from '../../../../types';
 
@@ -21,7 +21,7 @@ const get = (req: Request, res: Response) =>
   res.render(TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES, {
     ...singleInputPageVariables(PAGE_VARIABLES),
     BACK_LINK: req.headers.referer,
-    submittedValues: req.session.submittedData,
+    submittedValues: req.session.submittedData.quoteEligibility,
   });
 
 const post = (req: Request, res: Response) => {
@@ -50,7 +50,7 @@ const post = (req: Request, res: Response) => {
     return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
   }
 
-  req.session.submittedData = updateSubmittedData(req.body, req.session.submittedData);
+  req.session.submittedData.quoteEligibility = updateSubmittedData(req.body, req.session.submittedData.quoteEligibility);
 
   if (isChangeRoute(req.originalUrl)) {
     return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);

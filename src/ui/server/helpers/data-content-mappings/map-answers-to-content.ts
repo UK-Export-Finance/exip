@@ -5,7 +5,7 @@ import mapCountry from './map-country';
 import mapCost from './map-cost';
 import mapPeriodMonths from './map-period-months';
 import mapPolicyLength from './map-policy-length';
-import { SubmittedData } from '../../../types';
+import { SubmittedDataInsuranceEligibility, SubmittedDataQuoteEligibility } from '../../../types';
 
 const {
   BUYER_COUNTRY,
@@ -40,7 +40,7 @@ const mapPolicyType = (answer: string) => {
 
 const mapPercentageOfCover = (answer: number) => `${answer}%`;
 
-const mapAnswersToContent = (answers: SubmittedData) => {
+const mapAnswersToContent = (answers: SubmittedDataQuoteEligibility | SubmittedDataInsuranceEligibility) => {
   const mapped = {
     [VALID_EXPORTER_LOCATION]: {
       text: SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION],

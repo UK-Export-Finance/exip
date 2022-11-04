@@ -3,7 +3,7 @@ import { FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/core-page-variables';
 import generateValidationErrors from './validation';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { mockReq, mockRes, mockAnswers } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
@@ -58,7 +58,7 @@ describe('controllers/quote/policy-type', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.POLICY_TYPE, {
         ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
         ...PAGE_VARIABLES,
-        submittedValues: req.session.submittedData,
+        submittedValues: req.session.submittedData.quoteEligibility,
       });
     });
   });
@@ -104,9 +104,9 @@ describe('controllers/quote/policy-type', () => {
       it('should update the session with submitted data', () => {
         post(req, res);
 
-        const expected = updateSubmittedData(req.body, req.session.submittedData);
+        const expected = updateSubmittedData(req.body, req.session.submittedData.quoteEligibility);
 
-        expect(req.session.submittedData).toEqual(expected);
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
       it(`should redirect to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY}`, () => {

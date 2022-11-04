@@ -1,7 +1,7 @@
 import { Country } from './country';
 import { Currency } from './currency';
 
-type SubmittedData = {
+type SubmittedDataQuoteEligibility = {
   amount?: number;
   buyerCountry?: Country;
   contractValue?: number;
@@ -14,4 +14,14 @@ type SubmittedData = {
   policyLength?: number;
 };
 
-export { SubmittedData };
+type SubmittedDataInsuranceEligibility = {
+  wantCoverOverMaxAmount?: boolean;
+  wantCoverOverMaxPeriod?: boolean;
+};
+
+type SubmittedData = {
+  quoteEligibility: SubmittedDataQuoteEligibility;
+  insuranceEligibility: SubmittedDataInsuranceEligibility;
+};
+
+export { SubmittedDataQuoteEligibility, SubmittedDataInsuranceEligibility, SubmittedData };

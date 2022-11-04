@@ -6,7 +6,7 @@ import corePageVariables from '../../../helpers/core-page-variables';
 import { Request, Response } from '../../../../types';
 
 const get = async (req: Request, res: Response) => {
-  const answers = mapAnswersToContent(req.session.submittedData);
+  const answers = mapAnswersToContent(req.session.submittedData.quoteEligibility);
 
   const summaryList = answersSummaryList(answers);
 

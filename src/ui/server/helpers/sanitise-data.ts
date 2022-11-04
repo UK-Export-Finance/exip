@@ -1,6 +1,6 @@
 import { isNumber } from './number';
 import { stripCommas } from './string';
-import { RequestBody, SubmittedData } from '../../types';
+import { RequestBody } from '../../types';
 
 const shouldChangeToNumber = (value: string | number) => {
   if (typeof value === 'string' && isNumber(value)) {
@@ -37,7 +37,8 @@ const sanitiseValue = (value: string | number | boolean) => {
 };
 
 const sanitiseData = (formData: RequestBody) => {
-  const sanitised = {} as SubmittedData;
+  // const sanitised = {} as SubmittedDataQuoteEligibility | SubmittedDataInsuranceEligibility;
+  const sanitised = {};
   const keys = Object.keys(formData);
 
   keys.forEach((key) => {
