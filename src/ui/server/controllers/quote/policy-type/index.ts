@@ -37,7 +37,7 @@ const get = (req: Request, res: Response) =>
   res.render(TEMPLATES.QUOTE.POLICY_TYPE, {
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
     ...PAGE_VARIABLES,
-    submittedValues: req.session.submittedData,
+    submittedValues: req.session.submittedData.quoteEligibility,
   });
 
 const post = (req: Request, res: Response) => {

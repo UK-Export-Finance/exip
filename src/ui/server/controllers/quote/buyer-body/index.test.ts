@@ -1,6 +1,6 @@
 import { PAGE_VARIABLES, mapAnswer, mapSubmittedAnswer, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
+import { ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/single-input-page-variables';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
@@ -27,7 +27,7 @@ describe('controllers/quote/buyer-body', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.VALID_BUYER_BODY,
+        FIELD_ID: PAGE_VARIABLES.FIELD_ID,
         PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
       };
 
@@ -87,7 +87,7 @@ describe('controllers/quote/buyer-body', () => {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
         submittedValues: {
           ...req.session.submittedData.quoteEligibility,
-          [PAGE_VARIABLES.FIELD_ID]: mapSubmittedAnswer(req.session.submittedData[FIELD_IDS.VALID_BUYER_BODY]),
+          [PAGE_VARIABLES.FIELD_ID]: mapSubmittedAnswer(req.session.submittedData.quoteEligibility[PAGE_VARIABLES.FIELD_ID]),
         },
       };
 
@@ -109,7 +109,7 @@ describe('controllers/quote/buyer-body', () => {
 
     describe('when the submitted answer is `yes`', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.VALID_BUYER_BODY] = 'true';
+        req.body[PAGE_VARIABLES.FIELD_ID] = 'true';
       });
 
       it('should add previousRoute, exitReason and exitDescription to req.flash', async () => {
@@ -135,7 +135,7 @@ describe('controllers/quote/buyer-body', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.VALID_BUYER_BODY]: 'false',
+        [PAGE_VARIABLES.FIELD_ID]: 'false',
       };
 
       beforeEach(() => {
@@ -145,9 +145,9 @@ describe('controllers/quote/buyer-body', () => {
       it('should update the session with submitted data, popluated with mapped buyer body answer', async () => {
         await post(req, res);
 
-        const expectedMappedAnswer = mapAnswer(req.body[FIELD_IDS.VALID_BUYER_BODY]);
+        const expectedMappedAnswer = mapAnswer(req.body[PAGE_VARIABLES.FIELD_ID]);
 
-        const expected = updateSubmittedData({ [FIELD_IDS.VALID_BUYER_BODY]: expectedMappedAnswer }, req.session.submittedData.quoteEligibility);
+        const expected = updateSubmittedData({ [PAGE_VARIABLES.FIELD_ID]: expectedMappedAnswer }, req.session.submittedData.quoteEligibility);
 
         expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });

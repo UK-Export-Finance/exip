@@ -49,7 +49,7 @@ const mapSubmittedAnswer = (answer?: boolean) => {
 };
 
 const get = (req: Request, res: Response) => {
-  const mappedAnswer = mapSubmittedAnswer(req.session.submittedData[FIELD_IDS.VALID_BUYER_BODY]);
+  const mappedAnswer = mapSubmittedAnswer(req.session.submittedData.quoteEligibility[FIELD_ID]);
 
   return res.render(TEMPLATES.QUOTE.BUYER_BODY, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
@@ -70,11 +70,11 @@ const post = (req: Request, res: Response) => {
     });
   }
 
-  const answer = req.body[FIELD_IDS.VALID_BUYER_BODY];
+  const answer = req.body[FIELD_ID];
 
-  const mappedAnswer = mapAnswer(req.body[FIELD_IDS.VALID_BUYER_BODY]);
+  const mappedAnswer = mapAnswer(req.body[FIELD_ID]);
 
-  req.session.submittedData.quoteEligibility = updateSubmittedData({ [FIELD_IDS.VALID_BUYER_BODY]: mappedAnswer }, req.session.submittedData.quoteEligibility);
+  req.session.submittedData.quoteEligibility = updateSubmittedData({ [FIELD_ID]: mappedAnswer }, req.session.submittedData.quoteEligibility);
 
   if (answer === 'true') {
     req.flash('previousRoute', ROUTES.QUOTE.BUYER_BODY);
