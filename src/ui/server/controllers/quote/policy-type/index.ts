@@ -1,6 +1,6 @@
 import { FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
-import corePageVariables from '../../../helpers/core-page-variables';
+import corePageVariables from '../../../helpers/page-variables/core/quote';
 import generateValidationErrors from './validation';
 import { isSinglePolicyType } from '../../../helpers/policy-type';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';

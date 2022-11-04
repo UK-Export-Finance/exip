@@ -1,9 +1,9 @@
 import { PAGE_VARIABLES, get, post } from '.';
-import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../content-strings';
+import { ERROR_MESSAGES, FIELDS, PAGES, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../constants';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
-import singleInputPageVariables from '../../../helpers/single-input-page-variables';
+import singleInputPageVariables from '../../../helpers/page-variables/single-input';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 
 describe('controllers/root/cookies', () => {
@@ -24,6 +24,7 @@ describe('controllers/root/cookies', () => {
       const expected = {
         FIELD_ID: FIELD_IDS.OPTIONAL_COOKIES,
         PAGE_CONTENT_STRINGS: PAGES.COOKIES_PAGE,
+        PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);

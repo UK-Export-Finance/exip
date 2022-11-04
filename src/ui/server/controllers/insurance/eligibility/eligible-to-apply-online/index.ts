@@ -1,6 +1,6 @@
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
-import corePageVariables from '../../../../helpers/core-page-variables';
+import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { Request, Response } from '../../../../../types';
 
 const PAGE_VARIABLES = {

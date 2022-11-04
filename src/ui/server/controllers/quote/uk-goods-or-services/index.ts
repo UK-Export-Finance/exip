@@ -1,6 +1,6 @@
 import { PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
-import singleInputPageVariables from '../../../helpers/single-input-page-variables';
+import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import isChangeRoute from '../../../helpers/is-change-route';

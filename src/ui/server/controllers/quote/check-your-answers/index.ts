@@ -2,7 +2,7 @@ import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import { mapAnswersToContent } from '../../../helpers/data-content-mappings/map-answers-to-content';
 import { answersSummaryList } from '../../../helpers/summary-lists/answers-summary-list';
-import corePageVariables from '../../../helpers/core-page-variables';
+import corePageVariables from '../../../helpers/page-variables/core/quote';
 import { Request, Response } from '../../../../types';
 
 const get = async (req: Request, res: Response) => {

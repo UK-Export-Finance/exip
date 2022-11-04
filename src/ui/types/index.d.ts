@@ -18,10 +18,12 @@ import {
 } from './pages/tell-us-about-your-policy';
 import { ValidationErrors } from './validation-errors';
 import {
+  CorePageVariablesInitialInput,
   CorePageVariablesInput,
   CorePageVariables,
   PageContentStrings,
   PageVariablesContentStrings,
+  SingleInputPageVariablesInitialInput,
   SingleInputPageVariablesInput,
   SingleInputPageVariables,
 } from './page-variables';
@@ -31,6 +33,7 @@ export {
   AnswersFieldGroups,
   ApolloResponse,
   CisCountry,
+  CorePageVariablesInitialInput,
   CorePageVariablesInput,
   CorePageVariables,
   Country,
@@ -48,6 +51,7 @@ export {
   RequiredDataState,
   Response,
   SelectOption,
+  SingleInputPageVariablesInitialInput,
   SingleInputPageVariablesInput,
   SingleInputPageVariables,
   SubmittedDataQuoteEligibility,

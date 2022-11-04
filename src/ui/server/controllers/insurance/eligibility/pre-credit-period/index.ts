@@ -1,6 +1,6 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
-import singleInputPageVariables from '../../../../helpers/single-input-page-variables';
+import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../types';
 

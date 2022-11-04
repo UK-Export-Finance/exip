@@ -1,7 +1,7 @@
 import { PAGE_VARIABLES, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
-import singleInputPageVariables from '../../../../helpers/single-input-page-variables';
+import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import api from '../../../../api';
 import { mapCountries } from '../../../../helpers/mappings/map-countries';

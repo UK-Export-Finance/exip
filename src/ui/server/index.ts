@@ -124,7 +124,10 @@ app.get('*', (req: Request, res: Response) =>
       COOKIES_CONSENT,
       FOOTER,
       LINKS,
-      PRODUCT,
+      PRODUCT: {
+        ...PRODUCT,
+        DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC,
+      },
       ...PAGES.PAGE_NOT_FOUND_PAGE,
     },
   }),

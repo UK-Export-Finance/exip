@@ -1,11 +1,11 @@
 import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import { Request, Response } from '../../../../types';
-import corePageVariables from '../../../helpers/core-page-variables';
+import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 
 const get = (req: Request, res: Response) =>
   res.render(TEMPLATES.INSURANCE.START, {
-    ...corePageVariables({
+    ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.START,
       BACK_LINK: req.headers.referer,
     }),

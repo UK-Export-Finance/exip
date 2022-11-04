@@ -1,7 +1,7 @@
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { Request, Response } from '../../../../../types';
-import corePageVariables from '../../../../helpers/core-page-variables';
+import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 
 const get = (req: Request, res: Response) => {
   const EXIT_REASON = req.flash('exitReason');

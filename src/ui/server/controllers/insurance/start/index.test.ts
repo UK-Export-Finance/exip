@@ -1,7 +1,7 @@
 import { get, post } from '.';
 import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
-import corePageVariables from '../../../helpers/core-page-variables';
+import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
@@ -19,7 +19,7 @@ describe('controllers/insurance/start', () => {
       get(req, res);
 
       const expectedVariables = {
-        ...corePageVariables({
+        ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.START,
           BACK_LINK: req.headers.referer,
         }),
