@@ -3,19 +3,22 @@ import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
+import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover - submit `not based inside the UK`', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
+    completeStartForm();
+    completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
 
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);

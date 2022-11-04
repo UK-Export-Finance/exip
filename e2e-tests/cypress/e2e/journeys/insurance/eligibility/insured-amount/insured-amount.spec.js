@@ -9,26 +9,30 @@ import {
 } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
+import {
+  completeStartForm,
+  completeCheckIfEligibleForm,
+  completeExporterLocationForm,
+  completeUkGoodsAndServicesForm,
+} from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maxium amount of cover available online', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
+    completeStartForm();
+    completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
-
-    yesRadio().click();
-    submitButton().click();
-
-    yesRadio().click();
-    submitButton().click();
+    completeExporterLocationForm();
+    completeUkGoodsAndServicesForm();
 
     const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`;
 

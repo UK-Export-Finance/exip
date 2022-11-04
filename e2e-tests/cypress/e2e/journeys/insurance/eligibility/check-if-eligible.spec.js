@@ -3,6 +3,7 @@ import { insurance } from '../../../pages';
 import partials from '../../../partials';
 import { BUTTONS, LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
+import { completeStartForm } from '../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
 
@@ -15,7 +16,9 @@ context('Insurance Eligibility - start page', () => {
       },
     });
 
-    submitButton().click();
+    completeStartForm();
+
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
   });
 
   beforeEach(() => {

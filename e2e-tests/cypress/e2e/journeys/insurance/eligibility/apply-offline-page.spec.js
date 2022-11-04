@@ -4,6 +4,9 @@ import partials from '../../../partials';
 import { LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 
+import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
+
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE;
 const { ACTIONS } = CONTENT_STRINGS;
 
@@ -13,14 +16,15 @@ const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
 
 context('Insurance Eligibility - apply offline exit page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
+    completeStartForm();
+    completeCheckIfEligibleForm();
 
     buyerCountryPage.searchInput().type(COUNTRY_NAME_APPLY_OFFLINE_ONLY);
 

@@ -3,6 +3,7 @@ import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
+import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 const { REASON } = CONTENT_STRINGS;
@@ -13,14 +14,15 @@ const COUNTRY_NAME_UNSUPPORTED = 'France';
 
 context('Insurance - Buyer location page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based - submit unsupported country', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
+    completeStartForm();
+    completeCheckIfEligibleForm();
 
     buyerCountryPage.searchInput().type(COUNTRY_NAME_UNSUPPORTED);
 

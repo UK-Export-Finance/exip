@@ -3,44 +3,40 @@ import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
+import {
+  completeStartForm,
+  completeCheckIfEligibleForm,
+  completeExporterLocationForm,
+  completeUkGoodsAndServicesForm,
+  completeInsuredAmountForm,
+  completeInsuredPeriodForm,
+  completeOtherPartiesForm,
+  completeLetterOfCreditForm,
+  completePreCreditPeriodForm,
+} from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I do not have UK Companies House Registration Number - submit `no companies house number`', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
+    completeStartForm();
+    completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
-
-    yesRadio().click();
-    submitButton().click();
-
-    yesRadio().click();
-    submitButton().click();
-
-    noRadio().click();
-    submitButton().click();
-
-    noRadio().click();
-    submitButton().click();
-
-    noRadio().click();
-    submitButton().click();
-
-    noRadio().click();
-    submitButton().click();
-
-    noRadio().click();
-    submitButton().click();
-
-    noRadio().click();
-    submitButton().click();
+    completeExporterLocationForm();
+    completeUkGoodsAndServicesForm();
+    completeInsuredAmountForm();
+    completeInsuredPeriodForm();
+    completeOtherPartiesForm();
+    completeLetterOfCreditForm();
+    completePreCreditPeriodForm();
   });
 
   it('redirects to exit page', () => {
