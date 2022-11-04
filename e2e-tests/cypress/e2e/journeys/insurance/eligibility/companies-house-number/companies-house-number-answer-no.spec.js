@@ -1,4 +1,4 @@
-import { cannotApplyPage, yesRadio, noRadio, submitButton } from '../../../../pages/shared';
+import { cannotApplyPage, noRadio, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
@@ -37,6 +37,9 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     completeOtherPartiesForm();
     completeLetterOfCreditForm();
     completePreCreditPeriodForm();
+
+    noRadio().click();
+    submitButton().click();
   });
 
   it('redirects to exit page', () => {

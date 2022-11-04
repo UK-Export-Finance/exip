@@ -8,7 +8,6 @@ import {
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 const { ACTIONS } = CONTENT_STRINGS;
@@ -28,7 +27,12 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
 
     completeStartForm();
     completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
+
+    buyerCountryPage.searchInput().type(COUNTRY_NAME_UNSUPPORTED);
+    const results = buyerCountryPage.results();
+    results.first().click();
+
+    submitButton().click();
 
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
   });

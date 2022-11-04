@@ -3,7 +3,7 @@ import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility';
+import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 const { REASON } = CONTENT_STRINGS;

@@ -10,7 +10,7 @@ import {
   PAGES,
 } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility';
+import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
 import {
   checkPageTitleAndHeading,
   checkInputHint,
