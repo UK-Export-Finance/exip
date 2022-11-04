@@ -2,6 +2,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD;
@@ -38,6 +39,8 @@ const post = (req: Request, res: Response) => {
 
     return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM);
   }
+
+  req.session.submittedData.insuranceEligibility = updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility);
 
   return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED);
 };

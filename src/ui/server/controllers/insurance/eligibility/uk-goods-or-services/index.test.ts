@@ -3,6 +3,7 @@ import { PAGES, UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION, UK_GOODS_AND_SERVIC
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
@@ -81,6 +82,18 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
 
       beforeEach(() => {
         req.body = validBody;
+      });
+
+      it('should update the session with submitted data, populated with the answer', () => {
+        post(req, res);
+
+        const expectedPopulatedData = {
+          [PAGE_VARIABLES.FIELD_ID]: validBody[PAGE_VARIABLES.FIELD_ID],
+        };
+
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility);
+
+        expect(req.session.submittedData.insuranceEligibility).toEqual(expected);
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`, () => {

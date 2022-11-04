@@ -2,6 +2,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.VALID_EXPORTER_LOCATION;
@@ -34,6 +35,8 @@ const post = (req: Request, res: Response) => {
 
     return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
   }
+
+  req.session.submittedData.insuranceEligibility = updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility);
 
   return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
 };

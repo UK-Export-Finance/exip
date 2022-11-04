@@ -5,7 +5,7 @@ import { RequestBody, SubmittedDataQuoteEligibility } from '../../../../types';
 
 const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE } = FIELD_IDS;
 
-describe('server/helpers/update-submitted-data', () => {
+describe('server/helpers/update-submitted-data/quote', () => {
   describe('mapSubmittedData', () => {
     describe(`when ${POLICY_TYPE} is 'single'`, () => {
       it('should return policy length field with single specific fields', () => {

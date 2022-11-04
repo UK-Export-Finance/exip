@@ -38,7 +38,7 @@ const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): Submitt
 
 /*
  * updateSubmittedData
- * update session data with sanitised form data
+ * update quote eligibility session data with sanitised form data
  */
 const updateSubmittedData = (formData: RequestBody, existingData?: SubmittedDataQuoteEligibility): SubmittedDataQuoteEligibility => {
   const submittedFormData = formData;

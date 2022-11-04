@@ -5,7 +5,9 @@ import singleInputPageVariables from '../../../../helpers/page-variables/single-
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import api from '../../../../api';
 import { mapCountries } from '../../../../helpers/mappings/map-countries';
-import { mockReq, mockRes, mockSession, mockCisCountries } from '../../../../test-mocks';
+import getCountryByName from '../../../../helpers/get-country-by-name';
+import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
+import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
 describe('controllers/insurance/eligibility/buyer-country', () => {
@@ -160,9 +162,35 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       });
     });
 
-    describe('when the submitted country can apply for an application online', () => {
+    describe('when the country can apply for an application online', () => {
+      const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
+      const mappedCountries = mapCountries(mockCountriesResponse);
+      const selectedCountry = getCountryByName(mappedCountries, selectedCountryName);
+
+      const validBody = {
+        [FIELD_IDS.BUYER_COUNTRY]: countrySupported.marketName,
+      };
+
       beforeEach(() => {
-        req.body[FIELD_IDS.BUYER_COUNTRY] = countrySupported.marketName;
+        req.body = validBody;
+      });
+
+      it('should update the session with submitted data, popluated with country object', async () => {
+        await post(req, res);
+
+        const expectedPopulatedData = {
+          // TODO: why is this in quote version of buyer country?
+          // ...validBody,
+          [FIELD_IDS.BUYER_COUNTRY]: {
+            name: selectedCountry?.name,
+            isoCode: selectedCountry?.isoCode,
+            riskCategory: selectedCountry?.riskCategory,
+          },
+        };
+
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility);
+
+        expect(req.session.submittedData.insuranceEligibility).toEqual(expected);
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION}`, async () => {
