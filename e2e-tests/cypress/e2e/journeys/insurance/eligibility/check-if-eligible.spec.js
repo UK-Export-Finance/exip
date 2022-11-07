@@ -7,7 +7,7 @@ import { completeStartForm, completeCheckIfEligibleForm } from '../../../../supp
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
 
-context('Insurance Eligibility - start page', () => {
+context('Insurance Eligibility - check if eligible page', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
       auth: {
@@ -17,10 +17,9 @@ context('Insurance Eligibility - start page', () => {
     });
 
     completeStartForm();
-    
-    completeCheckIfEligibleForm();
+    // completeCheckIfEligibleForm();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE);
   });
 
   beforeEach(() => {
