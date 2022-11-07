@@ -17,8 +17,7 @@ context('Insurance Eligibility - check if eligible page', () => {
     });
 
     completeStartForm();
-    
-    completeCheckIfEligibleForm();
+    // completeCheckIfEligibleForm();
 
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE);
   });
