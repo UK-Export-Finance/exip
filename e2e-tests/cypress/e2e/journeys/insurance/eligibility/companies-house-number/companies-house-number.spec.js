@@ -158,13 +158,23 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE}`, () => {
+      beforeEach(() => {
         yesRadio().click();
         submitButton().click();
+      });
 
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE}`, () => {
         const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE}`;
 
         cy.url().should('eq', expected);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the originally submitted answer selected', () => {
+          partials.backLink().click();
+
+          yesRadioInput().should('be.checked');
+        });
       });
     });
   });

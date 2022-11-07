@@ -124,15 +124,26 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
     });
 
     describe('when submitting with a supported country', () => {
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION}`, () => {
+      beforeEach(() => {
         buyerCountryPage.searchInput().type('Algeria');
 
         const results = buyerCountryPage.results();
         results.first().click();
 
         submitButton().click();
+      });
 
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION}`, () => {
         cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the originally submitted answer selected', () => {
+          partials.backLink().click();
+
+          const expectedValue = 'Algeria';
+          buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
+        });
       });
     });
   });

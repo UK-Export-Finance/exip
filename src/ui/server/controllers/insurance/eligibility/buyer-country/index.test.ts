@@ -66,6 +66,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         BACK_LINK: req.headers.referer,
         HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
         countries: mapCountries(mockCountriesResponse),
+        submittedValues: req.session.submittedData.insuranceEligibility,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, expectedVariables);
@@ -84,6 +85,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
           BACK_LINK: req.headers.referer,
           HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
           countries: expectedCountries,
+          submittedValues: req.session.submittedData.insuranceEligibility,
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, expectedVariables);

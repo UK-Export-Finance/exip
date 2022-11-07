@@ -32,6 +32,7 @@ export const get = async (req: Request, res: Response) => {
     }),
     HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
+    submittedValues: req.session.submittedData.insuranceEligibility,
   });
 };
 

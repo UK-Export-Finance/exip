@@ -52,4 +52,12 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
 
     partials.backLink().should('have.attr', 'href', expected);
   });
+
+  describe('when going back to the page', () => {
+    it('should have the originally submitted answer selected', () => {
+      partials.backLink().click();
+
+      buyerCountryPage.hiddenInput().should('have.attr', 'value', COUNTRY_NAME_UNSUPPORTED);
+    });
+  });
 });

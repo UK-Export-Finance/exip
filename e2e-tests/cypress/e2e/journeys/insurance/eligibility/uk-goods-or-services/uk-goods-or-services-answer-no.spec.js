@@ -1,4 +1,4 @@
-import { cannotApplyPage, yesRadio, noRadio, submitButton } from '../../../../pages/shared';
+import { cannotApplyPage, noRadio, noRadioInput, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
@@ -45,6 +45,14 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES}`;
 
       expect(text.trim()).equal(expected);
+    });
+  });
+
+  describe('when going back to the page', () => {
+    it('should have the originally submitted answer selected', () => {
+      partials.backLink().click();
+
+      noRadioInput().should('be.checked');
     });
   });
 });

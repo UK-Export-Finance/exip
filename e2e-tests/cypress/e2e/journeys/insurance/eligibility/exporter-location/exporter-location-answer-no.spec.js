@@ -1,4 +1,4 @@
-import { cannotApplyPage, exporterLocationPage, noRadio, submitButton } from '../../../../pages/shared';
+import { cannotApplyPage, exporterLocationPage, noRadio, noRadioInput, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
@@ -44,6 +44,14 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
       const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.UNSUPPORTED_COMPANY_COUNTRY}`;
 
       expect(text.trim()).equal(expected);
+    });
+  });
+
+  describe('when going back to the page', () => {
+    it('should have the originally submitted answer selected', () => {
+      partials.backLink().click();
+
+      noRadioInput().should('be.checked');
     });
   });
 });

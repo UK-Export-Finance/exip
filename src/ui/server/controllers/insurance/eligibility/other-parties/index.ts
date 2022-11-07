@@ -13,7 +13,10 @@ const PAGE_VARIABLES = {
 };
 
 const get = (req: Request, res: Response) =>
-  res.render(TEMPLATES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED, singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }));
+  res.render(TEMPLATES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED, {
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+    submittedValues: req.session.submittedData.insuranceEligibility,
+  });
 
 const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY);

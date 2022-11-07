@@ -1,4 +1,4 @@
-import { cannotApplyPage, yesRadio, noRadio, submitButton } from '../../../../pages/shared';
+import { cannotApplyPage, yesRadio, yesRadioInput, noRadio, submitButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
@@ -54,6 +54,14 @@ context('Insurance - Insured amount page - I want to check if I can use online s
       const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.OTHER_PARTIES_INVOLVED}`;
 
       expect(text.trim()).equal(expected);
+    });
+  });
+
+  describe('when going back to the page', () => {
+    it('should have the originally submitted answer selected', () => {
+      partials.backLink().click();
+
+      yesRadioInput().should('be.checked');
     });
   });
 });

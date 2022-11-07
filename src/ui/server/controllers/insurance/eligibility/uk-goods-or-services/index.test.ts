@@ -35,10 +35,10 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(
-        TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES,
-        singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
-      );
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+        submittedValues: req.session.submittedData.insuranceEligibility,
+      });
     });
   });
 

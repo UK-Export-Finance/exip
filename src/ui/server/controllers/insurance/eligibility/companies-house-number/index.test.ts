@@ -31,10 +31,10 @@ describe('controllers/insurance/eligibility/companies-house-number', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(
-        TEMPLATES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER,
-        singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
-      );
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, {
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+        submittedValues: req.session.submittedData.insuranceEligibility,
+      });
     });
   });
 
