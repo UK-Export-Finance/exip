@@ -1,26 +1,20 @@
-import { buyerCountryPage, heading, submitButton } from '../../pages/shared';
-import { needToStartAgainPage } from '../../pages/shared';
-import partials from '../../partials';
-import {
-  BUTTONS,
-  ORGANISATION,
-  LINKS,
-  PAGES,
-} from '../../../../content-strings';
-import CONSTANTS from '../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
-import { completeAndSubmitBuyerBodyForm } from '../../../support/quote/forms';
+import { heading, submitButton } from '../../../pages/shared';
+import { needToStartAgainPage } from '../../../pages/shared';
+import partials from '../../../partials';
+import { LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
+import CONSTANTS from '../../../../../constants';
+import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
-const { FIELD_IDS, ROUTES } = CONSTANTS;
+const { ACTIONS } = CONTENT_STRINGS;
 
-context('Get a Quote - Need to start again exit page', () => {
+const { ROUTES } = CONSTANTS;
+
+const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
+
+context('Insurance Eligibility - Need to start again exit page', () => {
   beforeEach(() => {
-    cy.login();
-    completeAndSubmitBuyerCountryForm();
-    completeAndSubmitBuyerBodyForm();
-
-    cy.visit(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
@@ -30,7 +24,20 @@ context('Get a Quote - Need to start again exit page', () => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');
 
-    cy.url().should('include', ROUTES.QUOTE.NEED_TO_START_AGAIN);
+    completeStartForm();
+    completeCheckIfEligibleForm();
+
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
+
+    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD, {
+      auth: {
+        username: Cypress.config('basicAuthKey'),
+        password: Cypress.config('basicAuthSecret'),
+      },
+    });
+
+
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN);
   });
 
   it('passes the audits', () => {
@@ -52,7 +59,7 @@ context('Get a Quote - Need to start again exit page', () => {
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
-  }); 
+  });
 
   it('renders a page title and heading', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
@@ -76,10 +83,10 @@ context('Get a Quote - Need to start again exit page', () => {
   });
 
   describe('clicking the submit button', () => {
-    it(`should redirect to ${ROUTES.QUOTE.BUYER_COUNTRY}`, () => {
+    it(`should redirect to ${ROUTES.INSURANCE.START}`, () => {
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+      cy.url().should('include', ROUTES.INSURANCE.START);
     });
   });
 });
