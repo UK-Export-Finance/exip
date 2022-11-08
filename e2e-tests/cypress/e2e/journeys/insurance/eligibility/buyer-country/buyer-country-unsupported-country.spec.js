@@ -32,6 +32,11 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
     submitButton().click();
   });
 
+  beforeEach(() => {
+    Cypress.Cookies.preserveOnce('_csrf');
+    Cypress.Cookies.preserveOnce('connect.sid');
+  });
+
   it('redirects to `cannot apply` exit page', () => {
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
   });
@@ -54,10 +59,10 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
   });
 
   describe('when going back to the page', () => {
-    it('should have the originally submitted answer selected', () => {
+    it('should NOT have the originally submitted answer selected', () => {
       partials.backLink().click();
 
-      buyerCountryPage.hiddenInput().should('have.attr', 'value', COUNTRY_NAME_UNSUPPORTED);
+      buyerCountryPage.hiddenInput().should('not.have.attr', 'value', COUNTRY_NAME_UNSUPPORTED);
     });
   });
 });

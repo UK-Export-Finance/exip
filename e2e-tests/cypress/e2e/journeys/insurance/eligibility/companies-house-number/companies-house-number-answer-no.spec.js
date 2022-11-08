@@ -42,6 +42,11 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     submitButton().click();
   });
 
+  beforeEach(() => {
+    Cypress.Cookies.preserveOnce('_csrf');
+    Cypress.Cookies.preserveOnce('connect.sid');
+  });
+
   it('redirects to exit page', () => {
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
   });
@@ -63,10 +68,10 @@ context('Insurance - Eligibility - Companies house number page - I want to check
   });
 
   describe('when going back to the page', () => {
-    it('should have the originally submitted answer selected', () => {
+    it('should NOT have the originally submitted answer selected', () => {
       partials.backLink().click();
 
-      noRadioInput().should('be.checked');
+      noRadioInput().should('not.be.checked');
     });
   });
 });
