@@ -1,6 +1,6 @@
 import { FIELD_IDS, ROUTES } from '../../../constants';
 import { Request, RequiredDataStateQuoteEligibility, Response, SubmittedDataQuoteEligibility } from '../../../../types';
-import { getRoutesAsArray, routeIsKnown } from '../helpers';
+import { getRoutesAsArray, routeIsKnown, hasRequiredData } from '../helpers';
 import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-type';
 
 const {
@@ -86,34 +86,6 @@ export const generateRequiredDataState = (submittedData: SubmittedDataQuoteEligi
 };
 
 /**
- * hasRequiredData
- * Get a list of required data for a route,
- * Check if the total amount of submitted data matches the total amount of required fields.
- * @param {String} route
- * @param {Object} all submitted data
- * @returns {Boolean}
- */
-export const hasRequiredData = (route: string, submittedData: SubmittedDataQuoteEligibility) => {
-  const requiredDataState = generateRequiredDataState(submittedData);
-
-  const requiredData = requiredDataState[route];
-
-  let suppliedDataCount = 0;
-
-  requiredData.forEach((fieldId: string) => {
-    if (submittedData[fieldId]) {
-      suppliedDataCount += 1;
-    }
-  });
-
-  if (suppliedDataCount === requiredData.length) {
-    return true;
-  }
-
-  return false;
-};
-
-/**
  * requiredQuoteEligibilityDataProvided
  * Prevent users from accessing a page if all previous forms in the user flow have not been submitted.
  * Without this, a user could manually navigate to e.g, page/form no.4 - bypassing previous forms or, manually go directly to the final quote page.
@@ -137,22 +109,20 @@ export const requiredQuoteEligibilityDataProvided = (req: Request, res: Response
 
   // do not run any data checks if the requested route is one of the following:
   // is a route that does nout require any data checks
-  // is assets
-  // is 404 page or 'problem with service' page
+  // is 404 page
   // or the request is not a GET request.
-  if (isIrrelevantRoute(url) || url.includes('/assets') || !routeIsKnown(routesArray, url) || method !== 'GET') {
+  if (isIrrelevantRoute(url) || !routeIsKnown(routesArray, url) || method !== 'GET') {
     return next();
   }
 
-  // TODO do we need assets here.
-
   if (req.session && req.session.submittedData) {
     const { submittedData } = req.session;
+    const requiredDataState = generateRequiredDataState(submittedData.quoteEligibility);
 
-    if (!hasRequiredData(url, submittedData.quoteEligibility)) {
+    if (!hasRequiredData(url, requiredDataState, submittedData.quoteEligibility)) {
       return res.redirect(NEED_TO_START_AGAIN);
     }
-  } else if (!hasRequiredData(url, {})) {
+  } else if (!hasRequiredData(url, generateRequiredDataState({}), {})) {
     return res.redirect(NEED_TO_START_AGAIN);
   }
 

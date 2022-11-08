@@ -97,7 +97,6 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-// app.use(requiredDataProvided);
 app.use('/quote', requiredQuoteEligibilityDataProvided);
 app.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
 

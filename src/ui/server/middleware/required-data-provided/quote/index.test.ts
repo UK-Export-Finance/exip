@@ -1,4 +1,4 @@
-import { getRoutesAsArray, routeIsKnown, allRequiredData, generateRequiredDataState, hasRequiredData, requiredQuoteEligibilityDataProvided } from '.';
+import { allRequiredData, generateRequiredDataState, requiredQuoteEligibilityDataProvided } from '.';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../constants';
 import { mockReq, mockRes, mockSession } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
@@ -22,43 +22,9 @@ const {
   YOUR_QUOTE,
 } = ROUTES.QUOTE;
 
-describe('middleware/required-data-provided', () => {
+describe('middleware/required-data-provided/quote', () => {
   let req: Request;
   let res: Response;
-
-  describe('getRoutesAsArray', () => {
-    it('should return all routes as an array of strings', () => {
-      const result = getRoutesAsArray();
-
-      const expected = Object.values(ROUTES.QUOTE);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('routeIsKnown', () => {
-    describe('when a route is in the list of routes', () => {
-      it('should return true', () => {
-        const routes = getRoutesAsArray();
-        const route = TELL_US_ABOUT_YOUR_POLICY;
-
-        const result = routeIsKnown(routes, route);
-
-        expect(result).toEqual(true);
-      });
-    });
-
-    describe('when a route is NOT in the list of routes', () => {
-      it('should return false', () => {
-        const routes = getRoutesAsArray();
-        const route = '/unknown-404-page';
-
-        const result = routeIsKnown(routes, route);
-
-        expect(result).toEqual(false);
-      });
-    });
-  });
 
   describe('allRequiredData', () => {
     describe('when policy type is single', () => {
@@ -191,24 +157,6 @@ describe('middleware/required-data-provided', () => {
     });
   });
 
-  describe('hasRequiredData', () => {
-    describe('when total amount of submitted fields matches the total of required fields', () => {
-      it('should return true', () => {
-        const result = hasRequiredData(EXPORTER_LOCATION_CHANGE, mockSession.submittedData.quoteEligibility);
-
-        expect(result).toEqual(true);
-      });
-    });
-
-    describe('when total amount of submitted fields does NOT match the total of required fields', () => {
-      it('should return false', () => {
-        const result = hasRequiredData(EXPORTER_LOCATION_CHANGE, {});
-
-        expect(result).toEqual(false);
-      });
-    });
-  });
-
   describe('requiredQuoteEligibilityDataProvided', () => {
     const nextSpy = jest.fn();
     const redirectSpy = jest.fn();
@@ -265,24 +213,6 @@ describe('middleware/required-data-provided', () => {
       });
     });
 
-    describe('when req.originalUrl contains `assets`', () => {
-      it('should call req.next', () => {
-        req.originalUrl = '/assets/styles.css';
-        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
-
-        expect(nextSpy).toHaveBeenCalled();
-      });
-    });
-
-    describe('when req.originalUrl is an unknown/404 page', () => {
-      it('should call req.next', () => {
-        req.originalUrl = '/page-that-does-not-exist';
-        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
-
-        expect(nextSpy).toHaveBeenCalled();
-      });
-    });
-
     describe('when req.method is not `GET`', () => {
       it('should call req.next', () => {
         req.method = 'POST';
@@ -328,7 +258,7 @@ describe('middleware/required-data-provided', () => {
       });
     });
 
-    it(`should call req.next to ${NEED_TO_START_AGAIN}`, () => {
+    it('should call req.next', () => {
       req.originalUrl = YOUR_QUOTE;
       req.session = mockSession;
 
