@@ -6,10 +6,13 @@ import singleInputPageVariables from '../../../../helpers/page-variables/single-
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import getCountryByName from '../../../../helpers/get-country-by-name';
 import { canApplyOnline, canApplyOffline, cannotApply } from '../../../../helpers/country-support';
+import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 
+const FIELD_ID = FIELD_IDS.COUNTRY;
+
 export const PAGE_VARIABLES = {
-  FIELD_ID: FIELD_IDS.COUNTRY,
+  FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
 };
 
@@ -29,6 +32,7 @@ export const get = async (req: Request, res: Response) => {
     }),
     HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
+    submittedValues: req.session.submittedData.insuranceEligibility,
   });
 };
 
@@ -64,6 +68,19 @@ export const post = async (req: Request, res: Response) => {
   }
 
   if (canApplyOnline(country)) {
+    const populatedData = {
+      [FIELD_IDS.BUYER_COUNTRY]: {
+        name: country.name,
+        isoCode: country.isoCode,
+        riskCategory: country.riskCategory,
+      },
+    };
+
+    req.session.submittedData = {
+      ...req.session.submittedData,
+      insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
+    };
+
     return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
   }
 

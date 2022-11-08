@@ -7,50 +7,26 @@ import {
   PAGES,
 } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/insurance/eligibility/submit-answers-happy-path';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 const { ROUTES } = CONSTANTS;
 
 context('Insurance - Eligibility - You are eligible to apply online page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction', () => {
   before(() => {
-  cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
-    auth: {
-      username: Cypress.config('basicAuthKey'),
-      password: Cypress.config('basicAuthSecret'),
-    },
+    cy.visit(ROUTES.INSURANCE.START, {
+      auth: {
+        username: Cypress.config('basicAuthKey'),
+        password: Cypress.config('basicAuthSecret'),
+      },
+    });
+
+    cy.submitInsuranceEligibilityAnswersHappyPath();
+
+    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE}`;
+
+    cy.url().should('eq', expected);
   });
-
-  completeAndSubmitBuyerCountryForm();
-
-  yesRadio().click();
-  submitButton().click();
-
-  yesRadio().click();
-  submitButton().click();
-
-  noRadio().click();
-  submitButton().click();
-
-  noRadio().click();
-  submitButton().click();
-
-  noRadio().click();
-  submitButton().click();
-
-  noRadio().click();
-  submitButton().click();
-
-  noRadio().click();
-  submitButton().click();
-
-  yesRadio().click();
-  submitButton().click();
-
-  const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE}`;
-
-  cy.url().should('eq', expected);
-});
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');

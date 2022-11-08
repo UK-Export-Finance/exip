@@ -3,6 +3,13 @@ import { insurance } from '../../../pages';
 import partials from '../../../partials';
 import { LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
 import CONSTANTS from '../../../../../constants';
+import {
+  completeStartForm,
+  completeCheckIfEligibleForm,
+  completeExporterLocationForm,
+  completeUkGoodsAndServicesForm,
+  completeInsuredAmountForm,
+ } from '../../../../support/insurance/eligibility/forms';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM;
@@ -14,23 +21,21 @@ const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
 
 context('Insurance Eligibility - speak to UKEF EFM exit page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
+    completeStartForm();
+    completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
+    completeExporterLocationForm();
+    completeUkGoodsAndServicesForm();
+    completeInsuredAmountForm();
 
-    yesRadio().click();
-    submitButton().click();
-
-    yesRadio().click();
-    submitButton().click();
-
-    noRadio().click();
-    submitButton().click();
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD);
 
     yesRadio().click();
     submitButton().click();

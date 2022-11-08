@@ -1,4 +1,4 @@
-import { heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../../pages/shared';
+import { heading, yesRadio, yesRadioInput, noRadio, noRadioInput, inlineErrorMessage, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import {
   ORGANISATION,
@@ -9,26 +9,30 @@ import {
 } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
+import {
+  completeStartForm,
+  completeCheckIfEligibleForm,
+  completeExporterLocationForm,
+  completeUkGoodsAndServicesForm,
+} from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maxium amount of cover available online', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
+    completeStartForm();
+    completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
-
-    yesRadio().click();
-    submitButton().click();
-
-    yesRadio().click();
-    submitButton().click();
+    completeExporterLocationForm();
+    completeUkGoodsAndServicesForm();
 
     const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`;
 
@@ -141,13 +145,23 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     });
 
     describe('when submitting the answer as `no`', () => {
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {
+      beforeEach(() => {
         noRadio().click();
         submitButton().click();
+      });
 
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {
         const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`;
 
         cy.url().should('eq', expected);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the originally submitted answer selected', () => {
+          partials.backLink().click();
+
+          noRadioInput().should('be.checked');
+        });
       });
     });
   });

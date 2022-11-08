@@ -3,6 +3,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
@@ -30,10 +31,10 @@ describe('controllers/insurance/eligibility/letter-of-credit', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(
-        TEMPLATES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT,
-        singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
-      );
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT, {
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+        submittedValues: req.session.submittedData.insuranceEligibility,
+      });
     });
   });
 
@@ -77,6 +78,21 @@ describe('controllers/insurance/eligibility/letter-of-credit', () => {
 
       beforeEach(() => {
         req.body = validBody;
+      });
+
+      it('should update the session with submitted data, populated with the answer', () => {
+        post(req, res);
+
+        const expectedPopulatedData = {
+          [PAGE_VARIABLES.FIELD_ID]: validBody[PAGE_VARIABLES.FIELD_ID],
+        };
+
+        const expected = {
+          ...req.session.submittedData,
+          insuranceEligibility: updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility),
+        };
+
+        expect(req.session.submittedData).toEqual(expected);
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD}`, () => {

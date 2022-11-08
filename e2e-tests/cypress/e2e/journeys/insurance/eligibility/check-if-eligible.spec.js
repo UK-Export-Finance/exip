@@ -3,10 +3,11 @@ import { insurance } from '../../../pages';
 import partials from '../../../partials';
 import { BUTTONS, LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
+import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
 
-context('Insurance Eligibility - start page', () => {
+context('Insurance Eligibility - check if eligible page', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
       auth: {
@@ -15,7 +16,10 @@ context('Insurance Eligibility - start page', () => {
       },
     });
 
-    submitButton().click();
+    completeStartForm();
+    // completeCheckIfEligibleForm();
+
+    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE);
   });
 
   beforeEach(() => {

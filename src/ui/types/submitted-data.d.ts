@@ -1,23 +1,31 @@
 import { Country } from './country';
 import { Currency } from './currency';
 
-type SubmittedDataQuoteEligibility = {
-  amount?: number;
+type SharedEligibility = {
   buyerCountry?: Country;
+  hasMinimumUkGoodsOrServices?: boolean;
+  validExporterLocation?: boolean;
+};
+
+interface SubmittedDataQuoteEligibility extends SharedEligibility {
+  amount?: number;
   contractValue?: number;
   creditPeriodInMonths?: number;
   currency?: Currency;
-  hasMinimumUkGoodsOrServices?: boolean;
   maximumContractAmountOwed?: number;
   percentageOfCover?: number;
   policyType?: string;
   policyLength?: number;
-};
+}
 
-type SubmittedDataInsuranceEligibility = {
+interface SubmittedDataInsuranceEligibility extends SharedEligibility {
+  haveCompaniesHouseNumber?: boolean;
+  otherPartiesInvolved?: boolean;
+  paidByLetterOfCredit?: boolean;
+  needPreCreditPeriodCover?: boolean;
   wantCoverOverMaxAmount?: boolean;
   wantCoverOverMaxPeriod?: boolean;
-};
+}
 
 type SubmittedData = {
   quoteEligibility: SubmittedDataQuoteEligibility;

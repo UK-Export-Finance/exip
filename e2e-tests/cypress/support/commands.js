@@ -13,6 +13,7 @@ import analytics from '../support/analytics';
 Cypress.Commands.add('login', require('./login'));
 Cypress.Commands.add('checkPhaseBanner', require('./check-phase-banner'));
 
+// TODO: rename
 Cypress.Commands.add('submitAnswersHappyPathSinglePolicy', require('./quote/submit-answers-happy-path-single-policy'));
 Cypress.Commands.add('submitAnswersHappyPathMultiPolicy', require('./quote/submit-answers-happy-path-multi-policy'));
 
@@ -28,3 +29,5 @@ Cypress.Commands.add('checkCookiesConsentBannerIsVisible', analytics.checkCookie
 Cypress.Commands.add('checkCookiesConsentBannerDoesNotExist', analytics.checkCookiesConsentBannerDoesNotExist);
 
 Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);
+
+Cypress.Commands.add('submitInsuranceEligibilityAnswersHappyPath', require('./insurance/eligibility/submit-answers-happy-path'));

@@ -1,27 +1,35 @@
-import { cannotApplyPage, exporterLocationPage, noRadio, submitButton } from '../../../../pages/shared';
+import { cannotApplyPage, exporterLocationPage, noRadio, noRadioInput, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
+import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover - submit `not based inside the UK`', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
+    completeStartForm();
+    completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
 
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
 
     noRadio().click();
     submitButton().click();
+  });
+
+  beforeEach(() => {
+    Cypress.Cookies.preserveOnce('_csrf');
+    Cypress.Cookies.preserveOnce('connect.sid');
   });
 
   it('redirects to exit page', () => {
@@ -41,6 +49,14 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
       const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.UNSUPPORTED_COMPANY_COUNTRY}`;
 
       expect(text.trim()).equal(expected);
+    });
+  });
+
+  describe('when going back to the page', () => {
+    it('should NOT have the originally submitted answer selected', () => {
+      partials.backLink().click();
+
+      noRadioInput().should('not.be.checked');
     });
   });
 });

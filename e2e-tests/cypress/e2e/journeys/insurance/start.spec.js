@@ -6,7 +6,7 @@ import { ROUTES } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.START;
 
-context('Insurance - start page', () => {
+context('Insurance Eligibility - start page', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
       auth: {

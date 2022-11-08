@@ -9,6 +9,7 @@ import {
 } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
+import { completeStartForm, completeCheckIfEligibleForm, completeExporterLocationForm } from '../../../../../support/insurance/eligibility/forms';
 import ukGoodsAndServicesCalculateDescription from '../../../../../support/check-uk-goods-and-services-calculate-description';
 import ukGoodsAndServicesDescription from '../../../../../support/check-uk-goods-and-services-description';
 
@@ -17,19 +18,17 @@ const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
+    completeStartForm();
+    completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
-
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
-
-    yesRadio().click();
-    submitButton().click();
+    completeExporterLocationForm();
 
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
   });
@@ -173,11 +172,22 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`, () => {
+      before(() => {
         yesRadio().click();
         submitButton().click();
+      });
 
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`, () => {
         cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the originally submitted answer selected', () => {
+          partials.backLink().click();
+          cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+
+          yesRadioInput().should('be.checked');
+        });
       });
     });
   });

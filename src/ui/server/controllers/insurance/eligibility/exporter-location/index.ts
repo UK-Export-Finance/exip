@@ -2,6 +2,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.VALID_EXPORTER_LOCATION;
@@ -12,7 +13,10 @@ const PAGE_VARIABLES = {
 };
 
 const get = (req: Request, res: Response) =>
-  res.render(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }));
+  res.render(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, {
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+    submittedValues: req.session.submittedData.insuranceEligibility,
+  });
 
 const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
@@ -34,6 +38,11 @@ const post = (req: Request, res: Response) => {
 
     return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
   }
+
+  req.session.submittedData = {
+    ...req.session.submittedData,
+    insuranceEligibility: updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility),
+  };
 
   return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
 };

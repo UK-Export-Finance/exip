@@ -1,44 +1,49 @@
-import { cannotApplyPage, yesRadio, noRadio, submitButton } from '../../../../pages/shared';
+import { cannotApplyPage, yesRadio, yesRadioInput, noRadio, submitButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
+import {
+  completeStartForm,
+  completeCheckIfEligibleForm,
+  completeExporterLocationForm,
+  completeUkGoodsAndServicesForm,
+  completeInsuredAmountForm,
+  completeInsuredPeriodForm,
+  completeOtherPartiesForm,
+  completeLetterOfCreditForm,
+} from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE;
 const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - Eligibility - Pre-credit period page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit - submit `need pre-credit period cover`', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
+    completeStartForm();
+    completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
+    completeExporterLocationForm();
+    completeUkGoodsAndServicesForm();
+    completeInsuredAmountForm();
+    completeInsuredPeriodForm();
+    completeOtherPartiesForm();
+    completeLetterOfCreditForm();
 
     yesRadio().click();
     submitButton().click();
+  });
 
-    yesRadio().click();
-    submitButton().click();
-
-    noRadio().click();
-    submitButton().click();
-
-    noRadio().click();
-    submitButton().click();
-
-    noRadio().click();
-    submitButton().click();
-
-    noRadio().click();
-    submitButton().click();
-
-    yesRadio().click();
-    submitButton().click();
+  beforeEach(() => {
+    Cypress.Cookies.preserveOnce('_csrf');
+    Cypress.Cookies.preserveOnce('connect.sid');
   });
 
   it('redirects to exit page', () => {
@@ -58,6 +63,14 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
       const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NEED_PRE_CREDIT_PERIOD_COVER}`;
 
       expect(text.trim()).equal(expected);
+    });
+  });
+
+  describe('when going back to the page', () => {
+    it('should NOT have the originally submitted answer selected', () => {
+      partials.backLink().click();
+
+      yesRadioInput().should('not.be.checked');
     });
   });
 });

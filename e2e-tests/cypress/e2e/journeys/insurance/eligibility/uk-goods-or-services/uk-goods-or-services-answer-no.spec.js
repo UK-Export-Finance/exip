@@ -1,7 +1,8 @@
-import { cannotApplyPage, yesRadio, noRadio, submitButton } from '../../../../pages/shared';
+import { cannotApplyPage, noRadio, noRadioInput, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import CONSTANTS from '../../../../../../constants';
+import { completeStartForm, completeCheckIfEligibleForm, completeExporterLocationForm } from '../../../../../support/insurance/eligibility/forms';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
@@ -9,24 +10,25 @@ const { ROUTES } = CONSTANTS;
 
 context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover - submit `no - UK goods/services is below the minimum`', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
+    completeStartForm();
+    completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
-
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
-
-    yesRadio().click();
-    submitButton().click();
-
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+    completeExporterLocationForm()
 
     noRadio().click();
     submitButton().click();
+  });
+
+  beforeEach(() => {
+    Cypress.Cookies.preserveOnce('_csrf');
+    Cypress.Cookies.preserveOnce('connect.sid');
   });
 
   it('redirects to exit page', () => {
@@ -48,6 +50,14 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES}`;
 
       expect(text.trim()).equal(expected);
+    });
+  });
+
+  describe('when going back to the page', () => {
+    it('should NOT have the originally submitted answer selected', () => {
+      partials.backLink().click();
+
+      noRadioInput().should('not.be.checked');
     });
   });
 });

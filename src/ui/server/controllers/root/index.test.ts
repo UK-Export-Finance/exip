@@ -19,7 +19,9 @@ describe('controllers/root', () => {
           quoteEligibility: {
             [FIELD_IDS.CREDIT_PERIOD]: 1,
           },
-          insuranceEligibility: {},
+          insuranceEligibility: {
+            [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: true,
+          },
         },
       };
 
@@ -27,7 +29,9 @@ describe('controllers/root', () => {
 
       expect(req.session.submittedData).toEqual({
         quoteEligibility: {},
-        insuranceEligibility: {},
+        insuranceEligibility: {
+          [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: true,
+        },
       });
     });
 
