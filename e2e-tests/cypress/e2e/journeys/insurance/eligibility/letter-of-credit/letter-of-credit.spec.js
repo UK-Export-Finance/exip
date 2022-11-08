@@ -1,4 +1,4 @@
-import { heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../../pages/shared';
+import { heading, yesRadio, yesRadioInput, noRadio, noRadioInput, inlineErrorMessage, submitButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import {
@@ -154,7 +154,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
     });
 
     describe('when submitting the answer as `no`', () => {
-      beforeEach(() => {
+      before(() => {
         noRadio().click();
         submitButton().click();
       });

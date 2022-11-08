@@ -158,7 +158,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     });
 
     describe('when submitting the answer as `yes`', () => {
-      beforeEach(() => {
+      before(() => {
         yesRadio().click();
         submitButton().click();
       });

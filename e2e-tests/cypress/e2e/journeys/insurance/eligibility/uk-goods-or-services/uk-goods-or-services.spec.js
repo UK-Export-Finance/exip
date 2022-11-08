@@ -172,7 +172,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     });
 
     describe('when submitting the answer as `yes`', () => {
-      beforeEach(() => {
+      before(() => {
         yesRadio().click();
         submitButton().click();
       });
@@ -184,6 +184,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       describe('when going back to the page', () => {
         it('should have the originally submitted answer selected', () => {
           partials.backLink().click();
+          cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
 
           yesRadioInput().should('be.checked');
         });

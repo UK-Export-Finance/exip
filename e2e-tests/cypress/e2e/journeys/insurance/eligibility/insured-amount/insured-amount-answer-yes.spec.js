@@ -31,6 +31,11 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     submitButton().click();
   });
 
+  beforeEach(() => {
+    Cypress.Cookies.preserveOnce('_csrf');
+    Cypress.Cookies.preserveOnce('connect.sid');
+  });
+
   it('redirects to exit page', () => {
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
   });
@@ -52,10 +57,10 @@ context('Insurance - Insured amount page - I want to check if I can use online s
   });
 
   describe('when going back to the page', () => {
-    it('should have the originally submitted answer selected', () => {
+    it('should NOT have the originally submitted answer selected', () => {
       partials.backLink().click();
 
-      yesRadioInput().should('be.checked');
+      yesRadioInput().should('not.be.checked');
     });
   });
 });
