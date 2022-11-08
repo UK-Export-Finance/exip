@@ -1,9 +1,7 @@
-import { getRoutesAsArray, routeIsKnown, allRequiredData, generateRequiredDataState, hasRequiredData, requiredDataProvided } from './required-data-provided';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../constants';
-import { mockReq, mockRes, mockSession } from '../test-mocks';
-import { Request, Response } from '../../types';
-
-const { ROOT, COOKIES, PROBLEM_WITH_SERVICE, QUOTE } = ROUTES;
+import { getRoutesAsArray, routeIsKnown, allRequiredData, generateRequiredDataState, hasRequiredData, requiredQuoteEligibilityDataProvided } from '.';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../constants';
+import { mockReq, mockRes, mockSession } from '../../../test-mocks';
+import { Request, Response } from '../../../../types';
 
 const {
   BUYER_BODY,
@@ -22,7 +20,7 @@ const {
   TELL_US_ABOUT_YOUR_POLICY,
   TELL_US_ABOUT_YOUR_POLICY_CHANGE,
   YOUR_QUOTE,
-} = QUOTE;
+} = ROUTES.QUOTE;
 
 describe('middleware/required-data-provided', () => {
   let req: Request;
@@ -32,12 +30,7 @@ describe('middleware/required-data-provided', () => {
     it('should return all routes as an array of strings', () => {
       const result = getRoutesAsArray();
 
-      const expected = Object.values({
-        ROOT,
-        COOKIES,
-        PROBLEM_WITH_SERVICE,
-        ...QUOTE,
-      });
+      const expected = Object.values(ROUTES.QUOTE);
 
       expect(result).toEqual(expected);
     });
@@ -216,7 +209,7 @@ describe('middleware/required-data-provided', () => {
     });
   });
 
-  describe('requiredDataProvided', () => {
+  describe('requiredQuoteEligibilityDataProvided', () => {
     const nextSpy = jest.fn();
     const redirectSpy = jest.fn();
 
@@ -230,7 +223,7 @@ describe('middleware/required-data-provided', () => {
     describe('when req.originalUrl is root URL', () => {
       it('should call req.next', () => {
         req.originalUrl = '/';
-        requiredDataProvided(req, res, nextSpy);
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
@@ -239,7 +232,7 @@ describe('middleware/required-data-provided', () => {
     describe(`when req.originalUrl is ${BUYER_COUNTRY}`, () => {
       it('should call req.next', () => {
         req.originalUrl = BUYER_COUNTRY;
-        requiredDataProvided(req, res, nextSpy);
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
@@ -248,7 +241,7 @@ describe('middleware/required-data-provided', () => {
     describe(`when req.originalUrl is ${NEED_TO_START_AGAIN}`, () => {
       it('should call req.next', () => {
         req.originalUrl = NEED_TO_START_AGAIN;
-        requiredDataProvided(req, res, nextSpy);
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
@@ -257,7 +250,7 @@ describe('middleware/required-data-provided', () => {
     describe(`when req.originalUrl is ${CANNOT_APPLY}`, () => {
       it('should call req.next', () => {
         req.originalUrl = CANNOT_APPLY;
-        requiredDataProvided(req, res, nextSpy);
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
@@ -266,25 +259,7 @@ describe('middleware/required-data-provided', () => {
     describe(`when req.originalUrl is ${GET_A_QUOTE_BY_EMAIL}`, () => {
       it('should call req.next', () => {
         req.originalUrl = GET_A_QUOTE_BY_EMAIL;
-        requiredDataProvided(req, res, nextSpy);
-
-        expect(nextSpy).toHaveBeenCalled();
-      });
-    });
-
-    describe(`when req.originalUrl is ${COOKIES}`, () => {
-      it('should call req.next', () => {
-        req.originalUrl = COOKIES;
-        requiredDataProvided(req, res, nextSpy);
-
-        expect(nextSpy).toHaveBeenCalled();
-      });
-    });
-
-    describe(`when req.originalUrl is ${PROBLEM_WITH_SERVICE}`, () => {
-      it('should call req.next', () => {
-        req.originalUrl = PROBLEM_WITH_SERVICE;
-        requiredDataProvided(req, res, nextSpy);
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
@@ -293,7 +268,7 @@ describe('middleware/required-data-provided', () => {
     describe('when req.originalUrl contains `assets`', () => {
       it('should call req.next', () => {
         req.originalUrl = '/assets/styles.css';
-        requiredDataProvided(req, res, nextSpy);
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
@@ -302,7 +277,7 @@ describe('middleware/required-data-provided', () => {
     describe('when req.originalUrl is an unknown/404 page', () => {
       it('should call req.next', () => {
         req.originalUrl = '/page-that-does-not-exist';
-        requiredDataProvided(req, res, nextSpy);
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
@@ -311,7 +286,7 @@ describe('middleware/required-data-provided', () => {
     describe('when req.method is not `GET`', () => {
       it('should call req.next', () => {
         req.method = 'POST';
-        requiredDataProvided(req, res, nextSpy);
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
@@ -329,7 +304,7 @@ describe('middleware/required-data-provided', () => {
           },
         };
 
-        requiredDataProvided(req, res, nextSpy);
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(redirectSpy).toHaveBeenCalled();
         expect(redirectSpy).toHaveBeenCalledWith(NEED_TO_START_AGAIN);
@@ -346,7 +321,7 @@ describe('middleware/required-data-provided', () => {
           },
         };
 
-        requiredDataProvided(req, res, nextSpy);
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(redirectSpy).toHaveBeenCalled();
         expect(redirectSpy).toHaveBeenCalledWith(NEED_TO_START_AGAIN);
@@ -357,7 +332,7 @@ describe('middleware/required-data-provided', () => {
       req.originalUrl = YOUR_QUOTE;
       req.session = mockSession;
 
-      requiredDataProvided(req, res, nextSpy);
+      requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
       expect(nextSpy).toHaveBeenCalled();
     });

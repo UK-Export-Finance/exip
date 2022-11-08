@@ -1,8 +1,7 @@
-import { FIELD_IDS, ROUTES } from '../constants';
-import { Request, RequiredDataState, Response, SubmittedDataQuoteEligibility } from '../../types';
-import { isSinglePolicyType, isMultiPolicyType } from '../helpers/policy-type';
-
-const { ROOT, COOKIES, PROBLEM_WITH_SERVICE, QUOTE } = ROUTES;
+import { FIELD_IDS, ROUTES } from '../../../constants';
+import { Request, RequiredDataStateQuoteEligibility, Response, SubmittedDataQuoteEligibility } from '../../../../types';
+import { getRoutesAsArray, routeIsKnown } from '../helpers';
+import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-type';
 
 const {
   BUYER_BODY,
@@ -21,36 +20,7 @@ const {
   TELL_US_ABOUT_YOUR_POLICY,
   TELL_US_ABOUT_YOUR_POLICY_CHANGE,
   YOUR_QUOTE,
-} = QUOTE;
-
-/**
- * getRoutesAsArray
- * transform all routes into an array of strings
- * @returns {Array}
- */
-export const getRoutesAsArray = (): Array<string> => {
-  const routes = {
-    ROOT,
-    COOKIES,
-    PROBLEM_WITH_SERVICE,
-    ...QUOTE,
-  };
-
-  return Object.values(routes);
-};
-
-/**
- * routeIsKnown
- * check if a route is a known route. If not, it's a 404 page.
- * @returns {Boolean}
- */
-export const routeIsKnown = (knownRoutes: Array<string>, route: string): boolean => {
-  if (knownRoutes.includes(route)) {
-    return true;
-  }
-
-  return false;
-};
+} = ROUTES.QUOTE;
 
 /**
  * allRequiredData
@@ -59,8 +29,8 @@ export const routeIsKnown = (knownRoutes: Array<string>, route: string): boolean
  * @param {Object} all submitted data
  * @returns {Object}
  */
-export const allRequiredData = (submittedData: SubmittedDataQuoteEligibility): RequiredDataState => {
-  const requiredDataState = {} as RequiredDataState;
+export const allRequiredData = (submittedData: SubmittedDataQuoteEligibility): RequiredDataStateQuoteEligibility => {
+  const requiredDataState = {} as RequiredDataStateQuoteEligibility;
 
   requiredDataState[BUYER_COUNTRY] = [];
 
@@ -93,8 +63,8 @@ export const allRequiredData = (submittedData: SubmittedDataQuoteEligibility): R
   return requiredDataState;
 };
 
-export const generateRequiredDataState = (submittedData: SubmittedDataQuoteEligibility): RequiredDataState => {
-  const requiredDataState = {} as RequiredDataState;
+export const generateRequiredDataState = (submittedData: SubmittedDataQuoteEligibility): RequiredDataStateQuoteEligibility => {
+  const requiredDataState = {} as RequiredDataStateQuoteEligibility;
 
   const required = allRequiredData(submittedData);
 
@@ -144,7 +114,7 @@ export const hasRequiredData = (route: string, submittedData: SubmittedDataQuote
 };
 
 /**
- * requiredDataProvided
+ * requiredQuoteEligibilityDataProvided
  * Prevent users from accessing a page if all previous forms in the user flow have not been submitted.
  * Without this, a user could manually navigate to e.g, page/form no.4 - bypassing previous forms or, manually go directly to the final quote page.
  * The last 3 pages in the user flow require data from the previous forms. Not having this data will result in errors/bad UX.
@@ -154,14 +124,14 @@ export const hasRequiredData = (route: string, submittedData: SubmittedDataQuote
  * @param {String} next Callback function name
  * @returns {Function} next() if all required data is provided, otherwise redirect to an exit page.
  */
-export const requiredDataProvided = (req: Request, res: Response, next: () => void) => {
+export const requiredQuoteEligibilityDataProvided = (req: Request, res: Response, next: () => void) => {
   const { originalUrl: url, method } = req;
 
   // get all defined routes as an array
-  const routesArray = getRoutesAsArray();
+  const routesArray = getRoutesAsArray(ROUTES.QUOTE);
 
   // array of routes that do not require any data checks.
-  const irrelevantRoutes = [ROOT, BUYER_COUNTRY, CANNOT_APPLY, GET_A_QUOTE_BY_EMAIL, COOKIES, NEED_TO_START_AGAIN, PROBLEM_WITH_SERVICE];
+  const irrelevantRoutes = [BUYER_COUNTRY, CANNOT_APPLY, GET_A_QUOTE_BY_EMAIL, NEED_TO_START_AGAIN];
 
   const isIrrelevantRoute = (route: string) => irrelevantRoutes.includes(route);
 
@@ -173,6 +143,8 @@ export const requiredDataProvided = (req: Request, res: Response, next: () => vo
   if (isIrrelevantRoute(url) || url.includes('/assets') || !routeIsKnown(routesArray, url) || method !== 'GET') {
     return next();
   }
+
+  // TODO do we need assets here.
 
   if (req.session && req.session.submittedData) {
     const { submittedData } = req.session;
