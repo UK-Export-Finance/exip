@@ -25,9 +25,10 @@
   },
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "dependencies": {
-    "@keystone-6/auth": "^4.0.0",
-    "@keystone-6/core": "^2.1.0",
-    "@keystone-6/fields-document": "^4.0.0",
+    "@graphql-tools/schema": "^9.0.9",
+    "@keystone-6/auth": "5.0.0",
+    "@keystone-6/core": "3.0.2",
+    "@keystone-6/fields-document": "5.0.1",
     "date-fns": "^2.29.3",
     "dotenv": "16.0.2",
     "notifications-node-client": "^5.2.0",
@@ -46,10 +47,5 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "4.2.1",
     "prettier": "^2.7.1"
-  },
-  "overrides": {
-    "graphql-upload@15.0.2": {
-      "graphql": "^15.8.0"
-    }
   }
 }
