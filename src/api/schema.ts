@@ -1,4 +1,5 @@
 import { list } from '@keystone-6/core';
+import { allowAll } from '@keystone-6/core/access';
 import { integer, relationship, select, text, timestamp, password } from '@keystone-6/core/fields';
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
@@ -13,6 +14,7 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
     },
+    access: allowAll,
   },
   Application: {
     fields: {
@@ -35,6 +37,7 @@ export const lists = {
         const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
           data: {},
         });
+
         modifiedData.referenceNumber = newReferenceNumber;
 
         // add dates
@@ -49,8 +52,10 @@ export const lists = {
         return modifiedData;
       },
     },
+    access: allowAll,
   },
   Page: list({
+  // Page: {
     fields: {
       heading: text({
         label: 'Page heading',
@@ -69,6 +74,7 @@ export const lists = {
         initialColumns: ['heading', 'id'],
       },
     },
+    access: allowAll,
   }),
   User: list({
     fields: {
@@ -84,5 +90,7 @@ export const lists = {
         initialColumns: ['name', 'email'],
       },
     },
+    access: allowAll,
   }),
+  // },
 } as Lists;
