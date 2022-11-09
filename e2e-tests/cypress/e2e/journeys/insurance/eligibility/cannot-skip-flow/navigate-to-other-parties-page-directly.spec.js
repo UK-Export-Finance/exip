@@ -3,7 +3,7 @@ const { ROUTES } = CONSTANTS;
 
 context('Manually going to the `Other parties` page via URL without completing the previous forms', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES, {
+    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
