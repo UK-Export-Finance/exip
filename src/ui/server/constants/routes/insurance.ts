@@ -21,5 +21,6 @@ export const INSURANCE_ROUTES = {
     COMPANIES_HOUSE_NUMBER: `${INSURANCE}${ELIGIBILITY}/companies-house-number`,
     ELIGIBLE_TO_APPLY_ONLINE: `${INSURANCE}${ELIGIBILITY}/eligible-to-apply-online`,
     ALREADY_HAVE_ACCOUNT: `${INSURANCE}${ELIGIBILITY}/already-have-account`,
+    NEED_TO_START_AGAIN: `${INSURANCE}${ELIGIBILITY}/need-to-start-again`,
   },
 };

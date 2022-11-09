@@ -7,5 +7,4 @@ export const QUOTE_TEMPLATES = {
   CANNOT_APPLY: 'quote/cannot-apply.njk',
   GET_A_QUOTE_BY_EMAIL: 'quote/get-a-quote-by-email.njk',
   YOUR_QUOTE: 'quote/your-quote.njk',
-  NEED_TO_START_AGAIN: 'quote/need-to-start-again.njk',
 };

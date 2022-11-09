@@ -1,4 +1,4 @@
-type RequiredDataState = {
+type RequiredDataStateQuoteEligibility = {
   'buyer-country': Array<string>;
   'buyer-country/change': Array<string>;
   'buyer-body': Array<string>;
@@ -11,8 +11,7 @@ type RequiredDataState = {
   'tell-us-about-policy': Array<string>;
   'tell-us-about-policy/change': Array<string>;
   'check-your-answers': Array<string>;
-  'cannot-apply': Array<string>;
   'your-quote': Array<string>;
 };
 
-export { RequiredDataState };
+export { RequiredDataStateQuoteEligibility };

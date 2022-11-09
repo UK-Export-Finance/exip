@@ -20,8 +20,10 @@ dotenv.config();
 import configureNunjucks from './nunjucks-configuration';
 
 import { rootRoute, quoteRoutes, insuranceRoutes } from './routes';
+import { ROUTES } from './constants';
 import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from './content-strings';
-import { requiredDataProvided } from './middleware/required-data-provided';
+import { requiredQuoteEligibilityDataProvided } from './middleware/required-data-provided/quote';
+import { requiredInsuranceEligibilityDataProvided } from './middleware/required-data-provided/insurance/eligibility';
 
 // @ts-ignore
 const app = express();
@@ -95,7 +97,8 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-app.use(requiredDataProvided);
+app.use('/quote', requiredQuoteEligibilityDataProvided);
+app.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
 
 app.use('/', rootRoute);
 app.use('/', quoteRoutes);
@@ -112,7 +115,7 @@ app.use(
 /* eslint-disable no-unused-vars, prettier/prettier */
 // @ts-ignore
 const errorHandler: express.ErrorRequestHandler = (err, req, res, next) => {
-  res.redirect('/problem-with-service');
+  res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
 };
 /* eslint-enable no-unused-vars, prettier/prettier */
 

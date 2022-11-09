@@ -1,6 +1,7 @@
 const buyerCountryPage = require('./buyerCountry');
 const cannotApplyPage = require('./cannotApply');
 const exporterLocationPage = require('./exporterLocation');
+const needToStartAgainPage = require('./needToStartAgain');
 const ukGoodsOrServicesPage = require('./ukGoodsOrServices');
 
 module.exports = {
@@ -14,5 +15,6 @@ module.exports = {
   buyerCountryPage,
   cannotApplyPage,
   exporterLocationPage,
+  needToStartAgainPage,
   ukGoodsOrServicesPage,
 };

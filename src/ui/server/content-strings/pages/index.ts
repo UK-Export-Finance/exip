@@ -92,6 +92,11 @@ const COOKIES_PAGE = {
   },
 };
 
+const NEED_TO_START_AGAIN_PAGE = {
+  PAGE_TITLE: 'You need to start again',
+  REASON: 'This is because you have not yet answered all the eligibility questions.',
+};
+
 const PAGE_NOT_FOUND_PAGE = {
   PAGE_TITLE: 'Page not found',
   BODY_1: 'If you typed the web address, check it is correct.',
@@ -108,6 +113,7 @@ export const PAGES = {
   UK_GOODS_OR_SERVICES,
   CANNOT_APPLY,
   COOKIES_PAGE,
+  NEED_TO_START_AGAIN_PAGE,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
   QUOTE: QUOTE_PAGES,

@@ -131,11 +131,6 @@ const YOUR_QUOTE = {
   },
 };
 
-const NEED_TO_START_AGAIN = {
-  PAGE_TITLE: 'You need to start again',
-  REASON: 'This is because you have not yet answered all the eligibility questions.',
-};
-
 export default {
   BUYER_BODY,
   UK_GOODS_OR_SERVICES,
@@ -144,5 +139,4 @@ export default {
   CHECK_YOUR_ANSWERS,
   GET_A_QUOTE_BY_EMAIL,
   YOUR_QUOTE,
-  NEED_TO_START_AGAIN,
 };
