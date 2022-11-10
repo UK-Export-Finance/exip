@@ -30,26 +30,61 @@ export const lists = {
       }),
     },
     hooks: {
-      resolveInput: async ({ resolvedData, context }) => {
-        const modifiedData = resolvedData;
+      resolveInput: async ({ operation, resolvedData, context }) => {
+        if (operation === 'create') {
+          try {
+            console.info('Adding default data to a new application');
+            const modifiedData = resolvedData;
 
-        // generate and add a new unique reference number
-        const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
-          data: {},
-        });
+            // generate and add a new unique reference number
+            const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
+              data: {},
+            });
 
-        modifiedData.referenceNumber = newReferenceNumber;
+            modifiedData.referenceNumber = newReferenceNumber;
 
-        // add dates
-        const now = new Date();
-        modifiedData.createdAt = now;
-        modifiedData.updatedAt = now;
-        modifiedData.submissionDeadline = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
+            // add dates
+            const now = new Date();
+            modifiedData.createdAt = now;
+            modifiedData.updatedAt = now;
+            modifiedData.submissionDeadline = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
 
-        // add default submission type
-        modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
+            // add default submission type
+            modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
 
-        return modifiedData;
+            return modifiedData;
+          } catch (err) {
+            console.error('Error adding default data to a new application. ', { err });
+
+            return err;
+          }
+        }
+      },
+      afterOperation: async ({ operation, item, context }) => {
+        if (operation === 'create') {
+          try {
+            console.info('Adding application ID to reference number entry');
+
+            const applicationId = item.id;
+            const { referenceNumber } = item;
+
+            // add the application ID to the reference number entry.
+            await context.db.ReferenceNumber.updateOne({
+              where: { id: String(referenceNumber)  },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                },
+              }
+            });
+          } catch (err) {
+            console.error('Error adding an application ID to reference number entry ', { err });
+
+            return err;
+          }
+        }
       },
     },
     access: allowAll,

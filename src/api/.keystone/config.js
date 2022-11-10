@@ -66,18 +66,48 @@ var lists = {
       })
     },
     hooks: {
-      resolveInput: async ({ resolvedData, context }) => {
-        const modifiedData = resolvedData;
-        const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
-          data: {}
-        });
-        modifiedData.referenceNumber = newReferenceNumber;
-        const now = new Date();
-        modifiedData.createdAt = now;
-        modifiedData.updatedAt = now;
-        modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
-        modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
-        return modifiedData;
+      resolveInput: async ({ operation, resolvedData, context }) => {
+        if (operation === "create") {
+          try {
+            console.info("Adding default data to a new application");
+            const modifiedData = resolvedData;
+            const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
+              data: {}
+            });
+            modifiedData.referenceNumber = newReferenceNumber;
+            const now = new Date();
+            modifiedData.createdAt = now;
+            modifiedData.updatedAt = now;
+            modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
+            modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
+            return modifiedData;
+          } catch (err) {
+            console.error("Error adding default data to a new application. ", { err });
+            return err;
+          }
+        }
+      },
+      afterOperation: async ({ operation, item, context }) => {
+        if (operation === "create") {
+          try {
+            console.info("Adding application ID to reference number entry");
+            const applicationId = item.id;
+            const { referenceNumber } = item;
+            await context.db.ReferenceNumber.updateOne({
+              where: { id: String(referenceNumber) },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                }
+              }
+            });
+          } catch (err) {
+            console.error("Error adding an application ID to reference number entry ", { err });
+            return err;
+          }
+        }
       }
     },
     access: import_access.allowAll
@@ -154,9 +184,12 @@ var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
   typeDefs: `
+      type EmailResponse {
+        success: Boolean
+      }
+
       type Mutation {
-        publishPost(id: ID!): Application
-        sendEmail: Boolean
+        sendEmail: EmailResponse
       }
       `,
   resolvers: {
@@ -174,12 +207,6 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           console.error("Unable to send email", { err });
           return { success: false };
         }
-      },
-      publishPost: (root, { id }, context) => {
-        return context.db.Application.updateOne({
-          where: { id },
-          data: { status: "published", publishDate: new Date().toUTCString() }
-        });
       }
     }
   }
