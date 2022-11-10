@@ -18,6 +18,7 @@ const mockReq = () => {
     },
     method: 'GET',
     originalUrl: 'mock',
+    params: {},
     redirect: jest.fn(),
     session: {
       submittedData: {

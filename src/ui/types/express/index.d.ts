@@ -3,12 +3,6 @@ export {};
 import { SubmittedData } from '../submitted-data';
 import { Quote } from '../quote';
 
-interface RequestSession {
-  submittedData: SubmittedData;
-  quote?: Quote;
-  cookieConsentNewDecision?: boolean;
-}
-
 interface RequestBody {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
@@ -29,6 +23,16 @@ interface ResponseLocals {
   googleAnalyticsId?: string;
 }
 
+interface RequestParams {
+  referenceNumber?: string;
+}
+
+interface RequestSession {
+  submittedData: SubmittedData;
+  quote?: Quote;
+  cookieConsentNewDecision?: boolean;
+}
+
 interface Request {
   body: RequestBody;
   cookies: RequestCookies;
@@ -38,6 +42,7 @@ interface Request {
   method: string;
   originalUrl: string;
   redirect: (str: string) => any;
+  params: RequestParams;
   session: RequestSession;
 }
 
