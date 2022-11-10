@@ -55,7 +55,6 @@ export const lists = {
     access: allowAll,
   },
   Page: list({
-  // Page: {
     fields: {
       heading: text({
         label: 'Page heading',
@@ -92,5 +91,4 @@ export const lists = {
     },
     access: allowAll,
   }),
-  // },
 } as Lists;

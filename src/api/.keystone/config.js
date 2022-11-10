@@ -24,7 +24,7 @@ __export(keystone_exports, {
 });
 module.exports = __toCommonJS(keystone_exports);
 var import_config2 = require("dotenv/config");
-var import_core3 = require("@keystone-6/core");
+var import_core2 = require("@keystone-6/core");
 
 // schema.ts
 var import_core = require("@keystone-6/core");
@@ -147,31 +147,25 @@ var session = (0, import_session.statelessSessions)({
 });
 
 // custom-schema.ts
-var import_core2 = require("@keystone-6/core");
+var import_schema = require("@graphql-tools/schema");
 var import_notifications_node_client = require("notifications-node-client");
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
 var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
-var extendGraphqlSchema = (0, import_core2.graphQLSchemaExtension)({
+var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
+  schemas: [schema],
   typeDefs: `
-    type EmailResponse {
-      success: Boolean
-    }
-
-    type Mutation {
-      """ send an email """
-      sendEmail(
-        templateId: String!
-        sendToEmailAddress: String!
-      ): EmailResponse
-    }
-  `,
+      type Mutation {
+        publishPost(id: ID!): Application
+        sendEmail: Boolean
+      }
+      `,
   resolvers: {
     Mutation: {
-      sendEmail: async (root, variables) => {
+      sendEmail: (root, variables) => {
         try {
           console.info("Calling Notify API. templateId: ", variables.templateId);
           const { templateId, sendToEmailAddress } = variables;
-          await notifyClient.sendEmail(templateId, sendToEmailAddress, {
+          notifyClient.sendEmail(templateId, sendToEmailAddress, {
             personalisation: {},
             reference: null
           });
@@ -180,6 +174,12 @@ var extendGraphqlSchema = (0, import_core2.graphQLSchemaExtension)({
           console.error("Unable to send email", { err });
           return { success: false };
         }
+      },
+      publishPost: (root, { id }, context) => {
+        return context.db.Application.updateOne({
+          where: { id },
+          data: { status: "published", publishDate: new Date().toUTCString() }
+        });
       }
     }
   }
@@ -187,7 +187,7 @@ var extendGraphqlSchema = (0, import_core2.graphQLSchemaExtension)({
 
 // keystone.ts
 var keystone_default = withAuth(
-  (0, import_core3.config)({
+  (0, import_core2.config)({
     db: {
       provider: "mysql",
       url: String(process.env.DB_URI),
