@@ -70,14 +70,14 @@ export const lists = {
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
-              where: { id: String(referenceNumber)  },
+              where: { id: String(referenceNumber) },
               data: {
                 application: {
                   connect: {
-                    id: applicationId
-                  }
+                    id: applicationId,
+                  },
                 },
-              }
+              },
             });
           } catch (err) {
             console.error('Error adding an application ID to reference number entry ', { err });
