@@ -53,6 +53,20 @@ describe('controllers/insurance/all-sections', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ALL_SECTIONS, expectedVariables);
     });
 
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        // @ts-ignore
+        getApplicationSpy = jest.fn(() => Promise.resolve());
+        api.keystone.getApplication = getApplicationSpy;
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
     describe('when there is an error with the API call', () => {
       beforeEach(() => {
         getApplicationSpy = jest.fn(() => Promise.reject());

@@ -57,6 +57,21 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
 
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        // @ts-ignore
+        createApplicationSpy = jest.fn(() => Promise.resolve());
+
+        api.keystone.createApplication = createApplicationSpy;
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
     describe('when there is an error with the API call', () => {
       beforeEach(() => {
         createApplicationSpy = jest.fn(() => Promise.reject());

@@ -5,6 +5,9 @@ const createApplicationMutation = gql`
     createApplication(data: {}) {
       id
       referenceNumber
+      eligibility {
+        id
+      }
     }
   }
 `;

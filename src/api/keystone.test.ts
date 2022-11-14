@@ -15,7 +15,7 @@ describe('Create an Application', () => {
   beforeAll(async () => {
     application = await context.query.Application.createOne({
       data: {},
-      query: 'id createdAt updatedAt referenceNumber submissionDeadline submissionType',
+      query: 'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id }',
     });
   });
 
@@ -71,6 +71,15 @@ describe('Create an Application', () => {
 
   test('it should have a default submission type', () => {
     expect(application.submissionType).toEqual(APPLICATION.SUBMISSION_TYPE.MIA);
+  });
+
+  test('it should have generated an eligibility entry and add the ID to the application', async () => {
+    const allEligibilityEntires = await context.query.Eligibility.findMany();
+    const lastEligibilityEntry = allEligibilityEntires[allEligibilityEntires.length - 1];
+
+    const expected = lastEligibilityEntry.id;
+
+    expect(application.eligibility.id).toEqual(expected);
   });
 
   test('it should add the application ID to the reference number entry', async () => {

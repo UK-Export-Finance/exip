@@ -109,12 +109,16 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT}`, () => {
+    it(`should redirect to ${ROUTES.INSURANCE.ROOT}/[referenceNumber]${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
       submitButton().click();
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT}`;
+      cy.url().then(url => {
+        const splitUrl = url.split('/');
+        const applicationId = splitUrl[4];
 
-      cy.url().should('eq', expected);
+        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+        cy.url().should('eq', expected);
+      });
     });
   });
 });

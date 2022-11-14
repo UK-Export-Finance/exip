@@ -10,6 +10,10 @@ const get = async (req: Request, res: Response) => {
   try {
     const application = await api.keystone.getApplication(Number(referenceNumber));
 
+    if (!application) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
     return res.render(TEMPLATES.INSURANCE.ALL_SECTIONS, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.START,

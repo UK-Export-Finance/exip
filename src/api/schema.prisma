@@ -24,12 +24,43 @@ model Application {
   id                               String            @id @default(cuid())
   createdAt                        DateTime?
   updatedAt                        DateTime?
+  eligibility                      Eligibility?      @relation("Application_eligibility", fields: [eligibilityId], references: [id])
+  eligibilityId                    String?           @map("eligibility")
   referenceNumber                  Int?
   submissionDeadline               DateTime?
   submissionType                   String?           @default("Manual Inclusion Application")
   from_ReferenceNumber_application ReferenceNumber[] @relation("ReferenceNumber_application")
+  from_Eligibility_application     Eligibility[]     @relation("Eligibility_application")
 
+  @@index([eligibilityId])
   @@index([referenceNumber])
+}
+
+model Country {
+  id                            String        @id @default(cuid())
+  isoCode                       String        @default("")
+  name                          String        @default("")
+  from_Eligibility_buyerCountry Eligibility[] @relation("Eligibility_buyerCountry")
+}
+
+model Eligibility {
+  id                           String        @id @default(cuid())
+  application                  Application?  @relation("Eligibility_application", fields: [applicationId], references: [id])
+  applicationId                String?       @map("application")
+  buyerCountry                 Country?      @relation("Eligibility_buyerCountry", fields: [buyerCountryId], references: [id])
+  buyerCountryId               String?       @map("buyerCountry")
+  hasMinimumUkGoodsOrServices  Boolean       @default(false)
+  validExporterLocation        Boolean       @default(false)
+  hasCompaniesHouseNumber      Boolean       @default(false)
+  otherPartiesInvolved         Boolean       @default(false)
+  paidByLetterOfCredit         Boolean       @default(false)
+  needPreCreditPeriodCover     Boolean       @default(false)
+  wantCoverOverMaxAmount       Boolean       @default(false)
+  wantCoverOverMaxPeriod       Boolean       @default(false)
+  from_Application_eligibility Application[] @relation("Application_eligibility")
+
+  @@index([applicationId])
+  @@index([buyerCountryId])
 }
 
 model Page {

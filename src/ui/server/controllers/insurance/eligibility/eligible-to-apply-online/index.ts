@@ -16,9 +16,16 @@ const get = (req: Request, res: Response) =>
 
 const post = async (req: Request, res: Response) => {
   try {
-    const newApplication = await api.keystone.createApplication();
+    const eligibilityAnswers = req.session.submittedData.insuranceEligibility;
 
-    const { referenceNumber } = newApplication;
+    const application = await api.keystone.createApplication(eligibilityAnswers);
+
+    if (!application) {
+      console.error('Error creating application');
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    const { referenceNumber } = application;
 
     return res.redirect(`${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
   } catch (err) {
