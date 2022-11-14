@@ -1,6 +1,6 @@
 import { list } from '@keystone-6/core';
 import { allowAll } from '@keystone-6/core/access';
-import { integer, relationship, select, text, timestamp, password } from '@keystone-6/core/fields';
+import { checkbox, integer, relationship, select, text, timestamp, password } from '@keystone-6/core/fields';
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types'; // eslint-disable-line
@@ -20,6 +20,7 @@ export const lists = {
     fields: {
       createdAt: timestamp(),
       updatedAt: timestamp(),
+      eligibility: relationship({ ref: 'Eligibility' }),
       referenceNumber: integer({
         isIndexed: true,
       }),
@@ -36,12 +37,23 @@ export const lists = {
             console.info('Adding default data to a new application');
             const modifiedData = resolvedData;
 
-            // generate and add a new unique reference number
+            // generate and attach a new unique reference number
             const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
               data: {},
             });
 
             modifiedData.referenceNumber = newReferenceNumber;
+
+            // generate and attach eligibility relationship with empty answers
+            const { id: eligibilityId } = await context.db.Eligibility.createOne({
+              data: {},
+            });
+
+            modifiedData.eligibility = {
+              connect: {
+                id: eligibilityId
+              }
+            };
 
             // add dates
             const now = new Date();
@@ -66,11 +78,23 @@ export const lists = {
             console.info('Adding application ID to reference number entry');
 
             const applicationId = item.id;
-            const { referenceNumber } = item;
+            const { referenceNumber, eligibilityId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId,
+                  },
+                },
+              },
+            });
+
+            // add the application ID to the elgibility entry.
+            await context.db.Eligibility.updateOne({
+              where: { id: eligibilityId },
               data: {
                 application: {
                   connect: {
@@ -89,6 +113,32 @@ export const lists = {
     },
     access: allowAll,
   },
+  Country: list({
+    fields: {
+      isoCode: text({
+        validation: { isRequired: true }
+      }),
+      name: text({
+        validation: { isRequired: true }
+      }),
+    },
+    access: allowAll,
+  }),
+  Eligibility: list({
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      buyerCountry: relationship({ ref: 'Country' }),
+      hasMinimumUkGoodsOrServices: checkbox(),
+      validExporterLocation: checkbox(),
+      hasCompaniesHouseNumber: checkbox(),
+      otherPartiesInvolved: checkbox(),
+      paidByLetterOfCredit: checkbox(),
+      needPreCreditPeriodCover: checkbox(),
+      wantCoverOverMaxAmount: checkbox(),
+      wantCoverOverMaxPeriod: checkbox(),
+    },
+    access: allowAll,
+  }),
   Page: list({
     fields: {
       heading: text({

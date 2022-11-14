@@ -56,6 +56,7 @@ var lists = {
     fields: {
       createdAt: (0, import_fields.timestamp)(),
       updatedAt: (0, import_fields.timestamp)(),
+      eligibility: (0, import_fields.relationship)({ ref: "Eligibility" }),
       referenceNumber: (0, import_fields.integer)({
         isIndexed: true
       }),
@@ -75,6 +76,14 @@ var lists = {
               data: {}
             });
             modifiedData.referenceNumber = newReferenceNumber;
+            const { id: eligibilityId } = await context.db.Eligibility.createOne({
+              data: {}
+            });
+            modifiedData.eligibility = {
+              connect: {
+                id: eligibilityId
+              }
+            };
             const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
@@ -92,9 +101,19 @@ var lists = {
           try {
             console.info("Adding application ID to reference number entry");
             const applicationId = item.id;
-            const { referenceNumber } = item;
+            const { referenceNumber, eligibilityId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                }
+              }
+            });
+            await context.db.Eligibility.updateOne({
+              where: { id: eligibilityId },
               data: {
                 application: {
                   connect: {
@@ -112,6 +131,32 @@ var lists = {
     },
     access: import_access.allowAll
   },
+  Country: (0, import_core.list)({
+    fields: {
+      isoCode: (0, import_fields.text)({
+        validation: { isRequired: true }
+      }),
+      name: (0, import_fields.text)({
+        validation: { isRequired: true }
+      })
+    },
+    access: import_access.allowAll
+  }),
+  Eligibility: (0, import_core.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      buyerCountry: (0, import_fields.relationship)({ ref: "Country" }),
+      hasMinimumUkGoodsOrServices: (0, import_fields.checkbox)(),
+      validExporterLocation: (0, import_fields.checkbox)(),
+      hasCompaniesHouseNumber: (0, import_fields.checkbox)(),
+      otherPartiesInvolved: (0, import_fields.checkbox)(),
+      paidByLetterOfCredit: (0, import_fields.checkbox)(),
+      needPreCreditPeriodCover: (0, import_fields.checkbox)(),
+      wantCoverOverMaxAmount: (0, import_fields.checkbox)(),
+      wantCoverOverMaxPeriod: (0, import_fields.checkbox)()
+    },
+    access: import_access.allowAll
+  }),
   Page: (0, import_core.list)({
     fields: {
       heading: (0, import_fields.text)({
