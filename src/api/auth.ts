@@ -3,7 +3,7 @@ import { createAuth } from '@keystone-6/auth';
 
 import { statelessSessions } from '@keystone-6/core/session';
 
-const sessionSecret = String(process.env.SESSION_SECRET);
+const sessionSecret = String(process.env.SESSION_SECRET || 'asdfaslfdjjasjoiwefjwoerij23j8j2oi2j');
 
 if (!sessionSecret) {
   if (process.env.NODE_ENV === 'production') {

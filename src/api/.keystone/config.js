@@ -200,7 +200,7 @@ var lists = {
 var import_config = require("dotenv/config");
 var import_auth = require("@keystone-6/auth");
 var import_session = require("@keystone-6/core/session");
-var sessionSecret = String(process.env.SESSION_SECRET);
+var sessionSecret = String(process.env.SESSION_SECRET || "asdfaslfdjjasjoiwefjwoerij23j8j2oi2j");
 if (!sessionSecret) {
   if (process.env.NODE_ENV === "production") {
     throw new Error("SESSION_SECRET environment variable must be set in production");
@@ -223,9 +223,6 @@ var session = (0, import_session.statelessSessions)({
 
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
-var import_notifications_node_client = require("notifications-node-client");
-var notifyKey = process.env.GOV_NOTIFY_API_KEY;
-var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
   typeDefs: `
@@ -238,22 +235,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
       `,
   resolvers: {
-    Mutation: {
-      sendEmail: (root, variables) => {
-        try {
-          console.info("Calling Notify API. templateId: ", variables.templateId);
-          const { templateId, sendToEmailAddress } = variables;
-          notifyClient.sendEmail(templateId, sendToEmailAddress, {
-            personalisation: {},
-            reference: null
-          });
-          return { success: true };
-        } catch (err) {
-          console.error("Unable to send email", { err });
-          return { success: false };
-        }
-      }
-    }
+    Mutation: {}
   }
 });
 

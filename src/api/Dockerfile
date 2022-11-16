@@ -24,10 +24,13 @@ EXPOSE 80 ${SSH_PORT}
 # Node setup
 WORKDIR /app
 COPY package.json .
-RUN npm install --omit=dev
+COPY package-lock.json .
+COPY .keystone keystone
+RUN npm ci --legacy-peer-deps
 RUN npm install -g typescript
 RUN npm cache clean --force
 COPY . .
+RUN npm run build
 
 # Execute Script
 ENTRYPOINT ["/bin/init.sh"]

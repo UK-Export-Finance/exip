@@ -1,9 +1,32 @@
 version: "3"
 services:
+  api:
+    image: mysql
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    build: ./src/api
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./api/src:/app/src:ro
+      # - ./src/api/.keystone:/app/src/.keystone:ro
+      # - ./src/api/:/app/src/:ro
+      - ./api/src/.keystone:/app/src/.keystone:ro
+    environment:
+      - MYSQL_ROOT_PASSWORD=example
+      - PORT=5005
+      - DB_URI=mysql://root@localhost:5005/exip
+      - SESSION_SECRET=asdfaslfdjjasjoiwefjwoerij23j8j2oi2j
+      - GOV_NOTIFY_API_KEY
+    entrypoint: npx nodemon src/keystone.ts -L
   ui:
     build: ./src/ui
     image: exip/src/ui
     restart: always
+    depends_on:
+      - api
     ports:
       - "5000:5000"
     volumes:
@@ -22,14 +45,7 @@ services:
       - MULESOFT_API_MDM_EA_SECRET
       - GOOGLE_ANALYTICS_ID
     entrypoint: npx nodemon src/index.ts -L
-  api:
-    build: ./src/api
-    image: exip/src/api
-    restart: always
-    ports:
-      - "5005:5005"
-    volumes:
-      - ./api/src:/app/src:ro
-    environment:
-      - PORT=5005
-    entrypoint: npx nodemon src/index.js -L
+
+# DB_URI=mysql://root@localhost:3306/exip
+# SESSION_SECRET=asdfaslfdjjasjoiwefjwoerij23j8j2oi2j
+# - MONGODB_URI=mongodb://root:r00t@dtfs-submissions-data:27017/?authMechanism=DEFAULT
