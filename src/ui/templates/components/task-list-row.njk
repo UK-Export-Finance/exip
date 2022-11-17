@@ -7,9 +7,16 @@
   <div class="govuk-summary-list__row">
 
     <dt class="ukef-task-list--key-cell">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ row.href }}">
-        {{ row.title }}
-      </a>
+      <p class="govuk-body govuk-!-margin-bottom-0">
+        {% if row.href %}
+          <a class="govuk-link govuk-link--no-visited-state" href="{{ row.href }}">
+            {{ row.title }}
+          </a>
+
+          {% else %}
+            {{ row.title }}
+        {% endif %}
+      </p>
     </dt>
 
     <dd class="govuk-summary-list__actions">

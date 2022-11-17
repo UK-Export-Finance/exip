@@ -2,7 +2,7 @@ import prepareApplicationTasks from './prepare-application';
 import { TaskListData, TaskListDataTask } from '../../../../types';
 import { getTaskById } from '../task-helpers';
 import createInitialChecksTasks from './initial-checks';
-import { GROUP_IDS, ROUTES, TASK_IDS } from '../../../constants';
+import { GROUP_IDS, TASK_IDS } from '../../../constants';
 import { TASKS } from '../../../content-strings';
 
 describe('server/helpers/task-list/prepare-application', () => {
@@ -19,41 +19,31 @@ describe('server/helpers/task-list/prepare-application', () => {
 
     const result = prepareApplicationTasks(previousGroups);
 
-    const POLICY_TYPE = {
-      href: ROUTES.QUOTE.POLICY_TYPE,
-      title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE,
-      id: TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE,
+    const POLICY_TYPE_AND_EXPORTS = {
+      href: '#',
+      title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS,
+      id: TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE_AND_EXPORTS,
       fields: [],
-      dependencies: [
-        ...getTaskById(previousGroups[0].tasks, TASK_IDS.INITIAL_CHECKS.ELIGIBILITY).fields,
-        ...getTaskById(previousGroups[0].tasks, TASK_IDS.INITIAL_CHECKS.CONTACT_DETAILS).fields,
-      ],
+      dependencies: [...getTaskById(previousGroups[0].tasks, TASK_IDS.INITIAL_CHECKS.ELIGIBILITY).fields],
     };
 
-    const EXPORTS_TO_INSURE = {
+    const EXPORTER_BUSINESS = {
       href: '#',
-      title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTS_TO_INSURE,
-      id: TASK_IDS.PREPARE_APPLICATION.EXPORTS_TO_INSURE,
+      title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
+      id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
       fields: [],
-      dependencies: [...POLICY_TYPE.fields, ...POLICY_TYPE.dependencies],
+      dependencies: [...POLICY_TYPE_AND_EXPORTS.fields, ...POLICY_TYPE_AND_EXPORTS.dependencies],
     };
 
     const expected = [
-      POLICY_TYPE,
-      EXPORTS_TO_INSURE,
-      {
-        href: '#',
-        title: TASKS.LIST.PREPARE_APPLICATION.TASKS.ABOUT_BUSINESS,
-        id: TASK_IDS.PREPARE_APPLICATION.ABOUT_BUSINESS,
-        fields: [],
-        dependencies: [...EXPORTS_TO_INSURE.dependencies, ...EXPORTS_TO_INSURE.fields],
-      },
+      POLICY_TYPE_AND_EXPORTS,
+      EXPORTER_BUSINESS,
       {
         href: '#',
         title: TASKS.LIST.PREPARE_APPLICATION.TASKS.BUYER,
         id: TASK_IDS.PREPARE_APPLICATION.BUYER,
-        fields: [],
-        dependencies: [],
+        fields: ['temp'],
+        dependencies: [...EXPORTER_BUSINESS.dependencies, ...EXPORTER_BUSINESS.fields],
       },
     ];
 

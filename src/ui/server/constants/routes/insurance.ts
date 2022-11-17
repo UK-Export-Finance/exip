@@ -25,4 +25,12 @@ export const INSURANCE_ROUTES = {
     NEED_TO_START_AGAIN: `${ROOT}${ELIGIBILITY}/need-to-start-again`,
   },
   ALL_SECTIONS: '/all-sections',
+  POLICY_AND_EXPORTS: {},
+};
+
+const POLICY_AND_EXPORTS_ROOT = '/policy-and-exports';
+
+INSURANCE_ROUTES.POLICY_AND_EXPORTS = {
+  ROOT: POLICY_AND_EXPORTS_ROOT,
+  TYPE_OF_POLICY: `${POLICY_AND_EXPORTS_ROOT}/type-of-policy`,
 };

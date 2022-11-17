@@ -2,20 +2,16 @@ import { get } from '.';
 import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
-import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 import api from '../../../api';
+import generateGroupsAndTasks from '../../../helpers/task-list/generate-groups-and-tasks';
+import generateTaskList from '../../../helpers/task-list';
+import flattenApplicationData from '../../../helpers/flatten-application-data';
+import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
 
 describe('controllers/insurance/all-sections', () => {
   let req: Request;
   let res: Response;
-
-  // TODO: move to test mocks
-  const mockReferenceNumber = '10001';
-
-  const mockApplication = {
-    referenceNumber: mockReferenceNumber,
-  };
 
   const mockGetApplicationResponse = mockApplication;
 
@@ -23,7 +19,7 @@ describe('controllers/insurance/all-sections', () => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = mockReferenceNumber;
+    req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
   describe('get', () => {
@@ -42,12 +38,17 @@ describe('controllers/insurance/all-sections', () => {
     it('should render template', async () => {
       await get(req, res);
 
+      const flatApplicationData = flattenApplicationData(mockApplication);
+      const taskListStructure = generateGroupsAndTasks();
+      const expectedTaskListData = generateTaskList(taskListStructure, flatApplicationData);
+
       const expectedVariables = {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.START,
           BACK_LINK: req.headers.referer,
         }),
         application: mockApplication,
+        taskListData: expectedTaskListData,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ALL_SECTIONS, expectedVariables);
