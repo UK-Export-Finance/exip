@@ -62,7 +62,7 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
     it('should NOT have the originally submitted answer selected', () => {
       partials.backLink().click();
 
-      buyerCountryPage.hiddenInput().should('not.have.attr', 'value', COUNTRY_NAME_UNSUPPORTED);
+      buyerCountryPage.results().should('have.length', 0);
     });
   });
 });

@@ -87,10 +87,6 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
       checkAutocompleteInput.rendersMultipleResults();
     });
 
-    it('adds the country name to a hidden input value after searching', () => {
-      checkAutocompleteInput.addsCountryNameToHiddenInput();
-    });
-
     it('allows user to remove a selected country and search again', () => {
       checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain();
     });
@@ -142,7 +138,10 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
           partials.backLink().click();
 
           const expectedValue = 'Algeria';
-          buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
+
+          buyerCountryPage.results().invoke('text').then((text) => {
+            expect(text.trim()).equal(expectedValue);
+          });
         });
       });
     });

@@ -50,7 +50,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     it('should NOT have the originally submitted answer selected', () => {
       partials.backLink().click();
 
-      buyerCountryPage.hiddenInput().should('not.have.attr', 'value', COUNTRY_NAME_APPLY_OFFLINE_ONLY);
+      buyerCountryPage.results().should('have.length', 0);
     });
   });
 });

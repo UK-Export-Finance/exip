@@ -75,10 +75,6 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       checkAutocompleteInput.rendersMultipleResults();
     });
 
-    it('adds the country name to a hidden input value after searching', () => {
-      checkAutocompleteInput.addsCountryNameToHiddenInput();
-    });
-
     it('allows user to remove a selected country and search again', () => {
       checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain();
     });
