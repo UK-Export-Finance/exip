@@ -9,7 +9,7 @@ import { canApplyOnline, canApplyOffline, cannotApply } from '../../../../helper
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 
-const FIELD_ID = FIELD_IDS.COUNTRY;
+const FIELD_ID = FIELD_IDS.BUYER_COUNTRY;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
@@ -59,7 +59,7 @@ export const post = async (req: Request, res: Response) => {
     });
   }
 
-  const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY] || req.body[FIELD_IDS.COUNTRY];
+  const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY] || req.body[FIELD_IDS.BUYER_COUNTRY];
 
   const country = getCountryByName(mappedCountries, submittedCountryName);
 

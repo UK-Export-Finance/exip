@@ -36,7 +36,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.COUNTRY,
+        FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
         PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
       };
 

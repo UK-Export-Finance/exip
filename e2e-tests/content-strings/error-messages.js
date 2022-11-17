@@ -9,7 +9,6 @@ const MAX_COVER_AMOUNT = PRODUCT.MAX_COVER_AMOUNT_IN_GBP.toLocaleString('en', {
 
 const ERROR_MESSAGES = {
   [FIELD_IDS.BUYER_COUNTRY]: 'Select where your buyer is based',
-  [FIELD_IDS.COUNTRY]: 'Select where your buyer is based',
   [FIELD_IDS.VALID_BUYER_BODY]: 'Select if your buyer is a government or public sector body',
   [FIELD_IDS.VALID_EXPORTER_LOCATION]: 'Select if your company is based in the UK, Channel Islands, Isle of Man or not',
   [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
