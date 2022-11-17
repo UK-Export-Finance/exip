@@ -277,7 +277,6 @@ describe('controllers/quote/buyer-country', () => {
         await post(req, res);
 
         const expectedPopulatedData = {
-          ...validBody,
           [FIELD_IDS.BUYER_COUNTRY]: {
             name: selectedCountry?.name,
             isoCode: selectedCountry?.isoCode,
