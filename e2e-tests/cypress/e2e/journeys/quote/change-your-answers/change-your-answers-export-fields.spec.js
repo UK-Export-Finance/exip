@@ -51,7 +51,9 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     it('has originally submitted answer selected', () => {
       const expectedValue = submissionData[BUYER_COUNTRY];
 
-      buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
+      buyerCountryPage.results().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedValue);
+      });
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {

@@ -36,7 +36,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.COUNTRY,
+        FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
         PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
       };
 
@@ -64,7 +64,6 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       const expectedVariables = {
         ...singleInputPageVariables(PAGE_VARIABLES),
         BACK_LINK: req.headers.referer,
-        HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
         countries: mapCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData.insuranceEligibility,
       };
@@ -78,12 +77,11 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
         await get(req, res);
 
-        const expectedCountries = mapCountries(mockCountriesResponse, req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY].isoCode);
+        const expectedCountries = mapCountries(mockCountriesResponse, req.session.submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY].isoCode);
 
         const expectedVariables = {
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: req.headers.referer,
-          HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
           countries: expectedCountries,
           submittedValues: req.session.submittedData.insuranceEligibility,
         };
@@ -145,7 +143,6 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: req.headers.referer,
-          HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
           countries: mapCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),
         });
@@ -181,8 +178,6 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         await post(req, res);
 
         const expectedPopulatedData = {
-          // TODO: why is this in quote version of buyer country?
-          // ...validBody,
           [FIELD_IDS.BUYER_COUNTRY]: {
             name: selectedCountry?.name,
             isoCode: selectedCountry?.isoCode,
