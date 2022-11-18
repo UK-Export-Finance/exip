@@ -1,5 +1,5 @@
-import { InsuranceEligibility, InsuranceEligibilityCore } from '.';
-import { Country } from '.';
+import { InsuranceEligibilityCore } from './submitted-data';
+import { Country } from './country';
 
 type ApplicationCore = {
   id: string;
@@ -16,10 +16,10 @@ interface ApplicationEligibility extends InsuranceEligibilityCore {
 
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
-};
+}
 
 interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore {
   buyerCountry: string;
-};
+}
 
 export { Application, ApplicationFlat };

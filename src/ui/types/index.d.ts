@@ -9,7 +9,13 @@ import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibilit
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
 import { Quote, QuoteContent } from './quote';
 import { SelectOption } from './select-option';
-import { SubmittedDataQuoteEligibility, InsuranceEligibility, InsuranceEligibilityCore,  SubmittedDataInsuranceEligibility, SubmittedData } from './submitted-data';
+import {
+  SubmittedDataQuoteEligibility,
+  InsuranceEligibility,
+  InsuranceEligibilityCore,
+  SubmittedDataInsuranceEligibility,
+  SubmittedData,
+} from './submitted-data';
 import { SummaryListItem, SummaryListItemData } from './summary-list';
 import { TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
 import {
