@@ -14,8 +14,7 @@ export const FIELDS = {
     },
   },
   [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
-    LABEL: 'Percentage of your export that is UK content',
-    HINT: 'Enter the UK content of your export as a percentage.',
+    HINT: 'You can include your profit margin as part of the contract value.',
     SUMMARY: {
       TITLE: 'UK goods or services',
     },

@@ -6,6 +6,7 @@ const ukGoodsOrServicesPage = require('./ukGoodsOrServices');
 
 module.exports = {
   heading: () => cy.get('[data-cy="heading"]'),
+  yesNoRadioHint: () => cy.get(`[data-cy="yes-no-input-hint"]`),
   yesRadio: () => cy.get(`[data-cy="yes"]`),
   yesRadioInput: () => cy.get(`[data-cy="yes-input"]`),
   noRadio: () => cy.get(`[data-cy="no"]`),
