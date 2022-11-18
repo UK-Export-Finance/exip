@@ -18,7 +18,12 @@ const START = {
   BODY_4: 'If you need it more urgently, you can tell us before you submit your application.',
 };
 
+const ALL_SECTIONS = {
+  PAGE_TITLE: 'Apply for UKEF export insurance',
+};
+
 export default {
   START,
   ELIGIBILITY,
+  ALL_SECTIONS,
 };

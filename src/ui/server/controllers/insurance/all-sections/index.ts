@@ -25,7 +25,7 @@ const get = async (req: Request, res: Response) => {
 
     return res.render(TEMPLATES.INSURANCE.ALL_SECTIONS, {
       ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.START,
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ALL_SECTIONS,
         BACK_LINK: req.headers.referer,
       }),
       application,

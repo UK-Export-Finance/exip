@@ -10,19 +10,19 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
     const result = generateGroupsAndTasks();
 
     const initialChecks = {
-      title: TASKS.LIST.INITIAL_CHECKS.TITLE,
+      title: TASKS.LIST.INITIAL_CHECKS.HEADING,
       id: GROUP_IDS.INITIAL_CHECKS,
       tasks: initialChecksTasks(),
     };
 
     const prepareApplication = {
-      title: TASKS.LIST.PREPARE_APPLICATION.TITLE,
+      title: TASKS.LIST.PREPARE_APPLICATION.HEADING,
       id: GROUP_IDS.PREPARE_APPLICATION,
       tasks: prepareApplicationTasks([initialChecks]),
     };
 
     const submitApplication = {
-      title: TASKS.LIST.SUBMIT_APPLICATION.TITLE,
+      title: TASKS.LIST.SUBMIT_APPLICATION.HEADING,
       id: GROUP_IDS.SUBMIT_APPLICATION,
       tasks: submitApplicationTasks([initialChecks, prepareApplication]),
     };

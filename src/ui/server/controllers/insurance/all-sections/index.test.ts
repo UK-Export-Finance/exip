@@ -44,7 +44,7 @@ describe('controllers/insurance/all-sections', () => {
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.START,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ALL_SECTIONS,
           BACK_LINK: req.headers.referer,
         }),
         application: mockApplication,

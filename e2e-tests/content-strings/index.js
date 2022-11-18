@@ -8,6 +8,7 @@ const PAGES = require('./pages');
 const PRODUCT = require('./product');
 const QUOTE_TITLES = require('./quote-titles');
 const SUMMARY_ANSWERS = require('./summary-answers');
+const TASKS = require('./tasks');
 const UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION = require('./uk-goods-and-services-calculate-description');
 const UK_GOODS_AND_SERVICES_DESCRIPTION = require('./uk-goods-and-services-description');
 
@@ -25,6 +26,7 @@ module.exports = {
   PRODUCT,
   QUOTE_TITLES,
   SUMMARY_ANSWERS,
+  TASKS,
   UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
   UK_GOODS_AND_SERVICES_DESCRIPTION,
 };

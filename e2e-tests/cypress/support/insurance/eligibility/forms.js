@@ -48,4 +48,6 @@ export const completeCompaniesHouseNumberForm = () => {
   submitButton().click();
 };
 
-
+export const completeEligibleToApplyOnlineForm = () => {
+  submitButton().click();
+};

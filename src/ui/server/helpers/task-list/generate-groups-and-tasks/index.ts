@@ -12,7 +12,7 @@ import { GROUP_IDS } from '../../../constants';
 const generateGroupsAndTasks = (): TaskListData => {
   let groups = [
     {
-      title: TASKS.LIST.INITIAL_CHECKS.TITLE,
+      title: TASKS.LIST.INITIAL_CHECKS.HEADING,
       id: GROUP_IDS.INITIAL_CHECKS,
       tasks: initialChecksTasks(),
     },
@@ -21,7 +21,7 @@ const generateGroupsAndTasks = (): TaskListData => {
   groups = [
     ...groups,
     {
-      title: TASKS.LIST.PREPARE_APPLICATION.TITLE,
+      title: TASKS.LIST.PREPARE_APPLICATION.HEADING,
       id: GROUP_IDS.PREPARE_APPLICATION,
       tasks: prepareApplicationTasks(groups),
     },
@@ -30,7 +30,7 @@ const generateGroupsAndTasks = (): TaskListData => {
   groups = [
     ...groups,
     {
-      title: TASKS.LIST.SUBMIT_APPLICATION.TITLE,
+      title: TASKS.LIST.SUBMIT_APPLICATION.HEADING,
       id: GROUP_IDS.SUBMIT_APPLICATION,
       tasks: submitApplicationTasks(groups),
     },

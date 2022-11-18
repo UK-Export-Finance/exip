@@ -11,7 +11,7 @@ describe('server/helpers/task-list/prepare-application', () => {
 
     const previousGroups = [
       {
-        title: TASKS.LIST.INITIAL_CHECKS.TITLE,
+        title: TASKS.LIST.INITIAL_CHECKS.HEADING,
         id: GROUP_IDS.INITIAL_CHECKS,
         tasks: initialChecks,
       },
