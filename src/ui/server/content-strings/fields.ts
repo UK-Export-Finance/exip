@@ -167,4 +167,7 @@ export const FIELDS = {
       },
     },
   },
+  [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
+    HINT: 'This is known as the pre-credit period.',
+  },
 };

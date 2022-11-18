@@ -167,12 +167,8 @@ const FIELDS = {
       },
     },
   },
-  INSURANCE: {
-    ELIGIBILITY: {
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT]: {
-        HINT: 'This is known as the pre-credit period.',
-      }
-    },
+  [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
+    HINT: 'This is known as the pre-credit period.',
   },
 };
 
