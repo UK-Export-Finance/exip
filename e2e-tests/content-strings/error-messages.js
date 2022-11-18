@@ -12,7 +12,7 @@ const ERROR_MESSAGES = {
   [FIELD_IDS.VALID_BUYER_BODY]: 'Select if your buyer is a government or public sector body',
   [FIELD_IDS.VALID_EXPORTER_LOCATION]: 'Select if your company is based in the UK, Channel Islands, Isle of Man or not',
   [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
-    IS_EMPTY: 'Select whether at least 20% of your export contract value is made up from UK goods and services',
+    IS_EMPTY: 'Select if 20% of your export contract value is made up from UK goods/services or not',
   },
   [FIELD_IDS.CURRENCY]: {
     IS_EMPTY: 'Select currency',
