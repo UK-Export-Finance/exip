@@ -14,8 +14,7 @@ export const FIELDS = {
     },
   },
   [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
-    LABEL: 'Percentage of your export that is UK content',
-    HINT: 'Enter the UK content of your export as a percentage.',
+    HINT: 'You can include your profit margin as part of the contract value.',
     SUMMARY: {
       TITLE: 'UK goods or services',
     },
@@ -167,5 +166,8 @@ export const FIELDS = {
         TEXT: 'Do not use cookies that measure your use of this service',
       },
     },
+  },
+  [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
+    HINT: 'This is known as the pre-credit period.',
   },
 };

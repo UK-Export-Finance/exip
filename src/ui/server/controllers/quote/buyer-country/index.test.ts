@@ -306,54 +306,6 @@ describe('controllers/quote/buyer-country', () => {
       });
     });
 
-    describe(`when the country is supported for an online quote, submitted with ${FIELD_IDS.BUYER_COUNTRY} (no JS) and there are no validation errors`, () => {
-      const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
-      const mappedCountries = mapCountries(mockCountriesResponse);
-
-      const selectedCountry = getCountryByName(mappedCountries, selectedCountryName);
-
-      const validBody = {
-        [FIELD_IDS.BUYER_COUNTRY]: selectedCountryName,
-      };
-
-      beforeEach(() => {
-        req.body = validBody;
-      });
-
-      it('should update the session with submitted data, popluated with country object', async () => {
-        await post(req, res);
-
-        const expectedPopulatedData = {
-          ...validBody,
-          [FIELD_IDS.BUYER_COUNTRY]: {
-            name: selectedCountry?.name,
-            isoCode: selectedCountry?.isoCode,
-            riskCategory: selectedCountry?.riskCategory,
-          },
-        };
-
-        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
-
-        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
-      });
-
-      it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_BODY);
-      });
-
-      describe("when the url's last substring is `change`", () => {
-        it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, async () => {
-          req.originalUrl = 'mock/change';
-
-          await post(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
-        });
-      });
-    });
-
     describe('when the CIS (country information system) API has no data', () => {
       beforeEach(() => {
         // @ts-ignore

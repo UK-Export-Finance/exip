@@ -7,7 +7,7 @@ const BUYER_COUNTRY = {
 };
 
 const EXPORTER_LOCATION = {
-  PAGE_TITLE: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
+  PAGE_TITLE: 'Are you exporting from a business base inside the UK, Channel Islands or Isle of Man?',
 };
 
 const UK_GOODS_OR_SERVICES = {

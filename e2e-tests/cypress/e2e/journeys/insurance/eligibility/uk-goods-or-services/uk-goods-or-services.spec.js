@@ -1,8 +1,9 @@
-import { exporterLocationPage, ukGoodsOrServicesPage, heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../../pages/shared';
+import { exporterLocationPage, ukGoodsOrServicesPage, heading, yesNoRadioHint, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import {
   ORGANISATION,
   BUTTONS,
+  FIELDS,
   LINKS,
   PAGES,
   ERROR_MESSAGES,
@@ -84,6 +85,14 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
 
     heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
+    });
+  });
+
+  it('renders radio button hint', () => {
+    yesNoRadioHint().should('exist');
+
+    yesNoRadioHint().invoke('text').then((text) => {
+      expect(text.trim()).equal(FIELDS[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES].HINT);
     });
   });
 
