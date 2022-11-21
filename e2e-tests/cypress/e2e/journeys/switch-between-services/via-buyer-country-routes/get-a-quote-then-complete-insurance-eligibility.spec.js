@@ -1,5 +1,5 @@
-import { submitButton } from '../pages/shared';
-import { completeAndSubmitBuyerCountryForm } from '../../support/forms'
+import { submitButton } from '../../../pages/shared';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms'
 import {
   completeExporterLocationForm,
   completeUkGoodsAndServicesForm,
@@ -10,8 +10,8 @@ import {
   completePreCreditPeriodForm,
   completeCompaniesHouseNumberForm,
   completeEligibleToApplyOnlineForm,
-} from '../../support/insurance/eligibility/forms';
-import { ROUTES } from '../../../constants';
+} from '../../../../support/insurance/eligibility/forms';
+import { ROUTES } from '../../../../../constants';
 
 context('Get a quote, complete insurance eligibility and then re-visit the quote tool - all by visiting the buyer country form instead of via `start now` route', () => {
   before(() => {
