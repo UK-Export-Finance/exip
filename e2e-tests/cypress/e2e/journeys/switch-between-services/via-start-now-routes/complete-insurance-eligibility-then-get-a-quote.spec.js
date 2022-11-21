@@ -1,5 +1,5 @@
 import { submitButton } from '../../../pages/shared';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms'
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import {
   completeStartForm,
   completeCheckIfEligibleForm,
