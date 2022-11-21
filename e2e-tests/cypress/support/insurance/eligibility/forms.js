@@ -47,3 +47,7 @@ export const completeCompaniesHouseNumberForm = () => {
   yesRadio().click();
   submitButton().click();
 };
+
+export const completeEligibleToApplyOnlineForm = () => {
+  submitButton().click();
+};
