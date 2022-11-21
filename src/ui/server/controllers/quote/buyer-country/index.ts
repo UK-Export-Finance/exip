@@ -47,7 +47,13 @@ export const getBackLink = (referer?: string): string => {
 };
 
 export const get = async (req: Request, res: Response) => {
-  const { submittedData } = req.session;
+  if (!req.session.submittedData || !req.session.submittedData.quoteEligibility) {
+    req.session.submittedData = {
+      ...req.session.submittedData,
+      quoteEligibility: {},
+    };
+  }
+
   const countries = await api.getCountries();
 
   if (!countries || !countries.length) {
@@ -56,8 +62,8 @@ export const get = async (req: Request, res: Response) => {
 
   let countryValue;
 
-  if (submittedData && submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY]) {
-    countryValue = submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY];
+  if (req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY]) {
+    countryValue = req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY];
   }
 
   let mappedCountries;
