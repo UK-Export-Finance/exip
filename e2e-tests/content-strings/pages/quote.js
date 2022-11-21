@@ -159,7 +159,7 @@ const YOUR_QUOTE = {
   },
 };
 
-export {
+const QUOTE = {
   BUYER_BODY,
   UK_GOODS_OR_SERVICES,
   POLICY_TYPE,
@@ -169,3 +169,5 @@ export {
   GET_A_QUOTE_BY_EMAIL,
   YOUR_QUOTE,
 };
+
+export default QUOTE;

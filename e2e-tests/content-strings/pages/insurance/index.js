@@ -18,7 +18,9 @@ const START = {
   BODY_4: 'If you need it more urgently, you can tell us before you submit your application.',
 };
 
-export {
+const INSURANCE = {
   START,
   ELIGIBILITY,
 };
+
+export default INSURANCE;

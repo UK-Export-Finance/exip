@@ -6,9 +6,11 @@ import quotePages from './quote';
 const insurance = insurancePages;
 const quote = quotePages;
 
-export {
+const pages = {
   cookiesPage,
   insurance,
   pageNotFoundPage,
   quote,
 };
+
+export default pages;

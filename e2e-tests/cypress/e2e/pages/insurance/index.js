@@ -1,7 +1,9 @@
 import startPage from './start';
 import eligibility from './eligibility';
 
-export {
+const insurancePages = {
   startPage,
   eligibility,
 };
+
+export default insurancePages;

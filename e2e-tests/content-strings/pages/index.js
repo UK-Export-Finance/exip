@@ -110,7 +110,7 @@ const PROBLEM_WITH_SERVICE_PAGE = {
 const QUOTE = QUOTE_PAGES;
 const INSURANCE = INSURANCE_PAGES;
 
-export {
+const PAGES = {
   BUYER_COUNTRY,
   EXPORTER_LOCATION,
   UK_GOODS_OR_SERVICES,
@@ -122,3 +122,5 @@ export {
   QUOTE,
   INSURANCE,
 };
+
+export default PAGES;

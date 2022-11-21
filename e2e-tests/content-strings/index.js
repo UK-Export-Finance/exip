@@ -13,7 +13,7 @@ import UK_GOODS_AND_SERVICES_DESCRIPTION from './uk-goods-and-services-descripti
 
 const ORGANISATION = 'UK Export Finance';
 
-export {
+const CONTENT_STRINGS = {
   BUTTONS,
   COOKIES_CONSENT,
   ERROR_MESSAGES,
@@ -28,3 +28,5 @@ export {
   UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
   UK_GOODS_AND_SERVICES_DESCRIPTION,
 };
+
+export default CONTENT_STRINGS;
