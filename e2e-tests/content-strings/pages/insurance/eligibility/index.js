@@ -1,5 +1,5 @@
-const LINKS = require('../../../links');
-const { PRODUCT } = require('../../../../constants')
+import LINKS from '../../../links';
+import { PRODUCT } from '../../../../constants';
 
 const MAX_COVER_AMOUNT = PRODUCT.MAX_COVER_AMOUNT_IN_GBP.toLocaleString('en', {
   style: 'currency',
@@ -94,7 +94,7 @@ const OTHER_PARTIES_INVOLVED = {
       {
         TEXT: "consortium or group you're involved in that has a significant role in these exports",
       },
-    ]
+    ],
   },
 };
 
@@ -130,9 +130,9 @@ const ELIGIBLE_TO_APPLY_ONLINE = {
   INSET: 'This does not automatically guarantee cover.',
   BODY: 'You now need to fill in the application so we can assess the risks around your exports and your buyer.',
   SUBMIT_BUTTON: 'Continue to application',
-}; 
+};
 
-module.exports = {
+export {
   APPLY_OFFLINE,
   SPEAK_TO_UKEF_EFM,
   CHECK_IF_ELIGIBLE,

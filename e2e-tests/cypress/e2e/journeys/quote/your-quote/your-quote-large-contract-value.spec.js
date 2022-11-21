@@ -11,9 +11,7 @@ import {
   tellUsAboutYourPolicyPage,
   checkYourAnswersPage,
 } from '../../../pages/quote';
-import CONSTANTS from '../../../../../constants';
-
-const { ROUTES, FIELD_IDS } = CONSTANTS;
+import { ROUTES, FIELD_IDS } from '../../../../../constants';
 
 const {
   CONTRACT_VALUE,

@@ -13,7 +13,7 @@
 
 const { lighthouse, pa11y, prepareAudit } = require('cypress-audit');
 
-module.exports = (on, config) => { // eslint-disable-line no-unused-vars
+export default (on, config) => { // eslint-disable-line no-unused-vars
   // eslint-disable-next-line
   on('before:browser:launch', (browser = {}, launchOptions) => {
     prepareAudit(launchOptions);

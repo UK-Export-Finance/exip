@@ -1,19 +1,18 @@
-import { heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../pages/shared';
-import { buyerBodyPage } from '../../../pages/quote';
+import {
+  heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
+} from '../../../pages/shared';
 import partials from '../../../partials';
 import {
   BUTTONS,
   ERROR_MESSAGES,
-  FIELDS,
   LINKS,
   ORGANISATION,
   PAGES,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.BUYER_BODY;
-const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country', () => {
   beforeEach(() => {

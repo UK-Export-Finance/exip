@@ -1,10 +1,10 @@
-const policyTypePage = require('./policyType');
-const tellUsAboutYourPolicyPage = require('./tellUsAboutYourPolicy');
-const checkYourAnswersPage = require('./checkYourAnswers');
-const yourQuotePage = require('./yourQuote');
-const getAQuoteByEmailPage = require('./getAQuoteByEmail');
+import policyTypePage from './policyType';
+import tellUsAboutYourPolicyPage from './tellUsAboutYourPolicy';
+import checkYourAnswersPage from './checkYourAnswers';
+import yourQuotePage from './yourQuote';
+import getAQuoteByEmailPage from './getAQuoteByEmail';
 
-module.exports = {
+export {
   policyTypePage,
   tellUsAboutYourPolicyPage,
   checkYourAnswersPage,

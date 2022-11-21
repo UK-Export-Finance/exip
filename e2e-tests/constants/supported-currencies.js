@@ -4,4 +4,4 @@ const SUPPORTED_CURRENCIES = [
   'USD',
 ];
 
-module.exports = SUPPORTED_CURRENCIES;
+export default SUPPORTED_CURRENCIES;

@@ -4,7 +4,7 @@ import {
   tellUsAboutYourPolicyPage,
 } from '../../../pages/quote';
 import partials from '../../../partials';
-import CONSTANTS from '../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import {
   completeAndSubmitBuyerBodyForm,
@@ -12,11 +12,6 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
-
-const {
-  FIELD_IDS,
-  ROUTES,
-} = CONSTANTS;
 
 const {
   CREDIT_PERIOD,

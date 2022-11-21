@@ -1,5 +1,5 @@
-const INSURANCE_ROUTES = require('./insurance');
-const QUOTE_ROUTES = require('./quote');
+import INSURANCE_ROUTES from './insurance';
+import QUOTE_ROUTES from './quote';
 
 const ROUTES = {
   ROOT: '/',

@@ -1,15 +1,7 @@
-import { insurance } from '../../../../pages';
 import { buyerCountryPage, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
-import {
-  BUTTONS,
-  ERROR_MESSAGES,
-  FIELDS,
-  LINKS,
-  ORGANISATION,
-  PAGES,
-} from '../../../../../../content-strings';
-import CONSTANTS from '../../../../../../constants';
+import { LINKS } from '../../../../../../content-strings';
+import { ROUTES } from '../../../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
 import {
   checkPageTitleAndHeading,
@@ -19,9 +11,6 @@ import {
   checkValidationErrors,
   checkFocusOnInputWhenClickingSummaryErrorMessage,
 } from '../../../../../support/check-buyer-country-form';
-
-const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
-const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - Buyer location page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based', () => {
   beforeEach(() => {

@@ -7,4 +7,4 @@ const PERCENTAGES_OF_COVER = [
   95,
 ];
 
-module.exports = PERCENTAGES_OF_COVER;
+export default PERCENTAGES_OF_COVER;

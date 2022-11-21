@@ -13,4 +13,4 @@ const FIELD_VALUES = {
   },
 };
 
-module.exports = FIELD_VALUES;
+export default FIELD_VALUES;

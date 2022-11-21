@@ -1,25 +1,12 @@
 import { buyerCountryPage, submitButton } from '../../../pages/shared';
-import {
-  checkYourAnswersPage,
-  tellUsAboutYourPolicyPage,
-  yourQuotePage,
-} from '../../../pages/quote';
+import { tellUsAboutYourPolicyPage, yourQuotePage } from '../../../pages/quote';
 import partials from '../../../partials';
-import CONSTANTS from '../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../constants';
 
 const {
-  ROUTES,
-  FIELD_IDS,
-} = CONSTANTS;
-
-const {
-  CONTRACT_VALUE,
   MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
-  POLICY_TYPE,
   QUOTE,
-  SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
 context('Your quote page - change answers (policy type and length from multi to single) - as an exporter, I want to get an Export insurance quote', () => {

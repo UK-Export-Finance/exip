@@ -3,4 +3,4 @@ const PRODUCT = {
   MAX_COVER_PERIOD_YEARS: 2,
 };
 
-module.exports = PRODUCT;
+export default PRODUCT;

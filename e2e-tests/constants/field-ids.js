@@ -34,4 +34,4 @@ const FIELD_IDS = {
   },
 };
 
-module.exports = FIELD_IDS;
+export default FIELD_IDS;

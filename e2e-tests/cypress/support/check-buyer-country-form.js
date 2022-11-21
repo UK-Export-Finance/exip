@@ -1,6 +1,10 @@
-import { buyerCountryPage, heading, inlineErrorMessage, submitButton } from '../e2e/pages/shared';
+import {
+  buyerCountryPage, heading, inlineErrorMessage, submitButton,
+} from '../e2e/pages/shared';
 import partials from '../e2e/partials';
-import { BUTTONS, ERROR_MESSAGES, FIELDS, ORGANISATION, PAGES } from '../../content-strings';
+import {
+  BUTTONS, ERROR_MESSAGES, FIELDS, ORGANISATION, PAGES,
+} from '../../content-strings';
 import { FIELD_IDS } from '../../constants';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
@@ -112,7 +116,7 @@ const checkFocusOnInputWhenClickingSummaryErrorMessage = () => {
   buyerCountryPage.searchInput().should('have.class', 'autocomplete__input--focused');
 };
 
-module.exports = {
+export {
   checkPageTitleAndHeading,
   checkInputHint,
   checkAutocompleteInput,

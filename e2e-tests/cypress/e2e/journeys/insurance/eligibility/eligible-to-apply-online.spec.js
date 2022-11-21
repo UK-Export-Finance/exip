@@ -1,4 +1,6 @@
-import { heading, yesRadio, noRadio, submitButton } from '../../../pages/shared';
+import {
+  heading, submitButton,
+} from '../../../pages/shared';
 import { insurance } from '../../../pages';
 import partials from '../../../partials';
 import {
@@ -6,11 +8,9 @@ import {
   LINKS,
   PAGES,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/insurance/eligibility/submit-answers-happy-path';
+import { ROUTES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
-const { ROUTES } = CONSTANTS;
 
 context('Insurance - Eligibility - You are eligible to apply online page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction', () => {
   before(() => {

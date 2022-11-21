@@ -8,7 +8,7 @@
 
 import 'cypress-audit/commands';
 
-import analytics from '../support/analytics';
+import analytics from './analytics';
 
 Cypress.Commands.add('login', require('./login'));
 Cypress.Commands.add('checkPhaseBanner', require('./check-phase-banner'));

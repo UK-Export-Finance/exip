@@ -1,4 +1,4 @@
-const FIELD_IDS = require('../constants/field-ids');
+import FIELD_IDS from '../constants/field-ids';
 
 const QUOTE_TITLES = {
   [FIELD_IDS.CONTRACT_VALUE]: 'Contract value',
@@ -12,4 +12,4 @@ const QUOTE_TITLES = {
   [FIELD_IDS.QUOTE.BUYER_LOCATION]: 'Buyer location',
 };
 
-module.exports = QUOTE_TITLES;
+export default QUOTE_TITLES;

@@ -1,7 +1,7 @@
-const startPage = require('./start');
-const eligibility = require('./eligibility');
+import startPage from './start';
+import eligibility from './eligibility';
 
-module.exports = {
+export {
   startPage,
   eligibility,
 };

@@ -1,5 +1,4 @@
-import CONSTANTS from '../../../../../constants';
-const { ROUTES } = CONSTANTS;
+import { ROUTES } from '../../../../../constants';
 
 context('Manually going to the `Exporter location` page via URL without completing the previous forms', () => {
   beforeEach(() => {

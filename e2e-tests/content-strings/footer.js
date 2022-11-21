@@ -1,4 +1,4 @@
-const { ROUTES } = require('../constants');
+import { ROUTES } from '../constants';
 
 const FOOTER = {
   HEADING: 'Contact us',
@@ -39,4 +39,4 @@ const FOOTER = {
   },
 };
 
-module.exports = FOOTER;
+export default FOOTER;

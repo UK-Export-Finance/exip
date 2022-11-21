@@ -1,6 +1,6 @@
-const QUOTE_PAGES = require('./quote');
-const INSURANCE_PAGES = require('./insurance');
-const LINKS = require('../links');
+import QUOTE_PAGES from './quote';
+import INSURANCE_PAGES from './insurance';
+import LINKS from '../links';
 
 const BUYER_COUNTRY = {
   PAGE_TITLE: 'Where is your buyer based?',
@@ -107,7 +107,10 @@ const PROBLEM_WITH_SERVICE_PAGE = {
   PAGE_TITLE: 'Problem with the service',
 };
 
-module.exports = {
+const QUOTE = QUOTE_PAGES;
+const INSURANCE = INSURANCE_PAGES;
+
+export {
   BUYER_COUNTRY,
   EXPORTER_LOCATION,
   UK_GOODS_OR_SERVICES,
@@ -116,6 +119,6 @@ module.exports = {
   NEED_TO_START_AGAIN_PAGE,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
-  QUOTE: QUOTE_PAGES,
-  INSURANCE: INSURANCE_PAGES,
+  QUOTE,
+  INSURANCE,
 };

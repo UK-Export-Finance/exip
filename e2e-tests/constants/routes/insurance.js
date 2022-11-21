@@ -1,4 +1,4 @@
-const PRODUCT = require('../product');
+import PRODUCT from '../product';
 
 const INSURANCE = '/insurance';
 const ELIGIBILITY = '/eligibility';

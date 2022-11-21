@@ -6,4 +6,4 @@ const BUTTONS = {
   SAVE_CHANGES: 'Save changes',
 };
 
-module.exports = BUTTONS;
+export default BUTTONS;

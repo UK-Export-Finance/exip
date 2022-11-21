@@ -1,4 +1,4 @@
-const ROUTES = require('../constants/routes');
+import ROUTES from '../constants/routes';
 
 const LINKS = {
   BACK: 'Back',
@@ -23,4 +23,4 @@ const LINKS = {
   },
 };
 
-module.exports = LINKS;
+export default LINKS;

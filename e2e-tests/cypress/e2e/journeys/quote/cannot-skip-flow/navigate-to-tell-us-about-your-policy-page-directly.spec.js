@@ -1,5 +1,4 @@
-import CONSTANTS from '../../../../../constants';
-const { ROUTES } = CONSTANTS;
+import { ROUTES } from '../../../../../constants';
 
 context('Manually going to the `Tell us about your policy` page via URL without completing previous forms', () => {
   beforeEach(() => {

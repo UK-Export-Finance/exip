@@ -2,15 +2,11 @@ import { buyerCountryPage, heading, submitButton } from '../../../pages/shared';
 import { insurance } from '../../../pages';
 import partials from '../../../partials';
 import { LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
-
+import { ROUTES } from '../../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE;
 const { ACTIONS } = CONTENT_STRINGS;
-
-const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
 

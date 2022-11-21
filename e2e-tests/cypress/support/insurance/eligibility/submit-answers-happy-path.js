@@ -10,7 +10,7 @@ import {
   completePreCreditPeriodForm,
   completeCompaniesHouseNumberForm,
 } from './forms';
-import { completeAndSubmitBuyerCountryForm } from '../../forms'
+import { completeAndSubmitBuyerCountryForm } from '../../forms';
 
 export default () => {
   completeStartForm();

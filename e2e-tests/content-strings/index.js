@@ -1,19 +1,19 @@
-const BUTTONS = require('./buttons');
-const COOKIES_CONSENT = require('./cookies-consent');
-const ERROR_MESSAGES = require('./error-messages');
-const FOOTER = require('./footer');
-const FIELDS = require('./fields');
-const LINKS = require('./links');
-const PAGES = require('./pages');
-const PRODUCT = require('./product');
-const QUOTE_TITLES = require('./quote-titles');
-const SUMMARY_ANSWERS = require('./summary-answers');
-const UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION = require('./uk-goods-and-services-calculate-description');
-const UK_GOODS_AND_SERVICES_DESCRIPTION = require('./uk-goods-and-services-description');
+import BUTTONS from './buttons';
+import COOKIES_CONSENT from './cookies-consent';
+import ERROR_MESSAGES from './error-messages';
+import FOOTER from './footer';
+import FIELDS from './fields';
+import LINKS from './links';
+import PAGES from './pages';
+import PRODUCT from './product';
+import QUOTE_TITLES from './quote-titles';
+import SUMMARY_ANSWERS from './summary-answers';
+import UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION from './uk-goods-and-services-calculate-description';
+import UK_GOODS_AND_SERVICES_DESCRIPTION from './uk-goods-and-services-description';
 
 const ORGANISATION = 'UK Export Finance';
 
-module.exports = {
+export {
   BUTTONS,
   COOKIES_CONSENT,
   ERROR_MESSAGES,

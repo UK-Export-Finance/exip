@@ -17,4 +17,4 @@ const cypressConfig = defineConfig({
   },
 });
 
-module.exports = cypressConfig;
+export default cypressConfig;

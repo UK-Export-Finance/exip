@@ -1,4 +1,4 @@
-const LINKS = require('../links');
+import LINKS from '../links';
 
 const BUYER_BODY = {
   PAGE_TITLE: 'Is your buyer a government or public sector body?',
@@ -159,7 +159,7 @@ const YOUR_QUOTE = {
   },
 };
 
-module.exports = {
+export {
   BUYER_BODY,
   UK_GOODS_OR_SERVICES,
   POLICY_TYPE,

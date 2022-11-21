@@ -8,11 +8,10 @@ import {
   PAGES,
   SUMMARY_ANSWERS,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES, FIELD_VALUES } from '../../../../../constants';
 import FIELD_IDS from '../../../../../constants/field-ids';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CHECK_YOUR_ANSWERS;
-const { ROUTES, FIELD_VALUES } = CONSTANTS;
 
 context('Check your answers page (single policy) - as an exporter, I want to review the details before submitting the proposal', () => {
   const {

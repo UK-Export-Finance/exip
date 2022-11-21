@@ -27,4 +27,4 @@ const QUOTE_ROUTES = {
   NEED_TO_START_AGAIN: '/quote/need-to-start-again',
 };
 
-module.exports = QUOTE_ROUTES;
+export default QUOTE_ROUTES;

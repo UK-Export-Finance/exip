@@ -1,4 +1,4 @@
-const ELIGIBILITY = require('./eligibility');
+import ELIGIBILITY from './eligibility';
 
 const START = {
   PAGE_TITLE: 'Apply for UKEF export insurance',
@@ -18,7 +18,7 @@ const START = {
   BODY_4: 'If you need it more urgently, you can tell us before you submit your application.',
 };
 
-module.exports = {
+export {
   START,
   ELIGIBILITY,
 };

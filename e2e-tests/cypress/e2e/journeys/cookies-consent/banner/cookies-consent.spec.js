@@ -1,5 +1,5 @@
 import partials from '../../../partials';
-import { COOKIES_CONSENT, PAGES, PRODUCT } from '../../../../../content-strings';
+import { COOKIES_CONSENT, PRODUCT } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
 context('Cookies consent - initial/default', () => {
@@ -12,7 +12,6 @@ context('Cookies consent - initial/default', () => {
   describe('question banner', () => {
     describe('heading', () => {
       it('should render a heading when on a Quote page/root', () => {
-
         partials.cookieBanner.heading().invoke('text').then((text) => {
           expect(text.trim()).equal(`${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.QUOTE}`);
         });
@@ -88,7 +87,7 @@ context('Cookies consent - initial/default', () => {
     });
   });
 
-  it('should NOT render any scripts that contain `google` or `G-`', ( ) => {
+  it('should NOT render any scripts that contain `google` or `G-`', () => {
     cy.checkAnalyticsScriptsAreNotRendered();
   });
 

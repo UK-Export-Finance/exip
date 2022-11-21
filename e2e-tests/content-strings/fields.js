@@ -1,6 +1,6 @@
-const FIELD_IDS = require('../constants/field-ids');
-const FIELD_VALUES = require('../constants/field-values');
-const LINKS = require('./links');
+import FIELD_IDS from '../constants/field-ids';
+import FIELD_VALUES from '../constants/field-values';
+import LINKS from './links';
 
 const FIELDS = {
   [FIELD_IDS.BUYER_COUNTRY]: {
@@ -172,4 +172,4 @@ const FIELDS = {
   },
 };
 
-module.exports = FIELDS;
+export default FIELDS;

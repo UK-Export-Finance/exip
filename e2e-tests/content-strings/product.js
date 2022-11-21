@@ -6,4 +6,4 @@ const PRODUCT = {
   },
 };
 
-module.exports = PRODUCT;
+export default PRODUCT;

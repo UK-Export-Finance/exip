@@ -8,4 +8,4 @@ const TEMPLATES = {
   INSURANCE: INSURANCE_TEMPLATES,
 };
 
-module.exports = TEMPLATES;
+export default TEMPLATES;

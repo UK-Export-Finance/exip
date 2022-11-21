@@ -3,7 +3,7 @@ const UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION = {
   LIST_INTRO: 'To work out your percentage, follow these steps.',
   LIST: [
     {
-      TEXT: "Find out your export contract’s total value.",
+      TEXT: 'Find out your export contract’s total value.',
     },
     {
       TEXT: 'Deduct the cost of any:',
@@ -13,11 +13,11 @@ const UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION = {
         },
         {
           TEXT: "second hand goods you've bought from overseas for this contract that you've stored in the UK for less than a year",
-        }
+        },
       ],
     },
     {
-      TEXT: "You're left with your amount of UK goods and services (this may include your profit margin)."
+      TEXT: "You're left with your amount of UK goods and services (this may include your profit margin).",
     },
     {
       TEXT: 'Convert this to a percentage of the total export contract value.',
@@ -25,4 +25,4 @@ const UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION = {
   ],
 };
 
-module.exports = UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION;
+export default UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION;

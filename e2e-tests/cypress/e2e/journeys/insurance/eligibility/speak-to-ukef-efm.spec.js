@@ -1,23 +1,21 @@
-import { heading, yesRadio, noRadio, submitButton } from '../../../pages/shared';
+import {
+  heading, yesRadio, submitButton,
+} from '../../../pages/shared';
 import { insurance } from '../../../pages';
 import partials from '../../../partials';
 import { LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
 import {
   completeStartForm,
   completeCheckIfEligibleForm,
   completeExporterLocationForm,
   completeUkGoodsAndServicesForm,
   completeInsuredAmountForm,
- } from '../../../../support/insurance/eligibility/forms';
+} from '../../../../support/insurance/eligibility/forms';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM;
 const { ACTIONS } = CONTENT_STRINGS;
-
-const { ROUTES } = CONSTANTS;
-
-const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
 
 context('Insurance Eligibility - speak to UKEF EFM exit page', () => {
   beforeEach(() => {

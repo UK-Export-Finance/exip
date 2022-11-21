@@ -47,5 +47,3 @@ export const completeCompaniesHouseNumberForm = () => {
   yesRadio().click();
   submitButton().click();
 };
-
-

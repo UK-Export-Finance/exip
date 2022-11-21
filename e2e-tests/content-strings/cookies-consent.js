@@ -19,4 +19,4 @@ const COOKIES_CONSENT = {
   },
 };
 
-module.exports = COOKIES_CONSENT;
+export default COOKIES_CONSENT;
