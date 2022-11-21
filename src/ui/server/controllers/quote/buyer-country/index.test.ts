@@ -116,6 +116,42 @@ describe('controllers/quote/buyer-country', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, expectedVariables);
     });
 
+    describe('when a there is no submittedData in req.session', () => {
+      it('should add empty submittedData.quoteEligibility to the session', async () => {
+        // @ts-ignore
+        req.session = {};
+
+        await get(req, res);
+
+        const expected = {
+          ...req.session,
+          submittedData: {
+            quoteEligibility: {},
+          },
+        };
+
+        expect(req.session).toEqual(expected);
+      });
+    });
+
+    describe('when a there is no quoteEligibility in req.session.submittedData', () => {
+      it('should add empty submittedData.quoteEligibility to the session and retain existing req.session.submittedData', async () => {
+        // @ts-ignore
+        req.session.submittedData = {
+          insuranceEligibility: {},
+        };
+
+        await get(req, res);
+
+        const expected = {
+          ...req.session.submittedData,
+          quoteEligibility: {},
+        };
+
+        expect(req.session.submittedData).toEqual(expected);
+      });
+    });
+
     describe('when a country has been submitted', () => {
       it('should render template with countries mapped to submitted country', async () => {
         req.session.submittedData = mockSession.submittedData;

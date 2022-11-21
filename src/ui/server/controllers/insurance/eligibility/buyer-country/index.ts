@@ -17,7 +17,13 @@ export const PAGE_VARIABLES = {
 };
 
 export const get = async (req: Request, res: Response) => {
-  const { submittedData } = req.session;
+  if (!req.session.submittedData || !req.session.submittedData.insuranceEligibility) {
+    req.session.submittedData = {
+      ...req.session.submittedData,
+      insuranceEligibility: {},
+    };
+  }
+
   const countries = await api.getCountries();
 
   if (!countries || !countries.length) {
@@ -26,8 +32,8 @@ export const get = async (req: Request, res: Response) => {
 
   let countryValue;
 
-  if (submittedData && submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY]) {
-    countryValue = submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY];
+  if (req.session.submittedData && req.session.submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY]) {
+    countryValue = req.session.submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY];
   }
 
   let mappedCountries;
