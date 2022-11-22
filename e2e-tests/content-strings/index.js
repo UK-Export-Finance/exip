@@ -1,32 +1,16 @@
-import BUTTONS from './buttons';
-import COOKIES_CONSENT from './cookies-consent';
-import ERROR_MESSAGES from './error-messages';
-import FOOTER from './footer';
-import FIELDS from './fields';
-import LINKS from './links';
-import PAGES from './pages';
-import PRODUCT from './product';
-import QUOTE_TITLES from './quote-titles';
-import SUMMARY_ANSWERS from './summary-answers';
-import UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION from './uk-goods-and-services-calculate-description';
-import UK_GOODS_AND_SERVICES_DESCRIPTION from './uk-goods-and-services-description';
+import PAGE_STRINGS from './pages';
 
-const ORGANISATION = 'UK Export Finance';
+export * from './buttons';
+export * from './cookies-consent';
+export * from './error-messages';
+export * from './footer';
+export * from './fields';
+export * from './links';
+export * from './product';
+export * from './quote-titles';
+export * from './summary-answers';
+export * from './uk-goods-and-services-calculate-description';
+export * from './uk-goods-and-services-description';
 
-const CONTENT_STRINGS = {
-  BUTTONS,
-  COOKIES_CONSENT,
-  ERROR_MESSAGES,
-  FIELDS,
-  FOOTER,
-  LINKS,
-  ORGANISATION,
-  PAGES,
-  PRODUCT,
-  QUOTE_TITLES,
-  SUMMARY_ANSWERS,
-  UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
-  UK_GOODS_AND_SERVICES_DESCRIPTION,
-};
-
-export default CONTENT_STRINGS;
+export const ORGANISATION = 'UK Export Finance';
+export const PAGES = PAGE_STRINGS;

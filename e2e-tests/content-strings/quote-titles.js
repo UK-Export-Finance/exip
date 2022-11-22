@@ -1,6 +1,6 @@
-import FIELD_IDS from '../constants/field-ids';
+import { FIELD_IDS } from '../constants/field-ids';
 
-const QUOTE_TITLES = {
+export const QUOTE_TITLES = {
   [FIELD_IDS.CONTRACT_VALUE]: 'Contract value',
   [FIELD_IDS.MAX_AMOUNT_OWED]: 'Maximum buyer will owe at any point',
   [`${[FIELD_IDS.QUOTE.INSURED_FOR]}_SINGLE_POLICY`]: "You'll be insured for",
@@ -11,5 +11,3 @@ const QUOTE_TITLES = {
   [FIELD_IDS.POLICY_LENGTH]: 'Policy length',
   [FIELD_IDS.QUOTE.BUYER_LOCATION]: 'Buyer location',
 };
-
-export default QUOTE_TITLES;

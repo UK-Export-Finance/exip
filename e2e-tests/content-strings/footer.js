@@ -1,6 +1,6 @@
 import { ROUTES } from '../constants';
 
-const FOOTER = {
+export const FOOTER = {
   HEADING: 'Contact us',
   EMAIL: {
     HEADING: 'Email',
@@ -38,5 +38,3 @@ const FOOTER = {
     HREF: 'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
   },
 };
-
-export default FOOTER;

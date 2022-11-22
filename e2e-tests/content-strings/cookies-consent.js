@@ -1,4 +1,4 @@
-const COOKIES_CONSENT = {
+export const COOKIES_CONSENT = {
   HEADING_INTRO: 'Cookies on',
   HIDE_BUTTON: 'Hide this message',
   COOKIES_LINK: 'cookies link',
@@ -18,5 +18,3 @@ const COOKIES_CONSENT = {
     COPY_2: 'in our footer.',
   },
 };
-
-export default COOKIES_CONSENT;

@@ -1,6 +1,6 @@
 import QUOTE_PAGES from './quote';
 import INSURANCE_PAGES from './insurance';
-import LINKS from '../links';
+import { LINKS } from '../links';
 
 const BUYER_COUNTRY = {
   PAGE_TITLE: 'Where is your buyer based?',
@@ -107,9 +107,6 @@ const PROBLEM_WITH_SERVICE_PAGE = {
   PAGE_TITLE: 'Problem with the service',
 };
 
-const QUOTE = QUOTE_PAGES;
-const INSURANCE = INSURANCE_PAGES;
-
 const PAGES = {
   BUYER_COUNTRY,
   EXPORTER_LOCATION,
@@ -119,8 +116,8 @@ const PAGES = {
   NEED_TO_START_AGAIN_PAGE,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
-  QUOTE,
-  INSURANCE,
+  QUOTE: QUOTE_PAGES,
+  INSURANCE: INSURANCE_PAGES,
 };
 
 export default PAGES;

@@ -1,4 +1,4 @@
-import LINKS from '../links';
+import { LINKS } from '../links';
 
 const BUYER_BODY = {
   PAGE_TITLE: 'Is your buyer a government or public sector body?',

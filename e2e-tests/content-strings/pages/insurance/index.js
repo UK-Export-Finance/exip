@@ -1,4 +1,4 @@
-import ELIGIBILITY from './eligibility';
+import * as ELIGIBILITY_PAGES from './eligibility';
 
 const START = {
   PAGE_TITLE: 'Apply for UKEF export insurance',
@@ -17,6 +17,8 @@ const START = {
   BODY_3: "You'll usually get a decision back from UKEF within 2 weeks. This is because underwriters need to carry out checks on risks around the buyer.",
   BODY_4: 'If you need it more urgently, you can tell us before you submit your application.',
 };
+
+const ELIGIBILITY = ELIGIBILITY_PAGES;
 
 const INSURANCE = {
   START,

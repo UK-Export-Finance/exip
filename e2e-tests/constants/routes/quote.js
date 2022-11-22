@@ -1,4 +1,4 @@
-const QUOTE_ROUTES = {
+export const QUOTE_ROUTES = {
   BUYER_BODY: '/quote/type-of-buyer',
 
   BUYER_COUNTRY: '/quote/buyer-country',
@@ -26,5 +26,3 @@ const QUOTE_ROUTES = {
 
   NEED_TO_START_AGAIN: '/quote/need-to-start-again',
 };
-
-export default QUOTE_ROUTES;

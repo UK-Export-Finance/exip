@@ -1,6 +1,6 @@
 import { FIELD_IDS } from '../../../constants';
 
-const cookiesPage = {
+export const cookiesPage = {
   body1: () => cy.get('[data-cy="body-1"]'),
   body2: () => cy.get('[data-cy="body-2"]'),
   essentialCookies: {
@@ -49,5 +49,3 @@ const cookiesPage = {
     goBackLink: () => cy.get('[data-cy="success-message-go-back-link"]'),
   },
 };
-
-export default cookiesPage;

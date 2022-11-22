@@ -1,16 +1,8 @@
-import cookiesPage from './cookies';
-import insurancePages from './insurance';
-import pageNotFoundPage from './pageNotFound';
 import quotePages from './quote';
+import insurancePages from './insurance';
 
-const insurance = insurancePages;
-const quote = quotePages;
+export * from './cookies';
+export * from './pageNotFound';
 
-const pages = {
-  cookiesPage,
-  insurance,
-  pageNotFoundPage,
-  quote,
-};
-
-export default pages;
+export const insurance = insurancePages;
+export const quote = quotePages;

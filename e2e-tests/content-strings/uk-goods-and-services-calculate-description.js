@@ -1,4 +1,4 @@
-const UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION = {
+export const UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION = {
   INTRO: 'How do I calculate my percentage?',
   LIST_INTRO: 'To work out your percentage, follow these steps.',
   LIST: [
@@ -24,5 +24,3 @@ const UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION = {
     },
   ],
 };
-
-export default UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION;
