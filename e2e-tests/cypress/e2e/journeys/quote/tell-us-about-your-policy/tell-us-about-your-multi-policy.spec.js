@@ -15,14 +15,9 @@ import {
   FIELDS,
   PAGES,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES, FIELD_IDS, SUPPORTED_CURRENCIES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
-const {
-  ROUTES,
-  FIELD_IDS,
-  SUPPORTED_CURRENCIES,
-} = CONSTANTS;
 
 context('Tell us about your multi policy page - as an exporter, I want to provide my Export insurance policy details', () => {
   describe('rendering', () => {

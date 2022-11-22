@@ -1,4 +1,4 @@
-const FIELD_IDS = {
+export const FIELD_IDS = {
   OPTIONAL_COOKIES: 'optionalCookies',
   VALID_BUYER_BODY: 'validBuyerBody',
   VALID_EXPORTER_LOCATION: 'validExporterLocation',
@@ -33,5 +33,3 @@ const FIELD_IDS = {
     },
   },
 };
-
-module.exports = FIELD_IDS;

@@ -1,18 +1,16 @@
-import { buyerCountryPage, heading, submitButton } from '../../pages/shared';
-import { needToStartAgainPage } from '../../pages/shared';
-import partials from '../../partials';
 import {
-  BUTTONS,
+  heading, submitButton, needToStartAgainPage,
+} from '../../pages/shared';
+import {
   ORGANISATION,
   LINKS,
   PAGES,
 } from '../../../../content-strings';
-import CONSTANTS from '../../../../constants';
+import { ROUTES } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 import { completeAndSubmitBuyerBodyForm } from '../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
-const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 context('Get a Quote - Need to start again exit page', () => {
   beforeEach(() => {
@@ -52,7 +50,7 @@ context('Get a Quote - Need to start again exit page', () => {
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
-  }); 
+  });
 
   it('renders a page title and heading', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;

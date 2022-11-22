@@ -1,4 +1,6 @@
-import { heading, yesNoRadioHint, yesRadio, yesRadioInput, noRadio, noRadioInput, inlineErrorMessage, submitButton } from '../../../../pages/shared';
+import {
+  heading, yesNoRadioHint, yesRadio, yesRadioInput, noRadio, noRadioInput, inlineErrorMessage, submitButton,
+} from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import {
@@ -9,7 +11,7 @@ import {
   PAGES,
   ERROR_MESSAGES,
 } from '../../../../../../content-strings';
-import CONSTANTS from '../../../../../../constants';
+import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
   completeStartForm,
@@ -23,7 +25,6 @@ import {
 } from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD;
-const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - Eligibility - Pre-credit period page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit', () => {
   before(() => {

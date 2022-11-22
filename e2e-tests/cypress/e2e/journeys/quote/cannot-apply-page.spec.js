@@ -1,16 +1,17 @@
-import { cannotApplyPage, ukGoodsOrServicesPage, heading, noRadio, submitButton } from '../../pages/shared';
+import {
+  cannotApplyPage, heading, noRadio, submitButton,
+} from '../../pages/shared';
 import partials from '../../partials';
 import {
   ORGANISATION,
   LINKS,
   PAGES,
 } from '../../../../content-strings';
-import CONSTANTS from '../../../../constants';
+import { ROUTES } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
-const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 context('Cannot apply exit page', () => {
   beforeEach(() => {

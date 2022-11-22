@@ -1,7 +1,7 @@
 import { graphQLSchemaExtension } from '@keystone-6/core';
 import { NotifyClient } from 'notifications-node-client';
 
-import { Context } from '.keystone/types';
+import { Context } from '.keystone/types'; // eslint-disable-line
 
 const notifyKey: any = process.env.GOV_NOTIFY_API_KEY;
 const notifyClient = new NotifyClient(notifyKey);

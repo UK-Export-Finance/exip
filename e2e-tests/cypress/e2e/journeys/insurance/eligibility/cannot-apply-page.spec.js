@@ -1,18 +1,19 @@
-import { buyerCountryPage, cannotApplyPage, heading, submitButton } from '../../../pages/shared';
-import { insurance } from '../../../pages';
+import {
+  buyerCountryPage,
+  cannotApplyPage,
+  heading,
+  submitButton,
+} from '../../../pages/shared';
 import partials from '../../../partials';
 import {
   ORGANISATION,
   LINKS,
   PAGES,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
-const { ACTIONS } = CONTENT_STRINGS;
-
-const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 const COUNTRY_NAME_UNSUPPORTED = 'France';
 

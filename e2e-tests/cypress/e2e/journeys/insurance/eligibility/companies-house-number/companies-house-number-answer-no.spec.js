@@ -1,7 +1,9 @@
-import { cannotApplyPage, noRadio, noRadioInput, submitButton } from '../../../../pages/shared';
+import {
+  cannotApplyPage, noRadio, noRadioInput, submitButton,
+} from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
-import CONSTANTS from '../../../../../../constants';
+import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
   completeStartForm,
@@ -16,7 +18,6 @@ import {
 } from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE;
-const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I do not have UK Companies House Registration Number - submit `no companies house number`', () => {
   before(() => {

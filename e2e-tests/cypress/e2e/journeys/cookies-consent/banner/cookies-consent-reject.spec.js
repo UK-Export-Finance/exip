@@ -1,5 +1,5 @@
 import partials from '../../../partials';
-import { COOKIES_CONSENT, PAGES } from '../../../../../content-strings';
+import { COOKIES_CONSENT } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
@@ -31,7 +31,6 @@ context('Cookies consent - reject', () => {
 
       partials.cookieBanner.rejected.copy().should('exist');
       partials.cookieBanner.rejected.copy().invoke('text').then((text) => {
-
         const { REJECTED } = COOKIES_CONSENT;
         const expected = `${REJECTED.COPY_1} ${COOKIES_CONSENT.COOKIES_LINK} ${REJECTED.COPY_2}`;
 

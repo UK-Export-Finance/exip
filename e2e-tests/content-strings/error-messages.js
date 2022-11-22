@@ -1,13 +1,13 @@
 import { FIELD_IDS, PRODUCT } from '../constants';
 
-const MAX_COVER_AMOUNT = PRODUCT.MAX_COVER_AMOUNT_IN_GBP.toLocaleString('en', {
+export const MAX_COVER_AMOUNT = PRODUCT.MAX_COVER_AMOUNT_IN_GBP.toLocaleString('en', {
   style: 'currency',
   currency: 'GBP',
   minimumFractionDigits: 0,
   maximumFractionDigits: 0,
 });
 
-const ERROR_MESSAGES = {
+export const ERROR_MESSAGES = {
   [FIELD_IDS.BUYER_COUNTRY]: 'Select where your buyer is based',
   [FIELD_IDS.VALID_BUYER_BODY]: 'Select if your buyer is a government or public sector body',
   [FIELD_IDS.VALID_EXPORTER_LOCATION]: 'Select if your company is based in the UK, Channel Islands, Isle of Man or not',
@@ -69,5 +69,3 @@ const ERROR_MESSAGES = {
     },
   },
 };
-
-module.exports = ERROR_MESSAGES;

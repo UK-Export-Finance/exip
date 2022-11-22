@@ -1,11 +1,8 @@
-const cookiesPage = require('./cookies');
-const insurancePages = require('./insurance');
-const pageNotFoundPage = require('./pageNotFound');
-const quotePages = require('./quote');
+import quotePages from './quote';
+import insurancePages from './insurance';
 
-module.exports = {
-  cookiesPage,
-  insurance: insurancePages,
-  pageNotFoundPage,
-  quote: quotePages,
-};
+export * from './cookies';
+export * from './pageNotFound';
+
+export const insurance = insurancePages;
+export const quote = quotePages;

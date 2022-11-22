@@ -1,12 +1,7 @@
-import { buyerCountryPage, exporterLocationPage, ukGoodsOrServicesPage, yesRadioInput, submitButton } from '../../../pages/shared';
+import { buyerCountryPage, yesRadioInput, submitButton } from '../../../pages/shared';
 import { checkYourAnswersPage } from '../../../pages/quote';
 import partials from '../../../partials';
-import CONSTANTS from '../../../../../constants';
-
-const {
-  FIELD_IDS,
-  ROUTES,
-} = CONSTANTS;
+import { FIELD_IDS, ROUTES } from '../../../../../constants';
 
 const {
   BUYER_COUNTRY,

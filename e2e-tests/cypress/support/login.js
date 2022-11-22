@@ -1,7 +1,7 @@
-const CONSTANTS = require('../../constants');
+import { ROUTES } from '../../constants';
 
 export default () => {
-  cy.visit(CONSTANTS.ROUTES.ROOT, {
+  cy.visit(ROUTES.ROOT, {
     auth: {
       username: Cypress.config('basicAuthKey'),
       password: Cypress.config('basicAuthSecret'),

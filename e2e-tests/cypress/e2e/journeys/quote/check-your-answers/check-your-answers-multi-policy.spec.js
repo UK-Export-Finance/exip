@@ -6,10 +6,9 @@ import {
   PAGES,
   SUMMARY_ANSWERS,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CHECK_YOUR_ANSWERS;
-const { FIELD_IDS, FIELD_VALUES, ROUTES } = CONSTANTS;
 
 context('Check your answers page (multi policy) - as an exporter, I want to review the details before submitting the proposal', () => {
   const {

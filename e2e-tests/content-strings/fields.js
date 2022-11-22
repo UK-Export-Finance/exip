@@ -1,8 +1,8 @@
-const FIELD_IDS = require('../constants/field-ids');
-const FIELD_VALUES = require('../constants/field-values');
-const LINKS = require('./links');
+import { FIELD_IDS } from '../constants/field-ids';
+import { FIELD_VALUES } from '../constants/field-values';
+import { LINKS } from './links';
 
-const FIELDS = {
+export const FIELDS = {
   [FIELD_IDS.BUYER_COUNTRY]: {
     HINT: 'Cover is based on the country your buyer is located in, not the destination of your goods or services.',
     SUMMARY: {
@@ -171,5 +171,3 @@ const FIELDS = {
     HINT: 'This is known as the pre-credit period.',
   },
 };
-
-module.exports = FIELDS;

@@ -1,9 +1,5 @@
-import { buyerCountryPage, exporterLocationPage, ukGoodsOrServicesPage, yesRadio, noRadio, submitButton } from '../../e2e/pages/shared';
-import {
-  buyerBodyPage,
-  policyTypePage,
-  tellUsAboutYourPolicyPage,
-} from '../../e2e/pages/quote';
+import { yesRadio, noRadio, submitButton } from '../../e2e/pages/shared';
+import { policyTypePage, tellUsAboutYourPolicyPage } from '../../e2e/pages/quote';
 import { FIELD_IDS } from '../../../constants';
 
 const {
@@ -14,7 +10,6 @@ const {
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
-  VALID_EXPORTER_LOCATION,
 } = FIELD_IDS;
 
 export const completeAndSubmitBuyerBodyForm = () => {

@@ -11,7 +11,7 @@ const checkAnalyticsCookieProperties = () => {
     const year = new Date(date).getFullYear();
 
     const today = new Date();
-    const tomorrow = today.setDate(today.getDate() + 1)
+    const tomorrow = today.setDate(today.getDate() + 1);
 
     const expectedDay = new Date(tomorrow).getDate();
     const expectedMonth = new Date(tomorrow).getMonth();

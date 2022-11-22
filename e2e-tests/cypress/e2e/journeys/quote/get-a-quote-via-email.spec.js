@@ -6,12 +6,9 @@ import {
   LINKS,
   PAGES,
 } from '../../../../content-strings';
-import CONSTANTS from '../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
-import { completeAndSubmitExporterLocationForm } from '../../../support/quote/forms';
+import { ROUTES } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL;
-const { FIELD_IDS, ROUTES } = CONSTANTS;
 
 const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
 
@@ -81,7 +78,7 @@ context('Get a quote via email exit page', () => {
   it('renders `action` content', () => {
     getAQuoteByEmailPage.action.text().invoke('text').then((text) => {
       const actionStrings = CONTENT_STRINGS.ACTION[0];
-      const expected = `${actionStrings[0].text}${actionStrings[1].text}${actionStrings[2].text} ${actionStrings[3].text}`
+      const expected = `${actionStrings[0].text}${actionStrings[1].text}${actionStrings[2].text} ${actionStrings[3].text}`;
       expect(text.trim()).equal(expected);
     });
 

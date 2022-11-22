@@ -14,13 +14,9 @@ import {
   FIELDS,
   PAGES,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES, FIELD_IDS } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.QUOTE.POLICY_TYPE;
-const {
-  ROUTES,
-  FIELD_IDS,
-} = CONSTANTS;
 
 const { POLICY_TYPE } = FIELD_IDS;
 
@@ -145,7 +141,6 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       it('should reveal inset text and link', () => {
         const multiPolicyType = policyTypePage[POLICY_TYPE].multi;
         multiPolicyType.label().click();
-
 
         const field = FIELDS[POLICY_TYPE];
 

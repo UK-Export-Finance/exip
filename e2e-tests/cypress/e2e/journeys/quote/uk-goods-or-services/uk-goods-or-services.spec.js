@@ -1,4 +1,6 @@
-import { exporterLocationPage, ukGoodsOrServicesPage, heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../pages/shared';
+import {
+  heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
+} from '../../../pages/shared';
 import partials from '../../../partials';
 import {
   ORGANISATION,
@@ -7,17 +9,15 @@ import {
   PAGES,
   ERROR_MESSAGES,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../support/quote/forms';
-import { checkSummaryText, checkSummaryClickRevealsContent, checkDescriptionContent } from '../../../../support/check-uk-goods-and-services-description';
+import { checkDescriptionSummaryText, checkDescriptionSummaryClickRevealsContent, checkDescriptionContent } from '../../../../support/check-uk-goods-and-services-description';
 
 const CONTENT_STRINGS = {
   ...PAGES.UK_GOODS_OR_SERVICES,
   ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
 };
-
-const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
   before(() => {
@@ -33,7 +33,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');
   });
- 
+
   it('passes the audits', () => {
     cy.lighthouse({
       accessibility: 100,
@@ -101,11 +101,11 @@ context('UK goods or services page - as an exporter, I want to check if my expor
 
   describe('expandable details', () => {
     it('renders summary text', () => {
-      checkSummaryText();
+      checkDescriptionSummaryText();
     });
 
     it('clicking summary text reveals details', () => {
-      checkSummaryClickRevealsContent();
+      checkDescriptionSummaryClickRevealsContent();
     });
 
     it('renders expanded content', () => {

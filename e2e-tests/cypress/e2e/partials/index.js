@@ -1,4 +1,4 @@
-import cookieBanner from './cookieBanner'
+import cookieBanner from './cookieBanner';
 import footer from './footer';
 import header from './header';
 import phaseBanner from './phaseBanner';

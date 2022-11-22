@@ -1,7 +1,9 @@
 import { heading, submitButton } from '../../pages/shared';
 import { insurance } from '../../pages';
 import partials from '../../partials';
-import { BUTTONS, LINKS, ORGANISATION, PAGES } from '../../../../content-strings';
+import {
+  BUTTONS, LINKS, ORGANISATION, PAGES,
+} from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.START;
@@ -57,7 +59,7 @@ context('Insurance Eligibility - start page', () => {
       expect(text.trim()).equal(CONTENT_STRINGS.INTRO);
     });
   });
-  
+
   describe('`you will need` list', () => {
     it('renders an intro', () => {
       insurance.startPage.list.intro().invoke('text').then((text) => {
