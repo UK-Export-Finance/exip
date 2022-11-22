@@ -1,5 +1,6 @@
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES, ROOT } from '../../../../constants/routes/insurance';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
 
@@ -27,7 +28,7 @@ const post = async (req: Request, res: Response) => {
 
     const { referenceNumber } = application;
 
-    return res.redirect(`${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
+    return res.redirect(`${ROOT}/${referenceNumber}${INSURANCE_ROUTES.ALL_SECTIONS}`);
   } catch (err) {
     console.error('Error creating application ', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

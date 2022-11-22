@@ -1,6 +1,7 @@
 import { get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES, ROOT } from '../../../../constants/routes/insurance';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
@@ -49,10 +50,10 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
       expect(createApplicationSpy).toHaveBeenCalledTimes(1);
     });
 
-    it(`should redirect to ${ROUTES.INSURANCE.ROOT}/${mockReferenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
+    it(`should redirect to ${ROOT}/${mockReferenceNumber}${INSURANCE_ROUTES.ALL_SECTIONS}`, async () => {
       await post(req, res);
 
-      const expected = `${ROUTES.INSURANCE.ROOT}/${mockReferenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${ROOT}/${mockReferenceNumber}${INSURANCE_ROUTES.ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
