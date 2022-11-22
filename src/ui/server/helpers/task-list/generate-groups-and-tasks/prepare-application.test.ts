@@ -1,5 +1,5 @@
-import prepareApplicationTasks from './prepare-application';
-import { TaskListData, TaskListDataTask } from '../../../../types';
+import createPrepareApplicationTasks from './prepare-application';
+import { TaskListData } from '../../../../types';
 import { getTaskById } from '../task-helpers';
 import createInitialChecksTasks from './initial-checks';
 import { GROUP_IDS, TASK_IDS } from '../../../constants';
@@ -7,7 +7,7 @@ import { TASKS } from '../../../content-strings';
 
 describe('server/helpers/task-list/prepare-application', () => {
   it('should return EXIP `prepare application` tasks', () => {
-    const initialChecks = createInitialChecksTasks() as Array<TaskListDataTask>;
+    const initialChecks = createInitialChecksTasks();
 
     const previousGroups = [
       {
@@ -17,7 +17,7 @@ describe('server/helpers/task-list/prepare-application', () => {
       },
     ] as TaskListData;
 
-    const result = prepareApplicationTasks(previousGroups);
+    const result = createPrepareApplicationTasks(previousGroups);
 
     const POLICY_TYPE_AND_EXPORTS = {
       href: '#',

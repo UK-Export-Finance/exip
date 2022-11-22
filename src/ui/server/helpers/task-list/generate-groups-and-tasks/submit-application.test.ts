@@ -1,4 +1,4 @@
-import submitApplicationTasks from './submit-application';
+import createSubmitApplicationTasks from './submit-application';
 import { getTaskById } from '../task-helpers';
 import generateGroupsAndTasks from '.';
 import { TASK_IDS } from '../../../constants';
@@ -13,7 +13,7 @@ describe('server/helpers/task-list/submit-application', () => {
 
     const previousGroups = [initialChecksGroup, prepareApplicationGroup];
 
-    const result = submitApplicationTasks(previousGroups);
+    const result = createSubmitApplicationTasks(previousGroups);
 
     const DECLARATIONS = {
       href: '#',

@@ -4,11 +4,11 @@ import { TASKS } from '../../../content-strings';
 import { getGroupById, getTaskById } from '../task-helpers';
 
 /**
- * submitApplicationTasks
+ * createSubmitApplicationTasks
  * @param {Array} otherGroups Task list groups
  * @returns {Array} Tasks
  */
-const submitApplicationTasks = (otherGroups: TaskListData): Array<TaskListDataTask> => {
+const createSubmitApplicationTasks = (otherGroups: TaskListData): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
   const prepareApplicationGroup = getGroupById(otherGroups, GROUP_IDS.PREPARE_APPLICATION);
 
@@ -38,4 +38,4 @@ const submitApplicationTasks = (otherGroups: TaskListData): Array<TaskListDataTa
   return tasks;
 };
 
-export default submitApplicationTasks;
+export default createSubmitApplicationTasks;
