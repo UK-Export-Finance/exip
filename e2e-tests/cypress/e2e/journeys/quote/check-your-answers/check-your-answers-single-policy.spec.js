@@ -9,7 +9,7 @@ import {
   SUMMARY_ANSWERS,
 } from '../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../constants';
-import FIELD_IDS from '../../../../../constants/field-ids';
+import { FIELD_IDS } from '../../../../../constants/field-ids';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CHECK_YOUR_ANSWERS;
 

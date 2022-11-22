@@ -1,5 +1,5 @@
 import startPage from './start';
-import eligibility from './eligibility';
+import * as eligibility from './eligibility';
 
 const insurancePages = {
   startPage,
