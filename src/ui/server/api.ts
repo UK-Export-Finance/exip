@@ -79,7 +79,8 @@ const keystone = () => {
       if (response instanceof ApolloError) {
         throw new Error('Creating empty application');
       }
-    } catch {
+    } catch (err) {
+      console.error(err);
       throw new Error('Creating empty application');
     }
   };

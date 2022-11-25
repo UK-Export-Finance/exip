@@ -1,8 +1,9 @@
 node_modules
+README.md
 Dockerfile
-generated_reports
-*.md
+.git/
+docs/
+dist/
 .env
 .prettierrc.json
-.env.sample
 .eslintignore

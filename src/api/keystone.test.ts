@@ -4,7 +4,7 @@ import baseConfig from './keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { APPLICATION } from './constants';
 
-const dbUrl = process.env.DB_URI;
+const dbUrl = process.env.DATABASE_URL;
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
 
 const context = getContext(config, PrismaModule);

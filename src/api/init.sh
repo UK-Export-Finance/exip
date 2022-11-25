@@ -14,3 +14,6 @@ fi
 sed -i "s/SSH_PORT/$SSH_PORT/g" /etc/ssh/sshd_config
 echo "cd /home" >> /etc/profile
 rc-service sshd start
+
+echo "Intialising Keystone..."
+npm run start

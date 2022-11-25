@@ -1,31 +1,42 @@
-version: "3"
+version: '3.3'
+
 services:
-  api:
+
+  database:
     image: mysql
-    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    # (this is just an example, not intended to be a production configuration)
-    command: --default-authentication-plugin=mysql_native_password
     restart: always
-    build: ./src/api
     ports:
-      - "5005:5005"
+      - "3306:3306"
+    volumes:
+      - ./.database/data:/var/lib/mysql
+      - ./.database/log:/var/log/mysql
+      - ./.database/mysql:/etc/mysql/conf.d
+    environment:
+      MYSQL_DATABASE: exip
+      MYSQL_ROOT_PASSWORD: password
+
+  api:
+    build: ./src/api
+    image: exip/src/api
+    restart: always
+    command: npm run start
+    depends_on:
+      - database
+    ports:
+      - "5001:5001"
     volumes:
       - ./api/src:/app/src:ro
-      # - ./src/api/.keystone:/app/src/.keystone:ro
-      # - ./src/api/:/app/src/:ro
       - ./api/src/.keystone:/app/src/.keystone:ro
     environment:
-      - MYSQL_ROOT_PASSWORD=example
-      - PORT=5005
-      - DB_URI=mysql://root@localhost:5005/exip
-      - SESSION_SECRET=asdfaslfdjjasjoiwefjwoerij23j8j2oi2j
-      - GOV_NOTIFY_API_KEY
-    entrypoint: npx nodemon src/keystone.ts -L
+      PORT: 5001
+      DATABASE_URL: mysql://root:password@database:3306/exip
+
   ui:
     build: ./src/ui
     image: exip/src/ui
     restart: always
     depends_on:
+      - database
       - api
     ports:
       - "5000:5000"
@@ -34,18 +45,15 @@ services:
       - ./src/ui/public:/app/public:ro
       - ./src/ui/templates:/app/templates:ro
     environment:
-      - PORT=5000
-      - BASIC_AUTH_KEY
-      - BASIC_AUTH_SECRET
-      - MULESOFT_API_CIS_URL
-      - MULESOFT_API_CIS_KEY
-      - MULESOFT_API_CIS_SECRET
-      - MULESOFT_API_MDM_EA_URL
-      - MULESOFT_API_MDM_EA_KEY
-      - MULESOFT_API_MDM_EA_SECRET
-      - GOOGLE_ANALYTICS_ID
+      PORT: 5000
+      API_URL:
+      BASIC_AUTH_KEY:
+      BASIC_AUTH_SECRET:
+      MULESOFT_API_CIS_URL:
+      MULESOFT_API_CIS_KEY:
+      MULESOFT_API_CIS_SECRET:
+      MULESOFT_API_MDM_EA_URL:
+      MULESOFT_API_MDM_EA_KEY:
+      MULESOFT_API_MDM_EA_SECRET:
+      GOOGLE_ANALYTICS_ID:
     entrypoint: npx nodemon src/index.ts -L
-
-# DB_URI=mysql://root@localhost:3306/exip
-# SESSION_SECRET=asdfaslfdjjasjoiwefjwoerij23j8j2oi2j
-# - MONGODB_URI=mongodb://root:r00t@dtfs-submissions-data:27017/?authMechanism=DEFAULT
