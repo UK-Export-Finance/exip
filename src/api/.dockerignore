@@ -1,9 +1,6 @@
-node_modules
-README.md
-Dockerfile
-.git/
-docs/
-dist/
 .env
 .prettierrc.json
 .eslintignore
+node_modules
+README.md
+Dockerfile

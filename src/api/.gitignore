@@ -1,8 +1,6 @@
 .vscode
 .DS_Store
 .env
-.api
-.database
+*.log
 node_modules
 .keystone/admin
-*.log
