@@ -25,8 +25,8 @@ services:
     ports:
       - "5001:5001"
     volumes:
-      - ./api/src:/app/src:ro
-      - ./api/src/.keystone:/app/src/.keystone:ro
+      - ./.api/src:/app/src:ro
+      - ./.api/src/.keystone:/app/src/.keystone:ro
     environment:
       PORT: 5001
       DATABASE_URL: mysql://root:password@database:3306/exip

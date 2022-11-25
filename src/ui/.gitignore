@@ -1,6 +1,6 @@
 .vscode
 .DS_Store
 .env
+.api
+.database
 node_modules
-
-generated_reports
