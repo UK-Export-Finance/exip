@@ -12,8 +12,8 @@ services:
       - ./.database/log:/var/log/mysql
       - ./.database/mysql:/etc/mysql/conf.d
     environment:
-      MYSQL_DATABASE: exip
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE:
+      MYSQL_ROOT_PASSWORD:
 
   api:
     build: ./src/api
@@ -29,7 +29,7 @@ services:
       - ./.api/src/.keystone:/app/src/.keystone:ro
     environment:
       PORT: 5001
-      DATABASE_URL: mysql://root:password@database:3306/exip
+      DATABASE_URL:
 
   ui:
     build: ./src/ui
