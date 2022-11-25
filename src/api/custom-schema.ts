@@ -24,12 +24,10 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         //   try {
         //     console.info('Calling Notify API. templateId: ', variables.templateId);
         //     const { templateId, sendToEmailAddress } = variables;
-
         //     notifyClient.sendEmail(templateId, sendToEmailAddress, {
         //       personalisation: {},
         //       reference: null,
         //     });
-
         //     return { success: true };
         //   } catch (err) {
         //     console.error('Unable to send email', { err });

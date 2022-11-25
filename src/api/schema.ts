@@ -51,8 +51,8 @@ export const lists = {
 
             modifiedData.eligibility = {
               connect: {
-                id: eligibilityId
-              }
+                id: eligibilityId,
+              },
             };
 
             // add dates
@@ -116,10 +116,10 @@ export const lists = {
   Country: list({
     fields: {
       isoCode: text({
-        validation: { isRequired: true }
+        validation: { isRequired: true },
       }),
       name: text({
-        validation: { isRequired: true }
+        validation: { isRequired: true },
       }),
     },
     access: allowAll,
