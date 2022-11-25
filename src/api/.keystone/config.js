@@ -240,7 +240,6 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 });
 
 // keystone.ts
-console.log("===", process.env);
 var keystone_default = withAuth(
   (0, import_core2.config)({
     db: {
