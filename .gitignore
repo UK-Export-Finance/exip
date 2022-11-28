@@ -4,3 +4,4 @@
 .api
 .database
 node_modules
+e2e-tests/cypress/*
