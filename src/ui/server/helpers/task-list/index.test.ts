@@ -10,7 +10,7 @@ describe('server/helpers/task-list', () => {
 
   describe('generateTaskStatusesAndLinks', () => {
     it('should return an array of groups and tasks with task statuses', () => {
-      const mockTaskListData = generateGroupsAndTasks();
+      const mockTaskListData = generateGroupsAndTasks(mockApplication.referenceNumber);
 
       const result = generateTaskStatusesAndLinks(mockTaskListData, mockApplicationFlat);
 
@@ -60,7 +60,7 @@ describe('server/helpers/task-list', () => {
 
   describe('generateSimplifiedTaskList', () => {
     it('should return a simplified task list in an array of objects structure', () => {
-      const mockTaskListData = generateGroupsAndTasks();
+      const mockTaskListData = generateGroupsAndTasks(mockApplication.referenceNumber);
       const taskListDataWithStates = generateTaskStatusesAndLinks(mockTaskListData, mockApplicationFlat);
 
       const result = generateSimplifiedTaskList(taskListDataWithStates);
@@ -101,7 +101,7 @@ describe('server/helpers/task-list', () => {
 
   describe('generateTaskList', () => {
     it('should return a simplified task list with statuses', () => {
-      const mockTaskListData = generateGroupsAndTasks();
+      const mockTaskListData = generateGroupsAndTasks(mockApplication.referenceNumber);
 
       const result = generateTaskList(mockTaskListData, mockApplicationFlat);
 

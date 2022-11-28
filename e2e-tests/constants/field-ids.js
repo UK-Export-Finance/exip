@@ -1,3 +1,17 @@
+// TODO: add QUOTE.ELIGIBILITY structure.
+
+const SHARED = {
+  POLICY_TYPE: 'policyType',
+  SINGLE_POLICY_TYPE: 'singlePolicyType',
+  MULTI_POLICY_TYPE: 'multiPolicyType',
+};
+
+const SHARED_ELIGIBILITY = {
+  BUYER_COUNTRY: 'buyerCountry',
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',
+  VALID_EXPORTER_LOCATION: 'validExporterLocation',
+};
+
 const FIELD_IDS = {
   OPTIONAL_COOKIES: 'optionalCookies',
   VALID_BUYER_BODY: 'validBuyerBody',
@@ -10,9 +24,9 @@ const FIELD_IDS = {
   CONTRACT_VALUE: 'contractValue',
   MAX_AMOUNT_OWED: 'maximumContractAmountOwed',
   CREDIT_PERIOD: 'creditPeriodInMonths',
-  POLICY_TYPE: 'policyType',
-  SINGLE_POLICY_TYPE: 'singlePolicyType',
-  MULTI_POLICY_TYPE: 'multiPolicyType',
+  // POLICY_TYPE: 'policyType',
+  // SINGLE_POLICY_TYPE: 'singlePolicyType',
+  // MULTI_POLICY_TYPE: 'multiPolicyType',
   POLICY_LENGTH: 'policyLength',
   SINGLE_POLICY_LENGTH: 'singlePolicyLengthMonths',
   MULTI_POLICY_LENGTH: 'multiPolicyLengthMonths',
@@ -31,6 +45,9 @@ const FIELD_IDS = {
       LETTER_OF_CREDIT: 'paidByLetterOfCredit',
       PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
       COMPANIES_HOUSE_NUMBER: 'hasCompaniesHouseNumber',
+    },
+    POLICY_AND_EXPORTS: {
+      ...SHARED,
     },
   },
 };

@@ -2,8 +2,12 @@ import createPrepareApplicationTasks from './prepare-application';
 import { TaskListData } from '../../../../types';
 import { getTaskById } from '../task-helpers';
 import createInitialChecksTasks from './initial-checks';
-import { GROUP_IDS, TASK_IDS } from '../../../constants';
+import { GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
 import { TASKS } from '../../../content-strings';
+import { mockApplication } from '../../../test-mocks';
+
+const { INSURANCE } = ROUTES;
+const { ROOT, POLICY_AND_EXPORTS } = INSURANCE;
 
 describe('server/helpers/task-list/prepare-application', () => {
   it('should return EXIP `prepare application` tasks', () => {
@@ -17,10 +21,10 @@ describe('server/helpers/task-list/prepare-application', () => {
       },
     ] as TaskListData;
 
-    const result = createPrepareApplicationTasks(previousGroups);
+    const result = createPrepareApplicationTasks(mockApplication.referenceNumber, previousGroups);
 
     const POLICY_TYPE_AND_EXPORTS = {
-      href: '#',
+      href: `${ROOT}/${mockApplication.referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`,
       title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS,
       id: TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE_AND_EXPORTS,
       fields: [],

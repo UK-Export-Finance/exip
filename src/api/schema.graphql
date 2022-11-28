@@ -70,6 +70,7 @@ type Application {
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
+  policyAndExport: PolicyAndExport
 }
 
 scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
@@ -89,6 +90,7 @@ input ApplicationWhereInput {
   referenceNumber: IntNullableFilter
   submissionDeadline: DateTimeNullableFilter
   submissionType: StringNullableFilter
+  policyAndExport: PolicyAndExportWhereInput
 }
 
 input DateTimeNullableFilter {
@@ -157,11 +159,18 @@ input ApplicationUpdateInput {
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
+  policyAndExport: PolicyAndExportRelateToOneForUpdateInput
 }
 
 input EligibilityRelateToOneForUpdateInput {
   create: EligibilityCreateInput
   connect: EligibilityWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PolicyAndExportRelateToOneForUpdateInput {
+  create: PolicyAndExportCreateInput
+  connect: PolicyAndExportWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -177,11 +186,56 @@ input ApplicationCreateInput {
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
+  policyAndExport: PolicyAndExportRelateToOneForCreateInput
 }
 
 input EligibilityRelateToOneForCreateInput {
   create: EligibilityCreateInput
   connect: EligibilityWhereUniqueInput
+}
+
+input PolicyAndExportRelateToOneForCreateInput {
+  create: PolicyAndExportCreateInput
+  connect: PolicyAndExportWhereUniqueInput
+}
+
+type PolicyAndExport {
+  id: ID!
+  application: Application
+  policyType: String
+}
+
+input PolicyAndExportWhereUniqueInput {
+  id: ID
+}
+
+input PolicyAndExportWhereInput {
+  AND: [PolicyAndExportWhereInput!]
+  OR: [PolicyAndExportWhereInput!]
+  NOT: [PolicyAndExportWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  policyType: StringNullableFilter
+}
+
+input PolicyAndExportOrderByInput {
+  id: OrderDirection
+  policyType: OrderDirection
+}
+
+input PolicyAndExportUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  policyType: String
+}
+
+input PolicyAndExportUpdateArgs {
+  where: PolicyAndExportWhereUniqueInput!
+  data: PolicyAndExportUpdateInput!
+}
+
+input PolicyAndExportCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  policyType: String
 }
 
 type Country {
@@ -459,6 +513,12 @@ type Mutation {
   updateApplications(data: [ApplicationUpdateArgs!]!): [Application]
   deleteApplication(where: ApplicationWhereUniqueInput!): Application
   deleteApplications(where: [ApplicationWhereUniqueInput!]!): [Application]
+  createPolicyAndExport(data: PolicyAndExportCreateInput!): PolicyAndExport
+  createPolicyAndExports(data: [PolicyAndExportCreateInput!]!): [PolicyAndExport]
+  updatePolicyAndExport(where: PolicyAndExportWhereUniqueInput!, data: PolicyAndExportUpdateInput!): PolicyAndExport
+  updatePolicyAndExports(data: [PolicyAndExportUpdateArgs!]!): [PolicyAndExport]
+  deletePolicyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
+  deletePolicyAndExports(where: [PolicyAndExportWhereUniqueInput!]!): [PolicyAndExport]
   createCountry(data: CountryCreateInput!): Country
   createCountries(data: [CountryCreateInput!]!): [Country]
   updateCountry(where: CountryWhereUniqueInput!, data: CountryUpdateInput!): Country
@@ -513,6 +573,9 @@ type Query {
   applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0): [Application!]
   application(where: ApplicationWhereUniqueInput!): Application
   applicationsCount(where: ApplicationWhereInput! = {}): Int
+  policyAndExports(where: PolicyAndExportWhereInput! = {}, orderBy: [PolicyAndExportOrderByInput!]! = [], take: Int, skip: Int! = 0): [PolicyAndExport!]
+  policyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
+  policyAndExportsCount(where: PolicyAndExportWhereInput! = {}): Int
   countries(where: CountryWhereInput! = {}, orderBy: [CountryOrderByInput!]! = [], take: Int, skip: Int! = 0): [Country!]
   country(where: CountryWhereUniqueInput!): Country
   countriesCount(where: CountryWhereInput! = {}): Int

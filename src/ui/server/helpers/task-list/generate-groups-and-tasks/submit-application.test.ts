@@ -3,10 +3,11 @@ import { getTaskById } from '../task-helpers';
 import generateGroupsAndTasks from '.';
 import { TASK_IDS } from '../../../constants';
 import { TASKS } from '../../../content-strings';
+import { mockApplication } from '../../../test-mocks';
 
 describe('server/helpers/task-list/submit-application', () => {
   it('should return EXIP `submit application` tasks', () => {
-    const groupsAndTasks = generateGroupsAndTasks();
+    const groupsAndTasks = generateGroupsAndTasks(mockApplication.referenceNumber);
 
     const initialChecksGroup = groupsAndTasks[0];
     const prepareApplicationGroup = groupsAndTasks[1];

@@ -38,7 +38,11 @@ var APPLICATION = {
   SUBMISSION_TYPE: {
     MIA: "Manual Inclusion Application"
   },
-  SUBMISSION_DEADLINE_IN_MONTHS: 3
+  SUBMISSION_DEADLINE_IN_MONTHS: 3,
+  POLICY_TYPE: {
+    SINGLE: "Single contract policy",
+    MULTI: "Multiple contract policy"
+  }
 };
 
 // schema.ts
@@ -64,7 +68,8 @@ var lists = {
       submissionType: (0, import_fields.select)({
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
-      })
+      }),
+      policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" })
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -84,6 +89,14 @@ var lists = {
                 id: eligibilityId
               }
             };
+            const { id: policyAndExportId } = await context.db.PolicyAndExport.createOne({
+              data: {}
+            });
+            modifiedData.policyAndExport = {
+              connect: {
+                id: policyAndExportId
+              }
+            };
             const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
@@ -95,13 +108,15 @@ var lists = {
             return err;
           }
         }
+        return resolvedData;
       },
       afterOperation: async ({ operation, item, context }) => {
         if (operation === "create") {
           try {
             console.info("Adding application ID to reference number entry");
+            console.log("------ item ", item);
             const applicationId = item.id;
-            const { referenceNumber, eligibilityId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -122,12 +137,34 @@ var lists = {
                 }
               }
             });
+            await context.db.PolicyAndExport.updateOne({
+              where: { id: policyAndExportId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                }
+              }
+            });
           } catch (err) {
             console.error("Error adding an application ID to reference number entry ", { err });
             return err;
           }
         }
       }
+    },
+    access: import_access.allowAll
+  },
+  PolicyAndExport: {
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      policyType: (0, import_fields.select)({
+        options: [
+          { label: APPLICATION.POLICY_TYPE.SINGLE, value: APPLICATION.POLICY_TYPE.SINGLE },
+          { label: APPLICATION.POLICY_TYPE.MULTI, value: APPLICATION.POLICY_TYPE.MULTI }
+        ]
+      })
     },
     access: import_access.allowAll
   },

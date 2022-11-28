@@ -9,6 +9,7 @@ const mockApplication = {
   submissionDeadline: '2023-02-11 10:44:20.762',
   submissionType: 'Manual Inclusion Application',
   eligibility: {
+    id: 'clav8by1g0000kgoq5a2afr1z',
     buyerCountry: mockCountries[0],
     hasMinimumUkGoodsOrServices: true,
     validExporterLocation: true,
@@ -18,6 +19,10 @@ const mockApplication = {
     needPreCreditPeriodCover: false,
     wantCoverOverMaxAmount: false,
     wantCoverOverMaxPeriod: false,
+  },
+  policyAndExport: {
+    id: 'clav8by1i0007kgoqies0dbfc',
+    policyType: 'Multiple contract policy',
   },
 } as Application;
 

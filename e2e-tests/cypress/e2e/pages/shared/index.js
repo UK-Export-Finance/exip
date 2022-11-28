@@ -6,12 +6,14 @@ const ukGoodsOrServicesPage = require('./ukGoodsOrServices');
 
 module.exports = {
   heading: () => cy.get('[data-cy="heading"]'),
+  headingCaption: () => cy.get('[data-cy="heading-caption"]'),
   yesRadio: () => cy.get(`[data-cy="yes"]`),
   yesRadioInput: () => cy.get(`[data-cy="yes-input"]`),
   noRadio: () => cy.get(`[data-cy="no"]`),
   noRadioInput: () => cy.get(`[data-cy="no-input"]`),
   inlineErrorMessage: () => cy.get(`[data-cy="inline-error-message"]`),
   submitButton: () => cy.get('[data-cy="submit-button"]'),
+  saveAndBackButton: () => cy.get('[data-cy="save-and-back-button"]'),
   buyerCountryPage,
   cannotApplyPage,
   exporterLocationPage,

@@ -11,7 +11,7 @@ const get = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
 
   try {
-    const application = await api.keystone.getApplication(Number(referenceNumber));
+    const application = await api.keystone.application.get(Number(referenceNumber));
 
     if (!application) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
@@ -19,7 +19,7 @@ const get = async (req: Request, res: Response) => {
 
     const flatApplicationData = flattenApplicationData(application);
 
-    const taskListStructure = generateGroupsAndTasks();
+    const taskListStructure = generateGroupsAndTasks(application.referenceNumber);
 
     const taskListData = generateTaskList(taskListStructure, flatApplicationData);
 

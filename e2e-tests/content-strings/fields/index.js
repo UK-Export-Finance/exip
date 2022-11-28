@@ -1,7 +1,8 @@
-import { FIELD_IDS, FIELD_VALUES } from '../constants';
-import { LINKS } from './links';
+const FIELD_IDS = require('../../constants/field-ids');
+const FIELD_VALUES = require('../../constants/field-values');
+const LINKS = require('../links');
 
-export const FIELDS = {
+const FIELDS = {
   [FIELD_IDS.COUNTRY]: {
     HINT: 'Cover is based on the country your buyer is located in, not the destination of your goods or services.',
   },
@@ -24,15 +25,14 @@ export const FIELDS = {
   },
   [FIELD_IDS.AMOUNT_CURRENCY]: {
     SINGLE_POLICY: {
-      LEGEND: "What's the total value of the contract you want to insure?",
+      LEGEND: 'What\'s the total value of the contract you want to insure?',
     },
     MULTI_POLICY: {
-      LEGEND: "What's the maximum amount your buyer will owe you at any single point during the policy?",
+      LEGEND: 'What\'s the maximum amount your buyer will owe you at any single point during the policy?',
     },
   },
   [FIELD_IDS.CURRENCY]: {
-    LABEL:
-      'Select a currency (pounds sterling, euros or US dollars). You can send out your invoices in most currencies but UKEF only issues policies in these 3 currencies.',
+    LABEL: 'Select a currency (pounds sterling, euros or US dollars). You can send out your invoices in most currencies but UKEF only issues policies in these 3 currencies.',
   },
   [FIELD_IDS.CONTRACT_VALUE]: {
     LABEL: 'Contract value',
@@ -170,4 +170,13 @@ export const FIELDS = {
       },
     },
   },
+  INSURANCE: {
+    ELIGIBILITY: {
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT]: {
+        HINT: 'This is known as the pre-credit period.',
+      },
+    },
+  },
 };
+
+module.exports = FIELDS;

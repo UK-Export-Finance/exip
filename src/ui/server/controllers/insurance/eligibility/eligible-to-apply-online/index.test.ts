@@ -40,10 +40,10 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
     let createApplicationSpy = jest.fn(() => Promise.resolve(mockCreateApplicationResponse));
 
     beforeEach(() => {
-      api.keystone.createApplication = createApplicationSpy;
+      api.keystone.application.create = createApplicationSpy;
     });
 
-    it('should call api.keystone.createApplication', async () => {
+    it('should call api.keystone.application.create', async () => {
       await post(req, res);
 
       expect(createApplicationSpy).toHaveBeenCalledTimes(1);
@@ -62,7 +62,7 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
         // @ts-ignore
         createApplicationSpy = jest.fn(() => Promise.resolve());
 
-        api.keystone.createApplication = createApplicationSpy;
+        api.keystone.application.create = createApplicationSpy;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -75,7 +75,7 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
     describe('when there is an error with the API call', () => {
       beforeEach(() => {
         createApplicationSpy = jest.fn(() => Promise.reject());
-        api.keystone.createApplication = createApplicationSpy;
+        api.keystone.application.create = createApplicationSpy;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {

@@ -68,5 +68,10 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Select whether you have a UK Companies House registration number or not',
       },
     },
+    POLICY_AND_EXPORTS: {
+      [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE]: {
+        IS_EMPTY: 'Select the type of policy you need',
+      },
+    },
   },
 } as ErrorMessage;

@@ -1,4 +1,5 @@
-import { PRODUCT } from '../product';
+import { PRODUCT } from '../../product';
+import { POLICY_AND_EXPORTS } from './policy-and-export';
 
 const ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
@@ -25,12 +26,5 @@ export const INSURANCE_ROUTES = {
     NEED_TO_START_AGAIN: `${ROOT}${ELIGIBILITY}/need-to-start-again`,
   },
   ALL_SECTIONS: '/all-sections',
-  POLICY_AND_EXPORTS: {},
-};
-
-const POLICY_AND_EXPORTS_ROOT = '/policy-and-exports';
-
-INSURANCE_ROUTES.POLICY_AND_EXPORTS = {
-  ROOT: POLICY_AND_EXPORTS_ROOT,
-  TYPE_OF_POLICY: `${POLICY_AND_EXPORTS_ROOT}/type-of-policy`,
+  POLICY_AND_EXPORTS,
 };

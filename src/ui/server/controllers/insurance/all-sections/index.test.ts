@@ -26,10 +26,10 @@ describe('controllers/insurance/all-sections', () => {
     let getApplicationSpy = jest.fn(() => Promise.resolve(mockGetApplicationResponse));
 
     beforeEach(() => {
-      api.keystone.getApplication = getApplicationSpy;
+      api.keystone.application.get = getApplicationSpy;
     });
 
-    it('should call api.keystone.getApplication', async () => {
+    it('should call api.keystone.application.get', async () => {
       await get(req, res);
 
       expect(getApplicationSpy).toHaveBeenCalledTimes(1);
@@ -39,7 +39,7 @@ describe('controllers/insurance/all-sections', () => {
       await get(req, res);
 
       const flatApplicationData = flattenApplicationData(mockApplication);
-      const taskListStructure = generateGroupsAndTasks();
+      const taskListStructure = generateGroupsAndTasks(mockApplication.referenceNumber);
       const expectedTaskListData = generateTaskList(taskListStructure, flatApplicationData);
 
       const expectedVariables = {
@@ -58,7 +58,7 @@ describe('controllers/insurance/all-sections', () => {
       beforeEach(() => {
         // @ts-ignore
         getApplicationSpy = jest.fn(() => Promise.resolve());
-        api.keystone.getApplication = getApplicationSpy;
+        api.keystone.application.get = getApplicationSpy;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -71,7 +71,7 @@ describe('controllers/insurance/all-sections', () => {
     describe('when there is an error with the API call', () => {
       beforeEach(() => {
         getApplicationSpy = jest.fn(() => Promise.reject());
-        api.keystone.getApplication = getApplicationSpy;
+        api.keystone.application.get = getApplicationSpy;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {

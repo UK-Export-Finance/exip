@@ -1,4 +1,5 @@
 const ELIGIBILITY = require('./eligibility');
+const POLICY_AND_EXPORTS = require('./policy-and-exports');
 
 const START = {
   PAGE_TITLE: 'Apply for UKEF export insurance',
@@ -26,4 +27,5 @@ module.exports = {
   START,
   ELIGIBILITY,
   ALL_SECTIONS,
+  POLICY_AND_EXPORTS,
 };

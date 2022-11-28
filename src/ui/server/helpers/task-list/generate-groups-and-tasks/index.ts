@@ -9,7 +9,7 @@ import { GROUP_IDS } from '../../../constants';
  * generateGroupsAndTasks
  * @returns {Array} Task list groups and tasks
  */
-const generateGroupsAndTasks = (): TaskListData => {
+const generateGroupsAndTasks = (applicationReferenceNumber: number): TaskListData => {
   let groups = [
     {
       title: TASKS.LIST.INITIAL_CHECKS.HEADING,
@@ -23,7 +23,7 @@ const generateGroupsAndTasks = (): TaskListData => {
     {
       title: TASKS.LIST.PREPARE_APPLICATION.HEADING,
       id: GROUP_IDS.PREPARE_APPLICATION,
-      tasks: prepareApplicationTasks(groups),
+      tasks: prepareApplicationTasks(applicationReferenceNumber, groups),
     },
   ] as TaskListData;
 

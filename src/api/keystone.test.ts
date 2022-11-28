@@ -15,7 +15,7 @@ describe('Create an Application', () => {
   beforeAll(async () => {
     application = await context.query.Application.createOne({
       data: {},
-      query: 'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id }',
+      query: 'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id } policyAndExport { id }',
     });
   });
 
@@ -69,6 +69,11 @@ describe('Create an Application', () => {
     expect(typeof application.referenceNumber).toEqual('number');
   });
 
+  test('it should have a policy and export id', () => {
+    expect(application.policyAndExport).toBeDefined();
+    expect(typeof application.policyAndExport.id).toEqual('string');
+  });
+
   test('it should have a default submission type', () => {
     expect(application.submissionType).toEqual(APPLICATION.SUBMISSION_TYPE.MIA);
   });
@@ -91,5 +96,16 @@ describe('Create an Application', () => {
     });
 
     expect(referenceNumber.application.id).toEqual(application.id);
+  });
+
+  test('it should add the application ID to the policy and export entry', async () => {
+    const policyAndExport = await context.query.PolicyAndExport.findOne({
+      where: {
+        id: application.policyAndExport.id,
+      },
+      query: 'id application { id }',
+    });
+
+    expect(policyAndExport.application.id).toEqual(application.id);
   });
 });

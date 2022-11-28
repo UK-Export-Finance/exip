@@ -1,18 +1,21 @@
 import { TaskListDataTask, TaskListData } from '../../../../types';
-import { GROUP_IDS, TASK_IDS } from '../../../constants';
+import { GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
 import { TASKS } from '../../../content-strings';
 import { getGroupById, getTaskById } from '../task-helpers';
+
+const { INSURANCE } = ROUTES;
+const { ROOT, POLICY_AND_EXPORTS } = INSURANCE;
 
 /**
  * createPrepareApplicationTasks
  * @param {Array} otherGroups Task list groups
  * @returns {Array} Tasks
  */
-const createPrepareApplicationTasks = (otherGroups: TaskListData): Array<TaskListDataTask> => {
+const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: TaskListData): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
 
   const POLICY_TYPE_AND_EXPORTS = {
-    href: '#',
+    href: `${ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`,
     title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS,
     id: TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE_AND_EXPORTS,
     fields: [],
