@@ -112,7 +112,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     it(`should redirect to ${ROUTES.INSURANCE.ROOT}/[referenceNumber]${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
       submitButton().click();
 
-      cy.url().then(url => {
+      cy.url().then((url) => {
         const splitUrl = url.split('/');
         const applicationId = splitUrl[4];
 
