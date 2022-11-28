@@ -211,10 +211,10 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         insuranceEligibility: {},
       };
 
-      api.getCurrencies = getCurrenciesSpy;
+      api.external.getCurrencies = getCurrenciesSpy;
     });
 
-    it('should call api.getCurrencies', async () => {
+    it('should call api.external.getCurrencies', async () => {
       await get(req, res);
 
       expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
@@ -322,7 +322,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       beforeEach(() => {
         // @ts-ignore
         getCurrenciesSpy = jest.fn(() => Promise.resolve());
-        api.getCurrencies = getCurrenciesSpy;
+        api.external.getCurrencies = getCurrenciesSpy;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -335,7 +335,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       beforeEach(() => {
         // @ts-ignore
         getCurrenciesSpy = jest.fn(() => Promise.resolve({}));
-        api.getCurrencies = getCurrenciesSpy;
+        api.external.getCurrencies = getCurrenciesSpy;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -347,7 +347,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     describe('when the currencies API does not return a populated array', () => {
       beforeEach(() => {
         getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
-        api.getCurrencies = getCurrenciesSpy;
+        api.external.getCurrencies = getCurrenciesSpy;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -361,7 +361,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
     beforeEach(() => {
-      api.getCurrencies = getCurrenciesSpy;
+      api.external.getCurrencies = getCurrenciesSpy;
       req.body = mockAnswers;
       req.session.submittedData = {
         quoteEligibility: previousFlowSubmittedData,
@@ -370,7 +370,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     });
 
     describe('when a currency code has been submitted', () => {
-      it('should call api.getCurrencies', async () => {
+      it('should call api.external.getCurrencies', async () => {
         await post(req, res);
 
         expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
@@ -532,7 +532,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       beforeEach(() => {
         // @ts-ignore
         getCurrenciesSpy = jest.fn(() => Promise.resolve());
-        api.getCurrencies = getCurrenciesSpy;
+        api.external.getCurrencies = getCurrenciesSpy;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -545,7 +545,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       beforeEach(() => {
         // @ts-ignore
         getCurrenciesSpy = jest.fn(() => Promise.resolve({}));
-        api.getCurrencies = getCurrenciesSpy;
+        api.external.getCurrencies = getCurrenciesSpy;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -557,7 +557,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     describe('when the currencies API does not return a populated array', () => {
       beforeEach(() => {
         getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
-        api.getCurrencies = getCurrenciesSpy;
+        api.external.getCurrencies = getCurrenciesSpy;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {

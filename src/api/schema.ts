@@ -91,7 +91,6 @@ export const lists = {
           try {
             console.info('Adding application ID to reference number entry');
 
-            console.log('------ item ', item);
             const applicationId = item.id;
             const { referenceNumber, eligibilityId, policyAndExportId } = item;
 

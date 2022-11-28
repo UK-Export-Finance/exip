@@ -17,7 +17,7 @@ export const PAGE_VARIABLES = {
 };
 
 export const get = async (req: Request, res: Response) => {
-  const countries = await api.getCountries();
+  const countries = await api.external.getCountries();
 
   if (!countries || !countries.length) {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
@@ -39,7 +39,7 @@ export const get = async (req: Request, res: Response) => {
 export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body);
 
-  const countries = await api.getCountries();
+  const countries = await api.external.getCountries();
 
   if (!countries || !countries.length) {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
