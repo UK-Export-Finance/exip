@@ -1,6 +1,6 @@
-const ROUTES = require('../constants/routes');
+import { ROUTES } from '../constants/routes';
 
-const LINKS = {
+export const LINKS = {
   BACK: 'Back',
   CHANGE: 'Change',
   START_AGAIN: {
@@ -22,5 +22,3 @@ const LINKS = {
     FULL_APPLICATION: 'https://www.gov.uk/guidance/apply-for-ukef-export-insurance',
   },
 };
-
-module.exports = LINKS;

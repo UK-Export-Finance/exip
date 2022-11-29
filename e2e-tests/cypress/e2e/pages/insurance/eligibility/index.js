@@ -1,11 +1,11 @@
-const checkIfEligiblePage = require('./checkIfEligible');
-const applyOfflinePage = require('./applyOffline');
-const speakToUkefEfmPage = require('./speakToUkefEfm');
-const otherPartiesPage = require('./otherParties');
-const preCreditPeriodPage = require('./preCreditPeriod');
-const eligibleToApplyOnlinePage = require('./eligibleToApplyOnline');
+import checkIfEligiblePage from './checkIfEligible';
+import applyOfflinePage from './applyOffline';
+import speakToUkefEfmPage from './speakToUkefEfm';
+import otherPartiesPage from './otherParties';
+import preCreditPeriodPage from './preCreditPeriod';
+import eligibleToApplyOnlinePage from './eligibleToApplyOnline';
 
-module.exports = {
+export {
   checkIfEligiblePage,
   applyOfflinePage,
   speakToUkefEfmPage,

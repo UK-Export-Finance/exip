@@ -1,16 +1,9 @@
-import { heading, submitButton } from '../../../pages/shared';
-import { needToStartAgainPage } from '../../../pages/shared';
-import partials from '../../../partials';
+import { heading, submitButton, needToStartAgainPage } from '../../../pages/shared';
 import { LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
-const { ACTIONS } = CONTENT_STRINGS;
-
-const { ROUTES } = CONSTANTS;
-
-const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
 
 context('Insurance Eligibility - Need to start again exit page', () => {
   beforeEach(() => {
@@ -35,7 +28,6 @@ context('Insurance Eligibility - Need to start again exit page', () => {
         password: Cypress.config('basicAuthSecret'),
       },
     });
-
 
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN);
   });

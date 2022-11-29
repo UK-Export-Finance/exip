@@ -2,12 +2,10 @@ import { submitButton } from '../../../pages/shared';
 import { policyTypePage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import checkText from '../../../helpers/check-text';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, completeAndSubmitUkContentForm } from '../../../../support/quote/forms';
-
-const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Policy type page - policy type & length validation', () => {
   before(() => {

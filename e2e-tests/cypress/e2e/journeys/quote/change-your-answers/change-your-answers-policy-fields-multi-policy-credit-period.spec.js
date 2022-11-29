@@ -4,22 +4,9 @@ import {
   checkYourAnswersPage,
 } from '../../../pages/quote';
 import partials from '../../../partials';
-import CONSTANTS from '../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../constants';
 
-const {
-  FIELD_IDS,
-  ROUTES,
-} = CONSTANTS;
-
-const {
-  AMOUNT,
-  CREDIT_PERIOD,
-} = FIELD_IDS;
-
-const submissionData = {
-  [AMOUNT]: '150000',
-  [CREDIT_PERIOD]: '1',
-};
+const { CREDIT_PERIOD } = FIELD_IDS;
 
 context('Change your answers (policy fields) - as an exporter, I want to change the details before submitting the proposal', () => {
   before(() => {
@@ -56,8 +43,6 @@ context('Change your answers (policy fields) - as an exporter, I want to change 
     });
 
     it('has originally submitted answer', () => {
-      const expectedValue = submissionData[CREDIT_PERIOD];
-
       const firstOption = tellUsAboutYourPolicyPage[CREDIT_PERIOD].inputOption().eq(0);
       firstOption.should('have.attr', 'selected', 'selected');
 

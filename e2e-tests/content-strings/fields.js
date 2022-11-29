@@ -1,24 +1,21 @@
-const FIELD_IDS = require('../constants/field-ids');
-const FIELD_VALUES = require('../constants/field-values');
-const LINKS = require('./links');
+import { FIELD_IDS } from '../constants/field-ids';
+import { FIELD_VALUES } from '../constants/field-values';
+import { LINKS } from './links';
 
-const FIELDS = {
-  [FIELD_IDS.COUNTRY]: {
+export const FIELDS = {
+  [FIELD_IDS.BUYER_COUNTRY]: {
     HINT: 'Cover is based on the country your buyer is located in, not the destination of your goods or services.',
+    SUMMARY: {
+      TITLE: 'Buyer is based in',
+    },
   },
   [FIELD_IDS.VALID_EXPORTER_LOCATION]: {
     SUMMARY: {
       TITLE: 'Your company',
     },
   },
-  [FIELD_IDS.BUYER_COUNTRY]: {
-    SUMMARY: {
-      TITLE: 'Buyer is based in',
-    },
-  },
   [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
-    LABEL: 'Percentage of your export that is UK content',
-    HINT: 'Enter the UK content of your export as a percentage.',
+    HINT: 'You can include your profit margin as part of the contract value.',
     SUMMARY: {
       TITLE: 'UK goods or services',
     },
@@ -170,13 +167,7 @@ const FIELDS = {
       },
     },
   },
-  INSURANCE: {
-    ELIGIBILITY: {
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT]: {
-        HINT: 'This is known as the pre-credit period.',
-      }
-    },
+  [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
+    HINT: 'This is known as the pre-credit period.',
   },
 };
-
-module.exports = FIELDS;

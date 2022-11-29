@@ -1,4 +1,4 @@
-const FIELD_VALUES = {
+export const FIELD_VALUES = {
   OPTIONAL_COOKIES: {
     ACCEPT: 'accept',
     REJECT: 'reject',
@@ -12,5 +12,3 @@ const FIELD_VALUES = {
     MULTI: 12,
   },
 };
-
-module.exports = FIELD_VALUES;

@@ -1,6 +1,4 @@
 import partials from '../../e2e/partials';
-import { COOKIES_CONSENT, PAGES } from '../../../content-strings';
-import { ROUTES } from '../../../constants';
 import checkCookiesConsentBannerIsVisible from './check-cookies-consent-banner-is-visible';
 import checkCookiesConsentBannerIsNotVisible from './check-cookies-consent-banner-is-not-visible';
 
@@ -9,7 +7,7 @@ const accept = () => {
   partials.cookieBanner.hideButton().click();
 };
 
-const checkAnalyticsCookiesConsentAndAccept = () => {  
+const checkAnalyticsCookiesConsentAndAccept = () => {
   checkCookiesConsentBannerIsVisible();
   accept();
   checkCookiesConsentBannerIsNotVisible();

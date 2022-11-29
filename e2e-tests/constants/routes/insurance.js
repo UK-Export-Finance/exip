@@ -1,9 +1,9 @@
-const PRODUCT = require('../product');
+import { PRODUCT } from '../product';
 
 const ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
 
-const INSURANCE_ROUTES = {
+export const INSURANCE_ROUTES = {
   ROOT,
   START: `${ROOT}/start`,
   ELIGIBILITY: {
@@ -26,5 +26,3 @@ const INSURANCE_ROUTES = {
   },
   ALL_SECTIONS: '/all-sections',
 };
-
-export default INSURANCE_ROUTES;

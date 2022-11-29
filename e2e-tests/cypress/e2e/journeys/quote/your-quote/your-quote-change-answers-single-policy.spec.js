@@ -2,17 +2,10 @@ import { buyerCountryPage, submitButton } from '../../../pages/shared';
 import {
   policyTypePage,
   tellUsAboutYourPolicyPage,
-  checkYourAnswersPage,
   yourQuotePage,
 } from '../../../pages/quote';
 import partials from '../../../partials';
-import CONSTANTS from '../../../../../constants';
-
-const {
-  ROUTES,
-  FIELD_IDS,
-  FIELD_VALUES,
-} = CONSTANTS;
+import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 
 const {
   CONTRACT_VALUE,

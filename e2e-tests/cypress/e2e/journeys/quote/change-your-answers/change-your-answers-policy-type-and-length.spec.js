@@ -5,17 +5,12 @@ import {
   tellUsAboutYourPolicyPage,
 } from '../../../pages/quote';
 import partials from '../../../partials';
-import CONSTANTS from '../../../../../constants';
-import { CONTRACT_VALUE, MAX_AMOUNT_OWED } from '../../../../../constants/field-ids';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../constants';
 
 const {
-  FIELD_IDS,
-  FIELD_VALUES,
-  ROUTES,
-} = CONSTANTS;
-
-const {
+  CONTRACT_VALUE,
   CREDIT_PERIOD,
+  MAX_AMOUNT_OWED,
   MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
   POLICY_LENGTH,

@@ -1,9 +1,8 @@
-const FIELD_IDS = {
+export const FIELD_IDS = {
   OPTIONAL_COOKIES: 'optionalCookies',
   VALID_BUYER_BODY: 'validBuyerBody',
   VALID_EXPORTER_LOCATION: 'validExporterLocation',
   BUYER_COUNTRY: 'buyerCountry',
-  COUNTRY: 'country',
   HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',
   AMOUNT_CURRENCY: 'amountAndCurrency',
   CURRENCY: 'currency',
@@ -34,5 +33,3 @@ const FIELD_IDS = {
     },
   },
 };
-
-module.exports = FIELD_IDS;

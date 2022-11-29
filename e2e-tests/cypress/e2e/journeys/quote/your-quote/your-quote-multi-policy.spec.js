@@ -1,15 +1,10 @@
 import { submitButton } from '../../../pages/shared';
-import {
-  checkYourAnswersPage,
-  yourQuotePage,
-} from '../../../pages/quote';
+import { yourQuotePage } from '../../../pages/quote';
 import {
   LINKS,
   QUOTE_TITLES,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
-
-const { ROUTES, FIELD_IDS, FIELD_VALUES } = CONSTANTS;
+import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 
 const {
   BUYER_COUNTRY,

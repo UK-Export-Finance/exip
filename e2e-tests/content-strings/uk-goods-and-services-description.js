@@ -1,6 +1,6 @@
-import LINKS from './links';
+import { LINKS } from './links';
 
-const UK_GOODS_AND_SERVICES_DESCRIPTION = {
+export const UK_GOODS_AND_SERVICES_DESCRIPTION = {
   INTRO: 'What counts as UK goods and services?',
   INCLUDES: {
     INTRO: 'UK goods and services includes:',
@@ -55,5 +55,3 @@ const UK_GOODS_AND_SERVICES_DESCRIPTION = {
     BODY_2: "if you'd like to check whether you're eligible around this criteria.",
   },
 };
-
-export default UK_GOODS_AND_SERVICES_DESCRIPTION;

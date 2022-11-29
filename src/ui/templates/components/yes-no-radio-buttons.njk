@@ -4,6 +4,7 @@
 
   {% set fieldId = params.fieldId %}
   {% set heading = params.heading %}
+  {% set hintText = params.hintText %}
   {% set submittedAnswer = params.submittedAnswer %}
   {% set errorMessage = params.errorMessage %}
 
@@ -14,6 +15,12 @@
     fieldset: {
       legend: {
         html: "<h1 class='govuk-heading-l' id='heading' data-cy='heading'>" + heading + "</h1>"
+      }
+    },
+    hint: {
+      text: hintText,
+      attributes: {
+        'data-cy': 'yes-no-input-hint'
       }
     },
     items: [

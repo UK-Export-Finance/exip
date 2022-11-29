@@ -1,6 +1,10 @@
-import { buyerCountryPage, heading, inlineErrorMessage, submitButton } from '../e2e/pages/shared';
+import {
+  buyerCountryPage, heading, inlineErrorMessage, submitButton,
+} from '../e2e/pages/shared';
 import partials from '../e2e/partials';
-import { BUTTONS, ERROR_MESSAGES, FIELDS, ORGANISATION, PAGES } from '../../content-strings';
+import {
+  BUTTONS, ERROR_MESSAGES, FIELDS, ORGANISATION, PAGES,
+} from '../../content-strings';
 import { FIELD_IDS } from '../../constants';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
@@ -16,7 +20,7 @@ const checkPageTitleAndHeading = () => {
 
 const checkInputHint = () => {
   buyerCountryPage.hint().invoke('text').then((text) => {
-    expect(text.trim()).equal(FIELDS[FIELD_IDS.COUNTRY].HINT);
+    expect(text.trim()).equal(FIELDS[FIELD_IDS.BUYER_COUNTRY].HINT);
   });
 };
 
@@ -56,21 +60,6 @@ const checkAutocompleteInput = {
 
     results.should('have.length.greaterThan', 1);
   },
-  addsCountryNameToHiddenInput: () => {
-    buyerCountryPage.searchInput().type('Algeria');
-
-    const noResults = buyerCountryPage.noResults();
-    noResults.should('not.exist');
-
-    const results = buyerCountryPage.results();
-
-    // select the first result (Algeria)
-    results.first().click();
-
-    // check hidden input value
-    const expectedValue = 'Algeria';
-    buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
-  },
   allowsUserToRemoveCountryAndSearchAgain: () => {
     buyerCountryPage.searchInput().type('Algeria');
     const results = buyerCountryPage.results();
@@ -86,7 +75,10 @@ const checkAutocompleteInput = {
 
     // check hidden input value
     const expectedValue = 'Brazil';
-    buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
+
+    buyerCountryPage.results().invoke('text').then((text) => {
+      expect(text.trim()).equal(expectedValue);
+    });
   },
 };
 
@@ -124,7 +116,7 @@ const checkFocusOnInputWhenClickingSummaryErrorMessage = () => {
   buyerCountryPage.searchInput().should('have.class', 'autocomplete__input--focused');
 };
 
-module.exports = {
+export {
   checkPageTitleAndHeading,
   checkInputHint,
   checkAutocompleteInput,

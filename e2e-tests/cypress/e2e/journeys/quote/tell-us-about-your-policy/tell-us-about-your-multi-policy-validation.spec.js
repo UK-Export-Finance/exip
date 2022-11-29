@@ -9,10 +9,8 @@ import { submitButton } from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { FIELD_IDS } from '../../../../../constants';
 import checkText from '../../../helpers/check-text';
-
-const { FIELD_IDS } = CONSTANTS;
 
 context('Tell us about the multi policy you need - form validation', () => {
   beforeEach(() => {

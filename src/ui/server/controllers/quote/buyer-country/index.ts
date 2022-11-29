@@ -11,7 +11,7 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data/quot
 import { Request, Response } from '../../../../types';
 
 export const PAGE_VARIABLES = {
-  FIELD_ID: FIELD_IDS.COUNTRY,
+  FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
   PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
 };
 
@@ -47,7 +47,13 @@ export const getBackLink = (referer?: string): string => {
 };
 
 export const get = async (req: Request, res: Response) => {
-  const { submittedData } = req.session;
+  if (!req.session.submittedData || !req.session.submittedData.quoteEligibility) {
+    req.session.submittedData = {
+      ...req.session.submittedData,
+      quoteEligibility: {},
+    };
+  }
+
   const countries = await api.getCountries();
 
   if (!countries || !countries.length) {
@@ -56,8 +62,8 @@ export const get = async (req: Request, res: Response) => {
 
   let countryValue;
 
-  if (submittedData && submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY]) {
-    countryValue = submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY];
+  if (req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY]) {
+    countryValue = req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY];
   }
 
   let mappedCountries;
@@ -70,7 +76,6 @@ export const get = async (req: Request, res: Response) => {
 
   return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
-    HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
     submittedValues: req.session.submittedData?.quoteEligibility,
     isChangeRoute: isChangeRoute(req.originalUrl),
@@ -91,14 +96,13 @@ export const post = async (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
-      HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
       countries: mappedCountries,
       validationErrors,
       isChangeRoute: isChangeRoute(req.originalUrl),
     });
   }
 
-  const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY] || req.body[FIELD_IDS.COUNTRY];
+  const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY];
 
   const country = getCountryByName(mappedCountries, submittedCountryName);
 

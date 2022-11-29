@@ -1,9 +1,7 @@
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import {
   completeAndSubmitBuyerBodyForm,
   completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
 import { buyerCountryPage, submitButton } from '../../../pages/shared';
 import {
@@ -12,9 +10,7 @@ import {
   tellUsAboutYourPolicyPage,
   yourQuotePage,
 } from '../../../pages/quote';
-import CONSTANTS from '../../../../../constants';
-
-const { ROUTES, FIELD_IDS } = CONSTANTS;
+import { ROUTES, FIELD_IDS } from '../../../../../constants';
 
 const {
   CONTRACT_VALUE,
