@@ -1,15 +1,9 @@
 import { yesRadio, yesRadioInput, submitButton } from '../../../pages/shared';
-import {
-  buyerBodyPage,
-  getAQuoteByEmailPage,
-} from '../../../pages/quote';
+import { getAQuoteByEmailPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { PAGES } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
-
-const CONTENT_STRINGS = PAGES.QUOTE.BUYER_BODY;
-const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country - submit `buyer is a government or public sector body`', () => {
   before(() => {

@@ -37,6 +37,7 @@
         {{ yesNoRadioButtons.render({
           fieldId: FIELD_ID,
           heading: CONTENT_STRINGS.PAGE_TITLE,
+          hintText: FIELD_HINT,
           submittedAnswer: submittedValues[FIELD_ID],
           errorMessage: validationErrors.errorList[FIELD_ID]
         }) }}
@@ -44,7 +45,7 @@
       </div>
     </div>
 
-    {% set calculateContractValuePercentageHtml %}
+    {% set detailsHtml %}
       {% include "partials/uk-goods-and-services-calculate-description.njk" %}
     {% endset %}
 
@@ -53,7 +54,7 @@
 
         {{ govukDetails({
           summaryText: CONTENT_STRINGS.UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION.INTRO,
-          html: calculateContractValuePercentageHtml,
+          html: detailsHtml,
           attributes: {
             "data-cy": "goods-and-services-calculate"
           }

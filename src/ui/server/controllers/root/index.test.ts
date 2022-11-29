@@ -13,7 +13,7 @@ describe('controllers/root', () => {
   });
 
   describe('get', () => {
-    it('should add an empty submittedData object to the session', () => {
+    it('should add empty submittedData structure to the session', () => {
       req.session = {
         submittedData: {
           quoteEligibility: {
@@ -29,9 +29,7 @@ describe('controllers/root', () => {
 
       expect(req.session.submittedData).toEqual({
         quoteEligibility: {},
-        insuranceEligibility: {
-          [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: true,
-        },
+        insuranceEligibility: {},
       });
     });
 

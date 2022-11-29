@@ -1,5 +1,5 @@
-const ELIGIBILITY = require('./eligibility');
-const POLICY_AND_EXPORTS = require('./policy-and-exports');
+import POLICY_AND_EXPORTS from './policy-and-exports';
+import * as ELIGIBILITY_PAGES from './eligibility';
 
 const START = {
   PAGE_TITLE: 'Apply for UKEF export insurance',
@@ -23,9 +23,11 @@ const ALL_SECTIONS = {
   PAGE_TITLE: 'Apply for UKEF export insurance',
 };
 
-module.exports = {
+const INSURANCE = {
   START,
-  ELIGIBILITY,
+  ELIGIBILITY: ELIGIBILITY_PAGES,
   ALL_SECTIONS,
   POLICY_AND_EXPORTS,
 };
+
+export default INSURANCE;

@@ -1,6 +1,5 @@
 import partials from '../../../partials';
-import { buyerBodyPage } from '../../../pages/quote';
-import { COOKIES_CONSENT, PAGES } from '../../../../../content-strings';
+import { COOKIES_CONSENT } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
@@ -32,7 +31,6 @@ context('Cookies consent - accept', () => {
 
       partials.cookieBanner.accepted.copy().should('exist');
       partials.cookieBanner.accepted.copy().invoke('text').then((text) => {
-
         const { ACCEPTED } = COOKIES_CONSENT;
         const expected = `${ACCEPTED.COPY_1} ${COOKIES_CONSENT.COOKIES_LINK} ${ACCEPTED.COPY_2}`;
 

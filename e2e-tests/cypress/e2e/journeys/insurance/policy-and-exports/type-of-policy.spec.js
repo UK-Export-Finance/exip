@@ -1,7 +1,19 @@
-import { headingCaption, heading, inlineErrorMessage, submitButton, saveAndBackButton } from '../../../pages/shared';
+import {
+  headingCaption,
+  heading,
+  inlineErrorMessage,
+  submitButton,
+  saveAndBackButton,
+} from '../../../pages/shared';
 import { insurance } from '../../../pages';
-import { backLink, errorSummaryListItems, errorSummaryListItemLinks, insurance as insurancePartials } from '../../../partials';
-import { BUTTONS, ERROR_MESSAGES, LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
+import partials from '../../../partials';
+import {
+  BUTTONS,
+  ERROR_MESSAGES,
+  LINKS,
+  ORGANISATION,
+  PAGES,
+} from '../../../../../content-strings';
 import { FIELDS } from '../../../../../content-strings/fields/insurance/policy-and-exports';
 import CONSTANTS from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
@@ -62,7 +74,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     completeCompaniesHouseNumberForm();
     completeEligibleToApplyOnlineForm();
 
-    insurancePartials.taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+    partials.insurancePartials.taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
     getApplicationId().then((id) => {
       applicationId = id;
@@ -77,22 +89,22 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 75,
-  //     'best-practices': 100,
-  //     seo: 70,
-  //   });
-  // });
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 75,
+      'best-practices': 100,
+      seo: 70,
+    });
+  });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
-    backLink().invoke('text').then((text) => {
+    partials.backLink().should('exist');
+    partials.backLink().invoke('text').then((text) => {
       expect(text.trim()).equal(LINKS.BACK);
     });
 
-    backLink().click();
+    partials.backLink().click();
 
     const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
@@ -195,12 +207,12 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
       it('should render a validation error', () => {
         submitButton().click();
 
-        errorSummaryListItems().should('exist');
-        errorSummaryListItems().should('have.length', 1);
+        partials.errorSummaryListItems().should('exist');
+        partials.errorSummaryListItems().should('have.length', 1);
 
         const expectedMessage = ERROR_MESSAGES.INSURANCE.POLICY_AND_EXPORTS[FIELD_ID].IS_EMPTY;
 
-        errorSummaryListItems().first().invoke('text').then((text) => {
+        partials.errorSummaryListItems().first().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedMessage);
         });
 
@@ -212,7 +224,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
       it('should focus on input when clicking summary error message', () => {
         submitButton().click();
 
-        errorSummaryListItemLinks().eq(0).click();
+        partials.errorSummaryListItemLinks().eq(0).click();
         singlePolicyField.input().should('have.focus');
       });
     });
@@ -255,7 +267,6 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
           multiplePolicyField.input().should('be.checked');
         });
       });
-
     });
   });
 });

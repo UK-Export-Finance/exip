@@ -2,22 +2,19 @@ import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { LINKS } from '../links';
 
 export const FIELDS = {
-  [FIELD_IDS.COUNTRY]: {
+  [FIELD_IDS.BUYER_COUNTRY]: {
     HINT: 'Cover is based on the country your buyer is located in, not the destination of your goods or services.',
+    SUMMARY: {
+      TITLE: 'Buyer is based in',
+    },
   },
   [FIELD_IDS.VALID_EXPORTER_LOCATION]: {
     SUMMARY: {
       TITLE: 'Your company',
     },
   },
-  [FIELD_IDS.BUYER_COUNTRY]: {
-    SUMMARY: {
-      TITLE: 'Buyer is based in',
-    },
-  },
   [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
-    LABEL: 'Percentage of your export that is UK content',
-    HINT: 'Enter the UK content of your export as a percentage.',
+    HINT: 'You can include your profit margin as part of the contract value.',
     SUMMARY: {
       TITLE: 'UK goods or services',
     },
@@ -169,5 +166,8 @@ export const FIELDS = {
         TEXT: 'Do not use cookies that measure your use of this service',
       },
     },
+  },
+  [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
+    HINT: 'This is known as the pre-credit period.',
   },
 };

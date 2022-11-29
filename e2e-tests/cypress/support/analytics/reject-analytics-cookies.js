@@ -1,7 +1,5 @@
 import partials from '../../e2e/partials';
-import { COOKIES_CONSENT, PAGES } from '../../../content-strings';
-import { ROUTES } from '../../../constants';
-import checkCookiesConsentBannerIsNotVisible from'./check-cookies-consent-banner-is-not-visible';
+import checkCookiesConsentBannerIsNotVisible from './check-cookies-consent-banner-is-not-visible';
 
 const clearCookies = () => {
   cy.clearCookie('optionalCookies');

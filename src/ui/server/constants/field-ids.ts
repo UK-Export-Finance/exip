@@ -13,14 +13,9 @@ const SHARED_ELIGIBILITY = {
 };
 
 export const FIELD_IDS = {
-  SHARED_ELIGIBILITY,
+  ...SHARED_ELIGIBILITY,
   OPTIONAL_COOKIES: 'optionalCookies',
   VALID_BUYER_BODY: 'validBuyerBody',
-
-  VALID_EXPORTER_LOCATION: 'validExporterLocation',
-  BUYER_COUNTRY: 'buyerCountry',
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',
-
   COUNTRY: 'country',
   AMOUNT_CURRENCY: 'amountAndCurrency',
   CURRENCY: 'currency',

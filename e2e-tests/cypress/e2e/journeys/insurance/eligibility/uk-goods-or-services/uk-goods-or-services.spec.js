@@ -1,20 +1,30 @@
-import { exporterLocationPage, ukGoodsOrServicesPage, heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../../pages/shared';
+import {
+  heading, yesNoRadioHint, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
+} from '../../../../pages/shared';
 import partials from '../../../../partials';
 import {
   ORGANISATION,
   BUTTONS,
+  FIELDS,
   LINKS,
   PAGES,
   ERROR_MESSAGES,
 } from '../../../../../../content-strings';
-import CONSTANTS from '../../../../../../constants';
+import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import { completeStartForm, completeCheckIfEligibleForm, completeExporterLocationForm } from '../../../../../support/insurance/eligibility/forms';
-import ukGoodsAndServicesCalculateDescription from '../../../../../support/check-uk-goods-and-services-calculate-description';
-import ukGoodsAndServicesDescription from '../../../../../support/check-uk-goods-and-services-description';
+import {
+  checkCalculateDescriptionSummaryText,
+  checkCalculateDescriptionSummaryClickRevealsContent,
+  checkCalculateDescriptionDescriptionContent,
+} from '../../../../../support/check-uk-goods-and-services-calculate-description';
+import {
+  checkDescriptionSummaryText,
+  checkDescriptionSummaryClickRevealsContent,
+  checkDescriptionContent,
+} from '../../../../../support/check-uk-goods-and-services-description';
 
 const CONTENT_STRINGS = PAGES.UK_GOODS_OR_SERVICES;
-const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
   before(() => {
@@ -87,6 +97,14 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     });
   });
 
+  it('renders radio button hint', () => {
+    yesNoRadioHint().should('exist');
+
+    yesNoRadioHint().invoke('text').then((text) => {
+      expect(text.trim()).equal(FIELDS[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES].HINT);
+    });
+  });
+
   it('renders `yes` radio button', () => {
     yesRadio().should('exist');
 
@@ -112,31 +130,30 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   });
 
   describe('expandable details - how to calculate percentage', () => {
-    // ukGoodsAndServicesCalculateDescription
     it('renders summary text', () => {
-      ukGoodsAndServicesCalculateDescription.checkSummaryText();
+      checkCalculateDescriptionSummaryText();
     });
 
     it('clicking summary text reveals details', () => {
-      ukGoodsAndServicesCalculateDescription.checkSummaryClickRevealsContent();
+      checkCalculateDescriptionSummaryClickRevealsContent();
     });
 
     it('renders expanded content', () => {
-      ukGoodsAndServicesCalculateDescription.checkDescriptionContent();
+      checkCalculateDescriptionDescriptionContent();
     });
   });
 
   describe('expandable details - what counts as UK goods and services', () => {
     it('renders summary text', () => {
-      ukGoodsAndServicesDescription.checkSummaryText();
+      checkDescriptionSummaryText();
     });
 
     it('clicking summary text reveals details', () => {
-      ukGoodsAndServicesDescription.checkSummaryClickRevealsContent();
+      checkDescriptionSummaryClickRevealsContent();
     });
 
     it('renders expanded content', () => {
-      ukGoodsAndServicesDescription.checkDescriptionContent();
+      checkDescriptionContent();
     });
 
     it('does NOT render `will calculate thoroughly` copy ', () => {

@@ -4,13 +4,8 @@ import {
   tellUsAboutYourPolicyPage,
   yourQuotePage,
 } from '../../../pages/quote';
-import {
-  LINKS,
-  QUOTE_TITLES,
-} from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
-
-const { ROUTES, FIELD_IDS } = CONSTANTS;
+import { QUOTE_TITLES } from '../../../../../content-strings';
+import { ROUTES, FIELD_IDS } from '../../../../../constants';
 
 const {
   CONTRACT_VALUE,

@@ -1,6 +1,6 @@
 // CIS = Country Information System
 
-const API = {
+export const API = {
   CIS: {
     RISK: {
       VERY_HIGH: 'Very High',
@@ -26,5 +26,3 @@ const API = {
     },
   },
 };
-
-module.exports = API;

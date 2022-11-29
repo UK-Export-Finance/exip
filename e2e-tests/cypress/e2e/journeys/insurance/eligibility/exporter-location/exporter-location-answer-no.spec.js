@@ -1,12 +1,13 @@
-import { cannotApplyPage, exporterLocationPage, noRadio, noRadioInput, submitButton } from '../../../../pages/shared';
+import {
+  cannotApplyPage, noRadio, noRadioInput, submitButton,
+} from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
-import CONSTANTS from '../../../../../../constants';
+import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
-const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover - submit `not based inside the UK`', () => {
   before(() => {

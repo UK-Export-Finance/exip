@@ -1,12 +1,7 @@
-import { buyerCountryPage, exporterLocationPage, ukGoodsOrServicesPage, yesRadioInput, submitButton } from '../../../pages/shared';
+import { buyerCountryPage, yesRadioInput, submitButton } from '../../../pages/shared';
 import { checkYourAnswersPage } from '../../../pages/quote';
 import partials from '../../../partials';
-import CONSTANTS from '../../../../../constants';
-
-const {
-  FIELD_IDS,
-  ROUTES,
-} = CONSTANTS;
+import { FIELD_IDS, ROUTES } from '../../../../../constants';
 
 const {
   BUYER_COUNTRY,
@@ -51,7 +46,9 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     it('has originally submitted answer selected', () => {
       const expectedValue = submissionData[BUYER_COUNTRY];
 
-      buyerCountryPage.hiddenInput().should('have.attr', 'value', expectedValue);
+      buyerCountryPage.results().invoke('text').then((text) => {
+        expect(text.trim()).equal(expectedValue);
+      });
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {

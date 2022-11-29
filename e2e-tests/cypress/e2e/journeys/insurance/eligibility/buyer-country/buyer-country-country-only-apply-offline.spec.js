@@ -1,11 +1,7 @@
 import { buyerCountryPage, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
-import { PAGES } from '../../../../../../content-strings';
-import CONSTANTS from '../../../../../../constants';
+import { ROUTES } from '../../../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
-
-const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
-const { ROUTES } = CONSTANTS;
 
 const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
 
@@ -50,7 +46,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     it('should NOT have the originally submitted answer selected', () => {
       partials.backLink().click();
 
-      buyerCountryPage.hiddenInput().should('not.have.attr', 'value', COUNTRY_NAME_APPLY_OFFLINE_ONLY);
+      buyerCountryPage.results().should('have.length', 0);
     });
   });
 });

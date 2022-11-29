@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.14.4](https://github.com/UK-Export-Finance/exip/compare/v1.14.3...v1.14.4) (2022-10-28)
+
+
+### Bug Fixes
+
+* **EMS-378:** update Content-Security-Policy to allow GA scripts ([c0539e4](https://github.com/UK-Export-Finance/exip/commit/c0539e443f2725e0a9b7ec653782296f0611e686))
+
+## [1.14.3](https://github.com/UK-Export-Finance/exip/compare/v1.14.2...v1.14.3) (2022-10-27)
+
+
+### Bug Fixes
+
+* **EMS-379:** fix issue where buyer country would not update when JS is disabled ([#141](https://github.com/UK-Export-Finance/exip/issues/141)) ([397378b](https://github.com/UK-Export-Finance/exip/commit/397378b18638f8a14e579437a0a4ad966c2bfb8e))
+
 ## [1.14.2](https://github.com/UK-Export-Finance/exip/compare/v1.14.1...v1.14.2) (2022-10-20)
 
 

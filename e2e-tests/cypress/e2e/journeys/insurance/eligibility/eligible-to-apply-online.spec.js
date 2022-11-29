@@ -1,4 +1,6 @@
-import { heading, yesRadio, noRadio, submitButton } from '../../../pages/shared';
+import {
+  heading, submitButton,
+} from '../../../pages/shared';
 import { insurance } from '../../../pages';
 import partials from '../../../partials';
 import {
@@ -6,11 +8,9 @@ import {
   LINKS,
   PAGES,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/insurance/eligibility/submit-answers-happy-path';
+import { ROUTES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
-const { ROUTES } = CONSTANTS;
 
 context('Insurance - Eligibility - You are eligible to apply online page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction', () => {
   before(() => {
@@ -112,7 +112,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     it(`should redirect to ${ROUTES.INSURANCE.ROOT}/[referenceNumber]${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
       submitButton().click();
 
-      cy.url().then(url => {
+      cy.url().then((url) => {
         const splitUrl = url.split('/');
         const applicationId = splitUrl[4];
 

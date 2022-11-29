@@ -3,7 +3,7 @@ import { allowAll } from '@keystone-6/core/access';
 import { checkbox, integer, relationship, select, text, timestamp, password } from '@keystone-6/core/fields';
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
-import { Lists } from '.keystone/types'; // eslint-disable-line import/no-extraneous-dependencies
+import { Lists } from '.keystone/types'; // eslint-disable-line
 import { APPLICATION } from './constants';
 
 export const lists = {
@@ -66,7 +66,7 @@ export const lists = {
                 id: policyAndExportId,
               },
             };
-            
+
             // add dates
             const now = new Date();
             modifiedData.createdAt = now;
@@ -154,10 +154,10 @@ export const lists = {
   Country: list({
     fields: {
       isoCode: text({
-        validation: { isRequired: true }
+        validation: { isRequired: true },
       }),
       name: text({
-        validation: { isRequired: true }
+        validation: { isRequired: true },
       }),
     },
     access: allowAll,

@@ -1,10 +1,6 @@
 import { buyerCountryPage, submitButton } from '../../../pages/shared';
 import partials from '../../../partials';
-import { PAGES } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
-
-const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
-const { ROUTES } = CONSTANTS;
+import { ROUTES } from '../../../../../constants';
 
 const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
 

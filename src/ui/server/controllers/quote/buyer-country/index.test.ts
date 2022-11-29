@@ -36,7 +36,7 @@ describe('controllers/quote/buyer-country', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.COUNTRY,
+        FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
         PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
       };
 
@@ -108,13 +108,48 @@ describe('controllers/quote/buyer-country', () => {
 
       const expectedVariables = {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
-        HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
         countries: mapCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData.quoteEligibility,
         isChangeRoute: isChangeRoute(req.originalUrl),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, expectedVariables);
+    });
+
+    describe('when a there is no submittedData in req.session', () => {
+      it('should add empty submittedData.quoteEligibility to the session', async () => {
+        // @ts-ignore
+        req.session = {};
+
+        await get(req, res);
+
+        const expected = {
+          ...req.session,
+          submittedData: {
+            quoteEligibility: {},
+          },
+        };
+
+        expect(req.session).toEqual(expected);
+      });
+    });
+
+    describe('when a there is no quoteEligibility in req.session.submittedData', () => {
+      it('should add empty submittedData.quoteEligibility to the session and retain existing req.session.submittedData', async () => {
+        // @ts-ignore
+        req.session.submittedData = {
+          insuranceEligibility: {},
+        };
+
+        await get(req, res);
+
+        const expected = {
+          ...req.session.submittedData,
+          quoteEligibility: {},
+        };
+
+        expect(req.session.submittedData).toEqual(expected);
+      });
     });
 
     describe('when a country has been submitted', () => {
@@ -127,7 +162,6 @@ describe('controllers/quote/buyer-country', () => {
 
         const expectedVariables = {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
-          HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
           countries: expectedCountries,
           submittedValues: req.session.submittedData.quoteEligibility,
           isChangeRoute: isChangeRoute(req.originalUrl),
@@ -189,7 +223,6 @@ describe('controllers/quote/buyer-country', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
-          HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
           countries: mapCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),
           isChangeRoute: isChangeRoute(req.originalUrl),
@@ -280,56 +313,6 @@ describe('controllers/quote/buyer-country', () => {
         await post(req, res);
 
         const expectedPopulatedData = {
-          ...validBody,
-          [FIELD_IDS.BUYER_COUNTRY]: {
-            name: selectedCountry?.name,
-            isoCode: selectedCountry?.isoCode,
-            riskCategory: selectedCountry?.riskCategory,
-          },
-        };
-
-        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
-
-        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
-      });
-
-      it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_BODY);
-      });
-
-      describe("when the url's last substring is `change`", () => {
-        it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, async () => {
-          req.originalUrl = 'mock/change';
-
-          await post(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
-        });
-      });
-    });
-
-    describe(`when the country is supported for an online quote, submitted with ${FIELD_IDS.COUNTRY} (no JS) and there are no validation errors`, () => {
-      const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
-      const mappedCountries = mapCountries(mockCountriesResponse);
-
-      const selectedCountry = getCountryByName(mappedCountries, selectedCountryName);
-
-      const validBody = {
-        [FIELD_IDS.BUYER_COUNTRY]: '',
-        [FIELD_IDS.COUNTRY]: selectedCountryName,
-      };
-
-      beforeEach(() => {
-        req.body = validBody;
-      });
-
-      it('should update the session with submitted data, popluated with country object', async () => {
-        await post(req, res);
-
-        const expectedPopulatedData = {
-          ...validBody,
           [FIELD_IDS.BUYER_COUNTRY]: {
             name: selectedCountry?.name,
             isoCode: selectedCountry?.isoCode,

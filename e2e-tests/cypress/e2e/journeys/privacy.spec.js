@@ -1,4 +1,3 @@
-import { cookiesPage } from '../pages';
 import partials from '../partials';
 import { LINKS } from '../../../content-strings';
 

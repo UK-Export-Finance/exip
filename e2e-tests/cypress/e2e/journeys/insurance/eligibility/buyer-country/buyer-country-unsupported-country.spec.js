@@ -1,14 +1,11 @@
 import { buyerCountryPage, cannotApplyPage, submitButton } from '../../../../pages/shared';
-import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
-import CONSTANTS from '../../../../../../constants';
+import { ROUTES } from '../../../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 const { REASON } = CONTENT_STRINGS;
-
-const { ROUTES } = CONSTANTS;
 
 const COUNTRY_NAME_UNSUPPORTED = 'France';
 
@@ -62,7 +59,7 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
     it('should NOT have the originally submitted answer selected', () => {
       partials.backLink().click();
 
-      buyerCountryPage.hiddenInput().should('not.have.attr', 'value', COUNTRY_NAME_UNSUPPORTED);
+      buyerCountryPage.results().should('have.length', 0);
     });
   });
 });

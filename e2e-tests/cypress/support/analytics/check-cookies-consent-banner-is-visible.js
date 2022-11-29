@@ -33,5 +33,4 @@ const checkCookiesConsentBannerIsVisible = () => {
   partials.cookieBanner.cookiesLink().should('have.attr', 'href', ROUTES.COOKIES);
 };
 
-
 export default checkCookiesConsentBannerIsVisible;

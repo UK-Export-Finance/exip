@@ -1,12 +1,9 @@
-import {
-  FIELD_IDS,
-  FIELD_VALUES,
-} from '../../../../../constants';
+import { FIELD_IDS } from '../../../../../constants';
 
 const { INSURANCE } = FIELD_IDS;
 
 const typeOfPolicy = {
-  intro: () => cy.get(`[data-cy="intro"]`),
+  intro: () => cy.get('[data-cy="intro"]'),
   [INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE]: {
     single: {
       label: () => cy.get(`[data-cy="${INSURANCE.POLICY_AND_EXPORTS.SINGLE_POLICY_TYPE}-label"]`),

@@ -1,14 +1,14 @@
-const LINKS = require('../../../links');
-const { PRODUCT } = require('../../../../constants')
+import { LINKS } from '../../../links';
+import { PRODUCT } from '../../../../constants';
 
-const MAX_COVER_AMOUNT = PRODUCT.MAX_COVER_AMOUNT_IN_GBP.toLocaleString('en', {
+export const MAX_COVER_AMOUNT = PRODUCT.MAX_COVER_AMOUNT_IN_GBP.toLocaleString('en', {
   style: 'currency',
   currency: 'GBP',
   minimumFractionDigits: 0,
   maximumFractionDigits: 0,
 });
 
-const APPLY_OFFLINE = {
+export const APPLY_OFFLINE = {
   PAGE_TITLE: 'You need to apply using our form',
   REASON: {
     INTRO: 'This is because',
@@ -36,7 +36,7 @@ const APPLY_OFFLINE = {
   },
 };
 
-const SPEAK_TO_UKEF_EFM = {
+export const SPEAK_TO_UKEF_EFM = {
   PAGE_TITLE: 'You need to speak with a UKEF export finance manager',
   REASON: {
     INTRO: 'This is because',
@@ -60,20 +60,20 @@ const SPEAK_TO_UKEF_EFM = {
   },
 };
 
-const CHECK_IF_ELIGIBLE = {
+export const CHECK_IF_ELIGIBLE = {
   PAGE_TITLE: 'Check you can apply for UKEF insurance for your export',
   BODY: 'This will take a couple of minutes. If your export is eligible, you can start the application immediately.',
 };
 
-const INSURED_AMOUNT = {
+export const INSURED_AMOUNT = {
   PAGE_TITLE: `Do you want to be insured for ${MAX_COVER_AMOUNT} or more?`,
 };
 
-const INSURED_PERIOD = {
+export const INSURED_PERIOD = {
   PAGE_TITLE: `Do you want to be insured for longer than ${PRODUCT.MAX_COVER_PERIOD_YEARS} years?`,
 };
 
-const OTHER_PARTIES_INVOLVED = {
+export const OTHER_PARTIES_INVOLVED = {
   PAGE_TITLE: 'Are there any other parties involved, apart from you and the buyer?',
   OTHER_PARTIES_DESCRIPTION: {
     INTRO: 'What counts as another party?',
@@ -94,15 +94,15 @@ const OTHER_PARTIES_INVOLVED = {
       {
         TEXT: "consortium or group you're involved in that has a significant role in these exports",
       },
-    ]
+    ],
   },
 };
 
-const LETTER_OF_CREDIT = {
+export const LETTER_OF_CREDIT = {
   PAGE_TITLE: 'Will you be paid by a letter of credit?',
 };
 
-const PRE_CREDIT_PERIOD = {
+export const PRE_CREDIT_PERIOD = {
   PAGE_TITLE: 'Do you need cover for a period before you supply the goods or services to the buyer?',
   PRE_CREDIT_PERIOD_DESCRIPTION: {
     INTRO: 'What is the pre-credit period?',
@@ -121,26 +121,13 @@ const PRE_CREDIT_PERIOD = {
   },
 };
 
-const COMPANIES_HOUSE_NUMBER = {
+export const COMPANIES_HOUSE_NUMBER = {
   PAGE_TITLE: 'Do you have a UK Companies House registration number?',
 };
 
-const ELIGIBLE_TO_APPLY_ONLINE = {
+export const ELIGIBLE_TO_APPLY_ONLINE = {
   PAGE_TITLE: "You're eligible to apply online",
   INSET: 'This does not automatically guarantee cover.',
   BODY: 'You now need to fill in the application so we can assess the risks around your exports and your buyer.',
   SUBMIT_BUTTON: 'Continue to application',
-}; 
-
-module.exports = {
-  APPLY_OFFLINE,
-  SPEAK_TO_UKEF_EFM,
-  CHECK_IF_ELIGIBLE,
-  INSURED_AMOUNT,
-  INSURED_PERIOD,
-  OTHER_PARTIES_INVOLVED,
-  LETTER_OF_CREDIT,
-  PRE_CREDIT_PERIOD,
-  COMPANIES_HOUSE_NUMBER,
-  ELIGIBLE_TO_APPLY_ONLINE,
 };

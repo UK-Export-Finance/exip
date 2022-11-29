@@ -1,24 +1,19 @@
 import { buyerCountryPage, submitButton } from '../../../pages/shared';
-import {
-  yourQuotePage,
-  tellUsAboutYourPolicyPage,
-} from '../../../pages/quote';
+import { yourQuotePage } from '../../../pages/quote';
 import {
   LINKS,
   PAGES,
   QUOTE_TITLES,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.QUOTE.YOUR_QUOTE;
-const { ROUTES, FIELD_IDS, FIELD_VALUES } = CONSTANTS;
 
 const {
   BUYER_COUNTRY,
   CONTRACT_VALUE,
   CURRENCY,
   CREDIT_PERIOD,
-  MAX_AMOUNT_OWED,
   PERCENTAGE_OF_COVER,
   POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
@@ -302,7 +297,9 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         });
 
         it('clears the session', () => {
-          buyerCountryPage.hiddenInput().should('have.attr', 'value', '');
+          // buyer country auto complete stores the selected value in the first list item of the 'results' list.
+          // Therefore, if it's not defined, nothing has been selected/submitted.
+          buyerCountryPage.results().should('not.exist');
         });
       });
     });

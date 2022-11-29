@@ -1,5 +1,6 @@
-import { heading, yesRadio, yesRadioInput, noRadio, noRadioInput, inlineErrorMessage, submitButton } from '../../../../pages/shared';
-import { insurance } from '../../../../pages';
+import {
+  heading, yesRadio, yesRadioInput, noRadio, noRadioInput, inlineErrorMessage, submitButton,
+} from '../../../../pages/shared';
 import partials from '../../../../partials';
 import {
   ORGANISATION,
@@ -8,7 +9,7 @@ import {
   PAGES,
   ERROR_MESSAGES,
 } from '../../../../../../content-strings';
-import CONSTANTS from '../../../../../../constants';
+import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
   completeStartForm,
@@ -21,7 +22,6 @@ import {
 } from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT;
-const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - Eligibility - Letter of credit page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit', () => {
   before(() => {

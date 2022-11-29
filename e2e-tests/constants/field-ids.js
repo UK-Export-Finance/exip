@@ -12,13 +12,10 @@ const SHARED_ELIGIBILITY = {
   VALID_EXPORTER_LOCATION: 'validExporterLocation',
 };
 
-const FIELD_IDS = {
+export const FIELD_IDS = {
+  ...SHARED_ELIGIBILITY,
   OPTIONAL_COOKIES: 'optionalCookies',
   VALID_BUYER_BODY: 'validBuyerBody',
-  VALID_EXPORTER_LOCATION: 'validExporterLocation',
-  BUYER_COUNTRY: 'buyerCountry',
-  COUNTRY: 'country',
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',
   AMOUNT_CURRENCY: 'amountAndCurrency',
   CURRENCY: 'currency',
   CONTRACT_VALUE: 'contractValue',
@@ -51,5 +48,3 @@ const FIELD_IDS = {
     },
   },
 };
-
-module.exports = FIELD_IDS;

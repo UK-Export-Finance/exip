@@ -1,11 +1,10 @@
-const PRODUCT = require('../product');
+import { PRODUCT } from '../product';
 import { POLICY_AND_EXPORTS } from './policy-and-export';
 
 const ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
 
-const INSURANCE_ROUTES = {
-  ROOT,
+export const INSURANCE_ROUTES = {
   START: `${ROOT}/start`,
   ELIGIBILITY: {
     CHECK_IF_ELIGIBLE: `${ROOT}${ELIGIBILITY}/check-if-eligible`,
@@ -28,5 +27,3 @@ const INSURANCE_ROUTES = {
   ALL_SECTIONS: '/all-sections',
   POLICY_AND_EXPORTS,
 };
-
-export default INSURANCE_ROUTES;

@@ -5,4 +5,3 @@ export const POLICY_AND_EXPORTS = {
   TYPE_OF_POLICY: `${ROOT}/type-of-policy`,
   ABOUT_GOODS_OR_SERVICES: `${ROOT}/about-goods-or-services`,
 };
-

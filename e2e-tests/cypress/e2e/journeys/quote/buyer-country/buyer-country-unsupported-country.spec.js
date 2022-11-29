@@ -1,10 +1,9 @@
 import { buyerCountryPage, cannotApplyPage, submitButton } from '../../../pages/shared';
 import partials from '../../../partials';
 import { PAGES } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
-const { ROUTES } = CONSTANTS;
 
 const COUNTRY_NAME_UNSUPPORTED = 'France';
 

@@ -1,4 +1,11 @@
-import { buyerCountryPage, exporterLocationPage, heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton } from '../../../pages/shared';
+import {
+  heading,
+  yesRadio,
+  yesRadioInput,
+  noRadio,
+  inlineErrorMessage,
+  submitButton,
+} from '../../../pages/shared';
 import partials from '../../../partials';
 import {
   ORGANISATION,
@@ -7,12 +14,11 @@ import {
   PAGES,
   ERROR_MESSAGES,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import { completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
-const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
   beforeEach(() => {

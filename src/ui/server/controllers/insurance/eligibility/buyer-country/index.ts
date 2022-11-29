@@ -9,7 +9,7 @@ import { canApplyOnline, canApplyOffline, cannotApply } from '../../../../helper
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 
-const FIELD_ID = FIELD_IDS.COUNTRY;
+const FIELD_ID = FIELD_IDS.BUYER_COUNTRY;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
@@ -17,20 +17,38 @@ export const PAGE_VARIABLES = {
 };
 
 export const get = async (req: Request, res: Response) => {
+  if (!req.session.submittedData || !req.session.submittedData.insuranceEligibility) {
+    req.session.submittedData = {
+      ...req.session.submittedData,
+      insuranceEligibility: {},
+    };
+  }
+
   const countries = await api.external.getCountries();
 
   if (!countries || !countries.length) {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 
-  const mappedCountries = mapCountries(countries);
+  let countryValue;
+
+  if (req.session.submittedData && req.session.submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY]) {
+    countryValue = req.session.submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY];
+  }
+
+  let mappedCountries;
+
+  if (countryValue) {
+    mappedCountries = mapCountries(countries, countryValue.isoCode);
+  } else {
+    mappedCountries = mapCountries(countries);
+  }
 
   return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
     ...singleInputPageVariables({
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
     }),
-    HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
     countries: mappedCountries,
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
@@ -53,13 +71,12 @@ export const post = async (req: Request, res: Response) => {
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
       }),
-      HIDDEN_FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
       countries: mappedCountries,
       validationErrors,
     });
   }
 
-  const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY] || req.body[FIELD_IDS.COUNTRY];
+  const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY];
 
   const country = getCountryByName(mappedCountries, submittedCountryName);
 

@@ -13,43 +13,17 @@ describe('shared-validation/buyer-country', () => {
       });
     });
 
-    describe(`when both ${FIELD_IDS.BUYER_COUNTRY} and ${FIELD_IDS.COUNTRY} are provided`, () => {
-      describe(`when ${FIELD_IDS.COUNTRY} does NOT have a value`, () => {
+    describe(`when ${FIELD_IDS.BUYER_COUNTRY} is provided`, () => {
+      describe(`when ${FIELD_IDS.BUYER_COUNTRY} does NOT have a value`, () => {
         it('should return true', () => {
           const mockBody = {
             [FIELD_IDS.BUYER_COUNTRY]: '',
-            [FIELD_IDS.COUNTRY]: '',
           };
 
           const result = hasErrors(mockBody);
 
           expect(result).toEqual(true);
         });
-      });
-
-      describe(`when ${FIELD_IDS.COUNTRY} has a value`, () => {
-        it('should return false', () => {
-          const mockBody = {
-            [FIELD_IDS.BUYER_COUNTRY]: '',
-            [FIELD_IDS.COUNTRY]: 'Australia',
-          };
-
-          const result = hasErrors(mockBody);
-
-          expect(result).toEqual(false);
-        });
-      });
-    });
-
-    describe(`when only ${FIELD_IDS.BUYER_COUNTRY} is provided and there is no value`, () => {
-      it('should return true', () => {
-        const mockBody = {
-          [FIELD_IDS.BUYER_COUNTRY]: '',
-        };
-
-        const result = hasErrors(mockBody);
-
-        expect(result).toEqual(true);
       });
     });
 
@@ -69,7 +43,7 @@ describe('shared-validation/buyer-country', () => {
       it('should return validation errors', () => {
         const result = validation({});
 
-        const expected = generateValidationErrors(FIELD_IDS.COUNTRY, CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.COUNTRY]);
+        const expected = generateValidationErrors(FIELD_IDS.BUYER_COUNTRY, CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.BUYER_COUNTRY]);
 
         expect(result).toEqual(expected);
       });
@@ -79,7 +53,7 @@ describe('shared-validation/buyer-country', () => {
       it('should return validation errors', () => {
         const result = validation({});
 
-        const expected = generateValidationErrors(FIELD_IDS.COUNTRY, CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.COUNTRY]);
+        const expected = generateValidationErrors(FIELD_IDS.BUYER_COUNTRY, CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.BUYER_COUNTRY]);
 
         expect(result).toEqual(expected);
       });

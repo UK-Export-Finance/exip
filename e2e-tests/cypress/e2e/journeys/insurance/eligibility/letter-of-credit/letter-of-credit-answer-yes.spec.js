@@ -1,7 +1,9 @@
-import { cannotApplyPage, yesRadio, yesRadioInput, noRadio, submitButton } from '../../../../pages/shared';
+import {
+  cannotApplyPage, yesRadio, yesRadioInput, submitButton,
+} from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
-import CONSTANTS from '../../../../../../constants';
+import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
   completeStartForm,
@@ -14,7 +16,6 @@ import {
 } from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE;
-const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 context('Insurance - Eligibility - Letter of credit page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit - submit `paid by letter of credit`', () => {
   before(() => {
