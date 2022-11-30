@@ -31,14 +31,14 @@ module.exports = {
         },
       },
       {
-        test: /\.(s*)css$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: { outputPath: '../css', name: 'styles.css' },
-          },
-          'sass-loader',
-        ],
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        type: 'asset/resource',
+        generator: {
+          outputPath: '../css',
+          filename: 'styles.css',
+        },
+        use: ['sass-loader'],
       },
     ],
   },
