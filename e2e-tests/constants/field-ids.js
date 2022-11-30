@@ -45,6 +45,9 @@ export const FIELD_IDS = {
     },
     POLICY_AND_EXPORTS: {
       ...SHARED,
+      TYPE_OF_POLICY: {
+        POLICY_TYPE: SHARED.POLICY_TYPE,
+      },
     },
   },
 };

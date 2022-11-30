@@ -1,4 +1,14 @@
-import { getGroupById, getTaskById, getSubmittedFields, taskIsInProgress, taskIsComplete, areTaskDependenciesMet, taskStatus, taskLink } from './task-helpers';
+import {
+  getGroupById,
+  getTaskById,
+  getAllTasksFieldsInAGroup,
+  getSubmittedFields,
+  taskIsInProgress,
+  taskIsComplete,
+  areTaskDependenciesMet,
+  taskStatus,
+  taskLink,
+} from './task-helpers';
 import { ApplicationFlat, TaskListData, TaskListDataTask } from '../../../types';
 import { TASKS } from '../../content-strings';
 import { mockApplication } from '../../test-mocks';
@@ -7,14 +17,20 @@ import flattenApplicationData from '../flatten-application-data';
 describe('server/helpers/task-helpers', () => {
   const mockApplicationFlat = flattenApplicationData(mockApplication);
 
+  const mockGroups = [
+    { title: 'Group A', id: 'groupA', tasks: [] },
+    { title: 'Group B', id: 'groupB', tasks: [] },
+    { title: 'Group C', id: 'groupC', tasks: [] },
+  ] as TaskListData;
+
+  const mockGroupTasks = [
+    { title: 'Task A', id: 'taskA', fields: ['a', 'b'] },
+    { title: 'Task B', id: 'taskB', fields: ['c', 'd'] },
+    { title: 'Task C', id: 'taskC', fields: ['e', 'f'] },
+  ] as Array<TaskListDataTask>;
+
   describe('getGroupById', () => {
     it('should return a group that matches the provided id', () => {
-      const mockGroups = [
-        { title: 'Group A', id: 'groupA', tasks: [] },
-        { title: 'Group B', id: 'groupB', tasks: [] },
-        { title: 'Group C', id: 'groupC', tasks: [] },
-      ] as TaskListData;
-
       const mockGroupId = 'groupB';
 
       const result = getGroupById(mockGroups, mockGroupId);
@@ -27,17 +43,53 @@ describe('server/helpers/task-helpers', () => {
 
   describe('getTaskById', () => {
     it('should return a task that matches the provided id', () => {
-      const mockGroupTasks = [
-        { title: 'Task A', id: 'taskA' },
-        { title: 'Task B', id: 'taskB' },
-        { title: 'Task C', id: 'taskC' },
-      ] as Array<TaskListDataTask>;
-
       const mockTaskId = 'taskB';
 
       const result = getTaskById(mockGroupTasks, mockTaskId);
 
       const expected = mockGroupTasks[1];
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('getAllTasksFieldsInAGroup', () => {
+    describe('when no group is provided', () => {
+      it('should return an empty array', () => {
+        // @ts-ignore
+        const result = getAllTasksFieldsInAGroup();
+
+        expect(result).toEqual([]);
+      });
+    });
+
+    describe('when a group has no tasks', () => {
+      it('should return an empty array', () => {
+        // @ts-ignore
+        const result = getAllTasksFieldsInAGroup({});
+
+        expect(result).toEqual([]);
+      });
+    });
+
+    describe('when a group has an empty array of tasks', () => {
+      it('should return an empty array', () => {
+        // @ts-ignore
+        const result = getAllTasksFieldsInAGroup({ tasks: [] });
+
+        expect(result).toEqual([]);
+      });
+    });
+
+    it('should return all fields from every task in the group', () => {
+      const mockGroup = {
+        ...mockGroups[0],
+        tasks: mockGroupTasks,
+      };
+
+      const result = getAllTasksFieldsInAGroup(mockGroup);
+
+      const expected = [mockGroupTasks[0].fields, mockGroupTasks[1].fields, mockGroupTasks[2].fields].flat();
 
       expect(result).toEqual(expected);
     });

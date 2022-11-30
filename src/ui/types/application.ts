@@ -25,7 +25,7 @@ interface Application extends ApplicationCore {
   policyAndExport: ApplicationPolicyAndExport;
 }
 
-interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore {
+interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, ApplicationPolicyAndExport {
   buyerCountry: string;
 }
 
