@@ -50,7 +50,6 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     partials.insurance.taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    // TODO rename to reference number
     getReferenceNumber().then((id) => {
       referenceNumber = id;
 
