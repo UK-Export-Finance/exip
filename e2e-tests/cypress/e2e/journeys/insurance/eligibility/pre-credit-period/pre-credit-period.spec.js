@@ -110,7 +110,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     yesNoRadioHint().should('exist');
 
     yesNoRadioHint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD].HINT);
+      expect(text.trim()).equal(FIELDS.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD].HINT);
     });
   });
 

@@ -11,6 +11,7 @@ const SHARED_ELIGIBILITY = {
 };
 
 export const FIELD_IDS = {
+  ...SHARED,
   ...SHARED_ELIGIBILITY,
   OPTIONAL_COOKIES: 'optionalCookies',
   VALID_BUYER_BODY: 'validBuyerBody',
