@@ -17,7 +17,7 @@ import {
 } from '../../../../../content-strings';
 import { FIELDS } from '../../../../../content-strings/fields/insurance/policy-and-exports';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
-import getApplicationId from '../../../helpers/get-application-id';
+import getReferenceNumber from '../../../helpers/get-reference-number';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
 
@@ -26,8 +26,8 @@ const FIELD_ID = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
 const singlePolicyField = insurance.policyAndExport.typeOfPolicy[FIELD_ID].single;
 const multiplePolicyField = insurance.policyAndExport.typeOfPolicy[FIELD_ID].multi;
 
-const goToPageDirectly = (applicationId) => {
-  cy.visit(`${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`, {
+const goToPageDirectly = (referenceNumber) => {
+  cy.visit(`${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`, {
     auth: {
       username: Cypress.config('basicAuthKey'),
       password: Cypress.config('basicAuthSecret'),
@@ -36,7 +36,7 @@ const goToPageDirectly = (applicationId) => {
 };
 
 context('Insurance - Policy and exports - Type of policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
-  let applicationId;
+  let referenceNumber;
 
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -51,10 +51,10 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     partials.insurance.taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
     // TODO rename to reference number
-    getApplicationId().then((id) => {
-      applicationId = id;
+    getReferenceNumber().then((id) => {
+      referenceNumber = id;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
       cy.url().should('eq', expected);
     });
   });
@@ -81,11 +81,11 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     partials.backLink().click();
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
     cy.url().should('include', expectedUrl);
 
-    goToPageDirectly(applicationId);
+    goToPageDirectly(referenceNumber);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {
@@ -210,14 +210,14 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
         submitButton().click();
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
 
         cy.url().should('eq', expected);
       });
 
       describe('when going back to the page', () => {
         it('should have the originally submitted answer selected', () => {
-          goToPageDirectly(applicationId);
+          goToPageDirectly(referenceNumber);
 
           singlePolicyField.input().should('be.checked');
         });
@@ -230,14 +230,14 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
         submitButton().click();
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
 
         cy.url().should('eq', expected);
       });
 
       describe('when going back to the page', () => {
         it('should have the originally submitted answer selected', () => {
-          goToPageDirectly(applicationId);
+          goToPageDirectly(referenceNumber);
 
           multiplePolicyField.input().should('be.checked');
         });
@@ -246,7 +246,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     describe('after submitting an answer', () => {
       it('should update the status of task `type of policy and exports`to `in progress`', () => {
-        cy.visit(`${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.ALL_SECTIONS}`, {
+        cy.visit(`${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`, {
           auth: {
             username: Cypress.config('basicAuthKey'),
             password: Cypress.config('basicAuthSecret'),

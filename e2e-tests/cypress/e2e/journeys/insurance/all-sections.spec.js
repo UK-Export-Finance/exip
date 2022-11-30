@@ -6,14 +6,13 @@ import {
   PAGES,
   TASKS,
 } from '../../../../content-strings';
-import CONSTANTS from '../../../../constants';
-import getApplicationId from '../../helpers/get-application-id';
+import { ROUTES } from '../../../../constants';
+import getReferenceNumber from '../../helpers/get-reference-number';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ALL_SECTIONS;
-const { ROUTES } = CONSTANTS;
 
 context('Insurance - All sections - new application', () => {
-  let applicationId;
+  let referenceNumber;
 
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -25,10 +24,10 @@ context('Insurance - All sections - new application', () => {
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    getApplicationId().then((id) => {
-      applicationId = id;
+    getReferenceNumber().then((id) => {
+      referenceNumber = id;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
       cy.url().should('eq', expected);
     });
   });
@@ -60,7 +59,7 @@ context('Insurance - All sections - new application', () => {
     cy.url().should('include', expectedUrl);
 
     // go back to page
-    cy.visit(`${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.ALL_SECTIONS}`, {
+    cy.visit(`${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
@@ -139,7 +138,8 @@ context('Insurance - All sections - new application', () => {
             expect(text.trim()).equal(expected);
           });
 
-          task.link().should('have.attr', 'href', '#');
+          const expectedUrl = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
+          task.link().should('have.attr', 'href', expectedUrl);
 
           task.status().invoke('text').then((text) => {
             const expected = TASKS.STATUS.NOT_STARTED_YET;
