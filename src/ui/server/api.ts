@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { ApolloResponse } from '../types';
 import apollo from './graphql/apollo';
 import pageQuery from './graphql/queries/page';
+import companiesHouseQuery from './graphql/queries/companiesHouse';
 
 dotenv.config();
 
@@ -71,6 +72,29 @@ const keystone = {
 
     if (response?.data?.page) {
       return response.data.page;
+    }
+
+    return {};
+  },
+  getCompaniesHouseInformation: async (companiesHouseNumber: string) => {
+    const queryParams = {
+      companiesHouseNumber,
+    };
+
+    const query = companiesHouseQuery;
+    const response = (await apollo('GET', query, queryParams)) as ApolloResponse;
+
+    if (response.errors) {
+      console.error('GraphQL error querying keystone page ', response.errors);
+    }
+
+    if (response?.networkError?.result?.errors) {
+      console.error('GraphQL network error querying keystone page ', response.networkError.result.errors);
+    }
+
+    // response.data.getCompaniesHouseInformation should exist if successful
+    if (response?.data?.getCompaniesHouseInformation) {
+      return response.data?.getCompaniesHouseInformation;
     }
 
     return {};

@@ -2,6 +2,7 @@ import { PRODUCT } from '../product';
 
 const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
+const BUSINESS = '/your-business';
 
 export const INSURANCE_ROUTES = {
   START: `${INSURANCE_ROOT}/start`,
@@ -22,5 +23,9 @@ export const INSURANCE_ROUTES = {
     ELIGIBLE_TO_APPLY_ONLINE: `${INSURANCE_ROOT}${ELIGIBILITY}/eligible-to-apply-online`,
     ALREADY_HAVE_ACCOUNT: `${INSURANCE_ROOT}${ELIGIBILITY}/already-have-account`,
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY}/need-to-start-again`,
+  },
+  EXPORTER_BUSINESS: {
+    COMPANY_DETAILS: `${INSURANCE_ROOT}${BUSINESS}/company-details`,
+    COMPANY_HOUSE_SEARCH: `${INSURANCE_ROOT}${BUSINESS}/company-details/companies-house-search`,
   },
 };

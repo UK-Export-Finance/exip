@@ -407,6 +407,13 @@ type Query {
   usersCount(where: UserWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
+
+  """
+  get companies house information
+  """
+  getCompaniesHouseInformation(
+    companiesHouseNumber: String!
+  ): CompaniesHouseResponse
 }
 
 union AuthenticatedItem = User
@@ -501,4 +508,25 @@ enum KeystoneAdminUISortDirection {
 
 type EmailResponse {
   success: Boolean
+}
+
+type CompanyAddress {
+  addressLineOne: String
+  addressLineTwo: String
+  careOf: String
+  locality: String
+  region: String
+  postalCode: String
+  country: String
+  premises: String
+}
+
+type CompaniesHouseResponse {
+  companyName: String
+  registeredOfficeAddress: CompanyAddress
+  companyNumber: String
+  dateOfCreation: String
+  sicCodes: [String]
+  success: Boolean
+  apiError: Boolean
 }

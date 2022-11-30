@@ -12,7 +12,7 @@
     "lint:fix": "eslint ./server --fix",
     "build": "rimraf ./public/js && rimraf ./public/css && webpack --mode production --config webpack.prod.config.js",
     "start": "ts-node server/index.ts",
-    "dev": "webpack --config webpack.config.dev.js --watch",
+    "dev": "npx nodemon server/index.ts",
     "test": "jest --notify --coverage --verbose --config=jest.config.js",
     "test-watch": "jest --watchAll --notify --coverage --verbose --config=jest.config.js --detectOpenHandles",
     "component-test": "jest --notify --config=jest.component-test.config.js"
@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "dependencies": {
+    "@ministryofjustice/frontend": "^1.6.3",
     "@types/compression": "^1.7.2",
     "@types/connect-flash": "^0.0.37",
     "@types/cookie-parser": "^1.4.3",
@@ -46,6 +47,7 @@
     "cookie-parser": "^1.4.6",
     "cross-fetch": "^3.1.5",
     "csurf": "^1.11.0",
+    "date-fns": "^2.29.3",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-basic-auth": "^1.2.1",
@@ -53,6 +55,7 @@
     "govuk-frontend": "^4.3.1",
     "graphql": "^15.8.0",
     "graphql-tag": "^2.12.6",
+    "joi": "^17.7.0",
     "morgan": "1.10.0",
     "node-notifier": "^10.0.1",
     "nodemon": "2.0.19",

@@ -1,8 +1,10 @@
 $govuk-new-link-styles: true;
 
 @import 'node_modules/govuk-frontend/govuk/all';
+@import "node_modules/@ministryofjustice/frontend/moj/all";
 @import './accessible-autocomplete.min.scss';
 @import './task-list.scss';
+@import './separator.scss';
 
 .ukef-white-text {
   color: govuk-colour('white');
@@ -30,4 +32,24 @@ $govuk-new-link-styles: true;
 
 .ukef-multi-policy-length-hint {
   max-width: 97%;
+}
+
+.input-width {
+  width: 50%;
+}
+
+.companies-house-search {
+  display: inline-block;
+  flex: 1;
+  margin-bottom: 0;
+  vertical-align: top;
+  align-items: flex-end;
+  display: flex;
+}
+
+.your-business-heading {
+  font-weight: 700;
+  font-size: 1.1875rem;
+  line-height: 1.3157894737;
+  margin-bottom: 10px;
 }

@@ -1,6 +1,8 @@
 import { AnswersContent, AnswersFieldGroups } from './answers';
 import { ApolloResponse } from './apollo';
 import { CisCountry } from './cis-country';
+import { CompanyDetails, CompanyDetailsFieldGroups } from './company-details';
+import { CompanyHouseResponse } from './company-house-response';
 import { Country } from './country';
 import { Currency } from './currency';
 import { Request, RequestBody, RequestSession, Response } from './express';
@@ -33,6 +35,9 @@ export {
   AnswersFieldGroups,
   ApolloResponse,
   CisCountry,
+  CompanyDetails,
+  CompanyDetailsFieldGroups,
+  CompanyHouseResponse,
   CorePageVariablesInitialInput,
   CorePageVariablesInput,
   CorePageVariables,

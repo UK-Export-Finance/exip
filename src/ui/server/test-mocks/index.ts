@@ -4,6 +4,7 @@ import mockSession from './mock-session';
 import mockQuote from './mock-quote';
 import mockCisCountries from './mock-cis-countries';
 import mockCountries from './mock-countries';
+import mockCompanyResponse from './mock-companies-house-response';
 
 const mockReq = () => {
   let req = {} as Request;
@@ -45,4 +46,4 @@ const mockRes = () => {
 
 const mockNext = jest.fn();
 
-export { mockAnswers, mockCisCountries, mockCountries, mockNext, mockSession, mockQuote, mockReq, mockRes };
+export { mockAnswers, mockCisCountries, mockCountries, mockCompanyResponse, mockNext, mockSession, mockQuote, mockReq, mockRes };
