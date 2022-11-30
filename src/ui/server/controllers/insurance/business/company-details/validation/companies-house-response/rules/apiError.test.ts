@@ -3,6 +3,7 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../../constants';
 import generateValidationErrors from '../../../../../../../helpers/validation';
 import { CompanyHouseResponse } from '../../../../../../../../types';
+import {mockCompanyResponse } from '../../../../../../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: { COMPANY_HOUSE },
@@ -27,6 +28,15 @@ describe('controllers/insurance/business/company-details/validation/companies-ho
     expect(result).toEqual(expected);
   });
 
+  it('should return validation error when there is no responseBody', () => {
+    const result = apiError({} as CompanyHouseResponse, mockErrors);
+
+    const errorMessage = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT].TECHNICAL_ISSUES;
+    const expected = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, mockErrors);
+
+    expect(result).toEqual(expected);
+  });
+
   it('should not return validation error when apiError is false', () => {
     mockBody.apiError = false;
     const result = apiError(mockBody, mockErrors);
@@ -34,9 +44,8 @@ describe('controllers/insurance/business/company-details/validation/companies-ho
     expect(result).toEqual(mockErrors);
   });
 
-  it('should not return validation error when apiError is null', () => {
-    const mockBodyEmpty = {} as CompanyHouseResponse;
-    const result = apiError(mockBodyEmpty, mockErrors);
+  it('should not return validation error when there is a response and apiError is null', () => {
+    const result = apiError(mockCompanyResponse, mockErrors);
 
     expect(result).toEqual(mockErrors);
   });

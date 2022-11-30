@@ -28,6 +28,7 @@
     "@keystone-6/auth": "^4.0.0",
     "@keystone-6/core": "^2.1.0",
     "@keystone-6/fields-document": "^4.0.0",
+    "axios": "^1.2.0",
     "date-fns": "^2.29.3",
     "dotenv": "16.0.2",
     "notifications-node-client": "^5.2.0",
