@@ -15,26 +15,10 @@ import {
   PAGES,
 } from '../../../../../content-strings';
 import { FIELDS } from '../../../../../content-strings/fields/insurance/policy-and-exports';
-import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
-import {
-  completeStartForm,
-  completeCheckIfEligibleForm,
-  completeExporterLocationForm,
-  completeUkGoodsAndServicesForm,
-  completeInsuredAmountForm,
-  completeInsuredPeriodForm,
-  completeOtherPartiesForm,
-  completeLetterOfCreditForm,
-  completePreCreditPeriodForm,
-  completeCompaniesHouseNumberForm,
-  completeEligibleToApplyOnlineForm,
-} from '../../../../support/insurance/eligibility/forms';
+import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import getApplicationId from '../../../helpers/get-application-id';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
-
-const { ROUTES, FIELD_IDS } = CONSTANTS;
 
 const FIELD_ID = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
 
@@ -61,20 +45,9 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
       },
     });
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
-    completeUkGoodsAndServicesForm();
-    completeInsuredAmountForm();
-    completeInsuredPeriodForm();
-    completeOtherPartiesForm();
-    completeLetterOfCreditForm();
-    completePreCreditPeriodForm();
-    completeCompaniesHouseNumberForm();
-    completeEligibleToApplyOnlineForm();
+    cy.submitInsuranceEligibilityAndStartApplication();
 
-    partials.insurancePartials.taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+    partials.insurance.taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
     getApplicationId().then((id) => {
       applicationId = id;
@@ -89,14 +62,14 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
-    });
-  });
+  // it('passes the audits', () => {
+  //   cy.lighthouse({
+  //     accessibility: 100,
+  //     performance: 75,
+  //     'best-practices': 100,
+  //     seo: 70,
+  //   });
+  // });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');

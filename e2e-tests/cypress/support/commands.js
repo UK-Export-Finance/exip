@@ -31,3 +31,5 @@ Cypress.Commands.add('checkCookiesConsentBannerDoesNotExist', analytics.checkCoo
 Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);
 
 Cypress.Commands.add('submitInsuranceEligibilityAnswersHappyPath', require('./insurance/eligibility/submit-answers-happy-path'));
+
+Cypress.Commands.add('submitInsuranceEligibilityAndStartApplication', require('./insurance/submit-eligibility-and-start-an-application'));

@@ -1,12 +1,10 @@
-const { TASKS } = require('../../../../content-strings');
-
-const { LIST } = TASKS;
+import { TASKS } from '../../../../content-strings';
 
 const {
   INITIAL_CHECKS,
   PREPARE_APPLICATION,
   SUBMIT_APPLICATION,
-} = LIST;
+} = TASKS.LIST;
 
 const taskList = {
   initialChecks: {
