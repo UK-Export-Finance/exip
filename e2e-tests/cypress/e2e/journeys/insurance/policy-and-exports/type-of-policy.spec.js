@@ -13,6 +13,7 @@ import {
   LINKS,
   ORGANISATION,
   PAGES,
+  TASKS,
 } from '../../../../../content-strings';
 import { FIELDS } from '../../../../../content-strings/fields/insurance/policy-and-exports';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
@@ -49,6 +50,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     partials.insurance.taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
+    // TODO rename to reference number
     getApplicationId().then((id) => {
       applicationId = id;
 
@@ -62,14 +64,14 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 75,
-  //     'best-practices': 100,
-  //     seo: 70,
-  //   });
-  // });
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 75,
+      'best-practices': 100,
+      seo: 70,
+    });
+  });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
@@ -238,6 +240,25 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
           goToPageDirectly(applicationId);
 
           multiplePolicyField.input().should('be.checked');
+        });
+      });
+    });
+
+    describe('after submitting an answer', () => {
+      it('should update the status of task `type of policy and exports`to `in progress`', () => {
+        cy.visit(`${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.ALL_SECTIONS}`, {
+          auth: {
+            username: Cypress.config('basicAuthKey'),
+            password: Cypress.config('basicAuthSecret'),
+          },
+        });
+
+        const task = partials.insurance.taskList.prepareApplication.tasks.policyTypeAndExports;
+
+        task.status().invoke('text').then((text) => {
+          const expected = TASKS.STATUS.IN_PROGRESS;
+
+          expect(text.trim()).equal(expected);
         });
       });
     });

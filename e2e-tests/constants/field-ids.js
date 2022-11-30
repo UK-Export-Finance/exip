@@ -47,6 +47,7 @@ export const FIELD_IDS = {
       ...SHARED,
       TYPE_OF_POLICY: {
         POLICY_TYPE: SHARED.POLICY_TYPE,
+        CURRENCY_CODE: 'currencyCode',
       },
     },
   },
