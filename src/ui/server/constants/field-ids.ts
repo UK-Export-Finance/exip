@@ -1,5 +1,3 @@
-// TODO: add QUOTE.ELIGIBILITY structure.
-
 const SHARED = {
   POLICY_TYPE: 'policyType',
   SINGLE_POLICY_TYPE: 'singlePolicyType',
@@ -22,9 +20,6 @@ export const FIELD_IDS = {
   CONTRACT_VALUE: 'contractValue',
   MAX_AMOUNT_OWED: 'maximumContractAmountOwed',
   CREDIT_PERIOD: 'creditPeriodInMonths',
-  // POLICY_TYPE: 'policyType',
-  // SINGLE_POLICY_TYPE: 'singlePolicyType',
-  // MULTI_POLICY_TYPE: 'multiPolicyType',
   ...SHARED,
   POLICY_LENGTH: 'policyLength',
   SINGLE_POLICY_LENGTH: 'singlePolicyLengthMonths',

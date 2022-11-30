@@ -26,10 +26,6 @@ const get = async (req: Request, res: Response) => {
   try {
     const application = await api.keystone.application.get(Number(referenceNumber));
 
-    // TODO: middleware
-    // should go to 404 page.
-    // same for every insurance page.
-    // TODO: create ticket
     if (!application) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
