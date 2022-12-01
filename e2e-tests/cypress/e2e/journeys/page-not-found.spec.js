@@ -24,15 +24,10 @@ context('404 Page not found', () => {
   });
 
   describe('header', () => {
-    it('renders a GOV home link and SVG', () => {
+    it('renders a GOV home link', () => {
       partials.header.govHomeLink().should('exist');
-      partials.header.govCrownText().invoke('text').then((text) => {
-        expect(text.trim()).equal('GOV.UK');
-      });
 
       partials.header.govHomeLink().should('have.attr', 'href', 'https://www.gov.uk');
-
-      partials.header.govCrownSvg().should('exist');
     });
 
     it('renders service name link', () => {
