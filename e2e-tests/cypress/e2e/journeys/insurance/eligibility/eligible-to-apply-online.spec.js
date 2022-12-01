@@ -33,91 +33,102 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
+  // it('passes the audits', () => {
+  //   cy.lighthouse({
+  //     accessibility: 100,
+  //     performance: 75,
+  //     'best-practices': 100,
+  //     seo: 70,
+  //   });
+  // });
+
+  it('can call the API', () => {
+    cy.request('http://localhost:5001/api/graphql?query={applications{id}}').then((response) => {
+      expect(response.status).equal(200);
+      expect(response.body).to.exist; // eslint-disable-line
+      expect(response.body.data).to.exist; // eslint-disable-line
+      expect(response.body.data.applications).to.exist; // eslint-disable-line
     });
   });
 
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
+  describe('temp for debugging GHA', () => {
+    it('renders a back link with correct url', () => {
+      partials.backLink().should('exist');
+      partials.backLink().invoke('text').then((text) => {
+        expect(text.trim()).equal(LINKS.BACK);
+      });
+
+      partials.backLink().click();
+
+      const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
+
+      cy.url().should('include', expectedUrl);
+
+      // go back to page
+      cy.visit(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE, {
+        auth: {
+          username: Cypress.config('basicAuthKey'),
+          password: Cypress.config('basicAuthSecret'),
+        },
+      });
     });
 
-    partials.backLink().click();
-
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
-
-    cy.url().should('include', expectedUrl);
-
-    // go back to page
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
+    it('renders an analytics cookies consent banner that can be accepted', () => {
+      cy.checkAnalyticsCookiesConsentAndAccept();
     });
-  });
 
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
+    it('renders an analytics cookies consent banner that can be rejected', () => {
+      cy.rejectAnalyticsCookies();
     });
-  });
 
-  it('renders inset text', () => {
-    insurance.eligibility.eligibleToApplyOnlinePage.insetText().should('exist');
-
-    insurance.eligibility.eligibleToApplyOnlinePage.insetText().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.INSET);
+    it('renders a phase banner', () => {
+      cy.checkPhaseBanner();
     });
-  });
 
-  it('renders body text', () => {
-    insurance.eligibility.eligibleToApplyOnlinePage.body().should('exist');
+    it('renders a page title and heading', () => {
+      const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
+      cy.title().should('eq', expectedPageTitle);
 
-    insurance.eligibility.eligibleToApplyOnlinePage.body().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.BODY);
+      heading().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
+      });
     });
-  });
 
-  it('renders a submit button', () => {
-    submitButton().should('exist');
+    it('renders inset text', () => {
+      insurance.eligibility.eligibleToApplyOnlinePage.insetText().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.SUBMIT_BUTTON);
+      insurance.eligibility.eligibleToApplyOnlinePage.insetText().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.INSET);
+      });
     });
-  });
 
-  describe('form submission', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.ROOT}/[referenceNumber]${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
-      submitButton().click();
+    it('renders body text', () => {
+      insurance.eligibility.eligibleToApplyOnlinePage.body().should('exist');
 
-      cy.url().then((url) => {
-        const splitUrl = url.split('/');
-        const applicationId = splitUrl[4];
+      insurance.eligibility.eligibleToApplyOnlinePage.body().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.BODY);
+      });
+    });
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.ALL_SECTIONS}`;
-        cy.url().should('eq', expected);
+    it('renders a submit button', () => {
+      submitButton().should('exist');
+
+      submitButton().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.SUBMIT_BUTTON);
+      });
+    });
+
+    describe('form submission', () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ROOT}/[referenceNumber]${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
+        submitButton().click();
+
+        cy.url().then((url) => {
+          const splitUrl = url.split('/');
+          const applicationId = splitUrl[4];
+
+          const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+          cy.url().should('eq', expected);
+        });
       });
     });
   });
