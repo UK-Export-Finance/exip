@@ -4,4 +4,5 @@
 .api
 .database
 node_modules
-e2e-tests/cypress/*
+e2e-tests/cypress/screenshots/*
+e2e-tests/cypress/videos/*

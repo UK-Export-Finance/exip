@@ -13,7 +13,7 @@
     "postinstall": "husky install",
     "prepublishOnly": "npm run build",
     "lint": "eslint --ext .ts src/ui && eslint --ext .ts src/api && eslint --ext .js ./e2e-tests",
-    "lint:fix": "prettier --write src/ui && eslint --ext .ts src/ui --fix && ./e2e-tests --ext .js --fix",
+    "lint:fix": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix && ./e2e-tests --ext .js --fix",
     "prepare": "husky install"
   },
   "repository": {

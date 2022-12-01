@@ -33,6 +33,8 @@ services:
       PORT: 5001
       DATABASE_URL:
       GOV_NOTIFY_API_KEY:
+      COMPANIES_HOUSE_API_URL:
+      COMPANIES_HOUSE_API_KEY:
 
   ui:
     build: ./src/ui
