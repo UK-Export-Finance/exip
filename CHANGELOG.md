@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.5](https://github.com/UK-Export-Finance/exip/compare/v1.14.4...v1.14.5) (2022-12-01)
+
+
+### Miscellaneous
+
+* **security:** Remove file-loader and bump all packages ([#168](https://github.com/UK-Export-Finance/exip/issues/168)) ([24bb235](https://github.com/UK-Export-Finance/exip/commit/24bb2359d52c560bcab59e60cffa084fd2debba6))
+
 ## [1.14.4](https://github.com/UK-Export-Finance/exip/compare/v1.14.3...v1.14.4) (2022-10-28)
 
 
