@@ -74,7 +74,7 @@ jobs:
     needs: set-environment
     environment:
       name: ${{ needs.set-environment.outputs.environment }}
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux]
     strategy:
       # when one test fails, DO NOT cancel the other
       # containers, because this will kill Cypress processes
@@ -97,6 +97,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Docker flush
+        run: docker system prune -a -f --volumes
       - name: Start Docker Compose
         run: docker-compose up --build -d
       - name: Run e2e tests
