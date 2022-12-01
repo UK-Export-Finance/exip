@@ -1,9 +1,11 @@
-import 'dotenv/config';
 import type { GraphQLSchema } from 'graphql';
 import { mergeSchemas } from '@graphql-tools/schema';
 import { NotifyClient } from 'notifications-node-client';
+import dotenv from 'dotenv';
 
-const notifyKey: any = process.env.GOV_NOTIFY_API_KEY;
+dotenv.config();
+
+const notifyKey = process.env.GOV_NOTIFY_API_KEY;
 const notifyClient = new NotifyClient(notifyKey);
 
 export const extendGraphqlSchema = (schema: GraphQLSchema) =>

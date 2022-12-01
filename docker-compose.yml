@@ -18,7 +18,10 @@ services:
       MYSQL_ROOT_PASSWORD:
 
   api:
-    build: ./src/api
+    build:
+      context: ./src/api
+      args:
+        GOV_NOTIFY_API_KEY: ${GOV_NOTIFY_API_KEY}
     image: exip/src/api
     restart: always
     command: npm run start
