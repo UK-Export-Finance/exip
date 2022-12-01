@@ -172,7 +172,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     saveAndBackButton().should('exist');
 
     saveAndBackButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK_TO_ALL_SECTIONS);
+      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
     });
   });
 
