@@ -98,7 +98,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Set permission
-        run: sudo chown -R $USER:$USER /home/github/actions-runner/_work/
+        run: sudo chown -R $USER:$USER _work/
       - name: Docker flush
         run: docker system prune -a -f --volumes
       - name: Start Docker Compose
