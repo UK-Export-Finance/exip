@@ -1,6 +1,6 @@
+import 'dotenv/config';
 import type { GraphQLSchema } from 'graphql';
 import { mergeSchemas } from '@graphql-tools/schema';
-
 import { NotifyClient } from 'notifications-node-client';
 
 const notifyKey: any = process.env.GOV_NOTIFY_API_KEY;

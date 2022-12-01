@@ -5,12 +5,14 @@ services:
   database:
     image: mysql
     restart: always
+    command: --default-authentication-plugin=mysql_native_password
     ports:
       - "3306:3306"
     volumes:
       - ./.database/data:/var/lib/mysql
       - ./.database/log:/var/log/mysql
       - ./.database/mysql:/etc/mysql/conf.d
+      - ./database/exip.sql:/docker-entrypoint-initdb.d/0_database.sql
     environment:
       MYSQL_DATABASE:
       MYSQL_ROOT_PASSWORD:
@@ -30,6 +32,7 @@ services:
     environment:
       PORT: 5001
       DATABASE_URL:
+      GOV_NOTIFY_API_KEY:
 
   ui:
     build: ./src/ui
