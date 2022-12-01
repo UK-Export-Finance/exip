@@ -88,7 +88,7 @@ jobs:
       API_URL: ${{ secrets.API_URL }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-      MYSQL_DATABMYSQL_ROOT_PASSWORDASE: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
       BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
       BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
       MULESOFT_API_CIS_URL: ${{ secrets.MULESOFT_API_CIS_URL }}
