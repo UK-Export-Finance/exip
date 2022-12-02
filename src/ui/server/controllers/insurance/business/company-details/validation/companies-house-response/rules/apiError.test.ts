@@ -3,7 +3,7 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../../constants';
 import generateValidationErrors from '../../../../../../../helpers/validation';
 import { CompanyHouseResponse } from '../../../../../../../../types';
-import {mockCompanyResponse } from '../../../../../../../test-mocks';
+import { mockCompanyResponse } from '../../../../../../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: { COMPANY_HOUSE },
@@ -30,6 +30,16 @@ describe('controllers/insurance/business/company-details/validation/companies-ho
 
   it('should return validation error when there is no responseBody', () => {
     const result = apiError({} as CompanyHouseResponse, mockErrors);
+
+    const errorMessage = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT].TECHNICAL_ISSUES;
+    const expected = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, mockErrors);
+
+    expect(result).toEqual(expected);
+  });
+
+  it('should return validation error when the responseBody is null', () => {
+    // @ts-ignore
+    const result = apiError(null, mockErrors);
 
     const errorMessage = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT].TECHNICAL_ISSUES;
     const expected = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, mockErrors);

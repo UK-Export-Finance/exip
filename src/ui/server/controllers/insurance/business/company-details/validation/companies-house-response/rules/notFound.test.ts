@@ -40,4 +40,11 @@ describe('controllers/insurance/business/company-details/validation/companies-ho
 
     expect(result).toEqual(mockErrors);
   });
+
+  it('should not return validation error when apiError is true', () => {
+    mockBody.apiError = true;
+    const result = notFound(mockBody, mockErrors);
+
+    expect(result).toEqual(mockErrors);
+  });
 });

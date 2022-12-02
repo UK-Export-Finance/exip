@@ -8,8 +8,8 @@ const companiesHouseQuery = gql`
       registeredOfficeAddress {
         careOf
         premises
-        addressLineOne
-        addressLineTwo
+        addressLine1
+        addressLine2
         locality
         region
         postalCode

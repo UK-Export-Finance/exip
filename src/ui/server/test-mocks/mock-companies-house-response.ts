@@ -4,7 +4,7 @@ const mockCompanyResponse = {
   companyName: 'Mock company',
   companyNumber: '123456',
   registeredOfficeAddress: {
-    addressLineOne: 'Test road',
+    addressLine1: 'Test road',
     locality: 'Test',
     region: 'Test',
     postalCode: 'SW1A 2AA',

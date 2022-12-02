@@ -1,8 +1,8 @@
 import { PRODUCT } from '../product';
+import { YOUR_BUSINESS_ROUTES } from './your-business';
 
 const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
-const BUSINESS = '/your-business';
 
 export const INSURANCE_ROUTES = {
   START: `${INSURANCE_ROOT}/start`,
@@ -25,7 +25,6 @@ export const INSURANCE_ROUTES = {
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY}/need-to-start-again`,
   },
   YOUR_BUSINESS: {
-    COMPANY_DETAILS: `${INSURANCE_ROOT}${BUSINESS}/company-details`,
-    COMPANY_HOUSE_SEARCH: `${INSURANCE_ROOT}${BUSINESS}/company-details/companies-house-search`,
+    ...YOUR_BUSINESS_ROUTES,
   },
 };

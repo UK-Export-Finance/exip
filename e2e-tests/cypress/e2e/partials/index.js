@@ -4,6 +4,7 @@ import header from './header';
 import phaseBanner from './phaseBanner';
 import ukGoodsOrServicesCalculateDescription from './ukGoodsOrServicesCalculateDescription';
 import ukGoodsOrServicesDescription from './ukGoodsAndServicesDescription';
+import yourBusinessSummaryList from './yourBusinessSummaryList';
 
 const partials = {
   backLink: () => cy.get('[data-cy="back-link"]'),
@@ -16,6 +17,7 @@ const partials = {
   skipLink: () => cy.get('[data-cy="skip-link"]'),
   phaseBanner,
   ukGoodsOrServicesDescription,
+  yourBusinessSummaryList,
 };
 
 export default partials;

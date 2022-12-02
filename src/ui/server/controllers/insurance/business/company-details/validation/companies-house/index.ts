@@ -1,6 +1,12 @@
 import companiesHouseRules from './rules';
 import { RequestBody } from '../../../../../../../types';
 
+/**
+ * validates formBody for entered companies house number
+ * throws validation errors if incorrect format
+ * @param formBody containing an object with the requestBody containing the companies house number input
+ * @returns object containing errors or blank object
+ */
 const validation = (formBody: RequestBody) => {
   let errors!: object;
 

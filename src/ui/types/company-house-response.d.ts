@@ -1,8 +1,8 @@
 interface CompaniesHouseAddress {
   careOf: string;
   premises: string;
-  addressLineOne: string;
-  addressLineTwo: string;
+  addressLine1: string;
+  addressLine2: string;
   locality: string;
   region: string;
   postalCode: string;

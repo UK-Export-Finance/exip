@@ -12,11 +12,3 @@ export const FIELD_VALUES = {
     MULTI: 12,
   },
 };
-
-export const YOUR_BUSINESS_SUMMARY_LIST_FIELDS = {
-  COMPANY_NUMBER: 'Companies House registration number',
-  COMPANY_NAME: 'Company name',
-  COMPANY_ADDRESS: 'Registered office address',
-  COMPANY_INCORPORATED: 'Incorporated on',
-  COMPANY_SIC: 'Standard industrial classification (SIC) codes and nature of business',
-};

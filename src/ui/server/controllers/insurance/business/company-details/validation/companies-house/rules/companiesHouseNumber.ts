@@ -12,6 +12,12 @@ const {
 // schema to check that number only contains letters and/or numbers and has a length greater than 6
 const schema = Joi.string().alphanum().min(6).required();
 
+/**
+ * validates companies house input
+ * throws validation errors if does not follow JOI schema for minimum length, if special characters or is blank
+ * @param formBody containing an object with the companies house input
+ * @returns object containing errors or blank object
+ */
 const companiesHouseNumber = (formBody: RequestBody, errors: object) => {
   let updatedErrors = errors;
 

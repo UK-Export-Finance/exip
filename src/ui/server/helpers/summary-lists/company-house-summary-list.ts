@@ -10,9 +10,11 @@ const {
 const { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC } = COMPANY_HOUSE;
 
 /**
- * maps through address object and returns string
- * does not construct string where address field is null
  * able to handle addresses with all fields present or where some are null as not present
+ * maps through addrress object and contructs an html string containing line breaks
+ * skips fields where the field is null or is typename
+ * @param address
+ * @returns string containing html of address
  */
 const generateAddressHTML = (address: object) => {
   let addressString = '';
@@ -27,11 +29,12 @@ const generateAddressHTML = (address: object) => {
   return addressString;
 };
 
-/*
- * generateFieldGroups
+/**
  * Create all field groups for govukSummaryList
  * The following fields depend on the response from companies house api:
  * - COMPANY_ADDRESS - if all parts of address are returned or not
+ * @param companyDetails object
+ * @returns object with fieldGroups populated
  */
 const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
   const fieldGroups = {
@@ -86,10 +89,11 @@ const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
  */
 const getKeyText = (fieldId: string) => FIELDS[fieldId]?.SUMMARY?.TITLE;
 
-/*
- * generateSummaryListRows
+/**
  * Map an array of fields with values in submitted data object
  * for govukSummaryList component
+ * @param fields - Array of SummaryListItemData
+ * @returns mapped object with summary list rows populated
  */
 const generateSummaryListRows = (fields: Array<SummaryListItemData>): Array<SummaryListItem> =>
   fields.map((field: SummaryListItemData): SummaryListItem => {

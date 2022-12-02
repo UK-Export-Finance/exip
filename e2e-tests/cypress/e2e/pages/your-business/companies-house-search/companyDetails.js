@@ -1,7 +1,6 @@
 const companyDetails = {
   errorSummary: () => cy.get('[data-cy="error-summary'),
   headingCaption: () => cy.get('[data-cy="heading-caption'),
-  heading: () => cy.get('[data-cy="heading'),
 
   companiesHouseSearch: () => cy.get('[data-cy="companies-house-search'),
   companiesHouseSearchLabel: () => cy.get('[data-cy="companies-house-search-label'),

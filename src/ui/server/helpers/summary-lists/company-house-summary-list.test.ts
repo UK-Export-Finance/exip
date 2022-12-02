@@ -17,8 +17,8 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
       const address = {
         careOf: 'Careof',
         premises: 'Premise',
-        addressLineOne: 'Line 1',
-        addressLineTwo: 'Line 2',
+        addressLine1: 'Line 1',
+        addressLine2: 'Line 2',
         locality: 'Locality',
         region: 'Region',
         postalCode: 'Postcode',
@@ -28,7 +28,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
 
       const result = generateAddressHTML(address);
 
-      const expected = `${address.careOf}<br>${address.premises}<br>${address.addressLineOne}<br>${address.addressLineTwo}<br>${address.locality}<br>${address.region}<br>${address.postalCode}<br>${address.country}<br>`;
+      const expected = `${address.careOf}<br>${address.premises}<br>${address.addressLine1}<br>${address.addressLine2}<br>${address.locality}<br>${address.region}<br>${address.postalCode}<br>${address.country}<br>`;
       expect(result).toEqual(expected);
     });
 
@@ -36,8 +36,8 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
       const address = {
         careOf: null,
         premises: 'Premise',
-        addressLineOne: 'Line 1',
-        addressLineTwo: null,
+        addressLine1: 'Line 1',
+        addressLine2: null,
         locality: 'Locality',
         region: 'Region',
         postalCode: 'Postcode',
@@ -47,7 +47,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
 
       const result = generateAddressHTML(address);
 
-      const expected = `${address.premises}<br>${address.addressLineOne}<br>${address.locality}<br>${address.region}<br>${address.postalCode}<br>`;
+      const expected = `${address.premises}<br>${address.addressLine1}<br>${address.locality}<br>${address.region}<br>${address.postalCode}<br>`;
       expect(result).toEqual(expected);
     });
   });
@@ -76,7 +76,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
             id: COMPANY_ADDRESS,
             ...FIELDS[COMPANY_ADDRESS],
             value: {
-              html: `${mockCompanyResponse[COMPANY_ADDRESS].addressLineOne}<br>${mockCompanyResponse[COMPANY_ADDRESS].locality}<br>${mockCompanyResponse[COMPANY_ADDRESS].region}<br>${mockCompanyResponse[COMPANY_ADDRESS].postalCode}<br>`,
+              html: `${mockCompanyResponse[COMPANY_ADDRESS].addressLine1}<br>${mockCompanyResponse[COMPANY_ADDRESS].locality}<br>${mockCompanyResponse[COMPANY_ADDRESS].region}<br>${mockCompanyResponse[COMPANY_ADDRESS].postalCode}<br>`,
             },
           },
           {

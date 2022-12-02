@@ -37,7 +37,7 @@
     </div>
 
     <div class="govuk-grid-column-three-quarters-from-desktop">
-      <form action="{{POSTROUTE}}" method="POST">
+      <form action="{{POST_ROUTE}}" method="POST">
 
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <div class="companies-house-search">
@@ -60,8 +60,8 @@
             attributes: {
               "data-cy": "companies-house-search"
             },
-            id: FIELD_IDS.INPUT,
-            name: FIELD_IDS.INPUT,
+            id: FIELDS.INPUT,
+            name: FIELDS.INPUT,
             value: companiesHouseNumber,
             errorMessage: validationErrors.errorList.companiesHouseNumber and {
               text: validationErrors.errorList.companiesHouseNumber.text,
@@ -86,8 +86,8 @@
 
     {% if SUMMARY_LIST %}
       <div class="govuk-grid-column-three-quarters-from-desktop">
-        <h3 class="your-business-heading" data-cy="your-business-heading">{{CONTENT_STRINGS.YOUR_BUSINESS_HEADING}}</h3>
-        <div class="separator-line"></div>
+        <h3 class="govuk-fieldset__legend--m" data-cy="your-business-heading">{{CONTENT_STRINGS.YOUR_BUSINESS_HEADING}}</h3>
+
         {{ govukSummaryList({
           classes: 'govuk-!-margin-bottom-9',
           rows: SUMMARY_LIST.COMPANY_DETAILS.ROWS,

@@ -18,8 +18,8 @@ export const extendGraphqlSchema = graphQLSchemaExtension<Context>({
 
     # fields from registered_office_address object
     type CompanyAddress {
-      addressLineOne: String
-      addressLineTwo: String
+      addressLine1: String
+      addressLine2: String
       careOf: String
       locality: String
       region: String
@@ -73,7 +73,11 @@ export const extendGraphqlSchema = graphQLSchemaExtension<Context>({
       },
     },
     Query: {
-      // call for companies house API
+      /**
+       * Call for companies house API
+       * @param variables - companies house number is received as a string within variables
+       * @returns either mapped response or success false flag with or without apiError
+       */
       getCompaniesHouseInformation: async (root, variables) => {
         try {
           const { companiesHouseNumber } = variables;
@@ -98,11 +102,16 @@ export const extendGraphqlSchema = graphQLSchemaExtension<Context>({
 
           // maps response to camelCase fields
           const mappedResponse = mapCompaniesHouseFields(response.data);
-          return mappedResponse;
+
+          return {
+            ...mappedResponse,
+            success: true,
+          };
         } catch (error) {
           console.error('Error calling Companies House API', { error });
           return {
             apiError: true,
+            success: false,
           };
         }
       },

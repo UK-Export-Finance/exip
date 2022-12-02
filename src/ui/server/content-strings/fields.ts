@@ -192,7 +192,7 @@ export const FIELDS = {
   },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_SIC]: {
     SUMMARY: {
-      TITLE: 'Standard industrial classification  (SIC) codes and nature of business',
+      TITLE: 'Standard industrial classification (SIC) codes and nature of business',
     },
   },
 };

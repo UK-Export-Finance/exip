@@ -29,8 +29,8 @@ const mapCompaniesHouseFields = (companiesHouseResponse: CompanyHouseResponse) =
     registeredOfficeAddress: {
       careOf: companiesHouseResponse.registered_office_address.care_of,
       premises: companiesHouseResponse.registered_office_address.premises,
-      addressLineOne: companiesHouseResponse.registered_office_address.address_line_1,
-      addressLineTwo: companiesHouseResponse.registered_office_address.address_line_2,
+      addressLine1: companiesHouseResponse.registered_office_address.address_line_1,
+      addressLine2: companiesHouseResponse.registered_office_address.address_line_2,
       locality: companiesHouseResponse.registered_office_address.locality,
       region: companiesHouseResponse.registered_office_address.region,
       postalCode: companiesHouseResponse.registered_office_address.postal_code,
@@ -39,7 +39,6 @@ const mapCompaniesHouseFields = (companiesHouseResponse: CompanyHouseResponse) =
     companyNumber: companiesHouseResponse.company_number,
     dateOfCreation: companiesHouseResponse.date_of_creation,
     sicCodes: companiesHouseResponse.sic_codes,
-    success: true,
   };
 };
 

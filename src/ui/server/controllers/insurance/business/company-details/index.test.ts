@@ -29,8 +29,8 @@ describe('controllers/insurance/business/companies-details', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
-        POSTROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
-        FIELD_IDS: COMPANY_HOUSE,
+        POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
+        FIELDS: COMPANY_HOUSE,
       });
     });
   });
@@ -50,8 +50,8 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          POSTROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
-          FIELD_IDS: COMPANY_HOUSE,
+          POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
+          FIELDS: COMPANY_HOUSE,
           validationErrors: generateValidationErrors(FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT, errorMessage, {}),
           companiesHouseNumber: req.body.companiesHouseNumber,
         });
@@ -70,8 +70,8 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          POSTROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
-          FIELD_IDS: COMPANY_HOUSE,
+          POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
+          FIELDS: COMPANY_HOUSE,
           validationErrors: generateValidationErrors(FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT, errorMessage, {}),
           companiesHouseNumber: req.body.companiesHouseNumber,
         });
@@ -90,8 +90,8 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          POSTROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
-          FIELD_IDS: COMPANY_HOUSE,
+          POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
+          FIELDS: COMPANY_HOUSE,
           validationErrors: generateValidationErrors(FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT, errorMessage, {}),
           companiesHouseNumber: req.body.companiesHouseNumber,
         });
@@ -113,8 +113,8 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          POSTROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
-          FIELD_IDS: COMPANY_HOUSE,
+          POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
+          FIELDS: COMPANY_HOUSE,
           validationErrors: generateValidationErrors(FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT, errorMessage, {}),
           companiesHouseNumber: req.body.companiesHouseNumber,
         });
@@ -136,8 +136,8 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          POSTROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
-          FIELD_IDS: COMPANY_HOUSE,
+          POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
+          FIELDS: COMPANY_HOUSE,
           validationErrors: generateValidationErrors(FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT, errorMessage, {}),
           companiesHouseNumber: req.body.companiesHouseNumber,
         });
@@ -160,11 +160,26 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          POSTROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
-          FIELD_IDS: COMPANY_HOUSE,
+          POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
+          FIELDS: COMPANY_HOUSE,
           SUMMARY_LIST: companyHouseSummaryList(mockCompanyResponse),
           companiesHouseNumber: req.body.companiesHouseNumber,
         });
+      });
+    });
+
+    describe('when there are errors caught on the post request', () => {
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        req.body = {
+          companiesHouseNumber: '123456',
+        };
+
+        const getCompaniesHouseResponse = jest.fn(() => Promise.resolve(null));
+        api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
+
+        await postCompaniesHouseSearch(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });
     });
   });

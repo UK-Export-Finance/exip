@@ -7,11 +7,18 @@ const {
   EXPORTER_BUSINESS: { COMPANY_HOUSE },
 } = FIELD_IDS.INSURANCE;
 
+/**
+ * validates company house API response
+ * throws validation errors if success is false and if apiError is also false
+ * only success: false returned if company not found
+ * @param responseBody containing an object with the companies house API response
+ * @returns object containing errors or blank object
+ */
 const notFound = (responseBody: CompanyHouseResponse, errors: object) => {
   let updatedErrors = errors;
 
   // if success is false, then company cannot be found by companies house API
-  if (responseBody.success === false) {
+  if (responseBody.success === false && !responseBody.apiError) {
     const errorMessage = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT].NOT_FOUND;
     updatedErrors = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, errors);
   }

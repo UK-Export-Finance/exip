@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '../../../../../constants';
+import { FIELD_IDS } from '../../../constants';
 
 const {
   EXPORTER_BUSINESS: {

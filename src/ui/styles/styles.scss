@@ -4,7 +4,6 @@ $govuk-new-link-styles: true;
 @import "node_modules/@ministryofjustice/frontend/moj/all";
 @import './accessible-autocomplete.min.scss';
 @import './task-list.scss';
-@import './separator.scss';
 
 .ukef-white-text {
   color: govuk-colour('white');
@@ -44,11 +43,4 @@ $govuk-new-link-styles: true;
   vertical-align: top;
   align-items: flex-end;
   display: flex;
-}
-
-.your-business-heading {
-  font-weight: 700;
-  font-size: 1.1875rem;
-  line-height: 1.3157894737;
-  margin-bottom: 10px;
 }

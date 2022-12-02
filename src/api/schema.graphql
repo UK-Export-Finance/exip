@@ -511,8 +511,8 @@ type EmailResponse {
 }
 
 type CompanyAddress {
-  addressLineOne: String
-  addressLineTwo: String
+  addressLine1: String
+  addressLine2: String
   careOf: String
   locality: String
   region: String
