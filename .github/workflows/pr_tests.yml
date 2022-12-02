@@ -9,6 +9,7 @@ env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
   MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
   MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+  SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
   BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
   BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
   MULESOFT_API_CIS_URL: ${{ secrets.MULESOFT_API_CIS_URL }}
@@ -100,10 +101,17 @@ jobs:
       matrix:
         machines: [ 1, 2, 3, 4 ]
 
+    # Cancel Previous runs
+    concurrency:
+      group: e2e-${{ github.workflow }}-${{ github.ref }}-${{ matrix.containers }}
+      cancel-in-progress: true
+
     steps:
       - uses: actions/checkout@v3
       - name: Start Docker Compose
         run: docker-compose up --build -d
+      - name: Sleep for 30 seconds
+        run: sleep 30s
       - name: Run e2e tests
         uses: cypress-io/github-action@v4
         with:
