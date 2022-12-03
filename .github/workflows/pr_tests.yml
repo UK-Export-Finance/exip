@@ -26,7 +26,7 @@ env:
 jobs:
   set-environment:
     name: Set Environment
-    runs-on: ubuntu-latest
+    runs-on: [ self-hosted, linux ]
     outputs:
       environment: ${{ env.environment }}
     steps:
@@ -38,7 +38,7 @@ jobs:
     name: Run linting
     environment:
       name: ${{ needs.set-environment.outputs.environment }}
-    runs-on: ubuntu-latest
+    runs-on: [ self-hosted, linux ]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -91,7 +91,7 @@ jobs:
     needs: set-environment
     environment:
       name: ${{ needs.set-environment.outputs.environment }}
-    runs-on: ubuntu-latest
+    runs-on: [ self-hosted, linux ]
     strategy:
       # when one test fails, DO NOT cancel the other
       # containers, because this will kill Cypress processes
@@ -108,6 +108,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Test
+        run: |
+        echo Accessing ${{ env.environment }} environment variables
       - name: Start Docker Compose
         run: docker-compose up --build -d
       - name: Sleep for 30 seconds
