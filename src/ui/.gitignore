@@ -2,5 +2,3 @@
 .DS_Store
 .env
 node_modules
-
-generated_reports

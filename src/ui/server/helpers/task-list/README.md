@@ -4,8 +4,8 @@ This function consumes groups of tasks and submitted answers and returns a data 
 
 ## How to use
 
-1) Create an object of groups and tasks for your app.
-2) Call the function with your groups and submitted answers. e.g `generateTaskList(groupsAndTasks, submittedAnswers);`
+1. Create an object of groups and tasks for your app.
+2. Call the function with your groups and submitted answers. e.g `generateTaskList(groupsAndTasks, submittedAnswers);`
 
 The function will:
 
@@ -137,7 +137,7 @@ The returned data structure is simpler and only contains the data that a UI need
       },
     ],
   },
-]
+];
 ```
 
 ## Example usage
@@ -191,13 +191,5 @@ Now, a task list can be rendered in a UI template or component.
 In this repository there is a [task-list nunjuck component](/src/ui/templates/components/task-list.njk) that can automatically render the data into a GOV design list. Example:
 
 ```html
-// template.njk
-
-{% import '../components/task-list.njk' as taskList %}
-
-{{ taskList.render({
-  groups: taskListData
-}) }}
+// template.njk {% import '../components/task-list.njk' as taskList %} {{ taskList.render({ groups: taskListData }) }}
 ```
-
-

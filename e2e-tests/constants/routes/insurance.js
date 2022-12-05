@@ -4,6 +4,7 @@ const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
 
 export const INSURANCE_ROUTES = {
+  ROOT: INSURANCE_ROOT,
   START: `${INSURANCE_ROOT}/start`,
   ELIGIBILITY: {
     CHECK_IF_ELIGIBLE: `${INSURANCE_ROOT}${ELIGIBILITY}/check-if-eligible`,
