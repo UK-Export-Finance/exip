@@ -21,7 +21,7 @@ import {
   completeCompaniesHouseNumberForm,
   completeEligibleToApplyOnlineForm,
 } from '../../../support/insurance/eligibility/forms';
-import getApplicationId from '../../helpers/get-application-id';
+import getReferenceNumber from '../../helpers/get-application-id';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ALL_SECTIONS;
 
@@ -49,7 +49,7 @@ context('Insurance - All sections - new application', () => {
     completeCompaniesHouseNumberForm();
     completeEligibleToApplyOnlineForm();
 
-    getApplicationId().then((id) => {
+    getReferenceNumber().then((id) => {
       applicationId = id;
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.ALL_SECTIONS}`;
