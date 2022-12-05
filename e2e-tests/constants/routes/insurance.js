@@ -1,7 +1,7 @@
 import { PRODUCT } from '../product';
 import { POLICY_AND_EXPORTS } from './policy-and-export';
 
-const ROOT = '/insurance';
+export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
 
 export const INSURANCE_ROUTES = {
