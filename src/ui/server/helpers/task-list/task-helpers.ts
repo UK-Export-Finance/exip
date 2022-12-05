@@ -156,10 +156,4 @@ export const taskStatus = (task: TaskListDataTask, submittedData: ApplicationFla
  * @param {String} status Status of the task
  * @returns {String} Task link if the status is not `cannot start`
  */
-export const taskLink = (link: string, status: string): string | null => {
-  if (status !== TASKS.STATUS.CANNOT_START) {
-    return link;
-  }
-
-  return null;
-};
+export const taskLink = (link: string, status: string): string | null => (status === TASKS.STATUS.CANNOT_START ? null : link);
