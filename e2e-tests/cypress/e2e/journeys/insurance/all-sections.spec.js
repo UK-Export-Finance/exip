@@ -1,5 +1,5 @@
 import { heading } from '../../pages/shared';
-import partials, { insurancePartials } from '../../partials';
+import partials from '../../partials';
 import {
   ORGANISATION,
   LINKS,
@@ -25,7 +25,7 @@ import getReferenceNumber from '../../helpers/get-reference-number';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ALL_SECTIONS;
 
-const { taskList } = insurancePartials;
+const { taskList } = partials.insurancePartials;
 
 context('Insurance - All sections - new application', () => {
   let applicationId;
