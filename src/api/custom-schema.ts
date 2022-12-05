@@ -22,12 +22,12 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       `,
     resolvers: {
       Mutation: {
-        sendEmail: (root, variables) => {
+        sendEmail: async (root, variables) => {
           try {
             console.info('Calling Notify API. templateId: ', variables.templateId);
             const { templateId, sendToEmailAddress } = variables;
 
-            notifyClient.sendEmail(templateId, sendToEmailAddress, {
+            await notifyClient.sendEmail(templateId, sendToEmailAddress, {
               personalisation: {},
               reference: null,
             });

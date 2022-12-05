@@ -10,7 +10,6 @@ describe('controllers/insurance/all-sections', () => {
   let req: Request;
   let res: Response;
 
-  // TODO: move to test mocks
   const mockReferenceNumber = '10001';
 
   const mockApplication = {

@@ -13,8 +13,6 @@ const PAGE_VARIABLES = {
 const get = (req: Request, res: Response) =>
   res.render(TEMPLATES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE, corePageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }));
 
-// const post = (req: Request, res: Response) => res.redirect(ROUTES.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT);
-
 const post = async (req: Request, res: Response) => {
   try {
     const eligibilityAnswers = req.session.submittedData.insuranceEligibility;
