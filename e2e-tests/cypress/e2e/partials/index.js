@@ -1,7 +1,7 @@
 import cookieBanner from './cookieBanner';
 import footer from './footer';
 import header from './header';
-import insurance from './insurance';
+import insurancePartials from './insurance';
 import phaseBanner from './phaseBanner';
 import ukGoodsOrServicesCalculateDescription from './ukGoodsOrServicesCalculateDescription';
 import ukGoodsOrServicesDescription from './ukGoodsAndServicesDescription';
@@ -14,7 +14,7 @@ const partials = {
   errorSummaryListItemLinks: () => cy.get('.govuk-error-summary li a'),
   footer,
   header,
-  insurance,
+  insurancePartials,
   skipLink: () => cy.get('[data-cy="skip-link"]'),
   phaseBanner,
   ukGoodsOrServicesDescription,

@@ -29,5 +29,3 @@ export const TASKS = {
     },
   },
 };
-
-module.exports = TASKS;

@@ -6,7 +6,7 @@ import {
   PAGES,
   TASKS,
 } from '../../../../content-strings';
-import CONSTANTS from '../../../../constants';
+import { ROUTES } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 import {
   completeStartForm,
@@ -24,7 +24,6 @@ import {
 import getApplicationId from '../../helpers/get-application-id';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ALL_SECTIONS;
-const { ROUTES } = CONSTANTS;
 
 context('Insurance - All sections - new application', () => {
   let applicationId;

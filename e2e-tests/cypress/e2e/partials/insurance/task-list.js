@@ -1,4 +1,4 @@
-const { TASKS } = require('../../../../content-strings');
+import { TASKS } from '../../../../content-strings';
 
 const { LIST } = TASKS;
 
