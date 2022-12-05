@@ -1,4 +1,14 @@
-import { getGroupById, getTaskById, getSubmittedFields, taskIsInProgress, taskIsComplete, areTaskDependenciesMet, taskStatus, taskLink } from './task-helpers';
+import {
+  getGroupById,
+  getTaskById,
+  hasSubmittedField,
+  getSubmittedFields,
+  taskIsInProgress,
+  taskIsComplete,
+  areTaskDependenciesMet,
+  taskStatus,
+  taskLink,
+} from './task-helpers';
 import { ApplicationFlat, TaskListData, TaskListDataTask } from '../../../types';
 import { TASKS } from '../../content-strings';
 import { mockApplication } from '../../test-mocks';
@@ -40,6 +50,41 @@ describe('server/helpers/task-helpers', () => {
       const expected = mockGroupTasks[1];
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe('hasSubmittedField', () => {
+    describe('when submitted data has the given field id', () => {
+      it('should return true', () => {
+        const result = hasSubmittedField(mockApplicationFlat, 'hasMinimumUkGoodsOrServices');
+
+        expect(result).toEqual(true);
+      });
+
+      describe('when the field value is false boolean', () => {
+        it('should return true', () => {
+          const result = hasSubmittedField(mockApplicationFlat, 'wantCoverOverMaxAmount');
+
+          expect(result).toEqual(true);
+        });
+      });
+    });
+
+    describe('when submitted data does NOT have the given field id', () => {
+      it('should return false', () => {
+        const result = hasSubmittedField(mockApplicationFlat, 'mockField');
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when submitted data or fieldId is not provided', () => {
+      it('should return false', () => {
+        // @ts-ignore
+        const result = hasSubmittedField();
+
+        expect(result).toEqual(false);
+      });
     });
   });
 

@@ -20,6 +20,21 @@ export const getTaskById = (groupTasks: Array<TaskListDataTask>, taskId: string)
   groupTasks.find((task: TaskListDataTask) => task.id === taskId) as TaskListDataTask;
 
 /**
+ * hasSubmittedField
+ * @param {Object} submittedData Submitted application data
+ * @param {String} field ID of the field to get
+ * @returns {Boolean} True if the field is in submittedData.
+ */
+// Note: this assumes that any data in submitted fields is a valid answer. E.g, false boolean is a valid answer.
+export const hasSubmittedField = (submittedData: ApplicationFlat, fieldId: string) => {
+  if (submittedData && fieldId && (submittedData[fieldId] || submittedData[fieldId] === false)) {
+    return true;
+  }
+
+  return false;
+};
+
+/**
  * getSubmittedFields
  * @param {Array} fields Array of field ids
  * @param {Object} submittedData Submitted application data
@@ -30,9 +45,7 @@ export const getSubmittedFields = (fields: Array<string>, submittedData: Applica
 
   if (fields) {
     fields.forEach((fieldId) => {
-      // NOTE this assumes that any data in submitted fields, is a valid answer. E.g, "false" is a valid answer.
-
-      if (submittedData && (submittedData[fieldId] || submittedData[fieldId] === false)) {
+      if (hasSubmittedField(submittedData, fieldId)) {
         submittedFields.push(fieldId);
       }
     });
@@ -88,11 +101,10 @@ export const areTaskDependenciesMet = (dependencies: Array<string>, submittedDat
 
   if (dependencies) {
     validDependencies = dependencies.filter((fieldId: string) => {
-      // NOTE this assumes that any data in submitted fields, is a valid answer. E.g, "false" is a valid answer.
-
-      if (submittedData && (submittedData[fieldId] || submittedData[fieldId] === false)) {
+      if (hasSubmittedField(submittedData, fieldId)) {
         return fieldId;
       }
+
       return null;
     });
   }
