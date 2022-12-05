@@ -97,6 +97,10 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
+          BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
+          GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
         run: docker-compose up --build -d
       - name: Sleep for 30 seconds
         run: sleep 30s
