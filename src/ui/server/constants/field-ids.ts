@@ -29,7 +29,7 @@ export const FIELD_IDS = {
       OTHER_PARTIES_INVOLVED: 'otherPartiesInvolved',
       LETTER_OF_CREDIT: 'paidByLetterOfCredit',
       PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
-      COMPANIES_HOUSE_NUMBER: 'haveCompaniesHouseNumber',
+      COMPANIES_HOUSE_NUMBER: 'hasCompaniesHouseNumber',
     },
   },
 };

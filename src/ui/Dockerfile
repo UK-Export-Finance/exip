@@ -31,3 +31,6 @@ COPY . .
 
 # Execute Script
 ENTRYPOINT ["/bin/init.sh"]
+
+# Hot reloading
+# CMD npx nodemon server/index.ts

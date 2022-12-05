@@ -1,6 +1,7 @@
 import { get, post } from '../../test-mocks/mock-router';
-import { ROUTES } from '../../constants';
+import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../constants/routes/insurance';
 import { get as startGet, post as startPost } from '../../controllers/insurance/start';
+import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
 
 describe('routes/insurance', () => {
   beforeEach(() => {
@@ -12,10 +13,12 @@ describe('routes/insurance', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(16);
+    expect(get).toHaveBeenCalledTimes(17);
     expect(post).toHaveBeenCalledTimes(13);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.START, startGet);
-    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.START, startPost);
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startGet);
+    expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startPost);
+
+    expect(get).toHaveBeenCalledWith(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.ALL_SECTIONS}`, allSectionsGet);
   });
 });

@@ -1,9 +1,10 @@
 import { PRODUCT } from '../product';
 
-const INSURANCE_ROOT = '/insurance';
+export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
 
 export const INSURANCE_ROUTES = {
+  ROOT: INSURANCE_ROOT,
   START: `${INSURANCE_ROOT}/start`,
   ELIGIBILITY: {
     CHECK_IF_ELIGIBLE: `${INSURANCE_ROOT}${ELIGIBILITY}/check-if-eligible`,
@@ -23,4 +24,5 @@ export const INSURANCE_ROUTES = {
     ALREADY_HAVE_ACCOUNT: `${INSURANCE_ROOT}${ELIGIBILITY}/already-have-account`,
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY}/need-to-start-again`,
   },
+  ALL_SECTIONS: '/all-sections',
 };
