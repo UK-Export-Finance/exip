@@ -21,7 +21,7 @@ import {
   completeCompaniesHouseNumberForm,
   completeEligibleToApplyOnlineForm,
 } from '../../../support/insurance/eligibility/forms';
-import getReferenceNumber from '../../helpers/get-application-id';
+import getReferenceNumber from '../../helpers/get-reference-number';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ALL_SECTIONS;
 

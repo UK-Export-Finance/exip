@@ -14,8 +14,6 @@ insuranceRouter.post(INSURANCE_ROUTES.START, startPost);
 
 insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.ALL_SECTIONS}`, allSectionsGet);
 
-insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.ALL_SECTIONS}`, allSectionsGet);
-
 insuranceRouter.use('/', insuranceEligibilityRoutes);
 
 export default insuranceRouter;
