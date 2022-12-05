@@ -116,3 +116,4 @@ If these definitions need to change, only the product constants need to be updat
 Note that the cover period URL references the maximum cover period. The route is created dynamically by referencing the cover period definition.
 
 Also note that the field IDs that we use for the answers to these questions are generic and do not refer to the actual maximum. I.e, `wantCoverOverMaxPeriod` instead of `wantCoverOver2Years`.
+
