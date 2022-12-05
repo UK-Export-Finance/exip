@@ -12,6 +12,8 @@ import { ROUTES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
+const insuranceStartRoute = ROUTES.INSURANCE.START;
+
 context('Insurance - Eligibility - You are eligible to apply online page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -69,6 +71,10 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
 
   it('renders an analytics cookies consent banner that can be rejected', () => {
     cy.rejectAnalyticsCookies();
+  });
+
+  it('should render a header with href to insurance start', () => {
+    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
   it('renders a phase banner', () => {

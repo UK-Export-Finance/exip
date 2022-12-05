@@ -2,6 +2,8 @@ import partials from '../../partials';
 import { PRODUCT } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
+const insuranceStartRoute = ROUTES.INSURANCE.START;
+
 context('Insurance - header', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -28,6 +30,6 @@ context('Insurance - header', () => {
       expect(text.trim()).equal(PRODUCT.DESCRIPTION.APPLICATION);
     });
 
-    partials.header.serviceName().should('have.attr', 'href', '/');
+    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 });

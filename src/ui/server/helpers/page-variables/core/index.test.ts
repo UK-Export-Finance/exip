@@ -1,5 +1,8 @@
 import corePageVariables from '.';
 import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PRODUCT } from '../../../content-strings';
+import { ROUTES } from '../../../constants';
+
+const { START: quoteStart } = ROUTES.QUOTE;
 
 describe('server/helpers/page-variables/core', () => {
   const mock = {
@@ -11,6 +14,7 @@ describe('server/helpers/page-variables/core', () => {
       DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
     },
     BACK_LINK: '/mock',
+    START_ROUTE: quoteStart,
   };
 
   it('should return an object with provided data and additional content strings', () => {
@@ -26,6 +30,7 @@ describe('server/helpers/page-variables/core', () => {
         PRODUCT: mock.PRODUCT,
       },
       BACK_LINK: mock.BACK_LINK,
+      START_ROUTE: quoteStart,
     };
 
     expect(result).toEqual(expected);

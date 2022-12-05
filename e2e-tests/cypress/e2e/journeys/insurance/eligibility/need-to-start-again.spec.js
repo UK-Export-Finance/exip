@@ -1,9 +1,12 @@
 import { heading, submitButton, needToStartAgainPage } from '../../../pages/shared';
 import { LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
+import partials from '../../../partials';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
+
+const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance Eligibility - Need to start again exit page', () => {
   beforeEach(() => {
@@ -51,6 +54,10 @@ context('Insurance Eligibility - Need to start again exit page', () => {
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
+  });
+
+  it('should render a header with href to insurance start', () => {
+    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
   it('renders a page title and heading', () => {
