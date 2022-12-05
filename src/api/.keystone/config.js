@@ -1,7 +1,9 @@
 "use strict";
+var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
@@ -15,6 +17,10 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // keystone.ts
@@ -260,6 +266,8 @@ var session = (0, import_session.statelessSessions)({
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
 var import_notifications_node_client = require("notifications-node-client");
+var import_dotenv = __toESM(require("dotenv"));
+import_dotenv.default.config();
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
 var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
@@ -275,11 +283,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       `,
   resolvers: {
     Mutation: {
-      sendEmail: (root, variables) => {
+      sendEmail: async (root, variables) => {
         try {
           console.info("Calling Notify API. templateId: ", variables.templateId);
           const { templateId, sendToEmailAddress } = variables;
-          notifyClient.sendEmail(templateId, sendToEmailAddress, {
+          await notifyClient.sendEmail(templateId, sendToEmailAddress, {
             personalisation: {},
             reference: null
           });
@@ -298,7 +306,7 @@ var keystone_default = withAuth(
   (0, import_core2.config)({
     db: {
       provider: "mysql",
-      url: String(process.env.DB_URI),
+      url: String(process.env.DATABASE_URL),
       enableLogging: true
     },
     ui: {

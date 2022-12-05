@@ -1,9 +1,53 @@
-version: "3"
+version: '3.3'
+
 services:
+
+  database:
+    image: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.database/data:/var/lib/mysql
+      - ./.database/log:/var/log/mysql
+      - ./.database/mysql:/etc/mysql/conf.d
+      - ./database/exip.sql:/docker-entrypoint-initdb.d/0_database.sql
+    environment:
+      MYSQL_DATABASE:
+      MYSQL_ROOT_PASSWORD:
+
+  api:
+    build:
+      context: ./src/api
+      args:
+        SESSION_SECRET: ${SESSION_SECRET}
+        GOV_NOTIFY_API_KEY: ${GOV_NOTIFY_API_KEY}
+    image: exip/src/api
+    restart: always
+    command: npm run start
+    depends_on:
+      - database
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./.api/src:/app/src:ro
+      - ./.api/src/.keystone:/app/src/.keystone:ro
+    environment:
+      PORT: 5001
+      DATABASE_URL:
+      SESSION_SECRET:
+      GOV_NOTIFY_API_KEY:
+      COMPANIES_HOUSE_API_URL:
+      COMPANIES_HOUSE_API_KEY:
+
   ui:
     build: ./src/ui
     image: exip/src/ui
     restart: always
+    depends_on:
+      - database
+      - api
     ports:
       - "5000:5000"
     volumes:
@@ -11,25 +55,15 @@ services:
       - ./src/ui/public:/app/public:ro
       - ./src/ui/templates:/app/templates:ro
     environment:
-      - PORT=5000
-      - BASIC_AUTH_KEY
-      - BASIC_AUTH_SECRET
-      - MULESOFT_API_CIS_URL
-      - MULESOFT_API_CIS_KEY
-      - MULESOFT_API_CIS_SECRET
-      - MULESOFT_API_MDM_EA_URL
-      - MULESOFT_API_MDM_EA_KEY
-      - MULESOFT_API_MDM_EA_SECRET
-      - GOOGLE_ANALYTICS_ID
+      PORT: 5000
+      API_URL:
+      BASIC_AUTH_KEY:
+      BASIC_AUTH_SECRET:
+      MULESOFT_API_CIS_URL:
+      MULESOFT_API_CIS_KEY:
+      MULESOFT_API_CIS_SECRET:
+      MULESOFT_API_MDM_EA_URL:
+      MULESOFT_API_MDM_EA_KEY:
+      MULESOFT_API_MDM_EA_SECRET:
+      GOOGLE_ANALYTICS_ID:
     entrypoint: npx nodemon src/index.ts -L
-  api:
-    build: ./src/api
-    image: exip/src/api
-    restart: always
-    ports:
-      - "5005:5005"
-    volumes:
-      - ./api/src:/app/src:ro
-    environment:
-      - PORT=5005
-    entrypoint: npx nodemon src/index.js -L

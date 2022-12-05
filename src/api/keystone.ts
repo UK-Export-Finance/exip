@@ -8,7 +8,7 @@ export default withAuth(
   config({
     db: {
       provider: 'mysql',
-      url: String(process.env.DB_URI),
+      url: String(process.env.DATABASE_URL),
       enableLogging: true,
     },
     ui: {

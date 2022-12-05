@@ -7,7 +7,7 @@ CRUD API for EXIP applications. This API is built with [keystone](https://keysto
 - Node version 16.17.0 or higher with a corresponding `npm`.
 - An empty MySQL database.
 - Make sure you have an `.env` Use `.env.sample` as a base. These variables are required to run the API.
-- The DB_URI environment variable should be pointing to your local MySQL database. e.g: `mysql://root:@localhost:1234/db-name`.
+- The DATABASE_URL environment variable should be pointing to your local MySQL database. e.g: `mysql://root:@localhost:1234/db-name`.
 - Run `npm install` in this directory.
 
 :warning: There is currently an issue with Keystone and `npm install` due to [duplicate graphql versions](https://github.com/keystonejs/keystone/issues/7816) which is why we currently have graphql overrides in the package.json.
