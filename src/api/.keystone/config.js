@@ -200,7 +200,11 @@ var lists = {
 var import_config = require("dotenv/config");
 var import_auth = require("@keystone-6/auth");
 var import_session = require("@keystone-6/core/session");
+<<<<<<< HEAD
 var sessionSecret = String(process.env.SESSION_SECRET);
+=======
+var sessionSecret = String(process.env.SESSION_SECRET || "asdfaslfdjjasjoiwefjwoerij23j8j2oi2j");
+>>>>>>> main-application
 if (!sessionSecret) {
   if (process.env.NODE_ENV === "production") {
     throw new Error("SESSION_SECRET environment variable must be set in production");
@@ -223,9 +227,12 @@ var session = (0, import_session.statelessSessions)({
 
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
+<<<<<<< HEAD
 var import_notifications_node_client = require("notifications-node-client");
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
 var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
+=======
+>>>>>>> main-application
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
   typeDefs: `
@@ -238,6 +245,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
       `,
   resolvers: {
+<<<<<<< HEAD
     Mutation: {
       sendEmail: (root, variables) => {
         try {
@@ -254,6 +262,9 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         }
       }
     }
+=======
+    Mutation: {}
+>>>>>>> main-application
   }
 });
 
@@ -262,7 +273,11 @@ var keystone_default = withAuth(
   (0, import_core2.config)({
     db: {
       provider: "mysql",
+<<<<<<< HEAD
       url: String(process.env.DB_URI),
+=======
+      url: String(process.env.DATABASE_URL),
+>>>>>>> main-application
       enableLogging: true
     },
     ui: {

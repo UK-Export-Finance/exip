@@ -1,8 +1,8 @@
+const container = () => cy.get('[data-cy="header"]');
+
 const header = {
-  govHomeLink: () => cy.get('[data-cy="gov-home-link"]'),
-  govCrownSvg: () => cy.get('[data-cy="gov-crown-svg"]'),
-  govCrownText: () => cy.get('[data-cy="gov-crown-text"]'),
-  serviceName: () => cy.get('[data-cy="service-name"]'),
+  govHomeLink: () => container().find('a').eq(0),
+  serviceName: () => container().find('a').eq(1),
 };
 
 export default header;

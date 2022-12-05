@@ -4,7 +4,7 @@
   "description": "Export Insurance Policies API",
   "engineStrict": true,
   "engines": {
-    "node": "^14.15 || ^16.13",
+    "node": "^18.9.1",
     "npm": ">=6.0.0"
   },
   "scripts": {

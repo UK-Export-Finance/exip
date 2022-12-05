@@ -1,8 +1,11 @@
 import type { GraphQLSchema } from 'graphql';
 import { mergeSchemas } from '@graphql-tools/schema';
 import { NotifyClient } from 'notifications-node-client';
+import dotenv from 'dotenv';
 
-const notifyKey: any = process.env.GOV_NOTIFY_API_KEY;
+dotenv.config();
+
+const notifyKey = process.env.GOV_NOTIFY_API_KEY;
 const notifyClient = new NotifyClient(notifyKey);
 
 export const extendGraphqlSchema = (schema: GraphQLSchema) =>
@@ -19,12 +22,12 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       `,
     resolvers: {
       Mutation: {
-        sendEmail: (root, variables) => {
+        sendEmail: async (root, variables) => {
           try {
             console.info('Calling Notify API. templateId: ', variables.templateId);
             const { templateId, sendToEmailAddress } = variables;
 
-            notifyClient.sendEmail(templateId, sendToEmailAddress, {
+            await notifyClient.sendEmail(templateId, sendToEmailAddress, {
               personalisation: {},
               reference: null,
             });

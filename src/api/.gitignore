@@ -1,3 +1,6 @@
+.vscode
+.DS_Store
+.env
+*.log
 node_modules
 .keystone/admin
-*.log

@@ -10,7 +10,7 @@ dotenv.config();
 const urlRoot = process.env.API_URL;
 
 const createHttpLinkOptions = {
-  uri: `${urlRoot}/graphql`,
+  uri: `${urlRoot}`,
   fetch,
 } as FetchOptions;
 

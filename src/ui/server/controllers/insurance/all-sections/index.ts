@@ -7,6 +7,8 @@ import generateGroupsAndTasks from '../../../helpers/task-list/generate-groups-a
 import generateTaskList from '../../../helpers/task-list';
 import flattenApplicationData from '../../../helpers/flatten-application-data';
 
+export const TEMPLATE = TEMPLATES.INSURANCE.ALL_SECTIONS;
+
 const get = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
 
