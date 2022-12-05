@@ -1,4 +1,4 @@
-import { get } from '.';
+import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
@@ -25,6 +25,12 @@ describe('controllers/insurance/all-sections', () => {
     req.params.referenceNumber = mockReferenceNumber;
   });
 
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ALL_SECTIONS);
+    });
+  });
+
   describe('get', () => {
     let getApplicationSpy = jest.fn(() => Promise.resolve(mockGetApplicationResponse));
 
@@ -49,7 +55,7 @@ describe('controllers/insurance/all-sections', () => {
         application: mockApplication,
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ALL_SECTIONS, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
     describe('when there is no application', () => {

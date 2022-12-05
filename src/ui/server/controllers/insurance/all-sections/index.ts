@@ -4,6 +4,8 @@ import { Request, Response } from '../../../../types';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import api from '../../../api';
 
+export const TEMPLATE = TEMPLATES.INSURANCE.ALL_SECTIONS;
+
 const get = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
 
@@ -14,7 +16,7 @@ const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.render(TEMPLATES.INSURANCE.ALL_SECTIONS, {
+    return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.START,
         BACK_LINK: req.headers.referer,
