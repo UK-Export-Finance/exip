@@ -5,6 +5,8 @@ import createInitialChecksTasks from './initial-checks';
 import { GROUP_IDS, TASK_IDS } from '../../../constants';
 import { TASKS } from '../../../content-strings';
 
+const { PREPARE_APPLICATION } = TASKS.LIST;
+
 describe('server/helpers/task-list/prepare-application', () => {
   it('should return EXIP `prepare application` tasks', () => {
     const initialChecks = createInitialChecksTasks();
@@ -21,7 +23,7 @@ describe('server/helpers/task-list/prepare-application', () => {
 
     const POLICY_TYPE_AND_EXPORTS = {
       href: '#',
-      title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS,
+      title: PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS,
       id: TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE_AND_EXPORTS,
       fields: [],
       dependencies: [...getTaskById(previousGroups[0].tasks, TASK_IDS.INITIAL_CHECKS.ELIGIBILITY).fields],
@@ -29,7 +31,7 @@ describe('server/helpers/task-list/prepare-application', () => {
 
     const EXPORTER_BUSINESS = {
       href: '#',
-      title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
+      title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
       id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
       fields: [],
       dependencies: [...POLICY_TYPE_AND_EXPORTS.fields, ...POLICY_TYPE_AND_EXPORTS.dependencies],
@@ -40,7 +42,7 @@ describe('server/helpers/task-list/prepare-application', () => {
       EXPORTER_BUSINESS,
       {
         href: '#',
-        title: TASKS.LIST.PREPARE_APPLICATION.TASKS.BUYER,
+        title: PREPARE_APPLICATION.TASKS.BUYER,
         id: TASK_IDS.PREPARE_APPLICATION.BUYER,
         fields: ['temp'],
         dependencies: [...EXPORTER_BUSINESS.dependencies, ...EXPORTER_BUSINESS.fields],
