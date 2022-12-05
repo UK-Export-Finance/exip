@@ -7,6 +7,7 @@ import generateValidationErrors from './validation';
 import api from '../../../../api';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 
+const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 
 const PAGE_VARIABLES = {
@@ -91,7 +92,7 @@ const post = async (req: Request, res: Response) => {
         return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
       }
 
-      return res.redirect(`${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`);
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`);
     } catch (err) {
       console.error('Error updating application', { err });
 

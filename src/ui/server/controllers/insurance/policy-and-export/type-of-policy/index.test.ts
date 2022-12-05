@@ -9,6 +9,7 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
+const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 
 describe('controllers/insurance/policy-and-export/type-of-policy', () => {
@@ -136,7 +137,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
         const referenceNumber = Number(req.params.referenceNumber);
 
-        const expected = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
