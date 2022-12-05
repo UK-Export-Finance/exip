@@ -4,7 +4,7 @@ import { TASKS } from '../../../content-strings';
 import { getGroupById, getAllTasksFieldsInAGroup } from '../task-helpers';
 
 const { INSURANCE } = ROUTES;
-const { ROOT, POLICY_AND_EXPORTS } = INSURANCE;
+const { INSURANCE_ROOT, POLICY_AND_EXPORTS } = INSURANCE;
 
 /**
  * createPrepareApplicationTasks
@@ -17,7 +17,7 @@ const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: Tas
   const allInitialChecksFields = getAllTasksFieldsInAGroup(initialChecksGroup);
 
   const POLICY_TYPE_AND_EXPORTS = {
-    href: `${ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`,
+    href: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`,
     title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS,
     id: TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE_AND_EXPORTS,
     fields: Object.values(FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY),

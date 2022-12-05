@@ -7,7 +7,7 @@ import { getAllTasksFieldsInAGroup } from '../task-helpers';
 import { mockApplication } from '../../../test-mocks';
 
 const { INSURANCE } = ROUTES;
-const { ROOT, POLICY_AND_EXPORTS } = INSURANCE;
+const { INSURANCE_ROOT, POLICY_AND_EXPORTS } = INSURANCE;
 
 describe('server/helpers/task-list/prepare-application', () => {
   it('should return EXIP `prepare application` tasks', () => {
@@ -26,7 +26,7 @@ describe('server/helpers/task-list/prepare-application', () => {
     const expectedDependencies = getAllTasksFieldsInAGroup(previousGroups[0]);
 
     const POLICY_TYPE_AND_EXPORTS = {
-      href: `${ROOT}/${mockApplication.referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`,
+      href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`,
       title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS,
       id: TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE_AND_EXPORTS,
       fields: Object.values(FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY),
