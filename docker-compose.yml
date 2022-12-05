@@ -21,6 +21,7 @@ services:
     build:
       context: ./src/api
       args:
+        SESSION_SECRET: ${SESSION_SECRET}
         GOV_NOTIFY_API_KEY: ${GOV_NOTIFY_API_KEY}
     image: exip/src/api
     restart: always
@@ -35,6 +36,7 @@ services:
     environment:
       PORT: 5001
       DATABASE_URL:
+      SESSION_SECRET:
       GOV_NOTIFY_API_KEY:
       COMPANIES_HOUSE_API_URL:
       COMPANIES_HOUSE_API_KEY:
