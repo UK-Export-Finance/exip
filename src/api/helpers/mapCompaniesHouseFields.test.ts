@@ -1,7 +1,6 @@
 import { mapCompaniesHouseFields, CompanyHouseResponse } from './mapCompaniesHouseFields';
 
 describe('mapCompaniesHouseFields()', () => {
-  // @ts-ignore
   const companyHouseResponseMock = {
     company_name: 'Test name',
     registered_office_address: {

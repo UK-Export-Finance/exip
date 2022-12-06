@@ -1,12 +1,12 @@
 interface CompaniesHouseAddress {
-  care_of: string;
-  premises: string;
-  address_line_1: string;
-  address_line_2: string;
-  locality: string;
-  region: string;
-  postal_code: string;
-  country: string;
+  care_of: string | null;
+  premises: string | null;
+  address_line_1: string | null;
+  address_line_2: string | null;
+  locality: string | null;
+  region: string | null;
+  postal_code: string | null;
+  country: string | null;
 }
 
 interface CompanyHouseResponse {
