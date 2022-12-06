@@ -1,5 +1,5 @@
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockCompanyResponse } from '../../../../test-mocks';
+import { mockReq, mockRes, mockCompany } from '../../../../test-mocks';
 import { get, postCompaniesHouseSearch } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -9,6 +9,8 @@ import api from '../../../../api';
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 
 const { COMPANY_HOUSE } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
+const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 describe('controllers/insurance/business/companies-details', () => {
   let req: Request;
@@ -24,9 +26,9 @@ describe('controllers/insurance/business/companies-details', () => {
     it('should render the company-details template with correct variables', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, {
+      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
         ...corePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
+          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
         POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
@@ -45,9 +47,9 @@ describe('controllers/insurance/business/companies-details', () => {
         postCompaniesHouseSearch(req, res);
 
         const errorMessage = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, {
+        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
           ...corePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
+            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
           POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
@@ -65,9 +67,9 @@ describe('controllers/insurance/business/companies-details', () => {
         postCompaniesHouseSearch(req, res);
 
         const errorMessage = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, {
+        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
           ...corePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
+            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
           POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
@@ -85,9 +87,9 @@ describe('controllers/insurance/business/companies-details', () => {
         postCompaniesHouseSearch(req, res);
 
         const errorMessage = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, {
+        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
           ...corePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
+            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
           POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
@@ -108,9 +110,9 @@ describe('controllers/insurance/business/companies-details', () => {
         await postCompaniesHouseSearch(req, res);
 
         const errorMessage = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT].NOT_FOUND;
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, {
+        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
           ...corePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
+            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
           POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
@@ -131,9 +133,9 @@ describe('controllers/insurance/business/companies-details', () => {
         await postCompaniesHouseSearch(req, res);
 
         const errorMessage = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT].TECHNICAL_ISSUES;
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, {
+        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
           ...corePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
+            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
           POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
@@ -150,19 +152,19 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '123456',
         };
 
-        const getCompaniesHouseResponse = jest.fn(() => Promise.resolve(mockCompanyResponse));
+        const getCompaniesHouseResponse = jest.fn(() => Promise.resolve(mockCompany));
         api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
 
         await postCompaniesHouseSearch(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, {
+        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
           ...corePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
+            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
           POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
           FIELDS: COMPANY_HOUSE,
-          SUMMARY_LIST: companyHouseSummaryList(mockCompanyResponse),
+          SUMMARY_LIST: companyHouseSummaryList(mockCompany),
           companiesHouseNumber: req.body.companiesHouseNumber,
         });
       });

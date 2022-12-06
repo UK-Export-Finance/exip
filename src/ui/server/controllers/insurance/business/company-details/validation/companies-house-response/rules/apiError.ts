@@ -4,8 +4,10 @@ import generateValidationErrors from '../../../../../../../helpers/validation';
 import { CompanyHouseResponse } from '../../../../../../../../types';
 
 const {
-  EXPORTER_BUSINESS: { COMPANY_HOUSE },
-} = FIELD_IDS.INSURANCE;
+  COMPANY_HOUSE: { INPUT },
+} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+
+const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
 /**
  * validates if there is an API error
@@ -18,8 +20,8 @@ const apiError = (responseBody: CompanyHouseResponse, errors: object) => {
 
   // if flag is set, then error with companies house API or if responseBody is totally empty
   if (!responseBody || !Object.keys(responseBody)?.length || responseBody.apiError) {
-    const errorMessage = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT].TECHNICAL_ISSUES;
-    updatedErrors = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, errors);
+    const errorMessage = EXPORTER_BUSINESS[INPUT].TECHNICAL_ISSUES;
+    updatedErrors = generateValidationErrors(INPUT, errorMessage, errors);
   }
 
   return updatedErrors;

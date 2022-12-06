@@ -9,9 +9,12 @@ import companyHouseResponseValidation from './validation/companies-house-respons
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 
 const { COMPANY_HOUSE } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
+const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
+const { COMPANY_HOUSE_SEARCH } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
 
 const PAGE_VARIABLES = {
-  POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
+  POST_ROUTE: COMPANY_HOUSE_SEARCH,
   FIELDS: COMPANY_HOUSE,
 };
 
@@ -22,9 +25,9 @@ const PAGE_VARIABLES = {
  * @returns res
  */
 const get = async (req: Request, res: Response) => {
-  return res.render(TEMPLATES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, {
+  return res.render(companyDetailsTemplate, {
     ...corePageVariables({
-      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
+      PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
       BACK_LINK: req.headers.referer,
     }),
     ...PAGE_VARIABLES,
@@ -48,9 +51,9 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     const validationErrors = companiesHouseValidation(body);
 
     if (validationErrors) {
-      return res.render(TEMPLATES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, {
+      return res.render(companyDetailsTemplate, {
         ...corePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
+          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
@@ -75,9 +78,9 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     const responseValidationErrors = companyHouseResponseValidation(company);
 
     if (responseValidationErrors) {
-      return res.render(TEMPLATES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, {
+      return res.render(companyDetailsTemplate, {
         ...corePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
+          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
@@ -89,9 +92,9 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     // populates summary list with company information
     const summaryList = companyHouseSummaryList(company);
 
-    return res.render(TEMPLATES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, {
+    return res.render(companyDetailsTemplate, {
       ...corePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS,
+        PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
         BACK_LINK: req.headers.referer,
       }),
       ...PAGE_VARIABLES,

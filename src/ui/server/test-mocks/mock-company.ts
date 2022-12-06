@@ -1,6 +1,6 @@
 import { CompanyHouseResponse } from '../../types';
 
-const mockCompanyResponse = {
+const mockCompany = {
   companyName: 'Mock company',
   companyNumber: '123456',
   registeredOfficeAddress: {
@@ -14,4 +14,4 @@ const mockCompanyResponse = {
   success: true,
 } as CompanyHouseResponse;
 
-export default mockCompanyResponse;
+export default mockCompany;

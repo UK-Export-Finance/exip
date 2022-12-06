@@ -4,7 +4,7 @@ import { mergeSchemas } from '@graphql-tools/schema';
 import { NotifyClient } from 'notifications-node-client';
 import axios from 'axios';
 import dotenv from 'dotenv';
-import mapCompaniesHouseFields from './helpers/mapCompaniesHouseFields';
+import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 
 dotenv.config();
 

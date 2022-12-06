@@ -212,11 +212,11 @@ const keystone = () => {
     const response = (await apollo('GET', query, queryParams)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error querying keystone page ', response.errors);
+      console.error('GraphQL network error querying companies house information ', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error querying keystone page ', response.networkError.result.errors);
+      console.error('GraphQL network error querying companies house information ', response.networkError.result.errors);
     }
 
     // response.data.getCompaniesHouseInformation should exist if successful

@@ -4,8 +4,10 @@ import generateValidationErrors from '../../../../../../../helpers/validation';
 import { CompanyHouseResponse } from '../../../../../../../../types';
 
 const {
-  EXPORTER_BUSINESS: { COMPANY_HOUSE },
-} = FIELD_IDS.INSURANCE;
+  COMPANY_HOUSE: { INPUT },
+} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+
+const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
 /**
  * validates company house API response
@@ -19,8 +21,8 @@ const notFound = (responseBody: CompanyHouseResponse, errors: object) => {
 
   // if success is false, then company cannot be found by companies house API
   if (responseBody.success === false && !responseBody.apiError) {
-    const errorMessage = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT].NOT_FOUND;
-    updatedErrors = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, errors);
+    const errorMessage = EXPORTER_BUSINESS[INPUT].NOT_FOUND;
+    updatedErrors = generateValidationErrors(INPUT, errorMessage, errors);
   }
 
   return updatedErrors;

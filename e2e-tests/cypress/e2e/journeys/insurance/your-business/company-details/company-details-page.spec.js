@@ -65,7 +65,7 @@ context('Your business - company details page - As an Exporter I want to enter m
   });
 
   it('should display the headings correctly', () => {
-    companyDetails.headingCaption().invoke('text').then((text) => {
+    partials.headingCaption().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.HEADING_CAPTION);
     });
     heading().invoke('text').then((text) => {

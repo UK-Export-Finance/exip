@@ -3,7 +3,7 @@ import { generateFieldGroups, getKeyText, generateSummaryListRows, companyHouseS
 import { SummaryListItemData } from '../../../types';
 import { FIELD_IDS } from '../../constants';
 import { FIELDS, PAGES } from '../../content-strings';
-import { mockCompanyResponse } from '../../test-mocks';
+import { mockCompany } from '../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: { COMPANY_HOUSE },
@@ -54,7 +54,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
 
   describe('generateFieldGroups()', () => {
     it('should populate field groups when provided with companyDetails', () => {
-      const result = generateFieldGroups(mockCompanyResponse);
+      const result = generateFieldGroups(mockCompany);
 
       const expected = {
         COMPANY_DETAILS: [
@@ -62,35 +62,35 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
             id: COMPANY_NUMBER,
             ...FIELDS[COMPANY_NUMBER],
             value: {
-              text: mockCompanyResponse[COMPANY_NUMBER],
+              text: mockCompany[COMPANY_NUMBER],
             },
           },
           {
             id: COMPANY_NAME,
             ...FIELDS[COMPANY_NAME],
             value: {
-              text: mockCompanyResponse[COMPANY_NAME],
+              text: mockCompany[COMPANY_NAME],
             },
           },
           {
             id: COMPANY_ADDRESS,
             ...FIELDS[COMPANY_ADDRESS],
             value: {
-              html: `${mockCompanyResponse[COMPANY_ADDRESS].addressLine1}<br>${mockCompanyResponse[COMPANY_ADDRESS].locality}<br>${mockCompanyResponse[COMPANY_ADDRESS].region}<br>${mockCompanyResponse[COMPANY_ADDRESS].postalCode}<br>`,
+              html: `${mockCompany[COMPANY_ADDRESS].addressLine1}<br>${mockCompany[COMPANY_ADDRESS].locality}<br>${mockCompany[COMPANY_ADDRESS].region}<br>${mockCompany[COMPANY_ADDRESS].postalCode}<br>`,
             },
           },
           {
             id: COMPANY_INCORPORATED,
             ...FIELDS[COMPANY_INCORPORATED],
             value: {
-              text: format(new Date(mockCompanyResponse[COMPANY_INCORPORATED]), 'dd MMMM yyyy'),
+              text: format(new Date(mockCompany[COMPANY_INCORPORATED]), 'dd MMMM yyyy'),
             },
           },
           {
             id: COMPANY_SIC,
             ...FIELDS[COMPANY_SIC],
             value: {
-              text: mockCompanyResponse[COMPANY_SIC],
+              text: mockCompany[COMPANY_SIC],
             },
           },
         ],
@@ -129,7 +129,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
     });
 
     it('returns an array of objects mapped to submitted data', () => {
-      const fieldGroups = generateFieldGroups(mockCompanyResponse);
+      const fieldGroups = generateFieldGroups(mockCompany);
 
       const result = generateSummaryListRows(fieldGroups.COMPANY_DETAILS);
 
@@ -156,9 +156,9 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
 
   describe('companyHouseSummaryList()', () => {
     it('should return a mapped summary list for companies house response', () => {
-      const fieldGroups = generateFieldGroups(mockCompanyResponse);
+      const fieldGroups = generateFieldGroups(mockCompany);
 
-      const result = companyHouseSummaryList(mockCompanyResponse);
+      const result = companyHouseSummaryList(mockCompany);
 
       const expected = {
         COMPANY_DETAILS: {

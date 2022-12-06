@@ -42,4 +42,4 @@ const mapCompaniesHouseFields = (companiesHouseResponse: CompanyHouseResponse) =
   };
 };
 
-export default mapCompaniesHouseFields;
+export { mapCompaniesHouseFields, CompanyHouseResponse };

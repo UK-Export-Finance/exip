@@ -31,7 +31,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters-from-desktop">
         <span class="govuk-caption-xl" data-cy="heading-caption">
-          {{CONTENT_STRINGS.PAGE_GREY_HEADING}}
+          {{CONTENT_STRINGS.HEADING_CAPTION}}
         </span>
       <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
     </div>
@@ -72,7 +72,7 @@
           }) }}
 
           {{ govukButton({
-            text: CONTENT_STRINGS.SEARCH,
+            text: CONTENT_STRINGS.BUTTONS.SEARCH,
             classes: "govuk-button--secondary",
             attributes: {
               'data-cy': 'companies-house-search-button'
@@ -185,20 +185,20 @@
 
     <div class="govuk-grid-column-three-quarters-from-desktop">
       <div class="govuk-button-group">
-          {{ govukButton({
-            text: CONTENT_STRINGS.CONTINUE,
-            attributes: {
-              'data-cy': 'continue-button'
-            }
-          }) }}
+        {{ govukButton({
+          text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+          attributes: {
+            'data-cy': 'continue-button'
+          }
+        }) }}
 
         {{ govukButton({
-            text: CONTENT_STRINGS.SAVE_AND_BACK,
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
             classes: "govuk-button--secondary",
             attributes: {
               'data-cy': 'save-and-back-button'
             }
-          }) }}
+        }) }}
       </div>
     </div>
   </div>

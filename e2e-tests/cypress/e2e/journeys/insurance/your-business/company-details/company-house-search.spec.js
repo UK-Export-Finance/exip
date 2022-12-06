@@ -133,14 +133,14 @@ context('Your business - company details page', () => {
     it('should not display errors', () => {
       companyDetails.companiesHouseSearch().clear().type('8989898');
       companyDetails.companiesHouseSearchButton().click();
-      companyDetails.errorSummary().should('not.exist');
+      partials.errorSummary().should('not.exist');
       companyDetails.companiesHouseSearchError().should('not.exist');
     });
 
     it('should display your business summary list', () => {
       companyDetails.companiesHouseSearch().clear().type('8989898');
       companyDetails.companiesHouseSearchButton().click();
-      companyDetails.errorSummary().should('not.exist');
+      partials.errorSummary().should('not.exist');
       companyDetails.companiesHouseSearchError().should('not.exist');
 
       companyDetails.yourBusinessHeading().invoke('text').then((text) => {

@@ -5,8 +5,10 @@ import generateValidationErrors from '../../../../../../../helpers/validation';
 import { CompanyHouseResponse } from '../../../../../../../../types';
 
 const {
-  EXPORTER_BUSINESS: { COMPANY_HOUSE },
-} = FIELD_IDS.INSURANCE;
+  COMPANY_HOUSE: { INPUT },
+} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+
+const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/company-details/validation/companies-house-response/rules/notFound', () => {
   const mockErrors = {
@@ -21,8 +23,8 @@ describe('controllers/insurance/business/company-details/validation/companies-ho
   it('should return validation error when success is false', () => {
     const result = notFound(mockBody, mockErrors);
 
-    const errorMessage = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT].NOT_FOUND;
-    const expected = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, mockErrors);
+    const errorMessage = EXPORTER_BUSINESS[INPUT].NOT_FOUND;
+    const expected = generateValidationErrors(INPUT, errorMessage, mockErrors);
 
     expect(result).toEqual(expected);
   });

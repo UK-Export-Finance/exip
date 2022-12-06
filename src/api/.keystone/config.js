@@ -252,7 +252,6 @@ var mapCompaniesHouseFields = (companiesHouseResponse) => {
     sicCodes: companiesHouseResponse.sic_codes
   };
 };
-var mapCompaniesHouseFields_default = mapCompaniesHouseFields;
 
 // custom-schema.ts
 import_dotenv.default.config();
@@ -340,7 +339,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
               success: false
             };
           }
-          const mappedResponse = mapCompaniesHouseFields_default(response.data);
+          const mappedResponse = mapCompaniesHouseFields(response.data);
           return {
             ...mappedResponse,
             success: true
