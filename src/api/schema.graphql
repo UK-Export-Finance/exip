@@ -66,13 +66,13 @@ type Application {
   id: ID!
   createdAt: DateTime
   updatedAt: DateTime
+  eligibility: Eligibility
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
 }
 
-scalar DateTime
-  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
+scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
 input ApplicationWhereUniqueInput {
   id: ID
@@ -85,6 +85,7 @@ input ApplicationWhereInput {
   id: IDFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  eligibility: EligibilityWhereInput
   referenceNumber: IntNullableFilter
   submissionDeadline: DateTimeNullableFilter
   submissionType: StringNullableFilter
@@ -152,9 +153,16 @@ input ApplicationOrderByInput {
 input ApplicationUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
+  eligibility: EligibilityRelateToOneForUpdateInput
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
+}
+
+input EligibilityRelateToOneForUpdateInput {
+  create: EligibilityCreateInput
+  connect: EligibilityWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ApplicationUpdateArgs {
@@ -165,33 +173,34 @@ input ApplicationUpdateArgs {
 input ApplicationCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
+  eligibility: EligibilityRelateToOneForCreateInput
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
 }
 
-type Page {
+input EligibilityRelateToOneForCreateInput {
+  create: EligibilityCreateInput
+  connect: EligibilityWhereUniqueInput
+}
+
+type Country {
   id: ID!
-  heading: String
-  metaTitle: String
-  content: Page_content_Document
+  isoCode: String
+  name: String
 }
 
-type Page_content_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
-}
-
-input PageWhereUniqueInput {
+input CountryWhereUniqueInput {
   id: ID
 }
 
-input PageWhereInput {
-  AND: [PageWhereInput!]
-  OR: [PageWhereInput!]
-  NOT: [PageWhereInput!]
+input CountryWhereInput {
+  AND: [CountryWhereInput!]
+  OR: [CountryWhereInput!]
+  NOT: [CountryWhereInput!]
   id: IDFilter
-  heading: StringFilter
-  metaTitle: StringFilter
+  isoCode: StringFilter
+  name: StringFilter
 }
 
 input StringFilter {
@@ -220,6 +229,145 @@ input NestedStringFilter {
   startsWith: String
   endsWith: String
   not: NestedStringFilter
+}
+
+input CountryOrderByInput {
+  id: OrderDirection
+  isoCode: OrderDirection
+  name: OrderDirection
+}
+
+input CountryUpdateInput {
+  isoCode: String
+  name: String
+}
+
+input CountryUpdateArgs {
+  where: CountryWhereUniqueInput!
+  data: CountryUpdateInput!
+}
+
+input CountryCreateInput {
+  isoCode: String
+  name: String
+}
+
+type Eligibility {
+  id: ID!
+  application: Application
+  buyerCountry: Country
+  hasMinimumUkGoodsOrServices: Boolean
+  validExporterLocation: Boolean
+  hasCompaniesHouseNumber: Boolean
+  otherPartiesInvolved: Boolean
+  paidByLetterOfCredit: Boolean
+  needPreCreditPeriodCover: Boolean
+  wantCoverOverMaxAmount: Boolean
+  wantCoverOverMaxPeriod: Boolean
+}
+
+input EligibilityWhereUniqueInput {
+  id: ID
+}
+
+input EligibilityWhereInput {
+  AND: [EligibilityWhereInput!]
+  OR: [EligibilityWhereInput!]
+  NOT: [EligibilityWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  buyerCountry: CountryWhereInput
+  hasMinimumUkGoodsOrServices: BooleanFilter
+  validExporterLocation: BooleanFilter
+  hasCompaniesHouseNumber: BooleanFilter
+  otherPartiesInvolved: BooleanFilter
+  paidByLetterOfCredit: BooleanFilter
+  needPreCreditPeriodCover: BooleanFilter
+  wantCoverOverMaxAmount: BooleanFilter
+  wantCoverOverMaxPeriod: BooleanFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input EligibilityOrderByInput {
+  id: OrderDirection
+  hasMinimumUkGoodsOrServices: OrderDirection
+  validExporterLocation: OrderDirection
+  hasCompaniesHouseNumber: OrderDirection
+  otherPartiesInvolved: OrderDirection
+  paidByLetterOfCredit: OrderDirection
+  needPreCreditPeriodCover: OrderDirection
+  wantCoverOverMaxAmount: OrderDirection
+  wantCoverOverMaxPeriod: OrderDirection
+}
+
+input EligibilityUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  buyerCountry: CountryRelateToOneForUpdateInput
+  hasMinimumUkGoodsOrServices: Boolean
+  validExporterLocation: Boolean
+  hasCompaniesHouseNumber: Boolean
+  otherPartiesInvolved: Boolean
+  paidByLetterOfCredit: Boolean
+  needPreCreditPeriodCover: Boolean
+  wantCoverOverMaxAmount: Boolean
+  wantCoverOverMaxPeriod: Boolean
+}
+
+input CountryRelateToOneForUpdateInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
+  disconnect: Boolean
+}
+
+input EligibilityUpdateArgs {
+  where: EligibilityWhereUniqueInput!
+  data: EligibilityUpdateInput!
+}
+
+input EligibilityCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  buyerCountry: CountryRelateToOneForCreateInput
+  hasMinimumUkGoodsOrServices: Boolean
+  validExporterLocation: Boolean
+  hasCompaniesHouseNumber: Boolean
+  otherPartiesInvolved: Boolean
+  paidByLetterOfCredit: Boolean
+  needPreCreditPeriodCover: Boolean
+  wantCoverOverMaxAmount: Boolean
+  wantCoverOverMaxPeriod: Boolean
+}
+
+input CountryRelateToOneForCreateInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
+}
+
+type Page {
+  id: ID!
+  heading: String
+  metaTitle: String
+  content: Page_content_Document
+}
+
+type Page_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input PageWhereUniqueInput {
+  id: ID
+}
+
+input PageWhereInput {
+  AND: [PageWhereInput!]
+  OR: [PageWhereInput!]
+  NOT: [PageWhereInput!]
+  id: IDFilter
+  heading: StringFilter
+  metaTitle: StringFilter
 }
 
 input PageOrderByInput {
@@ -296,36 +444,33 @@ input UserCreateInput {
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
-scalar JSON
-  @specifiedBy(
-    url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
-  )
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
 
 type Mutation {
   createReferenceNumber(data: ReferenceNumberCreateInput!): ReferenceNumber
-  createReferenceNumbers(
-    data: [ReferenceNumberCreateInput!]!
-  ): [ReferenceNumber]
-  updateReferenceNumber(
-    where: ReferenceNumberWhereUniqueInput!
-    data: ReferenceNumberUpdateInput!
-  ): ReferenceNumber
+  createReferenceNumbers(data: [ReferenceNumberCreateInput!]!): [ReferenceNumber]
+  updateReferenceNumber(where: ReferenceNumberWhereUniqueInput!, data: ReferenceNumberUpdateInput!): ReferenceNumber
   updateReferenceNumbers(data: [ReferenceNumberUpdateArgs!]!): [ReferenceNumber]
-  deleteReferenceNumber(
-    where: ReferenceNumberWhereUniqueInput!
-  ): ReferenceNumber
-  deleteReferenceNumbers(
-    where: [ReferenceNumberWhereUniqueInput!]!
-  ): [ReferenceNumber]
+  deleteReferenceNumber(where: ReferenceNumberWhereUniqueInput!): ReferenceNumber
+  deleteReferenceNumbers(where: [ReferenceNumberWhereUniqueInput!]!): [ReferenceNumber]
   createApplication(data: ApplicationCreateInput!): Application
   createApplications(data: [ApplicationCreateInput!]!): [Application]
-  updateApplication(
-    where: ApplicationWhereUniqueInput!
-    data: ApplicationUpdateInput!
-  ): Application
+  updateApplication(where: ApplicationWhereUniqueInput!, data: ApplicationUpdateInput!): Application
   updateApplications(data: [ApplicationUpdateArgs!]!): [Application]
   deleteApplication(where: ApplicationWhereUniqueInput!): Application
   deleteApplications(where: [ApplicationWhereUniqueInput!]!): [Application]
+  createCountry(data: CountryCreateInput!): Country
+  createCountries(data: [CountryCreateInput!]!): [Country]
+  updateCountry(where: CountryWhereUniqueInput!, data: CountryUpdateInput!): Country
+  updateCountries(data: [CountryUpdateArgs!]!): [Country]
+  deleteCountry(where: CountryWhereUniqueInput!): Country
+  deleteCountries(where: [CountryWhereUniqueInput!]!): [Country]
+  createEligibility(data: EligibilityCreateInput!): Eligibility
+  createEligibilities(data: [EligibilityCreateInput!]!): [Eligibility]
+  updateEligibility(where: EligibilityWhereUniqueInput!, data: EligibilityUpdateInput!): Eligibility
+  updateEligibilities(data: [EligibilityUpdateArgs!]!): [Eligibility]
+  deleteEligibility(where: EligibilityWhereUniqueInput!): Eligibility
+  deleteEligibilities(where: [EligibilityWhereUniqueInput!]!): [Eligibility]
   createPage(data: PageCreateInput!): Page
   createPages(data: [PageCreateInput!]!): [Page]
   updatePage(where: PageWhereUniqueInput!, data: PageUpdateInput!): Page
@@ -339,23 +484,12 @@ type Mutation {
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
   endSession: Boolean!
-  authenticateUserWithPassword(
-    email: String!
-    password: String!
-  ): UserAuthenticationWithPasswordResult
-  createInitialUser(
-    data: CreateInitialUserInput!
-  ): UserAuthenticationWithPasswordSuccess!
-
-  """
-  send an email
-  """
-  sendEmail(templateId: String!, sendToEmailAddress: String!): EmailResponse
+  authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
+  createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
+  sendEmail: EmailResponse
 }
 
-union UserAuthenticationWithPasswordResult =
-    UserAuthenticationWithPasswordSuccess
-  | UserAuthenticationWithPasswordFailure
+union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
 
 type UserAuthenticationWithPasswordSuccess {
   sessionToken: String!
@@ -373,36 +507,22 @@ input CreateInitialUserInput {
 }
 
 type Query {
-  referenceNumbers(
-    where: ReferenceNumberWhereInput! = {}
-    orderBy: [ReferenceNumberOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [ReferenceNumber!]
+  referenceNumbers(where: ReferenceNumberWhereInput! = {}, orderBy: [ReferenceNumberOrderByInput!]! = [], take: Int, skip: Int! = 0): [ReferenceNumber!]
   referenceNumber(where: ReferenceNumberWhereUniqueInput!): ReferenceNumber
   referenceNumbersCount(where: ReferenceNumberWhereInput! = {}): Int
-  applications(
-    where: ApplicationWhereInput! = {}
-    orderBy: [ApplicationOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Application!]
+  applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0): [Application!]
   application(where: ApplicationWhereUniqueInput!): Application
   applicationsCount(where: ApplicationWhereInput! = {}): Int
-  pages(
-    where: PageWhereInput! = {}
-    orderBy: [PageOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Page!]
+  countries(where: CountryWhereInput! = {}, orderBy: [CountryOrderByInput!]! = [], take: Int, skip: Int! = 0): [Country!]
+  country(where: CountryWhereUniqueInput!): Country
+  countriesCount(where: CountryWhereInput! = {}): Int
+  eligibilities(where: EligibilityWhereInput! = {}, orderBy: [EligibilityOrderByInput!]! = [], take: Int, skip: Int! = 0): [Eligibility!]
+  eligibility(where: EligibilityWhereUniqueInput!): Eligibility
+  eligibilitiesCount(where: EligibilityWhereInput! = {}): Int
+  pages(where: PageWhereInput! = {}, orderBy: [PageOrderByInput!]! = [], take: Int, skip: Int! = 0): [Page!]
   page(where: PageWhereUniqueInput!): Page
   pagesCount(where: PageWhereInput! = {}): Int
-  users(
-    where: UserWhereInput! = {}
-    orderBy: [UserOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [User!]
+  users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
   keystone: KeystoneMeta!
@@ -423,8 +543,6 @@ type KeystoneMeta {
 }
 
 type KeystoneAdminMeta {
-  enableSignout: Boolean!
-  enableSessionItem: Boolean!
   lists: [KeystoneAdminUIListMeta!]!
   list(key: String!): KeystoneAdminUIListMeta
 }
@@ -446,6 +564,7 @@ type KeystoneAdminUIListMeta {
   fields: [KeystoneAdminUIFieldMeta!]!
   initialSort: KeystoneAdminUISort
   isHidden: Boolean!
+  isSingleton: Boolean
 }
 
 type KeystoneAdminUIFieldMeta {

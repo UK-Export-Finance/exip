@@ -9,6 +9,7 @@ export * from './links';
 export * from './product';
 export * from './quote-titles';
 export * from './summary-answers';
+export * from './tasks';
 export * from './uk-goods-and-services-calculate-description';
 export * from './uk-goods-and-services-description';
 

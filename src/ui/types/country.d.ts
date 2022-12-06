@@ -1,4 +1,5 @@
 interface Country {
+  id?: string;
   name: string;
   isoCode: string;
   riskCategory: string;

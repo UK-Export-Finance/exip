@@ -5,13 +5,14 @@
   {% set groups = params.groups %}
 
   {% for group in groups %}
-    <h2 class="govuk-heading-m">{{ group.title }}</h2>
+    <h2 class="govuk-heading-m" data-cy="task-list-group-heading-{{ group.title }}">{{ loop.index }}. {{ group.title }}</h2>
 
     <dl class="govuk-summary-list ukef-task-list">
       {% for task in group.tasks %}
 
         {{ taskListRow.render({
-          row: task
+          task: task,
+          groupTitle: group.title
         }) }}
 
       {% endfor %}

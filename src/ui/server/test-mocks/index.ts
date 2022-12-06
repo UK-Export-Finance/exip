@@ -5,6 +5,7 @@ import mockQuote from './mock-quote';
 import mockCisCountries from './mock-cis-countries';
 import mockCountries from './mock-countries';
 import mockCompanyResponse from './mock-companies-house-response';
+import mockApplication from './mock-application';
 
 const mockReq = () => {
   let req = {} as Request;
@@ -19,6 +20,7 @@ const mockReq = () => {
     },
     method: 'GET',
     originalUrl: 'mock',
+    params: {},
     redirect: jest.fn(),
     session: {
       submittedData: {
@@ -46,4 +48,4 @@ const mockRes = () => {
 
 const mockNext = jest.fn();
 
-export { mockAnswers, mockCisCountries, mockCountries, mockCompanyResponse, mockNext, mockSession, mockQuote, mockReq, mockRes };
+export { mockAnswers, mockApplication, mockCisCountries, mockCountries, mockCompanyResponse, mockNext, mockSession, mockQuote, mockReq, mockRes };

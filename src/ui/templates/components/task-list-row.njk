@@ -2,20 +2,31 @@
 
 {% macro render(params) %}
 
-  {% set row = params.row %}
+  {% set task = params.task %}
+  {% set groupTitle = params.groupTitle %}
  
   <div class="govuk-summary-list__row">
 
     <dt class="ukef-task-list--key-cell">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ row.href }}">
-        {{ row.title }}
-      </a>
+      <p class="govuk-body govuk-!-margin-bottom-0">
+        {% if task.href %}
+          <a class="govuk-link govuk-link--no-visited-state" href="{{ task.href }}" data-cy="task-list-group-{{ groupTitle }}-task-{{ task.title }}-link">
+            {{ task.title }}
+          </a>
+
+          {% else %}
+            <span data-cy="task-list-group-{{ groupTitle }}-task-{{ task.title }}">
+              {{ task.title }}
+            </span>
+        {% endif %}
+      </p>
     </dt>
 
     <dd class="govuk-summary-list__actions">
       {{ statusTag.render({
-        status: row.status,
-        href: row.href
+        status: task.status,
+        href: task.href,
+        dataCy: "task-list-group-" + groupTitle + "-task-" + task.title + "-status"
       }) }}
     </dd>
   </div>

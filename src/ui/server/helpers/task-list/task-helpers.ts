@@ -1,4 +1,4 @@
-import { SubmittedDataInsuranceEligibility, TaskListData, TaskListDataGroup, TaskListDataTask } from '../../../types';
+import { ApplicationFlat, TaskListData, TaskListDataGroup, TaskListDataTask } from '../../../types';
 import { TASKS } from '../../content-strings';
 
 /**
@@ -20,17 +20,32 @@ export const getTaskById = (groupTasks: Array<TaskListDataTask>, taskId: string)
   groupTasks.find((task: TaskListDataTask) => task.id === taskId) as TaskListDataTask;
 
 /**
+ * hasSubmittedField
+ * @param {Object} submittedData Submitted application data
+ * @param {String} field ID of the field to get
+ * @returns {Boolean} True if the field is in submittedData.
+ */
+// Note: this assumes that any data in submitted fields is a valid answer. E.g, false boolean is a valid answer.
+export const hasSubmittedField = (submittedData: ApplicationFlat, fieldId: string) => {
+  if (submittedData && fieldId && (submittedData[fieldId] || submittedData[fieldId] === false)) {
+    return true;
+  }
+
+  return false;
+};
+
+/**
  * getSubmittedFields
  * @param {Array} fields Array of field ids
  * @param {Object} submittedData Submitted application data
  * @returns {Array} array of submitted field ids.
  */
-export const getSubmittedFields = (fields: Array<string>, submittedData: SubmittedDataInsuranceEligibility): Array<string> => {
+export const getSubmittedFields = (fields: Array<string>, submittedData: ApplicationFlat): Array<string> => {
   const submittedFields = [] as Array<string>;
 
   if (fields) {
     fields.forEach((fieldId) => {
-      if (submittedData && submittedData[fieldId]) {
+      if (hasSubmittedField(submittedData, fieldId)) {
         submittedFields.push(fieldId);
       }
     });
@@ -45,7 +60,7 @@ export const getSubmittedFields = (fields: Array<string>, submittedData: Submitt
  * @param {Object} submittedData Submitted application data
  * @returns {Boolean}
  */
-export const taskIsInProgress = (taskFields: Array<string>, submittedData: SubmittedDataInsuranceEligibility) => {
+export const taskIsInProgress = (taskFields: Array<string>, submittedData: ApplicationFlat) => {
   const submittedFields = getSubmittedFields(taskFields, submittedData);
 
   if (submittedFields.length > 0 && submittedFields.length < taskFields.length) {
@@ -61,7 +76,7 @@ export const taskIsInProgress = (taskFields: Array<string>, submittedData: Submi
  * @param {Object} submittedData Submitted application data
  * @returns {Boolean}
  */
-export const taskIsComplete = (taskFields: Array<string>, submittedData: SubmittedDataInsuranceEligibility): boolean => {
+export const taskIsComplete = (taskFields: Array<string>, submittedData: ApplicationFlat): boolean => {
   const submittedFields = getSubmittedFields(taskFields, submittedData);
 
   if (submittedFields && submittedFields.length && taskFields && taskFields.length) {
@@ -79,16 +94,17 @@ export const taskIsComplete = (taskFields: Array<string>, submittedData: Submitt
  * @param {Object} submittedData Submitted application data
  * @returns {Boolean}
  */
-export const areTaskDependenciesMet = (dependencies: Array<string>, submittedData: SubmittedDataInsuranceEligibility): boolean => {
+export const areTaskDependenciesMet = (dependencies: Array<string>, submittedData: ApplicationFlat): boolean => {
   const totalDependencies = (dependencies && dependencies.length) || 0;
 
   let validDependencies = [];
 
   if (dependencies) {
     validDependencies = dependencies.filter((fieldId: string) => {
-      if (submittedData && submittedData[fieldId]) {
+      if (hasSubmittedField(submittedData, fieldId)) {
         return fieldId;
       }
+
       return null;
     });
   }
@@ -108,7 +124,7 @@ export const areTaskDependenciesMet = (dependencies: Array<string>, submittedDat
  * @param {Object} submittedData Submitted application data
  * @returns {String} Task status - cannot start/start now/in progress/completed
  */
-export const taskStatus = (task: TaskListDataTask, submittedData: SubmittedDataInsuranceEligibility): string => {
+export const taskStatus = (task: TaskListDataTask, submittedData: ApplicationFlat): string => {
   const { dependencies, fields } = task;
 
   const dependenciesMet = areTaskDependenciesMet(dependencies, submittedData);
@@ -120,7 +136,7 @@ export const taskStatus = (task: TaskListDataTask, submittedData: SubmittedDataI
   }
 
   if (dependenciesMet && !isInProgress && !isComplete) {
-    return TASKS.STATUS.START_NOW;
+    return TASKS.STATUS.NOT_STARTED_YET;
   }
 
   if (isInProgress) {
@@ -133,3 +149,11 @@ export const taskStatus = (task: TaskListDataTask, submittedData: SubmittedDataI
 
   return '-';
 };
+
+/**
+ * taskStatus
+ * @param {String} link Link to the task
+ * @param {String} status Status of the task
+ * @returns {String} Task link if the status is not `cannot start`
+ */
+export const taskLink = (link: string, status: string): string | null => (status === TASKS.STATUS.CANNOT_START ? null : link);

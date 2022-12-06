@@ -5,6 +5,7 @@ const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
 
 export const INSURANCE_ROUTES = {
+  ROOT: INSURANCE_ROOT,
   START: `${INSURANCE_ROOT}/start`,
   ELIGIBILITY: {
     CHECK_IF_ELIGIBLE: `${INSURANCE_ROOT}${ELIGIBILITY}/check-if-eligible`,
@@ -27,4 +28,13 @@ export const INSURANCE_ROUTES = {
   YOUR_BUSINESS: {
     ...YOUR_BUSINESS_ROUTES,
   },
+  ALL_SECTIONS: '/all-sections',
+  POLICY_AND_EXPORTS: {},
+};
+
+const POLICY_AND_EXPORTS_ROOT = '/policy-and-exports';
+
+INSURANCE_ROUTES.POLICY_AND_EXPORTS = {
+  ROOT: POLICY_AND_EXPORTS_ROOT,
+  TYPE_OF_POLICY: `${POLICY_AND_EXPORTS_ROOT}/type-of-policy`,
 };

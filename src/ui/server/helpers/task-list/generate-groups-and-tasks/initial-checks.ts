@@ -1,9 +1,8 @@
 import { TaskListDataTask } from '../../../../types';
 import { TASKS } from '../../../content-strings';
-import { TASK_IDS } from '../../../constants';
+import { FIELD_IDS, TASK_IDS } from '../../../constants';
 
-// NOTE: task list structure is temporary until design is final.
-// This is just an example.
+const { INITIAL_CHECKS } = TASKS.LIST;
 
 /**
  * createInitialChecksTasks
@@ -12,16 +11,9 @@ import { TASK_IDS } from '../../../constants';
 const createInitialChecksTasks = (): Array<TaskListDataTask> => [
   {
     href: '#',
-    title: TASKS.LIST.INITIAL_CHECKS.TASKS.ELIGIBILITY,
+    title: INITIAL_CHECKS.TASKS.ELIGIBILITY,
     id: TASK_IDS.INITIAL_CHECKS.ELIGIBILITY,
-    fields: ['a'],
-    dependencies: [],
-  } as TaskListDataTask,
-  {
-    href: '#',
-    title: TASKS.LIST.INITIAL_CHECKS.TASKS.CONTACT_DETAILS,
-    id: TASK_IDS.INITIAL_CHECKS.CONTACT_DETAILS,
-    fields: ['b', 'c'],
+    fields: Object.values(FIELD_IDS.INSURANCE.ELIGIBILITY),
     dependencies: [],
   } as TaskListDataTask,
 ];

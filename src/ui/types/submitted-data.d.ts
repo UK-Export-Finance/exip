@@ -2,13 +2,13 @@ import { Country } from './country';
 import { Currency } from './currency';
 
 type SharedEligibility = {
-  buyerCountry?: Country;
   hasMinimumUkGoodsOrServices?: boolean;
   validExporterLocation?: boolean;
 };
 
 interface SubmittedDataQuoteEligibility extends SharedEligibility {
   amount?: number;
+  buyerCountry?: Country;
   contractValue?: number;
   creditPeriodInMonths?: number;
   currency?: Currency;
@@ -18,8 +18,8 @@ interface SubmittedDataQuoteEligibility extends SharedEligibility {
   policyLength?: number;
 }
 
-interface SubmittedDataInsuranceEligibility extends SharedEligibility {
-  haveCompaniesHouseNumber?: boolean;
+interface InsuranceEligibilityCore extends SharedEligibility {
+  hasCompaniesHouseNumber?: boolean;
   otherPartiesInvolved?: boolean;
   paidByLetterOfCredit?: boolean;
   needPreCreditPeriodCover?: boolean;
@@ -27,9 +27,17 @@ interface SubmittedDataInsuranceEligibility extends SharedEligibility {
   wantCoverOverMaxPeriod?: boolean;
 }
 
+interface InsuranceEligibility extends InsuranceEligibilityCore {
+  buyerCountry: Country;
+}
+
+interface SubmittedDataInsuranceEligibility extends InsuranceEligibilityCore {
+  buyerCountry?: Country;
+}
+
 type SubmittedData = {
   quoteEligibility: SubmittedDataQuoteEligibility;
   insuranceEligibility: SubmittedDataInsuranceEligibility;
 };
 
-export { SubmittedDataQuoteEligibility, SubmittedDataInsuranceEligibility, SubmittedData };
+export { SubmittedDataQuoteEligibility, InsuranceEligibility, InsuranceEligibilityCore, SubmittedDataInsuranceEligibility, SubmittedData };

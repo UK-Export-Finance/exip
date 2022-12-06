@@ -1,20 +1,25 @@
-import { taskStatus } from './task-helpers';
-import { TaskListData, TaskListDataTask, TaskListGroup, SubmittedDataInsuranceEligibility } from '../../../types';
+import { taskStatus, taskLink } from './task-helpers';
+import { TaskListData, TaskListDataTask, TaskListGroup, ApplicationFlat } from '../../../types';
 
 /**
- * generateTaskStatuses
+ * generateTaskStatusesAndLinks
  * @param {Array} taskListData Task list groups and tasks
  * @param {Object} submittedData Submitted application data
- * @returns {Object} Task list groups and tasks with added task statuses.
+ * @returns {Object} Task list groups and tasks with added statuses and links.
  */
-export const generateTaskStatuses = (taskListData: TaskListData, submittedData: SubmittedDataInsuranceEligibility): TaskListData => {
+export const generateTaskStatusesAndLinks = (taskListData: TaskListData, submittedData: ApplicationFlat): TaskListData => {
   const tasksList = taskListData.map((group) => {
     return {
       ...group,
-      tasks: group.tasks.map((task) => ({
-        ...task,
-        status: taskStatus(task, submittedData),
-      })),
+      tasks: group.tasks.map((task) => {
+        const status = taskStatus(task, submittedData);
+
+        return {
+          ...task,
+          status,
+          href: taskLink(task.href, status),
+        };
+      }),
     };
   }) as TaskListData;
 
@@ -47,12 +52,12 @@ export const generateSimplifiedTaskList = (taskList: TaskListData): Array<TaskLi
  * @param {Object} submittedData Submitted application data
  * @returns {Array} generateSimplifiedTaskList- Array of groups and tasks with only the data required for UI consumption.
  */
-const generateTaskList = (groupsAndTasks: TaskListData, submittedData: SubmittedDataInsuranceEligibility): Array<TaskListGroup> => {
-  // add task statuses
-  const withStatuses = generateTaskStatuses(groupsAndTasks, submittedData);
+const generateTaskList = (groupsAndTasks: TaskListData, submittedData: ApplicationFlat): Array<TaskListGroup> => {
+  // add task statuses and links
+  const withStatusesAndLinks = generateTaskStatusesAndLinks(groupsAndTasks, submittedData);
 
   // simplify and map the data structure into an array of objects for UI component consumption.
-  const simplifiedTaskList = generateSimplifiedTaskList(withStatuses);
+  const simplifiedTaskList = generateSimplifiedTaskList(withStatusesAndLinks);
 
   return simplifiedTaskList;
 };

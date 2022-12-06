@@ -1,6 +1,7 @@
 import express from 'express';
-import { ROUTES } from '../../constants';
+import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../constants/routes/insurance';
 import { get as startGet, post as startPost } from '../../controllers/insurance/start';
+import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
 import insuranceEligibilityRoutes from './eligibility';
 import insuranceBusinessRouter from './business';
 
@@ -9,8 +10,10 @@ import insuranceBusinessRouter from './business';
 const insuranceRouter = express.Router();
 /* eslint-enable @typescript-eslint/ban-ts-comment */
 
-insuranceRouter.get(ROUTES.INSURANCE.START, startGet);
-insuranceRouter.post(ROUTES.INSURANCE.START, startPost);
+insuranceRouter.get(INSURANCE_ROUTES.START, startGet);
+insuranceRouter.post(INSURANCE_ROUTES.START, startPost);
+
+insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.ALL_SECTIONS}`, allSectionsGet);
 
 insuranceRouter.use('/', insuranceEligibilityRoutes);
 insuranceRouter.use('/', insuranceBusinessRouter);

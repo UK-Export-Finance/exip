@@ -5,4 +5,5 @@ export const INSURANCE_TEMPLATES = {
   START: 'insurance/start.njk',
   ELIGIBILITY: ELIGIBILITY_TEMPLATES,
   EXPORTER_BUSINESS: BUSINESS_TEMPLATES,
+  ALL_SECTIONS: 'insurance/all-sections.njk',
 };
