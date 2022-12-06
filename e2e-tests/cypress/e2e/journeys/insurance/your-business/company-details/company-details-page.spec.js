@@ -40,7 +40,7 @@ context('Your business - company details page - As an Exporter I want to enter m
     cy.lighthouse({
       accessibility: 100,
       performance: 75,
-      'best-practices': 100,
+      'best-practices': 93,
       seo: 70,
     });
   });
