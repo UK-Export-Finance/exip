@@ -1,9 +1,19 @@
+const SHARED_ELIGIBILITY = {
+  BUYER_COUNTRY: 'buyerCountry',
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',
+  VALID_EXPORTER_LOCATION: 'validExporterLocation',
+};
+
 export const FIELD_IDS = {
+  SHARED_ELIGIBILITY,
   OPTIONAL_COOKIES: 'optionalCookies',
   VALID_BUYER_BODY: 'validBuyerBody',
+
   VALID_EXPORTER_LOCATION: 'validExporterLocation',
   BUYER_COUNTRY: 'buyerCountry',
   HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',
+
+  COUNTRY: 'country',
   AMOUNT_CURRENCY: 'amountAndCurrency',
   CURRENCY: 'currency',
   CONTRACT_VALUE: 'contractValue',
@@ -24,6 +34,7 @@ export const FIELD_IDS = {
   },
   INSURANCE: {
     ELIGIBILITY: {
+      ...SHARED_ELIGIBILITY,
       WANT_COVER_OVER_MAX_AMOUNT: 'wantCoverOverMaxAmount',
       WANT_COVER_OVER_MAX_PERIOD: 'wantCoverOverMaxPeriod',
       OTHER_PARTIES_INVOLVED: 'otherPartiesInvolved',

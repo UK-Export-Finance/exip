@@ -1,33 +1,41 @@
-import generateTaskList, { generateTaskStatuses, generateSimplifiedTaskList } from '.';
-import { taskStatus } from './task-helpers';
+import generateTaskList, { generateTaskStatusesAndLinks, generateSimplifiedTaskList } from '.';
+import { taskStatus, taskLink } from './task-helpers';
 import generateGroupsAndTasks from './generate-groups-and-tasks';
-import { TaskListDataTask, SubmittedDataInsuranceEligibility } from '../../../types';
+import flattenApplicationData from '../flatten-application-data';
+import { TaskListDataTask, ApplicationFlat } from '../../../types';
+import { mockApplication } from '../../test-mocks';
 
 describe('server/helpers/task-list', () => {
-  const mockSubmittedData = {
-    wantCoverOverMaxAmount: false,
-    wantCoverOverMaxPeriod: false,
-  };
+  const mockApplicationFlat = flattenApplicationData(mockApplication);
 
-  describe('generateTaskStatuses', () => {
+  describe('generateTaskStatusesAndLinks', () => {
     it('should return an array of groups and tasks with task statuses', () => {
       const mockTaskListData = generateGroupsAndTasks();
 
-      const result = generateTaskStatuses(mockTaskListData, mockSubmittedData);
+      const result = generateTaskStatusesAndLinks(mockTaskListData, mockApplicationFlat);
 
-      const mapTask = (task: TaskListDataTask, submittedData: SubmittedDataInsuranceEligibility) => ({
-        ...task,
-        status: taskStatus(task, submittedData),
-      });
+      const mapTask = (task: TaskListDataTask, application: ApplicationFlat) => {
+        const status = taskStatus(task, application);
+
+        return {
+          ...task,
+          status,
+          href: taskLink(task.href, status),
+        };
+      };
 
       const expectedTasks = {
         initialChecks: () => {
           const { tasks } = mockTaskListData[0];
-          return tasks.map((task) => mapTask(task, mockSubmittedData));
+          return tasks.map((task) => mapTask(task, mockApplicationFlat));
         },
         prepareApplication: () => {
           const { tasks } = mockTaskListData[1];
-          return tasks.map((task) => mapTask(task, mockSubmittedData));
+          return tasks.map((task) => mapTask(task, mockApplicationFlat));
+        },
+        submitApplication: () => {
+          const { tasks } = mockTaskListData[2];
+          return tasks.map((task) => mapTask(task, mockApplicationFlat));
         },
       };
 
@@ -40,6 +48,10 @@ describe('server/helpers/task-list', () => {
           ...mockTaskListData[1],
           tasks: expectedTasks.prepareApplication(),
         },
+        {
+          ...mockTaskListData[2],
+          tasks: expectedTasks.submitApplication(),
+        },
       ];
 
       expect(result).toEqual(expected);
@@ -49,7 +61,7 @@ describe('server/helpers/task-list', () => {
   describe('generateSimplifiedTaskList', () => {
     it('should return a simplified task list in an array of objects structure', () => {
       const mockTaskListData = generateGroupsAndTasks();
-      const taskListDataWithStates = generateTaskStatuses(mockTaskListData, mockSubmittedData);
+      const taskListDataWithStates = generateTaskStatusesAndLinks(mockTaskListData, mockApplicationFlat);
 
       const result = generateSimplifiedTaskList(taskListDataWithStates);
 
@@ -72,6 +84,15 @@ describe('server/helpers/task-list', () => {
             title: task.title,
           })),
         },
+        {
+          title: taskListDataWithStates[2].title,
+          tasks: Object.values(taskListDataWithStates[2].tasks).map((task) => ({
+            id: task.id,
+            href: task.href,
+            status: task.status,
+            title: task.title,
+          })),
+        },
       ];
 
       expect(result).toEqual(expected);
@@ -82,11 +103,11 @@ describe('server/helpers/task-list', () => {
     it('should return a simplified task list with statuses', () => {
       const mockTaskListData = generateGroupsAndTasks();
 
-      const result = generateTaskList(mockTaskListData, mockSubmittedData);
+      const result = generateTaskList(mockTaskListData, mockApplicationFlat);
 
-      const withStatuses = generateTaskStatuses(mockTaskListData, mockSubmittedData);
+      const withStatusesAndLinks = generateTaskStatusesAndLinks(mockTaskListData, mockApplicationFlat);
 
-      const expected = generateSimplifiedTaskList(withStatuses);
+      const expected = generateSimplifiedTaskList(withStatusesAndLinks);
 
       expect(result).toEqual(expected);
     });

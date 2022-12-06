@@ -1,7 +1,9 @@
 "use strict";
+var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
@@ -15,6 +17,10 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // keystone.ts
@@ -200,7 +206,7 @@ var lists = {
 var import_config = require("dotenv/config");
 var import_auth = require("@keystone-6/auth");
 var import_session = require("@keystone-6/core/session");
-var sessionSecret = String(process.env.SESSION_SECRET || "asdfaslfdjjasjoiwefjwoerij23j8j2oi2j");
+var sessionSecret = String(process.env.SESSION_SECRET);
 if (!sessionSecret) {
   if (process.env.NODE_ENV === "production") {
     throw new Error("SESSION_SECRET environment variable must be set in production");
@@ -223,6 +229,11 @@ var session = (0, import_session.statelessSessions)({
 
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
+var import_notifications_node_client = require("notifications-node-client");
+var import_dotenv = __toESM(require("dotenv"));
+import_dotenv.default.config();
+var notifyKey = process.env.GOV_NOTIFY_API_KEY;
+var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
   typeDefs: `
@@ -235,7 +246,22 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
       `,
   resolvers: {
-    Mutation: {}
+    Mutation: {
+      sendEmail: async (root, variables) => {
+        try {
+          console.info("Calling Notify API. templateId: ", variables.templateId);
+          const { templateId, sendToEmailAddress } = variables;
+          await notifyClient.sendEmail(templateId, sendToEmailAddress, {
+            personalisation: {},
+            reference: null
+          });
+          return { success: true };
+        } catch (err) {
+          console.error("Unable to send email", { err });
+          return { success: false };
+        }
+      }
+    }
   }
 });
 
