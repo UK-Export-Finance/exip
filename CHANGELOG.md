@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.7](https://github.com/UK-Export-Finance/exip/compare/v1.14.6...v1.14.7) (2022-12-06)
+
+
+### Miscellaneous
+
+* High vulenerability - jpeg-js updated from 0.4.3 to 0.4.4 ([#173](https://github.com/UK-Export-Finance/exip/issues/173)) ([5ac714e](https://github.com/UK-Export-Finance/exip/commit/5ac714e26f98d36086246f12f3b2470f5e5b4358))
+
 ## [1.14.6](https://github.com/UK-Export-Finance/exip/compare/v1.14.5...v1.14.6) (2022-12-06)
 
 
