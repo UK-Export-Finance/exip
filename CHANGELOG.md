@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.6](https://github.com/UK-Export-Finance/exip/compare/v1.14.5...v1.14.6) (2022-12-06)
+
+
+### Miscellaneous
+
+* **dependencies:** Bumped various dependencies ([5d9328d](https://github.com/UK-Export-Finance/exip/commit/5d9328d8c18cb47657f6d275bcfa8de658e72bb2))
+
 ## [1.14.5](https://github.com/UK-Export-Finance/exip/compare/v1.14.4...v1.14.5) (2022-12-01)
 
 
