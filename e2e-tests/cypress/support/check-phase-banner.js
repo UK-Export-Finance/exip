@@ -1,5 +1,5 @@
 import partials from '../e2e/partials';
-import { ROUTES } from '../../constants';
+import { LINKS } from '../../content-strings';
 
 export default () => {
   partials.phaseBanner.tag().invoke('text').then((text) => {
@@ -14,5 +14,5 @@ export default () => {
     expect(text.trim()).equal('feedback');
   });
 
-  partials.phaseBanner.feedbackLink().should('have.attr', 'href', ROUTES.FEEDBACK);
+  partials.phaseBanner.feedbackLink().should('have.attr', 'href', LINKS.EXTERNAL.FEEDBACK);
 };

@@ -1,21 +1,26 @@
 const LINKS = require('./links');
 
-const COMPANY_BASED_PAGE = {
-  PAGE_TITLE: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
-  HEADING: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
-};
-
 const BUYER_COUNTRY_PAGE = {
   PAGE_TITLE: 'Where is your buyer based?',
   HEADING: 'Where is your buyer based?',
 };
 
-const CAN_GET_PRIVATE_INSURANCE_PAGE = {
-  PAGE_TITLE: 'Are you able to get insurance for this export from companies in the private sector?',
-  HEADING: 'Are you able to get insurance for this export from companies in the private sector?',
+const BUYER_BODY_PAGE = {
+  PAGE_TITLE: 'Is your buyer a government or public sector body?',
+  HEADING: 'Is your buyer a government or public sector body?',
+  DETAILS: {
+    INTRO: 'What counts as a government or public sector body?',
+    BODY_1: 'This means a formally established organisation that is, at least in part, publicly funded to deliver a public or government service.',
+    BODY_2: 'For example, a central government department, a local authority or a public utlity company.',
+  },
 };
 
-const UK_GOODS_OR_SERVICES_PAGE = {
+const COMPANY_BASED_PAGE = {
+  PAGE_TITLE: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
+  HEADING: 'Is your company based inside the UK, Channel Islands or Isle of Man?',
+};
+
+const HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE = {
   PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
   HEADING: 'Is at least 20% of your export contract value made up from UK goods or services?',
   DETAILS: {
@@ -23,7 +28,7 @@ const UK_GOODS_OR_SERVICES_PAGE = {
     INCLUDES: {
       INTRO: 'UK goods and services includes:',
       PRODUCTS: 'products made in the UK',
-      MANUFACTURED: 'goods manufactured outside the UK but processed or modified here - they\'ll usually still have a certificate of UK origin',
+      MANUFACTURED: 'goods manufactured outside the UK but processed or modified in the UK, which would then be eligible for a certificate of UK origin',
       STAFFING_COSTS: {
         LINK: {
           TEXT: 'staffing costs',
@@ -38,23 +43,24 @@ const UK_GOODS_OR_SERVICES_PAGE = {
         },
         TEXT: 'that are produced in the UK',
       },
+      CAN_COUNT_AS: 'If any of the above are from the Channel Islands or Isle of Man, you can also count them as UK goods or services.',
     },
     DOES_NOT_COUNT: {
       HEADING: 'What does not count as UK goods and services',
-      TEXT: 'Goods or services from outside the UK that you\'ll send directly to the buyer unprocessed or unaltered in the UK are classed as foreign goods and services.',
+      TEXT: 'Goods or services from outside the UK that you\'ll send directly to the buyer unprocessed or unaltered in the UK do not count. Instead, they\'re classed as foreign goods and services.',
     },
     STAFFING_COSTS: {
-      HEADING: 'Staffing costs',
-      TEXT: 'You can treat the following staffing costs as UK services:',
+      HEADING: 'Staffing costs for this export contract',
+      TEXT: 'You can count the following (but only count the actual staffing costs incurred on this specific export contract):',
       LIST: [
         {
           TEXT: 'employees of your UK business',
         },
         {
-          TEXT: 'contractors supplied to work for you by a UK sub- contractor',
+          TEXT: 'contractors supplied to work for you by a UK sub-contractor',
         },
         {
-          TEXT: 'staff seconded from abroad to work for you in the UK, on the export contract, and for whom you’re financially responsible',
+          TEXT: 'staff seconded from abroad to work for you in the UK, on the export contract, and for whom you\'re financially responsible',
         },
       ],
     },
@@ -67,7 +73,7 @@ const UK_GOODS_OR_SERVICES_PAGE = {
       BODY_1: 'You can speak with',
       LINK: {
         TEXT: 'an export finance manager',
-        HREF: '#',
+        HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
       },
       BODY_2: 'if you\'d like to check whether you\'re eligible around this criteria.',
       BODY_3: 'We\'ll also calculate this thoroughly if you go on to make a full application.',
@@ -83,8 +89,8 @@ const POLICY_TYPE_PAGE = {
 const TELL_US_ABOUT_YOUR_POLICY_PAGE = {
   SINGLE_POLICY_PAGE_TITLE: 'Tell us about the single contract policy you need',
   SINGLE_POLICY_HEADING: 'Tell us about the single contract policy you need',
-  MULTI_POLICY_PAGE_TITLE: 'Tell us about the multiple policy you need',
-  MULTI_POLICY_HEADING: 'Tell us about the multiple policy you need',
+  MULTI_POLICY_PAGE_TITLE: 'Tell us about the multiple contract policy you need',
+  MULTI_POLICY_HEADING: 'Tell us about the multiple contract policy you need',
 };
 
 const CHECK_YOUR_ANSWERS_PAGE = {
@@ -92,6 +98,7 @@ const CHECK_YOUR_ANSWERS_PAGE = {
   HEADING: 'Check your answers',
   GROUP_HEADING_EXPORT: 'Export details',
   GROUP_HEADING_POLICY: 'Policy details',
+  SUBMIT_BUTTON: 'Get your quote',
 };
 
 const CANNOT_OBTAIN_COVER_PAGE = {
@@ -99,11 +106,10 @@ const CANNOT_OBTAIN_COVER_PAGE = {
   HEADING: 'You cannot apply for UKEF export insurance',
   REASON: {
     INTRO: 'This is because',
-    UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man',
+    UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man.',
     UNSUPPORTED_BUYER_COUNTRY_1: 'your buyer is based in',
     UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
-    CAN_GET_PRIVATE_INSURANCE: 'you\'re able to get insurance for this export from companies in the private sector.',
-    NOT_ENOUGH_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from  at least 20% UK goods or services.',
+    NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from  at least 20% UK goods or services.',
   },
   ACTIONS: {
     INTRO: 'You can:',
@@ -111,7 +117,7 @@ const CANNOT_OBTAIN_COVER_PAGE = {
       TEXT: 'read about',
       LINK: {
         TEXT: 'eligibility',
-        HREF: `${LINKS.EXTERNAL.GUIDANCE}#eligibility`,
+        HREF: LINKS.EXTERNAL.GUIDANCE,
       },
     },
     CONTACT_APPROVED_BROKER: {
@@ -122,6 +128,35 @@ const CANNOT_OBTAIN_COVER_PAGE = {
       TEXT: 'who may be able to help you get insurance from the private sector, if you`ve not tried already',
     },
   },
+};
+
+const GET_A_QUOTE_BY_EMAIL_PAGE = {
+  PAGE_TITLE: 'You need to get a quote by email',
+  HEADING: 'You need to get a quote by email',
+  REASON: {
+    BUYER_BODY: 'We cannot give you a quote online because your buyer is a government or public sector body.',
+    BUYER_BODY_DESCRIPTION: "We can still give you a quote but may need extra information from you to assess the risks around your buyer first.",
+    BUYER_COUNTRY: 'We cannot give you a quote online because of the country where your buyer is based.',
+    BUYER_COUNTRY_DESCRIPTION: "We can still give you a quote but may need extra information from you to assess the risks around your buyer's country first.",
+  },
+  ACTION: [
+    [
+      {
+        text: 'Download this form',
+        href: LINKS.EXTERNAL.NBI_FORM,
+      },
+      {
+        text: ' and fill it in. ',
+      },
+      {
+        text: 'Email it to',
+      },
+      {
+        text: 'exipunderwriting@ukexportfinance.gov.uk',
+        href: 'mailto:exipunderwriting@ukexportfinance.gov.uk',
+      },
+    ],
+  ],
 };
 
 const YOUR_QUOTE_PAGE = {
@@ -142,7 +177,7 @@ const YOUR_QUOTE_PAGE = {
         },
         {
           text: 'full application',
-          href: '#',
+          href: LINKS.EXTERNAL.FULL_APPLICATION,
         },
         {
           text: '. ',
@@ -225,6 +260,35 @@ const COOKIES_PAGE = {
       },
     ],
   },
+  OPTIONAL_COOKIES: {
+    HEADING: 'Optional Cookies',
+    BODY_1:
+      'With your permission, we use Google Analytics to collect how you use this service and your web performance experience while visiting so we can improve it based on user needs.',
+    BODY_2: 'We do not allow Google to use or share the data about how you use this service.',
+    BODY_3: 'Google Analytics stores anonymised information about:',
+    ANALYTICS_INFO_LIST: [
+      {
+        text: 'how you got to this service',
+      },
+      {
+        text: 'the pages you visit on GOV.UK and government digital services, and how long you spend on each page',
+      },
+      {
+        text: "what you click on while you're visiting the site",
+      },
+    ],
+  },
+  SUCCESS_BANNER: {
+    HEADING: 'Your cookie settings were saved',
+    BODY: 'Government services may set additional cookies and, if so, will have their own cookie policy and banner.',
+    GO_BACK: 'Go back to the page you were looking at',
+  },
+};
+
+const NEED_TO_START_AGAIN = {
+  PAGE_TITLE: 'You need to start again',
+  HEADING: 'You need to start again',
+  REASON: 'This is because you have not yet answered all the eligibility questions.',
 };
 
 const PAGE_NOT_FOUND_PAGE = {
@@ -240,16 +304,18 @@ const PROBLEM_WITH_SERVICE_PAGE = {
 };
 
 module.exports = {
-  COMPANY_BASED_PAGE,
   BUYER_COUNTRY_PAGE,
-  CAN_GET_PRIVATE_INSURANCE_PAGE,
-  UK_GOODS_OR_SERVICES_PAGE,
+  BUYER_BODY_PAGE,
+  COMPANY_BASED_PAGE,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE,
   POLICY_TYPE_PAGE,
   TELL_US_ABOUT_YOUR_POLICY_PAGE,
   CHECK_YOUR_ANSWERS_PAGE,
   CANNOT_OBTAIN_COVER_PAGE,
+  GET_A_QUOTE_BY_EMAIL_PAGE,
   YOUR_QUOTE_PAGE,
   COOKIES_PAGE,
+  NEED_TO_START_AGAIN,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
 };

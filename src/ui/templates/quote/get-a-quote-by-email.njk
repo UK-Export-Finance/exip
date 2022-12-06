@@ -1,0 +1,33 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% import '../components/details-text.njk' as detailsText %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+
+  {% if EXIT_REASON %}
+    <p class="govuk-body" data-cy="reason">{{ CONTENT_STRINGS.REASON.INTRO }} {{ EXIT_REASON }}</p>
+  {% endif %}
+
+  {% if EXIT_DESCRIPTION %}
+    <p class="govuk-body" data-cy="description">{{ EXIT_DESCRIPTION }}</p>
+  {% endif %}
+
+  {{detailsText.render({
+    items: CONTENT_STRINGS.ACTION
+  }) }}
+
+{% endblock %}

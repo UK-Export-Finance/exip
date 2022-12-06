@@ -1,0 +1,13 @@
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+
+<div class="govuk-width-container" role="complementary">
+  {{ govukPhaseBanner({
+    tag: {
+      text: "alpha"
+    },
+    attributes: {
+      "data-cy": "phase-banner"
+    },
+    html: '<span data-cy="phase-banner-text">This is a new service - your <a class="govuk-link" href="https://forms.office.com/r/TacytrRCgJ" data-cy="phase-banner-feedback-link">feedback</a> will help us to improve it.</span>'
+  }) }}
+</div>

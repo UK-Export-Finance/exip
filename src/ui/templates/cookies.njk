@@ -1,0 +1,195 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from 'govuk/components/radios/macro.njk' import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% import './components/text-list.njk' as textList %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  {% if showSuccessMessage %}
+    {% set html %}
+      <h3 class="govuk-notification-banner__heading" data-cy="success-message-heading">{{ CONTENT_STRINGS.SUCCESS_BANNER.HEADING }}</h3>
+      <p class="govuk-body" data-cy="success-message-body">{{ CONTENT_STRINGS.SUCCESS_BANNER.BODY }}</p>
+
+      {% if showSuccessMessageGoBackLink %}
+        <p class="govuk-body"><a class="govuk-notification-banner__link" href="{{ BACK_LINK }}" data-cy="success-message-go-back-link">{{ CONTENT_STRINGS.SUCCESS_BANNER.GO_BACK }}</a></p>
+      {% endif %}
+    {% endset %}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {{ govukNotificationBanner({
+          html: html,
+          type: 'success'
+        }) }}
+      </div>
+    </div>
+  {% endif %}
+
+  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+
+  <p class="govuk-body" data-cy="body-1">{{ CONTENT_STRINGS.BODY_1 }}</p>
+  <p class="govuk-body" data-cy="body-2">{{ CONTENT_STRINGS.BODY_2 }}</p>
+
+  <h2 class="govuk-heading-m" data-cy="essential-cookies-heading">{{ CONTENT_STRINGS.ESSENTIAL_COOKIES.HEADING }}</h2>
+
+  <p class="govuk-body" data-cy="essential-cookies-intro">{{ CONTENT_STRINGS.ESSENTIAL_COOKIES.INTRO }}</p>
+
+  {{ govukTable({
+    firstCellIsHeader: true,
+    attributes: {
+      "data-cy": "essential-cookies-table"
+    },
+    head: [
+      {
+        text: CONTENT_STRINGS.TABLE_HEADINGS.NAME,
+        attributes: {
+          "data-cy": "essential-cookies-table-head-cell-1"
+        }
+      },
+      {
+        text: CONTENT_STRINGS.TABLE_HEADINGS.PURPOSE,
+        attributes: {
+          "data-cy": "essential-cookies-table-head-cell-2"
+        }
+      },
+      {
+        text: CONTENT_STRINGS.TABLE_HEADINGS.EXPIRES,
+        attributes: {
+          "data-cy": "essential-cookies-table-head-cell-3"
+        }
+      }
+    ],
+    rows: [
+      [
+        {
+          text: CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].NAME,
+          attributes: {
+            "data-cy": "essential-cookies-table-row-1-cell-1"
+          }
+        },
+        {
+          text: CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].PURPOSE,
+          attributes: {
+            "data-cy": "essential-cookies-table-row-1-cell-2"
+          }
+        },
+        {
+          text: CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].EXPIRES,
+          attributes: {
+            "data-cy": "essential-cookies-table-row-1-cell-3"
+          }
+        }
+      ],
+      [
+        {
+          text: CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].NAME,
+          attributes: {
+            "data-cy": "essential-cookies-table-row-2-cell-1"
+          }
+        },
+        {
+          text: CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].PURPOSE,
+          attributes: {
+            "data-cy": "essential-cookies-table-row-2-cell-2"
+          }
+        },
+        {
+          text: CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].EXPIRES,
+          attributes: {
+            "data-cy": "essential-cookies-table-row-2-cell-3"
+          }
+        }
+      ]
+    ]
+  }) }}
+
+  <h2 class="govuk-heading-m" data-cy="optional-cookies-heading">{{ CONTENT_STRINGS.OPTIONAL_COOKIES.HEADING }}</h2>
+
+  <p class="govuk-body" data-cy="optional-cookies-body-1">{{ CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_1 }}</p>
+  <p class="govuk-body" data-cy="optional-cookies-body-2">{{ CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_2 }}</p>
+  <p class="govuk-body" data-cy="optional-cookies-body-3">{{ CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_3 }}</p>
+
+  {{ textList.render({
+    items: CONTENT_STRINGS.OPTIONAL_COOKIES.ANALYTICS_INFO_LIST,
+    dataCy: 'analytics-info-list'
+  }) }}
+
+  <form method="POST" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {{ govukRadios({
+      idPrefix: FIELD_ID,
+      name: FIELD_ID,
+      items: [
+        {
+          label: {
+            attributes: {
+              id: FIELD.OPTIONS.ACCEPT.ID + '-label',
+              'data-cy': FIELD.OPTIONS.ACCEPT.ID + '-label'
+            }
+          },
+          value: FIELD.OPTIONS.ACCEPT.VALUE,
+          text: FIELD.OPTIONS.ACCEPT.TEXT,
+          attributes: {
+            "data-cy": FIELD.OPTIONS.ACCEPT.ID + "-input"
+          },
+          checked: submittedValue === 'true'
+        },
+        {
+          label: {
+            attributes: {
+              id: FIELD.OPTIONS.REJECT.ID + '-label',
+              'data-cy': FIELD.OPTIONS.REJECT.ID + '-label'
+            }
+          },
+          value: FIELD.OPTIONS.REJECT.VALUE,
+          text: FIELD.OPTIONS.REJECT.TEXT,
+          attributes: {
+            "data-cy": FIELD.OPTIONS.REJECT.ID + "-input"
+          },
+          checked: submittedValue === 'false'
+        }
+      ],
+      errorMessage: validationErrors.errorList[FIELD_ID]and {
+        text: validationErrors.errorList[FIELD_ID].text,
+        attributes: {
+          "data-cy": FIELD_ID + "-error-message"
+        }
+      }
+    }) }}
+    
+    {{ govukButton({
+      text: CONTENT_STRINGS.BUTTONS.SAVE_CHANGES,
+      classes: "change-cookies-submit-button",
+      attributes: {
+        'data-cy': 'submit-button'
+      }
+    }) }}
+
+  </form>
+
+{% endblock %}

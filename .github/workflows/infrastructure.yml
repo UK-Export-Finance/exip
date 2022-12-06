@@ -1,0 +1,33 @@
+name: EXIPS - Base Infrastructure
+
+on:
+  push:
+    branches: [ infrastructure ]
+    paths: 
+    - '.github/workflows/infrastructure.yml'
+
+jobs:
+
+  prod:
+    name: Production  
+    environment: prod
+    runs-on: [self-hosted, linux, deployment, infrastructure]
+    steps:
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Azure Defaults
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az configure --defaults location=${{ secrets.AZURE_REGION }}
+          az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
+
+    - name: ACR
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az acr create --name ${{ secrets.ACR }} --sku Standard --admin-enabled true

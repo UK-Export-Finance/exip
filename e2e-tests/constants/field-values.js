@@ -1,11 +1,15 @@
 const FIELD_VALUES = {
-  CAN_GET_PRIVATE_INSURANCE: {
-    YES: true,
-    NO: false,
+  OPTIONAL_COOKIES: {
+    ACCEPT: 'accept',
+    REJECT: 'reject',
   },
   POLICY_TYPE: {
     SINGLE: 'Single contract policy',
     MULTI: 'Multiple contract policy',
+  },
+  POLICY_LENGTH: {
+    // default multi policy length in months
+    MULTI: 12,
   },
 };
 

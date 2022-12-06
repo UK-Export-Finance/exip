@@ -3,7 +3,7 @@ import { PAGES } from '../../../content-strings';
 
 const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
 
-context('Page not found', () => {
+context('404 Page not found', () => {
   before(() => {
     cy.visit('/test', {
       auth: {
@@ -11,6 +11,14 @@ context('Page not found', () => {
         password: Cypress.config('basicAuthSecret'),
       },
     });
+  });
+
+  it('renders an analytics cookies consent banner that can be accepted', () => {
+    cy.checkAnalyticsCookiesConsentAndAccept();
+  });
+
+  it('renders an analytics cookies consent banner that can be rejected', () => {
+    cy.rejectAnalyticsCookies();
   });
 
   it('renders a phase banner', () => {

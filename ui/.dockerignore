@@ -1,9 +1,0 @@
-node_modules
-Dockerfile
-docker-compose.yml
-generated_reports
-.git
-*.md
-.env
-.env.sample
-.eslintignore

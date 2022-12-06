@@ -15,6 +15,10 @@ const FOOTER = {
     VALUE: 'Monday to Friday, 9am to 5pm (excluding public holidays)',
   },
   SUPPORT_LINKS_HEADING: 'Support Links',
+  PRIVACY: {
+    TEXT: 'Privacy',
+    HREF: 'https://www.gov.uk/government/publications/ukef-privacy-notice',
+  },
   COOKIES: {
     TEXT: 'Cookies',
     HREF: ROUTES.COOKIES,

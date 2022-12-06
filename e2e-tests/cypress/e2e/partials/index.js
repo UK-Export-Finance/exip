@@ -1,15 +1,15 @@
+import cookieBanner from './cookieBanner';
 import footer from './footer';
+import phaseBanner from './phaseBanner';
 
 const partials = {
   backLink: () => cy.get('[data-cy="back-link"]'),
+  cookieBanner,
   errorSummaryListItems: () => cy.get('.govuk-error-summary li'),
   errorSummaryListItemLinks: () => cy.get('.govuk-error-summary li a'),
-  phaseBanner: {
-    tag: () => cy.get('.govuk-phase-banner__content__tag'),
-    text: () => cy.get('[data-cy="phase-banner-text"]'),
-    feedbackLink: () => cy.get('[data-cy="phase-banner-feedback-link"]'),
-  },
   footer,
+  phaseBanner,
+  skipLink: () => cy.get('[data-cy="skip-link"]'),
 };
 
 export default partials;

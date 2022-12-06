@@ -1,0 +1,173 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% import '../components/details-text.njk' as detailsText %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <form method="POST" novalidate>
+
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+        {% set singlePolicyLengthHintHtml %}
+          <div data-cy="{{ FIELDS.SINGLE_POLICY_LENGTH.ID }}-hint">
+            {{detailsText.render({
+              items: FIELDS.SINGLE_POLICY_LENGTH.HINT
+            }) }}
+          </div>
+        {% endset %}
+
+        {% set singlePolicyLengthHtml %}
+          {{ govukInput({
+            label: {
+              text: FIELDS.SINGLE_POLICY_LENGTH.LABEL,
+              attributes: {
+                id: FIELDS.SINGLE_POLICY_LENGTH.ID + '-label',
+                'data-cy': FIELDS.SINGLE_POLICY_LENGTH.ID + '-label'
+              }
+            },
+            hint: {
+              html: singlePolicyLengthHintHtml
+            },
+            classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
+            attributes: {
+              'data-cy': FIELDS.SINGLE_POLICY_LENGTH.ID + '-input'
+            },
+            id: FIELDS.SINGLE_POLICY_LENGTH.ID,
+            name: FIELDS.SINGLE_POLICY_LENGTH.ID,
+            inputmode: "numeric",
+            pattern: "[0-9]*",
+            suffix: {
+              text: "months"
+            },
+            spellcheck: false,
+            errorMessage: validationErrors.errorList[FIELDS.SINGLE_POLICY_LENGTH.ID]and {
+              text: validationErrors.errorList[FIELDS.SINGLE_POLICY_LENGTH.ID].text,
+              attributes: {
+                "data-cy": FIELDS.SINGLE_POLICY_LENGTH.ID + "-error-message"
+              }
+            },
+            value: submittedValues[FIELDS.POLICY_LENGTH.ID]
+          }) }}
+        {% endset %}
+
+        {% set multiPolicyTypeInsetHtml %}
+          <div data-cy="multi-policy-inset">
+            {{ detailsText.render({
+              items: FIELDS.POLICY_TYPE.OPTIONS.MULTI.INSET
+            }) }}
+          </div>
+        {% endset %}
+
+        {% if validationErrors.errorList[FIELDS.POLICY_TYPE.ID] %}
+          {% set validationError = validationErrors.errorList[FIELDS.POLICY_TYPE.ID] %}
+        {% endif %}
+
+        {% if validationErrors.errorList[FIELDS.SINGLE_POLICY_TYPE.ID] %}
+          {% set validationError = validationErrors.errorList[FIELDS.SINGLE_POLICY_TYPE.ID] %}
+        {% endif %}
+
+        {{ govukRadios({
+          idPrefix: FIELDS.POLICY_TYPE.ID,
+          name: FIELDS.POLICY_TYPE.ID,
+          fieldset: {
+            legend: {
+              html: "<legend class='govuk-fieldset__legend govuk-fieldset__legend--l'><h1 class='govuk-fieldset__heading' id='heading' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1></legend>"
+            }
+          },
+          classes: "govuk-!-margin-bottom-4",
+          items: [
+            {
+              id: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.ID,
+              value: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE,
+              text: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.TEXT,
+              label: {
+                attributes: {
+                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE + '-label'
+                }
+              },
+              hint: {
+                text: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.HINT,
+                attributes: {
+                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE + '-hint'
+                }
+              },
+              attributes: {
+                'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE + '-input'
+              },
+              checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE,
+              conditional: {
+                html: singlePolicyLengthHtml
+              }
+            },
+            {
+              id: FIELDS.POLICY_TYPE.OPTIONS.MULTI.ID,
+              value: FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE,
+              text: FIELDS.POLICY_TYPE.OPTIONS.MULTI.TEXT,
+              label: {
+                attributes: {
+                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE + '-label'
+                }
+              },
+              hint: {
+                text: FIELDS.POLICY_TYPE.OPTIONS.MULTI.HINT,
+                attributes: {
+                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE + '-hint'
+                }
+              },
+              attributes: {
+                'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE + '-input'
+              },
+              checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE,
+              conditional: {
+                html: multiPolicyTypeInsetHtml
+              }
+            }
+          ],
+          errorMessage: validationError and {
+            text: validationError.text,
+            attributes: {
+              "data-cy": FIELDS.POLICY_TYPE.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukButton({
+          text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+          attributes: {
+            'data-cy': 'submit-button'
+          }
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}
