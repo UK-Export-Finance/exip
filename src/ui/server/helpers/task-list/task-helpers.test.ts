@@ -1,12 +1,21 @@
-import { getGroupById, getTaskById, getSubmittedFields, taskIsInProgress, taskIsComplete, areTaskDependenciesMet, taskStatus } from './task-helpers';
-import { TaskListData, TaskListDataTask } from '../../../types';
+import {
+  getGroupById,
+  getTaskById,
+  hasSubmittedField,
+  getSubmittedFields,
+  taskIsInProgress,
+  taskIsComplete,
+  areTaskDependenciesMet,
+  taskStatus,
+  taskLink,
+} from './task-helpers';
+import { ApplicationFlat, TaskListData, TaskListDataTask } from '../../../types';
 import { TASKS } from '../../content-strings';
+import { mockApplication } from '../../test-mocks';
+import flattenApplicationData from '../flatten-application-data';
 
 describe('server/helpers/task-helpers', () => {
-  const mockSubmittedData = {
-    wantCoverOverMaxAmount: true,
-    wantCoverOverMaxPeriod: true,
-  };
+  const mockApplicationFlat = flattenApplicationData(mockApplication);
 
   describe('getGroupById', () => {
     it('should return a group that matches the provided id', () => {
@@ -44,11 +53,46 @@ describe('server/helpers/task-helpers', () => {
     });
   });
 
+  describe('hasSubmittedField', () => {
+    describe('when submitted data has the given field id', () => {
+      it('should return true', () => {
+        const result = hasSubmittedField(mockApplicationFlat, 'hasMinimumUkGoodsOrServices');
+
+        expect(result).toEqual(true);
+      });
+
+      describe('when the field value is false boolean', () => {
+        it('should return true', () => {
+          const result = hasSubmittedField(mockApplicationFlat, 'wantCoverOverMaxAmount');
+
+          expect(result).toEqual(true);
+        });
+      });
+    });
+
+    describe('when submitted data does NOT have the given field id', () => {
+      it('should return false', () => {
+        const result = hasSubmittedField(mockApplicationFlat, 'mockField');
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when submitted data or fieldId is not provided', () => {
+      it('should return false', () => {
+        // @ts-ignore
+        const result = hasSubmittedField();
+
+        expect(result).toEqual(false);
+      });
+    });
+  });
+
   describe('getSubmittedFields', () => {
     it('should return fields that are provided and also in provided submitted fields', () => {
       const mockFields = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod', 'mockField'];
 
-      const result = getSubmittedFields(mockFields, mockSubmittedData);
+      const result = getSubmittedFields(mockFields, mockApplicationFlat);
 
       const expected = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'];
 
@@ -57,7 +101,7 @@ describe('server/helpers/task-helpers', () => {
 
     describe('when no fields are provided', () => {
       it('should return empty array', () => {
-        const result = getSubmittedFields([], mockSubmittedData);
+        const result = getSubmittedFields([], mockApplicationFlat);
 
         expect(result).toEqual([]);
       });
@@ -69,11 +113,11 @@ describe('server/helpers/task-helpers', () => {
       it('should return true', () => {
         const mockFields = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'];
 
-        const mockSubmittedDataIncomplete = {
-          wantCoverOverMaxAmount: mockSubmittedData.wantCoverOverMaxAmount,
-        };
+        const mockApplicationIncomplete = {
+          wantCoverOverMaxAmount: mockApplicationFlat.wantCoverOverMaxAmount,
+        } as ApplicationFlat;
 
-        const result = taskIsInProgress(mockFields, mockSubmittedDataIncomplete);
+        const result = taskIsInProgress(mockFields, mockApplicationIncomplete);
 
         expect(result).toEqual(true);
       });
@@ -83,7 +127,7 @@ describe('server/helpers/task-helpers', () => {
       it('should return false', () => {
         const mockFields = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'];
 
-        const result = taskIsInProgress(mockFields, mockSubmittedData);
+        const result = taskIsInProgress(mockFields, mockApplicationFlat);
 
         expect(result).toEqual(false);
       });
@@ -95,7 +139,7 @@ describe('server/helpers/task-helpers', () => {
       it('should return true', () => {
         const mockFields = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'];
 
-        const result = taskIsComplete(mockFields, mockSubmittedData);
+        const result = taskIsComplete(mockFields, mockApplicationFlat);
 
         expect(result).toEqual(true);
       });
@@ -105,7 +149,7 @@ describe('server/helpers/task-helpers', () => {
       it('should return false', () => {
         const mockFields = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod', 'mockField'];
 
-        const result = taskIsComplete(mockFields, mockSubmittedData);
+        const result = taskIsComplete(mockFields, mockApplicationFlat);
 
         expect(result).toEqual(false);
       });
@@ -117,7 +161,7 @@ describe('server/helpers/task-helpers', () => {
       it('should return true', () => {
         const mockDeps = ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'];
 
-        const result = areTaskDependenciesMet(mockDeps, mockSubmittedData);
+        const result = areTaskDependenciesMet(mockDeps, mockApplicationFlat);
 
         expect(result).toEqual(true);
       });
@@ -127,7 +171,7 @@ describe('server/helpers/task-helpers', () => {
       it('should return false', () => {
         const mockDeps = ['mockField'];
 
-        const result = areTaskDependenciesMet(mockDeps, mockSubmittedData);
+        const result = areTaskDependenciesMet(mockDeps, mockApplicationFlat);
 
         expect(result).toEqual(false);
       });
@@ -140,28 +184,30 @@ describe('server/helpers/task-helpers', () => {
         const mockTask = {
           title: 'Mock',
           id: 'mock',
+          href: '#',
           fields: [''],
           dependencies: ['amount', 'mockField'],
         };
 
-        const result = taskStatus(mockTask, mockSubmittedData);
+        const result = taskStatus(mockTask, mockApplicationFlat);
 
         expect(result).toEqual(TASKS.STATUS.CANNOT_START);
       });
     });
 
     describe('when task dependencies are met and task fields are NOT in progress or complete', () => {
-      it(`should return ${TASKS.STATUS.START_NOW} status`, () => {
+      it(`should return ${TASKS.STATUS.NOT_STARTED_YET} status`, () => {
         const mockTask = {
           title: 'Mock',
           id: 'mock',
+          href: '#',
           fields: ['fieldA', 'fieldB'],
           dependencies: ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'],
         };
 
-        const result = taskStatus(mockTask, mockSubmittedData);
+        const result = taskStatus(mockTask, mockApplicationFlat);
 
-        expect(result).toEqual(TASKS.STATUS.START_NOW);
+        expect(result).toEqual(TASKS.STATUS.NOT_STARTED_YET);
       });
     });
 
@@ -170,16 +216,18 @@ describe('server/helpers/task-helpers', () => {
         const mockTask = {
           title: 'Mock',
           id: 'mock',
+          href: '#',
           fields: ['fieldA', 'fieldB'],
           dependencies: ['wantCoverOverMaxAmount'],
         };
 
-        const mockSubmittedDataHalfComplete = {
-          wantCoverOverMaxAmount: mockSubmittedData.wantCoverOverMaxAmount,
+        // @ts-ignore
+        const mockApplicationHalfComplete = {
+          wantCoverOverMaxAmount: mockApplicationFlat.wantCoverOverMaxAmount,
           fieldA: 'mock',
-        };
+        } as ApplicationFlat;
 
-        const result = taskStatus(mockTask, mockSubmittedDataHalfComplete);
+        const result = taskStatus(mockTask, mockApplicationHalfComplete);
 
         expect(result).toEqual(TASKS.STATUS.IN_PROGRESS);
       });
@@ -190,13 +238,36 @@ describe('server/helpers/task-helpers', () => {
         const mockTask = {
           title: 'Mock',
           id: 'mock',
+          href: '#',
           fields: ['wantCoverOverMaxAmount', 'wantCoverOverMaxPeriod'],
           dependencies: [],
         };
 
-        const result = taskStatus(mockTask, mockSubmittedData);
+        const result = taskStatus(mockTask, mockApplicationFlat);
 
         expect(result).toEqual(TASKS.STATUS.COMPLETED);
+      });
+    });
+  });
+
+  describe('taskLink', () => {
+    const mockTaskLink = '#';
+
+    describe(`when the task does NOT have a status of ${TASKS.STATUS.NOT_STARTED_YET}`, () => {
+      it('should return the link', () => {
+        const result = taskLink(mockTaskLink, TASKS.STATUS.NOT_STARTED_YET);
+
+        const expected = mockTaskLink;
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when the task has a status of ${TASKS.STATUS.CANNOT_START}`, () => {
+      it('should return null', () => {
+        const result = taskLink(mockTaskLink, TASKS.STATUS.CANNOT_START);
+
+        expect(result).toEqual(null);
       });
     });
   });

@@ -1,6 +1,8 @@
 import createInitialChecksTasks from './initial-checks';
 import { TASKS } from '../../../content-strings';
-import { TASK_IDS } from '../../../constants';
+import { FIELD_IDS, TASK_IDS } from '../../../constants';
+
+const { INITIAL_CHECKS } = TASKS.LIST;
 
 describe('server/helpers/task-list/initial-checks', () => {
   it('should return EXIP `initial checks` tasks', () => {
@@ -9,16 +11,9 @@ describe('server/helpers/task-list/initial-checks', () => {
     const expected = [
       {
         href: '#',
-        title: TASKS.LIST.INITIAL_CHECKS.TASKS.ELIGIBILITY,
+        title: INITIAL_CHECKS.TASKS.ELIGIBILITY,
         id: TASK_IDS.INITIAL_CHECKS.ELIGIBILITY,
-        fields: ['a'],
-        dependencies: [],
-      },
-      {
-        href: '#',
-        title: TASKS.LIST.INITIAL_CHECKS.TASKS.CONTACT_DETAILS,
-        id: TASK_IDS.INITIAL_CHECKS.CONTACT_DETAILS,
-        fields: ['b', 'c'],
+        fields: Object.values(FIELD_IDS.INSURANCE.ELIGIBILITY),
         dependencies: [],
       },
     ];

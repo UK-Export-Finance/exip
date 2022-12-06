@@ -10,6 +10,20 @@ const applicationQuery = gql`
         updatedAt
         submissionDeadline
         submissionType
+        eligibility {
+          buyerCountry {
+            isoCode
+            name
+          }
+          hasMinimumUkGoodsOrServices
+          validExporterLocation
+          hasCompaniesHouseNumber
+          otherPartiesInvolved
+          paidByLetterOfCredit
+          needPreCreditPeriodCover
+          wantCoverOverMaxAmount
+          wantCoverOverMaxPeriod
+        }
       }
     }
   }

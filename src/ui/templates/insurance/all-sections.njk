@@ -1,6 +1,7 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import '../components/task-list.njk' as taskList %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -18,11 +19,14 @@
 
   <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
-  <p>id: {{ application.id }}</p>
-  <p>referenceNumber: {{ application.referenceNumber }}</p>
-  <p>submissionDeadline: {{ application.submissionDeadline }}</p>
-  <p>submissionType: {{ application.submissionType }}</p>
-  <p>createdAt: {{ application.createdAt }}</p>
-  <p>updatedAt: {{ application.updatedAt }}</p>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      {{ taskList.render({
+        groups: taskListData
+      }) }}
+
+    </div>
+  </div>
 
 {% endblock %}

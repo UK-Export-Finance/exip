@@ -1,10 +1,10 @@
 import { TaskListDataTask, TaskListData } from '../../../../types';
-import { GROUP_IDS, ROUTES, TASK_IDS } from '../../../constants';
+import { GROUP_IDS, TASK_IDS } from '../../../constants';
 import { TASKS } from '../../../content-strings';
 import { getGroupById, getTaskById } from '../task-helpers';
 
-// NOTE: task list structure is temporary until design is final.
-// This is just an example.
+const { PREPARE_APPLICATION } = TASKS.LIST;
+
 /**
  * createPrepareApplicationTasks
  * @param {Array} otherGroups Task list groups
@@ -13,41 +13,31 @@ import { getGroupById, getTaskById } from '../task-helpers';
 const createPrepareApplicationTasks = (otherGroups: TaskListData): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
 
-  const POLICY_TYPE = {
-    href: ROUTES.QUOTE.POLICY_TYPE,
-    title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE,
-    id: TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE,
+  const POLICY_TYPE_AND_EXPORTS = {
+    href: '#',
+    title: PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS,
+    id: TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE_AND_EXPORTS,
     fields: [],
-    dependencies: [
-      ...getTaskById(initialChecksGroup.tasks, TASK_IDS.INITIAL_CHECKS.ELIGIBILITY).fields,
-      ...getTaskById(initialChecksGroup.tasks, TASK_IDS.INITIAL_CHECKS.CONTACT_DETAILS).fields,
-    ],
+    dependencies: [...getTaskById(initialChecksGroup.tasks, TASK_IDS.INITIAL_CHECKS.ELIGIBILITY).fields],
   };
 
-  const EXPORTS_TO_INSURE = {
+  const EXPORTER_BUSINESS = {
     href: '#',
-    title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTS_TO_INSURE,
-    id: TASK_IDS.PREPARE_APPLICATION.EXPORTS_TO_INSURE,
+    title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
+    id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
     fields: [],
-    dependencies: [...POLICY_TYPE.fields, ...POLICY_TYPE.dependencies],
+    dependencies: [...POLICY_TYPE_AND_EXPORTS.fields, ...POLICY_TYPE_AND_EXPORTS.dependencies],
   };
 
   const tasks = [
-    POLICY_TYPE,
-    EXPORTS_TO_INSURE,
+    POLICY_TYPE_AND_EXPORTS,
+    EXPORTER_BUSINESS,
     {
       href: '#',
-      title: TASKS.LIST.PREPARE_APPLICATION.TASKS.ABOUT_BUSINESS,
-      id: TASK_IDS.PREPARE_APPLICATION.ABOUT_BUSINESS,
-      fields: [],
-      dependencies: [...EXPORTS_TO_INSURE.dependencies, ...EXPORTS_TO_INSURE.fields],
-    },
-    {
-      href: '#',
-      title: TASKS.LIST.PREPARE_APPLICATION.TASKS.BUYER,
+      title: PREPARE_APPLICATION.TASKS.BUYER,
       id: TASK_IDS.PREPARE_APPLICATION.BUYER,
-      fields: [],
-      dependencies: [],
+      fields: ['temp'],
+      dependencies: [...EXPORTER_BUSINESS.dependencies, ...EXPORTER_BUSINESS.fields],
     },
   ] as Array<TaskListDataTask>;
 

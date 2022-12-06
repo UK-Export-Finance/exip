@@ -18,11 +18,14 @@ const START = {
   BODY_4: 'If you need it more urgently, you can tell us before you submit your application.',
 };
 
-const ELIGIBILITY = ELIGIBILITY_PAGES;
+const ALL_SECTIONS = {
+  PAGE_TITLE: 'Apply for UKEF export insurance',
+};
 
 const INSURANCE = {
   START,
-  ELIGIBILITY,
+  ELIGIBILITY: ELIGIBILITY_PAGES,
+  ALL_SECTIONS,
 };
 
 export default INSURANCE;
