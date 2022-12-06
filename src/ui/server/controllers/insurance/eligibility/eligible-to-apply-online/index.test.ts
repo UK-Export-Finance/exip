@@ -49,10 +49,10 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
       expect(createApplicationSpy).toHaveBeenCalledTimes(1);
     });
 
-    it(`should redirect to ${ROUTES.INSURANCE.ROOT}/${mockReferenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
+    it(`should redirect to ${ROUTES.INSURANCE.INSURANCE_ROOT}/${mockReferenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
       await post(req, res);
 
-      const expected = `${ROUTES.INSURANCE.ROOT}/${mockReferenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${ROUTES.INSURANCE.INSURANCE_ROOT}/${mockReferenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

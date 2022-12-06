@@ -5,13 +5,15 @@ import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
 import api from '../../../../api';
-import { sanitiseData } from '../../../../helpers/sanitise-data';
+import save from '../save-data';
 
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
+const { INSURANCE } = ROUTES;
 
-const PAGE_VARIABLES = {
+const pageVariables = (referenceNumber: number) => ({
   FIELD: FIELDS[POLICY_AND_EXPORTS.POLICY_TYPE],
-};
+  SAVE_AND_BACK_URL: `${INSURANCE.INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY_SAVE_AND_BACK}`,
+});
 
 /**
  * get
@@ -24,7 +26,8 @@ const get = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
 
   try {
-    const application = await api.keystone.application.get(Number(referenceNumber));
+    const refNumber = Number(referenceNumber);
+    const application = await api.keystone.application.get(refNumber);
 
     if (!application) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
@@ -35,7 +38,7 @@ const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
         BACK_LINK: req.headers.referer,
       }),
-      ...PAGE_VARIABLES,
+      ...pageVariables(refNumber),
       application,
     });
   } catch (err) {
@@ -54,6 +57,9 @@ const get = async (req: Request, res: Response) => {
  */
 const post = async (req: Request, res: Response) => {
   try {
+    const { referenceNumber } = req.params;
+    const refNumber = Number(referenceNumber);
+
     // check for form errors.
     const validationErrors = generateValidationErrors(req.body);
 
@@ -63,40 +69,20 @@ const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(refNumber),
         validationErrors,
       });
     }
 
-    // get the application.
-    const { referenceNumber } = req.params;
+    // save the application
+    const saveResponse = await save.policyAndExport(Number(referenceNumber), req.body);
 
-    const application = await api.keystone.application.get(Number(referenceNumber));
-
-    // check that the application exists and has policyAndExport.id.
-    if (!application || !application.policyAndExport || !application.policyAndExport.id) {
+    if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const policyAndExportId = application.policyAndExport.id;
-
-    // sanitise the form data.
-    const sanitisedData = sanitiseData(req.body);
-
-    try {
-      // send the form data to the API for database update.
-      const saveResponse = await api.keystone.application.update.policyAndExport(policyAndExportId, sanitisedData);
-
-      if (!saveResponse) {
-        return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-      }
-
-      return res.redirect(`${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`);
-    } catch (err) {
-      console.error('Error updating application', { err });
-
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-    }
+    // redirect to next part of the flow
+    return res.redirect(`${INSURANCE.INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`);
   } catch (err) {
     console.error('Error getting application', { err });
 
@@ -104,4 +90,4 @@ const post = async (req: Request, res: Response) => {
   }
 };
 
-export { PAGE_VARIABLES, get, post };
+export { pageVariables, get, post };

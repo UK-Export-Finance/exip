@@ -26,7 +26,7 @@ const post = async (req: Request, res: Response) => {
 
     const { referenceNumber } = application;
 
-    return res.redirect(`${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
+    return res.redirect(`${ROUTES.INSURANCE.INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
   } catch (err) {
     console.error('Error creating application ', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

@@ -4,9 +4,9 @@ import {
   inlineErrorMessage,
   submitButton,
   saveAndBackButton,
-} from '../../../pages/shared';
-import { insurance } from '../../../pages';
-import partials from '../../../partials';
+} from '../../../../pages/shared';
+import { insurance } from '../../../../pages';
+import partials from '../../../../partials';
 import {
   BUTTONS,
   ERROR_MESSAGES,
@@ -14,10 +14,10 @@ import {
   ORGANISATION,
   PAGES,
   TASKS,
-} from '../../../../../content-strings';
-import { FIELDS } from '../../../../../content-strings/fields/insurance/policy-and-exports';
-import { ROUTES, FIELD_IDS } from '../../../../../constants';
-import getReferenceNumber from '../../../helpers/get-reference-number';
+} from '../../../../../../content-strings';
+import { FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
+import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
 
@@ -244,7 +244,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     });
 
     describe('after submitting an answer', () => {
-      it('should update the status of task `type of policy and exports`to `in progress`', () => {
+      it('should update the status of task `type of policy and exports` to `in progress`', () => {
         cy.visit(`${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`, {
           auth: {
             username: Cypress.config('basicAuthKey'),
