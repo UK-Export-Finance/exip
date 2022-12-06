@@ -39,7 +39,7 @@ interface SingleInputPageVariablesInitialInput {
 interface SingleInputPageVariablesInput extends SingleInputPageVariablesInitialInput {
   FIELD_ID: string;
   PRODUCT: PageVariablesProduct;
-  START_ROUTE?: string;
+  START_ROUTE: string;
 }
 
 interface SingleInputPageVariables extends CorePageVariables {
