@@ -1,6 +1,6 @@
 {
   "name": "@uk-export-finance/exip",
-  "version": "1.14.5",
+  "version": "1.14.6",
   "description": "Export Insurance Policies",
   "engineStrict": true,
   "engines": {
