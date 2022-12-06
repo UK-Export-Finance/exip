@@ -11,7 +11,6 @@ const partials = {
   backLink: () => cy.get('[data-cy="back-link"]'),
   ukGoodsOrServicesCalculateDescription,
   cookieBanner,
-  errorSummary: () => cy.get('[data-cy="error-summary'),
   errorSummaryListItems: () => cy.get('.govuk-error-summary li'),
   errorSummaryListItemLinks: () => cy.get('.govuk-error-summary li a'),
   footer,
