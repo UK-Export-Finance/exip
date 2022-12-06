@@ -486,7 +486,9 @@ type Mutation {
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
-  sendEmail: EmailResponse
+
+  """ send an email """
+  sendEmail(templateId: String!, sendToEmailAddress: String!): EmailResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
@@ -528,12 +530,8 @@ type Query {
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 
-  """
-  get companies house information
-  """
-  getCompaniesHouseInformation(
-    companiesHouseNumber: String!
-  ): CompaniesHouseResponse
+  """ get companies house information """
+  getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
 }
 
 union AuthenticatedItem = User
