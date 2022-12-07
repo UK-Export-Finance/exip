@@ -19,6 +19,8 @@ const {
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
+const insuranceStart = ROUTES.INSURANCE.START;
+
 context('Your business - company details page - As an Exporter I want to enter my business\'s CRN So that I can apply for UKEF Export Insurance policy', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.YOUR_BUSINESS.COMPANY_DETAILS, {
@@ -47,6 +49,10 @@ context('Your business - company details page - As an Exporter I want to enter m
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
+  });
+
+  it('should render a header with href to quote start', () => {
+    partials.header.serviceName().should('have.attr', 'href', insuranceStart);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {
