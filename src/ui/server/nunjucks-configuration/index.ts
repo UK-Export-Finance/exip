@@ -7,7 +7,7 @@ interface Opts {
 }
 
 const configureNunjucks = (opts: Opts) => {
-  const appViews = ['node_modules/govuk-frontend', 'templates'];
+  const appViews = ['node_modules/govuk-frontend', 'node_modules/@ministryofjustice/frontend', 'templates'];
 
   nunjucks.configure(appViews, opts);
 

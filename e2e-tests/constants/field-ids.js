@@ -39,6 +39,22 @@ export const FIELD_IDS = {
       PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
       COMPANIES_HOUSE_NUMBER: 'hasCompaniesHouseNumber',
     },
+    EXPORTER_BUSINESS: {
+      COMPANY_HOUSE: {
+        INPUT: 'companiesHouseNumber',
+        COMPANY_NAME: 'companyName',
+        COMPANY_ADDRESS: 'registeredOfficeAddress',
+        COMPANY_NUMBER: 'companyNumber',
+        COMPANY_INCORPORATED: 'dateOfCreation',
+        COMPANY_SIC: 'sicCodes',
+        SUMMARY_LIST: 'summaryList',
+      },
+      YOUR_COMPANY: {
+        TRADING_NAME: 'tradingName',
+        TRADING_ADDRESS: 'tradingAddress',
+        WEBSITE: 'companyWebsite',
+      },
+    },
     POLICY_AND_EXPORTS: {
       ...SHARED,
       TYPE_OF_POLICY: {

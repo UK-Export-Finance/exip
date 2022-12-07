@@ -1,0 +1,206 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{%- from "moj/components/search/macro.njk" import mojSearch -%}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+        <span class="govuk-caption-xl" data-cy="heading-caption">
+          {{CONTENT_STRINGS.HEADING_CAPTION}}
+        </span>
+      <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+    </div>
+
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <form action="{{POST_ROUTE}}" method="POST">
+
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <div class="companies-house-search">
+
+          {{ govukInput({
+            label: {
+              text: CONTENT_STRINGS.CRN_HEADING,
+              classes: "govuk-label--m",
+              isPageHeading: false,
+              attributes: {
+                "data-cy": "companies-house-search-label"
+              }
+            },
+            hint: {
+              html: CONTENT_STRINGS.CRN_HINT,
+              attributes: {
+                "data-cy": "companies-house-search-hint"
+              }
+            },
+            attributes: {
+              "data-cy": "companies-house-search"
+            },
+            id: FIELDS.INPUT,
+            name: FIELDS.INPUT,
+            value: companiesHouseNumber,
+            errorMessage: validationErrors.errorList.companiesHouseNumber and {
+              text: validationErrors.errorList.companiesHouseNumber.text,
+              attributes: {
+                "data-cy": "companies-house-search-error"
+              }
+            }
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SEARCH,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'companies-house-search-button'
+            }
+          }) }}
+        </div>
+      </form>
+
+      <p class="govuk-!-margin-bottom-6"><a class="govuk-link" href="/" data-cy="do-not-have-number">{{CONTENT_STRINGS.NO_COMPANY_HOUSE_NUMER}}</a></p>
+    </div>
+
+    {% if SUMMARY_LIST %}
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <h3 class="govuk-fieldset__legend--m" data-cy="your-business-heading">{{CONTENT_STRINGS.YOUR_BUSINESS_HEADING}}</h3>
+
+        {{ govukSummaryList({
+          classes: 'govuk-!-margin-bottom-9',
+          rows: SUMMARY_LIST.COMPANY_DETAILS.ROWS,
+           attributes: {
+            'data-cy': 'companies-house-summary-list'
+          }
+        }) }}
+      </div>
+    {% endif %}
+
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        name: "trading-name",
+        fieldset: {
+          legend: {
+            text: CONTENT_STRINGS.TRADING_NAME,
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+          },
+          attributes: {
+            'data-cy': 'trading-name'
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes",
+            attributes: {
+              'data-cy': "trading-name-yes"
+            }
+          },
+          {
+            value: "no",
+            text: "No",
+            attributes: {
+              'data-cy': "trading-name-no"
+            }
+          }
+        ]
+      }) }}
+    </div>
+
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        name: "trading-address",
+        fieldset: {
+          legend: {
+            text: CONTENT_STRINGS.TRADING_ADDRESS,
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+          },
+          attributes: {
+            'data-cy': 'trading-address'
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes",
+            attributes: {
+              'data-cy': "trading-address-yes"
+            }
+          },
+          {
+            value: "no",
+            text: "No",
+            attributes: {
+              'data-cy': "trading-address-no"
+            }
+          }
+        ]
+      }) }}
+    </div>
+
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      {{ govukInput({
+        label: {
+          text: CONTENT_STRINGS.WEBSITE,
+          classes: "govuk-label--m",
+          isPageHeading: false,
+          attributes: {
+          'data-cy': 'company-website-heading'
+        }
+        },
+        id: "company-website",
+        name: "company-website",
+        classes: "input-width",
+        attributes: {
+          'data-cy': 'company-website'
+        }
+      }) }}
+    </div>
+
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+          attributes: {
+            'data-cy': 'continue-button'
+          }
+        }) }}
+
+        {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button'
+            }
+        }) }}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

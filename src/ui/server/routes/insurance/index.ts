@@ -4,6 +4,7 @@ import { get as startGet, post as startPost } from '../../controllers/insurance/
 import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
 import { get as typeOfPolicyGet, post as typeOfPolicyPost } from '../../controllers/insurance/policy-and-export/type-of-policy';
 import insuranceEligibilityRoutes from './eligibility';
+import insuranceBusinessRouter from './business';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
@@ -21,5 +22,6 @@ insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY
 insuranceRouter.post(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`, typeOfPolicyPost);
 
 insuranceRouter.use('/', insuranceEligibilityRoutes);
+insuranceRouter.use('/', insuranceBusinessRouter);
 
 export default insuranceRouter;

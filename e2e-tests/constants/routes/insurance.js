@@ -1,5 +1,6 @@
 import { PRODUCT } from '../product';
 import { POLICY_AND_EXPORTS } from './policy-and-export';
+import { YOUR_BUSINESS_ROUTES } from './your-business';
 
 export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
@@ -27,4 +28,5 @@ export const INSURANCE_ROUTES = {
   },
   ALL_SECTIONS: '/all-sections',
   POLICY_AND_EXPORTS,
+  YOUR_BUSINESS: YOUR_BUSINESS_ROUTES,
 };
