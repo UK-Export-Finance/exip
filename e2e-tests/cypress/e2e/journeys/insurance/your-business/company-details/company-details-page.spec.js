@@ -51,7 +51,7 @@ context('Your business - company details page - As an Exporter I want to enter m
     cy.checkPhaseBanner();
   });
 
-  it('should render a header with href to quote start', () => {
+  it('should render a header with href to insurance start', () => {
     partials.header.serviceName().should('have.attr', 'href', insuranceStart);
   });
 
