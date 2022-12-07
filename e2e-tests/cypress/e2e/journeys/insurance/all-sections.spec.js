@@ -9,6 +9,8 @@ import {
 import { ROUTES } from '../../../../constants';
 import getReferenceNumber from '../../helpers/get-reference-number';
 
+const { taskList } = partials.insurancePartials;
+
 const CONTENT_STRINGS = PAGES.INSURANCE.ALL_SECTIONS;
 
 context('Insurance - All sections - new application', () => {
