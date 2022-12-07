@@ -192,10 +192,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
 
       const result = updateSubmittedData(mockFormData, mockExistingData);
 
-      const expectedSanitisedData = sanitiseData({
-        ...mockExistingData,
-        a: true,
-      });
+      const expectedSanitisedData = sanitiseData(mockFormData);
 
       const expected = mapSubmittedData(expectedSanitisedData);
 
