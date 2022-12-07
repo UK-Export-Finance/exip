@@ -325,13 +325,14 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         try {
           const { companiesHouseNumber } = variables;
           console.info("Calling Companies House API for ", companiesHouseNumber);
-          const sanitisedRegNo = companiesHouseNumber.padStart(8, "0");
+          const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
           const response = await (0, import_axios.default)({
             method: "get",
             url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
             auth: { username, password: "" },
             validateStatus(status) {
-              return status === 200 || status === 404;
+              const acceptableStatus = [200, 404];
+              return acceptableStatus.includes(status);
             }
           });
           if (!response.data || response.status === 404) {

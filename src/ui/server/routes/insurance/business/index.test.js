@@ -4,10 +4,6 @@ import { ROUTES } from '../../../constants';
 import { get as getCompanyDetails, postCompaniesHouseSearch } from '../../../controllers/insurance/business/company-details';
 
 describe('routes/insurance/your-business', () => {
-  beforeEach(() => {
-    require('.'); // eslint-disable-line global-require
-  });
-
   afterEach(() => {
     jest.resetAllMocks();
   });

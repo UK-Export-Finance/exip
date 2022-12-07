@@ -204,27 +204,32 @@ const keystone = () => {
   };
 
   const getCompaniesHouseInformation = async (companiesHouseNumber: string) => {
-    const queryParams = {
-      companiesHouseNumber,
-    };
+    try {
+      const queryParams = {
+        companiesHouseNumber,
+      };
 
-    const query = companiesHouseQuery;
-    const response = (await apollo('GET', query, queryParams)) as ApolloResponse;
+      const query = companiesHouseQuery;
+      const response = (await apollo('GET', query, queryParams)) as ApolloResponse;
 
-    if (response.errors) {
-      console.error('GraphQL network error querying companies house information ', response.errors);
+      if (response.errors) {
+        console.error('GraphQL network error querying companies house information ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error querying companies house information ', response.networkError.result.errors);
+      }
+
+      // response.data.getCompaniesHouseInformation should exist if successful
+      if (response?.data?.getCompaniesHouseInformation) {
+        return response.data?.getCompaniesHouseInformation;
+      }
+
+      return {};
+    } catch (error) {
+      console.error('Error getting Companies house information ', { error });
+      return {};
     }
-
-    if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error querying companies house information ', response.networkError.result.errors);
-    }
-
-    // response.data.getCompaniesHouseInformation should exist if successful
-    if (response?.data?.getCompaniesHouseInformation) {
-      return response.data?.getCompaniesHouseInformation;
-    }
-
-    return {};
   };
 
   const getPage = async (pageId: string) => {

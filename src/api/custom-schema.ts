@@ -87,14 +87,15 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           try {
             const { companiesHouseNumber } = variables;
             console.info('Calling Companies House API for ', companiesHouseNumber);
-            const sanitisedRegNo: number = companiesHouseNumber.padStart(8, '0');
+            const sanitisedRegNo: number = companiesHouseNumber.toString().padStart(8, '0');
 
             const response = await axios({
               method: 'get',
               url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
               auth: { username, password: '' },
               validateStatus(status) {
-                return status === 200 || status === 404;
+                const acceptableStatus = [200, 404];
+                return acceptableStatus.includes(status);
               },
             });
 

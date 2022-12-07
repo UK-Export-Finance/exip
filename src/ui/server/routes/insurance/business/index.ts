@@ -2,8 +2,6 @@ import express from 'express';
 import { ROUTES } from '../../../constants';
 
 import { get as getCompanyDetails, postCompaniesHouseSearch } from '../../../controllers/insurance/business/company-details';
-
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 const insuranceBusinessRouter = express.Router();
 

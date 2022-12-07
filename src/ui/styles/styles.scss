@@ -42,5 +42,9 @@ $govuk-new-link-styles: true;
   margin-bottom: 0;
   vertical-align: top;
   align-items: flex-end;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
 }
