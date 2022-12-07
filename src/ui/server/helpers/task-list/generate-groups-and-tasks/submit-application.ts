@@ -3,6 +3,8 @@ import { GROUP_IDS, TASK_IDS } from '../../../constants';
 import { TASKS } from '../../../content-strings';
 import { getGroupById, getTaskById } from '../task-helpers';
 
+const { SUBMIT_APPLICATION } = TASKS.LIST;
+
 /**
  * createSubmitApplicationTasks
  * @param {Array} otherGroups Task list groups
@@ -14,7 +16,7 @@ const createSubmitApplicationTasks = (otherGroups: TaskListData): Array<TaskList
 
   const DECLARATIONS = {
     href: '#',
-    title: TASKS.LIST.SUBMIT_APPLICATION.TASKS.DECLARATIONS,
+    title: SUBMIT_APPLICATION.TASKS.DECLARATIONS,
     id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS,
     fields: ['temp'],
     dependencies: [
@@ -27,7 +29,7 @@ const createSubmitApplicationTasks = (otherGroups: TaskListData): Array<TaskList
 
   const CHECK_ANSWERS_AND_SUBMIT = {
     href: '#',
-    title: TASKS.LIST.SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT,
+    title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT,
     id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS_AND_SUBMIT,
     fields: [],
     dependencies: [...DECLARATIONS.fields, ...DECLARATIONS.dependencies],

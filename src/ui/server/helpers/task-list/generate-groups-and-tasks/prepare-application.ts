@@ -6,6 +6,8 @@ import { getGroupById, getAllTasksFieldsInAGroup } from '../task-helpers';
 const { INSURANCE } = ROUTES;
 const { INSURANCE_ROOT, POLICY_AND_EXPORTS } = INSURANCE;
 
+const { PREPARE_APPLICATION } = TASKS.LIST;
+
 /**
  * createPrepareApplicationTasks
  * @param {Array} otherGroups Task list groups
@@ -26,7 +28,7 @@ const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: Tas
 
   const EXPORTER_BUSINESS = {
     href: '#',
-    title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
+    title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
     id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
     fields: [],
     dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
@@ -37,7 +39,7 @@ const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: Tas
     EXPORTER_BUSINESS,
     {
       href: '#',
-      title: TASKS.LIST.PREPARE_APPLICATION.TASKS.BUYER,
+      title: PREPARE_APPLICATION.TASKS.BUYER,
       id: TASK_IDS.PREPARE_APPLICATION.BUYER,
       fields: ['temp'],
       dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],

@@ -1,5 +1,7 @@
 import { TASKS } from '../../../../content-strings';
 
+const { LIST } = TASKS;
+
 const {
   INITIAL_CHECKS,
   PREPARE_APPLICATION,

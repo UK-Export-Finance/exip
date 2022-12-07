@@ -91,7 +91,7 @@ context('Insurance - All sections - new application', () => {
   describe('task list', () => {
     describe('`initial checks` group', () => {
       it('should render a group heading', () => {
-        partials.insurance.taskList.initialChecks.groupHeading().invoke('text').then((text) => {
+        taskList.initialChecks.groupHeading().invoke('text').then((text) => {
           const expected = `1. ${TASKS.LIST.INITIAL_CHECKS.HEADING}`;
 
           expect(text.trim()).equal(expected);
@@ -100,7 +100,7 @@ context('Insurance - All sections - new application', () => {
 
       describe('tasks', () => {
         it('should render a `check eligibility` task with link and `completed` status', () => {
-          const task = partials.insurance.taskList.initialChecks.tasks.eligibility;
+          const task = taskList.initialChecks.tasks.eligibility;
 
           task.link().invoke('text').then((text) => {
             const expected = TASKS.LIST.INITIAL_CHECKS.TASKS.ELIGIBILITY;
@@ -121,7 +121,7 @@ context('Insurance - All sections - new application', () => {
 
     describe('`prepare application` group', () => {
       it('should render a group heading', () => {
-        partials.insurance.taskList.prepareApplication.groupHeading().invoke('text').then((text) => {
+        taskList.prepareApplication.groupHeading().invoke('text').then((text) => {
           const expected = `2. ${TASKS.LIST.PREPARE_APPLICATION.HEADING}`;
 
           expect(text.trim()).equal(expected);
@@ -130,7 +130,7 @@ context('Insurance - All sections - new application', () => {
 
       describe('tasks', () => {
         it('should render a `type of policy and exports` task with link and `not started` status', () => {
-          const task = partials.insurance.taskList.prepareApplication.tasks.policyTypeAndExports;
+          const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
           task.link().invoke('text').then((text) => {
             const expected = TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS;
@@ -149,7 +149,7 @@ context('Insurance - All sections - new application', () => {
         });
 
         it('should render a `your business` task with link and `not started` status', () => {
-          const task = partials.insurance.taskList.prepareApplication.tasks.exporterBusiness;
+          const task = taskList.prepareApplication.tasks.exporterBusiness;
 
           task.link().invoke('text').then((text) => {
             const expected = TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS;
@@ -167,7 +167,7 @@ context('Insurance - All sections - new application', () => {
         });
 
         it('should render a `your buyer` task with link and `not started` status', () => {
-          const task = partials.insurance.taskList.prepareApplication.tasks.buyer;
+          const task = taskList.prepareApplication.tasks.buyer;
 
           task.link().invoke('text').then((text) => {
             const expected = TASKS.LIST.PREPARE_APPLICATION.TASKS.BUYER;
@@ -188,7 +188,7 @@ context('Insurance - All sections - new application', () => {
 
     describe('`submit application` group', () => {
       it('should render a group heading', () => {
-        partials.insurance.taskList.submitApplication.groupHeading().invoke('text').then((text) => {
+        taskList.submitApplication.groupHeading().invoke('text').then((text) => {
           const expected = `3. ${TASKS.LIST.SUBMIT_APPLICATION.HEADING}`;
 
           expect(text.trim()).equal(expected);
@@ -197,7 +197,7 @@ context('Insurance - All sections - new application', () => {
 
       describe('tasks', () => {
         it('should render a `declarations` task with no link and `cannot start yet` status', () => {
-          const task = partials.insurance.taskList.submitApplication.tasks.declarations;
+          const task = taskList.submitApplication.tasks.declarations;
 
           task.text().invoke('text').then((text) => {
             const expected = TASKS.LIST.SUBMIT_APPLICATION.TASKS.DECLARATIONS;
@@ -215,7 +215,7 @@ context('Insurance - All sections - new application', () => {
         });
 
         it('should render a `check answers and submit` task with no link and `cannot start` status', () => {
-          const task = partials.insurance.taskList.submitApplication.tasks.checkAnswersAndSubmit;
+          const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
 
           task.text().invoke('text').then((text) => {
             const expected = TASKS.LIST.SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT;
