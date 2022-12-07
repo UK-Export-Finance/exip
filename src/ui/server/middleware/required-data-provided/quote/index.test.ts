@@ -180,7 +180,7 @@ describe('middleware/required-data-provided/quote', () => {
 
     describe(`when req.originalUrl is ${START}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = '/';
+        req.originalUrl = START;
         requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
