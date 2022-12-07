@@ -486,7 +486,9 @@ type Mutation {
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
-  sendEmail: EmailResponse
+
+  """ send an email """
+  sendEmail(templateId: String!, sendToEmailAddress: String!): EmailResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
@@ -527,6 +529,9 @@ type Query {
   usersCount(where: UserWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
+
+  """ get companies house information """
+  getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
 }
 
 union AuthenticatedItem = User
@@ -620,4 +625,25 @@ enum KeystoneAdminUISortDirection {
 
 type EmailResponse {
   success: Boolean
+}
+
+type CompanyAddress {
+  addressLine1: String
+  addressLine2: String
+  careOf: String
+  locality: String
+  region: String
+  postalCode: String
+  country: String
+  premises: String
+}
+
+type CompaniesHouseResponse {
+  companyName: String
+  registeredOfficeAddress: CompanyAddress
+  companyNumber: String
+  dateOfCreation: String
+  sicCodes: [String]
+  success: Boolean
+  apiError: Boolean
 }

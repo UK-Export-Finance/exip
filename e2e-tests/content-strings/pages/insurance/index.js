@@ -1,4 +1,5 @@
 import * as ELIGIBILITY_PAGES from './eligibility';
+import * as YOUR_BUSINESS from './your-business';
 
 const START = {
   PAGE_TITLE: 'Apply for UKEF export insurance',
@@ -24,6 +25,7 @@ const ALL_SECTIONS = {
 
 const INSURANCE = {
   START,
+  YOUR_BUSINESS,
   ELIGIBILITY: ELIGIBILITY_PAGES,
   ALL_SECTIONS,
 };

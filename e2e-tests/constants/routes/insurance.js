@@ -1,4 +1,5 @@
 import { PRODUCT } from '../product';
+import { YOUR_BUSINESS_ROUTES } from './your-business';
 
 const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
@@ -24,6 +25,7 @@ export const INSURANCE_ROUTES = {
     ALREADY_HAVE_ACCOUNT: `${INSURANCE_ROOT}${ELIGIBILITY}/already-have-account`,
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY}/need-to-start-again`,
   },
+  YOUR_BUSINESS: YOUR_BUSINESS_ROUTES,
   ALL_SECTIONS: '/all-sections',
   POLICY_AND_EXPORTS: {},
 };

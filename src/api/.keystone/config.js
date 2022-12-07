@@ -230,10 +230,35 @@ var session = (0, import_session.statelessSessions)({
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
 var import_notifications_node_client = require("notifications-node-client");
+var import_axios = __toESM(require("axios"));
 var import_dotenv = __toESM(require("dotenv"));
+
+// helpers/mapCompaniesHouseFields.ts
+var mapCompaniesHouseFields = (companiesHouseResponse) => {
+  return {
+    companyName: companiesHouseResponse.company_name,
+    registeredOfficeAddress: {
+      careOf: companiesHouseResponse.registered_office_address.care_of,
+      premises: companiesHouseResponse.registered_office_address.premises,
+      addressLine1: companiesHouseResponse.registered_office_address.address_line_1,
+      addressLine2: companiesHouseResponse.registered_office_address.address_line_2,
+      locality: companiesHouseResponse.registered_office_address.locality,
+      region: companiesHouseResponse.registered_office_address.region,
+      postalCode: companiesHouseResponse.registered_office_address.postal_code,
+      country: companiesHouseResponse.registered_office_address.country
+    },
+    companyNumber: companiesHouseResponse.company_number,
+    dateOfCreation: companiesHouseResponse.date_of_creation,
+    sicCodes: companiesHouseResponse.sic_codes
+  };
+};
+
+// custom-schema.ts
 import_dotenv.default.config();
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
 var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
+var username = process.env.COMPANIES_HOUSE_API_KEY;
+var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
   typeDefs: `
@@ -241,10 +266,43 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         success: Boolean
       }
 
-      type Mutation {
-        sendEmail: EmailResponse
+      # fields from registered_office_address object
+      type CompanyAddress {
+        addressLine1: String
+        addressLine2: String
+        careOf: String
+        locality: String
+        region: String
+        postalCode: String
+        country: String
+        premises: String
       }
-      `,
+
+      type CompaniesHouseResponse {
+        companyName: String
+        registeredOfficeAddress: CompanyAddress
+        companyNumber: String
+        dateOfCreation: String
+        sicCodes: [String]
+        success: Boolean
+        apiError: Boolean
+      }
+
+      type Mutation {
+        """ send an email """
+        sendEmail(
+          templateId: String!
+          sendToEmailAddress: String!
+        ): EmailResponse
+      }
+
+      type Query {
+        """ get companies house information """
+        getCompaniesHouseInformation(
+          companiesHouseNumber: String!
+        ): CompaniesHouseResponse
+      }
+    `,
   resolvers: {
     Mutation: {
       sendEmail: async (root, variables) => {
@@ -259,6 +317,40 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         } catch (err) {
           console.error("Unable to send email", { err });
           return { success: false };
+        }
+      }
+    },
+    Query: {
+      getCompaniesHouseInformation: async (root, variables) => {
+        try {
+          const { companiesHouseNumber } = variables;
+          console.info("Calling Companies House API for ", companiesHouseNumber);
+          const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
+          const response = await (0, import_axios.default)({
+            method: "get",
+            url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
+            auth: { username, password: "" },
+            validateStatus(status) {
+              const acceptableStatus = [200, 404];
+              return acceptableStatus.includes(status);
+            }
+          });
+          if (!response.data || response.status === 404) {
+            return {
+              success: false
+            };
+          }
+          const mappedResponse = mapCompaniesHouseFields(response.data);
+          return {
+            ...mappedResponse,
+            success: true
+          };
+        } catch (error) {
+          console.error("Error calling Companies House API", { error });
+          return {
+            apiError: true,
+            success: false
+          };
         }
       }
     }
