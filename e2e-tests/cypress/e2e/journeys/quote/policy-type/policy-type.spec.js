@@ -20,6 +20,8 @@ const CONTENT_STRINGS = PAGES.QUOTE.POLICY_TYPE;
 
 const { POLICY_TYPE } = FIELD_IDS;
 
+const startRoute = ROUTES.QUOTE.START;
+
 context('Policy type page - as an exporter, I want to get UKEF export insurance quote based on the export policy - provide policy type', () => {
   describe('rendering', () => {
     before(() => {
@@ -71,6 +73,10 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
 
     it('renders a phase banner', () => {
       cy.checkPhaseBanner();
+    });
+
+    it('should render a header with href to quote start', () => {
+      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
     it('renders a page title and heading', () => {

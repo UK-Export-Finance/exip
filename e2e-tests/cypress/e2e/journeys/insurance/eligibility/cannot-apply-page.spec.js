@@ -17,6 +17,8 @@ const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 
 const COUNTRY_NAME_UNSUPPORTED = 'France';
 
+const insuranceStartRoute = ROUTES.INSURANCE.START;
+
 context('Insurance Eligibility - Cannot apply exit page', () => {
   beforeEach(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -53,6 +55,10 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
 
   it('renders an analytics cookies consent banner that can be rejected', () => {
     cy.rejectAnalyticsCookies();
+  });
+
+  it('should render a header with href to insurance start', () => {
+    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
   it('renders a phase banner', () => {

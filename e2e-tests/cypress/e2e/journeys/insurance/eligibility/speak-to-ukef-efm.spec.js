@@ -17,6 +17,8 @@ import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM;
 const { ACTIONS } = CONTENT_STRINGS;
 
+const insuranceStartRoute = ROUTES.INSURANCE.START;
+
 context('Insurance Eligibility - speak to UKEF EFM exit page', () => {
   beforeEach(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -56,6 +58,10 @@ context('Insurance Eligibility - speak to UKEF EFM exit page', () => {
 
   it('renders an analytics cookies consent banner that can be rejected', () => {
     cy.rejectAnalyticsCookies();
+  });
+
+  it('should render a header with href to insurance start', () => {
+    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
   it('renders a phase banner', () => {

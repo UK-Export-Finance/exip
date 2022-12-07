@@ -19,6 +19,8 @@ import { ROUTES, FIELD_IDS, SUPPORTED_CURRENCIES } from '../../../../../constant
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
+const startRoute = ROUTES.QUOTE.START;
+
 context('Tell us about your multi policy page - as an exporter, I want to provide my Export insurance policy details', () => {
   describe('rendering', () => {
     before(() => {
@@ -52,6 +54,10 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
 
     it('renders a phase banner', () => {
       cy.checkPhaseBanner();
+    });
+
+    it('should render a header with href to quote start', () => {
+      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
     it('renders a back link with correct url', () => {

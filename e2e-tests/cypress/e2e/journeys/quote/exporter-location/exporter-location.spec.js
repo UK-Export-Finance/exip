@@ -20,6 +20,8 @@ import { completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms'
 
 const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 
+const startRoute = ROUTES.QUOTE.START;
+
 context('Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
   beforeEach(() => {
     cy.login();
@@ -40,6 +42,10 @@ context('Exporter location page - as an exporter, I want to check if my company 
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
+  });
+
+  it('should render a header with href to quote start', () => {
+    partials.header.serviceName().should('have.attr', 'href', startRoute);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {

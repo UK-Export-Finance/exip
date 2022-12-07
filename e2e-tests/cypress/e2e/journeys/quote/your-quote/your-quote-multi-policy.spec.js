@@ -1,5 +1,6 @@
 import { submitButton } from '../../../pages/shared';
 import { yourQuotePage } from '../../../pages/quote';
+import partials from '../../../partials';
 import {
   LINKS,
   QUOTE_TITLES,
@@ -26,6 +27,8 @@ const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
 };
 
+const startRoute = ROUTES.QUOTE.START;
+
 context('Get a quote/your quote page (multi policy) - as an exporter, I want to get an Export insurance quote', () => {
   before(() => {
     cy.login();
@@ -43,6 +46,10 @@ context('Get a quote/your quote page (multi policy) - as an exporter, I want to 
   context('panel/quote', () => {
     context('summary list', () => {
       const { summaryList } = yourQuotePage.panel;
+
+      it('should render a header with href to quote start', () => {
+        partials.header.serviceName().should('have.attr', 'href', startRoute);
+      });
 
       it('renders `max amount owed` key, value with no decimal points and change link', () => {
         const row = summaryList[MAX_AMOUNT_OWED];

@@ -6,6 +6,8 @@ import generateValidationErrors from '../../../shared-validation/yes-no-radios-f
 
 const FIELD_ID = FIELD_IDS.OPTIONAL_COOKIES;
 
+const startRoute = ROUTES.QUOTE.START;
+
 const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.COOKIES_PAGE,
@@ -17,7 +19,7 @@ const get = (req: Request, res: Response) => {
   req.flash('previousUrl', req.headers.referer);
 
   return res.render(TEMPLATES.COOKIES, {
-    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
     submittedValue: req.cookies.optionalCookies,
   });
@@ -26,9 +28,11 @@ const get = (req: Request, res: Response) => {
 const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
 
+  let backLink = req.headers.referer;
+
   if (validationErrors) {
     return res.render(TEMPLATES.COOKIES, {
-      ...singleInputPageVariables({ ...PAGE_VARIABLES }),
+      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
       FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
       BACK_LINK: req.headers.referer,
       validationErrors,
@@ -39,14 +43,12 @@ const post = (req: Request, res: Response) => {
 
   const showSuccessMessageGoBackLink = previousUrl && previousUrl.length && !previousUrl.includes(ROUTES.COOKIES);
 
-  let backLink = req.headers.referer;
-
   if (previousUrl) {
     backLink = previousUrl[previousUrl.length - 1];
   }
 
   return res.render(TEMPLATES.COOKIES, {
-    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: backLink }),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: backLink, START_ROUTE: startRoute }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
     submittedValue: req.cookies.optionalCookies,
     showSuccessMessage: true,

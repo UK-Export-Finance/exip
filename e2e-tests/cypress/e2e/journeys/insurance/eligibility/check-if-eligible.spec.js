@@ -9,6 +9,8 @@ import { completeStartForm } from '../../../../support/insurance/eligibility/for
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
 
+const insuranceStartRoute = ROUTES.INSURANCE.START;
+
 context('Insurance Eligibility - check if eligible page', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -39,6 +41,10 @@ context('Insurance Eligibility - check if eligible page', () => {
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
+  });
+
+  it('should render a header with href to insurance start', () => {
+    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
   it('renders a back link with correct url', () => {

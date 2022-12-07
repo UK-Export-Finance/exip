@@ -11,6 +11,8 @@ import {
   checkFocusOnInputWhenClickingSummaryErrorMessage,
 } from '../../../../support/check-buyer-country-form';
 
+const startRoute = ROUTES.QUOTE.START;
+
 context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based', () => {
   beforeEach(() => {
     cy.login();
@@ -29,6 +31,10 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
+  });
+
+  it('should render a header with href to quote start', () => {
+    partials.header.serviceName().should('have.attr', 'href', startRoute);
   });
 
   it('renders a back link with correct url', () => {

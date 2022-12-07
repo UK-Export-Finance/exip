@@ -1,6 +1,9 @@
 import insuranceCorePageVariables from '.';
 import corePageVariables from '..';
+import { ROUTES } from '../../../../constants';
 import { PRODUCT } from '../../../../content-strings';
+
+const { START: insuranceStart } = ROUTES.INSURANCE;
 
 describe('server/helpers/page-variables/core/insurance', () => {
   const mock = {
@@ -9,6 +12,7 @@ describe('server/helpers/page-variables/core/insurance', () => {
       HEADING: 'Testing',
     },
     BACK_LINK: '/mock',
+    START_ROUTE: insuranceStart,
   };
 
   it('should return corePageVariables with BACK_LINK and insurance/application product description', () => {
@@ -21,6 +25,7 @@ describe('server/helpers/page-variables/core/insurance', () => {
         DESCRIPTION: PRODUCT.DESCRIPTION.APPLICATION,
       },
       BACK_LINK: mock.BACK_LINK,
+      START_ROUTE: insuranceStart,
     });
 
     expect(result).toEqual(expected);
