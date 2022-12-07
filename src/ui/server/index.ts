@@ -134,6 +134,7 @@ app.get('*', (req: Request, res: Response) =>
       },
       ...PAGES.PAGE_NOT_FOUND_PAGE,
     },
+    START_ROUTE: ROUTES.QUOTE.START,
   }),
 );
 
