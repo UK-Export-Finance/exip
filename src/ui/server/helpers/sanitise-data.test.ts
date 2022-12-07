@@ -120,10 +120,18 @@ describe('server/helpers/sanitise-data', () => {
     });
 
     describe('when formBody._csrf does not exist', () => {
-      it('should return an empty object', () => {
-        const result = sanitiseData({});
+      it('should return return sanitised data', () => {
+        const mockFormData = {
+          a: 'true',
+        };
 
-        expect(result).toEqual({});
+        const result = sanitiseData(mockFormData);
+
+        const expected = {
+          a: true,
+        };
+
+        expect(result).toEqual(expected);
       });
     });
   });

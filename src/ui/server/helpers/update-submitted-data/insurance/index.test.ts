@@ -44,24 +44,6 @@ describe('server/helpers/update-submitted-data/insurance', () => {
       });
     });
 
-    it('should not return _csrf from provided form data', () => {
-      const mockFormData = {
-        _csrf: '123',
-        a: true,
-      } as RequestBody;
-
-      const mockExistingData = {};
-
-      const result = updateSubmittedData(mockFormData, mockExistingData);
-
-      const expected = sanitiseData({
-        ...mockExistingData,
-        a: true,
-      });
-
-      expect(result).toEqual(expected);
-    });
-
     describe('when there is no existing or provided data', () => {
       it('should return empty object', () => {
         const mockFormData = {

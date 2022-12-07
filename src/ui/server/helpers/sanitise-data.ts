@@ -37,22 +37,21 @@ const sanitiseValue = (value: string | number | boolean) => {
 };
 
 const sanitiseData = (formBody: RequestBody) => {
-  if (formBody._csrf) {
-    const { _csrf, ...formData } = formBody;
-
-    const sanitised = {};
-    const keys = Object.keys(formData);
-
-    keys.forEach((key) => {
-      const value = formData[key];
-
-      sanitised[key] = sanitiseValue(value);
-    });
-
-    return sanitised;
+  const formData = formBody;
+  if (formData._csrf) {
+    delete formData._csrf;
   }
 
-  return {};
+  const sanitised = {};
+  const keys = Object.keys(formData);
+
+  keys.forEach((key) => {
+    const value = formData[key];
+
+    sanitised[key] = sanitiseValue(value);
+  });
+
+  return sanitised;
 };
 
 export { shouldChangeToNumber, sanitiseValue, sanitiseData };
