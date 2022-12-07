@@ -10,9 +10,11 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 
-const PAGE_VARIABLES = {
+export const PAGE_VARIABLES = {
   FIELD: FIELDS[POLICY_AND_EXPORTS.POLICY_TYPE],
 };
+
+export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
 
 /**
  * get
@@ -21,7 +23,7 @@ const PAGE_VARIABLES = {
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Type of policy page
  */
-const get = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
 
   try {
@@ -31,7 +33,7 @@ const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.render(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY, {
+    return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
         BACK_LINK: req.headers.referer,
@@ -53,13 +55,13 @@ const get = async (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   try {
     // check for form errors.
     const validationErrors = generateValidationErrors(req.body);
 
     if (validationErrors) {
-      return res.render(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY, {
+      return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
           BACK_LINK: req.headers.referer,
@@ -104,5 +106,3 @@ const post = async (req: Request, res: Response) => {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };
-
-export { PAGE_VARIABLES, get, post };

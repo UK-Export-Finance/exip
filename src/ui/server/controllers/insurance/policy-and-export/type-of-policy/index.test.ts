@@ -1,4 +1,4 @@
-import { PAGE_VARIABLES, get, post } from '.';
+import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
@@ -44,6 +44,12 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
     });
   });
 
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY);
+    });
+  });
+
   describe('get', () => {
     beforeEach(() => {
       api.keystone.application.get = getApplicationSpy;
@@ -68,7 +74,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         application: mockApplication,
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
     describe('when there is no application returned from the API', () => {
@@ -156,7 +162,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
           validationErrors: generateValidationErrors(req.body),
         };
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY, expectedVariables);
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
     });
 
