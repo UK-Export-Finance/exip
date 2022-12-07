@@ -26,6 +26,8 @@ import {
 
 const CONTENT_STRINGS = PAGES.UK_GOODS_OR_SERVICES;
 
+const insuranceStartRoute = ROUTES.INSURANCE.START;
+
 context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -82,6 +84,10 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
 
   it('renders an analytics cookies consent banner that can be rejected', () => {
     cy.rejectAnalyticsCookies();
+  });
+
+  it('should render a header with href to insurance start', () => {
+    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
   it('renders a phase banner', () => {

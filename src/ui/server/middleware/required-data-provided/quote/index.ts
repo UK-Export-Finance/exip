@@ -4,6 +4,7 @@ import { getRoutesAsArray, routeIsKnown, hasRequiredData } from '../helpers';
 import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-type';
 
 const {
+  START,
   BUYER_BODY,
   BUYER_COUNTRY,
   BUYER_COUNTRY_CHANGE,
@@ -103,7 +104,7 @@ export const requiredQuoteEligibilityDataProvided = (req: Request, res: Response
   const routesArray = getRoutesAsArray(ROUTES.QUOTE);
 
   // array of routes that do not require any data checks.
-  const irrelevantRoutes = [BUYER_COUNTRY, CANNOT_APPLY, GET_A_QUOTE_BY_EMAIL, NEED_TO_START_AGAIN];
+  const irrelevantRoutes = [BUYER_COUNTRY, CANNOT_APPLY, GET_A_QUOTE_BY_EMAIL, NEED_TO_START_AGAIN, START];
 
   const isIrrelevantRoute = (route: string) => irrelevantRoutes.includes(route);
 

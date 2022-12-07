@@ -26,6 +26,8 @@ import {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD;
 
+const insuranceStartRoute = ROUTES.INSURANCE.START;
+
 context('Insurance - Eligibility - Pre-credit period page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -91,6 +93,10 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
 
   it('renders an analytics cookies consent banner that can be rejected', () => {
     cy.rejectAnalyticsCookies();
+  });
+
+  it('should render a header with href to insurance start', () => {
+    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
   it('renders a phase banner', () => {

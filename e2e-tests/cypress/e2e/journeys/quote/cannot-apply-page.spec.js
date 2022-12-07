@@ -12,6 +12,7 @@ import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
+const startRoute = ROUTES.QUOTE.START;
 
 context('Cannot apply exit page', () => {
   beforeEach(() => {
@@ -47,6 +48,10 @@ context('Cannot apply exit page', () => {
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
+  });
+
+  it('should render a header with href to quote start', () => {
+    partials.header.serviceName().should('have.attr', 'href', startRoute);
   });
 
   it('renders a back link with correct url', () => {

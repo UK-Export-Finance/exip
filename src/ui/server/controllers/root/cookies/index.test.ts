@@ -6,6 +6,8 @@ import { Request, Response } from '../../../../types';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 
+const startRoute = ROUTES.QUOTE.START;
+
 describe('controllers/root/cookies', () => {
   let req: Request;
   let res: Response;
@@ -36,7 +38,7 @@ describe('controllers/root/cookies', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
-        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
         FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
         submittedValue: req.cookies.optionalCookies,
       });
@@ -57,7 +59,7 @@ describe('controllers/root/cookies', () => {
         post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
-          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
           FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
           validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),
         });
@@ -74,7 +76,7 @@ describe('controllers/root/cookies', () => {
         post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
-          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
           FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
           submittedValue: req.cookies.optionalCookies,
           showSuccessMessage: true,
@@ -101,7 +103,7 @@ describe('controllers/root/cookies', () => {
           await post(req, res);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
-            ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: mockPreviousUrl }),
+            ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: mockPreviousUrl, START_ROUTE: startRoute }),
             FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
             submittedValue: req.cookies.optionalCookies,
             showSuccessMessage: true,
@@ -131,7 +133,7 @@ describe('controllers/root/cookies', () => {
           post(req, res);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
-            ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: ROUTES.COOKIES }),
+            ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: ROUTES.COOKIES, START_ROUTE: startRoute }),
             FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
             submittedValue: req.cookies.optionalCookies,
             showSuccessMessage: true,

@@ -15,6 +15,8 @@ import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../s
 
 const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 
+const insuranceStartRoute = ROUTES.INSURANCE.START;
+
 context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
   beforeEach(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -50,6 +52,10 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
 
   it('renders an analytics cookies consent banner that can be rejected', () => {
     cy.rejectAnalyticsCookies();
+  });
+
+  it('should render a header with href to insurance start', () => {
+    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
   it('renders a back link with correct url', () => {

@@ -20,6 +20,7 @@ const {
   TELL_US_ABOUT_YOUR_POLICY,
   TELL_US_ABOUT_YOUR_POLICY_CHANGE,
   YOUR_QUOTE,
+  START,
 } = ROUTES.QUOTE;
 
 describe('middleware/required-data-provided/quote', () => {
@@ -171,6 +172,15 @@ describe('middleware/required-data-provided/quote', () => {
     describe('when req.originalUrl is root URL', () => {
       it('should call req.next', () => {
         req.originalUrl = '/';
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${START}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = START;
         requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

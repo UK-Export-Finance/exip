@@ -14,6 +14,8 @@ const submissionData = {
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
 };
 
+const startRoute = ROUTES.QUOTE.START;
+
 context('Change your answers (export fields) - as an exporter, I want to change the details before submitting the proposal', () => {
   before(() => {
     cy.login();
@@ -63,6 +65,10 @@ context('Change your answers (export fields) - as an exporter, I want to change 
       submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+    });
+
+    it('should render a header with href to quote start', () => {
+      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
     it('renders the new answer in `Check your answers` page', () => {

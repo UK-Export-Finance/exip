@@ -1,5 +1,6 @@
 import { submitButton } from '../../../pages/shared';
 import { checkYourAnswersPage } from '../../../pages/quote';
+import partials from '../../../partials';
 import {
   FIELDS,
   LINKS,
@@ -9,6 +10,8 @@ import {
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CHECK_YOUR_ANSWERS;
+
+const startRoute = ROUTES.QUOTE.START;
 
 context('Check your answers page (multi policy) - as an exporter, I want to review the details before submitting the proposal', () => {
   const {
@@ -48,6 +51,10 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
       list.heading().invoke('text').then((text) => {
         expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_EXPORT);
       });
+    });
+
+    it('should render a header with href to quote start', () => {
+      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
     it('renders `Buyer based` key, value and change link', () => {
