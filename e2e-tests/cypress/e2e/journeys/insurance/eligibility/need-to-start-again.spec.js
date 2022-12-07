@@ -83,10 +83,12 @@ context('Insurance Eligibility - Need to start again exit page', () => {
   });
 
   describe('clicking the submit button', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.buyerCountryRoute}`, () => {
+    it(`should redirect to ${buyerCountryRoute}`, () => {
       submitButton().click();
 
-      cy.url().should('include', buyerCountryRoute);
+      const expected = `${Cypress.config('baseUrl')}${buyerCountryRoute}`;
+
+      cy.url().should('eq', expected);
     });
   });
 });
