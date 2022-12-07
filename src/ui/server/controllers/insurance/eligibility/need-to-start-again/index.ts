@@ -9,4 +9,4 @@ export const get = (req: Request, res: Response) =>
     corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.NEED_TO_START_AGAIN_PAGE, BACK_LINK: req.headers.referer }),
   );
 
-export const post = (req: Request, res: Response) => res.redirect(ROUTES.INSURANCE.START);
+export const post = (req: Request, res: Response) => res.redirect(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);

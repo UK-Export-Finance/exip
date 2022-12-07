@@ -7,6 +7,7 @@ import { completeStartForm, completeCheckIfEligibleForm } from '../../../../supp
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
 
 const insuranceStartRoute = ROUTES.INSURANCE.START;
+const buyerCountryRoute = ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY;
 
 context('Insurance Eligibility - Need to start again exit page', () => {
   beforeEach(() => {
@@ -82,10 +83,12 @@ context('Insurance Eligibility - Need to start again exit page', () => {
   });
 
   describe('clicking the submit button', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.START}`, () => {
+    it(`should redirect to ${buyerCountryRoute}`, () => {
       submitButton().click();
 
-      cy.url().should('include', ROUTES.INSURANCE.START);
+      const expected = `${Cypress.config('baseUrl')}${buyerCountryRoute}`;
+
+      cy.url().should('eq', expected);
     });
   });
 });
