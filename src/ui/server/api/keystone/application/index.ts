@@ -108,7 +108,7 @@ const application = {
           console.error('GraphQL network error updating application policy and export ', response.networkError.result.errors);
         }
 
-        if (response?.data?.updatePolicyAndExport && response?.data?.updatePolicyAndExport) {
+        if (response?.data?.updatePolicyAndExport) {
           const { data } = response;
 
           return data.updatePolicyAndExport;

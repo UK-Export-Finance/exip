@@ -6,24 +6,26 @@ import { TASKS } from '../../../content-strings';
 import { GROUP_IDS } from '../../../constants';
 import { mockApplication } from '../../../test-mocks';
 
+const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
+
 describe('server/helpers/task-list/generate-groups-and-tasks', () => {
   it('should return EXIP groups and tasks', () => {
     const result = generateGroupsAndTasks(mockApplication.referenceNumber);
 
     const initialChecks = {
-      title: TASKS.LIST.INITIAL_CHECKS.HEADING,
+      title: INITIAL_CHECKS.HEADING,
       id: GROUP_IDS.INITIAL_CHECKS,
       tasks: initialChecksTasks(),
     };
 
     const prepareApplication = {
-      title: TASKS.LIST.PREPARE_APPLICATION.HEADING,
+      title: PREPARE_APPLICATION.HEADING,
       id: GROUP_IDS.PREPARE_APPLICATION,
       tasks: prepareApplicationTasks(mockApplication.referenceNumber, [initialChecks]),
     };
 
     const submitApplication = {
-      title: TASKS.LIST.SUBMIT_APPLICATION.HEADING,
+      title: SUBMIT_APPLICATION.HEADING,
       id: GROUP_IDS.SUBMIT_APPLICATION,
       tasks: submitApplicationTasks([initialChecks, prepareApplication]),
     };

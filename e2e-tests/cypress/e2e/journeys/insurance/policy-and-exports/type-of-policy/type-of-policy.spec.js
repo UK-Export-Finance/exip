@@ -19,12 +19,16 @@ import { FIELDS } from '../../../../../../content-strings/fields/insurance/polic
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
+const insuranceStartRoute = ROUTES.INSURANCE.START;
+
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
 
 const FIELD_ID = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
 
 const singlePolicyField = insurance.policyAndExport.typeOfPolicy[FIELD_ID].single;
 const multiplePolicyField = insurance.policyAndExport.typeOfPolicy[FIELD_ID].multi;
+
+const { taskList } = partials.insurancePartials;
 
 const goToPageDirectly = (referenceNumber) => {
   cy.visit(`${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`, {
@@ -48,7 +52,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    partials.insurance.taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
@@ -70,6 +74,10 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
       'best-practices': 100,
       seo: 70,
     });
+  });
+
+  it('should render a header with href to insurance start', () => {
+    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
   it('renders a back link with correct url', () => {
@@ -252,7 +260,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
           },
         });
 
-        const task = partials.insurance.taskList.prepareApplication.tasks.policyTypeAndExports;
+        const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
         task.status().invoke('text').then((text) => {
           const expected = TASKS.STATUS.IN_PROGRESS;

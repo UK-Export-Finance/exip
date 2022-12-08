@@ -7,13 +7,16 @@ import generateValidationErrors from './validation';
 import api from '../../../../api';
 import save from '../save-data';
 
+const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 const { INSURANCE } = ROUTES;
 
-const pageVariables = (referenceNumber: number) => ({
+export const pageVariables = (referenceNumber: number) => ({
   FIELD: FIELDS[POLICY_AND_EXPORTS.POLICY_TYPE],
-  SAVE_AND_BACK_URL: `${INSURANCE.INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY_SAVE_AND_BACK}`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY_SAVE_AND_BACK}`,
 });
+
+export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
 
 /**
  * get
@@ -22,7 +25,7 @@ const pageVariables = (referenceNumber: number) => ({
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Type of policy page
  */
-const get = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
 
   try {
@@ -33,7 +36,7 @@ const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.render(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY, {
+    return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
         BACK_LINK: req.headers.referer,
@@ -55,7 +58,7 @@ const get = async (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-const post = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   try {
     const { referenceNumber } = req.params;
     const refNumber = Number(referenceNumber);
@@ -64,7 +67,7 @@ const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(req.body);
 
     if (validationErrors) {
-      return res.render(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY, {
+      return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
           BACK_LINK: req.headers.referer,
@@ -82,12 +85,10 @@ const post = async (req: Request, res: Response) => {
     }
 
     // redirect to next part of the flow
-    return res.redirect(`${INSURANCE.INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`);
   } catch (err) {
     console.error('Error getting application', { err });
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };
-
-export { pageVariables, get, post };

@@ -8,6 +8,8 @@ import { ROUTES } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.START;
 
+const insuranceStartRoute = ROUTES.INSURANCE.START;
+
 context('Insurance Eligibility - start page', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -34,6 +36,10 @@ context('Insurance Eligibility - start page', () => {
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
+  });
+
+  it('should render a header with href to insurance start', () => {
+    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
   it('renders a back link with correct url', () => {

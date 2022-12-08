@@ -3,7 +3,11 @@ FROM node:18.9-alpine3.16
 
 # Variables
 ARG GITHUB_SHA
-ENV GITHUB_SHA=$GITHUB_SHA
+ARG SESSION_SECRET
+ARG GOV_NOTIFY_API_KEY
+ENV GITHUB_SHA $GITHUB_SHA
+ENV SESSION_SECRET $SESSION_SECRET
+ENV GOV_NOTIFY_API_KEY $GOV_NOTIFY_API_KEY
 ENV SSH_PORT=2222
 
 # SSH Setup
@@ -24,10 +28,13 @@ EXPOSE 80 ${SSH_PORT}
 # Node setup
 WORKDIR /app
 COPY package.json .
-RUN npm install --omit=dev
+COPY package-lock.json .
+COPY .keystone keystone
+RUN npm ci --legacy-peer-deps
 RUN npm install -g typescript
 RUN npm cache clean --force
 COPY . .
+RUN npm run build
 
 # Execute Script
 ENTRYPOINT ["/bin/init.sh"]

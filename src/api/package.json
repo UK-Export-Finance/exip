@@ -4,7 +4,7 @@
   "description": "Export Insurance Policies API",
   "engineStrict": true,
   "engines": {
-    "node": "^14.15 || ^16.13",
+    "node": "^18.9.1",
     "npm": ">=6.0.0"
   },
   "scripts": {
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "dependencies": {
+    "axios": "^1.2.0",
     "@babel/core": "^7.16.0",
     "@babel/plugin-transform-runtime": "^7.19.6",
     "@babel/preset-env": "^7.16.0",

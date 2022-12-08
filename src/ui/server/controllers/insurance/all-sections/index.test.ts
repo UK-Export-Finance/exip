@@ -1,4 +1,4 @@
-import { get } from '.';
+import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
@@ -22,6 +22,12 @@ describe('controllers/insurance/all-sections', () => {
     req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ALL_SECTIONS);
+    });
+  });
+
   describe('get', () => {
     let getApplicationSpy = jest.fn(() => Promise.resolve(mockGetApplicationResponse));
 
@@ -29,7 +35,7 @@ describe('controllers/insurance/all-sections', () => {
       api.keystone.application.get = getApplicationSpy;
     });
 
-    it('should call api.keystone.application.get', async () => {
+    it('should call api.keystone.getApplication', async () => {
       await get(req, res);
 
       expect(getApplicationSpy).toHaveBeenCalledTimes(1);

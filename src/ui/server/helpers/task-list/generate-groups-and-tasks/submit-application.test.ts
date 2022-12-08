@@ -5,6 +5,8 @@ import { TASK_IDS } from '../../../constants';
 import { TASKS } from '../../../content-strings';
 import { mockApplication } from '../../../test-mocks';
 
+const { SUBMIT_APPLICATION } = TASKS.LIST;
+
 describe('server/helpers/task-list/submit-application', () => {
   it('should return EXIP `submit application` tasks', () => {
     const groupsAndTasks = generateGroupsAndTasks(mockApplication.referenceNumber);
@@ -18,7 +20,7 @@ describe('server/helpers/task-list/submit-application', () => {
 
     const DECLARATIONS = {
       href: '#',
-      title: TASKS.LIST.SUBMIT_APPLICATION.TASKS.DECLARATIONS,
+      title: SUBMIT_APPLICATION.TASKS.DECLARATIONS,
       id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS,
       fields: ['temp'],
       dependencies: [
@@ -31,7 +33,7 @@ describe('server/helpers/task-list/submit-application', () => {
 
     const CHECK_ANSWERS_AND_SUBMIT = {
       href: '#',
-      title: TASKS.LIST.SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT,
+      title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT,
       id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS_AND_SUBMIT,
       fields: [],
       dependencies: [...DECLARATIONS.fields, ...DECLARATIONS.dependencies],

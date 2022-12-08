@@ -7,7 +7,9 @@ import generateGroupsAndTasks from '../../../helpers/task-list/generate-groups-a
 import generateTaskList from '../../../helpers/task-list';
 import flattenApplicationData from '../../../helpers/flatten-application-data';
 
-const get = async (req: Request, res: Response) => {
+export const TEMPLATE = TEMPLATES.INSURANCE.ALL_SECTIONS;
+
+export const get = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
 
   try {
@@ -23,7 +25,7 @@ const get = async (req: Request, res: Response) => {
 
     const taskListData = generateTaskList(taskListStructure, flatApplicationData);
 
-    return res.render(TEMPLATES.INSURANCE.ALL_SECTIONS, {
+    return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ALL_SECTIONS,
         BACK_LINK: req.headers.referer,
@@ -37,5 +39,3 @@ const get = async (req: Request, res: Response) => {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };
-
-export { get };

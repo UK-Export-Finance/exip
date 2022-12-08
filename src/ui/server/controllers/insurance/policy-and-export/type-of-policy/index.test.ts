@@ -1,4 +1,4 @@
-import { pageVariables, get, post } from '.';
+import { pageVariables, get, post, TEMPLATE } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
@@ -9,6 +9,7 @@ import generateValidationErrors from './validation';
 import save from '../save-data';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
+const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 const { INSURANCE } = ROUTES;
 
@@ -53,6 +54,12 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
     });
   });
 
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY);
+    });
+  });
+
   describe('get', () => {
     beforeEach(() => {
       api.keystone.application.get = getApplicationSpy;
@@ -77,7 +84,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         application: mockApplication,
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
     describe('when there is no application returned from the API', () => {
@@ -129,7 +136,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
         const referenceNumber = refNumber;
 
-        const expected = `${ROUTES.INSURANCE.INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -148,7 +155,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
           validationErrors: generateValidationErrors(req.body),
         };
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY, expectedVariables);
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
     });
 

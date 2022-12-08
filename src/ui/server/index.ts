@@ -115,6 +115,7 @@ app.use(
 /* eslint-disable no-unused-vars, prettier/prettier */
 // @ts-ignore
 const errorHandler: express.ErrorRequestHandler = (err, req, res, next) => {
+  console.error('Error with EXIP UI app', err);
   res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
 };
 /* eslint-enable no-unused-vars, prettier/prettier */
@@ -133,6 +134,7 @@ app.get('*', (req: Request, res: Response) =>
       },
       ...PAGES.PAGE_NOT_FOUND_PAGE,
     },
+    START_ROUTE: ROUTES.QUOTE.START,
   }),
 );
 

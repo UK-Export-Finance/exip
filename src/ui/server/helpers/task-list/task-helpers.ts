@@ -22,7 +22,7 @@ export const getTaskById = (groupTasks: Array<TaskListDataTask>, taskId: string)
 /**
  * getAllTasksFieldsInAGroup
  * @param {Object} group Task list group
- * @returns {Array} All field IDs from all tasks in the provided group
+ * @returns {Array} All field IDs from all tasks in the provided group. Flattens the task fields into a 1 level array.
  */
 export const getAllTasksFieldsInAGroup = (group: TaskListDataGroup): Array<string> => {
   if (group && group.tasks && group.tasks.length) {
@@ -30,6 +30,21 @@ export const getAllTasksFieldsInAGroup = (group: TaskListDataGroup): Array<strin
   }
 
   return [];
+};
+
+/**
+ * hasSubmittedField
+ * @param {Object} submittedData Submitted application data
+ * @param {String} field ID of the field to get
+ * @returns {Boolean} True if the field is in submittedData.
+ */
+// Note: this assumes that any data in submitted fields is a valid answer. E.g, false boolean is a valid answer.
+export const hasSubmittedField = (submittedData: ApplicationFlat, fieldId: string) => {
+  if (submittedData && fieldId && (submittedData[fieldId] || submittedData[fieldId] === false)) {
+    return true;
+  }
+
+  return false;
 };
 
 /**
@@ -43,9 +58,7 @@ export const getSubmittedFields = (fields: Array<string>, submittedData: Applica
 
   if (fields) {
     fields.forEach((fieldId) => {
-      // NOTE this assumes that any data in submitted fields, is a valid answer. E.g, "false" is a valid answer.
-
-      if (submittedData && (submittedData[fieldId] || submittedData[fieldId] === false)) {
+      if (hasSubmittedField(submittedData, fieldId)) {
         submittedFields.push(fieldId);
       }
     });
@@ -101,11 +114,10 @@ export const areTaskDependenciesMet = (dependencies: Array<string>, submittedDat
 
   if (dependencies) {
     validDependencies = dependencies.filter((fieldId: string) => {
-      // NOTE this assumes that any data in submitted fields, is a valid answer. E.g, "false" is a valid answer.
-
-      if (submittedData && (submittedData[fieldId] || submittedData[fieldId] === false)) {
+      if (hasSubmittedField(submittedData, fieldId)) {
         return fieldId;
       }
+
       return null;
     });
   }
@@ -157,10 +169,4 @@ export const taskStatus = (task: TaskListDataTask, submittedData: ApplicationFla
  * @param {String} status Status of the task
  * @returns {String} Task link if the status is not `cannot start`
  */
-export const taskLink = (link: string, status: string): string | null => {
-  if (status !== TASKS.STATUS.CANNOT_START) {
-    return link;
-  }
-
-  return null;
-};
+export const taskLink = (link: string, status: string): string | null => (status === TASKS.STATUS.CANNOT_START ? null : link);

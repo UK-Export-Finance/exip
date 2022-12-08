@@ -1,5 +1,6 @@
 import { buyerCountryPage, submitButton } from '../../../pages/shared';
 import { yourQuotePage } from '../../../pages/quote';
+import partials from '../../../partials';
 import {
   LINKS,
   PAGES,
@@ -39,6 +40,8 @@ const submissionData = {
   [CREDIT_PERIOD]: '1',
 };
 
+const startRoute = ROUTES.QUOTE.START;
+
 context('Get a quote/your quote page (single policy) - as an exporter, I want to get an Export insurance quote', () => {
   before(() => {
     cy.login();
@@ -73,6 +76,10 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
+  });
+
+  it('should render a header with href to quote start', () => {
+    partials.header.serviceName().should('have.attr', 'href', startRoute);
   });
 
   context('panel/quote', () => {
