@@ -204,7 +204,7 @@ const get = (req: Request, res: Response) =>
 
 ### Single input pages
 
-In the eligibility flows, there are lot of "yes or no" question pages with single radio button selection. The only difference between each of these pages is the field itself - e.g the title, id and hint. Therefore we also have a special page variables function that is exactly the same as the others, except that it can consume a field ID and automatically adds any hints or labels defined for the field ID. Example usage:
+In the eligibility flows, there are lot of "yes or no" question pages with single radio button selection. The only difference between each of these pages is the field itself - e.g the title, id and hint. Therefore we also have a special page variables function, [singleInputPageVariables](https://github.com/UK-Export-Finance/exip/tree/main-application/src/ui/server/helpers/page-variables/single-input) that is exactly the same as the others, except that it can consume a field ID and automatically adds any hints or labels defined for the field ID. NBite Example usage:
 
 ```js
 const get = (req: Request, res: Response) =>
@@ -222,7 +222,7 @@ const get = (req: Request, res: Response) =>
 
 ### Generic pages
 
-For controllers/pages that are not part of the Quote tool or Insurance, e.g "problem with this service", use Use [corePageVariables](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/helpers/page-variables/core/index.ts). Example usage:
+For controllers/pages that are not part of the Quote tool or Insurance, e.g "problem with this service", use [corePageVariables](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/helpers/page-variables/core/index.ts). Example usage:
 
 ```js
 const get = (req: Request, res: Response) =>
@@ -270,7 +270,7 @@ export const get = (req: Request, res: Response) =>
 
 A complete example with validation handling and a POST can be found [here](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/policy-and-export/type-of-policy/index.ts).
 
-Note: Pages with a single form field (for example eligibility pages) are a little simpler and use `FIELD_ID` instead of `FIELDS`. An example can be found [here](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/eligibility/exporter-location/index.ts)
+Note: Pages with a single form field (for example eligibility pages) are a little simpler and use `FIELD_ID` instead of `FIELDS`. An example can be found [here](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/eligibility/exporter-location/index.ts).
 
 ## Git workflow
 
