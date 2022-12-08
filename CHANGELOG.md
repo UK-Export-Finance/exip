@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.8](https://github.com/UK-Export-Finance/exip/compare/v1.14.7...v1.14.8) (2022-12-08)
+
+
+### Miscellaneous
+
+* Dependency vulnerability removal ([#178](https://github.com/UK-Export-Finance/exip/issues/178)) ([49bfb56](https://github.com/UK-Export-Finance/exip/commit/49bfb566068b2b2af8d6b3cd3839489bb4d52d49))
+
 ## [1.14.7](https://github.com/UK-Export-Finance/exip/compare/v1.14.6...v1.14.7) (2022-12-06)
 
 
