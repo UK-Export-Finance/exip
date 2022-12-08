@@ -6,8 +6,9 @@ import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-
 const multiplePolicyField = insurance.policyAndExport.typeOfPolicy[FIELD_ID].multi;
+
+const { taskList } = partials.insurancePartials;
 
 context('Insurance - Policy and exports - Type of policy page - Save and go back', () => {
   let referenceNumber;
@@ -22,7 +23,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    partials.insurance.taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
@@ -47,7 +48,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
     });
 
     it('should retain the `type of policy and exports` task status as `not started yet`', () => {
-      const task = partials.insurance.taskList.prepareApplication.tasks.policyTypeAndExports;
+      const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
       task.status().invoke('text').then((text) => {
         const expected = TASKS.STATUS.NOT_STARTED_YET;
@@ -59,7 +60,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
 
   describe('when selecting an answer and submitting the form via `save and go back` button', () => {
     before(() => {
-      partials.insurance.taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
     });
 
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
@@ -72,7 +73,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
     });
 
     it('should update the status of task `type of policy and exports`to `in progress`', () => {
-      const task = partials.insurance.taskList.prepareApplication.tasks.policyTypeAndExports;
+      const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
       task.status().invoke('text').then((text) => {
         const expected = TASKS.STATUS.IN_PROGRESS;
@@ -83,7 +84,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
 
     describe('when going back to the page', () => {
       it('should have the originally submitted answer selected', () => {
-        partials.insurance.taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+        taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
         multiplePolicyField.input().should('be.checked');
       });
