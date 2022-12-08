@@ -36,8 +36,13 @@ const sanitiseValue = (value: string | number | boolean) => {
   return value;
 };
 
-const sanitiseData = (formData: RequestBody) => {
-  // const sanitised = {} as SubmittedDataQuoteEligibility | SubmittedDataInsuranceEligibility;
+const sanitiseData = (formBody: RequestBody) => {
+  const formData = formBody;
+
+  if (formData._csrf) {
+    delete formData._csrf;
+  }
+
   const sanitised = {};
   const keys = Object.keys(formData);
 

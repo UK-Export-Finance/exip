@@ -92,7 +92,7 @@ const generatePageVariables = (policyType: string) => {
 
 const get = async (req: Request, res: Response) => {
   const { submittedData } = req.session;
-  const currencies = await api.getCurrencies();
+  const currencies = await api.external.getCurrencies();
 
   if (!currencies || !currencies.length) {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
@@ -144,7 +144,7 @@ const post = async (req: Request, res: Response) => {
     ...req.body,
   });
 
-  const currencies = await api.getCurrencies();
+  const currencies = await api.external.getCurrencies();
 
   if (!currencies || !currencies.length) {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

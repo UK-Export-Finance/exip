@@ -1,17 +1,25 @@
-export const FIELD_IDS = {
-  OPTIONAL_COOKIES: 'optionalCookies',
-  VALID_BUYER_BODY: 'validBuyerBody',
-  VALID_EXPORTER_LOCATION: 'validExporterLocation',
+const SHARED = {
+  POLICY_TYPE: 'policyType',
+  SINGLE_POLICY_TYPE: 'singlePolicyType',
+  MULTI_POLICY_TYPE: 'multiPolicyType',
+};
+
+const SHARED_ELIGIBILITY = {
   BUYER_COUNTRY: 'buyerCountry',
   HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',
+  VALID_EXPORTER_LOCATION: 'validExporterLocation',
+};
+
+export const FIELD_IDS = {
+  ...SHARED,
+  ...SHARED_ELIGIBILITY,
+  OPTIONAL_COOKIES: 'optionalCookies',
+  VALID_BUYER_BODY: 'validBuyerBody',
   AMOUNT_CURRENCY: 'amountAndCurrency',
   CURRENCY: 'currency',
   CONTRACT_VALUE: 'contractValue',
   MAX_AMOUNT_OWED: 'maximumContractAmountOwed',
   CREDIT_PERIOD: 'creditPeriodInMonths',
-  POLICY_TYPE: 'policyType',
-  SINGLE_POLICY_TYPE: 'singlePolicyType',
-  MULTI_POLICY_TYPE: 'multiPolicyType',
   POLICY_LENGTH: 'policyLength',
   SINGLE_POLICY_LENGTH: 'singlePolicyLengthMonths',
   MULTI_POLICY_LENGTH: 'multiPolicyLengthMonths',
@@ -45,6 +53,13 @@ export const FIELD_IDS = {
         TRADING_NAME: 'tradingName',
         TRADING_ADDRESS: 'tradingAddress',
         WEBSITE: 'companyWebsite',
+      },
+    },
+    POLICY_AND_EXPORTS: {
+      ...SHARED,
+      TYPE_OF_POLICY: {
+        POLICY_TYPE: SHARED.POLICY_TYPE,
+        CURRENCY_CODE: 'currencyCode',
       },
     },
   },

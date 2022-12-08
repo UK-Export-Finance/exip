@@ -100,20 +100,39 @@ describe('server/helpers/sanitise-data', () => {
   });
 
   describe('sanitiseData', () => {
-    const mockFormData = {
-      a: 'mock',
-      b: 'true',
-      c: '100',
-    };
+    it('should remove _csrf and return sanitised data', () => {
+      const mockFormData = {
+        _csrf: '1234',
+        a: 'mock',
+        b: 'true',
+        c: '100',
+      };
 
-    const result = sanitiseData(mockFormData);
+      const result = sanitiseData(mockFormData);
 
-    const expected = {
-      a: mockFormData.a,
-      b: true,
-      c: 100,
-    };
+      const expected = {
+        a: mockFormData.a,
+        b: true,
+        c: 100,
+      };
 
-    expect(result).toEqual(expected);
+      expect(result).toEqual(expected);
+    });
+
+    describe('when formBody._csrf does not exist', () => {
+      it('should return return sanitised data', () => {
+        const mockFormData = {
+          a: 'true',
+        };
+
+        const result = sanitiseData(mockFormData);
+
+        const expected = {
+          a: true,
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
   });
 });

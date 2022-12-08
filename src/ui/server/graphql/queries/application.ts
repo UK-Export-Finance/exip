@@ -11,6 +11,7 @@ const applicationQuery = gql`
         submissionDeadline
         submissionType
         eligibility {
+          id
           buyerCountry {
             isoCode
             name
@@ -23,6 +24,10 @@ const applicationQuery = gql`
           needPreCreditPeriodCover
           wantCoverOverMaxAmount
           wantCoverOverMaxPeriod
+        }
+        policyAndExport {
+          id
+          policyType
         }
       }
     }

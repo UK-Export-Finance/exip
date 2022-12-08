@@ -11,14 +11,21 @@ type ApplicationCore = {
 };
 
 interface ApplicationEligibility extends InsuranceEligibilityCore {
+  id: string;
   buyerCountry: Country;
+}
+
+interface ApplicationPolicyAndExport {
+  id: string;
+  policyType: string;
 }
 
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
+  policyAndExport: ApplicationPolicyAndExport;
 }
 
-interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore {
+interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, ApplicationPolicyAndExport {
   buyerCountry: string;
 }
 

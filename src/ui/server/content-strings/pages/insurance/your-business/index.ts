@@ -11,4 +11,4 @@ const EXPORTER_BUSINESS = {
   },
 };
 
-export { EXPORTER_BUSINESS };
+export default EXPORTER_BUSINESS;

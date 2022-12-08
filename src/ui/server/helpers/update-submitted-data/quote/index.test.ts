@@ -13,7 +13,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
           mock: '1',
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [POLICY_LENGTH]: '10',
-        } as RequestBody;
+        } as SubmittedDataQuoteEligibility;
 
         const result = mapSubmittedData(mockFormData);
 
@@ -33,7 +33,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
           mock: '1',
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
           [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
-        } as RequestBody;
+        } as SubmittedDataQuoteEligibility;
 
         const result = mapSubmittedData(mockFormData);
 
@@ -53,7 +53,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [POLICY_LENGTH]: '10',
           [CONTRACT_VALUE]: 100,
-        } as RequestBody;
+        } as SubmittedDataQuoteEligibility;
 
         const mockExistingData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
@@ -78,7 +78,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
           [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
           [MAX_AMOUNT_OWED]: 200,
-        } as RequestBody;
+        } as SubmittedDataQuoteEligibility;
 
         const mockExistingData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
@@ -103,7 +103,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
         const mockFormData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
           [POLICY_LENGTH]: '10',
-        } as RequestBody;
+        } as SubmittedDataQuoteEligibility;
 
         const mockExistingData = {
           [CREDIT_PERIOD]: 2,
@@ -124,7 +124,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
       it('should return all fields', () => {
         const mockFormData = {
           mock: '1',
-        } as RequestBody;
+        } as SubmittedDataQuoteEligibility;
 
         const result = mapSubmittedData(mockFormData);
 
@@ -192,10 +192,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
 
       const result = updateSubmittedData(mockFormData, mockExistingData);
 
-      const expectedSanitisedData = sanitiseData({
-        ...mockExistingData,
-        a: true,
-      });
+      const expectedSanitisedData = sanitiseData(mockFormData);
 
       const expected = mapSubmittedData(expectedSanitisedData);
 

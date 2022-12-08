@@ -29,6 +29,7 @@ export const lists = {
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA,
       }),
+      policyAndExport: relationship({ ref: 'PolicyAndExport' }),
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -55,6 +56,17 @@ export const lists = {
               },
             };
 
+            // generate and attach a new 'policy and export' relationship
+            const { id: policyAndExportId } = await context.db.PolicyAndExport.createOne({
+              data: {},
+            });
+
+            modifiedData.policyAndExport = {
+              connect: {
+                id: policyAndExportId,
+              },
+            };
+
             // add dates
             const now = new Date();
             modifiedData.createdAt = now;
@@ -71,6 +83,8 @@ export const lists = {
             return err;
           }
         }
+
+        return resolvedData;
       },
       afterOperation: async ({ operation, item, context }) => {
         if (operation === 'create') {
@@ -78,7 +92,7 @@ export const lists = {
             console.info('Adding application ID to reference number entry');
 
             const applicationId = item.id;
-            const { referenceNumber, eligibilityId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -103,6 +117,18 @@ export const lists = {
                 },
               },
             });
+
+            // add the application ID to the policyAndExport entry.
+            await context.db.PolicyAndExport.updateOne({
+              where: { id: policyAndExportId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId,
+                  },
+                },
+              },
+            });
           } catch (err) {
             console.error('Error adding an application ID to reference number entry ', { err });
 
@@ -110,6 +136,18 @@ export const lists = {
           }
         }
       },
+    },
+    access: allowAll,
+  },
+  PolicyAndExport: {
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      policyType: select({
+        options: [
+          { label: APPLICATION.POLICY_TYPE.SINGLE, value: APPLICATION.POLICY_TYPE.SINGLE },
+          { label: APPLICATION.POLICY_TYPE.MULTI, value: APPLICATION.POLICY_TYPE.MULTI },
+        ],
+      }),
     },
     access: allowAll,
   },

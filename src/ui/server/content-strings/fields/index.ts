@@ -1,6 +1,5 @@
-import { FIELD_IDS } from '../constants/field-ids';
-import { FIELD_VALUES } from '../constants/field-values';
-import { LINKS } from './links';
+import { FIELD_IDS, FIELD_VALUES } from '../../constants';
+import { LINKS } from '../links';
 
 export const FIELDS = {
   [FIELD_IDS.BUYER_COUNTRY]: {
@@ -22,14 +21,15 @@ export const FIELDS = {
   },
   [FIELD_IDS.AMOUNT_CURRENCY]: {
     SINGLE_POLICY: {
-      LEGEND: 'What\'s the total value of the contract you want to insure?',
+      LEGEND: "What's the total value of the contract you want to insure?",
     },
     MULTI_POLICY: {
-      LEGEND: 'What\'s the maximum amount your buyer will owe you at any single point during the policy?',
+      LEGEND: "What's the maximum amount your buyer will owe you at any single point during the policy?",
     },
   },
   [FIELD_IDS.CURRENCY]: {
-    LABEL: 'Select a currency (pounds sterling, euros or US dollars). You can send out your invoices in most currencies but UKEF only issues policies in these 3 currencies.',
+    LABEL:
+      'Select a currency (pounds sterling, euros or US dollars). You can send out your invoices in most currencies but UKEF only issues policies in these 3 currencies.',
   },
   [FIELD_IDS.CONTRACT_VALUE]: {
     LABEL: 'Contract value',
@@ -170,35 +170,29 @@ export const FIELDS = {
   [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
     HINT: 'This is known as the pre-credit period.',
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.SUMMARY_LIST]: {
-    LABEL: 'Your business',
-    COMPANY_NUMBER: {
-      text: 'Companies House registration number',
-    },
-    COMPANY_NAME: {
-      text: 'Company name',
-    },
-    COMPANY_ADDRESS: {
-      text: 'Registered office address',
-    },
-    COMPANY_INCORPORATED: {
-      text: 'Incorporated on',
-    },
-    COMPANY_SIC: {
-      text: 'Standard industrial classification (SIC) codes and nature of business',
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
+    SUMMARY: {
+      TITLE: 'Companies House registration number',
     },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT]: {
-    LABEL: 'Enter your Companies House registration number (CRN)',
-    HINT: 'For example, 8989898 or SC907816. You\'ll find it on your incorporation certificate or on the Companies House website',
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NAME]: {
+    SUMMARY: {
+      TITLE: 'Company name',
+    },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_NAME]: {
-    LABEL: 'Do you use a different trading name for this company?',
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_ADDRESS]: {
+    SUMMARY: {
+      TITLE: 'Registered office address',
+    },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_ADDRESS]: {
-    LABEL: 'Do you trade from a different address to your registered office address for this company?',
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_INCORPORATED]: {
+    SUMMARY: {
+      TITLE: 'Incorporated on',
+    },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.WEBSITE]: {
-    LABEL: 'Enter your company website, if you have one (optional)',
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_SIC]: {
+    SUMMARY: {
+      TITLE: 'Standard industrial classification (SIC) codes and nature of business',
+    },
   },
 };

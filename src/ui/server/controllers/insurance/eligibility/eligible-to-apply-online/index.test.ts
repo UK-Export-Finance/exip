@@ -1,21 +1,19 @@
 import { get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
-import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../constants/routes/insurance';
+import { INSURANCE_ROOT } from '../../../../constants/routes/insurance';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { mockReq, mockRes } from '../../../../test-mocks';
-import { Request, Response } from '../../../../../types';
 import api from '../../../../api';
+import { mockApplication, mockReq, mockRes } from '../../../../test-mocks';
+import { Request, Response } from '../../../../../types';
 
 describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
   let req: Request;
   let res: Response;
 
-  const mockReferenceNumber = '1001';
+  const { referenceNumber } = mockApplication;
 
-  const mockCreateApplicationResponse = {
-    referenceNumber: mockReferenceNumber,
-  };
+  const mockCreateApplicationResponse = { referenceNumber };
 
   beforeEach(() => {
     req = mockReq();
@@ -41,19 +39,19 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
     let createApplicationSpy = jest.fn(() => Promise.resolve(mockCreateApplicationResponse));
 
     beforeEach(() => {
-      api.keystone.createApplication = createApplicationSpy;
+      api.keystone.application.create = createApplicationSpy;
     });
 
-    it('should call api.keystone.createApplication', async () => {
+    it('should call api.keystone.application.create', async () => {
       await post(req, res);
 
       expect(createApplicationSpy).toHaveBeenCalledTimes(1);
     });
 
-    it(`should redirect to ${INSURANCE_ROOT}/${mockReferenceNumber}${INSURANCE_ROUTES.ALL_SECTIONS}`, async () => {
+    it(`should redirect to ${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${mockReferenceNumber}${INSURANCE_ROUTES.ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
@@ -63,7 +61,7 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
         // @ts-ignore
         createApplicationSpy = jest.fn(() => Promise.resolve());
 
-        api.keystone.createApplication = createApplicationSpy;
+        api.keystone.application.create = createApplicationSpy;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -76,7 +74,7 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
     describe('when there is an error with the API call', () => {
       beforeEach(() => {
         createApplicationSpy = jest.fn(() => Promise.reject());
-        api.keystone.createApplication = createApplicationSpy;
+        api.keystone.application.create = createApplicationSpy;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {

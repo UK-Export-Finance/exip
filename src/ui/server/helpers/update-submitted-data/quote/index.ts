@@ -41,12 +41,9 @@ const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): Submitt
  * update quote eligibility session data with sanitised form data
  */
 const updateSubmittedData = (formData: RequestBody, existingData?: SubmittedDataQuoteEligibility): SubmittedDataQuoteEligibility => {
-  const submittedFormData = formData;
-  delete submittedFormData._csrf;
-
   const modifiedData = {
     ...existingData,
-    ...submittedFormData,
+    ...formData,
   };
 
   const sanitised = sanitiseData(modifiedData);

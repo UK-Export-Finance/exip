@@ -29,11 +29,25 @@ model Application {
   referenceNumber                  Int?
   submissionDeadline               DateTime?
   submissionType                   String?           @default("Manual Inclusion Application")
+  policyAndExport                  PolicyAndExport?  @relation("Application_policyAndExport", fields: [policyAndExportId], references: [id])
+  policyAndExportId                String?           @map("policyAndExport")
   from_ReferenceNumber_application ReferenceNumber[] @relation("ReferenceNumber_application")
+  from_PolicyAndExport_application PolicyAndExport[] @relation("PolicyAndExport_application")
   from_Eligibility_application     Eligibility[]     @relation("Eligibility_application")
 
   @@index([eligibilityId])
   @@index([referenceNumber])
+  @@index([policyAndExportId])
+}
+
+model PolicyAndExport {
+  id                               String        @id @default(cuid())
+  application                      Application?  @relation("PolicyAndExport_application", fields: [applicationId], references: [id])
+  applicationId                    String?       @map("application")
+  policyType                       String?
+  from_Application_policyAndExport Application[] @relation("Application_policyAndExport")
+
+  @@index([applicationId])
 }
 
 model Country {

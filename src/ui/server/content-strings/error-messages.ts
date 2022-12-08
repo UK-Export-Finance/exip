@@ -74,5 +74,10 @@ export const ERROR_MESSAGES = {
         TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
       },
     },
+    POLICY_AND_EXPORTS: {
+      [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE]: {
+        IS_EMPTY: 'Select the type of policy you need',
+      },
+    },
   },
 } as ErrorMessage;

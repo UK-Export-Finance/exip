@@ -20,6 +20,19 @@ export const getTaskById = (groupTasks: Array<TaskListDataTask>, taskId: string)
   groupTasks.find((task: TaskListDataTask) => task.id === taskId) as TaskListDataTask;
 
 /**
+ * getAllTasksFieldsInAGroup
+ * @param {Object} group Task list group
+ * @returns {Array} All field IDs from all tasks in the provided group. Flattens the task fields into a 1 level array.
+ */
+export const getAllTasksFieldsInAGroup = (group: TaskListDataGroup): Array<string> => {
+  if (group && group.tasks && group.tasks.length) {
+    return group.tasks.map((task: TaskListDataTask) => task.fields).flat();
+  }
+
+  return [];
+};
+
+/**
  * hasSubmittedField
  * @param {Object} submittedData Submitted application data
  * @param {String} field ID of the field to get

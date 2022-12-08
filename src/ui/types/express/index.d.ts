@@ -4,6 +4,7 @@ import { SubmittedData } from '../submitted-data';
 import { Quote } from '../quote';
 
 interface RequestBody {
+  _csrf?: string;
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 

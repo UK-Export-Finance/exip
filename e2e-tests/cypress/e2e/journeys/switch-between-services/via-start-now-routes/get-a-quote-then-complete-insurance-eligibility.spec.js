@@ -1,18 +1,5 @@
 import { submitButton } from '../../../pages/shared';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
-import {
-  completeStartForm,
-  completeCheckIfEligibleForm,
-  completeExporterLocationForm,
-  completeUkGoodsAndServicesForm,
-  completeInsuredAmountForm,
-  completeInsuredPeriodForm,
-  completeOtherPartiesForm,
-  completeLetterOfCreditForm,
-  completePreCreditPeriodForm,
-  completeCompaniesHouseNumberForm,
-  completeEligibleToApplyOnlineForm,
-} from '../../../../support/insurance/eligibility/forms';
 import { ROUTES } from '../../../../../constants';
 
 context('Get a quote, Complete insurance eligibility and then re-visit the quote tool - all via `start now` route/beginning of the flow', () => {
@@ -43,18 +30,7 @@ context('Get a quote, Complete insurance eligibility and then re-visit the quote
       },
     });
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
-    completeUkGoodsAndServicesForm();
-    completeInsuredAmountForm();
-    completeInsuredPeriodForm();
-    completeOtherPartiesForm();
-    completeLetterOfCreditForm();
-    completePreCreditPeriodForm();
-    completeCompaniesHouseNumberForm();
-    completeEligibleToApplyOnlineForm();
+    cy.submitInsuranceEligibilityAndStartApplication();
   });
 
   it('allows an exporter to start another quote when visiting the beginning of the flow', () => {

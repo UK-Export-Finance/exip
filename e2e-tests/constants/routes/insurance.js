@@ -1,7 +1,8 @@
 import { PRODUCT } from '../product';
+import { POLICY_AND_EXPORTS } from './policy-and-export';
 import { YOUR_BUSINESS_ROUTES } from './your-business';
 
-const INSURANCE_ROOT = '/insurance';
+export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
 
 export const INSURANCE_ROUTES = {
@@ -25,14 +26,7 @@ export const INSURANCE_ROUTES = {
     ALREADY_HAVE_ACCOUNT: `${INSURANCE_ROOT}${ELIGIBILITY}/already-have-account`,
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY}/need-to-start-again`,
   },
-  YOUR_BUSINESS: YOUR_BUSINESS_ROUTES,
   ALL_SECTIONS: '/all-sections',
-  POLICY_AND_EXPORTS: {},
-};
-
-const POLICY_AND_EXPORTS_ROOT = '/policy-and-exports';
-
-INSURANCE_ROUTES.POLICY_AND_EXPORTS = {
-  ROOT: POLICY_AND_EXPORTS_ROOT,
-  TYPE_OF_POLICY: `${POLICY_AND_EXPORTS_ROOT}/type-of-policy`,
+  POLICY_AND_EXPORTS,
+  YOUR_BUSINESS: YOUR_BUSINESS_ROUTES,
 };

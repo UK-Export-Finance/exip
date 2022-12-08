@@ -1,3 +1,4 @@
+import POLICY_AND_EXPORTS from './policy-and-exports';
 import * as ELIGIBILITY_PAGES from './eligibility';
 import * as YOUR_BUSINESS from './your-business';
 
@@ -28,6 +29,7 @@ const INSURANCE = {
   YOUR_BUSINESS,
   ELIGIBILITY: ELIGIBILITY_PAGES,
   ALL_SECTIONS,
+  POLICY_AND_EXPORTS,
 };
 
 export default INSURANCE;

@@ -1,11 +1,12 @@
-import { PRODUCT } from '../product';
+import { PRODUCT } from '../../product';
+import { POLICY_AND_EXPORTS } from './policy-and-export';
 
 export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
 const BUSINESS = '/your-business';
 
 export const INSURANCE_ROUTES = {
-  ROOT: INSURANCE_ROOT,
+  INSURANCE_ROOT,
   START: `${INSURANCE_ROOT}/start`,
   ELIGIBILITY: {
     CHECK_IF_ELIGIBLE: `${INSURANCE_ROOT}${ELIGIBILITY}/check-if-eligible`,
@@ -30,12 +31,5 @@ export const INSURANCE_ROUTES = {
     COMPANY_DETAILS: `${INSURANCE_ROOT}${BUSINESS}/company-details`,
     COMPANY_HOUSE_SEARCH: `${INSURANCE_ROOT}${BUSINESS}/company-details/companies-house-search`,
   },
-  POLICY_AND_EXPORTS: {},
-};
-
-const POLICY_AND_EXPORTS_ROOT = '/policy-and-exports';
-
-INSURANCE_ROUTES.POLICY_AND_EXPORTS = {
-  ROOT: POLICY_AND_EXPORTS_ROOT,
-  TYPE_OF_POLICY: `${POLICY_AND_EXPORTS_ROOT}/type-of-policy`,
+  POLICY_AND_EXPORTS,
 };

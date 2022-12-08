@@ -1,18 +1,6 @@
 import { submitButton } from '../../../pages/shared';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
-import {
-  completeStartForm,
-  completeCheckIfEligibleForm,
-  completeExporterLocationForm,
-  completeUkGoodsAndServicesForm,
-  completeInsuredAmountForm,
-  completeInsuredPeriodForm,
-  completeOtherPartiesForm,
-  completeLetterOfCreditForm,
-  completePreCreditPeriodForm,
-  completeCompaniesHouseNumberForm,
-  completeEligibleToApplyOnlineForm,
-} from '../../../../support/insurance/eligibility/forms';
+import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
 import { ROUTES } from '../../../../../constants';
 
 context('Complete insurance eligibility, get a quote and then re-visit the insurance eligibility - all via `start now` route/beginning of the flow', () => {
@@ -24,18 +12,7 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
       },
     });
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
-    completeUkGoodsAndServicesForm();
-    completeInsuredAmountForm();
-    completeInsuredPeriodForm();
-    completeOtherPartiesForm();
-    completeLetterOfCreditForm();
-    completePreCreditPeriodForm();
-    completeCompaniesHouseNumberForm();
-    completeEligibleToApplyOnlineForm();
+    cy.submitInsuranceEligibilityAndStartApplication();
   });
 
   beforeEach(() => {

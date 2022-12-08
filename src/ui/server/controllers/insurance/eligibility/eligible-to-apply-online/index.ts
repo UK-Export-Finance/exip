@@ -17,7 +17,7 @@ const post = async (req: Request, res: Response) => {
   try {
     const eligibilityAnswers = req.session.submittedData.insuranceEligibility;
 
-    const application = await api.keystone.createApplication(eligibilityAnswers);
+    const application = await api.keystone.application.create(eligibilityAnswers);
 
     if (!application) {
       console.error('Error creating application');

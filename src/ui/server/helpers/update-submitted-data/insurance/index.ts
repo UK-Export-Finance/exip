@@ -6,12 +6,9 @@ import { RequestBody, SubmittedDataInsuranceEligibility } from '../../../../type
  * update insurance eligibility session data with sanitised form data
  */
 const updateSubmittedData = (formData: RequestBody, existingData?: SubmittedDataInsuranceEligibility): SubmittedDataInsuranceEligibility => {
-  const submittedFormData = formData;
-  delete submittedFormData._csrf;
-
   const modifiedData = {
     ...existingData,
-    ...submittedFormData,
+    ...formData,
   };
 
   const sanitised = sanitiseData(modifiedData);
