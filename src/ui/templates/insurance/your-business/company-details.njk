@@ -122,7 +122,8 @@
               text: "Yes",
               checked: submittedValues[FIELDS.YOUR_COMPANY.TRADING_NAME] === 'yes',
               attributes: {
-                'data-cy': "trading-name-yes"
+                'data-cy': "trading-name-yes",
+                'aria-label': CONTENT_STRINGS.TRADING_NAME + ' yes radio'
               }
             },
             {
@@ -130,7 +131,8 @@
               text: "No",
               checked: submittedValues[FIELDS.YOUR_COMPANY.TRADING_NAME] === 'no',
               attributes: {
-                'data-cy': "trading-name-no"
+                'data-cy': "trading-name-no",
+                'aria-label': CONTENT_STRINGS.TRADING_NAME + ' no radio'
               }
             }
           ],
@@ -162,14 +164,16 @@
               value: "yes",
               text: "Yes",
               attributes: {
-                'data-cy': "trading-address-yes"
+                'data-cy': "trading-address-yes",
+                'aria-label': CONTENT_STRINGS.TRADING_ADDRESS + ' yes radio'
               }
             },
             {
               value: "no",
               text: "No",
               attributes: {
-                'data-cy': "trading-address-no"
+                'data-cy': "trading-address-no",
+                'aria-label': CONTENT_STRINGS.TRADING_ADDRESS + ' no radio'
               }
             }
           ]
@@ -190,7 +194,8 @@
           name: FIELDS.COMPANY_DETAILS.WEBSITE,
           classes: "input-width",
           attributes: {
-            'data-cy': 'company-website'
+            'data-cy': 'company-website',
+            'aria-label': CONTENT_STRINGS.WEBSITE
           }
         }) }}
       </div>
@@ -215,7 +220,8 @@
           name: FIELDS.COMPANY_DETAILS.PHONE_NUMBER,
           classes: "input-width",
           attributes: {
-            'data-cy': 'company-phone'
+            'data-cy': 'company-phone',
+            'aria-label': CONTENT_STRINGS.PHONE_NUMBER
           }
         }) }}
       </div>

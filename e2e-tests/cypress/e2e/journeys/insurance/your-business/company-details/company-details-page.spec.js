@@ -105,13 +105,29 @@ context('Your business - company details page - As an Exporter I want to enter m
   it('should display the trading name radios', () => {
     companyDetails.tradingName().contains(FIELDS[TRADING_NAME].LABEL);
     companyDetails.tradingNameYesRadio().should('exist');
+
+    companyDetails.tradingNameYesRadio().invoke('attr', 'aria-label').then((text) => {
+      expect(text.trim()).equal(`${FIELDS[TRADING_NAME].LABEL} yes radio`);
+    });
+
     companyDetails.tradingNameNoRadio().should('exist');
+
+    companyDetails.tradingNameNoRadio().invoke('attr', 'aria-label').then((text) => {
+      expect(text.trim()).equal(`${FIELDS[TRADING_NAME].LABEL} no radio`);
+    });
   });
 
   it('should display the trading address radios', () => {
     companyDetails.tradingAddress().contains(FIELDS[TRADING_ADDRESS].LABEL);
     companyDetails.tradingAddressYesRadio().should('exist');
+    companyDetails.tradingAddressYesRadio().invoke('attr', 'aria-label').then((text) => {
+      expect(text.trim()).equal(`${FIELDS[TRADING_ADDRESS].LABEL} yes radio`);
+    });
+
     companyDetails.tradingAddressNoRadio().should('exist');
+    companyDetails.tradingAddressNoRadio().invoke('attr', 'aria-label').then((text) => {
+      expect(text.trim()).equal(`${FIELDS[TRADING_ADDRESS].LABEL} no radio`);
+    });
   });
 
   it('should display the company website text area', () => {
@@ -119,6 +135,9 @@ context('Your business - company details page - As an Exporter I want to enter m
       expect(text.trim()).equal(FIELDS[WEBSITE].LABEL);
     });
     companyDetails.companyWebsite().should('exist');
+    companyDetails.companyWebsite().invoke('attr', 'aria-label').then((text) => {
+      expect(text.trim()).equal(FIELDS[WEBSITE].LABEL);
+    });
   });
 
   it('should display the phone number text area', () => {
@@ -129,6 +148,9 @@ context('Your business - company details page - As an Exporter I want to enter m
       expect(text.trim()).equal(FIELDS[PHONE_NUMBER].HINT);
     });
     companyDetails.phoneNumber().should('exist');
+    companyDetails.phoneNumber().invoke('attr', 'aria-label').then((text) => {
+      expect(text.trim()).equal(FIELDS[PHONE_NUMBER].LABEL);
+    });
   });
 
   it('should display the continue and save and go back button', () => {
