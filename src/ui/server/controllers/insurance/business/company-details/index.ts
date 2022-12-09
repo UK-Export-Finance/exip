@@ -5,17 +5,22 @@ import corePageVariables from '../../../../helpers/page-variables/core/insurance
 import api from '../../../../api';
 import companiesHouseValidation from './validation/companies-house';
 import companyHouseResponseValidation from './validation/companies-house-response';
+import companyDetailsValidation from './validation/company-details';
 
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 
-const { COMPANY_HOUSE } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
+const { COMPANY_HOUSE, YOUR_COMPANY } = EXPORTER_BUSINESS;
+const { TRADING_NAME } = YOUR_COMPANY;
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_HOUSE_SEARCH } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
+const { COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
 
 const PAGE_VARIABLES = {
-  POST_ROUTE: COMPANY_HOUSE_SEARCH,
-  FIELDS: COMPANY_HOUSE,
+  COMPANIES_HOUSE_POST_ROUTE: COMPANY_HOUSE_SEARCH,
+  COMPANY_DETAILS_POST_ROUTE: COMPANY_DETAILS_ROUTE,
+  FIELDS: EXPORTER_BUSINESS,
 };
 
 /**
@@ -47,6 +52,10 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     const { body } = req;
 
     const { companiesHouseNumber } = body;
+    const submittedValues = {
+      [COMPANY_HOUSE.INPUT]: companiesHouseNumber,
+    };
+
     // checks if input is correctly formatted before searching
     const validationErrors = companiesHouseValidation(body);
 
@@ -58,7 +67,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
         }),
         ...PAGE_VARIABLES,
         validationErrors,
-        companiesHouseNumber,
+        submittedValues,
       });
     }
 
@@ -85,7 +94,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
         }),
         ...PAGE_VARIABLES,
         validationErrors: responseValidationErrors,
-        companiesHouseNumber,
+        submittedValues,
       });
     }
 
@@ -99,7 +108,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
       }),
       ...PAGE_VARIABLES,
       SUMMARY_LIST: summaryList,
-      companiesHouseNumber,
+      submittedValues,
     });
   } catch (error) {
     console.error('Error posting companies house search', { error });
@@ -107,4 +116,49 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
   }
 };
 
-export { get, postCompaniesHouseSearch };
+/**
+ * posts company details
+ * validates tradingName fields
+ * @param req
+ * @param res
+ * @returns validation errors if required fields not entered correctly
+ */
+const post = (req: Request, res: Response) => {
+  try {
+    const { body } = req;
+    const submittedValues = {
+      [COMPANY_HOUSE.INPUT]: body[COMPANY_HOUSE.INPUT],
+      [TRADING_NAME]: body[TRADING_NAME],
+    };
+
+    const validationErrors = companyDetailsValidation(body);
+
+    if (validationErrors) {
+      return res.render(companyDetailsTemplate, {
+        ...corePageVariables({
+          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
+          BACK_LINK: req.headers.referer,
+        }),
+        ...PAGE_VARIABLES,
+        validationErrors,
+        submittedValues,
+      });
+    }
+
+    // TODO: Remove once page complete.  For testing purposes
+    return res.render(companyDetailsTemplate, {
+      ...corePageVariables({
+        PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...PAGE_VARIABLES,
+      validationErrors,
+      submittedValues,
+    });
+  } catch (error) {
+    console.error('Error posting company details response', { error });
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+};
+
+export { get, postCompaniesHouseSearch, post };

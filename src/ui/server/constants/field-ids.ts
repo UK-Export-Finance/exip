@@ -51,6 +51,12 @@ export const FIELD_IDS = {
         COMPANY_INCORPORATED: 'dateOfCreation',
         COMPANY_SIC: 'sicCodes',
       },
+      YOUR_COMPANY: {
+        TRADING_ADDRESS: 'tradingAddress',
+        TRADING_NAME: 'tradingName',
+        WEBSITE: 'companyWebsite',
+        PHONE_NUMBER: 'phoneNumber',
+      },
     },
     POLICY_AND_EXPORTS: {
       ...SHARED,

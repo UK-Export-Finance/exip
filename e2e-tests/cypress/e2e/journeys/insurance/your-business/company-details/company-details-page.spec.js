@@ -1,6 +1,6 @@
 import { companyDetails } from '../../../../pages/your-business';
 import partials from '../../../../partials';
-import { heading } from '../../../../pages/shared';
+import { heading, continueButton, saveAndBackButton } from '../../../../pages/shared';
 import {
   PAGES, BUTTONS, FIELDS, LINKS,
 } from '../../../../../../content-strings';
@@ -16,6 +16,7 @@ const {
     TRADING_ADDRESS,
     TRADING_NAME,
     WEBSITE,
+    PHONE_NUMBER,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -114,7 +115,29 @@ context('Your business - company details page - As an Exporter I want to enter m
   });
 
   it('should display the company website text area', () => {
-    companyDetails.companyWebsiteHeading().contains(FIELDS[WEBSITE].LABEL);
+    companyDetails.companyWebsiteHeading().invoke('text').then((text) => {
+      expect(text.trim()).equal(FIELDS[WEBSITE].LABEL);
+    });
     companyDetails.companyWebsite().should('exist');
+  });
+
+  it('should display the phone number text area', () => {
+    companyDetails.phoneNumberHeading().invoke('text').then((text) => {
+      expect(text.trim()).equal(FIELDS[PHONE_NUMBER].LABEL);
+    });
+    companyDetails.phoneNumberHint().invoke('text').then((text) => {
+      expect(text.trim()).equal(FIELDS[PHONE_NUMBER].HINT);
+    });
+    companyDetails.phoneNumber().should('exist');
+  });
+
+  it('should display the continue and save and go back button', () => {
+    continueButton().invoke('text').then((text) => {
+      expect(text.trim()).equal(BUTTONS.CONTINUE);
+    });
+
+    saveAndBackButton().invoke('text').then((text) => {
+      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
+    });
   });
 });

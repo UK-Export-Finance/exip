@@ -53,6 +53,7 @@ export const FIELD_IDS = {
         TRADING_NAME: 'tradingName',
         TRADING_ADDRESS: 'tradingAddress',
         WEBSITE: 'companyWebsite',
+        PHONE_NUMBER: 'phoneNumber',
       },
     },
     POLICY_AND_EXPORTS: {

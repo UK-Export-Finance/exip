@@ -37,7 +37,7 @@
     </div>
 
     <div class="govuk-grid-column-three-quarters-from-desktop">
-      <form action="{{POST_ROUTE}}" method="POST">
+      <form action="{{COMPANIES_HOUSE_POST_ROUTE}}" method="POST">
 
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <div class="companies-house-search">
@@ -60,9 +60,9 @@
             attributes: {
               "data-cy": "companies-house-search"
             },
-            id: FIELDS.INPUT,
-            name: FIELDS.INPUT,
-            value: companiesHouseNumber,
+            id: FIELDS.COMPANY_HOUSE.INPUT,
+            name: FIELDS.COMPANY_HOUSE.INPUT,
+            value: submittedValues[FIELDS.COMPANY_HOUSE.INPUT],
             errorMessage: validationErrors.errorList.companiesHouseNumber and {
               text: validationErrors.errorList.companiesHouseNumber.text,
               attributes: {
@@ -98,109 +98,148 @@
       </div>
     {% endif %}
 
-    <div class="govuk-grid-column-three-quarters-from-desktop">
-      {{ govukRadios({
-        classes: "govuk-radios--inline",
-        name: "trading-name",
-        fieldset: {
-          legend: {
-            text: CONTENT_STRINGS.TRADING_NAME,
-            isPageHeading: false,
-            classes: "govuk-fieldset__legend--m"
-          },
-          attributes: {
-            'data-cy': 'trading-name'
-          }
-        },
-        items: [
-          {
-            value: "yes",
-            text: "Yes",
+    <form action="{{COMPANY_DETAILS_POST_ROUTE}}" method="POST" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ govukRadios({
+          classes: "govuk-radios--inline",
+          idPrefix: FIELDS.YOUR_COMPANY.TRADING_NAME,
+          name: FIELDS.YOUR_COMPANY.TRADING_NAME,
+          fieldset: {
+            legend: {
+              text: CONTENT_STRINGS.TRADING_NAME,
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--m"
+            },
             attributes: {
-              'data-cy': "trading-name-yes"
+              'data-cy': 'trading-name'
             }
           },
-          {
-            value: "no",
-            text: "No",
+          items: [
+            {
+              value: "yes",
+              text: "Yes",
+              checked: submittedValues[FIELDS.YOUR_COMPANY.TRADING_NAME] === 'yes',
+              attributes: {
+                'data-cy': "trading-name-yes"
+              }
+            },
+            {
+              value: "no",
+              text: "No",
+              checked: submittedValues[FIELDS.YOUR_COMPANY.TRADING_NAME] === 'no',
+              attributes: {
+                'data-cy': "trading-name-no"
+              }
+            }
+          ],
+          errorMessage: validationErrors.errorList.tradingName and {
+            text: validationErrors.errorList.tradingName.text,
             attributes: {
-              'data-cy': "trading-name-no"
+              "data-cy": "trading-name-error"
             }
           }
-        ]
-      }) }}
-    </div>
-
-    <div class="govuk-grid-column-three-quarters-from-desktop">
-      {{ govukRadios({
-        classes: "govuk-radios--inline",
-        name: "trading-address",
-        fieldset: {
-          legend: {
-            text: CONTENT_STRINGS.TRADING_ADDRESS,
-            isPageHeading: false,
-            classes: "govuk-fieldset__legend--m"
-          },
-          attributes: {
-            'data-cy': 'trading-address'
-          }
-        },
-        items: [
-          {
-            value: "yes",
-            text: "Yes",
-            attributes: {
-              'data-cy': "trading-address-yes"
-            }
-          },
-          {
-            value: "no",
-            text: "No",
-            attributes: {
-              'data-cy': "trading-address-no"
-            }
-          }
-        ]
-      }) }}
-    </div>
-
-    <div class="govuk-grid-column-three-quarters-from-desktop">
-      {{ govukInput({
-        label: {
-          text: CONTENT_STRINGS.WEBSITE,
-          classes: "govuk-label--m",
-          isPageHeading: false,
-          attributes: {
-          'data-cy': 'company-website-heading'
-        }
-        },
-        id: "company-website",
-        name: "company-website",
-        classes: "input-width",
-        attributes: {
-          'data-cy': 'company-website'
-        }
-      }) }}
-    </div>
-
-    <div class="govuk-grid-column-three-quarters-from-desktop">
-      <div class="govuk-button-group">
-        {{ govukButton({
-          text: CONTENT_STRINGS.BUTTONS.CONTINUE,
-          attributes: {
-            'data-cy': 'continue-button'
-          }
-        }) }}
-
-        {{ govukButton({
-            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
-            classes: "govuk-button--secondary",
-            attributes: {
-              'data-cy': 'save-and-back-button'
-            }
         }) }}
       </div>
-    </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ govukRadios({
+          classes: "govuk-radios--inline",
+          name: FIELDS.COMPANY_DETAILS.TRADING_ADDRESS,
+          fieldset: {
+            legend: {
+              text: CONTENT_STRINGS.TRADING_ADDRESS,
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--m"
+            },
+            attributes: {
+              'data-cy': 'trading-address'
+            }
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes",
+              attributes: {
+                'data-cy': "trading-address-yes"
+              }
+            },
+            {
+              value: "no",
+              text: "No",
+              attributes: {
+                'data-cy': "trading-address-no"
+              }
+            }
+          ]
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ govukInput({
+          label: {
+            text: CONTENT_STRINGS.WEBSITE,
+            classes: "govuk-label--m",
+            isPageHeading: false,
+            attributes: {
+            'data-cy': 'company-website-heading'
+          }
+          },
+          id: FIELDS.COMPANY_DETAILS.WEBSITE,
+          name: FIELDS.COMPANY_DETAILS.WEBSITE,
+          classes: "input-width",
+          attributes: {
+            'data-cy': 'company-website'
+          }
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ govukInput({
+          label: {
+            text: CONTENT_STRINGS.PHONE_NUMBER,
+            classes: "govuk-label--m",
+            isPageHeading: false,
+            attributes: {
+            'data-cy': 'company-phone-heading'
+            }
+          },
+          hint: {
+            text: CONTENT_STRINGS.PHONE_NUMBER_HINT,
+            attributes: {
+              'data-cy': 'company-phone-hint'
+            }
+          },
+          id: FIELDS.COMPANY_DETAILS.PHONE_NUMBER,
+          name: FIELDS.COMPANY_DETAILS.PHONE_NUMBER,
+          classes: "input-width",
+          attributes: {
+            'data-cy': 'company-phone'
+          }
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+            attributes: {
+              'data-cy': 'continue-button'
+            }
+          }) }}
+
+          {{ govukButton({
+              text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+              classes: "govuk-button--secondary",
+              attributes: {
+                'data-cy': 'save-and-back-button'
+              }
+          }) }}
+        </div>
+      </div>
+
+    </form>
   </div>
 
 {% endblock %}
