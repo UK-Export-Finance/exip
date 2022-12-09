@@ -6,18 +6,22 @@
  * @returns {Object} Form data with invalid fields removed
  */
 const getValidFields = (formData: object, errorList: object) => {
-  if (formData && errorList) {
-    const fieldsWithErrors = Object.keys(errorList);
+  if (formData) {
+    if (errorList) {
+      const fieldsWithErrors = Object.keys(errorList);
 
-    const validFields = {};
+      const validFields = {};
 
-    Object.keys(formData).forEach((fieldName) => {
-      if (!fieldsWithErrors.includes(fieldName)) {
-        validFields[fieldName] = formData[fieldName];
-      }
-    });
+      Object.keys(formData).forEach((fieldName) => {
+        if (!fieldsWithErrors.includes(fieldName)) {
+          validFields[fieldName] = formData[fieldName];
+        }
+      });
 
-    return validFields;
+      return validFields;
+    }
+
+    return formData;
   }
 
   return {};

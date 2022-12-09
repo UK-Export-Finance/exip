@@ -34,12 +34,12 @@ describe('helpers/get-valid-fields', () => {
     });
   });
 
-  describe('when errorList is not provided', () => {
-    it('should return an empty object', () => {
+  describe('when formData is provided and errorList is not', () => {
+    it('should return formData as iss', () => {
       // @ts-ignore
       const result = getValidFields(mockFormData, undefined);
 
-      expect(result).toEqual({});
+      expect(result).toEqual(mockFormData);
     });
   });
 });
