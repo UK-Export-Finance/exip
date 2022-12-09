@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.9](https://github.com/UK-Export-Finance/exip/compare/v1.14.8...v1.14.9) (2022-12-09)
+
+
+### Miscellaneous
+
+* **EMS-662:** update README.md ([#180](https://github.com/UK-Export-Finance/exip/issues/180)) ([c87a4c6](https://github.com/UK-Export-Finance/exip/commit/c87a4c67c7b983b62b2fe0cef76625fdaf477a4b))
+
 ## [1.14.8](https://github.com/UK-Export-Finance/exip/compare/v1.14.7...v1.14.8) (2022-12-08)
 
 
