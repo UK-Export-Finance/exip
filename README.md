@@ -162,9 +162,9 @@ Each page and field has content specific to that page or field. We keep these in
 - To avoid referencing a field ID or value by hard coding it in logic or tests
 - Enforces a single source of truth
 - Provides us with an easy way to change or rename content - change it one single place
-- Provides with an opportunity in the future to extract the content into Keystone and allow designers to edit the content themselves
+- Provides us with an opportunity in the future to extract the content into Keystone and allow designers to edit the content themselves
 
-We have the same for content that is used throughout, for example buttons, links, components that are used in multiple places etc.
+We have the same approach for content that is used throughout, for example buttons, links, components that are used in multiple places etc.
 
 The files can be found  here:
 
@@ -204,7 +204,7 @@ const get = (req: Request, res: Response) =>
 
 ### Single input pages
 
-In the eligibility flows, there are lot of "yes or no" question pages with single radio button selection. The only difference between each of these pages is the field itself - e.g the title, id and hint. Therefore we also have a special page variables function, [singleInputPageVariables](https://github.com/UK-Export-Finance/exip/tree/main-application/src/ui/server/helpers/page-variables/single-input) that is exactly the same as the others, except that it can consume a field ID and automatically adds any hints or labels defined for the field ID. NBite Example usage:
+In the eligibility flows, there are lot of "yes or no" question pages with single radio button selection. The main difference between each of these pages is the field itself - e.g the title, id and hint. Therefore we also have a special page variables function, [singleInputPageVariables](https://github.com/UK-Export-Finance/exip/tree/main-application/src/ui/server/helpers/page-variables/single-input) that is exactly the same as the others, except that it can consume a field ID and automatically adds any hints or labels defined for the field ID. Example usage:
 
 ```js
 const get = (req: Request, res: Response) =>
