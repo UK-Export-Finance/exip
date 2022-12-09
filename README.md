@@ -43,13 +43,13 @@ In one terminal:
 
 1. `cd src/ui`
 2. `npm start`
+3. Or for hot reloading: `npm run dev`
 
 In another terminal:
 
 1. `cd src/api`
 2. `npm start`
-
-For hot reloading, run execute `npm run dev` instead of `npm start`.
+3. Or for hot reloading: `npm run dev`
 
 Note that we use [express-basic-auth](https://www.npmjs.com/package/express-basic-auth) in every environment except for production. This is because we do not want anyone to see work in progress before it is live. For example, some real-world users may obtain the password in a dev/test environment for user testing. We do not want this to then be shared.
 
@@ -232,6 +232,7 @@ const get = (req: Request, res: Response) =>
       PAGE_CONTENT_STRINGS: PAGES.EXAMPLE,
       BACK_LINK: req.headers.referer,
       PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
+      START_ROUTE: '/',
     }),
   );
 ```
