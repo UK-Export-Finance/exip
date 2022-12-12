@@ -1,5 +1,5 @@
-import flattenApplicationData from './flatten-application-data';
-import { mockApplication } from '../test-mocks';
+import flattenApplicationData from '.';
+import { mockApplication } from '../../test-mocks';
 
 describe('server/helpers/flatten-application-data', () => {
   it('should return an application with a flat structure with no nested objects', () => {
