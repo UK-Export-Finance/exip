@@ -16,7 +16,7 @@ const {
   VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
-/*
+/**
  * generateFieldGroups
  * Create all field groups for govukSummaryList
  * The following fields depend on the submitted answers and design ordering requirements:
@@ -24,6 +24,8 @@ const {
  * - Policy length depending on the Policy type (must have single/multi input ID)
  * - Contract value or Max contract value depending on the Policy type
  * - Credit period if Policy type is multi
+ * @param {Object} All submitted data
+ * @returns {Object} All quote values in an object structure for GOVUK summary list structure
  */
 const generateFieldGroups = (answers: AnswersContent) => {
   const fieldGroups = {
@@ -153,17 +155,19 @@ const generateFieldGroups = (answers: AnswersContent) => {
   return fieldGroups;
 };
 
-/*
+/**
  * getKeyText
- * Get the summary text to display in a key
- * for govukSummaryList component
+ * Get the field name text/key to display in a title of a govukSummaryList row
+ * @param {String} Field ID
+ * @returns {String} Title of the field for a govukSummaryList row
  */
 const getKeyText = (fieldId: string) => FIELDS[fieldId]?.SUMMARY?.TITLE;
 
-/*
+/**
  * generateSummaryListRows
- * Map an array of fields with values in submitted data object
- * for govukSummaryList component
+ * Map an array of fields with values for govukSummaryList component
+ * @param {Array} Array of fields and answers
+ * @returns {Array} Array of fields/answers in govukSummaryList data structure
  */
 const generateSummaryListRows = (fields: Array<SummaryListItemData>): Array<SummaryListItem> =>
   fields.map((field: SummaryListItemData): SummaryListItem => {
@@ -195,9 +199,11 @@ const generateSummaryListRows = (fields: Array<SummaryListItemData>): Array<Summ
     return mapped;
   });
 
-/*
+/**
  * answersSummaryList
- * Create multiple summary lists
+ * Create multiple groups with govukSummaryList data structure
+ * @param {Object} All answers/submitted data in a simple object.text structure
+ * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const answersSummaryList = (answersContent: AnswersContent) => {
   const fieldGroups = generateFieldGroups(answersContent);
