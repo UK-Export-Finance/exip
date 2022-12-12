@@ -1,6 +1,6 @@
 import { FIELD_IDS } from '../../../../constants';
 
-export const EXPORTER_BUSINESS = {
+export const EXPORTER_BUSINESS_FIELDS = {
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.SUMMARY_LIST]: {
     LABEL: 'Your business',
     COMPANY_NUMBER: {

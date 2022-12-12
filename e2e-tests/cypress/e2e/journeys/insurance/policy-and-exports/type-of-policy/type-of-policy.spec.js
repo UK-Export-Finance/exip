@@ -25,8 +25,8 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
 
 const FIELD_ID = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
 
-const singlePolicyField = insurance.policyAndExport.typeOfPolicy[FIELD_ID].single;
-const multiplePolicyField = insurance.policyAndExport.typeOfPolicy[FIELD_ID].multi;
+const singlePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID].single;
+const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID].multi;
 
 const { taskList } = partials.insurancePartials;
 
@@ -121,7 +121,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
   });
 
   it('renders an intro paragraph', () => {
-    insurance.policyAndExport.typeOfPolicy.intro().invoke('text').then((text) => {
+    insurance.policyAndExport.typeOfPolicyPage.intro().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.INTRO);
     });
   });

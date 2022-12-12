@@ -7,4 +7,9 @@ export const EXPORTER_BUSINESS = {
     COMPANY_INCORPORATED: 'dateOfCreation',
     COMPANY_SIC: 'sicCodes',
   },
+  YOUR_COMPANY: {
+    TRADING_NAME: 'tradingName',
+    TRADING_ADDRESS: 'tradingAddress',
+    WEBSITE: 'companyWebsite',
+  },
 };
