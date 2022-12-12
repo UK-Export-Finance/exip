@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.14.10](https://github.com/UK-Export-Finance/exip/compare/v1.14.9...v1.14.10) (2022-12-12)
+
+
+### Miscellaneous
+
+* **EMS-653:** add string check to getLastSubstring function ([f9b5c81](https://github.com/UK-Export-Finance/exip/commit/f9b5c814803701fdca1403f9ac706c7bcceeb387))
+* **EMS-653:** remove eslint ignore line ([b5c5643](https://github.com/UK-Export-Finance/exip/commit/b5c56436a4da3b7394a054e60ebb303115243285))
+* **EMS-653:** UI helpers documentation, cleaner structure ([e1ab281](https://github.com/UK-Export-Finance/exip/commit/e1ab281c8a822ac34c8f628c80f8dd9aae6d5a9a))
+
 ## [1.14.9](https://github.com/UK-Export-Finance/exip/compare/v1.14.8...v1.14.9) (2022-12-09)
 
 
