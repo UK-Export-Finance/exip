@@ -47,21 +47,6 @@ describe('helpers/has-form-data', () => {
       });
     });
 
-    describe('when a field has a true or false boolean value', () => {
-      it('should return the form field', () => {
-        const mockFormData = {
-          a: true,
-          b: false,
-        };
-
-        const result = stripEmptyFormFields(mockFormData);
-
-        const expected = { b: true };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
     describe('when there are multiple fields with empty values', () => {
       it('should return form fields without the empty fields', () => {
         const mockFormData = {
