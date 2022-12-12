@@ -2,6 +2,16 @@ import corePageVariables from '../core';
 import { FIELDS } from '../../../content-strings';
 import { SingleInputPageVariablesInput, SingleInputPageVariables } from '../../../../types';
 
+/**
+ * singleInputPageVariables
+ * Generate page variables for a page with a single input form
+ * @param {String} Field/input ID
+ * @param {Object} Page content strings bespoke to the page
+ * @param {String} Product string
+ * @param {String} Link to the previous page
+ * @param {String} Link to the start route for the header
+ * @returns {Object} Common page content strings combined with field specifics
+ */
 const singleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, PRODUCT, BACK_LINK, START_ROUTE }: SingleInputPageVariablesInput) => {
   const pageVariables: SingleInputPageVariables = {
     ...corePageVariables({
