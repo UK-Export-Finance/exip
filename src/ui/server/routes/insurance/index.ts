@@ -4,6 +4,7 @@ import { get as startGet, post as startPost } from '../../controllers/insurance/
 import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
 import { get as typeOfPolicyGet, post as typeOfPolicyPost } from '../../controllers/insurance/policy-and-export/type-of-policy';
 import { post as typeOfPolicySaveAndBackPost } from '../../controllers/insurance/policy-and-export/type-of-policy/save-and-back';
+import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-found';
 import insuranceEligibilityRoutes from './eligibility';
 import insuranceBusinessRouter from './business';
 
@@ -23,6 +24,8 @@ insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY
 insuranceRouter.post(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`, typeOfPolicyPost);
 
 insuranceRouter.post(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY_SAVE_AND_BACK}`, typeOfPolicySaveAndBackPost);
+
+insuranceRouter.get(`${INSURANCE_ROOT}${INSURANCE_ROUTES.PAGE_NOT_FOUND}`, pageNotFoundGet);
 
 insuranceRouter.use('/', insuranceEligibilityRoutes);
 insuranceRouter.use('/', insuranceBusinessRouter);

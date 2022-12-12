@@ -8,4 +8,5 @@ export const INSURANCE_TEMPLATES = {
   EXPORTER_BUSINESS: BUSINESS_TEMPLATES,
   ALL_SECTIONS: 'insurance/all-sections.njk',
   POLICY_AND_EXPORTS: POLICY_AND_EXPORTS_TEMPLATES,
+  PAGE_NOT_FOUND: 'insurance/page-not-found.njk',
 };
