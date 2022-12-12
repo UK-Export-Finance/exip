@@ -6,7 +6,7 @@
  */
 const getLastSubstring = (str: string) => {
   if (str) {
-    return str.substring(str.lastIndexOf('/') + 1)
+    return str.substring(str.lastIndexOf('/') + 1);
   }
 
   return null;
