@@ -177,4 +177,32 @@ export const FIELDS = {
       },
     },
   },
+  [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
+    HINT: 'This is known as the pre-credit period.',
+  },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
+    SUMMARY: {
+      TITLE: 'Companies House registration number',
+    },
+  },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NAME]: {
+    SUMMARY: {
+      TITLE: 'Company name',
+    },
+  },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_ADDRESS]: {
+    SUMMARY: {
+      TITLE: 'Registered office address',
+    },
+  },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_INCORPORATED]: {
+    SUMMARY: {
+      TITLE: 'Incorporated on',
+    },
+  },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_SIC]: {
+    SUMMARY: {
+      TITLE: 'Standard industrial classification (SIC) codes and nature of business',
+    },
+  },
 };
