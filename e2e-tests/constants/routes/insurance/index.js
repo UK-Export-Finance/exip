@@ -1,6 +1,6 @@
-import { PRODUCT } from '../product';
+import { PRODUCT } from '../../product';
 import { POLICY_AND_EXPORTS } from './policy-and-export';
-import { YOUR_BUSINESS_ROUTES } from './your-business';
+import { YOUR_BUSINESS_ROUTES } from '../your-business';
 
 export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
