@@ -1,5 +1,7 @@
-const typeOfPolicy = require('./typeOfPolicy');
+import typeOfPolicyPage from './typeOfPolicy';
+import singleContractPolicyPage from './singleContractPolicy';
 
-module.exports = {
-  typeOfPolicy,
+export {
+  typeOfPolicyPage,
+  singleContractPolicyPage,
 };

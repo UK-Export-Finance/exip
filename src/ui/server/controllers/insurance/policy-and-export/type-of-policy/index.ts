@@ -6,6 +6,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import generateValidationErrors from './validation';
 import api from '../../../../api';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
+import { isMultiPolicyType, isSinglePolicyType } from '../../../../helpers/policy-type';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
@@ -13,6 +14,8 @@ const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 export const PAGE_VARIABLES = {
   FIELD: FIELDS[POLICY_AND_EXPORTS.POLICY_TYPE],
 };
+
+const FIELD_ID = POLICY_AND_EXPORTS.POLICY_TYPE;
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
 
@@ -94,7 +97,14 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
       }
 
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`);
+      if (isSinglePolicyType(sanitisedData[FIELD_ID])) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`);
+      }
+      if (isMultiPolicyType(sanitisedData[FIELD_ID])) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTI_CONTRACT_POLICY}`);
+      }
+
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     } catch (err) {
       console.error('Error updating application', { err });
 

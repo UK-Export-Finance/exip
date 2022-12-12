@@ -3,6 +3,7 @@ import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../constants/routes/insuran
 import { get as startGet, post as startPost } from '../../controllers/insurance/start';
 import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
 import { get as typeOfPolicyGet, post as typeOfPolicyPost } from '../../controllers/insurance/policy-and-export/type-of-policy';
+import { get as singleContractPolicyGet } from '../../controllers/insurance/policy-and-export/single-contract-policy';
 
 describe('routes/insurance', () => {
   beforeEach(() => {
@@ -14,7 +15,7 @@ describe('routes/insurance', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(19);
+    expect(get).toHaveBeenCalledTimes(20);
     expect(post).toHaveBeenCalledTimes(14);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startGet);
@@ -23,7 +24,11 @@ describe('routes/insurance', () => {
     expect(get).toHaveBeenCalledWith(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.ALL_SECTIONS}`, allSectionsGet);
 
     expect(get).toHaveBeenCalledWith(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`, typeOfPolicyGet);
-
     expect(post).toHaveBeenCalledWith(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`, typeOfPolicyPost);
+
+    expect(get).toHaveBeenCalledWith(
+      `${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`,
+      singleContractPolicyGet,
+    );
   });
 });

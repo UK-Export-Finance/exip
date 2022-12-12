@@ -84,7 +84,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
-    cy.url().should('include', expectedUrl);
+    cy.url().should('eq', expectedUrl);
 
     goToPageDirectly(referenceNumber);
   });
@@ -206,12 +206,12 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     });
 
     describe('when submitting the answer as `single`', () => {
-      it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`, () => {
+      it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`, () => {
         singlePolicyField.input().click();
 
         submitButton().click();
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
 
         cy.url().should('eq', expected);
       });
@@ -226,12 +226,12 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     });
 
     describe('when submitting the answer as `multiple`', () => {
-      it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`, () => {
+      it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTI_CONTRACT_POLICY}`, () => {
         multiplePolicyField.input().click();
 
         submitButton().click();
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTI_CONTRACT_POLICY}`;
 
         cy.url().should('eq', expected);
       });

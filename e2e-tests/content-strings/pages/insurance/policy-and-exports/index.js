@@ -8,6 +8,12 @@ const TYPE_OF_POLICY = {
   INTRO: 'You can change this before you accept and pay for any policy.',
 };
 
+const SINGLE_CONTRACT_POLICY = {
+  ...SHARED,
+  PAGE_TITLE: 'Tell us about the single contract policy you need',
+};
+
 module.exports = {
   TYPE_OF_POLICY,
+  SINGLE_CONTRACT_POLICY,
 };
