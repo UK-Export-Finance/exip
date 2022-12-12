@@ -59,19 +59,19 @@ jobs:
       - name: Root unit tests
         working-directory: ./
         run: |
-          npm i --legacy-peer-deps
+          npm i
           npm run test
       - name: UI unit tests
         working-directory: ./src/ui
         run: |
-          npm i --legacy-peer-deps
+          npm i
           npm run test
           # TODO: Enable test
           # npm run component-test
       - name: API unit tests
         working-directory: ./src/api
         run: |
-          npm i --legacy-peer-deps
+          npm i
           npm run test
       - uses: act10ns/slack@v1
         with:
@@ -88,14 +88,13 @@ jobs:
     environment:
       name: ${{ needs.set-environment.outputs.environment }}
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false
       matrix:
         machines: [ 1, 2, 3, 4 ]
-
-    concurrency:
-      group: e2e-journey-${{ github.workflow }}-${{ github.ref }}-${{ matrix.containers }}
-      cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v3
