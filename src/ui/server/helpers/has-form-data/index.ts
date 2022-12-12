@@ -15,7 +15,9 @@ export const stripEmptyFormFields = (formBody: RequestBody) => {
     keys.forEach((key) => {
       const value = formBody[key];
 
-      if (Boolean(value)) {
+      const hasValue = Boolean(value);
+
+      if (hasValue) {
         fieldsWithValues[key] = value;
       }
     });
