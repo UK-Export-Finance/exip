@@ -1,11 +1,17 @@
 import { FIELD_IDS } from '../../constants';
 import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
 import formatCurrency from '../format-currency';
-import { Quote, SubmittedDataQuoteEligibility, SubmittedDataInsuranceEligibility } from '../../../types';
+import { SubmittedDataQuoteEligibility, SubmittedDataInsuranceEligibility } from '../../../types';
 
 const { CONTRACT_VALUE, CURRENCY, POLICY_TYPE, MAX_AMOUNT_OWED } = FIELD_IDS;
 
-const mapCost = (answers: SubmittedDataQuoteEligibility | SubmittedDataInsuranceEligibility | Quote) => {
+/**
+ * mapCost
+ * Map cost answer into an object for GOV summary list structure
+ * @param {Object} All submitted data
+ * @returns {Object} Answer in an object
+ */
+const mapCost = (answers: SubmittedDataQuoteEligibility | SubmittedDataInsuranceEligibility) => {
   let mapped;
 
   if (isSinglePolicyType(answers[POLICY_TYPE])) {
