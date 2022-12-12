@@ -29,7 +29,6 @@ module.exports = {
     },
   },
   rules: {
-    'import/no-unresolved': 'error',
     '@typescript-eslint/indent': ['error', 2],
     'prettier/prettier': [
       'error',

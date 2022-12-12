@@ -64,14 +64,14 @@ jobs:
       - name: UI unit tests
         working-directory: ./src/ui
         run: |
-          npm i
+          npm i --legacy-peer-deps
           npm run test
           # TODO: Enable test
           # npm run component-test
       - name: API unit tests
         working-directory: ./src/api
         run: |
-          npm i
+          npm i --legacy-peer-deps
           npm run test
       - uses: act10ns/slack@v1
         with:
@@ -88,9 +88,6 @@ jobs:
     environment:
       name: ${{ needs.set-environment.outputs.environment }}
     runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-      cancel-in-progress: true
     strategy:
       fail-fast: false
       matrix:
