@@ -12,7 +12,7 @@ import {
   ORGANISATION,
   PAGES,
 } from '../../../../../content-strings';
-import { FIELDS } from '../../../../../content-strings/fields/insurance/policy-and-exports';
+import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/policy-and-exports';
 import { FIELD_IDS, ROUTES, SUPPORTED_CURRENCIES } from '../../../../../constants';
 import getReferenceNumber from '../../../helpers/get-reference-number';
 

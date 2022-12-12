@@ -1,4 +1,5 @@
 import { SHARED_ELIGIBILITY_FIELD_IDS } from '../shared-eligibility';
+import { EXPORTER_BUSINESS } from './exporter-business';
 import { POLICY_AND_EXPORTS } from './policy-and-exports';
 
 export const INSURANCE_FIELD_IDS = {
@@ -12,4 +13,5 @@ export const INSURANCE_FIELD_IDS = {
     COMPANIES_HOUSE_NUMBER: 'hasCompaniesHouseNumber',
   },
   POLICY_AND_EXPORTS,
+  EXPORTER_BUSINESS,
 };

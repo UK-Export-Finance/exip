@@ -4,7 +4,7 @@ import { LINKS } from '../../../links';
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 const { CONTRACT_POLICY } = POLICY_AND_EXPORTS;
 
-export const FIELDS = {
+export const POLICY_AND_EXPORT_FIELDS = {
   [POLICY_AND_EXPORTS.POLICY_TYPE]: {
     ID: FIELD_IDS.POLICY_TYPE,
     OPTIONS: {
