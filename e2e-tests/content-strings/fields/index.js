@@ -9,7 +9,7 @@ export const FIELDS = {
       TITLE: 'Buyer is based in',
     },
   },
-  [FIELD_IDS.VALID_EXPORTER_LOCATION]: {
+  [FIELD_IDS.VALID_EXPORTER_LOCATION]: {ngs/fields.js
     SUMMARY: {
       TITLE: 'Your company',
     },
