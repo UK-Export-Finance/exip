@@ -5,13 +5,15 @@ import { RequestBody, SubmittedDataQuoteEligibility } from '../../../../types';
 
 const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
 
-/*
+/**
  * mapSubmittedData
- * Map "single/multi policy length" fields to policy length.
- * Delete single policy length if policy type is multi.
- * Delete multi policy length if policy type is single.
- * Delete contract value if policy type is multi.
- * Delete maximum amount owed if policy type is single.
+ * Delete policy specific fields depending on what is submitted
+ * - Delete single policy length if policy type is multi.
+ * - Delete multi policy length if policy type is single.
+ * - Delete contract value if policy type is multi.
+ * - Delete maximum amount owed if policy type is single.
+ * @param {Object} All submitted data
+ * @returns {Object} Submitted data
  */
 const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): SubmittedDataQuoteEligibility => {
   const mapped = submittedData;
@@ -36,9 +38,13 @@ const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): Submitt
   return mapped;
 };
 
-/*
+/**
  * updateSubmittedData
  * update quote eligibility session data with sanitised form data
+ * Map and sanitise form data
+ * @param {Express.Request.body} Form body
+ * @param {Object} Existing submitted data
+ * @returns {Object} Mapped and sanitised data
  */
 const updateSubmittedData = (formData: RequestBody, existingData?: SubmittedDataQuoteEligibility): SubmittedDataQuoteEligibility => {
   const modifiedData = {

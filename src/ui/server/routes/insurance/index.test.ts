@@ -3,6 +3,7 @@ import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../constants/routes/insuran
 import { get as startGet, post as startPost } from '../../controllers/insurance/start';
 import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
 import { get as typeOfPolicyGet, post as typeOfPolicyPost } from '../../controllers/insurance/policy-and-export/type-of-policy';
+import { post as typeOfPolicySaveAndBackPost } from '../../controllers/insurance/policy-and-export/type-of-policy/save-and-back';
 
 describe('routes/insurance', () => {
   beforeEach(() => {
@@ -25,5 +26,10 @@ describe('routes/insurance', () => {
     expect(get).toHaveBeenCalledWith(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`, typeOfPolicyGet);
 
     expect(post).toHaveBeenCalledWith(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`, typeOfPolicyPost);
+
+    expect(post).toHaveBeenCalledWith(
+      `${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY_SAVE_AND_BACK}`,
+      typeOfPolicySaveAndBackPost,
+    );
   });
 });

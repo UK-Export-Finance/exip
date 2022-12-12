@@ -18,6 +18,12 @@ const {
   VALID_EXPORTER_LOCATION,
 } = FIELD_IDS;
 
+/**
+ * mapPolicyType
+ * Map policy type into an object for GOV summary list structure
+ * @param {String} Policy type answer
+ * @returns {Object} Answer in an object
+ */
 const mapPolicyType = (answer: string) => {
   if (isSinglePolicyType(answer)) {
     return {
@@ -38,8 +44,20 @@ const mapPolicyType = (answer: string) => {
   return {};
 };
 
+/**
+ * mapPercentageOfCover
+ * Map percentage of cover answer to a string with percentage symbol for GOVUK summary list structure
+ * @param {Number} Percentage of cover answer
+ * @returns {String} Percentage of cover with percentage symbol
+ */
 const mapPercentageOfCover = (answer: number) => `${answer}%`;
 
+/**
+ * mapAnswersToContent
+ * Map all answers/submitted data into an object structure for GOVUK summary list structure
+ * @param {Object} All submitted data
+ * @returns {Object} All answers in an object structure with 'text' field
+ */
 const mapAnswersToContent = (answers: SubmittedDataQuoteEligibility | SubmittedDataInsuranceEligibility) => {
   const mapped = {
     [VALID_EXPORTER_LOCATION]: {
