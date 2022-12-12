@@ -12,6 +12,8 @@ const CONTENT_STRINGS = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL;
 
 const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
 
+const startRoute = ROUTES.QUOTE.START;
+
 context('Get a quote via email exit page', () => {
   beforeEach(() => {
     cy.login();
@@ -43,6 +45,10 @@ context('Get a quote via email exit page', () => {
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
+  });
+
+  it('should render a header with href to quote start', () => {
+    partials.header.serviceName().should('have.attr', 'href', startRoute);
   });
 
   it('renders a back link with correct url', () => {

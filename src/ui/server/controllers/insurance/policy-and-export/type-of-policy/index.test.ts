@@ -1,48 +1,58 @@
-import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { pageVariables, get, post, TEMPLATE } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
-import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
+import save from '../save-data';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
+const { INSURANCE } = ROUTES;
 
 const FIELD_ID = POLICY_AND_EXPORTS.POLICY_TYPE;
 
 describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   let req: Request;
   let res: Response;
+  let refNumber: number;
 
-  const mockGetApplicationResponse = mockApplication;
-  let getApplicationSpy = jest.fn(() => Promise.resolve(mockGetApplicationResponse));
+  jest.mock('../save-data');
 
-  const mockUpdatePolicyAndExportResponse = {
-    id: mockApplication.policyAndExport.id,
-  };
+  const mockSavePolicyAndExportData = jest.fn(() => {
+    return Promise.resolve({});
+  });
+
+  save.policyAndExport = mockSavePolicyAndExportData;
+
+  let getApplicationSpy = jest.fn(() => Promise.resolve(mockApplication));
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
     req.params.referenceNumber = String(mockApplication.referenceNumber);
+
+    refNumber = Number(mockApplication.referenceNumber);
   });
 
   afterAll(() => {
     jest.resetAllMocks();
   });
 
-  describe('PAGE_VARIABLES', () => {
+  describe('pageVariables', () => {
     it('should have correct properties', () => {
+      const result = pageVariables(refNumber);
+
       const expected = {
         FIELD: FIELDS[POLICY_AND_EXPORTS.POLICY_TYPE],
+        SAVE_AND_BACK_URL: `${INSURANCE.INSURANCE_ROOT}/${req.params.referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY_SAVE_AND_BACK}`,
       };
 
-      expect(PAGE_VARIABLES).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 
@@ -61,7 +71,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
       await get(req, res);
 
       expect(getApplicationSpy).toHaveBeenCalledTimes(1);
-      expect(getApplicationSpy).toHaveBeenCalledWith(Number(req.params.referenceNumber));
+      expect(getApplicationSpy).toHaveBeenCalledWith(refNumber);
     });
 
     it('should render template', async () => {
@@ -72,7 +82,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(refNumber),
         application: mockApplication,
       };
 
@@ -108,15 +118,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   });
 
   describe('post', () => {
-    let updatePolicyAndExportSpy = jest.fn(() => Promise.resolve(mockUpdatePolicyAndExportResponse));
-
-    beforeEach(() => {
-      getApplicationSpy = jest.fn(() => Promise.resolve(mockGetApplicationResponse));
-
-      api.keystone.application.get = getApplicationSpy;
-      api.keystone.application.update.policyAndExport = updatePolicyAndExportSpy;
-    });
-
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = {
@@ -124,29 +125,19 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         };
       });
 
-      it('should call api.keystone.application.get', async () => {
+      it('should call save.policyAndExport with application reference number and req.body', async () => {
         await post(req, res);
 
-        expect(getApplicationSpy).toHaveBeenCalledTimes(1);
-        expect(getApplicationSpy).toHaveBeenCalledWith(Number(req.params.referenceNumber));
-      });
+        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
 
-      it('should call api.keystone.application.update.policyAndExport with policyAndExport id and sanitised data', async () => {
-        await post(req, res);
-
-        expect(updatePolicyAndExportSpy).toHaveBeenCalledTimes(1);
-
-        const expectedPayload = sanitiseData(req.body);
-        expect(updatePolicyAndExportSpy).toHaveBeenCalledWith(mockApplication.policyAndExport.id, expectedPayload);
+        expect(save.policyAndExport).toHaveBeenCalledWith(refNumber, req.body);
       });
 
       describe('when the answer is `single`', () => {
         it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`, async () => {
           await post(req, res);
 
-          const referenceNumber = Number(req.params.referenceNumber);
-
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
+          const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -176,7 +167,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
             BACK_LINK: req.headers.referer,
           }),
-          ...PAGE_VARIABLES,
+          ...pageVariables(refNumber),
           validationErrors: generateValidationErrors(req.body),
         };
 
@@ -191,100 +182,32 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         };
       });
 
-      describe('get application call', () => {
-        describe('when there is no application returned', () => {
-          beforeEach(() => {
-            // @ts-ignore
-            getApplicationSpy = jest.fn(() => Promise.resolve());
-            api.keystone.application.get = getApplicationSpy;
-          });
+      describe('when no application is returned', () => {
+        beforeEach(() => {
+          // @ts-ignore
+          const savePolicyAndExportDataSpy = jest.fn(() => Promise.resolve());
 
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-            await post(req, res);
-
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-          });
+          save.policyAndExport = savePolicyAndExportDataSpy;
         });
 
-        describe('when an application does not have policyAndExport', () => {
-          beforeEach(() => {
-            const application = {};
-            // @ts-ignore
-            getApplicationSpy = jest.fn(() => Promise.resolve(application));
-            api.keystone.application.get = getApplicationSpy;
-          });
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
 
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-            await post(req, res);
-
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-          });
-        });
-
-        describe('when an application does not have policyAndExport.id', () => {
-          beforeEach(() => {
-            const application = { policyAndExport: {} };
-
-            // @ts-ignore
-            getApplicationSpy = jest.fn(() => Promise.resolve(application));
-            api.keystone.application.get = getApplicationSpy;
-          });
-
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-            await post(req, res);
-
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-          });
-        });
-
-        describe('when there is an error', () => {
-          beforeEach(() => {
-            getApplicationSpy = jest.fn(() => Promise.reject());
-            api.keystone.application.get = getApplicationSpy;
-          });
-
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-            await post(req, res);
-
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-          });
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
         });
       });
 
-      describe('update policyAndExport call', () => {
-        describe('when there is no object returned', () => {
-          beforeEach(() => {
-            getApplicationSpy = jest.fn(() => Promise.resolve(mockGetApplicationResponse));
-            api.keystone.application.get = getApplicationSpy;
+      describe('when there is an error', () => {
+        beforeEach(() => {
+          const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject());
 
-            // @ts-ignore
-            updatePolicyAndExportSpy = jest.fn(() => Promise.resolve());
-
-            api.keystone.application.update.policyAndExport = updatePolicyAndExportSpy;
-          });
-
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-            await post(req, res);
-
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-          });
+          save.policyAndExport = savePolicyAndExportDataSpy;
         });
 
-        describe('when there is an error', () => {
-          beforeEach(() => {
-            getApplicationSpy = jest.fn(() => Promise.resolve(mockGetApplicationResponse));
-            api.keystone.application.get = getApplicationSpy;
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
 
-            updatePolicyAndExportSpy = jest.fn(() => Promise.reject());
-
-            api.keystone.application.update.policyAndExport = updatePolicyAndExportSpy;
-          });
-
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-            await post(req, res);
-
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-          });
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
         });
       });
     });

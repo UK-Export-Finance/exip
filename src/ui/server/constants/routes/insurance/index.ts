@@ -3,6 +3,7 @@ import { POLICY_AND_EXPORTS } from './policy-and-export';
 
 export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
+const BUSINESS = '/your-business';
 
 export const INSURANCE_ROUTES = {
   INSURANCE_ROOT,
@@ -26,5 +27,9 @@ export const INSURANCE_ROUTES = {
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY}/need-to-start-again`,
   },
   ALL_SECTIONS: '/all-sections',
+  EXPORTER_BUSINESS: {
+    COMPANY_DETAILS: `${INSURANCE_ROOT}${BUSINESS}/company-details`,
+    COMPANY_HOUSE_SEARCH: `${INSURANCE_ROOT}${BUSINESS}/company-details/companies-house-search`,
+  },
   POLICY_AND_EXPORTS,
 };

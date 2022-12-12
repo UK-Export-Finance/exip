@@ -1,6 +1,7 @@
 import {
   heading, submitButton, needToStartAgainPage,
 } from '../../pages/shared';
+import partials from '../../partials';
 import {
   ORGANISATION,
   LINKS,
@@ -11,6 +12,8 @@ import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 import { completeAndSubmitBuyerBodyForm } from '../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
+
+const startRoute = ROUTES.QUOTE.START;
 
 context('Get a Quote - Need to start again exit page', () => {
   beforeEach(() => {
@@ -46,6 +49,10 @@ context('Get a Quote - Need to start again exit page', () => {
 
   it('renders an analytics cookies consent banner that can be rejected', () => {
     cy.rejectAnalyticsCookies();
+  });
+
+  it('should render a header with href to quote start', () => {
+    partials.header.serviceName().should('have.attr', 'href', startRoute);
   });
 
   it('renders a phase banner', () => {

@@ -1,5 +1,6 @@
 import ELIGIBILITY from './eligibility';
 import POLICY_AND_EXPORTS from './policy-and-exports';
+import EXPORTER_BUSINESS from './your-business';
 
 const START = {
   PAGE_TITLE: 'Apply for UKEF export insurance',
@@ -26,6 +27,7 @@ const ALL_SECTIONS = {
 export default {
   START,
   ELIGIBILITY,
+  EXPORTER_BUSINESS,
   ALL_SECTIONS,
   POLICY_AND_EXPORTS,
 };

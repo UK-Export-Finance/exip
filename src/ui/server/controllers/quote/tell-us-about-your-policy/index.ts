@@ -13,6 +13,8 @@ import { Request, Response, SelectOption, TellUsAboutPolicyPageVariables } from 
 
 const { AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE } = FIELD_IDS;
 
+const { START: quoteStart } = ROUTES.QUOTE;
+
 const generatePageVariables = (policyType: string) => {
   const pageVariables: TellUsAboutPolicyPageVariables = {
     CONTENT_STRINGS: {
@@ -37,6 +39,7 @@ const generatePageVariables = (policyType: string) => {
         ID: PERCENTAGE_OF_COVER,
       },
     },
+    START_ROUTE: quoteStart,
   };
 
   const { TELL_US_ABOUT_YOUR_POLICY } = PAGES.QUOTE;

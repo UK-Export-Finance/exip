@@ -1,9 +1,11 @@
 import { get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
-import corePageVariables from '../../../../helpers/page-variables/core/quote';
+import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
+
+const buyerCountryRoute = ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY;
 
 describe('controllers/insurance/eligibility/need-to-start-again', () => {
   let req: Request;
@@ -29,10 +31,10 @@ describe('controllers/insurance/eligibility/need-to-start-again', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.START}`, async () => {
+    it(`should redirect to ${buyerCountryRoute}`, async () => {
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.START);
+      expect(res.redirect).toHaveBeenCalledWith(buyerCountryRoute);
     });
   });
 });

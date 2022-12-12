@@ -19,6 +19,7 @@ type TellUsAboutPolicyPageVariablesFields = {
 interface TellUsAboutPolicyPageVariables {
   CONTENT_STRINGS: TellUsAboutPolicyPageVariablesContentStrings;
   FIELDS: TellUsAboutPolicyPageVariablesFields;
+  START_ROUTE: string;
 }
 
 export { TellUsAboutPolicyPageVariablesContentStrings, TellUsAboutPolicyPageVariablesFields, TellUsAboutPolicyPageVariables };

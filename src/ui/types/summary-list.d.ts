@@ -3,7 +3,8 @@ interface SummaryListField {
 }
 
 type SummaryListItemDataValue = {
-  text: string;
+  text?: string;
+  html?: string;
 };
 
 type SummaryListItemData = {

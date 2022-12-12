@@ -1,4 +1,5 @@
 import SHARED_ELIGIBILITY_FIELD_IDS from '../shared-eligibility';
+import EXPORTER_BUSINESS from './exporter-business';
 import POLICY_AND_EXPORTS from './policy-and-exports';
 
 const INSURANCE_FIELD_IDS = {
@@ -11,6 +12,7 @@ const INSURANCE_FIELD_IDS = {
     PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
     COMPANIES_HOUSE_NUMBER: 'hasCompaniesHouseNumber',
   },
+  EXPORTER_BUSINESS,
   POLICY_AND_EXPORTS,
 };
 

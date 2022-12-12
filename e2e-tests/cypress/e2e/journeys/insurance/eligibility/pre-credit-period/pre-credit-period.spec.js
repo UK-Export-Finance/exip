@@ -26,6 +26,9 @@ import {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD;
 
+const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD;
+const insuranceStartRoute = ROUTES.INSURANCE.START;
+
 context('Insurance - Eligibility - Pre-credit period page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit', () => {
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -93,6 +96,10 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     cy.rejectAnalyticsCookies();
   });
 
+  it('should render a header with href to insurance start', () => {
+    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
+  });
+
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
   });
@@ -110,7 +117,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     yesNoRadioHint().should('exist');
 
     yesNoRadioHint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD].HINT);
+      expect(text.trim()).equal(FIELDS.INSURANCE.ELIGIBILITY[FIELD_ID].HINT);
     });
   });
 
@@ -198,7 +205,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD].IS_EMPTY;
+        const expectedMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY;
 
         partials.errorSummaryListItems().first().invoke('text').then((text) => {
           expect(text.trim()).equal(expectedMessage);

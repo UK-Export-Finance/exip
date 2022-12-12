@@ -67,6 +67,13 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Select whether you have a UK Companies House registration number or not',
       },
     },
+    EXPORTER_BUSINESS: {
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT]: {
+        INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format - for example, 8989898 or SC907816',
+        NOT_FOUND: 'The number you entered does not match any company in Companies House - try again',
+        TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
+      },
+    },
     POLICY_AND_EXPORTS: {
       [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE]: {
         IS_EMPTY: 'Select the type of policy you need',

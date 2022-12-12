@@ -118,5 +118,21 @@ describe('server/helpers/sanitise-data', () => {
 
       expect(result).toEqual(expected);
     });
+
+    describe('when formBody._csrf does not exist', () => {
+      it('should return return sanitised data', () => {
+        const mockFormData = {
+          a: 'true',
+        };
+
+        const result = sanitiseData(mockFormData);
+
+        const expected = {
+          a: true,
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
   });
 });

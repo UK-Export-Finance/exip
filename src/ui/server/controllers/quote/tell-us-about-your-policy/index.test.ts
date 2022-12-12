@@ -14,6 +14,8 @@ import { Request, Response, SelectOption, TellUsAboutPolicyPageVariables } from 
 
 const { AMOUNT_CURRENCY, BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE, POLICY_LENGTH } = FIELD_IDS;
 
+const { START: quoteStart } = ROUTES.QUOTE;
+
 describe('controllers/quote/tell-us-about-your-policy', () => {
   let req: Request;
   let res: Response;
@@ -73,6 +75,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
               ID: PERCENTAGE_OF_COVER,
             },
           },
+          START_ROUTE: quoteStart,
         } as TellUsAboutPolicyPageVariables;
 
         expected.FIELDS.AMOUNT_CURRENCY = {
@@ -124,6 +127,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
               ID: PERCENTAGE_OF_COVER,
             },
           },
+          START_ROUTE: quoteStart,
         } as TellUsAboutPolicyPageVariables;
 
         expected.FIELDS.AMOUNT_CURRENCY = {
@@ -177,6 +181,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
               ID: PERCENTAGE_OF_COVER,
             },
           },
+          START_ROUTE: quoteStart,
         };
 
         expect(result).toEqual(expected);

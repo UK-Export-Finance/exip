@@ -19,6 +19,8 @@ const CONTENT_STRINGS = {
   ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
 };
 
+const startRoute = ROUTES.QUOTE.START;
+
 context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
   before(() => {
     cy.login();
@@ -72,6 +74,10 @@ context('UK goods or services page - as an exporter, I want to check if my expor
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
+  });
+
+  it('should render a header with href to quote start', () => {
+    partials.header.serviceName().should('have.attr', 'href', startRoute);
   });
 
   it('renders a page title and heading', () => {
