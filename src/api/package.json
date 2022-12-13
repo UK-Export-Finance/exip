@@ -26,7 +26,6 @@
   },
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "dependencies": {
-    "axios": "^1.2.0",
     "@babel/core": "^7.16.0",
     "@babel/plugin-transform-runtime": "^7.19.6",
     "@babel/preset-env": "^7.16.0",
@@ -35,12 +34,14 @@
     "@keystone-6/auth": "^6.0.0",
     "@keystone-6/core": "^4.0.1",
     "@keystone-6/fields-document": "^6.0.0",
+    "axios": "^1.2.0",
     "date-fns": "^2.29.3",
     "dotenv": "16.0.2",
     "notifications-node-client": "^5.2.0",
     "typescript": "^4.7.4"
   },
   "devDependencies": {
+    "@types/jest": "^29.2.4",
     "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
     "babel-jest": "^29.0.1",

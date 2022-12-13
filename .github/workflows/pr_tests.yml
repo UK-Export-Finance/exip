@@ -35,7 +35,6 @@ jobs:
       - name: Linting
         working-directory: ./
         run: |
-          npm i
           npm run lint
       - uses: act10ns/slack@v1
         with:
@@ -56,11 +55,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - name: Root unit tests
-        working-directory: ./
-        run: |
-          npm i
-          npm run test
       - name: UI unit tests
         working-directory: ./src/ui
         run: |

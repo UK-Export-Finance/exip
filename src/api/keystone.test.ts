@@ -5,7 +5,7 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import { APPLICATION } from './constants';
 import { Application } from './types';
 
-const dbUrl = process.env.DATABASE_URL;
+const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
 
 const context = getContext(config, PrismaModule);
@@ -91,7 +91,7 @@ describe('Create an Application', () => {
   test('it should add the application ID to the reference number entry', async () => {
     const referenceNumber = await context.query.ReferenceNumber.findOne({
       where: {
-        id: application.referenceNumber,
+        id: application.referenceNumber.toString(),
       },
       query: 'id application { id }',
     });
