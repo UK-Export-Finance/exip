@@ -18,7 +18,9 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters-from-desktop">
-      <p class="govuk-body" data-cy="contact">{{ CONTENT_STRINGS.CONTACT.TEXT }} {{ contactLinkHtml | safe }} {{ CONTENT_STRINGS.CONTACT.OUTRO }}</p>
+      <p class="govuk-body">
+        <span data-cy="contact-1">{{ CONTENT_STRINGS.CONTACT.TEXT }}</span> <span data-cy="contact-2">{{ contactLinkHtml | safe }}</span> <span data-cy="contact-3">{{ CONTENT_STRINGS.CONTACT.OUTRO }}</span>
+        </p>
     </div>
   </div>
 

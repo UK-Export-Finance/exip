@@ -61,10 +61,16 @@ context('Insurance - page not found', () => {
   });
 
   it('renders contact text and link', () => {
-    pageNotFoundPage.contact().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.CONTACT.TEXT} ${CONTENT_STRINGS.CONTACT.LINK.TEXT} ${CONTENT_STRINGS.CONTACT.OUTRO}`;
+    pageNotFoundPage.contact1().invoke('text').then((text) => {
+      expect(text.trim()).eq(CONTENT_STRINGS.CONTACT.TEXT);
+    });
 
-      expect(text.trim()).equal(expected);
+    pageNotFoundPage.contact2().invoke('text').then((text) => {
+      expect(text.trim()).eq(CONTENT_STRINGS.CONTACT.LINK.TEXT);
+    });
+
+    pageNotFoundPage.contact3().invoke('text').then((text) => {
+      expect(text.trim()).eq(CONTENT_STRINGS.CONTACT.OUTRO);
     });
 
     pageNotFoundPage.contactLink().invoke('text').then((text) => {
