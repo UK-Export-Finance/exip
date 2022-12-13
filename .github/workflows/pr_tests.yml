@@ -65,9 +65,10 @@ jobs:
       - name: API micro-service
         working-directory: ./src/api
         run: |
-          export SESSION_SECRET=${{ secrets.SESSION_SECRET }}
-          export GOV_NOTIFY_API_KEY=${{ secrets.SESSION_SECRET }}
-          export DATABASE_URL=${{ secrets.DATABASE_URL }}
+
+          export SESSION_SECRET=abcacbacbacbacbacad123Test
+          export GOV_NOTIFY_API_KEY=abcacbacbacbacbacad123Test
+          export DATABASE_URL=mysql://root:root@database:1234/test
           npm i --legacy-peer-deps
           npm run test
       - uses: act10ns/slack@v1
