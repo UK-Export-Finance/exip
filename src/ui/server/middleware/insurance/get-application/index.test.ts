@@ -19,6 +19,19 @@ describe('middleware/insurance/get-application', () => {
     req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
+  describe(`when the route contains ${ROUTES.INSURANCE.ELIGIBILITY_ROOT}`, () => {
+    beforeEach(() => {
+      req.originalUrl = ROUTES.INSURANCE.ELIGIBILITY_ROOT;
+      next = nextSpy;
+    });
+
+    it('should call next()', async () => {
+      await getApplicationMiddleware(req, res, next);
+
+      expect(nextSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('when an application exists', () => {
     const getApplicationSpy = jest.fn(() => Promise.resolve(mockApplication));
 
