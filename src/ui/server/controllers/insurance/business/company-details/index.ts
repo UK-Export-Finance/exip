@@ -2,7 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { Request, Response, CompanyHouseResponse } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import convertRadioButtonResponse from '../../../../helpers/convert-radio-response-boolean';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import companiesHouseValidation from './validation/companies-house';
 import companyHouseResponseValidation from './validation/companies-house-response';
@@ -52,8 +52,9 @@ const get = async (req: Request, res: Response) => {
  * validates input and response from companies house api and shows relevant errors if they exist
  * populates a summary list with the company information if no validation errors
  * @param req
- * @param res
- * @returns template with validation errors or summary list with company details populated
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} companyDetails template with validation errors or summary list with company details populated
  */
 const postCompaniesHouseSearch = async (req: Request, res: Response) => {
   try {
@@ -127,9 +128,9 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
 /**
  * posts company details
  * validates tradingName fields
- * @param req
- * @param res
- * @returns validation errors if required fields not entered correctly
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ *  @returns {Express.Response.redirect} Company details page with or without errors
  */
 const post = (req: Request, res: Response) => {
   try {
@@ -138,7 +139,7 @@ const post = (req: Request, res: Response) => {
     const submittedValues = {
       [COMPANY_HOUSE.INPUT]: body[COMPANY_HOUSE.INPUT],
       // if trading name is string true, then convert to boolean true
-      [TRADING_NAME]: convertRadioButtonResponse(body[TRADING_NAME]),
+      [TRADING_NAME]: sanitiseData(body[TRADING_NAME]),
     };
 
     const validationErrors = companyDetailsValidation(body);

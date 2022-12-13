@@ -107,7 +107,7 @@ context('Your business - company details page - As an Exporter I want to enter m
   });
 
   it('should display the trading name radios', () => {
-    companyDetails.tradingNameHeading().invoke('text').then((text) => {
+    companyDetails.tradingNameLabel().invoke('text').then((text) => {
       expect(text.trim()).equal(FIELDS[TRADING_NAME].LABEL);
     });
     yesRadioInput().first().should('exist');
@@ -124,7 +124,7 @@ context('Your business - company details page - As an Exporter I want to enter m
   });
 
   it('should display the trading address radios', () => {
-    companyDetails.tradingAddressHeading().invoke('text').then((text) => {
+    companyDetails.tradingAddressLabel().invoke('text').then((text) => {
       expect(text.trim()).equal(FIELDS[TRADING_ADDRESS].LABEL);
     });
     yesRadioInput().eq(1).should('exist');
@@ -139,7 +139,7 @@ context('Your business - company details page - As an Exporter I want to enter m
   });
 
   it('should display the company website text area', () => {
-    companyDetails.companyWebsiteHeading().invoke('text').then((text) => {
+    companyDetails.companyWebsiteLabel().invoke('text').then((text) => {
       expect(text.trim()).equal(FIELDS[WEBSITE].LABEL);
     });
     companyDetails.companyWebsite().should('exist');
@@ -149,7 +149,7 @@ context('Your business - company details page - As an Exporter I want to enter m
   });
 
   it('should display the phone number text area', () => {
-    companyDetails.phoneNumberHeading().invoke('text').then((text) => {
+    companyDetails.phoneNumberLabel().invoke('text').then((text) => {
       expect(text.trim()).equal(FIELDS[PHONE_NUMBER].LABEL);
     });
     companyDetails.phoneNumberHint().invoke('text').then((text) => {

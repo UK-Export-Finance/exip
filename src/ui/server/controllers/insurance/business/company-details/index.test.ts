@@ -7,7 +7,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import generateValidationErrors from '../../../../helpers/validation';
 import api from '../../../../api';
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
-import convertRadioButtonResponse from '../../../../helpers/convert-radio-response-boolean';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
@@ -229,7 +229,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
       const submittedValues = {
         [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        [TRADING_NAME]: convertRadioButtonResponse(req.body[TRADING_NAME]),
+        [TRADING_NAME]: sanitiseData(req.body[TRADING_NAME]),
       };
 
       post(req, res);

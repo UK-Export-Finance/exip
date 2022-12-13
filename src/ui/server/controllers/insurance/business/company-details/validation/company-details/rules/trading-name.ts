@@ -12,8 +12,9 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 /**
  * validates tradingName in company details response body
  * throws validation errors if there is no tradingName property
- * @param responseBody containing an object with the company details response
- * @returns object containing errors or blank object
+ * @param {RequestBody} responseBody containing an object with the company details response
+ * @param {object} errors errorList
+ * @returns {object} object containing errors or blank object
  */
 const tradingName = (responseBody: RequestBody, errors: object) => {
   let updatedErrors = errors;
