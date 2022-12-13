@@ -115,7 +115,7 @@
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
           {{ yesNoRadioButtons.render({
-            fieldId: FIELDS.COMPANY_DETAILS.TRADING_ADDRESS,
+            fieldId: FIELDS.YOUR_COMPANY.TRADING_ADDRESS,
             heading: CONTENT_STRINGS.TRADING_ADDRESS,
             submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
             errorMessage: validationErrors.errorList.tradingAddress,
@@ -134,8 +134,8 @@
             'data-cy': 'company-website-heading'
           }
           },
-          id: FIELDS.COMPANY_DETAILS.WEBSITE,
-          name: FIELDS.COMPANY_DETAILS.WEBSITE,
+          id: FIELDS.YOUR_COMPANY.WEBSITE,
+          name: FIELDS.YOUR_COMPANY.WEBSITE,
           classes: "input-width",
           attributes: {
             'data-cy': 'company-website',
@@ -160,8 +160,8 @@
               'data-cy': 'company-phone-hint'
             }
           },
-          id: FIELDS.COMPANY_DETAILS.PHONE_NUMBER,
-          name: FIELDS.COMPANY_DETAILS.PHONE_NUMBER,
+          id: FIELDS.YOUR_COMPANY.PHONE_NUMBER,
+          name: FIELDS.YOUR_COMPANY.PHONE_NUMBER,
           classes: "input-width",
           attributes: {
             'data-cy': 'company-phone',
