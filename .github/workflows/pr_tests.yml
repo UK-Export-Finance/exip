@@ -63,7 +63,6 @@ jobs:
           # TODO: Enable test
           # npm run component-test
       - name: API unit tests
-        working-directory: ./src/api
         env:
           API_URL: ${{ secrets.API_URL }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -82,6 +81,7 @@ jobs:
           GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
           COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
           COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
+        working-directory: ./src/api
         run: |
           npm i --legacy-peer-deps
           npm run test
