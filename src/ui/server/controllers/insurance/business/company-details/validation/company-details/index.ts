@@ -4,7 +4,7 @@ import { RequestBody } from '../../../../../../../types';
 /**
  * validates company details page response
  * throws validation errors if any fields are not completed or incorrectly completed
- * @param {RequestBody} responseBody containing an object with the company details response body
+ * @param {Express.Request.body} responseBody containing an object with the company details response body
  * @returns {object} object containing errors or blank object
  */
 const validation = (responseBody: RequestBody) => {
