@@ -1,4 +1,3 @@
-import { companyDetails } from '../../../../pages/your-business';
 import { submitButton, yesRadioInput, inlineErrorMessage } from '../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import partials from '../../../../partials';

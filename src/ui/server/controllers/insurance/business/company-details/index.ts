@@ -2,6 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { Request, Response, CompanyHouseResponse } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import convertRadioButtonResponse from '../../../../helpers/convert-radio-response-boolean';
 import api from '../../../../api';
 import companiesHouseValidation from './validation/companies-house';
 import companyHouseResponseValidation from './validation/companies-house-response';
@@ -137,7 +138,7 @@ const post = (req: Request, res: Response) => {
     const submittedValues = {
       [COMPANY_HOUSE.INPUT]: body[COMPANY_HOUSE.INPUT],
       // if trading name is string true, then convert to boolean true
-      [TRADING_NAME]: body[TRADING_NAME] === 'true' ? true : false,
+      [TRADING_NAME]: convertRadioButtonResponse(body[TRADING_NAME]),
     };
 
     const validationErrors = companyDetailsValidation(body);
