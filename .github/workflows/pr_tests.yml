@@ -49,7 +49,7 @@ jobs:
     name: Unit tests
     environment:
       name: ${{ needs.set-environment.outputs.environment }}
-    runs-on: ubuntu-latest
+    runs-on: [ self-hosted, linux ]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
