@@ -33,6 +33,6 @@ describe('routes/insurance', () => {
       typeOfPolicySaveAndBackPost,
     );
 
-    expect(get).toHaveBeenCalledWith(`${INSURANCE_ROOT}${INSURANCE_ROUTES.PAGE_NOT_FOUND}`, pageNotFoundGet);
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.PAGE_NOT_FOUND, pageNotFoundGet);
   });
 });

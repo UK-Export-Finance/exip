@@ -25,7 +25,7 @@ insuranceRouter.post(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLIC
 
 insuranceRouter.post(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY_SAVE_AND_BACK}`, typeOfPolicySaveAndBackPost);
 
-insuranceRouter.get(`${INSURANCE_ROOT}${INSURANCE_ROUTES.PAGE_NOT_FOUND}`, pageNotFoundGet);
+insuranceRouter.get(INSURANCE_ROUTES.PAGE_NOT_FOUND, pageNotFoundGet);
 
 insuranceRouter.use('/', insuranceEligibilityRoutes);
 insuranceRouter.use('/', insuranceBusinessRouter);

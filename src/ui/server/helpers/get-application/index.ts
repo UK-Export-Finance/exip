@@ -11,9 +11,7 @@ const getApplication = async (referenceNumber: number) => {
 
     return application;
   } catch (err) {
-    console.error('Error getting application ', { err });
-
-    return err;
+    throw new Error(`Getting application ${err}`);
   }
 };
 

@@ -27,6 +27,7 @@ export const INSURANCE_ROUTES = {
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY}/need-to-start-again`,
   },
   ALL_SECTIONS: '/all-sections',
+  PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
   POLICY_AND_EXPORTS,
   YOUR_BUSINESS: YOUR_BUSINESS_ROUTES,
 };

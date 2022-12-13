@@ -11,12 +11,14 @@
   <p class="govuk-body" data-cy="body-1">{{ CONTENT_STRINGS.BODY_1 }}</p>
   <p class="govuk-body" data-cy="body-2">{{ CONTENT_STRINGS.BODY_2 }}</p>
 
+
+  {% set contactLinkHtml %}
+    <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.CONTACT.LINK.HREF }}" data-cy="contact-link">{{ CONTENT_STRINGS.CONTACT.LINK.TEXT }}</a>
+  {% endset %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters-from-desktop">
-      <p class="govuk-body" data-cy="contact">{{ CONTENT_STRINGS.CONTACT.TEXT }}
-        <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.CONTACT.LINK.HREF }}" data-cy="contact-link">{{ CONTENT_STRINGS.CONTACT.LINK.TEXT }}</a>
-        {{ CONTENT_STRINGS.CONTACT.OUTRO }}
-      </p>
+      <p class="govuk-body" data-cy="contact">{{ CONTENT_STRINGS.CONTACT.TEXT }} {{ contactLinkHtml | safe }} {{ CONTENT_STRINGS.CONTACT.OUTRO }}</p>
     </div>
   </div>
 
