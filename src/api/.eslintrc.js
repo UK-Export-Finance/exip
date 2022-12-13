@@ -29,6 +29,7 @@ module.exports = {
     },
   },
   rules: {
+    'import/no-unresolved': [2, { caseSensitive: false }],
     '@typescript-eslint/indent': ['error', 2],
     'prettier/prettier': [
       'error',
