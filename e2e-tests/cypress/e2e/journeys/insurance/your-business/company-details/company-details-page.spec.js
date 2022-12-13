@@ -4,8 +4,9 @@ import {
   heading, submitButton, saveAndBackButton, yesRadioInput, noRadioInput,
 } from '../../../../pages/shared';
 import {
-  PAGES, BUTTONS, FIELDS, LINKS,
+  PAGES, BUTTONS, LINKS,
 } from '../../../../../../content-strings';
+import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUSINESS.COMPANY_DETAILS;
@@ -87,6 +88,7 @@ context('Your business - company details page - As an Exporter I want to enter m
     companyDetails.companiesHouseSearchLabel().invoke('text').then((text) => {
       expect(text.trim()).equal(FIELDS[INPUT].LABEL);
     });
+
     companyDetails.companiesHouseSearchHint().contains(FIELDS[INPUT].HINT);
 
     companyDetails.companiesHouseSearchButton().invoke('text').then((text) => {

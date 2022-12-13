@@ -5,6 +5,13 @@ import corePageVariables from '..';
 
 const { START: startRoute } = ROUTES.INSURANCE;
 
+/**
+ * insuranceCorePageVariables
+ * Generate page variables required for every insurance page
+ * @param {Object} Page content strings bespoke to the page
+ * @param {String} Link to the previous page
+ * @returns {Object} Common page content strings
+ */
 const insuranceCorePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK }: CorePageVariablesInitialInput): CorePageVariables => ({
   ...corePageVariables({
     PAGE_CONTENT_STRINGS,

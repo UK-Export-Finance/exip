@@ -1,5 +1,6 @@
 import { companyDetails } from '../../../../pages/your-business';
-import { ERROR_MESSAGES, FIELDS } from '../../../../../../content-strings';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import partials from '../../../../partials';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 
