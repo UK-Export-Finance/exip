@@ -47,6 +47,7 @@ jobs:
 
   unit-tests:
     name: Unit tests
+    needs: set-environment
     environment:
       name: ${{ needs.set-environment.outputs.environment }}
     runs-on: [ self-hosted, linux ]
@@ -64,11 +65,25 @@ jobs:
           # npm run component-test
       - name: API micro-service
         working-directory: ./src/api
+        env:
+          API_URL: ${{ secrets.API_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
+          BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
+          MULESOFT_API_CIS_URL: ${{ secrets.MULESOFT_API_CIS_URL }}
+          MULESOFT_API_CIS_KEY: ${{ secrets.MULESOFT_API_CIS_KEY }}
+          MULESOFT_API_CIS_SECRET: ${{ secrets.MULESOFT_API_CIS_SECRET }}
+          MULESOFT_API_MDM_EA_URL: ${{ secrets.MULESOFT_API_MDM_EA_URL }}
+          MULESOFT_API_MDM_EA_KEY: ${{ secrets.MULESOFT_API_MDM_EA_KEY }}
+          MULESOFT_API_MDM_EA_SECRET: ${{ secrets.MULESOFT_API_MDM_EA_SECRET }}
+          GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
+          GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
+          COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
+          COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
         run: |
-
-          export SESSION_SECRET=abcacbacbacbacbacad123Test
-          export GOV_NOTIFY_API_KEY=abcacbacbacbacbacad123Test
-          export DATABASE_URL=mysql://root:root@database:1234/test
           npm i --legacy-peer-deps
           npm run test
       - uses: act10ns/slack@v1
