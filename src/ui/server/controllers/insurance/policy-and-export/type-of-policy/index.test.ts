@@ -12,6 +12,8 @@ const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 const { INSURANCE } = ROUTES;
 
+const FIELD_ID = POLICY_AND_EXPORTS.POLICY_TYPE;
+
 describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   let req: Request;
   let res: Response;
@@ -90,7 +92,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = {
-          [pageVariables(refNumber).FIELD.ID]: FIELDS[POLICY_AND_EXPORTS.POLICY_TYPE].OPTIONS.SINGLE.VALUE,
+          [FIELD_ID]: FIELDS[FIELD_ID]?.OPTIONS?.SINGLE.VALUE,
         };
       });
 
@@ -102,14 +104,28 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, req.body);
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`, async () => {
-        await post(req, res);
+      describe('when the answer is `single`', () => {
+        it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`, async () => {
+          await post(req, res);
 
-        const referenceNumber = refNumber;
+          const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
 
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
 
-        expect(res.redirect).toHaveBeenCalledWith(expected);
+      describe('when the answer is `multi`', () => {
+        it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTI_CONTRACT_POLICY}`, async () => {
+          req.body[FIELD_ID] = FIELDS[FIELD_ID]?.OPTIONS?.MULTI.VALUE;
+
+          await post(req, res);
+
+          const referenceNumber = Number(req.params.referenceNumber);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTI_CONTRACT_POLICY}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 
@@ -145,7 +161,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
     describe('api error handling', () => {
       beforeEach(() => {
         req.body = {
-          [pageVariables(refNumber).FIELD.ID]: FIELDS[POLICY_AND_EXPORTS.POLICY_TYPE].OPTIONS.SINGLE.VALUE,
+          [FIELD_ID]: FIELDS[FIELD_ID]?.OPTIONS?.SINGLE.VALUE,
         };
       });
 

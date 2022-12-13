@@ -6,7 +6,8 @@ import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const multiplePolicyField = insurance.policyAndExport.typeOfPolicy[FIELD_ID].multi;
+
+const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID].multi;
 
 const { taskList } = partials.insurancePartials;
 

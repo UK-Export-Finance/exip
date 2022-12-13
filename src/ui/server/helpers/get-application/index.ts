@@ -1,5 +1,11 @@
 import api from '../../api';
 
+/**
+ * getApplication
+ * Get an application from the API/DB
+ * @param {Number} Application reference number
+ * @returns {Object} Application
+ */
 const getApplication = async (referenceNumber: number) => {
   try {
     const application = await api.keystone.application.get(referenceNumber);

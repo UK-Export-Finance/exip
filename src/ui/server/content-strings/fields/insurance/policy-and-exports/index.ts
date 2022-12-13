@@ -1,6 +1,8 @@
 import { FIELD_IDS, FIELD_VALUES } from '../../../../constants';
+import { LINKS } from '../../../links';
 
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
+const { CONTRACT_POLICY } = POLICY_AND_EXPORTS;
 
 export const FIELDS = {
   [POLICY_AND_EXPORTS.POLICY_TYPE]: {
@@ -28,5 +30,39 @@ export const FIELDS = {
         ],
       },
     },
+  },
+  CONTRACT_POLICY: {
+    [CONTRACT_POLICY.REQUESTED_START_DATE]: {
+      LABEL: 'When do you want your policy to start?',
+      HINT: 'For example, 6 11 2023',
+    },
+    [CONTRACT_POLICY.CREDIT_PERIOD_WITH_BUYER]: {
+      LABEL: 'What credit period do you have with your buyer?',
+      HINT: 'For example, 60 days after dispatching goods from your premises or 90 days after invoicing.',
+      MAXIMUM: 1000,
+    },
+    [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
+      LABEL: "Select currency you'd like your policy to be issued in",
+      HINT: [
+        {
+          text: "UKEF usually issues policies in pounds sterling, US dollars or euros. If you need a different currency, you'll need to ",
+        },
+        {
+          text: 'apply using our form.',
+          href: LINKS.EXTERNAL.NBI_FORM,
+        },
+      ],
+    },
+    SINGLE: {
+      [CONTRACT_POLICY.SINGLE.COMPLETION_OF_CONTRACT_DATE]: {
+        LABEL: 'When do you expect to complete the export contract?',
+        HINT: 'For example, 6 11 2024',
+      },
+      [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+        LABEL: "What's the total value of the contract you want to insure?",
+        HINT: 'Enter a whole number - do not enter decimals.',
+      },
+    },
+    MULTI: {},
   },
 };
