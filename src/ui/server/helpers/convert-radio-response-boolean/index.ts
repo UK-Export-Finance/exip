@@ -5,6 +5,7 @@
  */
 const convertRadioButtonResponse = (response: string) => {
   if (response) {
+    // if response and if response is string true then return true, else false
     return response === 'true' ? true : false;
   }
 
