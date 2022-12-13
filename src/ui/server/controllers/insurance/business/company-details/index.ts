@@ -33,9 +33,9 @@ const PAGE_VARIABLES = {
 
 /**
  * gets the template for company details page
- * @param req
- * @param res
- * @returns res
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} renders company details page
  */
 const get = async (req: Request, res: Response) => {
   return res.render(companyDetailsTemplate, {
@@ -51,7 +51,6 @@ const get = async (req: Request, res: Response) => {
  * posts companies house number to company house api
  * validates input and response from companies house api and shows relevant errors if they exist
  * populates a summary list with the company information if no validation errors
- * @param req
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} companyDetails template with validation errors or summary list with company details populated
@@ -130,7 +129,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
  * validates tradingName fields
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- *  @returns {Express.Response.redirect} Company details page with or without errors
+ * @returns {Express.Response.redirect} Company details page with or without errors
  */
 const post = (req: Request, res: Response) => {
   try {
