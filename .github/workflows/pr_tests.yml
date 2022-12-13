@@ -83,7 +83,7 @@ jobs:
         if: failure()
 
   e2e-journey-tests:
-    name: Run e2e tests
+    name: E2E tests
     needs: set-environment
     environment:
       name: ${{ needs.set-environment.outputs.environment }}
