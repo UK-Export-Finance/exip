@@ -52,10 +52,8 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_P
  * @returns {Express.Response.render} Single contract policy page
  */
 export const get = async (req: Request, res: Response) => {
-  const { referenceNumber } = req.params;
-
   try {
-    const application = await api.keystone.application.get(Number(referenceNumber));
+    const { application } = res.locals;
 
     if (!application) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

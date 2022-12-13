@@ -23,15 +23,14 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
   let req: Request;
   let res: Response;
 
-  let getApplicationSpy = jest.fn(() => Promise.resolve(mockApplication));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
+    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
-
     api.external.getCurrencies = getCurrenciesSpy;
   });
 
@@ -77,17 +76,6 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
   });
 
   describe('get', () => {
-    beforeEach(() => {
-      api.keystone.application.get = getApplicationSpy;
-    });
-
-    it('should call api.keystone.application.get', async () => {
-      await get(req, res);
-
-      expect(getApplicationSpy).toHaveBeenCalledTimes(1);
-      expect(getApplicationSpy).toHaveBeenCalledWith(Number(req.params.referenceNumber));
-    });
-
     it('should call api.external.getCurrencies', async () => {
       await get(req, res);
 
@@ -112,34 +100,19 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        res.locals = { csrfToken: '1234' };
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
     describe('api error handling', () => {
-      describe('when there is no application returned from the API', () => {
-        beforeEach(() => {
-          // @ts-ignore
-          getApplicationSpy = jest.fn(() => Promise.resolve());
-          api.keystone.application.get = getApplicationSpy;
-        });
-
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-        });
-      });
-
-      describe('when there is an error with the getApplication API call', () => {
-        beforeEach(() => {
-          getApplicationSpy = jest.fn(() => Promise.reject());
-          api.keystone.application.get = getApplicationSpy;
-        });
-
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-        });
-      });
-
       describe('when there are no currencies returned from the API', () => {
         beforeEach(() => {
           // @ts-ignore
