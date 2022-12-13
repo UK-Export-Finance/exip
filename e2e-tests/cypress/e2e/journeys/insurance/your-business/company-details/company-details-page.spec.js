@@ -1,6 +1,8 @@
 import { companyDetails } from '../../../../pages/your-business';
 import partials from '../../../../partials';
-import { heading, continueButton, saveAndBackButton } from '../../../../pages/shared';
+import {
+  heading, submitButton, saveAndBackButton, yesRadioInput, noRadioInput,
+} from '../../../../pages/shared';
 import {
   PAGES, BUTTONS, FIELDS, LINKS,
 } from '../../../../../../content-strings';
@@ -103,29 +105,33 @@ context('Your business - company details page - As an Exporter I want to enter m
   });
 
   it('should display the trading name radios', () => {
-    companyDetails.tradingName().contains(FIELDS[TRADING_NAME].LABEL);
-    companyDetails.tradingNameYesRadio().should('exist');
+    companyDetails.tradingNameHeading().invoke('text').then((text) => {
+      expect(text.trim()).equal(FIELDS[TRADING_NAME].LABEL);
+    });
+    yesRadioInput().first().should('exist');
 
-    companyDetails.tradingNameYesRadio().invoke('attr', 'aria-label').then((text) => {
+    yesRadioInput().first().invoke('attr', 'aria-label').then((text) => {
       expect(text.trim()).equal(`${FIELDS[TRADING_NAME].LABEL} yes radio`);
     });
 
-    companyDetails.tradingNameNoRadio().should('exist');
+    noRadioInput().first().should('exist');
 
-    companyDetails.tradingNameNoRadio().invoke('attr', 'aria-label').then((text) => {
+    noRadioInput().first().invoke('attr', 'aria-label').then((text) => {
       expect(text.trim()).equal(`${FIELDS[TRADING_NAME].LABEL} no radio`);
     });
   });
 
   it('should display the trading address radios', () => {
-    companyDetails.tradingAddress().contains(FIELDS[TRADING_ADDRESS].LABEL);
-    companyDetails.tradingAddressYesRadio().should('exist');
-    companyDetails.tradingAddressYesRadio().invoke('attr', 'aria-label').then((text) => {
+    companyDetails.tradingAddressHeading().invoke('text').then((text) => {
+      expect(text.trim()).equal(FIELDS[TRADING_ADDRESS].LABEL);
+    });
+    yesRadioInput().eq(1).should('exist');
+    yesRadioInput().eq(1).invoke('attr', 'aria-label').then((text) => {
       expect(text.trim()).equal(`${FIELDS[TRADING_ADDRESS].LABEL} yes radio`);
     });
 
-    companyDetails.tradingAddressNoRadio().should('exist');
-    companyDetails.tradingAddressNoRadio().invoke('attr', 'aria-label').then((text) => {
+    noRadioInput().eq(1).should('exist');
+    noRadioInput().eq(1).invoke('attr', 'aria-label').then((text) => {
       expect(text.trim()).equal(`${FIELDS[TRADING_ADDRESS].LABEL} no radio`);
     });
   });
@@ -154,7 +160,7 @@ context('Your business - company details page - As an Exporter I want to enter m
   });
 
   it('should display the continue and save and go back button', () => {
-    continueButton().invoke('text').then((text) => {
+    submitButton().invoke('text').then((text) => {
       expect(text.trim()).equal(BUTTONS.CONTINUE);
     });
 

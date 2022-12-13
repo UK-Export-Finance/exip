@@ -1,7 +1,7 @@
 import { PAGES } from '../../../../content-strings';
 import { Request, Response, CompanyHouseResponse } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
-import corePageVariables from '../../../../helpers/page-variables/core/insurance';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
 import companiesHouseValidation from './validation/companies-house';
 import companyHouseResponseValidation from './validation/companies-house-response';
@@ -10,16 +10,23 @@ import companyDetailsValidation from './validation/company-details';
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
-const { COMPANY_HOUSE, YOUR_COMPANY } = EXPORTER_BUSINESS;
-const { TRADING_NAME } = YOUR_COMPANY;
+const {
+  EXPORTER_BUSINESS: {
+    COMPANY_HOUSE,
+    YOUR_COMPANY: { TRADING_NAME },
+  },
+} = FIELD_IDS.INSURANCE;
+
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
-const { COMPANY_HOUSE_SEARCH } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
-const { COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
+
+const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
 
 const PAGE_VARIABLES = {
-  COMPANIES_HOUSE_POST_ROUTE: COMPANY_HOUSE_SEARCH,
-  COMPANY_DETAILS_POST_ROUTE: COMPANY_DETAILS_ROUTE,
+  POST_ROUTES: {
+    COMPANIES_HOUSE: COMPANY_HOUSE_SEARCH,
+    COMPANY_DETAILS: COMPANY_DETAILS_ROUTE,
+  },
   FIELDS: EXPORTER_BUSINESS,
 };
 
@@ -31,7 +38,7 @@ const PAGE_VARIABLES = {
  */
 const get = async (req: Request, res: Response) => {
   return res.render(companyDetailsTemplate, {
-    ...corePageVariables({
+    ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
       BACK_LINK: req.headers.referer,
     }),
@@ -61,7 +68,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
 
     if (validationErrors) {
       return res.render(companyDetailsTemplate, {
-        ...corePageVariables({
+        ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
@@ -88,7 +95,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
 
     if (responseValidationErrors) {
       return res.render(companyDetailsTemplate, {
-        ...corePageVariables({
+        ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
@@ -102,7 +109,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     const summaryList = companyHouseSummaryList(company);
 
     return res.render(companyDetailsTemplate, {
-      ...corePageVariables({
+      ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
         BACK_LINK: req.headers.referer,
       }),
@@ -126,16 +133,18 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
 const post = (req: Request, res: Response) => {
   try {
     const { body } = req;
+
     const submittedValues = {
       [COMPANY_HOUSE.INPUT]: body[COMPANY_HOUSE.INPUT],
-      [TRADING_NAME]: body[TRADING_NAME],
+      // if trading name is string true, then convert to boolean true
+      [TRADING_NAME]: body[TRADING_NAME] === 'true' ? true : false,
     };
 
     const validationErrors = companyDetailsValidation(body);
 
     if (validationErrors) {
       return res.render(companyDetailsTemplate, {
-        ...corePageVariables({
+        ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
@@ -147,7 +156,7 @@ const post = (req: Request, res: Response) => {
 
     // TODO: Remove once page complete.  For testing purposes
     return res.render(companyDetailsTemplate, {
-      ...corePageVariables({
+      ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
         BACK_LINK: req.headers.referer,
       }),
@@ -156,7 +165,7 @@ const post = (req: Request, res: Response) => {
       submittedValues,
     });
   } catch (error) {
-    console.error('Error posting company details response', { error });
+    console.error('Error posting company details', { error });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };

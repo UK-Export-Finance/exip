@@ -1,4 +1,4 @@
-import tradingName from './tradingName';
+import tradingName from './trading-name';
 
 const rules = [tradingName];
 

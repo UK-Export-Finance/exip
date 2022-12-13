@@ -1,4 +1,4 @@
-import tradingName from './tradingName';
+import tradingName from './trading-name';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../../constants';
 import generateValidationErrors from '../../../../../../../helpers/validation';
@@ -9,6 +9,8 @@ const {
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
+
+const errorMessage = EXPORTER_BUSINESS[TRADING_NAME].IS_EMPTY;
 
 describe('controllers/insurance/business/company-details/validation/company-details/rules/tradingName', () => {
   const mockErrors = {
@@ -23,7 +25,6 @@ describe('controllers/insurance/business/company-details/validation/company-deta
   it('should return a validation error when tradingName is an empty string', () => {
     const result = tradingName(mockBody, mockErrors);
 
-    const errorMessage = EXPORTER_BUSINESS[TRADING_NAME].IS_EMPTY;
     const expected = generateValidationErrors(TRADING_NAME, errorMessage, mockErrors);
 
     expect(result).toEqual(expected);
@@ -34,7 +35,6 @@ describe('controllers/insurance/business/company-details/validation/company-deta
 
     const result = tradingName(mockBody, mockErrors);
 
-    const errorMessage = EXPORTER_BUSINESS[TRADING_NAME].IS_EMPTY;
     const expected = generateValidationErrors(TRADING_NAME, errorMessage, mockErrors);
 
     expect(result).toEqual(expected);
@@ -45,7 +45,6 @@ describe('controllers/insurance/business/company-details/validation/company-deta
 
     const result = tradingName(mockBody, mockErrors);
 
-    const errorMessage = EXPORTER_BUSINESS[TRADING_NAME].IS_EMPTY;
     const expected = generateValidationErrors(TRADING_NAME, errorMessage, mockErrors);
 
     expect(result).toEqual(expected);

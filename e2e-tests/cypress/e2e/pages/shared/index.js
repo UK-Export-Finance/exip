@@ -13,7 +13,6 @@ const noRadio = () => cy.get('[data-cy="no"]');
 const noRadioInput = () => cy.get('[data-cy="no-input"]');
 const inlineErrorMessage = () => cy.get('[data-cy="inline-error-message"]');
 const submitButton = () => cy.get('[data-cy="submit-button"]');
-const continueButton = () => cy.get('[data-cy="continue-button"]');
 const saveAndBackButton = () => cy.get('[data-cy="save-and-back-button"]');
 
 export {
@@ -26,7 +25,6 @@ export {
   noRadioInput,
   inlineErrorMessage,
   submitButton,
-  continueButton,
   saveAndBackButton,
   buyerCountryPage,
   cannotApplyPage,

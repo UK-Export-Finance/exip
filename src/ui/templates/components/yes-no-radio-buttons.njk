@@ -8,13 +8,25 @@
   {% set submittedAnswer = params.submittedAnswer %}
   {% set errorMessage = params.errorMessage %}
 
+  {% if params.headerClass %}
+    {% set headerClass = params.headerClass %}
+  {% else%}
+    {% set headerClass = 'govuk-heading-l' %}
+  {% endif %}
+
+  {% if params.datacyHeading %}
+    {% set datacyHeading = params.datacyHeading %}
+  {% else%}
+    {% set datacyHeading = 'heading' %}
+  {% endif %}
+
   {{ govukRadios({
     classes: "govuk-radios--inline",
     idPrefix: fieldId,
     name: fieldId,
     fieldset: {
       legend: {
-        html: "<h1 class='govuk-heading-l' id='heading' data-cy='heading'>" + heading + "</h1>"
+        html: "<h1 class=" + headerClass + " id='heading' data-cy='" + datacyHeading + "'>" + heading + "</h1>"
       }
     },
     hint: {
@@ -33,7 +45,8 @@
           }
         },
         attributes: {
-          "data-cy": "yes-input"
+          "data-cy": "yes-input",
+          'aria-label': heading + ' yes radio'
         },
         checked: submittedAnswer === true
       },
@@ -46,7 +59,8 @@
           }
         },
         attributes: {
-          "data-cy": "no-input"
+          "data-cy": "no-input",
+          'aria-label': heading + ' no radio'
         },
         checked: submittedAnswer === false
       }

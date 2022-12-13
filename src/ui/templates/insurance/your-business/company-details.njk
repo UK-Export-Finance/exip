@@ -7,6 +7,7 @@
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {%- from "moj/components/search/macro.njk" import mojSearch -%}
+{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
 
 {% block content %}
 
@@ -37,7 +38,7 @@
     </div>
 
     <div class="govuk-grid-column-three-quarters-from-desktop">
-      <form action="{{COMPANIES_HOUSE_POST_ROUTE}}" method="POST">
+      <form action="{{POST_ROUTES.COMPANIES_HOUSE}}" method="POST">
 
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <div class="companies-house-search">
@@ -98,86 +99,29 @@
       </div>
     {% endif %}
 
-    <form action="{{COMPANY_DETAILS_POST_ROUTE}}" method="POST" novalidate>
+    <form action="{{POST_ROUTES.COMPANY_DETAILS}}" method="POST" novalidate>
       <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
-        {{ govukRadios({
-          classes: "govuk-radios--inline",
-          idPrefix: FIELDS.YOUR_COMPANY.TRADING_NAME,
-          name: FIELDS.YOUR_COMPANY.TRADING_NAME,
-          fieldset: {
-            legend: {
-              text: CONTENT_STRINGS.TRADING_NAME,
-              isPageHeading: false,
-              classes: "govuk-fieldset__legend--m"
-            },
-            attributes: {
-              'data-cy': 'trading-name'
-            }
-          },
-          items: [
-            {
-              value: "yes",
-              text: "Yes",
-              checked: submittedValues[FIELDS.YOUR_COMPANY.TRADING_NAME] === 'yes',
-              attributes: {
-                'data-cy': "trading-name-yes",
-                'aria-label': CONTENT_STRINGS.TRADING_NAME + ' yes radio'
-              }
-            },
-            {
-              value: "no",
-              text: "No",
-              checked: submittedValues[FIELDS.YOUR_COMPANY.TRADING_NAME] === 'no',
-              attributes: {
-                'data-cy': "trading-name-no",
-                'aria-label': CONTENT_STRINGS.TRADING_NAME + ' no radio'
-              }
-            }
-          ],
-          errorMessage: validationErrors.errorList.tradingName and {
-            text: validationErrors.errorList.tradingName.text,
-            attributes: {
-              "data-cy": "trading-name-error"
-            }
-          }
+        {{ yesNoRadioButtons.render({
+          fieldId: FIELDS.YOUR_COMPANY.TRADING_NAME,
+          heading: CONTENT_STRINGS.TRADING_NAME,
+          submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_NAME],
+          errorMessage: validationErrors.errorList.tradingName,
+          headerClass: 'govuk-fieldset__legend--m',
+          datacyHeading: 'trading-name-heading'
         }) }}
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
-        {{ govukRadios({
-          classes: "govuk-radios--inline",
-          name: FIELDS.COMPANY_DETAILS.TRADING_ADDRESS,
-          fieldset: {
-            legend: {
-              text: CONTENT_STRINGS.TRADING_ADDRESS,
-              isPageHeading: false,
-              classes: "govuk-fieldset__legend--m"
-            },
-            attributes: {
-              'data-cy': 'trading-address'
-            }
-          },
-          items: [
-            {
-              value: "yes",
-              text: "Yes",
-              attributes: {
-                'data-cy': "trading-address-yes",
-                'aria-label': CONTENT_STRINGS.TRADING_ADDRESS + ' yes radio'
-              }
-            },
-            {
-              value: "no",
-              text: "No",
-              attributes: {
-                'data-cy': "trading-address-no",
-                'aria-label': CONTENT_STRINGS.TRADING_ADDRESS + ' no radio'
-              }
-            }
-          ]
-        }) }}
+          {{ yesNoRadioButtons.render({
+            fieldId: FIELDS.COMPANY_DETAILS.TRADING_ADDRESS,
+            heading: CONTENT_STRINGS.TRADING_ADDRESS,
+            submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
+            errorMessage: validationErrors.errorList.tradingAddress,
+            headerClass: 'govuk-fieldset__legend--m',
+            datacyHeading: 'trading-address-heading'
+          }) }}
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
@@ -231,7 +175,7 @@
           {{ govukButton({
             text: CONTENT_STRINGS.BUTTONS.CONTINUE,
             attributes: {
-              'data-cy': 'continue-button'
+              'data-cy': 'submit-button'
             }
           }) }}
 

@@ -3,7 +3,6 @@ import { Application, ApplicationFlat } from './application';
 import { ApolloResponse } from './apollo';
 import { CisCountry } from './cis-country';
 import { CompanyDetails, CompanyDetailsFieldGroups } from './company-details';
-import { CompanyDetailsResponse } from './company-details-response';
 import { CompanyHouseResponse } from './company-house-response';
 import { Country } from './country';
 import { Currency } from './currency';
@@ -45,7 +44,6 @@ export {
   ApplicationFlat,
   ApolloResponse,
   CisCountry,
-  CompanyDetailsResponse,
   CompanyDetails,
   CompanyDetailsFieldGroups,
   CompanyHouseResponse,
