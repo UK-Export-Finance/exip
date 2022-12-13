@@ -7,7 +7,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import generateValidationErrors from '../../../../helpers/validation';
 import api from '../../../../api';
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
-import { sanitiseData } from '../../../../helpers/sanitise-data';
+import { sanitiseValue } from '../../../../helpers/sanitise-data';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
@@ -229,7 +229,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
       const submittedValues = {
         [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        [TRADING_NAME]: sanitiseData(req.body[TRADING_NAME]),
+        [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
       };
 
       post(req, res);

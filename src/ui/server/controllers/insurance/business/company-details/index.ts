@@ -2,7 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { Request, Response, CompanyHouseResponse } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { sanitiseData } from '../../../../helpers/sanitise-data';
+import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import companiesHouseValidation from './validation/companies-house';
 import companyHouseResponseValidation from './validation/companies-house-response';
@@ -139,7 +139,7 @@ const post = (req: Request, res: Response) => {
     const submittedValues = {
       [COMPANY_HOUSE.INPUT]: body[COMPANY_HOUSE.INPUT],
       // if trading name is string true, then convert to boolean true
-      [TRADING_NAME]: sanitiseData(body[TRADING_NAME]),
+      [TRADING_NAME]: sanitiseValue(body[TRADING_NAME]),
     };
 
     const validationErrors = companyDetailsValidation(body);
