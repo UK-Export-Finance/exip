@@ -4,7 +4,6 @@ import { PAGES } from '../../../../content-strings';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import api from '../../../../api';
 import generateValidationErrors from './validation';
 import save from '../save-data';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
@@ -26,14 +25,12 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
   save.policyAndExport = mockSavePolicyAndExportData;
 
-  let getApplicationSpy = jest.fn(() => Promise.resolve(mockApplication));
-
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
+    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
-
     refNumber = Number(mockApplication.referenceNumber);
   });
 
@@ -61,17 +58,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   });
 
   describe('get', () => {
-    beforeEach(() => {
-      api.keystone.application.get = getApplicationSpy;
-    });
-
-    it('should call api.keystone.application.get', async () => {
-      await get(req, res);
-
-      expect(getApplicationSpy).toHaveBeenCalledTimes(1);
-      expect(getApplicationSpy).toHaveBeenCalledWith(refNumber);
-    });
-
     it('should render template', async () => {
       await get(req, res);
 
@@ -81,30 +67,15 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
-        application: mockApplication,
+        application: res.locals.application,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
-    describe('when there is no application returned from the API', () => {
+    describe('when there is no application', () => {
       beforeEach(() => {
-        // @ts-ignore
-        getApplicationSpy = jest.fn(() => Promise.resolve());
-        api.keystone.application.get = getApplicationSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-
-    describe('when there is an error with the getApplication API call', () => {
-      beforeEach(() => {
-        getApplicationSpy = jest.fn(() => Promise.reject());
-        api.keystone.application.get = getApplicationSpy;
+        res.locals = { csrfToken: '1234' };
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -123,12 +94,12 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         };
       });
 
-      it('should call save.policyAndExport with application reference number and req.body', async () => {
+      it('should call save.policyAndExport with application and req.body', async () => {
         await post(req, res);
 
         expect(save.policyAndExport).toHaveBeenCalledTimes(1);
 
-        expect(save.policyAndExport).toHaveBeenCalledWith(refNumber, req.body);
+        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, req.body);
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`, async () => {
@@ -156,6 +127,18 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        res.locals = { csrfToken: '1234' };
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });
     });
 

@@ -4,7 +4,6 @@ import { FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
-import api from '../../../../api';
 import save from '../save-data';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
@@ -25,30 +24,24 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Type of policy page
  */
-export const get = async (req: Request, res: Response) => {
-  const { referenceNumber } = req.params;
+export const get = (req: Request, res: Response) => {
+  const { application } = res.locals;
 
-  try {
-    const refNumber = Number(referenceNumber);
-    const application = await api.keystone.application.get(refNumber);
-
-    if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-    }
-
-    return res.render(TEMPLATE, {
-      ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
-        BACK_LINK: req.headers.referer,
-      }),
-      ...pageVariables(refNumber),
-      application,
-    });
-  } catch (err) {
-    console.error('Error getting application ', { err });
-
+  if (!application) {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
+
+  const { referenceNumber } = req.params;
+  const refNumber = Number(referenceNumber);
+
+  return res.render(TEMPLATE, {
+    ...insuranceCorePageVariables({
+      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
+      BACK_LINK: req.headers.referer,
+    }),
+    ...pageVariables(refNumber),
+    application,
+  });
 };
 
 /**
@@ -60,6 +53,12 @@ export const get = async (req: Request, res: Response) => {
  */
 export const post = async (req: Request, res: Response) => {
   try {
+    const { application } = res.locals;
+
+    if (!application) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
     const { referenceNumber } = req.params;
     const refNumber = Number(referenceNumber);
 
@@ -78,7 +77,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     // save the application
-    const saveResponse = await save.policyAndExport(Number(referenceNumber), req.body);
+    const saveResponse = await save.policyAndExport(application, req.body);
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
