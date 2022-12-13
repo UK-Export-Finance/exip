@@ -66,6 +66,8 @@ jobs:
         working-directory: ./src/api
         run: |
           export SESSION_SECRET=${{ secrets.SESSION_SECRET }}
+          export GOV_NOTIFY_API_KEY=${{ secrets.SESSION_SECRET }}
+          export DATABASE_URL=${{ secrets.DATABASE_URL }}
           npm i --legacy-peer-deps
           npm run test
       - uses: act10ns/slack@v1
