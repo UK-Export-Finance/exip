@@ -1,4 +1,4 @@
-const ROOT = '/company-details';
+const ROOT = '/your-business/company-details';
 
 export const EXPORTER_BUSINESS = {
   ROOT,

@@ -1,5 +1,5 @@
 import { Request, Response } from '../../../../../types';
-import { get, postCompaniesHouseSearch, post } from '.';
+import { pageVariables, get, postCompaniesHouseSearch, post } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
@@ -20,17 +20,19 @@ const {
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
-const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
+const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
+
+const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = EXPORTER_BUSINESS_ROUTES;
 
 const { EXPORTER_BUSINESS: EXPORTER_BUSINESS_ERROR } = ERROR_MESSAGES.INSURANCE;
 
-const PAGE_VARIABLES = {
-  POST_ROUTES: {
-    COMPANIES_HOUSE: COMPANY_HOUSE_SEARCH,
-    COMPANY_DETAILS: COMPANY_DETAILS_ROUTE,
-  },
-  FIELDS: EXPORTER_BUSINESS,
-};
+// const PAGE_VARIABLES = {
+//   POST_ROUTES: {
+//     COMPANIES_HOUSE: COMPANY_HOUSE_SEARCH,
+//     COMPANY_DETAILS: COMPANY_DETAILS_ROUTE,
+//   },
+//   FIELDS: EXPORTER_BUSINESS,
+// };
 
 describe('controllers/insurance/business/companies-details', () => {
   let req: Request;
@@ -47,6 +49,22 @@ describe('controllers/insurance/business/companies-details', () => {
     jest.resetAllMocks();
   });
 
+  describe('pageVariables', () => {
+    it('should have correct properties', () => {
+      const result = pageVariables(mockApplication.referenceNumber);
+
+      const expected = {
+        POST_ROUTES: {
+          COMPANIES_HOUSE: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_HOUSE_SEARCH}`,
+          COMPANY_DETAILS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROUTE}`,
+        },
+        FIELDS: EXPORTER_BUSINESS,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('get', () => {
     it('should render the company-details template with correct variables', () => {
       get(req, res);
@@ -56,7 +74,7 @@ describe('controllers/insurance/business/companies-details', () => {
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(mockApplication.referenceNumber),
       });
     });
 
@@ -92,7 +110,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          ...PAGE_VARIABLES,
+          ...pageVariables(mockApplication.referenceNumber),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
           submittedValues,
         });
@@ -115,7 +133,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          ...PAGE_VARIABLES,
+          ...pageVariables(mockApplication.referenceNumber),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
           submittedValues,
         });
@@ -138,7 +156,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          ...PAGE_VARIABLES,
+          ...pageVariables(mockApplication.referenceNumber),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
           submittedValues,
         });
@@ -164,7 +182,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          ...PAGE_VARIABLES,
+          ...pageVariables(mockApplication.referenceNumber),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
           submittedValues,
         });
@@ -190,7 +208,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          ...PAGE_VARIABLES,
+          ...pageVariables(mockApplication.referenceNumber),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
           submittedValues,
         });
@@ -217,7 +235,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          ...PAGE_VARIABLES,
+          ...pageVariables(mockApplication.referenceNumber),
           SUMMARY_LIST: companyHouseSummaryList(mockCompany),
           submittedValues,
         });
@@ -269,7 +287,7 @@ describe('controllers/insurance/business/companies-details', () => {
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(mockApplication.referenceNumber),
         validationErrors: generateValidationErrors(TRADING_NAME, errorMessage, {}),
         submittedValues,
       });

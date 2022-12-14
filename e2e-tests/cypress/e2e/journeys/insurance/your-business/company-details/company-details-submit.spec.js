@@ -2,6 +2,7 @@ import { submitButton, yesRadioInput, inlineErrorMessage } from '../../../../pag
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import partials from '../../../../partials';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const {
   EXPORTER_BUSINESS: {
@@ -14,16 +15,34 @@ const {
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 describe("Your business - company house search - As an Exporter I want to enter details about my business in 'your business' section", () => {
+  let referenceNumber;
+
   before(() => {
-    cy.visit(ROUTES.INSURANCE.YOUR_BUSINESS.COMPANY_DETAILS, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
-    cy.url().should('include', ROUTES.INSURANCE.YOUR_BUSINESS.COMPANY_DETAILS);
+    cy.submitInsuranceEligibilityAndStartApplication();
+
+    getReferenceNumber().then((id) => {
+      referenceNumber = id;
+
+      const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+
+      cy.visit(url, {
+        auth: {
+          username: Cypress.config('basicAuthKey'),
+          password: Cypress.config('basicAuthSecret'),
+        },
+      });
+
+      cy.url().should('eq', url);
+    });
   });
+
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');

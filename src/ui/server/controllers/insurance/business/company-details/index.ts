@@ -21,15 +21,17 @@ const {
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
-const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
+const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const PAGE_VARIABLES = {
+const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = EXPORTER_BUSINESS_ROUTES;
+
+const pageVariables = (referenceNumber: number) => ({
   POST_ROUTES: {
-    COMPANIES_HOUSE: COMPANY_HOUSE_SEARCH,
-    COMPANY_DETAILS: COMPANY_DETAILS_ROUTE,
+    COMPANIES_HOUSE: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_HOUSE_SEARCH}`,
+    COMPANY_DETAILS: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROUTE}`,
   },
   FIELDS: EXPORTER_BUSINESS,
-};
+});
 
 /**
  * gets the template for company details page
@@ -49,7 +51,7 @@ const get = async (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
       BACK_LINK: req.headers.referer,
     }),
-    ...PAGE_VARIABLES,
+    ...pageVariables(application.referenceNumber),
   });
 };
 
@@ -85,7 +87,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(application.referenceNumber),
         validationErrors,
         submittedValues,
       });
@@ -112,7 +114,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(application.referenceNumber),
         validationErrors: responseValidationErrors,
         submittedValues,
       });
@@ -126,7 +128,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
         BACK_LINK: req.headers.referer,
       }),
-      ...PAGE_VARIABLES,
+      ...pageVariables(application.referenceNumber),
       SUMMARY_LIST: summaryList,
       submittedValues,
     });
@@ -167,7 +169,7 @@ const post = (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(application.referenceNumber),
         validationErrors,
         submittedValues,
       });
@@ -179,7 +181,7 @@ const post = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
         BACK_LINK: req.headers.referer,
       }),
-      ...PAGE_VARIABLES,
+      ...pageVariables(application.referenceNumber),
       validationErrors,
       submittedValues,
     });
@@ -189,4 +191,4 @@ const post = (req: Request, res: Response) => {
   }
 };
 
-export { get, postCompaniesHouseSearch, post };
+export { pageVariables, get, postCompaniesHouseSearch, post };

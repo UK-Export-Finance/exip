@@ -30,6 +30,6 @@ insuranceRouter.post(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLIC
 insuranceRouter.get(INSURANCE_ROUTES.PAGE_NOT_FOUND, pageNotFoundGet);
 
 insuranceRouter.use('/', insuranceEligibilityRoutes);
-insuranceRouter.use(`${INSURANCE_ROOT}/:referenceNumber/your-business`, insuranceBusinessRouter);
+insuranceRouter.use(`${INSURANCE_ROOT}/:referenceNumber`, insuranceBusinessRouter);
 
 export default insuranceRouter;
