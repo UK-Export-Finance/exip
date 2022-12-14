@@ -50,13 +50,13 @@ context('Insurance - page not found', () => {
     });
   });
 
-  it('renders body text', () => {
+  it('renders `typed` and `pasted` text', () => {
     pageNotFoundPage.body1().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.BODY_1);
+      expect(text.trim()).equal(CONTENT_STRINGS.TYPED_ADDRESS);
     });
 
     pageNotFoundPage.body2().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.BODY_2);
+      expect(text.trim()).equal(CONTENT_STRINGS.PASTED_ADDRESS);
     });
   });
 
