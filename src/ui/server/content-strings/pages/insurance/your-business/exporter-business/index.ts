@@ -9,6 +9,8 @@ const COMPANY_DETAILS = {
   TABLE_NAME: 'Your company',
   NO_COMPANY_HOUSE_NUMER: 'I do not have a UK Companies House registration number',
   YOUR_BUSINESS_HEADING: 'Your business',
+  PHONE_NUMBER: 'Your UK telephone number (optional)',
+  PHONE_NUMBER_HINT: 'We may need to contact you about your application',
 };
 
 export { COMPANY_DETAILS };

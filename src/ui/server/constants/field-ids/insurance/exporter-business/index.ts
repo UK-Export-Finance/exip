@@ -8,9 +8,10 @@ const EXPORTER_BUSINESS = {
     COMPANY_SIC: 'sicCodes',
   },
   YOUR_COMPANY: {
-    TRADING_NAME: 'tradingName',
     TRADING_ADDRESS: 'tradingAddress',
+    TRADING_NAME: 'tradingName',
     WEBSITE: 'companyWebsite',
+    PHONE_NUMBER: 'phoneNumber',
   },
 };
 

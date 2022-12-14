@@ -32,4 +32,8 @@ export const EXPORTER_BUSINESS_FIELDS = {
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.WEBSITE]: {
     LABEL: 'Enter your company website, if you have one (optional)',
   },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
+    LABEL: 'Your UK telephone number (optional)',
+    HINT: 'We may need to contact you about your application',
+  },
 };

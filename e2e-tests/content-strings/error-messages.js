@@ -73,6 +73,9 @@ export const ERROR_MESSAGES = {
         NOT_FOUND: 'The number you entered does not match any company in Companies House - try again',
         TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
       },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_NAME]: {
+        IS_EMPTY: 'Select whether you use a different trading name for this company',
+      },
     },
     POLICY_AND_EXPORTS: {
       [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE]: {
