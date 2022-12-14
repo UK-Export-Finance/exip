@@ -49,13 +49,13 @@ context('404 Page not found', () => {
     });
   });
 
-  it('renders body text', () => {
-    pageNotFoundPage.body1().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.BODY_1);
+  it('renders `typed` and `pasted` text', () => {
+    pageNotFoundPage.typedAddress().invoke('text').then((text) => {
+      expect(text.trim()).equal(CONTENT_STRINGS.TYPED_ADDRESS);
     });
 
-    pageNotFoundPage.body2().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.BODY_2);
+    pageNotFoundPage.pastedAddress().invoke('text').then((text) => {
+      expect(text.trim()).equal(CONTENT_STRINGS.PASTED_ADDRESS);
     });
   });
 });

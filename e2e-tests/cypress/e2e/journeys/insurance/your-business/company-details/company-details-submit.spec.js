@@ -43,7 +43,6 @@ describe("Your business - company house search - As an Exporter I want to enter 
     });
   });
 
-
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');
