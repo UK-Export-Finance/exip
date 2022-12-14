@@ -29,7 +29,7 @@ const policyAndExport = async (application: Application, formBody: RequestBody, 
     const sanitisedData = sanitiseData(dataToSave);
 
     // send the form data to the API for database update.
-    const policyAndExportId = application.policyAndExport.id;
+    const policyAndExportId = application.policyAndExport?.id;
 
     try {
       const saveResponse = await api.keystone.application.update.policyAndExport(policyAndExportId, sanitisedData);
