@@ -1,5 +1,4 @@
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockCompany } from '../../../../test-mocks';
 import { get, postCompaniesHouseSearch } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -7,6 +6,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import generateValidationErrors from '../../../../helpers/validation';
 import api from '../../../../api';
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
+import { mockReq, mockRes, mockCompany, mockApplication } from '../../../../test-mocks';
 
 const { COMPANY_HOUSE } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -19,6 +19,11 @@ describe('controllers/insurance/business/companies-details', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
+
+    res.locals.application = mockApplication;
+  });
+
+  afterAll(() => {
     jest.resetAllMocks();
   });
 
@@ -33,6 +38,18 @@ describe('controllers/insurance/business/companies-details', () => {
         }),
         POST_ROUTE: ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH,
         FIELDS: COMPANY_HOUSE,
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        res.locals = { csrfToken: '1234' };
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });
     });
   });
@@ -180,6 +197,18 @@ describe('controllers/insurance/business/companies-details', () => {
         api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
 
         await postCompaniesHouseSearch(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        res.locals = { csrfToken: '1234' };
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+        postCompaniesHouseSearch(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });

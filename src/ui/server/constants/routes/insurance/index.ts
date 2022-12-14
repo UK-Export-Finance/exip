@@ -1,9 +1,9 @@
 import { PRODUCT } from '../../product';
 import { POLICY_AND_EXPORTS } from './policy-and-export';
+import { EXPORTER_BUSINESS } from './exporter-business';
 
 export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY_ROOT = '/eligibility';
-const BUSINESS = '/your-business';
 
 export const INSURANCE_ROUTES = {
   INSURANCE_ROOT,
@@ -29,9 +29,6 @@ export const INSURANCE_ROUTES = {
   },
   ALL_SECTIONS: '/all-sections',
   PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
-  EXPORTER_BUSINESS: {
-    COMPANY_DETAILS: `${INSURANCE_ROOT}${BUSINESS}/company-details`,
-    COMPANY_HOUSE_SEARCH: `${INSURANCE_ROOT}${BUSINESS}/company-details/companies-house-search`,
-  },
+  EXPORTER_BUSINESS,
   POLICY_AND_EXPORTS,
 };

@@ -25,6 +25,12 @@ const PAGE_VARIABLES = {
  * @returns res
  */
 const get = async (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+
   return res.render(companyDetailsTemplate, {
     ...corePageVariables({
       PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
@@ -44,6 +50,12 @@ const get = async (req: Request, res: Response) => {
  */
 const postCompaniesHouseSearch = async (req: Request, res: Response) => {
   try {
+    const { application } = res.locals;
+
+    if (!application) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
     const { body } = req;
 
     const { companiesHouseNumber } = body;

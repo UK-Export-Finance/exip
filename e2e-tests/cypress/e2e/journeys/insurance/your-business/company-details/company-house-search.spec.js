@@ -24,14 +24,14 @@ const COMPANIES_HOUSE_INPUT_FIELD_ID = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COM
 
 context('Your business - company details page', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.YOUR_BUSINESS.COMPANY_DETAILS, {
+    cy.visit(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
-    cy.url().should('include', ROUTES.INSURANCE.YOUR_BUSINESS.COMPANY_DETAILS);
+    cy.url().should('include', ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS);
   });
 
   beforeEach(() => {

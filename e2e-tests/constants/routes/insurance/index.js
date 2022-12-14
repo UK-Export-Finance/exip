@@ -1,6 +1,6 @@
 import { PRODUCT } from '../../product';
 import { POLICY_AND_EXPORTS } from './policy-and-export';
-import { YOUR_BUSINESS_ROUTES } from '../your-business';
+import { EXPORTER_BUSINESS } from './exporter-business';
 
 export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
@@ -29,5 +29,5 @@ export const INSURANCE_ROUTES = {
   ALL_SECTIONS: '/all-sections',
   PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
   POLICY_AND_EXPORTS,
-  YOUR_BUSINESS: YOUR_BUSINESS_ROUTES,
+  EXPORTER_BUSINESS,
 };
