@@ -11,7 +11,7 @@
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "postinstall": "husky install",
     "prepublishOnly": "npm run build",
-    "lint": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && eslint --ext .ts src/ui && npm i --legacy-peer-deps --prefix ./src/api && eslint --ext .ts src/api && eslint --ext .js e2e-tests",
+    "lint": "npm i && npm i --legacy-peer-deps --prefix ./src/ui && eslint --ext .ts src/ui && npm i --prefix ./src/api && eslint --ext .ts src/api && eslint --ext .js e2e-tests",
     "lint:fix": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
     "prepare": "husky install"
   },

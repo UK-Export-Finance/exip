@@ -30,7 +30,7 @@ WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
 COPY .keystone keystone
-RUN npm i --legacy-peer-deps
+RUN npm i
 RUN npm install -g typescript
 RUN npm cache clean --force
 COPY . .
