@@ -56,18 +56,18 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - name: UI micro-service
+      - name: UI
         working-directory: ./src/ui
         run: |
           npm i --legacy-peer-deps
           npm run test
           # TODO: Enable test
           # npm run component-test
-      - name: API micro-service
-        working-directory: ./src/api
+      - name: API
+        working-directory: ./
         env:
           API_URL: ${{ secrets.API_URL }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL_DETACHED }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
@@ -84,8 +84,8 @@ jobs:
           COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
           COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
         run: |
-          npm i --legacy-peer-deps
-          npm run test
+          docker-compose up --build -d
+          npm run test --prefix ./src/api
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
