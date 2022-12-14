@@ -85,6 +85,7 @@ jobs:
           COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
         run: |
           docker-compose up --build -d
+          npm i --prefix ./src/api
           npm run test --prefix ./src/api
       - uses: act10ns/slack@v1
         with:
