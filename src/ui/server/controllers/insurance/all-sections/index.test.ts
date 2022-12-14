@@ -3,7 +3,6 @@ import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import { Request, Response } from '../../../../types';
-import api from '../../../api';
 import generateGroupsAndTasks from '../../../helpers/task-list/generate-groups-and-tasks';
 import generateTaskList from '../../../helpers/task-list';
 import flattenApplicationData from '../../../helpers/flatten-application-data';
@@ -13,13 +12,11 @@ describe('controllers/insurance/all-sections', () => {
   let req: Request;
   let res: Response;
 
-  const mockGetApplicationResponse = mockApplication;
-
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
+    res.locals.application = mockApplication;
   });
 
   describe('TEMPLATE', () => {
@@ -29,20 +26,8 @@ describe('controllers/insurance/all-sections', () => {
   });
 
   describe('get', () => {
-    let getApplicationSpy = jest.fn(() => Promise.resolve(mockGetApplicationResponse));
-
-    beforeEach(() => {
-      api.keystone.application.get = getApplicationSpy;
-    });
-
-    it('should call api.keystone.getApplication', async () => {
-      await get(req, res);
-
-      expect(getApplicationSpy).toHaveBeenCalledTimes(1);
-    });
-
-    it('should render template', async () => {
-      await get(req, res);
+    it('should render template', () => {
+      get(req, res);
 
       const flatApplicationData = flattenApplicationData(mockApplication);
       const taskListStructure = generateGroupsAndTasks(mockApplication.referenceNumber);
@@ -53,7 +38,7 @@ describe('controllers/insurance/all-sections', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ALL_SECTIONS,
           BACK_LINK: req.headers.referer,
         }),
-        application: mockApplication,
+        application: res.locals.application,
         taskListData: expectedTaskListData,
       };
 
@@ -62,26 +47,11 @@ describe('controllers/insurance/all-sections', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        // @ts-ignore
-        getApplicationSpy = jest.fn(() => Promise.resolve());
-        api.keystone.application.get = getApplicationSpy;
+        res.locals = { csrfToken: '1234' };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-
-    describe('when there is an error with the API call', () => {
-      beforeEach(() => {
-        getApplicationSpy = jest.fn(() => Promise.reject());
-        api.keystone.application.get = getApplicationSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+        get(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });

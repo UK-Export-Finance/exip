@@ -5,6 +5,7 @@ import { get as allSectionsGet } from '../../controllers/insurance/all-sections'
 import { get as typeOfPolicyGet, post as typeOfPolicyPost } from '../../controllers/insurance/policy-and-export/type-of-policy';
 import { get as singleContractPolicyGet } from '../../controllers/insurance/policy-and-export/single-contract-policy';
 import { post as typeOfPolicySaveAndBackPost } from '../../controllers/insurance/policy-and-export/type-of-policy/save-and-back';
+import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-found';
 
 describe('routes/insurance', () => {
   beforeEach(() => {
@@ -16,7 +17,7 @@ describe('routes/insurance', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(21);
+    expect(get).toHaveBeenCalledTimes(22);
     expect(post).toHaveBeenCalledTimes(17);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startGet);
@@ -36,5 +37,7 @@ describe('routes/insurance', () => {
       `${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY_SAVE_AND_BACK}`,
       typeOfPolicySaveAndBackPost,
     );
+
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.PAGE_NOT_FOUND, pageNotFoundGet);
   });
 });

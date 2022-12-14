@@ -17,6 +17,12 @@ const {
  */
 export const post = async (req: Request, res: Response) => {
   try {
+    const { application } = res.locals;
+
+    if (!application) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
     const { referenceNumber } = req.params;
 
     if (hasFormData(req.body)) {
@@ -25,9 +31,9 @@ export const post = async (req: Request, res: Response) => {
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.policyAndExport(Number(referenceNumber), req.body, validationErrors.errorList);
+        saveResponse = await save.policyAndExport(application, req.body, validationErrors.errorList);
       } else {
-        saveResponse = await save.policyAndExport(Number(referenceNumber), req.body);
+        saveResponse = await save.policyAndExport(application, req.body);
       }
 
       if (!saveResponse) {

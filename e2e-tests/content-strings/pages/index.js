@@ -99,8 +99,16 @@ const NEED_TO_START_AGAIN_PAGE = {
 
 const PAGE_NOT_FOUND_PAGE = {
   PAGE_TITLE: 'Page not found',
-  BODY_1: 'If you typed the web address, check it is correct.',
-  BODY_2: 'If you pasted the web address, check you copied the entire address.',
+  TYPED_ADDRESS: 'If you typed the web address, check it is correct.',
+  PASTED_ADDRESS: 'If you pasted the web address, check you copied the entire address.',
+  CONTACT: {
+    TEXT: 'If the web address is correct or you selected a link or button, you can',
+    LINK: {
+      TEXT: 'contact us',
+      HREF: '#',
+    },
+    OUTRO: 'if you still need help.',
+  },
 };
 
 const PROBLEM_WITH_SERVICE_PAGE = {

@@ -50,12 +50,15 @@ describe('helpers/get-application', () => {
 
   describe('when the api call fails', () => {
     it('should return false', async () => {
-      getApplicationSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
+      const mockErrorMessage = 'Mock error';
+      getApplicationSpy = jest.fn(() => Promise.reject(mockErrorMessage));
       api.keystone.application.get = getApplicationSpy;
 
-      const result = await getApplication(mockApplication.referenceNumber);
-
-      expect(result).toEqual(new Error('Mock error'));
+      try {
+        await getApplication(mockApplication.referenceNumber);
+      } catch (err) {
+        expect(err).toEqual(new Error(`Getting application ${mockErrorMessage}`));
+      }
     });
   });
 

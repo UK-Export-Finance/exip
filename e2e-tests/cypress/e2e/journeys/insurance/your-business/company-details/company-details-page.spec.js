@@ -8,8 +8,9 @@ import {
 } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import getReferenceNumber from '../../../../helpers/get-reference-number';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUSINESS.COMPANY_DETAILS;
+const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS;
 
 const {
   COMPANY_HOUSE: {
@@ -26,15 +27,32 @@ const {
 const insuranceStart = ROUTES.INSURANCE.START;
 
 context('Your business - company details page - As an Exporter I want to enter my business\'s CRN So that I can apply for UKEF Export Insurance policy', () => {
+  let referenceNumber;
+
   before(() => {
-    cy.visit(ROUTES.INSURANCE.YOUR_BUSINESS.COMPANY_DETAILS, {
+    cy.visit(ROUTES.INSURANCE.START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
       },
     });
 
-    cy.url().should('include', ROUTES.INSURANCE.YOUR_BUSINESS.COMPANY_DETAILS);
+    cy.submitInsuranceEligibilityAndStartApplication();
+
+    getReferenceNumber().then((id) => {
+      referenceNumber = id;
+
+      const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+
+      cy.visit(url, {
+        auth: {
+          username: Cypress.config('basicAuthKey'),
+          password: Cypress.config('basicAuthSecret'),
+        },
+      });
+
+      cy.url().should('eq', url);
+    });
   });
 
   beforeEach(() => {
