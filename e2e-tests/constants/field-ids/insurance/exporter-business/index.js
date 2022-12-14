@@ -12,5 +12,6 @@ export const EXPORTER_BUSINESS = {
     TRADING_NAME: 'tradingName',
     TRADING_ADDRESS: 'tradingAddress',
     WEBSITE: 'companyWebsite',
+    PHONE_NUMBER: 'phoneNumber',
   },
 };

@@ -2,6 +2,11 @@
 export {};
 import { SubmittedData } from '../submitted-data';
 import { Quote } from '../quote';
+import { Application } from '../application';
+
+interface Next {
+  (err?: any): void;
+}
 
 interface RequestBody {
   _csrf?: string;
@@ -17,6 +22,7 @@ interface RequestHeaders {
 }
 
 interface ResponseLocals {
+  application?: Application;
   csrfToken: string;
   cookieConsent?: boolean;
   cookieConsentDecision?: boolean;
@@ -61,4 +67,4 @@ declare module 'express-session' {
   }
 }
 
-export { Request, RequestBody, RequestSession, Response };
+export { Next, Request, RequestBody, RequestSession, Response };

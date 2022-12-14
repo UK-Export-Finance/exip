@@ -33,6 +33,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
     req = mockReq();
     res = mockRes();
 
+    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
@@ -51,7 +52,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
         const validationErrors = generateValidationErrors(req.body);
 
         expect(save.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(save.policyAndExport).toHaveBeenCalledWith(refNumber, req.body, validationErrors?.errorList);
+        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, req.body, validationErrors?.errorList);
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
@@ -72,7 +73,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
         await post(req, res);
 
         expect(save.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(save.policyAndExport).toHaveBeenCalledWith(refNumber, req.body);
+        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, req.body);
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
@@ -94,6 +95,18 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
       const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
+    });
+  });
+
+  describe('when there is no application', () => {
+    beforeEach(() => {
+      res.locals = { csrfToken: '1234' };
+    });
+
+    it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      await post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
     });
   });
 

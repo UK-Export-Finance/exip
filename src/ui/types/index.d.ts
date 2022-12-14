@@ -6,7 +6,7 @@ import { CompanyDetails, CompanyDetailsFieldGroups } from './company-details';
 import { CompanyHouseResponse } from './company-house-response';
 import { Country } from './country';
 import { Currency } from './currency';
-import { Request, RequestBody, RequestSession, Response } from './express';
+import { Next, Request, RequestBody, RequestSession, Response } from './express';
 import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibility } from './required-data-state';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
 import { Quote, QuoteContent } from './quote';
@@ -54,6 +54,7 @@ export {
   Currency,
   InsuranceEligibility,
   InsuranceEligibilityCore,
+  Next,
   PageContentStrings,
   PageVariablesContentStrings,
   PricingGrid,

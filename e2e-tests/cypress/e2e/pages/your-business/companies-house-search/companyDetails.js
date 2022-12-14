@@ -11,15 +11,17 @@ const companyDetails = {
   yourBusinessSummaryList: () => cy.get('[data-cy="companies-house-summary-list'),
 
   tradingName: () => cy.get('[data-cy="trading-name'),
-  tradingNameYesRadio: () => cy.get('[data-cy="trading-name-yes'),
-  tradingNameNoRadio: () => cy.get('[data-cy="trading-name-no'),
+  tradingNameLabel: () => cy.get('[data-cy="trading-name-heading'),
 
   tradingAddress: () => cy.get('[data-cy="trading-address'),
-  tradingAddressYesRadio: () => cy.get('[data-cy="trading-address-yes'),
-  tradingAddressNoRadio: () => cy.get('[data-cy="trading-address-no'),
+  tradingAddressLabel: () => cy.get('[data-cy="trading-address-heading'),
 
-  companyWebsiteHeading: () => cy.get('[data-cy="company-website-heading'),
+  companyWebsiteLabel: () => cy.get('[data-cy="company-website-heading'),
   companyWebsite: () => cy.get('[data-cy="company-website'),
+
+  phoneNumberLabel: () => cy.get('[data-cy="company-phone-heading'),
+  phoneNumberHint: () => cy.get('[data-cy="company-phone-hint'),
+  phoneNumber: () => cy.get('[data-cy="company-phone'),
 };
 
 export default companyDetails;

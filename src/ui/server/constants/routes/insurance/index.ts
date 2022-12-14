@@ -1,35 +1,34 @@
 import { PRODUCT } from '../../product';
 import { POLICY_AND_EXPORTS } from './policy-and-export';
+import { EXPORTER_BUSINESS } from './exporter-business';
 
 export const INSURANCE_ROOT = '/insurance';
-const ELIGIBILITY = '/eligibility';
-const BUSINESS = '/your-business';
+const ELIGIBILITY_ROOT = '/eligibility';
 
 export const INSURANCE_ROUTES = {
   INSURANCE_ROOT,
+  ELIGIBILITY_ROOT,
   START: `${INSURANCE_ROOT}/start`,
   ELIGIBILITY: {
-    CHECK_IF_ELIGIBLE: `${INSURANCE_ROOT}${ELIGIBILITY}/check-if-eligible`,
-    BUYER_COUNTRY: `${INSURANCE_ROOT}${ELIGIBILITY}/buyer-location`,
-    CANNOT_APPLY: `${INSURANCE_ROOT}${ELIGIBILITY}/cannot-apply`,
-    APPLY_OFFLINE: `${INSURANCE_ROOT}${ELIGIBILITY}/apply-using-our-form`,
-    SPEAK_TO_UKEF_EFM: `${INSURANCE_ROOT}${ELIGIBILITY}/speak-to-UKEF-EFM`,
-    EXPORTER_LOCATION: `${INSURANCE_ROOT}${ELIGIBILITY}/exporter-location`,
-    UK_GOODS_OR_SERVICES: `${INSURANCE_ROOT}${ELIGIBILITY}/uk-goods-services`,
-    INSURED_AMOUNT: `${INSURANCE_ROOT}${ELIGIBILITY}/insured-amount`,
-    INSURED_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY}/insured-over-${PRODUCT.MAX_COVER_PERIOD_YEARS}-years`,
-    OTHER_PARTIES_INVOLVED: `${INSURANCE_ROOT}${ELIGIBILITY}/other-parties`,
-    LETTER_OF_CREDIT: `${INSURANCE_ROOT}${ELIGIBILITY}/letter-of-credit`,
-    PRE_CREDIT_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY}/pre-credit-period`,
-    COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}${ELIGIBILITY}/companies-house-number`,
-    ELIGIBLE_TO_APPLY_ONLINE: `${INSURANCE_ROOT}${ELIGIBILITY}/eligible-to-apply-online`,
-    ALREADY_HAVE_ACCOUNT: `${INSURANCE_ROOT}${ELIGIBILITY}/already-have-account`,
-    NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY}/need-to-start-again`,
+    CHECK_IF_ELIGIBLE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/check-if-eligible`,
+    BUYER_COUNTRY: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/buyer-location`,
+    CANNOT_APPLY: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/cannot-apply`,
+    APPLY_OFFLINE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/apply-using-our-form`,
+    SPEAK_TO_UKEF_EFM: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/speak-to-UKEF-EFM`,
+    EXPORTER_LOCATION: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/exporter-location`,
+    UK_GOODS_OR_SERVICES: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/uk-goods-services`,
+    INSURED_AMOUNT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/insured-amount`,
+    INSURED_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/insured-over-${PRODUCT.MAX_COVER_PERIOD_YEARS}-years`,
+    OTHER_PARTIES_INVOLVED: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/other-parties`,
+    LETTER_OF_CREDIT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/letter-of-credit`,
+    PRE_CREDIT_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/pre-credit-period`,
+    COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/companies-house-number`,
+    ELIGIBLE_TO_APPLY_ONLINE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/eligible-to-apply-online`,
+    ALREADY_HAVE_ACCOUNT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/already-have-account`,
+    NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/need-to-start-again`,
   },
   ALL_SECTIONS: '/all-sections',
-  EXPORTER_BUSINESS: {
-    COMPANY_DETAILS: `${INSURANCE_ROOT}${BUSINESS}/company-details`,
-    COMPANY_HOUSE_SEARCH: `${INSURANCE_ROOT}${BUSINESS}/company-details/companies-house-search`,
-  },
+  PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
+  EXPORTER_BUSINESS,
   POLICY_AND_EXPORTS,
 };
