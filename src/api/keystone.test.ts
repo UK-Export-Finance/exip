@@ -3,20 +3,21 @@ import { addMonths } from 'date-fns';
 import baseConfig from './keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { APPLICATION } from './constants';
+import { Application } from './types';
 
-const dbUrl = process.env.DATABASE_URL;
+const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
 
 const context = getContext(config, PrismaModule);
 
 describe('Create an Application', () => {
-  let application;
+  let application: Application;
 
   beforeAll(async () => {
-    application = await context.query.Application.createOne({
+    application = (await context.query.Application.createOne({
       data: {},
       query: 'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id } policyAndExport { id }',
-    });
+    })) as Application;
   });
 
   test('it should have an ID', () => {
@@ -90,7 +91,7 @@ describe('Create an Application', () => {
   test('it should add the application ID to the reference number entry', async () => {
     const referenceNumber = await context.query.ReferenceNumber.findOne({
       where: {
-        id: application.referenceNumber,
+        id: application.referenceNumber.toString(),
       },
       query: 'id application { id }',
     });
