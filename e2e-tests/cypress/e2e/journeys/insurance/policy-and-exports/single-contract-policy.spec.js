@@ -38,7 +38,6 @@ const {
         REQUESTED_START_DATE,
         CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
-        REQUESTED_START_DATE,
         SINGLE: {
           COMPLETION_OF_CONTRACT_DATE,
           TOTAL_CONTRACT_VALUE,
@@ -256,9 +255,9 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       const date = new Date();
       const tomorrow = add(date, { days: 1, months: 1 });
 
-      singleContractPolicyPage[CONTRACT_POLICY.REQUESTED_START_DATE].dayInput().type(getDate(tomorrow));
-      singleContractPolicyPage[CONTRACT_POLICY.REQUESTED_START_DATE].monthInput().type(getMonth(tomorrow));
-      singleContractPolicyPage[CONTRACT_POLICY.REQUESTED_START_DATE].yearInput().type(getYear(tomorrow));
+      singleContractPolicyPage[REQUESTED_START_DATE].dayInput().type(getDate(tomorrow));
+      singleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(tomorrow));
+      singleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(getYear(tomorrow));
 
       submitButton().click();
 
