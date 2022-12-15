@@ -1,5 +1,5 @@
 import { Request, Response } from '../../../../../types';
-import { pageVariables, get, postCompaniesHouseSearch, post } from '.';
+import { pageVariables, get, postCompaniesHouseSearch } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
@@ -7,14 +7,10 @@ import generateValidationErrors from '../../../../helpers/validation';
 import api from '../../../../api';
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 import { mockReq, mockRes, mockCompany, mockApplication } from '../../../../test-mocks';
-import { sanitiseValue } from '../../../../helpers/sanitise-data';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE,
-    YOUR_COMPANY: { TRADING_NAME },
-  },
+  EXPORTER_BUSINESS: { COMPANY_HOUSE },
 } = FIELD_IDS.INSURANCE;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -25,14 +21,6 @@ const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.I
 const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = EXPORTER_BUSINESS_ROUTES;
 
 const { EXPORTER_BUSINESS: EXPORTER_BUSINESS_ERROR } = ERROR_MESSAGES.INSURANCE;
-
-// const PAGE_VARIABLES = {
-//   POST_ROUTES: {
-//     COMPANIES_HOUSE: COMPANY_HOUSE_SEARCH,
-//     COMPANY_DETAILS: COMPANY_DETAILS_ROUTE,
-//   },
-//   FIELDS: EXPORTER_BUSINESS,
-// };
 
 describe('controllers/insurance/business/companies-details', () => {
   let req: Request;
@@ -93,7 +81,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
   describe('postCompaniesHouseSearch', () => {
     describe('when there are validation errors', () => {
-      it('should render template with validation errors when companies house input is empty', () => {
+      it('should render template with validation errors when companies house input is empty', async () => {
         req.body = {
           companiesHouseNumber: '',
         };
@@ -102,7 +90,7 @@ describe('controllers/insurance/business/companies-details', () => {
           [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
         };
 
-        postCompaniesHouseSearch(req, res);
+        await postCompaniesHouseSearch(req, res);
 
         const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
         expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
@@ -116,7 +104,7 @@ describe('controllers/insurance/business/companies-details', () => {
         });
       });
 
-      it('should render template with validation errors when companies house input is less than 6 numbers', () => {
+      it('should render template with validation errors when companies house input is less than 6 numbers', async () => {
         req.body = {
           companiesHouseNumber: '1234',
         };
@@ -125,7 +113,7 @@ describe('controllers/insurance/business/companies-details', () => {
           [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
         };
 
-        postCompaniesHouseSearch(req, res);
+        await postCompaniesHouseSearch(req, res);
 
         const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
         expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
@@ -139,7 +127,7 @@ describe('controllers/insurance/business/companies-details', () => {
         });
       });
 
-      it('should render template with validation errors when companies house input has special characters', () => {
+      it('should render template with validation errors when companies house input has special characters', async () => {
         req.body = {
           companiesHouseNumber: '123456!',
         };
@@ -148,7 +136,7 @@ describe('controllers/insurance/business/companies-details', () => {
           [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
         };
 
-        postCompaniesHouseSearch(req, res);
+        await postCompaniesHouseSearch(req, res);
 
         const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
         expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
@@ -238,6 +226,7 @@ describe('controllers/insurance/business/companies-details', () => {
           ...pageVariables(mockApplication.referenceNumber),
           SUMMARY_LIST: companyHouseSummaryList(mockCompany),
           submittedValues,
+          validationErrors: {},
         });
       });
     });
@@ -248,7 +237,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '123456',
         };
 
-        const getCompaniesHouseResponse = jest.fn(() => Promise.resolve(null));
+        const getCompaniesHouseResponse = jest.fn(() => Promise.reject());
         api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
 
         await postCompaniesHouseSearch(req, res);
@@ -264,42 +253,6 @@ describe('controllers/insurance/business/companies-details', () => {
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
         postCompaniesHouseSearch(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-  });
-
-  describe('post', () => {
-    it('should display validation errors when there is no trading name', () => {
-      req.body = {};
-
-      const submittedValues = {
-        [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
-      };
-
-      post(req, res);
-
-      const errorMessage = EXPORTER_BUSINESS_ERROR[TRADING_NAME].IS_EMPTY;
-      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-        ...corePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(mockApplication.referenceNumber),
-        validationErrors: generateValidationErrors(TRADING_NAME, errorMessage, {}),
-        submittedValues,
-      });
-    });
-
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });

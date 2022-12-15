@@ -6,7 +6,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
   it('should return an array of results from rule functions', () => {
     const mockSubmittedData = {} as RequestBody;
 
-    const result = validation(mockSubmittedData);
+    const result = validation(mockSubmittedData, {});
 
     let expectedErrorsObj!: object;
 
