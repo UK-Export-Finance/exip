@@ -5,7 +5,7 @@ import { LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE;
+const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 const { ACTIONS } = CONTENT_STRINGS;
 
 const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
@@ -31,7 +31,7 @@ context('Insurance Eligibility - apply offline exit page', () => {
 
     submitButton().click();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
+    cy.url().should('include', ROUTES.INSURANCE.APPLY_OFFLINE);
   });
 
   it('passes the audits', () => {

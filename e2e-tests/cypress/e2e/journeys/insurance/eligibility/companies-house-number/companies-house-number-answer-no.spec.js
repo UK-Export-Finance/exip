@@ -17,7 +17,7 @@ import {
   completePreCreditPeriodForm,
 } from '../../../../../support/insurance/eligibility/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE;
+const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 
 context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I do not have UK Companies House Registration Number - submit `no companies house number`', () => {
   before(() => {
@@ -49,7 +49,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
+    cy.url().should('include', ROUTES.INSURANCE.APPLY_OFFLINE);
   });
 
   it('renders a back link with correct url', () => {

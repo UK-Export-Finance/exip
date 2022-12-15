@@ -40,7 +40,7 @@ context('Insurance Eligibility - speak to UKEF EFM exit page', () => {
     yesRadio().click();
     submitButton().click();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM);
+    cy.url().should('include', ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM);
   });
 
   it('passes the audits', () => {

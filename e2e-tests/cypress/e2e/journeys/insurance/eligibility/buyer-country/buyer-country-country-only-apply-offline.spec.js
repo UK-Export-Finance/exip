@@ -31,7 +31,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   });
 
   it('redirects to `apply offline` exit page', () => {
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
+    cy.url().should('include', ROUTES.INSURANCE.APPLY_OFFLINE);
   });
 
   it('renders a back link with correct url', () => {
