@@ -30,17 +30,17 @@
   {% endif %}
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters-from-desktop">
-        <span class="govuk-caption-xl" data-cy="heading-caption">
-          {{CONTENT_STRINGS.HEADING_CAPTION}}
-        </span>
-      <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
-    </div>
+    <form method="POST" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-    <div class="govuk-grid-column-three-quarters-from-desktop">
-      <form action="{{POST_ROUTES.COMPANIES_HOUSE}}" method="POST">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+          <span class="govuk-caption-xl" data-cy="heading-caption">
+            {{CONTENT_STRINGS.HEADING_CAPTION}}
+          </span>
+        <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+      </div>
 
-        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="companies-house-search">
 
           {{ govukInput({
@@ -76,31 +76,28 @@
             text: CONTENT_STRINGS.BUTTONS.SEARCH,
             classes: "govuk-button--secondary",
             attributes: {
-              'data-cy': 'companies-house-search-button'
+              'data-cy': 'companies-house-search-button',
+              'formaction': POST_ROUTES.COMPANIES_HOUSE
             }
           }) }}
         </div>
-      </form>
 
-      <p class="govuk-!-margin-bottom-6"><a class="govuk-link" href="/" data-cy="do-not-have-number">{{CONTENT_STRINGS.NO_COMPANY_HOUSE_NUMER}}</a></p>
-    </div>
-
-    {% if SUMMARY_LIST %}
-      <div class="govuk-grid-column-three-quarters-from-desktop">
-        <h3 class="govuk-fieldset__legend--m" data-cy="your-business-heading">{{CONTENT_STRINGS.YOUR_BUSINESS_HEADING}}</h3>
-
-        {{ govukSummaryList({
-          classes: 'govuk-!-margin-bottom-9',
-          rows: SUMMARY_LIST.COMPANY_DETAILS.ROWS,
-           attributes: {
-            'data-cy': 'companies-house-summary-list'
-          }
-        }) }}
+        <p class="govuk-!-margin-bottom-6"><a class="govuk-link" href="/" data-cy="do-not-have-number">{{CONTENT_STRINGS.NO_COMPANY_HOUSE_NUMER}}</a></p>
       </div>
-    {% endif %}
 
-    <form action="{{POST_ROUTES.COMPANY_DETAILS}}" method="POST" novalidate>
-      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+      {% if SUMMARY_LIST %}
+        <div class="govuk-grid-column-three-quarters-from-desktop">
+          <h3 class="govuk-fieldset__legend--m" data-cy="your-business-heading">{{CONTENT_STRINGS.YOUR_BUSINESS_HEADING}}</h3>
+
+          {{ govukSummaryList({
+            classes: 'govuk-!-margin-bottom-9',
+            rows: SUMMARY_LIST.COMPANY_DETAILS.ROWS,
+            attributes: {
+              'data-cy': 'companies-house-summary-list'
+            }
+          }) }}
+        </div>
+      {% endif %}
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
         {{ yesNoRadioButtons.render({
@@ -131,8 +128,8 @@
             classes: "govuk-label--m",
             isPageHeading: false,
             attributes: {
-            'data-cy': 'company-website-heading'
-          }
+              'data-cy': 'company-website-label'
+            }
           },
           id: FIELDS.YOUR_COMPANY.WEBSITE,
           name: FIELDS.YOUR_COMPANY.WEBSITE,
@@ -151,7 +148,7 @@
             classes: "govuk-label--m",
             isPageHeading: false,
             attributes: {
-            'data-cy': 'company-phone-heading'
+            'data-cy': 'company-phone-label'
             }
           },
           hint: {
@@ -175,20 +172,20 @@
           {{ govukButton({
             text: CONTENT_STRINGS.BUTTONS.CONTINUE,
             attributes: {
-              'data-cy': 'submit-button'
+              'data-cy': 'submit-button',
+              'formaction' : POST_ROUTES.COMPANY_DETAILS
             }
           }) }}
 
           {{ govukButton({
-              text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
-              classes: "govuk-button--secondary",
-              attributes: {
-                'data-cy': 'save-and-back-button'
-              }
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button'
+            }
           }) }}
         </div>
       </div>
-
     </form>
   </div>
 

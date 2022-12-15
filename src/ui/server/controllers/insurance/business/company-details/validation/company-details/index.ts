@@ -7,14 +7,14 @@ import { RequestBody } from '../../../../../../../types';
  * @param {Express.Request.body} responseBody containing an object with the company details response body
  * @returns {object} object containing errors or blank object
  */
-const validation = (responseBody: RequestBody) => {
-  let errors!: object;
+const validation = (responseBody: RequestBody, errors: object) => {
+  let updatedErrors = errors;
 
   for (let i = 0; i < companyDetailsResponseRules.length; i += 1) {
-    errors = companyDetailsResponseRules[i](responseBody, errors);
+    updatedErrors = companyDetailsResponseRules[i](responseBody, errors);
   }
 
-  return errors;
+  return updatedErrors;
 };
 
 export default validation;

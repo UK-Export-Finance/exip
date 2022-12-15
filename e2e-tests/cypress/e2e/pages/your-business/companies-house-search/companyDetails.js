@@ -16,10 +16,10 @@ const companyDetails = {
   tradingAddress: () => cy.get('[data-cy="trading-address'),
   tradingAddressLabel: () => cy.get('[data-cy="trading-address-heading'),
 
-  companyWebsiteLabel: () => cy.get('[data-cy="company-website-heading'),
+  companyWebsiteLabel: () => cy.get('[data-cy="company-website-label'),
   companyWebsite: () => cy.get('[data-cy="company-website'),
 
-  phoneNumberLabel: () => cy.get('[data-cy="company-phone-heading'),
+  phoneNumberLabel: () => cy.get('[data-cy="company-phone-label'),
   phoneNumberHint: () => cy.get('[data-cy="company-phone-hint'),
   phoneNumber: () => cy.get('[data-cy="company-phone'),
 };
