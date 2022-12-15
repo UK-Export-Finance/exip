@@ -1,11 +1,9 @@
 import { PAGES } from '../../../../content-strings';
-import { Request, Response, CompanyHouseResponse } from '../../../../../types';
+import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
-import api from '../../../../api';
-import companiesHouseValidation from './validation/companies-house';
-import companyHouseResponseValidation from './validation/companies-house-response';
+import companiesHouseSearch from './helpers/companies-house-search.helper';
 import companyDetailsValidation from './validation/company-details';
 
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
@@ -79,9 +77,14 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     };
 
     // checks if input is correctly formatted before searching
-    const validationErrors = companiesHouseValidation(body);
+    const response = await companiesHouseSearch(body);
+    const { validationErrors, error, company } = response;
 
-    if (validationErrors) {
+    if (error) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    if (Object.keys(validationErrors).length) {
       return res.render(companyDetailsTemplate, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
@@ -93,45 +96,23 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
       });
     }
 
-    let company = {} as CompanyHouseResponse;
+    if (company) {
+      // populates summary list with company information
+      const summaryList = companyHouseSummaryList(company);
 
-    // if number provided, then sends to companies house API as keystone query
-    if (companiesHouseNumber) {
-      try {
-        company = await api.keystone.getCompaniesHouseInformation(companiesHouseNumber);
-      } catch (error) {
-        console.error('Error posting to companies house API', { error });
-        return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-      }
-    }
-
-    // checks that success flag is not false and apiError flag is not set
-    const responseValidationErrors = companyHouseResponseValidation(company);
-
-    if (responseValidationErrors) {
       return res.render(companyDetailsTemplate, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(application.referenceNumber),
-        validationErrors: responseValidationErrors,
+        validationErrors,
+        SUMMARY_LIST: summaryList,
         submittedValues,
       });
     }
 
-    // populates summary list with company information
-    const summaryList = companyHouseSummaryList(company);
-
-    return res.render(companyDetailsTemplate, {
-      ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-        BACK_LINK: req.headers.referer,
-      }),
-      ...pageVariables(application.referenceNumber),
-      SUMMARY_LIST: summaryList,
-      submittedValues,
-    });
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   } catch (error) {
     console.error('Error posting companies house search', { error });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
@@ -140,12 +121,12 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
 
 /**
  * posts company details
- * validates tradingName fields
+ * validates tradingName and companiesHouseInput fields
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Company details page with or without errors
  */
-const post = (req: Request, res: Response) => {
+const post = async (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
 
@@ -154,16 +135,30 @@ const post = (req: Request, res: Response) => {
     }
 
     const { body } = req;
+    // runs companiesHouse validation and api call first for companiesHouse input
+    const response = await companiesHouseSearch(body);
 
+    const { error, companiesHouseNumber } = response;
+
+    // if error, then there is problem with api/service to redirect
+    if (error) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    let { validationErrors } = response;
+
+    // populate submittedValues
     const submittedValues = {
-      [COMPANY_HOUSE.INPUT]: body[COMPANY_HOUSE.INPUT],
+      [COMPANY_HOUSE.INPUT]: companiesHouseNumber,
       // if trading name is string true, then convert to boolean true
       [TRADING_NAME]: sanitiseValue(body[TRADING_NAME]),
     };
 
-    const validationErrors = companyDetailsValidation(body);
+    // run validation on other fields on page
+    validationErrors = companyDetailsValidation(body, validationErrors);
 
-    if (validationErrors) {
+    // if any errors then render template with errors
+    if (Object.keys(validationErrors).length) {
       return res.render(companyDetailsTemplate, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
