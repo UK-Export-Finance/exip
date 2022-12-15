@@ -6,9 +6,9 @@ import { RequestBody, CompanyHouseResponse } from '../../../../../../types';
 /**
  * helper which takes formBody containing companies house number
  * runs validation and makes api call to keystone getCompaniesHouseInformation
- * runs validation on response and returns companyResponse or validation errors or error
+ * runs validation on response and returns companyResponse or validation errors or apiError
  * @param {RequestBody} formBody
- * @returns {object} validationErrors, error flag, companiesHouseNumber and companyResponse
+ * @returns {object} validationErrors, apiError flag, companiesHouseNumber and companyResponse
  */
 const companiesHouseSearch = async (formBody: RequestBody) => {
   const { companiesHouseNumber } = formBody;
@@ -32,7 +32,7 @@ const companiesHouseSearch = async (formBody: RequestBody) => {
     } catch (error) {
       console.error('Error posting to companies house API', { error });
       return {
-        error: true,
+        apiError: true,
         companiesHouseNumber,
         validationErrors: {},
       };
@@ -59,7 +59,7 @@ const companiesHouseSearch = async (formBody: RequestBody) => {
   }
 
   return {
-    error: true,
+    apiError: true,
     companiesHouseNumber,
     validationErrors: {},
   };

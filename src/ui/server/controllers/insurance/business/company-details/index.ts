@@ -17,7 +17,7 @@ const {
 } = FIELD_IDS.INSURANCE;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
-const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
+const { COMPANY_DETAILS: TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
@@ -44,7 +44,7 @@ const get = async (req: Request, res: Response) => {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 
-  return res.render(companyDetailsTemplate, {
+  return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
       BACK_LINK: req.headers.referer,
@@ -78,14 +78,14 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
 
     // checks if input is correctly formatted before searching
     const response = await companiesHouseSearch(body);
-    const { validationErrors, error, company } = response;
+    const { validationErrors, apiError, company } = response;
 
-    if (error) {
+    if (apiError) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    if (Object.keys(validationErrors).length) {
-      return res.render(companyDetailsTemplate, {
+    if (validationErrors && Object.keys(validationErrors).length) {
+      return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
@@ -100,7 +100,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
       // populates summary list with company information
       const summaryList = companyHouseSummaryList(company);
 
-      return res.render(companyDetailsTemplate, {
+      return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
@@ -138,10 +138,10 @@ const post = async (req: Request, res: Response) => {
     // runs companiesHouse validation and api call first for companiesHouse input
     const response = await companiesHouseSearch(body);
 
-    const { error, companiesHouseNumber } = response;
+    const { apiError, companiesHouseNumber } = response;
 
     // if error, then there is problem with api/service to redirect
-    if (error) {
+    if (apiError) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
@@ -158,8 +158,8 @@ const post = async (req: Request, res: Response) => {
     validationErrors = companyDetailsValidation(body, validationErrors);
 
     // if any errors then render template with errors
-    if (Object.keys(validationErrors).length) {
-      return res.render(companyDetailsTemplate, {
+    if (validationErrors && Object.keys(validationErrors).length) {
+      return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
@@ -171,7 +171,7 @@ const post = async (req: Request, res: Response) => {
     }
 
     // TODO: Remove once page complete.  For testing purposes
-    return res.render(companyDetailsTemplate, {
+    return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
         BACK_LINK: req.headers.referer,

@@ -79,7 +79,7 @@ describe('controllers/insurance/business/companies-details/helpers/companies-hou
     const expected = {
       validationErrors: {},
       [COMPANY_HOUSE.INPUT]: formBody[COMPANY_HOUSE.INPUT],
-      error: true,
+      apiError: true,
     };
 
     expect(response).toEqual(expected);
@@ -98,7 +98,7 @@ describe('controllers/insurance/business/companies-details/helpers/companies-hou
     const expected = {
       validationErrors: {},
       [COMPANY_HOUSE.INPUT]: formBody[COMPANY_HOUSE.INPUT],
-      error: true,
+      apiError: true,
     };
 
     expect(response).toEqual(expected);
