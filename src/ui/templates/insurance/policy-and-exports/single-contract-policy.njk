@@ -1,10 +1,12 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import '../../components/date-input.njk' as dateInput %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -43,42 +45,25 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
-        {{ govukDateInput({
-          id: FIELDS.REQUESTED_START_DATE.ID,
-          namePrefix: FIELDS.REQUESTED_START_DATE.ID,
-          fieldset: {
-            legend: {
-              html: "<span class='govuk-fieldset__legend govuk-!-font-weight-bold govuk-!-font-size-24' data-cy='" + FIELDS.REQUESTED_START_DATE.ID + "-label'>" + FIELDS.REQUESTED_START_DATE.LABEL + "</span>"
-            }
-          },
-          hint: {
-            text: FIELDS.REQUESTED_START_DATE.HINT,
-            attributes: {
-              'data-cy': FIELDS.REQUESTED_START_DATE.ID + '-hint'
-            }
-          },
-          attributes: {
-            'data-cy': FIELDS.REQUESTED_START_DATE.ID + '-input'
-          }
+
+        {% set dayId = FIELDS.REQUESTED_START_DATE.ID + '-day' %}
+        {% set monthId = FIELDS.REQUESTED_START_DATE.ID + '-month' %}
+        {% set yearId = FIELDS.REQUESTED_START_DATE.ID + '-year' %}
+
+        {{dateInput.render({
+          fieldId: FIELDS.REQUESTED_START_DATE.ID,
+          label: FIELDS.REQUESTED_START_DATE.LABEL,
+          hint: FIELDS.REQUESTED_START_DATE.HINT,
+          error: validationErrors.errorList[FIELDS.REQUESTED_START_DATE.ID],
+          submittedAnswers: submittedValues
         }) }}
 
-        {{ govukDateInput({
-          id: FIELDS.COMPLETION_OF_CONTRACT_DATE.ID,
-          namePrefix: FIELDS.COMPLETION_OF_CONTRACT_DATE.ID,
-          fieldset: {
-            legend: {
-              html: "<span class='govuk-fieldset__legend govuk-!-font-weight-bold govuk-!-font-size-24' data-cy='" + FIELDS.COMPLETION_OF_CONTRACT_DATE.ID + "-label'>" + FIELDS.COMPLETION_OF_CONTRACT_DATE.LABEL + "</span>"
-            }
-          },
-          hint: {
-            text: FIELDS.COMPLETION_OF_CONTRACT_DATE.HINT,
-            attributes: {
-              'data-cy': FIELDS.COMPLETION_OF_CONTRACT_DATE.ID + '-hint'
-            }
-          },
-          attributes: {
-            'data-cy': FIELDS.COMPLETION_OF_CONTRACT_DATE.ID + '-input'
-          }
+        {{dateInput.render({
+          fieldId: FIELDS.COMPLETION_OF_CONTRACT_DATE.ID,
+          label: FIELDS.COMPLETION_OF_CONTRACT_DATE.LABEL,
+          hint: FIELDS.COMPLETION_OF_CONTRACT_DATE.HINT,
+          error: validationErrors.errorList[FIELDS.COMPLETION_OF_CONTRACT_DATE.ID],
+          submittedAnswers: submittedValues
         }) }}
 
         {{ govukInput({

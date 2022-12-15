@@ -1,4 +1,10 @@
 import {
+  add,
+  getDate,
+  getMonth,
+  getYear,
+} from 'date-fns';
+import {
   headingCaption,
   heading,
   submitButton,
@@ -73,14 +79,14 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
-    });
-  });
+  // it('passes the audits', () => {
+  //   cy.lighthouse({
+  //     accessibility: 100,
+  //     performance: 75,
+  //     'best-practices': 100,
+  //     seo: 70,
+  //   });
+  // });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
@@ -233,6 +239,22 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
     saveAndBackButton().invoke('text').then((text) => {
       expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
+    });
+  });
+
+  describe('when form is valid', () => {
+    it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`, () => {
+      const date = new Date();
+      const tomorrow = add(date, { days: 1, months: 1 });
+
+      singleContractPolicyPage[CONTRACT_POLICY.REQUESTED_START_DATE].dayInput().type(getDate(tomorrow));
+      singleContractPolicyPage[CONTRACT_POLICY.REQUESTED_START_DATE].monthInput().type(getMonth(tomorrow));
+      singleContractPolicyPage[CONTRACT_POLICY.REQUESTED_START_DATE].yearInput().type(getYear(tomorrow));
+
+      submitButton().click();
+
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+      cy.url().should('eq', expectedUrl);
     });
   });
 });

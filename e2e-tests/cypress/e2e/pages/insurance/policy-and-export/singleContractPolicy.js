@@ -20,16 +20,17 @@ const singleContractPolicy = {
   [REQUESTED_START_DATE]: {
     label: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-label"]`),
     hint: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-hint"]`),
-    dayInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-input"]`).find('input').eq(0),
-    monthInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-input"]`).find('input').eq(1),
-    yearInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-input"]`).find('input').eq(2),
+    dayInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-day-input"]`),
+    monthInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-month-input"]`),
+    yearInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-year-input"]`),
+    errorMessage: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-error-message"]`),
   },
   [COMPLETION_OF_CONTRACT_DATE]: {
     label: () => cy.get(`[data-cy="${COMPLETION_OF_CONTRACT_DATE}-label"]`),
     hint: () => cy.get(`[data-cy="${COMPLETION_OF_CONTRACT_DATE}-hint"]`),
-    dayInput: () => cy.get(`[data-cy="${COMPLETION_OF_CONTRACT_DATE}-input"]`).find('input').eq(0),
-    monthInput: () => cy.get(`[data-cy="${COMPLETION_OF_CONTRACT_DATE}-input"]`).find('input').eq(1),
-    yearInput: () => cy.get(`[data-cy="${COMPLETION_OF_CONTRACT_DATE}-input"]`).find('input').eq(2),
+    dayInput: () => cy.get(`[data-cy="${COMPLETION_OF_CONTRACT_DATE}-day-input"]`),
+    monthInput: () => cy.get(`[data-cy="${COMPLETION_OF_CONTRACT_DATE}-month-input"]`),
+    yearInput: () => cy.get(`[data-cy="${COMPLETION_OF_CONTRACT_DATE}-year-input"]`),
   },
   [TOTAL_CONTRACT_VALUE]: {
     label: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-label"]`),

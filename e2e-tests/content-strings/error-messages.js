@@ -78,8 +78,18 @@ export const ERROR_MESSAGES = {
       },
     },
     POLICY_AND_EXPORTS: {
+      // TODO move to TYPE_OF_POLICY: {},
       [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE]: {
         IS_EMPTY: 'Select the type of policy you need',
+      },
+      CONTRACT_POLICY: {
+        SINGLE: {
+          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.REQUESTED_START_DATE]: {
+            IS_EMPTY: 'Enter a policy start date in the correct format - for example, 06 11 2023',
+            NOT_A_NUMBER: 'Enter a policy start date in the correct format - for example, 06 11 2023',
+            BEFORE_EARLIEST: 'You cannot enter a policy start date in the past - enter a future date',
+          },
+        },
       },
     },
   },
