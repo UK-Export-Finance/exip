@@ -34,7 +34,16 @@ const { INSURANCE } = ROUTES;
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY,
+      CONTRACT_POLICY: {
+        REQUESTED_START_DATE,
+        CREDIT_PERIOD_WITH_BUYER,
+        POLICY_CURRENCY_CODE,
+        REQUESTED_START_DATE,
+        SINGLE: {
+          COMPLETION_OF_CONTRACT_DATE,
+          TOTAL_CONTRACT_VALUE,
+        },
+      },
     },
   },
 } = FIELD_IDS;
@@ -79,14 +88,14 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 75,
-  //     'best-practices': 100,
-  //     seo: 70,
-  //   });
-  // });
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 75,
+      'best-practices': 100,
+      seo: 70,
+    });
+  });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
@@ -129,7 +138,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   });
 
   it('renders `requested start date` label, hint and inputs', () => {
-    const fieldId = CONTRACT_POLICY.REQUESTED_START_DATE;
+    const fieldId = REQUESTED_START_DATE;
     const field = singleContractPolicyPage[fieldId];
 
     field.label().should('exist');
@@ -147,7 +156,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   });
 
   it('renders `contract completion date` label, hint and inputs', () => {
-    const fieldId = CONTRACT_POLICY.SINGLE.COMPLETION_OF_CONTRACT_DATE;
+    const fieldId = COMPLETION_OF_CONTRACT_DATE;
     const field = singleContractPolicyPage[fieldId];
 
     field.label().should('exist');
@@ -165,7 +174,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   });
 
   it('renders `total contract value` label, hint, prefix and input', () => {
-    const fieldId = CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE;
+    const fieldId = TOTAL_CONTRACT_VALUE;
     const field = singleContractPolicyPage[fieldId];
 
     field.label().should('exist');
@@ -185,7 +194,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   });
 
   it('renders `buyer credit period` label, hint and input', () => {
-    const fieldId = CONTRACT_POLICY.CREDIT_PERIOD_WITH_BUYER;
+    const fieldId = CREDIT_PERIOD_WITH_BUYER;
     const field = singleContractPolicyPage[fieldId];
 
     field.label().should('exist');
@@ -202,7 +211,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
   describe('currency', () => {
     it('renders `currency` label and input', () => {
-      const fieldId = CONTRACT_POLICY.POLICY_CURRENCY_CODE;
+      const fieldId = POLICY_CURRENCY_CODE;
       const field = singleContractPolicyPage[fieldId];
 
       field.label().should('exist');
@@ -214,7 +223,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     });
 
     it('renders only supported currencies in alphabetical order', () => {
-      const fieldId = CONTRACT_POLICY.POLICY_CURRENCY_CODE;
+      const fieldId = POLICY_CURRENCY_CODE;
       const field = singleContractPolicyPage[fieldId];
 
       field.inputOption().should('have.length', SUPPORTED_CURRENCIES.length + 1);
