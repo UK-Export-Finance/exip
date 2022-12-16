@@ -1,4 +1,3 @@
-import { LINKS } from '../../../links';
 import { PRODUCT } from '../../../../constants';
 
 export const MAX_COVER_AMOUNT = PRODUCT.MAX_COVER_AMOUNT_IN_GBP.toLocaleString('en', {
