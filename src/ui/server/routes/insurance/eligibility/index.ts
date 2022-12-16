@@ -12,8 +12,6 @@ import { get as preCreditPeriodGet, post as preCreditPeriodPost } from '../../..
 import { get as companiesHouseNumberGet, post as companiesHouseNumberPost } from '../../../controllers/insurance/eligibility/companies-house-number';
 import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } from '../../../controllers/insurance/eligibility/eligible-to-apply-online';
 import cannotApplyGet from '../../../controllers/insurance/eligibility/cannot-apply';
-import applyOfflineGet from '../../../controllers/insurance/eligibility/apply-offline';
-import speakToUkefEfmGet from '../../../controllers/insurance/eligibility/speak-to-ukef-efm';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../../controllers/insurance/eligibility/need-to-start-again';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
@@ -55,8 +53,6 @@ insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ON
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE, eligibleToApplyOnlinePost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY, cannotApplyGet);
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE, applyOfflineGet);
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM, speakToUkefEfmGet);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainPost);

@@ -35,12 +35,12 @@ const post = (req: Request, res: Response) => {
 
   if (answer === 'true') {
     const { INSURANCE } = PAGES;
-    const { APPLY_OFFLINE } = INSURANCE.ELIGIBILITY;
+    const { APPLY_OFFLINE } = INSURANCE;
     const { REASON } = APPLY_OFFLINE;
 
     req.flash('exitReason', REASON.NEED_PRE_CREDIT_PERIOD_COVER);
 
-    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
+    return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
   }
 
   req.session.submittedData = {

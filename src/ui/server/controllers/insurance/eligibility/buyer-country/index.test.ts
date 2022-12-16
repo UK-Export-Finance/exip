@@ -240,9 +240,9 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         req.body[FIELD_IDS.BUYER_COUNTRY] = countrySupportedViaOfflineOnly.marketName;
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE}`, async () => {
+      it(`should redirect to ${ROUTES.INSURANCE.APPLY_OFFLINE}`, async () => {
         await post(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.APPLY_OFFLINE);
       });
     });
 

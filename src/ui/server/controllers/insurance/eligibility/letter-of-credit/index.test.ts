@@ -57,16 +57,16 @@ describe('controllers/insurance/eligibility/letter-of-credit', () => {
         };
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE}`, async () => {
+      it(`should redirect to ${ROUTES.INSURANCE.APPLY_OFFLINE}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.APPLY_OFFLINE);
       });
 
       it('should add exitReason to req.flash', async () => {
         await post(req, res);
 
-        const expectedReason = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE.REASON.WILL_BE_PAID_BY_LETTER_OF_CREDIT;
+        const expectedReason = PAGES.INSURANCE.APPLY_OFFLINE.REASON.WILL_BE_PAID_BY_LETTER_OF_CREDIT;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });

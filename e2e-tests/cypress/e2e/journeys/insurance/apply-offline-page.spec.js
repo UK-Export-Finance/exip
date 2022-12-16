@@ -1,18 +1,18 @@
-import { buyerCountryPage, heading, submitButton } from '../../../pages/shared';
-import { insurance } from '../../../pages';
-import partials from '../../../partials';
-import { LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
-import { ROUTES } from '../../../../../constants';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
+import { buyerCountryPage, heading, submitButton } from '../../pages/shared';
+import { insurance } from '../../pages';
+import partials from '../../partials';
+import { LINKS, ORGANISATION, PAGES } from '../../../../content-strings';
+import { ROUTES } from '../../../../constants';
+import { completeStartForm, completeCheckIfEligibleForm } from '../../../support/insurance/eligibility/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE;
+const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 const { ACTIONS } = CONTENT_STRINGS;
 
 const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
 
 const insuranceStartRoute = ROUTES.INSURANCE.START;
 
-context('Insurance Eligibility - apply offline exit page', () => {
+context('Insurance - apply offline exit page', () => {
   beforeEach(() => {
     cy.visit(ROUTES.INSURANCE.START, {
       auth: {
@@ -31,7 +31,7 @@ context('Insurance Eligibility - apply offline exit page', () => {
 
     submitButton().click();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
+    cy.url().should('include', ROUTES.INSURANCE.APPLY_OFFLINE);
   });
 
   it('passes the audits', () => {
@@ -80,26 +80,26 @@ context('Insurance Eligibility - apply offline exit page', () => {
   });
 
   it('renders `download form` copy with link', () => {
-    insurance.eligibility.applyOfflinePage.downloadFormCopy().invoke('text').then((text) => {
+    insurance.applyOfflinePage.downloadFormCopy().invoke('text').then((text) => {
       const expected = `${ACTIONS.DOWNLOAD_FORM.LINK.TEXT} ${ACTIONS.DOWNLOAD_FORM.TEXT}`;
 
       expect(text.trim()).equal(expected);
     });
 
-    insurance.eligibility.applyOfflinePage.downloadFormLink().invoke('text').then((text) => {
+    insurance.applyOfflinePage.downloadFormLink().invoke('text').then((text) => {
       expect(text.trim()).equal(ACTIONS.DOWNLOAD_FORM.LINK.TEXT);
     });
 
-    insurance.eligibility.applyOfflinePage.downloadFormLink().should('have.attr', 'href', ACTIONS.DOWNLOAD_FORM.LINK.HREF);
+    insurance.applyOfflinePage.downloadFormLink().should('have.attr', 'href', ACTIONS.DOWNLOAD_FORM.LINK.HREF);
   });
 
   it('renders `contact` copy with link', () => {
-    insurance.eligibility.applyOfflinePage.contactCopy().invoke('text').then((text) => {
+    insurance.applyOfflinePage.contactCopy().invoke('text').then((text) => {
       const expected = `${ACTIONS.CONTACT.TEXT} ${ACTIONS.CONTACT.LINK.TEXT}`;
 
       expect(text.trim()).equal(expected);
     });
 
-    insurance.eligibility.applyOfflinePage.contactLink().should('have.attr', 'href', ACTIONS.CONTACT.LINK.HREF);
+    insurance.applyOfflinePage.contactLink().should('have.attr', 'href', ACTIONS.CONTACT.LINK.HREF);
   });
 });
