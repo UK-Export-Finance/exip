@@ -158,6 +158,20 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
       });
     });
 
+    describe('when the submitted answer is not a recognised policy type', () => {
+      beforeEach(() => {
+        req.body = {
+          [FIELD_ID]: 'Unrecognised policy type',
+        };
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
     describe('api error handling', () => {
       beforeEach(() => {
         req.body = {
