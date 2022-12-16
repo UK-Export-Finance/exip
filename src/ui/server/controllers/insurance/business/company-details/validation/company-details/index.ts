@@ -11,7 +11,7 @@ const validation = (responseBody: RequestBody, errors: object) => {
   let updatedErrors = errors;
 
   for (let i = 0; i < companyDetailsResponseRules.length; i += 1) {
-    updatedErrors = companyDetailsResponseRules[i](responseBody, errors);
+    updatedErrors = companyDetailsResponseRules[i](responseBody, updatedErrors);
   }
 
   return updatedErrors;

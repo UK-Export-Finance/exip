@@ -19,7 +19,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
   };
 
   const mockBody = {
-    TRADING_NAME: '',
+    [TRADING_NAME]: '',
   } as RequestBody;
 
   it('should return a validation error when tradingName is an empty string', () => {

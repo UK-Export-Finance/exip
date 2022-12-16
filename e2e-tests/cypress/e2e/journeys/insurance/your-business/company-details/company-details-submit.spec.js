@@ -12,13 +12,14 @@ const {
     },
     YOUR_COMPANY: {
       TRADING_NAME,
+      TRADING_ADDRESS,
     },
   },
 } = FIELD_IDS.INSURANCE;
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
-describe("Your business - company house search - As an Exporter I want to enter details about my business in 'your business' section", () => {
+describe("Your business - As an Exporter I want to enter details about my business in 'your business' section", () => {
   let referenceNumber;
 
   before(() => {
@@ -53,9 +54,9 @@ describe("Your business - company house search - As an Exporter I want to enter 
   });
 
   describe('all page errors', () => {
-    it('should display validation errors if trading name question and companies house input are not answered', () => {
+    it('should display validation errors if trading name, address questions and companies house input are not answered', () => {
       submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 2);
+      partials.errorSummaryListItems().should('have.length', 3);
 
       partials.errorSummaryListItems().first().invoke('text')
         .then((text) => {
@@ -65,6 +66,11 @@ describe("Your business - company house search - As an Exporter I want to enter 
       partials.errorSummaryListItems().eq(1).invoke('text')
         .then((text) => {
           expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
+        });
+
+      partials.errorSummaryListItems().eq(2).invoke('text')
+        .then((text) => {
+          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
         });
     });
 
@@ -86,13 +92,25 @@ describe("Your business - company house search - As an Exporter I want to enter 
     });
 
     it('should display the validation error for trading name in radio error summary', () => {
-      inlineErrorMessage().invoke('text')
+      inlineErrorMessage().first().invoke('text')
         .then((text) => {
           expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY}`);
         });
     });
 
-    it('should display companies house error and trading name error when companies house incorrectly entered', () => {
+    it('should focus to the trading address section when clicking the error', () => {
+      partials.errorSummaryListItemLinks().eq(2).click();
+      yesRadioInput().eq(1).should('have.focus');
+    });
+
+    it('should display the validation error for trading address in radio error summary', () => {
+      inlineErrorMessage().eq(1).invoke('text')
+        .then((text) => {
+          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY}`);
+        });
+    });
+
+    it('should display companies house error and trading name, address errors when companies house incorrectly entered', () => {
       companyDetails.companiesHouseSearch().clear().type('123456!');
       companyDetails.companiesHouseSearchButton().click();
 
@@ -106,9 +124,14 @@ describe("Your business - company house search - As an Exporter I want to enter 
         .then((text) => {
           expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
         });
+
+      partials.errorSummaryListItems().eq(2).invoke('text')
+        .then((text) => {
+          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
+        });
     });
 
-    it('should display companies house error and trading name error when companies house not found', () => {
+    it('should display companies house error and trading name, address errors when companies house not found', () => {
       companyDetails.companiesHouseSearch().clear().type('123456');
       companyDetails.companiesHouseSearchButton().click();
 
@@ -122,31 +145,10 @@ describe("Your business - company house search - As an Exporter I want to enter 
         .then((text) => {
           expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
         });
-    });
-  });
 
-  describe('trading name error', () => {
-    const companiesHouseNumber = '8989898';
-
-    it('should display validation errors if trading name question is not answered', () => {
-      companyDetails.companiesHouseSearch().clear().type(companiesHouseNumber);
-      submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 1);
-      partials.errorSummaryListItems().first().invoke('text')
+      partials.errorSummaryListItems().eq(2).invoke('text')
         .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
-        });
-    });
-
-    it('should focus to the trading name section when clicking the error', () => {
-      partials.errorSummaryListItemLinks().first().click();
-      yesRadioInput().first().should('have.focus');
-    });
-
-    it('should display the validation error for trading name in radio error summary', () => {
-      inlineErrorMessage().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY}`);
+          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
         });
     });
   });
