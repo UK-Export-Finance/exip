@@ -2,7 +2,7 @@ import { companyDetails } from '../../../../pages/your-business';
 import { submitButton, yesRadioInput, inlineErrorMessage } from '../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import partials from '../../../../partials';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const {
@@ -50,10 +50,8 @@ describe("Your business - As an Exporter I want to enter details about my busine
   });
 
   describe('trading address error', () => {
-    const companiesHouseNumber = '8989898';
-
     it('should display validation errors if trading address question is not answered', () => {
-      companyDetails.companiesHouseSearch().clear().type(companiesHouseNumber);
+      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       yesRadioInput().first().click();
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);

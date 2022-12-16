@@ -2,7 +2,7 @@ import { companyDetails } from '../../../../pages/your-business';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import partials from '../../../../partials';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const {
@@ -150,14 +150,14 @@ context('Your business - company house search - As an Exporter I want to enter m
 
   describe('when the companies house number is correctly entered', () => {
     it('should not display errors', () => {
-      companyDetails.companiesHouseSearch().clear().type('8989898');
+      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       companyDetails.companiesHouseSearchButton().click();
       partials.errorSummaryListItems().should('not.exist');
       companyDetails.companiesHouseSearchError().should('not.exist');
     });
 
     it('should display your business summary list', () => {
-      companyDetails.companiesHouseSearch().clear().type('8989898');
+      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       companyDetails.companiesHouseSearchButton().click();
       partials.errorSummaryListItems().should('not.exist');
       companyDetails.companiesHouseSearchError().should('not.exist');
@@ -170,7 +170,7 @@ context('Your business - company house search - As an Exporter I want to enter m
         expect(text.trim()).equal(SUMMARY_LIST_FIELDS.COMPANY_NUMBER.text);
       });
       partials.yourBusinessSummaryList[COMPANY_NUMBER].value().invoke('text').then((text) => {
-        expect(text.trim()).equal('08989898');
+        expect(text.trim()).equal(COMPANIES_HOUSE_NUMBER);
       });
 
       partials.yourBusinessSummaryList[COMPANY_NAME].key().invoke('text').then((text) => {
