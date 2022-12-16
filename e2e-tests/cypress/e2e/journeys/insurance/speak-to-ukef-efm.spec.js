@@ -90,13 +90,13 @@ context('Insurance - speak to UKEF EFM exit page', () => {
   });
 
   it('renders `find your nearest EFM` copy with link', () => {
-    insurance.eligibility.speakToUkefEfmPage.action.text().invoke('text').then((text) => {
+    insurance.speakToUkefEfmPage.action.text().invoke('text').then((text) => {
       const expected = `${ACTIONS.FIND_EFM[0][0].text} ${ACTIONS.FIND_EFM[0][1].text}${ACTIONS.FIND_EFM[0][2].text}`;
 
       expect(text.trim()).equal(expected);
     });
 
-    insurance.eligibility.speakToUkefEfmPage.action.link().invoke('text').then((text) => {
+    insurance.speakToUkefEfmPage.action.link().invoke('text').then((text) => {
       const expected = `${ACTIONS.FIND_EFM[0][1].text}`;
 
       expect(text.trim()).equal(expected);
@@ -104,6 +104,6 @@ context('Insurance - speak to UKEF EFM exit page', () => {
 
     const expectedHref = ACTIONS.FIND_EFM[0][1].href;
 
-    insurance.eligibility.speakToUkefEfmPage.action.link().should('have.attr', 'href', expectedHref);
+    insurance.speakToUkefEfmPage.action.link().should('have.attr', 'href', expectedHref);
   });
 });
