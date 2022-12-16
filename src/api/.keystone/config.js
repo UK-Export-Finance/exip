@@ -169,7 +169,8 @@ var lists = {
           { label: APPLICATION.POLICY_TYPE.SINGLE, value: APPLICATION.POLICY_TYPE.SINGLE },
           { label: APPLICATION.POLICY_TYPE.MULTI, value: APPLICATION.POLICY_TYPE.MULTI }
         ]
-      })
+      }),
+      requestedStartDate: (0, import_fields.timestamp)()
     },
     access: import_access.allowAll
   },

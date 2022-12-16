@@ -21,10 +21,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
   jest.mock('../save-data');
 
-  const mockSavePolicyAndExportData = jest.fn(() => {
-    return Promise.resolve({});
-  });
-
+  const mockSavePolicyAndExportData = jest.fn(() => Promise.resolve({}));
   save.policyAndExport = mockSavePolicyAndExportData;
 
   beforeEach(() => {

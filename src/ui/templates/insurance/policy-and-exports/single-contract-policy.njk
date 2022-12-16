@@ -55,7 +55,7 @@
           label: FIELDS.REQUESTED_START_DATE.LABEL,
           hint: FIELDS.REQUESTED_START_DATE.HINT,
           error: validationErrors.errorList[FIELDS.REQUESTED_START_DATE.ID],
-          submittedAnswers: submittedValues
+          submittedAnswers: application
         }) }}
 
         {{dateInput.render({
@@ -63,7 +63,7 @@
           label: FIELDS.COMPLETION_OF_CONTRACT_DATE.LABEL,
           hint: FIELDS.COMPLETION_OF_CONTRACT_DATE.HINT,
           error: validationErrors.errorList[FIELDS.COMPLETION_OF_CONTRACT_DATE.ID],
-          submittedAnswers: submittedValues
+          submittedAnswers: application
         }) }}
 
         {{ govukInput({

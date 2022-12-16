@@ -14,7 +14,7 @@ const getDateFieldsFromTimestamp = (timestamp: Date, fieldId: string) => {
     const day = getDate(date);
     const month = getMonth(date) + 1;
     const year = getYear(date);
-    
+
     return {
       [`${fieldId}-day`]: day,
       [`${fieldId}-month`]: month,

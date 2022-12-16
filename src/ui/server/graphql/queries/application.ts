@@ -28,6 +28,7 @@ const applicationQuery = gql`
         policyAndExport {
           id
           policyType
+          requestedStartDate
         }
       }
     }

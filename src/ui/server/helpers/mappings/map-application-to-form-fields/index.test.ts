@@ -5,9 +5,7 @@ import { mockApplication } from '../../../test-mocks';
 
 const {
   POLICY_AND_EXPORTS: {
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-    },
+    CONTRACT_POLICY: { REQUESTED_START_DATE },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -16,7 +14,7 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
     const simpleApplication = {
       ...mockApplication,
       policyAndExport: {
-        id: mockApplication.policyAndExport.id
+        id: mockApplication.policyAndExport.id,
       },
     };
 

@@ -203,6 +203,7 @@ type PolicyAndExport {
   id: ID!
   application: Application
   policyType: String
+  requestedStartDate: DateTime
 }
 
 input PolicyAndExportWhereUniqueInput {
@@ -216,16 +217,19 @@ input PolicyAndExportWhereInput {
   id: IDFilter
   application: ApplicationWhereInput
   policyType: StringNullableFilter
+  requestedStartDate: DateTimeNullableFilter
 }
 
 input PolicyAndExportOrderByInput {
   id: OrderDirection
   policyType: OrderDirection
+  requestedStartDate: OrderDirection
 }
 
 input PolicyAndExportUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   policyType: String
+  requestedStartDate: DateTime
 }
 
 input PolicyAndExportUpdateArgs {
@@ -236,6 +240,7 @@ input PolicyAndExportUpdateArgs {
 input PolicyAndExportCreateInput {
   application: ApplicationRelateToOneForCreateInput
   policyType: String
+  requestedStartDate: DateTime
 }
 
 type Country {

@@ -148,6 +148,7 @@ export const lists = {
           { label: APPLICATION.POLICY_TYPE.MULTI, value: APPLICATION.POLICY_TYPE.MULTI },
         ],
       }),
+      requestedStartDate: timestamp(),
     },
     access: allowAll,
   },

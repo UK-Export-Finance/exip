@@ -4,9 +4,7 @@ import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestam
 
 const {
   POLICY_AND_EXPORTS: {
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-    },
+    CONTRACT_POLICY: { REQUESTED_START_DATE },
   },
 } = FIELD_IDS.INSURANCE;
 

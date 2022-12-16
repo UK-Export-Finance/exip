@@ -5,7 +5,10 @@ import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
+import createTimestampFromNumbers from '../../../../helpers/date/create-timestamp-from-numbers';
+import save from '../save-data';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 
@@ -76,7 +79,7 @@ export const get = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...PAGE_VARIABLES,
-      application,
+      application: mapApplicationToFormFields(application),
       currencies: mappedCurrencies,
     });
   } catch (err) {
@@ -132,5 +135,29 @@ export const post = async (req: Request, res: Response) => {
     }
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`);
+  try {
+    // save the application
+
+    const day = Number(req.body[`${PAGE_VARIABLES.FIELDS.REQUESTED_START_DATE.ID}-day`]);
+    const month = Number(req.body[`${PAGE_VARIABLES.FIELDS.REQUESTED_START_DATE.ID}-month`]);
+    const year = Number(req.body[`${PAGE_VARIABLES.FIELDS.REQUESTED_START_DATE.ID}-year`]);
+
+    const submittedDate = createTimestampFromNumbers(day, month, year);
+
+    const populatedData = {
+      [PAGE_VARIABLES.FIELDS.REQUESTED_START_DATE.ID]: submittedDate,
+    };
+
+    const saveResponse = await save.policyAndExport(application, populatedData);
+
+    if (!saveResponse) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`);
+  } catch (err) {
+    console.error('Error updating application', { err });
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
 };
