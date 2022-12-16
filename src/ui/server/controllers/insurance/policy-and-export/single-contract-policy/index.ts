@@ -5,6 +5,9 @@ import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
+import generateValidationErrors from './validation';
+
+const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 
 const {
   POLICY_AND_EXPORTS: { CONTRACT_POLICY },
@@ -52,13 +55,56 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_P
  * @returns {Express.Response.render} Single contract policy page
  */
 export const get = async (req: Request, res: Response) => {
-  try {
-    const { application } = res.locals;
+  const { application } = res.locals;
 
-    if (!application) {
+  if (!application) {
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+
+  try {
+    const currencies = await api.external.getCurrencies();
+
+    if (!currencies || !currencies.length) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
+    const mappedCurrencies = mapCurrencies(currencies);
+
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...PAGE_VARIABLES,
+      application,
+      currencies: mappedCurrencies,
+    });
+  } catch (err) {
+    console.error('Error getting currencies ', { err });
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+};
+
+/**
+ * post
+ * Check Single contract policy validation errors and if successful, redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or error page
+ */
+export const post = async (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = req.params;
+
+  const validationErrors = generateValidationErrors(req.body);
+
+  if (validationErrors) {
     try {
       const currencies = await api.external.getCurrencies();
 
@@ -76,15 +122,15 @@ export const get = async (req: Request, res: Response) => {
         ...PAGE_VARIABLES,
         application,
         currencies: mappedCurrencies,
+        validationErrors,
+        submittedValues: req.body,
       });
     } catch (err) {
       console.error('Error getting currencies ', { err });
 
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
-  } catch (err) {
-    console.error('Error getting application ', { err });
-
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
+
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`);
 };
