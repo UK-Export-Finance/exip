@@ -1,9 +1,9 @@
-import { buyerCountryPage, heading, submitButton } from '../../../pages/shared';
-import { insurance } from '../../../pages';
-import partials from '../../../partials';
-import { LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
-import { ROUTES } from '../../../../../constants';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
+import { buyerCountryPage, heading, submitButton } from '../../pages/shared';
+import { insurance } from '../../pages';
+import partials from '../../partials';
+import { LINKS, ORGANISATION, PAGES } from '../../../../content-strings';
+import { ROUTES } from '../../../../constants';
+import { completeStartForm, completeCheckIfEligibleForm } from '../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 const { ACTIONS } = CONTENT_STRINGS;
@@ -12,7 +12,7 @@ const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
 
 const insuranceStartRoute = ROUTES.INSURANCE.START;
 
-context('Insurance Eligibility - apply offline exit page', () => {
+context('Insurance - apply offline exit page', () => {
   beforeEach(() => {
     cy.visit(ROUTES.INSURANCE.START, {
       auth: {
