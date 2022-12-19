@@ -53,6 +53,8 @@ In another terminal:
 
 Note that we use [express-basic-auth](https://www.npmjs.com/package/express-basic-auth) in every environment except for production. This is because we do not want anyone to see work in progress before it is live. For example, some real-world users may obtain the password in a dev/test environment for user testing. We do not want this to then be shared.
 
+To run the full application flow without docker, you'll need to spin up a MySQL database and update the `DATABASE_URL` environment variable. Once the database exists, [import the MySQL dump](https://github.com/UK-Export-Finance/exip/blob/main-application/database/exip.sql) to get everything working. Otherwise, the database will not have any tables or countries and therefore CRUD operations will fail.
+
 ## Testing
 
 ### Run the unit tests
