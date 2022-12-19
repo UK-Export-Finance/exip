@@ -4,9 +4,12 @@ import createTimestampFromNumbers from '../../../../../helpers/date/create-times
 
 const {
   POLICY_AND_EXPORTS: {
-    CONTRACT_POLICY: { REQUESTED_START_DATE },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+    },
   },
 } = FIELD_IDS.INSURANCE;
+
 
 /**
  * mapSubmittedData
@@ -15,6 +18,12 @@ const {
  * @returns {Object} Page variables
  */
 const mapSubmittedData = (formBody: RequestBody): object => {
+  if (!formBody) {
+    return {};
+  }
+
+  let populatedData = formBody;
+
   const requestedStartDateFormIds = {
     dayId: `${REQUESTED_START_DATE}-day`,
     monthId: `${REQUESTED_START_DATE}-month`,
@@ -29,15 +38,13 @@ const mapSubmittedData = (formBody: RequestBody): object => {
       const month = Number(formBody[monthId]);
       const year = Number(formBody[yearId]);
 
-      const populatedData = {
-        [REQUESTED_START_DATE]: createTimestampFromNumbers(day, month, year),
-      };
+      populatedData[REQUESTED_START_DATE] = createTimestampFromNumbers(day, month, year);
 
       return populatedData;
     }
   }
 
-  return {};
+  return populatedData;
 };
 
 export default mapSubmittedData;

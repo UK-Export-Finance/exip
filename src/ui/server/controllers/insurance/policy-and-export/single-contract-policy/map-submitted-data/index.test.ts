@@ -26,16 +26,14 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/map-sub
       const month = Number(mockBody[`${REQUESTED_START_DATE}-month`]);
       const year = Number(mockBody[`${REQUESTED_START_DATE}-year`]);
 
-      const expected = {
-        [REQUESTED_START_DATE]: createTimestampFromNumbers(day, month, year),
-      };
+      const expected = createTimestampFromNumbers(day, month, year);
 
-      expect(result).toEqual(expected);
+      expect(result[REQUESTED_START_DATE]).toEqual(expected);
     });
   });
 
   describe(`when form body does not have a ${REQUESTED_START_DATE}-day field`, () => {
-    it('should return an empty object', () => {
+    it('should return the form body without a timestamp', () => {
       const mockBody = {
         [`${REQUESTED_START_DATE}-month`]: '2',
         [`${REQUESTED_START_DATE}-year`]: '2022',
@@ -43,12 +41,12 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/map-sub
 
       const result = mapSubmittedData(mockBody);
 
-      expect(result).toEqual({});
+      expect(result).toEqual(mockBody);
     });
   });
 
   describe(`when form body does not have a ${REQUESTED_START_DATE}-month field`, () => {
-    it('should return an empty object', () => {
+    it('should return the form body without a timestamp', () => {
       const mockBody = {
         [`${REQUESTED_START_DATE}-day`]: '1',
         [`${REQUESTED_START_DATE}-year`]: '2022',
@@ -56,12 +54,12 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/map-sub
 
       const result = mapSubmittedData(mockBody);
 
-      expect(result).toEqual({});
+      expect(result).toEqual(mockBody);
     });
   });
 
   describe(`when form body does not have a ${REQUESTED_START_DATE}-year field`, () => {
-    it('should return an empty object', () => {
+    it('should return the form body without a timestamp', () => {
       const mockBody = {
         [`${REQUESTED_START_DATE}-day`]: '1',
         [`${REQUESTED_START_DATE}-month`]: '2',
@@ -69,7 +67,19 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/map-sub
 
       const result = mapSubmittedData(mockBody);
 
-      expect(result).toEqual({});
+      expect(result).toEqual(mockBody);
+    });
+  });
+
+  describe(`when form body does not have any day/month/year fields`, () => {
+    it('should return the form body', () => {
+      const mockBody = {
+        anotherField: true,
+      };
+
+      const result = mapSubmittedData(mockBody);
+
+      expect(result).toEqual(mockBody);
     });
   });
 
