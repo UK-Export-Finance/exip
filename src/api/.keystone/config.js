@@ -170,7 +170,14 @@ var lists = {
           { label: APPLICATION.POLICY_TYPE.MULTI, value: APPLICATION.POLICY_TYPE.MULTI }
         ]
       }),
-      requestedStartDate: (0, import_fields.timestamp)()
+      requestedStartDate: (0, import_fields.timestamp)(),
+      totalValueOfContract: (0, import_fields.integer)({
+        validation: {
+          min: 1,
+          max: 499999
+        }
+      }),
+      policyCurrencyCode: (0, import_fields.text)()
     },
     access: import_access.allowAll
   },

@@ -19,6 +19,7 @@ interface ApplicationPolicyAndExport {
   id: string;
   policyType?: string;
   requestedStartDate?: Date;
+  totalValueOfContract?: Number;
 }
 
 interface Application extends ApplicationCore {

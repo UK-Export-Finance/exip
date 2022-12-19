@@ -149,6 +149,13 @@ export const lists = {
         ],
       }),
       requestedStartDate: timestamp(),
+      totalValueOfContract: integer({
+        validation: {
+          min: 1,
+          max: 499999,
+        },
+      }),
+      policyCurrencyCode: text(),
     },
     access: allowAll,
   },

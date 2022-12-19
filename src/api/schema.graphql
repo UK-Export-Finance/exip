@@ -204,6 +204,8 @@ type PolicyAndExport {
   application: Application
   policyType: String
   requestedStartDate: DateTime
+  totalValueOfContract: Int
+  policyCurrencyCode: String
 }
 
 input PolicyAndExportWhereUniqueInput {
@@ -218,48 +220,8 @@ input PolicyAndExportWhereInput {
   application: ApplicationWhereInput
   policyType: StringNullableFilter
   requestedStartDate: DateTimeNullableFilter
-}
-
-input PolicyAndExportOrderByInput {
-  id: OrderDirection
-  policyType: OrderDirection
-  requestedStartDate: OrderDirection
-}
-
-input PolicyAndExportUpdateInput {
-  application: ApplicationRelateToOneForUpdateInput
-  policyType: String
-  requestedStartDate: DateTime
-}
-
-input PolicyAndExportUpdateArgs {
-  where: PolicyAndExportWhereUniqueInput!
-  data: PolicyAndExportUpdateInput!
-}
-
-input PolicyAndExportCreateInput {
-  application: ApplicationRelateToOneForCreateInput
-  policyType: String
-  requestedStartDate: DateTime
-}
-
-type Country {
-  id: ID!
-  isoCode: String
-  name: String
-}
-
-input CountryWhereUniqueInput {
-  id: ID
-}
-
-input CountryWhereInput {
-  AND: [CountryWhereInput!]
-  OR: [CountryWhereInput!]
-  NOT: [CountryWhereInput!]
-  id: IDFilter
-  isoCode: StringFilter
-  name: StringFilter
+  totalValueOfContract: IntNullableFilter
+  policyCurrencyCode: StringFilter
 }
 
 input StringFilter {
@@ -288,6 +250,54 @@ input NestedStringFilter {
   startsWith: String
   endsWith: String
   not: NestedStringFilter
+}
+
+input PolicyAndExportOrderByInput {
+  id: OrderDirection
+  policyType: OrderDirection
+  requestedStartDate: OrderDirection
+  totalValueOfContract: OrderDirection
+  policyCurrencyCode: OrderDirection
+}
+
+input PolicyAndExportUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  policyType: String
+  requestedStartDate: DateTime
+  totalValueOfContract: Int
+  policyCurrencyCode: String
+}
+
+input PolicyAndExportUpdateArgs {
+  where: PolicyAndExportWhereUniqueInput!
+  data: PolicyAndExportUpdateInput!
+}
+
+input PolicyAndExportCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  policyType: String
+  requestedStartDate: DateTime
+  totalValueOfContract: Int
+  policyCurrencyCode: String
+}
+
+type Country {
+  id: ID!
+  isoCode: String
+  name: String
+}
+
+input CountryWhereUniqueInput {
+  id: ID
+}
+
+input CountryWhereInput {
+  AND: [CountryWhereInput!]
+  OR: [CountryWhereInput!]
+  NOT: [CountryWhereInput!]
+  id: IDFilter
+  isoCode: StringFilter
+  name: StringFilter
 }
 
 input CountryOrderByInput {

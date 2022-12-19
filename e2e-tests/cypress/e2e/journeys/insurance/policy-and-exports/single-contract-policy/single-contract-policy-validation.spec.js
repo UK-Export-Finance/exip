@@ -22,12 +22,15 @@ const { INSURANCE } = ROUTES;
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY,
+      CONTRACT_POLICY: {
+        REQUESTED_START_DATE,
+        SINGLE: {
+          TOTAL_CONTRACT_VALUE,
+        },
+      }
     },
   },
 } = FIELD_IDS;
-
-const { REQUESTED_START_DATE } = CONTRACT_POLICY;
 
 const {
   INSURANCE: {
@@ -73,12 +76,17 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     partials.errorSummaryListItems().should('exist');
 
-    const TOTAL_REQUIRED_FIELDS = 1;
+    const TOTAL_REQUIRED_FIELDS = 2;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
     checkText(
       partials.errorSummaryListItems().eq(0),
       CONTRACT_ERROR_MESSAGES.SINGLE[REQUESTED_START_DATE].IS_EMPTY,
+    );
+
+    checkText(
+      partials.errorSummaryListItems().eq(1),
+      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].IS_EMPTY,
     );
   });
 
@@ -213,6 +221,94 @@ context('Insurance - Policy and exports - Single contract policy page - form val
         checkText(
           field.errorMessage(),
           `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[REQUESTED_START_DATE].BEFORE_EARLIEST}`,
+        );
+      });
+    });
+  });
+
+  describe('total contract value', () => {
+    const field = singleContractPolicyPage[TOTAL_CONTRACT_VALUE];
+
+    describe('when total contract value is not provided', () => {
+      it('should render a validation error', () => {
+        submitButton().click();
+
+        checkText(
+          partials.errorSummaryListItems().eq(1),
+          CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].IS_EMPTY,
+        );
+
+        checkText(
+          field.errorMessage(),
+          `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].IS_EMPTY}`,
+        );
+      });
+    });
+
+    describe('when total contract value is not a number', () => {
+      it('should render a validation error', () => {
+        field.input().type('Fifty');
+        submitButton().click();
+
+        checkText(
+          partials.errorSummaryListItems().eq(1),
+          CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_NUMBER,
+        );
+
+        checkText(
+          field.errorMessage(),
+          `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_NUMBER}`,
+        );
+      });
+    });
+
+    describe('when total contract value is not a whole number', () => {
+      it('should render a validation error', () => {
+        field.input().clear().type('123.456');
+        submitButton().click();
+
+        checkText(
+          partials.errorSummaryListItems().eq(1),
+          CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_WHOLE_NUMBER,
+        );
+
+        checkText(
+          field.errorMessage(),
+          `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_WHOLE_NUMBER}`,
+        );
+      });
+    });
+
+    describe('when total contract value is below the minimum', () => {
+      it('should render a validation error', () => {
+        field.input().clear().type('0');
+        submitButton().click();
+
+        checkText(
+          partials.errorSummaryListItems().eq(1),
+          CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM,
+        );
+
+        checkText(
+          field.errorMessage(),
+          `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM}`,
+        );
+      });
+    });
+
+    describe('when total contract value is abovee the maximum', () => {
+      it('should render a validation error', () => {
+        field.input().clear().type('500000');
+        submitButton().click();
+
+        checkText(
+          partials.errorSummaryListItems().eq(1),
+          CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM,
+        );
+
+        checkText(
+          field.errorMessage(),
+          `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM}`,
         );
       });
     });

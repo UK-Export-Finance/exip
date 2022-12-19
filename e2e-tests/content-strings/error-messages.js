@@ -89,6 +89,13 @@ export const ERROR_MESSAGES = {
             NOT_A_NUMBER: 'Enter a policy start date in the correct format - for example, 06 11 2023',
             BEFORE_EARLIEST: 'You cannot enter a policy start date in the past - enter a future date',
           },
+          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+            IS_EMPTY: 'Enter your contract value as a whole number - do not enter decimals',
+            NOT_A_NUMBER: 'Enter your contract value as a whole number - do not enter decimals',
+            NOT_A_WHOLE_NUMBER: 'Enter your contract value as a whole number - do not enter decimals',
+            BELOW_MINIMUM: 'Your contract value must be 1 or more',
+            ABOVE_MAXIMUM: "The maximum the buyer will owe cannot be more than £499.999.If you need cover for more than this , fill in this form instead.",
+          },
         },
       },
     },

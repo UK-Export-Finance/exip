@@ -7,8 +7,9 @@ import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
-import createTimestampFromNumbers from '../../../../helpers/date/create-timestamp-from-numbers';
+import mapSubmittedData from './map-submitted-data';
 import save from '../save-data';
 import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
 
@@ -108,7 +109,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
-        application: res.locals.application,
+        application: mapApplicationToFormFields(mockApplication),
         currencies: expectedCurrencies,
       };
 
@@ -185,9 +186,9 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
       [`${COMPLETION_OF_CONTRACT_DATE}-day`]: '1',
       [`${COMPLETION_OF_CONTRACT_DATE}-month`]: getMonth(add(date, { months: 6 })),
       [`${COMPLETION_OF_CONTRACT_DATE}-year`]: getYear(date),
-      TOTAL_CONTRACT_VALUE: '150000',
-      CREDIT_PERIOD_WITH_BUYER: 'Mock text',
-      POLICY_CURRENCY_CODE: mockCurrencies[0].isoCode,
+      [TOTAL_CONTRACT_VALUE]: '150000',
+      [CREDIT_PERIOD_WITH_BUYER]: 'Mock text',
+      [POLICY_CURRENCY_CODE]: mockCurrencies[0].isoCode,
     };
 
     describe('when there are no validation errors', () => {
@@ -200,13 +201,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
 
         expect(save.policyAndExport).toHaveBeenCalledTimes(1);
 
-        const day = Number(req.body[`${REQUESTED_START_DATE}-day`]);
-        const month = Number(req.body[`${REQUESTED_START_DATE}-month`]);
-        const year = Number(req.body[`${REQUESTED_START_DATE}-year`]);
-
-        const expectedPopulatedData = {
-          [REQUESTED_START_DATE]: createTimestampFromNumbers(day, month, year),
-        };
+        const expectedPopulatedData = mapSubmittedData(req.body);
 
         expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, expectedPopulatedData);
       });
@@ -238,10 +233,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
-          application: res.locals.application,
+          application: mapApplicationToFormFields(mockApplication),
+          submittedValues: req.body,
           currencies: expectedCurrencies,
           validationErrors: generateValidationErrors(req.body),
-          submittedValues: req.body,
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

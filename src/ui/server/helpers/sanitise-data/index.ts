@@ -55,8 +55,8 @@ const sanitiseValue = (value: string | number | boolean) => {
  * @param {String} Form field name
  * @returns {Boolean}
  */
-const isDayMonthYearField = (fieldName: string): Boolean => {
-  if (fieldName.includes('-day') || fieldName.includes('-month') || fieldName.includes('-year')) {  
+const isDayMonthYearField = (fieldName: string): boolean => {
+  if (fieldName.includes('-day') || fieldName.includes('-month') || fieldName.includes('-year')) {
     return true;
   }
 
@@ -84,7 +84,7 @@ const sanitiseData = (formBody: RequestBody) => {
   keys.forEach((key) => {
     const value = formData[key];
 
-    // do not includE day/month/year fields, these should be captured as timestamps.
+    // do not include day/month/year fields, these should be captured as timestamps.
     if (!isDayMonthYearField(key)) {
       sanitised[key] = sanitiseValue(value);
     }

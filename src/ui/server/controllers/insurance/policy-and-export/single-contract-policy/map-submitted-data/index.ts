@@ -4,12 +4,9 @@ import createTimestampFromNumbers from '../../../../../helpers/date/create-times
 
 const {
   POLICY_AND_EXPORTS: {
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-    },
+    CONTRACT_POLICY: { REQUESTED_START_DATE },
   },
 } = FIELD_IDS.INSURANCE;
-
 
 /**
  * mapSubmittedData
@@ -22,7 +19,7 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     return {};
   }
 
-  let populatedData = formBody;
+  const populatedData = formBody;
 
   const requestedStartDateFormIds = {
     dayId: `${REQUESTED_START_DATE}-day`,

@@ -71,7 +71,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/map-sub
     });
   });
 
-  describe(`when form body does not have any day/month/year fields`, () => {
+  describe('when form body does not have any day/month/year fields', () => {
     it('should return the form body', () => {
       const mockBody = {
         anotherField: true,
