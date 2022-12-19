@@ -4,8 +4,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import generateValidationErrors from '../../../../helpers/validation';
-import api from '../../../../api';
-import { mockReq, mockRes, mockCompany, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 
 const {
