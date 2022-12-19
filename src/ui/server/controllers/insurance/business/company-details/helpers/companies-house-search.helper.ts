@@ -2,6 +2,11 @@ import api from '../../../../../api';
 import companiesHouseValidation from '../validation/companies-house';
 import companyHouseResponseValidation from '../validation/companies-house-response';
 import { RequestBody, CompanyHouseResponse } from '../../../../../../types';
+import { FIELD_IDS } from '../../../../../constants';
+
+const {
+  COMPANY_HOUSE: { INPUT },
+} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 /**
  * helper which takes formBody containing companies house number
@@ -11,7 +16,7 @@ import { RequestBody, CompanyHouseResponse } from '../../../../../../types';
  * @returns {object} validationErrors, apiError flag, companiesHouseNumber and companyResponse
  */
 const companiesHouseSearch = async (formBody: RequestBody) => {
-  const { companiesHouseNumber } = formBody;
+  const { [INPUT]: companiesHouseNumber } = formBody;
 
   // checks input is correctly formatted
   const validationErrors = companiesHouseValidation(formBody);
