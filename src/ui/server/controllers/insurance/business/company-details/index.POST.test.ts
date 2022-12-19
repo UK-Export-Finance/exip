@@ -2,8 +2,9 @@ import { Request, Response } from '../../../../../types';
 import { pageVariables, post } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import generateValidationErrors from '../../../../helpers/validation';
+import { PAGES } from '../../../../content-strings';
+import companiesHouseValidation from './validation/companies-house';
+import companyDetailsValidation from './validation/company-details';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 
@@ -16,8 +17,6 @@ const {
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
-
-const { EXPORTER_BUSINESS: EXPORTER_BUSINESS_ERROR } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/companies-details', () => {
   let req: Request;
@@ -35,8 +34,6 @@ describe('controllers/insurance/business/companies-details', () => {
   });
 
   describe('post', () => {
-    const errorMessageTradingName = EXPORTER_BUSINESS_ERROR[TRADING_NAME].IS_EMPTY;
-    const errorMessageTradingAddress = EXPORTER_BUSINESS_ERROR[TRADING_ADDRESS].IS_EMPTY;
     describe('when there are validation errors', () => {
       it('should render template with validation errors', async () => {
         req.body = {};
@@ -49,11 +46,8 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        const errorMessageCompanyHouseIncorrect = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
-
-        let validationErrors = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessageCompanyHouseIncorrect, {});
-        validationErrors = generateValidationErrors(TRADING_NAME, errorMessageTradingName, validationErrors);
-        validationErrors = generateValidationErrors(TRADING_ADDRESS, errorMessageTradingAddress, validationErrors);
+        let validationErrors = companiesHouseValidation(req.body);
+        validationErrors = companyDetailsValidation(req.body, validationErrors);
 
         expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
           ...corePageVariables({
