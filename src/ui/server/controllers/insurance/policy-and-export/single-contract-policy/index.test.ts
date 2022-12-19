@@ -12,8 +12,15 @@ import createTimestampFromNumbers from '../../../../helpers/date/create-timestam
 import save from '../save-data';
 import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
 
-const { INSURANCE_ROOT } = ROUTES.INSURANCE;
-const { INSURANCE } = ROUTES;
+const {
+  INSURANCE: {
+    INSURANCE_ROOT,
+    POLICY_AND_EXPORTS: {
+      SINGLE_CONTRACT_POLICY_SAVE_AND_BACK,
+      ABOUT_GOODS_OR_SERVICES,
+    },
+  },
+} = ROUTES;
 
 const {
   POLICY_AND_EXPORTS: { CONTRACT_POLICY },
@@ -77,7 +84,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE.INSURANCE_ROOT}/${req.params.referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -211,10 +218,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
         expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, expectedPopulatedData);
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`, async () => {
+      it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

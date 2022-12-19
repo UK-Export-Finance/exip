@@ -19,6 +19,16 @@ const singlePolicyField = typeOfPolicyPage[singlePolicyFieldId].single;
 
 const {
   INSURANCE: {
+    ROOT: INSURANCE_ROOT,
+    ALL_SECTIONS,
+    POLICY_AND_EXPORTS: {
+      SINGLE_CONTRACT_POLICY,
+    },
+  },
+} = ROUTES;
+
+const {
+  INSURANCE: {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
@@ -50,7 +60,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
     getReferenceNumber().then((id) => {
       referenceNumber = id;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
+      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
       cy.url().should('eq', expected);
     });
   });
@@ -61,10 +71,10 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       saveAndBackButton().click();
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
     });
@@ -96,10 +106,10 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
       field.yearInput().type(getYear(yesterday));
     });
 
-    it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       saveAndBackButton().click();
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
     });
@@ -139,8 +149,8 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
       saveAndBackButton().click();
     });
 
-    it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
+      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
     });
