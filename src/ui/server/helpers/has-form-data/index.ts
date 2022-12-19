@@ -1,34 +1,5 @@
 import { RequestBody } from '../../../types';
-
-// TODO: extract into its own file
-
-/**
- * stripEmptyFormFields
- * Filters out form fields with empty values
- * @param {Express.Request.body} Form data
- * @returns {Object} Form data without empty values
- */
-export const stripEmptyFormFields = (formBody: RequestBody) => {
-  if (formBody) {
-    const fieldsWithValues = {};
-
-    const keys = Object.keys(formBody);
-
-    keys.forEach((key) => {
-      const value = formBody[key];
-
-      const hasValue = Boolean(value) || value === false;
-
-      if (hasValue) {
-        fieldsWithValues[key] = value;
-      }
-    });
-
-    return fieldsWithValues;
-  }
-
-  return {};
-};
+import stripEmptyFormFields from '../strip-empty-form-fields';
 
 /**
  * hasFormData

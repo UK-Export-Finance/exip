@@ -1,7 +1,7 @@
 import { isNumber } from '../number';
 import { stripCommas } from '../string';
 import { RequestBody } from '../../../types';
-import { stripEmptyFormFields } from '../has-form-data';
+import stripEmptyFormFields from '../strip-empty-form-fields';
 
 /**
  * shouldChangeToNumber
