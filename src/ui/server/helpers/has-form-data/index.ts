@@ -1,5 +1,7 @@
 import { RequestBody } from '../../../types';
 
+// TODO: extract into its own file
+
 /**
  * stripEmptyFormFields
  * Filters out form fields with empty values
@@ -15,7 +17,7 @@ export const stripEmptyFormFields = (formBody: RequestBody) => {
     keys.forEach((key) => {
       const value = formBody[key];
 
-      const hasValue = Boolean(value);
+      const hasValue = Boolean(value) || value === false;
 
       if (hasValue) {
         fieldsWithValues[key] = value;

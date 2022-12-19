@@ -32,6 +32,20 @@ describe('helpers/has-form-data', () => {
       });
     });
 
+    describe('when a field has a value of false bolean', () => {
+      it('should return the field', () => {
+        const mockFormData = {
+          a: false,
+        };
+
+        const result = stripEmptyFormFields(mockFormData);
+
+        const expected = { a: false };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
     describe('when a field has a value of undefined', () => {
       it('should return form fields without the empty field', () => {
         const mockFormData = {
