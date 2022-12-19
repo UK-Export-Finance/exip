@@ -15,10 +15,7 @@ import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../t
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: {
-      SINGLE_CONTRACT_POLICY_SAVE_AND_BACK,
-      ABOUT_GOODS_OR_SERVICES,
-    },
+    POLICY_AND_EXPORTS: { SINGLE_CONTRACT_POLICY_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES },
   },
 } = ROUTES;
 
