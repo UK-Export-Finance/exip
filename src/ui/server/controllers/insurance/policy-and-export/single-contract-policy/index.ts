@@ -7,10 +7,11 @@ import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
-import createTimestampFromNumbers from '../../../../helpers/date/create-timestamp-from-numbers';
+import mapSubmittedData from './map-submitted-data';
 import save from '../save-data';
 
-const { INSURANCE_ROOT } = ROUTES.INSURANCE;
+const { INSURANCE } = ROUTES;
+const { INSURANCE_ROOT } = INSURANCE;
 
 const {
   POLICY_AND_EXPORTS: { CONTRACT_POLICY },
@@ -23,7 +24,13 @@ const {
   POLICY_CURRENCY_CODE,
 } = CONTRACT_POLICY;
 
-export const PAGE_VARIABLES = {
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} Application reference number
+ * @returns {Object} Page variables
+ */
+export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     REQUESTED_START_DATE: {
       ID: REQUESTED_START_DATE,
@@ -46,7 +53,8 @@ export const PAGE_VARIABLES = {
       ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
     },
   },
-};
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
+});
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY;
 
@@ -64,6 +72,9 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 
+  const { referenceNumber } = req.params;
+  const refNumber = Number(referenceNumber);
+
   try {
     const currencies = await api.external.getCurrencies();
 
@@ -78,7 +89,7 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY,
         BACK_LINK: req.headers.referer,
       }),
-      ...PAGE_VARIABLES,
+      ...pageVariables(refNumber),
       application: mapApplicationToFormFields(application),
       currencies: mappedCurrencies,
     });
@@ -104,6 +115,7 @@ export const post = async (req: Request, res: Response) => {
   }
 
   const { referenceNumber } = req.params;
+  const refNumber = Number(referenceNumber);
 
   const validationErrors = generateValidationErrors(req.body);
 
@@ -122,7 +134,7 @@ export const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(refNumber),
         application,
         currencies: mappedCurrencies,
         validationErrors,
@@ -137,16 +149,7 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-
-    const day = Number(req.body[`${PAGE_VARIABLES.FIELDS.REQUESTED_START_DATE.ID}-day`]);
-    const month = Number(req.body[`${PAGE_VARIABLES.FIELDS.REQUESTED_START_DATE.ID}-month`]);
-    const year = Number(req.body[`${PAGE_VARIABLES.FIELDS.REQUESTED_START_DATE.ID}-year`]);
-
-    const submittedDate = createTimestampFromNumbers(day, month, year);
-
-    const populatedData = {
-      [PAGE_VARIABLES.FIELDS.REQUESTED_START_DATE.ID]: submittedDate,
-    };
+    const populatedData = mapSubmittedData(req.body);
 
     const saveResponse = await save.policyAndExport(application, populatedData);
 
@@ -154,7 +157,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`);
   } catch (err) {
     console.error('Error updating application', { err });
 

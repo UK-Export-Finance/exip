@@ -1,5 +1,5 @@
 import { add, getMonth, getYear } from 'date-fns';
-import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { pageVariables, TEMPLATE, get, post } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
@@ -13,6 +13,7 @@ import save from '../save-data';
 import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
+const { INSURANCE } = ROUTES;
 
 const {
   POLICY_AND_EXPORTS: { CONTRACT_POLICY },
@@ -49,8 +50,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
     jest.resetAllMocks();
   });
 
-  describe('PAGE_VARIABLES', () => {
+  describe('pageVariables', () => {
     it('should have correct properties', () => {
+      const result = pageVariables(refNumber);
+
       const expected = {
         FIELDS: {
           REQUESTED_START_DATE: {
@@ -74,9 +77,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
           },
         },
+        SAVE_AND_BACK_URL: `${INSURANCE.INSURANCE_ROOT}/${req.params.referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
       };
 
-      expect(PAGE_VARIABLES).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 
@@ -103,7 +107,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(refNumber),
         application: res.locals.application,
         currencies: expectedCurrencies,
       };
@@ -196,12 +200,12 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
 
         expect(save.policyAndExport).toHaveBeenCalledTimes(1);
 
-        const day = Number(req.body[`${PAGE_VARIABLES.FIELDS.REQUESTED_START_DATE.ID}-day`]);
-        const month = Number(req.body[`${PAGE_VARIABLES.FIELDS.REQUESTED_START_DATE.ID}-month`]);
-        const year = Number(req.body[`${PAGE_VARIABLES.FIELDS.REQUESTED_START_DATE.ID}-year`]);
+        const day = Number(req.body[`${REQUESTED_START_DATE}-day`]);
+        const month = Number(req.body[`${REQUESTED_START_DATE}-month`]);
+        const year = Number(req.body[`${REQUESTED_START_DATE}-year`]);
 
         const expectedPopulatedData = {
-          [PAGE_VARIABLES.FIELDS.REQUESTED_START_DATE.ID]: createTimestampFromNumbers(day, month, year),
+          [REQUESTED_START_DATE]: createTimestampFromNumbers(day, month, year),
         };
 
         expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, expectedPopulatedData);
@@ -233,7 +237,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY,
             BACK_LINK: req.headers.referer,
           }),
-          ...PAGE_VARIABLES,
+          ...pageVariables(refNumber),
           application: res.locals.application,
           currencies: expectedCurrencies,
           validationErrors: generateValidationErrors(req.body),

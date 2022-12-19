@@ -33,7 +33,7 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
         ...mockApplication,
         policyAndExport: {
           ...mockApplication.policyAndExport,
-          [REQUESTED_START_DATE]: getDateFieldsFromTimestamp(timestamp, REQUESTED_START_DATE),
+          ...getDateFieldsFromTimestamp(timestamp, REQUESTED_START_DATE),
         },
       };
 

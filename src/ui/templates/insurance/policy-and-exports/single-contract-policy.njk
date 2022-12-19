@@ -45,7 +45,6 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
-
         {% set dayId = FIELDS.REQUESTED_START_DATE.ID + '-day' %}
         {% set monthId = FIELDS.REQUESTED_START_DATE.ID + '-month' %}
         {% set yearId = FIELDS.REQUESTED_START_DATE.ID + '-year' %}
@@ -55,7 +54,7 @@
           label: FIELDS.REQUESTED_START_DATE.LABEL,
           hint: FIELDS.REQUESTED_START_DATE.HINT,
           error: validationErrors.errorList[FIELDS.REQUESTED_START_DATE.ID],
-          submittedAnswers: application
+          submittedAnswers: application.policyAndExport
         }) }}
 
         {{dateInput.render({
@@ -63,7 +62,7 @@
           label: FIELDS.COMPLETION_OF_CONTRACT_DATE.LABEL,
           hint: FIELDS.COMPLETION_OF_CONTRACT_DATE.HINT,
           error: validationErrors.errorList[FIELDS.COMPLETION_OF_CONTRACT_DATE.ID],
-          submittedAnswers: application
+          submittedAnswers: application.policyAndExport
         }) }}
 
         {{ govukInput({
@@ -152,6 +151,7 @@
         text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
         classes: "govuk-button--secondary",
         attributes: {
+          formaction: SAVE_AND_BACK_URL,
           'data-cy': 'save-and-back-button'
         }
       }) }}

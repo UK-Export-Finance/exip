@@ -21,7 +21,10 @@ const mapApplicationToFormFields = (application: Application): object => {
     if (application.policyAndExport && application.policyAndExport[REQUESTED_START_DATE]) {
       const timestamp = application.policyAndExport[REQUESTED_START_DATE];
 
-      mapped.policyAndExport[REQUESTED_START_DATE] = getDateFieldsFromTimestamp(timestamp, REQUESTED_START_DATE);
+      mapped.policyAndExport = {
+        ...mapped.policyAndExport,
+        ...getDateFieldsFromTimestamp(timestamp, REQUESTED_START_DATE),
+      };
     }
 
     return mapped;

@@ -9,8 +9,8 @@ import save from '../save-data';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
-const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 const { INSURANCE } = ROUTES;
+const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 
 const FIELD_ID = POLICY_AND_EXPORTS.POLICY_TYPE;
 
