@@ -1,4 +1,4 @@
-import { shouldChangeToNumber, sanitiseValue, sanitiseData } from '.';
+import { shouldChangeToNumber, sanitiseValue, isDayMonthYearField, sanitiseData } from '.';
 
 describe('server/helpers/sanitise-data', () => {
   describe('shouldChangeToNumber', () => {
@@ -99,13 +99,51 @@ describe('server/helpers/sanitise-data', () => {
     });
   });
 
+  describe('isDayMonthYearField', () => {
+    describe('when a field name contains `-day`', () => {
+      it('should return true', () => {
+        const result = isDayMonthYearField('-day');
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('when a field name contains `-month`', () => {
+      it('should return true', () => {
+        const result = isDayMonthYearField('-month');
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('when a field name contains `-year`', () => {
+      it('should return true', () => {
+        const result = isDayMonthYearField('-year');
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('when a field name does not contain day/month/year', () => {
+      it('should return false', () => {
+        const result = isDayMonthYearField('mockField');
+
+        expect(result).toEqual(false);
+      });
+    });
+  });
+
   describe('sanitiseData', () => {
-    it('should remove _csrf and return sanitised data', () => {
+    it('should return data without _csrf, empty fields and day/month/year fields', () => {
       const mockFormData = {
         _csrf: '1234',
         a: 'mock',
         b: 'true',
         c: '100',
+        d: '',
+        'date-day': '01',
+        'date-month': '02',
+        'date-year': '2022',
       };
 
       const result = sanitiseData(mockFormData);
