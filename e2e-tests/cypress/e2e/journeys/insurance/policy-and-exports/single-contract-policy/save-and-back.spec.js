@@ -6,14 +6,11 @@ import {
   sub,
 } from 'date-fns';
 import { submitButton, saveAndBackButton } from '../../../../pages/shared';
-import { insurance } from '../../../../pages';
 import { typeOfPolicyPage, singleContractPolicyPage } from '../../../../pages/insurance/policy-and-export';
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
-
-const FIELD_ID = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
 
 const { taskList } = partials.insurancePartials;
 
