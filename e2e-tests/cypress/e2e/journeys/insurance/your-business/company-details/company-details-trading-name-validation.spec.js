@@ -8,14 +8,14 @@ import getReferenceNumber from '../../../../helpers/get-reference-number';
 const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
-      TRADING_ADDRESS,
+      TRADING_NAME,
     },
   },
 } = FIELD_IDS.INSURANCE;
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
-describe("Your business - As an Exporter I want to enter details about my business in 'your business' section - trading address errors", () => {
+describe("Insurance - Your business - Company details page- As an Exporter I want to enter details about my business in 'your business' section - trading name validation", () => {
   let referenceNumber;
 
   before(() => {
@@ -49,27 +49,27 @@ describe("Your business - As an Exporter I want to enter details about my busine
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  describe('trading address error', () => {
-    it('should display validation errors if trading address question is not answered', () => {
+  describe('trading name error', () => {
+    it('should display validation errors if trading name question is not answered', () => {
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-      yesRadioInput().first().click();
+      yesRadioInput().eq(1).click();
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);
       partials.errorSummaryListItems().first().invoke('text')
         .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
+          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
         });
     });
 
-    it('should focus to the trading address section when clicking the error', () => {
+    it('should focus to the trading name section when clicking the error', () => {
       partials.errorSummaryListItemLinks().first().click();
-      yesRadioInput().eq(1).should('have.focus');
+      yesRadioInput().first().should('have.focus');
     });
 
-    it('should display the validation error for trading address in radio error summary', () => {
+    it('should display the validation error for trading name in radio error summary', () => {
       inlineErrorMessage().invoke('text')
         .then((text) => {
-          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY}`);
+          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY}`);
         });
     });
   });

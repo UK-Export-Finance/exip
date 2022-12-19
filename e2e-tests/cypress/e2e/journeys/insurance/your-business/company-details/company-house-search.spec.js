@@ -23,7 +23,7 @@ const SUMMARY_LIST_FIELDS = FIELDS[SUMMARY_LIST];
 
 const COMPANIES_HOUSE_INPUT_FIELD_ID = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT;
 
-context('Your business - company house search - As an Exporter I want to enter my business\'s Companies House Registration Number (CRN)', () => {
+context('Insurance - Your business - Company details page - company house search - As an Exporter I want to enter my business\'s Companies House Registration Number (CRN)', () => {
   let referenceNumber;
 
   before(() => {

@@ -22,7 +22,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     [TRADING_ADDRESS]: '',
   } as RequestBody;
 
-  it('should return a validation error when tradingAddress is an empty string', () => {
+  it(`should return a validation error when ${TRADING_ADDRESS} is an empty string`, () => {
     const result = tradingAddress(mockBody, mockErrors);
 
     const expected = generateValidationErrors(TRADING_ADDRESS, errorMessage, mockErrors);
@@ -40,7 +40,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     expect(result).toEqual(expected);
   });
 
-  it('should return a validation error when tradingAddress is not in the body', () => {
+  it(`should return a validation error when ${TRADING_ADDRESS} is not in the body`, () => {
     delete mockBody[TRADING_ADDRESS];
 
     const result = tradingAddress(mockBody, mockErrors);
@@ -50,7 +50,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     expect(result).toEqual(expected);
   });
 
-  it('should not return a validation error when tradingAddress is yes', () => {
+  it(`should not return a validation error when ${TRADING_ADDRESS} is yes`, () => {
     mockBody[TRADING_ADDRESS] = 'yes';
 
     const result = tradingAddress(mockBody, mockErrors);
@@ -58,7 +58,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     expect(result).toEqual(mockErrors);
   });
 
-  it('should not return a validation error when tradingAddress is no', () => {
+  it(`should not return a validation error when ${TRADING_ADDRESS} is no`, () => {
     mockBody[TRADING_ADDRESS] = 'no';
 
     const result = tradingAddress(mockBody, mockErrors);

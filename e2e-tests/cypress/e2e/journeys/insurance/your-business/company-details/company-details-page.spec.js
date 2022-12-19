@@ -26,7 +26,7 @@ const {
 
 const insuranceStart = ROUTES.INSURANCE.START;
 
-context('Your business - company details page - As an Exporter I want to enter my business\'s CRN So that I can apply for UKEF Export Insurance policy', () => {
+context('Insurance - Your business - Company details page - As an Exporter I want to enter my business\'s CRN So that I can apply for UKEF Export Insurance policy', () => {
   let referenceNumber;
 
   before(() => {

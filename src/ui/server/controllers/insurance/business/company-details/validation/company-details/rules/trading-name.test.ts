@@ -22,7 +22,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     [TRADING_NAME]: '',
   } as RequestBody;
 
-  it('should return a validation error when tradingName is an empty string', () => {
+  it(`should return a validation error when ${TRADING_NAME} is an empty string`, () => {
     const result = tradingName(mockBody, mockErrors);
 
     const expected = generateValidationErrors(TRADING_NAME, errorMessage, mockErrors);
@@ -30,7 +30,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     expect(result).toEqual(expected);
   });
 
-  it('should return a validation error when tradingName is null string', () => {
+  it(`should return a validation error when ${TRADING_NAME} is null string`, () => {
     mockBody[TRADING_NAME] = null;
 
     const result = tradingName(mockBody, mockErrors);
@@ -40,7 +40,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     expect(result).toEqual(expected);
   });
 
-  it('should return a validation error when tradingName is not in the body', () => {
+  it(`should return a validation error when ${TRADING_NAME} is not in the body`, () => {
     delete mockBody[TRADING_NAME];
 
     const result = tradingName(mockBody, mockErrors);
@@ -50,7 +50,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     expect(result).toEqual(expected);
   });
 
-  it('should not return a validation error when tradingName is yes', () => {
+  it(`should not return a validation error when ${TRADING_NAME} is yes`, () => {
     mockBody[TRADING_NAME] = 'yes';
 
     const result = tradingName(mockBody, mockErrors);
@@ -58,7 +58,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     expect(result).toEqual(mockErrors);
   });
 
-  it('should not return a validation error when tradingName is no', () => {
+  it(`should not return a validation error when ${TRADING_NAME} is no`, () => {
     mockBody[TRADING_NAME] = 'no';
 
     const result = tradingName(mockBody, mockErrors);

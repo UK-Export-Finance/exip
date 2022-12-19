@@ -19,7 +19,7 @@ const {
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
-describe("Your business - As an Exporter I want to enter details about my business in 'your business' section", () => {
+describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section", () => {
   let referenceNumber;
 
   before(() => {

@@ -38,286 +38,33 @@ describe('controllers/insurance/business/companies-details', () => {
   describe('post', () => {
     const errorMessageTradingName = EXPORTER_BUSINESS_ERROR[TRADING_NAME].IS_EMPTY;
     const errorMessageTradingAddress = EXPORTER_BUSINESS_ERROR[TRADING_ADDRESS].IS_EMPTY;
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors', async () => {
+        req.body = {};
 
-    it('should display validation errors when there is no trading name or companies house number or trading address', async () => {
-      req.body = {};
+        const submittedValues = {
+          [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
+          [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
+          [TRADING_ADDRESS]: sanitiseValue(req.body[TRADING_ADDRESS]),
+        };
 
-      const submittedValues = {
-        [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
-        [TRADING_ADDRESS]: sanitiseValue(req.body[TRADING_ADDRESS]),
-      };
+        await post(req, res);
 
-      await post(req, res);
+        const errorMessageCompanyHouseIncorrect = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
 
-      const errorMessageCompanyHouseIncorrect = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
+        let validationErrors = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessageCompanyHouseIncorrect, {});
+        validationErrors = generateValidationErrors(TRADING_NAME, errorMessageTradingName, validationErrors);
+        validationErrors = generateValidationErrors(TRADING_ADDRESS, errorMessageTradingAddress, validationErrors);
 
-      let validationErrors = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessageCompanyHouseIncorrect, {});
-      validationErrors = generateValidationErrors(TRADING_NAME, errorMessageTradingName, validationErrors);
-      validationErrors = generateValidationErrors(TRADING_ADDRESS, errorMessageTradingAddress, validationErrors);
-
-      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-        ...corePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(mockApplication.referenceNumber),
-        validationErrors,
-        submittedValues,
-      });
-    });
-
-    it('should display validation errors when there is no trading name and api error for companies house and no trading address', async () => {
-      req.body = {
-        companiesHouseNumber: '123456',
-      };
-
-      const submittedValues = {
-        [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
-        [TRADING_ADDRESS]: sanitiseValue(req.body[TRADING_ADDRESS]),
-      };
-
-      const getCompaniesHouseResponse = jest.fn(() => Promise.resolve({ apiError: true }));
-      api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
-
-      await post(req, res);
-
-      const errorMessageCompanyHouseIssue = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].TECHNICAL_ISSUES;
-
-      let validationErrors = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessageCompanyHouseIssue, {});
-      validationErrors = generateValidationErrors(TRADING_NAME, errorMessageTradingName, validationErrors);
-      validationErrors = generateValidationErrors(TRADING_ADDRESS, errorMessageTradingAddress, validationErrors);
-
-      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-        ...corePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(mockApplication.referenceNumber),
-        validationErrors,
-        submittedValues,
-      });
-    });
-
-    it('should display validation errors when there is no trading name and api error for companies house but there is trading address', async () => {
-      req.body = {
-        companiesHouseNumber: '123456',
-        [TRADING_ADDRESS]: 'true',
-      };
-
-      const submittedValues = {
-        [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
-        [TRADING_ADDRESS]: sanitiseValue(req.body[TRADING_ADDRESS]),
-      };
-
-      const getCompaniesHouseResponse = jest.fn(() => Promise.resolve({ apiError: true }));
-      api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
-
-      await post(req, res);
-
-      const errorMessageCompanyHouseIssue = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].TECHNICAL_ISSUES;
-
-      let validationErrors = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessageCompanyHouseIssue, {});
-      validationErrors = generateValidationErrors(TRADING_NAME, errorMessageTradingName, validationErrors);
-
-      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-        ...corePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(mockApplication.referenceNumber),
-        validationErrors,
-        submittedValues,
-      });
-    });
-
-    it('should display validation errors when there is no trading name and company not found and no trading address', async () => {
-      req.body = {
-        companiesHouseNumber: '123456',
-      };
-
-      const submittedValues = {
-        [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
-        [TRADING_ADDRESS]: sanitiseValue(req.body[TRADING_ADDRESS]),
-      };
-
-      const getCompaniesHouseResponse = jest.fn(() => Promise.resolve({ success: false }));
-      api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
-
-      await post(req, res);
-
-      const errorMessageCompanyHouseIssue = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].NOT_FOUND;
-
-      let validationErrors = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessageCompanyHouseIssue, {});
-      validationErrors = generateValidationErrors(TRADING_NAME, errorMessageTradingName, validationErrors);
-      validationErrors = generateValidationErrors(TRADING_ADDRESS, errorMessageTradingAddress, validationErrors);
-
-      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-        ...corePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(mockApplication.referenceNumber),
-        validationErrors,
-        submittedValues,
-      });
-    });
-
-    it('should display validation errors when there is no trading name and company not found and there is trading address', async () => {
-      req.body = {
-        companiesHouseNumber: '123456',
-        [TRADING_ADDRESS]: 'true',
-      };
-
-      const submittedValues = {
-        [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
-        [TRADING_ADDRESS]: sanitiseValue(req.body[TRADING_ADDRESS]),
-      };
-
-      const getCompaniesHouseResponse = jest.fn(() => Promise.resolve({ success: false }));
-      api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
-
-      await post(req, res);
-
-      const errorMessageCompanyHouseIssue = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].NOT_FOUND;
-
-      let validationErrors = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessageCompanyHouseIssue, {});
-      validationErrors = generateValidationErrors(TRADING_NAME, errorMessageTradingName, validationErrors);
-
-      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-        ...corePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(mockApplication.referenceNumber),
-        validationErrors,
-        submittedValues,
-      });
-    });
-
-    it('should display validation error for trading name when there is no trading name and company is found and no trading address', async () => {
-      req.body = {
-        companiesHouseNumber: '123456',
-      };
-
-      const submittedValues = {
-        [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
-        [TRADING_ADDRESS]: sanitiseValue(req.body[TRADING_ADDRESS]),
-      };
-
-      const getCompaniesHouseResponse = jest.fn(() => Promise.resolve(mockCompany));
-      api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
-
-      await post(req, res);
-
-      let validationErrors = generateValidationErrors(TRADING_NAME, errorMessageTradingName, {});
-      validationErrors = generateValidationErrors(TRADING_ADDRESS, errorMessageTradingAddress, validationErrors);
-
-      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-        ...corePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(mockApplication.referenceNumber),
-        validationErrors,
-        submittedValues,
-      });
-    });
-
-    it('should display validation error for trading name when there is no trading name and company is found and there is trading address', async () => {
-      req.body = {
-        companiesHouseNumber: '123456',
-        [TRADING_ADDRESS]: 'true',
-      };
-
-      const submittedValues = {
-        [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
-        [TRADING_ADDRESS]: sanitiseValue(req.body[TRADING_ADDRESS]),
-      };
-
-      const getCompaniesHouseResponse = jest.fn(() => Promise.resolve(mockCompany));
-      api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
-
-      await post(req, res);
-
-      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-        ...corePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(mockApplication.referenceNumber),
-        validationErrors: generateValidationErrors(TRADING_NAME, errorMessageTradingName, {}),
-        submittedValues,
-      });
-    });
-
-    it('should display validation error for companies house when company house error but trading name radio is selected and no trading address', async () => {
-      req.body = {
-        companiesHouseNumber: '123456',
-        [TRADING_NAME]: 'true',
-      };
-
-      const submittedValues = {
-        [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
-        [TRADING_ADDRESS]: sanitiseValue(req.body[TRADING_ADDRESS]),
-      };
-
-      const getCompaniesHouseResponse = jest.fn(() => Promise.resolve({ apiError: true }));
-      api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
-
-      await post(req, res);
-
-      const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].TECHNICAL_ISSUES;
-
-      let validationErrors = generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {});
-      validationErrors = generateValidationErrors(TRADING_ADDRESS, errorMessageTradingAddress, validationErrors);
-
-      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-        ...corePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(mockApplication.referenceNumber),
-        validationErrors,
-        submittedValues,
-      });
-    });
-
-    it('should display validation error for companies house when company house error but trading name radio is selected and there is trading address', async () => {
-      req.body = {
-        companiesHouseNumber: '123456',
-        [TRADING_NAME]: 'true',
-        [TRADING_ADDRESS]: 'true',
-      };
-
-      const submittedValues = {
-        [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
-        [TRADING_ADDRESS]: sanitiseValue(req.body[TRADING_ADDRESS]),
-      };
-
-      const getCompaniesHouseResponse = jest.fn(() => Promise.resolve({ apiError: true }));
-      api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
-
-      await post(req, res);
-
-      const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].TECHNICAL_ISSUES;
-
-      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-        ...corePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(mockApplication.referenceNumber),
-        validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-        submittedValues,
+        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
+          ...corePageVariables({
+            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(mockApplication.referenceNumber),
+          validationErrors,
+          submittedValues,
+        });
       });
     });
 
