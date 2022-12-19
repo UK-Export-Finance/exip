@@ -21,15 +21,18 @@ const { COMPANY_DETAILS: TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = EXPORTER_BUSINESS_ROUTES;
+const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NO_COMPANIES_HOUSE_NUMBER } = EXPORTER_BUSINESS_ROUTES;
 
 const pageVariables = (referenceNumber: number) => ({
   POST_ROUTES: {
     COMPANIES_HOUSE: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_HOUSE_SEARCH}`,
     COMPANY_DETAILS: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROUTE}`,
+    NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
   },
   FIELDS: EXPORTER_BUSINESS,
 });
+
+const exitReasonNoCompaniesHouseNum = PAGES.INSURANCE.APPLY_OFFLINE.REASON.NO_COMPANIES_HOUSE_NUMBER;
 
 /**
  * gets the template for company details page
@@ -121,6 +124,12 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
   }
 };
 
+const redirectToNoCompaniesHouseNumberExitPage = (req: Request, res: Response) => {
+  req.flash('exitReason', exitReasonNoCompaniesHouseNum);
+
+  return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
+};
+
 /**
  * posts company details
  * validates tradingName and companiesHouseInput fields
@@ -189,4 +198,4 @@ const post = async (req: Request, res: Response) => {
   }
 };
 
-export { pageVariables, get, postCompaniesHouseSearch, post };
+export { pageVariables, get, postCompaniesHouseSearch, redirectToNoCompaniesHouseNumberExitPage, post };
