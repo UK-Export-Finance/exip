@@ -1,12 +1,12 @@
 /**
- * createDateFromNumbers
+ * createTimestampFromNumbers
  * Create a date from day, month and year numbers
  * @param {Number} day
  * @param {Number} month
  * @param {Number} year
  * @returns {Date}
  */
-const createDateFromNumbers = (day: number, month: number, year: number): Date | null => {
+const createTimestampFromNumbers = (day: number, month: number, year: number): Date | null => {
   if (day && month && year) {
     return new Date(`${month} ${day} ${year}`);
   }
@@ -14,4 +14,4 @@ const createDateFromNumbers = (day: number, month: number, year: number): Date |
   return null;
 };
 
-export default createDateFromNumbers;
+export default createTimestampFromNumbers;

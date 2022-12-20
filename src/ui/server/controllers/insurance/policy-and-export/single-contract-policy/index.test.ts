@@ -1,5 +1,5 @@
 import { add, getMonth, getYear } from 'date-fns';
-import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { pageVariables, TEMPLATE, get, post } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
@@ -8,9 +8,16 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import generateValidationErrors from './validation';
+import createTimestampFromNumbers from '../../../../helpers/date/create-timestamp-from-numbers';
+import save from '../save-data';
 import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
 
-const { INSURANCE_ROOT } = ROUTES.INSURANCE;
+const {
+  INSURANCE: {
+    INSURANCE_ROOT,
+    POLICY_AND_EXPORTS: { SINGLE_CONTRACT_POLICY_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES },
+  },
+} = ROUTES;
 
 const {
   POLICY_AND_EXPORTS: { CONTRACT_POLICY },
@@ -26,7 +33,11 @@ const {
 describe('controllers/insurance/policy-and-export/single-contract-policy', () => {
   let req: Request;
   let res: Response;
+  let refNumber: number;
 
+  jest.mock('../save-data');
+
+  save.policyAndExport = jest.fn(() => Promise.resolve({}));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
 
   beforeEach(() => {
@@ -35,6 +46,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
 
     res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
+    refNumber = Number(mockApplication.referenceNumber);
     api.external.getCurrencies = getCurrenciesSpy;
   });
 
@@ -42,8 +54,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
     jest.resetAllMocks();
   });
 
-  describe('PAGE_VARIABLES', () => {
+  describe('pageVariables', () => {
     it('should have correct properties', () => {
+      const result = pageVariables(refNumber);
+
       const expected = {
         FIELDS: {
           REQUESTED_START_DATE: {
@@ -67,9 +81,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
           },
         },
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
       };
 
-      expect(PAGE_VARIABLES).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 
@@ -96,7 +111,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(refNumber),
         application: res.locals.application,
         currencies: expectedCurrencies,
       };
@@ -184,10 +199,26 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
         req.body = validBody;
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`, async () => {
+      it('should call save.policyAndExport with application and populated data from req.body', async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
+
+        const day = Number(req.body[`${REQUESTED_START_DATE}-day`]);
+        const month = Number(req.body[`${REQUESTED_START_DATE}-month`]);
+        const year = Number(req.body[`${REQUESTED_START_DATE}-year`]);
+
+        const expectedPopulatedData = {
+          [REQUESTED_START_DATE]: createTimestampFromNumbers(day, month, year),
+        };
+
+        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, expectedPopulatedData);
+      });
+
+      it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, async () => {
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -210,7 +241,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY,
             BACK_LINK: req.headers.referer,
           }),
-          ...PAGE_VARIABLES,
+          ...pageVariables(refNumber),
           application: res.locals.application,
           currencies: expectedCurrencies,
           validationErrors: generateValidationErrors(req.body),
@@ -234,43 +265,80 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
     });
 
     describe('api error handling', () => {
-      describe('when there are no currencies returned from the API', () => {
-        beforeEach(() => {
-          // @ts-ignore
-          getCurrenciesSpy = jest.fn(() => Promise.resolve());
-          api.external.getCurrencies = getCurrenciesSpy;
+      describe('get currencies call', () => {
+        describe('when there are no currencies returned', () => {
+          beforeEach(() => {
+            // @ts-ignore
+            getCurrenciesSpy = jest.fn(() => Promise.resolve());
+            api.external.getCurrencies = getCurrenciesSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-          await post(req, res);
+        describe('when the currencies response is an empty array', () => {
+          beforeEach(() => {
+            getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+            api.external.getCurrencies = getCurrenciesSpy;
+          });
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error with the API call', () => {
+          beforeEach(() => {
+            getCurrenciesSpy = jest.fn(() => Promise.reject());
+            api.external.getCurrencies = getCurrenciesSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
         });
       });
 
-      describe('when there currencies response is an empty array', () => {
+      describe('save.policyAndExport call', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
-          api.external.getCurrencies = getCurrenciesSpy;
+          req.body = validBody;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-          await post(req, res);
+        describe('when no application is returned', () => {
+          beforeEach(() => {
+            // @ts-ignore
+            const savePolicyAndExportDataSpy = jest.fn(() => Promise.resolve());
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+            save.policyAndExport = savePolicyAndExportDataSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
         });
-      });
 
-      describe('when there is an error with the getCurrencies API call', () => {
-        beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject());
-          api.external.getCurrencies = getCurrenciesSpy;
-        });
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject());
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-          await post(req, res);
+            save.policyAndExport = savePolicyAndExportDataSpy;
+          });
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
         });
       });
     });

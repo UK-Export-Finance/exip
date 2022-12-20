@@ -45,6 +45,7 @@ model PolicyAndExport {
   application                      Application?  @relation("PolicyAndExport_application", fields: [applicationId], references: [id])
   applicationId                    String?       @map("application")
   policyType                       String?
+  requestedStartDate               DateTime?
   from_Application_policyAndExport Application[] @relation("Application_policyAndExport")
 
   @@index([applicationId])

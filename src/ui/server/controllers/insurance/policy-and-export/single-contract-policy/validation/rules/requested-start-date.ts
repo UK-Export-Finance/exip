@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
-import createDateFromNumbers from '../../../../../../helpers/create-date-from-numbers';
+import createTimestampFromNumbers from '../../../../../../helpers/date/create-timestamp-from-numbers';
 import { isNumber } from '../../../../../../helpers/number';
 import { RequestBody } from '../../../../../../../types';
 
@@ -55,7 +55,7 @@ const requestedStartDateRules = (formBody: RequestBody, errors: object) => {
   }
 
   // check that the date is in the future.
-  const submittedDate = createDateFromNumbers(Number(day), Number(month), Number(year));
+  const submittedDate = createTimestampFromNumbers(Number(day), Number(month), Number(year));
 
   if (submittedDate && isPast(submittedDate)) {
     updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BEFORE_EARLIEST, errors);

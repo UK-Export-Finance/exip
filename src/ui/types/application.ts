@@ -17,7 +17,8 @@ interface ApplicationEligibility extends InsuranceEligibilityCore {
 
 interface ApplicationPolicyAndExport {
   id: string;
-  policyType: string;
+  policyType?: string;
+  requestedStartDate?: Date;
 }
 
 interface Application extends ApplicationCore {

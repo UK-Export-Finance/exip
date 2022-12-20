@@ -9,8 +9,8 @@ import save from '../save-data';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
-const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 const { INSURANCE } = ROUTES;
+const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 
 const FIELD_ID = POLICY_AND_EXPORTS.POLICY_TYPE;
 
@@ -21,10 +21,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
   jest.mock('../save-data');
 
-  const mockSavePolicyAndExportData = jest.fn(() => {
-    return Promise.resolve({});
-  });
-
+  const mockSavePolicyAndExportData = jest.fn(() => Promise.resolve({}));
   save.policyAndExport = mockSavePolicyAndExportData;
 
   beforeEach(() => {
@@ -149,6 +146,20 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
     describe('when there is no application', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when the submitted answer is not a recognised policy type', () => {
+      beforeEach(() => {
+        req.body = {
+          [FIELD_ID]: 'Unrecognised policy type',
+        };
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
