@@ -21,15 +21,20 @@ const { COMPANY_DETAILS: TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = EXPORTER_BUSINESS_ROUTES;
+const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NO_COMPANIES_HOUSE_NUMBER } = EXPORTER_BUSINESS_ROUTES;
 
 const pageVariables = (referenceNumber: number) => ({
   POST_ROUTES: {
     COMPANIES_HOUSE: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_HOUSE_SEARCH}`,
     COMPANY_DETAILS: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROUTE}`,
+    NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
   },
   FIELDS: EXPORTER_BUSINESS,
 });
+
+const exitReason = {
+  noCompaniesHouseNumber: PAGES.INSURANCE.APPLY_OFFLINE.REASON.NO_COMPANIES_HOUSE_NUMBER,
+};
 
 /**
  * gets the template for company details page
@@ -51,6 +56,20 @@ const get = async (req: Request, res: Response) => {
     }),
     ...pageVariables(application.referenceNumber),
   });
+};
+
+const redirectToExitPage = {
+  /**
+   * handles redirect to apply offline page if no companies house number link is pressed
+   * @param {Express.Request} Express request
+   * @param {Express.Response} Express response
+   * @returns {Express.Response.redirect} redirects to apply offline page
+   */
+  noCompaniesHouseNumber: (req: Request, res: Response) => {
+    req.flash('exitReason', exitReason.noCompaniesHouseNumber);
+
+    return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
+  },
 };
 
 /**
@@ -189,4 +208,4 @@ const post = async (req: Request, res: Response) => {
   }
 };
 
-export { pageVariables, get, postCompaniesHouseSearch, post };
+export { pageVariables, get, postCompaniesHouseSearch, redirectToExitPage, post };

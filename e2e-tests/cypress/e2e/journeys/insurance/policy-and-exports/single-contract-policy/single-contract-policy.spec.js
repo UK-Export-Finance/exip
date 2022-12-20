@@ -269,6 +269,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       singleContractPolicyPage[REQUESTED_START_DATE].dayInput().type(getDate(futureDate));
       singleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(futureDate));
       singleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(getYear(futureDate));
+      singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().type('10000');
 
       singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().type('10000');
 

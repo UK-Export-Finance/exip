@@ -1,5 +1,5 @@
 import { Request, Response } from '../../../../../types';
-import { pageVariables, get, postCompaniesHouseSearch } from '.';
+import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
@@ -18,7 +18,7 @@ const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = EXPORTER_BUSINESS_ROUTES;
+const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NO_COMPANIES_HOUSE_NUMBER } = EXPORTER_BUSINESS_ROUTES;
 
 const { EXPORTER_BUSINESS: EXPORTER_BUSINESS_ERROR } = ERROR_MESSAGES.INSURANCE;
 
@@ -45,6 +45,7 @@ describe('controllers/insurance/business/companies-details', () => {
         POST_ROUTES: {
           COMPANIES_HOUSE: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_HOUSE_SEARCH}`,
           COMPANY_DETAILS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROUTE}`,
+          NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
         },
         FIELDS: EXPORTER_BUSINESS,
       };
@@ -75,6 +76,19 @@ describe('controllers/insurance/business/companies-details', () => {
         get(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+  });
+
+  describe('redirectToExitPage', () => {
+    describe('noCompaniesHouseNumber', () => {
+      it('should redirect to the APPLY_OFFLINE page with NO_COMPANIES_HOUSE_NUMBER message', () => {
+        redirectToExitPage.noCompaniesHouseNumber(req, res);
+
+        const expectedReason = PAGES.INSURANCE.APPLY_OFFLINE.REASON.NO_COMPANIES_HOUSE_NUMBER;
+        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.APPLY_OFFLINE);
       });
     });
   });

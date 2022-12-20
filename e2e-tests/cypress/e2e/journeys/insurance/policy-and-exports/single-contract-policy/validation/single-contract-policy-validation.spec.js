@@ -85,7 +85,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     checkText(
       partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.SINGLE[CREDIT_PERIOD_WITH_BUYER].IS_EMPTY,
+      CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].IS_EMPTY,
     );
   });
 });

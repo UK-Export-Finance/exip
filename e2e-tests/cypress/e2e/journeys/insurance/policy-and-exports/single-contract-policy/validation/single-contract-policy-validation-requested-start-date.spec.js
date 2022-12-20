@@ -24,9 +24,6 @@ const {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
-        SINGLE: {
-          TOTAL_CONTRACT_VALUE,
-        },
       },
     },
   },
