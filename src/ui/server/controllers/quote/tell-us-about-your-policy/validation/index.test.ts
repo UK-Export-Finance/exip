@@ -12,9 +12,9 @@ describe('controllers/quote/tell-us-about-your-policy/validation', () => {
 
     let expectedErrorsObj!: object;
 
-    for (let i = 0; i < validationRules.length; i += 1) {
-      expectedErrorsObj = validationRules[i](mockSubmittedData, expectedErrorsObj);
-    }
+    validationRules.forEach((rule) => {
+      expectedErrorsObj = rule(mockSubmittedData, expectedErrorsObj);
+    });
 
     expect(result).toEqual(expectedErrorsObj);
   });

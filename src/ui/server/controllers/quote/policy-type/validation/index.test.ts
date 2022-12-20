@@ -9,9 +9,9 @@ describe('controllers/quote/policy-type/validation', () => {
 
     let expectedErrorsObj!: object;
 
-    for (let i = 0; i < validationRules.length; i += 1) {
-      expectedErrorsObj = validationRules[i](mockBody, expectedErrorsObj);
-    }
+    validationRules.forEach((rule) => {
+      expectedErrorsObj = rule(mockBody, expectedErrorsObj);
+    });
 
     expect(result).toEqual(expectedErrorsObj);
   });

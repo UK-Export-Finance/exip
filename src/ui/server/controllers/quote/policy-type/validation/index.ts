@@ -4,9 +4,9 @@ import { RequestBody } from '../../../../../types';
 const validation = (formBody: RequestBody) => {
   let errors!: object;
 
-  for (let i = 0; i < validationRules.length; i += 1) {
-    errors = validationRules[i](formBody, errors);
-  }
+  validationRules.forEach((rule) => {
+    errors = rule(formBody, errors);
+  });
 
   return errors;
 };

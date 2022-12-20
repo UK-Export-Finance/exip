@@ -10,9 +10,9 @@ import { RequestBody } from '../../../../../../../types';
 const validation = (responseBody: RequestBody, errors: object) => {
   let updatedErrors = errors;
 
-  for (let i = 0; i < companyDetailsResponseRules.length; i += 1) {
-    updatedErrors = companyDetailsResponseRules[i](responseBody, updatedErrors);
-  }
+  companyDetailsResponseRules.forEach((rule) => {
+    updatedErrors = rule(responseBody, updatedErrors);
+  });
 
   return updatedErrors;
 };
