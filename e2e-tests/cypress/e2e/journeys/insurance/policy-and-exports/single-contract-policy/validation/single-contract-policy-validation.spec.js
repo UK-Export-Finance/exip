@@ -18,6 +18,7 @@ const {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
+        CREDIT_PERIOD_WITH_BUYER,
         SINGLE: {
           TOTAL_CONTRACT_VALUE,
         },
