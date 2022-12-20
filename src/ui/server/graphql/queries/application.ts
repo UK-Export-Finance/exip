@@ -30,6 +30,7 @@ const applicationQuery = gql`
           policyType
           requestedStartDate
           totalValueOfContract
+          creditPeriodWithBuyer
         }
       }
     }

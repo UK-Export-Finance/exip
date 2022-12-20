@@ -47,6 +47,7 @@ model PolicyAndExport {
   policyType                       String?
   requestedStartDate               DateTime?
   totalValueOfContract             Int?
+  creditPeriodWithBuyer            String        @default("")
   policyCurrencyCode               String        @default("")
   from_Application_policyAndExport Application[] @relation("Application_policyAndExport")
 

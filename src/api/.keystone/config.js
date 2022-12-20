@@ -183,6 +183,7 @@ var lists = {
           max: APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT.MAXIMUM
         }
       }),
+      creditPeriodWithBuyer: (0, import_fields.text)(),
       policyCurrencyCode: (0, import_fields.text)()
     },
     access: import_access.allowAll

@@ -133,7 +133,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     });
   });
 
-  describe('when total contract value is abovee the maximum', () => {
+  describe('when total contract value is above the maximum', () => {
     it('should render a validation error', () => {
       field.input().clear().type('500000');
       submitButton().click();
