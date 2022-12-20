@@ -46,6 +46,8 @@ model PolicyAndExport {
   applicationId                    String?       @map("application")
   policyType                       String?
   requestedStartDate               DateTime?
+  totalValueOfContract             Int?
+  policyCurrencyCode               String        @default("")
   from_Application_policyAndExport Application[] @relation("Application_policyAndExport")
 
   @@index([applicationId])

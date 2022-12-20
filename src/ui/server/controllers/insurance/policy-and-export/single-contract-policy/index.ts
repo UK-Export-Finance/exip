@@ -139,10 +139,10 @@ export const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
-        application,
+        application: mapApplicationToFormFields(application),
+        submittedValues: req.body,
         currencies: mappedCurrencies,
         validationErrors,
-        submittedValues: req.body,
       });
     } catch (err) {
       console.error('Error getting currencies ', { err });

@@ -37,6 +37,7 @@ const singleContractPolicy = {
     hint: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-hint"]`),
     prefix: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-prefix"]`),
     input: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-input"]`),
+    errorMessage: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-error-message"]`),
   },
   [CREDIT_PERIOD_WITH_BUYER]: {
     label: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-label"]`),

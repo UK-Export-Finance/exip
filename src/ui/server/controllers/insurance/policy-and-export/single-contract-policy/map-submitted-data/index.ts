@@ -15,6 +15,12 @@ const {
  * @returns {Object} Page variables
  */
 const mapSubmittedData = (formBody: RequestBody): object => {
+  if (!formBody) {
+    return {};
+  }
+
+  const populatedData = formBody;
+
   const requestedStartDateFormIds = {
     dayId: `${REQUESTED_START_DATE}-day`,
     monthId: `${REQUESTED_START_DATE}-month`,
@@ -29,15 +35,13 @@ const mapSubmittedData = (formBody: RequestBody): object => {
       const month = Number(formBody[monthId]);
       const year = Number(formBody[yearId]);
 
-      const populatedData = {
-        [REQUESTED_START_DATE]: createTimestampFromNumbers(day, month, year),
-      };
+      populatedData[REQUESTED_START_DATE] = createTimestampFromNumbers(day, month, year);
 
       return populatedData;
     }
   }
 
-  return {};
+  return populatedData;
 };
 
 export default mapSubmittedData;

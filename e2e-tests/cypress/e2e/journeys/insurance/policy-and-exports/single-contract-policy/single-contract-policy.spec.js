@@ -21,7 +21,6 @@ import {
 } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
 import { FIELD_IDS, ROUTES, SUPPORTED_CURRENCIES } from '../../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
@@ -31,7 +30,18 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLIC
 const singlePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
 const singlePolicyField = typeOfPolicyPage[singlePolicyFieldId].single;
 
-const { INSURANCE } = ROUTES;
+const {
+  INSURANCE: {
+    ROOT: INSURANCE_ROOT,
+    START,
+    ALL_SECTIONS,
+    POLICY_AND_EXPORTS: {
+      TYPE_OF_POLICY,
+      SINGLE_CONTRACT_POLICY,
+      ABOUT_GOODS_OR_SERVICES,
+    },
+  },
+} = ROUTES;
 
 const {
   INSURANCE: {
@@ -50,7 +60,7 @@ const {
 } = FIELD_IDS;
 
 const goToPageDirectly = (referenceNumber) => {
-  cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`, {
+  cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`, {
     auth: {
       username: Cypress.config('basicAuthKey'),
       password: Cypress.config('basicAuthSecret'),
@@ -64,7 +74,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   const futureDate = add(date, { days: 1, months: 3 });
 
   before(() => {
-    cy.visit(INSURANCE.START, {
+    cy.visit(START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
@@ -80,7 +90,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
       cy.url().should('eq', expectedUrl);
     });
@@ -108,7 +118,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
     partials.backLink().click();
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
+    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
     cy.url().should('eq', expectedUrl);
 
@@ -255,30 +265,21 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`, () => {
+    it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
       singleContractPolicyPage[REQUESTED_START_DATE].dayInput().type(getDate(futureDate));
       singleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(futureDate));
       singleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(getYear(futureDate));
+      singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().type('10000');
 
       submitButton().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       cy.url().should('eq', expectedUrl);
     });
 
-    describe('when going back to the page', () => {
-      it('should have the submitted values', () => {
-        goToPageDirectly(referenceNumber);
-
-        singleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', getDate(futureDate));
-        singleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', getMonth(futureDate));
-        singleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', getYear(futureDate));
-      });
-    });
-
-    describe('after submitting an answer', () => {
+    describe('after submitting the form', () => {
       it('should retain the `type of policy and exports` task status as `in progress`', () => {
-        cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`, {
+        cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`, {
           auth: {
             username: Cypress.config('basicAuthKey'),
             password: Cypress.config('basicAuthSecret'),
@@ -292,6 +293,17 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
           expect(text.trim()).equal(expected);
         });
+      });
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        goToPageDirectly(referenceNumber);
+
+        singleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', getDate(futureDate));
+        singleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', getMonth(futureDate));
+        singleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', getYear(futureDate));
+        singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', '10000');
       });
     });
   });

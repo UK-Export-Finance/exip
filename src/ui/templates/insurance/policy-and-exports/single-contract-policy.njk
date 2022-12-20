@@ -54,7 +54,7 @@
           label: FIELDS.REQUESTED_START_DATE.LABEL,
           hint: FIELDS.REQUESTED_START_DATE.HINT,
           error: validationErrors.errorList[FIELDS.REQUESTED_START_DATE.ID],
-          submittedAnswers: application.policyAndExport
+          submittedAnswers: submittedValues or application.policyAndExport
         }) }}
 
         {{dateInput.render({
@@ -62,7 +62,7 @@
           label: FIELDS.COMPLETION_OF_CONTRACT_DATE.LABEL,
           hint: FIELDS.COMPLETION_OF_CONTRACT_DATE.HINT,
           error: validationErrors.errorList[FIELDS.COMPLETION_OF_CONTRACT_DATE.ID],
-          submittedAnswers: application.policyAndExport
+          submittedAnswers: submittedValues or application.policyAndExport
         }) }}
 
         {{ govukInput({
@@ -94,7 +94,14 @@
               'data-cy': FIELDS.TOTAL_CONTRACT_VALUE.ID + '-prefix'
             }
           },
-          spellcheck: false
+          spellcheck: false,
+          value: submittedValues[FIELDS.TOTAL_CONTRACT_VALUE.ID] or application.policyAndExport[FIELDS.TOTAL_CONTRACT_VALUE.ID],
+          errorMessage: validationErrors.errorList[FIELDS.TOTAL_CONTRACT_VALUE.ID] and {
+            text: validationErrors.errorList[FIELDS.TOTAL_CONTRACT_VALUE.ID].text,
+            attributes: {
+              "data-cy": FIELDS.TOTAL_CONTRACT_VALUE.ID + "-error-message"
+            }
+          }
         }) }}
 
         {{ govukCharacterCount({

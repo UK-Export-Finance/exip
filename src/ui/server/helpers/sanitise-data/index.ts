@@ -1,6 +1,7 @@
 import { isNumber } from '../number';
 import { stripCommas } from '../string';
 import { RequestBody } from '../../../types';
+import stripEmptyFormFields from '../strip-empty-form-fields';
 
 /**
  * shouldChangeToNumber
@@ -49,6 +50,20 @@ const sanitiseValue = (value: string | number | boolean) => {
 };
 
 /**
+ * isDayMonthYearField
+ * Checks if a field is a day, month or year field
+ * @param {String} Form field name
+ * @returns {Boolean}
+ */
+const isDayMonthYearField = (fieldName: string): boolean => {
+  if (fieldName.includes('-day') || fieldName.includes('-month') || fieldName.includes('-year')) {
+    return true;
+  }
+
+  return false;
+};
+
+/**
  * sanitiseData
  * Sanitise form data
  * @param {Express.Request.body} Form body
@@ -62,15 +77,20 @@ const sanitiseData = (formBody: RequestBody) => {
   }
 
   const sanitised = {};
-  const keys = Object.keys(formData);
+
+  // strip any empty form fields
+  const keys = Object.keys(stripEmptyFormFields(formData));
 
   keys.forEach((key) => {
     const value = formData[key];
 
-    sanitised[key] = sanitiseValue(value);
+    // do not include day/month/year fields, these should be captured as timestamps.
+    if (!isDayMonthYearField(key)) {
+      sanitised[key] = sanitiseValue(value);
+    }
   });
 
   return sanitised;
 };
 
-export { shouldChangeToNumber, sanitiseValue, sanitiseData };
+export { shouldChangeToNumber, sanitiseValue, isDayMonthYearField, sanitiseData };

@@ -8,10 +8,13 @@ import save from '../../save-data';
 import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
 
 const {
-  POLICY_AND_EXPORTS: { CONTRACT_POLICY },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      SINGLE: { TOTAL_CONTRACT_VALUE },
+    },
+  },
 } = FIELD_IDS.INSURANCE;
-
-const { REQUESTED_START_DATE } = CONTRACT_POLICY;
 
 const {
   INSURANCE: { INSURANCE_ROOT },
@@ -35,6 +38,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
     [`${REQUESTED_START_DATE}-day`]: '1',
     [`${REQUESTED_START_DATE}-month`]: getMonth(date),
     [`${REQUESTED_START_DATE}-year`]: getYear(add(date, { years: 1 })),
+    [TOTAL_CONTRACT_VALUE]: '150000',
   };
 
   beforeEach(() => {

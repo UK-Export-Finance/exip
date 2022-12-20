@@ -7,4 +7,10 @@ export const APPLICATION = {
     SINGLE: 'Single contract policy',
     MULTI: 'Multiple contract policy',
   },
+  POLICY_AND_EXPORT: {
+    TOTAL_VALUE_OF_CONTRACT: {
+      MINIMUM: 1,
+      MAXIMUM: 499999,
+    },
+  },
 };
