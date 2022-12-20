@@ -32,7 +32,9 @@ const pageVariables = (referenceNumber: number) => ({
   FIELDS: EXPORTER_BUSINESS,
 });
 
-const exitReasonNoCompaniesHouseNum = PAGES.INSURANCE.APPLY_OFFLINE.REASON.NO_COMPANIES_HOUSE_NUMBER;
+const exitReason = {
+  noCompaniesHouseNumber: PAGES.INSURANCE.APPLY_OFFLINE.REASON.NO_COMPANIES_HOUSE_NUMBER,
+};
 
 /**
  * gets the template for company details page
@@ -54,6 +56,14 @@ const get = async (req: Request, res: Response) => {
     }),
     ...pageVariables(application.referenceNumber),
   });
+};
+
+const redirectToExitPage = {
+  noCompaniesHouseNumber: (req: Request, res: Response) => {
+    req.flash('exitReason', exitReason.noCompaniesHouseNumber);
+
+    return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
+  },
 };
 
 /**
@@ -124,12 +134,6 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
   }
 };
 
-const redirectToNoCompaniesHouseNumberExitPage = (req: Request, res: Response) => {
-  req.flash('exitReason', exitReasonNoCompaniesHouseNum);
-
-  return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
-};
-
 /**
  * posts company details
  * validates tradingName and companiesHouseInput fields
@@ -198,4 +202,4 @@ const post = async (req: Request, res: Response) => {
   }
 };
 
-export { pageVariables, get, postCompaniesHouseSearch, redirectToNoCompaniesHouseNumberExitPage, post };
+export { pageVariables, get, postCompaniesHouseSearch, redirectToExitPage, post };

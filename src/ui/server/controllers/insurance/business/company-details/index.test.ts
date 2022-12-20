@@ -1,5 +1,5 @@
 import { Request, Response } from '../../../../../types';
-import { pageVariables, get, redirectToNoCompaniesHouseNumberExitPage, postCompaniesHouseSearch } from '.';
+import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
@@ -80,14 +80,16 @@ describe('controllers/insurance/business/companies-details', () => {
     });
   });
 
-  describe('redirectToNoCompaniesHouseNumberExitPage', () => {
-    it('should redirect to the APPLY_OFFLINE page with NO_COMPANIES_HOUSE_NUMBER message', () => {
-      redirectToNoCompaniesHouseNumberExitPage(req, res);
+  describe('redirectToExitPage', () => {
+    describe('noCompaniesHouseNumber', () => {
+      it('should redirect to the APPLY_OFFLINE page with NO_COMPANIES_HOUSE_NUMBER message', () => {
+        redirectToExitPage.noCompaniesHouseNumber(req, res);
 
-      const expectedReason = PAGES.INSURANCE.APPLY_OFFLINE.REASON.NO_COMPANIES_HOUSE_NUMBER;
-      expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
+        const expectedReason = PAGES.INSURANCE.APPLY_OFFLINE.REASON.NO_COMPANIES_HOUSE_NUMBER;
+        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.APPLY_OFFLINE);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.APPLY_OFFLINE);
+      });
     });
   });
 
