@@ -1,12 +1,12 @@
-import createDateFromNumbers from '.';
+import createTimestampFromNumbers from '.';
 
-describe('server/helpers/create-date-from-numbers', () => {
+describe('server/helpers/date/create-date-from-numbers', () => {
   const day = 1;
   const month = 12;
   const year = 2022;
 
   it('shouild return a formatted currency', () => {
-    const result = createDateFromNumbers(day, month, year);
+    const result = createTimestampFromNumbers(day, month, year);
 
     const expected = new Date(`${month} ${day} ${year}`);
 
@@ -16,7 +16,7 @@ describe('server/helpers/create-date-from-numbers', () => {
   describe('when day is not provided', () => {
     it('should return null', () => {
       // @ts-ignore
-      const result = createDateFromNumbers(undefined, month, year);
+      const result = createTimestampFromNumbers(undefined, month, year);
 
       expect(result).toEqual(null);
     });
@@ -25,7 +25,7 @@ describe('server/helpers/create-date-from-numbers', () => {
   describe('when month is not provided', () => {
     it('should return null', () => {
       // @ts-ignore
-      const result = createDateFromNumbers(day, undefined, year);
+      const result = createTimestampFromNumbers(day, undefined, year);
 
       expect(result).toEqual(null);
     });
@@ -34,7 +34,7 @@ describe('server/helpers/create-date-from-numbers', () => {
   describe('when year is not provided', () => {
     it('should return null', () => {
       // @ts-ignore
-      const result = createDateFromNumbers(day, month, undefined);
+      const result = createTimestampFromNumbers(day, month, undefined);
 
       expect(result).toEqual(null);
     });

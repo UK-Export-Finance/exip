@@ -336,6 +336,7 @@ CREATE TABLE IF NOT EXISTS `PolicyAndExport` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `policyType` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+	`requestedStartDate` datetime(3) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `PolicyAndExport_application_idx` (`application`),
   CONSTRAINT `PolicyAndExport_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE

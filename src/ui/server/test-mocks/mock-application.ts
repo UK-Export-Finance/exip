@@ -23,6 +23,7 @@ const mockApplication = {
   policyAndExport: {
     id: 'clav8by1i0007kgoqies0dbfc',
     policyType: 'Multiple contract policy',
+    requestedStartDate: new Date(),
   },
 } as Application;
 

@@ -55,30 +55,30 @@ export const get = (req: Request, res: Response) => {
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
 export const post = async (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = req.params;
+  const refNumber = Number(referenceNumber);
+
+  // check for form errors.
+  const validationErrors = generateValidationErrors(req.body);
+
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(refNumber),
+      validationErrors,
+    });
+  }
+
   try {
-    const { application } = res.locals;
-
-    if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-    }
-
-    const { referenceNumber } = req.params;
-    const refNumber = Number(referenceNumber);
-
-    // check for form errors.
-    const validationErrors = generateValidationErrors(req.body);
-
-    if (validationErrors) {
-      return res.render(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(refNumber),
-        validationErrors,
-      });
-    }
-
     // save the application
     const saveResponse = await save.policyAndExport(application, req.body);
 
@@ -86,26 +86,16 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    try {
-      if (!saveResponse) {
-        return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-      }
-
-      if (isSinglePolicyType(req.body[FIELD_ID])) {
-        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`);
-      }
-      if (isMultiPolicyType(req.body[FIELD_ID])) {
-        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTI_CONTRACT_POLICY}`);
-      }
-
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-    } catch (err) {
-      console.error('Error updating application', { err });
-
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    if (isSinglePolicyType(req.body[FIELD_ID])) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`);
     }
+    if (isMultiPolicyType(req.body[FIELD_ID])) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTI_CONTRACT_POLICY}`);
+    }
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error('Error getting application', { err });
+    console.error('Error updating application', { err });
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }

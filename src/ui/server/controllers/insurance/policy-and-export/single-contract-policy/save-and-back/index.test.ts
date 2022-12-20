@@ -1,16 +1,23 @@
+import { add, getMonth, getYear } from 'date-fns';
 import { post } from '.';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { Request, Response } from '../../../../../../types';
+import mapSubmittedData from '../map-submitted-data';
 import generateValidationErrors from '../validation';
 import save from '../../save-data';
 import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
 
-const { POLICY_TYPE } = FIELD_IDS;
+const {
+  POLICY_AND_EXPORTS: { CONTRACT_POLICY },
+} = FIELD_IDS.INSURANCE;
+
+const { REQUESTED_START_DATE } = CONTRACT_POLICY;
+
 const {
   INSURANCE: { INSURANCE_ROOT },
 } = ROUTES;
 
-describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back', () => {
+describe('controllers/insurance/policy-and-export/single-contract-policy/save-and-back', () => {
   let req: Request;
   let res: Response;
 
@@ -21,9 +28,13 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
 
   const refNumber = Number(mockApplication.referenceNumber);
 
+  const date = new Date();
+
   const mockValidFormBody = {
     _csrf: '1234',
-    [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+    [`${REQUESTED_START_DATE}-day`]: '1',
+    [`${REQUESTED_START_DATE}-month`]: getMonth(date),
+    [`${REQUESTED_START_DATE}-year`]: getYear(add(date, { years: 1 })),
   };
 
   beforeEach(() => {
@@ -43,13 +54,13 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
         };
       });
 
-      it('should call save.policyAndExport with application reference number, form data and validationErrors.errorList', async () => {
+      it('should call save.policyAndExport with application reference number, populated submitted data and validationErrors.errorList', async () => {
         await post(req, res);
 
         const validationErrors = generateValidationErrors(req.body);
 
         expect(save.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, req.body, validationErrors?.errorList);
+        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, mapSubmittedData(req.body), validationErrors?.errorList);
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
@@ -66,11 +77,11 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
         req.body = mockValidFormBody;
       });
 
-      it('should call save.policyAndExport with application reference number and form data', async () => {
+      it('should call save.policyAndExport with application reference number and populated submitted data', async () => {
         await post(req, res);
 
         expect(save.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, req.body);
+        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, mapSubmittedData(req.body));
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {

@@ -4,13 +4,13 @@ import {
   getYear,
   sub,
 } from 'date-fns';
-import { submitButton } from '../../../pages/shared';
-import { typeOfPolicyPage, singleContractPolicyPage } from '../../../pages/insurance/policy-and-export';
-import partials from '../../../partials';
-import { ERROR_MESSAGES } from '../../../../../content-strings';
-import { FIELD_IDS, ROUTES } from '../../../../../constants';
-import getReferenceNumber from '../../../helpers/get-reference-number';
-import checkText from '../../../helpers/check-text';
+import { submitButton } from '../../../../pages/shared';
+import { typeOfPolicyPage, singleContractPolicyPage } from '../../../../pages/insurance/policy-and-export';
+import partials from '../../../../partials';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { FIELD_IDS, ROUTES } from '../../../../../../constants';
+import getReferenceNumber from '../../../../helpers/get-reference-number';
+import checkText from '../../../../helpers/check-text';
 
 const { taskList } = partials.insurancePartials;
 
