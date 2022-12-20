@@ -31,7 +31,17 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLIC
 const singlePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
 const singlePolicyField = typeOfPolicyPage[singlePolicyFieldId].single;
 
-const { INSURANCE } = ROUTES;
+const {
+  INSURANCE: {
+    ROOT: INSURANCE_ROOT,
+    ALL_SECTIONS,
+    POLICY_AND_EXPORTS: {
+      SINGLE_CONTRACT_POLICY,
+      ABOUT_GOODS_OR_SERVICES,
+    },
+  },
+} = ROUTES;
+
 
 const {
   INSURANCE: {
@@ -255,7 +265,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`, () => {
+    it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
       singleContractPolicyPage[REQUESTED_START_DATE].dayInput().type(getDate(futureDate));
       singleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(futureDate));
       singleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(getYear(futureDate));
@@ -263,19 +273,8 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
       submitButton().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       cy.url().should('eq', expectedUrl);
-    });
-
-    describe('when going back to the page', () => {
-      it('should have the submitted values', () => {
-        goToPageDirectly(referenceNumber);
-
-        singleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', getDate(futureDate));
-        singleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', getMonth(futureDate));
-        singleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', getYear(futureDate));
-        singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', '10000');
-      });
     });
 
     describe('after submitting the form', () => {
@@ -294,6 +293,17 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
           expect(text.trim()).equal(expected);
         });
+      });
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        goToPageDirectly(referenceNumber);
+
+        singleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', getDate(futureDate));
+        singleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', getMonth(futureDate));
+        singleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', getYear(futureDate));
+        singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', '10000');
       });
     });
   });

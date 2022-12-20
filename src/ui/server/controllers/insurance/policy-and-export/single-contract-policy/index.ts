@@ -10,8 +10,12 @@ import generateValidationErrors from './validation';
 import mapSubmittedData from './map-submitted-data';
 import save from '../save-data';
 
-const { INSURANCE } = ROUTES;
-const { INSURANCE_ROOT } = INSURANCE;
+const {
+  INSURANCE: {
+    INSURANCE_ROOT,
+    POLICY_AND_EXPORTS: { SINGLE_CONTRACT_POLICY_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES },
+  },
+} = ROUTES;
 
 const {
   POLICY_AND_EXPORTS: { CONTRACT_POLICY },
@@ -53,7 +57,7 @@ export const pageVariables = (referenceNumber: number) => ({
       ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
     },
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
 });
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY;
@@ -157,7 +161,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
   } catch (err) {
     console.error('Error updating application', { err });
 

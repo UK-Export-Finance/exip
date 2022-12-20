@@ -15,7 +15,7 @@ import {
   completeOtherPartiesForm,
 } from '../../../../../support/insurance/eligibility/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE;
+const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 
 context('Insurance - Eligibility - Letter of credit page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit - submit `paid by letter of credit`', () => {
   before(() => {
@@ -45,7 +45,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
+    cy.url().should('include', ROUTES.INSURANCE.APPLY_OFFLINE);
   });
 
   it('renders a back link with correct url', () => {

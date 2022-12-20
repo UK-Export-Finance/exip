@@ -102,7 +102,7 @@ export const post = async (req: Request, res: Response) => {
   }
 
   if (canApplyOffline(country)) {
-    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
+    return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
   }
 
   if (cannotApply(country)) {

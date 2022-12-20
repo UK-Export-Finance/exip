@@ -57,16 +57,16 @@ describe('controllers/insurance/eligibility/insured-period', () => {
         };
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM}`, async () => {
+      it(`should redirect to ${ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM);
       });
 
       it('should add exitReason to req.flash', async () => {
         await post(req, res);
 
-        const expectedReason = PAGES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM.REASON.WANT_COVER_OVER_MAX_PERIOD;
+        const expectedReason = PAGES.INSURANCE.SPEAK_TO_UKEF_EFM.REASON.WANT_COVER_OVER_MAX_PERIOD;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });

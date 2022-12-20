@@ -1,25 +1,25 @@
 import {
   heading, yesRadio, submitButton,
-} from '../../../pages/shared';
-import { insurance } from '../../../pages';
-import partials from '../../../partials';
-import { LINKS, ORGANISATION, PAGES } from '../../../../../content-strings';
-import { ROUTES } from '../../../../../constants';
+} from '../../pages/shared';
+import { insurance } from '../../pages';
+import partials from '../../partials';
+import { LINKS, ORGANISATION, PAGES } from '../../../../content-strings';
+import { ROUTES } from '../../../../constants';
 import {
   completeStartForm,
   completeCheckIfEligibleForm,
   completeExporterLocationForm,
   completeUkGoodsAndServicesForm,
   completeInsuredAmountForm,
-} from '../../../../support/insurance/eligibility/forms';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
+} from '../../../support/insurance/eligibility/forms';
+import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM;
+const CONTENT_STRINGS = PAGES.INSURANCE.SPEAK_TO_UKEF_EFM;
 const { ACTIONS } = CONTENT_STRINGS;
 
 const insuranceStartRoute = ROUTES.INSURANCE.START;
 
-context('Insurance Eligibility - speak to UKEF EFM exit page', () => {
+context('Insurance - speak to UKEF EFM exit page', () => {
   beforeEach(() => {
     cy.visit(ROUTES.INSURANCE.START, {
       auth: {
@@ -40,7 +40,7 @@ context('Insurance Eligibility - speak to UKEF EFM exit page', () => {
     yesRadio().click();
     submitButton().click();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM);
+    cy.url().should('include', ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM);
   });
 
   it('passes the audits', () => {
@@ -90,13 +90,13 @@ context('Insurance Eligibility - speak to UKEF EFM exit page', () => {
   });
 
   it('renders `find your nearest EFM` copy with link', () => {
-    insurance.eligibility.speakToUkefEfmPage.action.text().invoke('text').then((text) => {
+    insurance.speakToUkefEfmPage.action.text().invoke('text').then((text) => {
       const expected = `${ACTIONS.FIND_EFM[0][0].text} ${ACTIONS.FIND_EFM[0][1].text}${ACTIONS.FIND_EFM[0][2].text}`;
 
       expect(text.trim()).equal(expected);
     });
 
-    insurance.eligibility.speakToUkefEfmPage.action.link().invoke('text').then((text) => {
+    insurance.speakToUkefEfmPage.action.link().invoke('text').then((text) => {
       const expected = `${ACTIONS.FIND_EFM[0][1].text}`;
 
       expect(text.trim()).equal(expected);
@@ -104,6 +104,6 @@ context('Insurance Eligibility - speak to UKEF EFM exit page', () => {
 
     const expectedHref = ACTIONS.FIND_EFM[0][1].href;
 
-    insurance.eligibility.speakToUkefEfmPage.action.link().should('have.attr', 'href', expectedHref);
+    insurance.speakToUkefEfmPage.action.link().should('have.attr', 'href', expectedHref);
   });
 });

@@ -14,7 +14,7 @@ import {
   completeInsuredPeriodForm,
 } from '../../../../../support/insurance/eligibility/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE;
+const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 
 context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maxium amount of cover available online - submit `cover over max amount`', () => {
   before(() => {
@@ -43,7 +43,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.APPLY_OFFLINE);
+    cy.url().should('include', ROUTES.INSURANCE.APPLY_OFFLINE);
   });
 
   it('renders a back link with correct url', () => {

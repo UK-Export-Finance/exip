@@ -3,10 +3,10 @@ import { FIELD_IDS, ROUTES } from '../../../../constants';
 import { mockReq, mockRes, mockSession } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
+const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM } = ROUTES.INSURANCE;
+
 const {
   CANNOT_APPLY,
-  APPLY_OFFLINE,
-  SPEAK_TO_UKEF_EFM,
   CHECK_IF_ELIGIBLE,
   NEED_TO_START_AGAIN,
   ALREADY_HAVE_ACCOUNT,

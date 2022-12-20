@@ -35,12 +35,12 @@ const post = (req: Request, res: Response) => {
 
   if (answer === 'true') {
     const { INSURANCE } = PAGES;
-    const { SPEAK_TO_UKEF_EFM } = INSURANCE.ELIGIBILITY;
+    const { SPEAK_TO_UKEF_EFM } = INSURANCE;
     const { REASON } = SPEAK_TO_UKEF_EFM;
 
     req.flash('exitReason', REASON.WANT_COVER_OVER_MAX_PERIOD);
 
-    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.SPEAK_TO_UKEF_EFM);
+    return res.redirect(ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM);
   }
 
   req.session.submittedData = {

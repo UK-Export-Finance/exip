@@ -48,6 +48,12 @@ var APPLICATION = {
   POLICY_TYPE: {
     SINGLE: "Single contract policy",
     MULTI: "Multiple contract policy"
+  },
+  POLICY_AND_EXPORT: {
+    TOTAL_VALUE_OF_CONTRACT: {
+      MINIMUM: 1,
+      MAXIMUM: 499999
+    }
   }
 };
 
@@ -173,8 +179,8 @@ var lists = {
       requestedStartDate: (0, import_fields.timestamp)(),
       totalValueOfContract: (0, import_fields.integer)({
         validation: {
-          min: 1,
-          max: 499999
+          min: APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
+          max: APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT.MAXIMUM
         }
       }),
       policyCurrencyCode: (0, import_fields.text)()
