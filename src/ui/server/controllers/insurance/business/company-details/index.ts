@@ -59,6 +59,12 @@ const get = async (req: Request, res: Response) => {
 };
 
 const redirectToExitPage = {
+  /**
+   * handles redirect to apply offline page if no companies house number link is pressed
+   * @param {Express.Request} Express request
+   * @param {Express.Response} Express response
+   * @returns {Express.Response.redirect} redirects to apply offline page
+   */
   noCompaniesHouseNumber: (req: Request, res: Response) => {
     req.flash('exitReason', exitReason.noCompaniesHouseNumber);
 
