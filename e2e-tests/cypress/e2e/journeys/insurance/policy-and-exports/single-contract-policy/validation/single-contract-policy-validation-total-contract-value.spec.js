@@ -1,9 +1,3 @@
-import {
-  getDate,
-  getMonth,
-  getYear,
-  sub,
-} from 'date-fns';
 import { submitButton } from '../../../../../pages/shared';
 import { typeOfPolicyPage, singleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../partials';
@@ -23,11 +17,10 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
         SINGLE: {
           TOTAL_CONTRACT_VALUE,
         },
-      }
+      },
     },
   },
 } = FIELD_IDS;

@@ -1,11 +1,5 @@
-import {
-  getDate,
-  getMonth,
-  getYear,
-  sub,
-} from 'date-fns';
 import { submitButton } from '../../../../../pages/shared';
-import { typeOfPolicyPage, singleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
+import { typeOfPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
@@ -27,7 +21,7 @@ const {
         SINGLE: {
           TOTAL_CONTRACT_VALUE,
         },
-      }
+      },
     },
   },
 } = FIELD_IDS;

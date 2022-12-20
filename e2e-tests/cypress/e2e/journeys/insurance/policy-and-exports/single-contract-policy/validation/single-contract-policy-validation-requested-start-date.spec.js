@@ -27,7 +27,7 @@ const {
         SINGLE: {
           TOTAL_CONTRACT_VALUE,
         },
-      }
+      },
     },
   },
 } = FIELD_IDS;
