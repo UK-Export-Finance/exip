@@ -151,8 +151,8 @@ export const lists = {
       requestedStartDate: timestamp(),
       totalValueOfContract: integer({
         validation: {
-          min: 1,
-          max: 499999,
+          min: APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
+          max: APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT.MAXIMUM,
         },
       }),
       policyCurrencyCode: text(),
