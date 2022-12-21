@@ -43,6 +43,7 @@ const singleContractPolicy = {
     label: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-label"]`),
     hint: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-hint"]`),
     input: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-input"]`),
+    errorMessage: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-error-message"]`),
   },
   [POLICY_CURRENCY_CODE]: {
     label: () => cy.get(`[data-cy="${POLICY_CURRENCY_CODE}-label"]`),

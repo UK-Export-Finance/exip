@@ -334,11 +334,12 @@ CREATE TABLE IF NOT EXISTS `Page` (
 
 CREATE TABLE IF NOT EXISTS `PolicyAndExport` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `policyType` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-	`requestedStartDate` datetime(3) DEFAULT NULL,
-	`totalValueOfContract` int DEFAULT NULL,
+  `policyType` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `requestedStartDate` datetime(3) DEFAULT NULL,
   `policyCurrencyCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `totalValueOfContract` int DEFAULT NULL,
+  `creditPeriodWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `PolicyAndExport_application_idx` (`application`),
   CONSTRAINT `PolicyAndExport_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
