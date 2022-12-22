@@ -46,6 +46,7 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     env:
       name: ui
+      webapp: ${{ env.product }}-${{ env.environment }}-${{ env.name }}
       
     steps:
     - name: Repository
@@ -65,7 +66,7 @@ jobs:
         username: ${{ env.acr_username }}
         password: ${{ env.acr_password }}
         repository: ${{ env.name }}
-        path: src/ui
+        path: ./
         tags: ${{ env.from }}
         build_args: GITHUB_SHA=${{ github.sha }}
         add_git_labels: true
@@ -92,8 +93,6 @@ jobs:
 
     - name: Azure WebApp - Slots
       uses: azure/cli@v1.0.0
-      env:
-        webapp: ${{ env.product }}-${{ env.environment }}-${{ env.name }}
       with:
         inlineScript: |
           az webapp deployment slot create --name ${{ env.webapp }} --slot ${{ github.sha }} --configuration-source ${{ env.webapp }}

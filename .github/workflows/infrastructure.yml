@@ -8,7 +8,7 @@ run-name: EXIP Base infrastructure build on ${{ github.repository }}
 
 on:
   push:
-    branches: [ infrastructure ]
+    branches: [ EMS-470-api-in-dev-environment ]
     paths: 
     - '.github/workflows/infrastructure.yml'
 
@@ -73,11 +73,7 @@ jobs:
           GOOGLE_ANALYTICS_ID=${{ secrets.GOOGLE_ANALYTICS_ID }} \
           GOV_NOTIFY_API_KEY=${{ secrets.GOV_NOTIFY_API_KEY }} \
           COMPANIES_HOUSE_API_URL=${{ secrets.COMPANIES_HOUSE_API_URL }} \
-          COMPANIES_HOUSE_API_KEY=${{ secrets.COMPANIES_HOUSE_API_KEY }}
-
-          az webapp config connection-string set --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
-          --connection-string-type custom \
-          --settings \
+          COMPANIES_HOUSE_API_KEY=${{ secrets.COMPANIES_HOUSE_API_KEY }} \
           API_URL=${{ secrets.API_URL }} \
           DATABASE_URL=${{ secrets.DATABASE_URL_DETACHED }} \
           MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
