@@ -53,9 +53,9 @@ jobs:
         name: ui
       with:
         inlineScript: |
-          az webapp create --name ${{ env.product }}-${{ development.env.plan }}-${{ development.steps[3].env.name }} \
-          --plan ${{ development.env.service_plan }} \
-          --deployment-container-image-name ${{ env.acr }}/{{ development.steps[3].env.name }}:${{ development.env.plan }}
+          az webapp create --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --plan ${{ env.plan }} \
+          --deployment-container-image-name ${{ env.acr }}/{{ env.name }}:${{ env.plan }}
 
 # Production environment
   production:
