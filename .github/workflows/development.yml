@@ -37,7 +37,74 @@ jobs:
     - name: Environment 🧪
       run: echo "Environment set to ${{ env.environment }}"
 
-  # 2. UI - Deployment
+# 2. API - Deployment
+  api:
+    name: API 📦️
+    needs: setup
+    runs-on: [self-hosted, linux, deployment]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    env:
+      name: api
+      
+    steps:
+    - name: Repository
+      uses: actions/checkout@v3
+
+    - name: ACR - Login
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.acr }}
+        username: ${{ env.acr_username }}
+        password: ${{ env.acr_password }}
+
+    - name: ACR - `latest` artifact
+      uses: docker/build-push-action@v1
+      with:
+        registry: ${{ env.acr }}
+        username: ${{ env.acr_username }}
+        password: ${{ env.acr_password }}
+        repository: ${{ env.name }}
+        path: src/${{ env.name }}
+        tags: ${{ env.from }}
+        build_args: GITHUB_SHA=${{ github.sha }}
+        add_git_labels: true
+
+    - name: ACR - `dev` artifact
+      run: |
+        from=${{ env.from }}
+        to=${{ env.environment }}
+        docker pull ${{ env.acr }}/${{ env.name }}:$from
+        docker tag ${{ env.acr }}/${{ env.name }}:$from ${{ env.acr }}/${{ env.name }}:$to
+        docker push ${{ env.acr }}/${{ env.name }}:$to
+
+    - name: Azure - Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ env.credentials }}
+
+    - name: Azure - CLI defaults
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az configure --defaults location=${{ secrets.AZURE_REGION }}
+          az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
+
+    - name: Azure WebApp - Slots
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az webapp deployment slot create --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }} --configuration-source ${{ env.product }}-${{ env.environment }}-${{ env.name }}
+          az webapp deployment slot swap --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }} --action swap
+          az webapp deployment slot delete --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }}
+    
+    - name: 8. Azure WebApp - Restart
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az webapp restart --name ${{ env.product }}-${{ env.environment }}-${{ env.name }}
+
+  # 4. UI - Deployment
   ui:
     name: UI 🎨
     needs: setup
@@ -65,7 +132,7 @@ jobs:
         username: ${{ env.acr_username }}
         password: ${{ env.acr_password }}
         repository: ${{ env.name }}
-        path: ./
+        path: src/${{ env.name }}
         tags: ${{ env.from }}
         build_args: GITHUB_SHA=${{ github.sha }}
         add_git_labels: true
