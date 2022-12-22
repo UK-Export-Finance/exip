@@ -3,6 +3,7 @@
 #
 # 1. ACR
 # 2. WebApp
+
 name: Infrastructure 🔨
 run-name: EXIP Base infrastructure build on ${{ github.repository }}
 
