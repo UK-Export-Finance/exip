@@ -1,20 +1,13 @@
-import companiesHouseRules from './rules';
+import validationRules from './rules';
+import combineValidationRules from '../../../../../../helpers/combine-validation-rules';
 import { CompanyHouseResponse } from '../../../../../../../types';
 
 /**
- * validates company house API response
- * throws validation errors if success is false or apiError is flagged or if responseBody is null
- * @param responseBody containing an object with the companies house API response
- * @returns object containing errors or blank object
+ * Validates company house API response
+ * Throws validation errors if success is false or apiError is flagged or if responseBody is null
+ * @param {Object} Companies house API response
+ * @returns Object containing errors or blank object
  */
-const validation = (responseBody: CompanyHouseResponse) => {
-  let errors!: object;
-
-  companiesHouseRules.forEach((rule) => {
-    errors = rule(responseBody, errors);
-  });
-
-  return errors;
-};
+const validation = (responseBody: CompanyHouseResponse) => combineValidationRules(validationRules, responseBody);
 
 export default validation;

@@ -1,4 +1,5 @@
-import companiesHouseRules from './rules';
+import validationRules from './rules';
+import combineValidationRules from '../../../../../../helpers/combine-validation-rules';
 import { RequestBody } from '../../../../../../../types';
 
 /**
@@ -7,14 +8,6 @@ import { RequestBody } from '../../../../../../../types';
  * @param formBody containing an object with the requestBody containing the companies house number input
  * @returns object containing errors or blank object
  */
-const validation = (formBody: RequestBody) => {
-  let errors!: object;
-
-  companiesHouseRules.forEach((rule) => {
-    errors = rule(formBody, errors);
-  });
-
-  return errors;
-};
+const validation = (formBody: RequestBody) => combineValidationRules(validationRules, formBody);
 
 export default validation;
