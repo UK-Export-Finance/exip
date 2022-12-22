@@ -269,7 +269,9 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       singleContractPolicyPage[REQUESTED_START_DATE].dayInput().type(getDate(futureDate));
       singleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(futureDate));
       singleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(getYear(futureDate));
+
       singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().type('10000');
+      singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().type('mock free text');
 
       submitButton().click();
 
@@ -303,7 +305,9 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
         singleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', getDate(futureDate));
         singleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', getMonth(futureDate));
         singleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', getYear(futureDate));
+
         singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', '10000');
+        singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().should('have.value', 'mock free text');
       });
     });
   });

@@ -11,6 +11,7 @@ const {
   POLICY_AND_EXPORTS: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
       SINGLE: { TOTAL_CONTRACT_VALUE },
     },
   },
@@ -39,6 +40,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
     [`${REQUESTED_START_DATE}-month`]: getMonth(date),
     [`${REQUESTED_START_DATE}-year`]: getYear(add(date, { years: 1 })),
     [TOTAL_CONTRACT_VALUE]: '150000',
+    [CREDIT_PERIOD_WITH_BUYER]: 'Example',
   };
 
   beforeEach(() => {

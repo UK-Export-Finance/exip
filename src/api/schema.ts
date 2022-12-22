@@ -155,6 +155,7 @@ export const lists = {
           max: APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT.MAXIMUM,
         },
       }),
+      creditPeriodWithBuyer: text(),
       policyCurrencyCode: text(),
     },
     access: allowAll,
