@@ -57,6 +57,41 @@ jobs:
           --plan ${{ env.plan }} \
           --deployment-container-image-name ${{ env.acr }}/${{ env.name }}:${{ env.plan }}
 
+          az webapp deployment container config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --enable-cd true
+
+          az webapp config set --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --always-on true
+
+          az webapp config appsettings set --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --settings \
+          WEBSITE_DNS_SERVER="168.63.129.16" \
+          WEBSITE_VNET_ROUTE_ALL=1 \
+          SESSION_SECRET=${{ secrets.SESSION_SECRET }} \
+          BASIC_AUTH_KEY=${{ secrets.BASIC_AUTH_KEY }} \
+          BASIC_AUTH_SECRET=${{ secrets.BASIC_AUTH_SECRET }} \
+          GOOGLE_ANALYTICS_ID=${{ secrets.GOOGLE_ANALYTICS_ID }} \
+          GOV_NOTIFY_API_KEY=${{ secrets.GOV_NOTIFY_API_KEY }} \
+          COMPANIES_HOUSE_API_URL=${{ secrets.COMPANIES_HOUSE_API_URL }} \
+          COMPANIES_HOUSE_API_KEY=${{ secrets.COMPANIES_HOUSE_API_KEY }}
+
+          az webapp config connection-string set --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --connection-string-type custom \
+          --settings \
+          API_URL=${{ secrets.API_URL }} \
+          DATABASE_URL=${{ secrets.DATABASE_URL_DETACHED }} \
+          MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
+          MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} \
+          MULESOFT_API_CIS_URL=${{ secrets.MULESOFT_API_CIS_URL }} \
+          MULESOFT_API_CIS_KEY=${{ secrets.MULESOFT_API_CIS_KEY }} \
+          MULESOFT_API_CIS_SECRET=${{ secrets.MULESOFT_API_CIS_SECRET }} \
+          MULESOFT_API_MDM_EA_URL=${{ secrets.MULESOFT_API_MDM_EA_URL }} \
+          MULESOFT_API_MDM_EA_KEY=${{ secrets.MULESOFT_API_MDM_EA_KEY }} \
+          MULESOFT_API_MDM_EA_SECRET=${{ secrets.MULESOFT_API_MDM_EA_SECRET }}
+
+          az webapp log config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --docker-container-logging filesystem
+
 # Production environment
   production:
     name: Production 🚀
