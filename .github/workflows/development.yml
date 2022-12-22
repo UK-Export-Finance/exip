@@ -13,8 +13,8 @@ run-name: Deploying to dev ${{ github.repository }} 🚀
 on:
   push:
     branches: [ EMS-470-api-in-dev-environment ]
-    paths:
-    - 'src/**'
+    # paths:
+    # - 'src/**'
   
 env:
   product: exip
