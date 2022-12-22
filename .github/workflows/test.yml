@@ -110,21 +110,14 @@ jobs:
         machines: [ 1, 2, 3, 4 ]
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Timezone
         uses: szenius/set-timezone@v1.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
-          
-      - name: Repository
-        uses: actions/checkout@v3
-
-      - name: Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
 
       - name: Docker    
-        uses: actions/checkout@v3
         env:
           API_URL: ${{ secrets.API_URL }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -143,7 +136,7 @@ jobs:
           GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
           COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
           COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
-          run: docker-compose up --build -d
+        run: docker-compose up --build -d
 
       - name: 30s Sleep
         run: sleep 30s
