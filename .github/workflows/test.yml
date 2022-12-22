@@ -47,6 +47,7 @@ jobs:
         uses: szenius/set-timezone@v1.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
       - name: Repository
         uses: actions/checkout@v3
 
@@ -109,6 +110,18 @@ jobs:
         machines: [ 1, 2, 3, 4 ]
 
     steps:
+      - name: Timezone
+        uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+          
+      - name: Repository
+        uses: actions/checkout@v3
+
+      - name: Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
 
       - name: Docker    
         uses: actions/checkout@v3

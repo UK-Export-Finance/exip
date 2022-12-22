@@ -36,7 +36,7 @@ jobs:
 
 # 2. Lint
   lint:
-    name: Linting 🎨
+    name: Scanning 🎨
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
