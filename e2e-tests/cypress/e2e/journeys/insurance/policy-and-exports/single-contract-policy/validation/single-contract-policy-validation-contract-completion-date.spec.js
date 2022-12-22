@@ -216,9 +216,6 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     describe(`when the date is the same as ${REQUESTED_START_DATE}`, () => {
       it('should render a validation error', () => {
-        const date = new Date();
-        const yesterday = sub(date, { days: 1 });
-
         field.dayInput().clear().type(getDate(startDate));
         field.monthInput().clear().type(getMonth(startDate));
         field.yearInput().clear().type(getYear(startDate));
@@ -257,8 +254,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     describe(`when the date is over the maximum years allowed after ${REQUESTED_START_DATE}`, () => {
       it('should render a validation error', () => {
-        const date = new Date(startDate);
-        const futureDate = add(date, { years: PRODUCT.MAX_COVER_PERIOD_YEARS, days: 1 });
+        const futureDate = add(new Date(startDate), { years: PRODUCT.MAX_COVER_PERIOD_YEARS, days: 1 });
 
         field.dayInput().clear().type(getDate(futureDate));
         field.monthInput().clear().type(getMonth(futureDate));
