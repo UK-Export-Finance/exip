@@ -1,4 +1,10 @@
-name: EXIPS - Base Infrastructure
+# This GHA is responsible for `EXIP` base infrastructure
+# creation using AZ CLI. Following resources are created:
+#
+# 1. ACR
+# 2. WebApp
+name: Infrastructure 🔨
+run-name: EXIP Base infrastructure build on ${{ github.repository }}
 
 on:
   push:
@@ -8,10 +14,36 @@ on:
 
 jobs:
 
-  prod:
-    name: Production  
+############### 1. DEVELOPMENT ###############
+  development:
+    name: Development 🚀
+    environment: dev
+    runs-on: [ self-hosted, linux, deployment, infrastructure ]
+    steps:
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Azure Defaults
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az configure --defaults location=${{ secrets.AZURE_REGION }}
+          az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
+
+    - name: ACR
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az acr create --name ${{ secrets.ACR }} --sku Standard --admin-enabled true
+
+############### 2. PRODUCTION ###############
+  production:
+    name: Production 🚀
     environment: prod
-    runs-on: [self-hosted, linux, deployment, infrastructure]
+    runs-on: [ self-hosted, linux, deployment, infrastructure ]
     steps:
 
     - name: Azure Login
