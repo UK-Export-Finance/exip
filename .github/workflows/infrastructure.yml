@@ -55,7 +55,7 @@ jobs:
         inlineScript: |
           az webapp create --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
           --plan ${{ env.plan }} \
-          --deployment-container-image-name ${{ env.acr }}/{{ env.name }}:${{ env.plan }}
+          --deployment-container-image-name ${{ env.acr }}/${{ env.name }}:${{ env.plan }}
 
 # Production environment
   production:
