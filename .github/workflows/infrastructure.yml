@@ -21,19 +21,19 @@ jobs:
     runs-on: [ self-hosted, linux, deployment, infrastructure ]
     steps:
 
-    - name: Azure Login
+    - name: Azure Login 🔐
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Azure Defaults
+    - name: Azure Defaults ✨
       uses: azure/cli@v1.0.0
       with:
         inlineScript: |
           az configure --defaults location=${{ secrets.AZURE_REGION }}
           az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
 
-    - name: ACR
+    - name: ACR 📦️
       uses: azure/cli@v1.0.0
       with:
         inlineScript: |
@@ -46,19 +46,19 @@ jobs:
     runs-on: [ self-hosted, linux, deployment, infrastructure ]
     steps:
 
-    - name: Azure Login
+    - name: Azure Login 🔐
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Azure Defaults
+    - name: Azure Defaults ✨
       uses: azure/cli@v1.0.0
       with:
         inlineScript: |
           az configure --defaults location=${{ secrets.AZURE_REGION }}
           az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
 
-    - name: ACR
+    - name: ACR 📦️
       uses: azure/cli@v1.0.0
       with:
         inlineScript: |
