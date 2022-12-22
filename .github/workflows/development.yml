@@ -67,7 +67,10 @@ jobs:
         repository: ${{ env.name }}
         path: src/${{ env.name }}
         tags: ${{ env.from }}
-        build_args: GITHUB_SHA=${{ github.sha }}
+        build_args:
+          GITHUB_SHA=${{ github.sha }}
+          SESSION_SECRET=${{ secrets.SESSION_SECRET }}
+          GOV_NOTIFY_API_KEY=${{ secrets.GOV_NOTIFY_API_KEY }}
         add_git_labels: true
 
     - name: ACR - `dev` artifact
