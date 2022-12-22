@@ -48,14 +48,15 @@ jobs:
           az acr create --name ${{ secrets.ACR }} --sku Standard --admin-enabled true
 
     - name: WebApp UI 🌐
+      id: ui
       uses: azure/cli@v1.0.0
       env:
         name: ui
       with:
         inlineScript: |
-          az webapp create --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          az webapp create --name ${{ env.product }}-${{ env.plan }}-${{ steps.ui.env.name }} \
           --plan ${{ env.plan }} \
-          --deployment-container-image-name ${{ env.acr }}/{{ env.name }}:${{ env.plan }}
+          --deployment-container-image-name ${{ env.acr }}/{{ steps.ui.env.name }}:${{ env.plan }}
 
 # Production environment
   production:
