@@ -46,7 +46,6 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     env:
       name: ui
-      webapp: ${{ env.product }}-${{ env.environment }}-${{ env.name }}
       
     steps:
     - name: Repository
@@ -95,12 +94,12 @@ jobs:
       uses: azure/cli@v1.0.0
       with:
         inlineScript: |
-          az webapp deployment slot create --name ${{ env.webapp }} --slot ${{ github.sha }} --configuration-source ${{ env.webapp }}
-          az webapp deployment slot swap --name ${{ env.webapp }} --slot ${{ github.sha }} --action swap
-          az webapp deployment slot delete --name ${{ env.webapp }} --slot ${{ github.sha }}
+          az webapp deployment slot create --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }} --configuration-source ${{ env.product }}-${{ env.environment }}-${{ env.name }}
+          az webapp deployment slot swap --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }} --action swap
+          az webapp deployment slot delete --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }}
     
     - name: 8. Azure WebApp - Restart
       uses: azure/cli@v1.0.0
       with:
         inlineScript: |
-          az webapp restart --name ${{ env.webapp }}
+          az webapp restart --name ${{ env.product }}-${{ env.environment }}-${{ env.name }}
