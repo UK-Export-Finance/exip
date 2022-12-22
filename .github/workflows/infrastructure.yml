@@ -12,13 +12,21 @@ on:
     paths: 
     - '.github/workflows/infrastructure.yml'
 
+env:
+  product: exip
+
 jobs:
 
-############### 1. DEVELOPMENT ###############
+# Development environment
   development:
     name: Development 🚀
     environment: dev
     runs-on: [ self-hosted, linux, deployment, infrastructure ]
+    env:
+      plan: dev
+      acr: ${{ secrets.ACR_SERVER }}
+      acr_username: ${{ secrets.ACR_USERNAME }}
+      acr_password: ${{ secrets.ACR_PASSWORD }}
     steps:
 
     - name: Azure Login 🔐
@@ -39,7 +47,17 @@ jobs:
         inlineScript: |
           az acr create --name ${{ secrets.ACR }} --sku Standard --admin-enabled true
 
-############### 2. PRODUCTION ###############
+    - name: WebApp UI 🌐
+      uses: azure/cli@v1.0.0
+      env:
+        name: ui
+      with:
+        inlineScript: |
+          az webapp create --name ${{ env.product }}-${{ jobs.development.env.plan }}-${{ jobs.development.steps[3].env.name }} \
+          --plan ${{ development.env.service_plan }} \
+          --deployment-container-image-name ${{ env.acr }}/{{ jobs.development.steps[3].env.name }}:${{ jobs.development.env.plan }}
+
+# Production environment
   production:
     name: Production 🚀
     environment: prod
