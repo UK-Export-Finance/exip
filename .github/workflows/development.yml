@@ -46,6 +46,8 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     env:
       name: api
+      SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+      GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
       
     steps:
     - name: Repository
