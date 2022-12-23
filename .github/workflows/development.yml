@@ -37,7 +37,7 @@ jobs:
     - name: Environment 🧪
       run: echo "Environment set to ${{ env.environment }}"
 
-# 2. DB - Initilisation
+# 2. DB - Initialisation
   database:
     name: Database 📦️
     needs: setup
