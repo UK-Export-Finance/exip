@@ -16,6 +16,7 @@ on:
 env:
   product: exip
 
+
 jobs:
 
 # Development environment
@@ -24,6 +25,7 @@ jobs:
     environment: dev
     runs-on: [ self-hosted, linux, deployment, infrastructure ]
     env:
+      type: Pre-production
       plan: dev
       acr: ${{ secrets.ACR_SERVER }}
       acr_username: ${{ secrets.ACR_USERNAME }}
@@ -56,7 +58,9 @@ jobs:
         inlineScript: |
           az webapp create --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
           --plan ${{ env.plan }} \
-          --deployment-container-image-name ${{ env.acr }}/${{ env.name }}:${{ env.plan }}
+          --deployment-container-image-name ${{ env.acr }}/${{ env.name }}:${{ env.plan }} \
+          --tags "Environment=${{ env.type }}" \
+          --tags "Product=${{ env.product }}"
 
           az webapp deployment container config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
           --enable-cd true
@@ -94,7 +98,9 @@ jobs:
         inlineScript: |
           az webapp create --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
           --plan ${{ env.plan }} \
-          --deployment-container-image-name ${{ env.acr }}/${{ env.name }}:${{ env.plan }}
+          --deployment-container-image-name ${{ env.acr }}/${{ env.name }}:${{ env.plan }} \
+          --tags "Environment=${{ env.type }}" \
+          --tags "Product=${{ env.product }}"
 
           az webapp deployment container config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
           --enable-cd true
@@ -112,7 +118,7 @@ jobs:
           GOV_NOTIFY_API_KEY=${{ secrets.GOV_NOTIFY_API_KEY }} \
           COMPANIES_HOUSE_API_URL=${{ secrets.COMPANIES_HOUSE_API_URL }} \
           COMPANIES_HOUSE_API_KEY=${{ secrets.COMPANIES_HOUSE_API_KEY }} \
-          DATABASE_URL=${{ secrets.DATABASE_URL_DETACHED }} \
+          DATABASE_URL=${{ secrets.DATABASE_URL }} \
           MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
           MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} \
           MULESOFT_API_CIS_URL=${{ secrets.MULESOFT_API_CIS_URL }} \
@@ -124,6 +130,36 @@ jobs:
 
           az webapp log config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
           --docker-container-logging filesystem
+
+    - name: MySQL 📝
+      uses: azure/cli@v1.0.0
+      env:
+        name: mysql
+      with:
+        inlineScript: |
+          az mysql flexible-server create \
+          --location ${{ secrets.AZURE_REGION }} \
+          --resource-group ${{ secrets.RESOURCE_GROUP }} \
+          --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --database-name ${{ secrets.MYSQL_DATABASE }} \
+          --admin-user ${{ secrets.MYSQL_DATABASE }} \
+          --admin-password ${{ secrets.MYSQL_ROOT_PASSWORD }} \
+          --sku-name Standard_B1s \
+          --tier Burstable \
+          --version 8.0 \
+          --storage-size 10 \
+          --storage-auto-grow Disabled \
+          --geo-redundant-backup Disabled \
+          --iops 360 \
+          --backup-retention 3
+
+          az mysql flexible-server execute \
+          --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --admin-password ${{ secrets.MYSQL_ROOT_PASSWORD }} \
+          --admin-user ${{ secrets.MYSQL_DATABASE }} \
+          --database-name ${{ secrets.MYSQL_DATABASE }} \
+          --file-path ./database/exip.sql
+
 
 # Production environment
   production:
