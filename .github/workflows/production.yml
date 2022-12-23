@@ -8,7 +8,7 @@
 # 1. UI
 
 name: Deployment - Production
-run-name: Executing test QA on ${{ github.repository }} 🚀
+run-name: Deploying to production ${{ github.repository }} 🚀
 
 on:
   push:
@@ -59,7 +59,7 @@ jobs:
         password: ${{ env.acr_password }}
         repository: ${{ env.repository }}
         path: src/ui
-        tags: latest
+        tags: ${{ env.from }}
         build_args: GITHUB_SHA=${{ github.sha }}
         add_git_labels: true
 
