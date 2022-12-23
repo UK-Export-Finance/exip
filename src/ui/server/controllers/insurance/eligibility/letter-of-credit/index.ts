@@ -12,8 +12,10 @@ const PAGE_VARIABLES = {
   PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT,
 };
 
+export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT;
+
 const get = (req: Request, res: Response) =>
-  res.render(TEMPLATES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT, {
+  res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
@@ -22,7 +24,7 @@ const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT, {
+    return res.render(TEMPLATE, {
       ...singleInputPageVariables({
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,

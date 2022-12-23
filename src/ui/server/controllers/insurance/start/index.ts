@@ -3,6 +3,8 @@ import { ROUTES, TEMPLATES } from '../../../constants';
 import { Request, Response } from '../../../../types';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 
+export const TEMPLATE = TEMPLATES.INSURANCE.START;
+
 const get = (req: Request, res: Response) => {
   // new insurance eligibility data in session
   req.session.submittedData = {
@@ -10,7 +12,7 @@ const get = (req: Request, res: Response) => {
     insuranceEligibility: {},
   };
 
-  return res.render(TEMPLATES.INSURANCE.START, {
+  return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.START,
       BACK_LINK: req.headers.referer,

@@ -16,8 +16,10 @@ const PAGE_VARIABLES = {
   },
 };
 
+export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES;
+
 const get = (req: Request, res: Response) =>
-  res.render(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
+  res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
@@ -26,7 +28,7 @@ const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
+    return res.render(TEMPLATE, {
       ...singleInputPageVariables({
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,

@@ -12,8 +12,10 @@ const PAGE_VARIABLES = {
   PAGE_CONTENT_STRINGS: PAGES.EXPORTER_LOCATION,
 };
 
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION;
+
 const get = (req: Request, res: Response) =>
-  res.render(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, {
+  res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
@@ -22,7 +24,7 @@ const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, {
+    return res.render(TEMPLATE, {
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
       validationErrors,
     });

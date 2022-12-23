@@ -1,4 +1,4 @@
-import { generatePageVariables, get, post } from '.';
+import { generatePageVariables, TEMPLATE, get, post } from '.';
 import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
@@ -186,6 +186,12 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
         expect(result).toEqual(expected);
       });
+    });
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
   });
 

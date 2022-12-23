@@ -9,7 +9,7 @@ import { get as insuredPeriodGet, post as insuredPeriodPost } from '../../../con
 import { get as letterOfCreditGet, post as letterOfCreditPost } from '../../../controllers/insurance/eligibility/letter-of-credit';
 import { get as companiesHouseNumberGet, post as companiesHouseNumberPost } from '../../../controllers/insurance/eligibility/companies-house-number';
 import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } from '../../../controllers/insurance/eligibility/eligible-to-apply-online';
-import cannotApplyGet from '../../../controllers/insurance/eligibility/cannot-apply';
+import { get as cannotApplyGet } from '../../../controllers/insurance/eligibility/cannot-apply';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../../controllers/insurance/eligibility/need-to-start-again';
 
 describe('routes/insurance/eligibility', () => {

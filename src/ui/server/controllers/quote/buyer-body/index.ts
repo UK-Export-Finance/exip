@@ -12,6 +12,8 @@ const PAGE_VARIABLES = {
   PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
 };
 
+export const TEMPLATE = TEMPLATES.QUOTE.BUYER_BODY;
+
 /**
  * mapAnswer
  * Map yes/no answer to true/false boolean.
@@ -51,7 +53,7 @@ const mapSubmittedAnswer = (answer?: boolean) => {
 const get = (req: Request, res: Response) => {
   const mappedAnswer = mapSubmittedAnswer(req.session.submittedData.quoteEligibility[FIELD_ID]);
 
-  return res.render(TEMPLATES.QUOTE.BUYER_BODY, {
+  return res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
     submittedValues: {
       ...req.session.submittedData.quoteEligibility,
@@ -64,7 +66,7 @@ const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.QUOTE.BUYER_BODY, {
+    return res.render(TEMPLATE, {
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
       validationErrors,
     });

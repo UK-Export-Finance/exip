@@ -14,11 +14,13 @@ const PAGE_VARIABLES = {
   PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
 };
 
+export const TEMPLATE = TEMPLATES.COOKIES;
+
 const get = (req: Request, res: Response) => {
   // store the previous URL so that we can use this in the POST res.render.
   req.flash('previousUrl', req.headers.referer);
 
-  return res.render(TEMPLATES.COOKIES, {
+  return res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
     submittedValue: req.cookies.optionalCookies,
@@ -31,7 +33,7 @@ const post = (req: Request, res: Response) => {
   let backLink = req.headers.referer;
 
   if (validationErrors) {
-    return res.render(TEMPLATES.COOKIES, {
+    return res.render(TEMPLATE, {
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
       FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
       BACK_LINK: req.headers.referer,
@@ -47,7 +49,7 @@ const post = (req: Request, res: Response) => {
     backLink = previousUrl[previousUrl.length - 1];
   }
 
-  return res.render(TEMPLATES.COOKIES, {
+  return res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: backLink, START_ROUTE: startRoute }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
     submittedValue: req.cookies.optionalCookies,

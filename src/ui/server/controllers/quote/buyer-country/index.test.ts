@@ -1,4 +1,4 @@
-import { PAGE_VARIABLES, getBackLink, get, post } from '.';
+import { PAGE_VARIABLES, TEMPLATE, getBackLink, get, post } from '.';
 import { LINKS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
@@ -41,6 +41,12 @@ describe('controllers/quote/buyer-country', () => {
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
+    });
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY);
     });
   });
 
