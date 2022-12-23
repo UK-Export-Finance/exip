@@ -8,31 +8,36 @@ NC='\033[0m'
 printf "📝 Deployment strategy:\n"
 printf "=======================\n\n"
 printf "${YELLOW}0. Infrastructure 🔧${NC}\n"
-printf "${RED}1. Production 🚀${NC}\n"
-printf "${RED}2. ACR Purge 🗑️${NC}\n\n"
+printf "${RED}1. Development 🚀${NC}\n"
+printf "${RED}2. Production 🚀${NC}\n"
+printf "${RED}3. ACR Purge 🗑️${NC}\n\n"
 
 read selection
 
 if [ -n "$selection" ]; then
 
+    ############### INFRA ###############
     if [ "$selection" = "0" ]
     then
-    ############### INFRA ###############
     destination=infrastructure
     branch=main
-    ############### INFRA ###############
+    ############### DEVELOPMENT ###############
     elif [ "$selection" = "1" ]
     then
+    destination=dev
+    branch=main-application
     ############### PRODUCTION ###############
+    elif [ "$selection" = "2" ]
+    then
     destination=prod
     branch=main
-    ############### PRODUCTION ###############
-    elif [ "$selection" = "4" ]
-    then
     ############### ACR PURGE ###############
+    elif [ "$selection" = "3" ]
+    then
     destination=""
     branch=""
-    az acr run --cmd "acr purge --filter 'exips-prod-get-a-quote:.*' --ago 15d" --registry exipsproduction /dev/null
+    az acr run --cmd "acr purge --filter 'get-a-quote:.*' --ago 15d" --registry exip-development /dev/null
+    az acr run --cmd "acr purge --filter 'get-a-quote:.*' --ago 15d" --registry exip-production /dev/null
     ############### ACR PURGE ###############
     fi
 
@@ -62,7 +67,7 @@ else
 fi
 
 #######################################
-# UKEF deployment shell script v0.0.3
-# 05/09/2022
+# UKEF deployment shell script v0.0.4
+# 22/12/2022
 # Abhi Markan
 #######################################

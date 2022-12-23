@@ -14,8 +14,7 @@
     "start": "ts-node server/index.ts",
     "dev": "npx nodemon server/index.ts",
     "test": "jest --notify --coverage --verbose --config=jest.config.js",
-    "test-watch": "jest --watchAll --notify --coverage --verbose --config=jest.config.js --detectOpenHandles",
-    "component-test": "jest --notify --config=jest.component-test.config.js"
+    "test-watch": "jest --watchAll --notify --coverage --verbose --config=jest.config.js --detectOpenHandles"
   },
   "repository": {
     "type": "git",

@@ -1,10 +1,20 @@
-name: EXIPS - Production deployment
+# EXIP Git Hub Actions
+#####################################
+# Initiates `Production` environment deployment.
+# Deployment is initiated by pushing `latest` artifact
+# to ACR, further tagged with `prod` before slots based deployment.
+#
+# Following microservices are deployed with latest artifacts:
+# 1. UI
+
+name: Deployment - Production
+run-name: Deploying to production ${{ github.repository }} 🚀
 
 on:
   push:
     branches: [ prod ]
     paths:
-    - 'src/ui/**'
+    - 'src/**'
   
 env:
   environment: prod
@@ -16,31 +26,32 @@ env:
   acr_password: ${{ secrets.ACR_PASSWORD }}
 
 jobs:
-  #################### 0. ENVIRONMENT ####################
-  production-environment:
-    name: Environment setup
+
+  # 1. Setup deployment environment
+  setup:
+    name: Environment setup 🔧
     runs-on: [self-hosted, linux, deployment]
     outputs:
       environment: ${{ env.environment }}
     steps:
-    - name: Initialise Environment
-      run: echo "Setting up ${{ env.environment }} environment"
+    - name: Environment 🧪
+      run: echo "Environment set to ${{ env.environment }}"
 
-  #################### 1. GET-A-QUOTE ####################
-  get-a-quote:
-    needs: production-environment
-    name: Get a quote
+  # 2. UI - Deployment
+  ui:
+    name: UI 🎨
+    needs: setup
     runs-on: [self-hosted, linux, deployment]
     environment:
-      name: ${{ needs.production-environment.outputs.environment }}
+      name: ${{ needs.setup.outputs.environment }}
     env:
       repository: get-a-quote
       
     steps:
-    - name: 1. GH Checkout
+    - name: 1. Repository
       uses: actions/checkout@v3
 
-    - name: 2. ACR - Push (Latest)
+    - name: 2. ACR - `latest` artifact
       uses: docker/build-push-action@v1
       with:
         registry: ${{ env.acr }}
@@ -48,7 +59,7 @@ jobs:
         password: ${{ env.acr_password }}
         repository: ${{ env.repository }}
         path: src/ui
-        tags: latest
+        tags: ${{ env.from }}
         build_args: GITHUB_SHA=${{ github.sha }}
         add_git_labels: true
 
@@ -59,7 +70,7 @@ jobs:
         username: ${{ env.acr_username }}
         password: ${{ env.acr_password }}
 
-    - name: 4. ACR - Push (Prod)
+    - name: 4. ACR - `prod` artifact
       run: |
         from=${{ env.from }}
         to=${{ env.environment }}
