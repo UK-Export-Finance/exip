@@ -3,6 +3,7 @@
 #
 # 1. ACR
 # 2. WebApp
+
 name: Infrastructure 🔨
 run-name: EXIP Base infrastructure build on ${{ github.repository }}
 
@@ -12,53 +13,170 @@ on:
     paths: 
     - '.github/workflows/infrastructure.yml'
 
+env:
+  product: exip
+
 jobs:
 
-############### 1. DEVELOPMENT ###############
+# Development environment
   development:
     name: Development 🚀
     environment: dev
     runs-on: [ self-hosted, linux, deployment, infrastructure ]
+    env:
+      type: Pre-production
+      plan: dev
+      acr: ${{ secrets.ACR_SERVER }}
+      acr_username: ${{ secrets.ACR_USERNAME }}
+      acr_password: ${{ secrets.ACR_PASSWORD }}
     steps:
 
-    - name: Azure Login
+    - name: Azure Login 🔐
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Azure Defaults
+    - name: Azure Defaults ✨
       uses: azure/cli@v1.0.0
       with:
         inlineScript: |
           az configure --defaults location=${{ secrets.AZURE_REGION }}
           az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
 
-    - name: ACR
+    - name: ACR 📦️
       uses: azure/cli@v1.0.0
       with:
         inlineScript: |
           az acr create --name ${{ secrets.ACR }} --sku Standard --admin-enabled true
 
-############### 2. PRODUCTION ###############
+    - name: WebApp UI 🌐
+      uses: azure/cli@v1.0.0
+      env:
+        name: ui
+      with:
+        inlineScript: |
+          az webapp create --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --plan ${{ env.plan }} \
+          --deployment-container-image-name ${{ env.acr }}/${{ env.name }}:${{ env.plan }} \
+          --tags "Environment=${{ env.type }}" \
+          --tags "Product=${{ env.product }}"
+
+          az webapp deployment container config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --enable-cd true
+
+          az webapp config set --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --always-on true
+
+          az webapp config appsettings set --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --settings \
+          WEBSITE_DNS_SERVER="168.63.129.16" \
+          WEBSITE_VNET_ROUTE_ALL=1 \
+          SESSION_SECRET=${{ secrets.SESSION_SECRET }} \
+          BASIC_AUTH_KEY=${{ secrets.BASIC_AUTH_KEY }} \
+          BASIC_AUTH_SECRET=${{ secrets.BASIC_AUTH_SECRET }} \
+          GOOGLE_ANALYTICS_ID=${{ secrets.GOOGLE_ANALYTICS_ID }} \
+          GOV_NOTIFY_API_KEY=${{ secrets.GOV_NOTIFY_API_KEY }} \
+          COMPANIES_HOUSE_API_URL=${{ secrets.COMPANIES_HOUSE_API_URL }} \
+          COMPANIES_HOUSE_API_KEY=${{ secrets.COMPANIES_HOUSE_API_KEY }} \
+          API_URL=${{ secrets.API_URL }} \
+          MULESOFT_API_CIS_URL=${{ secrets.MULESOFT_API_CIS_URL }} \
+          MULESOFT_API_CIS_KEY=${{ secrets.MULESOFT_API_CIS_KEY }} \
+          MULESOFT_API_CIS_SECRET=${{ secrets.MULESOFT_API_CIS_SECRET }} \
+          MULESOFT_API_MDM_EA_URL=${{ secrets.MULESOFT_API_MDM_EA_URL }} \
+          MULESOFT_API_MDM_EA_KEY=${{ secrets.MULESOFT_API_MDM_EA_KEY }} \
+          MULESOFT_API_MDM_EA_SECRET=${{ secrets.MULESOFT_API_MDM_EA_SECRET }}
+
+          az webapp log config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --docker-container-logging filesystem
+
+    - name: WebApp API 🌐
+      uses: azure/cli@v1.0.0
+      env:
+        name: api
+      with:
+        inlineScript: |
+          az webapp create --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --plan ${{ env.plan }} \
+          --deployment-container-image-name ${{ env.acr }}/${{ env.name }}:${{ env.plan }} \
+          --tags "Environment=${{ env.type }}" \
+          --tags "Product=${{ env.product }}"
+
+          az webapp deployment container config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --enable-cd true
+
+          az webapp config set --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --always-on true
+
+          az webapp config appsettings set --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --settings \
+          WEBSITE_DNS_SERVER="168.63.129.16" \
+          WEBSITE_VNET_ROUTE_ALL=1 \
+          SESSION_SECRET=${{ secrets.SESSION_SECRET }} \
+          BASIC_AUTH_KEY=${{ secrets.BASIC_AUTH_KEY }} \
+          BASIC_AUTH_SECRET=${{ secrets.BASIC_AUTH_SECRET }} \
+          GOV_NOTIFY_API_KEY=${{ secrets.GOV_NOTIFY_API_KEY }} \
+          COMPANIES_HOUSE_API_URL=${{ secrets.COMPANIES_HOUSE_API_URL }} \
+          COMPANIES_HOUSE_API_KEY=${{ secrets.COMPANIES_HOUSE_API_KEY }} \
+          DATABASE_URL=${{ secrets.DATABASE_URL }} \
+          MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
+          MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} \
+          MULESOFT_API_CIS_URL=${{ secrets.MULESOFT_API_CIS_URL }} \
+          MULESOFT_API_CIS_KEY=${{ secrets.MULESOFT_API_CIS_KEY }} \
+          MULESOFT_API_CIS_SECRET=${{ secrets.MULESOFT_API_CIS_SECRET }} \
+          MULESOFT_API_MDM_EA_URL=${{ secrets.MULESOFT_API_MDM_EA_URL }} \
+          MULESOFT_API_MDM_EA_KEY=${{ secrets.MULESOFT_API_MDM_EA_KEY }} \
+          MULESOFT_API_MDM_EA_SECRET=${{ secrets.MULESOFT_API_MDM_EA_SECRET }}
+
+          az webapp log config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          --docker-container-logging filesystem
+
+    - name: MySQL 📝
+      uses: azure/cli@v1.0.0
+      env:
+        name: mysql
+      with:
+        inlineScript: |
+          #TO-DO: Enable
+          # 1. Azure MySQL Flexible server upon UK South availability
+          # 2. Azure Private VNET connection
+
+          # az mysql flexible-server create \
+          # --location ${{ secrets.AZURE_REGION }} \
+          # --resource-group ${{ secrets.RESOURCE_GROUP }} \
+          # --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          # --database-name ${{ secrets.MYSQL_DATABASE }} \
+          # --admin-user ${{ secrets.MYSQL_DATABASE }} \
+          # --admin-password ${{ secrets.MYSQL_ROOT_PASSWORD }} \
+          # --sku-name Standard_B1s \
+          # --tier Burstable \
+          # --version 8.0 \
+          # --storage-size 10 \
+          # --storage-auto-grow Disabled \
+          # --geo-redundant-backup Disabled \
+          # --iops 360 \
+          # --backup-retention 3
+
+
+# Production environment
   production:
     name: Production 🚀
     environment: prod
     runs-on: [ self-hosted, linux, deployment, infrastructure ]
     steps:
 
-    - name: Azure Login
+    - name: Azure Login 🔐
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Azure Defaults
+    - name: Azure Defaults ✨
       uses: azure/cli@v1.0.0
       with:
         inlineScript: |
           az configure --defaults location=${{ secrets.AZURE_REGION }}
           az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
 
-    - name: ACR
+    - name: ACR 📦️
       uses: azure/cli@v1.0.0
       with:
         inlineScript: |

@@ -1,0 +1,214 @@
+# EXIP Git Hub Actions
+#####################################
+# Initiates `Development` environment deployment.
+# Deployment is initiated by pushing `latest` artifact
+# to ACR, further tagged with `dev` before slots based deployment.
+#
+# Following microservices are deployed with latest artifacts:
+# 1. UI
+
+name: Deployment - Development
+run-name: Deploying to dev ${{ github.repository }} 🚀
+
+on:
+  push:
+    branches: [ dev ]
+    paths:
+    - 'src/**'
+  
+env:
+  product: exip
+  environment: dev
+  from: latest
+  credentials: ${{ secrets.AZURE_CREDENTIALS }}
+  acr: ${{ secrets.ACR_SERVER }}
+  acr_username: ${{ secrets.ACR_USERNAME }}
+  acr_password: ${{ secrets.ACR_PASSWORD }}
+
+jobs:
+
+  # 1. Setup deployment environment
+  setup:
+    name: Environment setup 🔧
+    runs-on: [self-hosted, linux, deployment]
+    outputs:
+      environment: ${{ env.environment }}
+    steps:
+    - name: Environment 🧪
+      run: echo "Environment set to ${{ env.environment }}"
+
+# 2. DB - Initialisation
+  database:
+    name: Database 📦️
+    needs: setup
+    runs-on: [self-hosted, linux, deployment]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    env:
+      name: mysql
+      
+    steps:
+    - name: Repository
+      uses: actions/checkout@v3
+
+    - name: Azure - Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ env.credentials }}
+
+    - name: Azure - CLI defaults
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az configure --defaults location=${{ secrets.AZURE_REGION }}
+          az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
+
+    - name: Initialise
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          # To-Do: Enable MySQL script execution
+
+          # az mysql flexible-server execute \
+          # --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          # --admin-password ${{ secrets.MYSQL_ROOT_PASSWORD }} \
+          # --admin-user ${{ secrets.MYSQL_DATABASE }} \
+          # --database-name ${{ secrets.MYSQL_DATABASE }} \
+          # --file-path ./database/exip.sql
+
+# 3. API - Deployment
+  api:
+    name: API 📦️
+    needs: setup
+    runs-on: [self-hosted, linux, deployment]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    env:
+      name: api
+      
+    steps:
+    - name: Repository
+      uses: actions/checkout@v3
+
+    - name: ACR - Login
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.acr }}
+        username: ${{ env.acr_username }}
+        password: ${{ env.acr_password }}
+
+    - name: ACR - `latest` artifact
+      uses: docker/build-push-action@v1
+      with:
+        registry: ${{ env.acr }}
+        username: ${{ env.acr_username }}
+        password: ${{ env.acr_password }}
+        repository: ${{ env.name }}
+        path: src/${{ env.name }}
+        tags: ${{ env.from }}
+        build_args:
+          SESSION_SECRET=${{ secrets.SESSION_SECRET }}
+          GITHUB_SHA=${{ github.sha }}
+          GOV_NOTIFY_API_KEY=${{ secrets.GOV_NOTIFY_API_KEY }}
+        add_git_labels: true
+
+    - name: ACR - `dev` artifact
+      run: |
+        from=${{ env.from }}
+        to=${{ env.environment }}
+        docker pull ${{ env.acr }}/${{ env.name }}:$from
+        docker tag ${{ env.acr }}/${{ env.name }}:$from ${{ env.acr }}/${{ env.name }}:$to
+        docker push ${{ env.acr }}/${{ env.name }}:$to
+
+    - name: Azure - Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ env.credentials }}
+
+    - name: Azure - CLI defaults
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az configure --defaults location=${{ secrets.AZURE_REGION }}
+          az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
+
+    - name: Azure WebApp - Slots
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az webapp deployment slot create --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }} --configuration-source ${{ env.product }}-${{ env.environment }}-${{ env.name }}
+          az webapp deployment slot swap --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }} --action swap
+          az webapp deployment slot delete --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }}
+    
+    - name: 8. Azure WebApp - Restart
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az webapp restart --name ${{ env.product }}-${{ env.environment }}-${{ env.name }}
+
+  # 4. UI - Deployment
+  ui:
+    name: UI 🎨
+    needs: setup
+    runs-on: [self-hosted, linux, deployment]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    env:
+      name: ui
+      
+    steps:
+    - name: Repository
+      uses: actions/checkout@v3
+
+    - name: ACR - Login
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.acr }}
+        username: ${{ env.acr_username }}
+        password: ${{ env.acr_password }}
+
+    - name: ACR - `latest` artifact
+      uses: docker/build-push-action@v1
+      with:
+        registry: ${{ env.acr }}
+        username: ${{ env.acr_username }}
+        password: ${{ env.acr_password }}
+        repository: ${{ env.name }}
+        path: src/${{ env.name }}
+        tags: ${{ env.from }}
+        build_args: GITHUB_SHA=${{ github.sha }}
+        add_git_labels: true
+
+    - name: ACR - `dev` artifact
+      run: |
+        from=${{ env.from }}
+        to=${{ env.environment }}
+        docker pull ${{ env.acr }}/${{ env.name }}:$from
+        docker tag ${{ env.acr }}/${{ env.name }}:$from ${{ env.acr }}/${{ env.name }}:$to
+        docker push ${{ env.acr }}/${{ env.name }}:$to
+
+    - name: Azure - Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ env.credentials }}
+
+    - name: Azure - CLI defaults
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az configure --defaults location=${{ secrets.AZURE_REGION }}
+          az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
+
+    - name: Azure WebApp - Slots
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az webapp deployment slot create --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }} --configuration-source ${{ env.product }}-${{ env.environment }}-${{ env.name }}
+          az webapp deployment slot swap --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }} --action swap
+          az webapp deployment slot delete --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }}
+    
+    - name: 8. Azure WebApp - Restart
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az webapp restart --name ${{ env.product }}-${{ env.environment }}-${{ env.name }}
