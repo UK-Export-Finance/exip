@@ -37,7 +37,44 @@ jobs:
     - name: Environment 🧪
       run: echo "Environment set to ${{ env.environment }}"
 
-# 2. API - Deployment
+# 2. DB - Initilisation
+  database:
+    name: Database 📦️
+    needs: setup
+    runs-on: [self-hosted, linux, deployment]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    env:
+      name: mysql
+      
+    steps:
+    - name: Repository
+      uses: actions/checkout@v3
+
+    - name: Azure - Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ env.credentials }}
+
+    - name: Azure - CLI defaults
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          az configure --defaults location=${{ secrets.AZURE_REGION }}
+          az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
+
+    - name: Initialise
+      uses: azure/cli@v1.0.0
+      with:
+        inlineScript: |
+          # az mysql flexible-server execute \
+          # --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          # --admin-password ${{ secrets.MYSQL_ROOT_PASSWORD }} \
+          # --admin-user ${{ secrets.MYSQL_DATABASE }} \
+          # --database-name ${{ secrets.MYSQL_DATABASE }} \
+          # --file-path ./database/exip.sql
+
+# 3. API - Deployment
   api:
     name: API 📦️
     needs: setup
