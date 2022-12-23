@@ -7,7 +7,7 @@ import { Request, Response } from '../../../../types';
 
 const FIELD_ID = FIELD_IDS.VALID_BUYER_BODY;
 
-const PAGE_VARIABLES = {
+export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
 };
@@ -22,7 +22,7 @@ export const TEMPLATE = TEMPLATES.QUOTE.BUYER_BODY;
  * If the answer is 'true', the 'buyer body' is invalid. Return false.
  * @returns {boolean}
  */
-const mapAnswer = (answer: string) => {
+export const mapAnswer = (answer: string) => {
   if (answer === 'false') {
     return true;
   }
@@ -38,7 +38,7 @@ const mapAnswer = (answer: string) => {
  * If the answer is 'true', the 'buyer body' is invalid and saved as false. Return true.
  * @returns {boolean}
  */
-const mapSubmittedAnswer = (answer?: boolean) => {
+export const mapSubmittedAnswer = (answer?: boolean) => {
   if (answer === false) {
     return true;
   }
@@ -50,7 +50,7 @@ const mapSubmittedAnswer = (answer?: boolean) => {
   return null;
 };
 
-const get = (req: Request, res: Response) => {
+export const get = (req: Request, res: Response) => {
   const mappedAnswer = mapSubmittedAnswer(req.session.submittedData.quoteEligibility[FIELD_ID]);
 
   return res.render(TEMPLATE, {
@@ -62,7 +62,7 @@ const get = (req: Request, res: Response) => {
   });
 };
 
-const post = (req: Request, res: Response) => {
+export const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
 
   if (validationErrors) {
@@ -92,5 +92,3 @@ const post = (req: Request, res: Response) => {
 
   return res.redirect(ROUTES.QUOTE.EXPORTER_LOCATION);
 };
-
-export { PAGE_VARIABLES, mapAnswer, mapSubmittedAnswer, get, post };

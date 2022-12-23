@@ -8,7 +8,7 @@ const FIELD_ID = FIELD_IDS.OPTIONAL_COOKIES;
 
 const startRoute = ROUTES.QUOTE.START;
 
-const PAGE_VARIABLES = {
+export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.COOKIES_PAGE,
   PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
@@ -16,7 +16,7 @@ const PAGE_VARIABLES = {
 
 export const TEMPLATE = TEMPLATES.COOKIES;
 
-const get = (req: Request, res: Response) => {
+export const get = (req: Request, res: Response) => {
   // store the previous URL so that we can use this in the POST res.render.
   req.flash('previousUrl', req.headers.referer);
 
@@ -27,7 +27,7 @@ const get = (req: Request, res: Response) => {
   });
 };
 
-const post = (req: Request, res: Response) => {
+export const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
 
   let backLink = req.headers.referer;
@@ -57,5 +57,3 @@ const post = (req: Request, res: Response) => {
     showSuccessMessageGoBackLink,
   });
 };
-
-export { PAGE_VARIABLES, get, post };

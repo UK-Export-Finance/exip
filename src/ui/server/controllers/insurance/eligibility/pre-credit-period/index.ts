@@ -7,20 +7,20 @@ import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD;
 
-const PAGE_VARIABLES = {
+export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD,
 };
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD;
 
-const get = (req: Request, res: Response) =>
+export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
 
-const post = (req: Request, res: Response) => {
+export const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
@@ -52,5 +52,3 @@ const post = (req: Request, res: Response) => {
 
   return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER);
 };
-
-export { PAGE_VARIABLES, get, post };

@@ -7,7 +7,7 @@ import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
 
-const PAGE_VARIABLES = {
+export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: {
     ...PAGES.UK_GOODS_OR_SERVICES,
@@ -18,13 +18,13 @@ const PAGE_VARIABLES = {
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES;
 
-const get = (req: Request, res: Response) =>
+export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
 
-const post = (req: Request, res: Response) => {
+export const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
@@ -55,5 +55,3 @@ const post = (req: Request, res: Response) => {
 
   return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
 };
-
-export { PAGE_VARIABLES, get, post };

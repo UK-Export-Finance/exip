@@ -7,7 +7,7 @@ import { Request, Response } from '../../../../types';
 
 export const TEMPLATE = TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS;
 
-const get = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
   const answers = mapAnswersToContent(req.session.submittedData.quoteEligibility);
 
   const summaryList = answersSummaryList(answers);
@@ -18,6 +18,4 @@ const get = async (req: Request, res: Response) => {
   });
 };
 
-const post = (req: Request, res: Response) => res.redirect(ROUTES.QUOTE.YOUR_QUOTE);
-
-export { get, post };
+export const post = (req: Request, res: Response) => res.redirect(ROUTES.QUOTE.YOUR_QUOTE);

@@ -5,7 +5,7 @@ import insuranceCorePageVariables from '../../../helpers/page-variables/core/ins
 
 export const TEMPLATE = TEMPLATES.INSURANCE.START;
 
-const get = (req: Request, res: Response) => {
+export const get = (req: Request, res: Response) => {
   // new insurance eligibility data in session
   req.session.submittedData = {
     ...req.session.submittedData,
@@ -20,8 +20,6 @@ const get = (req: Request, res: Response) => {
   });
 };
 
-const post = (req: Request, res: Response) => {
+export const post = (req: Request, res: Response) => {
   return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE);
 };
-
-export { get, post };
