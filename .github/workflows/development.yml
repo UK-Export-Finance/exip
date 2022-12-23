@@ -12,9 +12,9 @@ run-name: Deploying to dev ${{ github.repository }} 🚀
 
 on:
   push:
-    branches: [ EMS-470-api-in-dev-environment ]
-    # paths:
-    # - 'src/**'
+    branches: [ dev ]
+    paths:
+    - 'src/**'
   
 env:
   product: exip
@@ -67,6 +67,8 @@ jobs:
       uses: azure/cli@v1.0.0
       with:
         inlineScript: |
+          # To-Do: Enable MySQL script execution
+
           # az mysql flexible-server execute \
           # --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
           # --admin-password ${{ secrets.MYSQL_ROOT_PASSWORD }} \
