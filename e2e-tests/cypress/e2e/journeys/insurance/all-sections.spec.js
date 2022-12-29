@@ -1,6 +1,6 @@
 import { addMonths, format } from 'date-fns';
 import { heading } from '../../pages/shared';
-import { allSectionsPage } from '../../pages/insurance';
+import insurance from '../../pages/insurance';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -241,17 +241,17 @@ context('Insurance - All sections - new application', () => {
 
   describe('submission deadline', () => {
     it('should render a heading', () => {
-      allSectionsPage.submissionDeadlineHeading().should('exist');
-      allSectionsPage.submissionDeadlineHeading().invoke('text').then((text) => {
+      insurance.allSectionsPage.submissionDeadlineHeading().should('exist');
+      insurance.allSectionsPage.submissionDeadlineHeading().invoke('text').then((text) => {
         expect(text.trim()).equal(CONTENT_STRINGS.DEADLINE_TO_SUBMIT);
       });
     });
 
     it('should render correct submission deadline', () => {
-      allSectionsPage.submissionDeadline().should('exist');
-      allSectionsPage.submissionDeadline().invoke('text').then((text) => {
+      insurance.allSectionsPage.submissionDeadline().should('exist');
+      insurance.allSectionsPage.submissionDeadline().invoke('text').then((text) => {
         const timestamp = addMonths(new Date(), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
-        
+
         const expected = format(new Date(timestamp), 'd MMMM yyyy');
 
         expect(text.trim()).equal(expected);
@@ -261,15 +261,15 @@ context('Insurance - All sections - new application', () => {
 
   describe('reference number', () => {
     it('should render a heading', () => {
-      allSectionsPage.yourReferenceNumberHeading().should('exist');
-      allSectionsPage.yourReferenceNumberHeading().invoke('text').then((text) => {
+      insurance.allSectionsPage.yourReferenceNumberHeading().should('exist');
+      insurance.allSectionsPage.yourReferenceNumberHeading().invoke('text').then((text) => {
         expect(text.trim()).equal(CONTENT_STRINGS.REFERENCE_NUMBER);
       });
     });
 
     it('should render correct reference number', () => {
-      allSectionsPage.yourReferenceNumber().should('exist');
-      allSectionsPage.yourReferenceNumber().invoke('text').then((text) => {
+      insurance.allSectionsPage.yourReferenceNumber().should('exist');
+      insurance.allSectionsPage.yourReferenceNumber().invoke('text').then((text) => {
         expect(text.trim()).equal(referenceNumber);
       });
     });
