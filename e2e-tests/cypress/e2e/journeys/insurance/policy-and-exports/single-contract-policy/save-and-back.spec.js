@@ -40,7 +40,7 @@ const {
 context('Insurance - Policy and exports - Type of policy page - Save and go back', () => {
   let referenceNumber;
   const date = new Date();
-  const futureDate = add(date, { days: 1, months: 3 });
+  const futureDate = add(date, { months: 3 });
 
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {

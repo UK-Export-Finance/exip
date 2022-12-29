@@ -71,7 +71,7 @@ const goToPageDirectly = (referenceNumber) => {
 context('Insurance - Policy and exports - Single contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
   const date = new Date();
-  const futureDate = add(date, { days: 1, months: 3 });
+  const futureDate = add(date, { months: 3 });
 
   before(() => {
     cy.visit(START, {
