@@ -80,8 +80,8 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
     it('should return validation error', () => {
       const mockSubmittedData = {
         [`${CONTRACT_COMPLETION_DATE}-day`]: 'One',
-        [`${CONTRACT_COMPLETION_DATE}-month`]: 'Two',
-        [`${CONTRACT_COMPLETION_DATE}-year`]: 'Three',
+        [`${CONTRACT_COMPLETION_DATE}-month`]: '!@',
+        [`${CONTRACT_COMPLETION_DATE}-year`]: ' ',
       };
 
       const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
