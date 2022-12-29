@@ -1,6 +1,5 @@
 import {
   add,
-  getDate,
   getMonth,
   getYear,
 } from 'date-fns';
