@@ -40,7 +40,7 @@ const {
 context('Insurance - Policy and exports - Type of policy page - Save and go back', () => {
   let referenceNumber;
   const date = new Date();
-  const futureDate = add(date, { days: 1, months: 3 });
+  const futureDate = add(date, { months: 3 });
 
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -142,7 +142,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
     const field = singleContractPolicyPage[REQUESTED_START_DATE];
 
     before(() => {
-      field.dayInput().type(getDate(futureDate));
+      field.dayInput().type('1');
       field.monthInput().type(getMonth(futureDate));
       field.yearInput().type(getYear(futureDate));
 
@@ -172,7 +172,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
       });
 
       it('should have the submitted values', () => {
-        field.dayInput().should('have.value', getDate(futureDate));
+        field.dayInput().should('have.value', '1');
         field.monthInput().should('have.value', getMonth(futureDate));
         field.yearInput().should('have.value', getYear(futureDate));
       });

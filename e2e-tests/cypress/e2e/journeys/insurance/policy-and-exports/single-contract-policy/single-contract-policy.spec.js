@@ -276,6 +276,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
       singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().type('10000');
       singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().type('mock free text');
+      singleContractPolicyPage[POLICY_CURRENCY_CODE].input().select('GBP');
 
       submitButton().click();
 
@@ -316,6 +317,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
         singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', '10000');
         singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().should('have.value', 'mock free text');
+        singleContractPolicyPage[POLICY_CURRENCY_CODE].inputOptionSelected().contains('GBP');
       });
     });
   });

@@ -1,5 +1,5 @@
 import { submitButton } from '../../../../../pages/shared';
-import { typeOfPolicyPage } from '../../../../../pages/insurance/policy-and-export';
+import { typeOfPolicyPage, singleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
@@ -17,13 +17,7 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
-        SINGLE: {
-          CONTRACT_COMPLETION_DATE,
-          TOTAL_CONTRACT_VALUE,
-        },
       },
     },
   },
@@ -37,7 +31,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-context('Insurance - Policy and exports - Single contract policy page - form validation', () => {
+context('Insurance - Policy and exports - Single contract policy page - form validation - policy currency code', () => {
   let referenceNumber;
 
   before(() => {
@@ -68,37 +62,21 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('should render validation errors for all required fields', () => {
-    submitButton().click();
+  const field = singleContractPolicyPage[POLICY_CURRENCY_CODE];
 
-    partials.errorSummaryListItems().should('exist');
+  describe('when policy currency code is not provided', () => {
+    it('should render a validation error', () => {
+      submitButton().click();
 
-    const TOTAL_REQUIRED_FIELDS = 5;
-    partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
+      checkText(
+        partials.errorSummaryListItems().eq(4),
+        CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
+      );
 
-    checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_ERROR_MESSAGES.SINGLE[REQUESTED_START_DATE].IS_EMPTY,
-    );
-
-    checkText(
-      partials.errorSummaryListItems().eq(1),
-      CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY,
-    );
-
-    checkText(
-      partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].IS_EMPTY,
-    );
-
-    checkText(
-      partials.errorSummaryListItems().eq(3),
-      CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].IS_EMPTY,
-    );
-
-    checkText(
-      partials.errorSummaryListItems().eq(4),
-      CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
-    );
+      checkText(
+        field.errorMessage(),
+        `Error: ${CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY}`,
+      );
+    });
   });
 });
