@@ -56,18 +56,12 @@ export const get = (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
-  try {
-    return res.render(TEMPLATE, {
-      ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
-        BACK_LINK: req.headers.referer,
-      }),
-      ...pageVariables(refNumber),
-      application,
-    });
-  } catch (err) {
-    console.error('Error getting currencies ', { err });
-
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-  }
+  return res.render(TEMPLATE, {
+    ...insuranceCorePageVariables({
+      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
+      BACK_LINK: req.headers.referer,
+    }),
+    ...pageVariables(refNumber),
+    application,
+  });
 };

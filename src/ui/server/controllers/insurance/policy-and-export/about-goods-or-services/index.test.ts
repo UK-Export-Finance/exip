@@ -45,11 +45,11 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
         FIELDS: {
           DESCRIPTION: {
             ID: DESCRIPTION,
-            ...FIELDS.ABOUT_GOODS_OR_SERVICES.DESCRIPTION,
+            ...FIELDS.ABOUT_GOODS_OR_SERVICES[DESCRIPTION],
           },
           FINAL_DESTINATION: {
             ID: FINAL_DESTINATION,
-            ...FIELDS.ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION,
+            ...FIELDS.ABOUT_GOODS_OR_SERVICES[FINAL_DESTINATION],
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK}`,
