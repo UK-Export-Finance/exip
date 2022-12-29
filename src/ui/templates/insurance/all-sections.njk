@@ -16,10 +16,20 @@
     }
   }) }}
 
-  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+  <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters-from-desktop">
+    <div class="govuk-grid-column-one-quarter-from-desktop ukef-all-sections-second-column">
+      
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="submission-deadline-heading">{{ CONTENT_STRINGS.DEADLINE_TO_SUBMIT }}</h2>
+      <p class="govuk-body govuk-!-margin-bottom-1" data-cy="submission-deadline">{{ application.submissionDeadline }}</p>
+
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="your-reference-number-heading">{{ CONTENT_STRINGS.REFERENCE_NUMBER }}</h2>
+      <p class="govuk-body" data-cy="your-reference-number">{{ application.referenceNumber }}</p>
+
+    </div>
+
+    <div class="govuk-grid-column-three-quarters-from-desktop ukef-task-list-column">
 
       {{ taskList.render({
         groups: taskListData

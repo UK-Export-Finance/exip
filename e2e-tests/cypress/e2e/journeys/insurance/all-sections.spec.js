@@ -1,4 +1,6 @@
+import { addMonths, format } from 'date-fns';
 import { heading } from '../../pages/shared';
+import { allSectionsPage } from '../../pages/insurance';
 import partials from '../../partials';
 import {
   ORGANISATION,
@@ -6,7 +8,7 @@ import {
   PAGES,
   TASKS,
 } from '../../../../content-strings';
-import { ROUTES } from '../../../../constants';
+import { APPLICATION, ROUTES } from '../../../../constants';
 import getReferenceNumber from '../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
@@ -233,6 +235,42 @@ context('Insurance - All sections - new application', () => {
             expect(text.trim()).equal(expected);
           });
         });
+      });
+    });
+  });
+
+  describe('submission deadline', () => {
+    it('should render a heading', () => {
+      allSectionsPage.submissionDeadlineHeading().should('exist');
+      allSectionsPage.submissionDeadlineHeading().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.DEADLINE_TO_SUBMIT);
+      });
+    });
+
+    it('should render correct submission deadline', () => {
+      allSectionsPage.submissionDeadline().should('exist');
+      allSectionsPage.submissionDeadline().invoke('text').then((text) => {
+        const timestamp = addMonths(new Date(), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
+        
+        const expected = format(new Date(timestamp), 'd MMMM yyyy');
+
+        expect(text.trim()).equal(expected);
+      });
+    });
+  });
+
+  describe('reference number', () => {
+    it('should render a heading', () => {
+      allSectionsPage.yourReferenceNumberHeading().should('exist');
+      allSectionsPage.yourReferenceNumberHeading().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.REFERENCE_NUMBER);
+      });
+    });
+
+    it('should render correct reference number', () => {
+      allSectionsPage.yourReferenceNumber().should('exist');
+      allSectionsPage.yourReferenceNumber().invoke('text').then((text) => {
+        expect(text.trim()).equal(referenceNumber);
       });
     });
   });
