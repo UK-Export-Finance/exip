@@ -50,7 +50,7 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
   });
 
   describe(`${WEBSITE} error`, () => {
-    it('should display validation errors if trading name question is not answered', () => {
+    it('should display validation errors if company website incorrectly entered', () => {
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       yesRadioInput().eq(0).click();
       yesRadioInput().eq(1).click();
@@ -63,12 +63,12 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
         });
     });
 
-    it('should focus to the trading name section when clicking the error', () => {
+    it('should focus to the company website section when clicking the error', () => {
       partials.errorSummaryListItemLinks().first().click();
       companyDetails.companyWebsite().should('have.focus');
     });
 
-    it('should display the validation error for trading name in radio error summary', () => {
+    it('should display the validation error for company website', () => {
       companyDetails.companyWebsiteError().invoke('text')
         .then((text) => {
           expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT}`);
