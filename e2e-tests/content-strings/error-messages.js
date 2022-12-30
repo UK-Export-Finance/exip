@@ -90,6 +90,9 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Enter the credit period you have with your buyer',
           ABOVE_MAXIMUM: 'The credit period you have with your buyer cannot be more than 1000 characters.',
         },
+        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
+          IS_EMPTY: 'Select currency you’d like your policy to be issued in',
+        },
         SINGLE: {
           [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.REQUESTED_START_DATE]: {
             IS_EMPTY: 'Enter a policy start date in the correct format - for example, 06 11 2023',

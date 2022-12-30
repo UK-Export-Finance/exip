@@ -13,6 +13,7 @@ const {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
         CREDIT_PERIOD_WITH_BUYER,
+        POLICY_CURRENCY_CODE,
         SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
       },
     },
@@ -34,6 +35,7 @@ export default () => {
 
   singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().type('10000');
   singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().type('mock free text');
+  singleContractPolicyPage[POLICY_CURRENCY_CODE].input().select('GBP');
 
   submitButton().click();
 };

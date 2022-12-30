@@ -86,7 +86,13 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const mappedCurrencies = mapCurrencies(currencies);
+    let mappedCurrencies;
+
+    if (application.policyAndExport[POLICY_CURRENCY_CODE]) {
+      mappedCurrencies = mapCurrencies(currencies, application.policyAndExport[POLICY_CURRENCY_CODE]);
+    } else {
+      mappedCurrencies = mapCurrencies(currencies);
+    }
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
