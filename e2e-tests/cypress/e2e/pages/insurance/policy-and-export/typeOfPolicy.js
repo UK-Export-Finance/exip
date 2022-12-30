@@ -19,7 +19,7 @@ const typeOfPolicy = {
         item4: () => cy.get(`[data-cy="${SINGLE_POLICY_TYPE_ID}-hint-list-item-4"]`),
       },
     },
-    multi: {
+    multiple: {
       label: () => cy.get(`[data-cy="${MULTI_POLICY_TYPE_ID}-label"]`),
       input: () => cy.get(`[data-cy="${MULTI_POLICY_TYPE_ID}-input"]`),
       hintList: {

@@ -18,6 +18,10 @@ export const POLICY_AND_EXPORTS = {
       COMPLETION_OF_CONTRACT_DATE: 'expectedCompletionOfContractDate',
       TOTAL_CONTRACT_VALUE: 'totalValueOfContract',
     },
-    MULTI: {},
+    MULTIPLE: {
+      TOTAL_MONTHS_OF_INSURANCE: 'totalMonthsOfInsurance',
+      TOTAL_SALES_TO_BUYER: 'totalSalesToBuyer',
+      MAXIMUM_BUYER_WILL_OWE: 'maximumBuyerWillOwe',
+    },
   },
 };

@@ -63,6 +63,23 @@ export const FIELDS = {
         HINT: 'Enter a whole number - do not enter decimals.',
       },
     },
-    MULTI: {},
+    MULTIPLE: {
+      [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_INSURANCE]: {
+        LABEL: 'How many months do you want to be insured for?',
+        HINT: 'The maximum is 12 months.',
+        MAXIMUM: 12,
+      },
+      [CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
+        LABEL: 'Estimate total sales to your buyer during this time',
+        HINT: 'Enter a whole number - do not enter decimals.',
+      },
+      [CONTRACT_POLICY.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
+        LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
+        HINT_LIST: [
+          'For example, your total sales might be £250,000 but the maximum the buyer will owe you at any single point is £100,000.',
+          'Enter a whole number - do not enter decimals',
+        ],
+      },
+    },
   },
 };

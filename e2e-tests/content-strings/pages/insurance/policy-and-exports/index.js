@@ -13,7 +13,13 @@ const SINGLE_CONTRACT_POLICY = {
   PAGE_TITLE: 'Tell us about the single contract policy you need',
 };
 
+const MULTIPLE_CONTRACT_POLICY = {
+  ...SHARED,
+  PAGE_TITLE: 'Tell us about the multiple contract policy you need',
+};
+
 module.exports = {
   TYPE_OF_POLICY,
   SINGLE_CONTRACT_POLICY,
+  MULTIPLE_CONTRACT_POLICY,
 };

@@ -112,14 +112,14 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
       });
 
       describe('when the answer is `multi`', () => {
-        it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTI_CONTRACT_POLICY}`, async () => {
+        it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, async () => {
           req.body[FIELD_ID] = FIELDS[FIELD_ID]?.OPTIONS?.MULTI.VALUE;
 
           await post(req, res);
 
           const referenceNumber = Number(req.params.referenceNumber);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTI_CONTRACT_POLICY}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

@@ -3,9 +3,10 @@ import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../constants/routes/insuran
 import { get as startGet, post as startPost } from '../../controllers/insurance/start';
 import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
 import { get as typeOfPolicyGet, post as typeOfPolicyPost } from '../../controllers/insurance/policy-and-export/type-of-policy';
+import { post as typeOfPolicySaveAndBackPost } from '../../controllers/insurance/policy-and-export/type-of-policy/save-and-back';
 import { get as singleContractPolicyGet, post as singleContractPolicyPost } from '../../controllers/insurance/policy-and-export/single-contract-policy';
 import { post as singleContractPolicySaveAndBackPost } from '../../controllers/insurance/policy-and-export/single-contract-policy/save-and-back';
-import { post as typeOfPolicySaveAndBackPost } from '../../controllers/insurance/policy-and-export/type-of-policy/save-and-back';
+import { get as multipleContractPolicyGet } from '../../controllers/insurance/policy-and-export/multiple-contract-policy';
 import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-found';
 
 describe('routes/insurance', () => {
@@ -18,7 +19,7 @@ describe('routes/insurance', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(23);
+    expect(get).toHaveBeenCalledTimes(24);
     expect(post).toHaveBeenCalledTimes(19);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startGet);
@@ -37,7 +38,6 @@ describe('routes/insurance', () => {
       `${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`,
       singleContractPolicyGet,
     );
-
     expect(post).toHaveBeenCalledWith(
       `${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`,
       singleContractPolicyPost,
@@ -45,6 +45,11 @@ describe('routes/insurance', () => {
     expect(post).toHaveBeenCalledWith(
       `${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
       singleContractPolicySaveAndBackPost,
+    );
+
+    expect(get).toHaveBeenCalledWith(
+      `${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`,
+      multipleContractPolicyGet,
     );
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.PAGE_NOT_FOUND, pageNotFoundGet);

@@ -234,12 +234,12 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     });
 
     describe('when submitting the answer as `multiple`', () => {
-      it(`should redirect to ${POLICY_AND_EXPORTS.MULTI_CONTRACT_POLICY}`, () => {
+      it(`should redirect to ${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, () => {
         multiplePolicyField.input().click();
 
         submitButton().click();
 
-        const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.MULTI_CONTRACT_POLICY}`;
+        const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 
         cy.url().should('eq', expected);
       });
