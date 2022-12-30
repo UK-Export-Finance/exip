@@ -1,8 +1,8 @@
 import express from 'express';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../constants/routes/insurance';
 import { get as startGet, post as startPost } from '../../controllers/insurance/start';
-import applyOfflineGet from '../../controllers/insurance/apply-offline';
-import speakToUkefEfmGet from '../../controllers/insurance/speak-to-ukef-efm';
+import { get as applyOfflineGet } from '../../controllers/insurance/apply-offline';
+import { get as speakToUkefEfmGet } from '../../controllers/insurance/speak-to-ukef-efm';
 import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
 import { get as typeOfPolicyGet, post as typeOfPolicyPost } from '../../controllers/insurance/policy-and-export/type-of-policy';
 import { post as typeOfPolicySaveAndBackPost } from '../../controllers/insurance/policy-and-export/type-of-policy/save-and-back';

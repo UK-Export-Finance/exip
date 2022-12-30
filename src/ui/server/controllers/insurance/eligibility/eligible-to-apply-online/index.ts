@@ -6,14 +6,15 @@ import api from '../../../../api';
 
 import { Request, Response } from '../../../../../types';
 
-const PAGE_VARIABLES = {
+export const PAGE_VARIABLES = {
   PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE,
 };
 
-const get = (req: Request, res: Response) =>
-  res.render(TEMPLATES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE, corePageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }));
+export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
-const post = async (req: Request, res: Response) => {
+export const get = (req: Request, res: Response) => res.render(TEMPLATE, corePageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }));
+
+export const post = async (req: Request, res: Response) => {
   try {
     const eligibilityAnswers = req.session.submittedData.insuranceEligibility;
 
@@ -32,5 +33,3 @@ const post = async (req: Request, res: Response) => {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };
-
-export { PAGE_VARIABLES, get, post };

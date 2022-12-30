@@ -1,4 +1,4 @@
-import { PAGE_VARIABLES, get, post } from '.';
+import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
@@ -24,6 +24,12 @@ describe('controllers/quote/exporter-location', () => {
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
+    });
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION);
     });
   });
 
