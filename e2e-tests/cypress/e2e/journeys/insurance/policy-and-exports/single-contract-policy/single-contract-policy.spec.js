@@ -311,8 +311,8 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
         singleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', getYear(startDate));
 
         singleContractPolicyPage[CONTRACT_COMPLETION_DATE].dayInput().should('have.value', '1');
-        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].monthInput().should('have.value', getMonth(futureDate));
-        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput().should('have.value', getYear(futureDate));
+        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].monthInput().should('have.value', getMonth(endDate));
+        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput().should('have.value', getYear(endDate));
 
         singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', '10000');
         singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().should('have.value', 'mock free text');
