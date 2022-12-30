@@ -20,6 +20,10 @@ const POLICY_AND_EXPORTS = {
     },
     MULTI: {},
   },
+  ABOUT_GOODS_OR_SERVICES: {
+    DESCRIPTION: 'goodsOrServicesDescription',
+    FINAL_DESTINATION: 'goodsOrServicesDestinationIsoCode',
+  },
 };
 
 export default POLICY_AND_EXPORTS;

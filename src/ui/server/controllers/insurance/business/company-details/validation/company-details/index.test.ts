@@ -1,19 +1,17 @@
 import validation from '.';
-import validationRules from './rules';
+import tradingName from './rules/trading-name';
+import tradingAddress from './rules/trading-address';
 import { RequestBody } from '../../../../../../../types';
 
 describe('controllers/insurance/business/company-details/validation/company-details', () => {
-  it('should return an array of results from rule functions', () => {
-    const mockSubmittedData = {} as RequestBody;
+  it('should return an object with results from all rule functions', () => {
+    const mockFormData = {} as RequestBody;
+    const mockErrors = tradingName(mockFormData, {});
 
-    const result = validation(mockSubmittedData, {});
+    const result = validation(mockFormData, {});
 
-    let expectedErrorsObj!: object;
+    const expected = tradingAddress(mockFormData, mockErrors);
 
-    for (let i = 0; i < validationRules.length; i += 1) {
-      expectedErrorsObj = validationRules[i](mockSubmittedData, expectedErrorsObj);
-    }
-
-    expect(result).toEqual(expectedErrorsObj);
+    expect(result).toEqual(expected);
   });
 });

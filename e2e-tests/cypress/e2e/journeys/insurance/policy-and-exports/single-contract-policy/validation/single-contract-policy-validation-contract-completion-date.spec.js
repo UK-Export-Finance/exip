@@ -206,17 +206,17 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe(`when ${REQUESTED_START_DATE} is also provided`, () => {
     const date = new Date();
-    const startDate = add(date, { days: 1, months: 3 });
+    const startDate = add(date, { months: 3 });
 
     beforeEach(() => {
-      singleContractPolicyPage[REQUESTED_START_DATE].dayInput().clear().type(getDate(startDate));
+      singleContractPolicyPage[REQUESTED_START_DATE].dayInput().clear().type('2');
       singleContractPolicyPage[REQUESTED_START_DATE].monthInput().clear().type(getMonth(startDate));
       singleContractPolicyPage[REQUESTED_START_DATE].yearInput().clear().type(getYear(startDate));
     });
 
     describe(`when the date is the same as ${REQUESTED_START_DATE}`, () => {
       it('should render a validation error', () => {
-        field.dayInput().clear().type(getDate(startDate));
+        field.dayInput().clear().type('2');
         field.monthInput().clear().type(getMonth(startDate));
         field.yearInput().clear().type(getYear(startDate));
         submitButton().click();
@@ -235,7 +235,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     describe(`when the date is before the ${REQUESTED_START_DATE}`, () => {
       it('should render a validation error', () => {
-        field.dayInput().clear().type(getDate(sub(startDate, { days: 1 })));
+        field.dayInput().clear().type('1');
         field.monthInput().clear().type(getMonth(startDate));
         field.yearInput().clear().type(getYear(startDate));
         submitButton().click();
@@ -254,11 +254,11 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     describe(`when the date is over the maximum years allowed after ${REQUESTED_START_DATE}`, () => {
       it('should render a validation error', () => {
-        const futureDate = add(new Date(startDate), { years: PRODUCT.MAX_COVER_PERIOD_YEARS, days: 1 });
+        const endDate = add(new Date(startDate), { years: PRODUCT.MAX_COVER_PERIOD_YEARS });
 
-        field.dayInput().clear().type(getDate(futureDate));
-        field.monthInput().clear().type(getMonth(futureDate));
-        field.yearInput().clear().type(getYear(futureDate));
+        field.dayInput().clear().type('3');
+        field.monthInput().clear().type(getMonth(endDate));
+        field.yearInput().clear().type(getYear(endDate));
         submitButton().click();
 
         checkText(

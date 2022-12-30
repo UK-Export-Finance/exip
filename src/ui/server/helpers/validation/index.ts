@@ -8,7 +8,7 @@ import { ValidationErrors } from '../../../types';
  * @param {Object} Existing validation errors
  * @returns {ValidationErrors} Error count, error list and summary
  */
-const generateValidationErrors = (fieldId: string, errorText: string, errors: ValidationErrors = { errorList: {}, summary: [] }) => {
+const generateValidationErrors = (fieldId: string, errorText: string, errors: ValidationErrors = { errorList: {}, summary: [] }): ValidationErrors => {
   let summary = [
     {
       text: errorText,

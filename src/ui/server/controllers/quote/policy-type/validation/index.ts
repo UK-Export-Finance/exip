@@ -1,14 +1,7 @@
 import validationRules from './rules';
+import combineValidationRules from '../../../../helpers/combine-validation-rules';
 import { RequestBody } from '../../../../../types';
 
-const validation = (formBody: RequestBody) => {
-  let errors!: object;
-
-  for (let i = 0; i < validationRules.length; i += 1) {
-    errors = validationRules[i](formBody, errors);
-  }
-
-  return errors;
-};
+const validation = (formBody: RequestBody) => combineValidationRules(validationRules, formBody);
 
 export default validation;

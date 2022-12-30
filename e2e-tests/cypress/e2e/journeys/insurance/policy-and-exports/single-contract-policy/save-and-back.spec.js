@@ -37,7 +37,7 @@ const {
   },
 } = FIELD_IDS;
 
-context('Insurance - Policy and exports - Type of policy page - Save and go back', () => {
+context('Insurance - Policy and exports - Single contract policy page - Save and go back', () => {
   let referenceNumber;
   const date = new Date();
   const futureDate = add(date, { months: 3 });
