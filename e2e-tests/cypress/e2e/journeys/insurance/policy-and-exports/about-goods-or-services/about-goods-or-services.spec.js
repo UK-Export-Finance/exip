@@ -68,7 +68,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     singlePolicyField.input().click();
     submitButton().click();
 
-    cy.completeAndSubmitAboutGoodsOrServicesForm();
+    cy.completeAndSubmitSingleContractPolicyForm();
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;

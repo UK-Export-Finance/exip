@@ -34,4 +34,4 @@ Cypress.Commands.add('submitInsuranceEligibilityAnswersHappyPath', require('./in
 
 Cypress.Commands.add('submitInsuranceEligibilityAndStartApplication', require('./insurance/submit-eligibility-and-start-an-application'));
 
-Cypress.Commands.add('completeAndSubmitAboutGoodsOrServicesForm', require('./insurance/complete-and-submit-about-goods-or-services-form'));
+Cypress.Commands.add('completeAndSubmitSingleContractPolicyForm', require('./insurance/complete-and-submit-single-contract-policy-form'));
