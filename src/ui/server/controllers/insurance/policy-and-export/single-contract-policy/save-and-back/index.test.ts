@@ -5,13 +5,14 @@ import { Request, Response } from '../../../../../../types';
 import mapSubmittedData from '../map-submitted-data';
 import generateValidationErrors from '../validation';
 import save from '../../save-data';
-import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
+import { mockApplication, mockCurrencies, mockReq, mockRes } from '../../../../../test-mocks';
 
 const {
   POLICY_AND_EXPORTS: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
       CREDIT_PERIOD_WITH_BUYER,
+      POLICY_CURRENCY_CODE,
       SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
   },
@@ -44,6 +45,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
     [`${CONTRACT_COMPLETION_DATE}-year`]: getYear(add(date, { years: 1, months: 6 })),
     [TOTAL_CONTRACT_VALUE]: '150000',
     [CREDIT_PERIOD_WITH_BUYER]: 'Example',
+    [POLICY_CURRENCY_CODE]: mockCurrencies[0].isoCode,
   };
 
   beforeEach(() => {
