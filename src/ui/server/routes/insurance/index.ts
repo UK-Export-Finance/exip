@@ -1,6 +1,7 @@
 import express from 'express';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../constants/routes/insurance';
 import { get as startGet, post as startPost } from '../../controllers/insurance/start';
+import { get as getaYourBuyerOrganisation } from '../../controllers/insurance/your-buyer/buyer-oganisation';
 import applyOfflineGet from '../../controllers/insurance/apply-offline';
 import speakToUkefEfmGet from '../../controllers/insurance/speak-to-ukef-efm';
 import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
@@ -19,6 +20,8 @@ const insuranceRouter = express.Router();
 
 insuranceRouter.get(INSURANCE_ROUTES.START, startGet);
 insuranceRouter.post(INSURANCE_ROUTES.START, startPost);
+
+insuranceRouter.get(INSURANCE_ROUTES.YOUR_BUYER_ORGANISATION, getaYourBuyerOrganisation);
 
 insuranceRouter.get(INSURANCE_ROUTES.APPLY_OFFLINE, applyOfflineGet);
 insuranceRouter.get(INSURANCE_ROUTES.SPEAK_TO_UKEF_EFM, speakToUkefEfmGet);

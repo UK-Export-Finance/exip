@@ -27,6 +27,7 @@ export const INSURANCE_ROUTES = {
   },
   APPLY_OFFLINE: `${INSURANCE_ROOT}/apply-using-our-form`,
   SPEAK_TO_UKEF_EFM: `${INSURANCE_ROOT}/speak-to-UKEF-EFM`,
+  YOUR_BUYER_ORGANISATION: `${INSURANCE_ROOT}/your-buyer-oraganisation`,
   ALL_SECTIONS: '/all-sections',
   PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
   EXPORTER_BUSINESS,
