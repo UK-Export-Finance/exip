@@ -1,8 +1,8 @@
 import { add, getDate, getMonth, getYear, sub } from 'date-fns';
-import requestedStartDateRules from './requested-start-date';
-import { FIELD_IDS } from '../../../../../../constants';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../helpers/validation';
+import requestedStartDateRules from '.';
+import { FIELD_IDS } from '../../constants';
+import { ERROR_MESSAGES } from '../../content-strings';
+import generateValidationErrors from '../../helpers/validation';
 
 const {
   INSURANCE: {
@@ -22,7 +22,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/policy-and-export/single-contract-policy/validation/rules/requested-start-date', () => {
+describe('shared-validation/requested-start-date', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
