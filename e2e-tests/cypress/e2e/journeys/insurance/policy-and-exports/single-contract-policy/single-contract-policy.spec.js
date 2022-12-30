@@ -69,9 +69,6 @@ const goToPageDirectly = (referenceNumber) => {
 
 context('Insurance - Policy and exports - Single contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
-  const date = new Date();
-  const startDate = add(date, { months: 3 });
-  const endDate = add(startDate, { months: 6 });
 
   before(() => {
     cy.visit(START, {
@@ -265,19 +262,12 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   });
 
   describe('form submission', () => {
+    const date = new Date();
+    const startDate = add(date, { months: 3 });
+    const endDate = add(startDate, { months: 6 });
+
     it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
-      singleContractPolicyPage[REQUESTED_START_DATE].dayInput().type('1');
-      singleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(startDate));
-      singleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(getYear(startDate));
-
-      singleContractPolicyPage[CONTRACT_COMPLETION_DATE].dayInput().type('1');
-      singleContractPolicyPage[CONTRACT_COMPLETION_DATE].monthInput().type(getMonth(endDate));
-      singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput().type(getYear(endDate));
-
-      singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().type('10000');
-      singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().type('mock free text');
-
-      submitButton().click();
+      cy.completeAndSubmitSingleContractPolicyForm();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       cy.url().should('eq', expectedUrl);
