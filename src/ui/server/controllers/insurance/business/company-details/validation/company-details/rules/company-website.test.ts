@@ -43,16 +43,18 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     });
   });
 
-  describe('without errors', () => {
-    it(`should not return a validation error when ${WEBSITE} is the correct format`, () => {
+  describe(`${WEBSITE} is the correct format`, () => {
+    it('should not return a validation error', () => {
       mockBody[WEBSITE] = 'www.google.com';
 
       const result = companyWebsite(mockBody, mockErrors);
 
       expect(result).toEqual(mockErrors);
     });
+  });
 
-    it(`should not return a validation error when ${WEBSITE} is an empty string`, () => {
+  describe(`${WEBSITE} is an empty string`, () => {
+    it('should not return a validation error', () => {
       mockBody[WEBSITE] = '';
 
       const result = companyWebsite(mockBody, mockErrors);

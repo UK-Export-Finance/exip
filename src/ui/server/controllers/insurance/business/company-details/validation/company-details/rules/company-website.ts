@@ -1,9 +1,8 @@
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../../constants';
 import { RequestBody } from '../../../../../../../../types';
-
 import isStringWithHttp from '../../../../../../../helpers/is-string-with-http';
-import validateWebsite from '../../../../../../../shared-validation/website';
+import validateWebsiteAddress from '../../../../../../../shared-validation/website-address';
 
 const {
   YOUR_COMPANY: { WEBSITE },
@@ -25,7 +24,7 @@ const companyWebsite = (responseBody: RequestBody, errors: object) => {
     const url = isStringWithHttp(responseBody[WEBSITE]);
     const errorMessage = EXPORTER_BUSINESS[WEBSITE].INCORRECT_FORMAT;
     // validates input
-    updatedErrors = validateWebsite(url, WEBSITE, errorMessage, updatedErrors);
+    updatedErrors = validateWebsiteAddress(url, WEBSITE, errorMessage, updatedErrors);
   }
 
   return updatedErrors;

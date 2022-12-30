@@ -9,7 +9,7 @@ import generateValidationErrors from '../../helpers/validation';
  * @param {object} errors
  * @returns {object} errors
  */
-const validateWebsite = (website: string, fieldId: string, errorMessage: string, errors: object) => {
+const validateWebsiteAddress = (website: string, fieldId: string, errorMessage: string, errors: object) => {
   let updatedErrors = errors;
 
   // if not correct url, then will be false
@@ -22,4 +22,4 @@ const validateWebsite = (website: string, fieldId: string, errorMessage: string,
   return updatedErrors;
 };
 
-export default validateWebsite;
+export default validateWebsiteAddress;

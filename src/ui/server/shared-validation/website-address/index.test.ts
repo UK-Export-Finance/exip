@@ -1,17 +1,17 @@
-import validateWebsite from '.';
+import validateWebsiteAddress from '.';
 import generateValidationErrors from '../../helpers/validation';
 
 describe('shared-validation/website', () => {
   const errors = {};
 
-  describe('when errors', () => {
+  describe('with errors', () => {
     const fieldId = 'website';
     const errorMessage = 'incorrect format';
 
     it('should display error when website is not complete "http://www"', () => {
       const website = 'http://www';
 
-      const result = validateWebsite(website, fieldId, errorMessage, errors);
+      const result = validateWebsiteAddress(website, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 
       expect(result).toEqual(expected);
@@ -20,7 +20,7 @@ describe('shared-validation/website', () => {
     it('should display error when website is not complete "http://google."', () => {
       const website = 'http://google.';
 
-      const result = validateWebsite(website, fieldId, errorMessage, errors);
+      const result = validateWebsiteAddress(website, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 
       expect(result).toEqual(expected);
@@ -29,21 +29,21 @@ describe('shared-validation/website', () => {
     it('should display error when website is empty', () => {
       const website = '';
 
-      const result = validateWebsite(website, fieldId, errorMessage, errors);
+      const result = validateWebsiteAddress(website, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe('when no errors', () => {
+  describe('without errors', () => {
     const fieldId = 'website';
     const errorMessage = 'incorrect format';
 
     it('should not display error when website is in the correct format', () => {
       const website = 'http://www.google.com';
 
-      const result = validateWebsite(website, fieldId, errorMessage, errors);
+      const result = validateWebsiteAddress(website, fieldId, errorMessage, errors);
 
       expect(result).toEqual({});
     });
@@ -51,7 +51,7 @@ describe('shared-validation/website', () => {
     it('should not display error when website is in the correct format but does not contain "www."', () => {
       const website = 'http://google.com';
 
-      const result = validateWebsite(website, fieldId, errorMessage, errors);
+      const result = validateWebsiteAddress(website, fieldId, errorMessage, errors);
 
       expect(result).toEqual({});
     });
@@ -59,7 +59,7 @@ describe('shared-validation/website', () => {
     it('should not display error when website is in the correct format and has "/"', () => {
       const website = 'http://google.com/123';
 
-      const result = validateWebsite(website, fieldId, errorMessage, errors);
+      const result = validateWebsiteAddress(website, fieldId, errorMessage, errors);
 
       expect(result).toEqual({});
     });
