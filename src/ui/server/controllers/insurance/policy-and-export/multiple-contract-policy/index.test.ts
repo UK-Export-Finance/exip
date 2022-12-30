@@ -1,4 +1,5 @@
-import { pageVariables, TEMPLATE, get } from '.';
+import { add, getMonth, getYear } from 'date-fns';
+import { pageVariables, TEMPLATE, get, post } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
@@ -7,12 +8,15 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import generateValidationErrors from './validation';
+import mapSubmittedData from '../map-submitted-data';
+import save from '../save-data';
 import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
 
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: { MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK },
+    POLICY_AND_EXPORTS: { MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES },
   },
 } = ROUTES;
 
@@ -27,11 +31,14 @@ const {
   POLICY_CURRENCY_CODE,
 } = CONTRACT_POLICY;
 
-describe('controllers/insurance/policy-and-export/single-contract-policy', () => {
+describe('controllers/insurance/policy-and-export/multiple-contract-policy', () => {
   let req: Request;
   let res: Response;
   let refNumber: number;
 
+  jest.mock('../save-data');
+
+  save.policyAndExport = jest.fn(() => Promise.resolve({}));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
 
   beforeEach(() => {
@@ -167,6 +174,174 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
           await get(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
+    });
+  });
+
+  describe('post', () => {
+    beforeEach(() => {
+      getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
+      api.external.getCurrencies = getCurrenciesSpy;
+    });
+
+    const date = new Date();
+
+    const validBody = {
+      [`${REQUESTED_START_DATE}-day`]: '1',
+      [`${REQUESTED_START_DATE}-month`]: getMonth(date),
+      [`${REQUESTED_START_DATE}-year`]: getYear(add(date, { years: 1 })),
+    };
+
+    describe('when there are no validation errors', () => {
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it('should call save.policyAndExport with application and populated data from req.body', async () => {
+        await post(req, res);
+
+        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
+
+        const expectedPopulatedData = mapSubmittedData(req.body);
+
+        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, expectedPopulatedData);
+      });
+
+      it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, async () => {
+        await post(req, res);
+
+        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
+
+        const expectedPopulatedData = mapSubmittedData(req.body);
+
+        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, expectedPopulatedData);
+      });
+
+      it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, async () => {
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe('when there are validation errors', () => {
+      it('should call api.external.getCurrencies', async () => {
+        await get(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+      });
+
+      it('should render template with validation errors', async () => {
+        await post(req, res);
+
+        const expectedCurrencies = mapCurrencies(mockCurrencies);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(refNumber),
+          application: mapApplicationToFormFields(mockApplication),
+          submittedValues: req.body,
+          currencies: expectedCurrencies,
+          validationErrors: generateValidationErrors(req.body),
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        res.locals = { csrfToken: '1234' };
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('get currencies call', () => {
+        describe('when there are no currencies returned', () => {
+          beforeEach(() => {
+            // @ts-ignore
+            getCurrenciesSpy = jest.fn(() => Promise.resolve());
+            api.external.getCurrencies = getCurrenciesSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when the currencies response is an empty array', () => {
+          beforeEach(() => {
+            getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+            api.external.getCurrencies = getCurrenciesSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error with the API call', () => {
+          beforeEach(() => {
+            getCurrenciesSpy = jest.fn(() => Promise.reject());
+            api.external.getCurrencies = getCurrenciesSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
+        });
+      });
+
+      describe('save.policyAndExport call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when no application is returned', () => {
+          beforeEach(() => {
+            // @ts-ignore
+            const savePolicyAndExportDataSpy = jest.fn(() => Promise.resolve());
+
+            save.policyAndExport = savePolicyAndExportDataSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject());
+
+            save.policyAndExport = savePolicyAndExportDataSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
         });
       });
     });

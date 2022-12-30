@@ -2,7 +2,7 @@ import { add, getMonth, getYear } from 'date-fns';
 import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { Request, Response } from '../../../../../../types';
-import mapSubmittedData from '../map-submitted-data';
+import mapSubmittedData from '../../map-submitted-data';
 import generateValidationErrors from '../validation';
 import save from '../../save-data';
 import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';

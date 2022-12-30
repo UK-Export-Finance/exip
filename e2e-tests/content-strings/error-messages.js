@@ -104,6 +104,13 @@ export const ERROR_MESSAGES = {
             ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £499.999. If you need cover for more than this, fill in this form instead.',
           },
         },
+        MULTIPLE: {
+          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.REQUESTED_START_DATE]: {
+            IS_EMPTY: 'Enter a policy start date in the correct format - for example, 06 11 2023',
+            NOT_A_NUMBER: 'Enter a policy start date in the correct format - for example, 06 11 2023',
+            BEFORE_EARLIEST: 'You cannot enter a policy start date in the past - enter a future date',
+          },
+        },
       },
     },
   },

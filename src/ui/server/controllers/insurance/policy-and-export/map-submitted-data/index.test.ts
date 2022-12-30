@@ -1,7 +1,7 @@
 import { add, getMonth, getYear } from 'date-fns';
 import mapSubmittedData from '.';
-import { FIELD_IDS } from '../../../../../constants';
-import createTimestampFromNumbers from '../../../../../helpers/date/create-timestamp-from-numbers';
+import { FIELD_IDS } from '../../../../constants';
+import createTimestampFromNumbers from '../../../../helpers/date/create-timestamp-from-numbers';
 
 const {
   POLICY_AND_EXPORTS: { CONTRACT_POLICY },
@@ -9,7 +9,7 @@ const {
 
 const { REQUESTED_START_DATE } = CONTRACT_POLICY;
 
-describe('controllers/insurance/policy-and-export/single-contract-policy/map-submitted-data', () => {
+describe('controllers/insurance/policy-and-export/map-submitted-data', () => {
   describe(`when ${REQUESTED_START_DATE} day, month and year fields are provided`, () => {
     const date = new Date();
 
