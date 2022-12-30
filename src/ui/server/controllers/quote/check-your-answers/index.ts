@@ -5,17 +5,17 @@ import { answersSummaryList } from '../../../helpers/summary-lists/answers-summa
 import corePageVariables from '../../../helpers/page-variables/core/quote';
 import { Request, Response } from '../../../../types';
 
-const get = async (req: Request, res: Response) => {
+export const TEMPLATE = TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS;
+
+export const get = async (req: Request, res: Response) => {
   const answers = mapAnswersToContent(req.session.submittedData.quoteEligibility);
 
   const summaryList = answersSummaryList(answers);
 
-  return res.render(TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS, {
+  return res.render(TEMPLATE, {
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.CHECK_YOUR_ANSWERS, BACK_LINK: req.headers.referer }),
     SUMMARY_LIST: summaryList,
   });
 };
 
-const post = (req: Request, res: Response) => res.redirect(ROUTES.QUOTE.YOUR_QUOTE);
-
-export { get, post };
+export const post = (req: Request, res: Response) => res.redirect(ROUTES.QUOTE.YOUR_QUOTE);

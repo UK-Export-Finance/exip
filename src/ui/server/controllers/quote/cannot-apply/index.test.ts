@@ -1,4 +1,4 @@
-import get from '.';
+import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
@@ -26,12 +26,20 @@ describe('controllers/quote/cannot-apply', () => {
     res = mockRes();
   });
 
-  it('should render template with values from req.flash', () => {
-    get(req, res);
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.CANNOT_APPLY);
+    });
+  });
 
-    expect(res.render).toHaveBeenCalledWith(TEMPLATES.CANNOT_APPLY, {
-      ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY, BACK_LINK: mockPreviousRoute }),
-      EXIT_REASON: mockExitReason,
+  describe('get', () => {
+    it('should render template with values from req.flash', () => {
+      get(req, res);
+
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY, BACK_LINK: mockPreviousRoute }),
+        EXIT_REASON: mockExitReason,
+      });
     });
   });
 });

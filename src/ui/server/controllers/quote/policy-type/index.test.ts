@@ -1,4 +1,4 @@
-import { PAGE_VARIABLES, get, post } from '.';
+import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
@@ -51,11 +51,17 @@ describe('controllers/quote/policy-type', () => {
     });
   });
 
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.QUOTE.POLICY_TYPE);
+    });
+  });
+
   describe('get', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.POLICY_TYPE, {
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
         ...PAGE_VARIABLES,
         submittedValues: req.session.submittedData.quoteEligibility,
@@ -68,7 +74,7 @@ describe('controllers/quote/policy-type', () => {
       it('should render template with validation errors and submitted values', () => {
         post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.POLICY_TYPE, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
           ...PAGE_VARIABLES,
           validationErrors: generateValidationErrors(req.body),
@@ -81,7 +87,7 @@ describe('controllers/quote/policy-type', () => {
           req.body[FIELD_IDS.CURRENCY] = mockAnswers[FIELD_IDS.CURRENCY];
           post(req, res);
 
-          expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.POLICY_TYPE, {
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
             ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
             ...PAGE_VARIABLES,
             validationErrors: generateValidationErrors(req.body),

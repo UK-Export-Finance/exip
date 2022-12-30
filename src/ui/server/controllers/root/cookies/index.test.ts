@@ -1,4 +1,4 @@
-import { PAGE_VARIABLES, get, post } from '.';
+import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { ERROR_MESSAGES, FIELDS, PAGES, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../constants';
 import { mockReq, mockRes } from '../../../test-mocks';
@@ -21,7 +21,7 @@ describe('controllers/root/cookies', () => {
     res = mockRes();
   });
 
-  describe('get', () => {
+  describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID: FIELD_IDS.OPTIONAL_COOKIES,
@@ -33,11 +33,17 @@ describe('controllers/root/cookies', () => {
     });
   });
 
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.COOKIES);
+    });
+  });
+
   describe('get', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
         FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
         submittedValue: req.cookies.optionalCookies,
@@ -58,7 +64,7 @@ describe('controllers/root/cookies', () => {
       it('should render template with validation errors and submittedValue', () => {
         post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
           FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
           validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),
@@ -75,7 +81,7 @@ describe('controllers/root/cookies', () => {
       it('should render template with flags and submittedValue', () => {
         post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
           FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
           submittedValue: req.cookies.optionalCookies,
@@ -102,7 +108,7 @@ describe('controllers/root/cookies', () => {
         it('should render template with showSuccessMessageGoBackLink flag as true', async () => {
           await post(req, res);
 
-          expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
             ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: mockPreviousUrl, START_ROUTE: startRoute }),
             FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
             submittedValue: req.cookies.optionalCookies,
@@ -132,7 +138,7 @@ describe('controllers/root/cookies', () => {
 
           post(req, res);
 
-          expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
             ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: ROUTES.COOKIES, START_ROUTE: startRoute }),
             FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
             submittedValue: req.cookies.optionalCookies,
