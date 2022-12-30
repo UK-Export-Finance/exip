@@ -18,6 +18,7 @@ const companyDetails = {
 
   companyWebsiteLabel: () => cy.get('[data-cy="company-website-label'),
   companyWebsite: () => cy.get('[data-cy="company-website'),
+  companyWebsiteError: () => cy.get('[data-cy="company-website-error'),
 
   phoneNumberLabel: () => cy.get('[data-cy="company-phone-label'),
   phoneNumberHint: () => cy.get('[data-cy="company-phone-hint'),

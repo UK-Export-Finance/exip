@@ -13,6 +13,7 @@ const {
     YOUR_COMPANY: {
       TRADING_NAME,
       TRADING_ADDRESS,
+      WEBSITE,
     },
   },
 } = FIELD_IDS.INSURANCE;
@@ -55,6 +56,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe('all page errors', () => {
     it('should display validation errors if trading name, address questions and companies house input are not answered', () => {
+      companyDetails.companyWebsite().type('a');
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 3);
 
@@ -71,6 +73,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       partials.errorSummaryListItems().eq(2).invoke('text')
         .then((text) => {
           expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
+        });
+
+      partials.errorSummaryListItems().eq(3).invoke('text')
+        .then((text) => {
+          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
         });
     });
 
@@ -107,6 +114,18 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       inlineErrorMessage().eq(1).invoke('text')
         .then((text) => {
           expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY}`);
+        });
+    });
+
+    it('should focus to the company website section when clicking the error', () => {
+      partials.errorSummaryListItemLinks().eq(3).click();
+      companyDetails.companyWebsite().should('have.focus');
+    });
+
+    it('should display the validation error for company website in company website section', () => {
+      companyDetails.companyWebsiteError().invoke('text')
+        .then((text) => {
+          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT}`);
         });
     });
 

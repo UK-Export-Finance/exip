@@ -11,7 +11,7 @@ import { sanitiseValue } from '../../../../helpers/sanitise-data';
 const {
   EXPORTER_BUSINESS: {
     COMPANY_HOUSE,
-    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS },
+    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -42,6 +42,7 @@ describe('controllers/insurance/business/companies-details', () => {
           [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
           [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
           [TRADING_ADDRESS]: sanitiseValue(req.body[TRADING_ADDRESS]),
+          [WEBSITE]: req.body[WEBSITE],
         };
 
         await post(req, res);
