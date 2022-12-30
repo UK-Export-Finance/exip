@@ -119,10 +119,10 @@ jobs:
 
       - name: Docker    
         env:
-          API_URL: ${{ secrets.API_URL }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          API_URL: ${{ secrets.QA_API_URL }}
+          DATABASE_URL: ${{ secrets.QA_DATABASE_URL }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.QA_MYSQL_ROOT_PASSWORD }}
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
           BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
           BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
