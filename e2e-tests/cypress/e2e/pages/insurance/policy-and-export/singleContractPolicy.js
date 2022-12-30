@@ -8,7 +8,7 @@ const {
         CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
         SINGLE: {
-          COMPLETION_OF_CONTRACT_DATE,
+          CONTRACT_COMPLETION_DATE,
           TOTAL_CONTRACT_VALUE,
         },
       },
@@ -25,12 +25,13 @@ const singleContractPolicy = {
     yearInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-year-input"]`),
     errorMessage: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-error-message"]`),
   },
-  [COMPLETION_OF_CONTRACT_DATE]: {
-    label: () => cy.get(`[data-cy="${COMPLETION_OF_CONTRACT_DATE}-label"]`),
-    hint: () => cy.get(`[data-cy="${COMPLETION_OF_CONTRACT_DATE}-hint"]`),
-    dayInput: () => cy.get(`[data-cy="${COMPLETION_OF_CONTRACT_DATE}-day-input"]`),
-    monthInput: () => cy.get(`[data-cy="${COMPLETION_OF_CONTRACT_DATE}-month-input"]`),
-    yearInput: () => cy.get(`[data-cy="${COMPLETION_OF_CONTRACT_DATE}-year-input"]`),
+  [CONTRACT_COMPLETION_DATE]: {
+    label: () => cy.get(`[data-cy="${CONTRACT_COMPLETION_DATE}-label"]`),
+    hint: () => cy.get(`[data-cy="${CONTRACT_COMPLETION_DATE}-hint"]`),
+    dayInput: () => cy.get(`[data-cy="${CONTRACT_COMPLETION_DATE}-day-input"]`),
+    monthInput: () => cy.get(`[data-cy="${CONTRACT_COMPLETION_DATE}-month-input"]`),
+    yearInput: () => cy.get(`[data-cy="${CONTRACT_COMPLETION_DATE}-year-input"]`),
+    errorMessage: () => cy.get(`[data-cy="${CONTRACT_COMPLETION_DATE}-error-message"]`),
   },
   [TOTAL_CONTRACT_VALUE]: {
     label: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-label"]`),

@@ -46,6 +46,7 @@ model PolicyAndExport {
   applicationId                    String?       @map("application")
   policyType                       String?
   requestedStartDate               DateTime?
+  contractCompletionDate           DateTime?
   totalValueOfContract             Int?
   creditPeriodWithBuyer            String        @default("")
   policyCurrencyCode               String        @default("")
