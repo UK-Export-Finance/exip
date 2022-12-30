@@ -1,4 +1,4 @@
-import { PAGE_VARIABLES, get, post } from '.';
+import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -27,11 +27,17 @@ describe('controllers/insurance/eligibility/insured-amount', () => {
     });
   });
 
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
+    });
+  });
+
   describe('get', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT, {
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
         submittedValues: req.session.submittedData.insuranceEligibility,
       });
@@ -43,7 +49,7 @@ describe('controllers/insurance/eligibility/insured-amount', () => {
       it('should render template with validation errors', () => {
         post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
           validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });

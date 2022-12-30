@@ -15,6 +15,8 @@ export const PAGE_VARIABLES = {
   PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
 };
 
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;
+
 /**
  * If the user has come from the base root of the application (which redirects to this route)
  * Return the "Before you start" page, which is the original, external URL.
@@ -74,7 +76,7 @@ export const get = async (req: Request, res: Response) => {
     mappedCountries = mapCountries(countries);
   }
 
-  return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
+  return res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
     countries: mappedCountries,
     submittedValues: req.session.submittedData?.quoteEligibility,
@@ -94,7 +96,7 @@ export const post = async (req: Request, res: Response) => {
   const mappedCountries = mapCountries(countries);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
+    return res.render(TEMPLATE, {
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
       countries: mappedCountries,
       validationErrors,

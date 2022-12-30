@@ -1,4 +1,4 @@
-import { get, post } from '.';
+import { TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../constants';
 import { mapAnswersToContent } from '../../../helpers/data-content-mappings/map-answers-to-content';
@@ -39,6 +39,12 @@ describe('controllers/quote/check-your-answers', () => {
     };
 
     res = mockRes();
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS);
+    });
   });
 
   describe('get', () => {

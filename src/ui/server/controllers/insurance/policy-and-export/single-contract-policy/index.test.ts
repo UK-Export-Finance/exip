@@ -120,6 +120,38 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
+    describe('when a policy currency code has been previously submitted', () => {
+      const mockApplicationWithCurrencyCode = {
+        ...mockApplication,
+        policyAndExport: {
+          ...mockApplication.policyAndExport,
+          [POLICY_CURRENCY_CODE]: mockCurrencies[0].isoCode,
+        },
+      };
+
+      beforeEach(() => {
+        res.locals.application = mockApplicationWithCurrencyCode;
+      });
+
+      it('should render template with currencies mapped to submitted currency', async () => {
+        await get(req, res);
+
+        const expectedCurrencies = mapCurrencies(mockCurrencies, mockApplicationWithCurrencyCode.policyAndExport[POLICY_CURRENCY_CODE]);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(refNumber),
+          application: mapApplicationToFormFields(mockApplicationWithCurrencyCode),
+          currencies: expectedCurrencies,
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
     describe('when there is no application', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };

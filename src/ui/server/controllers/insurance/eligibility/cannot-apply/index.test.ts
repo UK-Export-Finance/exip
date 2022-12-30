@@ -1,4 +1,4 @@
-import get from '.';
+import { get, TEMPLATE } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -23,17 +23,25 @@ describe('controllers/insurance/eligibility/cannot-apply', () => {
     res = mockRes();
   });
 
-  it('should render template', () => {
-    get(req, res);
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.CANNOT_APPLY);
+    });
+  });
 
-    const expectedVariables = {
-      ...corePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY,
-        BACK_LINK: req.headers.referer,
-      }),
-      EXIT_REASON: mockExitReason,
-    };
+  describe('get', () => {
+    it('should render template', () => {
+      get(req, res);
 
-    expect(res.render).toHaveBeenCalledWith(TEMPLATES.CANNOT_APPLY, expectedVariables);
+      const expectedVariables = {
+        ...corePageVariables({
+          PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY,
+          BACK_LINK: req.headers.referer,
+        }),
+        EXIT_REASON: mockExitReason,
+      };
+
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+    });
   });
 });

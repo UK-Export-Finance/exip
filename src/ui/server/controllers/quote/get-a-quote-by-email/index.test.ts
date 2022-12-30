@@ -1,4 +1,4 @@
-import get from '.';
+import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
@@ -26,12 +26,20 @@ describe('controllers/quote/get-a-quote-by-email', () => {
     res = mockRes();
   });
 
-  it('should render template', () => {
-    get(req, res);
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.QUOTE.GET_A_QUOTE_BY_EMAIL);
+    });
+  });
 
-    expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.GET_A_QUOTE_BY_EMAIL, {
-      ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL, BACK_LINK: mockPreviousRoute }),
-      EXIT_REASON: mockExitReason,
+  describe('get', () => {
+    it('should render template', () => {
+      get(req, res);
+
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.GET_A_QUOTE_BY_EMAIL, {
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL, BACK_LINK: mockPreviousRoute }),
+        EXIT_REASON: mockExitReason,
+      });
     });
   });
 });
