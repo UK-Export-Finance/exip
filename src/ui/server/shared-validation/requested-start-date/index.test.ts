@@ -15,9 +15,7 @@ const {
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        SINGLE: { [FIELD_ID]: ERROR_MESSAGE },
-      },
+      CONTRACT_POLICY: { [FIELD_ID]: ERROR_MESSAGE },
     },
   },
 } = ERROR_MESSAGES;
