@@ -1,4 +1,4 @@
-import get from '.';
+import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/insurance';
@@ -23,17 +23,25 @@ describe('controllers/insurance/apply-offline', () => {
     res = mockRes();
   });
 
-  it('should render template', () => {
-    get(req, res);
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.APPLY_OFFLINE);
+    });
+  });
 
-    const expectedVariables = {
-      ...corePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.APPLY_OFFLINE,
-        BACK_LINK: req.headers.referer,
-      }),
-      EXIT_REASON: mockExitReason,
-    };
+  describe('get', () => {
+    it('should render template', () => {
+      get(req, res);
 
-    expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.APPLY_OFFLINE, expectedVariables);
+      const expectedVariables = {
+        ...corePageVariables({
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.APPLY_OFFLINE,
+          BACK_LINK: req.headers.referer,
+        }),
+        EXIT_REASON: mockExitReason,
+      };
+
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+    });
   });
 });

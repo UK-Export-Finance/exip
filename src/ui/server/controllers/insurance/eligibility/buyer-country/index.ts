@@ -16,6 +16,8 @@ export const PAGE_VARIABLES = {
   PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
 };
 
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;
+
 export const get = async (req: Request, res: Response) => {
   if (!req.session.submittedData || !req.session.submittedData.insuranceEligibility) {
     req.session.submittedData = {
@@ -44,7 +46,7 @@ export const get = async (req: Request, res: Response) => {
     mappedCountries = mapCountries(countries);
   }
 
-  return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
+  return res.render(TEMPLATE, {
     ...singleInputPageVariables({
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
@@ -66,7 +68,7 @@ export const post = async (req: Request, res: Response) => {
   const mappedCountries = mapCountries(countries);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
+    return res.render(TEMPLATE, {
       ...singleInputPageVariables({
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,

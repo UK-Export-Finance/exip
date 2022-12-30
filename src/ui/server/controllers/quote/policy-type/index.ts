@@ -8,7 +8,7 @@ import { Request, Response } from '../../../../types';
 
 const { MULTI_POLICY_TYPE, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH, SINGLE_POLICY_TYPE } = FIELD_IDS;
 
-const PAGE_VARIABLES = {
+export const PAGE_VARIABLES = {
   FIELDS: {
     MULTI_POLICY_TYPE: {
       ID: MULTI_POLICY_TYPE,
@@ -33,18 +33,20 @@ const PAGE_VARIABLES = {
   },
 };
 
-const get = (req: Request, res: Response) =>
-  res.render(TEMPLATES.QUOTE.POLICY_TYPE, {
+export const TEMPLATE = TEMPLATES.QUOTE.POLICY_TYPE;
+
+export const get = (req: Request, res: Response) =>
+  res.render(TEMPLATE, {
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
     ...PAGE_VARIABLES,
     submittedValues: req.session.submittedData.quoteEligibility,
   });
 
-const post = (req: Request, res: Response) => {
+export const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.QUOTE.POLICY_TYPE, {
+    return res.render(TEMPLATE, {
       ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
       ...PAGE_VARIABLES,
       validationErrors,
@@ -65,5 +67,3 @@ const post = (req: Request, res: Response) => {
 
   return res.redirect(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
 };
-
-export { PAGE_VARIABLES, get, post };
