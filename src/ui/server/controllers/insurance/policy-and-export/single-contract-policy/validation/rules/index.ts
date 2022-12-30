@@ -5,6 +5,8 @@ import creditPeriodWithBuyerRules from './credit-period-with-buyer';
 import policyCurrencyCodeRules from './policy-currency-code';
 import { ValidationErrors } from '../../../../../../../types';
 
-const rules = [requestedStartDateRules, contractCompletionDateRules, totalContractValueRules, creditPeriodWithBuyerRules, policyCurrencyCodeRules] as Array<() => ValidationErrors>;
+const rules = [requestedStartDateRules, contractCompletionDateRules, totalContractValueRules, creditPeriodWithBuyerRules, policyCurrencyCodeRules];
 
-export default rules;
+const validationRules = rules as Array<() => ValidationErrors>;
+
+export default validationRules;
