@@ -1,9 +1,9 @@
 # ************************************************************
 # UKEF EXIPS SQL Database
-# Version 0.1
+# Version 0.3
 #
 # Database: exip
-# Generation Time: 2022-11-30 11:44:13 +0000
+# Generation Time: 2022-12-29 11:57:50 +0000
 # ************************************************************
 
 CREATE DATABASE IF NOT EXISTS `exip`;
@@ -19,6 +19,10 @@ SET NAMES utf8mb4;
 /*!40101 SET @OLD_SQL_MODE='NO_AUTO_VALUE_ON_ZERO', SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+# FOREIGN KEY CHECKS : OFF
+# ------------------------------------------------------------
+SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS;
+SET FOREIGN_KEY_CHECKS = 0;
 
 # Dump of table Application
 # ------------------------------------------------------------
@@ -371,6 +375,12 @@ CREATE TABLE IF NOT EXISTS `User` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `User_email_key` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+# FOREIGN KEY CHECKS : ON
+# ------------------------------------------------------------
+SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
+SET FOREIGN_KEY_CHECKS = 1;
+
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

@@ -25,7 +25,7 @@ if [ -n "$selection" ]; then
     elif [ "$selection" = "1" ]
     then
     destination=dev
-    branch=main
+    branch=main-application
     ############### PRODUCTION ###############
     elif [ "$selection" = "2" ]
     then

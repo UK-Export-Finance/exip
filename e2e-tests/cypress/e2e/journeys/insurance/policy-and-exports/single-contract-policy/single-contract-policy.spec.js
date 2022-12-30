@@ -1,6 +1,5 @@
 import {
   add,
-  getDate,
   getMonth,
   getYear,
 } from 'date-fns';
@@ -71,7 +70,7 @@ const goToPageDirectly = (referenceNumber) => {
 context('Insurance - Policy and exports - Single contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
   const date = new Date();
-  const futureDate = add(date, { days: 1, months: 3 });
+  const futureDate = add(date, { months: 3 });
 
   before(() => {
     cy.visit(START, {
@@ -266,7 +265,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
   describe('form submission', () => {
     it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
-      singleContractPolicyPage[REQUESTED_START_DATE].dayInput().type(getDate(futureDate));
+      singleContractPolicyPage[REQUESTED_START_DATE].dayInput().type('1');
       singleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(futureDate));
       singleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(getYear(futureDate));
 
@@ -302,7 +301,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       it('should have the submitted values', () => {
         goToPageDirectly(referenceNumber);
 
-        singleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', getDate(futureDate));
+        singleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', '1');
         singleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', getMonth(futureDate));
         singleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', getYear(futureDate));
 
