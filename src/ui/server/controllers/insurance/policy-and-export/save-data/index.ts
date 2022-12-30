@@ -5,7 +5,8 @@ import { Application, RequestBody } from '../../../../../types';
 
 /**
  * policyAndExport
- * Strip invalid fields from submitted form data and update the application
+ * Strip invalid fields from submitted form data and update the application.
+ * This is used for any save functionality in the Policy and export section of the application.
  * @param {Object} Application
  * @param {Express.Request.body} Form data
  * @param {Express.Request.body} Field error list
