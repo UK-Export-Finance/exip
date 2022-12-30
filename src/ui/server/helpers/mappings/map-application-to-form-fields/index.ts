@@ -4,7 +4,10 @@ import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestam
 
 const {
   POLICY_AND_EXPORTS: {
-    CONTRACT_POLICY: { REQUESTED_START_DATE },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      SINGLE: { CONTRACT_COMPLETION_DATE },
+    },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -24,6 +27,15 @@ const mapApplicationToFormFields = (application: Application): object => {
       mapped.policyAndExport = {
         ...mapped.policyAndExport,
         ...getDateFieldsFromTimestamp(timestamp, REQUESTED_START_DATE),
+      };
+    }
+
+    if (application.policyAndExport && application.policyAndExport[CONTRACT_COMPLETION_DATE]) {
+      const timestamp = application.policyAndExport[CONTRACT_COMPLETION_DATE];
+
+      mapped.policyAndExport = {
+        ...mapped.policyAndExport,
+        ...getDateFieldsFromTimestamp(timestamp, CONTRACT_COMPLETION_DATE),
       };
     }
 

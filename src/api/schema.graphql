@@ -204,6 +204,7 @@ type PolicyAndExport {
   application: Application
   policyType: String
   requestedStartDate: DateTime
+  contractCompletionDate: DateTime
   totalValueOfContract: Int
   creditPeriodWithBuyer: String
   policyCurrencyCode: String
@@ -221,6 +222,7 @@ input PolicyAndExportWhereInput {
   application: ApplicationWhereInput
   policyType: StringNullableFilter
   requestedStartDate: DateTimeNullableFilter
+  contractCompletionDate: DateTimeNullableFilter
   totalValueOfContract: IntNullableFilter
   creditPeriodWithBuyer: StringFilter
   policyCurrencyCode: StringFilter
@@ -258,6 +260,7 @@ input PolicyAndExportOrderByInput {
   id: OrderDirection
   policyType: OrderDirection
   requestedStartDate: OrderDirection
+  contractCompletionDate: OrderDirection
   totalValueOfContract: OrderDirection
   creditPeriodWithBuyer: OrderDirection
   policyCurrencyCode: OrderDirection
@@ -267,6 +270,7 @@ input PolicyAndExportUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   policyType: String
   requestedStartDate: DateTime
+  contractCompletionDate: DateTime
   totalValueOfContract: Int
   creditPeriodWithBuyer: String
   policyCurrencyCode: String
@@ -281,6 +285,7 @@ input PolicyAndExportCreateInput {
   application: ApplicationRelateToOneForCreateInput
   policyType: String
   requestedStartDate: DateTime
+  contractCompletionDate: DateTime
   totalValueOfContract: Int
   creditPeriodWithBuyer: String
   policyCurrencyCode: String

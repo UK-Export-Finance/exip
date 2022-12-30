@@ -3,7 +3,7 @@ import Joi from 'joi';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../../constants';
 import generateValidationErrors from '../../../../../../../helpers/validation';
-import { RequestBody } from '../../../../../../../../types';
+import { RequestBody, ValidationErrors } from '../../../../../../../../types';
 
 const {
   COMPANY_HOUSE: { INPUT },
@@ -20,7 +20,7 @@ const schema = Joi.string().alphanum().min(6).required();
  * @param formBody containing an object with the companies house input
  * @returns object containing errors or blank object
  */
-const companiesHouseNumber = (formBody: RequestBody, errors: object) => {
+const companiesHouseNumber = (formBody: RequestBody, errors: ValidationErrors) => {
   let updatedErrors = errors;
 
   const validation = schema.validate(formBody[INPUT]);

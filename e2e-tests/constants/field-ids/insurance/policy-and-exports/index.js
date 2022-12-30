@@ -15,9 +15,13 @@ export const POLICY_AND_EXPORTS = {
   CONTRACT_POLICY: {
     ...SHARED_CONTRACT_POLICY,
     SINGLE: {
-      COMPLETION_OF_CONTRACT_DATE: 'expectedCompletionOfContractDate',
+      CONTRACT_COMPLETION_DATE: 'contractCompletionDate',
       TOTAL_CONTRACT_VALUE: 'totalValueOfContract',
     },
     MULTI: {},
+  },
+  ABOUT_GOODS_OR_SERVICES: {
+    DESCRIPTION: 'goodsOrServicesDescription',
+    FINAL_DESTINATION: 'goodsOrServicesDestinationIsoCode',
   },
 };

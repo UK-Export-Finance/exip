@@ -1,3 +1,4 @@
+import { add } from 'date-fns';
 import mockCountries from './mock-countries';
 import { Application } from '../../types';
 
@@ -24,6 +25,7 @@ const mockApplication = {
     id: 'clav8by1i0007kgoqies0dbfc',
     policyType: 'Multiple contract policy',
     requestedStartDate: new Date(),
+    contractCompletionDate: add(new Date(), { days: 1 }),
   },
 } as Application;
 

@@ -2,7 +2,7 @@ import { FIELD_IDS, FIELD_VALUES } from '../../../../constants';
 import { LINKS } from '../../../links';
 
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
-const { CONTRACT_POLICY } = POLICY_AND_EXPORTS;
+const { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES } = POLICY_AND_EXPORTS;
 
 export const POLICY_AND_EXPORT_FIELDS = {
   [POLICY_AND_EXPORTS.POLICY_TYPE]: {
@@ -54,7 +54,7 @@ export const POLICY_AND_EXPORT_FIELDS = {
       ],
     },
     SINGLE: {
-      [CONTRACT_POLICY.SINGLE.COMPLETION_OF_CONTRACT_DATE]: {
+      [CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
         LABEL: 'When do you expect to complete the export contract?',
         HINT: 'For example, 6 11 2024',
       },
@@ -64,5 +64,18 @@ export const POLICY_AND_EXPORT_FIELDS = {
       },
     },
     MULTI: {},
+  },
+  ABOUT_GOODS_OR_SERVICES: {
+    [ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
+      LABEL: "Describe the goods or services you want to insure and explain how they'll be used by the buyer",
+      HINT: {
+        INTRO: 'For example:',
+        LIST: ['clothing items for retail sale', 'construction materials to build commercial property', 'educational services such as teacher training'],
+      },
+      MAXIMUM: 1000,
+    },
+    FINAL_DESTINATION: {
+      LABEL: "What's the final destination of the goods or services?",
+    },
   },
 };

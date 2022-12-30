@@ -1,14 +1,7 @@
 import validationRules from './rules';
+import combineValidationRules from '../../../../helpers/combine-validation-rules';
 import { SubmittedDataQuoteEligibility } from '../../../../../types';
 
-const validation = (submittedData: SubmittedDataQuoteEligibility) => {
-  let errors!: object;
-
-  for (let i = 0; i < validationRules.length; i += 1) {
-    errors = validationRules[i](submittedData, errors);
-  }
-
-  return errors;
-};
+const validation = (submittedData: SubmittedDataQuoteEligibility) => combineValidationRules(validationRules, submittedData);
 
 export default validation;

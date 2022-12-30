@@ -69,7 +69,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       submitButton().click();
 
       checkText(
-        partials.errorSummaryListItems().eq(2),
+        partials.errorSummaryListItems().eq(3),
         CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].IS_EMPTY,
       );
 
@@ -86,7 +86,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       submitButton().click();
 
       checkText(
-        partials.errorSummaryListItems().eq(2),
+        partials.errorSummaryListItems().eq(3),
         CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].ABOVE_MAXIMUM,
       );
 
