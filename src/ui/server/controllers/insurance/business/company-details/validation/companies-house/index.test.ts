@@ -1,23 +1,20 @@
 import validation from '.';
 import validationRules from './rules';
 import { FIELD_IDS } from '../../../../../../constants';
+import combineValidationRules from '../../../../../../helpers/combine-validation-rules';
 
 const { COMPANY_HOUSE } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 describe('controllers/insurance/business/company-details/validation/companies-house', () => {
   it('should return an array of results from rule functions', () => {
-    const mockSubmittedData = {
+    const mockFormBody = {
       [COMPANY_HOUSE.INPUT]: '123',
     };
 
-    const result = validation(mockSubmittedData);
+    const result = validation(mockFormBody);
 
-    let expectedErrorsObj!: object;
+    const expected = combineValidationRules(validationRules, mockFormBody);
 
-    for (let i = 0; i < validationRules.length; i += 1) {
-      expectedErrorsObj = validationRules[i](mockSubmittedData, expectedErrorsObj);
-    }
-
-    expect(result).toEqual(expectedErrorsObj);
+    expect(result).toEqual(expected);
   });
 });

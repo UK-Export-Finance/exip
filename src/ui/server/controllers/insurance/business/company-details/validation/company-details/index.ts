@@ -1,5 +1,5 @@
 import companyDetailsResponseRules from './rules';
-import { RequestBody } from '../../../../../../../types';
+import { RequestBody, ValidationErrors } from '../../../../../../../types';
 
 /**
  * validates company details page response
@@ -10,9 +10,11 @@ import { RequestBody } from '../../../../../../../types';
 const validation = (responseBody: RequestBody, errors: object) => {
   let updatedErrors = errors;
 
-  for (let i = 0; i < companyDetailsResponseRules.length; i += 1) {
-    updatedErrors = companyDetailsResponseRules[i](responseBody, updatedErrors);
-  }
+  /* eslint-disable no-unused-vars, prettier/prettier */
+  companyDetailsResponseRules.forEach((rule: (ruleData: object, ruleErrors: ValidationErrors) => ValidationErrors) => {
+    /* eslint-enable no-unused-vars, prettier/prettier */
+    updatedErrors = rule(responseBody, updatedErrors);
+  });
 
   return updatedErrors;
 };

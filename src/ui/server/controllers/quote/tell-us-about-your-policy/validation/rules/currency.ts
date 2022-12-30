@@ -2,9 +2,9 @@ import { FIELD_IDS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../helpers/object';
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ValidationErrors } from '../../../../../../types';
 
-const currencyRules = (formBody: RequestBody, errors: object) => {
+const currencyRules = (formBody: RequestBody, errors: object): ValidationErrors => {
   let updatedErrors = errors;
 
   if (!objectHasProperty(formBody, FIELD_IDS.CURRENCY)) {

@@ -1,18 +1,15 @@
 import validation from '.';
 import validationRules from './rules';
+import combineValidationRules from '../../../../helpers/combine-validation-rules';
 
 describe('controllers/quote/policy-type/validation', () => {
   it('should return an array of results from rule functions', () => {
-    const mockBody = {};
+    const mockFormBody = {};
 
-    const result = validation(mockBody);
+    const result = validation(mockFormBody);
 
-    let expectedErrorsObj!: object;
+    const expected = combineValidationRules(validationRules, mockFormBody);
 
-    for (let i = 0; i < validationRules.length; i += 1) {
-      expectedErrorsObj = validationRules[i](mockBody, expectedErrorsObj);
-    }
-
-    expect(result).toEqual(expectedErrorsObj);
+    expect(result).toEqual(expected);
   });
 });
