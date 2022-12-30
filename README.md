@@ -182,7 +182,7 @@ Whilst the automatically generated graphQL API and database is fantastic, there 
 
 This can be easily achieved by creating a [custom schema](https://github.com/UK-Export-Finance/exip/blob/main-application/src/api/custom-schema.ts). We then import this in the [keystone config](https://github.com/UK-Export-Finance/exip/blob/main-application/src/api/keystone.ts#L19) and it magically merges our custom schema with the automatically generated schema.
 
-## Why and how we use Keystone
+## Why we use Keystone
 
 We decided to use Keystone because it provides us with so much functionality out of the box. We do not want to setup and build another CRUD API from scratch. Whilst building an API manually gives us more control, there is overhead for building specific features and maintaining the API.
 
@@ -190,7 +190,7 @@ With Keystone, we get all of this (including things like pagination), by writing
 
 Keystone also provides us with an admin UI for the database. Whilst we don't really use this, there are some potential opportunities for this to be used by non-technical people.
 
-## How and when the UI calls API
+## How and when the UI calls the API
 
 ### When an application page is loaded
 
