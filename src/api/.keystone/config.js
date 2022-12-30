@@ -177,6 +177,7 @@ var lists = {
         ]
       }),
       requestedStartDate: (0, import_fields.timestamp)(),
+      contractCompletionDate: (0, import_fields.timestamp)(),
       totalValueOfContract: (0, import_fields.integer)({
         validation: {
           min: APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT.MINIMUM,

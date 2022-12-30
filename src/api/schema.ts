@@ -149,6 +149,7 @@ export const lists = {
         ],
       }),
       requestedStartDate: timestamp(),
+      contractCompletionDate: timestamp(),
       totalValueOfContract: integer({
         validation: {
           min: APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT.MINIMUM,

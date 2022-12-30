@@ -5,7 +5,10 @@ import { mockApplication } from '../../../test-mocks';
 
 const {
   POLICY_AND_EXPORTS: {
-    CONTRACT_POLICY: { REQUESTED_START_DATE },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      SINGLE: { CONTRACT_COMPLETION_DATE },
+    },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -34,6 +37,24 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
         policyAndExport: {
           ...mockApplication.policyAndExport,
           ...getDateFieldsFromTimestamp(timestamp, REQUESTED_START_DATE),
+        },
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when an application has policyAndExport${CONTRACT_COMPLETION_DATE} field`, () => {
+    it('should return additional date fields from the timestamp', () => {
+      const timestamp = mockApplication.policyAndExport[CONTRACT_COMPLETION_DATE];
+
+      const result = mapApplicationToFormFields(mockApplication);
+
+      const expected = {
+        ...mockApplication,
+        policyAndExport: {
+          ...mockApplication.policyAndExport,
+          ...getDateFieldsFromTimestamp(timestamp, CONTRACT_COMPLETION_DATE),
         },
       };
 

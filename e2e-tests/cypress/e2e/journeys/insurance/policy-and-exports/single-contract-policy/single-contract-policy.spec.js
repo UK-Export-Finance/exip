@@ -50,7 +50,7 @@ const {
         CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
         SINGLE: {
-          COMPLETION_OF_CONTRACT_DATE,
+          CONTRACT_COMPLETION_DATE,
           TOTAL_CONTRACT_VALUE,
         },
       },
@@ -70,7 +70,8 @@ const goToPageDirectly = (referenceNumber) => {
 context('Insurance - Policy and exports - Single contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
   const date = new Date();
-  const futureDate = add(date, { months: 3 });
+  const startDate = add(date, { months: 3 });
+  const endDate = add(startDate, { months: 6 });
 
   before(() => {
     cy.visit(START, {
@@ -168,7 +169,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   });
 
   it('renders `contract completion date` label, hint and inputs', () => {
-    const fieldId = COMPLETION_OF_CONTRACT_DATE;
+    const fieldId = CONTRACT_COMPLETION_DATE;
     const field = singleContractPolicyPage[fieldId];
 
     field.label().should('exist');
@@ -266,8 +267,12 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   describe('form submission', () => {
     it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
       singleContractPolicyPage[REQUESTED_START_DATE].dayInput().type('1');
-      singleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(futureDate));
-      singleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(getYear(futureDate));
+      singleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(startDate));
+      singleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(getYear(startDate));
+
+      singleContractPolicyPage[CONTRACT_COMPLETION_DATE].dayInput().type('1');
+      singleContractPolicyPage[CONTRACT_COMPLETION_DATE].monthInput().type(getMonth(endDate));
+      singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput().type(getYear(endDate));
 
       singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().type('10000');
       singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().type('mock free text');
@@ -302,8 +307,12 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
         goToPageDirectly(referenceNumber);
 
         singleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', '1');
-        singleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', getMonth(futureDate));
-        singleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', getYear(futureDate));
+        singleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', getMonth(startDate));
+        singleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', getYear(startDate));
+
+        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].dayInput().should('have.value', '1');
+        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].monthInput().should('have.value', getMonth(endDate));
+        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput().should('have.value', getYear(endDate));
 
         singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', '10000');
         singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().should('have.value', 'mock free text');
