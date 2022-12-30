@@ -55,10 +55,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   describe('all page errors', () => {
-    it('should display validation errors if trading name, address questions and companies house input are not answered', () => {
+    it('should display validation errors if required inputs are not correctly answered', () => {
       companyDetails.companyWebsite().type('a');
       submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 3);
+      partials.errorSummaryListItems().should('have.length', 4);
 
       partials.errorSummaryListItems().first().invoke('text')
         .then((text) => {
