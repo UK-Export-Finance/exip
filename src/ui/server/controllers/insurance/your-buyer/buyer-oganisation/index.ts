@@ -41,7 +41,7 @@ export const get = async (req: Request, res: Response) => {
     mappedCountries = mapCountries(countries);
   }
 
-  return res.render(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
+  return res.render(TEMPLATES.YOUR_BUYER.BUYER_COMPANY_DETAILS, {
     ...singleInputPageVariables({
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
