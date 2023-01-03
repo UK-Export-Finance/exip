@@ -34,6 +34,8 @@ const {
   },
 } = ROUTES;
 
+const { CONTRACT_POLICY } = FIELDS;
+
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
@@ -146,11 +148,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     field.label().should('exist');
     field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY[fieldId].LABEL);
+      expect(text.trim()).equal(CONTRACT_POLICY[fieldId].LABEL);
     });
 
     field.hint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY[fieldId].HINT);
+      expect(text.trim()).equal(CONTRACT_POLICY[fieldId].HINT);
     });
 
     field.dayInput().should('exist');
@@ -164,11 +166,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     field.label().should('exist');
     field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
+      expect(text.trim()).equal(CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
     });
 
     field.hint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
+      expect(text.trim()).equal(CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
     });
 
     field.input().should('exist');
@@ -180,11 +182,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     field.label().should('exist');
     field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
+      expect(text.trim()).equal(CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
     });
 
     field.hint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
+      expect(text.trim()).equal(CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
     });
 
     field.prefix().invoke('text').then((text) => {
@@ -211,11 +213,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     field.label().should('exist');
     field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY[fieldId].LABEL);
+      expect(text.trim()).equal(CONTRACT_POLICY[fieldId].LABEL);
     });
 
     field.hint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY[fieldId].HINT);
+      expect(text.trim()).equal(CONTRACT_POLICY[fieldId].HINT);
     });
 
     field.input().should('exist');
@@ -228,7 +230,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
       field.label().should('exist');
       field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS.CONTRACT_POLICY[fieldId].LABEL);
+        expect(text.trim()).equal(CONTRACT_POLICY[fieldId].LABEL);
       });
 
       field.input().should('exist');
