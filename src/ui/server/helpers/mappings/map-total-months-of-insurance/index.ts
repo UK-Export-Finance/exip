@@ -1,5 +1,12 @@
 import mapMonthString from '../../data-content-mappings/map-month-string';
 
+/**
+ * mapTotalMonthsOfCover
+ * Map all months of covers options and mark if it's selected
+ * @param {Array} Array of numbers
+ * @returns {String} Selected months of cover
+ * @returns {Array} Array of mapped months with month(s) string
+ */
 const mapTotalMonthsOfCover = (months: Array<number>, selectedValue?: number) => {
   const mapped = months.map((month) => {
     if (selectedValue && selectedValue === month + 1) {
