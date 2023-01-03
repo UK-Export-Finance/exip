@@ -64,8 +64,8 @@
             id: FIELDS.COMPANY_HOUSE.INPUT,
             name: FIELDS.COMPANY_HOUSE.INPUT,
             value: submittedValues[FIELDS.COMPANY_HOUSE.INPUT],
-            errorMessage: validationErrors.errorList.companiesHouseNumber and {
-              text: validationErrors.errorList.companiesHouseNumber.text,
+            errorMessage: validationErrors.errorList[FIELDS.COMPANY_HOUSE.INPUT] and {
+              text: validationErrors.errorList[FIELDS.COMPANY_HOUSE.INPUT].text,
               attributes: {
                 "data-cy": "companies-house-search-error"
               }
@@ -104,7 +104,7 @@
           fieldId: FIELDS.YOUR_COMPANY.TRADING_NAME,
           heading: CONTENT_STRINGS.TRADING_NAME,
           submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_NAME],
-          errorMessage: validationErrors.errorList.tradingName,
+          errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_NAME],
           headerClass: 'govuk-fieldset__legend--m',
           datacyHeading: 'trading-name-heading'
         }) }}
@@ -115,7 +115,7 @@
             fieldId: FIELDS.YOUR_COMPANY.TRADING_ADDRESS,
             heading: CONTENT_STRINGS.TRADING_ADDRESS,
             submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
-            errorMessage: validationErrors.errorList.tradingAddress,
+            errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
             headerClass: 'govuk-fieldset__legend--m',
             datacyHeading: 'trading-address-heading'
           }) }}
@@ -137,6 +137,12 @@
           attributes: {
             'data-cy': 'company-website',
             'aria-label': CONTENT_STRINGS.WEBSITE
+          },
+          errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE] and {
+            text: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE].text,
+            attributes: {
+              "data-cy": "company-website-error"
+            }
           }
         }) }}
       </div>

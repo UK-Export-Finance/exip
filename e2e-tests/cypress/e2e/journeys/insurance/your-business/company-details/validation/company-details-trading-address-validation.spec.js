@@ -1,9 +1,9 @@
-import { companyDetails } from '../../../../pages/your-business';
-import { submitButton, yesRadioInput, inlineErrorMessage } from '../../../../pages/shared';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import partials from '../../../../partials';
-import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER } from '../../../../../../constants';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
+import { companyDetails } from '../../../../../pages/your-business';
+import { submitButton, yesRadioInput, inlineErrorMessage } from '../../../../../pages/shared';
+import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import partials from '../../../../../partials';
+import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER } from '../../../../../../../constants';
+import getReferenceNumber from '../../../../../helpers/get-reference-number';
 
 const {
   EXPORTER_BUSINESS: {
