@@ -22,7 +22,7 @@ insuranceRouter.get(INSURANCE_ROUTES.START, startGet);
 insuranceRouter.post(INSURANCE_ROUTES.START, startPost);
 
 insuranceRouter.get(INSURANCE_ROUTES.YOUR_BUYER_ORGANISATION, getaYourBuyerOrganisation);
-
+//
 insuranceRouter.get(INSURANCE_ROUTES.APPLY_OFFLINE, applyOfflineGet);
 insuranceRouter.get(INSURANCE_ROUTES.SPEAK_TO_UKEF_EFM, speakToUkefEfmGet);
 
