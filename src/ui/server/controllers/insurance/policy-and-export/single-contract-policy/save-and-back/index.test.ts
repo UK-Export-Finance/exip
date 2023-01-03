@@ -38,10 +38,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
   const mockValidFormBody = {
     _csrf: '1234',
     [`${REQUESTED_START_DATE}-day`]: '1',
-    [`${REQUESTED_START_DATE}-month`]: getMonth(date),
+    [`${REQUESTED_START_DATE}-month`]: getMonth(add(date, { months: 1 })),
     [`${REQUESTED_START_DATE}-year`]: getYear(add(date, { years: 1 })),
     [`${CONTRACT_COMPLETION_DATE}-day`]: '1',
-    [`${CONTRACT_COMPLETION_DATE}-month`]: getMonth(date),
+    [`${CONTRACT_COMPLETION_DATE}-month`]: getMonth(add(date, { months: 2 })),
     [`${CONTRACT_COMPLETION_DATE}-year`]: getYear(add(date, { years: 1, months: 6 })),
     [TOTAL_CONTRACT_VALUE]: '150000',
     [CREDIT_PERIOD_WITH_BUYER]: 'Example',

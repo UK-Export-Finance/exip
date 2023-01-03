@@ -25,8 +25,8 @@ const mockApplication = {
   policyAndExport: {
     id: 'clav8by1i0007kgoqies0dbfc',
     policyType: APPLICATION.POLICY_TYPE.MULTI,
-    requestedStartDate: new Date(),
-    contractCompletionDate: add(new Date(), { days: 1 }),
+    requestedStartDate: add(new Date(), { months: 1 }),
+    contractCompletionDate: add(new Date(), { months: 1, days: 1 }),
   },
 } as Application;
 
