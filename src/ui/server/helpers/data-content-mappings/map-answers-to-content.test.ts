@@ -1,7 +1,7 @@
 import { mapPolicyType, mapPercentageOfCover, mapAnswersToContent } from './map-answers-to-content';
 import mapCountry from './map-country';
 import mapCost from './map-cost';
-import mapPeriodMonths from './map-period-months';
+import mapMonthString from './map-month-string';
 import mapPolicyLength from './map-policy-length';
 import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { SUMMARY_ANSWERS } from '../../content-strings';
@@ -85,7 +85,7 @@ describe('server/helpers/map-answers-to-content', () => {
           text: mapPercentageOfCover(mockAnswers[PERCENTAGE_OF_COVER]),
         },
         [CREDIT_PERIOD]: {
-          text: mapPeriodMonths(mockAnswers[CREDIT_PERIOD]),
+          text: mapMonthString(mockAnswers[CREDIT_PERIOD]),
         },
       };
 

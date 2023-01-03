@@ -1,5 +1,5 @@
 import mapPolicyLength from './map-policy-length';
-import mapPeriodMonths from './map-period-months';
+import mapMonthString from './map-month-string';
 import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { Quote } from '../../../types';
 import { mockQuote } from '../../test-mocks';
@@ -19,7 +19,7 @@ describe('server/helpers/map-policy-length', () => {
 
       const expected = {
         [SINGLE_POLICY_LENGTH]: {
-          text: mapPeriodMonths(mockData[POLICY_LENGTH]),
+          text: mapMonthString(mockData[POLICY_LENGTH]),
         },
       };
 
@@ -39,7 +39,7 @@ describe('server/helpers/map-policy-length', () => {
 
       const expected = {
         [MULTI_POLICY_LENGTH]: {
-          text: mapPeriodMonths(mockData[POLICY_LENGTH]),
+          text: mapMonthString(mockData[POLICY_LENGTH]),
         },
       };
 
