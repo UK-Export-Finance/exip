@@ -49,17 +49,17 @@
               classes: "govuk-label--m",
               isPageHeading: false,
               attributes: {
-                "data-cy": "companies-house-search-label"
+                "data-cy": FIELDS.COMPANY_HOUSE.SEARCH + "-label"
               }
             },
             hint: {
               html: CONTENT_STRINGS.CRN_HINT,
               attributes: {
-                "data-cy": "companies-house-search-hint"
+                "data-cy": FIELDS.COMPANY_HOUSE.SEARCH + "-hint"
               }
             },
             attributes: {
-              "data-cy": "companies-house-search"
+              "data-cy": FIELDS.COMPANY_HOUSE.SEARCH
             },
             id: FIELDS.COMPANY_HOUSE.INPUT,
             name: FIELDS.COMPANY_HOUSE.INPUT,
@@ -67,7 +67,7 @@
             errorMessage: validationErrors.errorList[FIELDS.COMPANY_HOUSE.INPUT] and {
               text: validationErrors.errorList[FIELDS.COMPANY_HOUSE.INPUT].text,
               attributes: {
-                "data-cy": "companies-house-search-error"
+                "data-cy": FIELDS.COMPANY_HOUSE.SEARCH + "-error"
               }
             }
           }) }}
@@ -76,7 +76,7 @@
             text: CONTENT_STRINGS.BUTTONS.SEARCH,
             classes: "govuk-button--secondary",
             attributes: {
-              'data-cy': 'companies-house-search-button',
+              'data-cy': FIELDS.COMPANY_HOUSE.SEARCH + '-button',
               'formaction': POST_ROUTES.COMPANIES_HOUSE
             }
           }) }}
@@ -87,13 +87,13 @@
 
       {% if SUMMARY_LIST %}
         <div class="govuk-grid-column-three-quarters-from-desktop">
-          <h3 class="govuk-fieldset__legend--m" data-cy="your-business-heading">{{CONTENT_STRINGS.YOUR_BUSINESS_HEADING}}</h3>
+          <h3 class="govuk-fieldset__legend--m" data-cy="{{FIELDS.YOUR_COMPANY.YOUR_BUSINESS}}-heading">{{CONTENT_STRINGS.YOUR_BUSINESS_HEADING}}</h3>
 
           {{ govukSummaryList({
             classes: 'govuk-!-margin-bottom-9',
             rows: SUMMARY_LIST.COMPANY_DETAILS.ROWS,
             attributes: {
-              'data-cy': 'companies-house-summary-list'
+              'data-cy':  FIELDS.COMPANY_HOUSE.SEARCH + '-summary-list'
             }
           }) }}
         </div>
@@ -106,7 +106,7 @@
           submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_NAME],
           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_NAME],
           headerClass: 'govuk-fieldset__legend--m',
-          datacyHeading: 'trading-name-heading'
+          datacyHeading: FIELDS.YOUR_COMPANY.TRADING_NAME + '-heading'
         }) }}
       </div>
 
@@ -117,7 +117,7 @@
             submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
             errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
             headerClass: 'govuk-fieldset__legend--m',
-            datacyHeading: 'trading-address-heading'
+            datacyHeading: FIELDS.YOUR_COMPANY.TRADING_ADDRESS + '-heading'
           }) }}
       </div>
 
@@ -128,20 +128,20 @@
             classes: "govuk-label--m",
             isPageHeading: false,
             attributes: {
-              'data-cy': 'company-website-label'
+              'data-cy': FIELDS.YOUR_COMPANY.WEBSITE + '-label'
             }
           },
           id: FIELDS.YOUR_COMPANY.WEBSITE,
           name: FIELDS.YOUR_COMPANY.WEBSITE,
           classes: "companies-house-input-width",
           attributes: {
-            'data-cy': 'company-website',
+            'data-cy': FIELDS.YOUR_COMPANY.WEBSITE,
             'aria-label': CONTENT_STRINGS.WEBSITE
           },
           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE] and {
             text: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE].text,
             attributes: {
-              "data-cy": "company-website-error"
+              "data-cy": FIELDS.YOUR_COMPANY.WEBSITE + "-error"
             }
           }
         }) }}
@@ -154,20 +154,20 @@
             classes: "govuk-label--m",
             isPageHeading: false,
             attributes: {
-            'data-cy': 'company-phone-label'
+            'data-cy': FIELDS.YOUR_COMPANY.PHONE_NUMBER + '-label'
             }
           },
           hint: {
             text: CONTENT_STRINGS.PHONE_NUMBER_HINT,
             attributes: {
-              'data-cy': 'company-phone-hint'
+              'data-cy': FIELDS.YOUR_COMPANY.PHONE_NUMBER + '-hint'
             }
           },
           id: FIELDS.YOUR_COMPANY.PHONE_NUMBER,
           name: FIELDS.YOUR_COMPANY.PHONE_NUMBER,
           classes: "companies-house-input-width",
           attributes: {
-            'data-cy': 'company-phone',
+            'data-cy': FIELDS.YOUR_COMPANY.PHONE_NUMBER,
             'aria-label': CONTENT_STRINGS.PHONE_NUMBER
           }
         }) }}
