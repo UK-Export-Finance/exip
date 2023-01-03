@@ -7,7 +7,7 @@ import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
 
-const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID].multi;
+const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID].multiple;
 
 const { taskList } = partials.insurancePartials;
 
