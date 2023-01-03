@@ -1,6 +1,6 @@
 const EXPORTER_BUSINESS = {
   COMPANY_HOUSE: {
-    INDEX: 'companiesHouse',
+    SEARCH: 'companiesHouseSearch',
     INPUT: 'companiesHouseNumber',
     COMPANY_NAME: 'companyName',
     COMPANY_ADDRESS: 'registeredOfficeAddress',

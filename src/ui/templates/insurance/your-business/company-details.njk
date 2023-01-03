@@ -49,17 +49,17 @@
               classes: "govuk-label--m",
               isPageHeading: false,
               attributes: {
-                "data-cy": FIELDS.COMPANY_HOUSE.INPUT + "-search-label"
+                "data-cy": FIELDS.COMPANY_HOUSE.SEARCH + "-label"
               }
             },
             hint: {
               html: CONTENT_STRINGS.CRN_HINT,
               attributes: {
-                "data-cy": FIELDS.COMPANY_HOUSE.INPUT + "-search-hint"
+                "data-cy": FIELDS.COMPANY_HOUSE.SEARCH + "-hint"
               }
             },
             attributes: {
-              "data-cy": FIELDS.COMPANY_HOUSE.INPUT + "-search"
+              "data-cy": FIELDS.COMPANY_HOUSE.SEARCH
             },
             id: FIELDS.COMPANY_HOUSE.INPUT,
             name: FIELDS.COMPANY_HOUSE.INPUT,
@@ -67,7 +67,7 @@
             errorMessage: validationErrors.errorList[FIELDS.COMPANY_HOUSE.INPUT] and {
               text: validationErrors.errorList[FIELDS.COMPANY_HOUSE.INPUT].text,
               attributes: {
-                "data-cy": FIELDS.COMPANY_HOUSE.INPUT + "-search-error"
+                "data-cy": FIELDS.COMPANY_HOUSE.SEARCH + "-error"
               }
             }
           }) }}
@@ -76,7 +76,7 @@
             text: CONTENT_STRINGS.BUTTONS.SEARCH,
             classes: "govuk-button--secondary",
             attributes: {
-              'data-cy': FIELDS.COMPANY_HOUSE.INPUT + '-search-button',
+              'data-cy': FIELDS.COMPANY_HOUSE.SEARCH + '-button',
               'formaction': POST_ROUTES.COMPANIES_HOUSE
             }
           }) }}
@@ -93,7 +93,7 @@
             classes: 'govuk-!-margin-bottom-9',
             rows: SUMMARY_LIST.COMPANY_DETAILS.ROWS,
             attributes: {
-              'data-cy':  FIELDS.COMPANY_HOUSE.INDEX + '-summary-list'
+              'data-cy':  FIELDS.COMPANY_HOUSE.SEARCH + '-summary-list'
             }
           }) }}
         </div>

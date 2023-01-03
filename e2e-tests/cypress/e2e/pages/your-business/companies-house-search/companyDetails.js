@@ -9,22 +9,21 @@ const {
     YOUR_BUSINESS,
   },
   COMPANY_HOUSE: {
-    INDEX,
-    INPUT,
+    SEARCH,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const companyDetails = {
-  companiesHouseSearch: () => cy.get(`[data-cy="${INPUT}-search`),
-  companiesHouseSearchLabel: () => cy.get(`[data-cy="${INPUT}-search-label`),
-  companiesHouseSearchHint: () => cy.get(`[data-cy="${INPUT}-search-hint`),
-  companiesHouseSearchButton: () => cy.get(`[data-cy="${INPUT}-search-button`),
-  companiesHouseSearchError: () => cy.get(`[data-cy="${INPUT}-search-error`),
+  companiesHouseSearch: () => cy.get(`[data-cy="${SEARCH}`),
+  companiesHouseSearchLabel: () => cy.get(`[data-cy="${SEARCH}-label`),
+  companiesHouseSearchHint: () => cy.get(`[data-cy="${SEARCH}-hint`),
+  companiesHouseSearchButton: () => cy.get(`[data-cy="${SEARCH}-button`),
+  companiesHouseSearchError: () => cy.get(`[data-cy="${SEARCH}-error`),
 
   companiesHouseNoNumber: () => cy.get('[data-cy="do-not-have-number'),
 
   yourBusinessHeading: () => cy.get(`[data-cy="${YOUR_BUSINESS}-heading`),
-  yourBusinessSummaryList: () => cy.get(`[data-cy="${INDEX}-summary-list`),
+  yourBusinessSummaryList: () => cy.get(`[data-cy="${SEARCH}-summary-list`),
 
   tradingName: () => cy.get(`[data-cy="${TRADING_NAME}`),
   tradingNameLabel: () => cy.get(`[data-cy="${TRADING_NAME}-heading`),
