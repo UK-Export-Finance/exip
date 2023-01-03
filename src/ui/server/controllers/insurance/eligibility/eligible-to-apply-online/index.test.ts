@@ -1,4 +1,4 @@
-import { get, post } from '.';
+import { TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROOT } from '../../../../constants/routes/insurance';
@@ -20,6 +20,12 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
     res = mockRes();
   });
 
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE);
+    });
+  });
+
   describe('get', () => {
     it('should render template', () => {
       get(req, res);
@@ -31,7 +37,7 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
         }),
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
   });
 

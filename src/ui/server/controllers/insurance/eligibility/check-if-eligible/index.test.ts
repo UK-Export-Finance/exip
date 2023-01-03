@@ -1,4 +1,4 @@
-import { get, post } from '.';
+import { TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -14,6 +14,12 @@ describe('controllers/insurance/eligibility/check-if-eligible', () => {
     res = mockRes();
   });
 
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE);
+    });
+  });
+
   describe('get', () => {
     it('should render template', () => {
       get(req, res);
@@ -25,7 +31,7 @@ describe('controllers/insurance/eligibility/check-if-eligible', () => {
         }),
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
   });
 

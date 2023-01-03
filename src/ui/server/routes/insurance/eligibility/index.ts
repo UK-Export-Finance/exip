@@ -11,7 +11,7 @@ import { get as letterOfCreditGet, post as letterOfCreditPost } from '../../../c
 import { get as preCreditPeriodGet, post as preCreditPeriodPost } from '../../../controllers/insurance/eligibility/pre-credit-period';
 import { get as companiesHouseNumberGet, post as companiesHouseNumberPost } from '../../../controllers/insurance/eligibility/companies-house-number';
 import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } from '../../../controllers/insurance/eligibility/eligible-to-apply-online';
-import cannotApplyGet from '../../../controllers/insurance/eligibility/cannot-apply';
+import { get as cannotApplyGet } from '../../../controllers/insurance/eligibility/cannot-apply';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../../controllers/insurance/eligibility/need-to-start-again';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */

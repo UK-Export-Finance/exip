@@ -90,6 +90,8 @@ const generatePageVariables = (policyType: string) => {
   return pageVariables;
 };
 
+export const TEMPLATE = TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
+
 const get = async (req: Request, res: Response) => {
   const { submittedData } = req.session;
   const currencies = await api.external.getCurrencies();
@@ -124,7 +126,7 @@ const get = async (req: Request, res: Response) => {
 
   const PAGE_VARIABLES = generatePageVariables(submittedData.quoteEligibility[POLICY_TYPE]);
 
-  return res.render(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+  return res.render(TEMPLATE, {
     ...PAGE_VARIABLES,
     BACK_LINK: req.headers.referer,
     isSinglePolicyType: isSinglePolicyType(submittedData.quoteEligibility[POLICY_TYPE]),
@@ -186,7 +188,7 @@ const post = async (req: Request, res: Response) => {
 
     const PAGE_VARIABLES = generatePageVariables(submittedData.quoteEligibility[POLICY_TYPE]);
 
-    return res.render(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+    return res.render(TEMPLATE, {
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
       isSinglePolicyType: isSinglePolicyType(submittedData.quoteEligibility[POLICY_TYPE]),

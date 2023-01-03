@@ -341,6 +341,7 @@ CREATE TABLE IF NOT EXISTS `PolicyAndExport` (
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `policyType` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `requestedStartDate` datetime(3) DEFAULT NULL,
+	`contractCompletionDate` datetime(3) DEFAULT NULL,
   `policyCurrencyCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `totalValueOfContract` int DEFAULT NULL,
   `creditPeriodWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',

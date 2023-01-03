@@ -26,7 +26,7 @@ const {
 
 const {
   REQUESTED_START_DATE,
-  SINGLE: { COMPLETION_OF_CONTRACT_DATE, TOTAL_CONTRACT_VALUE },
+  SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
   CREDIT_PERIOD_WITH_BUYER,
   POLICY_CURRENCY_CODE,
 } = CONTRACT_POLICY;
@@ -65,9 +65,9 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             ID: REQUESTED_START_DATE,
             ...FIELDS.CONTRACT_POLICY[REQUESTED_START_DATE],
           },
-          COMPLETION_OF_CONTRACT_DATE: {
-            ID: COMPLETION_OF_CONTRACT_DATE,
-            ...FIELDS.CONTRACT_POLICY.SINGLE[COMPLETION_OF_CONTRACT_DATE],
+          CONTRACT_COMPLETION_DATE: {
+            ID: CONTRACT_COMPLETION_DATE,
+            ...FIELDS.CONTRACT_POLICY.SINGLE[CONTRACT_COMPLETION_DATE],
           },
           TOTAL_CONTRACT_VALUE: {
             ID: TOTAL_CONTRACT_VALUE,
@@ -118,6 +118,38 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+    });
+
+    describe('when a policy currency code has been previously submitted', () => {
+      const mockApplicationWithCurrencyCode = {
+        ...mockApplication,
+        policyAndExport: {
+          ...mockApplication.policyAndExport,
+          [POLICY_CURRENCY_CODE]: mockCurrencies[0].isoCode,
+        },
+      };
+
+      beforeEach(() => {
+        res.locals.application = mockApplicationWithCurrencyCode;
+      });
+
+      it('should render template with currencies mapped to submitted currency', async () => {
+        await get(req, res);
+
+        const expectedCurrencies = mapCurrencies(mockCurrencies, mockApplicationWithCurrencyCode.policyAndExport[POLICY_CURRENCY_CODE]);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(refNumber),
+          application: mapApplicationToFormFields(mockApplicationWithCurrencyCode),
+          currencies: expectedCurrencies,
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
     });
 
     describe('when there is no application', () => {
@@ -187,9 +219,9 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
       [`${REQUESTED_START_DATE}-day`]: '1',
       [`${REQUESTED_START_DATE}-month`]: getMonth(date),
       [`${REQUESTED_START_DATE}-year`]: getYear(add(date, { years: 1 })),
-      [`${COMPLETION_OF_CONTRACT_DATE}-day`]: '1',
-      [`${COMPLETION_OF_CONTRACT_DATE}-month`]: getMonth(add(date, { months: 6 })),
-      [`${COMPLETION_OF_CONTRACT_DATE}-year`]: getYear(date),
+      [`${CONTRACT_COMPLETION_DATE}-day`]: '1',
+      [`${CONTRACT_COMPLETION_DATE}-month`]: getMonth(date),
+      [`${CONTRACT_COMPLETION_DATE}-year`]: getYear(add(date, { years: 1, months: 6 })),
       [TOTAL_CONTRACT_VALUE]: '150000',
       [CREDIT_PERIOD_WITH_BUYER]: 'Mock text',
       [POLICY_CURRENCY_CODE]: mockCurrencies[0].isoCode,

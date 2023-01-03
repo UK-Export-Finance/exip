@@ -1,4 +1,4 @@
-import { PAGE_VARIABLES, mapAnswer, mapSubmittedAnswer, get, post } from '.';
+import { PAGE_VARIABLES, TEMPLATE, mapAnswer, mapSubmittedAnswer, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
@@ -32,6 +32,12 @@ describe('controllers/quote/buyer-body', () => {
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
+    });
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.QUOTE.BUYER_BODY);
     });
   });
 
@@ -91,7 +97,7 @@ describe('controllers/quote/buyer-body', () => {
         },
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_BODY, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
   });
 
@@ -100,7 +106,7 @@ describe('controllers/quote/buyer-body', () => {
       it('should render template with validation errors', async () => {
         await post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_BODY, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
           validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),
         });

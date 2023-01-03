@@ -1,4 +1,4 @@
-import { get, post } from '.';
+import { TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../content-strings';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
@@ -12,6 +12,12 @@ describe('controllers/insurance/start', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.START);
+    });
   });
 
   describe('get', () => {
@@ -47,7 +53,7 @@ describe('controllers/insurance/start', () => {
         }),
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.START, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
   });
 
