@@ -1,5 +1,6 @@
 export const EXPORTER_BUSINESS = {
   COMPANY_HOUSE: {
+    SEARCH: 'companiesHouseSearch',
     INPUT: 'companiesHouseNumber',
     COMPANY_NAME: 'companyName',
     COMPANY_ADDRESS: 'registeredOfficeAddress',
@@ -9,6 +10,7 @@ export const EXPORTER_BUSINESS = {
     SUMMARY_LIST: 'summaryList',
   },
   YOUR_COMPANY: {
+    YOUR_BUSINESS: 'yourBusiness',
     TRADING_NAME: 'tradingName',
     TRADING_ADDRESS: 'tradingAddress',
     WEBSITE: 'companyWebsite',
