@@ -9,7 +9,7 @@ const FIELD_ID = FIELD_IDS.BUYER_COUNTRY;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
-  PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
+  PAGE_CONTENT_STRINGS: PAGES.YOUR_BUYER,
 };
 
 export const get = async (req: Request, res: Response) => {

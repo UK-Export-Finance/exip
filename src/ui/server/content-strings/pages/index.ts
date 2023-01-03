@@ -114,6 +114,9 @@ const PAGE_NOT_FOUND_PAGE = {
 const PROBLEM_WITH_SERVICE_PAGE = {
   PAGE_TITLE: 'Problem with the service',
 };
+const YOUR_BUYER_DETAILS_PAGE = {
+  PAGE_TITLE: 'Your Buyer Details',
+};
 
 export const PAGES = {
   BUYER_COUNTRY,
@@ -126,4 +129,5 @@ export const PAGES = {
   PROBLEM_WITH_SERVICE_PAGE,
   QUOTE: QUOTE_PAGES,
   INSURANCE: INSURANCE_PAGES,
+  YOUR_BUYER: YOUR_BUYER_DETAILS_PAGE,
 };
