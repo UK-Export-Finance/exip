@@ -1,28 +1,44 @@
+import { FIELD_IDS } from '../../../../../constants/field-ids';
+
+const {
+  YOUR_COMPANY: {
+    TRADING_NAME,
+    TRADING_ADDRESS,
+    WEBSITE,
+    PHONE_NUMBER,
+    YOUR_BUSINESS,
+  },
+  COMPANY_HOUSE: {
+    INDEX,
+    INPUT,
+  },
+} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+
 const companyDetails = {
-  companiesHouseSearch: () => cy.get('[data-cy="companies-house-search'),
-  companiesHouseSearchLabel: () => cy.get('[data-cy="companies-house-search-label'),
-  companiesHouseSearchHint: () => cy.get('[data-cy="companies-house-search-hint'),
-  companiesHouseSearchButton: () => cy.get('[data-cy="companies-house-search-button'),
-  companiesHouseSearchError: () => cy.get('[data-cy="companies-house-search-error'),
+  companiesHouseSearch: () => cy.get(`[data-cy="${INPUT}-search`),
+  companiesHouseSearchLabel: () => cy.get(`[data-cy="${INPUT}-search-label`),
+  companiesHouseSearchHint: () => cy.get(`[data-cy="${INPUT}-search-hint`),
+  companiesHouseSearchButton: () => cy.get(`[data-cy="${INPUT}-search-button`),
+  companiesHouseSearchError: () => cy.get(`[data-cy="${INPUT}-search-error`),
 
   companiesHouseNoNumber: () => cy.get('[data-cy="do-not-have-number'),
 
-  yourBusinessHeading: () => cy.get('[data-cy="your-business-heading'),
-  yourBusinessSummaryList: () => cy.get('[data-cy="companies-house-summary-list'),
+  yourBusinessHeading: () => cy.get(`[data-cy="${YOUR_BUSINESS}-heading`),
+  yourBusinessSummaryList: () => cy.get(`[data-cy="${INDEX}-summary-list`),
 
-  tradingName: () => cy.get('[data-cy="trading-name'),
-  tradingNameLabel: () => cy.get('[data-cy="trading-name-heading'),
+  tradingName: () => cy.get(`[data-cy="${TRADING_NAME}`),
+  tradingNameLabel: () => cy.get(`[data-cy="${TRADING_NAME}-heading`),
 
-  tradingAddress: () => cy.get('[data-cy="trading-address'),
-  tradingAddressLabel: () => cy.get('[data-cy="trading-address-heading'),
+  tradingAddress: () => cy.get(`[data-cy="${TRADING_ADDRESS}`),
+  tradingAddressLabel: () => cy.get(`[data-cy="${TRADING_ADDRESS}-heading`),
 
-  companyWebsiteLabel: () => cy.get('[data-cy="company-website-label'),
-  companyWebsite: () => cy.get('[data-cy="company-website'),
-  companyWebsiteError: () => cy.get('[data-cy="company-website-error'),
+  companyWebsiteLabel: () => cy.get(`[data-cy="${WEBSITE}-label`),
+  companyWebsite: () => cy.get(`[data-cy="${WEBSITE}`),
+  companyWebsiteError: () => cy.get(`[data-cy="${WEBSITE}-error`),
 
-  phoneNumberLabel: () => cy.get('[data-cy="company-phone-label'),
-  phoneNumberHint: () => cy.get('[data-cy="company-phone-hint'),
-  phoneNumber: () => cy.get('[data-cy="company-phone'),
+  phoneNumberLabel: () => cy.get(`[data-cy="${PHONE_NUMBER}-label`),
+  phoneNumberHint: () => cy.get(`[data-cy="${PHONE_NUMBER}-hint`),
+  phoneNumber: () => cy.get(`[data-cy="${PHONE_NUMBER}`),
 };
 
 export default companyDetails;

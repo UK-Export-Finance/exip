@@ -1,5 +1,6 @@
 const EXPORTER_BUSINESS = {
   COMPANY_HOUSE: {
+    INDEX: 'companiesHouse',
     INPUT: 'companiesHouseNumber',
     COMPANY_NAME: 'companyName',
     COMPANY_ADDRESS: 'registeredOfficeAddress',
@@ -8,6 +9,7 @@ const EXPORTER_BUSINESS = {
     COMPANY_SIC: 'sicCodes',
   },
   YOUR_COMPANY: {
+    YOUR_BUSINESS: 'yourBusiness',
     TRADING_ADDRESS: 'tradingAddress',
     TRADING_NAME: 'tradingName',
     WEBSITE: 'companyWebsite',
