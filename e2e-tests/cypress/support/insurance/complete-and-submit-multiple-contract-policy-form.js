@@ -21,7 +21,6 @@ const {
 export default () => {
   const date = new Date();
   const startDate = add(date, { months: 3 });
-  const endDate = add(startDate, { months: 6 });
 
   multipleContractPolicyPage[REQUESTED_START_DATE].dayInput().type('1');
   multipleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(startDate));

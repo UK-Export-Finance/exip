@@ -19,7 +19,12 @@ import {
   TASKS,
 } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
-import { APPLICATION, FIELD_IDS, ROUTES, SUPPORTED_CURRENCIES } from '../../../../../../constants';
+import {
+  APPLICATION,
+  FIELD_IDS,
+  ROUTES,
+  SUPPORTED_CURRENCIES,
+} from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
@@ -172,7 +177,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
     const fieldId = TOTAL_MONTHS_OF_COVER;
     const field = multipleContractPolicyPage[fieldId];
 
-    it('renders `total months of insurance` label, hint, prefix and input', () => {
+    it('renders `total months of insurance` label, hint and input', () => {
       field.label().should('exist');
       field.label().invoke('text').then((text) => {
         expect(text.trim()).equal(CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
