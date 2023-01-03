@@ -6,7 +6,9 @@ import { quoteSummaryList } from '../../../helpers/summary-lists/quote-summary-l
 import mapQuoteToContent from '../../../helpers/data-content-mappings/map-quote-to-content';
 import { Request, Response } from '../../../../types';
 
-const get = (req: Request, res: Response) => {
+export const TEMPLATE = TEMPLATES.QUOTE.YOUR_QUOTE;
+
+export const get = (req: Request, res: Response) => {
   const { submittedData } = req.session;
 
   const quote = generateQuote(submittedData);
@@ -15,10 +17,8 @@ const get = (req: Request, res: Response) => {
 
   const quoteContent = mapQuoteToContent(quote);
 
-  return res.render(TEMPLATES.QUOTE.YOUR_QUOTE, {
+  return res.render(TEMPLATE, {
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.YOUR_QUOTE, BACK_LINK: req.headers.referer }),
     SUMMARY_LIST: quoteSummaryList(quoteContent),
   });
 };
-
-export default get;

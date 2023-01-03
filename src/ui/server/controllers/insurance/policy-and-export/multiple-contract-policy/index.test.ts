@@ -189,7 +189,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
 
     const validBody = {
       [`${REQUESTED_START_DATE}-day`]: '1',
-      [`${REQUESTED_START_DATE}-month`]: getMonth(date),
+      [`${REQUESTED_START_DATE}-month`]: getMonth(add(date, { months: 1 })),
       [`${REQUESTED_START_DATE}-year`]: getYear(add(date, { years: 1 })),
     };
 

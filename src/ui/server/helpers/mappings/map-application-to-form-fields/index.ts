@@ -1,10 +1,15 @@
 import { Application } from '../../../../types';
 import { FIELD_IDS } from '../../../constants';
+import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
 
 const {
+  SUBMISSION_DEADLINE,
   POLICY_AND_EXPORTS: {
-    CONTRACT_POLICY: { REQUESTED_START_DATE },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      SINGLE: { CONTRACT_COMPLETION_DATE },
+    },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -18,12 +23,25 @@ const mapApplicationToFormFields = (application: Application): object => {
   if (application && Object.keys(application)) {
     const mapped = application;
 
+    if (mapped[SUBMISSION_DEADLINE]) {
+      mapped[SUBMISSION_DEADLINE] = formatDate(application[SUBMISSION_DEADLINE]);
+    }
+
     if (application.policyAndExport && application.policyAndExport[REQUESTED_START_DATE]) {
       const timestamp = application.policyAndExport[REQUESTED_START_DATE];
 
       mapped.policyAndExport = {
         ...mapped.policyAndExport,
         ...getDateFieldsFromTimestamp(timestamp, REQUESTED_START_DATE),
+      };
+    }
+
+    if (application.policyAndExport && application.policyAndExport[CONTRACT_COMPLETION_DATE]) {
+      const timestamp = application.policyAndExport[CONTRACT_COMPLETION_DATE];
+
+      mapped.policyAndExport = {
+        ...mapped.policyAndExport,
+        ...getDateFieldsFromTimestamp(timestamp, CONTRACT_COMPLETION_DATE),
       };
     }
 

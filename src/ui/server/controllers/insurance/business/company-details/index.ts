@@ -12,7 +12,7 @@ const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
   EXPORTER_BUSINESS: {
     COMPANY_HOUSE,
-    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS },
+    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -95,6 +95,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
       [COMPANY_HOUSE.INPUT]: companiesHouseNumber,
       [TRADING_NAME]: sanitiseValue(body[TRADING_NAME]),
       [TRADING_ADDRESS]: sanitiseValue(body[TRADING_ADDRESS]),
+      [WEBSITE]: body[WEBSITE],
     };
 
     // checks if input is correctly formatted before searching
@@ -174,6 +175,7 @@ const post = async (req: Request, res: Response) => {
       // if trading name is string true, then convert to boolean true
       [TRADING_NAME]: sanitiseValue(body[TRADING_NAME]),
       [TRADING_ADDRESS]: sanitiseValue(body[TRADING_ADDRESS]),
+      [WEBSITE]: body[WEBSITE],
     };
 
     // run validation on other fields on page

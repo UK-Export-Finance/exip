@@ -7,7 +7,10 @@ const {
   POLICY_AND_EXPORTS: { CONTRACT_POLICY },
 } = FIELD_IDS.INSURANCE;
 
-const { REQUESTED_START_DATE } = CONTRACT_POLICY;
+const {
+  REQUESTED_START_DATE,
+  SINGLE: { CONTRACT_COMPLETION_DATE },
+} = CONTRACT_POLICY;
 
 describe('controllers/insurance/policy-and-export/map-submitted-data', () => {
   describe(`when ${REQUESTED_START_DATE} day, month and year fields are provided`, () => {
@@ -15,11 +18,11 @@ describe('controllers/insurance/policy-and-export/map-submitted-data', () => {
 
     const mockBody = {
       [`${REQUESTED_START_DATE}-day`]: '1',
-      [`${REQUESTED_START_DATE}-month`]: getMonth(date),
+      [`${REQUESTED_START_DATE}-month`]: getMonth(add(date, { months: 1 })),
       [`${REQUESTED_START_DATE}-year`]: getYear(add(date, { years: 1 })),
     };
 
-    it(`should return an object with single ${REQUESTED_START_DATE} field`, () => {
+    it(`should return an object with ${REQUESTED_START_DATE} as a timestamp`, () => {
       const result = mapSubmittedData(mockBody);
 
       const day = Number(mockBody[`${REQUESTED_START_DATE}-day`]);
@@ -29,6 +32,28 @@ describe('controllers/insurance/policy-and-export/map-submitted-data', () => {
       const expected = createTimestampFromNumbers(day, month, year);
 
       expect(result[REQUESTED_START_DATE]).toEqual(expected);
+    });
+  });
+
+  describe(`when ${CONTRACT_COMPLETION_DATE} day, month and year fields are provided`, () => {
+    const date = new Date();
+
+    const mockBody = {
+      [`${CONTRACT_COMPLETION_DATE}-day`]: '1',
+      [`${CONTRACT_COMPLETION_DATE}-month`]: getMonth(add(date, { months: 1 })),
+      [`${CONTRACT_COMPLETION_DATE}-year`]: getYear(add(date, { years: 1 })),
+    };
+
+    it(`should return an object with ${CONTRACT_COMPLETION_DATE} as a timestamp`, () => {
+      const result = mapSubmittedData(mockBody);
+
+      const day = Number(mockBody[`${CONTRACT_COMPLETION_DATE}-day`]);
+      const month = Number(mockBody[`${CONTRACT_COMPLETION_DATE}-month`]);
+      const year = Number(mockBody[`${CONTRACT_COMPLETION_DATE}-year`]);
+
+      const expected = createTimestampFromNumbers(day, month, year);
+
+      expect(result[CONTRACT_COMPLETION_DATE]).toEqual(expected);
     });
   });
 

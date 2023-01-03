@@ -7,9 +7,9 @@ import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../.
 import { get as policyTypeGet, post as policyTypePost } from '../../controllers/quote/policy-type';
 import { get as tellUsAboutYourPolicyGet, post as tellUsAboutYourPolicyPost } from '../../controllers/quote/tell-us-about-your-policy';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../controllers/quote/check-your-answers';
-import cannotObtainCoverGet from '../../controllers/quote/cannot-apply';
-import getAQuoteByEmailGet from '../../controllers/quote/get-a-quote-by-email';
-import yourQuoteGet from '../../controllers/quote/your-quote';
+import { get as cannotObtainCoverGet } from '../../controllers/quote/cannot-apply';
+import { get as getAQuoteByEmailGet } from '../../controllers/quote/get-a-quote-by-email';
+import { get as yourQuoteGet } from '../../controllers/quote/your-quote';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../controllers/quote/need-to-start-again';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */

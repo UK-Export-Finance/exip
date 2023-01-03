@@ -3,10 +3,12 @@ import { TEMPLATES } from '../../../constants';
 import { Request, Response } from '../../../../types';
 import corePageVariables from '../../../helpers/page-variables/core/insurance';
 
-const get = (req: Request, res: Response) => {
+export const TEMPLATE = TEMPLATES.INSURANCE.APPLY_OFFLINE;
+
+export const get = (req: Request, res: Response) => {
   const EXIT_REASON = req.flash('exitReason');
 
-  return res.render(TEMPLATES.INSURANCE.APPLY_OFFLINE, {
+  return res.render(TEMPLATE, {
     ...corePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.APPLY_OFFLINE,
       BACK_LINK: req.headers.referer,
@@ -14,5 +16,3 @@ const get = (req: Request, res: Response) => {
     EXIT_REASON,
   });
 };
-
-export default get;

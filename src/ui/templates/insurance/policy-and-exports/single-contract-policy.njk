@@ -58,10 +58,10 @@
         }) }}
 
         {{dateInput.render({
-          fieldId: FIELDS.COMPLETION_OF_CONTRACT_DATE.ID,
-          label: FIELDS.COMPLETION_OF_CONTRACT_DATE.LABEL,
-          hint: FIELDS.COMPLETION_OF_CONTRACT_DATE.HINT,
-          error: validationErrors.errorList[FIELDS.COMPLETION_OF_CONTRACT_DATE.ID],
+          fieldId: FIELDS.CONTRACT_COMPLETION_DATE.ID,
+          label: FIELDS.CONTRACT_COMPLETION_DATE.LABEL,
+          hint: FIELDS.CONTRACT_COMPLETION_DATE.HINT,
+          error: validationErrors.errorList[FIELDS.CONTRACT_COMPLETION_DATE.ID],
           submittedAnswers: submittedValues or application.policyAndExport
         }) }}
 
@@ -147,6 +147,12 @@
           classes: "govuk-grid-column-one-quarter-from-desktop",
           attributes: {
             "data-cy": FIELDS.POLICY_CURRENCY_CODE.ID + "-input"
+          },
+          errorMessage: validationErrors.errorList[FIELDS.POLICY_CURRENCY_CODE.ID] and {
+            text: validationErrors.errorList[FIELDS.POLICY_CURRENCY_CODE.ID].text,
+            attributes: {
+              "data-cy": FIELDS.POLICY_CURRENCY_CODE.ID + "-error-message"
+            }
           }
         }) }}
 

@@ -28,7 +28,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
 const FIELD_ID = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
 
 const singlePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID].single;
-const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID].multi;
+const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID].multiple;
 
 const { taskList } = partials.insurancePartials;
 

@@ -4,7 +4,10 @@ import createTimestampFromNumbers from '../../../../helpers/date/create-timestam
 
 const {
   POLICY_AND_EXPORTS: {
-    CONTRACT_POLICY: { REQUESTED_START_DATE },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      SINGLE: { CONTRACT_COMPLETION_DATE },
+    },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -21,24 +24,35 @@ const mapSubmittedData = (formBody: RequestBody): object => {
 
   const populatedData = formBody;
 
-  const requestedStartDateFormIds = {
-    dayId: `${REQUESTED_START_DATE}-day`,
-    monthId: `${REQUESTED_START_DATE}-month`,
-    yearId: `${REQUESTED_START_DATE}-year`,
+  const dateFieldIds = {
+    start: {
+      day: `${REQUESTED_START_DATE}-day`,
+      month: `${REQUESTED_START_DATE}-month`,
+      year: `${REQUESTED_START_DATE}-year`,
+    },
+    end: {
+      day: `${CONTRACT_COMPLETION_DATE}-day`,
+      month: `${CONTRACT_COMPLETION_DATE}-month`,
+      year: `${CONTRACT_COMPLETION_DATE}-year`,
+    },
   };
 
-  const { dayId, monthId, yearId } = requestedStartDateFormIds;
+  const { start, end } = dateFieldIds;
 
-  if (formBody) {
-    if (formBody[dayId] && formBody[monthId] && formBody[yearId]) {
-      const day = Number(formBody[dayId]);
-      const month = Number(formBody[monthId]);
-      const year = Number(formBody[yearId]);
+  if (formBody[start.day] && formBody[start.month] && formBody[start.year]) {
+    const day = Number(formBody[start.day]);
+    const month = Number(formBody[start.month]);
+    const year = Number(formBody[start.year]);
 
-      populatedData[REQUESTED_START_DATE] = createTimestampFromNumbers(day, month, year);
+    populatedData[REQUESTED_START_DATE] = createTimestampFromNumbers(day, month, year);
+  }
 
-      return populatedData;
-    }
+  if (formBody[end.day] && formBody[end.month] && formBody[end.year]) {
+    const day = Number(formBody[end.day]);
+    const month = Number(formBody[end.month]);
+    const year = Number(formBody[end.year]);
+
+    populatedData[CONTRACT_COMPLETION_DATE] = createTimestampFromNumbers(day, month, year);
   }
 
   return populatedData;

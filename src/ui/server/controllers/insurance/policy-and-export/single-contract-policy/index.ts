@@ -23,7 +23,7 @@ const {
 
 const {
   REQUESTED_START_DATE,
-  SINGLE: { COMPLETION_OF_CONTRACT_DATE, TOTAL_CONTRACT_VALUE },
+  SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
   CREDIT_PERIOD_WITH_BUYER,
   POLICY_CURRENCY_CODE,
 } = CONTRACT_POLICY;
@@ -40,9 +40,9 @@ export const pageVariables = (referenceNumber: number) => ({
       ID: REQUESTED_START_DATE,
       ...FIELDS.CONTRACT_POLICY[REQUESTED_START_DATE],
     },
-    COMPLETION_OF_CONTRACT_DATE: {
-      ID: COMPLETION_OF_CONTRACT_DATE,
-      ...FIELDS.CONTRACT_POLICY.SINGLE[COMPLETION_OF_CONTRACT_DATE],
+    CONTRACT_COMPLETION_DATE: {
+      ID: CONTRACT_COMPLETION_DATE,
+      ...FIELDS.CONTRACT_POLICY.SINGLE[CONTRACT_COMPLETION_DATE],
     },
     TOTAL_CONTRACT_VALUE: {
       ID: TOTAL_CONTRACT_VALUE,
@@ -86,7 +86,13 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const mappedCurrencies = mapCurrencies(currencies);
+    let mappedCurrencies;
+
+    if (application.policyAndExport[POLICY_CURRENCY_CODE]) {
+      mappedCurrencies = mapCurrencies(currencies, application.policyAndExport[POLICY_CURRENCY_CODE]);
+    } else {
+      mappedCurrencies = mapCurrencies(currencies);
+    }
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

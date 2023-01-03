@@ -71,7 +71,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       submitButton().click();
 
       checkText(
-        partials.errorSummaryListItems().eq(1),
+        partials.errorSummaryListItems().eq(2),
         CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].IS_EMPTY,
       );
 
@@ -88,7 +88,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       submitButton().click();
 
       checkText(
-        partials.errorSummaryListItems().eq(1),
+        partials.errorSummaryListItems().eq(2),
         CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_NUMBER,
       );
 
@@ -105,7 +105,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       submitButton().click();
 
       checkText(
-        partials.errorSummaryListItems().eq(1),
+        partials.errorSummaryListItems().eq(2),
         CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_WHOLE_NUMBER,
       );
 
@@ -122,7 +122,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       submitButton().click();
 
       checkText(
-        partials.errorSummaryListItems().eq(1),
+        partials.errorSummaryListItems().eq(2),
         CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM,
       );
 
@@ -139,7 +139,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       submitButton().click();
 
       checkText(
-        partials.errorSummaryListItems().eq(1),
+        partials.errorSummaryListItems().eq(2),
         CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM,
       );
 

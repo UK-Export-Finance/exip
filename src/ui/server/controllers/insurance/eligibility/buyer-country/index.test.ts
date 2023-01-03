@@ -1,4 +1,4 @@
-import { PAGE_VARIABLES, get, post } from '.';
+import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -44,6 +44,12 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
     });
   });
 
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY);
+    });
+  });
+
   describe('get', () => {
     let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
@@ -68,7 +74,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         submittedValues: req.session.submittedData.insuranceEligibility,
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
     describe('when a there is no submittedData in req.session', () => {
@@ -122,7 +128,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
           submittedValues: req.session.submittedData.insuranceEligibility,
         };
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, expectedVariables);
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
     });
 
@@ -176,7 +182,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       it('should render template with validation errors', async () => {
         await post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: req.headers.referer,
           countries: mapCountries(mockCountriesResponse),

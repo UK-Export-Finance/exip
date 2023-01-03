@@ -6,6 +6,7 @@ import { Request, Response } from '../../../../types';
 import generateGroupsAndTasks from '../../../helpers/task-list/generate-groups-and-tasks';
 import generateTaskList from '../../../helpers/task-list';
 import flattenApplicationData from '../../../helpers/flatten-application-data';
+import mapApplicationToFormFields from '../../../helpers/mappings/map-application-to-form-fields';
 import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
 
 describe('controllers/insurance/all-sections', () => {
@@ -38,7 +39,7 @@ describe('controllers/insurance/all-sections', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ALL_SECTIONS,
           BACK_LINK: req.headers.referer,
         }),
-        application: res.locals.application,
+        application: mapApplicationToFormFields(mockApplication),
         taskListData: expectedTaskListData,
       };
 

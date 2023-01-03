@@ -1,12 +1,14 @@
+import { add, addMonths } from 'date-fns';
+import { APPLICATION } from '../constants';
 import mockCountries from './mock-countries';
 import { Application } from '../../types';
 
 const mockApplication = {
   id: 'clacdgc630000kdoqn7wcgrz1',
   referenceNumber: 10001,
-  createdAt: '2022-11-11 10:44:20.762',
-  updatedAt: '2022-11-11 10:45:17.489',
-  submissionDeadline: '2023-02-11 10:44:20.762',
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  submissionDeadline: addMonths(new Date(), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS).toISOString(),
   submissionType: 'Manual Inclusion Application',
   eligibility: {
     id: 'clav8by1g0000kgoq5a2afr1z',
@@ -22,8 +24,9 @@ const mockApplication = {
   },
   policyAndExport: {
     id: 'clav8by1i0007kgoqies0dbfc',
-    policyType: 'Multiple contract policy',
-    requestedStartDate: new Date(),
+    policyType: APPLICATION.POLICY_TYPE.MULTI,
+    requestedStartDate: add(new Date(), { months: 1 }),
+    contractCompletionDate: add(new Date(), { months: 1, days: 1 }),
   },
 } as Application;
 

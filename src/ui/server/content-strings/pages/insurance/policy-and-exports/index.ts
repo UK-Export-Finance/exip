@@ -18,8 +18,14 @@ const MULTIPLE_CONTRACT_POLICY = {
   PAGE_TITLE: 'Tell us about the multiple contract policy you need',
 };
 
+const ABOUT_GOODS_OR_SERVICES = {
+  ...SHARED,
+  PAGE_TITLE: 'About the goods or services',
+};
+
 export default {
   TYPE_OF_POLICY,
   SINGLE_CONTRACT_POLICY,
   MULTIPLE_CONTRACT_POLICY,
+  ABOUT_GOODS_OR_SERVICES,
 };
