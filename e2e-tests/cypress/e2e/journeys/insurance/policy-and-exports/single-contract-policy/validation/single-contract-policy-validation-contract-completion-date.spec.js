@@ -188,7 +188,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       const yesterday = sub(date, { days: 1 });
 
       field.dayInput().clear().type(getDate(yesterday));
-      field.monthInput().clear().type(getMonth(yesterday));
+      field.monthInput().clear().type(getMonth(add(yesterday, { months: 1 })));
       field.yearInput().clear().type(getYear(yesterday));
       submitButton().click();
 
