@@ -40,7 +40,8 @@ export const get = async (req: Request, res: Response) => {
   } else {
     mappedCountries = mapCountries(countries);
   }
-
+  // // eslint-disable-next-line no-console
+  // console.log(mappedCountries);
   return res.render(TEMPLATES.YOUR_BUYER.BUYER_COMPANY_DETAILS, {
     ...singleInputPageVariables({
       ...PAGE_VARIABLES,

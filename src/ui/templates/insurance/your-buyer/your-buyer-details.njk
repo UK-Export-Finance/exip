@@ -42,28 +42,21 @@
           {% set class = "govuk-form-group govuk-form-group--error" %}
         {% endif %}
 
-        <div class="{{ class }}">
-          {{ govukErrorMessage({
-            text: validationErrors.errorList[FIELD_ID].text,
-            attributes: {
-              "data-cy": "inline-error-message"
-            }
-          }) }}
 
-          <select class="govuk-select" id="{{ FIELD_ID }}" name="{{ FIELD_ID }}">
-            <option value="" disabled selected></option>
-
-            {% for country in countries %}
-              {% if country.selected %}
-                <option value="{{ country.name }}" selected>{{ country.name }}</option>
-              {% else %}
-                <option value="{{ country.name }}">{{ country.name }}</option>
-              {% endif %}
-            {% endfor %}
-          </select>
-        </div>
-
+{{ govukSelect({
+  id: CONTENT_STRINGS.BUYER_COUNTRY,
+  name: CONTENT_STRINGS.BUYER_COUNTRY,
+  label: {
+    text: CONTENT_STRINGS.COUNTRY_LABEL
+  },
+  items: countries
+}) }}
       </div>
+
+
+
+
+
 
             <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="govuk-button-group">
