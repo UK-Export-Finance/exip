@@ -10,6 +10,8 @@ const { taskList } = partials.insurancePartials;
 const singlePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
 const singlePolicyField = typeOfPolicyPage[singlePolicyFieldId].single;
 
+const { checkValidation } = requestedCoverStartDate;
+
 const { INSURANCE } = ROUTES;
 
 context('Insurance - Policy and exports - Single contract policy page - form validation - requested start date', () => {
@@ -45,43 +47,43 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe('when day is not provided', () => {
     it('should render a validation error', () => {
-      requestedCoverStartDate.checkValidation.day.notProvided();
+      checkValidation.day.notProvided();
     });
   });
 
   describe('when month is not provided', () => {
     it('should render a validation error', () => {
-      requestedCoverStartDate.checkValidation.month.notProvided();
+      checkValidation.month.notProvided();
     });
   });
 
   describe('when year is not provided', () => {
     it('should render a validation error', () => {
-      requestedCoverStartDate.checkValidation.year.notProvided();
+      checkValidation.year.notProvided();
     });
   });
 
   describe('when day is not a number', () => {
     it('should render a validation error', () => {
-      requestedCoverStartDate.checkValidation.day.notANumber();
+      checkValidation.day.notANumber();
     });
   });
 
   describe('when month is not a number', () => {
     it('should render a validation error', () => {
-      requestedCoverStartDate.checkValidation.month.notANumber();
+      checkValidation.month.notANumber();
     });
   });
 
   describe('when year is not a number', () => {
     it('should render a validation error', () => {
-      requestedCoverStartDate.checkValidation.year.notANumber();
+      checkValidation.year.notANumber();
     });
   });
 
   describe('when the date is not in the future', () => {
     it('should render a validation error', () => {
-      requestedCoverStartDate.checkValidation.notInTheFuture();
+      checkValidation.notInTheFuture();
     });
   });
 });

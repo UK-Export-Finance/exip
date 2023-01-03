@@ -27,7 +27,6 @@ const mockApplication = {
     policyType: APPLICATION.POLICY_TYPE.MULTI,
     requestedStartDate: add(new Date(), { months: 1 }),
     contractCompletionDate: add(new Date(), { months: 1, days: 1 }),
-    totalMonthsOfCover: 3,
   },
 } as Application;
 

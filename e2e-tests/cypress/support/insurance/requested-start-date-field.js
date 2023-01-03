@@ -132,7 +132,7 @@ const checkValidation = {
   },
   notInTheFuture: () => {
     const date = new Date();
-    const yesterday = sub(date, { days: 1 });
+    const yesterday = sub(date, { days: 1, months: 1 });
 
     field.dayInput().clear().type(getDate(yesterday));
     field.monthInput().clear().type(getMonth(yesterday));
