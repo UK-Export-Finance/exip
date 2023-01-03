@@ -119,7 +119,6 @@ export const ERROR_MESSAGES = {
             ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £499.999. If you need cover for more than this, fill in this form instead.',
           },
         },
-        MULTIPLE: {},
       },
     },
   },
