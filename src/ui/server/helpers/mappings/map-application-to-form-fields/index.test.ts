@@ -1,9 +1,11 @@
 import mapApplicationToFormFields from '.';
 import { FIELD_IDS } from '../../../constants';
+import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
 import { mockApplication } from '../../../test-mocks';
 
 const {
+  SUBMISSION_DEADLINE,
   POLICY_AND_EXPORTS: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
@@ -13,9 +15,10 @@ const {
 } = FIELD_IDS.INSURANCE;
 
 describe('server/helpers/mappings/map-application-to-form-fields', () => {
-  it('should return the application without any mappings', () => {
+  it(`should return the application without mapped ${SUBMISSION_DEADLINE}`, () => {
     const simpleApplication = {
       ...mockApplication,
+      [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
       policyAndExport: {
         id: mockApplication.policyAndExport.id,
       },
@@ -34,6 +37,7 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
 
       const expected = {
         ...mockApplication,
+        [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
         policyAndExport: {
           ...mockApplication.policyAndExport,
           ...getDateFieldsFromTimestamp(timestamp, REQUESTED_START_DATE),
@@ -52,6 +56,7 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
 
       const expected = {
         ...mockApplication,
+        [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
         policyAndExport: {
           ...mockApplication.policyAndExport,
           ...getDateFieldsFromTimestamp(timestamp, CONTRACT_COMPLETION_DATE),
