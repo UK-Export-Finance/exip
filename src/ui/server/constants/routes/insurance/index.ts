@@ -4,6 +4,7 @@ import { EXPORTER_BUSINESS } from './exporter-business';
 
 export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY_ROOT = '/eligibility';
+// const YOUR_BUYER = '/your-buyer';
 
 export const INSURANCE_ROUTES = {
   INSURANCE_ROOT,
@@ -26,8 +27,8 @@ export const INSURANCE_ROUTES = {
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/need-to-start-again`,
   },
   APPLY_OFFLINE: `${INSURANCE_ROOT}/apply-using-our-form`,
+  YOUR_BUYER_DETAILS: `${INSURANCE_ROOT}/your-buyer-details`,
   SPEAK_TO_UKEF_EFM: `${INSURANCE_ROOT}/speak-to-UKEF-EFM`,
-  YOUR_BUYER_ORGANISATION: `${INSURANCE_ROOT}/your-buyer-oraganisation`,
   ALL_SECTIONS: '/all-sections',
   PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
   EXPORTER_BUSINESS,

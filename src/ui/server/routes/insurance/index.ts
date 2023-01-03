@@ -1,7 +1,6 @@
 import express from 'express';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../constants/routes/insurance';
 import { get as startGet, post as startPost } from '../../controllers/insurance/start';
-import { get as getaYourBuyerOrganisation } from '../../controllers/insurance/your-buyer/buyer-oganisation';
 import applyOfflineGet from '../../controllers/insurance/apply-offline';
 import speakToUkefEfmGet from '../../controllers/insurance/speak-to-ukef-efm';
 import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
@@ -12,6 +11,8 @@ import { post as typeOfPolicySaveAndBackPost } from '../../controllers/insurance
 import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-found';
 import insuranceEligibilityRoutes from './eligibility';
 import insuranceBusinessRouter from './business';
+// import { YOUR_BUYER } from '../../constants/routes/insurance/your-buyer';
+import { get as getaYourBuyerOrganisation } from '../../controllers/insurance/your-buyer/buyer-oganisation';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
@@ -21,8 +22,8 @@ const insuranceRouter = express.Router();
 insuranceRouter.get(INSURANCE_ROUTES.START, startGet);
 insuranceRouter.post(INSURANCE_ROUTES.START, startPost);
 
-insuranceRouter.get(INSURANCE_ROUTES.YOUR_BUYER_ORGANISATION, getaYourBuyerOrganisation);
-//
+insuranceRouter.get(INSURANCE_ROUTES.YOUR_BUYER_DETAILS, getaYourBuyerOrganisation);
+
 insuranceRouter.get(INSURANCE_ROUTES.APPLY_OFFLINE, applyOfflineGet);
 insuranceRouter.get(INSURANCE_ROUTES.SPEAK_TO_UKEF_EFM, speakToUkefEfmGet);
 
