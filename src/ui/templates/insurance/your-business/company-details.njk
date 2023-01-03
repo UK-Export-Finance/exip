@@ -133,14 +133,7 @@
           },
           id: FIELDS.YOUR_COMPANY.WEBSITE,
           name: FIELDS.YOUR_COMPANY.WEBSITE,
-          value: submittedValues[FIELDS.YOUR_COMPANY.WEBSITE],
-          errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE] and {
-            text: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE].text,
-            attributes: {
-              "data-cy": "company-website-error"
-            }
-          },
-          classes: "input-width",
+          classes: "companies-house-input-width",
           attributes: {
             'data-cy': 'company-website',
             'aria-label': CONTENT_STRINGS.WEBSITE
@@ -166,7 +159,7 @@
           },
           id: FIELDS.YOUR_COMPANY.PHONE_NUMBER,
           name: FIELDS.YOUR_COMPANY.PHONE_NUMBER,
-          classes: "input-width",
+          classes: "companies-house-input-width",
           attributes: {
             'data-cy': 'company-phone',
             'aria-label': CONTENT_STRINGS.PHONE_NUMBER
