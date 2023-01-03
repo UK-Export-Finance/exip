@@ -1,7 +1,7 @@
 import { ROUTES } from '../../../../../constants';
 import { Request, Response } from '../../../../../../types';
 import hasFormData from '../../../../../helpers/has-form-data';
-import mapSubmittedData from '../map-submitted-data';
+import mapSubmittedData from '../../map-submitted-data';
 import generateValidationErrors from '../validation';
 import save from '../../save-data';
 

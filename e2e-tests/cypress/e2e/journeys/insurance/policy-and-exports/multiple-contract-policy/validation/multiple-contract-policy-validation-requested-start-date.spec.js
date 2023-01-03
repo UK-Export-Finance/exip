@@ -7,14 +7,14 @@ import requestedCoverStartDate from '../../../../../../support/insurance/request
 
 const { taskList } = partials.insurancePartials;
 
-const singlePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const singlePolicyField = typeOfPolicyPage[singlePolicyFieldId].single;
+const multiplePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
+const multiplePolicyField = typeOfPolicyPage[multiplePolicyFieldId].multiple;
 
 const { checkValidation } = requestedCoverStartDate;
 
 const { INSURANCE } = ROUTES;
 
-context('Insurance - Policy and exports - Single contract policy page - form validation - requested start date', () => {
+context('Insurance - Policy and exports - Multiple contract policy page - form validation - requested start date', () => {
   let referenceNumber;
 
   before(() => {
@@ -29,12 +29,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    singlePolicyField.input().click();
+    multiplePolicyField.input().click();
     submitButton().click();
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 
       cy.url().should('eq', expectedUrl);
     });

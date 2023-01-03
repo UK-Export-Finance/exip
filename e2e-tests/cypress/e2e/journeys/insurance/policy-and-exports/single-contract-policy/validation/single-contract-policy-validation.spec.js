@@ -78,7 +78,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     checkText(
       partials.errorSummaryListItems().eq(0),
-      CONTRACT_ERROR_MESSAGES.SINGLE[REQUESTED_START_DATE].IS_EMPTY,
+      CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY,
     );
 
     checkText(

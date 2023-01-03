@@ -6,7 +6,7 @@ import { get as typeOfPolicyGet, post as typeOfPolicyPost } from '../../controll
 import { post as typeOfPolicySaveAndBackPost } from '../../controllers/insurance/policy-and-export/type-of-policy/save-and-back';
 import { get as singleContractPolicyGet, post as singleContractPolicyPost } from '../../controllers/insurance/policy-and-export/single-contract-policy';
 import { post as singleContractPolicySaveAndBackPost } from '../../controllers/insurance/policy-and-export/single-contract-policy/save-and-back';
-import { get as multipleContractPolicyGet } from '../../controllers/insurance/policy-and-export/multiple-contract-policy';
+import { get as multipleContractPolicyGet, post as multipleContractPolicyPost } from '../../controllers/insurance/policy-and-export/multiple-contract-policy';
 import { get as aboutGoodsOrServicesGet } from '../../controllers/insurance/policy-and-export/about-goods-or-services';
 import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-found';
 
@@ -21,7 +21,7 @@ describe('routes/insurance', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(25);
-    expect(post).toHaveBeenCalledTimes(19);
+    expect(post).toHaveBeenCalledTimes(20);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startPost);
@@ -51,6 +51,10 @@ describe('routes/insurance', () => {
     expect(get).toHaveBeenCalledWith(
       `${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`,
       multipleContractPolicyGet,
+    );
+    expect(post).toHaveBeenCalledWith(
+      `${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`,
+      multipleContractPolicyPost,
     );
 
     expect(get).toHaveBeenCalledWith(
