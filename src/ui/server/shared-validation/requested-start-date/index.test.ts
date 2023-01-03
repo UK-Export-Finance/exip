@@ -92,7 +92,7 @@ describe('shared-validation/requested-start-date', () => {
   describe('when the date is in the past', () => {
     it('should return validation error', () => {
       const date = new Date();
-      const yesterday = sub(date, { days: 1 });
+      const yesterday = sub(date, { days: 1, months: 1 });
 
       const mockSubmittedData = {
         [`${FIELD_ID}-day`]: getDate(yesterday),
