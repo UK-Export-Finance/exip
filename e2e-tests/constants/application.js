@@ -12,5 +12,6 @@ export const APPLICATION = {
       MINIMUM: 1,
       MAXIMUM: 499999,
     },
+    TOTAL_MONTHS_OF_COVER: 12,
   },
 };

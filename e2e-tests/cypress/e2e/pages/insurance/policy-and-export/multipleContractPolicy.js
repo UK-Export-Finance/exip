@@ -8,7 +8,7 @@ const {
         CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
         MULTIPLE: {
-          TOTAL_MONTHS_OF_INSURANCE,
+          TOTAL_MONTHS_OF_COVER,
           TOTAL_SALES_TO_BUYER,
           MAXIMUM_BUYER_WILL_OWE,
         },
@@ -26,12 +26,14 @@ const multipleContractPolicy = {
     yearInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-year-input"]`),
     errorMessage: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-error-message"]`),
   },
-  [TOTAL_MONTHS_OF_INSURANCE]: {
-    label: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_INSURANCE}-label"]`),
-    hint: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_INSURANCE}-hint"]`),
-    prefix: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_INSURANCE}-prefix"]`),
-    input: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_INSURANCE}-input"]`),
-    errorMessage: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_INSURANCE}-error-message"]`),
+  [TOTAL_MONTHS_OF_COVER]: {
+    label: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_COVER}-label"]`),
+    hint: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_COVER}-hint"]`),
+    input: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_COVER}-input"]`),
+    inputOption: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_COVER}-input"]`).find('option'),
+    inputFirstOption: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_COVER}-input"]`).find('option').eq(0),
+    inputOptionSelected: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_COVER}-input"]`).find(':selected'),
+    errorMessage: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_COVER}-error-message"]`),
   },
   [TOTAL_SALES_TO_BUYER]: {
     label: () => cy.get(`[data-cy="${TOTAL_SALES_TO_BUYER}-label"]`),

@@ -5,6 +5,7 @@ import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
+import mapTotalMonthsOfCover from '../../../../helpers/mappings/map-total-months-of-insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapSubmittedData from '../map-submitted-data';
@@ -23,7 +24,7 @@ const {
 
 const {
   REQUESTED_START_DATE,
-  MULTIPLE: { TOTAL_MONTHS_OF_INSURANCE, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+  MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
   CREDIT_PERIOD_WITH_BUYER,
   POLICY_CURRENCY_CODE,
 } = CONTRACT_POLICY;
@@ -40,9 +41,9 @@ export const pageVariables = (referenceNumber: number) => ({
       ID: REQUESTED_START_DATE,
       ...FIELDS.CONTRACT_POLICY[REQUESTED_START_DATE],
     },
-    TOTAL_MONTHS_OF_INSURANCE: {
-      ID: TOTAL_MONTHS_OF_INSURANCE,
-      ...FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_INSURANCE],
+    TOTAL_MONTHS_OF_COVER: {
+      ID: TOTAL_MONTHS_OF_COVER,
+      ...FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER],
     },
     TOTAL_SALES_TO_BUYER: {
       ID: TOTAL_SALES_TO_BUYER,
@@ -65,6 +66,8 @@ export const pageVariables = (referenceNumber: number) => ({
 });
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY;
+
+export const totalMonthsOfCoverOptions = FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER].OPTIONS as Array<number>;
 
 /**
  * get
@@ -92,6 +95,14 @@ export const get = async (req: Request, res: Response) => {
 
     const mappedCurrencies = mapCurrencies(currencies);
 
+    let mappedTotalMonthsOfCover;
+
+    if (application.policyAndExport[TOTAL_MONTHS_OF_COVER]) {
+      mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions, application.policyAndExport[TOTAL_MONTHS_OF_COVER]);
+    } else {
+      mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions);
+    }
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY,
@@ -100,6 +111,7 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(refNumber),
       application: mapApplicationToFormFields(application),
       currencies: mappedCurrencies,
+      monthOptions: mappedTotalMonthsOfCover,
     });
   } catch (err) {
     console.error('Error getting currencies ', { err });
@@ -137,6 +149,8 @@ export const post = async (req: Request, res: Response) => {
 
       const mappedCurrencies = mapCurrencies(currencies);
 
+      const mappedtotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions);
+
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY,
@@ -146,6 +160,7 @@ export const post = async (req: Request, res: Response) => {
         application: mapApplicationToFormFields(application),
         submittedValues: req.body,
         currencies: mappedCurrencies,
+        monthOptions: mappedtotalMonthsOfCover,
         validationErrors,
       });
     } catch (err) {

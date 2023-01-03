@@ -26,7 +26,7 @@ export default () => {
   const endDate = add(startDate, { months: 6 });
 
   singleContractPolicyPage[REQUESTED_START_DATE].dayInput().type('1');
-  singleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(add(startDate)));
+  singleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(startDate));
   singleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(getYear(startDate));
 
   singleContractPolicyPage[CONTRACT_COMPLETION_DATE].dayInput().type('1');

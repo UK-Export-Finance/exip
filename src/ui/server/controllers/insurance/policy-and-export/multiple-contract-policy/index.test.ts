@@ -1,5 +1,5 @@
 import { add, getMonth, getYear } from 'date-fns';
-import { pageVariables, TEMPLATE, get, post } from '.';
+import { pageVariables, TEMPLATE, totalMonthsOfCoverOptions, get, post } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
@@ -7,6 +7,7 @@ import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
+import mapTotalMonthsOfCover from '../../../../helpers/mappings/map-total-months-of-insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapSubmittedData from '../map-submitted-data';
@@ -26,7 +27,7 @@ const {
 
 const {
   REQUESTED_START_DATE,
-  MULTIPLE: { TOTAL_MONTHS_OF_INSURANCE, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+  MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
   CREDIT_PERIOD_WITH_BUYER,
   POLICY_CURRENCY_CODE,
 } = CONTRACT_POLICY;
@@ -65,9 +66,9 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
             ID: REQUESTED_START_DATE,
             ...FIELDS.CONTRACT_POLICY[REQUESTED_START_DATE],
           },
-          TOTAL_MONTHS_OF_INSURANCE: {
-            ID: TOTAL_MONTHS_OF_INSURANCE,
-            ...FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_INSURANCE],
+          TOTAL_MONTHS_OF_COVER: {
+            ID: TOTAL_MONTHS_OF_COVER,
+            ...FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER],
           },
           TOTAL_SALES_TO_BUYER: {
             ID: TOTAL_SALES_TO_BUYER,
@@ -99,6 +100,14 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
     });
   });
 
+  describe('totalMonthsOfCoverOptions', () => {
+    it('should have the correct array of months', () => {
+      const expected = FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER].OPTIONS;
+
+      expect(totalMonthsOfCoverOptions).toEqual(expected);
+    });
+  });
+
   describe('get', () => {
     it('should call api.external.getCurrencies', async () => {
       await get(req, res);
@@ -119,6 +128,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
         ...pageVariables(refNumber),
         application: mapApplicationToFormFields(mockApplication),
         currencies: expectedCurrencies,
+        monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -191,6 +201,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
       [`${REQUESTED_START_DATE}-day`]: '1',
       [`${REQUESTED_START_DATE}-month`]: getMonth(add(date, { months: 1 })),
       [`${REQUESTED_START_DATE}-year`]: getYear(add(date, { years: 1 })),
+      [TOTAL_MONTHS_OF_COVER]: 1,
     };
 
     describe('when there are no validation errors', () => {
@@ -248,6 +259,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: req.body,
           currencies: expectedCurrencies,
+          monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
           validationErrors: generateValidationErrors(req.body),
         };
 

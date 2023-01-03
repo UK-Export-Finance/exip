@@ -19,7 +19,7 @@ export const POLICY_AND_EXPORTS = {
       TOTAL_CONTRACT_VALUE: 'totalValueOfContract',
     },
     MULTIPLE: {
-      TOTAL_MONTHS_OF_INSURANCE: 'totalMonthsOfInsurance',
+      TOTAL_MONTHS_OF_COVER: 'totalMonthsOfCover',
       TOTAL_SALES_TO_BUYER: 'totalSalesToBuyer',
       MAXIMUM_BUYER_WILL_OWE: 'maximumBuyerWillOwe',
     },

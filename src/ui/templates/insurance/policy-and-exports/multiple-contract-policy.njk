@@ -55,35 +55,31 @@
           submittedAnswers: submittedValues or application.policyAndExport
         }) }}
 
-        {{ govukInput({
+        {{ govukSelect({
+          id: FIELDS.TOTAL_MONTHS_OF_COVER.ID,
+          name: FIELDS.TOTAL_MONTHS_OF_COVER.ID,
           label: {
-            text: FIELDS.TOTAL_MONTHS_OF_INSURANCE.LABEL,
+            text: FIELDS.TOTAL_MONTHS_OF_COVER.LABEL,
             classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
             attributes: {
-              id: FIELDS.TOTAL_MONTHS_OF_INSURANCE.ID + '-label',
-              'data-cy': FIELDS.TOTAL_MONTHS_OF_INSURANCE.ID + '-label'
+              'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-label'
             }
+          },
+          items: monthOptions,
+          classes: "govuk-grid-column-one-quarter-from-desktop",
+          attributes: {
+            "data-cy": FIELDS.TOTAL_MONTHS_OF_COVER.ID + "-input"
           },
           hint: {
-            text: FIELDS.TOTAL_MONTHS_OF_INSURANCE.HINT,
+            text: FIELDS.TOTAL_MONTHS_OF_COVER.HINT,
             attributes: {
-              'data-cy': FIELDS.TOTAL_MONTHS_OF_INSURANCE.ID + '-hint'
+              'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-hint'
             }
           },
-          classes: "govuk-input--width-10 govuk-!-margin-bottom-4",
-          attributes: {
-            'data-cy': FIELDS.TOTAL_MONTHS_OF_INSURANCE.ID + '-input'
-          },
-          id: FIELDS.TOTAL_MONTHS_OF_INSURANCE.ID,
-          name: FIELDS.TOTAL_MONTHS_OF_INSURANCE.ID,
-          inputmode: "numeric",
-          pattern: "[0-9]*",
-          spellcheck: false,
-          value: submittedValues[FIELDS.TOTAL_MONTHS_OF_INSURANCE.ID] or application.policyAndExport[FIELDS.TOTAL_MONTHS_OF_INSURANCE.ID],
-          errorMessage: validationErrors.errorList[FIELDS.TOTAL_MONTHS_OF_INSURANCE.ID] and {
-            text: validationErrors.errorList[FIELDS.TOTAL_MONTHS_OF_INSURANCE.ID].text,
+          errorMessage: validationErrors.errorList[FIELDS.TOTAL_MONTHS_OF_COVER.ID] and {
+            text: validationErrors.errorList[FIELDS.TOTAL_MONTHS_OF_COVER.ID].text,
             attributes: {
-              "data-cy": FIELDS.TOTAL_MONTHS_OF_INSURANCE.ID + "-error-message"
+              "data-cy": FIELDS.TOTAL_MONTHS_OF_COVER.ID + "-error-message"
             }
           }
         }) }}

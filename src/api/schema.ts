@@ -158,6 +158,7 @@ export const lists = {
       }),
       creditPeriodWithBuyer: text(),
       policyCurrencyCode: text(),
+      totalMonthsOfCover: integer(),
     },
     access: allowAll,
   },
