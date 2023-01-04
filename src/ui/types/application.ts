@@ -23,6 +23,7 @@ interface ApplicationPolicyAndExport {
   totalValueOfContract?: number;
   creditPeriodWithBuyer?: string;
   policyCurrencyCode?: string;
+  totalMonthsOfCover?: number;
 }
 
 interface Application extends ApplicationCore {

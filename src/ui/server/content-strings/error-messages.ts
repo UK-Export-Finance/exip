@@ -119,6 +119,11 @@ export const ERROR_MESSAGES = {
             ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £499.999. If you need cover for more than this, fill in this form instead.',
           },
         },
+        MULTIPLE: {
+          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
+            IS_EMPTY: 'Select how many months you want to be insured for',
+          },
+        },
       },
     },
   },

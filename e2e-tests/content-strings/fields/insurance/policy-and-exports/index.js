@@ -64,7 +64,7 @@ export const POLICY_AND_EXPORT_FIELDS = {
       },
     },
     MULTIPLE: {
-      [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_INSURANCE]: {
+      [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
         LABEL: 'How many months do you want to be insured for?',
         HINT: 'The maximum is 12 months.',
         MAXIMUM: 12,

@@ -1,4 +1,4 @@
-import { FIELD_IDS, FIELD_VALUES } from '../../../../constants';
+import { APPLICATION, FIELD_IDS, FIELD_VALUES } from '../../../../constants';
 import { LINKS } from '../../../links';
 
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
@@ -64,10 +64,10 @@ export const FIELDS = {
       },
     },
     MULTIPLE: {
-      [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_INSURANCE]: {
+      [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
         LABEL: 'How many months do you want to be insured for?',
-        HINT: 'The maximum is 12 months.',
-        MAXIMUM: 12,
+        HINT: `The maximum is ${APPLICATION.POLICY_AND_EXPORT.TOTAL_MONTHS_OF_COVER} months.`,
+        OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
       },
       [CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
         LABEL: 'Estimate total sales to your buyer during this time',
