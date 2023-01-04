@@ -106,14 +106,14 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 75,
-  //     'best-practices': 100,
-  //     seo: 70,
-  //   });
-  // });
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 75,
+      'best-practices': 100,
+      seo: 70,
+    });
+  });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
@@ -327,6 +327,8 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
         multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER].inputOptionSelected().invoke('text').then((text) => {
           expect(text.trim()).equal('2 months');
         });
+
+        multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().should('have.value', '1000');
       });
     });
   });

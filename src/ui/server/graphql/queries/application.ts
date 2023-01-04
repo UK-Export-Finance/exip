@@ -34,6 +34,7 @@ const applicationQuery = gql`
           creditPeriodWithBuyer
           policyCurrencyCode
           totalMonthsOfCover
+          totalSalesToBuyer
         }
       }
     }

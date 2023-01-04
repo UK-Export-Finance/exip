@@ -186,7 +186,8 @@ var lists = {
       }),
       creditPeriodWithBuyer: (0, import_fields.text)(),
       policyCurrencyCode: (0, import_fields.text)(),
-      totalMonthsOfCover: (0, import_fields.integer)()
+      totalMonthsOfCover: (0, import_fields.integer)(),
+      totalSalesToBuyer: (0, import_fields.integer)()
     },
     access: import_access.allowAll
   },

@@ -201,7 +201,8 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
       [`${REQUESTED_START_DATE}-day`]: '1',
       [`${REQUESTED_START_DATE}-month`]: getMonth(add(date, { months: 1 })),
       [`${REQUESTED_START_DATE}-year`]: getYear(add(date, { years: 1 })),
-      [TOTAL_MONTHS_OF_COVER]: 1,
+      [TOTAL_MONTHS_OF_COVER]: '1',
+      [TOTAL_SALES_TO_BUYER]: '1000',
     };
 
     describe('when there are no validation errors', () => {

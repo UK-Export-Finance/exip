@@ -33,7 +33,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-context('Insurance - Policy and exports - Multiple contract policy page - form validation - policy currency code', () => {
+context('Insurance - Policy and exports - Multiple contract policy page - form validation - total months of cover', () => {
   let referenceNumber;
 
   before(() => {
@@ -66,7 +66,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   const field = multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER];
 
-  describe('when policy currency code is not provided', () => {
+  describe('when total months of cover is not provided', () => {
     it('should render a validation error', () => {
       submitButton().click();
 
