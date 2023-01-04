@@ -1,9 +1,4 @@
 import {
-  add,
-  getMonth,
-  getYear,
-} from 'date-fns';
-import {
   headingCaption,
   heading,
   submitButton,
@@ -26,6 +21,7 @@ import {
   SUPPORTED_CURRENCIES,
 } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
+import application from '../../../../../fixtures/application';
 
 const { taskList } = partials.insurancePartials;
 
@@ -312,9 +308,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
   });
 
   describe('form submission', () => {
-    const date = new Date();
-    const startDate = add(date, { months: 3 });
-
     it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
       cy.completeAndSubmitMultipleContractPolicyForm();
 
@@ -345,17 +338,17 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
       it('should have the submitted values', () => {
         goToPageDirectly(referenceNumber);
 
-        multipleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', '1');
-        multipleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', getMonth(startDate));
-        multipleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', getYear(startDate));
+        multipleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
+        multipleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
+        multipleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
 
         multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER].inputOptionSelected().invoke('text').then((text) => {
-          expect(text.trim()).equal('2 months');
+          expect(text.trim()).equal(`${application.POLICY_AND_EXPORTS[TOTAL_MONTHS_OF_COVER]} months`);
         });
 
-        multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().should('have.value', '1000');
+        multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().should('have.value', application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
 
-        multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().should('have.value', '500');
+        multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().should('have.value', application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
       });
     });
   });
