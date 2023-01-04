@@ -12,7 +12,10 @@ const {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
-        MULTIPLE: { TOTAL_MONTHS_OF_COVER },
+        MULTIPLE: {
+          TOTAL_MONTHS_OF_COVER,
+          TOTAL_SALES_TO_BUYER,
+        },
       },
     },
   },
@@ -27,6 +30,7 @@ export default () => {
   multipleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(getYear(startDate));
 
   multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER].input().select('2');
+  multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().type('1000');
 
   submitButton().click();
 };

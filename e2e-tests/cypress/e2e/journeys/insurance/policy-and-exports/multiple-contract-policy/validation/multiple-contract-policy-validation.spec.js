@@ -18,7 +18,10 @@ const {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
-        MULTIPLE: { TOTAL_MONTHS_OF_COVER },
+        MULTIPLE: {
+          TOTAL_MONTHS_OF_COVER,
+          TOTAL_SALES_TO_BUYER,
+        },
       },
     },
   },
@@ -68,7 +71,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
     partials.errorSummaryListItems().should('exist');
 
-    const TOTAL_REQUIRED_FIELDS = 2;
+    const TOTAL_REQUIRED_FIELDS = 3;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
     checkText(
@@ -79,6 +82,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     checkText(
       partials.errorSummaryListItems().eq(1),
       CONTRACT_ERROR_MESSAGES.MULTIPLE[TOTAL_MONTHS_OF_COVER].IS_EMPTY,
+    );
+
+    checkText(
+      partials.errorSummaryListItems().eq(2),
+      CONTRACT_ERROR_MESSAGES.MULTIPLE[TOTAL_SALES_TO_BUYER].IS_EMPTY,
     );
   });
 });

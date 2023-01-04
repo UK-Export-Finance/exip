@@ -123,6 +123,12 @@ export const ERROR_MESSAGES = {
           [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
             IS_EMPTY: 'Select how many months you want to be insured for',
           },
+          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
+            IS_EMPTY: 'Enter your estimated sales as a whole number - do not enter decimals',
+            NOT_A_NUMBER: 'Enter your estimated sales as a whole number - do not enter decimals',
+            NOT_A_WHOLE_NUMBER: 'Enter your estimated sales as a whole number - do not enter decimals',
+            BELOW_MINIMUM: 'Your estimated sales must be 1 or more',
+          },
         },
       },
     },
