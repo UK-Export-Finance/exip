@@ -160,6 +160,7 @@ export const lists = {
       policyCurrencyCode: text(),
       totalMonthsOfCover: integer(),
       totalSalesToBuyer: integer(),
+      maximumBuyerWillOwe: integer(),
     },
     access: allowAll,
   },

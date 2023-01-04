@@ -15,6 +15,7 @@ const {
         MULTIPLE: {
           TOTAL_MONTHS_OF_COVER,
           TOTAL_SALES_TO_BUYER,
+          MAXIMUM_BUYER_WILL_OWE,
         },
       },
     },
@@ -31,6 +32,7 @@ export default () => {
 
   multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER].input().select('2');
   multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().type('1000');
+  multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().type('500');
 
   submitButton().click();
 };

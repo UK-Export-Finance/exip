@@ -217,12 +217,37 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
     field.input().should('exist');
   });
 
-  it('renders `maximum buyer will owe` prefix and input', () => {
+  it('renders `maximum buyer will owe` label, hint, prefix, input', () => {
     const fieldId = MAXIMUM_BUYER_WILL_OWE;
     const field = multipleContractPolicyPage[fieldId];
+    const { HINT } = CONTRACT_POLICY.MULTIPLE[fieldId];
 
-    field.prefix().invoke('text').then((text) => {
-      expect(text.trim()).equal('£');
+    field.label().should('exist');
+    field.label().invoke('text').then((text) => {
+      expect(text.trim()).equal(CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
+    });
+
+    field.label().invoke('text').then((text) => {
+      expect(text.trim()).equal(CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
+    });
+
+    field.hint.forExample().invoke('text').then((text) => {
+      expect(text.trim()).equal(HINT.FOR_EXAMPLE);
+    });
+
+    field.hint.needMoreCover().invoke('text').then((text) => {
+      const expected = `${HINT.NEED_MORE_COVER} ${HINT.FILL_IN_FORM.TEXT}`;
+      expect(text.trim()).equal(expected);
+    });
+
+    field.hint.fillInFormLink().invoke('text').then((text) => {
+      expect(text.trim()).equal(HINT.FILL_IN_FORM.TEXT);
+    });
+
+    field.hint.fillInFormLink().should('have.attr', 'href', HINT.FILL_IN_FORM.HREF);
+
+    field.hint.noDecimals().invoke('text').then((text) => {
+      expect(text.trim()).equal(HINT.NO_DECIMALS);
     });
 
     field.input().should('exist');
@@ -329,6 +354,8 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
         });
 
         multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().should('have.value', '1000');
+
+        multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().should('have.value', '500');
       });
     });
   });
