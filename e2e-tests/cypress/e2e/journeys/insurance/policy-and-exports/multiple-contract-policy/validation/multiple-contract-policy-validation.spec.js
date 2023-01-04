@@ -21,6 +21,7 @@ const {
         MULTIPLE: {
           TOTAL_MONTHS_OF_COVER,
           TOTAL_SALES_TO_BUYER,
+          MAXIMUM_BUYER_WILL_OWE,
         },
       },
     },
@@ -71,7 +72,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
     partials.errorSummaryListItems().should('exist');
 
-    const TOTAL_REQUIRED_FIELDS = 3;
+    const TOTAL_REQUIRED_FIELDS = 4;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
     checkText(
@@ -87,6 +88,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     checkText(
       partials.errorSummaryListItems().eq(2),
       CONTRACT_ERROR_MESSAGES.MULTIPLE[TOTAL_SALES_TO_BUYER].IS_EMPTY,
+    );
+
+    checkText(
+      partials.errorSummaryListItems().eq(3),
+      CONTRACT_ERROR_MESSAGES.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].IS_EMPTY,
     );
   });
 });

@@ -123,6 +123,17 @@
           }
         }) }}
 
+
+        {% set maximumBuyerWillOweId = FIELDS.MAXIMUM_BUYER_WILL_OWE.ID %}
+        {% set HINT = FIELDS.MAXIMUM_BUYER_WILL_OWE.HINT %}
+
+        {% set maximumBuyerWillOweHintHtml %}
+          <p data-cy="{{ maximumBuyerWillOweId }}-hint-for-example">{{ HINT.FOR_EXAMPLE }}</p>
+          <p data-cy="{{ maximumBuyerWillOweId }}-hint-need-more-cover">{{ HINT.NEED_MORE_COVER }} <a class="govuk-link govuk-link" href="{{ HINT.FILL_IN_FORM.HREF }}" data-cy="{{ maximumBuyerWillOweId }}-hint-fill-in-form-link">{{ HINT.FILL_IN_FORM.TEXT }}</a></p>
+
+          <p data-cy="{{ maximumBuyerWillOweId }}-hint-no-decimals">{{ HINT.NO_DECIMALS }}</p>
+        {% endset %}
+
         {{ govukInput({
           label: {
             text: FIELDS.MAXIMUM_BUYER_WILL_OWE.LABEL,
@@ -133,10 +144,7 @@
             }
           },
           hint: {
-            text: FIELDS.MAXIMUM_BUYER_WILL_OWE.HINT,
-            attributes: {
-              'data-cy': FIELDS.MAXIMUM_BUYER_WILL_OWE.ID + '-hint'
-            }
+            html: maximumBuyerWillOweHintHtml
           },
           classes: "govuk-input--width-10 govuk-!-margin-bottom-4",
           attributes: {

@@ -1,11 +1,7 @@
-import {
-  add,
-  getMonth,
-  getYear,
-} from 'date-fns';
 import { FIELD_IDS } from '../../../constants';
 import { multipleContractPolicyPage } from '../../e2e/pages/insurance/policy-and-export';
 import { submitButton } from '../../e2e/pages/shared';
+import application from '../../fixtures/application';
 
 const {
   INSURANCE: {
@@ -15,6 +11,7 @@ const {
         MULTIPLE: {
           TOTAL_MONTHS_OF_COVER,
           TOTAL_SALES_TO_BUYER,
+          MAXIMUM_BUYER_WILL_OWE,
         },
       },
     },
@@ -22,15 +19,13 @@ const {
 } = FIELD_IDS;
 
 export default () => {
-  const date = new Date();
-  const startDate = add(date, { months: 3 });
+  multipleContractPolicyPage[REQUESTED_START_DATE].dayInput().type(application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
+  multipleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
+  multipleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
 
-  multipleContractPolicyPage[REQUESTED_START_DATE].dayInput().type('1');
-  multipleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(startDate));
-  multipleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(getYear(startDate));
-
-  multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER].input().select('2');
-  multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().type('1000');
+  multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER].input().select(application.POLICY_AND_EXPORTS[TOTAL_MONTHS_OF_COVER]);
+  multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().type(application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
+  multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().type(application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
 
   submitButton().click();
 };

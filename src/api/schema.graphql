@@ -210,6 +210,7 @@ type PolicyAndExport {
   policyCurrencyCode: String
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
+  maximumBuyerWillOwe: Int
 }
 
 input PolicyAndExportWhereUniqueInput {
@@ -230,6 +231,7 @@ input PolicyAndExportWhereInput {
   policyCurrencyCode: StringFilter
   totalMonthsOfCover: IntNullableFilter
   totalSalesToBuyer: IntNullableFilter
+  maximumBuyerWillOwe: IntNullableFilter
 }
 
 input StringFilter {
@@ -270,6 +272,7 @@ input PolicyAndExportOrderByInput {
   policyCurrencyCode: OrderDirection
   totalMonthsOfCover: OrderDirection
   totalSalesToBuyer: OrderDirection
+  maximumBuyerWillOwe: OrderDirection
 }
 
 input PolicyAndExportUpdateInput {
@@ -282,6 +285,7 @@ input PolicyAndExportUpdateInput {
   policyCurrencyCode: String
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
+  maximumBuyerWillOwe: Int
 }
 
 input PolicyAndExportUpdateArgs {
@@ -299,6 +303,7 @@ input PolicyAndExportCreateInput {
   policyCurrencyCode: String
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
+  maximumBuyerWillOwe: Int
 }
 
 type Country {

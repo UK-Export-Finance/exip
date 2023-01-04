@@ -35,6 +35,7 @@ const applicationQuery = gql`
           policyCurrencyCode
           totalMonthsOfCover
           totalSalesToBuyer
+          maximumBuyerWillOwe
         }
       }
     }

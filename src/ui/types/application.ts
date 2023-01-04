@@ -24,6 +24,8 @@ interface ApplicationPolicyAndExport {
   creditPeriodWithBuyer?: string;
   policyCurrencyCode?: string;
   totalMonthsOfCover?: number;
+  totalSalesToBuyer?: number;
+  maximumBuyerWillOwe?: number;
 }
 
 interface Application extends ApplicationCore {

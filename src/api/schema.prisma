@@ -52,6 +52,7 @@ model PolicyAndExport {
   policyCurrencyCode               String        @default("")
   totalMonthsOfCover               Int?
   totalSalesToBuyer                Int?
+  maximumBuyerWillOwe              Int?
   from_Application_policyAndExport Application[] @relation("Application_policyAndExport")
 
   @@index([applicationId])
