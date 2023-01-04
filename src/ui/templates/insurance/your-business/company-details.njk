@@ -138,6 +138,7 @@
             'data-cy': FIELDS.YOUR_COMPANY.WEBSITE,
             'aria-label': CONTENT_STRINGS.WEBSITE
           },
+          value: submittedValues[FIELDS.YOUR_COMPANY.WEBSITE],
           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE] and {
             text: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE].text,
             attributes: {
@@ -165,10 +166,19 @@
           },
           id: FIELDS.YOUR_COMPANY.PHONE_NUMBER,
           name: FIELDS.YOUR_COMPANY.PHONE_NUMBER,
+          type: "tel",
+          autocomplete: "tel",
+          value: submittedValues[FIELDS.YOUR_COMPANY.PHONE_NUMBER],
           classes: "companies-house-input-width",
           attributes: {
             'data-cy': FIELDS.YOUR_COMPANY.PHONE_NUMBER,
             'aria-label': CONTENT_STRINGS.PHONE_NUMBER
+          },
+           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.PHONE_NUMBER] and {
+            text: validationErrors.errorList[FIELDS.YOUR_COMPANY.PHONE_NUMBER].text,
+            attributes: {
+              "data-cy": FIELDS.YOUR_COMPANY.PHONE_NUMBER + "-error"
+            }
           }
         }) }}
       </div>
