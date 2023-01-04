@@ -8,6 +8,7 @@ const {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
+        CREDIT_PERIOD_WITH_BUYER,
         MULTIPLE: {
           TOTAL_MONTHS_OF_COVER,
           TOTAL_SALES_TO_BUYER,
@@ -26,6 +27,7 @@ export default () => {
   multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER].input().select(application.POLICY_AND_EXPORTS[TOTAL_MONTHS_OF_COVER]);
   multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().type(application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
   multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().type(application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
+  multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().type(application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
 
   submitButton().click();
 };

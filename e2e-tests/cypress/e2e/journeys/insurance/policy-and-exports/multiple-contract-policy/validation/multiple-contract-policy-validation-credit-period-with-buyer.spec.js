@@ -1,5 +1,5 @@
 import { submitButton } from '../../../../../pages/shared';
-import { typeOfPolicyPage } from '../../../../../pages/insurance/policy-and-export';
+import { typeOfPolicyPage, multipleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
@@ -8,8 +8,8 @@ import checkText from '../../../../../helpers/check-text';
 
 const { taskList } = partials.insurancePartials;
 
-const multiplePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const multiplePolicyField = typeOfPolicyPage[multiplePolicyFieldId].multiple;
+const multipleePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
+const multipleePolicyField = typeOfPolicyPage[multipleePolicyFieldId].multiple;
 
 const { INSURANCE } = ROUTES;
 
@@ -17,13 +17,7 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
         CREDIT_PERIOD_WITH_BUYER,
-        MULTIPLE: {
-          TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
-        },
       },
     },
   },
@@ -37,7 +31,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-context('Insurance - Policy and exports - Multiple contract policy page - form validation', () => {
+context('Insurance - Policy and exports - Multiple contract policy page - form validation - credit period with buyer', () => {
   let referenceNumber;
 
   before(() => {
@@ -52,7 +46,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
     taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    multiplePolicyField.input().click();
+    multipleePolicyField.input().click();
     submitButton().click();
 
     getReferenceNumber().then((id) => {
@@ -68,37 +62,38 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('should render validation errors for all required fields', () => {
-    submitButton().click();
+  const field = multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
 
-    partials.errorSummaryListItems().should('exist');
+  describe('when credit period with buyer is not provided', () => {
+    it('should render a validation error', () => {
+      submitButton().click();
 
-    const TOTAL_REQUIRED_FIELDS = 5;
-    partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
+      checkText(
+        partials.errorSummaryListItems().eq(4),
+        CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].IS_EMPTY,
+      );
 
-    checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY,
-    );
+      checkText(
+        field.errorMessage(),
+        `Error: ${CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].IS_EMPTY}`,
+      );
+    });
+  });
 
-    checkText(
-      partials.errorSummaryListItems().eq(1),
-      CONTRACT_ERROR_MESSAGES.MULTIPLE[TOTAL_MONTHS_OF_COVER].IS_EMPTY,
-    );
+  describe('when total contract value is above the maximum', () => {
+    it('should render a validation error', () => {
+      field.input().type('a'.repeat(1001), { delay: 0 });
+      submitButton().click();
 
-    checkText(
-      partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.MULTIPLE[TOTAL_SALES_TO_BUYER].IS_EMPTY,
-    );
+      checkText(
+        partials.errorSummaryListItems().eq(4),
+        CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].ABOVE_MAXIMUM,
+      );
 
-    checkText(
-      partials.errorSummaryListItems().eq(3),
-      CONTRACT_ERROR_MESSAGES.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].IS_EMPTY,
-    );
-
-    checkText(
-      partials.errorSummaryListItems().eq(4),
-      CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].IS_EMPTY,
-    );
+      checkText(
+        field.errorMessage(),
+        `Error: ${CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].ABOVE_MAXIMUM}`,
+      );
+    });
   });
 });

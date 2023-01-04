@@ -1,8 +1,8 @@
-import { FIELD_IDS } from '../../../../../../constants';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../helpers/validation';
-import { objectHasProperty } from '../../../../../../helpers/object';
-import { RequestBody } from '../../../../../../../types';
+import { FIELD_IDS } from '../../constants';
+import { ERROR_MESSAGES } from '../../content-strings';
+import generateValidationErrors from '../../helpers/validation';
+import { objectHasProperty } from '../../helpers/object';
+import { RequestBody } from '../../../types';
 
 const {
   INSURANCE: {

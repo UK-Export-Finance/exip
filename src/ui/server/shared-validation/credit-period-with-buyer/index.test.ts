@@ -1,7 +1,7 @@
-import creditPeriodWithBuyerRules, { MAXIMUM } from './credit-period-with-buyer';
-import { FIELD_IDS } from '../../../../../../constants';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../helpers/validation';
+import creditPeriodWithBuyerRules, { MAXIMUM } from '.';
+import { FIELD_IDS } from '../../constants';
+import { ERROR_MESSAGES } from '../../content-strings';
+import generateValidationErrors from '../../helpers/validation';
 
 const {
   INSURANCE: {
@@ -19,7 +19,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/policy-and-export/single-contract-policy/validation/rules/credit-period-with-buyer', () => {
+describe('shared-validation/credit-period-with-buyer', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
