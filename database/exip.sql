@@ -347,6 +347,7 @@ CREATE TABLE IF NOT EXISTS `PolicyAndExport` (
   `creditPeriodWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	`totalMonthsOfCover` int DEFAULT NULL,
 	`totalSalesToBuyer` int DEFAULT NULL,
+	`maximumBuyerWillOwe` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `PolicyAndExport_application_idx` (`application`),
   CONSTRAINT `PolicyAndExport_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
