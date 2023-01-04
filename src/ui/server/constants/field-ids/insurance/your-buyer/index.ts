@@ -1,3 +1,6 @@
+// import { INSURANCE_ROOT } from "../../constants/routes/insurance";
+// import { INSURANCE_ROOT } from '../../insurance/routes/insurance';
+
 export const yourBuyerPageVariables = () => ({
   FIELDS: {
     BUYER_COUNTRY: {

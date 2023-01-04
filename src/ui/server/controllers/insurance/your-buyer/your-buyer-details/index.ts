@@ -32,3 +32,12 @@ export const get = async (req: Request, res: Response) => {
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
 };
+
+export const post = (req: Request, res: Response) => {
+  // eslint-disable-next-line no-console
+  console.log(`req : ${JSON.stringify(req.body)}`);
+  // eslint-disable-next-line no-console
+  console.log(`res : ${res}`);
+  return undefined;
+  // return res.redirect('/venki');
+};
