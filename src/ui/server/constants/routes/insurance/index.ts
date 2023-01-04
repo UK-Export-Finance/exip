@@ -4,7 +4,6 @@ import { EXPORTER_BUSINESS } from './exporter-business';
 
 export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY_ROOT = '/eligibility';
-// const YOUR_BUYER = '/your-buyer';
 
 export const INSURANCE_ROUTES = {
   INSURANCE_ROOT,

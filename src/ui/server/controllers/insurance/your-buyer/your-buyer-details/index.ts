@@ -13,7 +13,6 @@ export const PAGE_VARIABLES = {
 };
 
 export const get = async (req: Request, res: Response) => {
-  // console.log('called at steop');
   if (!req.session.submittedData || !req.session.submittedData.insuranceEligibility) {
     req.session.submittedData = {
       ...req.session.submittedData,
