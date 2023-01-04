@@ -12,7 +12,6 @@ import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-fou
 import insuranceEligibilityRoutes from './eligibility';
 import insuranceBusinessRouter from './business';
 import yourBuyerRouter from './your-buyer-details';
-// import { get as getaYourBuyerOrganisation } from '../../controllers/insurance/your-buyer/your-buyer-details';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
@@ -21,8 +20,6 @@ const insuranceRouter = express.Router();
 
 insuranceRouter.get(INSURANCE_ROUTES.START, startGet);
 insuranceRouter.post(INSURANCE_ROUTES.START, startPost);
-
-// insuranceRouter.get(INSURANCE_ROUTES.YOUR_BUYER_DETAILS, getaYourBuyerOrganisation);
 
 insuranceRouter.get(INSURANCE_ROUTES.APPLY_OFFLINE, applyOfflineGet);
 insuranceRouter.get(INSURANCE_ROUTES.SPEAK_TO_UKEF_EFM, speakToUkefEfmGet);
@@ -46,7 +43,6 @@ insuranceRouter.get(INSURANCE_ROUTES.PAGE_NOT_FOUND, pageNotFoundGet);
 
 insuranceRouter.use('/', insuranceEligibilityRoutes);
 insuranceRouter.use(`${INSURANCE_ROOT}/:referenceNumber`, insuranceBusinessRouter);
-// insuranceRouter.get(INSURANCE_ROUTES.YOUR_BUYER_DETAILS, getaYourBuyerOrganisation);
 insuranceRouter.use(`${INSURANCE_ROOT}/`, yourBuyerRouter);
 
 export default insuranceRouter;

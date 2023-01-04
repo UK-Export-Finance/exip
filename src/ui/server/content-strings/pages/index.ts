@@ -116,7 +116,6 @@ const PROBLEM_WITH_SERVICE_PAGE = {
 };
 const YOUR_BUYER_DETAILS_PAGE = {
   PAGE_TITLE: 'Your Buyer Details',
-  COUNTRY_LABEL: 'Country',
 };
 
 export const PAGES = {

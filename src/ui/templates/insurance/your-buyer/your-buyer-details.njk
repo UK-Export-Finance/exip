@@ -43,10 +43,10 @@
         {% endif %}
 
         {{ govukSelect({
-                id: CONTENT_STRINGS.BUYER_COUNTRY,
-                name: CONTENT_STRINGS.BUYER_COUNTRY,
+                id: FIELDS.BUYER_COUNTRY.ID,
+                name: FIELDS.BUYER_COUNTRY.NAME,
                 label: {
-                  text: CONTENT_STRINGS.COUNTRY_LABEL
+                  text: FIELDS.BUYER_COUNTRY.LABEL
                 },
                 items: countries
               }) }}

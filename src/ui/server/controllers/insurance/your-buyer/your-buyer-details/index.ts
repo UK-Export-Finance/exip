@@ -3,18 +3,10 @@ import { Request, Response } from '../../../../../types';
 import { mapCountries } from '../../../../helpers/mappings/map-countries';
 import api from '../../../../api';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
-import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
-
-const FIELD_ID = FIELD_IDS.BUYER_COUNTRY;
-
-export const PAGE_VARIABLES = {
-  FIELD_ID,
-  PAGE_CONTENT_STRINGS: PAGES.YOUR_BUYER,
-};
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import { yourBuyerPageVariables } from '../../../../constants/field-ids/insurance/your-buyer';
 
 export const get = async (req: Request, res: Response) => {
-  // eslint-disable-next-line no-console
-  console.log('calaled at step 2');
   if (!req.session.submittedData || !req.session.submittedData.insuranceEligibility) {
     req.session.submittedData = {
       ...req.session.submittedData,
@@ -41,13 +33,13 @@ export const get = async (req: Request, res: Response) => {
   } else {
     mappedCountries = mapCountries(countries);
   }
-  // // eslint-disable-next-line no-console
-  // console.log(mappedCountries);
+
   return res.render(TEMPLATES.YOUR_BUYER.BUYER_COMPANY_DETAILS, {
-    ...singleInputPageVariables({
-      ...PAGE_VARIABLES,
+    ...insuranceCorePageVariables({
+      PAGE_CONTENT_STRINGS: PAGES.YOUR_BUYER,
       BACK_LINK: req.headers.referer,
     }),
+    ...yourBuyerPageVariables(),
     countries: mappedCountries,
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
