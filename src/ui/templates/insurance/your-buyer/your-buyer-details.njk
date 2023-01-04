@@ -28,10 +28,10 @@
     }) }}
   {% endif %}
 
-  <form method="POST" novalidate>
+  <form method="POST" novalidate="novalidate">
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-    <input type="hidden" name="{{ HIDDEN_FIELD_ID }}" id="{{ HIDDEN_FIELD_ID }}" value="{{ submittedValues[HIDDEN_FIELD_ID].name }}">   
+    <input type="hidden" name="{{ HIDDEN_FIELD_ID }}" id="{{ HIDDEN_FIELD_ID }}" value="{{ submittedValues[HIDDEN_FIELD_ID].name }}">
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half-from-desktop">
@@ -42,18 +42,17 @@
           {% set class = "govuk-form-group govuk-form-group--error" %}
         {% endif %}
 
-
-{{ govukSelect({
-  id: CONTENT_STRINGS.BUYER_COUNTRY,
-  name: CONTENT_STRINGS.BUYER_COUNTRY,
-  label: {
-    text: CONTENT_STRINGS.COUNTRY_LABEL
-  },
-  items: countries
-}) }}
+        {{ govukSelect({
+                id: CONTENT_STRINGS.BUYER_COUNTRY,
+                name: CONTENT_STRINGS.BUYER_COUNTRY,
+                label: {
+                  text: CONTENT_STRINGS.COUNTRY_LABEL
+                },
+                items: countries
+              }) }}
       </div>
 
-            <div class="govuk-grid-column-three-quarters-from-desktop">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="govuk-button-group">
           {{ govukButton({
             text: CONTENT_STRINGS.BUTTONS.CONTINUE,
@@ -74,18 +73,13 @@
 
     </div>
 
-
-
   </form>
 
   <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript"></script>
 
   <script type="text/javascript">
     var element = document.getElementById('{{ FIELD_ID }}');
-    accessibleAutocomplete.enhanceSelectElement({
-      selectElement: element,
-      defaultValue: ''
-    });
+    accessibleAutocomplete.enhanceSelectElement({selectElement: element, defaultValue: ''});
   </script>
 
 {% endblock %}

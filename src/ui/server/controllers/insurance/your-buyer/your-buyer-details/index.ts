@@ -13,6 +13,8 @@ export const PAGE_VARIABLES = {
 };
 
 export const get = async (req: Request, res: Response) => {
+  // eslint-disable-next-line no-console
+  console.log('calaled at step 2');
   if (!req.session.submittedData || !req.session.submittedData.insuranceEligibility) {
     req.session.submittedData = {
       ...req.session.submittedData,
