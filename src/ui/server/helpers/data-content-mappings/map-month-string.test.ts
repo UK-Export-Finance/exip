@@ -21,7 +21,7 @@ describe('server/helpers/map-month-string', () => {
     });
   });
 
-  describe('when value is not 0 or 1', () => {
+  describe('when value is not 1', () => {
     it('should return a formatted string with `months`', () => {
       const result = mapMonthString(2);
 
