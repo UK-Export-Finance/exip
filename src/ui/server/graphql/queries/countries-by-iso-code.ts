@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const countriesQuery = gql`
+const countriesByIsoCodeQuery = gql`
   query ($isoCode: String) {
     countries(where: { isoCode: { equals: $isoCode } }) {
       id
@@ -10,4 +10,4 @@ const countriesQuery = gql`
   }
 `;
 
-export default countriesQuery;
+export default countriesByIsoCodeQuery;

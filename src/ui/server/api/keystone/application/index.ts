@@ -2,7 +2,7 @@ import { ApolloError } from 'apollo-client';
 import { ApolloResponse, SubmittedDataInsuranceEligibility } from '../../../../types';
 import apollo from '../../../graphql/apollo';
 import eligibility from './eligibility';
-import country from '../country';
+import countries from '../countries';
 import createApplicationMutation from '../../../graphql/mutations/create-application';
 import getApplicationQuery from '../../../graphql/queries/application';
 import updateApplicationPolicyAndExportMutation from '../../../graphql/mutations/update-application/policy-and-export';
@@ -45,7 +45,7 @@ const application = {
 
         const { id: eligibilityId } = newApplication.eligibility;
 
-        const buyerCountry = await country.get(buyerCountryIsoCode);
+        const buyerCountry = await countries.get(buyerCountryIsoCode);
 
         await eligibility.update(eligibilityId, {
           ...eligibilityAnswers,
