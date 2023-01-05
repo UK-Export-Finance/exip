@@ -213,6 +213,12 @@
           classes: "govuk-grid-column-one-quarter-from-desktop",
           attributes: {
             "data-cy": FIELDS.POLICY_CURRENCY_CODE.ID + "-input"
+          },
+          errorMessage: validationErrors.errorList[FIELDS.POLICY_CURRENCY_CODE.ID] and {
+            text: validationErrors.errorList[FIELDS.POLICY_CURRENCY_CODE.ID].text,
+            attributes: {
+              "data-cy": FIELDS.POLICY_CURRENCY_CODE.ID + "-error-message"
+            }
           }
         }) }}
 
