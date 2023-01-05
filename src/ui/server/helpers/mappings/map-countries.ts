@@ -82,7 +82,6 @@ export const filterCisCountries = (countries: Array<CisCountry>) => countries.fi
 export const mapCountry = (country: CisCountry, selectedIsoCode?: string): Country => {
   const mapped = {
     name: country.marketName,
-    text: country.marketName,
     isoCode: country.isoCode,
     value: country.isoCode,
     riskCategory: mapRiskCategory(country.ESRAClasificationDesc),

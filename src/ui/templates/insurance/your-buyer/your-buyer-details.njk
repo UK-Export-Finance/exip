@@ -30,9 +30,6 @@
 
   <form method="POST" novalidate="novalidate">
 
-    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-    <input type="hidden" name="{{ HIDDEN_FIELD_ID }}" id="{{ HIDDEN_FIELD_ID }}" value="{{ submittedValues[HIDDEN_FIELD_ID].name }}">
-
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half-from-desktop">
 
@@ -74,12 +71,5 @@
     </div>
 
   </form>
-
-  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript"></script>
-
-  <script type="text/javascript">
-    var element = document.getElementById('{{ FIELD_ID }}');
-    accessibleAutocomplete.enhanceSelectElement({selectElement: element, defaultValue: ''});
-  </script>
 
 {% endblock %}

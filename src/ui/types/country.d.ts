@@ -1,7 +1,6 @@
 interface Country {
   id?: string;
   name: string;
-  text?: string;
   isoCode: string;
   riskCategory: string;
   selected?: boolean;
