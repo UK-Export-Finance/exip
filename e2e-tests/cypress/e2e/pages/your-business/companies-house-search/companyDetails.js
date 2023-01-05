@@ -38,6 +38,8 @@ const companyDetails = {
   phoneNumberLabel: () => cy.get(`[data-cy="${PHONE_NUMBER}-label`),
   phoneNumberHint: () => cy.get(`[data-cy="${PHONE_NUMBER}-hint`),
   phoneNumber: () => cy.get(`[data-cy="${PHONE_NUMBER}`),
+  phoneNumberError: () => cy.get(`[data-cy="${PHONE_NUMBER}-error`),
+
 };
 
 export default companyDetails;

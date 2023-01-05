@@ -12,7 +12,7 @@ const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
   EXPORTER_BUSINESS: {
     COMPANY_HOUSE,
-    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE },
+    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -21,7 +21,7 @@ const { COMPANY_DETAILS: TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NO_COMPANIES_HOUSE_NUMBER } = EXPORTER_BUSINESS_ROUTES;
+const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NO_COMPANIES_HOUSE_NUMBER, NATURE_OF_BUSINESS } = EXPORTER_BUSINESS_ROUTES;
 
 const pageVariables = (referenceNumber: number) => ({
   POST_ROUTES: {
@@ -96,6 +96,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
       [TRADING_NAME]: sanitiseValue(body[TRADING_NAME]),
       [TRADING_ADDRESS]: sanitiseValue(body[TRADING_ADDRESS]),
       [WEBSITE]: body[WEBSITE],
+      [PHONE_NUMBER]: body[PHONE_NUMBER],
     };
 
     // checks if input is correctly formatted before searching
@@ -176,6 +177,7 @@ const post = async (req: Request, res: Response) => {
       [TRADING_NAME]: sanitiseValue(body[TRADING_NAME]),
       [TRADING_ADDRESS]: sanitiseValue(body[TRADING_ADDRESS]),
       [WEBSITE]: body[WEBSITE],
+      [PHONE_NUMBER]: body[PHONE_NUMBER],
     };
 
     // run validation on other fields on page
@@ -194,16 +196,7 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
-    // TODO: Remove once page complete.  For testing purposes
-    return res.render(TEMPLATE, {
-      ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-        BACK_LINK: req.headers.referer,
-      }),
-      ...pageVariables(application.referenceNumber),
-      validationErrors,
-      submittedValues,
-    });
+    return res.redirect(NATURE_OF_BUSINESS);
   } catch (error) {
     console.error('Error posting company details', { error });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
