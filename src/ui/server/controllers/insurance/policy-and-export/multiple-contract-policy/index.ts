@@ -9,8 +9,7 @@ import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapTotalMonthsOfCover from '../../../../helpers/mappings/map-total-months-of-insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
-import mapSubmittedData from '../map-submitted-data';
-import save from '../save-data';
+import mapAndSave from '../map-and-save';
 
 const {
   INSURANCE: {
@@ -191,9 +190,7 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const populatedData = mapSubmittedData(req.body);
-
-    const saveResponse = await save.policyAndExport(application, populatedData);
+    const saveResponse = await mapAndSave.policyAndExport(req.body, application);
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

@@ -9,7 +9,7 @@ const {
   INSURANCE: { INSURANCE_ROOT },
 } = ROUTES;
 
-describe('controllers/insurance/policy-and-export/single-contract-policy/save-and-back', () => {
+describe('controllers/insurance/policy-and-export/multiple-contract-policy/save-and-back', () => {
   let req: Request;
   let res: Response;
 
@@ -42,7 +42,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
       const validationErrors = generateValidationErrors(req.body);
 
       expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
-      expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(mockFormBody, res.locals.application, validationErrors);
+      expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application, validationErrors);
     });
 
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
