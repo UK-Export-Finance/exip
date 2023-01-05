@@ -108,7 +108,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
   });
 
   describe('api error handling', () => {
-    describe('when save application policyAndExport call does not retun anything', () => {
+    describe('when save application policyAndExport call does not return anything', () => {
       beforeEach(() => {
         req.body = mockValidFormBody;
 

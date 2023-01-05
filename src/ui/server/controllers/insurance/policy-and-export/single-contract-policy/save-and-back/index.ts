@@ -1,10 +1,8 @@
 import { ROUTES } from '../../../../../constants';
 import { Request, Response } from '../../../../../../types';
 import hasFormData from '../../../../../helpers/has-form-data';
-import mapSubmittedData from '../../map-submitted-data';
 import generateValidationErrors from '../validation';
-import save from '../../save-data';
-
+import mapAndSave from '../../map-and-save';
 const {
   INSURANCE: { INSURANCE_ROOT },
 } = ROUTES;
@@ -29,19 +27,13 @@ export const post = async (req: Request, res: Response) => {
     if (hasFormData(req.body)) {
       const validationErrors = generateValidationErrors(req.body);
 
-      const populatedData = mapSubmittedData(req.body);
+      const saved = await mapAndSave.policyAndExport(req.body, application, validationErrors);
 
-      let saveResponse;
-
-      if (validationErrors) {
-        saveResponse = await save.policyAndExport(application, populatedData, validationErrors.errorList);
-      } else {
-        saveResponse = await save.policyAndExport(application, populatedData);
+      if (saved) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
       }
 
-      if (!saveResponse) {
-        return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-      }
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);

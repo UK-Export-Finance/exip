@@ -1,22 +1,9 @@
-import { add, getMonth, getYear } from 'date-fns';
 import { post } from '.';
-import { FIELD_IDS, ROUTES } from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
 import { Request, Response } from '../../../../../../types';
-import mapSubmittedData from '../../map-submitted-data';
+import mapAndSave from '../../map-and-save';
 import generateValidationErrors from '../validation';
-import save from '../../save-data';
-import { mockApplication, mockCurrencies, mockReq, mockRes } from '../../../../../test-mocks';
-
-const {
-  POLICY_AND_EXPORTS: {
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-      CREDIT_PERIOD_WITH_BUYER,
-      POLICY_CURRENCY_CODE,
-      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-    },
-  },
-} = FIELD_IDS.INSURANCE;
+import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
 
 const {
   INSURANCE: { INSURANCE_ROOT },
@@ -26,26 +13,16 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
   let req: Request;
   let res: Response;
 
-  jest.mock('../../save-data');
+  jest.mock('../../map-and-save');
 
-  const mockSavePolicyAndExportData = jest.fn(() => Promise.resolve({}));
-  save.policyAndExport = mockSavePolicyAndExportData;
+  let mockMapAndSave = jest.fn(() => Promise.resolve(true));
+  mapAndSave.policyAndExport = mockMapAndSave;
 
   const refNumber = Number(mockApplication.referenceNumber);
 
-  const date = new Date();
-
-  const mockValidFormBody = {
+  const mockFormBody = {
     _csrf: '1234',
-    [`${REQUESTED_START_DATE}-day`]: '1',
-    [`${REQUESTED_START_DATE}-month`]: getMonth(add(date, { months: 1 })),
-    [`${REQUESTED_START_DATE}-year`]: getYear(add(date, { years: 1 })),
-    [`${CONTRACT_COMPLETION_DATE}-day`]: '1',
-    [`${CONTRACT_COMPLETION_DATE}-month`]: getMonth(add(date, { months: 2 })),
-    [`${CONTRACT_COMPLETION_DATE}-year`]: getYear(add(date, { years: 1, months: 6 })),
-    [TOTAL_CONTRACT_VALUE]: '150000',
-    [CREDIT_PERIOD_WITH_BUYER]: 'Example',
-    [POLICY_CURRENCY_CODE]: mockCurrencies[0].isoCode,
+    mock: true,
   };
 
   beforeEach(() => {
@@ -54,45 +31,33 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
 
     res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
+
+    req.body = mockFormBody;
   });
 
   describe('when the form has data', () => {
-    describe('when the form has validation errors ', () => {
-      beforeEach(() => {
-        req.body = {
-          _csrf: '1234',
-          mockField: true,
-        };
-      });
+    it('should call mapAndSave.policyAndExport with req.body, application and validationErrors', async () => {
+      await post(req, res);
 
-      it('should call save.policyAndExport with application reference number, populated submitted data and validationErrors.errorList', async () => {
-        await post(req, res);
+      const validationErrors = generateValidationErrors(req.body);
 
-        const validationErrors = generateValidationErrors(req.body);
-
-        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, mapSubmittedData(req.body), validationErrors?.errorList);
-      });
-
-      it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
-        await post(req, res);
-
-        const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
+      expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
+      expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(mockFormBody, res.locals.application, validationErrors);
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
+      await post(req, res);
+
+      const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+
+      expect(res.redirect).toHaveBeenCalledWith(expected);
+    });
+
+    describe('when the form does NOT have any data', () => {
       beforeEach(() => {
-        req.body = mockValidFormBody;
-      });
-
-      it('should call save.policyAndExport with application reference number and populated submitted data', async () => {
-        await post(req, res);
-
-        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, mapSubmittedData(req.body));
+        req.body = {
+          _csrf: mockFormBody._csrf,
+        };
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
@@ -129,33 +94,29 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
     });
   });
 
-  describe('api error handling', () => {
-    describe('when save application policyAndExport call does not retun anything', () => {
-      beforeEach(() => {
-        req.body = mockValidFormBody;
-
-        save.policyAndExport = jest.fn(() => Promise.resolve());
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
+  describe('when the mapAndSave call does not return anything', () => {
+    beforeEach(() => {
+      mockMapAndSave = jest.fn(() => Promise.resolve(false));
+      mapAndSave.policyAndExport = mockMapAndSave;
     });
 
-    describe('when save application policyAndExport call fails', () => {
-      beforeEach(() => {
-        req.body = mockValidFormBody;
+    it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      await post(req, res);
 
-        save.policyAndExport = jest.fn(() => Promise.reject(new Error('Mock error')));
-      });
+      expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+    });
+  });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
+  describe('when the mapAndSave call fails', () => {
+    beforeEach(() => {
+      mockMapAndSave = jest.fn(() => Promise.reject(new Error('Mock error')));
+      mapAndSave.policyAndExport = mockMapAndSave;
+    });
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
+    it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      await post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
     });
   });
 });
