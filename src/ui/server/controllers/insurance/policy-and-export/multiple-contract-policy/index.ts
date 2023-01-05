@@ -4,6 +4,7 @@ import { FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
+import { objectHasProperty } from '../../../../helpers/object';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapTotalMonthsOfCover from '../../../../helpers/mappings/map-total-months-of-insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
@@ -95,7 +96,7 @@ export const get = async (req: Request, res: Response) => {
 
     let mappedCurrencies;
 
-    if (application.policyAndExport[POLICY_CURRENCY_CODE]) {
+    if (objectHasProperty(application.policyAndExport, POLICY_CURRENCY_CODE)) {
       mappedCurrencies = mapCurrencies(currencies, application.policyAndExport[POLICY_CURRENCY_CODE]);
     } else {
       mappedCurrencies = mapCurrencies(currencies);
@@ -103,7 +104,7 @@ export const get = async (req: Request, res: Response) => {
 
     let mappedTotalMonthsOfCover;
 
-    if (application.policyAndExport[TOTAL_MONTHS_OF_COVER]) {
+    if (objectHasProperty(application.policyAndExport, TOTAL_MONTHS_OF_COVER)) {
       mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions, application.policyAndExport[TOTAL_MONTHS_OF_COVER]);
     } else {
       mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions);
@@ -155,7 +156,7 @@ export const post = async (req: Request, res: Response) => {
 
       let mappedCurrencies;
 
-      if (req.body[POLICY_CURRENCY_CODE]) {
+      if (objectHasProperty(req.body, POLICY_CURRENCY_CODE)) {
         mappedCurrencies = mapCurrencies(currencies, req.body[POLICY_CURRENCY_CODE]);
       } else {
         mappedCurrencies = mapCurrencies(currencies);
@@ -163,7 +164,7 @@ export const post = async (req: Request, res: Response) => {
 
       let mappedTotalMonthsOfCover;
 
-      if (req.body[TOTAL_MONTHS_OF_COVER]) {
+      if (objectHasProperty(req.body, TOTAL_MONTHS_OF_COVER)) {
         mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions, req.body[TOTAL_MONTHS_OF_COVER]);
       } else {
         mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions);
