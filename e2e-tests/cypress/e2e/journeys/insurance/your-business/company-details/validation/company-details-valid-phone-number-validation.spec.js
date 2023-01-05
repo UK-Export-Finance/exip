@@ -1,6 +1,5 @@
 import { companyDetails } from '../../../../../pages/your-business';
 import { submitButton, yesRadioInput } from '../../../../../pages/shared';
-import partials from '../../../../../partials';
 import {
   ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
 } from '../../../../../../../constants';
@@ -13,6 +12,9 @@ const {
     },
   },
 } = FIELD_IDS.INSURANCE;
+
+const natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+let url;
 
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - phone number validation - valid phone number", () => {
   let referenceNumber;
@@ -29,8 +31,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
-
-      const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
       cy.visit(url, {
         auth: {
@@ -46,6 +47,12 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');
+    cy.visit(url, {
+      auth: {
+        username: Cypress.config('basicAuthKey'),
+        password: Cypress.config('basicAuthSecret'),
+      },
+    });
   });
 
   describe(`when ${PHONE_NUMBER} is left empty`, () => {
@@ -56,7 +63,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       companyDetails.companyWebsite().clear();
       companyDetails.phoneNumber().clear();
       submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 0);
+      cy.url().should('eq', natureOfBusinessUrl);
     });
   });
 
@@ -69,7 +76,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
         companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE);
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
@@ -81,7 +88,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
         companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE_BRACKETS);
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
@@ -93,7 +100,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
         companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE_DASHES);
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
@@ -105,7 +112,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
         companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE_FULL_NO_ZEROS);
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
@@ -117,7 +124,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
         companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE_FULL);
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
@@ -129,7 +136,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
         companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.MOBILE);
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
@@ -141,35 +148,31 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
         companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.MOBILE_DASH);
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number with full country code', () => {
       it('should not display validation errors', () => {
-        Cypress.Cookies.preserveOnce('_csrf');
-        Cypress.Cookies.preserveOnce('connect.sid');
         companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
         yesRadioInput().eq(0).click();
         yesRadioInput().eq(1).click();
         companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
         companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.MOBILE_FULL_CODE);
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number with full country code with brackets', () => {
       it('should not display validation errors', () => {
-        Cypress.Cookies.preserveOnce('_csrf');
-        Cypress.Cookies.preserveOnce('connect.sid');
         companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
         yesRadioInput().eq(0).click();
         yesRadioInput().eq(1).click();
         companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
         companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.MOBILE_FULL_CODE_BRACKET);
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.url().should('eq', natureOfBusinessUrl);
       });
     });
   });

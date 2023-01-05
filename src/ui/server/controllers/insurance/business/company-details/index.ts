@@ -21,7 +21,7 @@ const { COMPANY_DETAILS: TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NO_COMPANIES_HOUSE_NUMBER } = EXPORTER_BUSINESS_ROUTES;
+const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NO_COMPANIES_HOUSE_NUMBER, NATURE_OF_BUSINESS } = EXPORTER_BUSINESS_ROUTES;
 
 const pageVariables = (referenceNumber: number) => ({
   POST_ROUTES: {
@@ -197,7 +197,7 @@ const post = async (req: Request, res: Response) => {
     }
 
     // TODO: Remove once page complete.  For testing purposes
-    return res.redirect('/your-business/nature-of-business');
+    return res.redirect(NATURE_OF_BUSINESS);
   } catch (error) {
     console.error('Error posting company details', { error });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

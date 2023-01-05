@@ -17,6 +17,9 @@ const {
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
+const natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+let url;
+
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - company website validation", () => {
   let referenceNumber;
 
@@ -33,7 +36,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     getReferenceNumber().then((id) => {
       referenceNumber = id;
 
-      const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
       cy.visit(url, {
         auth: {
@@ -80,23 +83,35 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe(`when ${WEBSITE} is left empty`, () => {
     it('should not display validation errors', () => {
+      cy.visit(url, {
+        auth: {
+          username: Cypress.config('basicAuthKey'),
+          password: Cypress.config('basicAuthSecret'),
+        },
+      });
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       yesRadioInput().eq(0).click();
       yesRadioInput().eq(1).click();
       companyDetails.companyWebsite().clear();
       submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 0);
+      cy.url().should('eq', natureOfBusinessUrl);
     });
   });
 
   describe(`when ${WEBSITE} is correctly entered`, () => {
     it('should not display validation errors', () => {
+      cy.visit(url, {
+        auth: {
+          username: Cypress.config('basicAuthKey'),
+          password: Cypress.config('basicAuthSecret'),
+        },
+      });
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       yesRadioInput().eq(0).click();
       yesRadioInput().eq(1).click();
       companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
       submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 0);
+      cy.url().should('eq', natureOfBusinessUrl);
     });
   });
 });
