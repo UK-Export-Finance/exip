@@ -26,7 +26,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
 
   describe('with errors', () => {
     it(`should return a validation error when ${PHONE_NUMBER} is not correct`, () => {
-      mockBody[PHONE_NUMBER] = INVALID_PHONE_NUMBERS.LONG_LANDLINE;
+      mockBody[PHONE_NUMBER] = INVALID_PHONE_NUMBERS.LANDLINE_LONG;
 
       const result = phoneNumber(mockBody, mockErrors);
 

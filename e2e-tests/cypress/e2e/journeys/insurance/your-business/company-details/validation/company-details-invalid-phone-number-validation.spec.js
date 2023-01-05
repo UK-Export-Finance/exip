@@ -18,6 +18,15 @@ const {
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const errorMessage = COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT;
 
+const completeAllFields = (phoneNumber) => {
+  companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
+  yesRadioInput().eq(0).click();
+  yesRadioInput().eq(1).click();
+  companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
+  companyDetails.phoneNumber().clear().type(phoneNumber);
+  submitButton().click();
+};
+
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - phone number validation - invalid phone number", () => {
   let referenceNumber;
 
@@ -55,12 +64,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe(`when ${PHONE_NUMBER} is incorrectly entered`, () => {
     describe('invalid long landline phone number', () => {
       it('should display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(INVALID_PHONE_NUMBERS.LONG_LANDLINE);
-        submitButton().click();
+        completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE_LONG);
         partials.errorSummaryListItems().should('have.length', 1);
         partials.errorSummaryListItems().first().invoke('text')
           .then((text) => {
@@ -83,12 +87,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('international phone number', () => {
       it('should display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(INVALID_PHONE_NUMBERS.INTERNATIONAL);
-        submitButton().click();
+        completeAllFields(INVALID_PHONE_NUMBERS.INTERNATIONAL);
+
         partials.errorSummaryListItems().should('have.length', 1);
         partials.errorSummaryListItems().first().invoke('text')
           .then((text) => {
@@ -103,12 +103,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('international phone number with full code', () => {
       it('should display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(INVALID_PHONE_NUMBERS.INTERNATIONAL_PLUS);
-        submitButton().click();
+        completeAllFields(INVALID_PHONE_NUMBERS.INTERNATIONAL_PLUS);
+
         partials.errorSummaryListItems().should('have.length', 1);
         partials.errorSummaryListItems().first().invoke('text')
           .then((text) => {
@@ -123,12 +119,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('mobile number with too many numbers', () => {
       it('should display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(INVALID_PHONE_NUMBERS.MOBILE_LONG);
-        submitButton().click();
+        completeAllFields(INVALID_PHONE_NUMBERS.MOBILE_LONG);
+
         partials.errorSummaryListItems().should('have.length', 1);
         partials.errorSummaryListItems().first().invoke('text')
           .then((text) => {
@@ -143,12 +135,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('landline number with too few numbers', () => {
       it('should display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(INVALID_PHONE_NUMBERS.LANDLINE_SHORT);
-        submitButton().click();
+        completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE_SHORT);
+
         partials.errorSummaryListItems().should('have.length', 1);
         partials.errorSummaryListItems().first().invoke('text')
           .then((text) => {
@@ -163,12 +151,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('special characters in phone number', () => {
       it('should display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(INVALID_PHONE_NUMBERS.LANDLINE_SPECIAL_CHAR);
-        submitButton().click();
+        completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE_SPECIAL_CHAR);
+
         partials.errorSummaryListItems().should('have.length', 1);
         partials.errorSummaryListItems().first().invoke('text')
           .then((text) => {
@@ -183,12 +167,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('letters in phone number', () => {
       it('should display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(INVALID_PHONE_NUMBERS.LANDLINE_LETTER);
-        submitButton().click();
+        completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE_LETTER);
+
         partials.errorSummaryListItems().should('have.length', 1);
         partials.errorSummaryListItems().first().invoke('text')
           .then((text) => {

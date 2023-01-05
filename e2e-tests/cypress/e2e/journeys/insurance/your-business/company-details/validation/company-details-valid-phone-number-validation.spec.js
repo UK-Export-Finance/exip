@@ -16,6 +16,15 @@ const {
 const natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 let url;
 
+const completeAllFields = (phoneNumber) => {
+  companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
+  yesRadioInput().eq(0).click();
+  yesRadioInput().eq(1).click();
+  companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
+  companyDetails.phoneNumber().clear().type(phoneNumber);
+  submitButton().click();
+};
+
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - phone number validation - valid phone number", () => {
   let referenceNumber;
 
@@ -60,7 +69,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       yesRadioInput().eq(0).click();
       yesRadioInput().eq(1).click();
-      companyDetails.companyWebsite().clear();
+      companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
       companyDetails.phoneNumber().clear();
       submitButton().click();
       cy.url().should('eq', natureOfBusinessUrl);
@@ -70,108 +79,63 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe(`when ${PHONE_NUMBER} is correctly entered`, () => {
     describe('valid landline phone number', () => {
       it('should not display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE);
-        submitButton().click();
+        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid landline phone number with brackets', () => {
       it('should not display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE_BRACKETS);
-        submitButton().click();
+        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE_BRACKETS);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid landline phone number with dashes', () => {
       it('should not display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE_DASHES);
-        submitButton().click();
+        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE_DASHES);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid landline phone number with country code without 0s', () => {
       it('should not display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE_FULL_NO_ZEROS);
-        submitButton().click();
+        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE_FULL_NO_ZEROS);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid landline phone number with country code', () => {
       it('should not display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE_FULL);
-        submitButton().click();
+        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE_FULL);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number', () => {
       it('should not display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.MOBILE);
-        submitButton().click();
+        completeAllFields(VALID_PHONE_NUMBERS.MOBILE);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number with dashes', () => {
       it('should not display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.MOBILE_DASH);
-        submitButton().click();
+        completeAllFields(VALID_PHONE_NUMBERS.MOBILE_DASH);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number with full country code', () => {
       it('should not display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.MOBILE_FULL_CODE);
-        submitButton().click();
+        completeAllFields(VALID_PHONE_NUMBERS.MOBILE_FULL_CODE);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number with full country code with brackets', () => {
       it('should not display validation errors', () => {
-        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-        yesRadioInput().eq(0).click();
-        yesRadioInput().eq(1).click();
-        companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-        companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.MOBILE_FULL_CODE_BRACKET);
-        submitButton().click();
+        completeAllFields(VALID_PHONE_NUMBERS.MOBILE_FULL_CODE_BRACKET);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });

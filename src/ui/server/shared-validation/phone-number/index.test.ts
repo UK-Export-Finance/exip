@@ -18,7 +18,7 @@ describe('shared-validation/phone-number', () => {
     });
 
     it('should display error when landline number is too long', () => {
-      const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.LONG_LANDLINE, fieldId, errorMessage, errors);
+      const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.LANDLINE_LONG, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 
       expect(result).toEqual(expected);

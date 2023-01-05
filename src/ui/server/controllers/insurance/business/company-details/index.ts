@@ -196,7 +196,6 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
-    // TODO: Remove once page complete.  For testing purposes
     return res.redirect(NATURE_OF_BUSINESS);
   } catch (error) {
     console.error('Error posting company details', { error });
