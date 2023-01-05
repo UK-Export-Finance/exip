@@ -204,6 +204,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
       [TOTAL_MONTHS_OF_COVER]: '1',
       [TOTAL_SALES_TO_BUYER]: '1000',
       [MAXIMUM_BUYER_WILL_OWE]: '500',
+      [CREDIT_PERIOD_WITH_BUYER]: 'Mock',
     };
 
     describe('when there are no validation errors', () => {
