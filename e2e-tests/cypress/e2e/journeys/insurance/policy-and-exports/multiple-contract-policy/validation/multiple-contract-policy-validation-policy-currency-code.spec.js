@@ -1,5 +1,5 @@
 import { submitButton } from '../../../../../pages/shared';
-import { typeOfPolicyPage, singleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
+import { typeOfPolicyPage, multipleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
@@ -9,7 +9,7 @@ import checkText from '../../../../../helpers/check-text';
 const { taskList } = partials.insurancePartials;
 
 const multiplePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const multiplePolicyField = typeOfPolicyPage[multiplePolicyFieldId].single;
+const multiplePolicyField = typeOfPolicyPage[multiplePolicyFieldId].multiple;
 
 const { INSURANCE } = ROUTES;
 
@@ -62,7 +62,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  const field = singleContractPolicyPage[POLICY_CURRENCY_CODE];
+  const field = multipleContractPolicyPage[POLICY_CURRENCY_CODE];
 
   describe('when policy currency code is not provided', () => {
     it('should render a validation error', () => {
