@@ -42,6 +42,9 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
   save.policyAndExport = jest.fn(() => Promise.resolve({}));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
 
+  const currencyCode = mockCurrencies[0].isoCode;
+  const monthsOfCover = 1;
+
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
@@ -134,6 +137,72 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
+    describe('when a policy currency code has been previously submitted', () => {
+      const mockApplicationWithCurrency = {
+        ...mockApplication,
+        policyAndExport: {
+          ...mockApplication.policyAndExport,
+          [POLICY_CURRENCY_CODE]: currencyCode,
+        },
+      };
+
+      beforeEach(() => {
+        res.locals.application = mockApplicationWithCurrency;
+      });
+
+      it('should render template with currencies mapped to submitted currency', async () => {
+        await get(req, res);
+
+        const expectedCurrencies = mapCurrencies(mockCurrencies, currencyCode);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(refNumber),
+          application: mapApplicationToFormFields(mockApplicationWithCurrency),
+          currencies: expectedCurrencies,
+          monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
+    describe('when total months of cover has been previously submitted', () => {
+      const mockApplicationWithMonths = {
+        ...mockApplication,
+        policyAndExport: {
+          ...mockApplication.policyAndExport,
+          [TOTAL_MONTHS_OF_COVER]: monthsOfCover,
+        },
+      };
+
+      beforeEach(() => {
+        res.locals.application = mockApplicationWithMonths;
+      });
+
+      it('should render template with months of cover mapped to submitted months of cover', async () => {
+        await get(req, res);
+
+        const expectedMonthOptions = mapTotalMonthsOfCover(totalMonthsOfCoverOptions, monthsOfCover);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(refNumber),
+          application: mapApplicationToFormFields(mockApplicationWithMonths),
+          currencies: mapCurrencies(mockCurrencies),
+          monthOptions: expectedMonthOptions,
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
     describe('when there is no application', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
@@ -205,6 +274,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
       [TOTAL_SALES_TO_BUYER]: '1000',
       [MAXIMUM_BUYER_WILL_OWE]: '500',
       [CREDIT_PERIOD_WITH_BUYER]: 'Mock',
+      [POLICY_CURRENCY_CODE]: 'GBP',
     };
 
     describe('when there are no validation errors', () => {
@@ -251,7 +321,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
       it('should render template with validation errors', async () => {
         await post(req, res);
 
-        const expectedCurrencies = mapCurrencies(mockCurrencies);
+        const expectedCurrencies = mapCurrencies(mockCurrencies, req.body[POLICY_CURRENCY_CODE]);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -267,6 +337,68 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+
+      describe('when a policy currency code is submitted', () => {
+        const mockFormBody = {
+          [POLICY_CURRENCY_CODE]: currencyCode,
+        };
+
+        beforeEach(() => {
+          req.body = mockFormBody;
+        });
+
+        it('should render template with currencies mapped to submitted currency', async () => {
+          await post(req, res);
+
+          const expectedCurrencies = mapCurrencies(mockCurrencies, currencyCode);
+
+          const expectedVariables = {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY,
+              BACK_LINK: req.headers.referer,
+            }),
+            ...pageVariables(refNumber),
+            application: mapApplicationToFormFields(mockApplication),
+            submittedValues: req.body,
+            currencies: expectedCurrencies,
+            monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
+            validationErrors: generateValidationErrors(req.body),
+          };
+
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+        });
+      });
+
+      describe('when total months of cover is submitted', () => {
+        const mockFormBody = {
+          [TOTAL_MONTHS_OF_COVER]: monthsOfCover,
+        };
+
+        beforeEach(() => {
+          req.body = mockFormBody;
+        });
+
+        it('should render template with months of cover mapped to submitted months of cover', async () => {
+          await post(req, res);
+
+          const expectedMonthOptions = mapTotalMonthsOfCover(totalMonthsOfCoverOptions, monthsOfCover);
+
+          const expectedVariables = {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY,
+              BACK_LINK: req.headers.referer,
+            }),
+            ...pageVariables(refNumber),
+            application: mapApplicationToFormFields(mockApplication),
+            submittedValues: req.body,
+            currencies: mapCurrencies(mockCurrencies),
+            monthOptions: expectedMonthOptions,
+            validationErrors: generateValidationErrors(req.body),
+          };
+
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+        });
       });
     });
 

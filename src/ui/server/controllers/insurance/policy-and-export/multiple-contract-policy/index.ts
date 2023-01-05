@@ -93,7 +93,13 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const mappedCurrencies = mapCurrencies(currencies);
+    let mappedCurrencies;
+
+    if (application.policyAndExport[POLICY_CURRENCY_CODE]) {
+      mappedCurrencies = mapCurrencies(currencies, application.policyAndExport[POLICY_CURRENCY_CODE]);
+    } else {
+      mappedCurrencies = mapCurrencies(currencies);
+    }
 
     let mappedTotalMonthsOfCover;
 
@@ -147,9 +153,21 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
       }
 
-      const mappedCurrencies = mapCurrencies(currencies);
+      let mappedCurrencies;
 
-      const mappedtotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions);
+      if (req.body[POLICY_CURRENCY_CODE]) {
+        mappedCurrencies = mapCurrencies(currencies, req.body[POLICY_CURRENCY_CODE]);
+      } else {
+        mappedCurrencies = mapCurrencies(currencies);
+      }
+
+      let mappedTotalMonthsOfCover;
+
+      if (req.body[TOTAL_MONTHS_OF_COVER]) {
+        mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions, req.body[TOTAL_MONTHS_OF_COVER]);
+      } else {
+        mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions);
+      }
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
@@ -160,7 +178,7 @@ export const post = async (req: Request, res: Response) => {
         application: mapApplicationToFormFields(application),
         submittedValues: req.body,
         currencies: mappedCurrencies,
-        monthOptions: mappedtotalMonthsOfCover,
+        monthOptions: mappedTotalMonthsOfCover,
         validationErrors,
       });
     } catch (err) {
