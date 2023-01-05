@@ -23,9 +23,9 @@ export const get = async (req: Request, res: Response) => {
 
   const mappedCountries = mapCountriesSelect(countries);
 
-  return res.render(TEMPLATES.YOUR_BUYER.BUYER_COMPANY_DETAILS, {
+  return res.render(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS, {
     ...insuranceCorePageVariables({
-      PAGE_CONTENT_STRINGS: PAGES.YOUR_BUYER,
+      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER_DETAILS,
       BACK_LINK: req.headers.referer,
     }),
     ...yourBuyerPageVariables(),
@@ -36,9 +36,9 @@ export const get = async (req: Request, res: Response) => {
 export const post = async (req: Request, res: Response) => {
   const validationErrors = yourBuyerDetailsValidation(req.body);
   if (validationErrors && Object.keys(validationErrors).length) {
-    return res.render(TEMPLATES.YOUR_BUYER.BUYER_COMPANY_DETAILS, {
+    return res.render(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS, {
       ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.YOUR_BUYER,
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER_DETAILS,
         BACK_LINK: req.headers.referer,
       }),
       ...yourBuyerPageVariables(),
