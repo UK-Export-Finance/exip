@@ -159,6 +159,8 @@ export const lists = {
       creditPeriodWithBuyer: text(),
       policyCurrencyCode: text(),
       totalMonthsOfCover: integer(),
+      totalSalesToBuyer: integer(),
+      maximumBuyerWillOwe: integer(),
     },
     access: allowAll,
   },

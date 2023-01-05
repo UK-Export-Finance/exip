@@ -44,7 +44,14 @@ const multipleContractPolicy = {
   },
   [MAXIMUM_BUYER_WILL_OWE]: {
     label: () => cy.get(`[data-cy="${MAXIMUM_BUYER_WILL_OWE}-label"]`),
-    hint: () => cy.get(`[data-cy="${MAXIMUM_BUYER_WILL_OWE}-hint"]`),
+    hint: {
+      forExample: () => cy.get(`[data-cy="${MAXIMUM_BUYER_WILL_OWE}-hint-for-example"]`),
+      needMoreCover: () => cy.get(`[data-cy="${MAXIMUM_BUYER_WILL_OWE}-hint-need-more-cover"]`),
+      fillInFormLink: () => cy.get(`[data-cy="${MAXIMUM_BUYER_WILL_OWE}-hint-fill-in-form-link"]`),
+      noDecimals: () => cy.get(`[data-cy="${MAXIMUM_BUYER_WILL_OWE}-hint-no-decimals"]`),
+    },
+    text: () => cy.get('[data-cy="details-1"]'),
+    link: () => cy.get('[data-cy="details-1"]  a'),
     prefix: () => cy.get(`[data-cy="${MAXIMUM_BUYER_WILL_OWE}-prefix"]`),
     input: () => cy.get(`[data-cy="${MAXIMUM_BUYER_WILL_OWE}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${MAXIMUM_BUYER_WILL_OWE}-error-message"]`),

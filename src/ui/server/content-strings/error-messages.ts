@@ -126,6 +126,19 @@ export const ERROR_MESSAGES = {
           [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
             IS_EMPTY: 'Select how many months you want to be insured for',
           },
+          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
+            IS_EMPTY: 'Enter your estimated sales as a whole number - do not enter decimals',
+            NOT_A_NUMBER: 'Enter your estimated sales as a whole number - do not enter decimals',
+            NOT_A_WHOLE_NUMBER: 'Enter your estimated sales as a whole number - do not enter decimals',
+            BELOW_MINIMUM: 'Your estimated sales must be 1 or more',
+          },
+          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
+            IS_EMPTY: 'Enter maximum the buyer will owe as a whole number - do not enter decimals',
+            NOT_A_NUMBER: 'Enter maximum the buyer will owe as a whole number - do not enter decimals',
+            NOT_A_WHOLE_NUMBER: 'Enter maximum the buyer will owe as a whole number - do not enter decimals',
+            BELOW_MINIMUM: 'The maximum the buyer will owe must be 1 or more',
+            ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £499.999',
+          },
         },
       },
     },

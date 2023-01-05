@@ -1,7 +1,7 @@
 import requestedStartDateRules from '../../../../../../shared-validation/requested-start-date';
+import creditPeriodWithBuyerRules from '../../../../../../shared-validation/credit-period-with-buyer';
 import contractCompletionDateRules from './contract-completion-date';
 import totalContractValueRules from './total-contract-value';
-import creditPeriodWithBuyerRules from './credit-period-with-buyer';
 import policyCurrencyCodeRules from './policy-currency-code';
 import { ValidationErrors } from '../../../../../../../types';
 

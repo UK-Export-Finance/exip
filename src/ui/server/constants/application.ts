@@ -13,5 +13,6 @@ export const APPLICATION = {
       MAXIMUM: 499999,
     },
     TOTAL_MONTHS_OF_COVER: 12,
+    MAXIMUM_BUYER_CAN_OWE: 499999,
   },
 };

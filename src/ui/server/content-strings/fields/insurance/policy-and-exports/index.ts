@@ -75,10 +75,15 @@ export const FIELDS = {
       },
       [CONTRACT_POLICY.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
         LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
-        HINT_LIST: [
-          'For example, your total sales might be £250,000 but the maximum the buyer will owe you at any single point is £100,000.',
-          'Enter a whole number - do not enter decimals',
-        ],
+        HINT: {
+          FOR_EXAMPLE: 'For example, your total sales might be £250,000 but the maximum the buyer will owe you at any single point is £100,000.',
+          NEED_MORE_COVER: 'If you need cover for more than £499,999, ',
+          FILL_IN_FORM: {
+            TEXT: 'fill in this form instead.',
+            HREF: LINKS.EXTERNAL.NBI_FORM,
+          },
+          NO_DECIMALS: 'Enter a whole number - do not enter decimals.',
+        },
       },
     },
   },
