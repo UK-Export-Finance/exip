@@ -1,10 +1,3 @@
-import {
-  add,
-  getDate,
-  getMonth,
-  getYear,
-  sub,
-} from 'date-fns';
 import { submitButton, saveAndBackButton } from '../../../../pages/shared';
 import { typeOfPolicyPage, multipleContractPolicyPage } from '../../../../pages/insurance/policy-and-export';
 import partials from '../../../../partials';
@@ -38,20 +31,8 @@ const {
   },
 } = FIELD_IDS;
 
-const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-      },
-    },
-  },
-} = FIELD_IDS;
-
 context('Insurance - Policy and exports - Multiple contract policy page - Save and go back', () => {
   let referenceNumber;
-  const date = new Date();
-  const futureDate = add(date, { months: 3 });
 
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
