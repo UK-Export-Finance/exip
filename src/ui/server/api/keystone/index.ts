@@ -1,11 +1,11 @@
 import application from './application';
-import country from './country';
+import countries from './countries';
 import getCompaniesHouseInformation from './get-companies-house-information';
 import page from './page';
 
 const keystone = {
   application,
-  country,
+  countries,
   getCompaniesHouseInformation,
   page,
 };
