@@ -197,15 +197,7 @@ const post = async (req: Request, res: Response) => {
     }
 
     // TODO: Remove once page complete.  For testing purposes
-    return res.render(TEMPLATE, {
-      ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-        BACK_LINK: req.headers.referer,
-      }),
-      ...pageVariables(application.referenceNumber),
-      validationErrors,
-      submittedValues,
-    });
+    return res.redirect('/your-business/nature-of-business');
   } catch (error) {
     console.error('Error posting company details', { error });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
