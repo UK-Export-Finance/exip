@@ -2,7 +2,9 @@ import { companyDetails } from '../../../../pages/your-business';
 import { submitButton, inlineErrorMessage } from '../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import partials from '../../../../partials';
-import { ROUTES, FIELD_IDS, LONG_PHONE_NUMBER } from '../../../../../../constants';
+import {
+  ROUTES, FIELD_IDS, INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
+} from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const {
@@ -57,8 +59,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe('all page errors', () => {
     it('should display validation errors if required inputs are not correctly answered', () => {
-      companyDetails.companyWebsite().type('a');
-      companyDetails.phoneNumber().type(LONG_PHONE_NUMBER);
+      companyDetails.companyWebsite().type(WEBSITE_EXAMPLES.INVALID);
+      companyDetails.phoneNumber().type(INVALID_PHONE_NUMBERS.LONG_LANDLINE);
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 5);
 

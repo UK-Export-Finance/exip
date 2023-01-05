@@ -3,7 +3,7 @@ import { submitButton, yesRadioInput } from '../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../partials';
 import {
-  ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, VALID_WEBSITE,
+  ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, WEBSITE_EXAMPLES,
 } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
 
@@ -56,7 +56,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       yesRadioInput().eq(0).click();
       yesRadioInput().eq(1).click();
-      companyDetails.companyWebsite().type('www');
+      companyDetails.companyWebsite().type(WEBSITE_EXAMPLES.INVALID);
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);
       partials.errorSummaryListItems().first().invoke('text')
@@ -94,7 +94,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       yesRadioInput().eq(0).click();
       yesRadioInput().eq(1).click();
-      companyDetails.companyWebsite().clear().type(VALID_WEBSITE);
+      companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 0);
     });

@@ -1,6 +1,6 @@
 import { PhoneNumberUtil } from 'google-libphonenumber';
 import generateValidationErrors from '../../helpers/validation';
-import { defaultCountryUK } from '../../constants';
+import { DEFAULT_COUNTRY_UK } from '../../constants';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
@@ -17,7 +17,7 @@ const validatePhoneNumber = (phoneNumber: string, fieldId: string, errorMessage:
   let updatedErrors = errors;
 
   // if not valid for UK, then returns validation error
-  if (!phoneUtil.isValidNumberForRegion(phoneUtil.parse(phoneNumber, defaultCountryUK), defaultCountryUK)) {
+  if (!phoneUtil.isValidNumberForRegion(phoneUtil.parse(phoneNumber, DEFAULT_COUNTRY_UK), DEFAULT_COUNTRY_UK)) {
     updatedErrors = generateValidationErrors(fieldId, errorMessage, updatedErrors);
 
     return updatedErrors;

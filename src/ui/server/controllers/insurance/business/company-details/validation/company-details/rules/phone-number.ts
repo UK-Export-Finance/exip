@@ -2,6 +2,7 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../../constants';
 import { RequestBody } from '../../../../../../../../types';
 import validatePhoneNumber from '../../../../../../../shared-validation/phone-number';
+import { objectHasProperty } from '../../../../../../../helpers/object';
 
 const {
   YOUR_COMPANY: { PHONE_NUMBER },
@@ -19,7 +20,7 @@ const phoneNumber = (responseBody: RequestBody, errors: object) => {
   let updatedErrors = errors;
 
   // as field is optional, only validate if it is not an empty string
-  if (responseBody[PHONE_NUMBER]) {
+  if (objectHasProperty(responseBody, PHONE_NUMBER)) {
     const errorMessage = EXPORTER_BUSINESS[PHONE_NUMBER].INCORRECT_FORMAT;
     // validates input
     updatedErrors = validatePhoneNumber(responseBody[PHONE_NUMBER], PHONE_NUMBER, errorMessage, updatedErrors);
