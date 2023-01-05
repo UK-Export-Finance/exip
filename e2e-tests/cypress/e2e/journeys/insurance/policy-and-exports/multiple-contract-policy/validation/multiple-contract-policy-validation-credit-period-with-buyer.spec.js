@@ -80,7 +80,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     });
   });
 
-  describe('when total contract value is above the maximum', () => {
+  describe('when credit period with buyer is above the maximum', () => {
     it('should render a validation error', () => {
       field.input().type('a'.repeat(1001), { delay: 0 });
       submitButton().click();

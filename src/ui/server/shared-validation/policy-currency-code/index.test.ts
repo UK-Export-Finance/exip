@@ -1,8 +1,8 @@
-import policyCurrencyCodeRules from './policy-currency-code';
-import { FIELD_IDS } from '../../../../../../constants';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../helpers/validation';
-import { mockCurrencies } from '../../../../../../test-mocks';
+import policyCurrencyCodeRules from '.';
+import { FIELD_IDS } from '../../constants';
+import { ERROR_MESSAGES } from '../../content-strings';
+import generateValidationErrors from '../../helpers/validation';
+import { mockCurrencies } from '../../test-mocks';
 
 const {
   INSURANCE: {
@@ -20,7 +20,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/policy-and-export/single-contract-policy/validation/rules/policy-currency-code', () => {
+describe('shared-validation/policy-currency-code', () => {
   const mockErrors = {
     summary: [],
     errorList: {},

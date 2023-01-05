@@ -4,6 +4,7 @@ import { FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
+import { objectHasProperty } from '../../../../helpers/object';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
@@ -88,7 +89,7 @@ export const get = async (req: Request, res: Response) => {
 
     let mappedCurrencies;
 
-    if (application.policyAndExport[POLICY_CURRENCY_CODE]) {
+    if (objectHasProperty(application.policyAndExport, POLICY_CURRENCY_CODE)) {
       mappedCurrencies = mapCurrencies(currencies, application.policyAndExport[POLICY_CURRENCY_CODE]);
     } else {
       mappedCurrencies = mapCurrencies(currencies);

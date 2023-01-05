@@ -4,6 +4,7 @@ import { FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
+import { objectHasProperty } from '../../../../helpers/object';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapTotalMonthsOfCover from '../../../../helpers/mappings/map-total-months-of-insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
@@ -93,11 +94,17 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const mappedCurrencies = mapCurrencies(currencies);
+    let mappedCurrencies;
+
+    if (objectHasProperty(application.policyAndExport, POLICY_CURRENCY_CODE)) {
+      mappedCurrencies = mapCurrencies(currencies, application.policyAndExport[POLICY_CURRENCY_CODE]);
+    } else {
+      mappedCurrencies = mapCurrencies(currencies);
+    }
 
     let mappedTotalMonthsOfCover;
 
-    if (application.policyAndExport[TOTAL_MONTHS_OF_COVER]) {
+    if (objectHasProperty(application.policyAndExport, TOTAL_MONTHS_OF_COVER)) {
       mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions, application.policyAndExport[TOTAL_MONTHS_OF_COVER]);
     } else {
       mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions);
@@ -147,9 +154,21 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
       }
 
-      const mappedCurrencies = mapCurrencies(currencies);
+      let mappedCurrencies;
 
-      const mappedtotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions);
+      if (objectHasProperty(req.body, POLICY_CURRENCY_CODE)) {
+        mappedCurrencies = mapCurrencies(currencies, req.body[POLICY_CURRENCY_CODE]);
+      } else {
+        mappedCurrencies = mapCurrencies(currencies);
+      }
+
+      let mappedTotalMonthsOfCover;
+
+      if (objectHasProperty(req.body, TOTAL_MONTHS_OF_COVER)) {
+        mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions, req.body[TOTAL_MONTHS_OF_COVER]);
+      } else {
+        mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions);
+      }
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
@@ -160,7 +179,7 @@ export const post = async (req: Request, res: Response) => {
         application: mapApplicationToFormFields(application),
         submittedValues: req.body,
         currencies: mappedCurrencies,
-        monthOptions: mappedtotalMonthsOfCover,
+        monthOptions: mappedTotalMonthsOfCover,
         validationErrors,
       });
     } catch (err) {
