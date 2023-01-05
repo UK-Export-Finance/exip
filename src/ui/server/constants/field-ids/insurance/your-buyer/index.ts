@@ -1,12 +1,10 @@
-// import { INSURANCE_ROOT } from "../../constants/routes/insurance";
-// import { INSURANCE_ROOT } from '../../insurance/routes/insurance';
-
 export const yourBuyerPageVariables = () => ({
   FIELDS: {
     BUYER_COUNTRY: {
-      ID: 'Country_Id',
-      NAME: 'Country_Name',
+      ID: 'countryId',
+      NAME: 'countryName',
       LABEL: 'Country',
+      ERROR_MESSAGE: 'Select your buyer country',
     },
   },
 });

@@ -5,6 +5,7 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { yourBuyerPageVariables } from '../../../../constants/field-ids/insurance/your-buyer';
 import { mapCountriesSelect } from '../../../../helpers/mappings/map-countries-select';
+import { yourBuyerDetailsValidation } from './validation/yourBuyerDetailsValidation';
 
 export const get = async (req: Request, res: Response) => {
   if (!req.session.submittedData || !req.session.submittedData.insuranceEligibility) {
@@ -29,15 +30,20 @@ export const get = async (req: Request, res: Response) => {
     }),
     ...yourBuyerPageVariables(),
     countries: mappedCountries,
-    submittedValues: req.session.submittedData.insuranceEligibility,
   });
 };
 
-export const post = (req: Request, res: Response) => {
-  // eslint-disable-next-line no-console
-  console.log(`req : ${JSON.stringify(req.body)}`);
-  // eslint-disable-next-line no-console
-  console.log(`res : ${res}`);
-  return undefined;
-  // return res.redirect('/venki');
+export const post = async (req: Request, res: Response) => {
+  const validationErrors = yourBuyerDetailsValidation(req.body);
+  if (validationErrors && Object.keys(validationErrors).length) {
+    return res.render(TEMPLATES.YOUR_BUYER.BUYER_COMPANY_DETAILS, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: PAGES.YOUR_BUYER,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...yourBuyerPageVariables(),
+      validationErrors,
+    });
+  }
+  return res.redirect('/needs_to_redirect_at_do_you_need_broker');
 };
