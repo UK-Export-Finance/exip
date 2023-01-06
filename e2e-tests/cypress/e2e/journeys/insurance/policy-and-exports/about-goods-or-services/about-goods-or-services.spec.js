@@ -88,14 +88,14 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 75,
-  //     'best-practices': 100,
-  //     seo: 70,
-  //   });
-  // });
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 75,
+      'best-practices': 100,
+      seo: 70,
+    });
+  });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
