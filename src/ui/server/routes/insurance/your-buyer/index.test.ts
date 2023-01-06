@@ -1,6 +1,6 @@
 import { YOUR_BUYER } from '../../../constants/routes/insurance/your-buyer';
 import { get, post } from '../../../test-mocks/mock-router';
-import { get as getYourBuyerDetails, post as postYourBuyeDetails } from '../../../controllers/insurance/your-buyer/your-buyer-details';
+import { get as getYourBuyerDetails, post as postYourBuyeDetails } from '../../../controllers/insurance/your-buyer';
 
 describe('routes/insurance/your-buyer', () => {
   beforeEach(() => {

@@ -1,11 +1,11 @@
-import { PAGES } from '../../../../content-strings';
-import { Request, Response } from '../../../../../types';
-import api from '../../../../api';
-import { ROUTES, TEMPLATES } from '../../../../constants';
-import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { mapCountriesSelect } from '../../../../helpers/mappings/map-countries-select';
+import { PAGES } from '../../../content-strings';
+import { Request, Response } from '../../../../types';
+import api from '../../../api';
+import { ROUTES, TEMPLATES } from '../../../constants';
+import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
+import { mapCountriesSelect } from '../../../helpers/mappings/map-countries-select';
 import yourBuyerDetailsValidation from './validation/yourBuyerDetailsValidation';
-import { yourBuyerFiledVariables } from '../../../../content-strings/fields/insurance/your-buyer';
+import { yourBuyerFiledVariables } from '../../../content-strings/fields/insurance/your-buyer';
 
 const getMappedCountries = async (res: Response) => {
   const countries = await api.external.getCountries();

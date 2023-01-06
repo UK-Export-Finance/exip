@@ -1,14 +1,14 @@
-import { mockReq, mockRes, mockApplication, mockCisCountries } from '../../../../test-mocks';
-import api from '../../../../api';
-import { Request, Response } from '../../../../../types';
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { mockReq, mockRes, mockApplication, mockCisCountries } from '../../../test-mocks';
+import api from '../../../api';
+import { Request, Response } from '../../../../types';
+import { ROUTES, TEMPLATES } from '../../../constants';
 import { get, post } from '.';
-import { mapCountriesSelect } from '../../../../helpers/mappings/map-countries-select';
-import { PAGES } from '../../../../content-strings';
-import { yourBuyerFiledVariables } from '../../../../content-strings/fields/insurance/your-buyer';
-import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { INSURANCE_ROOT } from '../../../../constants/routes/insurance';
-import { YOUR_BUYER } from '../../../../constants/routes/insurance/your-buyer';
+import { mapCountriesSelect } from '../../../helpers/mappings/map-countries-select';
+import { PAGES } from '../../../content-strings';
+import { yourBuyerFiledVariables } from '../../../content-strings/fields/insurance/your-buyer';
+import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
+import { INSURANCE_ROOT } from '../../../constants/routes/insurance';
+import { YOUR_BUYER } from '../../../constants/routes/insurance/your-buyer';
 
 describe('controllers/insurance/your-buyer/your-buyer-details', () => {
   let req: Request;

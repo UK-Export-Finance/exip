@@ -11,7 +11,7 @@ import { post as typeOfPolicySaveAndBackPost } from '../../controllers/insurance
 import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-found';
 import insuranceEligibilityRoutes from './eligibility';
 import insuranceBusinessRouter from './business';
-import yourBuyerRouter from './your-buyer-details';
+import yourBuyerRouter from './your-buyer';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
