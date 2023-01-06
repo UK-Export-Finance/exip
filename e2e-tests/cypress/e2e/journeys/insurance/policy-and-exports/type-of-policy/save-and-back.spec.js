@@ -11,6 +11,8 @@ const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID]
 
 const { taskList } = partials.insurancePartials;
 
+const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
 context('Insurance - Policy and exports - Type of policy page - Save and go back', () => {
   let referenceNumber;
 
@@ -24,7 +26,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+    task.link().click();
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
@@ -49,8 +51,6 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
     });
 
     it('should retain the `type of policy and exports` task status as `not started yet`', () => {
-      const task = taskList.prepareApplication.tasks.policyTypeAndExports;
-
       task.status().invoke('text').then((text) => {
         const expected = TASKS.STATUS.NOT_STARTED_YET;
 
@@ -61,7 +61,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
 
   describe('when selecting an answer and submitting the form via `save and go back` button', () => {
     before(() => {
-      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+      task.link().click();
     });
 
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
@@ -74,8 +74,6 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
     });
 
     it('should update the status of task `type of policy and exports`to `in progress`', () => {
-      const task = taskList.prepareApplication.tasks.policyTypeAndExports;
-
       task.status().invoke('text').then((text) => {
         const expected = TASKS.STATUS.IN_PROGRESS;
 
@@ -85,7 +83,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
 
     describe('when going back to the page', () => {
       it('should have the originally submitted answer selected', () => {
-        taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+        task.link().click();
 
         multiplePolicyField.input().should('be.checked');
       });

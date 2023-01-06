@@ -1,28 +1,22 @@
-import {
-  add,
-  getDate,
-  getMonth,
-  getYear,
-  sub,
-} from 'date-fns';
 import { submitButton, saveAndBackButton } from '../../../../pages/shared';
-import { typeOfPolicyPage, singleContractPolicyPage } from '../../../../pages/insurance/policy-and-export';
+import { typeOfPolicyPage, multipleContractPolicyPage } from '../../../../pages/insurance/policy-and-export';
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
+import application from '../../../../../fixtures/application';
 
 const { taskList } = partials.insurancePartials;
 
-const singlePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const singlePolicyField = typeOfPolicyPage[singlePolicyFieldId].single;
+const multiplePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
+const multiplePolicyField = typeOfPolicyPage[multiplePolicyFieldId].multiple;
 
 const {
   INSURANCE: {
     ROOT: INSURANCE_ROOT,
     ALL_SECTIONS,
     POLICY_AND_EXPORTS: {
-      SINGLE_CONTRACT_POLICY,
+      MULTIPLE_CONTRACT_POLICY,
     },
   },
 } = ROUTES;
@@ -31,7 +25,7 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
+        MULTIPLE: { TOTAL_SALES_TO_BUYER },
       },
     },
   },
@@ -39,10 +33,8 @@ const {
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
-context('Insurance - Policy and exports - Single contract policy page - Save and go back', () => {
+context('Insurance - Policy and exports - Multiple contract policy page - Save and go back', () => {
   let referenceNumber;
-  const date = new Date();
-  const futureDate = add(date, { months: 3 });
 
   before(() => {
     cy.visit(ROUTES.INSURANCE.START, {
@@ -54,15 +46,15 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    task.link().click();
+    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    singlePolicyField.input().click();
+    multiplePolicyField.input().click();
     submitButton().click();
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
+      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
       cy.url().should('eq', expected);
     });
   });
@@ -90,20 +82,16 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
   });
 
-  describe('when entering an invalid requested cover start date and submitting the form via `save and go back` button', () => {
-    const field = singleContractPolicyPage[REQUESTED_START_DATE];
+  describe('when entering an invalid total sales to buyer and submitting the form via `save and go back` button', () => {
+    const field = multipleContractPolicyPage[TOTAL_SALES_TO_BUYER];
+    const invalidValue = 'Not a number';
 
     before(() => {
       // go back to the page via the task list
-      task.link().click();
+      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
       submitButton().click();
 
-      // enter an invalid date
-      const yesterday = sub(date, { days: 1 });
-
-      field.dayInput().type(getDate(yesterday));
-      field.monthInput().type(getMonth(yesterday));
-      field.yearInput().type(getYear(yesterday));
+      field.input().type(invalidValue);
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -124,25 +112,21 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
 
     describe('when going back to the page', () => {
       before(() => {
-        task.link().click();
+        taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
         submitButton().click();
       });
 
-      it('should not have saved the submitted values', () => {
-        field.dayInput().should('have.value', '');
-        field.monthInput().should('have.value', '');
-        field.yearInput().should('have.value', '');
+      it('should not have saved the submitted value', () => {
+        field.input().should('have.value', '');
       });
     });
   });
 
-  describe('when entering a valid requested cover start date and submitting the form via `save and go back` button', () => {
-    const field = singleContractPolicyPage[REQUESTED_START_DATE];
+  describe('when entering a valid total sales to buyer and submitting the form via `save and go back` button', () => {
+    const field = multipleContractPolicyPage[TOTAL_SALES_TO_BUYER];
 
     before(() => {
-      field.dayInput().type('1');
-      field.monthInput().type(getMonth(futureDate));
-      field.yearInput().type(getYear(futureDate));
+      field.input().type(application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
 
       saveAndBackButton().click();
     });
@@ -163,14 +147,12 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
 
     describe('when going back to the page', () => {
       before(() => {
-        task.link().click();
+        taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
         submitButton().click();
       });
 
-      it('should have the submitted values', () => {
-        field.dayInput().should('have.value', '1');
-        field.monthInput().should('have.value', getMonth(futureDate));
-        field.yearInput().should('have.value', getYear(futureDate));
+      it('should have the submitted value', () => {
+        multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().should('have.value', application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
       });
     });
   });

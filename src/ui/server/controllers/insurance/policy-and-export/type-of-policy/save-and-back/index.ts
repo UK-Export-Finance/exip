@@ -2,10 +2,10 @@ import { ROUTES } from '../../../../../constants';
 import { Request, Response } from '../../../../../../types';
 import hasFormData from '../../../../../helpers/has-form-data';
 import generateValidationErrors from '../validation';
-import save from '../../save-data';
+import mapAndSave from '../../map-and-save';
 
 const {
-  INSURANCE: { INSURANCE_ROOT },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
 } = ROUTES;
 
 /**
@@ -31,9 +31,9 @@ export const post = async (req: Request, res: Response) => {
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.policyAndExport(application, req.body, validationErrors.errorList);
+        saveResponse = await mapAndSave.policyAndExport(req.body, application, validationErrors);
       } else {
-        saveResponse = await save.policyAndExport(application, req.body);
+        saveResponse = await mapAndSave.policyAndExport(req.body, application);
       }
 
       if (!saveResponse) {
@@ -41,7 +41,7 @@ export const post = async (req: Request, res: Response) => {
       }
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (err) {
     console.error('Error updating application', { err });
 

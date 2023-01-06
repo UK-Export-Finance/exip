@@ -10,8 +10,7 @@ import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapTotalMonthsOfCover from '../../../../helpers/mappings/map-total-months-of-insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
-import mapSubmittedData from '../map-submitted-data';
-import save from '../save-data';
+import mapAndSave from '../map-and-save';
 import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
 
 const {
@@ -37,9 +36,9 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
   let res: Response;
   let refNumber: number;
 
-  jest.mock('../save-data');
+  jest.mock('../map-and-save');
 
-  save.policyAndExport = jest.fn(() => Promise.resolve({}));
+  mapAndSave.policyAndExport = jest.fn(() => Promise.resolve(true));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
 
   const currencyCode = mockCurrencies[0].isoCode;
@@ -282,24 +281,12 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
         req.body = validBody;
       });
 
-      it('should call save.policyAndExport with application and populated data from req.body', async () => {
+      it('should call mapAndSave.policyAndExport with req.body and application', async () => {
         await post(req, res);
 
-        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
 
-        const expectedPopulatedData = mapSubmittedData(req.body);
-
-        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, expectedPopulatedData);
-      });
-
-      it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, async () => {
-        await post(req, res);
-
-        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
-
-        const expectedPopulatedData = mapSubmittedData(req.body);
-
-        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, expectedPopulatedData);
+        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application);
       });
 
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, async () => {
@@ -457,17 +444,16 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
         });
       });
 
-      describe('save.policyAndExport call', () => {
+      describe('mapAndSave.policyAndExport call', () => {
         beforeEach(() => {
           req.body = validBody;
         });
 
         describe('when no application is returned', () => {
           beforeEach(() => {
-            // @ts-ignore
-            const savePolicyAndExportDataSpy = jest.fn(() => Promise.resolve());
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 
-            save.policyAndExport = savePolicyAndExportDataSpy;
+            mapAndSave.policyAndExport = mapAndSaveSpy;
           });
 
           it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -479,9 +465,9 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject());
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
 
-            save.policyAndExport = savePolicyAndExportDataSpy;
+            mapAndSave.policyAndExport = mapAndSaveSpy;
           });
 
           it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {

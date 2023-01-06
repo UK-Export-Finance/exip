@@ -10,7 +10,7 @@ const {
 
 /**
  * post
- * Save any valid Single contract policy fields and if successful, redirect to the all sections page
+ * Save any valid Multiple contract policy fields and if successful, redirect to the all sections page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} All sections page or error page
