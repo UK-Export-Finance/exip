@@ -31,6 +31,8 @@ const {
   },
 } = FIELD_IDS;
 
+const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
 context('Insurance - Policy and exports - Multiple contract policy page - Save and go back', () => {
   let referenceNumber;
 
@@ -72,8 +74,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      const task = taskList.prepareApplication.tasks.policyTypeAndExports;
-
       task.status().invoke('text').then((text) => {
         const expected = TASKS.STATUS.IN_PROGRESS;
 
@@ -103,8 +103,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      const task = taskList.prepareApplication.tasks.policyTypeAndExports;
-
       task.status().invoke('text').then((text) => {
         const expected = TASKS.STATUS.IN_PROGRESS;
 
@@ -140,8 +138,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      const task = taskList.prepareApplication.tasks.policyTypeAndExports;
-
       task.status().invoke('text').then((text) => {
         const expected = TASKS.STATUS.IN_PROGRESS;
 

@@ -62,6 +62,8 @@ const {
   },
 } = FIELD_IDS;
 
+const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
 const goToPageDirectly = (referenceNumber) => {
   cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`, {
     auth: {
@@ -84,7 +86,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+    task.link().click();
 
     multiplePolicyField.input().click();
     submitButton().click();
@@ -323,8 +325,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
             password: Cypress.config('basicAuthSecret'),
           },
         });
-
-        const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
         task.status().invoke('text').then((text) => {
           const expected = TASKS.STATUS.IN_PROGRESS;

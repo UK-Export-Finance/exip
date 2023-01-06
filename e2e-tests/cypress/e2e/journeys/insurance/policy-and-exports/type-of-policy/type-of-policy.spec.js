@@ -41,6 +41,8 @@ const goToPageDirectly = (referenceNumber) => {
   });
 };
 
+const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
 context('Insurance - Policy and exports - Type of policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
 
@@ -54,7 +56,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+    task.link().click();
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
@@ -261,8 +263,6 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
             password: Cypress.config('basicAuthSecret'),
           },
         });
-
-        const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
         task.status().invoke('text').then((text) => {
           const expected = TASKS.STATUS.IN_PROGRESS;
