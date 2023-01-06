@@ -1,9 +1,8 @@
-export const yourBuyerPageVariables = {
+export const yourBuyerFiledVariables = {
   FIELDS: {
     BUYER_COUNTRY: {
       ID: 'countryId',
       LABEL: 'Country',
-      ERROR_MESSAGE: 'Select your buyer country',
     },
   },
 };

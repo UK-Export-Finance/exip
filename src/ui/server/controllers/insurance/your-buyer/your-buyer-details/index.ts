@@ -5,8 +5,7 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { mapCountriesSelect } from '../../../../helpers/mappings/map-countries-select';
 import { yourBuyerDetailsValidation } from './validation/yourBuyerDetailsValidation';
-// import { yourBuyerPageVariables } from '../../../content-strings/fields/insurance/your-buyer';
-import { yourBuyerPageVariables } from '../../../../content-strings/fields/insurance/your-buyer';
+import { yourBuyerFiledVariables } from '../../../../content-strings/fields/insurance/your-buyer';
 
 export const get = async (req: Request, res: Response) => {
   if (!req.session.submittedData || !req.session.submittedData.insuranceEligibility) {
@@ -29,7 +28,7 @@ export const get = async (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER_DETAILS,
       BACK_LINK: req.headers.referer,
     }),
-    ...yourBuyerPageVariables,
+    ...yourBuyerFiledVariables,
     countries: mappedCountries,
   });
 };
@@ -42,7 +41,7 @@ export const post = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER_DETAILS,
         BACK_LINK: req.headers.referer,
       }),
-      ...yourBuyerPageVariables,
+      ...yourBuyerFiledVariables,
       validationErrors,
     });
   }
