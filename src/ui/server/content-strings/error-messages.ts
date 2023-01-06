@@ -141,6 +141,15 @@ export const ERROR_MESSAGES = {
           },
         },
       },
+      ABOUT_GOODS_OR_SERVICES: {
+        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
+          IS_EMPTY: 'Enter the goods or services you will supply to the buyer',
+          ABOVE_MAXIMUM: 'The goods or services you will supply to the buyer cannot be more than 1000 characters.',
+        },
+        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
+          IS_EMPTY: 'Select the final destination of the goods or services',
+        },
+      },
     },
   },
 } as ErrorMessage;

@@ -26,6 +26,7 @@ interface ApplicationPolicyAndExport {
   totalMonthsOfCover?: number;
   totalSalesToBuyer?: number;
   maximumBuyerWillOwe?: number;
+  goodsOrServicesDescription?: string;
 }
 
 interface Application extends ApplicationCore {

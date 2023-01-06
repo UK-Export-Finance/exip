@@ -161,6 +161,7 @@ export const lists = {
       totalMonthsOfCover: integer(),
       totalSalesToBuyer: integer(),
       maximumBuyerWillOwe: integer(),
+      goodsOrServicesDescription: text(),
     },
     access: allowAll,
   },

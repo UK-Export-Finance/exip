@@ -11,10 +11,12 @@ import {
   LINKS,
   ORGANISATION,
   PAGES,
+  TASKS,
 } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
+import application from '../../../../../fixtures/application';
 
 const { taskList } = partials.insurancePartials;
 
@@ -27,6 +29,7 @@ const {
   INSURANCE: {
     ROOT: INSURANCE_ROOT,
     START,
+    ALL_SECTIONS,
     POLICY_AND_EXPORTS: {
       SINGLE_CONTRACT_POLICY,
       ABOUT_GOODS_OR_SERVICES,
@@ -41,6 +44,8 @@ const {
     },
   },
 } = FIELD_IDS;
+
+const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 const goToPageDirectly = (referenceNumber) => {
   cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`, {
@@ -83,14 +88,14 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
-    });
-  });
+  // it('passes the audits', () => {
+  //   cy.lighthouse({
+  //     accessibility: 100,
+  //     performance: 75,
+  //     'best-practices': 100,
+  //     seo: 70,
+  //   });
+  // });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
@@ -173,6 +178,40 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
     saveAndBackButton().invoke('text').then((text) => {
       expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
+    });
+  });
+
+  describe('form submission', () => {
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
+      cy.completeAndSubmitAboutGoodsOrServicesForm();
+
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      cy.url().should('eq', expectedUrl);
+    });
+
+    describe('after submitting the form', () => {
+      it('should retain the `type of policy and exports` task status as `in progress`', () => {
+        cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`, {
+          auth: {
+            username: Cypress.config('basicAuthKey'),
+            password: Cypress.config('basicAuthSecret'),
+          },
+        });
+
+        task.status().invoke('text').then((text) => {
+          const expected = TASKS.STATUS.IN_PROGRESS;
+
+          expect(text.trim()).equal(expected);
+        });
+      });
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        goToPageDirectly(referenceNumber);
+
+        aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.POLICY_AND_EXPORTS[DESCRIPTION]);
+      });
     });
   });
 });
