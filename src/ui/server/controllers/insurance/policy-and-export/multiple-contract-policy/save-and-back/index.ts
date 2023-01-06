@@ -5,7 +5,7 @@ import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save';
 
 const {
-  INSURANCE: { INSURANCE_ROOT },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
 } = ROUTES;
 
 /**
@@ -41,7 +41,7 @@ export const post = async (req: Request, res: Response) => {
       }
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (err) {
     console.error('Error updating application', { err });
 

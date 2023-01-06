@@ -2,7 +2,7 @@ import { post } from '.';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../constants';
 import { Request, Response } from '../../../../../../types';
 import generateValidationErrors from '../validation';
-import save from '../../save-data';
+import mapAndSave from '../../map-and-save';
 import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
 
 const { POLICY_TYPE } = FIELD_IDS;
@@ -14,12 +14,17 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
   let req: Request;
   let res: Response;
 
-  jest.mock('../../save-data');
+  jest.mock('../../map-and-save');
 
-  const mockSavePolicyAndExportData = jest.fn(() => Promise.resolve({}));
-  save.policyAndExport = mockSavePolicyAndExportData;
+  let mockMapAndSave = jest.fn(() => Promise.resolve(true));
+  mapAndSave.policyAndExport = mockMapAndSave;
 
   const refNumber = Number(mockApplication.referenceNumber);
+
+  const mockFormBody = {
+    _csrf: '1234',
+    mock: true,
+  };
 
   const mockValidFormBody = {
     _csrf: '1234',
@@ -32,24 +37,19 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
 
     res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
+
+    req.body = mockFormBody;
   });
 
   describe('when the form has data', () => {
     describe('when the form has validation errors ', () => {
-      beforeEach(() => {
-        req.body = {
-          _csrf: '1234',
-          mockField: true,
-        };
-      });
-
-      it('should call save.policyAndExport with application reference number, form data and validationErrors.errorList', async () => {
+      it('should call mapAndSave.policyAndExport with application reference number, form data and validationErrors.errorList', async () => {
         await post(req, res);
 
         const validationErrors = generateValidationErrors(req.body);
 
-        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, req.body, validationErrors?.errorList);
+        expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application, validationErrors);
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
@@ -59,26 +59,26 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
-    });
 
-    describe('when the form does NOT have validation errors ', () => {
-      beforeEach(() => {
-        req.body = mockValidFormBody;
-      });
+      describe('when the form does NOT have validation errors', () => {
+        beforeEach(() => {
+          req.body = mockValidFormBody;
+        });
 
-      it('should call save.policyAndExport with application reference number and form data', async () => {
-        await post(req, res);
+        it('should call mapAndSave.policyAndExport with application reference number and form data', async () => {
+          await post(req, res);
 
-        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, req.body);
-      });
+          expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
+          expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application);
+        });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
-        await post(req, res);
+        it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
+          await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+          const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
-        expect(res.redirect).toHaveBeenCalledWith(expected);
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
   });
@@ -108,11 +108,10 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
   });
 
   describe('api error handling', () => {
-    describe('when save application policyAndExport call does not return anything', () => {
+    describe('when the mapAndSave call does not return anything', () => {
       beforeEach(() => {
-        req.body = mockValidFormBody;
-
-        save.policyAndExport = jest.fn(() => Promise.resolve());
+        mockMapAndSave = jest.fn(() => Promise.resolve(false));
+        mapAndSave.policyAndExport = mockMapAndSave;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -122,11 +121,10 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
       });
     });
 
-    describe('when save application policyAndExport call fails', () => {
+    describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
-        req.body = mockValidFormBody;
-
-        save.policyAndExport = jest.fn(() => Promise.reject(new Error('Mock error')));
+        mockMapAndSave = jest.fn(() => Promise.reject(new Error('Mock error')));
+        mapAndSave.policyAndExport = mockMapAndSave;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {

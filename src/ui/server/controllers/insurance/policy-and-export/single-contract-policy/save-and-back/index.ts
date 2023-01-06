@@ -3,8 +3,9 @@ import { Request, Response } from '../../../../../../types';
 import hasFormData from '../../../../../helpers/has-form-data';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save';
+
 const {
-  INSURANCE: { INSURANCE_ROOT },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
 } = ROUTES;
 
 /**
@@ -27,16 +28,20 @@ export const post = async (req: Request, res: Response) => {
     if (hasFormData(req.body)) {
       const validationErrors = generateValidationErrors(req.body);
 
-      const saved = await mapAndSave.policyAndExport(req.body, application, validationErrors);
+      let saveResponse;
 
-      if (saved) {
-        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
+      if (validationErrors) {
+        saveResponse = await mapAndSave.policyAndExport(req.body, application, validationErrors);
+      } else {
+        saveResponse = await mapAndSave.policyAndExport(req.body, application);
       }
 
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      if (!saveResponse) {
+        return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      }
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (err) {
     console.error('Error updating application', { err });
 

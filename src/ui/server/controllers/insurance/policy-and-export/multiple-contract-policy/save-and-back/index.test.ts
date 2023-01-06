@@ -6,7 +6,7 @@ import generateValidationErrors from '../validation';
 import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
 
 const {
-  INSURANCE: { INSURANCE_ROOT },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
 } = ROUTES;
 
 describe('controllers/insurance/policy-and-export/multiple-contract-policy/save-and-back', () => {
@@ -45,22 +45,22 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/save-
       expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application, validationErrors);
     });
 
-    it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
+    it(`should redirect to ${ALL_SECTIONS}`, async () => {
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
   });
 
   describe('when the form does not have any data', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
+    it(`should redirect to ${ALL_SECTIONS}`, async () => {
       req.body = { _csrf: '1234' };
 
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
@@ -78,29 +78,31 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/save-
     });
   });
 
-  describe('when the mapAndSave call does not return anything', () => {
-    beforeEach(() => {
-      mockMapAndSave = jest.fn(() => Promise.resolve(false));
-      mapAndSave.policyAndExport = mockMapAndSave;
+  describe('api error handling', () => {
+    describe('when the mapAndSave call does not return anything', () => {
+      beforeEach(() => {
+        mockMapAndSave = jest.fn(() => Promise.resolve(false));
+        mapAndSave.policyAndExport = mockMapAndSave;
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
     });
 
-    it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-      await post(req, res);
+    describe('when the mapAndSave call fails', () => {
+      beforeEach(() => {
+        mockMapAndSave = jest.fn(() => Promise.reject(new Error('Mock error')));
+        mapAndSave.policyAndExport = mockMapAndSave;
+      });
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-    });
-  });
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
-  describe('when the mapAndSave call fails', () => {
-    beforeEach(() => {
-      mockMapAndSave = jest.fn(() => Promise.reject(new Error('Mock error')));
-      mapAndSave.policyAndExport = mockMapAndSave;
-    });
-
-    it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-      await post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
     });
   });
 });
