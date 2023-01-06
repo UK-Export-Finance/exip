@@ -5,7 +5,7 @@ import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
 import { isMultiPolicyType, isSinglePolicyType } from '../../../../helpers/policy-type';
-import save from '../save-data';
+import mapAndSave from '../map-and-save';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
@@ -80,7 +80,7 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const saveResponse = await save.policyAndExport(application, req.body);
+    const saveResponse = await mapAndSave.policyAndExport(req.body, application);
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

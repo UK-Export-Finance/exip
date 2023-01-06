@@ -190,6 +190,20 @@ With Keystone, we get all of this (including things like pagination), by writing
 
 Keystone also provides us with an admin UI for the database. Whilst we don't really use this, there are some potential opportunities for this to be used by non-technical people.
 
+### Requirements for submitting a form
+
+In the majority of pages, we have two submit buttons with different requirements.
+
+#### "Save and continue"
+
+- These primary buttons trigger a check for validation errors and if there are errors, reload the same page with validation errors.
+- If there are no validation errors, we trigger a redirect to the next page of the user flow.
+
+#### "Save and go back"
+
+- These secondary buttons check for validation errors and if there are errors, we strip out the invalid fields and save only valid fields.
+- Regardless of validation errors, a user is taken to the "main home page" of an application.
+
 ## How and when the UI calls the API
 
 ### When an application page is loaded
@@ -206,11 +220,11 @@ The following happens:
 
 1. The UI's POST contoller checks for validation errors.
 
-2. If all is OK, call a ["save data" function](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/policy-and-export/type-of-policy/index.ts#L83).
+2. If all is OK, call a ["map and save" function](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/policy-and-export/type-of-policy/index.ts#L83).
 
-3. The [save data function](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/policy-and-export/save-data/index.ts) filters out any invalid fields and sanitises all other fields.
+3. The map and save function maps the submitted form data into a better data structure (e.g day/month/year fields transform into a timestamp) and sends this data to the [save function](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/policy-and-export/map-and-save/index.ts).
 
-4. The save data function then calls the API. The actual call is made [here](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/api/keystone/application/index.ts#L91). We use apollo to run a GraphQL mutation.
+4. The save data function then filters out any invalid fields (if an error list is provided), sanitises all other fields and finally calls the API. The actual call is made [here](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/api/keystone/application/index.ts#L91). We use apollo to run a GraphQL mutation.
 
 5. The API automatically handles the request (thanks to Keystone) and updates the database columns provided in the GraphQL mutation, for the specified application.
 

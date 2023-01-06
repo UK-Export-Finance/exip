@@ -1,6 +1,6 @@
 import validationRules from './rules';
 import combineValidationRules from '../../../../../../helpers/combine-validation-rules';
-import { CompanyHouseResponse } from '../../../../../../../types';
+import { CompanyHouseResponse, ValidationErrors } from '../../../../../../../types';
 
 /**
  * Validates company house API response
@@ -8,6 +8,6 @@ import { CompanyHouseResponse } from '../../../../../../../types';
  * @param {Object} Companies house API response
  * @returns Object containing errors or blank object
  */
-const validation = (responseBody: CompanyHouseResponse) => combineValidationRules(validationRules, responseBody);
+const validation = (responseBody: CompanyHouseResponse) => combineValidationRules(validationRules, responseBody) as ValidationErrors;
 
 export default validation;

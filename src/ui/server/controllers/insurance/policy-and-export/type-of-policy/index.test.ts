@@ -5,7 +5,7 @@ import { FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
-import save from '../save-data';
+import mapAndSave from '../map-and-save';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
@@ -21,8 +21,8 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
   jest.mock('../save-data');
 
-  const mockSavePolicyAndExportData = jest.fn(() => Promise.resolve({}));
-  save.policyAndExport = mockSavePolicyAndExportData;
+  const mockSavePolicyAndExportData = jest.fn(() => Promise.resolve(true));
+  mapAndSave.policyAndExport = mockSavePolicyAndExportData;
 
   beforeEach(() => {
     req = mockReq();
@@ -93,12 +93,12 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         };
       });
 
-      it('should call save.policyAndExport with application and req.body', async () => {
+      it('should call mapAndSave.policyAndExport with req.body and application', async () => {
         await post(req, res);
 
-        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
 
-        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, req.body);
+        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application);
       });
 
       describe('when the answer is `single`', () => {
@@ -176,32 +176,33 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         };
       });
 
-      describe('when no application is returned', () => {
-        beforeEach(() => {
-          // @ts-ignore
-          const savePolicyAndExportDataSpy = jest.fn(() => Promise.resolve());
+      describe('mapAndSave.policyAndExport call', () => {
+        describe('when no application is returned', () => {
+          beforeEach(() => {
+            const savePolicyAndExportDataSpy = jest.fn(() => Promise.resolve(false));
 
-          save.policyAndExport = savePolicyAndExportDataSpy;
+            mapAndSave.policyAndExport = savePolicyAndExportDataSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-          await post(req, res);
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-        });
-      });
+            mapAndSave.policyAndExport = savePolicyAndExportDataSpy;
+          });
 
-      describe('when there is an error', () => {
-        beforeEach(() => {
-          const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject());
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
 
-          save.policyAndExport = savePolicyAndExportDataSpy;
-        });
-
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-          await post(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
         });
       });
     });
