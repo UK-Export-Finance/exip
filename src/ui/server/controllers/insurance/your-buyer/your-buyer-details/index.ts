@@ -7,16 +7,16 @@ import { mapCountriesSelect } from '../../../../helpers/mappings/map-countries-s
 import yourBuyerDetailsValidation from './validation/yourBuyerDetailsValidation';
 import { yourBuyerFiledVariables } from '../../../../content-strings/fields/insurance/your-buyer';
 
-export const get = async (req: Request, res: Response) => {
+const getMappedCountries = async (res: Response) => {
   const countries = await api.external.getCountries();
-  // const countries = await api.keystone.country.get;
-
   if (!countries || !countries.length) {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
+  return mapCountriesSelect(countries);
+};
 
-  const mappedCountries = mapCountriesSelect(countries);
-
+export const get = async (req: Request, res: Response) => {
+  const mappedCountries = await getMappedCountries(res);
   return res.render(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER_DETAILS,
@@ -28,6 +28,7 @@ export const get = async (req: Request, res: Response) => {
 };
 
 export const post = async (req: Request, res: Response) => {
+  const mappedCountries = await getMappedCountries(res);
   const validationErrors = yourBuyerDetailsValidation(req.body);
   if (validationErrors && Object.keys(validationErrors).length) {
     return res.render(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS, {
@@ -36,6 +37,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...yourBuyerFiledVariables,
+      countries: mappedCountries,
       validationErrors,
     });
   }

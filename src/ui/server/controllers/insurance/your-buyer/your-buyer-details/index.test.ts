@@ -14,10 +14,6 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
   let req: Request;
   let res: Response;
   //   let refNumber: number;
-
-  //   jest.mock('../save-data');
-
-  //   save.policyAndExport = jest.fn(() => Promise.resolve({}));
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCisCountries));
 
   beforeEach(() => {
