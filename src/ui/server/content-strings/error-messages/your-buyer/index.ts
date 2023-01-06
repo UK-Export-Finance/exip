@@ -1,3 +1,3 @@
 export const yourBuyerErrorVariables = {
-  ERROR_MESSAGE: 'Select your buyer country',
+  COUNTRY_SELECT_ERROR_MESSAGE: 'Select your buyer country',
 };

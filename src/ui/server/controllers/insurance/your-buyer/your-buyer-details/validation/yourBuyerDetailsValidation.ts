@@ -9,7 +9,7 @@ export const yourBuyerDetailsValidation = (responseBody: RequestBody) => {
   const YOUR_BUYER_ERROR_VARIABLES = yourBuyerErrorVariables;
   let updatedErrors;
   if (!countryName) {
-    updatedErrors = generateValidationErrors(YOUR_BUYER_PAGE_VARIABLE.FIELDS.BUYER_COUNTRY.ID, YOUR_BUYER_ERROR_VARIABLES.ERROR_MESSAGE);
+    updatedErrors = generateValidationErrors(YOUR_BUYER_PAGE_VARIABLE.FIELDS.BUYER_COUNTRY.ID, YOUR_BUYER_ERROR_VARIABLES.COUNTRY_SELECT_ERROR_MESSAGE);
   }
   return updatedErrors;
 };
