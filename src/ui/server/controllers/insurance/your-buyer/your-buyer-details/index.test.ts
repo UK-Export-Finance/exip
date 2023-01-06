@@ -134,7 +134,7 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
         await post(req, res);
 
         // const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
-        const expected = `${INSURANCE_ROOT}/${YOUR_BUYER}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}/${YOUR_BUYER}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
