@@ -8,11 +8,10 @@ import { yourBuyerDetailsValidation } from './validation/yourBuyerDetailsValidat
 import { yourBuyerFiledVariables } from '../../../../content-strings/fields/insurance/your-buyer';
 
 export const get = async (req: Request, res: Response) => {
-  if (!req.session.submittedData || !req.session.submittedData.insuranceEligibility) {
-    req.session.submittedData = {
-      ...req.session.submittedData,
-      insuranceEligibility: {},
-    };
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 
   const countries = await api.external.getCountries();
@@ -34,6 +33,12 @@ export const get = async (req: Request, res: Response) => {
 };
 
 export const post = async (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+
   const validationErrors = yourBuyerDetailsValidation(req.body);
   if (validationErrors && Object.keys(validationErrors).length) {
     return res.render(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS, {
