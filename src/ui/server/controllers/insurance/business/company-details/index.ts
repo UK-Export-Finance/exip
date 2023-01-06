@@ -19,14 +19,21 @@ const {
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
-const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, ALL_SECTIONS } = ROUTES.INSURANCE;
 
-const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NO_COMPANIES_HOUSE_NUMBER, NATURE_OF_BUSINESS } = EXPORTER_BUSINESS_ROUTES;
+const {
+  COMPANY_HOUSE_SEARCH,
+  COMPANY_DETAILS: COMPANY_DETAILS_ROUTE,
+  NO_COMPANIES_HOUSE_NUMBER,
+  COMPANY_DETAILS_SAVE_AND_BACK,
+  NATURE_OF_BUSINESS,
+} = EXPORTER_BUSINESS_ROUTES;
 
 const pageVariables = (referenceNumber: number) => ({
   POST_ROUTES: {
     COMPANIES_HOUSE: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_HOUSE_SEARCH}`,
     COMPANY_DETAILS: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROUTE}`,
+    COMPANY_DETAILS_SAVE_AND_BACK: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
     NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
   },
   FIELDS: EXPORTER_BUSINESS,
@@ -142,6 +149,24 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
   }
 };
 
+const postCompanyDetailsSaveAndBack = async (req: Request, res: Response) => {
+  try {
+    console.log('hereeeeeeeeeeee');
+    const { application } = res.locals;
+
+    const { referenceNumber } = req.params;
+    console.log(referenceNumber);
+    if (!application) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+  } catch (error) {
+    console.error('Error posting company details', { error });
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+};
+
 /**
  * posts company details
  * validates tradingName and companiesHouseInput fields
@@ -203,4 +228,4 @@ const post = async (req: Request, res: Response) => {
   }
 };
 
-export { pageVariables, get, postCompaniesHouseSearch, redirectToExitPage, post };
+export { pageVariables, get, postCompaniesHouseSearch, redirectToExitPage, postCompanyDetailsSaveAndBack, post };

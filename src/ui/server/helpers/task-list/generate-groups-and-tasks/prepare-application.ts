@@ -4,7 +4,7 @@ import { TASKS } from '../../../content-strings';
 import { getGroupById, getAllTasksFieldsInAGroup } from '../task-helpers';
 
 const { INSURANCE } = ROUTES;
-const { INSURANCE_ROOT, POLICY_AND_EXPORTS } = INSURANCE;
+const { INSURANCE_ROOT, POLICY_AND_EXPORTS, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = INSURANCE;
 
 const { PREPARE_APPLICATION } = TASKS.LIST;
 
@@ -27,7 +27,7 @@ const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: Tas
   };
 
   const EXPORTER_BUSINESS = {
-    href: '#',
+    href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROUTES.COMPANY_DETAILS}`,
     title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
     id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
     fields: [],
