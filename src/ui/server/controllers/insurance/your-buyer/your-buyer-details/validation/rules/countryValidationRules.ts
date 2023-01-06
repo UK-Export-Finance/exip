@@ -1,9 +1,9 @@
 import { RequestBody } from 'express';
-import generateValidationErrors from '../../../../../helpers/validation';
-import { yourBuyerFiledVariables } from '../../../../../content-strings/fields/insurance/your-buyer';
-import { objectHasProperty } from '../../../../../helpers/object';
-import { ERROR_MESSAGES } from '../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../constants';
+import generateValidationErrors from '../../../../../../helpers/validation';
+import { yourBuyerFiledVariables } from '../../../../../../content-strings/fields/insurance/your-buyer';
+import { objectHasProperty } from '../../../../../../helpers/object';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { FIELD_IDS } from '../../../../../../constants';
 /**
  * countryValidationRules
  * Check submitted form data for errors with the total contract value field
