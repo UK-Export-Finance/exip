@@ -151,11 +151,10 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
 
 const postCompanyDetailsSaveAndBack = async (req: Request, res: Response) => {
   try {
-    console.log('hereeeeeeeeeeee');
     const { application } = res.locals;
 
     const { referenceNumber } = req.params;
-    console.log(referenceNumber);
+
     if (!application) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }

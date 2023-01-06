@@ -48,6 +48,6 @@ insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY
 insuranceRouter.get(INSURANCE_ROUTES.PAGE_NOT_FOUND, pageNotFoundGet);
 
 insuranceRouter.use('/', insuranceEligibilityRoutes);
-insuranceRouter.use(`${INSURANCE_ROOT}/:referenceNumber`, insuranceBusinessRouter);
+insuranceRouter.use(`${INSURANCE_ROOT}`, insuranceBusinessRouter);
 
 export default insuranceRouter;
