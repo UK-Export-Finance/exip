@@ -9,6 +9,7 @@ import { yourBuyerFiledVariables } from '../../../../content-strings/fields/insu
 
 export const get = async (req: Request, res: Response) => {
   const countries = await api.external.getCountries();
+  // const countries = await api.keystone.country.get;
 
   if (!countries || !countries.length) {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
