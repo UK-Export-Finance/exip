@@ -30,6 +30,7 @@ export const post = async (req: Request, res: Response) => {
   }
   const mappedCountries = mapCountriesSelect(countries);
   const validationErrors = yourBuyerDetailsValidation(req.body);
+
   if (validationErrors && Object.keys(validationErrors).length) {
     return res.render(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS, {
       ...insuranceCorePageVariables({

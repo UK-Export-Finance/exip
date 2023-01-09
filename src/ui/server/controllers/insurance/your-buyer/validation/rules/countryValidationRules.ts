@@ -6,7 +6,7 @@ import { ERROR_MESSAGES } from '../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../constants';
 /**
  * countryValidationRules
- * Check submitted form data for errors with the total contract value field
+ * Check submitted form data for errors with the country field
  * Returns generateValidationErrors if there are any errors.
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
