@@ -7,16 +7,12 @@ import { mapCountriesSelect } from '../../../helpers/mappings/map-countries-sele
 import yourBuyerDetailsValidation from './validation/yourBuyerDetailsValidation';
 import { FIELDS } from '../../../content-strings/fields/insurance/your-buyer';
 
-const getMappedCountries = async (res: Response) => {
+export const get = async (req: Request, res: Response) => {
   const countries = await api.external.getCountries();
   if (!countries || !countries.length) {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
-  return mapCountriesSelect(countries);
-};
-
-export const get = async (req: Request, res: Response) => {
-  const mappedCountries = await getMappedCountries(res);
+  const mappedCountries = mapCountriesSelect(countries);
   return res.render(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER_DETAILS,
@@ -28,7 +24,11 @@ export const get = async (req: Request, res: Response) => {
 };
 
 export const post = async (req: Request, res: Response) => {
-  const mappedCountries = await getMappedCountries(res);
+  const countries = await api.external.getCountries();
+  if (!countries || !countries.length) {
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+  const mappedCountries = mapCountriesSelect(countries);
   const validationErrors = yourBuyerDetailsValidation(req.body);
   if (validationErrors && Object.keys(validationErrors).length) {
     return res.render(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS, {
