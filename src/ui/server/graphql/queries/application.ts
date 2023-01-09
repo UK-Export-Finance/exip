@@ -36,6 +36,7 @@ const applicationQuery = gql`
           totalMonthsOfCover
           totalSalesToBuyer
           maximumBuyerWillOwe
+          goodsOrServicesDescription
         }
       }
     }
