@@ -28,9 +28,19 @@ interface ApplicationPolicyAndExport {
   maximumBuyerWillOwe?: number;
 }
 
+interface ApplicationExporterCompany {
+  id: string;
+  companyName?: string;
+  companyNumber?: string;
+  companyWebsite?: string;
+  hasTradingName?: boolean;
+  hasTradingAddress?: boolean;
+}
+
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   policyAndExport: ApplicationPolicyAndExport;
+  exporterCompany: ApplicationExporterCompany;
 }
 
 interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, ApplicationPolicyAndExport {
