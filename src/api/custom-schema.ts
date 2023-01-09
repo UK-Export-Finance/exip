@@ -22,7 +22,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       }
 
       # fields from registered_office_address object
-      type CompanyAddress {
+      type CompaniesHouseCompanyAddress {
         addressLine1: String
         addressLine2: String
         careOf: String
@@ -35,7 +35,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
 
       type CompaniesHouseResponse {
         companyName: String
-        registeredOfficeAddress: CompanyAddress
+        registeredOfficeAddress: ExporterCompanyAddress
         companyNumber: String
         dateOfCreation: String
         sicCodes: [String]
@@ -43,7 +43,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         apiError: Boolean
       }
 
-      type ApplicationCompanyAddress {
+      type ExporterCompanyAddress {
         addressLine1: String
         addressLine2: String
         careOf: String
@@ -54,7 +54,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         premises: String
       }
 
-      input ApplicationCompanyAddressInput {
+      input ExporterCompanyAddressInput {
         addressLine1: String
         addressLine2: String
         careOf: String
@@ -65,9 +65,9 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         premises: String
       }
 
-      type ApplicationCompanyAndCompanyAddress {
+      type ExporterCompanyAndCompanyAddress {
         id: ID!
-        exporterCompanyAddress: ApplicationCompanyAddress
+        exporterCompanyAddress: ExporterCompanyAddress
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
@@ -77,8 +77,8 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         phoneNumber: String
       }
 
-      input ApplicationCompanyAndCompanyAddressInput {
-        exporterCompanyAddress: ApplicationCompanyAddressInput
+      input ExporterCompanyAndCompanyAddressInput {
+        exporterCompanyAddress: ExporterCompanyAddressInput
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
@@ -90,11 +90,11 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
 
       type Mutation {
         """ update application company and company address """
-        updateApplicationCompanyAndCompanyAddress(
+        updateExporterCompanyAndCompanyAddress(
           companyId: ID!
           companyAddressId: ID!
-          data: ApplicationCompanyAndCompanyAddressInput!
-        ): ApplicationCompanyAndCompanyAddress
+          data: ExporterCompanyAndCompanyAddressInput!
+        ): ExporterCompanyAndCompanyAddress
 
         """ send an email """
         sendEmail(
@@ -112,18 +112,18 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
     `,
     resolvers: {
       Mutation: {
-        updateApplicationCompanyAndCompanyAddress: async (root, variables, context) => {
+        updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
-            console.info('Updating application company and company address for ', variables.companyId);
+            console.info('Updating application exporter company and exporter company address for ', variables.companyId);
 
             const { exporterCompanyAddress, ...exporterCompany } = variables.data;
 
-            await context.db.Company.updateOne({
+            await context.db.ExporterCompany.updateOne({
               where: { id: variables.id },
               data: exporterCompany,
             });
 
-            await context.db.CompanyAddress.updateOne({
+            await context.db.ExporterCompanyAddress.updateOne({
               where: { id: variables.companyAddressId },
               data: exporterCompanyAddress,
             });
@@ -132,9 +132,9 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
               id: variables.id,
             };
           } catch (err) {
-            console.error('Error updating application company and company address', { err });
+            console.error('Error updating application exporter company and exporter company address', { err });
 
-            throw new Error(`Updating application company and company address ${err}`);
+            throw new Error(`Updating application exporter company and exporter company address ${err}`);
           }
         },
         sendEmail: async (root, variables) => {

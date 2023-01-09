@@ -30,8 +30,8 @@ export const lists = {
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA,
       }),
       policyAndExport: relationship({ ref: 'PolicyAndExport' }),
-      exporterCompany: relationship({ ref: 'Company' }),
-      exporterCompanyAddress: relationship({ ref: 'CompanyAddress' }),
+      exporterCompany: relationship({ ref: 'ExporterCompany' }),
+      exporterCompanyAddress: relationship({ ref: 'ExporterCompanyAddress' }),
     },
     // TODO: add logs to the hooks
     hooks: {
@@ -71,7 +71,7 @@ export const lists = {
             };
 
             // generate and attach a new `exporter company` relationship
-            const { id: exporterCompanyId } = await context.db.Company.createOne({
+            const { id: exporterCompanyId } = await context.db.ExporterCompany.createOne({
               data: {},
             });
 
@@ -82,9 +82,9 @@ export const lists = {
             };
 
             // generate and attach a new `exporter company address` relationship
-            const { id: exporterCompanyAddressId } = await context.db.CompanyAddress.createOne({
+            const { id: exporterCompanyAddressId } = await context.db.ExporterCompanyAddress.createOne({
               data: {
-                company: {
+                exporterCompany: {
                   connect: {
                     id: exporterCompanyId,
                   },
@@ -163,7 +163,7 @@ export const lists = {
             });
 
             // add the application ID to the exporter company entry.
-            await context.db.Company.updateOne({
+            await context.db.ExporterCompany.updateOne({
               where: { id: exporterCompanyId },
               data: {
                 application: {
@@ -175,7 +175,7 @@ export const lists = {
             });
 
             // add the application ID to the exporter company address entry.
-            await context.db.CompanyAddress.updateOne({
+            await context.db.ExporterCompanyAddress.updateOne({
               where: { id: exporterCompanyAddressId },
               data: {
                 application: {
@@ -220,9 +220,21 @@ export const lists = {
     },
     access: allowAll,
   },
-  CompanyAddress: list({
+  CompanySicCode: {
     fields: {
-      company: relationship({ ref: 'Company' }),
+      code: text(),
+    },
+    access: allowAll,
+  },
+  ExporterBusiness: list({
+    fields: {
+      company: relationship({ ref: 'ExporterCompany' }),
+    },
+    access: allowAll,
+  }),
+  ExporterCompanyAddress: list({
+    fields: {
+      exporterCompany: relationship({ ref: 'ExporterCompany' }),
       application: relationship({ ref: 'Application' }),
       addressLine1: text(),
       addressLine2: text(),
@@ -235,18 +247,11 @@ export const lists = {
     },
     access: allowAll,
   }),
-  CompanySicCode: {
-    fields: {
-      code: text(),
-      company: relationship({ ref: 'Company' }),
-    },
-    access: allowAll,
-  },
-  Company: list({
+  ExporterCompany: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      companyAddress: relationship({ ref: 'CompanyAddress' }),
-      business: relationship({ ref: 'Business' }),
+      exporterCompanyAddress: relationship({ ref: 'ExporterCompanyAddress' }),
+      business: relationship({ ref: 'ExporterBusiness' }),
       sicCodes: relationship({ ref: 'CompanySicCode' }),
       companyName: text(),
       companyNumber: text(),
@@ -255,12 +260,6 @@ export const lists = {
       hasTradingName: checkbox(),
       companyWebsite: text(),
       phoneNumber: text(),
-    },
-    access: allowAll,
-  }),
-  Business: list({
-    fields: {
-      company: relationship({ ref: 'Company' }),
     },
     access: allowAll,
   }),

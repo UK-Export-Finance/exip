@@ -6,7 +6,7 @@ import countries from '../countries';
 import createApplicationMutation from '../../../graphql/mutations/create-application';
 import getApplicationQuery from '../../../graphql/queries/application';
 import updateApplicationPolicyAndExportMutation from '../../../graphql/mutations/update-application/policy-and-export';
-import updateApplicationExporterCompanytMutation from '../../../graphql/mutations/update-application/exporter-company';
+import updateExporterCompanytMutation from '../../../graphql/mutations/update-application/exporter-company';
 
 const createEmptyApplication = async () => {
   try {
@@ -123,7 +123,7 @@ const application = {
     // TODO: align error message
     exporterCompany: async (companyId: string, companyAddressId: string, update: object) => {
       try {
-        console.info("Updating application's exporter company");
+        console.info('Updating exporter company');
 
         const variables = {
           companyId,
@@ -131,14 +131,14 @@ const application = {
           data: update,
         };
 
-        const response = (await apollo('POST', updateApplicationExporterCompanytMutation, variables)) as ApolloResponse;
+        const response = (await apollo('POST', updateExporterCompanytMutation, variables)) as ApolloResponse;
 
         if (response.errors) {
-          console.error("GraphQL error updating application's exporter company ", response.errors);
+          console.error('GraphQL error updating exporter company ', response.errors);
         }
 
         if (response?.networkError?.result?.errors) {
-          console.error("GraphQL network error updating application's exporter company ", response.networkError.result.errors);
+          console.error('GraphQL network error updating exporter company ', response.networkError.result.errors);
         }
 
         if (response?.data?.updateApplicationCompanyAndCompanyAddress) {
@@ -147,9 +147,9 @@ const application = {
           return data.updateApplicationCompanyAndCompanyAddress;
         }
 
-        throw new Error("Updating application's exporter company");
+        throw new Error('Updating exporter company');
       } catch (err) {
-        throw new Error(`Updating application's exporter company ${err}`);
+        throw new Error(`Updating exporter company ${err}`);
       }
     },
   },
