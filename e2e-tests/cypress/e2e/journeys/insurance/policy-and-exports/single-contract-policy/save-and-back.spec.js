@@ -37,6 +37,8 @@ const {
   },
 } = FIELD_IDS;
 
+const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
 context('Insurance - Policy and exports - Single contract policy page - Save and go back', () => {
   let referenceNumber;
   const date = new Date();
@@ -52,7 +54,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+    task.link().click();
 
     singlePolicyField.input().click();
     submitButton().click();
@@ -80,8 +82,6 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      const task = taskList.prepareApplication.tasks.policyTypeAndExports;
-
       task.status().invoke('text').then((text) => {
         const expected = TASKS.STATUS.IN_PROGRESS;
 
@@ -95,7 +95,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
 
     before(() => {
       // go back to the page via the task list
-      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+      task.link().click();
       submitButton().click();
 
       // enter an invalid date
@@ -115,8 +115,6 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      const task = taskList.prepareApplication.tasks.policyTypeAndExports;
-
       task.status().invoke('text').then((text) => {
         const expected = TASKS.STATUS.IN_PROGRESS;
 
@@ -126,7 +124,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
 
     describe('when going back to the page', () => {
       before(() => {
-        taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+        task.link().click();
         submitButton().click();
       });
 
@@ -156,8 +154,6 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      const task = taskList.prepareApplication.tasks.policyTypeAndExports;
-
       task.status().invoke('text').then((text) => {
         const expected = TASKS.STATUS.IN_PROGRESS;
 
@@ -167,7 +163,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
 
     describe('when going back to the page', () => {
       before(() => {
-        taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+        task.link().click();
         submitButton().click();
       });
 

@@ -1,5 +1,5 @@
 import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
-import mapPeriodMonths from './map-period-months';
+import mapMonthString from './map-month-string';
 import { FIELD_IDS } from '../../constants';
 
 const { POLICY_TYPE, POLICY_LENGTH, SINGLE_POLICY_LENGTH, MULTI_POLICY_LENGTH } = FIELD_IDS;
@@ -16,7 +16,7 @@ const mapPolicyLength = (data: object) => {
   if (isSinglePolicyType(data[POLICY_TYPE])) {
     mapped = {
       [SINGLE_POLICY_LENGTH]: {
-        text: mapPeriodMonths(data[POLICY_LENGTH]),
+        text: mapMonthString(data[POLICY_LENGTH]),
       },
     };
   }
@@ -24,7 +24,7 @@ const mapPolicyLength = (data: object) => {
   if (isMultiPolicyType(data[POLICY_TYPE])) {
     mapped = {
       [MULTI_POLICY_LENGTH]: {
-        text: mapPeriodMonths(data[POLICY_LENGTH]),
+        text: mapMonthString(data[POLICY_LENGTH]),
       },
     };
   }

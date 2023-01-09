@@ -1,49 +1,28 @@
-import { add, getMonth, getYear } from 'date-fns';
 import { post } from '.';
-import { FIELD_IDS, ROUTES } from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
 import { Request, Response } from '../../../../../../types';
-import mapSubmittedData from '../map-submitted-data';
+import mapAndSave from '../../map-and-save';
 import generateValidationErrors from '../validation';
-import save from '../../save-data';
 import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
 
 const {
-  POLICY_AND_EXPORTS: {
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-      CREDIT_PERIOD_WITH_BUYER,
-      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-    },
-  },
-} = FIELD_IDS.INSURANCE;
-
-const {
-  INSURANCE: { INSURANCE_ROOT },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
 } = ROUTES;
 
 describe('controllers/insurance/policy-and-export/single-contract-policy/save-and-back', () => {
   let req: Request;
   let res: Response;
 
-  jest.mock('../../save-data');
+  jest.mock('../../map-and-save');
 
-  const mockSavePolicyAndExportData = jest.fn(() => Promise.resolve({}));
-  save.policyAndExport = mockSavePolicyAndExportData;
+  let mockMapAndSave = jest.fn(() => Promise.resolve(true));
+  mapAndSave.policyAndExport = mockMapAndSave;
 
   const refNumber = Number(mockApplication.referenceNumber);
 
-  const date = new Date();
-
-  const mockValidFormBody = {
+  const mockFormBody = {
     _csrf: '1234',
-    [`${REQUESTED_START_DATE}-day`]: '1',
-    [`${REQUESTED_START_DATE}-month`]: getMonth(date),
-    [`${REQUESTED_START_DATE}-year`]: getYear(add(date, { years: 1 })),
-    [`${CONTRACT_COMPLETION_DATE}-day`]: '1',
-    [`${CONTRACT_COMPLETION_DATE}-month`]: getMonth(date),
-    [`${CONTRACT_COMPLETION_DATE}-year`]: getYear(add(date, { years: 1, months: 6 })),
-    [TOTAL_CONTRACT_VALUE]: '150000',
-    [CREDIT_PERIOD_WITH_BUYER]: 'Example',
+    mock: true,
   };
 
   beforeEach(() => {
@@ -52,64 +31,36 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
 
     res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
+
+    req.body = mockFormBody;
   });
 
   describe('when the form has data', () => {
-    describe('when the form has validation errors ', () => {
-      beforeEach(() => {
-        req.body = {
-          _csrf: '1234',
-          mockField: true,
-        };
-      });
+    it('should call mapAndSave.policyAndExport with req.body, application and validationErrors', async () => {
+      await post(req, res);
 
-      it('should call save.policyAndExport with application reference number, populated submitted data and validationErrors.errorList', async () => {
-        await post(req, res);
+      const validationErrors = generateValidationErrors(req.body);
 
-        const validationErrors = generateValidationErrors(req.body);
-
-        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, mapSubmittedData(req.body), validationErrors?.errorList);
-      });
-
-      it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
-        await post(req, res);
-
-        const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
+      expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
+      expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(mockFormBody, res.locals.application, validationErrors);
     });
 
-    describe('when the form does NOT have validation errors ', () => {
-      beforeEach(() => {
-        req.body = mockValidFormBody;
-      });
+    it(`should redirect to ${ALL_SECTIONS}`, async () => {
+      await post(req, res);
 
-      it('should call save.policyAndExport with application reference number and populated submitted data', async () => {
-        await post(req, res);
+      const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
 
-        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(save.policyAndExport).toHaveBeenCalledWith(res.locals.application, mapSubmittedData(req.body));
-      });
-
-      it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
-        await post(req, res);
-
-        const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
+      expect(res.redirect).toHaveBeenCalledWith(expected);
     });
   });
 
   describe('when the form does not have any data', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
+    it(`should redirect to ${ALL_SECTIONS}`, async () => {
       req.body = { _csrf: '1234' };
 
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
@@ -128,11 +79,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
   });
 
   describe('api error handling', () => {
-    describe('when save application policyAndExport call does not retun anything', () => {
+    describe('when the mapAndSave call does not return anything', () => {
       beforeEach(() => {
-        req.body = mockValidFormBody;
-
-        save.policyAndExport = jest.fn(() => Promise.resolve());
+        mockMapAndSave = jest.fn(() => Promise.resolve(false));
+        mapAndSave.policyAndExport = mockMapAndSave;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -142,11 +92,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
       });
     });
 
-    describe('when save application policyAndExport call fails', () => {
+    describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
-        req.body = mockValidFormBody;
-
-        save.policyAndExport = jest.fn(() => Promise.reject(new Error('Mock error')));
+        mockMapAndSave = jest.fn(() => Promise.reject(new Error('Mock error')));
+        mapAndSave.policyAndExport = mockMapAndSave;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {

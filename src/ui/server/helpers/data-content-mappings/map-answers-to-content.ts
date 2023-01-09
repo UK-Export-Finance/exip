@@ -3,7 +3,7 @@ import { SUMMARY_ANSWERS } from '../../content-strings';
 import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
 import mapCountry from './map-country';
 import mapCost from './map-cost';
-import mapPeriodMonths from './map-period-months';
+import mapMonthString from './map-month-string';
 import mapPolicyLength from './map-policy-length';
 import { SubmittedDataInsuranceEligibility, SubmittedDataQuoteEligibility } from '../../../types';
 
@@ -76,7 +76,7 @@ const mapAnswersToContent = (answers: SubmittedDataQuoteEligibility | SubmittedD
       text: mapPercentageOfCover(answers[PERCENTAGE_OF_COVER]),
     },
     [CREDIT_PERIOD]: {
-      text: mapPeriodMonths(answers[CREDIT_PERIOD]),
+      text: mapMonthString(answers[CREDIT_PERIOD]),
     },
   };
 

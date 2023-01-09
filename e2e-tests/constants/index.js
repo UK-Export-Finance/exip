@@ -1,5 +1,6 @@
 export * from './api';
-export * from './companies-house-number-examples';
+export * from './application';
+export * from './examples';
 export * from './field-ids';
 export * from './field-values';
 export * from './percentages-of-cover';

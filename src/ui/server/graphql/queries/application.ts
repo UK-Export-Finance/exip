@@ -32,6 +32,11 @@ const applicationQuery = gql`
           contractCompletionDate
           totalValueOfContract
           creditPeriodWithBuyer
+          policyCurrencyCode
+          totalMonthsOfCover
+          totalSalesToBuyer
+          maximumBuyerWillOwe
+          goodsOrServicesDescription
         }
       }
     }

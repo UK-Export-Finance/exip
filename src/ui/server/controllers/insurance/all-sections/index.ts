@@ -5,6 +5,7 @@ import insuranceCorePageVariables from '../../../helpers/page-variables/core/ins
 import generateGroupsAndTasks from '../../../helpers/task-list/generate-groups-and-tasks';
 import generateTaskList from '../../../helpers/task-list';
 import flattenApplicationData from '../../../helpers/flatten-application-data';
+import mapApplicationToFormFields from '../../../helpers/mappings/map-application-to-form-fields';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ALL_SECTIONS;
 
@@ -26,7 +27,7 @@ export const get = (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ALL_SECTIONS,
       BACK_LINK: req.headers.referer,
     }),
-    application,
+    application: mapApplicationToFormFields(application),
     taskListData,
   });
 };

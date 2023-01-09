@@ -1,9 +1,4 @@
 import {
-  add,
-  getMonth,
-  getYear,
-} from 'date-fns';
-import {
   headingCaption,
   heading,
   submitButton,
@@ -21,6 +16,7 @@ import {
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
 import { FIELD_IDS, ROUTES, SUPPORTED_CURRENCIES } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
+import application from '../../../../../fixtures/application';
 
 const { taskList } = partials.insurancePartials;
 
@@ -67,11 +63,10 @@ const goToPageDirectly = (referenceNumber) => {
   });
 };
 
+const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
 context('Insurance - Policy and exports - Single contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
-  const date = new Date();
-  const startDate = add(date, { months: 3 });
-  const endDate = add(startDate, { months: 6 });
 
   before(() => {
     cy.visit(START, {
@@ -83,7 +78,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+    task.link().click();
 
     singlePolicyField.input().click();
     submitButton().click();
@@ -266,18 +261,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
   describe('form submission', () => {
     it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
-      singleContractPolicyPage[REQUESTED_START_DATE].dayInput().type('1');
-      singleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(getMonth(startDate));
-      singleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(getYear(startDate));
-
-      singleContractPolicyPage[CONTRACT_COMPLETION_DATE].dayInput().type('1');
-      singleContractPolicyPage[CONTRACT_COMPLETION_DATE].monthInput().type(getMonth(endDate));
-      singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput().type(getYear(endDate));
-
-      singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().type('10000');
-      singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().type('mock free text');
-
-      submitButton().click();
+      cy.completeAndSubmitSingleContractPolicyForm();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       cy.url().should('eq', expectedUrl);
@@ -292,8 +276,6 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
           },
         });
 
-        const task = taskList.prepareApplication.tasks.policyTypeAndExports;
-
         task.status().invoke('text').then((text) => {
           const expected = TASKS.STATUS.IN_PROGRESS;
 
@@ -306,16 +288,17 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       it('should have the submitted values', () => {
         goToPageDirectly(referenceNumber);
 
-        singleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', '1');
-        singleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', getMonth(startDate));
-        singleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', getYear(startDate));
+        singleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
+        singleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
+        singleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
 
-        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].dayInput().should('have.value', '1');
-        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].monthInput().should('have.value', getMonth(endDate));
-        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput().should('have.value', getYear(endDate));
+        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].dayInput().should('have.value', application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].day);
+        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].monthInput().should('have.value', application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].month);
+        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput().should('have.value', application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].year);
 
-        singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', '10000');
-        singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().should('have.value', 'mock free text');
+        singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', application.POLICY_AND_EXPORTS[TOTAL_CONTRACT_VALUE]);
+        singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().should('have.value', application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
+        singleContractPolicyPage[POLICY_CURRENCY_CODE].inputOptionSelected().contains(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);
       });
     });
   });

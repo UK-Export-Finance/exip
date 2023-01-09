@@ -12,6 +12,7 @@ const INSURANCE_FIELD_IDS = {
     PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
     COMPANIES_HOUSE_NUMBER: 'hasCompaniesHouseNumber',
   },
+  SUBMISSION_DEADLINE: 'submissionDeadline',
   EXPORTER_BUSINESS,
   POLICY_AND_EXPORTS,
 };

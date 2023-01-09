@@ -4,11 +4,11 @@ import { FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
+import { objectHasProperty } from '../../../../helpers/object';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
-import mapSubmittedData from './map-submitted-data';
-import save from '../save-data';
+import mapAndSave from '../map-and-save';
 
 const {
   INSURANCE: {
@@ -86,7 +86,13 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const mappedCurrencies = mapCurrencies(currencies);
+    let mappedCurrencies;
+
+    if (objectHasProperty(application.policyAndExport, POLICY_CURRENCY_CODE)) {
+      mappedCurrencies = mapCurrencies(currencies, application.policyAndExport[POLICY_CURRENCY_CODE]);
+    } else {
+      mappedCurrencies = mapCurrencies(currencies);
+    }
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -153,9 +159,7 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const populatedData = mapSubmittedData(req.body);
-
-    const saveResponse = await save.policyAndExport(application, populatedData);
+    const saveResponse = await mapAndSave.policyAndExport(req.body, application);
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

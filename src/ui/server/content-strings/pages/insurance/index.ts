@@ -9,6 +9,8 @@ const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, 'GBP', 
 
 const ALL_SECTIONS = {
   PAGE_TITLE: 'Apply for UKEF export insurance',
+  DEADLINE_TO_SUBMIT: 'Deadline to submit',
+  REFERENCE_NUMBER: 'Your reference',
 };
 
 const APPLY_OFFLINE = {

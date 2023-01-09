@@ -208,6 +208,10 @@ type PolicyAndExport {
   totalValueOfContract: Int
   creditPeriodWithBuyer: String
   policyCurrencyCode: String
+  totalMonthsOfCover: Int
+  totalSalesToBuyer: Int
+  maximumBuyerWillOwe: Int
+  goodsOrServicesDescription: String
 }
 
 input PolicyAndExportWhereUniqueInput {
@@ -226,6 +230,10 @@ input PolicyAndExportWhereInput {
   totalValueOfContract: IntNullableFilter
   creditPeriodWithBuyer: StringFilter
   policyCurrencyCode: StringFilter
+  totalMonthsOfCover: IntNullableFilter
+  totalSalesToBuyer: IntNullableFilter
+  maximumBuyerWillOwe: IntNullableFilter
+  goodsOrServicesDescription: StringFilter
 }
 
 input StringFilter {
@@ -264,6 +272,10 @@ input PolicyAndExportOrderByInput {
   totalValueOfContract: OrderDirection
   creditPeriodWithBuyer: OrderDirection
   policyCurrencyCode: OrderDirection
+  totalMonthsOfCover: OrderDirection
+  totalSalesToBuyer: OrderDirection
+  maximumBuyerWillOwe: OrderDirection
+  goodsOrServicesDescription: OrderDirection
 }
 
 input PolicyAndExportUpdateInput {
@@ -274,6 +286,10 @@ input PolicyAndExportUpdateInput {
   totalValueOfContract: Int
   creditPeriodWithBuyer: String
   policyCurrencyCode: String
+  totalMonthsOfCover: Int
+  totalSalesToBuyer: Int
+  maximumBuyerWillOwe: Int
+  goodsOrServicesDescription: String
 }
 
 input PolicyAndExportUpdateArgs {
@@ -289,6 +305,10 @@ input PolicyAndExportCreateInput {
   totalValueOfContract: Int
   creditPeriodWithBuyer: String
   policyCurrencyCode: String
+  totalMonthsOfCover: Int
+  totalSalesToBuyer: Int
+  maximumBuyerWillOwe: Int
+  goodsOrServicesDescription: String
 }
 
 type Country {

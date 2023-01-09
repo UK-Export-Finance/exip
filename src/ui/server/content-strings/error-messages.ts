@@ -82,6 +82,12 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_ADDRESS]: {
         IS_EMPTY: 'Select whether you use a different trading address for this company',
       },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.WEBSITE]: {
+        INCORRECT_FORMAT: 'Enter your company website in a valid format - like www.example.com',
+      },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
+        INCORRECT_FORMAT: 'Enter a UK telephone number',
+      },
     },
     POLICY_AND_EXPORTS: {
       // TODO move to TYPE_OF_POLICY: {},
@@ -93,12 +99,15 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Enter the credit period you have with your buyer',
           ABOVE_MAXIMUM: 'The credit period you have with your buyer cannot be more than 1000 characters.',
         },
+        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.REQUESTED_START_DATE]: {
+          IS_EMPTY: 'Enter a policy start date in the correct format - for example, 06 11 2023',
+          NOT_A_NUMBER: 'Enter a policy start date in the correct format - for example, 06 11 2023',
+          BEFORE_EARLIEST: 'You cannot enter a policy start date in the past - enter a future date',
+        },
+        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
+          IS_EMPTY: "Select currency you'd like your policy to be issued in",
+        },
         SINGLE: {
-          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.REQUESTED_START_DATE]: {
-            IS_EMPTY: 'Enter a policy start date in the correct format - for example, 06 11 2023',
-            NOT_A_NUMBER: 'Enter a policy start date in the correct format - for example, 06 11 2023',
-            BEFORE_EARLIEST: 'You cannot enter a policy start date in the past - enter a future date',
-          },
           [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
             IS_EMPTY: 'Enter a contract completion date in the correct format - for example, 06 11 2023',
             NOT_A_NUMBER: 'Enter a contract completion date in the correct format - for example, 06 11 2023',
@@ -115,6 +124,33 @@ export const ERROR_MESSAGES = {
             BELOW_MINIMUM: 'Your contract value must be 1 or more',
             ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £499.999. If you need cover for more than this, fill in this form instead.',
           },
+        },
+        MULTIPLE: {
+          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
+            IS_EMPTY: 'Select how many months you want to be insured for',
+          },
+          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
+            IS_EMPTY: 'Enter your estimated sales as a whole number - do not enter decimals',
+            NOT_A_NUMBER: 'Enter your estimated sales as a whole number - do not enter decimals',
+            NOT_A_WHOLE_NUMBER: 'Enter your estimated sales as a whole number - do not enter decimals',
+            BELOW_MINIMUM: 'Your estimated sales must be 1 or more',
+          },
+          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
+            IS_EMPTY: 'Enter maximum the buyer will owe as a whole number - do not enter decimals',
+            NOT_A_NUMBER: 'Enter maximum the buyer will owe as a whole number - do not enter decimals',
+            NOT_A_WHOLE_NUMBER: 'Enter maximum the buyer will owe as a whole number - do not enter decimals',
+            BELOW_MINIMUM: 'The maximum the buyer will owe must be 1 or more',
+            ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £499.999',
+          },
+        },
+      },
+      ABOUT_GOODS_OR_SERVICES: {
+        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
+          IS_EMPTY: 'Enter the goods or services you will supply to the buyer',
+          ABOVE_MAXIMUM: 'The goods or services you will supply to the buyer cannot be more than 1000 characters',
+        },
+        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
+          IS_EMPTY: 'Select the final destination of the goods or services',
         },
       },
     },

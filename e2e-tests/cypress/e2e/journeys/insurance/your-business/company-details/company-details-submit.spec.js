@@ -1,8 +1,10 @@
 import { companyDetails } from '../../../../pages/your-business';
-import { submitButton, yesRadioInput, inlineErrorMessage } from '../../../../pages/shared';
+import { submitButton, inlineErrorMessage } from '../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import partials from '../../../../partials';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import {
+  ROUTES, FIELD_IDS, INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
+} from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const {
@@ -13,6 +15,8 @@ const {
     YOUR_COMPANY: {
       TRADING_NAME,
       TRADING_ADDRESS,
+      WEBSITE,
+      PHONE_NUMBER,
     },
   },
 } = FIELD_IDS.INSURANCE;
@@ -54,9 +58,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   describe('all page errors', () => {
-    it('should display validation errors if trading name, address questions and companies house input are not answered', () => {
+    it('should display validation errors if required inputs are not correctly answered', () => {
+      companyDetails.companyWebsite().type(WEBSITE_EXAMPLES.INVALID);
+      companyDetails.phoneNumber().type(INVALID_PHONE_NUMBERS.LANDLINE_LONG);
       submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 3);
+      partials.errorSummaryListItems().should('have.length', 5);
 
       partials.errorSummaryListItems().first().invoke('text')
         .then((text) => {
@@ -72,11 +78,16 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         .then((text) => {
           expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
         });
-    });
 
-    it('should focus to the companies house input section when clicking the companies house error', () => {
-      partials.errorSummaryListItemLinks().first().click();
-      companyDetails.companiesHouseSearch().first().should('have.focus');
+      partials.errorSummaryListItems().eq(3).invoke('text')
+        .then((text) => {
+          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
+        });
+
+      partials.errorSummaryListItems().eq(4).invoke('text')
+        .then((text) => {
+          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT);
+        });
     });
 
     it('should display the validation error for companies house input in companies house section', () => {
@@ -86,11 +97,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         });
     });
 
-    it('should focus to the trading name section when clicking the error', () => {
-      partials.errorSummaryListItemLinks().eq(1).click();
-      yesRadioInput().first().should('have.focus');
-    });
-
     it('should display the validation error for trading name in radio error summary', () => {
       inlineErrorMessage().first().invoke('text')
         .then((text) => {
@@ -98,15 +104,24 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         });
     });
 
-    it('should focus to the trading address section when clicking the error', () => {
-      partials.errorSummaryListItemLinks().eq(2).click();
-      yesRadioInput().eq(1).should('have.focus');
-    });
-
     it('should display the validation error for trading address in radio error summary', () => {
       inlineErrorMessage().eq(1).invoke('text')
         .then((text) => {
           expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY}`);
+        });
+    });
+
+    it('should display the validation error for company website in company website section', () => {
+      companyDetails.companyWebsiteError().invoke('text')
+        .then((text) => {
+          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT}`);
+        });
+    });
+
+    it('should display the validation error for phone number in phone number section', () => {
+      companyDetails.phoneNumberError().invoke('text')
+        .then((text) => {
+          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT}`);
         });
     });
 

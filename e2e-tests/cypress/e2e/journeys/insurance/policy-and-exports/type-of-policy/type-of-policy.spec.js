@@ -28,7 +28,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
 const FIELD_ID = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
 
 const singlePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID].single;
-const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID].multi;
+const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID].multiple;
 
 const { taskList } = partials.insurancePartials;
 
@@ -40,6 +40,8 @@ const goToPageDirectly = (referenceNumber) => {
     },
   });
 };
+
+const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 context('Insurance - Policy and exports - Type of policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
@@ -54,7 +56,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+    task.link().click();
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
@@ -234,12 +236,12 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     });
 
     describe('when submitting the answer as `multiple`', () => {
-      it(`should redirect to ${POLICY_AND_EXPORTS.MULTI_CONTRACT_POLICY}`, () => {
+      it(`should redirect to ${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, () => {
         multiplePolicyField.input().click();
 
         submitButton().click();
 
-        const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.MULTI_CONTRACT_POLICY}`;
+        const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 
         cy.url().should('eq', expected);
       });
@@ -261,8 +263,6 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
             password: Cypress.config('basicAuthSecret'),
           },
         });
-
-        const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
         task.status().invoke('text').then((text) => {
           const expected = TASKS.STATUS.IN_PROGRESS;

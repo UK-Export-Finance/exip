@@ -50,6 +50,10 @@ model PolicyAndExport {
   totalValueOfContract             Int?
   creditPeriodWithBuyer            String        @default("")
   policyCurrencyCode               String        @default("")
+  totalMonthsOfCover               Int?
+  totalSalesToBuyer                Int?
+  maximumBuyerWillOwe              Int?
+  goodsOrServicesDescription       String        @default("")
   from_Application_policyAndExport Application[] @relation("Application_policyAndExport")
 
   @@index([applicationId])

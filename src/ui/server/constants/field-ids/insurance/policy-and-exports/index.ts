@@ -18,7 +18,15 @@ const POLICY_AND_EXPORTS = {
       CONTRACT_COMPLETION_DATE: 'contractCompletionDate',
       TOTAL_CONTRACT_VALUE: 'totalValueOfContract',
     },
-    MULTI: {},
+    MULTIPLE: {
+      TOTAL_MONTHS_OF_COVER: 'totalMonthsOfCover',
+      TOTAL_SALES_TO_BUYER: 'totalSalesToBuyer',
+      MAXIMUM_BUYER_WILL_OWE: 'maximumBuyerWillOwe',
+    },
+  },
+  ABOUT_GOODS_OR_SERVICES: {
+    DESCRIPTION: 'goodsOrServicesDescription',
+    FINAL_DESTINATION: 'goodsOrServicesDestinationIsoCode',
   },
 };
 
