@@ -84,14 +84,12 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
       });
 
       describe('when there countries response is an empty array', () => {
-        // beforeEach(() => {
-        //   getCountriesSpy = jest.fn(() => Promise.resolve([]));
-        //   api.external.getCountries = getCountriesSpy;
-        // });
-
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        beforeEach(() => {
           getCountriesSpy = jest.fn(() => Promise.resolve([]));
           api.external.getCountries = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
