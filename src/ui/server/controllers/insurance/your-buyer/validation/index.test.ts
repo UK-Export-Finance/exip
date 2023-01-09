@@ -1,4 +1,4 @@
-import yourBuyerDetailsValidation from './yourBuyerDetailsValidation';
+import yourBuyerDetailsValidation from '.';
 import validationRules from './rules/rules';
 import combineValidationRules from '../../../../helpers/combine-validation-rules';
 

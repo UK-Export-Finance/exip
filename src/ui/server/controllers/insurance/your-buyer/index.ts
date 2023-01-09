@@ -4,7 +4,7 @@ import api from '../../../api';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import { mapCountriesSelect } from '../../../helpers/mappings/map-countries-select';
-import yourBuyerDetailsValidation from './validation/yourBuyerDetailsValidation';
+import yourBuyerDetailsValidation from './validation';
 import { FIELDS } from '../../../content-strings/fields/insurance/your-buyer';
 
 export const get = async (req: Request, res: Response) => {
