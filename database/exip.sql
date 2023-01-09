@@ -344,11 +344,11 @@ CREATE TABLE IF NOT EXISTS `PolicyAndExport` (
 	`contractCompletionDate` datetime(3) DEFAULT NULL,
   `policyCurrencyCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `totalValueOfContract` int DEFAULT NULL,
-  `creditPeriodWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `creditPeriodWithBuyer` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	`totalMonthsOfCover` int DEFAULT NULL,
 	`totalSalesToBuyer` int DEFAULT NULL,
 	`maximumBuyerWillOwe` int DEFAULT NULL,
-	`goodsOrServicesDescription` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+	`goodsOrServicesDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `PolicyAndExport_application_idx` (`application`),
   CONSTRAINT `PolicyAndExport_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
