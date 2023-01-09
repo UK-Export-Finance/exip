@@ -28,7 +28,7 @@ import getApplication from './middleware/insurance/get-application';
 
 // @ts-ignore
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 const https = Boolean(process.env.HTTPS || 0);
 
 app.use(seo);
