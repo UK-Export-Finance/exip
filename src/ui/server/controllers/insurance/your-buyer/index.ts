@@ -5,7 +5,7 @@ import { ROUTES, TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import { mapCountriesSelect } from '../../../helpers/mappings/map-countries-select';
 import yourBuyerDetailsValidation from './validation/yourBuyerDetailsValidation';
-import { yourBuyerFiledVariables } from '../../../content-strings/fields/insurance/your-buyer';
+import { FIELDS } from '../../../content-strings/fields/insurance/your-buyer';
 
 const getMappedCountries = async (res: Response) => {
   const countries = await api.external.getCountries();
@@ -22,7 +22,7 @@ export const get = async (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER_DETAILS,
       BACK_LINK: req.headers.referer,
     }),
-    ...yourBuyerFiledVariables,
+    ...FIELDS,
     countries: mappedCountries,
   });
 };
@@ -36,7 +36,7 @@ export const post = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER_DETAILS,
         BACK_LINK: req.headers.referer,
       }),
-      ...yourBuyerFiledVariables,
+      ...FIELDS,
       countries: mappedCountries,
       validationErrors,
     });

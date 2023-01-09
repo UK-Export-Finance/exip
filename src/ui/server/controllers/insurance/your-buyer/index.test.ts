@@ -5,7 +5,7 @@ import { ROUTES, TEMPLATES } from '../../../constants';
 import { get, post } from '.';
 import { mapCountriesSelect } from '../../../helpers/mappings/map-countries-select';
 import { PAGES } from '../../../content-strings';
-import { yourBuyerFiledVariables } from '../../../content-strings/fields/insurance/your-buyer';
+import { FIELDS } from '../../../content-strings/fields/insurance/your-buyer';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 
 describe('controllers/insurance/your-buyer/your-buyer-details', () => {
@@ -50,7 +50,7 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
-        ...yourBuyerFiledVariables,
+        ...FIELDS,
         countries: expectedCountries,
       };
 

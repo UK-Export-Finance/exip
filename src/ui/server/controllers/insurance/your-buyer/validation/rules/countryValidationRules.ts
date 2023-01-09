@@ -1,6 +1,6 @@
 import { RequestBody } from 'express';
 import generateValidationErrors from '../../../../../helpers/validation';
-import { yourBuyerFiledVariables } from '../../../../../content-strings/fields/insurance/your-buyer';
+import { FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
 import { objectHasProperty } from '../../../../../helpers/object';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../constants';
@@ -14,7 +14,7 @@ import { FIELD_IDS } from '../../../../../constants';
  */
 export const countryValidationRules = (formBody: RequestBody, errors: object) => {
   const updatedErrors = errors;
-  const FIELD_ID = yourBuyerFiledVariables.FIELDS.BUYER_COUNTRY.ID;
+  const FIELD_ID = FIELDS.YOUR_BUYER.BUYER_COUNTRY.ID;
   // check if the field is empty.
   if (!objectHasProperty(formBody, FIELD_ID)) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGES[FIELD_IDS.COUNTRY].IS_EMPTY, errors);
