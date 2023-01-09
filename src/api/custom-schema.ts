@@ -43,7 +43,59 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         apiError: Boolean
       }
 
+      type ApplicationCompanyAddress {
+        addressLine1: String
+        addressLine2: String
+        careOf: String
+        locality: String
+        region: String
+        postalCode: String
+        country: String
+        premises: String
+      }
+
+      input ApplicationCompanyAddressInput {
+        addressLine1: String
+        addressLine2: String
+        careOf: String
+        locality: String
+        region: String
+        postalCode: String
+        country: String
+        premises: String
+      }
+
+      type ApplicationCompanyAndCompanyAddress {
+        id: ID!
+        exporterCompanyAddress: ApplicationCompanyAddress
+        companyName: String
+        companyNumber: String
+        dateOfCreation: DateTime
+        hasTradingAddress: Boolean
+        hasTradingName: Boolean
+        companyWebsite: String
+        phoneNumber: String
+      }
+
+      input ApplicationCompanyAndCompanyAddressInput {
+        exporterCompanyAddress: ApplicationCompanyAddressInput
+        companyName: String
+        companyNumber: String
+        dateOfCreation: DateTime
+        hasTradingAddress: Boolean
+        hasTradingName: Boolean
+        companyWebsite: String
+        phoneNumber: String
+      }
+
       type Mutation {
+        """ update application company and company address """
+        updateApplicationCompanyAndCompanyAddress(
+          companyId: ID!
+          companyAddressId: ID!
+          data: ApplicationCompanyAndCompanyAddressInput!
+        ): ApplicationCompanyAndCompanyAddress
+
         """ send an email """
         sendEmail(
           templateId: String!
@@ -60,6 +112,31 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
     `,
     resolvers: {
       Mutation: {
+        updateApplicationCompanyAndCompanyAddress: async (root, variables, context) => {
+          try {
+            console.info('Updating application company and company address for ', variables.companyId);
+
+            const { exporterCompanyAddress, ...exporterCompany } = variables.data;
+
+            await context.db.Company.updateOne({
+              where: { id: variables.id },
+              data: exporterCompany,
+            });
+
+            await context.db.CompanyAddress.updateOne({
+              where: { id: variables.companyAddressId },
+              data: exporterCompanyAddress,
+            });
+
+            return {
+              id: variables.id,
+            };
+          } catch (err) {
+            console.error('Error updating application company and company address', { err });
+
+            throw new Error(`Updating application company and company address ${err}`);
+          }
+        },
         sendEmail: async (root, variables) => {
           try {
             console.info('Calling Notify API. templateId: ', variables.templateId);

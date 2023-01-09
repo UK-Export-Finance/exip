@@ -31,13 +31,21 @@ model Application {
   submissionType                   String?           @default("Manual Inclusion Application")
   policyAndExport                  PolicyAndExport?  @relation("Application_policyAndExport", fields: [policyAndExportId], references: [id])
   policyAndExportId                String?           @map("policyAndExport")
+  exporterCompany                  Company?          @relation("Application_exporterCompany", fields: [exporterCompanyId], references: [id])
+  exporterCompanyId                String?           @map("exporterCompany")
+  exporterCompanyAddress           CompanyAddress?   @relation("Application_exporterCompanyAddress", fields: [exporterCompanyAddressId], references: [id])
+  exporterCompanyAddressId         String?           @map("exporterCompanyAddress")
   from_ReferenceNumber_application ReferenceNumber[] @relation("ReferenceNumber_application")
   from_PolicyAndExport_application PolicyAndExport[] @relation("PolicyAndExport_application")
+  from_CompanyAddress_application  CompanyAddress[]  @relation("CompanyAddress_application")
+  from_Company_application         Company[]         @relation("Company_application")
   from_Eligibility_application     Eligibility[]     @relation("Eligibility_application")
 
   @@index([eligibilityId])
   @@index([referenceNumber])
   @@index([policyAndExportId])
+  @@index([exporterCompanyId])
+  @@index([exporterCompanyAddressId])
 }
 
 model PolicyAndExport {
@@ -56,6 +64,74 @@ model PolicyAndExport {
   from_Application_policyAndExport Application[] @relation("Application_policyAndExport")
 
   @@index([applicationId])
+}
+
+model CompanyAddress {
+  id                                      String        @id @default(cuid())
+  company                                 Company?      @relation("CompanyAddress_company", fields: [companyId], references: [id])
+  companyId                               String?       @map("company")
+  application                             Application?  @relation("CompanyAddress_application", fields: [applicationId], references: [id])
+  applicationId                           String?       @map("application")
+  addressLine1                            String        @default("")
+  addressLine2                            String        @default("")
+  careOf                                  String        @default("")
+  locality                                String        @default("")
+  region                                  String        @default("")
+  postalCode                              String        @default("")
+  country                                 String        @default("")
+  premises                                String        @default("")
+  from_Application_exporterCompanyAddress Application[] @relation("Application_exporterCompanyAddress")
+  from_Company_companyAddress             Company[]     @relation("Company_companyAddress")
+
+  @@index([companyId])
+  @@index([applicationId])
+}
+
+model CompanySicCode {
+  id                    String    @id @default(cuid())
+  code                  String    @default("")
+  company               Company?  @relation("CompanySicCode_company", fields: [companyId], references: [id])
+  companyId             String?   @map("company")
+  from_Company_sicCodes Company[] @relation("Company_sicCodes")
+
+  @@index([companyId])
+}
+
+model Company {
+  id                               String           @id @default(cuid())
+  application                      Application?     @relation("Company_application", fields: [applicationId], references: [id])
+  applicationId                    String?          @map("application")
+  companyAddress                   CompanyAddress?  @relation("Company_companyAddress", fields: [companyAddressId], references: [id])
+  companyAddressId                 String?          @map("companyAddress")
+  business                         Business?        @relation("Company_business", fields: [businessId], references: [id])
+  businessId                       String?          @map("business")
+  sicCodes                         CompanySicCode?  @relation("Company_sicCodes", fields: [sicCodesId], references: [id])
+  sicCodesId                       String?          @map("sicCodes")
+  companyName                      String           @default("")
+  companyNumber                    String           @default("")
+  dateOfCreation                   DateTime?
+  hasTradingAddress                Boolean          @default(false)
+  hasTradingName                   Boolean          @default(false)
+  companyWebsite                   String           @default("")
+  phoneNumber                      String           @default("")
+  from_Application_exporterCompany Application[]    @relation("Application_exporterCompany")
+  from_CompanyAddress_company      CompanyAddress[] @relation("CompanyAddress_company")
+  from_CompanySicCode_company      CompanySicCode[] @relation("CompanySicCode_company")
+  from_Business_company            Business[]       @relation("Business_company")
+
+  @@index([applicationId])
+  @@index([companyAddressId])
+  @@index([businessId])
+  @@index([sicCodesId])
+}
+
+model Business {
+  id                    String    @id @default(cuid())
+  company               Company?  @relation("Business_company", fields: [companyId], references: [id])
+  companyId             String?   @map("company")
+  from_Company_business Company[] @relation("Company_business")
+
+  @@index([companyId])
 }
 
 model Country {

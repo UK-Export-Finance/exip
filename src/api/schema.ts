@@ -30,7 +30,10 @@ export const lists = {
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA,
       }),
       policyAndExport: relationship({ ref: 'PolicyAndExport' }),
+      exporterCompany: relationship({ ref: 'Company' }),
+      exporterCompanyAddress: relationship({ ref: 'CompanyAddress' }),
     },
+    // TODO: add logs to the hooks
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
         if (operation === 'create') {
@@ -67,6 +70,34 @@ export const lists = {
               },
             };
 
+            // generate and attach a new `exporter company` relationship
+            const { id: exporterCompanyId } = await context.db.Company.createOne({
+              data: {},
+            });
+
+            modifiedData.exporterCompany = {
+              connect: {
+                id: exporterCompanyId,
+              },
+            };
+
+            // generate and attach a new `exporter company address` relationship
+            const { id: exporterCompanyAddressId } = await context.db.CompanyAddress.createOne({
+              data: {
+                company: {
+                  connect: {
+                    id: exporterCompanyId,
+                  },
+                },
+              },
+            });
+
+            modifiedData.exporterCompanyAddress = {
+              connect: {
+                id: exporterCompanyAddressId,
+              },
+            };
+
             // add dates
             const now = new Date();
             modifiedData.createdAt = now;
@@ -89,10 +120,11 @@ export const lists = {
       afterOperation: async ({ operation, item, context }) => {
         if (operation === 'create') {
           try {
-            console.info('Adding application ID to reference number entry');
+            console.info('Adding application ID to relationships');
 
             const applicationId = item.id;
-            const { referenceNumber, eligibilityId, policyAndExportId } = item;
+
+            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterCompanyAddressId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -106,7 +138,7 @@ export const lists = {
               },
             });
 
-            // add the application ID to the elgibility entry.
+            // add the application ID to the eligibility entry.
             await context.db.Eligibility.updateOne({
               where: { id: eligibilityId },
               data: {
@@ -129,8 +161,32 @@ export const lists = {
                 },
               },
             });
+
+            // add the application ID to the exporter company entry.
+            await context.db.Company.updateOne({
+              where: { id: exporterCompanyId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId,
+                  },
+                },
+              },
+            });
+
+            // add the application ID to the exporter company address entry.
+            await context.db.CompanyAddress.updateOne({
+              where: { id: exporterCompanyAddressId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId,
+                  },
+                },
+              },
+            });
           } catch (err) {
-            console.error('Error adding an application ID to reference number entry ', { err });
+            console.error('Error adding an application ID to relationships ', { err });
 
             return err;
           }
@@ -164,6 +220,50 @@ export const lists = {
     },
     access: allowAll,
   },
+  CompanyAddress: list({
+    fields: {
+      company: relationship({ ref: 'Company' }),
+      application: relationship({ ref: 'Application' }),
+      addressLine1: text(),
+      addressLine2: text(),
+      careOf: text(),
+      locality: text(),
+      region: text(),
+      postalCode: text(),
+      country: text(),
+      premises: text(),
+    },
+    access: allowAll,
+  }),
+  CompanySicCode: {
+    fields: {
+      code: text(),
+      company: relationship({ ref: 'Company' }),
+    },
+    access: allowAll,
+  },
+  Company: list({
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      companyAddress: relationship({ ref: 'CompanyAddress' }),
+      business: relationship({ ref: 'Business' }),
+      sicCodes: relationship({ ref: 'CompanySicCode' }),
+      companyName: text(),
+      companyNumber: text(),
+      dateOfCreation: timestamp(),
+      hasTradingAddress: checkbox(),
+      hasTradingName: checkbox(),
+      companyWebsite: text(),
+      phoneNumber: text(),
+    },
+    access: allowAll,
+  }),
+  Business: list({
+    fields: {
+      company: relationship({ ref: 'Company' }),
+    },
+    access: allowAll,
+  }),
   Country: list({
     fields: {
       isoCode: text({
