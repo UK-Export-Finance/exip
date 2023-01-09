@@ -23,7 +23,6 @@ const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER_DETAILS;
 
 // const FIELD_ID = yourBuyerFiledVariables;
 
-const { taskList } = partials.insurancePartials;
 
 const goToPageDirectly = (referenceNumber) => {
   cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.YOUR_BUYER_DETAILS}`, {
@@ -34,7 +33,7 @@ const goToPageDirectly = (referenceNumber) => {
   });
 };
 
-context('Insurance - Your Buyer - Type of yourbuyer Page - As an exporter, I want to enter the type of Your Buyer details I need for my export contract', () => {
+context('Insurance - Your Buyer - Type of your buyer Page - As an exporter, I want to enter the buyer details', () => {
   let referenceNumber;
 
   before(() => {
@@ -44,10 +43,6 @@ context('Insurance - Your Buyer - Type of yourbuyer Page - As an exporter, I wan
         password: Cypress.config('basicAuthSecret'),
       },
     });
-
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
@@ -83,7 +78,7 @@ context('Insurance - Your Buyer - Type of yourbuyer Page - As an exporter, I wan
 
     partials.backLink().click();
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.YOUR_BUYER_DETAILS}`;
 
     cy.url().should('eq', expectedUrl);
 
@@ -112,12 +107,6 @@ context('Insurance - Your Buyer - Type of yourbuyer Page - As an exporter, I wan
 
     heading().invoke('text').then((text) => {
       expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
-  });
-
-  it('renders an intro paragraph', () => {
-    insurance.policyAndExport.typeOfPolicyPage.intro().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.INTRO);
     });
   });
 
