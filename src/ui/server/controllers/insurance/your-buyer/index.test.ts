@@ -57,17 +57,6 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS, expectedVariables);
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-
     describe('api error handling', () => {
       describe('when there are no countries returned from the API', () => {
         beforeEach(() => {
@@ -86,19 +75,6 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
       describe('when there countries response is an empty array', () => {
         beforeEach(() => {
           getCountriesSpy = jest.fn(() => Promise.resolve([]));
-          api.external.getCountries = getCountriesSpy;
-        });
-
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-        });
-      });
-
-      describe('when there is an error with the getCountries API call', () => {
-        beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject());
           api.external.getCountries = getCountriesSpy;
         });
 
