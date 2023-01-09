@@ -35,10 +35,6 @@
 
         {% set class = "govuk-form-group" %}
 
-        {% if validationErrors.errorList[FIELD_ID] %}
-          {% set class = "govuk-form-group govuk-form-group--error" %}
-        {% endif %}
-
         {{ govukSelect({
           id: FIELDS.BUYER_COUNTRY.ID,
           name: FIELDS.BUYER_COUNTRY.ID,
