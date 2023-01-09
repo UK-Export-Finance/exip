@@ -57,14 +57,13 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS, expectedVariables);
     });
 
-    describe.skip('when there is no application', () => {
-      // beforeEach(() => {
-      //   res.locals = { csrfToken: '1234' };
-      // });
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        res.locals = { csrfToken: '1234' };
+      });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
-        res.locals = { csrfToken: '' };
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });
     });
@@ -100,14 +99,12 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
       });
 
       describe('when there is an error with the getCountries API call', () => {
-        // beforeEach(() => {
-        //   getCountriesSpy = jest.fn(() => Promise.reject());
-        //   api.external.getCountries = getCountriesSpy;
-        // });
-
-        it.skip(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        beforeEach(() => {
           getCountriesSpy = jest.fn(() => Promise.reject());
           api.external.getCountries = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
