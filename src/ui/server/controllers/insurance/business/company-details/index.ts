@@ -5,6 +5,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import companiesHouseSearch from './helpers/companies-house-search.helper';
 import companyDetailsValidation from './validation/company-details';
+import mapAndSave from '../map-and-save';
 
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 
@@ -159,9 +160,27 @@ const postCompanyDetailsSaveAndBack = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
+    const { body } = req;
+    // runs companiesHouse validation and api call first for companiesHouse input
+    const response = await companiesHouseSearch(body);
+    let { validationErrors } = response;
+    const { company } = response;
+
+    // run validation on other fields on page
+    validationErrors = companyDetailsValidation(body, validationErrors);
+
+    // body for update containing companies house info and request body
+    const updateBody = {
+      ...body,
+      ...company,
+    };
+
+    // runs save and go back commmand
+    await mapAndSave.companyDetailsSave(updateBody, application, validationErrors);
+    // redirect to all sections page
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (error) {
-    console.error('Error posting company details', { error });
+    console.error('Error posting save and back company details', { error });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };
@@ -219,6 +238,9 @@ const post = async (req: Request, res: Response) => {
         submittedValues,
       });
     }
+
+    // if no errors, then runs save api call to db
+    await mapAndSave.companyDetailsSave(req.body, application);
 
     return res.redirect(NATURE_OF_BUSINESS);
   } catch (error) {

@@ -1,8 +1,31 @@
+import Joi from 'joi';
 import { PhoneNumberUtil } from 'google-libphonenumber';
 import generateValidationErrors from '../../helpers/validation';
 import { DEFAULT_COUNTRY_UK } from '../../constants';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
+
+const pattern = '^[0-9-)(+— ]*$';
+
+/**
+ * validates phone number is valid and returns a boolean
+ * @param {string} phoneNumber
+ * @returns {Boolean}
+ */
+const phoneNumberValidity = (phoneNumber: string) => phoneUtil.isValidNumberForRegion(phoneUtil.parse(phoneNumber, DEFAULT_COUNTRY_UK), DEFAULT_COUNTRY_UK);
+
+/**
+ * joi phone using regex to ensure only numbers and specified special characters are in the string
+ * @param {string} phoneNumber
+ * @returns {Boolean}
+ */
+const phoneNumberValidation = (phoneNumber: string) => {
+  const schema = Joi.string().regex(RegExp(pattern)).required();
+
+  const validation = schema.validate(phoneNumber);
+
+  return validation.error;
+};
 
 /**
  * validates phone number is only from the UK and is a valid phone number
@@ -17,10 +40,13 @@ const validatePhoneNumber = (phoneNumber: string, fieldId: string, errorMessage:
   let updatedErrors = errors;
 
   // if not valid for UK, then returns validation error
-  if (!phoneUtil.isValidNumberForRegion(phoneUtil.parse(phoneNumber, DEFAULT_COUNTRY_UK), DEFAULT_COUNTRY_UK)) {
+  try {
+    if (!phoneNumberValidity(phoneNumber) || phoneNumberValidation(phoneNumber)) {
+      updatedErrors = generateValidationErrors(fieldId, errorMessage, updatedErrors);
+      return updatedErrors;
+    }
+  } catch {
     updatedErrors = generateValidationErrors(fieldId, errorMessage, updatedErrors);
-
-    return updatedErrors;
   }
 
   return updatedErrors;

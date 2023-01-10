@@ -180,5 +180,37 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
           });
       });
     });
+
+    describe('special characters in mobile number', () => {
+      it('should display validation errors', () => {
+        completeAllFields(INVALID_PHONE_NUMBERS.MOBILE_SPECIAL_CHAR);
+
+        partials.errorSummaryListItems().should('have.length', 1);
+        partials.errorSummaryListItems().first().invoke('text')
+          .then((text) => {
+            expect(text.trim()).equal(errorMessage);
+          });
+        companyDetails.phoneNumberError().invoke('text')
+          .then((text) => {
+            expect(text.trim()).equal(`Error: ${errorMessage}`);
+          });
+      });
+    });
+
+    describe('too short a number with special chars', () => {
+      it('should display validation errors', () => {
+        completeAllFields(INVALID_PHONE_NUMBERS.TOO_SHORT);
+
+        partials.errorSummaryListItems().should('have.length', 1);
+        partials.errorSummaryListItems().first().invoke('text')
+          .then((text) => {
+            expect(text.trim()).equal(errorMessage);
+          });
+        companyDetails.phoneNumberError().invoke('text')
+          .then((text) => {
+            expect(text.trim()).equal(`Error: ${errorMessage}`);
+          });
+      });
+    });
   });
 });

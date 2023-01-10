@@ -68,6 +68,27 @@ describe('shared-validation/phone-number', () => {
 
       expect(result).toEqual(expected);
     });
+
+    it('should display error entering just 2 digits', () => {
+      const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.TOO_SHORT, fieldId, errorMessage, errors);
+      const expected = generateValidationErrors(fieldId, errorMessage);
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should display error entering just 2 digits with a special character', () => {
+      const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR, fieldId, errorMessage, errors);
+      const expected = generateValidationErrors(fieldId, errorMessage);
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should display error entering mobile number with a special character', () => {
+      const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.MOBILE_SPECIAL_CHAR, fieldId, errorMessage, errors);
+      const expected = generateValidationErrors(fieldId, errorMessage);
+
+      expect(result).toEqual(expected);
+    });
   });
 
   describe('without errors', () => {
