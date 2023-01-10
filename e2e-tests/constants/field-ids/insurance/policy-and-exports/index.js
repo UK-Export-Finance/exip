@@ -26,6 +26,6 @@ export const POLICY_AND_EXPORTS = {
   },
   ABOUT_GOODS_OR_SERVICES: {
     DESCRIPTION: 'goodsOrServicesDescription',
-    FINAL_DESTINATION: 'goodsOrServicesDestinationIsoCode',
+    FINAL_DESTINATION: 'finalDestinationCountryCode',
   },
 };

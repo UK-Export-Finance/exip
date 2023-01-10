@@ -233,13 +233,8 @@ var lists = {
       totalMonthsOfCover: (0, import_fields.integer)(),
       totalSalesToBuyer: (0, import_fields.integer)(),
       maximumBuyerWillOwe: (0, import_fields.integer)(),
-      goodsOrServicesDescription: (0, import_fields.text)({
-        validation: {
-          length: {
-            max: 1e3
-          }
-        }
-      })
+      goodsOrServicesDescription: (0, import_fields.text)(),
+      finalDestinationCountryCode: (0, import_fields.text)()
     },
     access: import_access.allowAll
   },

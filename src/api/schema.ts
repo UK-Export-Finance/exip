@@ -218,6 +218,7 @@ export const lists = {
       totalSalesToBuyer: integer(),
       maximumBuyerWillOwe: integer(),
       goodsOrServicesDescription: text(),
+      finalDestinationCountryCode: text(),
     },
     access: allowAll,
   },

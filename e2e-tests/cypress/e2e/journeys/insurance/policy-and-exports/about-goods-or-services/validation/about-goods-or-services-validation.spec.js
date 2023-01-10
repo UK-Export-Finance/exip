@@ -16,7 +16,7 @@ const { INSURANCE } = ROUTES;
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
+      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     },
   },
 } = FIELD_IDS;
@@ -67,12 +67,17 @@ context('Insurance - Policy and exports - About goods or services - form validat
 
     partials.errorSummaryListItems().should('exist');
 
-    const TOTAL_REQUIRED_FIELDS = 1;
+    const TOTAL_REQUIRED_FIELDS = 2;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
     checkText(
       partials.errorSummaryListItems().eq(0),
       ABOUT_ERROR_MESSAGES[DESCRIPTION].IS_EMPTY,
+    );
+
+    checkText(
+      partials.errorSummaryListItems().eq(1),
+      ABOUT_ERROR_MESSAGES[FINAL_DESTINATION].IS_EMPTY,
     );
   });
 });

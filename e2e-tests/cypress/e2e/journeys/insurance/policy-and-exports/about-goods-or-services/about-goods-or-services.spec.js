@@ -17,6 +17,7 @@ import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-st
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
+import countries from '../../../../../fixtures/countries';
 
 const { taskList } = partials.insurancePartials;
 
@@ -40,7 +41,7 @@ const {
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
+      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     },
   },
 } = FIELD_IDS;
@@ -165,6 +166,20 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     field.input().should('exist');
   });
 
+  it('renders `final destination` label and input with disabled first input', () => {
+    const fieldId = FINAL_DESTINATION;
+    const field = aboutGoodsOrServicesPage[fieldId];
+
+    field.label().should('exist');
+    field.label().invoke('text').then((text) => {
+      expect(text.trim()).equal(FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
+    });
+
+    field.input().should('exist');
+
+    field.inputFirstOption().should('be.disabled');
+  });
+
   it('renders a submit button', () => {
     submitButton().should('exist');
 
@@ -211,6 +226,12 @@ context('Insurance - Policy and exports - About goods or services page - As an e
         goToPageDirectly(referenceNumber);
 
         aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.POLICY_AND_EXPORTS[DESCRIPTION]);
+
+        aboutGoodsOrServicesPage[FINAL_DESTINATION].inputOptionSelected().invoke('text').then((text) => {
+          const country = countries.find((c) => c.isoCode === application.POLICY_AND_EXPORTS[FINAL_DESTINATION]);
+
+          expect(text.trim()).equal(country.name);
+        });
       });
     });
   });
