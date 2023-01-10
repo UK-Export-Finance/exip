@@ -1,28 +1,10 @@
-import { CisCountry } from '../../../types';
+import mockCisCountries from '../../test-mocks/mock-cis-countries';
 import { mapCountriesSelect } from './map-countries-select';
 
 describe('server/helpers/mappings/map-countries-select', () => {
-  const mockCountries = [
-    {
-      marketName: 'Abu Dhabi',
-      isoCode: 'XAD',
-      shortTermCoverAvailabilityDesc: 'A',
-      ESRAClasificationDesc: 'B',
-      NBIIssue: 'C',
-    },
-    {
-      marketName: 'Algeria',
-      isoCode: 'DZA',
-      oecdRiskCategory: 2,
-      shortTermCoverAvailabilityDesc: 'D',
-      ESRAClasificationDesc: 'E',
-      NBIIssue: 'F',
-    },
-  ] as Array<CisCountry>;
-
-  describe('getSupportedCurrencies', () => {
-    it('should only return supported currencies (GBP, EUR, USD)', () => {
-      const result = mapCountriesSelect(mockCountries);
+  describe('getCountries', () => {
+    it('should return countries (XAD, DZA, EZY)', () => {
+      const result = mapCountriesSelect(mockCisCountries);
 
       const expected = [
         {
@@ -38,9 +20,17 @@ describe('server/helpers/mappings/map-countries-select', () => {
           text: 'Algeria',
           value: 'DZA',
         },
+        {
+          text: 'Egypt',
+          value: 'EGY',
+        },
+        {
+          text: 'Gabon',
+          value: 'GAB',
+        },
       ];
 
-      expect(result[0]).toEqual(expected[0]);
+      expect(result).toEqual(expected);
     });
   });
 });
