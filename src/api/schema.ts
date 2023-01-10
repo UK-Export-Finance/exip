@@ -220,12 +220,6 @@ export const lists = {
     },
     access: allowAll,
   },
-  CompanySicCode: {
-    fields: {
-      code: text(),
-    },
-    access: allowAll,
-  },
   ExporterBusiness: list({
     fields: {
       company: relationship({ ref: 'ExporterCompany' }),
@@ -252,7 +246,7 @@ export const lists = {
       application: relationship({ ref: 'Application' }),
       exporterCompanyAddress: relationship({ ref: 'ExporterCompanyAddress' }),
       business: relationship({ ref: 'ExporterBusiness' }),
-      sicCodes: relationship({ ref: 'CompanySicCode' }),
+      sicCodes: relationship({ ref: 'ExporterCompanySicCode' }),
       companyName: text(),
       companyNumber: text(),
       dateOfCreation: timestamp(),
@@ -263,6 +257,12 @@ export const lists = {
     },
     access: allowAll,
   }),
+  ExporterCompanySicCode: {
+    fields: {
+      code: text(),
+    },
+    access: allowAll,
+  },
   Country: list({
     fields: {
       isoCode: text({

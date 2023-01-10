@@ -52,17 +52,6 @@ CREATE TABLE IF NOT EXISTS `Application` (
 
 
 
-# Dump of table CompanySicCode
-# ------------------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS `CompanySicCode` (
-  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-
 # Dump of table Country
 # ------------------------------------------------------------
 
@@ -399,6 +388,17 @@ CREATE TABLE IF NOT EXISTS `ExporterCompanyAddress` (
   KEY `ExporterCompanyAddress_application_idx` (`application`),
   CONSTRAINT `ExporterCompanyAddress_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `ExporterCompanyAddress_exporterCompany_fkey` FOREIGN KEY (`exporterCompany`) REFERENCES `ExporterCompany` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table ExporterCompanySicCode
+# ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `ExporterCompanySicCode` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

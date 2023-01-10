@@ -89,7 +89,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       }
 
       type Mutation {
-        """ update application company and company address """
+        """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
           companyAddressId: ID!
