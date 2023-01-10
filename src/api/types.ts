@@ -6,6 +6,14 @@ interface ApplicationPolicyAndExport {
   id: string;
 }
 
+interface ApplicationExporterCompany {
+  id: string;
+}
+
+interface ApplicationExporterCompanyAddress {
+  id: string;
+}
+
 interface Application {
   id: string;
   referenceNumber: number;
@@ -13,8 +21,10 @@ interface Application {
   updatedAt: string;
   submissionDeadline: string;
   submissionType: string;
-  policyAndExport: ApplicationPolicyAndExport;
   eligibility: ApplicationEligibility;
+  policyAndExport: ApplicationPolicyAndExport;
+  exporterCompany: ApplicationExporterCompany;
+  exporterCompanyAddress: ApplicationExporterCompanyAddress;
 }
 
 export { Application };

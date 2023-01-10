@@ -81,7 +81,9 @@ var lists = {
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
       }),
-      policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" })
+      policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
+      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
+      exporterCompanyAddress: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress" })
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -109,6 +111,28 @@ var lists = {
                 id: policyAndExportId
               }
             };
+            const { id: exporterCompanyId } = await context.db.ExporterCompany.createOne({
+              data: {}
+            });
+            modifiedData.exporterCompany = {
+              connect: {
+                id: exporterCompanyId
+              }
+            };
+            const { id: exporterCompanyAddressId } = await context.db.ExporterCompanyAddress.createOne({
+              data: {
+                exporterCompany: {
+                  connect: {
+                    id: exporterCompanyId
+                  }
+                }
+              }
+            });
+            modifiedData.exporterCompanyAddress = {
+              connect: {
+                id: exporterCompanyAddressId
+              }
+            };
             const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
@@ -125,9 +149,9 @@ var lists = {
       afterOperation: async ({ operation, item, context }) => {
         if (operation === "create") {
           try {
-            console.info("Adding application ID to reference number entry");
+            console.info("Adding application ID to relationships");
             const applicationId = item.id;
-            const { referenceNumber, eligibilityId, policyAndExportId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterCompanyAddressId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -158,8 +182,28 @@ var lists = {
                 }
               }
             });
+            await context.db.ExporterCompany.updateOne({
+              where: { id: exporterCompanyId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                }
+              }
+            });
+            await context.db.ExporterCompanyAddress.updateOne({
+              where: { id: exporterCompanyAddressId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                }
+              }
+            });
           } catch (err) {
-            console.error("Error adding an application ID to reference number entry ", { err });
+            console.error("Error adding an application ID to relationships ", { err });
             return err;
           }
         }
@@ -196,6 +240,49 @@ var lists = {
           }
         }
       })
+    },
+    access: import_access.allowAll
+  },
+  ExporterBusiness: (0, import_core.list)({
+    fields: {
+      company: (0, import_fields.relationship)({ ref: "ExporterCompany" })
+    },
+    access: import_access.allowAll
+  }),
+  ExporterCompanyAddress: (0, import_core.list)({
+    fields: {
+      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      addressLine1: (0, import_fields.text)(),
+      addressLine2: (0, import_fields.text)(),
+      careOf: (0, import_fields.text)(),
+      locality: (0, import_fields.text)(),
+      region: (0, import_fields.text)(),
+      postalCode: (0, import_fields.text)(),
+      country: (0, import_fields.text)(),
+      premises: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
+  }),
+  ExporterCompany: (0, import_core.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      exporterCompanyAddress: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress" }),
+      business: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
+      sicCodes: (0, import_fields.relationship)({ ref: "ExporterCompanySicCode" }),
+      companyName: (0, import_fields.text)(),
+      companyNumber: (0, import_fields.text)(),
+      dateOfCreation: (0, import_fields.timestamp)(),
+      hasTradingAddress: (0, import_fields.checkbox)(),
+      hasTradingName: (0, import_fields.checkbox)(),
+      companyWebsite: (0, import_fields.text)(),
+      phoneNumber: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
+  }),
+  ExporterCompanySicCode: {
+    fields: {
+      code: (0, import_fields.text)()
     },
     access: import_access.allowAll
   },
@@ -329,7 +416,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
 
       # fields from registered_office_address object
-      type CompanyAddress {
+      type CompaniesHouseCompanyAddress {
         addressLine1: String
         addressLine2: String
         careOf: String
@@ -342,7 +429,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 
       type CompaniesHouseResponse {
         companyName: String
-        registeredOfficeAddress: CompanyAddress
+        registeredOfficeAddress: ExporterCompanyAddress
         companyNumber: String
         dateOfCreation: String
         sicCodes: [String]
@@ -350,7 +437,59 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         apiError: Boolean
       }
 
+      type ExporterCompanyAddress {
+        addressLine1: String
+        addressLine2: String
+        careOf: String
+        locality: String
+        region: String
+        postalCode: String
+        country: String
+        premises: String
+      }
+
+      input ExporterCompanyAddressInput {
+        addressLine1: String
+        addressLine2: String
+        careOf: String
+        locality: String
+        region: String
+        postalCode: String
+        country: String
+        premises: String
+      }
+
+      type ExporterCompanyAndCompanyAddress {
+        id: ID!
+        exporterCompanyAddress: ExporterCompanyAddress
+        companyName: String
+        companyNumber: String
+        dateOfCreation: DateTime
+        hasTradingAddress: Boolean
+        hasTradingName: Boolean
+        companyWebsite: String
+        phoneNumber: String
+      }
+
+      input ExporterCompanyAndCompanyAddressInput {
+        exporterCompanyAddress: ExporterCompanyAddressInput
+        companyName: String
+        companyNumber: String
+        dateOfCreation: DateTime
+        hasTradingAddress: Boolean
+        hasTradingName: Boolean
+        companyWebsite: String
+        phoneNumber: String
+      }
+
       type Mutation {
+        """ update exporter company and company address """
+        updateExporterCompanyAndCompanyAddress(
+          companyId: ID!
+          companyAddressId: ID!
+          data: ExporterCompanyAndCompanyAddressInput!
+        ): ExporterCompanyAndCompanyAddress
+
         """ send an email """
         sendEmail(
           templateId: String!
@@ -367,6 +506,26 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
     `,
   resolvers: {
     Mutation: {
+      updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
+        try {
+          console.info("Updating application exporter company and exporter company address for ", variables.companyId);
+          const { exporterCompanyAddress, ...exporterCompany } = variables.data;
+          await context.db.ExporterCompany.updateOne({
+            where: { id: variables.id },
+            data: exporterCompany
+          });
+          await context.db.ExporterCompanyAddress.updateOne({
+            where: { id: variables.companyAddressId },
+            data: exporterCompanyAddress
+          });
+          return {
+            id: variables.id
+          };
+        } catch (err) {
+          console.error("Error updating application exporter company and exporter company address", { err });
+          throw new Error(`Updating application exporter company and exporter company address ${err}`);
+        }
+      },
       sendEmail: async (root, variables) => {
         try {
           console.info("Calling Notify API. templateId: ", variables.templateId);
