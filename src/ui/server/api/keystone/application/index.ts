@@ -120,7 +120,6 @@ const application = {
         throw new Error(`Updating application policy and export ${err}`);
       }
     },
-    // TODO: align error message
     exporterCompany: async (companyId: string, companyAddressId: string, update: object) => {
       try {
         console.info('Updating exporter company');
