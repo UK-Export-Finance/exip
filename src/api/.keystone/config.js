@@ -236,12 +236,6 @@ var lists = {
     },
     access: import_access.allowAll
   },
-  CompanySicCode: {
-    fields: {
-      code: (0, import_fields.text)()
-    },
-    access: import_access.allowAll
-  },
   ExporterBusiness: (0, import_core.list)({
     fields: {
       company: (0, import_fields.relationship)({ ref: "ExporterCompany" })
@@ -268,7 +262,7 @@ var lists = {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       exporterCompanyAddress: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress" }),
       business: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
-      sicCodes: (0, import_fields.relationship)({ ref: "CompanySicCode" }),
+      sicCodes: (0, import_fields.relationship)({ ref: "ExporterCompanySicCode" }),
       companyName: (0, import_fields.text)(),
       companyNumber: (0, import_fields.text)(),
       dateOfCreation: (0, import_fields.timestamp)(),
@@ -279,6 +273,12 @@ var lists = {
     },
     access: import_access.allowAll
   }),
+  ExporterCompanySicCode: {
+    fields: {
+      code: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
+  },
   Country: (0, import_core.list)({
     fields: {
       isoCode: (0, import_fields.text)({
@@ -476,7 +476,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
 
       type Mutation {
-        """ update application company and company address """
+        """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
           companyAddressId: ID!

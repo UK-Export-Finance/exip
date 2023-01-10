@@ -336,41 +336,6 @@ input PolicyAndExportCreateInput {
   maximumBuyerWillOwe: Int
 }
 
-type CompanySicCode {
-  id: ID!
-  code: String
-}
-
-input CompanySicCodeWhereUniqueInput {
-  id: ID
-}
-
-input CompanySicCodeWhereInput {
-  AND: [CompanySicCodeWhereInput!]
-  OR: [CompanySicCodeWhereInput!]
-  NOT: [CompanySicCodeWhereInput!]
-  id: IDFilter
-  code: StringFilter
-}
-
-input CompanySicCodeOrderByInput {
-  id: OrderDirection
-  code: OrderDirection
-}
-
-input CompanySicCodeUpdateInput {
-  code: String
-}
-
-input CompanySicCodeUpdateArgs {
-  where: CompanySicCodeWhereUniqueInput!
-  data: CompanySicCodeUpdateInput!
-}
-
-input CompanySicCodeCreateInput {
-  code: String
-}
-
 type ExporterBusiness {
   id: ID!
   company: ExporterCompany
@@ -488,7 +453,7 @@ type ExporterCompany {
   application: Application
   exporterCompanyAddress: ExporterCompanyAddress
   business: ExporterBusiness
-  sicCodes: CompanySicCode
+  sicCodes: ExporterCompanySicCode
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
@@ -510,7 +475,7 @@ input ExporterCompanyWhereInput {
   application: ApplicationWhereInput
   exporterCompanyAddress: ExporterCompanyAddressWhereInput
   business: ExporterBusinessWhereInput
-  sicCodes: CompanySicCodeWhereInput
+  sicCodes: ExporterCompanySicCodeWhereInput
   companyName: StringFilter
   companyNumber: StringFilter
   dateOfCreation: DateTimeNullableFilter
@@ -540,7 +505,7 @@ input ExporterCompanyUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   exporterCompanyAddress: ExporterCompanyAddressRelateToOneForUpdateInput
   business: ExporterBusinessRelateToOneForUpdateInput
-  sicCodes: CompanySicCodeRelateToOneForUpdateInput
+  sicCodes: ExporterCompanySicCodeRelateToOneForUpdateInput
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
@@ -556,9 +521,9 @@ input ExporterBusinessRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input CompanySicCodeRelateToOneForUpdateInput {
-  create: CompanySicCodeCreateInput
-  connect: CompanySicCodeWhereUniqueInput
+input ExporterCompanySicCodeRelateToOneForUpdateInput {
+  create: ExporterCompanySicCodeCreateInput
+  connect: ExporterCompanySicCodeWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -571,7 +536,7 @@ input ExporterCompanyCreateInput {
   application: ApplicationRelateToOneForCreateInput
   exporterCompanyAddress: ExporterCompanyAddressRelateToOneForCreateInput
   business: ExporterBusinessRelateToOneForCreateInput
-  sicCodes: CompanySicCodeRelateToOneForCreateInput
+  sicCodes: ExporterCompanySicCodeRelateToOneForCreateInput
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
@@ -586,9 +551,44 @@ input ExporterBusinessRelateToOneForCreateInput {
   connect: ExporterBusinessWhereUniqueInput
 }
 
-input CompanySicCodeRelateToOneForCreateInput {
-  create: CompanySicCodeCreateInput
-  connect: CompanySicCodeWhereUniqueInput
+input ExporterCompanySicCodeRelateToOneForCreateInput {
+  create: ExporterCompanySicCodeCreateInput
+  connect: ExporterCompanySicCodeWhereUniqueInput
+}
+
+type ExporterCompanySicCode {
+  id: ID!
+  code: String
+}
+
+input ExporterCompanySicCodeWhereUniqueInput {
+  id: ID
+}
+
+input ExporterCompanySicCodeWhereInput {
+  AND: [ExporterCompanySicCodeWhereInput!]
+  OR: [ExporterCompanySicCodeWhereInput!]
+  NOT: [ExporterCompanySicCodeWhereInput!]
+  id: IDFilter
+  code: StringFilter
+}
+
+input ExporterCompanySicCodeOrderByInput {
+  id: OrderDirection
+  code: OrderDirection
+}
+
+input ExporterCompanySicCodeUpdateInput {
+  code: String
+}
+
+input ExporterCompanySicCodeUpdateArgs {
+  where: ExporterCompanySicCodeWhereUniqueInput!
+  data: ExporterCompanySicCodeUpdateInput!
+}
+
+input ExporterCompanySicCodeCreateInput {
+  code: String
 }
 
 type Country {
@@ -839,12 +839,6 @@ type Mutation {
   updatePolicyAndExports(data: [PolicyAndExportUpdateArgs!]!): [PolicyAndExport]
   deletePolicyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
   deletePolicyAndExports(where: [PolicyAndExportWhereUniqueInput!]!): [PolicyAndExport]
-  createCompanySicCode(data: CompanySicCodeCreateInput!): CompanySicCode
-  createCompanySicCodes(data: [CompanySicCodeCreateInput!]!): [CompanySicCode]
-  updateCompanySicCode(where: CompanySicCodeWhereUniqueInput!, data: CompanySicCodeUpdateInput!): CompanySicCode
-  updateCompanySicCodes(data: [CompanySicCodeUpdateArgs!]!): [CompanySicCode]
-  deleteCompanySicCode(where: CompanySicCodeWhereUniqueInput!): CompanySicCode
-  deleteCompanySicCodes(where: [CompanySicCodeWhereUniqueInput!]!): [CompanySicCode]
   createExporterBusiness(data: ExporterBusinessCreateInput!): ExporterBusiness
   createExporterBusinesses(data: [ExporterBusinessCreateInput!]!): [ExporterBusiness]
   updateExporterBusiness(where: ExporterBusinessWhereUniqueInput!, data: ExporterBusinessUpdateInput!): ExporterBusiness
@@ -863,6 +857,12 @@ type Mutation {
   updateExporterCompanies(data: [ExporterCompanyUpdateArgs!]!): [ExporterCompany]
   deleteExporterCompany(where: ExporterCompanyWhereUniqueInput!): ExporterCompany
   deleteExporterCompanies(where: [ExporterCompanyWhereUniqueInput!]!): [ExporterCompany]
+  createExporterCompanySicCode(data: ExporterCompanySicCodeCreateInput!): ExporterCompanySicCode
+  createExporterCompanySicCodes(data: [ExporterCompanySicCodeCreateInput!]!): [ExporterCompanySicCode]
+  updateExporterCompanySicCode(where: ExporterCompanySicCodeWhereUniqueInput!, data: ExporterCompanySicCodeUpdateInput!): ExporterCompanySicCode
+  updateExporterCompanySicCodes(data: [ExporterCompanySicCodeUpdateArgs!]!): [ExporterCompanySicCode]
+  deleteExporterCompanySicCode(where: ExporterCompanySicCodeWhereUniqueInput!): ExporterCompanySicCode
+  deleteExporterCompanySicCodes(where: [ExporterCompanySicCodeWhereUniqueInput!]!): [ExporterCompanySicCode]
   createCountry(data: CountryCreateInput!): Country
   createCountries(data: [CountryCreateInput!]!): [Country]
   updateCountry(where: CountryWhereUniqueInput!, data: CountryUpdateInput!): Country
@@ -891,7 +891,7 @@ type Mutation {
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
 
-  """ update application company and company address """
+  """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
 
   """ send an email """
@@ -925,9 +925,6 @@ type Query {
   policyAndExports(where: PolicyAndExportWhereInput! = {}, orderBy: [PolicyAndExportOrderByInput!]! = [], take: Int, skip: Int! = 0): [PolicyAndExport!]
   policyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
   policyAndExportsCount(where: PolicyAndExportWhereInput! = {}): Int
-  companySicCodes(where: CompanySicCodeWhereInput! = {}, orderBy: [CompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0): [CompanySicCode!]
-  companySicCode(where: CompanySicCodeWhereUniqueInput!): CompanySicCode
-  companySicCodesCount(where: CompanySicCodeWhereInput! = {}): Int
   exporterBusinesses(where: ExporterBusinessWhereInput! = {}, orderBy: [ExporterBusinessOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterBusiness!]
   exporterBusiness(where: ExporterBusinessWhereUniqueInput!): ExporterBusiness
   exporterBusinessesCount(where: ExporterBusinessWhereInput! = {}): Int
@@ -937,6 +934,9 @@ type Query {
   exporterCompanies(where: ExporterCompanyWhereInput! = {}, orderBy: [ExporterCompanyOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterCompany!]
   exporterCompany(where: ExporterCompanyWhereUniqueInput!): ExporterCompany
   exporterCompaniesCount(where: ExporterCompanyWhereInput! = {}): Int
+  exporterCompanySicCodes(where: ExporterCompanySicCodeWhereInput! = {}, orderBy: [ExporterCompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterCompanySicCode!]
+  exporterCompanySicCode(where: ExporterCompanySicCodeWhereUniqueInput!): ExporterCompanySicCode
+  exporterCompanySicCodesCount(where: ExporterCompanySicCodeWhereInput! = {}): Int
   countries(where: CountryWhereInput! = {}, orderBy: [CountryOrderByInput!]! = [], take: Int, skip: Int! = 0): [Country!]
   country(where: CountryWhereUniqueInput!): Country
   countriesCount(where: CountryWhereInput! = {}): Int

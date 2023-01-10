@@ -66,12 +66,6 @@ model PolicyAndExport {
   @@index([applicationId])
 }
 
-model CompanySicCode {
-  id                            String            @id @default(cuid())
-  code                          String            @default("")
-  from_ExporterCompany_sicCodes ExporterCompany[] @relation("ExporterCompany_sicCodes")
-}
-
 model ExporterBusiness {
   id                            String            @id @default(cuid())
   company                       ExporterCompany?  @relation("ExporterBusiness_company", fields: [companyId], references: [id])
@@ -110,7 +104,7 @@ model ExporterCompany {
   exporterCompanyAddressId                    String?                  @map("exporterCompanyAddress")
   business                                    ExporterBusiness?        @relation("ExporterCompany_business", fields: [businessId], references: [id])
   businessId                                  String?                  @map("business")
-  sicCodes                                    CompanySicCode?          @relation("ExporterCompany_sicCodes", fields: [sicCodesId], references: [id])
+  sicCodes                                    ExporterCompanySicCode?  @relation("ExporterCompany_sicCodes", fields: [sicCodesId], references: [id])
   sicCodesId                                  String?                  @map("sicCodes")
   companyName                                 String                   @default("")
   companyNumber                               String                   @default("")
@@ -127,6 +121,12 @@ model ExporterCompany {
   @@index([exporterCompanyAddressId])
   @@index([businessId])
   @@index([sicCodesId])
+}
+
+model ExporterCompanySicCode {
+  id                            String            @id @default(cuid())
+  code                          String            @default("")
+  from_ExporterCompany_sicCodes ExporterCompany[] @relation("ExporterCompany_sicCodes")
 }
 
 model Country {
