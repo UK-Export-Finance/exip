@@ -2,7 +2,7 @@ import { mockReq, mockRes, mockApplication, mockCisCountries } from '../../../te
 import api from '../../../api';
 import { Request, Response } from '../../../../types';
 import { ROUTES, TEMPLATES } from '../../../constants';
-import { get, post } from '.';
+import { get } from '.';
 import { mapCountriesSelect } from '../../../helpers/mappings/map-countries-select';
 import { PAGES } from '../../../content-strings';
 import { FIELDS } from '../../../content-strings/fields/insurance/your-buyer';
@@ -12,7 +12,7 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
   let req: Request;
   let res: Response;
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCisCountries));
-
+  const TEMPLATE = TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS;
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
@@ -28,7 +28,7 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS).toEqual(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS);
+      expect(TEMPLATE).toEqual(TEMPLATE);
     });
   });
 
@@ -52,7 +52,7 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
         countries: expectedCountries,
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
     describe('api error handling', () => {
@@ -81,29 +81,6 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
 
           expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
         });
-      });
-    });
-  });
-
-  describe('post', () => {
-    beforeEach(() => {
-      getCountriesSpy = jest.fn(() => Promise.resolve(mockCisCountries));
-      api.external.getCountries = getCountriesSpy;
-    });
-
-    const validBody = {
-      CountryId: mockCisCountries[0].isoCode,
-    };
-
-    describe.skip('when there are no validation errors', () => {
-      beforeEach(() => {
-        req.body = validBody;
-      });
-
-      it('should redirect to needs_to_redirect_at_do_you_need_broker', async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith('/needs_to_redirect_at_do_you_need_broker');
       });
     });
   });
