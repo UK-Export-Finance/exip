@@ -176,7 +176,12 @@ const postCompanyDetailsSaveAndBack = async (req: Request, res: Response) => {
     };
 
     // runs save and go back commmand
-    await mapAndSave.companyDetailsSave(updateBody, application, validationErrors);
+    const saveResponse = await mapAndSave.companyDetailsSave(updateBody, application, validationErrors);
+
+    if (!saveResponse) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
     // redirect to all sections page
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (error) {
@@ -240,7 +245,11 @@ const post = async (req: Request, res: Response) => {
     }
 
     // if no errors, then runs save api call to db
-    await mapAndSave.companyDetailsSave(req.body, application);
+    const saveResponse = await mapAndSave.companyDetailsSave(req.body, application);
+
+    if (!saveResponse) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
 
     return res.redirect(NATURE_OF_BUSINESS);
   } catch (error) {

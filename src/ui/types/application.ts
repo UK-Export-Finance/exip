@@ -38,10 +38,23 @@ interface ApplicationExporterCompany {
   hasTradingAddress?: boolean;
 }
 
+interface ApplicationExporterCompanyAddress {
+  id: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  careOf?: string;
+  locality?: string;
+  region?: string;
+  postalCode?: string;
+  country?: string;
+  premises?: string;
+}
+
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;
+  exporterCompanyAddress: ApplicationExporterCompanyAddress;
 }
 
 interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, ApplicationPolicyAndExport {

@@ -1,3 +1,4 @@
+import api from '../../../../api';
 import getDataToSave from '../../../../helpers/get-data-to-save';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapSubmittedData from '../map-submitted-data';
@@ -11,13 +12,13 @@ const companyDetails = async (application: Application, formBody: RequestBody, e
   const sanitisedData = sanitiseData(dataToSave);
 
   // send the form data to the API for database update.
-  const policyAndExportId = application.policyAndExport?.id;
-
+  const exporterCompanyId = application.exporterCompany?.id;
+  const exporterCompanyAddressId = application.exporterCompanyAddress?.id;
   try {
-    console.log(sanitisedData, policyAndExportId);
-    // const saveResponse = await api.keystone.application.update.policyAndExport(policyAndExportId, sanitisedData);
-
-    // return saveResponse;
+    console.log(sanitisedData, exporterCompanyId, exporterCompanyAddressId);
+    const saveResponse = await api.keystone.application.update.exporterCompany(exporterCompanyId, exporterCompanyAddressId, sanitisedData);
+    console.log('respponse', saveResponse);
+    return saveResponse;
   } catch (err) {
     throw new Error("Updating application's companyDetails");
   }

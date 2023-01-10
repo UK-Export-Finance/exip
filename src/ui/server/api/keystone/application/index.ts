@@ -131,7 +131,7 @@ const application = {
         };
 
         const response = (await apollo('POST', updateApplicationExporterCompanytMutation, variables)) as ApolloResponse;
-
+        // console.log(response);
         if (response.errors) {
           console.error('GraphQL error updating application exporter company ', response.errors);
         }

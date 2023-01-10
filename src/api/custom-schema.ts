@@ -114,12 +114,13 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       Mutation: {
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
+            console.log(variables);
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);
 
             const { exporterCompanyAddress, ...exporterCompany } = variables.data;
 
             await context.db.ExporterCompany.updateOne({
-              where: { id: variables.id },
+              where: { id: variables.companyId },
               data: exporterCompany,
             });
 

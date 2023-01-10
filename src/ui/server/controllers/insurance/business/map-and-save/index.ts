@@ -13,9 +13,9 @@ const companyDetailsSave = async (formBody: RequestBody, application: Applicatio
         saveResponse = await save.companyDetails(application, formBody);
       }
 
-      // if (!saveResponse) {
-      //   return false;
-      // }
+      if (!saveResponse) {
+        return false;
+      }
 
       return true;
     }

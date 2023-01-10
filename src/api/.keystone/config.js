@@ -233,13 +233,7 @@ var lists = {
       totalMonthsOfCover: (0, import_fields.integer)(),
       totalSalesToBuyer: (0, import_fields.integer)(),
       maximumBuyerWillOwe: (0, import_fields.integer)(),
-      goodsOrServicesDescription: (0, import_fields.text)({
-        validation: {
-          length: {
-            max: 1e3
-          }
-        }
-      })
+      goodsOrServicesDescription: (0, import_fields.text)()
     },
     access: import_access.allowAll
   },
@@ -508,10 +502,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
     Mutation: {
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
+          console.log(variables);
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);
           const { exporterCompanyAddress, ...exporterCompany } = variables.data;
           await context.db.ExporterCompany.updateOne({
-            where: { id: variables.id },
+            where: { id: variables.companyId },
             data: exporterCompany
           });
           await context.db.ExporterCompanyAddress.updateOne({
