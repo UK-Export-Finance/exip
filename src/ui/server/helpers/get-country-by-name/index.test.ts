@@ -3,7 +3,9 @@ import { mockCountries } from '../../test-mocks';
 
 describe('server/helpers/get-country-by-name', () => {
   it('should return a mapped object', () => {
-    const result = getCountryByName(mockCountries, 'Mock B');
+    const mockName = mockCountries[1].name;
+
+    const result = getCountryByName(mockCountries, mockName);
 
     const expected = mockCountries[1];
 
