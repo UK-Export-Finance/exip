@@ -16,7 +16,8 @@ describe('Create an Application', () => {
   beforeAll(async () => {
     application = (await context.query.Application.createOne({
       data: {},
-      query: 'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id } policyAndExport { id }',
+      query:
+        'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id } policyAndExport { id } exporterCompany { id } exporterCompanyAddress { id }',
     })) as Application;
   });
 
@@ -75,6 +76,16 @@ describe('Create an Application', () => {
     expect(typeof application.policyAndExport.id).toEqual('string');
   });
 
+  test('it should have an exporter company id', () => {
+    expect(application.exporterCompany).toBeDefined();
+    expect(typeof application.exporterCompany.id).toEqual('string');
+  });
+
+  test('it should have an exporter company address id', () => {
+    expect(application.exporterCompanyAddress).toBeDefined();
+    expect(typeof application.exporterCompanyAddress.id).toEqual('string');
+  });
+
   test('it should have a default submission type', () => {
     expect(application.submissionType).toEqual(APPLICATION.SUBMISSION_TYPE.MIA);
   });
@@ -108,5 +119,27 @@ describe('Create an Application', () => {
     });
 
     expect(policyAndExport.application.id).toEqual(application.id);
+  });
+
+  test('it should add the application ID to the exporter company entry', async () => {
+    const exporterCompany = await context.query.ExporterCompany.findOne({
+      where: {
+        id: application.exporterCompany.id,
+      },
+      query: 'id application { id }',
+    });
+
+    expect(exporterCompany.application.id).toEqual(application.id);
+  });
+
+  test('it should add the application ID to the exporter company address entry', async () => {
+    const exporterCompanyAddress = await context.query.ExporterCompanyAddress.findOne({
+      where: {
+        id: application.exporterCompanyAddress.id,
+      },
+      query: 'id application { id }',
+    });
+
+    expect(exporterCompanyAddress.application.id).toEqual(application.id);
   });
 });

@@ -22,7 +22,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       }
 
       # fields from registered_office_address object
-      type CompanyAddress {
+      type CompaniesHouseCompanyAddress {
         addressLine1: String
         addressLine2: String
         careOf: String
@@ -35,7 +35,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
 
       type CompaniesHouseResponse {
         companyName: String
-        registeredOfficeAddress: CompanyAddress
+        registeredOfficeAddress: ExporterCompanyAddress
         companyNumber: String
         dateOfCreation: String
         sicCodes: [String]
@@ -43,7 +43,59 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         apiError: Boolean
       }
 
+      type ExporterCompanyAddress {
+        addressLine1: String
+        addressLine2: String
+        careOf: String
+        locality: String
+        region: String
+        postalCode: String
+        country: String
+        premises: String
+      }
+
+      input ExporterCompanyAddressInput {
+        addressLine1: String
+        addressLine2: String
+        careOf: String
+        locality: String
+        region: String
+        postalCode: String
+        country: String
+        premises: String
+      }
+
+      type ExporterCompanyAndCompanyAddress {
+        id: ID!
+        exporterCompanyAddress: ExporterCompanyAddress
+        companyName: String
+        companyNumber: String
+        dateOfCreation: DateTime
+        hasTradingAddress: Boolean
+        hasTradingName: Boolean
+        companyWebsite: String
+        phoneNumber: String
+      }
+
+      input ExporterCompanyAndCompanyAddressInput {
+        exporterCompanyAddress: ExporterCompanyAddressInput
+        companyName: String
+        companyNumber: String
+        dateOfCreation: DateTime
+        hasTradingAddress: Boolean
+        hasTradingName: Boolean
+        companyWebsite: String
+        phoneNumber: String
+      }
+
       type Mutation {
+        """ update exporter company and company address """
+        updateExporterCompanyAndCompanyAddress(
+          companyId: ID!
+          companyAddressId: ID!
+          data: ExporterCompanyAndCompanyAddressInput!
+        ): ExporterCompanyAndCompanyAddress
+
         """ send an email """
         sendEmail(
           templateId: String!
@@ -60,6 +112,31 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
     `,
     resolvers: {
       Mutation: {
+        updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
+          try {
+            console.info('Updating application exporter company and exporter company address for ', variables.companyId);
+
+            const { exporterCompanyAddress, ...exporterCompany } = variables.data;
+
+            await context.db.ExporterCompany.updateOne({
+              where: { id: variables.id },
+              data: exporterCompany,
+            });
+
+            await context.db.ExporterCompanyAddress.updateOne({
+              where: { id: variables.companyAddressId },
+              data: exporterCompanyAddress,
+            });
+
+            return {
+              id: variables.id,
+            };
+          } catch (err) {
+            console.error('Error updating application exporter company and exporter company address', { err });
+
+            throw new Error(`Updating application exporter company and exporter company address ${err}`);
+          }
+        },
         sendEmail: async (root, variables) => {
           try {
             console.info('Calling Notify API. templateId: ', variables.templateId);
