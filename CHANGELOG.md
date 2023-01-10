@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.11](https://github.com/UK-Export-Finance/exip/compare/v1.14.10...v1.14.11) (2023-01-10)
+
+
+### Miscellaneous
+
+* **deps:** bump json5 ([23b7dd9](https://github.com/UK-Export-Finance/exip/commit/23b7dd9c202e64c69a848ccb3ac6c11f72901f52))
+
 ## [1.14.10](https://github.com/UK-Export-Finance/exip/compare/v1.14.9...v1.14.10) (2022-12-12)
 
 
