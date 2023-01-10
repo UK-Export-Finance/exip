@@ -1,5 +1,6 @@
 import { TaskListDataTask, TaskListData } from '../../../../types';
 import { FIELD_IDS, GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
+import { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
 import { TASKS } from '../../../content-strings';
 import { getGroupById, getAllTasksFieldsInAGroup } from '../task-helpers';
 
@@ -22,7 +23,12 @@ const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: Tas
     href: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`,
     title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS,
     id: TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE_AND_EXPORTS,
-    fields: Object.values(FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY),
+    fields: Object.values({
+      ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
+      ...SHARED_CONTRACT_POLICY,
+      ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE,
+      ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
+    }),
     dependencies: allInitialChecksFields,
   };
 

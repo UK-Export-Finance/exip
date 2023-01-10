@@ -2,6 +2,7 @@ import createPrepareApplicationTasks from './prepare-application';
 import { TaskListData } from '../../../../types';
 import createInitialChecksTasks from './initial-checks';
 import { FIELD_IDS, GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
+import { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
 import { TASKS } from '../../../content-strings';
 import { getAllTasksFieldsInAGroup } from '../task-helpers';
 import { mockApplication } from '../../../test-mocks';
@@ -31,7 +32,12 @@ describe('server/helpers/task-list/prepare-application', () => {
       href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`,
       title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS,
       id: TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE_AND_EXPORTS,
-      fields: Object.values(FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY),
+      fields: Object.values({
+        ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
+        ...SHARED_CONTRACT_POLICY,
+        ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE,
+        ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
+      }),
       dependencies: expectedDependencies,
     };
 
