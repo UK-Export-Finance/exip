@@ -1,6 +1,4 @@
 import {
-  headingCaption,
-  heading,
   submitButton,
   saveAndBackButton,
 } from '../../../pages/shared';
@@ -8,17 +6,24 @@ import partials from '../../../partials';
 import {
   BUTTONS,
   LINKS,
-  ORGANISATION,
-  PAGES,
 } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../helpers/get-reference-number';
+import { FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer'
+import { yourBuyerPage } from '../../../pages/insurance/your-buyer';
 
 const { START } = ROUTES.INSURANCE;
 const insuranceStartRoute = START;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER_DETAILS;
+const {
+  INSURANCE: {
+    POLICY_AND_EXPORTS: {
+      TYPE_OF_POLICY,
+    },
+  },
+} = ROUTES;
+
 
 const goToPageDirectly = (referenceNumber) => {
   cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.YOUR_BUYER_DETAILS}`, {
@@ -74,7 +79,7 @@ context('Insurance - Your Buyer - Type of your buyer Page - As an exporter, I wa
 
     partials.backLink().click();
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.YOUR_BUYER_DETAILS}`;
+    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
     cy.url().should('eq', expectedUrl);
 
@@ -93,18 +98,18 @@ context('Insurance - Your Buyer - Type of your buyer Page - As an exporter, I wa
     cy.checkPhaseBanner();
   });
 
-  it('renders a page title and heading with caption', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
+  describe('countries', () => {
+    it('renders `countries` label and input', () => {
+      const fieldId = FIELDS.YOUR_BUYER.BUYER_COUNTRY.ID;
+      const field = yourBuyerPage[fieldId];
 
-    headingCaption().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING_CAPTION);
-    });
+      field.label().should('exist');
+      field.label().invoke('text').then((text) => {
+        expect(text.trim()).equal( FIELDS.YOUR_BUYER.BUYER_COUNTRY.LABEL);
+      });
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
+      field.input().should('exist');
     });
-  });
 
   it('renders a submit button', () => {
     submitButton().should('exist');
