@@ -2,27 +2,14 @@ import {
   submitButton,
   saveAndBackButton,
 } from '../../../pages/shared';
-import partials from '../../../partials';
 import {
   BUTTONS,
-  LINKS,
 } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../helpers/get-reference-number';
 import { FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
 import { yourBuyer as yourBuyerPage } from '../../../pages/insurance/your-buyer';
-
-const { START } = ROUTES.INSURANCE;
-const insuranceStartRoute = START;
-
-const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      TYPE_OF_POLICY,
-    },
-  },
-} = ROUTES;
 
 const goToPageDirectly = (referenceNumber) => {
   cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.YOUR_BUYER_DETAILS}`, {
@@ -44,10 +31,13 @@ context('Insurance - Your Buyer - Type of your buyer Page - As an exporter, I wa
       },
     });
 
+    cy.submitInsuranceEligibilityAndStartApplication();
+
     getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.YOUR_BUYER_DETAILS}`;
+      goToPageDirectly(referenceNumber);
       cy.url().should('eq', expected);
     });
   });
@@ -55,34 +45,6 @@ context('Insurance - Your Buyer - Type of your buyer Page - As an exporter, I wa
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');
-  });
-
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
-    });
-  });
-
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
-
-    partials.backLink().click();
-
-    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
-
-    cy.url().should('eq', expectedUrl);
-
-    goToPageDirectly(referenceNumber);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {

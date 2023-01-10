@@ -37,9 +37,15 @@
           id: YOUR_BUYER.BUYER_COUNTRY.ID,
           name: YOUR_BUYER.BUYER_COUNTRY.ID,
           label: {
-            text: YOUR_BUYER.BUYER_COUNTRY.LABEL
+            text: YOUR_BUYER.BUYER_COUNTRY.LABEL,
+            attributes: {
+              'data-cy': YOUR_BUYER.BUYER_COUNTRY.ID + '-label'
+            }
           },
-          items: countries
+          items: countries,
+           attributes: {
+            "data-cy": YOUR_BUYER.BUYER_COUNTRY.ID  + "-input"
+          }
         }) }}
         
       </div>
