@@ -10,8 +10,8 @@ import {
 import { ROUTES } from '../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../helpers/get-reference-number';
-import { FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer'
-import { yourBuyerPage } from '../../../pages/insurance/your-buyer';
+import { FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
+import { yourBuyer as yourBuyerPage } from '../../../pages/insurance/your-buyer';
 
 const { START } = ROUTES.INSURANCE;
 const insuranceStartRoute = START;
@@ -23,7 +23,6 @@ const {
     },
   },
 } = ROUTES;
-
 
 const goToPageDirectly = (referenceNumber) => {
   cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.YOUR_BUYER_DETAILS}`, {
@@ -105,25 +104,26 @@ context('Insurance - Your Buyer - Type of your buyer Page - As an exporter, I wa
 
       field.label().should('exist');
       field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal( FIELDS.YOUR_BUYER.BUYER_COUNTRY.LABEL);
+        expect(text.trim()).equal(FIELDS.YOUR_BUYER.BUYER_COUNTRY.LABEL);
       });
 
       field.input().should('exist');
     });
 
-  it('renders a submit button', () => {
-    submitButton().should('exist');
+    it('renders a submit button', () => {
+      submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
+      submitButton().invoke('text').then((text) => {
+        expect(text.trim()).equal(BUTTONS.CONTINUE);
+      });
     });
-  });
 
-  it('renders a `save and back` button', () => {
-    saveAndBackButton().should('exist');
+    it('renders a `save and back` button', () => {
+      saveAndBackButton().should('exist');
 
-    saveAndBackButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
+      saveAndBackButton().invoke('text').then((text) => {
+        expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
+      });
     });
   });
 });
