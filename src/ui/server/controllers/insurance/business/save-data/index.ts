@@ -17,7 +17,6 @@ const companyDetails = async (application: Application, formBody: RequestBody, e
   try {
     console.log(sanitisedData, exporterCompanyId, exporterCompanyAddressId);
     const saveResponse = await api.keystone.application.update.exporterCompany(exporterCompanyId, exporterCompanyAddressId, sanitisedData);
-    console.log('respponse', saveResponse);
     return saveResponse;
   } catch (err) {
     throw new Error("Updating application's companyDetails");

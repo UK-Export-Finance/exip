@@ -66,7 +66,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       }
 
       type ExporterCompanyAndCompanyAddress {
-        id: ID!
+        id: ID
         exporterCompanyAddress: ExporterCompanyAddress
         companyName: String
         companyNumber: String
@@ -114,7 +114,6 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       Mutation: {
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
-            console.log(variables);
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);
 
             const { exporterCompanyAddress, ...exporterCompany } = variables.data;
@@ -130,7 +129,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
             });
 
             return {
-              id: variables.id,
+              id: variables.companyId,
             };
           } catch (err) {
             console.error('Error updating application exporter company and exporter company address', { err });

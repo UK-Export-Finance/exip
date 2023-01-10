@@ -454,7 +454,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
 
       type ExporterCompanyAndCompanyAddress {
-        id: ID!
+        id: ID
         exporterCompanyAddress: ExporterCompanyAddress
         companyName: String
         companyNumber: String
@@ -502,7 +502,6 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
     Mutation: {
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
-          console.log(variables);
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);
           const { exporterCompanyAddress, ...exporterCompany } = variables.data;
           await context.db.ExporterCompany.updateOne({
@@ -514,7 +513,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
             data: exporterCompanyAddress
           });
           return {
-            id: variables.id
+            id: variables.companyId
           };
         } catch (err) {
           console.error("Error updating application exporter company and exporter company address", { err });

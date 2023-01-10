@@ -1100,7 +1100,7 @@ input ExporterCompanyAddressInput {
 }
 
 type ExporterCompanyAndCompanyAddress {
-  id: ID!
+  id: ID
   exporterCompanyAddress: ExporterCompanyAddress
   companyName: String
   companyNumber: String

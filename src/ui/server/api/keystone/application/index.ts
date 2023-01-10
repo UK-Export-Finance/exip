@@ -131,7 +131,7 @@ const application = {
         };
 
         const response = (await apollo('POST', updateApplicationExporterCompanytMutation, variables)) as ApolloResponse;
-        // console.log(response);
+ 
         if (response.errors) {
           console.error('GraphQL error updating application exporter company ', response.errors);
         }
@@ -140,10 +140,10 @@ const application = {
           console.error('GraphQL network error updating application exporter company ', response.networkError.result.errors);
         }
 
-        if (response?.data?.updateApplicationCompanyAndCompanyAddress) {
+        if (response?.data?.updateExporterCompanyAndCompanyAddress) {
           const { data } = response;
 
-          return data.updateApplicationCompanyAndCompanyAddress;
+          return data.updateExporterCompanyAndCompanyAddress;
         }
 
         throw new Error('Updating application exporter company');
