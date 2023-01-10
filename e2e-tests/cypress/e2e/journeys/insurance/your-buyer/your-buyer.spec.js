@@ -4,7 +4,6 @@ import {
   submitButton,
   saveAndBackButton,
 } from '../../../pages/shared';
-import { insurance } from '../../../pages';
 import partials from '../../../partials';
 import {
   BUTTONS,
@@ -20,9 +19,6 @@ const { START } = ROUTES.INSURANCE;
 const insuranceStartRoute = START;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER_DETAILS;
-
-// const FIELD_ID = yourBuyerFiledVariables;
-
 
 const goToPageDirectly = (referenceNumber) => {
   cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.YOUR_BUYER_DETAILS}`, {
