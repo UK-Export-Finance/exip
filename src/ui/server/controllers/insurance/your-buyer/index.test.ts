@@ -11,7 +11,6 @@ import insuranceCorePageVariables from '../../../helpers/page-variables/core/ins
 describe('controllers/insurance/your-buyer/your-buyer-details', () => {
   let req: Request;
   let res: Response;
-  //   let refNumber: number;
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCisCountries));
 
   beforeEach(() => {
@@ -20,7 +19,6 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
 
     res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
-    // refNumber = Number(mockApplication.referenceNumber);
     api.external.getCountries = getCountriesSpy;
   });
 
@@ -105,8 +103,6 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
       it('should redirect to needs_to_redirect_at_do_you_need_broker', async () => {
         await post(req, res);
 
-        // const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
-        // const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}/${YOUR_BUYER}`;
         expect(res.redirect).toHaveBeenCalledWith('/needs_to_redirect_at_do_you_need_broker');
       });
     });
