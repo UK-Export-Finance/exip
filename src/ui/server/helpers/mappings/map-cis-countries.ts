@@ -73,13 +73,13 @@ export const mapNbiIssueAvailable = (str: string): boolean => {
 export const filterCisCountries = (countries: Array<CisCountry>) => countries.filter((country) => !API.CIS.INVALID_COUNTRIES.includes(country.marketName));
 
 /**
- * mapCountry
+ * mapCisCountry
  * Map a CIS country to cleaner structure
  * @param {Object} CIS Country
  * @returns {String} Selected country ISO code
  * @returns {Object} Mapped country
  */
-export const mapCountry = (country: CisCountry, selectedIsoCode?: string): Country => {
+export const mapCisCountry = (country: CisCountry, selectedIsoCode?: string): Country => {
   const mapped = {
     name: country.marketName,
     isoCode: country.isoCode,
@@ -97,16 +97,16 @@ export const mapCountry = (country: CisCountry, selectedIsoCode?: string): Count
 };
 
 /**
- * mapCountries
+ * mapCisCountries
  * Map all CIS countries to cleaner structure
  * @param {Array} Array of CIS Countries
  * @returns {String} Selected country ISO code
  * @returns {Array} Array of mapped countries
  */
-export const mapCountries = (countries: Array<CisCountry>, selectedIsoCode?: string) => {
+export const mapCisCountries = (countries: Array<CisCountry>, selectedIsoCode?: string) => {
   const filteredCountries = filterCisCountries(countries);
 
-  const mapped = filteredCountries.map((country) => mapCountry(country, selectedIsoCode));
+  const mapped = filteredCountries.map((country) => mapCisCountry(country, selectedIsoCode));
 
   const sorted = sortArrayAlphabetically(mapped, 'name');
 

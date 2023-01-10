@@ -1,9 +1,9 @@
-import { mapRiskCategory, mapNbiIssueAvailable, filterCisCountries, mapCountry, mapCountries } from './map-countries';
+import { mapRiskCategory, mapNbiIssueAvailable, filterCisCountries, mapCisCountry, mapCisCountries } from './map-cis-countries';
 import { API } from '../../constants';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
 import { CisCountry, Country } from '../../../types';
 
-describe('server/helpers/mappings/map-countries', () => {
+describe('server/helpers/mappings/map-cis-countries', () => {
   const mockCountries = [
     {
       marketName: 'Abu Dhabi',
@@ -110,9 +110,9 @@ describe('server/helpers/mappings/map-countries', () => {
     });
   });
 
-  describe('mapCountry', () => {
+  describe('mapCisCountry', () => {
     it('should return an object', () => {
-      const result = mapCountry(mockCountries[0]);
+      const result = mapCisCountry(mockCountries[0]);
 
       const expected = {
         name: mockCountries[0].marketName,
@@ -130,7 +130,7 @@ describe('server/helpers/mappings/map-countries', () => {
       it('should return an object with selected option', () => {
         const mockSelectedIsoCode = mockCountries[0].isoCode;
 
-        const result = mapCountry(mockCountries[0], mockSelectedIsoCode);
+        const result = mapCisCountry(mockCountries[0], mockSelectedIsoCode);
 
         const expected = {
           name: mockCountries[0].marketName,
@@ -147,15 +147,18 @@ describe('server/helpers/mappings/map-countries', () => {
     });
   });
 
-  describe('mapCountries', () => {
+  describe('mapCisCountries', () => {
     it('should returns array of filtered, mapped and sorted objects', () => {
       const mockSelectedIsoCode = mockCountries[0].isoCode;
 
       const filteredCountries = filterCisCountries(mockCountries);
 
-      const result = mapCountries(filteredCountries, mockSelectedIsoCode);
+      const result = mapCisCountries(filteredCountries, mockSelectedIsoCode);
 
-      const expected = sortArrayAlphabetically([mapCountry(mockCountries[0], mockSelectedIsoCode), mapCountry(mockCountries[1], mockSelectedIsoCode)], 'name');
+      const expected = sortArrayAlphabetically(
+        [mapCisCountry(mockCountries[0], mockSelectedIsoCode), mapCisCountry(mockCountries[1], mockSelectedIsoCode)],
+        'name',
+      );
 
       expect(result).toEqual(expected);
     });

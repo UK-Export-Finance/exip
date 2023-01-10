@@ -1,7 +1,7 @@
 import { LINKS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
-import { mapCountries } from '../../../helpers/mappings/map-countries';
+import { mapCisCountries } from '../../../helpers/mappings/map-cis-countries';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
@@ -71,9 +71,9 @@ export const get = async (req: Request, res: Response) => {
   let mappedCountries;
 
   if (countryValue) {
-    mappedCountries = mapCountries(countries, countryValue.isoCode);
+    mappedCountries = mapCisCountries(countries, countryValue.isoCode);
   } else {
-    mappedCountries = mapCountries(countries);
+    mappedCountries = mapCisCountries(countries);
   }
 
   return res.render(TEMPLATE, {
@@ -93,7 +93,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 
-  const mappedCountries = mapCountries(countries);
+  const mappedCountries = mapCisCountries(countries);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
