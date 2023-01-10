@@ -15,6 +15,7 @@ const {
         SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
         MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
       },
+      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
     },
   },
 } = FIELD_IDS;
@@ -44,6 +45,7 @@ const application = {
     [TOTAL_MONTHS_OF_COVER]: '2',
     [TOTAL_SALES_TO_BUYER]: '1000',
     [MAXIMUM_BUYER_WILL_OWE]: '500',
+    [DESCRIPTION]: 'Mock description',
   },
 };
 

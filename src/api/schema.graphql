@@ -71,6 +71,8 @@ type Application {
   submissionDeadline: DateTime
   submissionType: String
   policyAndExport: PolicyAndExport
+  exporterCompany: ExporterCompany
+  exporterCompanyAddress: ExporterCompanyAddress
 }
 
 scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
@@ -91,6 +93,8 @@ input ApplicationWhereInput {
   submissionDeadline: DateTimeNullableFilter
   submissionType: StringNullableFilter
   policyAndExport: PolicyAndExportWhereInput
+  exporterCompany: ExporterCompanyWhereInput
+  exporterCompanyAddress: ExporterCompanyAddressWhereInput
 }
 
 input DateTimeNullableFilter {
@@ -160,6 +164,8 @@ input ApplicationUpdateInput {
   submissionDeadline: DateTime
   submissionType: String
   policyAndExport: PolicyAndExportRelateToOneForUpdateInput
+  exporterCompany: ExporterCompanyRelateToOneForUpdateInput
+  exporterCompanyAddress: ExporterCompanyAddressRelateToOneForUpdateInput
 }
 
 input EligibilityRelateToOneForUpdateInput {
@@ -171,6 +177,18 @@ input EligibilityRelateToOneForUpdateInput {
 input PolicyAndExportRelateToOneForUpdateInput {
   create: PolicyAndExportCreateInput
   connect: PolicyAndExportWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ExporterCompanyRelateToOneForUpdateInput {
+  create: ExporterCompanyCreateInput
+  connect: ExporterCompanyWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ExporterCompanyAddressRelateToOneForUpdateInput {
+  create: ExporterCompanyAddressCreateInput
+  connect: ExporterCompanyAddressWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -187,6 +205,8 @@ input ApplicationCreateInput {
   submissionDeadline: DateTime
   submissionType: String
   policyAndExport: PolicyAndExportRelateToOneForCreateInput
+  exporterCompany: ExporterCompanyRelateToOneForCreateInput
+  exporterCompanyAddress: ExporterCompanyAddressRelateToOneForCreateInput
 }
 
 input EligibilityRelateToOneForCreateInput {
@@ -197,6 +217,16 @@ input EligibilityRelateToOneForCreateInput {
 input PolicyAndExportRelateToOneForCreateInput {
   create: PolicyAndExportCreateInput
   connect: PolicyAndExportWhereUniqueInput
+}
+
+input ExporterCompanyRelateToOneForCreateInput {
+  create: ExporterCompanyCreateInput
+  connect: ExporterCompanyWhereUniqueInput
+}
+
+input ExporterCompanyAddressRelateToOneForCreateInput {
+  create: ExporterCompanyAddressCreateInput
+  connect: ExporterCompanyAddressWhereUniqueInput
 }
 
 type PolicyAndExport {
@@ -211,6 +241,7 @@ type PolicyAndExport {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
+  goodsOrServicesDescription: String
 }
 
 input PolicyAndExportWhereUniqueInput {
@@ -232,6 +263,7 @@ input PolicyAndExportWhereInput {
   totalMonthsOfCover: IntNullableFilter
   totalSalesToBuyer: IntNullableFilter
   maximumBuyerWillOwe: IntNullableFilter
+  goodsOrServicesDescription: StringFilter
 }
 
 input StringFilter {
@@ -273,6 +305,7 @@ input PolicyAndExportOrderByInput {
   totalMonthsOfCover: OrderDirection
   totalSalesToBuyer: OrderDirection
   maximumBuyerWillOwe: OrderDirection
+  goodsOrServicesDescription: OrderDirection
 }
 
 input PolicyAndExportUpdateInput {
@@ -286,6 +319,7 @@ input PolicyAndExportUpdateInput {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
+  goodsOrServicesDescription: String
 }
 
 input PolicyAndExportUpdateArgs {
@@ -304,6 +338,262 @@ input PolicyAndExportCreateInput {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
+  goodsOrServicesDescription: String
+}
+
+type ExporterBusiness {
+  id: ID!
+  company: ExporterCompany
+}
+
+input ExporterBusinessWhereUniqueInput {
+  id: ID
+}
+
+input ExporterBusinessWhereInput {
+  AND: [ExporterBusinessWhereInput!]
+  OR: [ExporterBusinessWhereInput!]
+  NOT: [ExporterBusinessWhereInput!]
+  id: IDFilter
+  company: ExporterCompanyWhereInput
+}
+
+input ExporterBusinessOrderByInput {
+  id: OrderDirection
+}
+
+input ExporterBusinessUpdateInput {
+  company: ExporterCompanyRelateToOneForUpdateInput
+}
+
+input ExporterBusinessUpdateArgs {
+  where: ExporterBusinessWhereUniqueInput!
+  data: ExporterBusinessUpdateInput!
+}
+
+input ExporterBusinessCreateInput {
+  company: ExporterCompanyRelateToOneForCreateInput
+}
+
+type ExporterCompanyAddress {
+  id: ID!
+  exporterCompany: ExporterCompany
+  application: Application
+  addressLine1: String
+  addressLine2: String
+  careOf: String
+  locality: String
+  region: String
+  postalCode: String
+  country: String
+  premises: String
+}
+
+input ExporterCompanyAddressWhereUniqueInput {
+  id: ID
+}
+
+input ExporterCompanyAddressWhereInput {
+  AND: [ExporterCompanyAddressWhereInput!]
+  OR: [ExporterCompanyAddressWhereInput!]
+  NOT: [ExporterCompanyAddressWhereInput!]
+  id: IDFilter
+  exporterCompany: ExporterCompanyWhereInput
+  application: ApplicationWhereInput
+  addressLine1: StringFilter
+  addressLine2: StringFilter
+  careOf: StringFilter
+  locality: StringFilter
+  region: StringFilter
+  postalCode: StringFilter
+  country: StringFilter
+  premises: StringFilter
+}
+
+input ExporterCompanyAddressOrderByInput {
+  id: OrderDirection
+  addressLine1: OrderDirection
+  addressLine2: OrderDirection
+  careOf: OrderDirection
+  locality: OrderDirection
+  region: OrderDirection
+  postalCode: OrderDirection
+  country: OrderDirection
+  premises: OrderDirection
+}
+
+input ExporterCompanyAddressUpdateInput {
+  exporterCompany: ExporterCompanyRelateToOneForUpdateInput
+  application: ApplicationRelateToOneForUpdateInput
+  addressLine1: String
+  addressLine2: String
+  careOf: String
+  locality: String
+  region: String
+  postalCode: String
+  country: String
+  premises: String
+}
+
+input ExporterCompanyAddressUpdateArgs {
+  where: ExporterCompanyAddressWhereUniqueInput!
+  data: ExporterCompanyAddressUpdateInput!
+}
+
+input ExporterCompanyAddressCreateInput {
+  exporterCompany: ExporterCompanyRelateToOneForCreateInput
+  application: ApplicationRelateToOneForCreateInput
+  addressLine1: String
+  addressLine2: String
+  careOf: String
+  locality: String
+  region: String
+  postalCode: String
+  country: String
+  premises: String
+}
+
+type ExporterCompany {
+  id: ID!
+  application: Application
+  exporterCompanyAddress: ExporterCompanyAddress
+  business: ExporterBusiness
+  sicCodes: ExporterCompanySicCode
+  companyName: String
+  companyNumber: String
+  dateOfCreation: DateTime
+  hasTradingAddress: Boolean
+  hasTradingName: Boolean
+  companyWebsite: String
+  phoneNumber: String
+}
+
+input ExporterCompanyWhereUniqueInput {
+  id: ID
+}
+
+input ExporterCompanyWhereInput {
+  AND: [ExporterCompanyWhereInput!]
+  OR: [ExporterCompanyWhereInput!]
+  NOT: [ExporterCompanyWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  exporterCompanyAddress: ExporterCompanyAddressWhereInput
+  business: ExporterBusinessWhereInput
+  sicCodes: ExporterCompanySicCodeWhereInput
+  companyName: StringFilter
+  companyNumber: StringFilter
+  dateOfCreation: DateTimeNullableFilter
+  hasTradingAddress: BooleanFilter
+  hasTradingName: BooleanFilter
+  companyWebsite: StringFilter
+  phoneNumber: StringFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input ExporterCompanyOrderByInput {
+  id: OrderDirection
+  companyName: OrderDirection
+  companyNumber: OrderDirection
+  dateOfCreation: OrderDirection
+  hasTradingAddress: OrderDirection
+  hasTradingName: OrderDirection
+  companyWebsite: OrderDirection
+  phoneNumber: OrderDirection
+}
+
+input ExporterCompanyUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  exporterCompanyAddress: ExporterCompanyAddressRelateToOneForUpdateInput
+  business: ExporterBusinessRelateToOneForUpdateInput
+  sicCodes: ExporterCompanySicCodeRelateToOneForUpdateInput
+  companyName: String
+  companyNumber: String
+  dateOfCreation: DateTime
+  hasTradingAddress: Boolean
+  hasTradingName: Boolean
+  companyWebsite: String
+  phoneNumber: String
+}
+
+input ExporterBusinessRelateToOneForUpdateInput {
+  create: ExporterBusinessCreateInput
+  connect: ExporterBusinessWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ExporterCompanySicCodeRelateToOneForUpdateInput {
+  create: ExporterCompanySicCodeCreateInput
+  connect: ExporterCompanySicCodeWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ExporterCompanyUpdateArgs {
+  where: ExporterCompanyWhereUniqueInput!
+  data: ExporterCompanyUpdateInput!
+}
+
+input ExporterCompanyCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  exporterCompanyAddress: ExporterCompanyAddressRelateToOneForCreateInput
+  business: ExporterBusinessRelateToOneForCreateInput
+  sicCodes: ExporterCompanySicCodeRelateToOneForCreateInput
+  companyName: String
+  companyNumber: String
+  dateOfCreation: DateTime
+  hasTradingAddress: Boolean
+  hasTradingName: Boolean
+  companyWebsite: String
+  phoneNumber: String
+}
+
+input ExporterBusinessRelateToOneForCreateInput {
+  create: ExporterBusinessCreateInput
+  connect: ExporterBusinessWhereUniqueInput
+}
+
+input ExporterCompanySicCodeRelateToOneForCreateInput {
+  create: ExporterCompanySicCodeCreateInput
+  connect: ExporterCompanySicCodeWhereUniqueInput
+}
+
+type ExporterCompanySicCode {
+  id: ID!
+  code: String
+}
+
+input ExporterCompanySicCodeWhereUniqueInput {
+  id: ID
+}
+
+input ExporterCompanySicCodeWhereInput {
+  AND: [ExporterCompanySicCodeWhereInput!]
+  OR: [ExporterCompanySicCodeWhereInput!]
+  NOT: [ExporterCompanySicCodeWhereInput!]
+  id: IDFilter
+  code: StringFilter
+}
+
+input ExporterCompanySicCodeOrderByInput {
+  id: OrderDirection
+  code: OrderDirection
+}
+
+input ExporterCompanySicCodeUpdateInput {
+  code: String
+}
+
+input ExporterCompanySicCodeUpdateArgs {
+  where: ExporterCompanySicCodeWhereUniqueInput!
+  data: ExporterCompanySicCodeUpdateInput!
+}
+
+input ExporterCompanySicCodeCreateInput {
+  code: String
 }
 
 type Country {
@@ -379,11 +669,6 @@ input EligibilityWhereInput {
   needPreCreditPeriodCover: BooleanFilter
   wantCoverOverMaxAmount: BooleanFilter
   wantCoverOverMaxPeriod: BooleanFilter
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
 }
 
 input EligibilityOrderByInput {
@@ -559,6 +844,30 @@ type Mutation {
   updatePolicyAndExports(data: [PolicyAndExportUpdateArgs!]!): [PolicyAndExport]
   deletePolicyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
   deletePolicyAndExports(where: [PolicyAndExportWhereUniqueInput!]!): [PolicyAndExport]
+  createExporterBusiness(data: ExporterBusinessCreateInput!): ExporterBusiness
+  createExporterBusinesses(data: [ExporterBusinessCreateInput!]!): [ExporterBusiness]
+  updateExporterBusiness(where: ExporterBusinessWhereUniqueInput!, data: ExporterBusinessUpdateInput!): ExporterBusiness
+  updateExporterBusinesses(data: [ExporterBusinessUpdateArgs!]!): [ExporterBusiness]
+  deleteExporterBusiness(where: ExporterBusinessWhereUniqueInput!): ExporterBusiness
+  deleteExporterBusinesses(where: [ExporterBusinessWhereUniqueInput!]!): [ExporterBusiness]
+  createExporterCompanyAddress(data: ExporterCompanyAddressCreateInput!): ExporterCompanyAddress
+  createExporterCompanyAddresses(data: [ExporterCompanyAddressCreateInput!]!): [ExporterCompanyAddress]
+  updateExporterCompanyAddress(where: ExporterCompanyAddressWhereUniqueInput!, data: ExporterCompanyAddressUpdateInput!): ExporterCompanyAddress
+  updateExporterCompanyAddresses(data: [ExporterCompanyAddressUpdateArgs!]!): [ExporterCompanyAddress]
+  deleteExporterCompanyAddress(where: ExporterCompanyAddressWhereUniqueInput!): ExporterCompanyAddress
+  deleteExporterCompanyAddresses(where: [ExporterCompanyAddressWhereUniqueInput!]!): [ExporterCompanyAddress]
+  createExporterCompany(data: ExporterCompanyCreateInput!): ExporterCompany
+  createExporterCompanies(data: [ExporterCompanyCreateInput!]!): [ExporterCompany]
+  updateExporterCompany(where: ExporterCompanyWhereUniqueInput!, data: ExporterCompanyUpdateInput!): ExporterCompany
+  updateExporterCompanies(data: [ExporterCompanyUpdateArgs!]!): [ExporterCompany]
+  deleteExporterCompany(where: ExporterCompanyWhereUniqueInput!): ExporterCompany
+  deleteExporterCompanies(where: [ExporterCompanyWhereUniqueInput!]!): [ExporterCompany]
+  createExporterCompanySicCode(data: ExporterCompanySicCodeCreateInput!): ExporterCompanySicCode
+  createExporterCompanySicCodes(data: [ExporterCompanySicCodeCreateInput!]!): [ExporterCompanySicCode]
+  updateExporterCompanySicCode(where: ExporterCompanySicCodeWhereUniqueInput!, data: ExporterCompanySicCodeUpdateInput!): ExporterCompanySicCode
+  updateExporterCompanySicCodes(data: [ExporterCompanySicCodeUpdateArgs!]!): [ExporterCompanySicCode]
+  deleteExporterCompanySicCode(where: ExporterCompanySicCodeWhereUniqueInput!): ExporterCompanySicCode
+  deleteExporterCompanySicCodes(where: [ExporterCompanySicCodeWhereUniqueInput!]!): [ExporterCompanySicCode]
   createCountry(data: CountryCreateInput!): Country
   createCountries(data: [CountryCreateInput!]!): [Country]
   updateCountry(where: CountryWhereUniqueInput!, data: CountryUpdateInput!): Country
@@ -586,6 +895,9 @@ type Mutation {
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
+
+  """ update exporter company and company address """
+  updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
 
   """ send an email """
   sendEmail(templateId: String!, sendToEmailAddress: String!): EmailResponse
@@ -618,6 +930,18 @@ type Query {
   policyAndExports(where: PolicyAndExportWhereInput! = {}, orderBy: [PolicyAndExportOrderByInput!]! = [], take: Int, skip: Int! = 0): [PolicyAndExport!]
   policyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
   policyAndExportsCount(where: PolicyAndExportWhereInput! = {}): Int
+  exporterBusinesses(where: ExporterBusinessWhereInput! = {}, orderBy: [ExporterBusinessOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterBusiness!]
+  exporterBusiness(where: ExporterBusinessWhereUniqueInput!): ExporterBusiness
+  exporterBusinessesCount(where: ExporterBusinessWhereInput! = {}): Int
+  exporterCompanyAddresses(where: ExporterCompanyAddressWhereInput! = {}, orderBy: [ExporterCompanyAddressOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterCompanyAddress!]
+  exporterCompanyAddress(where: ExporterCompanyAddressWhereUniqueInput!): ExporterCompanyAddress
+  exporterCompanyAddressesCount(where: ExporterCompanyAddressWhereInput! = {}): Int
+  exporterCompanies(where: ExporterCompanyWhereInput! = {}, orderBy: [ExporterCompanyOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterCompany!]
+  exporterCompany(where: ExporterCompanyWhereUniqueInput!): ExporterCompany
+  exporterCompaniesCount(where: ExporterCompanyWhereInput! = {}): Int
+  exporterCompanySicCodes(where: ExporterCompanySicCodeWhereInput! = {}, orderBy: [ExporterCompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterCompanySicCode!]
+  exporterCompanySicCode(where: ExporterCompanySicCodeWhereUniqueInput!): ExporterCompanySicCode
+  exporterCompanySicCodesCount(where: ExporterCompanySicCodeWhereInput! = {}): Int
   countries(where: CountryWhereInput! = {}, orderBy: [CountryOrderByInput!]! = [], take: Int, skip: Int! = 0): [Country!]
   country(where: CountryWhereUniqueInput!): Country
   countriesCount(where: CountryWhereInput! = {}): Int
@@ -743,7 +1067,7 @@ type EmailResponse {
   success: Boolean
 }
 
-type CompanyAddress {
+type CompaniesHouseCompanyAddress {
   addressLine1: String
   addressLine2: String
   careOf: String
@@ -756,10 +1080,44 @@ type CompanyAddress {
 
 type CompaniesHouseResponse {
   companyName: String
-  registeredOfficeAddress: CompanyAddress
+  registeredOfficeAddress: ExporterCompanyAddress
   companyNumber: String
   dateOfCreation: String
   sicCodes: [String]
   success: Boolean
   apiError: Boolean
+}
+
+input ExporterCompanyAddressInput {
+  addressLine1: String
+  addressLine2: String
+  careOf: String
+  locality: String
+  region: String
+  postalCode: String
+  country: String
+  premises: String
+}
+
+type ExporterCompanyAndCompanyAddress {
+  id: ID!
+  exporterCompanyAddress: ExporterCompanyAddress
+  companyName: String
+  companyNumber: String
+  dateOfCreation: DateTime
+  hasTradingAddress: Boolean
+  hasTradingName: Boolean
+  companyWebsite: String
+  phoneNumber: String
+}
+
+input ExporterCompanyAndCompanyAddressInput {
+  exporterCompanyAddress: ExporterCompanyAddressInput
+  companyName: String
+  companyNumber: String
+  dateOfCreation: DateTime
+  hasTradingAddress: Boolean
+  hasTradingName: Boolean
+  companyWebsite: String
+  phoneNumber: String
 }

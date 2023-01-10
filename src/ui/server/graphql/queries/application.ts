@@ -36,6 +36,26 @@ const applicationQuery = gql`
           totalMonthsOfCover
           totalSalesToBuyer
           maximumBuyerWillOwe
+          goodsOrServicesDescription
+        }
+        exporterCompany {
+          id
+          companyName
+          companyNumber
+          companyWebsite
+          hasTradingName
+          hasTradingAddress
+        }
+        exporterCompanyAddress {
+          id
+          addressLine1
+          addressLine2
+          careOf
+          locality
+          region
+          postalCode
+          country
+          premises
         }
       }
     }

@@ -10,7 +10,7 @@ import { get as singleContractPolicyGet, post as singleContractPolicyPost } from
 import { post as singleContractPolicySaveAndBackPost } from '../../controllers/insurance/policy-and-export/single-contract-policy/save-and-back';
 import { get as multipleContractPolicyGet, post as multipleContractPolicyPost } from '../../controllers/insurance/policy-and-export/multiple-contract-policy';
 import { post as multipleContractPolicySaveAndBackPost } from '../../controllers/insurance/policy-and-export/multiple-contract-policy/save-and-back';
-import { get as aboutGoodsOrServicesGet } from '../../controllers/insurance/policy-and-export/about-goods-or-services';
+import { get as aboutGoodsOrServicesGet, post as aboutGoodsOrServicesPost } from '../../controllers/insurance/policy-and-export/about-goods-or-services';
 import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-found';
 import insuranceEligibilityRoutes from './eligibility';
 import insuranceBusinessRouter from './business';
@@ -49,6 +49,7 @@ insuranceRouter.post(
 );
 
 insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`, aboutGoodsOrServicesGet);
+insuranceRouter.post(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`, aboutGoodsOrServicesPost);
 
 insuranceRouter.get(INSURANCE_ROUTES.PAGE_NOT_FOUND, pageNotFoundGet);
 

@@ -21,6 +21,7 @@ const aboutGoodsOrServices = {
     },
     prefix: () => cy.get(`[data-cy="${DESCRIPTION}-prefix"]`),
     input: () => cy.get(`[data-cy="${DESCRIPTION}-input"]`),
+    errorMessage: () => cy.get(`[data-cy="${DESCRIPTION}-error-message"]`),
   },
 };
 
