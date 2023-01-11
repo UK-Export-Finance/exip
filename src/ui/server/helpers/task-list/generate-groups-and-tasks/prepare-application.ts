@@ -1,8 +1,8 @@
-import { TaskListDataTask, TaskListData } from '../../../../../types';
-import { FIELD_IDS, FIELD_VALUES, GROUP_IDS, TASK_IDS, ROUTES } from '../../../../constants';
-import { SHARED_CONTRACT_POLICY } from '../../../../constants/field-ids/insurance/policy-and-exports';
-import { TASKS } from '../../../../content-strings';
-import { getGroupById, getAllTasksFieldsInAGroup } from '../../task-helpers';
+import { TaskListDataTask, TaskListData } from '../../../../types';
+import { FIELD_IDS, FIELD_VALUES, GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
+import { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
+import { TASKS } from '../../../content-strings';
+import { getGroupById, getAllTasksFieldsInAGroup } from '../task-helpers';
 
 const { INSURANCE } = ROUTES;
 const { INSURANCE_ROOT, POLICY_AND_EXPORTS } = INSURANCE;

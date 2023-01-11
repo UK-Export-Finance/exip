@@ -1,11 +1,11 @@
-import createPrepareApplicationTasks, { getContractPolicyTasks } from '.';
-import { TaskListData } from '../../../../../types';
-import createInitialChecksTasks from '../initial-checks';
-import { FIELD_IDS, FIELD_VALUES, GROUP_IDS, TASK_IDS, ROUTES } from '../../../../constants';
-import { SHARED_CONTRACT_POLICY } from '../../../../constants/field-ids/insurance/policy-and-exports';
-import { TASKS } from '../../../../content-strings';
-import { getAllTasksFieldsInAGroup } from '../../task-helpers';
-import { mockApplication } from '../../../../test-mocks';
+import createPrepareApplicationTasks, { getContractPolicyTasks } from './prepare-application';
+import { TaskListData } from '../../../../types';
+import createInitialChecksTasks from './initial-checks';
+import { FIELD_IDS, FIELD_VALUES, GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
+import { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
+import { TASKS } from '../../../content-strings';
+import { getAllTasksFieldsInAGroup } from '../task-helpers';
+import { mockApplication } from '../../../test-mocks';
 
 const { INSURANCE } = ROUTES;
 const { INSURANCE_ROOT, POLICY_AND_EXPORTS } = INSURANCE;
