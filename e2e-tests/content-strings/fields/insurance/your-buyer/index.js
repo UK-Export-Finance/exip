@@ -4,5 +4,9 @@ export const FIELDS = {
       ID: 'country',
       LABEL: 'Country',
     },
+    BUYER_ORGANISATION: {
+      ID: 'organisation',
+      LABEL: "Buyer's company or organisation name",
+    },
   },
 };

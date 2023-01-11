@@ -71,21 +71,32 @@ context('Insurance - Your Buyer - Type of your buyer Page - As an exporter, I wa
 
       field.input().should('exist');
     });
+  });
 
-    it('renders a submit button', () => {
-      submitButton().should('exist');
+  it('renders `buyer organisation or compnay` label, and input', () => {
+    const fieldId = FIELDS.YOUR_BUYER.BUYER_ORGANISATION.ID;
+    const field = yourBuyerPage[fieldId];
 
-      submitButton().invoke('text').then((text) => {
-        expect(text.trim()).equal(BUTTONS.CONTINUE);
-      });
+    field.label().should('exist');
+    field.label().invoke('text').then((text) => {
+      expect(text.trim()).equal(FIELDS.YOUR_BUYER.BUYER_ORGANISATION.LABEL);
     });
+    field.input().should('exist');
+  });
 
-    it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
+  it('renders a submit button', () => {
+    submitButton().should('exist');
 
-      saveAndBackButton().invoke('text').then((text) => {
-        expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
-      });
+    submitButton().invoke('text').then((text) => {
+      expect(text.trim()).equal(BUTTONS.CONTINUE);
+    });
+  });
+
+  it('renders a `save and back` button', () => {
+    saveAndBackButton().should('exist');
+
+    saveAndBackButton().invoke('text').then((text) => {
+      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
     });
   });
 });
