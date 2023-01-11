@@ -49,7 +49,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
     taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTI);
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
