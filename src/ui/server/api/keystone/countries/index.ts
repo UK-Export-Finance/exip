@@ -20,7 +20,7 @@ const countries = {
       }
 
       if (response?.data?.countries) {
-        return response.data.countries[0];
+        return response.data.countries;
       }
 
       if (response instanceof ApolloError) {
