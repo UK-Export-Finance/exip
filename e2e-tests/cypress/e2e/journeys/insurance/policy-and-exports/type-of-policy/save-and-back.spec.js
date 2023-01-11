@@ -2,7 +2,7 @@ import { saveAndBackButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
@@ -63,7 +63,8 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
     });
 
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTI);
+      multiplePolicyField.input().click();
+      saveAndBackButton().click();
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
