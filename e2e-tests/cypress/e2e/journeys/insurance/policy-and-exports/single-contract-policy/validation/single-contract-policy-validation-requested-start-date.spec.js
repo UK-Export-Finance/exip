@@ -1,14 +1,9 @@
-import { submitButton } from '../../../../../pages/shared';
-import { typeOfPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
+import { FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
 import requestedCoverStartDate from '../../../../../../support/insurance/requested-start-date-field';
 
 const { taskList } = partials.insurancePartials;
-
-const singlePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const singlePolicyField = typeOfPolicyPage[singlePolicyFieldId].single;
 
 const { checkValidation } = requestedCoverStartDate;
 
@@ -29,8 +24,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    singlePolicyField.input().click();
-    submitButton().click();
+    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;

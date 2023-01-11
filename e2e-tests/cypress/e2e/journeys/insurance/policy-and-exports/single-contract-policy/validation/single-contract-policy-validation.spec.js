@@ -1,15 +1,11 @@
 import { submitButton } from '../../../../../pages/shared';
-import { typeOfPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
 import checkText from '../../../../../helpers/check-text';
 
 const { taskList } = partials.insurancePartials;
-
-const singlePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const singlePolicyField = typeOfPolicyPage[singlePolicyFieldId].single;
 
 const { INSURANCE } = ROUTES;
 
@@ -52,8 +48,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    singlePolicyField.input().click();
-    submitButton().click();
+    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
