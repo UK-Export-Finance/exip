@@ -49,6 +49,7 @@
           },
           id: YOUR_BUYER.BUYER_ORGANISATION.ID,
           name: YOUR_BUYER.BUYER_ORGANISATION.ID,
+          value: submittedValues[YOUR_BUYER.BUYER_ORGANISATION.ID],
           errorMessage: validationErrors.errorList[YOUR_BUYER.BUYER_ORGANISATION.ID] and {
             text: validationErrors.errorList[YOUR_BUYER.BUYER_ORGANISATION.ID].text,
             attributes: {
@@ -72,6 +73,12 @@
           items: countries,
            attributes: {
             "data-cy": YOUR_BUYER.BUYER_COUNTRY.ID  + "-input"
+          },
+          errorMessage: validationErrors.errorList[YOUR_BUYER.BUYER_COUNTRY.ID] and {
+            text: validationErrors.errorList[YOUR_BUYER.BUYER_COUNTRY.ID].text,
+            attributes: {
+              "data-cy": YOUR_BUYER.BUYER_COUNTRY.ID + "-error-message"
+            }
           }
         }) }}
         

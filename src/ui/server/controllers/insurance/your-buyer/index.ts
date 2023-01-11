@@ -25,7 +25,7 @@ export const get = async (req: Request, res: Response) => {
 };
 
 export const post = async (req: Request, res: Response) => {
-  const countries = await api.external.getCountries();
+  const countries = await api.keystone.countries.getAll();
   if (!countries || !countries.length) {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
@@ -39,6 +39,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...FIELDS,
+      submittedValues: req.body,
       countries: mappedCountries,
       validationErrors,
     });
