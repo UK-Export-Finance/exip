@@ -13,6 +13,10 @@ const mockCurrencies = [
     name: 'UK Sterling',
     isoCode: 'GBP',
   },
+  {
+    name: 'US Dollars',
+    isoCode: 'USD',
+  },
 ] as Array<Currency>;
 
 export default mockCurrencies;

@@ -1,23 +1,13 @@
-import { API } from '../constants';
 import { Country } from '../../types';
 
 const mockCountries = [
   {
-    isoCode: 'A',
-    name: 'Mock A',
-    riskCategory: 'Standard',
-    shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.YES,
-    nbiIssueAvailable: true,
-    selected: false,
-    value: 'A',
+    name: 'Abu Dhabi',
+    isoCode: 'XAD',
   },
   {
-    isoCode: 'B',
-    name: 'Mock B',
-    shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.YES,
-    nbiIssueAvailable: true,
-    selected: false,
-    value: 'B',
+    name: 'Algeria',
+    isoCode: 'DZA',
   },
 ] as Array<Country>;
 

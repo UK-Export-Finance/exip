@@ -4,7 +4,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import api from '../../../../api';
-import { mapCountries } from '../../../../helpers/mappings/map-countries';
+import { mapCisCountries } from '../../../../helpers/mappings/map-cis-countries';
 import getCountryByName from '../../../../helpers/get-country-by-name';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../../test-mocks';
@@ -70,7 +70,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       const expectedVariables = {
         ...singleInputPageVariables(PAGE_VARIABLES),
         BACK_LINK: req.headers.referer,
-        countries: mapCountries(mockCountriesResponse),
+        countries: mapCisCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData.insuranceEligibility,
       };
 
@@ -119,7 +119,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
         await get(req, res);
 
-        const expectedCountries = mapCountries(mockCountriesResponse, req.session.submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY].isoCode);
+        const expectedCountries = mapCisCountries(mockCountriesResponse, req.session.submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY].isoCode);
 
         const expectedVariables = {
           ...singleInputPageVariables(PAGE_VARIABLES),
@@ -185,7 +185,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: req.headers.referer,
-          countries: mapCountries(mockCountriesResponse),
+          countries: mapCisCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),
         });
       });
@@ -205,7 +205,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
     describe('when the country can apply for an application online', () => {
       const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
-      const mappedCountries = mapCountries(mockCountriesResponse);
+      const mappedCountries = mapCisCountries(mockCountriesResponse);
       const selectedCountry = getCountryByName(mappedCountries, selectedCountryName);
 
       const validBody = {
