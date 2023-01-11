@@ -23,9 +23,6 @@ const { YOUR_BUYER } = FIELDS;
  */
 export const validationRules = (formBody: RequestBody, errors: object) => {
   const updatedErrors = errors;
-  // const COUNTRY_FIELD_ID = FIELDS.YOUR_BUYER.BUYER_COUNTRY.ID;
-  // const ORGANISATION_FIELD_ID = FIELDS.YOUR_BUYER.BUYER_ORGANISATION.ID;
-
   // check if the BUYER ORGANISATION field is empty.
   if (!objectHasProperty(formBody, YOUR_BUYER.BUYER_ORGANISATION.ID)) {
     return generateValidationErrors(YOUR_BUYER.BUYER_ORGANISATION.ID, BUYER_ORGANISATION.IS_EMPTY, errors);
