@@ -83,6 +83,10 @@ const START = {
   BODY_4: 'If you need it more urgently, you can tell us before you submit your application.',
 };
 
+const YOUR_BUYER_DETAILS = {
+  PAGE_TITLE: 'Your Buyer Details',
+};
+
 export default {
   ALL_SECTIONS,
   APPLY_OFFLINE,
@@ -91,4 +95,5 @@ export default {
   POLICY_AND_EXPORTS,
   SPEAK_TO_UKEF_EFM,
   START,
+  YOUR_BUYER_DETAILS,
 };
