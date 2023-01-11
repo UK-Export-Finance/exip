@@ -4,7 +4,7 @@ import {
   submitButton,
   saveAndBackButton,
 } from '../../../../pages/shared';
-import { typeOfPolicyPage, aboutGoodsOrServicesPage } from '../../../../pages/insurance/policy-and-export';
+import { aboutGoodsOrServicesPage } from '../../../../pages/insurance/policy-and-export';
 import partials from '../../../../partials';
 import {
   BUTTONS,
@@ -14,7 +14,7 @@ import {
   TASKS,
 } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
-import { FIELD_IDS, ROUTES } from '../../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
 import countries from '../../../../../fixtures/countries';
@@ -22,9 +22,6 @@ import countries from '../../../../../fixtures/countries';
 const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES;
-
-const singlePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const singlePolicyField = typeOfPolicyPage[singlePolicyFieldId].single;
 
 const {
   INSURANCE: {
@@ -71,8 +68,8 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     cy.submitInsuranceEligibilityAndStartApplication();
 
     taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
-    singlePolicyField.input().click();
-    submitButton().click();
+
+    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
     cy.completeAndSubmitSingleContractPolicyForm();
 
@@ -205,7 +202,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     });
 
     describe('after submitting the form', () => {
-      it('should retain the `type of policy and exports` task status as `in progress`', () => {
+      it('should retain the `type of policy and exports` task status as `completed`', () => {
         cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`, {
           auth: {
             username: Cypress.config('basicAuthKey'),
@@ -214,7 +211,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
         });
 
         task.status().invoke('text').then((text) => {
-          const expected = TASKS.STATUS.IN_PROGRESS;
+          const expected = TASKS.STATUS.COMPLETED;
 
           expect(text.trim()).equal(expected);
         });

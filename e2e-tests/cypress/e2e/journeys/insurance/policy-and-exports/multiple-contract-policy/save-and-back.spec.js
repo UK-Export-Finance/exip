@@ -1,15 +1,12 @@
 import { submitButton, saveAndBackButton } from '../../../../pages/shared';
-import { typeOfPolicyPage, multipleContractPolicyPage } from '../../../../pages/insurance/policy-and-export';
+import { multipleContractPolicyPage } from '../../../../pages/insurance/policy-and-export';
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
 
 const { taskList } = partials.insurancePartials;
-
-const multiplePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const multiplePolicyField = typeOfPolicyPage[multiplePolicyFieldId].multiple;
 
 const {
   INSURANCE: {
@@ -48,8 +45,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
 
     taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    multiplePolicyField.input().click();
-    submitButton().click();
+    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTI);
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;

@@ -2,16 +2,14 @@ import { saveAndBackButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
-const FIELD_ID = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-
-const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID].multiple;
-
 const { taskList } = partials.insurancePartials;
-
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
+const FIELD_ID = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
+const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID].multiple;
 
 context('Insurance - Policy and exports - Type of policy page - Save and go back', () => {
   let referenceNumber;

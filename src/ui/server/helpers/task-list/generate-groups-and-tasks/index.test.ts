@@ -9,8 +9,10 @@ import { mockApplication } from '../../../test-mocks';
 const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 
 describe('server/helpers/task-list/generate-groups-and-tasks', () => {
+  const { referenceNumber, policyAndExport } = mockApplication;
+
   it('should return EXIP groups and tasks', () => {
-    const result = generateGroupsAndTasks(mockApplication.referenceNumber);
+    const result = generateGroupsAndTasks(referenceNumber, policyAndExport.policyType);
 
     const initialChecks = {
       title: INITIAL_CHECKS.HEADING,
@@ -21,7 +23,7 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
     const prepareApplication = {
       title: PREPARE_APPLICATION.HEADING,
       id: GROUP_IDS.PREPARE_APPLICATION,
-      tasks: prepareApplicationTasks(mockApplication.referenceNumber, [initialChecks]),
+      tasks: prepareApplicationTasks(referenceNumber, [initialChecks], policyAndExport.policyType),
     };
 
     const submitApplication = {

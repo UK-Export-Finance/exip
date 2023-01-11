@@ -1,14 +1,9 @@
-import { submitButton } from '../../../../../pages/shared';
-import { typeOfPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
+import { FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
 import requestedCoverStartDate from '../../../../../../support/insurance/requested-start-date-field';
 
 const { taskList } = partials.insurancePartials;
-
-const multiplePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const multiplePolicyField = typeOfPolicyPage[multiplePolicyFieldId].multiple;
 
 const { checkValidation } = requestedCoverStartDate;
 
@@ -29,8 +24,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
     taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    multiplePolicyField.input().click();
-    submitButton().click();
+    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTI);
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;

@@ -9,9 +9,11 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 
 /**
  * generateGroupsAndTasks
+ * @param {Number} Application reference number
+ * @param {String} Application policy type
  * @returns {Array} Task list groups and tasks
  */
-const generateGroupsAndTasks = (applicationReferenceNumber: number): TaskListData => {
+const generateGroupsAndTasks = (referenceNumber: number, policyType?: string): TaskListData => {
   let groups = [
     {
       title: INITIAL_CHECKS.HEADING,
@@ -25,7 +27,7 @@ const generateGroupsAndTasks = (applicationReferenceNumber: number): TaskListDat
     {
       title: PREPARE_APPLICATION.HEADING,
       id: GROUP_IDS.PREPARE_APPLICATION,
-      tasks: prepareApplicationTasks(applicationReferenceNumber, groups),
+      tasks: prepareApplicationTasks(referenceNumber, groups, policyType),
     },
   ] as TaskListData;
 
