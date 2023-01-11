@@ -37,19 +37,18 @@
     {{ govukInput({
           label: {
             text:  YOUR_BUYER.BUYER_ORGANISATION.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
             attributes: {
               id: YOUR_BUYER.BUYER_ORGANISATION.ID + '-label',
               'data-cy': YOUR_BUYER.BUYER_ORGANISATION.ID + '-label'
             }
           },
-          classes: "govuk-input--width-10 govuk-!-margin-bottom-4",
+          classes: "govuk-!-width-three-quarters",
           attributes: {
             'data-cy': YOUR_BUYER.BUYER_ORGANISATION.ID + '-input'
           },
           id: YOUR_BUYER.BUYER_ORGANISATION.ID,
           name: YOUR_BUYER.BUYER_ORGANISATION.ID,
-          value: YOUR_BUYER.BUYER_ORGANISATION.ID,
           errorMessage: validationErrors.errorList[YOUR_BUYER.BUYER_ORGANISATION.ID] and {
             text: validationErrors.errorList[YOUR_BUYER.BUYER_ORGANISATION.ID].text,
             attributes: {
@@ -64,10 +63,12 @@
           name: YOUR_BUYER.BUYER_COUNTRY.ID,
           label: {
             text: YOUR_BUYER.BUYER_COUNTRY.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
             attributes: {
               'data-cy': YOUR_BUYER.BUYER_COUNTRY.ID + '-label'
             }
           },
+          classes: "govuk-!-width-three-quarters",
           items: countries,
            attributes: {
             "data-cy": YOUR_BUYER.BUYER_COUNTRY.ID  + "-input"
