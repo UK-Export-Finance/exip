@@ -56,105 +56,115 @@ export const get = async (req: Request, res: Response) => {
     };
   }
 
-  const countries = await api.external.getCountries();
+  try {
+    const countries = await api.external.getCountries();
 
-  if (!countries || !countries.length) {
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-  }
+    if (!countries || !countries.length) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
 
-  let countryValue;
+    let countryValue;
 
-  if (req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY]) {
-    countryValue = req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY];
-  }
+    if (req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY]) {
+      countryValue = req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY];
+    }
 
-  let mappedCountries;
+    let mappedCountries;
 
-  if (countryValue) {
-    mappedCountries = mapCisCountries(countries, countryValue.isoCode);
-  } else {
-    mappedCountries = mapCisCountries(countries);
-  }
+    if (countryValue) {
+      mappedCountries = mapCisCountries(countries, countryValue.isoCode);
+    } else {
+      mappedCountries = mapCisCountries(countries);
+    }
 
-  return res.render(TEMPLATE, {
-    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
-    countries: mappedCountries,
-    submittedValues: req.session.submittedData?.quoteEligibility,
-    isChangeRoute: isChangeRoute(req.originalUrl),
-  });
-};
-
-export const post = async (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body);
-
-  const countries = await api.external.getCountries();
-
-  if (!countries || !countries.length) {
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-  }
-
-  const mappedCountries = mapCisCountries(countries);
-
-  if (validationErrors) {
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
       countries: mappedCountries,
-      validationErrors,
+      submittedValues: req.session.submittedData?.quoteEligibility,
       isChangeRoute: isChangeRoute(req.originalUrl),
     });
+  } catch (err) {
+    console.error('Error getting CIS countries ', { err });
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
+};
 
-  const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY];
+export const post = async (req: Request, res: Response) => {
+  try {
+    const countries = await api.external.getCountries();
 
-  const country = getCountryByName(mappedCountries, submittedCountryName);
-
-  if (!country) {
-    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
-  }
-
-  if (canGetAQuoteOnline(country)) {
-    const populatedData = {
-      ...req.body,
-      [FIELD_IDS.BUYER_COUNTRY]: {
-        name: country.name,
-        isoCode: country.isoCode,
-        riskCategory: country.riskCategory,
-      },
-    };
-
-    req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
-
-    if (isChangeRoute(req.originalUrl)) {
-      return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+    if (!countries || !countries.length) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(ROUTES.QUOTE.BUYER_BODY);
+    const mappedCountries = mapCisCountries(countries);
+
+    const validationErrors = generateValidationErrors(req.body);
+
+    if (validationErrors) {
+      return res.render(TEMPLATE, {
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
+        countries: mappedCountries,
+        validationErrors,
+        isChangeRoute: isChangeRoute(req.originalUrl),
+      });
+    }
+
+    const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY];
+
+    const country = getCountryByName(mappedCountries, submittedCountryName);
+
+    if (!country) {
+      return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
+    }
+
+    if (canGetAQuoteOnline(country)) {
+      const populatedData = {
+        ...req.body,
+        [FIELD_IDS.BUYER_COUNTRY]: {
+          name: country.name,
+          isoCode: country.isoCode,
+          riskCategory: country.riskCategory,
+        },
+      };
+
+      req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
+
+      if (isChangeRoute(req.originalUrl)) {
+        return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      }
+
+      return res.redirect(ROUTES.QUOTE.BUYER_BODY);
+    }
+
+    if (canGetAQuoteByEmail(country)) {
+      req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
+
+      const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
+      const { REASON } = GET_A_QUOTE_BY_EMAIL;
+
+      req.flash('exitReason', REASON.BUYER_COUNTRY);
+      req.flash('exitDescription', REASON.BUYER_COUNTRY_DESCRIPTION);
+
+      return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
+    }
+
+    if (cannotGetAQuote(country)) {
+      req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
+
+      const { CANNOT_APPLY } = PAGES;
+      const { REASON } = CANNOT_APPLY;
+
+      const reason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${country.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
+
+      req.flash('exitReason', reason);
+
+      return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
+    }
+  } catch (err) {
+    console.error('Error getting CIS countries ', { err });
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
-
-  if (canGetAQuoteByEmail(country)) {
-    req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
-
-    const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
-    const { REASON } = GET_A_QUOTE_BY_EMAIL;
-
-    req.flash('exitReason', REASON.BUYER_COUNTRY);
-    req.flash('exitDescription', REASON.BUYER_COUNTRY_DESCRIPTION);
-
-    return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
-  }
-
-  if (cannotGetAQuote(country)) {
-    req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
-
-    const { CANNOT_APPLY } = PAGES;
-    const { REASON } = CANNOT_APPLY;
-
-    const reason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${country.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
-
-    req.flash('exitReason', reason);
-
-    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
-  }
-
-  return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
 };
