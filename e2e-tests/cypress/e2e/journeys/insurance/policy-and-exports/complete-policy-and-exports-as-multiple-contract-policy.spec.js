@@ -30,7 +30,7 @@ context('Insurance - Policy and exports - Complete the entire section as a multi
     taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
     cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTI);
-    cy.completeAndSubmitSingleContractPolicyForm();
+    cy.completeAndSubmitMultipleContractPolicyForm();
     cy.completeAndSubmitAboutGoodsOrServicesForm();
   });
 
