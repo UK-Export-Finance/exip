@@ -242,6 +242,7 @@ type PolicyAndExport {
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
   goodsOrServicesDescription: String
+  finalDestinationCountryCode: String
 }
 
 input PolicyAndExportWhereUniqueInput {
@@ -264,6 +265,7 @@ input PolicyAndExportWhereInput {
   totalSalesToBuyer: IntNullableFilter
   maximumBuyerWillOwe: IntNullableFilter
   goodsOrServicesDescription: StringFilter
+  finalDestinationCountryCode: StringFilter
 }
 
 input StringFilter {
@@ -306,6 +308,7 @@ input PolicyAndExportOrderByInput {
   totalSalesToBuyer: OrderDirection
   maximumBuyerWillOwe: OrderDirection
   goodsOrServicesDescription: OrderDirection
+  finalDestinationCountryCode: OrderDirection
 }
 
 input PolicyAndExportUpdateInput {
@@ -320,6 +323,7 @@ input PolicyAndExportUpdateInput {
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
   goodsOrServicesDescription: String
+  finalDestinationCountryCode: String
 }
 
 input PolicyAndExportUpdateArgs {
@@ -339,6 +343,7 @@ input PolicyAndExportCreateInput {
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
   goodsOrServicesDescription: String
+  finalDestinationCountryCode: String
 }
 
 type ExporterBusiness {

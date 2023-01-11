@@ -27,6 +27,7 @@ interface ApplicationPolicyAndExport {
   totalSalesToBuyer?: number;
   maximumBuyerWillOwe?: number;
   goodsOrServicesDescription?: string;
+  finalDestinationCountryCode?: string;
 }
 
 interface ApplicationExporterCompany {
