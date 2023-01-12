@@ -6,7 +6,7 @@ import { countryValidationRules } from './countryValidationRules';
 
 const { YOUR_BUYER } = FIELDS;
 
-describe('controllers/insurance/your-buyer/validation/country-rules/', () => {
+describe('controllers/insurance/your-buyer/validation/country', () => {
   const mockErrors = {
     summary: [],
     errorList: {},

@@ -11,7 +11,7 @@ const {
 
 const { YOUR_BUYER } = FIELDS;
 
-describe('controllers/insurance/your-buyer/validation/organisation-name-rules/', () => {
+describe('controllers/insurance/your-buyer/validation/organisation/', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
