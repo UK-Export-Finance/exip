@@ -79,7 +79,7 @@ context('Insurance - Your Buyer - Type of your buyer Page - As an exporter, I wa
     });
   });
 
-  it('renders `buyer organisation or compnay` label, and input', () => {
+  it('renders `buyer organisation or company` label, and input', () => {
     const field = yourBuyerPage[BUYER_ORGANISATION];
 
     field.label().should('exist');
