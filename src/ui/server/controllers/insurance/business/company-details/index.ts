@@ -150,6 +150,14 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * saves and goes back to all sections from company details page unless there are database errors
+ * @param req
+ * @param res
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} redirects to all sections page on success
+ */
 const postCompanyDetailsSaveAndBack = async (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
@@ -192,7 +200,7 @@ const postCompanyDetailsSaveAndBack = async (req: Request, res: Response) => {
 
 /**
  * posts company details
- * validates tradingName and companiesHouseInput fields
+ * runs validation and either renders template with errors or redirects to next page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Company details page with or without errors

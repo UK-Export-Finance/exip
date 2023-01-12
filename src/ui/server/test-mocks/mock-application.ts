@@ -28,6 +28,12 @@ const mockApplication = {
     requestedStartDate: add(new Date(), { months: 1 }),
     contractCompletionDate: add(new Date(), { months: 1, days: 1 }),
   },
+  exporterCompany: {
+    id: 'clav8by1i0007kgoqies0deee',
+  },
+  exporterCompanyAddress: {
+    id: 'clav8by1i0007kgoqies0dfff',
+  },
 } as Application;
 
 export default mockApplication;

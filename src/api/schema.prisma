@@ -35,10 +35,13 @@ model Application {
   exporterCompanyId                       String?                  @map("exporterCompany")
   exporterCompanyAddress                  ExporterCompanyAddress?  @relation("Application_exporterCompanyAddress", fields: [exporterCompanyAddressId], references: [id])
   exporterCompanyAddressId                String?                  @map("exporterCompanyAddress")
+  exporterCompanySicCode                  ExporterCompanySicCode?  @relation("Application_exporterCompanySicCode", fields: [exporterCompanySicCodeId], references: [id])
+  exporterCompanySicCodeId                String?                  @map("exporterCompanySicCode")
   from_ReferenceNumber_application        ReferenceNumber[]        @relation("ReferenceNumber_application")
   from_PolicyAndExport_application        PolicyAndExport[]        @relation("PolicyAndExport_application")
   from_ExporterCompanyAddress_application ExporterCompanyAddress[] @relation("ExporterCompanyAddress_application")
   from_ExporterCompany_application        ExporterCompany[]        @relation("ExporterCompany_application")
+  from_ExporterCompanySicCode_application ExporterCompanySicCode[] @relation("ExporterCompanySicCode_application")
   from_Eligibility_application            Eligibility[]            @relation("Eligibility_application")
 
   @@index([eligibilityId])
@@ -46,6 +49,7 @@ model Application {
   @@index([policyAndExportId])
   @@index([exporterCompanyId])
   @@index([exporterCompanyAddressId])
+  @@index([exporterCompanySicCodeId])
 }
 
 model PolicyAndExport {
@@ -117,6 +121,7 @@ model ExporterCompany {
   from_Application_exporterCompany            Application[]            @relation("Application_exporterCompany")
   from_ExporterBusiness_company               ExporterBusiness[]       @relation("ExporterBusiness_company")
   from_ExporterCompanyAddress_exporterCompany ExporterCompanyAddress[] @relation("ExporterCompanyAddress_exporterCompany")
+  from_ExporterCompanySicCode_exporterCompany ExporterCompanySicCode[] @relation("ExporterCompanySicCode_exporterCompany")
 
   @@index([applicationId])
   @@index([exporterCompanyAddressId])
@@ -125,9 +130,17 @@ model ExporterCompany {
 }
 
 model ExporterCompanySicCode {
-  id                            String            @id @default(cuid())
-  code                          String            @default("")
-  from_ExporterCompany_sicCodes ExporterCompany[] @relation("ExporterCompany_sicCodes")
+  id                                      String            @id @default(cuid())
+  exporterCompany                         ExporterCompany?  @relation("ExporterCompanySicCode_exporterCompany", fields: [exporterCompanyId], references: [id])
+  exporterCompanyId                       String?           @map("exporterCompany")
+  application                             Application?      @relation("ExporterCompanySicCode_application", fields: [applicationId], references: [id])
+  applicationId                           String?           @map("application")
+  code                                    String            @default("")
+  from_Application_exporterCompanySicCode Application[]     @relation("Application_exporterCompanySicCode")
+  from_ExporterCompany_sicCodes           ExporterCompany[] @relation("ExporterCompany_sicCodes")
+
+  @@index([exporterCompanyId])
+  @@index([applicationId])
 }
 
 model Country {

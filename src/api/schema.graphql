@@ -73,6 +73,7 @@ type Application {
   policyAndExport: PolicyAndExport
   exporterCompany: ExporterCompany
   exporterCompanyAddress: ExporterCompanyAddress
+  exporterCompanySicCode: ExporterCompanySicCode
 }
 
 scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
@@ -95,6 +96,7 @@ input ApplicationWhereInput {
   policyAndExport: PolicyAndExportWhereInput
   exporterCompany: ExporterCompanyWhereInput
   exporterCompanyAddress: ExporterCompanyAddressWhereInput
+  exporterCompanySicCode: ExporterCompanySicCodeWhereInput
 }
 
 input DateTimeNullableFilter {
@@ -166,6 +168,7 @@ input ApplicationUpdateInput {
   policyAndExport: PolicyAndExportRelateToOneForUpdateInput
   exporterCompany: ExporterCompanyRelateToOneForUpdateInput
   exporterCompanyAddress: ExporterCompanyAddressRelateToOneForUpdateInput
+  exporterCompanySicCode: ExporterCompanySicCodeRelateToOneForUpdateInput
 }
 
 input EligibilityRelateToOneForUpdateInput {
@@ -192,6 +195,12 @@ input ExporterCompanyAddressRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input ExporterCompanySicCodeRelateToOneForUpdateInput {
+  create: ExporterCompanySicCodeCreateInput
+  connect: ExporterCompanySicCodeWhereUniqueInput
+  disconnect: Boolean
+}
+
 input ApplicationUpdateArgs {
   where: ApplicationWhereUniqueInput!
   data: ApplicationUpdateInput!
@@ -207,6 +216,7 @@ input ApplicationCreateInput {
   policyAndExport: PolicyAndExportRelateToOneForCreateInput
   exporterCompany: ExporterCompanyRelateToOneForCreateInput
   exporterCompanyAddress: ExporterCompanyAddressRelateToOneForCreateInput
+  exporterCompanySicCode: ExporterCompanySicCodeRelateToOneForCreateInput
 }
 
 input EligibilityRelateToOneForCreateInput {
@@ -227,6 +237,11 @@ input ExporterCompanyRelateToOneForCreateInput {
 input ExporterCompanyAddressRelateToOneForCreateInput {
   create: ExporterCompanyAddressCreateInput
   connect: ExporterCompanyAddressWhereUniqueInput
+}
+
+input ExporterCompanySicCodeRelateToOneForCreateInput {
+  create: ExporterCompanySicCodeCreateInput
+  connect: ExporterCompanySicCodeWhereUniqueInput
 }
 
 type PolicyAndExport {
@@ -526,12 +541,6 @@ input ExporterBusinessRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input ExporterCompanySicCodeRelateToOneForUpdateInput {
-  create: ExporterCompanySicCodeCreateInput
-  connect: ExporterCompanySicCodeWhereUniqueInput
-  disconnect: Boolean
-}
-
 input ExporterCompanyUpdateArgs {
   where: ExporterCompanyWhereUniqueInput!
   data: ExporterCompanyUpdateInput!
@@ -556,13 +565,10 @@ input ExporterBusinessRelateToOneForCreateInput {
   connect: ExporterBusinessWhereUniqueInput
 }
 
-input ExporterCompanySicCodeRelateToOneForCreateInput {
-  create: ExporterCompanySicCodeCreateInput
-  connect: ExporterCompanySicCodeWhereUniqueInput
-}
-
 type ExporterCompanySicCode {
   id: ID!
+  exporterCompany: ExporterCompany
+  application: Application
   code: String
 }
 
@@ -575,6 +581,8 @@ input ExporterCompanySicCodeWhereInput {
   OR: [ExporterCompanySicCodeWhereInput!]
   NOT: [ExporterCompanySicCodeWhereInput!]
   id: IDFilter
+  exporterCompany: ExporterCompanyWhereInput
+  application: ApplicationWhereInput
   code: StringFilter
 }
 
@@ -584,6 +592,8 @@ input ExporterCompanySicCodeOrderByInput {
 }
 
 input ExporterCompanySicCodeUpdateInput {
+  exporterCompany: ExporterCompanyRelateToOneForUpdateInput
+  application: ApplicationRelateToOneForUpdateInput
   code: String
 }
 
@@ -593,6 +603,8 @@ input ExporterCompanySicCodeUpdateArgs {
 }
 
 input ExporterCompanySicCodeCreateInput {
+  exporterCompany: ExporterCompanyRelateToOneForCreateInput
+  application: ApplicationRelateToOneForCreateInput
   code: String
 }
 
@@ -1113,6 +1125,7 @@ type ExporterCompanyAndCompanyAddress {
 
 input ExporterCompanyAndCompanyAddressInput {
   exporterCompanyAddress: ExporterCompanyAddressInput
+  sicCodes: [String]
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime

@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../../constants';
 import mapSubmittedData from '.';
 
 const {
-  COMPANY_HOUSE: { INPUT },
+  COMPANY_HOUSE: { INPUT, COMPANY_INCORPORATED },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 describe('controllers/insurance/business/map-submitted-data', () => {
@@ -29,23 +29,23 @@ describe('controllers/insurance/business/map-submitted-data', () => {
   } as RequestBody;
 
   describe(`when ${INPUT} success,and __typename fields are provided`, () => {
-    it(`should return the formBody without ${INPUT} success,and __typename fields`, () => {
+    it(`should return the formBody without ${INPUT} success,and __typename fields and change null fields in address to empty strings`, () => {
       const response = mapSubmittedData(mockBody);
 
       const expected = {
         companyName: 'testName',
-        registeredOfficeAddress: {
-          careOf: null,
-          premises: null,
+        companyNumber: '8989898',
+        dateOfCreation: new Date(mockBody[COMPANY_INCORPORATED]).toISOString(),
+        exporterCompanyAddress: {
+          careOf: '',
+          premises: '',
           addressLine1: 'line1',
           addressLine2: 'line2',
           locality: 'line3',
           region: 'line4',
           postalCode: 'line5',
-          country: null,
+          country: '',
         },
-        companyNumber: '8989898',
-        dateOfCreation: '2014-04-10',
         sicCodes: ['64999'],
       };
 
@@ -62,10 +62,12 @@ describe('controllers/insurance/business/map-submitted-data', () => {
     // eslint-disable-next-line no-underscore-dangle
     delete mockBodyWithoutFields.__typename;
     delete mockBodyWithoutFields.registeredOfficeAddress;
+    delete mockBodyWithoutFields.dateOfCreation;
     delete mockBodyWithoutFields.success;
 
-    it(`should return the formBody without ${INPUT} success,and __typename fields`, () => {
+    it(`should return the formBody without ${INPUT} success,and __typename fields and add an empty exporterCompanyAddress object`, () => {
       const response = mapSubmittedData(mockBodyWithoutFields);
+      mockBodyWithoutFields.exporterCompanyAddress = {};
 
       expect(response).toEqual(mockBodyWithoutFields);
     });

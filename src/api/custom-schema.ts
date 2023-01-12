@@ -5,6 +5,7 @@ import { NotifyClient } from 'notifications-node-client';
 import axios from 'axios';
 import dotenv from 'dotenv';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
+import { mapSicCodes } from './helpers/mapSicCodes';
 
 dotenv.config();
 
@@ -79,6 +80,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
 
       input ExporterCompanyAndCompanyAddressInput {
         exporterCompanyAddress: ExporterCompanyAddressInput
+        sicCodes: [String]
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
@@ -115,10 +117,9 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);
+            const { exporterCompanyAddress, sicCodes, ...exporterCompany } = variables.data;
 
-            const { exporterCompanyAddress, ...exporterCompany } = variables.data;
-
-            await context.db.ExporterCompany.updateOne({
+            const company = await context.db.ExporterCompany.updateOne({
               where: { id: variables.companyId },
               data: exporterCompany,
             });
@@ -126,6 +127,13 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
             await context.db.ExporterCompanyAddress.updateOne({
               where: { id: variables.companyAddressId },
               data: exporterCompanyAddress,
+            });
+
+            // maps SIC codes from variables into array
+            const sicCodesToAdd = mapSicCodes(company, sicCodes);
+            // TODO: delete existing SIC codes when adding sic codes to db
+            await context.db.ExporterCompanySicCode.createMany({
+              data: sicCodesToAdd,
             });
 
             return {

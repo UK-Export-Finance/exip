@@ -6,7 +6,7 @@ import countries from '../countries';
 import createApplicationMutation from '../../../graphql/mutations/create-application';
 import getApplicationQuery from '../../../graphql/queries/application';
 import updateApplicationPolicyAndExportMutation from '../../../graphql/mutations/update-application/policy-and-export';
-import updateApplicationExporterCompanytMutation from '../../../graphql/mutations/update-application/exporter-company';
+import updateApplicationExporterCompanyMutation from '../../../graphql/mutations/update-application/exporter-company';
 
 const createEmptyApplication = async () => {
   try {
@@ -130,8 +130,8 @@ const application = {
           data: update,
         };
 
-        const response = (await apollo('POST', updateApplicationExporterCompanytMutation, variables)) as ApolloResponse;
- 
+        const response = (await apollo('POST', updateApplicationExporterCompanyMutation, variables)) as ApolloResponse;
+
         if (response.errors) {
           console.error('GraphQL error updating application exporter company ', response.errors);
         }
