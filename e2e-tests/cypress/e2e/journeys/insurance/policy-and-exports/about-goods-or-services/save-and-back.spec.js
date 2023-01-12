@@ -8,6 +8,18 @@ import application from '../../../../../fixtures/application';
 
 const {
   INSURANCE: {
+    ROOT: INSURANCE_ROOT,
+    START,
+    ALL_SECTIONS,
+    POLICY_AND_EXPORTS: {
+      SINGLE_CONTRACT_POLICY,
+      ABOUT_GOODS_OR_SERVICES,
+    },
+  },
+} = ROUTES;
+
+const {
+  INSURANCE: {
     POLICY_AND_EXPORTS: {
       ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
     },
@@ -40,7 +52,7 @@ context('Insurance - Policy and exports - About goods or services - Save and go 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       cy.url().should('eq', expected);
     });
   });
@@ -51,10 +63,10 @@ context('Insurance - Policy and exports - About goods or services - Save and go 
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       saveAndBackButton().click();
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
     });
@@ -76,11 +88,11 @@ context('Insurance - Policy and exports - About goods or services - Save and go 
       submitButton().click();
     });
 
-    it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       aboutGoodsOrServicesPage[DESCRIPTION].input().type(application.POLICY_AND_EXPORTS[DESCRIPTION]);
       saveAndBackButton().click();
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
     });
