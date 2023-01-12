@@ -1,52 +1,32 @@
 import { RequestBody } from '../../../../../types';
 import { FIELD_IDS } from '../../../../constants';
 import mapSubmittedData from '.';
+import { mockBody } from './mocks';
 
 const {
   COMPANY_HOUSE: { INPUT, COMPANY_INCORPORATED },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 describe('controllers/insurance/business/map-submitted-data', () => {
-  const mockBody = {
-    [INPUT]: '8989898',
-    __typename: 'CompaniesHouseResponse',
-    companyName: 'testName',
-    registeredOfficeAddress: {
-      careOf: null,
-      premises: null,
-      addressLine1: 'line1',
-      addressLine2: 'line2',
-      locality: 'line3',
-      region: 'line4',
-      postalCode: 'line5',
-      country: null,
-      __typename: 'CompanyAddress',
-    },
-    companyNumber: '8989898',
-    dateOfCreation: '2014-04-10',
-    sicCodes: ['64999'],
-    success: true,
-  } as RequestBody;
-
   describe(`when ${INPUT} success,and __typename fields are provided`, () => {
     it(`should return the formBody without ${INPUT} success,and __typename fields and change null fields in address to empty strings`, () => {
       const response = mapSubmittedData(mockBody);
 
       const expected = {
-        companyName: 'testName',
-        companyNumber: '8989898',
+        companyName: mockBody.companyName,
+        companyNumber: mockBody.companyNumber.toString(),
         dateOfCreation: new Date(mockBody[COMPANY_INCORPORATED]).toISOString(),
         exporterCompanyAddress: {
           careOf: '',
           premises: '',
-          addressLine1: 'line1',
-          addressLine2: 'line2',
-          locality: 'line3',
-          region: 'line4',
-          postalCode: 'line5',
+          addressLine1: mockBody.registeredOfficeAddress.addressLine1,
+          addressLine2: '',
+          locality: mockBody.registeredOfficeAddress.locality,
+          region: mockBody.registeredOfficeAddress.region,
+          postalCode: mockBody.registeredOfficeAddress.postalCode,
           country: '',
         },
-        sicCodes: ['64999'],
+        sicCodes: mockBody.sicCodes,
       };
 
       expect(response).toEqual(expected);
@@ -64,12 +44,16 @@ describe('controllers/insurance/business/map-submitted-data', () => {
     delete mockBodyWithoutFields.registeredOfficeAddress;
     delete mockBodyWithoutFields.dateOfCreation;
     delete mockBodyWithoutFields.success;
+    delete mockBodyWithoutFields.apiError;
+    delete mockBodyWithoutFields.companyNumber;
 
     it(`should return the formBody without ${INPUT} success,and __typename fields and add an empty exporterCompanyAddress object`, () => {
       const response = mapSubmittedData(mockBodyWithoutFields);
-      mockBodyWithoutFields.exporterCompanyAddress = {};
 
-      expect(response).toEqual(mockBodyWithoutFields);
+      const { _csrf, ...expectedBody } = mockBodyWithoutFields;
+      expectedBody.exporterCompanyAddress = {};
+
+      expect(response).toEqual(expectedBody);
     });
   });
 });

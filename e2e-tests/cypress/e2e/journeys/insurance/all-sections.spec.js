@@ -161,7 +161,8 @@ context('Insurance - All sections - new application', () => {
             expect(text.trim()).equal(expected);
           });
 
-          task.link().should('have.attr', 'href', '#');
+          const expectedUrl = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+          task.link().should('have.attr', 'href', expectedUrl);
 
           task.status().invoke('text').then((text) => {
             const expected = TASKS.STATUS.NOT_STARTED_YET;

@@ -11,7 +11,7 @@ import mapSubmittedData from '../map-submitted-data';
  * @param {ValidationErrors} validationErrors
  * @returns {Boolean}
  */
-const companyDetailsSave = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
+const companyDetails = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
       // maps through formBody and puts fields in correct format
@@ -40,5 +40,5 @@ const companyDetailsSave = async (formBody: RequestBody, application: Applicatio
 };
 
 export default {
-  companyDetailsSave,
+  companyDetails,
 };

@@ -50,7 +50,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe('all page errors', () => {
     it('should display validation errors if required inputs are not correctly answered', () => {
       companyDetails.companyWebsite().type(WEBSITE_EXAMPLES.INVALID);
-      companyDetails.phoneNumber().type(INVALID_PHONE_NUMBERS.LANDLINE_LONG);
+      companyDetails.phoneNumber().type(INVALID_PHONE_NUMBERS.LANDLINE.LONG);
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 5);
 

@@ -7,6 +7,7 @@ import companiesHouseValidation from './validation/companies-house';
 import companyDetailsValidation from './validation/company-details';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../test-mocks';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
+import mapAndSave from '../map-and-save';
 import api from '../../../../api';
 
 const {
@@ -32,8 +33,7 @@ describe('controllers/insurance/business/companies-details', () => {
   const getCompaniesHouseResponse = jest.fn(() => Promise.resolve(mockCompany));
   api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
 
-  const mockUpdateApplicationResponse = mockApplication;
-  api.keystone.application.update.exporterCompany = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
+  mapAndSave.companyDetails = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -102,16 +102,27 @@ describe('controllers/insurance/business/companies-details', () => {
       });
     });
 
-    describe('when api.keystone.application.update.exporterCompany does not return success', () => {
-      beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
-        api.keystone.application.update.exporterCompany = jest.fn(() => Promise.reject());
+    describe('api error handling', () => {
+      describe('when api.keystone.application.update.exporterCompany returns an error', () => {
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+          res.locals = { csrfToken: '1234' };
+          mapAndSave.companyDetails = jest.fn(() => Promise.reject());
+
+          post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      describe('when api.keystone.application.update.exporterCompany resolves false', () => {
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+          res.locals = { csrfToken: '1234' };
+          mapAndSave.companyDetails = jest.fn(() => Promise.resolve(false));
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });

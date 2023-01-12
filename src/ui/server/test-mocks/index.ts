@@ -23,7 +23,7 @@ const mockReq = () => {
     method: 'GET',
     originalUrl: 'mock',
     params: {
-      referenceNumber: '12345',
+      referenceNumber: mockApplication.referenceNumber.toString(),
     },
     redirect: jest.fn(),
     session: {

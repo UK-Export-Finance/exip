@@ -30,30 +30,30 @@ describe('controllers/insurance/business/map-and-save', () => {
 
   describe('when the form has data', () => {
     describe('when the form has validation errors ', () => {
-      it('should call save.companyDetailsSave with application, populated submitted data and validationErrors.errorList', async () => {
-        await mapAndSave.companyDetailsSave(mockFormBody, mockApplication, mockValidationErrors);
+      it('should call save.companyDetails with application, populated submitted data and validationErrors.errorList', async () => {
+        await mapAndSave.companyDetails(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(save.companyDetails).toHaveBeenCalledTimes(1);
         expect(save.companyDetails).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.companyDetailsSave(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.companyDetails(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
     });
 
     describe('when the form does NOT have validation errors ', () => {
-      it('should call save.companyDetailsSave with application and populated submitted data', async () => {
-        await mapAndSave.companyDetailsSave(mockFormBody, mockApplication);
+      it('should call save.companyDetails with application and populated submitted data', async () => {
+        await mapAndSave.companyDetails(mockFormBody, mockApplication);
 
         expect(save.companyDetails).toHaveBeenCalledTimes(1);
         expect(save.companyDetails).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.companyDetailsSave(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.companyDetails(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
@@ -64,7 +64,7 @@ describe('controllers/insurance/business/map-and-save', () => {
     it('should return true', async () => {
       mockFormBody = { _csrf: '1234' };
 
-      const result = await mapAndSave.companyDetailsSave(mockFormBody, mockApplication, mockValidationErrors);
+      const result = await mapAndSave.companyDetails(mockFormBody, mockApplication, mockValidationErrors);
 
       expect(result).toEqual(true);
     });

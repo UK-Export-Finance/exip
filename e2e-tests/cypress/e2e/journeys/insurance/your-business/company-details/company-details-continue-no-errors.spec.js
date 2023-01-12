@@ -47,7 +47,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       companyDetails.companiesHouseSearch().type(COMPANIES_HOUSE_NUMBER);
       yesRadioInput().first().click();
       yesRadioInput().eq(1).click();
-      companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE);
+      companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
       companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
       submitButton().click();
       cy.url().should('eq', natureOfBusinessUrl);

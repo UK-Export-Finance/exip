@@ -79,63 +79,63 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe(`when ${PHONE_NUMBER} is correctly entered`, () => {
     describe('valid landline phone number', () => {
       it('should not display validation errors', () => {
-        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE);
+        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid landline phone number with brackets', () => {
       it('should not display validation errors', () => {
-        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE_BRACKETS);
+        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.BRACKETS);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid landline phone number with dashes', () => {
       it('should not display validation errors', () => {
-        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE_DASHES);
+        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.DASHES);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid landline phone number with country code without 0s', () => {
       it('should not display validation errors', () => {
-        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE_FULL_NO_ZEROS);
+        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.FULL_NO_ZEROS);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid landline phone number with country code', () => {
       it('should not display validation errors', () => {
-        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE_FULL);
+        completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.FULL);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number', () => {
       it('should not display validation errors', () => {
-        completeAllFields(VALID_PHONE_NUMBERS.MOBILE);
+        completeAllFields(VALID_PHONE_NUMBERS.MOBILE.NORMAL);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number with dashes', () => {
       it('should not display validation errors', () => {
-        completeAllFields(VALID_PHONE_NUMBERS.MOBILE_DASH);
+        completeAllFields(VALID_PHONE_NUMBERS.MOBILE.DASH);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number with full country code', () => {
       it('should not display validation errors', () => {
-        completeAllFields(VALID_PHONE_NUMBERS.MOBILE_FULL_CODE);
+        completeAllFields(VALID_PHONE_NUMBERS.MOBILE.FULL_CODE);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number with full country code with brackets', () => {
       it('should not display validation errors', () => {
-        completeAllFields(VALID_PHONE_NUMBERS.MOBILE_FULL_CODE_BRACKET);
+        completeAllFields(VALID_PHONE_NUMBERS.MOBILE.FULL_CODE_BRACKET);
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });

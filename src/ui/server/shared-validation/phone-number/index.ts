@@ -5,6 +5,7 @@ import { DEFAULT_COUNTRY_UK } from '../../constants';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
+// regex pattern to only allow numbers, dashes, plus sign and brackets
 const pattern = '^[0-9-)(+— ]*$';
 
 /**
@@ -12,14 +13,14 @@ const pattern = '^[0-9-)(+— ]*$';
  * @param {string} phoneNumber
  * @returns {Boolean}
  */
-const phoneNumberValidity = (phoneNumber: string) => phoneUtil.isValidNumberForRegion(phoneUtil.parse(phoneNumber, DEFAULT_COUNTRY_UK), DEFAULT_COUNTRY_UK);
+const isPhoneNumberValid = (phoneNumber: string) => phoneUtil.isValidNumberForRegion(phoneUtil.parse(phoneNumber, DEFAULT_COUNTRY_UK), DEFAULT_COUNTRY_UK);
 
 /**
  * joi phone using regex to ensure only numbers and specified special characters are in the string
  * @param {string} phoneNumber
  * @returns {Boolean}
  */
-const phoneNumberValidation = (phoneNumber: string) => {
+const phoneNumberPatternValidation = (phoneNumber: string) => {
   const schema = Joi.string().regex(RegExp(pattern)).required();
 
   const validation = schema.validate(phoneNumber);
@@ -41,7 +42,7 @@ const validatePhoneNumber = (phoneNumber: string, fieldId: string, errorMessage:
 
   // if not valid for UK, then returns validation error
   try {
-    if (!phoneNumberValidity(phoneNumber) || phoneNumberValidation(phoneNumber)) {
+    if (!isPhoneNumberValid(phoneNumber) || phoneNumberPatternValidation(phoneNumber)) {
       updatedErrors = generateValidationErrors(fieldId, errorMessage, updatedErrors);
       return updatedErrors;
     }

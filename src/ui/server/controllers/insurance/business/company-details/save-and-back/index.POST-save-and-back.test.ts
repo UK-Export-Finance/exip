@@ -1,8 +1,8 @@
-import { Request, Response } from '../../../../../types';
-import { postCompanyDetailsSaveAndBack } from '.';
-import { FIELD_IDS, ROUTES } from '../../../../constants';
-import { mockReq, mockRes, mockApplication, mockPhoneNumbers } from '../../../../test-mocks';
-import api from '../../../../api';
+import { Request, Response } from '../../../../../../types';
+import { post } from '.';
+import { FIELD_IDS, ROUTES } from '../../../../../constants';
+import { mockReq, mockRes, mockApplication, mockPhoneNumbers } from '../../../../../test-mocks';
+import api from '../../../../../api';
 
 const {
   EXPORTER_BUSINESS: {
@@ -34,7 +34,7 @@ describe('controllers/insurance/business/companies-details', () => {
     jest.resetAllMocks();
   });
 
-  describe('postCompanyDetailsSaveAndBack', () => {
+  describe('post', () => {
     describe('when there are validation errors', () => {
       it('should redirect to next page', async () => {
         req.body = {
@@ -43,7 +43,7 @@ describe('controllers/insurance/business/companies-details', () => {
           [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
         };
 
-        await postCompanyDetailsSaveAndBack(req, res);
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
@@ -55,7 +55,7 @@ describe('controllers/insurance/business/companies-details', () => {
           [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
         };
 
-        await postCompanyDetailsSaveAndBack(req, res);
+        await post(req, res);
 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
       });
@@ -69,7 +69,7 @@ describe('controllers/insurance/business/companies-details', () => {
           [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
         };
 
-        await postCompanyDetailsSaveAndBack(req, res);
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
@@ -81,7 +81,7 @@ describe('controllers/insurance/business/companies-details', () => {
           [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
         };
 
-        await postCompanyDetailsSaveAndBack(req, res);
+        await post(req, res);
 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
       });
@@ -93,7 +93,7 @@ describe('controllers/insurance/business/companies-details', () => {
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
-        postCompanyDetailsSaveAndBack(req, res);
+        post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });
@@ -107,7 +107,7 @@ describe('controllers/insurance/business/companies-details', () => {
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
-        postCompanyDetailsSaveAndBack(req, res);
+        post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });

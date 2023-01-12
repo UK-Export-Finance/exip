@@ -21,7 +21,7 @@ const {
   },
 } = FIELD_IDS.INSURANCE;
 
-describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section", () => {
+describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - Save and go back", () => {
   let referenceNumber;
   let url;
 
@@ -46,62 +46,60 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  describe('save and go back', () => {
-    it(`should not display validation errors and redirect to task list if only ${TRADING_ADDRESS} and ${TRADING_NAME} fields are completed`, () => {
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
-      saveAndBackButton().click();
+  it(`should not display validation errors and redirect to task list if only ${TRADING_ADDRESS} and ${TRADING_NAME} fields are completed`, () => {
+    yesRadioInput().first().click();
+    yesRadioInput().eq(1).click();
+    saveAndBackButton().click();
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-    });
+    cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+  });
 
-    it(`should not display validation errors and redirect to task list if required fields are completed and ${INPUT} is entered incorrectly`, () => {
-      cy.navigateToUrl(url);
+  it(`should not display validation errors and redirect to task list if required fields are completed and ${INPUT} is entered incorrectly`, () => {
+    cy.navigateToUrl(url);
 
-      companyDetails.companiesHouseSearch().clear().type('**/*');
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
-      saveAndBackButton().click();
+    companyDetails.companiesHouseSearch().clear().type('**/*');
+    yesRadioInput().first().click();
+    yesRadioInput().eq(1).click();
+    saveAndBackButton().click();
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-    });
+    cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+  });
 
-    it(`should not display validation errors and redirect to task list if required fields are completed and ${PHONE_NUMBER} is entered incorrectly`, () => {
-      cy.navigateToUrl(url);
+  it(`should not display validation errors and redirect to task list if required fields are completed and ${PHONE_NUMBER} is entered incorrectly`, () => {
+    cy.navigateToUrl(url);
 
-      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
-      companyDetails.phoneNumber().clear().type(INVALID_PHONE_NUMBERS.LANDLINE_SPECIAL_CHAR);
-      saveAndBackButton().click();
+    companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
+    yesRadioInput().first().click();
+    yesRadioInput().eq(1).click();
+    companyDetails.phoneNumber().clear().type(INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR);
+    saveAndBackButton().click();
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-    });
+    cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+  });
 
-    it(`should not display validation errors and redirect to task list if required fields are completed and ${WEBSITE} is entered incorrectly`, () => {
-      cy.navigateToUrl(url);
+  it(`should not display validation errors and redirect to task list if required fields are completed and ${WEBSITE} is entered incorrectly`, () => {
+    cy.navigateToUrl(url);
 
-      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
-      companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE);
-      companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.INVALID);
-      saveAndBackButton().click();
+    companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
+    yesRadioInput().first().click();
+    yesRadioInput().eq(1).click();
+    companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+    companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.INVALID);
+    saveAndBackButton().click();
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-    });
+    cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+  });
 
-    it('should not display validation errors and redirect to task list if all fields are entered correctly', () => {
-      cy.navigateToUrl(url);
+  it('should not display validation errors and redirect to task list if all fields are entered correctly', () => {
+    cy.navigateToUrl(url);
 
-      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
-      companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE);
-      companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
-      saveAndBackButton().click();
+    companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
+    yesRadioInput().first().click();
+    yesRadioInput().eq(1).click();
+    companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+    companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
+    saveAndBackButton().click();
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-    });
+    cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   });
 });

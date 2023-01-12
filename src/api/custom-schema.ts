@@ -5,7 +5,7 @@ import { NotifyClient } from 'notifications-node-client';
 import axios from 'axios';
 import dotenv from 'dotenv';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
-import { mapSicCodes } from './helpers/mapSicCodes';
+import { mappedSicCodes } from './helpers/mappedSicCodes';
 
 dotenv.config();
 
@@ -130,7 +130,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
             });
 
             // maps SIC codes from variables into array
-            const sicCodesToAdd = mapSicCodes(company, sicCodes);
+            const sicCodesToAdd = mappedSicCodes(company, sicCodes);
             // TODO: delete existing SIC codes when adding sic codes to db
             await context.db.ExporterCompanySicCode.createMany({
               data: sicCodesToAdd,
