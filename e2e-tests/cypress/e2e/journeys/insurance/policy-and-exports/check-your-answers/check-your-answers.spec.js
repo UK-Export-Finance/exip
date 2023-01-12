@@ -39,7 +39,7 @@ const goToPageDirectly = (referenceNumber) => {
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
-context('Insurance - Policy and exports - TODO', () => {
+context('Insurance - Policy and exports - Check your answers - As an exporter, I want to check my answers to the type of policy and exports section', () => {
   let referenceNumber;
 
   before(() => {
@@ -142,6 +142,8 @@ context('Insurance - Policy and exports - TODO', () => {
 
   describe('form submission', () => {
     it(`should redirect to ${COMPANY_DETAILS}`, () => {
+      submitButton().click();
+
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
       cy.url().should('eq', expectedUrl);
     });

@@ -1,4 +1,5 @@
 import partials from '../../../partials';
+import { saveAndBackButton } from '../../../pages/shared';
 import { TASKS } from '../../../../../content-strings';
 import { FIELD_VALUES, ROUTES } from '../../../../../constants';
 import getReferenceNumber from '../../../helpers/get-reference-number';
@@ -32,6 +33,9 @@ context('Insurance - Policy and exports - Complete the entire section as a singl
     cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
     cy.completeAndSubmitSingleContractPolicyForm();
     cy.completeAndSubmitAboutGoodsOrServicesForm();
+
+    // go back to the all sections page
+    saveAndBackButton().click();
   });
 
   beforeEach(() => {
@@ -39,7 +43,7 @@ context('Insurance - Policy and exports - Complete the entire section as a singl
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it(`should redirect to ${ALL_SECTIONS} change the 'type of policy and exports' task status to 'completed'`, () => {
+  it(`should change the 'type of policy and exports' task status to 'completed' in the ${ALL_SECTIONS} page`, () => {
     getReferenceNumber().then((referenceNumber) => {
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
