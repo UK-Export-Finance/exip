@@ -11,10 +11,7 @@ const {
     ROOT: INSURANCE_ROOT,
     START,
     ALL_SECTIONS,
-    POLICY_AND_EXPORTS: {
-      SINGLE_CONTRACT_POLICY,
-      ABOUT_GOODS_OR_SERVICES,
-    },
+    POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES },
   },
 } = ROUTES;
 
@@ -30,11 +27,11 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
-context('Insurance - Policy and exports - About goods or services - Save and go back', () => {
+context('Insurance - Policy and exports - About goods or services page - Save and go back', () => {
   let referenceNumber;
 
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
+    cy.visit(START, {
       auth: {
         username: Cypress.config('basicAuthKey'),
         password: Cypress.config('basicAuthSecret'),
