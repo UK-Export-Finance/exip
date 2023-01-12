@@ -38,15 +38,18 @@ CREATE TABLE IF NOT EXISTS `Application` (
   `policyAndExport` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `exporterCompany` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `exporterCompanyAddress` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+	`exporterCompanySicCode` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Application_referenceNumber_idx` (`referenceNumber`),
   KEY `Application_eligibility_idx` (`eligibility`),
   KEY `Application_policyAndExport_idx` (`policyAndExport`),
   KEY `Application_exporterCompany_idx` (`exporterCompany`),
   KEY `Application_exporterCompanyAddress_idx` (`exporterCompanyAddress`),
+	KEY `Application_exporterCompanySicCode_idx` (`exporterCompanySicCode`),
   CONSTRAINT `Application_eligibility_fkey` FOREIGN KEY (`eligibility`) REFERENCES `Eligibility` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_exporterCompany_fkey` FOREIGN KEY (`exporterCompany`) REFERENCES `ExporterCompany` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_exporterCompanyAddress_fkey` FOREIGN KEY (`exporterCompanyAddress`) REFERENCES `ExporterCompanyAddress` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+	CONSTRAINT `Application_exporterCompanySicCode_fkey` FOREIGN KEY (`exporterCompanySicCode`) REFERENCES `ExporterCompanySicCode` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_policyAndExport_fkey` FOREIGN KEY (`policyAndExport`) REFERENCES `PolicyAndExport` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -398,7 +401,13 @@ CREATE TABLE IF NOT EXISTS `ExporterCompanyAddress` (
 CREATE TABLE IF NOT EXISTS `ExporterCompanySicCode` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+	`application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `exporterCompany` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+	KEY `ExporterCompanySicCode_exporterCompany_idx` (`exporterCompany`),
+  KEY `ExporterCompanySicCode_application_idx` (`application`),
+  CONSTRAINT `ExporterCompanySicCode_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `ExporterCompanySicCode_exporterCompany_fkey` FOREIGN KEY (`exporterCompany`) REFERENCES `ExporterCompany` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
