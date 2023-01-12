@@ -16,7 +16,7 @@ import {
   TASKS,
 } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
@@ -237,9 +237,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     describe('when submitting the answer as `multiple`', () => {
       it(`should redirect to ${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, () => {
-        multiplePolicyField.input().click();
-
-        submitButton().click();
+        cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTI);
 
         const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 

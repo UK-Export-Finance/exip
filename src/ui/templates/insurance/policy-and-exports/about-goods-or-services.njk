@@ -1,7 +1,6 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
@@ -76,6 +75,29 @@
             text: validationErrors.errorList[FIELDS.DESCRIPTION.ID].text,
             attributes: {
               "data-cy": FIELDS.DESCRIPTION.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukSelect({
+          id: FIELDS.FINAL_DESTINATION.ID,
+          name: FIELDS.FINAL_DESTINATION.ID,
+          label: {
+            text: FIELDS.FINAL_DESTINATION.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              'data-cy': FIELDS.FINAL_DESTINATION.ID + '-label'
+            }
+          },
+          items: countries,
+          classes: "govuk-grid-column-one-quarter-from-desktop",
+          attributes: {
+            "data-cy": FIELDS.FINAL_DESTINATION.ID + "-input"
+          },
+          errorMessage: validationErrors.errorList[FIELDS.FINAL_DESTINATION.ID] and {
+            text: validationErrors.errorList[FIELDS.FINAL_DESTINATION.ID].text,
+            attributes: {
+              "data-cy": FIELDS.FINAL_DESTINATION.ID + "-error-message"
             }
           }
         }) }}

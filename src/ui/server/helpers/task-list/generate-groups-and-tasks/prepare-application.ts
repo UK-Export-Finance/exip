@@ -1,5 +1,6 @@
 import { TaskListDataTask, TaskListData } from '../../../../types';
-import { FIELD_IDS, GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
+import { FIELD_IDS, FIELD_VALUES, GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
+import { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
 import { TASKS } from '../../../content-strings';
 import { getGroupById, getAllTasksFieldsInAGroup } from '../task-helpers';
 
@@ -9,11 +10,31 @@ const { INSURANCE_ROOT, POLICY_AND_EXPORTS, EXPORTER_BUSINESS: EXPORTER_BUSINESS
 const { PREPARE_APPLICATION } = TASKS.LIST;
 
 /**
+ * getContractPolicyTasks
+ * Get contract policy tasks depending on the type of policy
+ * @param {String} Application policy type
+ * @returns {Objecvt} Contract policy tasks
+ */
+export const getContractPolicyTasks = (policyType?: string): object => {
+  if (policyType === FIELD_VALUES.POLICY_TYPE.SINGLE) {
+    return FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE;
+  }
+
+  if (policyType === FIELD_VALUES.POLICY_TYPE.MULTI) {
+    return FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE;
+  }
+
+  return FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
+};
+
+/**
  * createPrepareApplicationTasks
+ * @param {Number} Application reference number
+ * @param {String} Application policy type
  * @param {Array} otherGroups Task list groups
  * @returns {Array} Tasks
  */
-const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: TaskListData): Array<TaskListDataTask> => {
+const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: TaskListData, policyType?: string): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
 
   const allInitialChecksFields = getAllTasksFieldsInAGroup(initialChecksGroup);
@@ -22,7 +43,12 @@ const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: Tas
     href: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`,
     title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS,
     id: TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE_AND_EXPORTS,
-    fields: Object.values(FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY),
+    fields: Object.values({
+      ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
+      ...SHARED_CONTRACT_POLICY,
+      ...getContractPolicyTasks(policyType),
+      ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
+    }),
     dependencies: allInitialChecksFields,
   };
 

@@ -96,7 +96,7 @@ export const POLICY_AND_EXPORT_FIELDS = {
       },
       MAXIMUM: 1000,
     },
-    FINAL_DESTINATION: {
+    [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
       LABEL: "What's the final destination of the goods or services?",
     },
   },

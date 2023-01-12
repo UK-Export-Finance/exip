@@ -66,6 +66,7 @@ model PolicyAndExport {
   totalSalesToBuyer                Int?
   maximumBuyerWillOwe              Int?
   goodsOrServicesDescription       String        @default("")
+  finalDestinationCountryCode      String        @default("")
   from_Application_policyAndExport Application[] @relation("Application_policyAndExport")
 
   @@index([applicationId])

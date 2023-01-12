@@ -3,7 +3,10 @@ import { PAGES } from '../../../../content-strings';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import api from '../../../../api';
+import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
+import mapCountries from '../../../../helpers/mappings/map-countries';
 import mapAndSave from '../map-and-save';
 
 const {
@@ -49,7 +52,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SE
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} About goods or services page
  */
-export const get = (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -59,14 +62,35 @@ export const get = (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
-  return res.render(TEMPLATE, {
-    ...insuranceCorePageVariables({
-      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
-      BACK_LINK: req.headers.referer,
-    }),
-    ...pageVariables(refNumber),
-    application,
-  });
+  try {
+    const countries = await api.keystone.countries.getAll();
+
+    if (!countries || !countries.length) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    let mappedCountries;
+
+    if (objectHasProperty(application.policyAndExport, FINAL_DESTINATION)) {
+      mappedCountries = mapCountries(countries, application.policyAndExport[FINAL_DESTINATION]);
+    } else {
+      mappedCountries = mapCountries(countries);
+    }
+
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(refNumber),
+      application,
+      countries: mappedCountries,
+    });
+  } catch (err) {
+    console.error('Error getting countries ', { err });
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
 };
 
 /**
@@ -89,16 +113,37 @@ export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body);
 
   if (validationErrors) {
-    return res.render(TEMPLATE, {
-      ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
-        BACK_LINK: req.headers.referer,
-      }),
-      ...pageVariables(refNumber),
-      application,
-      submittedValues: req.body,
-      validationErrors,
-    });
+    try {
+      const countries = await api.keystone.countries.getAll();
+
+      if (!countries || !countries.length) {
+        return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      }
+
+      let mappedCountries;
+
+      if (objectHasProperty(req.body, FINAL_DESTINATION)) {
+        mappedCountries = mapCountries(countries, req.body[FINAL_DESTINATION]);
+      } else {
+        mappedCountries = mapCountries(countries);
+      }
+
+      return res.render(TEMPLATE, {
+        ...insuranceCorePageVariables({
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
+          BACK_LINK: req.headers.referer,
+        }),
+        ...pageVariables(refNumber),
+        application,
+        submittedValues: req.body,
+        countries: mappedCountries,
+        validationErrors,
+      });
+    } catch (err) {
+      console.error('Error getting countries ', { err });
+
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
   }
 
   try {

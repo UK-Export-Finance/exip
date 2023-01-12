@@ -37,6 +37,7 @@ const applicationQuery = gql`
           totalSalesToBuyer
           maximumBuyerWillOwe
           goodsOrServicesDescription
+          finalDestinationCountryCode
         }
         exporterCompany {
           id

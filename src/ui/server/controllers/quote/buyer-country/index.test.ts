@@ -6,7 +6,7 @@ import { validation as generateValidationErrors } from '../../../shared-validati
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
 import api from '../../../api';
-import { mapCountries } from '../../../helpers/mappings/map-countries';
+import { mapCisCountries } from '../../../helpers/mappings/map-cis-countries';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
@@ -114,7 +114,7 @@ describe('controllers/quote/buyer-country', () => {
 
       const expectedVariables = {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
-        countries: mapCountries(mockCountriesResponse),
+        countries: mapCisCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData.quoteEligibility,
         isChangeRoute: isChangeRoute(req.originalUrl),
       };
@@ -164,7 +164,7 @@ describe('controllers/quote/buyer-country', () => {
 
         await get(req, res);
 
-        const expectedCountries = mapCountries(mockCountriesResponse, req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY].isoCode);
+        const expectedCountries = mapCisCountries(mockCountriesResponse, req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY].isoCode);
 
         const expectedVariables = {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
@@ -177,41 +177,56 @@ describe('controllers/quote/buyer-country', () => {
       });
     });
 
-    describe('when the CIS (country information system) API has no data', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCountriesSpy = jest.fn(() => Promise.resolve());
-        api.external.getCountries = getCountriesSpy;
+    describe('api error handling', () => {
+      describe('when the CIS (country information system) API has no data', () => {
+        beforeEach(() => {
+          // @ts-ignore
+          getCountriesSpy = jest.fn(() => Promise.resolve());
+          api.external.getCountries = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
+      describe('when the CIS (country information system) API does not return an array', () => {
+        beforeEach(() => {
+          // @ts-ignore
+          getCountriesSpy = jest.fn(() => Promise.resolve({}));
+          api.external.getCountries = getCountriesSpy;
+        });
 
-    describe('when the CIS (country information system) API does not return an array', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCountriesSpy = jest.fn(() => Promise.resolve({}));
-        api.external.getCountries = getCountriesSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-
-    describe('when the CIS (country information system) API does not return a populated array', () => {
-      beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.resolve([]));
-        api.external.getCountries = getCountriesSpy;
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      describe('when the CIS (country information system) API does not return a populated array', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.resolve([]));
+          api.external.getCountries = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when there is an error with the CIS (country information system) API call', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.reject());
+          api.external.getCurrencies = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });
@@ -229,7 +244,7 @@ describe('controllers/quote/buyer-country', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
-          countries: mapCountries(mockCountriesResponse),
+          countries: mapCisCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),
           isChangeRoute: isChangeRoute(req.originalUrl),
         });
@@ -303,7 +318,7 @@ describe('controllers/quote/buyer-country', () => {
 
     describe('when the country is supported for an online quote and there are no validation errors', () => {
       const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
-      const mappedCountries = mapCountries(mockCountriesResponse);
+      const mappedCountries = mapCisCountries(mockCountriesResponse);
 
       const selectedCountry = getCountryByName(mappedCountries, selectedCountryName);
 
@@ -348,41 +363,56 @@ describe('controllers/quote/buyer-country', () => {
       });
     });
 
-    describe('when the CIS (country information system) API has no data', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCountriesSpy = jest.fn(() => Promise.resolve());
-        api.external.getCountries = getCountriesSpy;
+    describe('api error handling', () => {
+      describe('when the CIS (country information system) API has no data', () => {
+        beforeEach(() => {
+          // @ts-ignore
+          getCountriesSpy = jest.fn(() => Promise.resolve());
+          api.external.getCountries = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
+      describe('when the CIS (country information system) API does not return an array', () => {
+        beforeEach(() => {
+          // @ts-ignore
+          getCountriesSpy = jest.fn(() => Promise.resolve({}));
+          api.external.getCountries = getCountriesSpy;
+        });
 
-    describe('when the CIS (country information system) API does not return an array', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCountriesSpy = jest.fn(() => Promise.resolve({}));
-        api.external.getCountries = getCountriesSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-
-    describe('when the CIS (country information system) API does not return a populated array', () => {
-      beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.resolve([]));
-        api.external.getCountries = getCountriesSpy;
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      describe('when the CIS (country information system) API does not return a populated array', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.resolve([]));
+          api.external.getCountries = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when there is an error with the CIS (country information system) API call', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.reject());
+          api.external.getCurrencies = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });

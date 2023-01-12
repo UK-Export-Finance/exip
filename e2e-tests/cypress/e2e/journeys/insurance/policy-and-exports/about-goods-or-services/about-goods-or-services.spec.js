@@ -4,7 +4,7 @@ import {
   submitButton,
   saveAndBackButton,
 } from '../../../../pages/shared';
-import { typeOfPolicyPage, aboutGoodsOrServicesPage } from '../../../../pages/insurance/policy-and-export';
+import { aboutGoodsOrServicesPage } from '../../../../pages/insurance/policy-and-export';
 import partials from '../../../../partials';
 import {
   BUTTONS,
@@ -14,16 +14,14 @@ import {
   TASKS,
 } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
-import { FIELD_IDS, ROUTES } from '../../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
+import countries from '../../../../../fixtures/countries';
 
 const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES;
-
-const singlePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const singlePolicyField = typeOfPolicyPage[singlePolicyFieldId].single;
 
 const {
   INSURANCE: {
@@ -40,7 +38,7 @@ const {
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
+      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     },
   },
 } = FIELD_IDS;
@@ -70,8 +68,8 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     cy.submitInsuranceEligibilityAndStartApplication();
 
     taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
-    singlePolicyField.input().click();
-    submitButton().click();
+
+    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
     cy.completeAndSubmitSingleContractPolicyForm();
 
@@ -165,6 +163,20 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     field.input().should('exist');
   });
 
+  it('renders `final destination` label and input with disabled first input', () => {
+    const fieldId = FINAL_DESTINATION;
+    const field = aboutGoodsOrServicesPage[fieldId];
+
+    field.label().should('exist');
+    field.label().invoke('text').then((text) => {
+      expect(text.trim()).equal(FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
+    });
+
+    field.input().should('exist');
+
+    field.inputFirstOption().should('be.disabled');
+  });
+
   it('renders a submit button', () => {
     submitButton().should('exist');
 
@@ -190,7 +202,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     });
 
     describe('after submitting the form', () => {
-      it('should retain the `type of policy and exports` task status as `in progress`', () => {
+      it('should retain the `type of policy and exports` task status as `completed`', () => {
         cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`, {
           auth: {
             username: Cypress.config('basicAuthKey'),
@@ -199,7 +211,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
         });
 
         task.status().invoke('text').then((text) => {
-          const expected = TASKS.STATUS.IN_PROGRESS;
+          const expected = TASKS.STATUS.COMPLETED;
 
           expect(text.trim()).equal(expected);
         });
@@ -211,6 +223,12 @@ context('Insurance - Policy and exports - About goods or services page - As an e
         goToPageDirectly(referenceNumber);
 
         aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.POLICY_AND_EXPORTS[DESCRIPTION]);
+
+        aboutGoodsOrServicesPage[FINAL_DESTINATION].inputOptionSelected().invoke('text').then((text) => {
+          const country = countries.find((c) => c.isoCode === application.POLICY_AND_EXPORTS[FINAL_DESTINATION]);
+
+          expect(text.trim()).equal(country.name);
+        });
       });
     });
   });

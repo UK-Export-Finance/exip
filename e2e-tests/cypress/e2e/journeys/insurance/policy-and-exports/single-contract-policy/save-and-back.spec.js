@@ -6,16 +6,13 @@ import {
   sub,
 } from 'date-fns';
 import { submitButton, saveAndBackButton } from '../../../../pages/shared';
-import { typeOfPolicyPage, singleContractPolicyPage } from '../../../../pages/insurance/policy-and-export';
+import { singleContractPolicyPage } from '../../../../pages/insurance/policy-and-export';
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
-
-const singlePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const singlePolicyField = typeOfPolicyPage[singlePolicyFieldId].single;
 
 const {
   INSURANCE: {
@@ -56,8 +53,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
 
     task.link().click();
 
-    singlePolicyField.input().click();
-    submitButton().click();
+    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;

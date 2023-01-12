@@ -1,0 +1,74 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from 'govuk/components/label/macro.njk' import govukLabel %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <form method="POST" novalidate="novalidate">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half-from-desktop">
+
+        {{ govukSelect({
+          id: YOUR_BUYER.BUYER_COUNTRY.ID,
+          name: YOUR_BUYER.BUYER_COUNTRY.ID,
+          label: {
+            text: YOUR_BUYER.BUYER_COUNTRY.LABEL,
+            attributes: {
+              'data-cy': YOUR_BUYER.BUYER_COUNTRY.ID + '-label'
+            }
+          },
+          items: countries,
+           attributes: {
+            "data-cy": YOUR_BUYER.BUYER_COUNTRY.ID  + "-input"
+          }
+        }) }}
+        
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+            attributes: {
+              'data-cy': 'submit-button'
+            }
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button'
+            }
+          }) }}
+        </div>
+      </div>
+    </div>
+  </form>
+
+{% endblock %}
