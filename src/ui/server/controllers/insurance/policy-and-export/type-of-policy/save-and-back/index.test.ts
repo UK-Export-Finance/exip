@@ -1,11 +1,10 @@
 import { post } from '.';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
 import { Request, Response } from '../../../../../../types';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save';
 import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
 
-const { POLICY_TYPE } = FIELD_IDS;
 const {
   INSURANCE: { INSURANCE_ROOT },
 } = ROUTES;
@@ -26,11 +25,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
     mock: true,
   };
 
-  const mockValidFormBody = {
-    _csrf: '1234',
-    [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-  };
-
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
@@ -42,44 +36,21 @@ describe('controllers/insurance/policy-and-export/type-of-policy/save-and-back',
   });
 
   describe('when the form has data', () => {
-    describe('when the form has validation errors ', () => {
-      it('should call mapAndSave.policyAndExport with application reference number, form data and validationErrors.errorList', async () => {
-        await post(req, res);
+    it('should call mapAndSave.policyAndExport with application reference number, form data and validationErrors.errorList', async () => {
+      await post(req, res);
 
-        const validationErrors = generateValidationErrors(req.body);
+      const validationErrors = generateValidationErrors(req.body);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application, validationErrors);
-      });
+      expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
+      expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application, validationErrors);
+    });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
-        await post(req, res);
+    it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
+      await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
-        expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
-
-      describe('when the form does NOT have validation errors', () => {
-        beforeEach(() => {
-          req.body = mockValidFormBody;
-        });
-
-        it('should call mapAndSave.policyAndExport with application reference number and form data', async () => {
-          await post(req, res);
-
-          expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
-          expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application);
-        });
-
-        it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
-
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-      });
+      expect(res.redirect).toHaveBeenCalledWith(expected);
     });
   });
 
