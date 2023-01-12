@@ -11,7 +11,6 @@ const {
 describe('controllers/insurance/policy-and-export/check-your-answers/save-and-back', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   beforeEach(() => {
     req = mockReq();
