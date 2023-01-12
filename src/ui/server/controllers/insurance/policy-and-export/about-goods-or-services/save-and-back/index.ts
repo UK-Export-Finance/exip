@@ -2,7 +2,7 @@ import { ROUTES } from '../../../../../constants';
 import { Request, Response } from '../../../../../../types';
 import hasFormData from '../../../../../helpers/has-form-data';
 import generateValidationErrors from '../validation';
-// import callMapAndSave from '../call-map-and-save';
+import callMapAndSave from '../../call-map-and-save';
 
 const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
@@ -26,8 +26,7 @@ export const post = async (req: Request, res: Response) => {
     const { referenceNumber } = req.params;
 
     if (hasFormData(req.body)) {
-      // const saveResponse = await callMapAndSave(req.body, application, generateValidationErrors(req.body));
-      const saveResponse = true;
+      const saveResponse = await callMapAndSave(req.body, application, generateValidationErrors(req.body));
 
       if (!saveResponse) {
         return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
