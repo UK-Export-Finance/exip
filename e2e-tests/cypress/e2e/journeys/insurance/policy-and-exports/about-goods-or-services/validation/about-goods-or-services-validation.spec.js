@@ -25,7 +25,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-context('Insurance - Policy and exports - About goods or services - form validation', () => {
+context('Insurance - Policy and exports - About goods or services page - form validation', () => {
   let referenceNumber;
 
   before(() => {
