@@ -1,0 +1,26 @@
+import generateValidationErrors from '../../../../../helpers/validation';
+import { FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
+import { ERROR_MESSAGES } from '../../../../../content-strings';
+import { FIELD_IDS } from '../../../../../constants';
+import { countryValidationRules } from './countryValidationRules';
+
+const { YOUR_BUYER } = FIELDS;
+
+describe('controllers/insurance/your-buyer/validation/country-rules/', () => {
+  const mockErrors = {
+    summary: [],
+    errorList: {},
+  };
+
+  describe('when country name field  is not provided', () => {
+    it('should return validation error', () => {
+      const mockSubmittedData = { organisation: 'test', country: '' };
+
+      const result = countryValidationRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(YOUR_BUYER.BUYER_COUNTRY.ID, ERROR_MESSAGES[FIELD_IDS.COUNTRY].IS_EMPTY, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+});
