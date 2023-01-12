@@ -1,7 +1,7 @@
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import { organisationNameValidationRules } from './organisationNameValidationRules';
+import { organisationNameRules } from './organisation-name';
 
 const {
   INSURANCE: {
@@ -21,7 +21,7 @@ describe('controllers/insurance/your-buyer/validation/organisation/', () => {
     it('should return validation error', () => {
       const mockSubmittedData = { organisation: '', country: 'XAD' };
 
-      const result = organisationNameValidationRules(mockSubmittedData, mockErrors);
+      const result = organisationNameRules(mockSubmittedData, mockErrors);
 
       const expected = generateValidationErrors(YOUR_BUYER.BUYER_ORGANISATION.ID, BUYER_ORGANISATION.IS_EMPTY, mockErrors);
 

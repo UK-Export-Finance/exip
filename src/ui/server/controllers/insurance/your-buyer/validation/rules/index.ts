@@ -1,7 +1,7 @@
-import { countryValidationRules } from './countryValidationRules';
+import { countryRules } from './country';
 import { ValidationErrors } from '../../../../../../types';
-import { organisationNameValidationRules } from './organisationNameValidationRules';
+import { organisationNameRules } from './organisation-name';
 
-const rules = [countryValidationRules, organisationNameValidationRules] as Array<() => ValidationErrors>;
+const rules = [countryRules, organisationNameRules] as Array<() => ValidationErrors>;
 
 export default rules;
