@@ -18,7 +18,7 @@ describe('controllers/insurance/your-buyer/validation/rules/', () => {
     errorList: {},
   };
 
-  describe('when country name filed  is not provided', () => {
+  describe('when country name field  is not provided', () => {
     it('should return validation error', () => {
       const mockSubmittedData = { organisation: 'test', country: '' };
 
@@ -30,7 +30,7 @@ describe('controllers/insurance/your-buyer/validation/rules/', () => {
     });
   });
 
-  describe('when organisation name filed  is not provided', () => {
+  describe('when organisation name field  is not provided', () => {
     it('should return validation error', () => {
       const mockSubmittedData = { organisation: '', country: 'XAD' };
 
