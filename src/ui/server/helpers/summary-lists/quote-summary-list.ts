@@ -1,6 +1,7 @@
-import { LINKS, QUOTE_TITLES } from '../../content-strings';
+import { QUOTE_TITLES } from '../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../constants';
-import { QuoteContent, SummaryListItemData, SummaryListItem } from '../../../types';
+import generateSummaryListRows from './generate-summary-list-rows';
+import { QuoteContent, SummaryListItemData } from '../../../types';
 
 const { BUYER_COUNTRY, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, PERCENTAGE_OF_COVER, POLICY_LENGTH, QUOTE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
 
@@ -147,44 +148,6 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
 };
 
 /**
- * generateSummaryListRows
- * Map an array of fields with values for govukSummaryList component
- * @param {Array} Array of fields and answers
- * @returns {Array} Array of fields/answers in govukSummaryList data structure
- */
-const generateSummaryListRows = (fields: Array<SummaryListItemData>): Array<SummaryListItem> =>
-  fields.map((field: SummaryListItemData): SummaryListItem => {
-    const mapped = {
-      classes: 'ukef-white-text',
-      key: {
-        text: field.title,
-        classes: `${field.id}-key govuk-!-width-one-half`,
-      },
-      value: {
-        text: field.value.text,
-        classes: `${field.id}-value`,
-      },
-      actions: {
-        items: [],
-      },
-    } as SummaryListItem;
-
-    if (field.renderChangeLink) {
-      mapped.actions.items.push({
-        href: field.href,
-        text: LINKS.CHANGE,
-        visuallyHiddenText: field.title,
-        attributes: {
-          'data-cy': `${field.id}-change-link`,
-        },
-        classes: 'ukef-white-text govuk-link--no-visited-state',
-      });
-    }
-
-    return mapped;
-  });
-
-/**
  * quoteSummaryList
  * Create a group with govukSummaryList data structure
  * @param {Object} All quote content in a simple object.text structure
@@ -198,4 +161,4 @@ const quoteSummaryList = (quoteContent: QuoteContent) => {
   return summaryList;
 };
 
-export { generateFields, generateSummaryListRows, quoteSummaryList };
+export { generateFields, quoteSummaryList };

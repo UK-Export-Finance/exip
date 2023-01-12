@@ -1,8 +1,8 @@
 import { format } from 'date-fns';
-import getKeyText from './get-key-text';
+import generateSummaryListRows from './generate-summary-list-rows';
 import { FIELD_IDS } from '../../constants';
 import { FIELDS, PAGES } from '../../content-strings';
-import { CompanyHouseResponse, CompanyDetailsFieldGroups, SummaryListItem, SummaryListItemData } from '../../../types';
+import { CompanyHouseResponse, CompanyDetailsFieldGroups } from '../../../types';
 
 const {
   EXPORTER_BUSINESS: { COMPANY_HOUSE },
@@ -83,32 +83,6 @@ const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
   return fieldGroups;
 };
 
-/**
- * Map an array of fields with values in submitted data object
- * for govukSummaryList component
- * @param fields - Array of SummaryListItemData
- * @returns mapped object with summary list rows populated
- */
-const generateSummaryListRows = (fields: Array<SummaryListItemData>): Array<SummaryListItem> =>
-  fields.map((field: SummaryListItemData): SummaryListItem => {
-    const mapped = {
-      key: {
-        text: getKeyText(FIELDS, field.id),
-        classes: `${field.id}-key`,
-      },
-      value: {
-        text: field.value.text,
-        html: field.value.html,
-        classes: `${field.id}-value`,
-      },
-      actions: {
-        items: [],
-      },
-    } as SummaryListItem;
-
-    return mapped;
-  });
-
 const companyHouseSummaryList = (companyDetails: CompanyHouseResponse) => {
   const fieldGroups = generateFieldGroups(companyDetails);
 
@@ -122,4 +96,4 @@ const companyHouseSummaryList = (companyDetails: CompanyHouseResponse) => {
   return summaryList;
 };
 
-export { generateFieldGroups, generateSummaryListRows, companyHouseSummaryList, generateAddressHTML };
+export { generateFieldGroups, companyHouseSummaryList, generateAddressHTML };

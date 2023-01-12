@@ -1,10 +1,9 @@
-import { generateFieldGroups, generateSummaryListRows, answersSummaryList } from './answers-summary-list';
-import getKeyText from './get-key-text';
+import { generateFieldGroups, answersSummaryList } from './answers-summary-list';
+import generateSummaryListRows from './generate-summary-list-rows';
 import { mapAnswersToContent } from '../data-content-mappings/map-answers-to-content';
-import { FIELDS, LINKS, PAGES } from '../../content-strings';
+import { FIELDS, PAGES } from '../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../constants';
 import { mockSession } from '../../test-mocks';
-import { SummaryListItemData } from '../../../types';
 
 const {
   BUYER_COUNTRY,
@@ -14,7 +13,6 @@ const {
   MULTI_POLICY_LENGTH,
   MULTI_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
-  POLICY_LENGTH,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
@@ -275,85 +273,6 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         };
 
         expect(expectedField).toEqual(expected);
-      });
-    });
-  });
-
-  describe('generateSummaryListRows', () => {
-    const expectedObjBase = (field: SummaryListItemData) => ({
-      key: {
-        text: getKeyText(FIELDS, field.id),
-        classes: `${field.id}-key`,
-      },
-      value: {
-        text: field.value.text,
-        classes: `${field.id}-value`,
-      },
-      actions: {
-        items: [],
-      },
-    });
-
-    it('returns an array of objects mapped to submitted data', () => {
-      const mockMultiPolicySubmittedData = {
-        ...mockSession.submittedData.quoteEligibility,
-        [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-        [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
-        [MAX_AMOUNT_OWED]: 1234,
-      };
-
-      const mockAnswersContent = mapAnswersToContent(mockMultiPolicySubmittedData);
-
-      const fieldGroups = generateFieldGroups(mockAnswersContent);
-
-      const result = generateSummaryListRows(fieldGroups.POLICY_DETAILS);
-
-      const expectedObj = (field: SummaryListItemData) => ({
-        ...expectedObjBase(field),
-        key: {
-          text: getKeyText(FIELDS, field.id),
-          classes: `${field.id}-key`,
-        },
-        value: {
-          text: field.value.text,
-          classes: `${field.id}-value`,
-        },
-      });
-
-      expect(result).toBeInstanceOf(Array);
-
-      const fieldWithNoChangeLink = fieldGroups.POLICY_DETAILS[1];
-
-      const expected = expectedObj(fieldWithNoChangeLink);
-      expect(result[1]).toEqual(expected);
-    });
-
-    describe('when a field has renderChangeLink', () => {
-      it('should add a link to action.itmes', () => {
-        const mockField = {
-          id: 'mock',
-          title: 'Test',
-          value: {
-            text: 'mock',
-          },
-          renderChangeLink: true,
-          href: '/page#field-label',
-        };
-
-        const result = generateSummaryListRows([mockField]);
-
-        const expected = [
-          {
-            href: mockField.href,
-            text: LINKS.CHANGE,
-            visuallyHiddenText: getKeyText(FIELDS, mockField.id),
-            attributes: {
-              'data-cy': `${mockField.id}-change-link`,
-            },
-          },
-        ];
-
-        expect(result[0].actions.items).toEqual(expected);
       });
     });
   });

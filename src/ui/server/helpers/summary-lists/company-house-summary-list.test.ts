@@ -1,7 +1,6 @@
 import { format } from 'date-fns';
-import { generateFieldGroups, generateSummaryListRows, companyHouseSummaryList, generateAddressHTML } from './company-house-summary-list';
-import getKeyText from './get-key-text';
-import { SummaryListItemData } from '../../../types';
+import { generateFieldGroups, companyHouseSummaryList, generateAddressHTML } from './company-house-summary-list';
+import generateSummaryListRows from './generate-summary-list-rows';
 import { FIELD_IDS } from '../../constants';
 import { FIELDS, PAGES } from '../../content-strings';
 import { mockCompany } from '../../test-mocks';
@@ -98,47 +97,6 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
       };
 
       expect(result).toEqual(expected);
-    });
-  });
-
-  describe('generateSummaryListRows()', () => {
-    const expectedObjBase = (field: SummaryListItemData) => ({
-      key: {
-        text: getKeyText(FIELDS, field.id),
-        classes: `${field.id}-key`,
-      },
-      value: {
-        text: field.value.text,
-        classes: `${field.id}-value`,
-      },
-      actions: {
-        items: [],
-      },
-    });
-
-    it('returns an array of objects mapped to submitted data', () => {
-      const fieldGroups = generateFieldGroups(mockCompany);
-
-      const result = generateSummaryListRows(fieldGroups.COMPANY_DETAILS);
-
-      const expectedObj = (field: SummaryListItemData) => ({
-        ...expectedObjBase(field),
-        key: {
-          text: getKeyText(FIELDS, field.id),
-          classes: `${field.id}-key`,
-        },
-        value: {
-          text: field.value.text,
-          classes: `${field.id}-value`,
-        },
-      });
-
-      expect(result).toBeInstanceOf(Array);
-
-      const fieldWithNoChangeLink = fieldGroups.COMPANY_DETAILS[1];
-
-      const expected = expectedObj(fieldWithNoChangeLink);
-      expect(result[1]).toEqual(expected);
     });
   });
 
