@@ -12,8 +12,7 @@ import mapAndSave from '../map-and-save';
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    ALL_SECTIONS,
-    POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK },
+    POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   },
 } = ROUTES;
 
@@ -154,7 +153,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
     console.error('Error updating application', { err });
 

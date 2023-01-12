@@ -31,6 +31,7 @@ const {
     POLICY_AND_EXPORTS: {
       SINGLE_CONTRACT_POLICY,
       ABOUT_GOODS_OR_SERVICES,
+      CHECK_YOUR_ANSWERS,
     },
   },
 } = ROUTES;
@@ -194,10 +195,10 @@ context('Insurance - Policy and exports - About goods or services page - As an e
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.url().should('eq', expectedUrl);
     });
 
