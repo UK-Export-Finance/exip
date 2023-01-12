@@ -1,5 +1,5 @@
 import validation from '.';
-import { FIELD_IDS } from '../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 
@@ -22,14 +22,14 @@ describe('controllers/insurance/policy-and-export/type-of-policy/validation', ()
   });
 
   describe('when there are no validation errors', () => {
-    it('should return null', () => {
+    it('should return an empty object', () => {
       const mockBody = {
-        [FIELD_ID]: 'Single contract policy',
+        [FIELD_ID]: FIELD_VALUES.POLICY_TYPE.SINGLE,
       };
 
       const result = validation(mockBody);
 
-      expect(result).toEqual(null);
+      expect(result).toEqual({});
     });
   });
 });

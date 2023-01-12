@@ -18,7 +18,7 @@ const validation = (formBody: RequestBody) => {
     return errors;
   }
 
-  return null;
+  return {};
 };
 
 export default validation;
