@@ -78,7 +78,7 @@ describe('server/helpers/task-list/prepare-application', () => {
       };
 
       const EXPORTER_BUSINESS = {
-        href: '#',
+        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${EXPORTER_BUSINESS_ROUTES.COMPANY_DETAILS}`,
         title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
         id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
         fields: [],
