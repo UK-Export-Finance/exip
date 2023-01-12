@@ -10,7 +10,7 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: { CHECK_YOUR_ANSWERS_SAVE_AND_BACK },
     EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
-  }
+  },
 } = ROUTES;
 
 export const pageVariables = (referenceNumber: number) => ({
