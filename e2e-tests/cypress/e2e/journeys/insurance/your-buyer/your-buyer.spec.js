@@ -8,8 +8,15 @@ import {
 import { ROUTES } from '../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../helpers/get-reference-number';
-import { FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
+import { YOUR_BUYER_FIELD_IDS } from '../../../../../content-strings/fields/insurance/your-buyer';
 import { yourBuyer as yourBuyerPage } from '../../../pages/insurance/your-buyer';
+
+const {
+  BUYER_COUNTRY,
+  BUYER_COUNTRY_LABEL,
+  BUYER_ORGANISATION,
+  BUYER_ORGANISATION_LABEL,
+} = YOUR_BUYER_FIELD_IDS;
 
 const goToPageDirectly = (referenceNumber) => {
   cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.YOUR_BUYER_DETAILS}`, {
@@ -61,31 +68,40 @@ context('Insurance - Your Buyer - Type of your buyer Page - As an exporter, I wa
 
   describe('countries', () => {
     it('renders `countries` label and input', () => {
-      const fieldId = FIELDS.YOUR_BUYER.BUYER_COUNTRY.ID;
-      const field = yourBuyerPage[fieldId];
+      const field = yourBuyerPage[BUYER_COUNTRY];
 
       field.label().should('exist');
       field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS.YOUR_BUYER.BUYER_COUNTRY.LABEL);
+        expect(text.trim()).equal(BUYER_COUNTRY_LABEL);
       });
 
       field.input().should('exist');
     });
+  });
 
-    it('renders a submit button', () => {
-      submitButton().should('exist');
+  it('renders `buyer organisation or company` label, and input', () => {
+    const field = yourBuyerPage[BUYER_ORGANISATION];
 
-      submitButton().invoke('text').then((text) => {
-        expect(text.trim()).equal(BUTTONS.CONTINUE);
-      });
+    field.label().should('exist');
+    field.label().invoke('text').then((text) => {
+      expect(text.trim()).equal(BUYER_ORGANISATION_LABEL);
     });
+    field.input().should('exist');
+  });
 
-    it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
+  it('renders a submit button', () => {
+    submitButton().should('exist');
 
-      saveAndBackButton().invoke('text').then((text) => {
-        expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
-      });
+    submitButton().invoke('text').then((text) => {
+      expect(text.trim()).equal(BUTTONS.CONTINUE);
+    });
+  });
+
+  it('renders a `save and back` button', () => {
+    saveAndBackButton().should('exist');
+
+    saveAndBackButton().invoke('text').then((text) => {
+      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
     });
   });
 });

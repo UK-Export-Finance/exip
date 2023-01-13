@@ -83,7 +83,8 @@ var lists = {
       }),
       policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
       exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
-      exporterCompanyAddress: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress" })
+      exporterCompanyAddress: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress" }),
+      exporterCompanySicCode: (0, import_fields.relationship)({ ref: "ExporterCompanySicCode" })
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -277,6 +278,8 @@ var lists = {
   }),
   ExporterCompanySicCode: {
     fields: {
+      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
+      application: (0, import_fields.relationship)({ ref: "Application" }),
       code: (0, import_fields.text)()
     },
     access: import_access.allowAll
@@ -397,6 +400,31 @@ var mapCompaniesHouseFields = (companiesHouseResponse) => {
   };
 };
 
+// helpers/mapSicCodes.ts
+var mapSicCodes = (company, sicCodes) => {
+  const mapped = [];
+  if (!sicCodes || !sicCodes.length) {
+    return mapped;
+  }
+  sicCodes.forEach((code) => {
+    const codeToAdd = {
+      code,
+      exporterCompany: {
+        connect: {
+          id: company.id
+        }
+      },
+      application: {
+        connect: {
+          id: company.applicationId
+        }
+      }
+    };
+    mapped.push(codeToAdd);
+  });
+  return mapped;
+};
+
 // custom-schema.ts
 import_dotenv.default.config();
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
@@ -455,7 +483,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
 
       type ExporterCompanyAndCompanyAddress {
-        id: ID!
+        id: ID
         exporterCompanyAddress: ExporterCompanyAddress
         companyName: String
         companyNumber: String
@@ -468,6 +496,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 
       input ExporterCompanyAndCompanyAddressInput {
         exporterCompanyAddress: ExporterCompanyAddressInput
+        sicCodes: [String]
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
@@ -504,17 +533,21 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);
-          const { exporterCompanyAddress, ...exporterCompany } = variables.data;
-          await context.db.ExporterCompany.updateOne({
-            where: { id: variables.id },
+          const { exporterCompanyAddress, sicCodes, ...exporterCompany } = variables.data;
+          const company = await context.db.ExporterCompany.updateOne({
+            where: { id: variables.companyId },
             data: exporterCompany
           });
           await context.db.ExporterCompanyAddress.updateOne({
             where: { id: variables.companyAddressId },
             data: exporterCompanyAddress
           });
+          const mappedSicCodes = mapSicCodes(company, sicCodes);
+          await context.db.ExporterCompanySicCode.createMany({
+            data: mappedSicCodes
+          });
           return {
-            id: variables.id
+            id: variables.companyId
           };
         } catch (err) {
           console.error("Error updating application exporter company and exporter company address", { err });

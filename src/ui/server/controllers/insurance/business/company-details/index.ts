@@ -5,6 +5,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import companiesHouseSearch from './helpers/companies-house-search.helper';
 import companyDetailsValidation from './validation/company-details';
+import mapAndSave from '../map-and-save';
 
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 
@@ -21,12 +22,19 @@ const { COMPANY_DETAILS: TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NO_COMPANIES_HOUSE_NUMBER, NATURE_OF_BUSINESS } = EXPORTER_BUSINESS_ROUTES;
+const {
+  COMPANY_HOUSE_SEARCH,
+  COMPANY_DETAILS: COMPANY_DETAILS_ROUTE,
+  NO_COMPANIES_HOUSE_NUMBER,
+  COMPANY_DETAILS_SAVE_AND_BACK,
+  NATURE_OF_BUSINESS,
+} = EXPORTER_BUSINESS_ROUTES;
 
 const pageVariables = (referenceNumber: number) => ({
   POST_ROUTES: {
     COMPANIES_HOUSE: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_HOUSE_SEARCH}`,
     COMPANY_DETAILS: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROUTE}`,
+    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
     NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
   },
   FIELDS: EXPORTER_BUSINESS,
@@ -144,7 +152,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
 
 /**
  * posts company details
- * validates tradingName and companiesHouseInput fields
+ * runs validation and either renders template with errors or redirects to next page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Company details page with or without errors
@@ -194,6 +202,13 @@ const post = async (req: Request, res: Response) => {
         validationErrors,
         submittedValues,
       });
+    }
+
+    // if no errors, then runs save api call to db
+    const saveResponse = await mapAndSave.companyDetails(req.body, application);
+
+    if (!saveResponse) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
     return res.redirect(NATURE_OF_BUSINESS);
