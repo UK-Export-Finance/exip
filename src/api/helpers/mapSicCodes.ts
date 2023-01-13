@@ -6,7 +6,7 @@ import { CompanyResponse, SicCodes } from '../types';
  * @param {Array} sicCodes
  * @returns {Array} sicCodesToAdd
  */
-const mappedSicCodes = (company: CompanyResponse, sicCodes?: Array<string>) => {
+const mapSicCodes = (company: CompanyResponse, sicCodes?: Array<string>) => {
   const mapped = [] as Array<SicCodes>;
 
   if (!sicCodes || !sicCodes.length) {
@@ -34,4 +34,4 @@ const mappedSicCodes = (company: CompanyResponse, sicCodes?: Array<string>) => {
   return mapped;
 };
 
-export { mappedSicCodes, CompanyResponse, SicCodes };
+export { mapSicCodes, CompanyResponse, SicCodes };

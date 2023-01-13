@@ -1,4 +1,5 @@
-import { mappedSicCodes, CompanyResponse } from './mappedSicCodes';
+import { mapSicCodes } from './mapSicCodes';
+import { CompanyResponse } from '../types';
 
 describe('mapSicCodes', () => {
   let mockSicCodes = [] as Array<string>;
@@ -11,7 +12,7 @@ describe('mapSicCodes', () => {
       applicationId: '321',
     };
 
-    const response = mappedSicCodes(mockCompanyResponse, mockSicCodes);
+    const response = mapSicCodes(mockCompanyResponse, mockSicCodes);
 
     const expected = [
       {
@@ -52,7 +53,7 @@ describe('mapSicCodes', () => {
       applicationId: '321',
     };
 
-    const response = mappedSicCodes(mockCompanyResponse, mockSicCodes);
+    const response = mapSicCodes(mockCompanyResponse, mockSicCodes);
 
     expect(response).toEqual([]);
   });
@@ -63,7 +64,7 @@ describe('mapSicCodes', () => {
       applicationId: '321',
     };
 
-    const response = mappedSicCodes(mockCompanyResponse, null);
+    const response = mapSicCodes(mockCompanyResponse, null);
 
     expect(response).toEqual([]);
   });

@@ -400,8 +400,8 @@ var mapCompaniesHouseFields = (companiesHouseResponse) => {
   };
 };
 
-// helpers/mappedSicCodes.ts
-var mappedSicCodes = (company, sicCodes) => {
+// helpers/mapSicCodes.ts
+var mapSicCodes = (company, sicCodes) => {
   const mapped = [];
   if (!sicCodes || !sicCodes.length) {
     return mapped;
@@ -542,9 +542,9 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
             where: { id: variables.companyAddressId },
             data: exporterCompanyAddress
           });
-          const sicCodesToAdd = mappedSicCodes(company, sicCodes);
+          const mappedSicCodes = mapSicCodes(company, sicCodes);
           await context.db.ExporterCompanySicCode.createMany({
-            data: sicCodesToAdd
+            data: mappedSicCodes
           });
           return {
             id: variables.companyId
