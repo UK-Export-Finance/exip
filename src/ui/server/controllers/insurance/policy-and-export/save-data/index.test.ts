@@ -59,18 +59,6 @@ describe('controllers/insurance/policy-and-export/save-data', () => {
     });
   });
 
-  describe('when an application is not provided', () => {
-    it('should throw an error', async () => {
-      try {
-        // @ts-ignore
-        await save.policyAndExport(undefined, mockFormBody.valid);
-      } catch (err) {
-        const expected = new Error('No application provided');
-        expect(err).toEqual(expected);
-      }
-    });
-  });
-
   describe('api error handling', () => {
     describe('update policyAndExport call', () => {
       describe('when there is an error', () => {

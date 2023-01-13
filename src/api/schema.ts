@@ -32,6 +32,7 @@ export const lists = {
       policyAndExport: relationship({ ref: 'PolicyAndExport' }),
       exporterCompany: relationship({ ref: 'ExporterCompany' }),
       exporterCompanyAddress: relationship({ ref: 'ExporterCompanyAddress' }),
+      exporterCompanySicCode: relationship({ ref: 'ExporterCompanySicCode' }),
     },
     // TODO: add logs to the hooks
     hooks: {
@@ -261,6 +262,8 @@ export const lists = {
   }),
   ExporterCompanySicCode: {
     fields: {
+      exporterCompany: relationship({ ref: 'ExporterCompany' }),
+      application: relationship({ ref: 'Application' }),
       code: text(),
     },
     access: allowAll,

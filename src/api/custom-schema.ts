@@ -5,6 +5,7 @@ import { NotifyClient } from 'notifications-node-client';
 import axios from 'axios';
 import dotenv from 'dotenv';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
+import { mapSicCodes } from './helpers/mapSicCodes';
 
 dotenv.config();
 
@@ -66,7 +67,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       }
 
       type ExporterCompanyAndCompanyAddress {
-        id: ID!
+        id: ID
         exporterCompanyAddress: ExporterCompanyAddress
         companyName: String
         companyNumber: String
@@ -79,6 +80,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
 
       input ExporterCompanyAndCompanyAddressInput {
         exporterCompanyAddress: ExporterCompanyAddressInput
+        sicCodes: [String]
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
@@ -115,11 +117,10 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);
+            const { exporterCompanyAddress, sicCodes, ...exporterCompany } = variables.data;
 
-            const { exporterCompanyAddress, ...exporterCompany } = variables.data;
-
-            await context.db.ExporterCompany.updateOne({
-              where: { id: variables.id },
+            const company = await context.db.ExporterCompany.updateOne({
+              where: { id: variables.companyId },
               data: exporterCompany,
             });
 
@@ -128,8 +129,15 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
               data: exporterCompanyAddress,
             });
 
+            // maps SIC codes from variables into array
+            const mappedSicCodes = mapSicCodes(company, sicCodes);
+            // TODO: delete existing SIC codes when adding sic codes to db
+            await context.db.ExporterCompanySicCode.createMany({
+              data: mappedSicCodes,
+            });
+
             return {
-              id: variables.id,
+              id: variables.companyId,
             };
           } catch (err) {
             console.error('Error updating application exporter company and exporter company address', { err });

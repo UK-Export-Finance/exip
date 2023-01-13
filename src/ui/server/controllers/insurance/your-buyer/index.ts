@@ -25,20 +25,22 @@ export const get = async (req: Request, res: Response) => {
 };
 
 export const post = async (req: Request, res: Response) => {
-  const countries = await api.external.getCountries();
-  if (!countries || !countries.length) {
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-  }
-  const mappedCountries = mapCountries(countries);
   const validationErrors = yourBuyerDetailsValidation(req.body);
 
   if (validationErrors && Object.keys(validationErrors).length) {
+    const countries = await api.keystone.countries.getAll();
+    if (!countries || !countries.length) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+    const mappedCountries = mapCountries(countries);
+
     return res.render(TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER_DETAILS,
         BACK_LINK: req.headers.referer,
       }),
       ...FIELDS,
+      submittedValues: req.body,
       countries: mappedCountries,
       validationErrors,
     });

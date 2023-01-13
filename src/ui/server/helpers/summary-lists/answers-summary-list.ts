@@ -1,7 +1,12 @@
 import { FIELDS, PAGES } from '../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../constants';
+<<<<<<< HEAD
 import generateSummaryListRows from './generate-summary-list-rows';
 import { AnswersContent, AnswersFieldGroups } from '../../../types';
+=======
+import getKeyText from './get-key-text';
+import { AnswersContent, AnswersFieldGroups, SummaryListItem, SummaryListItemData } from '../../../types';
+>>>>>>> main-application
 
 const {
   BUYER_COUNTRY,
@@ -157,6 +162,45 @@ const generateFieldGroups = (answers: AnswersContent) => {
 };
 
 /**
+<<<<<<< HEAD
+=======
+ * generateSummaryListRows
+ * Map an array of fields with values for govukSummaryList component
+ * @param {Array} Array of fields and answers
+ * @returns {Array} Array of fields/answers in govukSummaryList data structure
+ */
+const generateSummaryListRows = (fields: Array<SummaryListItemData>): Array<SummaryListItem> =>
+  fields.map((field: SummaryListItemData): SummaryListItem => {
+    const mapped = {
+      key: {
+        text: getKeyText(FIELDS, field.id),
+        classes: `${field.id}-key`,
+      },
+      value: {
+        text: field.value.text,
+        classes: `${field.id}-value`,
+      },
+      actions: {
+        items: [],
+      },
+    } as SummaryListItem;
+
+    if (field.renderChangeLink) {
+      mapped.actions.items.push({
+        href: field.href,
+        text: LINKS.CHANGE,
+        visuallyHiddenText: getKeyText(FIELDS, field.id),
+        attributes: {
+          'data-cy': `${field.id}-change-link`,
+        },
+      });
+    }
+
+    return mapped;
+  });
+
+/**
+>>>>>>> main-application
  * answersSummaryList
  * Create multiple groups with govukSummaryList data structure
  * @param {Object} All answers/submitted data in a simple object.text structure
@@ -179,4 +223,8 @@ const answersSummaryList = (answersContent: AnswersContent) => {
   return summaryList;
 };
 
+<<<<<<< HEAD
 export { generateFieldGroups, answersSummaryList };
+=======
+export { generateFieldGroups, generateSummaryListRows, answersSummaryList };
+>>>>>>> main-application

@@ -1,5 +1,5 @@
 import api from '../../../../api';
-import getValidFields from '../../../../helpers/get-valid-fields';
+import getDataToSave from '../../../../helpers/get-data-to-save';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Application, RequestBody } from '../../../../../types';
 
@@ -13,35 +13,21 @@ import { Application, RequestBody } from '../../../../../types';
  * @returns {Object} Saved data
  */
 const policyAndExport = async (application: Application, formBody: RequestBody, errorList?: object) => {
-  const { _csrf, ...formData } = formBody;
+  const dataToSave = getDataToSave(formBody, errorList);
 
-  let dataToSave;
+  // sanitise the form data.
+  const sanitisedData = sanitiseData(dataToSave);
 
-  if (errorList) {
-    // strip out any invalid fields.
-    dataToSave = getValidFields(formData, errorList);
-  } else {
-    // all fields are assumed valid.
-    dataToSave = formBody;
+  // send the form data to the API for database update.
+  const policyAndExportId = application.policyAndExport?.id;
+
+  try {
+    const saveResponse = await api.keystone.application.update.policyAndExport(policyAndExportId, sanitisedData);
+
+    return saveResponse;
+  } catch (err) {
+    throw new Error("Updating application's policyAndExport");
   }
-
-  if (application) {
-    // sanitise the form data.
-    const sanitisedData = sanitiseData(dataToSave);
-
-    // send the form data to the API for database update.
-    const policyAndExportId = application.policyAndExport?.id;
-
-    try {
-      const saveResponse = await api.keystone.application.update.policyAndExport(policyAndExportId, sanitisedData);
-
-      return saveResponse;
-    } catch (err) {
-      throw new Error("Updating application's policyAndExport");
-    }
-  }
-
-  throw new Error('No application provided');
 };
 
 export default {

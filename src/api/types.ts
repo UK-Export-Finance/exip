@@ -27,4 +27,23 @@ interface Application {
   exporterCompanyAddress: ApplicationExporterCompanyAddress;
 }
 
-export { Application };
+interface CompanyResponse {
+  id: string;
+  applicationId: string;
+}
+
+interface ConnectId {
+  id: string;
+}
+
+interface ConnectObj {
+  connect: ConnectId;
+}
+
+interface SicCodes {
+  code: string;
+  exporterCompany: ConnectObj;
+  application: ConnectObj;
+}
+
+export { Application, CompanyResponse, SicCodes };

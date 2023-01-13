@@ -8,7 +8,7 @@ import { getAllTasksFieldsInAGroup } from '../task-helpers';
 import { mockApplication } from '../../../test-mocks';
 
 const { INSURANCE } = ROUTES;
-const { INSURANCE_ROOT, POLICY_AND_EXPORTS } = INSURANCE;
+const { INSURANCE_ROOT, POLICY_AND_EXPORTS, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = INSURANCE;
 
 const { PREPARE_APPLICATION } = TASKS.LIST;
 
@@ -78,7 +78,7 @@ describe('server/helpers/task-list/prepare-application', () => {
       };
 
       const EXPORTER_BUSINESS = {
-        href: '#',
+        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${EXPORTER_BUSINESS_ROUTES.COMPANY_DETAILS}`,
         title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
         id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
         fields: [],

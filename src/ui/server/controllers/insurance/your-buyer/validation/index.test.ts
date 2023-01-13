@@ -1,5 +1,5 @@
 import yourBuyerDetailsValidation from '.';
-import validationRules from './rules/rules';
+import validationRules from './rules';
 import combineValidationRules from '../../../../helpers/combine-validation-rules';
 
 describe('controllers/insurance/your-buyer/validation', () => {

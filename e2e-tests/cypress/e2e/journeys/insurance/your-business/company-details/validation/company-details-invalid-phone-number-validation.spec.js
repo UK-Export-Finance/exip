@@ -64,7 +64,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe(`when ${PHONE_NUMBER} is incorrectly entered`, () => {
     describe('invalid long landline phone number', () => {
       it('should display validation errors', () => {
-        completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE_LONG);
+        completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE.LONG);
         partials.errorSummaryListItems().should('have.length', 1);
         partials.errorSummaryListItems().first().invoke('text')
           .then((text) => {
@@ -119,7 +119,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('mobile number with too many numbers', () => {
       it('should display validation errors', () => {
-        completeAllFields(INVALID_PHONE_NUMBERS.MOBILE_LONG);
+        completeAllFields(INVALID_PHONE_NUMBERS.MOBILE.LONG);
 
         partials.errorSummaryListItems().should('have.length', 1);
         partials.errorSummaryListItems().first().invoke('text')
@@ -135,7 +135,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('landline number with too few numbers', () => {
       it('should display validation errors', () => {
-        completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE_SHORT);
+        completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE.SHORT);
 
         partials.errorSummaryListItems().should('have.length', 1);
         partials.errorSummaryListItems().first().invoke('text')
@@ -151,7 +151,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('special characters in phone number', () => {
       it('should display validation errors', () => {
-        completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE_SPECIAL_CHAR);
+        completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR);
 
         partials.errorSummaryListItems().should('have.length', 1);
         partials.errorSummaryListItems().first().invoke('text')
@@ -167,7 +167,39 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('letters in phone number', () => {
       it('should display validation errors', () => {
-        completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE_LETTER);
+        completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE.LETTER);
+
+        partials.errorSummaryListItems().should('have.length', 1);
+        partials.errorSummaryListItems().first().invoke('text')
+          .then((text) => {
+            expect(text.trim()).equal(errorMessage);
+          });
+        companyDetails.phoneNumberError().invoke('text')
+          .then((text) => {
+            expect(text.trim()).equal(`Error: ${errorMessage}`);
+          });
+      });
+    });
+
+    describe('special characters in mobile number', () => {
+      it('should display validation errors', () => {
+        completeAllFields(INVALID_PHONE_NUMBERS.MOBILE.SPECIAL_CHAR);
+
+        partials.errorSummaryListItems().should('have.length', 1);
+        partials.errorSummaryListItems().first().invoke('text')
+          .then((text) => {
+            expect(text.trim()).equal(errorMessage);
+          });
+        companyDetails.phoneNumberError().invoke('text')
+          .then((text) => {
+            expect(text.trim()).equal(`Error: ${errorMessage}`);
+          });
+      });
+    });
+
+    describe('too short a number with special chars', () => {
+      it('should display validation errors', () => {
+        completeAllFields(INVALID_PHONE_NUMBERS.TOO_SHORT);
 
         partials.errorSummaryListItems().should('have.length', 1);
         partials.errorSummaryListItems().first().invoke('text')
