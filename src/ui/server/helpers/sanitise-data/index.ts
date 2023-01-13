@@ -2,6 +2,14 @@ import { isNumber } from '../number';
 import { stripCommas } from '../string';
 import { RequestBody } from '../../../types';
 import stripEmptyFormFields from '../strip-empty-form-fields';
+import { FIELD_IDS } from '../../constants';
+
+const {
+  EXPORTER_BUSINESS: {
+    COMPANY_HOUSE: { COMPANY_NUMBER },
+    YOUR_COMPANY: { PHONE_NUMBER },
+  },
+} = FIELD_IDS.INSURANCE;
 
 /**
  * shouldChangeToNumber
@@ -31,7 +39,7 @@ const shouldChangeToNumber = (value: string | number) => {
  * @param {String | Number} Field value
  * @returns {Boolean}
  */
-const sanitiseValue = (value: string | number | boolean) => {
+const sanitiseValue = (value: string | number | boolean, key?: string) => {
   if (value === 'true' || value === true) {
     return true;
   }
@@ -40,7 +48,8 @@ const sanitiseValue = (value: string | number | boolean) => {
     return false;
   }
 
-  if (shouldChangeToNumber(value)) {
+  // should not change number if COMPANY_NUMBER or PHONE_NUMBER
+  if (shouldChangeToNumber(value) && key !== COMPANY_NUMBER && key !== PHONE_NUMBER) {
     const stripped = stripCommas(String(value));
 
     return Number(stripped);
@@ -86,7 +95,7 @@ const sanitiseData = (formBody: RequestBody) => {
 
     // do not include day/month/year fields, these should be captured as timestamps.
     if (!isDayMonthYearField(key)) {
-      sanitised[key] = sanitiseValue(value);
+      sanitised[key] = sanitiseValue(value, key);
     }
   });
 

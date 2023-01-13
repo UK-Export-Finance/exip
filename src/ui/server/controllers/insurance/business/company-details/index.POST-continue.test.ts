@@ -5,22 +5,35 @@ import corePageVariables from '../../../../helpers/page-variables/core/insurance
 import { PAGES } from '../../../../content-strings';
 import companiesHouseValidation from './validation/companies-house';
 import companyDetailsValidation from './validation/company-details';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../test-mocks';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
+import mapAndSave from '../map-and-save';
+import api from '../../../../api';
 
 const {
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE,
-    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE },
+    COMPANY_HOUSE: { INPUT },
+    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
   },
 } = FIELD_IDS.INSURANCE;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
+const { VALID_PHONE_NUMBERS } = mockPhoneNumbers;
+
+const {
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS },
+} = ROUTES.INSURANCE;
+
 describe('controllers/insurance/business/companies-details', () => {
   let req: Request;
   let res: Response;
+
+  const getCompaniesHouseResponse = jest.fn(() => Promise.resolve(mockCompany));
+  api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
+
+  mapAndSave.companyDetails = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -39,7 +52,7 @@ describe('controllers/insurance/business/companies-details', () => {
         req.body = {};
 
         const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
+          [INPUT]: req.body[INPUT],
           [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
           [TRADING_ADDRESS]: sanitiseValue(req.body[TRADING_ADDRESS]),
           [WEBSITE]: req.body[WEBSITE],
@@ -62,6 +75,21 @@ describe('controllers/insurance/business/companies-details', () => {
       });
     });
 
+    describe('when there are no validation errors', () => {
+      it('should redirect to next page', async () => {
+        req.body = {
+          [INPUT]: '8989898',
+          [TRADING_NAME]: 'true',
+          [TRADING_ADDRESS]: 'false',
+          [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
+        };
+
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(NATURE_OF_BUSINESS);
+      });
+    });
+
     describe('when there is no application', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
@@ -71,6 +99,30 @@ describe('controllers/insurance/business/companies-details', () => {
         post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('when api.keystone.application.update.exporterCompany returns an error', () => {
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+          res.locals = { csrfToken: '1234' };
+          mapAndSave.companyDetails = jest.fn(() => Promise.reject());
+
+          post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when api.keystone.application.update.exporterCompany resolves false', () => {
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+          res.locals = { csrfToken: '1234' };
+          mapAndSave.companyDetails = jest.fn(() => Promise.resolve(false));
+
+          post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });

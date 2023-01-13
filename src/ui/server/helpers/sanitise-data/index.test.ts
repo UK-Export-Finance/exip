@@ -1,4 +1,13 @@
 import { shouldChangeToNumber, sanitiseValue, isDayMonthYearField, sanitiseData } from '.';
+import { FIELD_IDS } from '../../constants';
+import { mockPhoneNumbers } from '../../test-mocks';
+
+const {
+  EXPORTER_BUSINESS: {
+    COMPANY_HOUSE: { COMPANY_NUMBER },
+    YOUR_COMPANY: { PHONE_NUMBER },
+  },
+} = FIELD_IDS.INSURANCE;
 
 describe('server/helpers/sanitise-data', () => {
   describe('shouldChangeToNumber', () => {
@@ -95,6 +104,24 @@ describe('server/helpers/sanitise-data', () => {
         const result = sanitiseValue('mock');
 
         expect(result).toEqual('mock');
+      });
+    });
+
+    describe(`when value is ${COMPANY_NUMBER}`, () => {
+      it('should return value', () => {
+        const result = sanitiseValue('12345', COMPANY_NUMBER);
+
+        expect(result).toEqual('12345');
+      });
+    });
+
+    describe(`when value is ${PHONE_NUMBER}`, () => {
+      it('should return value', () => {
+        const phoneNumber = mockPhoneNumbers.VALID_PHONE_NUMBERS.LANDLINE;
+
+        const result = sanitiseValue(phoneNumber, COMPANY_NUMBER);
+
+        expect(result).toEqual(phoneNumber);
       });
     });
   });
