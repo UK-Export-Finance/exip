@@ -22,7 +22,7 @@ describe('server/helpers/get-data-to-save', () => {
   });
 
   describe('when errorList is not populated', () => {
-    it('hould return form body', () => {
+    it('should return form body', () => {
       const response = getDataToSave(mockFormBody);
 
       expect(response).toEqual(mockFormBody);

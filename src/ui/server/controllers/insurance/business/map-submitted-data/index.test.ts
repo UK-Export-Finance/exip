@@ -33,7 +33,7 @@ describe('controllers/insurance/business/map-submitted-data', () => {
     });
   });
 
-  describe(`when ${INPUT} success,and __typename fields are not provided`, () => {
+  describe(`when ${INPUT} success, and __typename fields are not provided`, () => {
     const mockBodyWithoutFields = {
       ...mockBody,
     } as RequestBody;
