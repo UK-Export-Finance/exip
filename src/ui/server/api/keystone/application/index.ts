@@ -78,10 +78,12 @@ const application = {
       if (response?.data?.referenceNumber && response?.data?.referenceNumber?.application) {
         const { data } = response;
 
-        return {
+        const application = {
           ...data.referenceNumber.application,
           referenceNumber: data.referenceNumber.id,
         };
+
+        return application;
       }
 
       throw new Error('Getting application');

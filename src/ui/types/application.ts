@@ -30,15 +30,6 @@ interface ApplicationPolicyAndExport {
   finalDestinationCountryCode?: string;
 }
 
-interface ApplicationExporterCompany {
-  id: string;
-  companyName?: string;
-  companyNumber?: string;
-  companyWebsite?: string;
-  hasTradingName?: boolean;
-  hasTradingAddress?: boolean;
-}
-
 interface ApplicationExporterCompanyAddress {
   id: string;
   addressLine1?: string;
@@ -51,11 +42,20 @@ interface ApplicationExporterCompanyAddress {
   premises?: string;
 }
 
+interface ApplicationExporterCompany {
+  id: string;
+  companyName?: string;
+  companyNumber?: string;
+  companyWebsite?: string;
+  hasTradingName?: boolean;
+  hasTradingAddress?: boolean;
+  address: ApplicationExporterCompanyAddress;
+}
+
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;
-  exporterCompanyAddress: ApplicationExporterCompanyAddress;
 }
 
 interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, ApplicationPolicyAndExport {

@@ -15,15 +15,10 @@ const mapSicCodes = (company: CompanyResponse, sicCodes?: Array<string>) => {
 
   sicCodes.forEach((code) => {
     const codeToAdd = {
-      code,
+      sicCode: code,
       exporterCompany: {
         connect: {
           id: company.id,
-        },
-      },
-      application: {
-        connect: {
-          id: company.applicationId,
         },
       },
     } as SicCodes;

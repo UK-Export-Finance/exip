@@ -31,8 +31,6 @@ export const lists = {
       }),
       policyAndExport: relationship({ ref: 'PolicyAndExport' }),
       exporterCompany: relationship({ ref: 'ExporterCompany' }),
-      exporterCompanyAddress: relationship({ ref: 'ExporterCompanyAddress' }),
-      exporterCompanySicCode: relationship({ ref: 'ExporterCompanySicCode' }),
     },
     // TODO: add logs to the hooks
     hooks: {
@@ -82,23 +80,6 @@ export const lists = {
               },
             };
 
-            // generate and attach a new `exporter company address` relationship
-            const { id: exporterCompanyAddressId } = await context.db.ExporterCompanyAddress.createOne({
-              data: {
-                exporterCompany: {
-                  connect: {
-                    id: exporterCompanyId,
-                  },
-                },
-              },
-            });
-
-            modifiedData.exporterCompanyAddress = {
-              connect: {
-                id: exporterCompanyAddressId,
-              },
-            };
-
             // add dates
             const now = new Date();
             modifiedData.createdAt = now;
@@ -125,7 +106,7 @@ export const lists = {
 
             const applicationId = item.id;
 
-            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterCompanyAddressId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -166,18 +147,6 @@ export const lists = {
             // add the application ID to the exporter company entry.
             await context.db.ExporterCompany.updateOne({
               where: { id: exporterCompanyId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-
-            // add the application ID to the exporter company address entry.
-            await context.db.ExporterCompanyAddress.updateOne({
-              where: { id: exporterCompanyAddressId },
               data: {
                 application: {
                   connect: {
@@ -231,8 +200,7 @@ export const lists = {
   }),
   ExporterCompanyAddress: list({
     fields: {
-      exporterCompany: relationship({ ref: 'ExporterCompany' }),
-      application: relationship({ ref: 'Application' }),
+      exporterCompany: relationship({ ref: 'ExporterCompany.address' }),
       addressLine1: text(),
       addressLine2: text(),
       careOf: text(),
@@ -247,9 +215,12 @@ export const lists = {
   ExporterCompany: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      exporterCompanyAddress: relationship({ ref: 'ExporterCompanyAddress' }),
+      address: relationship({ ref: 'ExporterCompanyAddress.exporterCompany' }),
       business: relationship({ ref: 'ExporterBusiness' }),
-      sicCodes: relationship({ ref: 'ExporterCompanySicCode' }),
+      sicCodes: relationship({
+        ref: 'ExporterCompanySicCode.exporterCompany',
+        many: true,
+      }),
       companyName: text(),
       companyNumber: text(),
       dateOfCreation: timestamp(),
@@ -260,14 +231,14 @@ export const lists = {
     },
     access: allowAll,
   }),
-  ExporterCompanySicCode: {
+  ExporterCompanySicCode: list({
     fields: {
-      exporterCompany: relationship({ ref: 'ExporterCompany' }),
-      application: relationship({ ref: 'Application' }),
-      code: text(),
+      exporterCompany: relationship({ ref: 'ExporterCompany.sicCodes' }),
+      sicCode: text(),
     },
     access: allowAll,
-  },
+  }),
+
   Country: list({
     fields: {
       isoCode: text({

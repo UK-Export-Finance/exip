@@ -6,6 +6,7 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
+import { SicCodes } from './types';
 
 dotenv.config();
 
@@ -68,7 +69,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
 
       type ExporterCompanyAndCompanyAddress {
         id: ID
-        exporterCompanyAddress: ExporterCompanyAddress
+        address: ExporterCompanyAddress
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
@@ -79,7 +80,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       }
 
       input ExporterCompanyAndCompanyAddressInput {
-        exporterCompanyAddress: ExporterCompanyAddressInput
+        address: ExporterCompanyAddressInput
         sicCodes: [String]
         companyName: String
         companyNumber: String
@@ -117,7 +118,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);
-            const { exporterCompanyAddress, sicCodes, ...exporterCompany } = variables.data;
+            const { address, sicCodes, ...exporterCompany } = variables.data;
 
             const company = await context.db.ExporterCompany.updateOne({
               where: { id: variables.companyId },
@@ -126,14 +127,15 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
 
             await context.db.ExporterCompanyAddress.updateOne({
               where: { id: variables.companyAddressId },
-              data: exporterCompanyAddress,
+              data: address,
             });
 
-            // maps SIC codes from variables into array
             const mappedSicCodes = mapSicCodes(company, sicCodes);
-            // TODO: delete existing SIC codes when adding sic codes to db
-            await context.db.ExporterCompanySicCode.createMany({
-              data: mappedSicCodes,
+
+            mappedSicCodes.forEach(async (sicCodeObj: SicCodes) => {
+              await context.db.ExporterCompanySicCode.createOne({
+                data: sicCodeObj,
+              });
             });
 
             return {
