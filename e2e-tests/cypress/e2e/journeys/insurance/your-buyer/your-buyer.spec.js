@@ -16,6 +16,8 @@ const {
   BUYER_COUNTRY_LABEL,
   BUYER_ORGANISATION,
   BUYER_ORGANISATION_LABEL,
+  BUYER_ADDRESS,
+  BUYER_ADDRESS_LABEL,
 } = YOUR_BUYER_FIELD_IDS;
 
 const goToPageDirectly = (referenceNumber) => {
@@ -90,11 +92,11 @@ context('Insurance - Your Buyer - Type of your buyer Page - As an exporter, I wa
   });
 
   it('renders `buyer address` label, and input', () => {
-    const field = yourBuyerPage[BUYER_ORGANISATION];
+    const field = yourBuyerPage[BUYER_ADDRESS];
 
     field.label().should('exist');
     field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUYER_ORGANISATION_LABEL);
+      expect(text.trim()).equal(BUYER_ADDRESS_LABEL);
     });
     field.input().should('exist');
   });
