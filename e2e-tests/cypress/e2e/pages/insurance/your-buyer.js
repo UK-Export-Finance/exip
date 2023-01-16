@@ -3,6 +3,7 @@ import { YOUR_BUYER_FIELD_IDS } from '../../../../content-strings/fields/insuran
 const {
   BUYER_COUNTRY,
   BUYER_ORGANISATION,
+  BUYER_ADDRESS,
 } = YOUR_BUYER_FIELD_IDS;
 
 export const yourBuyer = {
@@ -18,5 +19,10 @@ export const yourBuyer = {
     label: () => cy.get(`[data-cy="${BUYER_ORGANISATION}-label"]`),
     input: () => cy.get(`[data-cy="${BUYER_ORGANISATION}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${BUYER_ORGANISATION}-error-message"]`),
+  },
+  [BUYER_ADDRESS]: {
+    label: () => cy.get(`[data-cy="${BUYER_ADDRESS}-label"]`),
+    input: () => cy.get(`[data-cy="${BUYER_ADDRESS}-input"]`),
+    errorMessage: () => cy.get(`[data-cy="${BUYER_ADDRESS}-error-message"]`),
   },
 };

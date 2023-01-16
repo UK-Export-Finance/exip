@@ -89,6 +89,16 @@ context('Insurance - Your Buyer - Type of your buyer Page - As an exporter, I wa
     field.input().should('exist');
   });
 
+  it('renders `buyer address` label, and input', () => {
+    const field = yourBuyerPage[BUYER_ORGANISATION];
+
+    field.label().should('exist');
+    field.label().invoke('text').then((text) => {
+      expect(text.trim()).equal(BUYER_ORGANISATION_LABEL);
+    });
+    field.input().should('exist');
+  });
+
   it('renders a submit button', () => {
     submitButton().should('exist');
 
