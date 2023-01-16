@@ -1,3 +1,13 @@
+type SummaryListItemDataFieldSummary = {
+  TITLE: string;
+};
+
+type SummaryListItemDataInputField = {
+  id: string;
+  title?: string;
+  SUMMARY?: SummaryListItemDataFieldSummary;
+};
+
 type SummaryListItemDataInput = {
   data: object;
   field: SummaryListItemDataInputField;
@@ -13,16 +23,6 @@ type SummaryListItemData = {
   renderChangeLink?: boolean;
   title?: string;
   value?: string;
-};
-
-type SummaryListItemDataInputField = {
-  id: string;
-  title?: string;
-  SUMMARY?: SummaryListItemDataFieldSummary;
-};
-
-type SummaryListItemDataFieldSummary = {
-  TITLE: string;
 };
 
 type SummaryListItemKey = {
