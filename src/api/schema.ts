@@ -80,7 +80,7 @@ export const lists = {
               },
             };
 
-            // generate a new `exporter company address` relationship with the exporter companya
+            // generate a new `exporter company address` relationship with the exporter company
             await context.db.ExporterCompanyAddress.createOne({
               data: {
                 exporterCompany: {
