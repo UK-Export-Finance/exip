@@ -158,6 +158,9 @@ export const ERROR_MESSAGES = {
       BUYER_ORGANISATION: {
         IS_EMPTY: "Enter the buyer's company or organisation name",
       },
+      BUYER_ADDRESS: {
+        IS_EMPTY: "Enter the buyer's address",
+      },
     },
   },
 } as ErrorMessage;
