@@ -30,9 +30,9 @@ const mockApplication = {
   },
   exporterCompany: {
     id: 'clav8by1i0007kgoqies0deee',
-  },
-  exporterCompanyAddress: {
-    id: 'clav8by1i0007kgoqies0dfff',
+    address: {
+      id: 'clcyj96p0002440oqoblaeht2',
+    },
   },
 } as Application;
 

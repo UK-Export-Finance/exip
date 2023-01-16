@@ -16,28 +16,18 @@ describe('mapSicCodes', () => {
 
     const expected = [
       {
-        code: mockSicCodes[0],
+        sicCode: mockSicCodes[0],
         exporterCompany: {
           connect: {
             id: mockCompanyResponse.id,
-          },
-        },
-        application: {
-          connect: {
-            id: mockCompanyResponse.applicationId,
           },
         },
       },
       {
-        code: mockSicCodes[1],
+        sicCode: mockSicCodes[1],
         exporterCompany: {
           connect: {
             id: mockCompanyResponse.id,
-          },
-        },
-        application: {
-          connect: {
-            id: mockCompanyResponse.applicationId,
           },
         },
       },

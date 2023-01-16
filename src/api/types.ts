@@ -41,7 +41,7 @@ interface ConnectObj {
 }
 
 interface SicCodes {
-  code: string;
+  sicCode: string;
   exporterCompany: ConnectObj;
   application: ConnectObj;
 }
