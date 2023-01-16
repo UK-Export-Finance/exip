@@ -7,6 +7,7 @@
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -34,7 +35,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half-from-desktop">
 
-            {{ govukInput({
+        {{ govukInput({
               label: {
                 text:  YOUR_BUYER.BUYER_ORGANISATION.LABEL,
                 classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
@@ -56,10 +57,23 @@
                   "data-cy": YOUR_BUYER.BUYER_ORGANISATION.ID + "-error-message"
                 }
               }
-            }) }}
+            }) 
+        }}
 
+        {{ govukCharacterCount({
+            name: "with-hint",
+            id: "with-hint",
+            maxlength: 300,
+            classes: "govuk-!-width-two-thirds",
+            label: {
+              text: "Address",
+              classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+              isPageHeading: true
+            }
+          }) 
+        }}
 
-            {{ govukSelect({
+        {{ govukSelect({
               id: YOUR_BUYER.BUYER_COUNTRY.ID,
               name: YOUR_BUYER.BUYER_COUNTRY.ID,
               label: {
@@ -81,19 +95,19 @@
                 }
               }
             }) }}
-        
+
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="govuk-button-group">
-            {{ govukButton({
+          {{ govukButton({
               text: CONTENT_STRINGS.BUTTONS.CONTINUE,
               attributes: {
                 'data-cy': 'submit-button'
               }
             }) }}
 
-            {{ govukButton({
+          {{ govukButton({
               text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
               classes: "govuk-button--secondary",
               attributes: {
