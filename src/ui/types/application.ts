@@ -49,7 +49,7 @@ interface ApplicationExporterCompany {
   companyWebsite?: string;
   hasTradingName?: boolean;
   hasTradingAddress?: boolean;
-  address: ApplicationExporterCompanyAddress;
+  registeredOfficeAddress: ApplicationExporterCompanyAddress;
 }
 
 interface Application extends ApplicationCore {

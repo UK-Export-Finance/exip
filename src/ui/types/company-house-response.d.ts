@@ -15,8 +15,8 @@ interface CompanyHouseResponse {
   companyNumber: string;
   dateOfCreation: string;
   sicCodes: Array<string>;
-  success: boolean;
-  apiError: boolean;
+  success?: boolean;
+  apiError?: boolean;
 }
 
 export { CompanyHouseResponse };

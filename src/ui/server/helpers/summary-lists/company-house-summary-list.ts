@@ -22,7 +22,7 @@ const generateAddressHTML = (address: object) => {
 
   Object.keys(address).forEach((field) => {
     // if the address field exists and not the typename part
-    if (address[field] && field !== '__typename') {
+    if (address[field] && field !== '__typename' && field !== 'id') {
       addressString += `${address[field]}<br>`;
     }
   });

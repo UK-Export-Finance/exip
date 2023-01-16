@@ -442,7 +442,7 @@ input ExporterCompanyAddressCreateInput {
 type ExporterCompany {
   id: ID!
   application: Application
-  address: ExporterCompanyAddress
+  registeredOfficeAddress: ExporterCompanyAddress
   business: ExporterBusiness
   sicCodes(where: ExporterCompanySicCodeWhereInput! = {}, orderBy: [ExporterCompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterCompanySicCode!]
   sicCodesCount(where: ExporterCompanySicCodeWhereInput! = {}): Int
@@ -465,7 +465,7 @@ input ExporterCompanyWhereInput {
   NOT: [ExporterCompanyWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
-  address: ExporterCompanyAddressWhereInput
+  registeredOfficeAddress: ExporterCompanyAddressWhereInput
   business: ExporterBusinessWhereInput
   sicCodes: ExporterCompanySicCodeManyRelationFilter
   companyName: StringFilter
@@ -501,7 +501,7 @@ input ExporterCompanyOrderByInput {
 
 input ExporterCompanyUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
-  address: ExporterCompanyAddressRelateToOneForUpdateInput
+  registeredOfficeAddress: ExporterCompanyAddressRelateToOneForUpdateInput
   business: ExporterBusinessRelateToOneForUpdateInput
   sicCodes: ExporterCompanySicCodeRelateToManyForUpdateInput
   companyName: String
@@ -539,7 +539,7 @@ input ExporterCompanyUpdateArgs {
 
 input ExporterCompanyCreateInput {
   application: ApplicationRelateToOneForCreateInput
-  address: ExporterCompanyAddressRelateToOneForCreateInput
+  registeredOfficeAddress: ExporterCompanyAddressRelateToOneForCreateInput
   business: ExporterBusinessRelateToOneForCreateInput
   sicCodes: ExporterCompanySicCodeRelateToManyForCreateInput
   companyName: String
@@ -1110,7 +1110,7 @@ input ExporterCompanyAddressInput {
 
 type ExporterCompanyAndCompanyAddress {
   id: ID
-  address: ExporterCompanyAddress
+  registeredOfficeAddress: ExporterCompanyAddress
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime

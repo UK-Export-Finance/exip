@@ -2,7 +2,7 @@ import { AnswersContent, AnswersFieldGroups } from './answers';
 import { Application, ApplicationFlat } from './application';
 import { ApolloResponse } from './apollo';
 import { CisCountry } from './cis-country';
-import { CompanyDetails, CompanyDetailsFieldGroups } from './company-details';
+import { CompanyDetails, CompanyDetailsFieldGroups, SicCodeResponse } from './company-details';
 import { CompanyHouseResponse } from './company-house-response';
 import { Country } from './country';
 import { Currency } from './currency';
@@ -69,6 +69,7 @@ export {
   RequiredDataStateQuoteEligibility,
   Response,
   SelectOption,
+  SicCodeResponse,
   SingleInputPageVariablesInitialInput,
   SingleInputPageVariablesInput,
   SingleInputPageVariables,

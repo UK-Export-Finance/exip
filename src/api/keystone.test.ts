@@ -131,12 +131,12 @@ describe('Create an Application', () => {
       where: {
         id: application.exporterCompany.id,
       },
-      query: 'id application { id } address { id }',
+      query: 'id application { id } registeredOfficeAddress { id }',
     });
 
     const exporterCompanyAddress = await context.query.ExporterCompanyAddress.findOne({
       where: {
-        id: exporterCompany.address.id,
+        id: exporterCompany.registeredOfficeAddress.id,
       },
       query: 'id exporterCompany { id }',
     });

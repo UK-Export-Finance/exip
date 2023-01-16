@@ -29,10 +29,33 @@ const mockApplication = {
     contractCompletionDate: add(new Date(), { months: 1, days: 1 }),
   },
   exporterCompany: {
-    id: 'clav8by1i0007kgoqies0deee',
-    address: {
-      id: 'clcyj96p0002440oqoblaeht2',
+    id: 'clcyyopn40148m8noyar9wxrn',
+    companyName: 'Test Name',
+    companyNumber: '0123456',
+    companyWebsite: '',
+    hasTradingName: false,
+    hasTradingAddress: false,
+    dateOfCreation: '2014-04-10T00:00:00.000Z',
+    sicCodes: [
+      {
+        id: 'clcyyxldc0634m8novkr94spo',
+        sicCode: '64999',
+        __typename: 'ExporterCompanySicCode',
+      },
+    ],
+    registeredOfficeAddress: {
+      id: 'clcyyopna0158m8noaglyy94t',
+      addressLine1: 'Line 1',
+      addressLine2: 'Line 2',
+      careOf: '',
+      locality: 'Locality',
+      region: 'Region',
+      postalCode: 'Post code',
+      country: '',
+      premises: '',
+      __typename: 'ExporterCompanyAddress',
     },
+    __typename: 'ExporterCompany',
   },
 } as Application;
 
