@@ -61,6 +61,7 @@ const get = async (req: Request, res: Response) => {
 
     const { exporterCompany } = application;
 
+    // values from application if they exist
     const submittedValues = {
       [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
       [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
@@ -76,6 +77,7 @@ const get = async (req: Request, res: Response) => {
       }),
       ...pageVariables(application.referenceNumber),
       submittedValues,
+      // summary list for company details
       SUMMARY_LIST: populateCompaniesHouseSummaryList(exporterCompany),
     });
   } catch (error) {

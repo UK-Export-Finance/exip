@@ -9,6 +9,11 @@ const {
   },
 } = FIELD_IDS.INSURANCE;
 
+/**
+ * maps database response and returns body in correct format for summary list
+ * @param {object} exporterCompany
+ * @returns {CompanyHouseResponse} reformatted exporterCompany
+ */
 const mapDatabaseResponse = (exporterCompany: object) => {
   return {
     [COMPANY_NAME]: exporterCompany[COMPANY_NAME],
@@ -21,6 +26,11 @@ const mapDatabaseResponse = (exporterCompany: object) => {
   } as CompanyHouseResponse;
 };
 
+/**
+ * receives exporterCompany and maps it to correct format and returns summaryList for company details
+ * @param {object} exporterCompany
+ * @returns {Array<SummaryListItemData>} summaryList for company details
+ */
 const populateCompaniesHouseSummaryList = (exporterCompany: object) => {
   if (!exporterCompany[COMPANY_NUMBER]) {
     return null;
