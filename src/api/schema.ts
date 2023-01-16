@@ -80,6 +80,17 @@ export const lists = {
               },
             };
 
+            // generate a new `exporter company address` relationship with the exporter companya
+            await context.db.ExporterCompanyAddress.createOne({
+              data: {
+                exporterCompany: {
+                  connect: {
+                    id: exporterCompanyId,
+                  },
+                },
+              },
+            });
+
             // add dates
             const now = new Date();
             modifiedData.createdAt = now;

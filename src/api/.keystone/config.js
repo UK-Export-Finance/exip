@@ -118,6 +118,15 @@ var lists = {
                 id: exporterCompanyId
               }
             };
+            await context.db.ExporterCompanyAddress.createOne({
+              data: {
+                exporterCompany: {
+                  connect: {
+                    id: exporterCompanyId
+                  }
+                }
+              }
+            });
             const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;

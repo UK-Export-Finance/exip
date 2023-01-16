@@ -125,4 +125,22 @@ describe('Create an Application', () => {
 
     expect(exporterCompany.application.id).toEqual(application.id);
   });
+
+  test('it should add the exporter company ID to the exporter company address entry', async () => {
+    const exporterCompany = await context.query.ExporterCompany.findOne({
+      where: {
+        id: application.exporterCompany.id,
+      },
+      query: 'id application { id } address { id }',
+    });
+
+    const exporterCompanyAddress = await context.query.ExporterCompanyAddress.findOne({
+      where: {
+        id: exporterCompany.address.id,
+      },
+      query: 'id exporterCompany { id }',
+    });
+
+    expect(exporterCompanyAddress.exporterCompany.id).toEqual(application.exporterCompany.id);
+  });
 });
