@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 import { generateFieldGroups, companyHouseSummaryList, generateAddressHTML } from './company-house-summary-list';
 import generateSummaryListRows from './generate-summary-list-rows';
+import fieldGroupItem from './generate-field-group-item';
 import { FIELD_IDS } from '../../constants';
 import { FIELDS, PAGES } from '../../content-strings';
 import { mockCompany } from '../../test-mocks';
@@ -58,41 +59,35 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
 
       const expected = {
         COMPANY_DETAILS: [
-          {
-            id: COMPANY_NUMBER,
-            ...FIELDS[COMPANY_NUMBER],
-            value: {
-              text: mockCompany[COMPANY_NUMBER],
+          fieldGroupItem({
+            field: { id: COMPANY_NUMBER, ...FIELDS[COMPANY_NUMBER] },
+            data: mockCompany,
+          }),
+          fieldGroupItem({
+            field: { id: COMPANY_NAME, ...FIELDS[COMPANY_NAME] },
+            data: mockCompany,
+          }),
+          fieldGroupItem(
+            {
+              field: { id: COMPANY_ADDRESS, ...FIELDS[COMPANY_ADDRESS] },
+              data: mockCompany,
             },
-          },
-          {
-            id: COMPANY_NAME,
-            ...FIELDS[COMPANY_NAME],
-            value: {
-              text: mockCompany[COMPANY_NAME],
+            generateAddressHTML(mockCompany[COMPANY_ADDRESS]),
+          ),
+          fieldGroupItem(
+            {
+              field: { id: COMPANY_INCORPORATED, ...FIELDS[COMPANY_INCORPORATED] },
+              data: mockCompany,
             },
-          },
-          {
-            id: COMPANY_ADDRESS,
-            ...FIELDS[COMPANY_ADDRESS],
-            value: {
-              html: `${mockCompany[COMPANY_ADDRESS].addressLine1}<br>${mockCompany[COMPANY_ADDRESS].locality}<br>${mockCompany[COMPANY_ADDRESS].region}<br>${mockCompany[COMPANY_ADDRESS].postalCode}<br>`,
+            format(new Date(mockCompany[COMPANY_INCORPORATED]), 'dd MMMM yyyy'),
+          ),
+          fieldGroupItem(
+            {
+              field: { id: COMPANY_SIC, ...FIELDS[COMPANY_SIC] },
+              data: mockCompany,
             },
-          },
-          {
-            id: COMPANY_INCORPORATED,
-            ...FIELDS[COMPANY_INCORPORATED],
-            value: {
-              text: format(new Date(mockCompany[COMPANY_INCORPORATED]), 'dd MMMM yyyy'),
-            },
-          },
-          {
-            id: COMPANY_SIC,
-            ...FIELDS[COMPANY_SIC],
-            value: {
-              text: mockCompany[COMPANY_SIC],
-            },
-          },
+            mockCompany[COMPANY_SIC][0],
+          ),
         ],
       };
 

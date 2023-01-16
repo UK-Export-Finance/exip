@@ -1,7 +1,8 @@
 import { format } from 'date-fns';
-import generateSummaryListRows from './generate-summary-list-rows';
 import { FIELD_IDS } from '../../constants';
 import { FIELDS, PAGES } from '../../content-strings';
+import generateSummaryListRows from './generate-summary-list-rows';
+import fieldGroupItem from './generate-field-group-item';
 import { CompanyHouseResponse, CompanyDetailsFieldGroups } from '../../../types';
 
 const {
@@ -43,41 +44,35 @@ const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
   } as CompanyDetailsFieldGroups;
 
   fieldGroups.COMPANY_DETAILS = [
-    {
-      id: COMPANY_NUMBER,
-      ...FIELDS[COMPANY_NUMBER],
-      value: {
-        text: companyDetails[COMPANY_NUMBER],
+    fieldGroupItem({
+      field: { id: COMPANY_NUMBER, ...FIELDS[COMPANY_NUMBER] },
+      data: companyDetails,
+    }),
+    fieldGroupItem({
+      field: { id: COMPANY_NAME, ...FIELDS[COMPANY_NAME] },
+      data: companyDetails,
+    }),
+    fieldGroupItem(
+      {
+        field: { id: COMPANY_ADDRESS, ...FIELDS[COMPANY_ADDRESS] },
+        data: companyDetails,
       },
-    },
-    {
-      id: COMPANY_NAME,
-      ...FIELDS[COMPANY_NAME],
-      value: {
-        text: companyDetails[COMPANY_NAME],
+      generateAddressHTML(companyDetails[COMPANY_ADDRESS]),
+    ),
+    fieldGroupItem(
+      {
+        field: { id: COMPANY_INCORPORATED, ...FIELDS[COMPANY_INCORPORATED] },
+        data: companyDetails,
       },
-    },
-    {
-      id: COMPANY_ADDRESS,
-      ...FIELDS[COMPANY_ADDRESS],
-      value: {
-        html: generateAddressHTML(companyDetails[COMPANY_ADDRESS]),
+      format(new Date(companyDetails[COMPANY_INCORPORATED]), 'dd MMMM yyyy'),
+    ),
+    fieldGroupItem(
+      {
+        field: { id: COMPANY_SIC, ...FIELDS[COMPANY_SIC] },
+        data: companyDetails,
       },
-    },
-    {
-      id: COMPANY_INCORPORATED,
-      ...FIELDS[COMPANY_INCORPORATED],
-      value: {
-        text: format(new Date(companyDetails[COMPANY_INCORPORATED]), 'dd MMMM yyyy'),
-      },
-    },
-    {
-      id: COMPANY_SIC,
-      ...FIELDS[COMPANY_SIC],
-      value: {
-        text: companyDetails[COMPANY_SIC],
-      },
-    },
+      companyDetails[COMPANY_SIC][0],
+    ),
   ];
 
   return fieldGroups;

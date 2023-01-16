@@ -11,9 +11,9 @@ describe('server/helpers/summary-lists/generate-summary-list-rows', () => {
   const fields = generateFields(mockQuoteContent);
 
   const expectedObjBase = (field: SummaryListItemData) => ({
-    classes: 'ukef-white-text',
+    classes: '',
     key: {
-      text: getKeyText(fields, field.id),
+      text: getKeyText(field),
       classes: `${field.id}-key govuk-!-width-one-half`,
     },
     value: {
@@ -24,7 +24,7 @@ describe('server/helpers/summary-lists/generate-summary-list-rows', () => {
     },
   });
 
-  it('returns an array of objects mapped to quote content', () => {
+  it('returns an array of objects mapped to answers/content', () => {
     const result = generateSummaryListRows(fields);
 
     const expectedObj = (field: SummaryListItemData) => {
@@ -33,10 +33,12 @@ describe('server/helpers/summary-lists/generate-summary-list-rows', () => {
       const mapped = {
         ...initObj,
         value: {
-          ...initObj.value,
-          text: field.value.text,
+          text: field.value,
+          html: field.value,
+          classes: `${field.id}-value`,
         },
       };
+
       return mapped;
     };
 
@@ -51,9 +53,7 @@ describe('server/helpers/summary-lists/generate-summary-list-rows', () => {
       const mockField = {
         id: 'mock',
         title: 'Test',
-        value: {
-          text: 'mock',
-        },
+        value: 'mock',
         renderChangeLink: true,
         href: '/page#field-label',
       };
@@ -68,11 +68,30 @@ describe('server/helpers/summary-lists/generate-summary-list-rows', () => {
           attributes: {
             'data-cy': `${mockField.id}-change-link`,
           },
-          classes: 'ukef-white-text govuk-link--no-visited-state',
+          classes: '',
         },
       ];
 
       expect(result[0].actions.items).toEqual(expected);
+    });
+  });
+
+  describe('when whiteText param is passed', () => {
+    it('should add a class to each row', () => {
+      const whiteText = true;
+
+      const result = generateSummaryListRows(fields, whiteText);
+
+      expect(result[0].classes).toEqual('ukef-white-text');
+      expect(result[1].classes).toEqual('ukef-white-text');
+    });
+
+    it('should add a class to each change link', () => {
+      const whiteText = true;
+
+      const result = generateSummaryListRows(fields, whiteText);
+
+      expect(result[0].actions.items[0].classes).toEqual('ukef-white-text no-visited-state');
     });
   });
 });

@@ -1,4 +1,4 @@
-import { SummaryListField, SummaryListItemData } from './summary-list';
+import { SummaryListItemData, SummaryListField } from './summary-list';
 
 interface CompanyDetails {
   companyRegistration?: SummaryListField;

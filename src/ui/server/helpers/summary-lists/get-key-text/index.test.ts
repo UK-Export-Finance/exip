@@ -7,7 +7,6 @@ const { AMOUNT_CURRENCY, VALID_EXPORTER_LOCATION } = FIELD_IDS;
 describe('server/helpers/summary-lists/get-key-text', () => {
   describe('getKeyText', () => {
     describe('when a field has SUMMARY objct with TITLE', () => {
-
       it('should return FIELD.SUMMARY.TITLE', () => {
         const result = getKeyText(FIELDS[VALID_EXPORTER_LOCATION]);
 
@@ -20,11 +19,9 @@ describe('server/helpers/summary-lists/get-key-text', () => {
       it('should return title', () => {
         const mockField = { id: 'mock', title: 'mock field' };
 
-        const mockFields = { mockField };
-
         const result = getKeyText(mockField);
 
-        expect(result).toEqual(null);
+        expect(result).toEqual(mockField.title);
       });
     });
 

@@ -1,26 +1,32 @@
-import getKeyText from '../get-key-text';
 import { LINKS } from '../../../content-strings';
 import { SummaryListItemData, SummaryListItem } from '../../../../types';
-
-// TODO optional govuk-link--no-visited-state
-// this is only required for the quote summary list.
 
 /**
  * generateSummaryListRows
  * Map an array of fields with values for govukSummaryList component
  * @param {Array} Array of fields and answers
+ * @param {Boolean} Add white text classes
  * @returns {Array} Array of fields/answers in govukSummaryList data structure
  */
-const generateSummaryListRows = (fields: Array<SummaryListItemData>): Array<SummaryListItem> =>
-  fields.map((field: SummaryListItemData): SummaryListItem => {
+const generateSummaryListRows = (fields: Array<SummaryListItemData>, whiteText?: boolean): Array<SummaryListItem> => {
+  let rowClasses = '';
+  let changeLinkClasses = '';
+
+  if (whiteText) {
+    rowClasses = 'ukef-white-text';
+    changeLinkClasses = 'ukef-white-text no-visited-state';
+  }
+
+  return fields.map((field: SummaryListItemData): SummaryListItem => {
     const mapped = {
-      classes: 'ukef-white-text',
+      classes: rowClasses,
       key: {
-        text: getKeyText(fields, field.id),
+        text: field.title,
         classes: `${field.id}-key govuk-!-width-one-half`,
       },
       value: {
-        text: field.value.text,
+        text: field.value,
+        html: field.value,
         classes: `${field.id}-value`,
       },
       actions: {
@@ -36,11 +42,12 @@ const generateSummaryListRows = (fields: Array<SummaryListItemData>): Array<Summ
         attributes: {
           'data-cy': `${field.id}-change-link`,
         },
-        classes: 'ukef-white-text govuk-link--no-visited-state',
+        classes: changeLinkClasses,
       });
     }
 
     return mapped;
   });
+};
 
 export default generateSummaryListRows;

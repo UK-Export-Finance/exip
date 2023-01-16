@@ -22,32 +22,24 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         {
           id: PERCENTAGE_OF_COVER,
           title: QUOTE_TITLES[PERCENTAGE_OF_COVER],
-          value: {
-            text: mockQuoteContent[PERCENTAGE_OF_COVER].text,
-          },
+          value: mockQuoteContent[PERCENTAGE_OF_COVER].text,
           renderChangeLink: true,
           href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
         },
         {
           id: PREMIUM_RATE_PERCENTAGE,
           title: QUOTE_TITLES[PREMIUM_RATE_PERCENTAGE],
-          value: {
-            text: mockQuoteContent[PREMIUM_RATE_PERCENTAGE].text,
-          },
+          value: mockQuoteContent[PREMIUM_RATE_PERCENTAGE].text,
         },
         {
           id: ESTIMATED_COST,
           title: QUOTE_TITLES[ESTIMATED_COST],
-          value: {
-            text: mockQuoteContent[ESTIMATED_COST].text,
-          },
+          value: mockQuoteContent[ESTIMATED_COST].text,
         },
         {
           id: BUYER_LOCATION,
           title: QUOTE_TITLES[BUYER_LOCATION],
-          value: {
-            text: mockQuoteContent[BUYER_COUNTRY].text,
-          },
+          value: mockQuoteContent[BUYER_COUNTRY].text,
           renderChangeLink: true,
           href: `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`,
         },
@@ -78,9 +70,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const expected = {
           id: FIELD_IDS.CONTRACT_VALUE,
           title: QUOTE_TITLES[CONTRACT_VALUE],
-          value: {
-            text: mockQuoteContent[CONTRACT_VALUE].text,
-          },
+          value: mockQuoteContent[CONTRACT_VALUE].text,
           renderChangeLink: true,
           href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
         };
@@ -106,9 +96,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const expected = {
           id: FIELD_IDS.QUOTE.INSURED_FOR,
           title: QUOTE_TITLES[`${QUOTE.INSURED_FOR}_SINGLE_POLICY`],
-          value: {
-            text: mockQuoteContent[INSURED_FOR].text,
-          },
+          value: mockQuoteContent[INSURED_FOR].text,
         };
 
         expect(expectedField).toEqual(expected);
@@ -129,9 +117,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const expected = {
           id: FIELD_IDS.SINGLE_POLICY_LENGTH,
           title: QUOTE_TITLES[POLICY_LENGTH],
-          value: {
-            text: mockQuoteContent[SINGLE_POLICY_LENGTH].text,
-          },
+          value: mockQuoteContent[SINGLE_POLICY_LENGTH].text,
           renderChangeLink: true,
           href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
         };
@@ -162,9 +148,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const expected = {
           id: FIELD_IDS.MAX_AMOUNT_OWED,
           title: QUOTE_TITLES[MAX_AMOUNT_OWED],
-          value: {
-            text: mockQuoteContent[MAX_AMOUNT_OWED].text,
-          },
+          value: mockQuoteContent[MAX_AMOUNT_OWED].text,
           renderChangeLink: true,
           href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
         };
@@ -195,9 +179,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const expected = {
           id: FIELD_IDS.QUOTE.INSURED_FOR,
           title: QUOTE_TITLES[`${QUOTE.INSURED_FOR}_MULTI_POLICY`],
-          value: {
-            text: mockQuoteContent[INSURED_FOR].text,
-          },
+          value: mockQuoteContent[INSURED_FOR].text,
         };
 
         expect(expectedField).toEqual(expected);
@@ -221,9 +203,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const expected = {
           id: FIELD_IDS.MULTI_POLICY_LENGTH,
           title: QUOTE_TITLES[POLICY_LENGTH],
-          value: {
-            text: mockQuoteContent[MULTI_POLICY_LENGTH].text,
-          },
+          value: mockQuoteContent[MULTI_POLICY_LENGTH].text,
         };
 
         expect(expectedField).toEqual(expected);
@@ -238,7 +218,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
       const result = quoteSummaryList(mockQuoteContent);
 
       const fields = generateFields(mockQuoteContent);
-      const expected = generateSummaryListRows(fields);
+      const expected = generateSummaryListRows(fields, true);
 
       expect(result).toEqual(expected);
     });

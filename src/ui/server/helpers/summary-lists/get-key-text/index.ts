@@ -7,8 +7,7 @@ type FieldSummary = {
 type TheField = {
   title?: string;
   SUMMARY?: FieldSummary;
-}
-
+};
 
 /**
  * getKeyText
