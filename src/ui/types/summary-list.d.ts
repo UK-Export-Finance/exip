@@ -1,9 +1,28 @@
+type SummaryListItemDataInput = {
+  data: object;
+  field: SummaryListItemDataInputField;
+  href?: string;
+  renderChangeLink?: boolean;
+  title?: string;
+  value?: string;
+};
+
 type SummaryListItemData = {
   id: string;
   href?: string;
   renderChangeLink?: boolean;
   title?: string;
   value?: string;
+};
+
+type SummaryListItemDataInputField = {
+  id: string;
+  title?: string;
+  SUMMARY?: SummaryListItemDataFieldSummary;
+};
+
+type SummaryListItemDataFieldSummary = {
+  TITLE: string;
 };
 
 type SummaryListItemKey = {
@@ -45,6 +64,9 @@ export {
   SummaryListItemActionsItemAttributes,
   SummaryListItemActionsItem,
   SummaryListItemData,
+  SummaryListItemDataInput,
+  SummaryListItemDataInputField,
+  SummaryListItemDataFieldSummary,
   SummaryListItemKey,
   SummaryListItemValue,
 };

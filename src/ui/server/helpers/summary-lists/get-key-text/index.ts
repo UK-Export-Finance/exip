@@ -1,13 +1,6 @@
+import { SummaryListItemDataInputField } from '../../../../types';
+
 // TODO : can we align TITLE and title?
-
-type FieldSummary = {
-  TITLE: string;
-};
-
-type TheField = {
-  title?: string;
-  SUMMARY?: FieldSummary;
-};
 
 /**
  * getKeyText
@@ -16,7 +9,7 @@ type TheField = {
  * @param {String} Field ID
  * @returns {String} Title of the field for a govukSummaryList row
  */
-const getKeyText = (field: TheField) => {
+const getKeyText = (field: SummaryListItemDataInputField) => {
   if (field.SUMMARY?.TITLE) {
     return field.SUMMARY.TITLE;
   }
