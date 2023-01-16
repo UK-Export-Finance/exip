@@ -169,7 +169,7 @@ const post = async (req: Request, res: Response) => {
     // runs companiesHouse validation and api call first for companiesHouse input
     const response = await companiesHouseSearch(body);
 
-    const { apiError, companiesHouseNumber } = response;
+    const { apiError, companiesHouseNumber, company } = response;
 
     // if error, then there is problem with api/service to redirect
     if (apiError) {
@@ -204,8 +204,13 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
+    const updateBody = {
+      ...body,
+      ...company,
+    };
+
     // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.companyDetails(req.body, application);
+    const saveResponse = await mapAndSave.companyDetails(updateBody, application);
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
