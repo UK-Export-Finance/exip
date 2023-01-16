@@ -160,6 +160,7 @@ export const ERROR_MESSAGES = {
       },
       BUYER_ADDRESS: {
         IS_EMPTY: "Enter the buyer's address",
+        ABOVE_MAXIMUM: 'Buyer address cannot be more than 330 characters',
       },
     },
   },

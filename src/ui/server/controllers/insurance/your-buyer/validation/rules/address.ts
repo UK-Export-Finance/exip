@@ -26,6 +26,10 @@ export const addressRules = (formBody: RequestBody, errors: object) => {
   if (!objectHasProperty(formBody, YOUR_BUYER.BUYER_ADDRESS.ID)) {
     return generateValidationErrors(YOUR_BUYER.BUYER_ADDRESS.ID, BUYER_ADDRESS.IS_EMPTY, errors);
   }
+  // check the  length of character
+  if (Object.keys(formBody[YOUR_BUYER.BUYER_ADDRESS.ID]).length > YOUR_BUYER.BUYER_ADDRESS.MAX_LENGTH) {
+    return generateValidationErrors(YOUR_BUYER.BUYER_ADDRESS.ID, BUYER_ADDRESS.ABOVE_MAXIMUM, errors);
+  }
 
   return updatedErrors;
 };
