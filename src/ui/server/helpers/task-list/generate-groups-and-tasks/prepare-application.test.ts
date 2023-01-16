@@ -81,7 +81,10 @@ describe('server/helpers/task-list/prepare-application', () => {
         href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${EXPORTER_BUSINESS_ROUTES.COMPANY_DETAILS}`,
         title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
         id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
-        fields: [],
+        fields: Object.values({
+          ...FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY,
+          ...FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE,
+        }),
         dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
       };
 
