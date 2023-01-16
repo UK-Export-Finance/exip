@@ -1,4 +1,5 @@
 import getKeyText from '../get-key-text';
+import { DEFAULT } from '../../../content-strings';
 import { SummaryListItemData, SummaryListItemDataInput } from '../../../../types';
 
 /**
@@ -19,7 +20,7 @@ export const getSummaryListItemDataValue = (data: object, fieldId: string, custo
     return data[fieldId];
   }
 
-  return '-';
+  return DEFAULT.EMPTY;
 };
 
 /**

@@ -1,5 +1,6 @@
 import generateSummaryListItemData, { getSummaryListItemDataValue } from '.';
 import getKeyText from '../get-key-text';
+import { DEFAULT } from '../../../content-strings';
 import { SummaryListItemDataInput } from '../../../../types';
 
 describe('server/helpers/summary-lists/generate-field-group-item', () => {
@@ -75,7 +76,7 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
       it('should return an empty dash', () => {
         const result = getSummaryListItemDataValue(mockSubmittedData, 'fieldC');
 
-        expect(result).toEqual('-');
+        expect(result).toEqual(DEFAULT.EMPTY);
       });
     });
   });
