@@ -92,7 +92,7 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
       api.keystone.countries.getAll = getCountriesSpy;
     });
 
-    const validBody = { organisation: 'test oraganisation', country: 'XAD' };
+    const validBody = { organisation: 'test oraganisation', country: 'XAD', address: '1234' };
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
