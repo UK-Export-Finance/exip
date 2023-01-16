@@ -61,14 +61,26 @@
         }}
 
         {{ govukCharacterCount({
-            name: "with-hint",
-            id: "with-hint",
-            maxlength: 300,
+            name: YOUR_BUYER.BUYER_ADDRESS.ID,
+            id: YOUR_BUYER.BUYER_ADDRESS.ID,
+            maxlength: YOUR_BUYER.BUYER_ADDRESS.MAX_LENGTH,
             classes: "govuk-!-width-two-thirds",
+            attributes: {
+                'data-cy': YOUR_BUYER.BUYER_ADDRESS.ID + '-input'
+            },
+            errorMessage: validationErrors.errorList[YOUR_BUYER.BUYER_ADDRESS.ID] and {
+                text: validationErrors.errorList[YOUR_BUYER.BUYER_ADDRESS.ID].text,
+                attributes: {
+                  "data-cy": YOUR_BUYER.BUYER_ADDRESS.ID + "-error-message"
+                }
+              },
             label: {
-              text: "Address",
+              text: YOUR_BUYER.BUYER_ADDRESS.LABEL,
               classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
-              isPageHeading: true
+              attributes: {
+                  id: YOUR_BUYER.BUYER_ADDRESS.ID + '-label',
+                  'data-cy': YOUR_BUYER.BUYER_ADDRESS.ID + '-label'
+              }
             }
           }) 
         }}
