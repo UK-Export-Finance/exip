@@ -15,8 +15,8 @@ const { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COM
  * able to handle addresses with all fields present or where some are null as not present
  * maps through addrress object and contructs an html string containing line breaks
  * skips fields where the field is null or is typename
- * @param address
- * @returns string containing html of address
+ * @param {Object} Address
+ * @returns {String} Address as a string of HTMl
  */
 const generateAddressHTML = (address: object) => {
   let addressString = '';
@@ -35,8 +35,8 @@ const generateAddressHTML = (address: object) => {
  * Create all field groups for govukSummaryList
  * The following fields depend on the response from companies house api:
  * - COMPANY_ADDRESS - if all parts of address are returned or not
- * @param companyDetails object
- * @returns object with fieldGroups populated
+ * @param {Object} Company details 
+ * @returns {Object} All quote values in an object structure for GOVUK summary list structure
  */
 const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
   const fieldGroups = {
@@ -78,6 +78,12 @@ const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
   return fieldGroups;
 };
 
+/**
+ * companyHouseSummaryList
+ * Create a group with govukSummaryList data structure
+ * @param {Object} All quote content in a simple object.text structure
+ * @returns {Object} A group with multiple fields/answers in govukSummaryList data structure
+ */
 const companyHouseSummaryList = (companyDetails: CompanyHouseResponse) => {
   const fieldGroups = generateFieldGroups(companyDetails);
 
