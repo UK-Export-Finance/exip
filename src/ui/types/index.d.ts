@@ -18,7 +18,7 @@ import {
   SubmittedDataInsuranceEligibility,
   SubmittedData,
 } from './submitted-data';
-import { SummaryListItemData, SummaryListItem, SummaryListItemData } from './summary-list';
+import { SummaryListItem, SummaryListItemData } from './summary-list';
 import { TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
 import {
   TellUsAboutPolicyPageVariablesContentStrings,
@@ -38,7 +38,6 @@ import {
 } from './page-variables';
 
 export {
-  SummaryListItemData,
   AnswersContent,
   AnswersFieldGroups,
   Application,

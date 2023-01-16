@@ -35,7 +35,7 @@ const generateAddressHTML = (address: object) => {
  * Create all field groups for govukSummaryList
  * The following fields depend on the response from companies house api:
  * - COMPANY_ADDRESS - if all parts of address are returned or not
- * @param {Object} Company details 
+ * @param {Object} Company details
  * @returns {Object} All quote values in an object structure for GOVUK summary list structure
  */
 const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
