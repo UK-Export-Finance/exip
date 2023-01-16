@@ -6,10 +6,6 @@ type SummaryListItemData = {
   value?: string;
 };
 
-interface SummaryListField {
-  text: string;
-}
-
 type SummaryListItemKey = {
   text: string;
   classes: string;
@@ -44,7 +40,6 @@ interface SummaryListItem {
 }
 
 export {
-  SummaryListField,
   SummaryListItem,
   SummaryListItemActions,
   SummaryListItemActionsItemAttributes,

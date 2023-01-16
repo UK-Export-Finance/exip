@@ -27,17 +27,13 @@ const {
 const mapPolicyType = (answer: string) => {
   if (isSinglePolicyType(answer)) {
     return {
-      [SINGLE_POLICY_TYPE]: {
-        text: answer,
-      },
+      [SINGLE_POLICY_TYPE]: answer,
     };
   }
 
   if (isMultiPolicyType(answer)) {
     return {
-      [MULTI_POLICY_TYPE]: {
-        text: answer,
-      },
+      [MULTI_POLICY_TYPE]: answer,
     };
   }
 
@@ -60,24 +56,14 @@ const mapPercentageOfCover = (answer: number) => `${answer}%`;
  */
 const mapAnswersToContent = (answers: SubmittedDataQuoteEligibility | SubmittedDataInsuranceEligibility) => {
   const mapped = {
-    [VALID_EXPORTER_LOCATION]: {
-      text: SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION],
-    },
-    [BUYER_COUNTRY]: {
-      text: mapCountry(answers[BUYER_COUNTRY]),
-    },
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
-      text: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
-    },
+    [VALID_EXPORTER_LOCATION]: SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION],
+    [BUYER_COUNTRY]: mapCountry(answers[BUYER_COUNTRY]),
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
     ...mapCost(answers),
     ...mapPolicyType(answers[POLICY_TYPE]),
     ...mapPolicyLength(answers),
-    [PERCENTAGE_OF_COVER]: {
-      text: mapPercentageOfCover(answers[PERCENTAGE_OF_COVER]),
-    },
-    [CREDIT_PERIOD]: {
-      text: mapMonthString(answers[CREDIT_PERIOD]),
-    },
+    [PERCENTAGE_OF_COVER]: mapPercentageOfCover(answers[PERCENTAGE_OF_COVER]),
+    [CREDIT_PERIOD]: mapMonthString(answers[CREDIT_PERIOD]),
   };
 
   return mapped;
