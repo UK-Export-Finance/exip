@@ -66,10 +66,13 @@ const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
       },
       format(new Date(companyDetails[COMPANY_INCORPORATED]), 'd MMMM yyyy'),
     ),
-    fieldGroupItem({
-      field: { id: COMPANY_SIC, ...FIELDS[COMPANY_SIC] },
-      data: companyDetails,
-    }),
+    fieldGroupItem(
+      {
+        field: { id: COMPANY_SIC, ...FIELDS[COMPANY_SIC] },
+        data: companyDetails,
+      },
+      companyDetails[COMPANY_SIC][0],
+    ),
   ];
 
   return fieldGroups;
