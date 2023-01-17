@@ -1,8 +1,9 @@
 import { format } from 'date-fns';
-import getKeyText from './get-key-text';
 import { FIELD_IDS } from '../../constants';
 import { FIELDS, PAGES } from '../../content-strings';
-import { CompanyHouseResponse, CompanyDetailsFieldGroups, SummaryListItem, SummaryListItemData } from '../../../types';
+import generateSummaryListRows from './generate-summary-list-rows';
+import fieldGroupItem from './generate-field-group-item';
+import { CompanyHouseResponse, CompanyDetailsFieldGroups } from '../../../types';
 
 const {
   EXPORTER_BUSINESS: { COMPANY_HOUSE },
@@ -14,8 +15,8 @@ const { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COM
  * able to handle addresses with all fields present or where some are null as not present
  * maps through addrress object and contructs an html string containing line breaks
  * skips fields where the field is null or is typename
- * @param address
- * @returns string containing html of address
+ * @param {Object} Address
+ * @returns {String} Address as a string of HTMl
  */
 const generateAddressHTML = (address: object) => {
   let addressString = '';
@@ -34,8 +35,8 @@ const generateAddressHTML = (address: object) => {
  * Create all field groups for govukSummaryList
  * The following fields depend on the response from companies house api:
  * - COMPANY_ADDRESS - if all parts of address are returned or not
- * @param companyDetails object
- * @returns object with fieldGroups populated
+ * @param {Object} Company details
+ * @returns {Object} All quote values in an object structure for GOVUK summary list structure
  */
 const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
   const fieldGroups = {
@@ -43,72 +44,46 @@ const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
   } as CompanyDetailsFieldGroups;
 
   fieldGroups.COMPANY_DETAILS = [
-    {
-      id: COMPANY_NUMBER,
-      ...FIELDS[COMPANY_NUMBER],
-      value: {
-        text: companyDetails[COMPANY_NUMBER],
+    fieldGroupItem({
+      field: { id: COMPANY_NUMBER, ...FIELDS[COMPANY_NUMBER] },
+      data: companyDetails,
+    }),
+    fieldGroupItem({
+      field: { id: COMPANY_NAME, ...FIELDS[COMPANY_NAME] },
+      data: companyDetails,
+    }),
+    fieldGroupItem(
+      {
+        field: { id: COMPANY_ADDRESS, ...FIELDS[COMPANY_ADDRESS] },
+        data: companyDetails,
       },
-    },
-    {
-      id: COMPANY_NAME,
-      ...FIELDS[COMPANY_NAME],
-      value: {
-        text: companyDetails[COMPANY_NAME],
+      generateAddressHTML(companyDetails[COMPANY_ADDRESS]),
+    ),
+    fieldGroupItem(
+      {
+        field: { id: COMPANY_INCORPORATED, ...FIELDS[COMPANY_INCORPORATED] },
+        data: companyDetails,
       },
-    },
-    {
-      id: COMPANY_ADDRESS,
-      ...FIELDS[COMPANY_ADDRESS],
-      value: {
-        html: generateAddressHTML(companyDetails[COMPANY_ADDRESS]),
+      format(new Date(companyDetails[COMPANY_INCORPORATED]), 'd MMMM yyyy'),
+    ),
+    fieldGroupItem(
+      {
+        field: { id: COMPANY_SIC, ...FIELDS[COMPANY_SIC] },
+        data: companyDetails,
       },
-    },
-    {
-      id: COMPANY_INCORPORATED,
-      ...FIELDS[COMPANY_INCORPORATED],
-      value: {
-        text: format(new Date(companyDetails[COMPANY_INCORPORATED]), 'd MMMM yyyy'),
-      },
-    },
-    {
-      id: COMPANY_SIC,
-      ...FIELDS[COMPANY_SIC],
-      value: {
-        text: companyDetails[COMPANY_SIC],
-      },
-    },
+      companyDetails[COMPANY_SIC][0],
+    ),
   ];
 
   return fieldGroups;
 };
 
 /**
- * Map an array of fields with values in submitted data object
- * for govukSummaryList component
- * @param fields - Array of SummaryListItemData
- * @returns mapped object with summary list rows populated
+ * companyHouseSummaryList
+ * Create a group with govukSummaryList data structure
+ * @param {Object} All quote content in a simple object.text structure
+ * @returns {Object} A group with multiple fields/answers in govukSummaryList data structure
  */
-const generateSummaryListRows = (fields: Array<SummaryListItemData>): Array<SummaryListItem> =>
-  fields.map((field: SummaryListItemData): SummaryListItem => {
-    const mapped = {
-      key: {
-        text: getKeyText(FIELDS, field.id),
-        classes: `${field.id}-key`,
-      },
-      value: {
-        text: field.value.text,
-        html: field.value.html,
-        classes: `${field.id}-value`,
-      },
-      actions: {
-        items: [],
-      },
-    } as SummaryListItem;
-
-    return mapped;
-  });
-
 const companyHouseSummaryList = (companyDetails: CompanyHouseResponse) => {
   const fieldGroups = generateFieldGroups(companyDetails);
 
@@ -122,4 +97,4 @@ const companyHouseSummaryList = (companyDetails: CompanyHouseResponse) => {
   return summaryList;
 };
 
-export { generateFieldGroups, generateSummaryListRows, companyHouseSummaryList, generateAddressHTML };
+export { generateFieldGroups, companyHouseSummaryList, generateAddressHTML };

@@ -1,5 +1,5 @@
 import { ApplicationFlat, TaskListData, TaskListDataGroup, TaskListDataTask } from '../../../types';
-import { TASKS } from '../../content-strings';
+import { DEFAULT, TASKS } from '../../content-strings';
 
 /**
  * getTaskById
@@ -160,7 +160,7 @@ export const taskStatus = (task: TaskListDataTask, submittedData: ApplicationFla
     return TASKS.STATUS.COMPLETED;
   }
 
-  return '-';
+  return DEFAULT.EMPTY;
 };
 
 /**

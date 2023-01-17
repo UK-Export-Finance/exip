@@ -18,7 +18,7 @@ import {
   SubmittedDataInsuranceEligibility,
   SubmittedData,
 } from './submitted-data';
-import { SummaryListItem, SummaryListItemData } from './summary-list';
+import { SummaryListItem, SummaryListItemData, SummaryListItemDataInput, SummaryListItemDataInputField, SummaryListItemDataFieldSummary } from './summary-list';
 import { TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
 import {
   TellUsAboutPolicyPageVariablesContentStrings,
@@ -76,6 +76,9 @@ export {
   SubmittedDataInsuranceEligibility,
   SubmittedData,
   SummaryListItemData,
+  SummaryListItemDataFieldSummary,
+  SummaryListItemDataInput,
+  SummaryListItemDataInputField,
   SummaryListItem,
   TaskList,
   TaskListData,
