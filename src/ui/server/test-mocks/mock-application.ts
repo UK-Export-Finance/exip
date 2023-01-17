@@ -40,7 +40,6 @@ const mockApplication = {
       {
         id: 'clcyyxldc0634m8novkr94spo',
         sicCode: '64999',
-        __typename: 'ExporterCompanySicCode',
       },
     ],
     registeredOfficeAddress: {

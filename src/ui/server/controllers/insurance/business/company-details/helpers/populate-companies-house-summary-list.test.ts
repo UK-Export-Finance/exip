@@ -2,11 +2,11 @@ import { populateCompaniesHouseSummaryList, mapDatabaseResponse } from './popula
 import { companyHouseSummaryList } from '../../../../../helpers/summary-lists/company-house-summary-list';
 import { FIELD_IDS } from '../../../../../constants';
 import { mockApplication } from '../../../../../test-mocks';
-import { CompanyHouseResponse } from '../../../../../../types';
+import { ApplicationExporterCompany } from '../../../../../../types';
 
 const {
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
+    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -16,17 +16,7 @@ describe('controllers/insurance/business/companies-details/helpers/populate-comp
       it('should return null', () => {
         const exporterCompany = {
           id: '12345',
-        };
-
-        const response = populateCompaniesHouseSummaryList(exporterCompany);
-
-        expect(response).toEqual(null);
-      });
-
-      it('should return null', () => {
-        const exporterCompany = {
-          id: '12345',
-        };
+        } as ApplicationExporterCompany;
 
         const response = populateCompaniesHouseSummaryList(exporterCompany);
 
@@ -41,14 +31,9 @@ describe('controllers/insurance/business/companies-details/helpers/populate-comp
         const response = populateCompaniesHouseSummaryList(exporterCompany);
 
         const expected = {
-          [COMPANY_NAME]: exporterCompany[COMPANY_NAME],
-          [COMPANY_ADDRESS]: {
-            ...exporterCompany[COMPANY_ADDRESS],
-          },
-          [COMPANY_NUMBER]: exporterCompany[COMPANY_NUMBER],
-          [COMPANY_INCORPORATED]: exporterCompany[COMPANY_INCORPORATED],
+          ...exporterCompany,
           [COMPANY_SIC]: [exporterCompany[COMPANY_SIC][0].sicCode],
-        } as CompanyHouseResponse;
+        } as ApplicationExporterCompany;
 
         expect(response).toEqual(companyHouseSummaryList(expected));
       });
@@ -64,12 +49,7 @@ describe('controllers/insurance/business/companies-details/helpers/populate-comp
       const response = mapDatabaseResponse(exporterCompany);
 
       const expected = {
-        [COMPANY_NAME]: exporterCompany[COMPANY_NAME],
-        [COMPANY_ADDRESS]: {
-          ...exporterCompany[COMPANY_ADDRESS],
-        },
-        [COMPANY_NUMBER]: exporterCompany[COMPANY_NUMBER],
-        [COMPANY_INCORPORATED]: exporterCompany[COMPANY_INCORPORATED],
+        ...exporterCompany,
         [COMPANY_SIC]: [exporterCompany[COMPANY_SIC][0].sicCode],
       };
 

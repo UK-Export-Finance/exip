@@ -42,6 +42,11 @@ interface ApplicationExporterCompanyAddress {
   premises?: string;
 }
 
+interface ApplicationExporterSicCodes {
+  id: string;
+  sicCode?: string;
+}
+
 interface ApplicationExporterCompany {
   id: string;
   companyName?: string;
@@ -50,6 +55,7 @@ interface ApplicationExporterCompany {
   hasTradingName?: boolean;
   hasTradingAddress?: boolean;
   registeredOfficeAddress: ApplicationExporterCompanyAddress;
+  sicCodes: Array<ApplicationExporterSicCodes>;
 }
 
 interface Application extends ApplicationCore {
@@ -62,4 +68,4 @@ interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, App
   buyerCountry: string;
 }
 
-export { Application, ApplicationFlat };
+export { Application, ApplicationFlat, ApplicationExporterCompany };

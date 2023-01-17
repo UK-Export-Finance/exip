@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../constants';
 import { FIELDS, PAGES } from '../../content-strings';
 import generateSummaryListRows from './generate-summary-list-rows';
 import fieldGroupItem from './generate-field-group-item';
-import { CompanyHouseResponse, CompanyDetailsFieldGroups } from '../../../types';
+import { CompanyHouseResponse, CompanyDetailsFieldGroups, ApplicationExporterCompany } from '../../../types';
 
 const {
   EXPORTER_BUSINESS: { COMPANY_HOUSE },
@@ -38,7 +38,7 @@ const generateAddressHTML = (address: object) => {
  * @param {Object} Company details
  * @returns {Object} All quote values in an object structure for GOVUK summary list structure
  */
-const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
+const generateFieldGroups = (companyDetails: CompanyHouseResponse | ApplicationExporterCompany) => {
   const fieldGroups = {
     COMPANY_DETAILS: [],
   } as CompanyDetailsFieldGroups;
@@ -71,7 +71,7 @@ const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
         field: { id: COMPANY_SIC, ...FIELDS[COMPANY_SIC] },
         data: companyDetails,
       },
-      companyDetails[COMPANY_SIC][0],
+      companyDetails[COMPANY_SIC].toString(),
     ),
   ];
 
@@ -84,7 +84,7 @@ const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
  * @param {Object} All quote content in a simple object.text structure
  * @returns {Object} A group with multiple fields/answers in govukSummaryList data structure
  */
-const companyHouseSummaryList = (companyDetails: CompanyHouseResponse) => {
+const companyHouseSummaryList = (companyDetails: CompanyHouseResponse | ApplicationExporterCompany) => {
   const fieldGroups = generateFieldGroups(companyDetails);
 
   const summaryList = {

@@ -106,7 +106,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
               field: { id: COMPANY_SIC, ...FIELDS[COMPANY_SIC] },
               data: mockCompany,
             },
-            mockCompany[COMPANY_SIC].join(),
+            mockCompany[COMPANY_SIC].toString(),
           ),
         ],
       };
