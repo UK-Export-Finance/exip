@@ -16,7 +16,7 @@ describe('controllers/insurance/business/map-submitted-data', () => {
         companyName: mockBody.companyName,
         companyNumber: mockBody.companyNumber.toString(),
         dateOfCreation: new Date(mockBody[COMPANY_INCORPORATED]).toISOString(),
-        exporterCompanyAddress: {
+        address: {
           careOf: '',
           premises: '',
           addressLine1: mockBody.registeredOfficeAddress.addressLine1,
@@ -47,11 +47,11 @@ describe('controllers/insurance/business/map-submitted-data', () => {
     delete mockBodyWithoutFields.apiError;
     delete mockBodyWithoutFields.companyNumber;
 
-    it(`should return the formBody without ${INPUT} success,and __typename fields and add an empty exporterCompanyAddress object`, () => {
+    it(`should return the formBody without ${INPUT} success,and __typename fields and add an empty address object`, () => {
       const response = mapSubmittedData(mockBodyWithoutFields);
 
       const { _csrf, ...expectedBody } = mockBodyWithoutFields;
-      expectedBody.exporterCompanyAddress = {};
+      expectedBody.address = {};
 
       expect(response).toEqual(expectedBody);
     });

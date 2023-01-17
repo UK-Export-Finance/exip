@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
-import { generateFieldGroups, getKeyText, generateSummaryListRows, companyHouseSummaryList, generateAddressHTML } from './company-house-summary-list';
+import { generateFieldGroups, generateSummaryListRows, companyHouseSummaryList, generateAddressHTML } from './company-house-summary-list';
+import getKeyText from './get-key-text';
 import { SummaryListItemData } from '../../../types';
 import { FIELD_IDS } from '../../constants';
 import { FIELDS, PAGES } from '../../content-strings';
@@ -100,23 +101,10 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
     });
   });
 
-  describe('getKeyText()', () => {
-    describe('when a field has SUMMARY objct', () => {
-      const fieldId = COMPANY_NAME;
-
-      it('should return FIELD.SUMMARY.TITLE', () => {
-        const result = getKeyText(fieldId);
-
-        const expected = FIELDS[COMPANY_NAME].SUMMARY?.TITLE;
-        expect(result).toEqual(expected);
-      });
-    });
-  });
-
   describe('generateSummaryListRows()', () => {
     const expectedObjBase = (field: SummaryListItemData) => ({
       key: {
-        text: getKeyText(field.id),
+        text: getKeyText(FIELDS, field.id),
         classes: `${field.id}-key`,
       },
       value: {
@@ -136,7 +124,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
       const expectedObj = (field: SummaryListItemData) => ({
         ...expectedObjBase(field),
         key: {
-          text: getKeyText(field.id),
+          text: getKeyText(FIELDS, field.id),
           classes: `${field.id}-key`,
         },
         value: {

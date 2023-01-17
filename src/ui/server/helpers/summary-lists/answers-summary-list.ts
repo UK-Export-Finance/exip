@@ -1,5 +1,6 @@
 import { FIELDS, LINKS, PAGES } from '../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../constants';
+import getKeyText from './get-key-text';
 import { AnswersContent, AnswersFieldGroups, SummaryListItem, SummaryListItemData } from '../../../types';
 
 const {
@@ -156,14 +157,6 @@ const generateFieldGroups = (answers: AnswersContent) => {
 };
 
 /**
- * getKeyText
- * Get the field name text/key to display in a title of a govukSummaryList row
- * @param {String} Field ID
- * @returns {String} Title of the field for a govukSummaryList row
- */
-const getKeyText = (fieldId: string) => FIELDS[fieldId]?.SUMMARY?.TITLE;
-
-/**
  * generateSummaryListRows
  * Map an array of fields with values for govukSummaryList component
  * @param {Array} Array of fields and answers
@@ -173,7 +166,7 @@ const generateSummaryListRows = (fields: Array<SummaryListItemData>): Array<Summ
   fields.map((field: SummaryListItemData): SummaryListItem => {
     const mapped = {
       key: {
-        text: getKeyText(field.id),
+        text: getKeyText(FIELDS, field.id),
         classes: `${field.id}-key`,
       },
       value: {
@@ -189,7 +182,7 @@ const generateSummaryListRows = (fields: Array<SummaryListItemData>): Array<Summ
       mapped.actions.items.push({
         href: field.href,
         text: LINKS.CHANGE,
-        visuallyHiddenText: getKeyText(field.id),
+        visuallyHiddenText: getKeyText(FIELDS, field.id),
         attributes: {
           'data-cy': `${field.id}-change-link`,
         },
@@ -222,4 +215,4 @@ const answersSummaryList = (answersContent: AnswersContent) => {
   return summaryList;
 };
 
-export { generateFieldGroups, getKeyText, generateSummaryListRows, answersSummaryList };
+export { generateFieldGroups, generateSummaryListRows, answersSummaryList };

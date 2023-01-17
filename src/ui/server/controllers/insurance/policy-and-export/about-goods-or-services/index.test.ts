@@ -13,8 +13,7 @@ import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../te
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    ALL_SECTIONS,
-    POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK },
+    POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   },
 } = ROUTES;
 
@@ -210,10 +209,10 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
         expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application);
       });
 
-      it(`should redirect to ${ALL_SECTIONS}`, async () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

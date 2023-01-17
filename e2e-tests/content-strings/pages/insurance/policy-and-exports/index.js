@@ -23,9 +23,15 @@ const ABOUT_GOODS_OR_SERVICES = {
   PAGE_TITLE: 'About the goods or services',
 };
 
+const CHECK_YOUR_ANSWERS = {
+  ...SHARED,
+  PAGE_TITLE: 'Check your answers for this section',
+};
+
 module.exports = {
   TYPE_OF_POLICY,
   SINGLE_CONTRACT_POLICY,
   MULTIPLE_CONTRACT_POLICY,
   ABOUT_GOODS_OR_SERVICES,
+  CHECK_YOUR_ANSWERS,
 };

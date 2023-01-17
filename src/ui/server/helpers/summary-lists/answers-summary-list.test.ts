@@ -1,4 +1,5 @@
-import { generateFieldGroups, getKeyText, generateSummaryListRows, answersSummaryList } from './answers-summary-list';
+import { generateFieldGroups, generateSummaryListRows, answersSummaryList } from './answers-summary-list';
+import getKeyText from './get-key-text';
 import { mapAnswersToContent } from '../data-content-mappings/map-answers-to-content';
 import { FIELDS, LINKS, PAGES } from '../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../constants';
@@ -278,23 +279,10 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
     });
   });
 
-  describe('getKeyText', () => {
-    describe('when a field has SUMMARY objct', () => {
-      const fieldId = VALID_EXPORTER_LOCATION;
-
-      it('should return FIELD.SUMMARY.TITLE', () => {
-        const result = getKeyText(fieldId);
-
-        const expected = FIELDS[VALID_EXPORTER_LOCATION].SUMMARY?.TITLE;
-        expect(result).toEqual(expected);
-      });
-    });
-  });
-
   describe('generateSummaryListRows', () => {
     const expectedObjBase = (field: SummaryListItemData) => ({
       key: {
-        text: getKeyText(field.id),
+        text: getKeyText(FIELDS, field.id),
         classes: `${field.id}-key`,
       },
       value: {
@@ -323,7 +311,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
       const expectedObj = (field: SummaryListItemData) => ({
         ...expectedObjBase(field),
         key: {
-          text: getKeyText(field.id),
+          text: getKeyText(FIELDS, field.id),
           classes: `${field.id}-key`,
         },
         value: {
@@ -358,7 +346,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
           {
             href: mockField.href,
             text: LINKS.CHANGE,
-            visuallyHiddenText: getKeyText(mockField.id),
+            visuallyHiddenText: getKeyText(FIELDS, mockField.id),
             attributes: {
               'data-cy': `${mockField.id}-change-link`,
             },
