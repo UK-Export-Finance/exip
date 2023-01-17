@@ -40,6 +40,10 @@ var import_fields_document = require("@keystone-6/fields-document");
 var import_date_fns = require("date-fns");
 
 // constants.ts
+var ANSWERS = {
+  YES: "Yes",
+  NO: "No"
+};
 var APPLICATION = {
   SUBMISSION_TYPE: {
     MIA: "Manual Inclusion Application"
@@ -254,8 +258,20 @@ var lists = {
       companyName: (0, import_fields.text)(),
       companyNumber: (0, import_fields.text)(),
       dateOfCreation: (0, import_fields.timestamp)(),
-      hasTradingAddress: (0, import_fields.checkbox)(),
-      hasTradingName: (0, import_fields.checkbox)(),
+      hasTradingAddress: (0, import_fields.select)({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO }
+        ],
+        db: { isNullable: true }
+      }),
+      hasTradingName: (0, import_fields.select)({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO }
+        ],
+        db: { isNullable: true }
+      }),
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)()
     },
@@ -467,8 +483,8 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
-        hasTradingAddress: Boolean
-        hasTradingName: Boolean
+        hasTradingAddress: String
+        hasTradingName: String
         companyWebsite: String
         phoneNumber: String
       }
@@ -479,8 +495,8 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
-        hasTradingAddress: Boolean
-        hasTradingName: Boolean
+        hasTradingAddress: String
+        hasTradingName: String
         companyWebsite: String
         phoneNumber: String
       }
