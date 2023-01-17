@@ -40,6 +40,10 @@ var import_fields_document = require("@keystone-6/fields-document");
 var import_date_fns = require("date-fns");
 
 // constants.ts
+var ANSWERS = {
+  YES: "Yes",
+  NO: "No"
+};
 var APPLICATION = {
   SUBMISSION_TYPE: {
     MIA: "Manual Inclusion Application"
@@ -254,8 +258,18 @@ var lists = {
       companyName: (0, import_fields.text)(),
       companyNumber: (0, import_fields.text)(),
       dateOfCreation: (0, import_fields.timestamp)(),
-      hasTradingAddress: (0, import_fields.checkbox)(),
-      hasTradingName: (0, import_fields.checkbox)(),
+      hasTradingAddress: (0, import_fields.select)({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO }
+        ]
+      }),
+      hasTradingName: (0, import_fields.select)({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO }
+        ]
+      }),
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)()
     },

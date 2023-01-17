@@ -449,8 +449,8 @@ type ExporterCompany {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasTradingAddress: String
+  hasTradingName: String
   companyWebsite: String
   phoneNumber: String
 }
@@ -471,8 +471,8 @@ input ExporterCompanyWhereInput {
   companyName: StringFilter
   companyNumber: StringFilter
   dateOfCreation: DateTimeNullableFilter
-  hasTradingAddress: BooleanFilter
-  hasTradingName: BooleanFilter
+  hasTradingAddress: StringNullableFilter
+  hasTradingName: StringNullableFilter
   companyWebsite: StringFilter
   phoneNumber: StringFilter
 }
@@ -481,11 +481,6 @@ input ExporterCompanySicCodeManyRelationFilter {
   every: ExporterCompanySicCodeWhereInput
   some: ExporterCompanySicCodeWhereInput
   none: ExporterCompanySicCodeWhereInput
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
 }
 
 input ExporterCompanyOrderByInput {
@@ -507,8 +502,8 @@ input ExporterCompanyUpdateInput {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasTradingAddress: String
+  hasTradingName: String
   companyWebsite: String
   phoneNumber: String
 }
@@ -545,8 +540,8 @@ input ExporterCompanyCreateInput {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasTradingAddress: String
+  hasTradingName: String
   companyWebsite: String
   phoneNumber: String
 }
@@ -678,6 +673,11 @@ input EligibilityWhereInput {
   needPreCreditPeriodCover: BooleanFilter
   wantCoverOverMaxAmount: BooleanFilter
   wantCoverOverMaxPeriod: BooleanFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
 }
 
 input EligibilityOrderByInput {

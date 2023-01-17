@@ -98,8 +98,8 @@ model ExporterCompany {
   companyName                      String                   @default("")
   companyNumber                    String                   @default("")
   dateOfCreation                   DateTime?
-  hasTradingAddress                Boolean                  @default(false)
-  hasTradingName                   Boolean                  @default(false)
+  hasTradingAddress                String?
+  hasTradingName                   String?
   companyWebsite                   String                   @default("")
   phoneNumber                      String                   @default("")
   from_Application_exporterCompany Application[]            @relation("Application_exporterCompany")
