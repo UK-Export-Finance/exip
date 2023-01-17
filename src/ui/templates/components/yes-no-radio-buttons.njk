@@ -20,6 +20,14 @@
     {% set datacyHeading = 'heading' %}
   {% endif %}
 
+  {% set yesValue = true %}
+  {% set noValue = false %}
+
+  {% if yesNoValueString %}
+    {% set yesValue = 'Yes' %}
+    {% set noValue = 'Yes' %}
+  {% endif %}
+
   {{ govukRadios({
     classes: "govuk-radios--inline",
     idPrefix: fieldId,
@@ -37,7 +45,7 @@
     },
     items: [
       {
-        value: true,
+        value: yesValue,
         text: "Yes",
         label: {
           attributes: {
@@ -48,10 +56,10 @@
           "data-cy": "yes-input",
           'aria-label': heading + ' yes radio'
         },
-        checked: submittedAnswer === true
+        checked: submittedAnswer === yesValue
       },
       {
-        value: false,
+        value: noValue,
         text: "No",
         label: {
           attributes: {
@@ -62,7 +70,7 @@
           "data-cy": "no-input",
           'aria-label': heading + ' no radio'
         },
-        checked: submittedAnswer === false
+        checked: submittedAnswer === noValue
       }
     ],
     errorMessage: errorMessage and {
