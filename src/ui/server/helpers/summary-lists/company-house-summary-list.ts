@@ -68,7 +68,7 @@ const generateFieldGroups = (companyDetails: CompanyHouseResponse) => {
       id: COMPANY_INCORPORATED,
       ...FIELDS[COMPANY_INCORPORATED],
       value: {
-        text: format(new Date(companyDetails[COMPANY_INCORPORATED]), 'dd MMMM yyyy'),
+        text: format(new Date(companyDetails[COMPANY_INCORPORATED]), 'd MMMM yyyy'),
       },
     },
     {
