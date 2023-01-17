@@ -1114,8 +1114,8 @@ type ExporterCompanyAndCompanyAddress {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasTradingAddress: String
+  hasTradingName: String
   companyWebsite: String
   phoneNumber: String
 }
@@ -1126,8 +1126,8 @@ input ExporterCompanyAndCompanyAddressInput {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasTradingAddress: String
+  hasTradingName: String
   companyWebsite: String
   phoneNumber: String
 }

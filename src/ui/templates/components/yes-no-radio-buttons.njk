@@ -7,6 +7,7 @@
   {% set hintText = params.hintText %}
   {% set submittedAnswer = params.submittedAnswer %}
   {% set errorMessage = params.errorMessage %}
+  {% set yesNoValueString = params.yesNoValueString %}
 
   {% if params.headerClass %}
     {% set headerClass = params.headerClass %}
@@ -25,8 +26,9 @@
 
   {% if yesNoValueString %}
     {% set yesValue = 'Yes' %}
-    {% set noValue = 'Yes' %}
+    {% set noValue = 'No' %}
   {% endif %}
+
 
   {{ govukRadios({
     classes: "govuk-radios--inline",

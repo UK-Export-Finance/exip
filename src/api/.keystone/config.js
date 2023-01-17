@@ -483,8 +483,8 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
-        hasTradingAddress: Boolean
-        hasTradingName: Boolean
+        hasTradingAddress: String
+        hasTradingName: String
         companyWebsite: String
         phoneNumber: String
       }
@@ -495,8 +495,8 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
-        hasTradingAddress: Boolean
-        hasTradingName: Boolean
+        hasTradingAddress: String
+        hasTradingName: String
         companyWebsite: String
         phoneNumber: String
       }
