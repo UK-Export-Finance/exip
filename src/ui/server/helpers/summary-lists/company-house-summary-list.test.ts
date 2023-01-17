@@ -79,15 +79,12 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
               field: { id: COMPANY_INCORPORATED, ...FIELDS[COMPANY_INCORPORATED] },
               data: mockCompany,
             },
-            format(new Date(mockCompany[COMPANY_INCORPORATED]), 'dd MMMM yyyy'),
+            format(new Date(mockCompany[COMPANY_INCORPORATED]), 'd MMMM yyyy'),
           ),
-          fieldGroupItem(
-            {
-              field: { id: COMPANY_SIC, ...FIELDS[COMPANY_SIC] },
-              data: mockCompany,
-            },
-            mockCompany[COMPANY_SIC][0],
-          ),
+          fieldGroupItem({
+            field: { id: COMPANY_SIC, ...FIELDS[COMPANY_SIC] },
+            data: mockCompany,
+          }),
         ],
       };
 

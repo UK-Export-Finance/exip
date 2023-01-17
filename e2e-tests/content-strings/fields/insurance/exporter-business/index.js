@@ -2,7 +2,7 @@ import { FIELD_IDS } from '../../../../constants';
 
 export const EXPORTER_BUSINESS_FIELDS = {
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.SUMMARY_LIST]: {
-    LABEL: 'Your business',
+    LABEL: 'Your company',
     COMPANY_NUMBER: {
       text: 'Companies House registration number',
     },
