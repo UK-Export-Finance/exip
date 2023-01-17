@@ -1,5 +1,6 @@
 import getKeyText from '../get-key-text';
 import { DEFAULT } from '../../../content-strings';
+import { objectHasProperty } from '../../object';
 import { SummaryListItemData, SummaryListItemDataInput } from '../../../../types';
 
 /**
@@ -16,7 +17,7 @@ export const getSummaryListItemDataValue = (data: object, fieldId: string, custo
     return customValue;
   }
 
-  if (data[fieldId]) {
+  if (objectHasProperty(data, fieldId)) {
     return data[fieldId];
   }
 

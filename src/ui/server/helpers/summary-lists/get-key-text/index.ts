@@ -1,7 +1,5 @@
 import { SummaryListItemDataInputField } from '../../../../types';
 
-// TODO : can we align TITLE and title?
-
 /**
  * getKeyText
  * Get the field name text/key to display in a title of a govukSummaryList row
