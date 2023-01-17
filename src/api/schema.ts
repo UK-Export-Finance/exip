@@ -4,7 +4,7 @@ import { checkbox, integer, relationship, select, text, timestamp, password } fr
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types';  // eslint-disable-line
-import { APPLICATION } from './constants';
+import { ANSWERS, APPLICATION } from './constants';
 
 export const lists = {
   ReferenceNumber: {
@@ -235,8 +235,20 @@ export const lists = {
       companyName: text(),
       companyNumber: text(),
       dateOfCreation: timestamp(),
-      hasTradingAddress: checkbox(),
-      hasTradingName: checkbox(),
+      hasTradingAddress: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+        db: { isNullable: true },
+      }),
+      hasTradingName: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+        db: { isNullable: true },
+      }),
       companyWebsite: text(),
       phoneNumber: text(),
     },
