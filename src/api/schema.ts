@@ -240,12 +240,14 @@ export const lists = {
           { label: ANSWERS.YES, value: ANSWERS.YES },
           { label: ANSWERS.NO, value: ANSWERS.NO },
         ],
+        db: { isNullable: true },
       }),
       hasTradingName: select({
         options: [
           { label: ANSWERS.YES, value: ANSWERS.YES },
           { label: ANSWERS.NO, value: ANSWERS.NO },
         ],
+        db: { isNullable: true },
       }),
       companyWebsite: text(),
       phoneNumber: text(),

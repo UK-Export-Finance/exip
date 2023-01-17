@@ -262,13 +262,15 @@ var lists = {
         options: [
           { label: ANSWERS.YES, value: ANSWERS.YES },
           { label: ANSWERS.NO, value: ANSWERS.NO }
-        ]
+        ],
+        db: { isNullable: true }
       }),
       hasTradingName: (0, import_fields.select)({
         options: [
           { label: ANSWERS.YES, value: ANSWERS.YES },
           { label: ANSWERS.NO, value: ANSWERS.NO }
-        ]
+        ],
+        db: { isNullable: true }
       }),
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)()
