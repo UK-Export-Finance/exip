@@ -17,9 +17,7 @@ const {
 const mapDatabaseResponse = (exporterCompany: object) => {
   return {
     [COMPANY_NAME]: exporterCompany[COMPANY_NAME],
-    [COMPANY_ADDRESS]: {
-      ...exporterCompany[COMPANY_ADDRESS],
-    },
+    [COMPANY_ADDRESS]: exporterCompany[COMPANY_ADDRESS],
     [COMPANY_NUMBER]: exporterCompany[COMPANY_NUMBER],
     [COMPANY_INCORPORATED]: exporterCompany[COMPANY_INCORPORATED],
     [COMPANY_SIC]: mapSicCodes(exporterCompany[COMPANY_SIC]),

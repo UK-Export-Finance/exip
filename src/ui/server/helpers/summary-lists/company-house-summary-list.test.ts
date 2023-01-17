@@ -33,6 +33,26 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
       expect(result).toEqual(expected);
     });
 
+    it('should remove id field when it is present', () => {
+      const address = {
+        id: '12345',
+        careOf: 'Careof',
+        premises: 'Premise',
+        addressLine1: 'Line 1',
+        addressLine2: 'Line 2',
+        locality: 'Locality',
+        region: 'Region',
+        postalCode: 'Postcode',
+        country: 'Country',
+        __typename: 'CompanyAddress',
+      };
+
+      const result = generateAddressHTML(address);
+
+      const expected = `${address.careOf}<br>${address.premises}<br>${address.addressLine1}<br>${address.addressLine2}<br>${address.locality}<br>${address.region}<br>${address.postalCode}<br>${address.country}<br>`;
+      expect(result).toEqual(expected);
+    });
+
     it('should only generate address where all fields are not null', () => {
       const address = {
         careOf: null,

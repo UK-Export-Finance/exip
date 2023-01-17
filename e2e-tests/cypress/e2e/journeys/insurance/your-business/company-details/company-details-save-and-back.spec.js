@@ -55,7 +55,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should display the valid inputs on fields when going back to the page', () => {
+    it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
       yesRadioInput().first().should('be.checked');
@@ -75,7 +75,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should display the valid inputs on fields when going back to the page', () => {
+    it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
       companyDetails.companiesHouseSearch().should('be.empty');
@@ -97,7 +97,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should display the valid inputs on fields when going back to the page', () => {
+    it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
       companyDetails.companiesHouseSearch().should('have.value', COMPANIES_HOUSE_NUMBER);
@@ -121,7 +121,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should display the valid inputs on fields when going back to the page', () => {
+    it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
       companyDetails.companiesHouseSearch().should('have.value', COMPANIES_HOUSE_NUMBER);
@@ -146,7 +146,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should display the valid inputs on fields when going back to the page', () => {
+    it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
       companyDetails.companiesHouseSearch().should('have.value', COMPANIES_HOUSE_NUMBER);

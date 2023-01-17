@@ -51,7 +51,7 @@ const exitReason = {
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} renders company details page with/without previously submitted details
  */
-const get = async (req: Request, res: Response) => {
+const get = (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
 

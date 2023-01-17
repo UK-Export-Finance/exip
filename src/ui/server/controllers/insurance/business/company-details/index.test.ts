@@ -60,59 +60,63 @@ describe('controllers/insurance/business/companies-details', () => {
   });
 
   describe('get', () => {
-    it('should render the company-details template with correct variables if application has populated exporterCompany data', () => {
-      get(req, res);
-      const { exporterCompany, referenceNumber } = mockApplication;
+    describe('when application has populated exporterCompany data', () => {
+      it('should render the company-details template with correct variables', () => {
+        get(req, res);
+        const { exporterCompany, referenceNumber } = mockApplication;
 
-      const submittedValues = {
-        [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
-        [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
-        [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
-        [WEBSITE]: exporterCompany?.[WEBSITE],
-        [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
-      };
+        const submittedValues = {
+          [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
+          [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
+          [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
+          [WEBSITE]: exporterCompany?.[WEBSITE],
+          [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
+        };
 
-      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-        ...corePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(referenceNumber),
-        submittedValues,
-        SUMMARY_LIST: populateCompaniesHouseSummaryList(exporterCompany),
+        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
+          ...corePageVariables({
+            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(referenceNumber),
+          submittedValues,
+          SUMMARY_LIST: populateCompaniesHouseSummaryList(exporterCompany),
+        });
       });
     });
 
-    it('should render the company-details template with correct variables if application does not have populated exporterCompany data', () => {
-      const mockApplicationNoData = {
-        ...mockApplication,
-        exporterCompany: {
-          id: '13456',
-        },
-      } as Application;
+    describe('when application does not have populated exporterCompany data', () => {
+      it('should render the company-details template with correct variables', () => {
+        const mockApplicationNoData = {
+          ...mockApplication,
+          exporterCompany: {
+            id: '13456',
+          },
+        } as Application;
 
-      res.locals.application = mockApplicationNoData;
+        res.locals.application = mockApplicationNoData;
 
-      get(req, res);
+        get(req, res);
 
-      const { exporterCompany, referenceNumber } = mockApplicationNoData;
+        const { exporterCompany, referenceNumber } = mockApplicationNoData;
 
-      const submittedValues = {
-        [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
-        [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
-        [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
-        [WEBSITE]: exporterCompany?.[WEBSITE],
-        [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
-      };
+        const submittedValues = {
+          [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
+          [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
+          [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
+          [WEBSITE]: exporterCompany?.[WEBSITE],
+          [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
+        };
 
-      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-        ...corePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(referenceNumber),
-        submittedValues,
-        SUMMARY_LIST: null,
+        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
+          ...corePageVariables({
+            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(referenceNumber),
+          submittedValues,
+          SUMMARY_LIST: null,
+        });
       });
     });
 
