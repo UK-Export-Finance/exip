@@ -104,7 +104,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
             id: COMPANY_INCORPORATED,
             ...FIELDS[COMPANY_INCORPORATED],
             value: {
-              text: format(new Date(mockCompany[COMPANY_INCORPORATED]), 'dd MMMM yyyy'),
+              text: format(new Date(mockCompany[COMPANY_INCORPORATED]), 'd MMMM yyyy'),
             },
           },
           {
