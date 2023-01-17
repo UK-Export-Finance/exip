@@ -15,17 +15,13 @@ const mapPolicyLength = (data: object) => {
 
   if (isSinglePolicyType(data[POLICY_TYPE])) {
     mapped = {
-      [SINGLE_POLICY_LENGTH]: {
-        text: mapMonthString(data[POLICY_LENGTH]),
-      },
+      [SINGLE_POLICY_LENGTH]: mapMonthString(data[POLICY_LENGTH]),
     };
   }
 
   if (isMultiPolicyType(data[POLICY_TYPE])) {
     mapped = {
-      [MULTI_POLICY_LENGTH]: {
-        text: mapMonthString(data[POLICY_LENGTH]),
-      },
+      [MULTI_POLICY_LENGTH]: mapMonthString(data[POLICY_LENGTH]),
     };
   }
 

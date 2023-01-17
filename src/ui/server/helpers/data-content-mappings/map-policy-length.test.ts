@@ -18,9 +18,7 @@ describe('server/helpers/map-policy-length', () => {
       const result = mapPolicyLength(mockData);
 
       const expected = {
-        [SINGLE_POLICY_LENGTH]: {
-          text: mapMonthString(mockData[POLICY_LENGTH]),
-        },
+        [SINGLE_POLICY_LENGTH]: mapMonthString(mockData[POLICY_LENGTH]),
       };
 
       expect(result).toEqual(expected);
@@ -38,9 +36,7 @@ describe('server/helpers/map-policy-length', () => {
       const result = mapPolicyLength(mockData);
 
       const expected = {
-        [MULTI_POLICY_LENGTH]: {
-          text: mapMonthString(mockData[POLICY_LENGTH]),
-        },
+        [MULTI_POLICY_LENGTH]: mapMonthString(mockData[POLICY_LENGTH]),
       };
 
       expect(result).toEqual(expected);

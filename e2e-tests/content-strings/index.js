@@ -2,6 +2,7 @@ import PAGE_STRINGS from './pages';
 
 export * from './buttons';
 export * from './cookies-consent';
+export * from './default';
 export * from './error-messages';
 export * from './footer';
 export * from './fields';

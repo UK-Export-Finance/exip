@@ -1,11 +1,11 @@
-import { SummaryListField, SummaryListItemData } from './summary-list';
+import { SummaryListItemData } from './summary-list';
 
 interface CompanyDetails {
-  companyRegistration?: SummaryListField;
-  companyName?: SummaryListField;
-  companyAddress?: SummaryListField;
-  companyIncorporated?: SummaryListField;
-  companySIC?: SummaryListField;
+  companyRegistration?: string;
+  companyName?: string;
+  companyAddress?: string;
+  companyIncorporated?: string;
+  companySIC?: string;
 }
 
 interface CompanyDetailsFieldGroups {

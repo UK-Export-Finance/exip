@@ -1,6 +1,5 @@
 import { Country } from './country';
 import { Currency } from './currency';
-import { SummaryListField } from './summary-list';
 
 type Quote = {
   buyerCountry: Country;
@@ -17,15 +16,15 @@ type Quote = {
 };
 
 interface QuoteContent {
-  contractValue?: SummaryListField;
-  buyerCountry: SummaryListField;
-  estimatedCost: SummaryListField;
-  insuredFor: SummaryListField;
-  maximumContractAmountOwed?: SummaryListField;
-  multiPolicyLengthMonths?: SummaryListField;
-  percentageOfCover: SummaryListField;
-  premiumRatePercentage: SummaryListField;
-  singlePolicyLengthMonths?: SummaryListField;
+  contractValue?: string;
+  buyerCountry: string;
+  estimatedCost: string;
+  insuredFor: string;
+  maximumContractAmountOwed?: string;
+  multiPolicyLengthMonths?: string;
+  percentageOfCover: string;
+  premiumRatePercentage: string;
+  singlePolicyLengthMonths?: string;
 }
 
 export { Quote, QuoteContent };
