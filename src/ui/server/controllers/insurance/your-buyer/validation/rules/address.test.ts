@@ -2,6 +2,7 @@ import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import { addressRules } from './address';
+import mockCountries from '../../../../../test-mocks/mock-countries';
 
 const {
   INSURANCE: {
@@ -19,7 +20,7 @@ describe('controllers/insurance/your-buyer/validation/address/', () => {
 
   describe('when address name field  is not provided', () => {
     it('should return validation error', () => {
-      const mockSubmittedData = { organisation: 'xdfd', country: 'XAD', address: '' };
+      const mockSubmittedData = { organisation: 'xdfd', country: mockCountries[0].isoCode, address: '' };
 
       const result = addressRules(mockSubmittedData, mockErrors);
 
@@ -31,12 +32,8 @@ describe('controllers/insurance/your-buyer/validation/address/', () => {
 
   describe('when address name field exceeds max characters', () => {
     it('should return validation error', () => {
-      const addresMockString = `1234asdfdsafsadfdsfdffdasdfdsafsadfdsfdffdasdfdsafsadfdsfdffdasdfdsafsadfdsfd
-                                ffdasdfdsafsadfdsfdffdasdfdsafsadfdsfdffdasdfdsafsadfdsfdffdasdfdsafsadfd
-                                sfdffdasdfdsafsadfdsfdffdasdfdsafsadfdsfdffdasdfdsafsadfdsfdffdasdfdsafsa
-                                dfdsfdffdasdfdsafsadfdsfdffdasdfdsafsadfdsfdffddfdsfdffdasdfdsafsadfdsfdf
-                                dfdsfdffdasdfdsafsadfdsfdffdasdfdsafsadfdsfdffdfdasdfdsafsadfdsfdffd`;
-      const mockSubmittedData = { organisation: 'xdfd', country: 'XAD', address: addresMockString };
+      const addresMockString = 'a'.repeat(YOUR_BUYER.BUYER_ADDRESS.MAX_LENGTH + 1);
+      const mockSubmittedData = { organisation: 'xdfd', country: mockCountries[0].isoCode, address: addresMockString };
 
       const result = addressRules(mockSubmittedData, mockErrors);
 

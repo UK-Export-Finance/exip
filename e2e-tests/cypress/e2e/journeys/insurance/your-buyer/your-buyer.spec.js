@@ -8,7 +8,7 @@ import {
 import { ROUTES } from '../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../helpers/get-reference-number';
-import { YOUR_BUYER_FIELD_IDS } from '../../../../../content-strings/fields/insurance/your-buyer';
+import { YOUR_BUYER_FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
 import { yourBuyer as yourBuyerPage } from '../../../pages/insurance/your-buyer';
 
 const {
@@ -18,7 +18,7 @@ const {
   BUYER_ORGANISATION_LABEL,
   BUYER_ADDRESS,
   BUYER_ADDRESS_LABEL,
-} = YOUR_BUYER_FIELD_IDS;
+} = YOUR_BUYER_FIELDS;
 
 const goToPageDirectly = (referenceNumber) => {
   cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.YOUR_BUYER_DETAILS}`, {

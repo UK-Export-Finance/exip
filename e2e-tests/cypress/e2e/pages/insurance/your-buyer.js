@@ -1,10 +1,10 @@
-import { YOUR_BUYER_FIELD_IDS } from '../../../../content-strings/fields/insurance/your-buyer';
+import { YOUR_BUYER_FIELDS } from '../../../../content-strings/fields/insurance/your-buyer';
 
 const {
   BUYER_COUNTRY,
   BUYER_ORGANISATION,
   BUYER_ADDRESS,
-} = YOUR_BUYER_FIELD_IDS;
+} = YOUR_BUYER_FIELDS;
 
 export const yourBuyer = {
   [BUYER_COUNTRY]: {
