@@ -104,6 +104,12 @@ describe('server/helpers/task-helpers', () => {
         expect(result).toEqual(true);
       });
 
+      it('should return true when array is populated', () => {
+        const result = hasSubmittedField(mockApplicationFlat, 'sicCodes');
+
+        expect(result).toEqual(true);
+      });
+
       describe('when the field value is false boolean', () => {
         it('should return true', () => {
           const result = hasSubmittedField(mockApplicationFlat, 'wantCoverOverMaxAmount');
@@ -125,6 +131,19 @@ describe('server/helpers/task-helpers', () => {
       it('should return false', () => {
         // @ts-ignore
         const result = hasSubmittedField();
+
+        expect(result).toEqual(false);
+      });
+
+      it('should return false when array is empty', () => {
+        const mockApplicationNoSic = {
+          ...mockApplication,
+        };
+
+        mockApplicationNoSic.exporterCompany.sicCodes = [];
+        const mockApplicationNoSicFlat = flattenApplicationData(mockApplicationNoSic);
+
+        const result = hasSubmittedField(mockApplicationNoSicFlat, 'sicCodes');
 
         expect(result).toEqual(false);
       });
