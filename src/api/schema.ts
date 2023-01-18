@@ -261,7 +261,6 @@ export const lists = {
     },
     access: allowAll,
   }),
-
   Country: list({
     fields: {
       isoCode: text({
