@@ -79,7 +79,7 @@ jobs:
 # 3. API - Deployment
   api:
     name: API 📦️
-    needs: database
+    needs: setup
     runs-on: [self-hosted, linux, deployment]
     environment:
       name: ${{ needs.setup.outputs.environment }}
@@ -149,7 +149,7 @@ jobs:
   # 4. UI - Deployment
   ui:
     name: UI 🎨
-    needs: api
+    needs: setup
     runs-on: [self-hosted, linux, deployment]
     environment:
       name: ${{ needs.setup.outputs.environment }}

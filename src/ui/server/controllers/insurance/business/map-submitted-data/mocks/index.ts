@@ -11,7 +11,7 @@ export const mockBody = {
   [INPUT]: '8989898',
   __typename: 'CompaniesHouseResponse',
   ...mockCompany,
-  registeredOfficeAddress: {
+  address: {
     ...mockCompany.registeredOfficeAddress,
     __typename: 'CompanyAddress',
   },

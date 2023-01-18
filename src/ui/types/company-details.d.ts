@@ -12,4 +12,9 @@ interface CompanyDetailsFieldGroups {
   COMPANY_DETAILS: Array<SummaryListItemData>;
 }
 
-export { CompanyDetails, CompanyDetailsFieldGroups };
+interface SicCode {
+  id: string;
+  sicCode: string;
+}
+
+export { CompanyDetails, CompanyDetailsFieldGroups, SicCode };

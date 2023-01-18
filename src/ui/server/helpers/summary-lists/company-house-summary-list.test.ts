@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import formatDate from '../date/format-date';
 import { generateFieldGroups, companyHouseSummaryList, generateAddressHTML } from './company-house-summary-list';
 import generateSummaryListRows from './generate-summary-list-rows';
 import fieldGroupItem from './generate-field-group-item';
@@ -16,6 +16,26 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
   describe('generateAddressHTML()', () => {
     it('should generate address where all fields are present', () => {
       const address = {
+        careOf: 'Careof',
+        premises: 'Premise',
+        addressLine1: 'Line 1',
+        addressLine2: 'Line 2',
+        locality: 'Locality',
+        region: 'Region',
+        postalCode: 'Postcode',
+        country: 'Country',
+        __typename: 'CompanyAddress',
+      };
+
+      const result = generateAddressHTML(address);
+
+      const expected = `${address.careOf}<br>${address.premises}<br>${address.addressLine1}<br>${address.addressLine2}<br>${address.locality}<br>${address.region}<br>${address.postalCode}<br>${address.country}<br>`;
+      expect(result).toEqual(expected);
+    });
+
+    it('should remove id field when it is present', () => {
+      const address = {
+        id: '12345',
         careOf: 'Careof',
         premises: 'Premise',
         addressLine1: 'Line 1',
@@ -79,14 +99,14 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
               field: { id: COMPANY_INCORPORATED, ...FIELDS[COMPANY_INCORPORATED] },
               data: mockCompany,
             },
-            format(new Date(mockCompany[COMPANY_INCORPORATED]), 'd MMMM yyyy'),
+            formatDate(mockCompany[COMPANY_INCORPORATED]),
           ),
           fieldGroupItem(
             {
               field: { id: COMPANY_SIC, ...FIELDS[COMPANY_SIC] },
               data: mockCompany,
             },
-            mockCompany[COMPANY_SIC].join(),
+            mockCompany[COMPANY_SIC].toString(),
           ),
         ],
       };
