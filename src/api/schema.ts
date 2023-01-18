@@ -4,7 +4,7 @@ import { checkbox, integer, relationship, select, text, timestamp, password } fr
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types';  // eslint-disable-line
-import { APPLICATION } from './constants';
+import { ANSWERS, APPLICATION } from './constants';
 
 export const lists = {
   ReferenceNumber: {
@@ -211,7 +211,7 @@ export const lists = {
   }),
   ExporterCompanyAddress: list({
     fields: {
-      exporterCompany: relationship({ ref: 'ExporterCompany.address' }),
+      exporterCompany: relationship({ ref: 'ExporterCompany.registeredOfficeAddress' }),
       addressLine1: text(),
       addressLine2: text(),
       careOf: text(),
@@ -226,7 +226,7 @@ export const lists = {
   ExporterCompany: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      address: relationship({ ref: 'ExporterCompanyAddress.exporterCompany' }),
+      registeredOfficeAddress: relationship({ ref: 'ExporterCompanyAddress.exporterCompany' }),
       business: relationship({ ref: 'ExporterBusiness' }),
       sicCodes: relationship({
         ref: 'ExporterCompanySicCode.exporterCompany',
@@ -235,8 +235,20 @@ export const lists = {
       companyName: text(),
       companyNumber: text(),
       dateOfCreation: timestamp(),
-      hasTradingAddress: checkbox(),
-      hasTradingName: checkbox(),
+      hasTradingAddress: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+        db: { isNullable: true },
+      }),
+      hasTradingName: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+        db: { isNullable: true },
+      }),
       companyWebsite: text(),
       phoneNumber: text(),
     },

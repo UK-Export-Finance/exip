@@ -1,3 +1,8 @@
+export const ANSWERS = {
+  YES: 'Yes',
+  NO: 'No',
+};
+
 export const APPLICATION = {
   SUBMISSION_TYPE: {
     MIA: 'Manual Inclusion Application',

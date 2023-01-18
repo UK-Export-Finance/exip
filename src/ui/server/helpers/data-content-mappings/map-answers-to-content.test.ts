@@ -26,9 +26,7 @@ describe('server/helpers/map-answers-to-content', () => {
         const result = mapPolicyType(mockAnswer);
 
         const expected = {
-          [SINGLE_POLICY_TYPE]: {
-            text: mockAnswer,
-          },
+          [SINGLE_POLICY_TYPE]: mockAnswer,
         };
 
         expect(result).toEqual(expected);
@@ -42,9 +40,7 @@ describe('server/helpers/map-answers-to-content', () => {
         const result = mapPolicyType(mockAnswer);
 
         const expected = {
-          [MULTI_POLICY_TYPE]: {
-            text: mockAnswer,
-          },
+          [MULTI_POLICY_TYPE]: mockAnswer,
         };
 
         expect(result).toEqual(expected);
@@ -69,24 +65,14 @@ describe('server/helpers/map-answers-to-content', () => {
       const result = mapAnswersToContent(mockAnswers);
 
       const expected = {
-        [VALID_EXPORTER_LOCATION]: {
-          text: SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION],
-        },
-        [BUYER_COUNTRY]: {
-          text: mapCountry(mockAnswers[BUYER_COUNTRY]),
-        },
-        [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
-          text: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
-        },
+        [VALID_EXPORTER_LOCATION]: SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION],
+        [BUYER_COUNTRY]: mapCountry(mockAnswers[BUYER_COUNTRY]),
+        [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
         ...mapCost(mockAnswers),
         ...mapPolicyType(mockAnswers[POLICY_TYPE]),
         ...mapPolicyLength(mockAnswers),
-        [PERCENTAGE_OF_COVER]: {
-          text: mapPercentageOfCover(mockAnswers[PERCENTAGE_OF_COVER]),
-        },
-        [CREDIT_PERIOD]: {
-          text: mapMonthString(mockAnswers[CREDIT_PERIOD]),
-        },
+        [PERCENTAGE_OF_COVER]: mapPercentageOfCover(mockAnswers[PERCENTAGE_OF_COVER]),
+        [CREDIT_PERIOD]: mapMonthString(mockAnswers[CREDIT_PERIOD]),
       };
 
       expect(result).toEqual(expected);

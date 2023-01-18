@@ -69,12 +69,12 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
 
       type ExporterCompanyAndCompanyAddress {
         id: ID
-        address: ExporterCompanyAddress
+        registeredOfficeAddress: ExporterCompanyAddress
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
-        hasTradingAddress: Boolean
-        hasTradingName: Boolean
+        hasTradingAddress: String
+        hasTradingName: String
         companyWebsite: String
         phoneNumber: String
       }
@@ -85,8 +85,8 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
-        hasTradingAddress: Boolean
-        hasTradingName: Boolean
+        hasTradingAddress: String
+        hasTradingName: String
         companyWebsite: String
         phoneNumber: String
       }

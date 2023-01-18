@@ -1,8 +1,8 @@
 import { AnswersContent, AnswersFieldGroups } from './answers';
-import { Application, ApplicationFlat } from './application';
+import { Application, ApplicationFlat, ApplicationExporterCompany } from './application';
 import { ApolloResponse } from './apollo';
 import { CisCountry } from './cis-country';
-import { CompanyDetails, CompanyDetailsFieldGroups } from './company-details';
+import { CompanyDetails, CompanyDetailsFieldGroups, SicCode } from './company-details';
 import { CompanyHouseResponse } from './company-house-response';
 import { Country } from './country';
 import { Currency } from './currency';
@@ -18,7 +18,7 @@ import {
   SubmittedDataInsuranceEligibility,
   SubmittedData,
 } from './submitted-data';
-import { SummaryListItem, SummaryListItemData } from './summary-list';
+import { SummaryListItem, SummaryListItemData, SummaryListItemDataInput, SummaryListItemDataInputField, SummaryListItemDataFieldSummary } from './summary-list';
 import { TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
 import {
   TellUsAboutPolicyPageVariablesContentStrings,
@@ -42,6 +42,7 @@ export {
   AnswersFieldGroups,
   Application,
   ApplicationFlat,
+  ApplicationExporterCompany,
   ApolloResponse,
   CisCountry,
   CompanyDetails,
@@ -69,6 +70,7 @@ export {
   RequiredDataStateQuoteEligibility,
   Response,
   SelectOption,
+  SicCode,
   SingleInputPageVariablesInitialInput,
   SingleInputPageVariablesInput,
   SingleInputPageVariables,
@@ -76,6 +78,9 @@ export {
   SubmittedDataInsuranceEligibility,
   SubmittedData,
   SummaryListItemData,
+  SummaryListItemDataFieldSummary,
+  SummaryListItemDataInput,
+  SummaryListItemDataInputField,
   SummaryListItem,
   TaskList,
   TaskListData,

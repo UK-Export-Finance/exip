@@ -16,17 +16,13 @@ const mapCost = (answers: SubmittedDataQuoteEligibility | SubmittedDataInsurance
 
   if (isSinglePolicyType(answers[POLICY_TYPE])) {
     mapped = {
-      [CONTRACT_VALUE]: {
-        text: formatCurrency(answers[CONTRACT_VALUE], answers[CURRENCY].isoCode, 0),
-      },
+      [CONTRACT_VALUE]: formatCurrency(answers[CONTRACT_VALUE], answers[CURRENCY].isoCode, 0),
     };
   }
 
   if (isMultiPolicyType(answers[POLICY_TYPE])) {
     mapped = {
-      [MAX_AMOUNT_OWED]: {
-        text: formatCurrency(answers[MAX_AMOUNT_OWED], answers[CURRENCY].isoCode, 0),
-      },
+      [MAX_AMOUNT_OWED]: formatCurrency(answers[MAX_AMOUNT_OWED], answers[CURRENCY].isoCode, 0),
     };
   }
 

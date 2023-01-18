@@ -1,10 +1,20 @@
-interface SummaryListField {
-  text: string;
-}
+type SummaryListItemDataFieldSummary = {
+  TITLE: string;
+};
 
-type SummaryListItemDataValue = {
-  text?: string;
-  html?: string;
+type SummaryListItemDataInputField = {
+  id: string;
+  title?: string;
+  SUMMARY?: SummaryListItemDataFieldSummary;
+};
+
+type SummaryListItemDataInput = {
+  data: object;
+  field: SummaryListItemDataInputField;
+  href?: string;
+  renderChangeLink?: boolean;
+  title?: string;
+  value?: string;
 };
 
 type SummaryListItemData = {
@@ -12,7 +22,7 @@ type SummaryListItemData = {
   href?: string;
   renderChangeLink?: boolean;
   title?: string;
-  value: SummaryListItemDataValue;
+  value?: string;
 };
 
 type SummaryListItemKey = {
@@ -49,13 +59,14 @@ interface SummaryListItem {
 }
 
 export {
-  SummaryListField,
   SummaryListItem,
   SummaryListItemActions,
   SummaryListItemActionsItemAttributes,
   SummaryListItemActionsItem,
   SummaryListItemData,
-  SummaryListItemDataValue,
+  SummaryListItemDataInput,
+  SummaryListItemDataInputField,
+  SummaryListItemDataFieldSummary,
   SummaryListItemKey,
   SummaryListItemValue,
 };
