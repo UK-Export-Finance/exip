@@ -153,18 +153,18 @@ Keystone will automatically generate the following graphQL resolvers in the back
 
 ### Mutations
 
-- `createCountry`
-- `createCountries`
-- `updateCountry`
-- `updateCountries`
-- `deleteCountry`
-- `deleteCountries`
+- `createCurrency`
+- `createCurrencies`
+- `updateCurrency`
+- `updateCurrencies`
+- `deleteCurrency`
+- `deleteCurrencies`
 
 ### Queries
 
-- `countries`
-- `country`
-- `countriesCount`
+- `currencies`
+- `currency`
+- `currenciesCount`
 
 Keystone will also automatically create a countries table in the database with any fields listed in the keystone schema as columns in the said table.
 
