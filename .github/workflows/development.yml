@@ -15,7 +15,7 @@ on:
     branches: [ dev ]
     paths:
     - 'src/**'
-  
+
 env:
   product: exip
   environment: dev
@@ -46,7 +46,7 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     env:
       name: mysql
-      
+
     steps:
     - name: Repository
       uses: actions/checkout@v3
@@ -79,13 +79,13 @@ jobs:
 # 3. API - Deployment
   api:
     name: API 📦️
-    needs: setup
+    needs: database
     runs-on: [self-hosted, linux, deployment]
     environment:
       name: ${{ needs.setup.outputs.environment }}
     env:
       name: api
-      
+
     steps:
     - name: Repository
       uses: actions/checkout@v3
@@ -139,7 +139,7 @@ jobs:
           az webapp deployment slot create --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }} --configuration-source ${{ env.product }}-${{ env.environment }}-${{ env.name }}
           az webapp deployment slot swap --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }} --action swap
           az webapp deployment slot delete --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }}
-    
+
     - name: 8. Azure WebApp - Restart
       uses: azure/cli@v1.0.0
       with:
@@ -149,13 +149,13 @@ jobs:
   # 4. UI - Deployment
   ui:
     name: UI 🎨
-    needs: setup
+    needs: api
     runs-on: [self-hosted, linux, deployment]
     environment:
       name: ${{ needs.setup.outputs.environment }}
     env:
       name: ui
-      
+
     steps:
     - name: Repository
       uses: actions/checkout@v3
@@ -206,7 +206,7 @@ jobs:
           az webapp deployment slot create --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }} --configuration-source ${{ env.product }}-${{ env.environment }}-${{ env.name }}
           az webapp deployment slot swap --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }} --action swap
           az webapp deployment slot delete --name ${{ env.product }}-${{ env.environment }}-${{ env.name }} --slot ${{ github.sha }}
-    
+
     - name: 8. Azure WebApp - Restart
       uses: azure/cli@v1.0.0
       with:
