@@ -9,9 +9,7 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
       TYPE_OF_POLICY: { POLICY_TYPE },
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-      },
+      CONTRACT_POLICY: { REQUESTED_START_DATE },
     },
   },
 } = FIELD_IDS;
@@ -27,10 +25,7 @@ describe('server/helpers/summary-lists/policy-and-export/policy-and-date-fields'
         field: { id: POLICY_TYPE, ...FIELDS[POLICY_TYPE] },
         data: mockAnswers,
       }),
-      fieldGroupItem(
-        { field: { id: REQUESTED_START_DATE, ...FIELDS.CONTRACT_POLICY[REQUESTED_START_DATE] } },
-        formatDate(mockAnswers[REQUESTED_START_DATE]),
-      ),
+      fieldGroupItem({ field: { id: REQUESTED_START_DATE, ...FIELDS.CONTRACT_POLICY[REQUESTED_START_DATE] } }, formatDate(mockAnswers[REQUESTED_START_DATE])),
     ];
 
     expect(result).toEqual(expected);

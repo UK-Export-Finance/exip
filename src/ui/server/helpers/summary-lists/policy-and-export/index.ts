@@ -2,7 +2,7 @@ import { FIELD_IDS } from '../../../constants';
 import generateSummaryListRows from '../generate-summary-list-rows';
 import { isSinglePolicyType, isMultiPolicyType } from '../../policy-type';
 import generatePolicyAndDateFields from './policy-and-date-fields';
-import generateCreditPeriodAndCurrencyFields from './credit-period-and-currency-fields'
+import generateCreditPeriodAndCurrencyFields from './credit-period-and-currency-fields';
 import generateAboutGoodsOrServicesFields from './about-goods-or-services-fields';
 import generateSingleContractPolicyFields from './single-contract-policy-fields';
 import generateMultipleContractPolicyFields from './multiple-contract-policy-fields';
@@ -28,24 +28,14 @@ const generateFields = (answers: ApplicationPolicyAndExport, countries: Array<Co
   fields = generatePolicyAndDateFields(answers);
 
   if (isSinglePolicyType(answers[POLICY_TYPE])) {
-    fields = [
-      ...fields,
-      ...generateSingleContractPolicyFields(answers),
-    ];
+    fields = [...fields, ...generateSingleContractPolicyFields(answers)];
   }
 
   if (isMultiPolicyType(answers[POLICY_TYPE])) {
-    fields = [
-      ...fields,
-      ...generateMultipleContractPolicyFields(answers),
-    ];
+    fields = [...fields, ...generateMultipleContractPolicyFields(answers)];
   }
 
-  fields = [
-    ...fields,
-    ...generateCreditPeriodAndCurrencyFields(answers, currencies),
-    ...generateAboutGoodsOrServicesFields(answers, countries),
-  ];
+  fields = [...fields, ...generateCreditPeriodAndCurrencyFields(answers, currencies), ...generateAboutGoodsOrServicesFields(answers, countries)];
 
   return fields;
 };

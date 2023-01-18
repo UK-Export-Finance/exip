@@ -12,7 +12,7 @@ const mockCountries = [
   {
     name: 'Greenland',
     isoCode: 'GRL',
-  }
+  },
 ] as Array<Country>;
 
 export default mockCountries;

@@ -8,10 +8,7 @@ import { mockApplication, mockCurrencies } from '../../../../test-mocks';
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-      },
+      CONTRACT_POLICY: { CREDIT_PERIOD_WITH_BUYER, POLICY_CURRENCY_CODE },
     },
   },
 } = FIELD_IDS;

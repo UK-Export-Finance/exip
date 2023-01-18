@@ -39,7 +39,6 @@ export const get = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
-
   try {
     const countries = await api.keystone.countries.getAll();
     const currencies = await api.external.getCurrencies();
@@ -49,7 +48,7 @@ export const get = async (req: Request, res: Response) => {
     }
 
     const summaryList = policyAndExportSummaryList(application.policyAndExport, countries, currencies);
-    
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS,

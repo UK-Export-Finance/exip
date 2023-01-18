@@ -40,7 +40,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
       [FINAL_DESTINATION]: null,
     },
   };
-  
+
   const countryIsoCode = mockCountries[0].isoCode;
 
   beforeEach(() => {

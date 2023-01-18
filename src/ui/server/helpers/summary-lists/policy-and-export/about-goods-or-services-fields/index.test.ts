@@ -8,10 +8,7 @@ import { mockApplication, mockCountries } from '../../../../test-mocks';
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
-      ABOUT_GOODS_OR_SERVICES: {
-        DESCRIPTION,
-        FINAL_DESTINATION,
-      },
+      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     },
   },
 } = FIELD_IDS;
@@ -20,7 +17,7 @@ describe('server/helpers/summary-lists/policy-and-export/about-goods-or-services
   const mockAnswers = mockApplication.policyAndExport;
 
   it('should return fields and values from the submitted data/answers', () => {
-    const result = generateAboutGoodsOrServicesFields(mockAnswers, mockCountries );
+    const result = generateAboutGoodsOrServicesFields(mockAnswers, mockCountries);
 
     const expected = [
       fieldGroupItem({

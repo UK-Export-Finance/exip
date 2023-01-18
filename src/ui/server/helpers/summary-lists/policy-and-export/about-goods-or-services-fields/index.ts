@@ -7,10 +7,7 @@ import { ApplicationPolicyAndExport, Country, SummaryListItemData } from '../../
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
-      ABOUT_GOODS_OR_SERVICES: {
-        DESCRIPTION,
-        FINAL_DESTINATION,
-      },
+      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     },
   },
 } = FIELD_IDS;

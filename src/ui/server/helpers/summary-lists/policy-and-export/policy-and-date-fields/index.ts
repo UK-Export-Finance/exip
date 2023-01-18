@@ -8,9 +8,7 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
       TYPE_OF_POLICY: { POLICY_TYPE },
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-      },
+      CONTRACT_POLICY: { REQUESTED_START_DATE },
     },
   },
 } = FIELD_IDS;
@@ -27,10 +25,7 @@ const generatePolicyAndDateFields = (answers: ApplicationPolicyAndExport) => {
       field: { id: POLICY_TYPE, ...FIELDS[POLICY_TYPE] },
       data: answers,
     }),
-    fieldGroupItem(
-      { field: { id: REQUESTED_START_DATE, ...FIELDS.CONTRACT_POLICY[REQUESTED_START_DATE] } },
-      formatDate(answers[REQUESTED_START_DATE]),
-    ),
+    fieldGroupItem({ field: { id: REQUESTED_START_DATE, ...FIELDS.CONTRACT_POLICY[REQUESTED_START_DATE] } }, formatDate(answers[REQUESTED_START_DATE])),
   ] as Array<SummaryListItemData>;
 
   return fields;

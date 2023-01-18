@@ -9,11 +9,7 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
-        MULTIPLE: {
-          TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
-        },
+        MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
       },
     },
   },

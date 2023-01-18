@@ -61,5 +61,4 @@ export const mockApplicationMultiplePolicy = {
   policyAndExport: mockMultiplePolicyAndExport,
 } as Application;
 
-
 export default mockApplication;

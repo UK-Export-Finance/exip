@@ -10,10 +10,7 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
-        SINGLE: {
-          CONTRACT_COMPLETION_DATE,
-          TOTAL_CONTRACT_VALUE,
-        },
+        SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
       },
     },
   },
