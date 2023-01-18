@@ -40,11 +40,20 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
   mapAndSave.policyAndExport = jest.fn(() => Promise.resolve(true));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
 
+  const mockApplicationWithoutCurrencyCode = {
+    ...mockApplication,
+    policyAndExport: {
+      ...mockApplication.policyAndExport,
+      [POLICY_CURRENCY_CODE]: null,
+    },
+  };
+
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
+    res.locals.application = mockApplicationWithoutCurrencyCode;
+
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     refNumber = Number(mockApplication.referenceNumber);
     api.external.getCurrencies = getCurrenciesSpy;
@@ -112,7 +121,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
-        application: mapApplicationToFormFields(mockApplication),
+        application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
         currencies: expectedCurrencies,
       };
 
@@ -266,7 +275,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
-          application: mapApplicationToFormFields(mockApplication),
+          application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
           submittedValues: req.body,
           currencies: expectedCurrencies,
           validationErrors: generateValidationErrors(req.body),

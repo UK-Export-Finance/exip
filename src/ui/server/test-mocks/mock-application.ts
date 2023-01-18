@@ -54,6 +54,12 @@ const mockApplication = {
       id: 'clcyj96p0002440oqoblaeht2',
     },
   },
+};
+
+export const mockApplicationMultiplePolicy = {
+  ...mockApplication,
+  policyAndExport: mockMultiplePolicyAndExport,
 } as Application;
+
 
 export default mockApplication;
