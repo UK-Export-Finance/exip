@@ -62,4 +62,4 @@ interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, App
   buyerCountry: string;
 }
 
-export { Application, ApplicationFlat };
+export { Application, ApplicationFlat, ApplicationPolicyAndExport };

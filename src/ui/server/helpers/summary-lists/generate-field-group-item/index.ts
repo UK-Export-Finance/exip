@@ -7,17 +7,17 @@ import { SummaryListItemData, SummaryListItemDataInput } from '../../../../types
  * getSummaryListItemDataValue
  * Get a field's value from a list of data
  * Conditonally returns a custom value if passed (e.g, custom HTML for an address).
- * @param {Object} Submitted data
  * @param {String} Field ID
+ * @param {Object} Submitted data
  * @param {String} Custom field value
- * @returns {String} Field value
+ * @returns {String} Field value or default empty string dash
  */
-export const getSummaryListItemDataValue = (data: object, fieldId: string, customValue?: string): string => {
+export const getSummaryListItemDataValue = (fieldId: string, data?: object, customValue?: string): string => {
   if (customValue) {
     return customValue;
   }
 
-  if (objectHasProperty(data, fieldId)) {
+  if (data && objectHasProperty(data, fieldId)) {
     return data[fieldId];
   }
 
@@ -33,18 +33,14 @@ export const getSummaryListItemDataValue = (data: object, fieldId: string, custo
  * @returns {Object} Field mapped with with key/title text, a value, and optional "change" href.
  */
 const generateSummaryListItemData = (obj: SummaryListItemDataInput, customValue?: string): SummaryListItemData => {
-  const { field, data } = obj;
+  const { field } = obj;
 
   const mapped = {
     id: field.id,
     title: getKeyText(field),
   } as SummaryListItemData;
 
-  if (customValue) {
-    mapped.value = getSummaryListItemDataValue(data, field.id, customValue);
-  } else {
-    mapped.value = getSummaryListItemDataValue(data, field.id);
-  }
+  mapped.value = getSummaryListItemDataValue(field.id, obj.data, customValue);
 
   if (obj.href && obj.renderChangeLink) {
     mapped.renderChangeLink = obj.renderChangeLink;
