@@ -28,12 +28,6 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 const { IN_PROGRESS } = TASKS.STATUS;
 
-const taskInProgress = (status) => {
-  task.status().invoke('text').then((text) => {
-    expect(text.trim()).equal(status);
-  });
-};
-
 describe('Insurance - Your business - Company details page - Save and go back', () => {
   let referenceNumber;
   let url;
@@ -68,7 +62,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       saveAndBackButton().click();
 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-      taskInProgress(IN_PROGRESS);
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
     it('should render valid submitted values when going back to the page', () => {
@@ -89,7 +83,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       saveAndBackButton().click();
 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-      taskInProgress(IN_PROGRESS);
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
     it('should render valid submitted values when going back to the page', () => {
@@ -112,7 +106,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       saveAndBackButton().click();
 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-      taskInProgress(IN_PROGRESS);
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
     it('should render valid submitted values when going back to the page', () => {
@@ -137,7 +131,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       saveAndBackButton().click();
 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-      taskInProgress(IN_PROGRESS);
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
     it('should render valid submitted values when going back to the page', () => {
@@ -163,7 +157,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       saveAndBackButton().click();
 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-      taskInProgress(IN_PROGRESS);
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
     it('should render valid submitted values when going back to the page', () => {

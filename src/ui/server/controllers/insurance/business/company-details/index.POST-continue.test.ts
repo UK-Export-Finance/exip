@@ -26,6 +26,8 @@ const {
   EXPORTER_BUSINESS: { NATURE_OF_BUSINESS },
 } = ROUTES.INSURANCE;
 
+jest.mock('../map-and-save');
+
 describe('controllers/insurance/business/companies-details', () => {
   let req: Request;
   let res: Response;
@@ -87,6 +89,25 @@ describe('controllers/insurance/business/companies-details', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(NATURE_OF_BUSINESS);
+      });
+
+      it('should call mapAndSave.companyDetails once with updateBody and application', async () => {
+        req.body = {
+          [INPUT]: '8989898',
+          [TRADING_NAME]: 'true',
+          [TRADING_ADDRESS]: 'false',
+          [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
+        };
+
+        await post(req, res);
+
+        expect(mapAndSave.companyDetails).toHaveBeenCalledTimes(1);
+
+        const updateBody = {
+          ...req.body,
+          ...mockCompany,
+        };
+        expect(mapAndSave.companyDetails).toHaveBeenCalledWith(updateBody, mockApplication);
       });
     });
 
