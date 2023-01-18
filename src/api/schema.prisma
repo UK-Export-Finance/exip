@@ -75,7 +75,7 @@ model ExporterBusiness {
 
 model ExporterCompanyAddress {
   id              String           @id @default(cuid())
-  exporterCompany ExporterCompany? @relation("ExporterCompany_address")
+  exporterCompany ExporterCompany? @relation("ExporterCompany_registeredOfficeAddress")
   addressLine1    String           @default("")
   addressLine2    String           @default("")
   careOf          String           @default("")
@@ -90,8 +90,8 @@ model ExporterCompany {
   id                               String                   @id @default(cuid())
   application                      Application?             @relation("ExporterCompany_application", fields: [applicationId], references: [id])
   applicationId                    String?                  @map("application")
-  address                          ExporterCompanyAddress?  @relation("ExporterCompany_address", fields: [addressId], references: [id])
-  addressId                        String?                  @unique @map("address")
+  registeredOfficeAddress          ExporterCompanyAddress?  @relation("ExporterCompany_registeredOfficeAddress", fields: [registeredOfficeAddressId], references: [id])
+  registeredOfficeAddressId        String?                  @unique @map("registeredOfficeAddress")
   business                         ExporterBusiness?        @relation("ExporterCompany_business", fields: [businessId], references: [id])
   businessId                       String?                  @map("business")
   sicCodes                         ExporterCompanySicCode[] @relation("ExporterCompanySicCode_exporterCompany")

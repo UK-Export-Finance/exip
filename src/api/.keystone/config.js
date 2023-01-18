@@ -234,7 +234,7 @@ var lists = {
   }),
   ExporterCompanyAddress: (0, import_core.list)({
     fields: {
-      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany.address" }),
+      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany.registeredOfficeAddress" }),
       addressLine1: (0, import_fields.text)(),
       addressLine2: (0, import_fields.text)(),
       careOf: (0, import_fields.text)(),
@@ -249,7 +249,7 @@ var lists = {
   ExporterCompany: (0, import_core.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      address: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress.exporterCompany" }),
+      registeredOfficeAddress: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress.exporterCompany" }),
       business: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
       sicCodes: (0, import_fields.relationship)({
         ref: "ExporterCompanySicCode.exporterCompany",
@@ -479,7 +479,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 
       type ExporterCompanyAndCompanyAddress {
         id: ID
-        address: ExporterCompanyAddress
+        registeredOfficeAddress: ExporterCompanyAddress
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime

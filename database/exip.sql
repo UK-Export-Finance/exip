@@ -351,12 +351,12 @@ CREATE TABLE IF NOT EXISTS `ExporterCompany` (
   `hasTradingName` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `companyWebsite` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `phoneNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-	`address` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+	`registeredOfficeAddress` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `ExporterCompany_address_key` (`address`),
+  UNIQUE KEY `ExporterCompany_address_key` (`registeredOfficeAddress`),
   KEY `ExporterCompany_application_idx` (`application`),
   KEY `ExporterCompany_business_idx` (`business`),
-  CONSTRAINT `ExporterCompany_address_fkey` FOREIGN KEY (`address`) REFERENCES `ExporterCompanyAddress` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `ExporterCompany_address_fkey` FOREIGN KEY (`registeredOfficeAddress`) REFERENCES `ExporterCompanyAddress` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `ExporterCompany_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `ExporterCompany_business_fkey` FOREIGN KEY (`business`) REFERENCES `ExporterBusiness` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

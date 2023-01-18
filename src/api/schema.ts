@@ -211,7 +211,7 @@ export const lists = {
   }),
   ExporterCompanyAddress: list({
     fields: {
-      exporterCompany: relationship({ ref: 'ExporterCompany.address' }),
+      exporterCompany: relationship({ ref: 'ExporterCompany.registeredOfficeAddress' }),
       addressLine1: text(),
       addressLine2: text(),
       careOf: text(),
@@ -226,7 +226,7 @@ export const lists = {
   ExporterCompany: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      address: relationship({ ref: 'ExporterCompanyAddress.exporterCompany' }),
+      registeredOfficeAddress: relationship({ ref: 'ExporterCompanyAddress.exporterCompany' }),
       business: relationship({ ref: 'ExporterBusiness' }),
       sicCodes: relationship({
         ref: 'ExporterCompanySicCode.exporterCompany',

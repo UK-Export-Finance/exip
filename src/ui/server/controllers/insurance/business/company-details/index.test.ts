@@ -1,4 +1,4 @@
-import { Request, Response } from '../../../../../types';
+import { Request, Response, Application } from '../../../../../types';
 import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -7,10 +7,14 @@ import generateValidationErrors from '../../../../helpers/validation';
 import api from '../../../../api';
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 import { mockReq, mockRes, mockCompany, mockApplication } from '../../../../test-mocks';
+import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
-  EXPORTER_BUSINESS: { COMPANY_HOUSE },
+  EXPORTER_BUSINESS: {
+    COMPANY_HOUSE,
+    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
+  },
 } = FIELD_IDS.INSURANCE;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -56,15 +60,63 @@ describe('controllers/insurance/business/companies-details', () => {
   });
 
   describe('get', () => {
-    it('should render the company-details template with correct variables', () => {
-      get(req, res);
+    describe('when application has populated exporterCompany data', () => {
+      it('should render the company-details template with correct variables', () => {
+        get(req, res);
+        const { exporterCompany, referenceNumber } = mockApplication;
 
-      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-        ...corePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(mockApplication.referenceNumber),
+        const submittedValues = {
+          [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
+          [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
+          [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
+          [WEBSITE]: exporterCompany?.[WEBSITE],
+          [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
+        };
+
+        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
+          ...corePageVariables({
+            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(referenceNumber),
+          submittedValues,
+          SUMMARY_LIST: populateCompaniesHouseSummaryList(exporterCompany),
+        });
+      });
+    });
+
+    describe('when application does not have populated exporterCompany data', () => {
+      it('should render the company-details template with correct variables', () => {
+        const mockApplicationNoData = {
+          ...mockApplication,
+          exporterCompany: {
+            id: '13456',
+          },
+        } as Application;
+
+        res.locals.application = mockApplicationNoData;
+
+        get(req, res);
+
+        const { exporterCompany, referenceNumber } = mockApplicationNoData;
+
+        const submittedValues = {
+          [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
+          [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
+          [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
+          [WEBSITE]: exporterCompany?.[WEBSITE],
+          [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
+        };
+
+        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
+          ...corePageVariables({
+            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(referenceNumber),
+          submittedValues,
+          SUMMARY_LIST: null,
+        });
       });
     });
 

@@ -46,11 +46,13 @@ const applicationQuery = gql`
           companyWebsite
           hasTradingName
           hasTradingAddress
+          dateOfCreation
+          phoneNumber
           sicCodes {
             id
             sicCode
           }
-          address {
+          registeredOfficeAddress {
             id
             addressLine1
             addressLine2
