@@ -52,11 +52,16 @@ const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: Tas
     dependencies: allInitialChecksFields,
   };
 
+  const { COMPANY_ADDRESS, SEARCH, INPUT, ...COMPANIES_HOUSE_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE;
+  const { PHONE_NUMBER, WEBSITE, ...YOUR_COMPANY_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY;
   const EXPORTER_BUSINESS = {
     href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROUTES.COMPANY_DETAILS}`,
     title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
     id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
-    fields: [],
+    fields: Object.values({
+      ...YOUR_COMPANY_FIELDS,
+      ...COMPANIES_HOUSE_FIELDS,
+    }),
     dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
   };
 

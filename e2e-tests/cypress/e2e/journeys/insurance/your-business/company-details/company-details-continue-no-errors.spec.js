@@ -34,7 +34,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe('continue to next page', () => {
     it('should not display any validation errors and redirect to the next page if required fields entered correctly', () => {
-      companyDetails.companiesHouseSearch().type(COMPANIES_HOUSE_NUMBER);
+      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       yesRadioInput().first().click();
       yesRadioInput().eq(1).click();
       submitButton().click();
@@ -44,7 +44,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     it('should not display any validation errors and redirect to the next page if required and optional fields entered correctly', () => {
       cy.navigateToUrl(url);
 
-      companyDetails.companiesHouseSearch().type(COMPANIES_HOUSE_NUMBER);
+      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       yesRadioInput().first().click();
       yesRadioInput().eq(1).click();
       companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
