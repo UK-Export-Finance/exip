@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import formatDate from '../date/format-date';
 import { generateFieldGroups, companyHouseSummaryList, generateAddressHTML } from './company-house-summary-list';
 import generateSummaryListRows from './generate-summary-list-rows';
 import fieldGroupItem from './generate-field-group-item';
@@ -99,7 +99,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
               field: { id: COMPANY_INCORPORATED, ...FIELDS[COMPANY_INCORPORATED] },
               data: mockCompany,
             },
-            format(new Date(mockCompany[COMPANY_INCORPORATED]), 'd MMMM yyyy'),
+            formatDate(mockCompany[COMPANY_INCORPORATED]),
           ),
           fieldGroupItem(
             {

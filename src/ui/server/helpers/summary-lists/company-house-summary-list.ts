@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import formatDate from '../date/format-date';
 import { FIELD_IDS } from '../../constants';
 import { FIELDS, PAGES } from '../../content-strings';
 import generateSummaryListRows from './generate-summary-list-rows';
@@ -64,7 +64,7 @@ const generateFieldGroups = (companyDetails: CompanyHouseResponse | ApplicationE
         field: { id: COMPANY_INCORPORATED, ...FIELDS[COMPANY_INCORPORATED] },
         data: companyDetails,
       },
-      format(new Date(companyDetails[COMPANY_INCORPORATED]), 'd MMMM yyyy'),
+      formatDate(companyDetails[COMPANY_INCORPORATED]),
     ),
     fieldGroupItem(
       {
