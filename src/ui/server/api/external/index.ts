@@ -1,12 +1,12 @@
 import dotenv from 'dotenv';
-import axios, { AxiosBasicCredentials, AxiosResponse, AxiosRequestConfig } from 'axios';
+import axios, { AxiosBasicCredentials, AxiosResponse, RawAxiosRequestConfig } from 'axios';
 
 dotenv.config();
 
 const external = {
   getCountries: async () => {
     try {
-      const config: AxiosRequestConfig = {
+      const config: RawAxiosRequestConfig = {
         method: 'GET',
         url: process.env.MULESOFT_API_CIS_URL,
         headers: {
@@ -28,7 +28,7 @@ const external = {
   },
   getCurrencies: async () => {
     try {
-      const config: AxiosRequestConfig = {
+      const config: RawAxiosRequestConfig = {
         method: 'GET',
         url: process.env.MULESOFT_API_MDM_EA_URL,
         headers: {
