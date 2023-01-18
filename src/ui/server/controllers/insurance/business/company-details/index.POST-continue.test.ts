@@ -124,7 +124,7 @@ describe('controllers/insurance/business/companies-details', () => {
     });
 
     describe('api error handling', () => {
-      describe('when api.keystone.application.update.exporterCompany returns an error', () => {
+      describe('when mapAndSave.companyDetails returns an error', () => {
         it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
           res.locals = { csrfToken: '1234' };
           mapAndSave.companyDetails = jest.fn(() => Promise.reject());
@@ -135,7 +135,7 @@ describe('controllers/insurance/business/companies-details', () => {
         });
       });
 
-      describe('when api.keystone.application.update.exporterCompany resolves false', () => {
+      describe('when mapAndSave.companyDetails resolves false', () => {
         it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
           res.locals = { csrfToken: '1234' };
           mapAndSave.companyDetails = jest.fn(() => Promise.resolve(false));
