@@ -1,10 +1,10 @@
 import formatCurrency from '.';
 
 describe('server/helpers/format-currency', () => {
-  it('shouild return a formatted currency', () => {
-    const mock = 123456;
-    const currencyCode = 'GBP';
+  const mock = 123456;
+  const currencyCode = 'GBP';
 
+  it('shouild return a formatted currency', () => {
     const result = formatCurrency(mock, currencyCode, 2);
 
     const expected = mock.toLocaleString('en', {
@@ -15,5 +15,20 @@ describe('server/helpers/format-currency', () => {
     });
 
     expect(result).toEqual(expected);
+  });
+
+  describe('when decimalPoints parameter is not provided', () => {
+    it('should default to 0', () => {
+      const result = formatCurrency(mock, currencyCode);
+
+      const expected = mock.toLocaleString('en', {
+        style: 'currency',
+        currency: currencyCode,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      });
+
+      expect(result).toEqual(expected);
+    });
   });
 });
