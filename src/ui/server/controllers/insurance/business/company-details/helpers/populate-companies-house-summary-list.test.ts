@@ -1,4 +1,5 @@
 import { populateCompaniesHouseSummaryList, mapDatabaseResponse } from './populate-companies-house-summary-list';
+import mapSicCodes from '../../../../../helpers/mappings/map-sic-codes';
 import { companyHouseSummaryList } from '../../../../../helpers/summary-lists/company-house-summary-list';
 import { FIELD_IDS } from '../../../../../constants';
 import { mockApplication } from '../../../../../test-mocks';
@@ -32,7 +33,7 @@ describe('controllers/insurance/business/companies-details/helpers/populate-comp
 
         const expected = {
           ...exporterCompany,
-          [COMPANY_SIC]: [exporterCompany[COMPANY_SIC][0].sicCode],
+          [COMPANY_SIC]: mapSicCodes(exporterCompany[COMPANY_SIC]),
         } as ApplicationExporterCompany;
 
         expect(response).toEqual(companyHouseSummaryList(expected));
@@ -50,7 +51,7 @@ describe('controllers/insurance/business/companies-details/helpers/populate-comp
 
       const expected = {
         ...exporterCompany,
-        [COMPANY_SIC]: [exporterCompany[COMPANY_SIC][0].sicCode],
+        [COMPANY_SIC]: mapSicCodes(exporterCompany[COMPANY_SIC]),
       };
 
       expect(response).toEqual(expected);
