@@ -8,7 +8,6 @@ import { FIELD_IDS } from '../../constants';
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
-      TYPE_OF_POLICY: { POLICY_TYPE },
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
         CREDIT_PERIOD_WITH_BUYER,
