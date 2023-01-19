@@ -30,8 +30,6 @@ export const endDate = add(startDate, { months: 6 });
 
 const application = {
   POLICY_AND_EXPORTS: {
-    // TODO: don't have this in here.
-    [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
     [REQUESTED_START_DATE]: {
       day: '1',
       month: getMonth(startDate),
