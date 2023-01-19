@@ -1,26 +1,36 @@
-import { RequestBody } from 'express';
 import generateValidationErrors from '../../../../../helpers/validation';
-import { FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
 import { objectHasProperty } from '../../../../../helpers/object';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../constants';
+import { RequestBody } from '../../../../../../types';
 
-const { YOUR_BUYER } = FIELDS;
+const {
+  INSURANCE: {
+    YOUR_BUYER: {
+      COMPANY_OR_ORGANISATION: { COUNTRY: FIELD_ID },
+    },
+  },
+} = FIELD_IDS;
+
+const { [FIELD_ID]: ERROR_MESSAGE } = ERROR_MESSAGES;
 
 /**
  * countryRules.
- * Check submitted form data for errors with the all mandatory fields
+ * Check submitted form data for errors with the country field
  * Returns generateValidationErrors if there are any errors.
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */
-export const countryRules = (formBody: RequestBody, errors: object) => {
+const countryRules = (formBody: RequestBody, errors: object) => {
   const updatedErrors = errors;
-  // check if the Country field is empty.
-  if (!objectHasProperty(formBody, YOUR_BUYER.BUYER_COUNTRY.ID)) {
-    return generateValidationErrors(YOUR_BUYER.BUYER_COUNTRY.ID, ERROR_MESSAGES[FIELD_IDS.COUNTRY].IS_EMPTY, errors);
+
+  // check if the field is empty.
+  if (!objectHasProperty(formBody, FIELD_ID)) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
   }
 
   return updatedErrors;
 };
+
+export default countryRules;

@@ -13,7 +13,7 @@ describe('routes/insurance/your-buyer', () => {
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(1);
     expect(post).toHaveBeenCalledTimes(1);
-    expect(get).toHaveBeenCalledWith(YOUR_BUYER.YOUR_BUYER_DETAILS, getYourBuyerDetails);
-    expect(post).toHaveBeenCalledWith(YOUR_BUYER.YOUR_BUYER_DETAILS, postYourBuyeDetails);
+    expect(get).toHaveBeenCalledWith(YOUR_BUYER.COMPANY_OR_ORGANISATION, getYourBuyerDetails);
+    expect(post).toHaveBeenCalledWith(YOUR_BUYER.COMPANY_OR_ORGANISATION, postYourBuyeDetails);
   });
 });
