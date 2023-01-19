@@ -1,5 +1,5 @@
 import { TEMPLATE, get } from '.';
-import { PAGES } from '../../../content-strings';
+import { PAGES, LINKS } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/insurance';
 import { mockReq, mockRes } from '../../../test-mocks';
@@ -39,9 +39,36 @@ describe('controllers/insurance/apply-offline', () => {
           BACK_LINK: req.headers.referer,
         }),
         EXIT_REASON: mockExitReason,
+        DOWNLOAD_FORM_LINK: LINKS.EXTERNAL.NBI_FORM,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+    });
+
+    describe('no companies house number exit reason', () => {
+      it('should render template with link to proposal form', () => {
+        const { NO_COMPANIES_HOUSE_NUMBER } = PAGES.INSURANCE.APPLY_OFFLINE.REASON;
+        req.flash = (property: string) => {
+          const obj = {
+            exitReason: NO_COMPANIES_HOUSE_NUMBER,
+          };
+
+          return obj[property];
+        };
+
+        get(req, res);
+
+        const expectedVariables = {
+          ...corePageVariables({
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.APPLY_OFFLINE,
+            BACK_LINK: req.headers.referer,
+          }),
+          EXIT_REASON: NO_COMPANIES_HOUSE_NUMBER,
+          DOWNLOAD_FORM_LINK: LINKS.EXTERNAL.PROPOSAL_FORM,
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
     });
   });
 });

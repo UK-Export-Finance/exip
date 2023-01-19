@@ -90,7 +90,7 @@ context('Insurance - apply offline exit page', () => {
       expect(text.trim()).equal(ACTIONS.DOWNLOAD_FORM.LINK.TEXT);
     });
 
-    insurance.applyOfflinePage.downloadFormLink().should('have.attr', 'href', ACTIONS.DOWNLOAD_FORM.LINK.HREF);
+    insurance.applyOfflinePage.downloadFormLink().should('have.attr', 'href', ACTIONS.DOWNLOAD_FORM.LINK.HREF_NBI);
   });
 
   it('renders `contact` copy with link', () => {
