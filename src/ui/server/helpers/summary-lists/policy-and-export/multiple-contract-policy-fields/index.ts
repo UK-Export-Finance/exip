@@ -1,17 +1,13 @@
 import { FIELDS } from '../../../../content-strings/fields/insurance';
-import { FIELD_IDS } from '../../../../constants';
+import FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import fieldGroupItem from '../../generate-field-group-item';
 import formatCurrency from '../../../format-currency';
 import mapMonthString from '../../../data-content-mappings/map-month-string';
 import { ApplicationPolicyAndExport, SummaryListItemData } from '../../../../../types';
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-      },
-    },
+  CONTRACT_POLICY: {
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
   },
 } = FIELD_IDS;
 

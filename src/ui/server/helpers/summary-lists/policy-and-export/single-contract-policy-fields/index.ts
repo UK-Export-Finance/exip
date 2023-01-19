@@ -1,17 +1,13 @@
 import { FIELDS } from '../../../../content-strings/fields/insurance';
-import { FIELD_IDS } from '../../../../constants';
+import FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import fieldGroupItem from '../../generate-field-group-item';
 import formatDate from '../../../date/format-date';
 import formatCurrency from '../../../format-currency';
 import { ApplicationPolicyAndExport, SummaryListItemData } from '../../../../../types';
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-      },
-    },
+  CONTRACT_POLICY: {
+    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
   },
 } = FIELD_IDS;
 
