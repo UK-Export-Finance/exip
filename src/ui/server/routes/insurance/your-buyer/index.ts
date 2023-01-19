@@ -4,7 +4,7 @@ import { get as getYourBuyerDetails, post as postYourBuyerDetails } from '../../
 
 // @ts-ignore
 const yourBuyerRouter = express.Router();
-yourBuyerRouter.get(YOUR_BUYER.YOUR_BUYER_DETAILS, getYourBuyerDetails);
-yourBuyerRouter.post(YOUR_BUYER.YOUR_BUYER_DETAILS, postYourBuyerDetails);
+yourBuyerRouter.get(YOUR_BUYER.COMPANY_OR_ORGANISATION, getYourBuyerDetails);
+yourBuyerRouter.post(YOUR_BUYER.COMPANY_OR_ORGANISATION, postYourBuyerDetails);
 
 export default yourBuyerRouter;
