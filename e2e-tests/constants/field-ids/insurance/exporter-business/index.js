@@ -16,4 +16,7 @@ export const EXPORTER_BUSINESS = {
     WEBSITE: 'companyWebsite',
     PHONE_NUMBER: 'phoneNumber',
   },
+  NATURE_OF_YOUR_BUSINESS: {
+    GOODS_OR_SERVICES: 'goodsOrServicesSupplied',
+  },
 };

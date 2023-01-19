@@ -13,8 +13,8 @@ const {
   },
 } = FIELD_IDS.INSURANCE;
 
-const natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 let url;
+let natureOfBusinessUrl;
 
 const completeAllFields = (phoneNumber) => {
   companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
@@ -41,6 +41,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     getReferenceNumber().then((id) => {
       referenceNumber = id;
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 
       cy.visit(url, {
         auth: {

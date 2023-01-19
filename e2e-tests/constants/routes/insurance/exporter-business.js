@@ -1,6 +1,7 @@
 const EXPORTER_BUSINESS_ROOT = '/your-business';
 const COMPANY_DETAILS = 'company-details';
 const NATURE_OF_BUSINESS = 'nature-of-business';
+const TURNOVER = 'turnover';
 
 export const EXPORTER_BUSINESS = {
   ROOT: EXPORTER_BUSINESS_ROOT,
@@ -8,4 +9,5 @@ export const EXPORTER_BUSINESS = {
   COMPANY_HOUSE_SEARCH: `${EXPORTER_BUSINESS_ROOT}/${COMPANY_DETAILS}/companies-house-search`,
   NO_COMPANIES_HOUSE_NUMBER: `${EXPORTER_BUSINESS_ROOT}/${COMPANY_DETAILS}/no-companies-house-number`,
   NATURE_OF_BUSINESS: `${EXPORTER_BUSINESS_ROOT}/${NATURE_OF_BUSINESS}`,
+  TURNOVER: `${EXPORTER_BUSINESS_ROOT}/${TURNOVER}`,
 };

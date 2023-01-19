@@ -5,11 +5,10 @@ import {
 } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
-const natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
-
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section", () => {
   let referenceNumber;
   let url;
+  let natureOfBusinessUrl;
 
   before(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
@@ -20,6 +19,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       referenceNumber = id;
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 
       cy.navigateToUrl(url);
 
