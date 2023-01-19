@@ -1,6 +1,7 @@
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import fieldGroupItem from '../../generate-field-group-item';
+import getFieldById from '../../../get-field-by-id';
 import formatCurrency from '../../../format-currency';
 import mapMonthString from '../../../data-content-mappings/map-month-string';
 import { ApplicationPolicyAndExport, SummaryListItemData } from '../../../../../types';
@@ -21,21 +22,21 @@ const generateMultipleContractPolicyFields = (answers: ApplicationPolicyAndExpor
   const fields = [
     fieldGroupItem(
       {
-        field: { id: TOTAL_MONTHS_OF_COVER, ...FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER] },
+        field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, TOTAL_MONTHS_OF_COVER),
         data: answers,
       },
       mapMonthString(answers[TOTAL_MONTHS_OF_COVER]),
     ),
     fieldGroupItem(
       {
-        field: { id: TOTAL_SALES_TO_BUYER, ...FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_SALES_TO_BUYER] },
+        field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, TOTAL_SALES_TO_BUYER),
         data: answers,
       },
       formatCurrency(answers[TOTAL_SALES_TO_BUYER], 'GBP'),
     ),
     fieldGroupItem(
       {
-        field: { id: MAXIMUM_BUYER_WILL_OWE, ...FIELDS.CONTRACT_POLICY.MULTIPLE[MAXIMUM_BUYER_WILL_OWE] },
+        field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, MAXIMUM_BUYER_WILL_OWE),
         data: answers,
       },
       formatCurrency(answers[MAXIMUM_BUYER_WILL_OWE], 'GBP'),

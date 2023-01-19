@@ -1,6 +1,7 @@
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import { FIELD_IDS } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
+import getFieldById from '../../../get-field-by-id';
 import getCurrencyByCode from '../../../get-currency-by-code';
 import { ApplicationPolicyAndExport, Currency, SummaryListItemData } from '../../../../../types';
 
@@ -21,11 +22,11 @@ const {
 const generateCreditPeriodAndCurrencyFields = (answers: ApplicationPolicyAndExport, currencies: Array<Currency>) => {
   const fields = [
     fieldGroupItem({
-      field: { id: CREDIT_PERIOD_WITH_BUYER, ...FIELDS.CONTRACT_POLICY[CREDIT_PERIOD_WITH_BUYER] },
+      field: getFieldById(FIELDS.CONTRACT_POLICY, CREDIT_PERIOD_WITH_BUYER),
       data: answers,
     }),
     fieldGroupItem(
-      { field: { id: POLICY_CURRENCY_CODE, ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE] } },
+      { field: getFieldById(FIELDS.CONTRACT_POLICY, POLICY_CURRENCY_CODE) },
       answers[POLICY_CURRENCY_CODE] && `${answers[POLICY_CURRENCY_CODE]} ${getCurrencyByCode(currencies, answers[POLICY_CURRENCY_CODE]).name}`,
     ),
   ] as Array<SummaryListItemData>;

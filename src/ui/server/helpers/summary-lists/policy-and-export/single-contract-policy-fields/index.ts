@@ -1,6 +1,7 @@
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import fieldGroupItem from '../../generate-field-group-item';
+import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
 import formatCurrency from '../../../format-currency';
 import { ApplicationPolicyAndExport, SummaryListItemData } from '../../../../../types';
@@ -19,14 +20,8 @@ const {
  */
 const generateSingleContractPolicyFields = (answers: ApplicationPolicyAndExport) => {
   const fields = [
-    fieldGroupItem(
-      { field: { id: CONTRACT_COMPLETION_DATE, ...FIELDS.CONTRACT_POLICY.SINGLE[CONTRACT_COMPLETION_DATE] } },
-      formatDate(answers[CONTRACT_COMPLETION_DATE]),
-    ),
-    fieldGroupItem(
-      { field: { id: TOTAL_CONTRACT_VALUE, ...FIELDS.CONTRACT_POLICY.SINGLE[TOTAL_CONTRACT_VALUE] } },
-      formatCurrency(answers[TOTAL_CONTRACT_VALUE], 'GBP'),
-    ),
+    fieldGroupItem({ field: getFieldById(FIELDS.CONTRACT_POLICY.SINGLE, CONTRACT_COMPLETION_DATE) }, formatDate(answers[CONTRACT_COMPLETION_DATE])),
+    fieldGroupItem({ field: getFieldById(FIELDS.CONTRACT_POLICY.SINGLE, TOTAL_CONTRACT_VALUE) }, formatCurrency(answers[TOTAL_CONTRACT_VALUE], 'GBP')),
   ] as Array<SummaryListItemData>;
 
   return fields;

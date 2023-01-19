@@ -1,6 +1,7 @@
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import { FIELD_IDS } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
+import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
 import { ApplicationPolicyAndExport, SummaryListItemData } from '../../../../../types';
 
@@ -22,10 +23,10 @@ const {
 const generatePolicyAndDateFields = (answers: ApplicationPolicyAndExport) => {
   const fields = [
     fieldGroupItem({
-      field: { id: POLICY_TYPE, ...FIELDS[POLICY_TYPE] },
+      field: getFieldById(FIELDS, POLICY_TYPE),
       data: answers,
     }),
-    fieldGroupItem({ field: { id: REQUESTED_START_DATE, ...FIELDS.CONTRACT_POLICY[REQUESTED_START_DATE] } }, formatDate(answers[REQUESTED_START_DATE])),
+    fieldGroupItem({ field: getFieldById(FIELDS.CONTRACT_POLICY, REQUESTED_START_DATE) }, formatDate(answers[REQUESTED_START_DATE])),
   ] as Array<SummaryListItemData>;
 
   return fields;

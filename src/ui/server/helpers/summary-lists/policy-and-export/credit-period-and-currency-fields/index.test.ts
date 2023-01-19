@@ -2,6 +2,7 @@ import generateCreditPeriodAndCurrencyFields from '.';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import { FIELD_IDS } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
+import getFieldById from '../../../get-field-by-id';
 import getCurrencyByCode from '../../../get-currency-by-code';
 import { mockApplication, mockCurrencies } from '../../../../test-mocks';
 
@@ -21,11 +22,11 @@ describe('server/helpers/summary-lists/policy-and-export/credit-period-and-curre
 
     const expected = [
       fieldGroupItem({
-        field: { id: CREDIT_PERIOD_WITH_BUYER, ...FIELDS.CONTRACT_POLICY[CREDIT_PERIOD_WITH_BUYER] },
+        field: getFieldById(FIELDS.CONTRACT_POLICY, CREDIT_PERIOD_WITH_BUYER),
         data: mockAnswers,
       }),
       fieldGroupItem(
-        { field: { id: POLICY_CURRENCY_CODE, ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE] } },
+        { field: getFieldById(FIELDS.CONTRACT_POLICY, POLICY_CURRENCY_CODE) },
         `${mockAnswers[POLICY_CURRENCY_CODE]} ${getCurrencyByCode(mockCurrencies, mockAnswers[POLICY_CURRENCY_CODE]).name}`,
       ),
     ];

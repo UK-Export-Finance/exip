@@ -2,6 +2,7 @@ import generateAboutGoodsOrServicesFields from '.';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import { FIELD_IDS } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
+import getFieldById from '../../../get-field-by-id';
 import getCountryByIsoCode from '../../../get-country-by-iso-code';
 import { mockApplication, mockCountries } from '../../../../test-mocks';
 
@@ -21,11 +22,11 @@ describe('server/helpers/summary-lists/policy-and-export/about-goods-or-services
 
     const expected = [
       fieldGroupItem({
-        field: { id: DESCRIPTION, ...FIELDS.ABOUT_GOODS_OR_SERVICES[DESCRIPTION] },
+        field: getFieldById(FIELDS.ABOUT_GOODS_OR_SERVICES, DESCRIPTION),
         data: mockAnswers,
       }),
       fieldGroupItem(
-        { field: { id: FINAL_DESTINATION, ...FIELDS.ABOUT_GOODS_OR_SERVICES[FINAL_DESTINATION] } },
+        { field: getFieldById(FIELDS.ABOUT_GOODS_OR_SERVICES, FINAL_DESTINATION) },
         mockAnswers[FINAL_DESTINATION] && getCountryByIsoCode(mockCountries, mockAnswers[FINAL_DESTINATION]).name,
       ),
     ];
