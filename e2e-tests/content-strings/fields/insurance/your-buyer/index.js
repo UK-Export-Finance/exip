@@ -1,9 +1,20 @@
+import { FIELD_IDS } from '../../../../constants';
+
+const {
+  YOUR_BUYER: { COMPANY_OR_ORGANISATION },
+} = FIELD_IDS.INSURANCE;
+
 export const YOUR_BUYER_FIELDS = {
-  BUYER_COUNTRY: 'country',
-  BUYER_COUNTRY_LABEL: 'Country',
-  BUYER_ORGANISATION: 'organisation',
-  BUYER_ORGANISATION_LABEL: "Buyer's company or organisation name",
-  BUYER_ADDRESS: 'address',
-  BUYER_ADDRESS_LABEL: 'Address',
-  BUYER_ADDRESS_MAX_LENGTH: 330,
+  COMPANY_OR_ORGANISATION: {
+    [COMPANY_OR_ORGANISATION.NAME]: {
+      LABEL: "Buyer's company or organisation name",
+    },
+    [COMPANY_OR_ORGANISATION.ADDRESS]: {
+      LABEL: 'Address',
+      MAXIMUM: 330,
+    },
+    [COMPANY_OR_ORGANISATION.COUNTRY]: {
+      LABEL: 'Country',
+    },
+  },
 };

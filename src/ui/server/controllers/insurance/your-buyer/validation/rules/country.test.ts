@@ -1,10 +1,15 @@
-import generateValidationErrors from '../../../../../helpers/validation';
-import { FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
-import { ERROR_MESSAGES } from '../../../../../content-strings';
+import countryRules from './country';
 import { FIELD_IDS } from '../../../../../constants';
-import { countryRules } from './country';
+import { ERROR_MESSAGES } from '../../../../../content-strings';
+import generateValidationErrors from '../../../../../helpers/validation';
 
-const { YOUR_BUYER } = FIELDS;
+const {
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION: { COUNTRY: FIELD_ID },
+  },
+} = FIELD_IDS.INSURANCE;
+
+const { [FIELD_ID]: ERROR_MESSAGE } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/validation/country', () => {
   const mockErrors = {
@@ -12,13 +17,13 @@ describe('controllers/insurance/your-buyer/validation/country', () => {
     errorList: {},
   };
 
-  describe('when country name field  is not provided', () => {
+  describe('when the field is not provided', () => {
     it('should return validation error', () => {
-      const mockSubmittedData = { organisation: 'test', country: '' };
+      const mockSubmittedData = {};
 
       const result = countryRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(YOUR_BUYER.BUYER_COUNTRY.ID, ERROR_MESSAGES[FIELD_IDS.COUNTRY].IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
       expect(result).toEqual(expected);
     });

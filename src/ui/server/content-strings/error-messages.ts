@@ -155,12 +155,14 @@ export const ERROR_MESSAGES = {
       },
     },
     YOUR_BUYER: {
-      BUYER_ORGANISATION: {
-        IS_EMPTY: "Enter the buyer's company or organisation name",
-      },
-      BUYER_ADDRESS: {
-        IS_EMPTY: "Enter the buyer's address",
-        ABOVE_MAXIMUM: 'Buyer address cannot be more than 330 characters',
+      COMPANY_OR_ORGANISATION: {
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.NAME]: {
+          IS_EMPTY: "Enter the buyer's company or organisation name",
+        },
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.ADDRESS]: {
+          IS_EMPTY: "Enter the buyer's address",
+          ABOVE_MAXIMUM: 'Buyer address cannot be more than 330 characters',
+        },
       },
     },
   },

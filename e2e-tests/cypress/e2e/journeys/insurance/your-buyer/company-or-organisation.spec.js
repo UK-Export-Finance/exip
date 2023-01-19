@@ -2,23 +2,21 @@ import {
   submitButton,
   saveAndBackButton,
 } from '../../../pages/shared';
-import {
-  BUTTONS,
-} from '../../../../../content-strings';
+import { companyOrOrganisationPage } from '../../../pages/insurance/your-buyer';
+import { BUTTONS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
+import { YOUR_BUYER as FIELD_IDS } from '../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROOT } from '../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../helpers/get-reference-number';
-import { YOUR_BUYER_FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
-import { yourBuyer as yourBuyerPage } from '../../../pages/insurance/your-buyer';
+import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
 
 const {
-  BUYER_COUNTRY,
-  BUYER_COUNTRY_LABEL,
-  BUYER_ORGANISATION,
-  BUYER_ORGANISATION_LABEL,
-  BUYER_ADDRESS,
-  BUYER_ADDRESS_LABEL,
-} = YOUR_BUYER_FIELDS;
+  COMPANY_OR_ORGANISATION: {
+    NAME,
+    ADDRESS,
+    COUNTRY,
+  },
+} = FIELD_IDS;
 
 const goToPageDirectly = (referenceNumber) => {
   cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.YOUR_BUYER_DETAILS}`, {
@@ -29,7 +27,7 @@ const goToPageDirectly = (referenceNumber) => {
   });
 };
 
-context('Insurance - Your Buyer - Type of your buyer Page - As an exporter, I want to enter the buyer details', () => {
+context('Insurance - Your Buyer - Company or organisation page - As an exporter, I want to enter the buyer details', () => {
   let referenceNumber;
 
   before(() => {
@@ -68,36 +66,37 @@ context('Insurance - Your Buyer - Type of your buyer Page - As an exporter, I wa
     cy.checkPhaseBanner();
   });
 
-  describe('countries', () => {
-    it('renders `countries` label and input', () => {
-      const field = yourBuyerPage[BUYER_COUNTRY];
-
-      field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(BUYER_COUNTRY_LABEL);
-      });
-
-      field.input().should('exist');
-    });
-  });
-
-  it('renders `buyer organisation or company` label, and input', () => {
-    const field = yourBuyerPage[BUYER_ORGANISATION];
+  it('renders an `organisation or company name` label, and input', () => {
+    const fieldId = NAME;
+    const field = companyOrOrganisationPage[fieldId];
 
     field.label().should('exist');
     field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUYER_ORGANISATION_LABEL);
+      expect(text.trim()).equal(FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
     });
     field.input().should('exist');
   });
 
-  it('renders `buyer address` label, and input', () => {
-    const field = yourBuyerPage[BUYER_ADDRESS];
+  it('renders an `address` label, and input', () => {
+    const fieldId = ADDRESS;
+    const field = companyOrOrganisationPage[fieldId];
 
     field.label().should('exist');
     field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUYER_ADDRESS_LABEL);
+      expect(text.trim()).equal(FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
     });
+    field.input().should('exist');
+  });
+
+  it('renders `countries` label and input', () => {
+    const fieldId = COUNTRY;
+    const field = companyOrOrganisationPage[fieldId];
+
+    field.label().should('exist');
+    field.label().invoke('text').then((text) => {
+      expect(text.trim()).equal(FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+    });
+
     field.input().should('exist');
   });
 

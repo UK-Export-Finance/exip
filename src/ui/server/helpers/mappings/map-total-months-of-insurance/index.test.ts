@@ -1,5 +1,5 @@
 import { FIELD_IDS } from '../../../constants';
-import { FIELDS } from '../../../content-strings/fields/insurance';
+import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../content-strings/fields/insurance';
 import mapTotalMonthsOfCover from '.';
 import mapMonthString from '../../data-content-mappings/map-month-string';
 
