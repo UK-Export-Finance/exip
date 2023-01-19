@@ -6,6 +6,7 @@ import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import companiesHouseSearch from './helpers/companies-house-search.helper';
 import companyDetailsValidation from './validation/company-details';
 import mapAndSave from '../map-and-save';
+import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
 
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 
@@ -48,22 +49,41 @@ const exitReason = {
  * gets the template for company details page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders company details page
+ * @returns {Express.Response.render} renders company details page with/without previously submitted details
  */
-const get = async (req: Request, res: Response) => {
-  const { application } = res.locals;
+const get = (req: Request, res: Response) => {
+  try {
+    const { application } = res.locals;
 
-  if (!application) {
+    if (!application) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    const { exporterCompany } = application;
+
+    // values from application if they exist
+    const submittedValues = {
+      [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
+      [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
+      [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
+      [WEBSITE]: exporterCompany?.[WEBSITE],
+      [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
+    };
+
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(application.referenceNumber),
+      submittedValues,
+      // summary list for company details
+      SUMMARY_LIST: populateCompaniesHouseSummaryList(exporterCompany),
+    });
+  } catch (error) {
+    console.error('Error getting company details', { error });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
-
-  return res.render(TEMPLATE, {
-    ...insuranceCorePageVariables({
-      PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-      BACK_LINK: req.headers.referer,
-    }),
-    ...pageVariables(application.referenceNumber),
-  });
 };
 
 const redirectToExitPage = {
@@ -169,7 +189,7 @@ const post = async (req: Request, res: Response) => {
     // runs companiesHouse validation and api call first for companiesHouse input
     const response = await companiesHouseSearch(body);
 
-    const { apiError, companiesHouseNumber } = response;
+    const { apiError, companiesHouseNumber, company } = response;
 
     // if error, then there is problem with api/service to redirect
     if (apiError) {
@@ -204,8 +224,13 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
+    const updateBody = {
+      ...body,
+      ...company,
+    };
+
     // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.companyDetails(req.body, application);
+    const saveResponse = await mapAndSave.companyDetails(updateBody, application);
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

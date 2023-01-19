@@ -40,6 +40,10 @@ var import_fields_document = require("@keystone-6/fields-document");
 var import_date_fns = require("date-fns");
 
 // constants.ts
+var ANSWERS = {
+  YES: "Yes",
+  NO: "No"
+};
 var APPLICATION = {
   SUBMISSION_TYPE: {
     MIA: "Manual Inclusion Application"
@@ -82,9 +86,7 @@ var lists = {
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
       }),
       policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
-      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
-      exporterCompanyAddress: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress" }),
-      exporterCompanySicCode: (0, import_fields.relationship)({ ref: "ExporterCompanySicCode" })
+      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" })
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -120,7 +122,7 @@ var lists = {
                 id: exporterCompanyId
               }
             };
-            const { id: exporterCompanyAddressId } = await context.db.ExporterCompanyAddress.createOne({
+            await context.db.ExporterCompanyAddress.createOne({
               data: {
                 exporterCompany: {
                   connect: {
@@ -129,11 +131,6 @@ var lists = {
                 }
               }
             });
-            modifiedData.exporterCompanyAddress = {
-              connect: {
-                id: exporterCompanyAddressId
-              }
-            };
             const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
@@ -152,7 +149,7 @@ var lists = {
           try {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
-            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterCompanyAddressId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -185,16 +182,6 @@ var lists = {
             });
             await context.db.ExporterCompany.updateOne({
               where: { id: exporterCompanyId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.ExporterCompanyAddress.updateOne({
-              where: { id: exporterCompanyAddressId },
               data: {
                 application: {
                   connect: {
@@ -247,8 +234,7 @@ var lists = {
   }),
   ExporterCompanyAddress: (0, import_core.list)({
     fields: {
-      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
-      application: (0, import_fields.relationship)({ ref: "Application" }),
+      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany.registeredOfficeAddress" }),
       addressLine1: (0, import_fields.text)(),
       addressLine2: (0, import_fields.text)(),
       careOf: (0, import_fields.text)(),
@@ -263,27 +249,41 @@ var lists = {
   ExporterCompany: (0, import_core.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      exporterCompanyAddress: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress" }),
+      registeredOfficeAddress: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress.exporterCompany" }),
       business: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
-      sicCodes: (0, import_fields.relationship)({ ref: "ExporterCompanySicCode" }),
+      sicCodes: (0, import_fields.relationship)({
+        ref: "ExporterCompanySicCode.exporterCompany",
+        many: true
+      }),
       companyName: (0, import_fields.text)(),
       companyNumber: (0, import_fields.text)(),
       dateOfCreation: (0, import_fields.timestamp)(),
-      hasTradingAddress: (0, import_fields.checkbox)(),
-      hasTradingName: (0, import_fields.checkbox)(),
+      hasTradingAddress: (0, import_fields.select)({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO }
+        ],
+        db: { isNullable: true }
+      }),
+      hasTradingName: (0, import_fields.select)({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO }
+        ],
+        db: { isNullable: true }
+      }),
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)()
     },
     access: import_access.allowAll
   }),
-  ExporterCompanySicCode: {
+  ExporterCompanySicCode: (0, import_core.list)({
     fields: {
-      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
-      application: (0, import_fields.relationship)({ ref: "Application" }),
-      code: (0, import_fields.text)()
+      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany.sicCodes" }),
+      sicCode: (0, import_fields.text)()
     },
     access: import_access.allowAll
-  },
+  }),
   Country: (0, import_core.list)({
     fields: {
       isoCode: (0, import_fields.text)({
@@ -408,15 +408,10 @@ var mapSicCodes = (company, sicCodes) => {
   }
   sicCodes.forEach((code) => {
     const codeToAdd = {
-      code,
+      sicCode: code,
       exporterCompany: {
         connect: {
           id: company.id
-        }
-      },
-      application: {
-        connect: {
-          id: company.applicationId
         }
       }
     };
@@ -484,24 +479,24 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 
       type ExporterCompanyAndCompanyAddress {
         id: ID
-        exporterCompanyAddress: ExporterCompanyAddress
+        registeredOfficeAddress: ExporterCompanyAddress
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
-        hasTradingAddress: Boolean
-        hasTradingName: Boolean
+        hasTradingAddress: String
+        hasTradingName: String
         companyWebsite: String
         phoneNumber: String
       }
 
       input ExporterCompanyAndCompanyAddressInput {
-        exporterCompanyAddress: ExporterCompanyAddressInput
+        address: ExporterCompanyAddressInput
         sicCodes: [String]
         companyName: String
         companyNumber: String
         dateOfCreation: DateTime
-        hasTradingAddress: Boolean
-        hasTradingName: Boolean
+        hasTradingAddress: String
+        hasTradingName: String
         companyWebsite: String
         phoneNumber: String
       }
@@ -533,18 +528,20 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);
-          const { exporterCompanyAddress, sicCodes, ...exporterCompany } = variables.data;
+          const { address, sicCodes, ...exporterCompany } = variables.data;
           const company = await context.db.ExporterCompany.updateOne({
             where: { id: variables.companyId },
             data: exporterCompany
           });
           await context.db.ExporterCompanyAddress.updateOne({
             where: { id: variables.companyAddressId },
-            data: exporterCompanyAddress
+            data: address
           });
           const mappedSicCodes = mapSicCodes(company, sicCodes);
-          await context.db.ExporterCompanySicCode.createMany({
-            data: mappedSicCodes
+          mappedSicCodes.forEach(async (sicCodeObj) => {
+            await context.db.ExporterCompanySicCode.createOne({
+              data: sicCodeObj
+            });
           });
           return {
             id: variables.companyId

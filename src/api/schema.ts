@@ -4,7 +4,7 @@ import { checkbox, integer, relationship, select, text, timestamp, password } fr
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types';  // eslint-disable-line
-import { APPLICATION } from './constants';
+import { ANSWERS, APPLICATION } from './constants';
 
 export const lists = {
   ReferenceNumber: {
@@ -31,8 +31,6 @@ export const lists = {
       }),
       policyAndExport: relationship({ ref: 'PolicyAndExport' }),
       exporterCompany: relationship({ ref: 'ExporterCompany' }),
-      exporterCompanyAddress: relationship({ ref: 'ExporterCompanyAddress' }),
-      exporterCompanySicCode: relationship({ ref: 'ExporterCompanySicCode' }),
     },
     // TODO: add logs to the hooks
     hooks: {
@@ -82,8 +80,8 @@ export const lists = {
               },
             };
 
-            // generate and attach a new `exporter company address` relationship
-            const { id: exporterCompanyAddressId } = await context.db.ExporterCompanyAddress.createOne({
+            // generate a new `exporter company address` relationship with the exporter company
+            await context.db.ExporterCompanyAddress.createOne({
               data: {
                 exporterCompany: {
                   connect: {
@@ -92,12 +90,6 @@ export const lists = {
                 },
               },
             });
-
-            modifiedData.exporterCompanyAddress = {
-              connect: {
-                id: exporterCompanyAddressId,
-              },
-            };
 
             // add dates
             const now = new Date();
@@ -125,7 +117,7 @@ export const lists = {
 
             const applicationId = item.id;
 
-            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterCompanyAddressId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -166,18 +158,6 @@ export const lists = {
             // add the application ID to the exporter company entry.
             await context.db.ExporterCompany.updateOne({
               where: { id: exporterCompanyId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-
-            // add the application ID to the exporter company address entry.
-            await context.db.ExporterCompanyAddress.updateOne({
-              where: { id: exporterCompanyAddressId },
               data: {
                 application: {
                   connect: {
@@ -231,8 +211,7 @@ export const lists = {
   }),
   ExporterCompanyAddress: list({
     fields: {
-      exporterCompany: relationship({ ref: 'ExporterCompany' }),
-      application: relationship({ ref: 'Application' }),
+      exporterCompany: relationship({ ref: 'ExporterCompany.registeredOfficeAddress' }),
       addressLine1: text(),
       addressLine2: text(),
       careOf: text(),
@@ -247,27 +226,42 @@ export const lists = {
   ExporterCompany: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      exporterCompanyAddress: relationship({ ref: 'ExporterCompanyAddress' }),
+      registeredOfficeAddress: relationship({ ref: 'ExporterCompanyAddress.exporterCompany' }),
       business: relationship({ ref: 'ExporterBusiness' }),
-      sicCodes: relationship({ ref: 'ExporterCompanySicCode' }),
+      sicCodes: relationship({
+        ref: 'ExporterCompanySicCode.exporterCompany',
+        many: true,
+      }),
       companyName: text(),
       companyNumber: text(),
       dateOfCreation: timestamp(),
-      hasTradingAddress: checkbox(),
-      hasTradingName: checkbox(),
+      hasTradingAddress: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+        db: { isNullable: true },
+      }),
+      hasTradingName: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+        db: { isNullable: true },
+      }),
       companyWebsite: text(),
       phoneNumber: text(),
     },
     access: allowAll,
   }),
-  ExporterCompanySicCode: {
+  ExporterCompanySicCode: list({
     fields: {
-      exporterCompany: relationship({ ref: 'ExporterCompany' }),
-      application: relationship({ ref: 'Application' }),
-      code: text(),
+      exporterCompany: relationship({ ref: 'ExporterCompany.sicCodes' }),
+      sicCode: text(),
     },
     access: allowAll,
-  },
+  }),
+
   Country: list({
     fields: {
       isoCode: text({

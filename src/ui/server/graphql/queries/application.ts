@@ -46,17 +46,23 @@ const applicationQuery = gql`
           companyWebsite
           hasTradingName
           hasTradingAddress
-        }
-        exporterCompanyAddress {
-          id
-          addressLine1
-          addressLine2
-          careOf
-          locality
-          region
-          postalCode
-          country
-          premises
+          dateOfCreation
+          phoneNumber
+          sicCodes {
+            id
+            sicCode
+          }
+          registeredOfficeAddress {
+            id
+            addressLine1
+            addressLine2
+            careOf
+            locality
+            region
+            postalCode
+            country
+            premises
+          }
         }
       }
     }

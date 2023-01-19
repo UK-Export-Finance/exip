@@ -19,7 +19,7 @@ const companyDetails = async (application: Application, formBody: RequestBody, e
   const sanitisedData = sanitiseData(dataToSave);
 
   const exporterCompanyId = application.exporterCompany?.id;
-  const exporterCompanyAddressId = application.exporterCompanyAddress?.id;
+  const exporterCompanyAddressId = application.exporterCompany?.registeredOfficeAddress?.id;
 
   try {
     // send the form data to the API for database update.

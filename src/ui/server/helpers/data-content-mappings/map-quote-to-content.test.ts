@@ -17,22 +17,12 @@ describe('server/helpers/map-quote-to-content', () => {
 
       const expected = {
         ...mapCost(mockQuote),
-        [PERCENTAGE_OF_COVER]: {
-          text: `${mockQuote[PERCENTAGE_OF_COVER]}%`,
-        },
-        [INSURED_FOR]: {
-          text: formatCurrency(mockQuote[INSURED_FOR], mockQuote[CURRENCY].isoCode, 2),
-        },
-        [PREMIUM_RATE_PERCENTAGE]: {
-          text: `${mockQuote[PREMIUM_RATE_PERCENTAGE]}%`,
-        },
-        [ESTIMATED_COST]: {
-          text: formatCurrency(mockQuote[ESTIMATED_COST], mockQuote[CURRENCY].isoCode, 2),
-        },
+        [PERCENTAGE_OF_COVER]: `${mockQuote[PERCENTAGE_OF_COVER]}%`,
+        [INSURED_FOR]: formatCurrency(mockQuote[INSURED_FOR], mockQuote[CURRENCY].isoCode, 2),
+        [PREMIUM_RATE_PERCENTAGE]: `${mockQuote[PREMIUM_RATE_PERCENTAGE]}%`,
+        [ESTIMATED_COST]: formatCurrency(mockQuote[ESTIMATED_COST], mockQuote[CURRENCY].isoCode, 2),
         ...mapPolicyLength(mockQuote),
-        [BUYER_LOCATION]: {
-          text: mapCountry(mockQuote[BUYER_COUNTRY]),
-        },
+        [BUYER_LOCATION]: mapCountry(mockQuote[BUYER_COUNTRY]),
       };
 
       expect(result).toEqual(expected);

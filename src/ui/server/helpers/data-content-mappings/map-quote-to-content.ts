@@ -20,22 +20,12 @@ const mapQuoteToContent = (quote: Quote): QuoteContent => {
 
   const mapped = {
     ...mapCost(quote),
-    percentageOfCover: {
-      text: `${quote[PERCENTAGE_OF_COVER]}%`,
-    },
-    insuredFor: {
-      text: formatCurrency(quote[INSURED_FOR], currencyCode, 2),
-    },
-    premiumRatePercentage: {
-      text: `${quote[PREMIUM_RATE_PERCENTAGE]}%`,
-    },
-    estimatedCost: {
-      text: formatCurrency(quote[ESTIMATED_COST], currencyCode, 2),
-    },
+    percentageOfCover: `${quote[PERCENTAGE_OF_COVER]}%`,
+    insuredFor: formatCurrency(quote[INSURED_FOR], currencyCode, 2),
+    premiumRatePercentage: `${quote[PREMIUM_RATE_PERCENTAGE]}%`,
+    estimatedCost: formatCurrency(quote[ESTIMATED_COST], currencyCode, 2),
     ...mapPolicyLength(quote),
-    buyerCountry: {
-      text: mapCountry(quote[BUYER_COUNTRY]),
-    },
+    buyerCountry: mapCountry(quote[BUYER_COUNTRY]),
   };
 
   return mapped;

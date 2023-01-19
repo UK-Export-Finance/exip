@@ -1,7 +1,7 @@
-import { format } from 'date-fns';
-import { generateFieldGroups, generateSummaryListRows, companyHouseSummaryList, generateAddressHTML } from './company-house-summary-list';
-import getKeyText from './get-key-text';
-import { SummaryListItemData } from '../../../types';
+import formatDate from '../date/format-date';
+import { generateFieldGroups, companyHouseSummaryList, generateAddressHTML } from './company-house-summary-list';
+import generateSummaryListRows from './generate-summary-list-rows';
+import fieldGroupItem from './generate-field-group-item';
 import { FIELD_IDS } from '../../constants';
 import { FIELDS, PAGES } from '../../content-strings';
 import { mockCompany } from '../../test-mocks';
@@ -16,6 +16,26 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
   describe('generateAddressHTML()', () => {
     it('should generate address where all fields are present', () => {
       const address = {
+        careOf: 'Careof',
+        premises: 'Premise',
+        addressLine1: 'Line 1',
+        addressLine2: 'Line 2',
+        locality: 'Locality',
+        region: 'Region',
+        postalCode: 'Postcode',
+        country: 'Country',
+        __typename: 'CompanyAddress',
+      };
+
+      const result = generateAddressHTML(address);
+
+      const expected = `${address.careOf}<br>${address.premises}<br>${address.addressLine1}<br>${address.addressLine2}<br>${address.locality}<br>${address.region}<br>${address.postalCode}<br>${address.country}<br>`;
+      expect(result).toEqual(expected);
+    });
+
+    it('should remove id field when it is present', () => {
+      const address = {
+        id: '12345',
         careOf: 'Careof',
         premises: 'Premise',
         addressLine1: 'Line 1',
@@ -59,86 +79,39 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
 
       const expected = {
         COMPANY_DETAILS: [
-          {
-            id: COMPANY_NUMBER,
-            ...FIELDS[COMPANY_NUMBER],
-            value: {
-              text: mockCompany[COMPANY_NUMBER],
+          fieldGroupItem({
+            field: { id: COMPANY_NUMBER, ...FIELDS[COMPANY_NUMBER] },
+            data: mockCompany,
+          }),
+          fieldGroupItem({
+            field: { id: COMPANY_NAME, ...FIELDS[COMPANY_NAME] },
+            data: mockCompany,
+          }),
+          fieldGroupItem(
+            {
+              field: { id: COMPANY_ADDRESS, ...FIELDS[COMPANY_ADDRESS] },
+              data: mockCompany,
             },
-          },
-          {
-            id: COMPANY_NAME,
-            ...FIELDS[COMPANY_NAME],
-            value: {
-              text: mockCompany[COMPANY_NAME],
+            generateAddressHTML(mockCompany[COMPANY_ADDRESS]),
+          ),
+          fieldGroupItem(
+            {
+              field: { id: COMPANY_INCORPORATED, ...FIELDS[COMPANY_INCORPORATED] },
+              data: mockCompany,
             },
-          },
-          {
-            id: COMPANY_ADDRESS,
-            ...FIELDS[COMPANY_ADDRESS],
-            value: {
-              html: `${mockCompany[COMPANY_ADDRESS].addressLine1}<br>${mockCompany[COMPANY_ADDRESS].locality}<br>${mockCompany[COMPANY_ADDRESS].region}<br>${mockCompany[COMPANY_ADDRESS].postalCode}<br>`,
+            formatDate(mockCompany[COMPANY_INCORPORATED]),
+          ),
+          fieldGroupItem(
+            {
+              field: { id: COMPANY_SIC, ...FIELDS[COMPANY_SIC] },
+              data: mockCompany,
             },
-          },
-          {
-            id: COMPANY_INCORPORATED,
-            ...FIELDS[COMPANY_INCORPORATED],
-            value: {
-              text: format(new Date(mockCompany[COMPANY_INCORPORATED]), 'dd MMMM yyyy'),
-            },
-          },
-          {
-            id: COMPANY_SIC,
-            ...FIELDS[COMPANY_SIC],
-            value: {
-              text: mockCompany[COMPANY_SIC],
-            },
-          },
+            mockCompany[COMPANY_SIC].toString(),
+          ),
         ],
       };
 
       expect(result).toEqual(expected);
-    });
-  });
-
-  describe('generateSummaryListRows()', () => {
-    const expectedObjBase = (field: SummaryListItemData) => ({
-      key: {
-        text: getKeyText(FIELDS, field.id),
-        classes: `${field.id}-key`,
-      },
-      value: {
-        text: field.value.text,
-        classes: `${field.id}-value`,
-      },
-      actions: {
-        items: [],
-      },
-    });
-
-    it('returns an array of objects mapped to submitted data', () => {
-      const fieldGroups = generateFieldGroups(mockCompany);
-
-      const result = generateSummaryListRows(fieldGroups.COMPANY_DETAILS);
-
-      const expectedObj = (field: SummaryListItemData) => ({
-        ...expectedObjBase(field),
-        key: {
-          text: getKeyText(FIELDS, field.id),
-          classes: `${field.id}-key`,
-        },
-        value: {
-          text: field.value.text,
-          classes: `${field.id}-value`,
-        },
-      });
-
-      expect(result).toBeInstanceOf(Array);
-
-      const fieldWithNoChangeLink = fieldGroups.COMPANY_DETAILS[1];
-
-      const expected = expectedObj(fieldWithNoChangeLink);
-      expect(result[1]).toEqual(expected);
     });
   });
 

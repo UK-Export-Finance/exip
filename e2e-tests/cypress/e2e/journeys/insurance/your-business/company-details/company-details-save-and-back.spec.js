@@ -1,9 +1,11 @@
 import { companyDetails } from '../../../../pages/your-business';
 import { saveAndBackButton, yesRadioInput } from '../../../../pages/shared';
+import partials from '../../../../partials';
 import {
   ROUTES, FIELD_IDS, INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS,
 } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
+import { TASKS } from '../../../../../../content-strings';
 
 const { ALL_SECTIONS } = ROUTES.INSURANCE;
 
@@ -20,6 +22,11 @@ const {
     },
   },
 } = FIELD_IDS.INSURANCE;
+
+const { taskList } = partials.insurancePartials;
+const task = taskList.prepareApplication.tasks.exporterBusiness;
+
+const { IN_PROGRESS } = TASKS.STATUS;
 
 describe('Insurance - Your business - Company details page - Save and go back', () => {
   let referenceNumber;
@@ -47,12 +54,22 @@ describe('Insurance - Your business - Company details page - Save and go back', 
   });
 
   describe(`when only ${TRADING_ADDRESS} and ${TRADING_NAME} fields are completed`, () => {
-    it('should not display validation errors and redirect to task list', () => {
+    it('should not display validation errors and redirect to task list with status of "In progress"', () => {
+      cy.navigateToUrl(url);
+
       yesRadioInput().first().click();
       yesRadioInput().eq(1).click();
       saveAndBackButton().click();
 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.checkTaskStatus(task, IN_PROGRESS);
+    });
+
+    it('should render valid submitted values when going back to the page', () => {
+      cy.navigateToUrl(url);
+
+      yesRadioInput().first().should('be.checked');
+      yesRadioInput().eq(1).should('be.checked');
     });
   });
 
@@ -66,6 +83,15 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       saveAndBackButton().click();
 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.checkTaskStatus(task, IN_PROGRESS);
+    });
+
+    it('should render valid submitted values when going back to the page', () => {
+      cy.navigateToUrl(url);
+
+      companyDetails.companiesHouseSearch().should('be.empty');
+      yesRadioInput().first().should('be.checked');
+      yesRadioInput().eq(1).should('be.checked');
     });
   });
 
@@ -80,6 +106,16 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       saveAndBackButton().click();
 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.checkTaskStatus(task, IN_PROGRESS);
+    });
+
+    it('should render valid submitted values when going back to the page', () => {
+      cy.navigateToUrl(url);
+
+      companyDetails.companiesHouseSearch().should('have.value', COMPANIES_HOUSE_NUMBER);
+      yesRadioInput().first().should('be.checked');
+      yesRadioInput().eq(1).should('be.checked');
+      companyDetails.phoneNumber().should('be.empty');
     });
   });
 
@@ -95,6 +131,17 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       saveAndBackButton().click();
 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.checkTaskStatus(task, IN_PROGRESS);
+    });
+
+    it('should render valid submitted values when going back to the page', () => {
+      cy.navigateToUrl(url);
+
+      companyDetails.companiesHouseSearch().should('have.value', COMPANIES_HOUSE_NUMBER);
+      yesRadioInput().first().should('be.checked');
+      yesRadioInput().eq(1).should('be.checked');
+      companyDetails.phoneNumber().should('have.value', VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+      companyDetails.companyWebsite().should('be.empty');
     });
   });
 
@@ -110,6 +157,17 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       saveAndBackButton().click();
 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.checkTaskStatus(task, IN_PROGRESS);
+    });
+
+    it('should render valid submitted values when going back to the page', () => {
+      cy.navigateToUrl(url);
+
+      companyDetails.companiesHouseSearch().should('have.value', COMPANIES_HOUSE_NUMBER);
+      yesRadioInput().first().should('be.checked');
+      yesRadioInput().eq(1).should('be.checked');
+      companyDetails.phoneNumber().should('have.value', VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+      companyDetails.companyWebsite().should('have.value', WEBSITE_EXAMPLES.VALID);
     });
   });
 });

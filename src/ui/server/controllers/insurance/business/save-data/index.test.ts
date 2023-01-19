@@ -36,7 +36,11 @@ describe('controllers/insurance/business/save-data', () => {
 
       const dataToSave = getDataToSave(mockFormBody, mockValidationErrors.errorList);
       const expectedSanitisedData = sanitiseData(dataToSave);
-      expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.exporterCompany.id, mockApplication.exporterCompanyAddress.id, expectedSanitisedData);
+      expect(updateApplicationSpy).toHaveBeenCalledWith(
+        mockApplication.exporterCompany.id,
+        mockApplication.exporterCompany.registeredOfficeAddress.id,
+        expectedSanitisedData,
+      );
     });
 
     it('should return the API response', async () => {
@@ -54,7 +58,11 @@ describe('controllers/insurance/business/save-data', () => {
 
       const dataToSave = getDataToSave(mockFormBody);
       const expectedSanitisedData = sanitiseData(dataToSave);
-      expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.exporterCompany.id, mockApplication.exporterCompanyAddress.id, expectedSanitisedData);
+      expect(updateApplicationSpy).toHaveBeenCalledWith(
+        mockApplication.exporterCompany.id,
+        mockApplication.exporterCompany.registeredOfficeAddress.id,
+        expectedSanitisedData,
+      );
     });
 
     it('should return the API response', async () => {

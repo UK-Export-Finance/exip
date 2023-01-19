@@ -16,8 +16,7 @@ describe('Create an Application', () => {
   beforeAll(async () => {
     application = (await context.query.Application.createOne({
       data: {},
-      query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id } policyAndExport { id } exporterCompany { id } exporterCompanyAddress { id }',
+      query: 'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id } policyAndExport { id } exporterCompany { id }',
     })) as Application;
   });
 
@@ -81,11 +80,6 @@ describe('Create an Application', () => {
     expect(typeof application.exporterCompany.id).toEqual('string');
   });
 
-  test('it should have an exporter company address id', () => {
-    expect(application.exporterCompanyAddress).toBeDefined();
-    expect(typeof application.exporterCompanyAddress.id).toEqual('string');
-  });
-
   test('it should have a default submission type', () => {
     expect(application.submissionType).toEqual(APPLICATION.SUBMISSION_TYPE.MIA);
   });
@@ -132,14 +126,21 @@ describe('Create an Application', () => {
     expect(exporterCompany.application.id).toEqual(application.id);
   });
 
-  test('it should add the application ID to the exporter company address entry', async () => {
-    const exporterCompanyAddress = await context.query.ExporterCompanyAddress.findOne({
+  test('it should add the exporter company ID to the exporter company address entry', async () => {
+    const exporterCompany = await context.query.ExporterCompany.findOne({
       where: {
-        id: application.exporterCompanyAddress.id,
+        id: application.exporterCompany.id,
       },
-      query: 'id application { id }',
+      query: 'id application { id } registeredOfficeAddress { id }',
     });
 
-    expect(exporterCompanyAddress.application.id).toEqual(application.id);
+    const exporterCompanyAddress = await context.query.ExporterCompanyAddress.findOne({
+      where: {
+        id: exporterCompany.registeredOfficeAddress.id,
+      },
+      query: 'id exporterCompany { id }',
+    });
+
+    expect(exporterCompanyAddress.exporterCompany.id).toEqual(application.exporterCompany.id);
   });
 });

@@ -26,6 +26,8 @@ const {
   EXPORTER_BUSINESS: { NATURE_OF_BUSINESS },
 } = ROUTES.INSURANCE;
 
+jest.mock('../map-and-save');
+
 describe('controllers/insurance/business/companies-details', () => {
   let req: Request;
   let res: Response;
@@ -88,6 +90,25 @@ describe('controllers/insurance/business/companies-details', () => {
 
         expect(res.redirect).toHaveBeenCalledWith(NATURE_OF_BUSINESS);
       });
+
+      it('should call mapAndSave.companyDetails once with updateBody and application', async () => {
+        req.body = {
+          [INPUT]: '8989898',
+          [TRADING_NAME]: 'true',
+          [TRADING_ADDRESS]: 'false',
+          [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
+        };
+
+        await post(req, res);
+
+        expect(mapAndSave.companyDetails).toHaveBeenCalledTimes(1);
+
+        const updateBody = {
+          ...req.body,
+          ...mockCompany,
+        };
+        expect(mapAndSave.companyDetails).toHaveBeenCalledWith(updateBody, mockApplication);
+      });
     });
 
     describe('when there is no application', () => {
@@ -103,7 +124,7 @@ describe('controllers/insurance/business/companies-details', () => {
     });
 
     describe('api error handling', () => {
-      describe('when api.keystone.application.update.exporterCompany returns an error', () => {
+      describe('when mapAndSave.companyDetails returns an error', () => {
         it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
           res.locals = { csrfToken: '1234' };
           mapAndSave.companyDetails = jest.fn(() => Promise.reject());
@@ -114,7 +135,7 @@ describe('controllers/insurance/business/companies-details', () => {
         });
       });
 
-      describe('when api.keystone.application.update.exporterCompany resolves false', () => {
+      describe('when mapAndSave.companyDetails resolves false', () => {
         it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
           res.locals = { csrfToken: '1234' };
           mapAndSave.companyDetails = jest.fn(() => Promise.resolve(false));

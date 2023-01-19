@@ -72,8 +72,6 @@ type Application {
   submissionType: String
   policyAndExport: PolicyAndExport
   exporterCompany: ExporterCompany
-  exporterCompanyAddress: ExporterCompanyAddress
-  exporterCompanySicCode: ExporterCompanySicCode
 }
 
 scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
@@ -95,8 +93,6 @@ input ApplicationWhereInput {
   submissionType: StringNullableFilter
   policyAndExport: PolicyAndExportWhereInput
   exporterCompany: ExporterCompanyWhereInput
-  exporterCompanyAddress: ExporterCompanyAddressWhereInput
-  exporterCompanySicCode: ExporterCompanySicCodeWhereInput
 }
 
 input DateTimeNullableFilter {
@@ -167,8 +163,6 @@ input ApplicationUpdateInput {
   submissionType: String
   policyAndExport: PolicyAndExportRelateToOneForUpdateInput
   exporterCompany: ExporterCompanyRelateToOneForUpdateInput
-  exporterCompanyAddress: ExporterCompanyAddressRelateToOneForUpdateInput
-  exporterCompanySicCode: ExporterCompanySicCodeRelateToOneForUpdateInput
 }
 
 input EligibilityRelateToOneForUpdateInput {
@@ -189,18 +183,6 @@ input ExporterCompanyRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input ExporterCompanyAddressRelateToOneForUpdateInput {
-  create: ExporterCompanyAddressCreateInput
-  connect: ExporterCompanyAddressWhereUniqueInput
-  disconnect: Boolean
-}
-
-input ExporterCompanySicCodeRelateToOneForUpdateInput {
-  create: ExporterCompanySicCodeCreateInput
-  connect: ExporterCompanySicCodeWhereUniqueInput
-  disconnect: Boolean
-}
-
 input ApplicationUpdateArgs {
   where: ApplicationWhereUniqueInput!
   data: ApplicationUpdateInput!
@@ -215,8 +197,6 @@ input ApplicationCreateInput {
   submissionType: String
   policyAndExport: PolicyAndExportRelateToOneForCreateInput
   exporterCompany: ExporterCompanyRelateToOneForCreateInput
-  exporterCompanyAddress: ExporterCompanyAddressRelateToOneForCreateInput
-  exporterCompanySicCode: ExporterCompanySicCodeRelateToOneForCreateInput
 }
 
 input EligibilityRelateToOneForCreateInput {
@@ -232,16 +212,6 @@ input PolicyAndExportRelateToOneForCreateInput {
 input ExporterCompanyRelateToOneForCreateInput {
   create: ExporterCompanyCreateInput
   connect: ExporterCompanyWhereUniqueInput
-}
-
-input ExporterCompanyAddressRelateToOneForCreateInput {
-  create: ExporterCompanyAddressCreateInput
-  connect: ExporterCompanyAddressWhereUniqueInput
-}
-
-input ExporterCompanySicCodeRelateToOneForCreateInput {
-  create: ExporterCompanySicCodeCreateInput
-  connect: ExporterCompanySicCodeWhereUniqueInput
 }
 
 type PolicyAndExport {
@@ -398,7 +368,6 @@ input ExporterBusinessCreateInput {
 type ExporterCompanyAddress {
   id: ID!
   exporterCompany: ExporterCompany
-  application: Application
   addressLine1: String
   addressLine2: String
   careOf: String
@@ -419,7 +388,6 @@ input ExporterCompanyAddressWhereInput {
   NOT: [ExporterCompanyAddressWhereInput!]
   id: IDFilter
   exporterCompany: ExporterCompanyWhereInput
-  application: ApplicationWhereInput
   addressLine1: StringFilter
   addressLine2: StringFilter
   careOf: StringFilter
@@ -444,7 +412,6 @@ input ExporterCompanyAddressOrderByInput {
 
 input ExporterCompanyAddressUpdateInput {
   exporterCompany: ExporterCompanyRelateToOneForUpdateInput
-  application: ApplicationRelateToOneForUpdateInput
   addressLine1: String
   addressLine2: String
   careOf: String
@@ -462,7 +429,6 @@ input ExporterCompanyAddressUpdateArgs {
 
 input ExporterCompanyAddressCreateInput {
   exporterCompany: ExporterCompanyRelateToOneForCreateInput
-  application: ApplicationRelateToOneForCreateInput
   addressLine1: String
   addressLine2: String
   careOf: String
@@ -476,14 +442,15 @@ input ExporterCompanyAddressCreateInput {
 type ExporterCompany {
   id: ID!
   application: Application
-  exporterCompanyAddress: ExporterCompanyAddress
+  registeredOfficeAddress: ExporterCompanyAddress
   business: ExporterBusiness
-  sicCodes: ExporterCompanySicCode
+  sicCodes(where: ExporterCompanySicCodeWhereInput! = {}, orderBy: [ExporterCompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterCompanySicCode!]
+  sicCodesCount(where: ExporterCompanySicCodeWhereInput! = {}): Int
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasTradingAddress: String
+  hasTradingName: String
   companyWebsite: String
   phoneNumber: String
 }
@@ -498,21 +465,22 @@ input ExporterCompanyWhereInput {
   NOT: [ExporterCompanyWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
-  exporterCompanyAddress: ExporterCompanyAddressWhereInput
+  registeredOfficeAddress: ExporterCompanyAddressWhereInput
   business: ExporterBusinessWhereInput
-  sicCodes: ExporterCompanySicCodeWhereInput
+  sicCodes: ExporterCompanySicCodeManyRelationFilter
   companyName: StringFilter
   companyNumber: StringFilter
   dateOfCreation: DateTimeNullableFilter
-  hasTradingAddress: BooleanFilter
-  hasTradingName: BooleanFilter
+  hasTradingAddress: StringNullableFilter
+  hasTradingName: StringNullableFilter
   companyWebsite: StringFilter
   phoneNumber: StringFilter
 }
 
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
+input ExporterCompanySicCodeManyRelationFilter {
+  every: ExporterCompanySicCodeWhereInput
+  some: ExporterCompanySicCodeWhereInput
+  none: ExporterCompanySicCodeWhereInput
 }
 
 input ExporterCompanyOrderByInput {
@@ -528,22 +496,35 @@ input ExporterCompanyOrderByInput {
 
 input ExporterCompanyUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
-  exporterCompanyAddress: ExporterCompanyAddressRelateToOneForUpdateInput
+  registeredOfficeAddress: ExporterCompanyAddressRelateToOneForUpdateInput
   business: ExporterBusinessRelateToOneForUpdateInput
-  sicCodes: ExporterCompanySicCodeRelateToOneForUpdateInput
+  sicCodes: ExporterCompanySicCodeRelateToManyForUpdateInput
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasTradingAddress: String
+  hasTradingName: String
   companyWebsite: String
   phoneNumber: String
+}
+
+input ExporterCompanyAddressRelateToOneForUpdateInput {
+  create: ExporterCompanyAddressCreateInput
+  connect: ExporterCompanyAddressWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ExporterBusinessRelateToOneForUpdateInput {
   create: ExporterBusinessCreateInput
   connect: ExporterBusinessWhereUniqueInput
   disconnect: Boolean
+}
+
+input ExporterCompanySicCodeRelateToManyForUpdateInput {
+  disconnect: [ExporterCompanySicCodeWhereUniqueInput!]
+  set: [ExporterCompanySicCodeWhereUniqueInput!]
+  create: [ExporterCompanySicCodeCreateInput!]
+  connect: [ExporterCompanySicCodeWhereUniqueInput!]
 }
 
 input ExporterCompanyUpdateArgs {
@@ -553,16 +534,21 @@ input ExporterCompanyUpdateArgs {
 
 input ExporterCompanyCreateInput {
   application: ApplicationRelateToOneForCreateInput
-  exporterCompanyAddress: ExporterCompanyAddressRelateToOneForCreateInput
+  registeredOfficeAddress: ExporterCompanyAddressRelateToOneForCreateInput
   business: ExporterBusinessRelateToOneForCreateInput
-  sicCodes: ExporterCompanySicCodeRelateToOneForCreateInput
+  sicCodes: ExporterCompanySicCodeRelateToManyForCreateInput
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasTradingAddress: String
+  hasTradingName: String
   companyWebsite: String
   phoneNumber: String
+}
+
+input ExporterCompanyAddressRelateToOneForCreateInput {
+  create: ExporterCompanyAddressCreateInput
+  connect: ExporterCompanyAddressWhereUniqueInput
 }
 
 input ExporterBusinessRelateToOneForCreateInput {
@@ -570,11 +556,15 @@ input ExporterBusinessRelateToOneForCreateInput {
   connect: ExporterBusinessWhereUniqueInput
 }
 
+input ExporterCompanySicCodeRelateToManyForCreateInput {
+  create: [ExporterCompanySicCodeCreateInput!]
+  connect: [ExporterCompanySicCodeWhereUniqueInput!]
+}
+
 type ExporterCompanySicCode {
   id: ID!
   exporterCompany: ExporterCompany
-  application: Application
-  code: String
+  sicCode: String
 }
 
 input ExporterCompanySicCodeWhereUniqueInput {
@@ -587,19 +577,17 @@ input ExporterCompanySicCodeWhereInput {
   NOT: [ExporterCompanySicCodeWhereInput!]
   id: IDFilter
   exporterCompany: ExporterCompanyWhereInput
-  application: ApplicationWhereInput
-  code: StringFilter
+  sicCode: StringFilter
 }
 
 input ExporterCompanySicCodeOrderByInput {
   id: OrderDirection
-  code: OrderDirection
+  sicCode: OrderDirection
 }
 
 input ExporterCompanySicCodeUpdateInput {
   exporterCompany: ExporterCompanyRelateToOneForUpdateInput
-  application: ApplicationRelateToOneForUpdateInput
-  code: String
+  sicCode: String
 }
 
 input ExporterCompanySicCodeUpdateArgs {
@@ -609,8 +597,7 @@ input ExporterCompanySicCodeUpdateArgs {
 
 input ExporterCompanySicCodeCreateInput {
   exporterCompany: ExporterCompanyRelateToOneForCreateInput
-  application: ApplicationRelateToOneForCreateInput
-  code: String
+  sicCode: String
 }
 
 type Country {
@@ -686,6 +673,11 @@ input EligibilityWhereInput {
   needPreCreditPeriodCover: BooleanFilter
   wantCoverOverMaxAmount: BooleanFilter
   wantCoverOverMaxPeriod: BooleanFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
 }
 
 input EligibilityOrderByInput {
@@ -1118,24 +1110,24 @@ input ExporterCompanyAddressInput {
 
 type ExporterCompanyAndCompanyAddress {
   id: ID
-  exporterCompanyAddress: ExporterCompanyAddress
+  registeredOfficeAddress: ExporterCompanyAddress
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasTradingAddress: String
+  hasTradingName: String
   companyWebsite: String
   phoneNumber: String
 }
 
 input ExporterCompanyAndCompanyAddressInput {
-  exporterCompanyAddress: ExporterCompanyAddressInput
+  address: ExporterCompanyAddressInput
   sicCodes: [String]
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasTradingAddress: String
+  hasTradingName: String
   companyWebsite: String
   phoneNumber: String
 }
