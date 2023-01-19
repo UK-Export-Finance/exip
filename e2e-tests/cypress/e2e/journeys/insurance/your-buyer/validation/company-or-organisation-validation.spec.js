@@ -1,12 +1,10 @@
 import { submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { companyOrOrganisationPage } from '../../../../pages/insurance/your-buyer';
 import { ROUTES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
-import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import checkText from '../../../../helpers/check-text';
 
 const {
