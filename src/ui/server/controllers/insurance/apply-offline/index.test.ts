@@ -5,6 +5,8 @@ import corePageVariables from '../../../helpers/page-variables/core/insurance';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
+const { NO_COMPANIES_HOUSE_NUMBER } = PAGES.INSURANCE.APPLY_OFFLINE.REASON;
+
 describe('controllers/insurance/apply-offline', () => {
   let req: Request;
   let res: Response;
@@ -45,9 +47,8 @@ describe('controllers/insurance/apply-offline', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
-    describe('no companies house number exit reason', () => {
+    describe(`when req.flash('exitReason') includes ${NO_COMPANIES_HOUSE_NUMBER}`, () => {
       it('should render template with link to proposal form', () => {
-        const { NO_COMPANIES_HOUSE_NUMBER } = PAGES.INSURANCE.APPLY_OFFLINE.REASON;
         req.flash = (property: string) => {
           const obj = {
             exitReason: NO_COMPANIES_HOUSE_NUMBER,
