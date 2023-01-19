@@ -16,7 +16,7 @@ const {
   },
 } = FIELD_IDS;
 
-describe('server/helpers/summary-lists/policy-and-export/policy-and-date-fields', () => {
+describe('server/helpers/summary-lists/policy-and-export/single-contract-policy-fields', () => {
   const mockAnswers = mockSinglePolicyAndExport;
 
   it('should return fields and values from the submitted data/answes', () => {

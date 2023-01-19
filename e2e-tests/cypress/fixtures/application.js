@@ -3,7 +3,7 @@ import {
   getMonth,
   getYear,
 } from 'date-fns';
-import { FIELD_IDS, FIELD_VALUES } from '../../constants';
+import { FIELD_IDS } from '../../constants';
 
 const {
   INSURANCE: {

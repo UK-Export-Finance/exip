@@ -59,7 +59,7 @@ export const get = async (req: Request, res: Response) => {
       SUMMARY_LIST: summaryList,
     });
   } catch (err) {
-    console.error('Error getting countries or currencie', { err });
+    console.error('Error getting countries or currencies', { err });
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }

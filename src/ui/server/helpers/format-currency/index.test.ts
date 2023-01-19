@@ -4,7 +4,7 @@ describe('server/helpers/format-currency', () => {
   const mock = 123456;
   const currencyCode = 'GBP';
 
-  it('shouild return a formatted currency', () => {
+  it('should return a formatted currency', () => {
     const result = formatCurrency(mock, currencyCode, 2);
 
     const expected = mock.toLocaleString('en', {
