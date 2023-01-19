@@ -12,7 +12,7 @@ const { GOODS_OR_SERVICES } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
 const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { NAURE_OF_YOUR_BUSINESS: TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
-const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
+const { EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
 const { TURNOVER_ROOT } = EXPORTER_BUSINESS_ROUTES;
 
@@ -94,7 +94,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ROOT}`);
+        expect(res.redirect).toHaveBeenCalledWith(TURNOVER_ROOT);
       });
     });
 
