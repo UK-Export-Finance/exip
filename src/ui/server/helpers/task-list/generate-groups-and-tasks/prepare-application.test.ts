@@ -8,7 +8,12 @@ import { getAllTasksFieldsInAGroup } from '../task-helpers';
 import { mockApplication } from '../../../test-mocks';
 
 const { INSURANCE } = ROUTES;
-const { INSURANCE_ROOT, POLICY_AND_EXPORTS, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = INSURANCE;
+const {
+  INSURANCE_ROOT,
+  POLICY_AND_EXPORTS,
+  EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
+  YOUR_BUYER: YOUR_BUYER_ROUTES,
+} = INSURANCE;
 
 const { PREPARE_APPLICATION } = TASKS.LIST;
 
@@ -94,7 +99,7 @@ describe('server/helpers/task-list/prepare-application', () => {
         POLICY_TYPE_AND_EXPORTS,
         EXPORTER_BUSINESS,
         {
-          href: '#',
+          href: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_ROUTES.COMPANY_OR_ORGANISATION}`,
           title: PREPARE_APPLICATION.TASKS.BUYER,
           id: TASK_IDS.PREPARE_APPLICATION.BUYER,
           fields: ['temp'],

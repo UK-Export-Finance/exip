@@ -5,7 +5,12 @@ import { TASKS } from '../../../content-strings';
 import { getGroupById, getAllTasksFieldsInAGroup } from '../task-helpers';
 
 const { INSURANCE } = ROUTES;
-const { INSURANCE_ROOT, POLICY_AND_EXPORTS, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = INSURANCE;
+const {
+  INSURANCE_ROOT,
+  POLICY_AND_EXPORTS,
+  EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
+  YOUR_BUYER: YOUR_BUYER_ROUTES,
+} = INSURANCE;
 
 const { PREPARE_APPLICATION } = TASKS.LIST;
 
@@ -54,6 +59,7 @@ const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: Tas
 
   const { COMPANY_ADDRESS, SEARCH, INPUT, ...COMPANIES_HOUSE_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE;
   const { PHONE_NUMBER, WEBSITE, ...YOUR_COMPANY_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY;
+
   const EXPORTER_BUSINESS = {
     href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROUTES.COMPANY_DETAILS}`,
     title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
@@ -69,7 +75,7 @@ const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: Tas
     POLICY_TYPE_AND_EXPORTS,
     EXPORTER_BUSINESS,
     {
-      href: '#',
+      href: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_ROUTES.COMPANY_OR_ORGANISATION}`,
       title: PREPARE_APPLICATION.TASKS.BUYER,
       id: TASK_IDS.PREPARE_APPLICATION.BUYER,
       fields: ['temp'],
