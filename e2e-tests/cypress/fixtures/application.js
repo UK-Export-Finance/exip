@@ -3,11 +3,12 @@ import {
   getMonth,
   getYear,
 } from 'date-fns';
-import { FIELD_IDS } from '../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
+      TYPE_OF_POLICY: { POLICY_TYPE },
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
         CREDIT_PERIOD_WITH_BUYER,
@@ -24,11 +25,13 @@ const {
  * Application data we use and assert in E2E tests.
  */
 const date = new Date();
-const startDate = add(date, { months: 3 });
-const endDate = add(startDate, { months: 6 });
+export const startDate = add(date, { months: 3 });
+export const endDate = add(startDate, { months: 6 });
 
 const application = {
   POLICY_AND_EXPORTS: {
+    // TODO: don't have this in here.
+    [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
     [REQUESTED_START_DATE]: {
       day: '1',
       month: getMonth(startDate),
