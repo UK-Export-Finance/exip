@@ -18,7 +18,7 @@ export const ERROR_MESSAGES = {
     IS_EMPTY: 'Select currency',
   },
   [FIELD_IDS.COUNTRY]: {
-    IS_EMPTY: 'Select the buyer’s country',
+    IS_EMPTY: "Select the buyer's country",
   },
   [FIELD_IDS.CONTRACT_VALUE]: {
     IS_EMPTY: 'Enter your contract value as a whole number - do not enter decimals',
