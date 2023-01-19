@@ -8,11 +8,11 @@ import { Country } from '../../../types';
  * @returns {Object} Country
  */
 const getCountryByIsoCode = (countries: Array<Country>, isoCode: string) => {
-  const country = countries.find((country) => country.isoCode === isoCode);
+  const countryByIsoCode = countries.find((country) => country.isoCode === isoCode);
 
   return {
-    isoCode: country?.isoCode,
-    name: country?.name,
+    isoCode: countryByIsoCode?.isoCode,
+    name: countryByIsoCode?.name,
   };
 };
 
