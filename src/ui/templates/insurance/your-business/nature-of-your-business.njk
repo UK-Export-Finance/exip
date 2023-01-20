@@ -1,0 +1,96 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <form method="POST" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <span class="govuk-caption-xl" data-cy="heading-caption">
+          {{CONTENT_STRINGS.HEADING_CAPTION}}
+        </span>
+        <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ govukCharacterCount({
+          name: FIELDS.GOODS_OR_SERVICES.ID,
+          id: FIELDS.GOODS_OR_SERVICES.ID,
+          maxlength: FIELDS.GOODS_OR_SERVICES.MAXIMUM,
+          value: submittedValues[FIELDS.GOODS_OR_SERVICES.ID],
+          label: {
+            text: FIELDS.GOODS_OR_SERVICES.LABEL,
+            classes: "govuk-label--m",
+            isPageHeading: false,
+            attributes: {
+              "data-cy": FIELDS.GOODS_OR_SERVICES.ID + "-label"
+            }
+          },
+          hint: {
+            text: FIELDS.GOODS_OR_SERVICES.HINT,
+            attributes: {
+              "data-cy": FIELDS.GOODS_OR_SERVICES.ID + "-hint"
+            }
+          },
+          attributes: {
+            "data-cy": FIELDS.GOODS_OR_SERVICES.ID
+          },
+          errorMessage: validationErrors.errorList[FIELDS.GOODS_OR_SERVICES.ID] and {
+            text: validationErrors.errorList[FIELDS.GOODS_OR_SERVICES.ID].text,
+            attributes: {
+              "data-cy": FIELDS.GOODS_OR_SERVICES.ID + "-error"
+            }
+          }
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+            attributes: {
+              'data-cy': 'submit-button',
+              'formaction' : POST_ROUTES.NATURE_OF_BUSINESS
+            }
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              'formaction' : POST_ROUTES.SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

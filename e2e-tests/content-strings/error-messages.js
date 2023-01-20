@@ -88,6 +88,10 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
         INCORRECT_FORMAT: 'Enter a UK telephone number',
       },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
+        IS_EMPTY: 'Enter the goods or services that your company supplies',
+        ABOVE_MAXIMUM: 'Description of goods and services that your company supplies cannot be more than 1000 characters',
+      },
     },
     POLICY_AND_EXPORTS: {
       // TODO move to TYPE_OF_POLICY: {},

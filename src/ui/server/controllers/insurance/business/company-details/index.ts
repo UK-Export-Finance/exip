@@ -19,7 +19,9 @@ const {
 } = FIELD_IDS.INSURANCE;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
-const { COMPANY_DETAILS: TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
+const { COMPANY_DETAILS: COMPANY_DETAILS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
+
+export const TEMPLATE = COMPANY_DETAILS_TEMPLATE;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
@@ -28,7 +30,7 @@ const {
   COMPANY_DETAILS: COMPANY_DETAILS_ROUTE,
   NO_COMPANIES_HOUSE_NUMBER,
   COMPANY_DETAILS_SAVE_AND_BACK,
-  NATURE_OF_BUSINESS,
+  NATURE_OF_BUSINESS_ROOT,
 } = EXPORTER_BUSINESS_ROUTES;
 
 const pageVariables = (referenceNumber: number) => ({
@@ -175,7 +177,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
  * runs validation and either renders template with errors or redirects to next page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.redirect} Company details page with or without errors
+ * @returns {Express.Response.redirect} Nature of business page with or without errors
  */
 const post = async (req: Request, res: Response) => {
   try {
@@ -184,6 +186,8 @@ const post = async (req: Request, res: Response) => {
     if (!application) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
+
+    const { referenceNumber } = application;
 
     const { body } = req;
     // runs companiesHouse validation and api call first for companiesHouse input
@@ -236,7 +240,7 @@ const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(NATURE_OF_BUSINESS);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
   } catch (error) {
     console.error('Error posting company details', { error });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

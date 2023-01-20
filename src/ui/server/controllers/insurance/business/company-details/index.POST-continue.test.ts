@@ -23,7 +23,8 @@ const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER
 const { VALID_PHONE_NUMBERS } = mockPhoneNumbers;
 
 const {
-  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS },
+  INSURANCE_ROOT,
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT },
 } = ROUTES.INSURANCE;
 
 jest.mock('../map-and-save');
@@ -88,7 +89,8 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(NATURE_OF_BUSINESS);
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
+        expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
       it('should call mapAndSave.companyDetails once with updateBody and application', async () => {
