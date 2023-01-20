@@ -1,4 +1,5 @@
 import { companyDetails } from '../../../../pages/your-business';
+import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import {
   cannotApplyPage,
@@ -8,6 +9,7 @@ import { ROUTES } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
+const { ACTIONS } = CONTENT_STRINGS;
 
 const {
   ROOT,
@@ -65,6 +67,10 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
 
       expect(text.trim()).equal(expected);
     });
+  });
+
+  it('should contain link to proposal form on the apply offline page', () => {
+    insurance.applyOfflinePage.downloadFormLink().should('have.attr', 'href', ACTIONS.DOWNLOAD_FORM.LINK.HREF_PROPOSAL);
   });
 
   it('should take you back to company-details page when pressing the back button', () => {

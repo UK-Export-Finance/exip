@@ -28,7 +28,6 @@ const APPLY_OFFLINE = {
     DOWNLOAD_FORM: {
       LINK: {
         TEXT: 'Download this form',
-        HREF: LINKS.EXTERNAL.NBI_FORM,
       },
       TEXT: "and email it to UKEF once you've filled it in.",
     },
