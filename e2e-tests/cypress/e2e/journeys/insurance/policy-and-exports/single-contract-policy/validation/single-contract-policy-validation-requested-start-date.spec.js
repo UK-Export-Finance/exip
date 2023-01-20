@@ -80,4 +80,10 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       checkValidation.notInTheFuture();
     });
   });
+
+  describe('when the date is today', () => {
+    it('should NOT render a validation error', () => {
+      checkValidation.isToday();
+    });
+  });
 });

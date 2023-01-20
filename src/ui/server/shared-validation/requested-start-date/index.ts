@@ -1,4 +1,4 @@
-import { isPast } from 'date-fns';
+import { endOfDay, isFuture } from 'date-fns';
 import { FIELD_IDS } from '../../constants';
 import { ERROR_MESSAGES } from '../../content-strings';
 import generateValidationErrors from '../../helpers/validation';
@@ -40,7 +40,7 @@ const requestedStartDateRules = (formBody: RequestBody, errors: object) => {
 
   // check that no fields are empty.
   if (!objectHasProperty(formBody, dayId) || !objectHasProperty(formBody, monthId) || !objectHasProperty(formBody, yearId)) {
-    updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
   }
 
   const day = formBody[dayId];
@@ -49,14 +49,14 @@ const requestedStartDateRules = (formBody: RequestBody, errors: object) => {
 
   // check that all fields are numbers.
   if (!isNumber(day) || !isNumber(month) || !isNumber(year)) {
-    updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, errors);
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, errors);
   }
 
   // check that the date is in the future.
   const submittedDate = createTimestampFromNumbers(Number(day), Number(month), Number(year));
 
-  if (submittedDate && isPast(submittedDate)) {
-    updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BEFORE_EARLIEST, errors);
+  if (submittedDate && !isFuture(endOfDay(submittedDate))) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BEFORE_EARLIEST, errors);
   }
 
   return updatedErrors;

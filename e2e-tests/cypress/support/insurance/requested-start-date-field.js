@@ -1,4 +1,5 @@
 import {
+  add,
   getDate,
   getMonth,
   getYear,
@@ -148,6 +149,21 @@ const checkValidation = {
       field.errorMessage(),
       `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].BEFORE_EARLIEST}`,
     );
+  },
+  isToday: () => {
+    const date = new Date();
+
+    field.dayInput().clear().type(getDate(date));
+    field.monthInput().clear().type(getMonth(date) + 1);
+    field.yearInput().clear().type(getYear(date));
+
+    submitButton().click();
+
+    partials.errorSummaryListItems().eq(0).invoke('text').then((text) => {
+      expect(text.trim()).not.equal(CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].BEFORE_EARLIEST);
+    });
+
+    field.errorMessage().should('not.exist');
   },
 };
 

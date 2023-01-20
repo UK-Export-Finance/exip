@@ -80,4 +80,10 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
       checkValidation.notInTheFuture();
     });
   });
+
+  describe('when the date is today', () => {
+    it('should NOT render a validation error', () => {
+      checkValidation.isToday();
+    });
+  });
 });
