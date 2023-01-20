@@ -1,7 +1,32 @@
 import { add, addMonths } from 'date-fns';
 import { APPLICATION } from '../constants';
 import mockCountries from './mock-countries';
+import mockCurrencies from './mock-currencies';
 import { Application } from '../../types';
+
+const mockGenericPolicyAndExport = {
+  id: 'clav8by1i0007kgoqies0dbfc',
+  goodsOrServicesDescription: 'Mock description',
+  finalDestinationCountryCode: mockCountries[0].isoCode,
+  requestedStartDate: add(new Date(), { months: 1 }),
+  creditPeriodWithBuyer: ' Mock free text',
+  policyCurrencyCode: mockCurrencies[0].isoCode,
+};
+
+export const mockSinglePolicyAndExport = {
+  ...mockGenericPolicyAndExport,
+  policyType: APPLICATION.POLICY_TYPE.SINGLE,
+  contractCompletionDate: add(new Date(), { months: 3 }),
+  totalValueOfContract: 1500,
+};
+
+export const mockMultiplePolicyAndExport = {
+  ...mockGenericPolicyAndExport,
+  policyType: APPLICATION.POLICY_TYPE.MULTI,
+  totalMonthsOfCover: 5,
+  totalSalesToBuyer: 1500,
+  maximumBuyerWillOwe: 1000,
+};
 
 const mockApplication = {
   id: 'clacdgc630000kdoqn7wcgrz1',
@@ -22,12 +47,7 @@ const mockApplication = {
     wantCoverOverMaxAmount: false,
     wantCoverOverMaxPeriod: false,
   },
-  policyAndExport: {
-    id: 'clav8by1i0007kgoqies0dbfc',
-    policyType: APPLICATION.POLICY_TYPE.MULTI,
-    requestedStartDate: add(new Date(), { months: 1 }),
-    contractCompletionDate: add(new Date(), { months: 1, days: 1 }),
-  },
+  policyAndExport: mockSinglePolicyAndExport,
   exporterCompany: {
     id: 'clcyyopn40148m8noyar9wxrn',
     companyName: 'Test Name',
@@ -56,6 +76,11 @@ const mockApplication = {
     },
     __typename: 'ExporterCompany',
   },
+};
+
+export const mockApplicationMultiplePolicy = {
+  ...mockApplication,
+  policyAndExport: mockMultiplePolicyAndExport,
 } as Application;
 
 export default mockApplication;

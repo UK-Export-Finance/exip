@@ -18,7 +18,7 @@ export const ERROR_MESSAGES = {
     IS_EMPTY: 'Select currency',
   },
   [FIELD_IDS.COUNTRY]: {
-    IS_EMPTY: 'Select the buyer’s country',
+    IS_EMPTY: "Select the buyer's country",
   },
   [FIELD_IDS.CONTRACT_VALUE]: {
     IS_EMPTY: 'Enter your contract value as a whole number - do not enter decimals',
@@ -159,8 +159,14 @@ export const ERROR_MESSAGES = {
       },
     },
     YOUR_BUYER: {
-      BUYER_ORGANISATION: {
-        IS_EMPTY: "Enter the buyer's company or organisation name",
+      COMPANY_OR_ORGANISATION: {
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.NAME]: {
+          IS_EMPTY: "Enter the buyer's company or organisation name",
+        },
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.ADDRESS]: {
+          IS_EMPTY: "Enter the buyer's address",
+          ABOVE_MAXIMUM: 'Buyer address cannot be more than 330 characters',
+        },
       },
     },
   },

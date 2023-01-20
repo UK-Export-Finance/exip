@@ -2,6 +2,7 @@ import formatDate from '../date/format-date';
 import { generateFieldGroups, companyHouseSummaryList, generateAddressHTML } from './company-house-summary-list';
 import generateSummaryListRows from './generate-summary-list-rows';
 import fieldGroupItem from './generate-field-group-item';
+import getFieldById from '../get-field-by-id';
 import { FIELD_IDS } from '../../constants';
 import { FIELDS, PAGES } from '../../content-strings';
 import { mockCompany } from '../../test-mocks';
@@ -80,30 +81,30 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
       const expected = {
         COMPANY_DETAILS: [
           fieldGroupItem({
-            field: { id: COMPANY_NUMBER, ...FIELDS[COMPANY_NUMBER] },
+            field: getFieldById(FIELDS, COMPANY_NUMBER),
             data: mockCompany,
           }),
           fieldGroupItem({
-            field: { id: COMPANY_NAME, ...FIELDS[COMPANY_NAME] },
+            field: getFieldById(FIELDS, COMPANY_NAME),
             data: mockCompany,
           }),
           fieldGroupItem(
             {
-              field: { id: COMPANY_ADDRESS, ...FIELDS[COMPANY_ADDRESS] },
+              field: getFieldById(FIELDS, COMPANY_ADDRESS),
               data: mockCompany,
             },
             generateAddressHTML(mockCompany[COMPANY_ADDRESS]),
           ),
           fieldGroupItem(
             {
-              field: { id: COMPANY_INCORPORATED, ...FIELDS[COMPANY_INCORPORATED] },
+              field: getFieldById(FIELDS, COMPANY_INCORPORATED),
               data: mockCompany,
             },
             formatDate(mockCompany[COMPANY_INCORPORATED]),
           ),
           fieldGroupItem(
             {
-              field: { id: COMPANY_SIC, ...FIELDS[COMPANY_SIC] },
+              field: getFieldById(FIELDS, COMPANY_SIC),
               data: mockCompany,
             },
             mockCompany[COMPANY_SIC].toString(),

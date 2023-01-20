@@ -1,19 +1,25 @@
-import { mockReq, mockRes, mockApplication, mockCountries } from '../../../test-mocks';
-import api from '../../../api';
-import { Request, Response } from '../../../../types';
-import { ROUTES, TEMPLATES } from '../../../constants';
-import { get, post } from '.';
-import mapCountries from '../../../helpers/mappings/map-countries';
+import { get, post, PAGE_VARIABLES, TEMPLATE } from '.';
 import { PAGES } from '../../../content-strings';
-import { FIELDS } from '../../../content-strings/fields/insurance/your-buyer';
+import { YOUR_BUYER_FIELDS as FIELDS } from '../../../content-strings/fields/insurance';
+import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
+import api from '../../../api';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
+import mapCountries from '../../../helpers/mappings/map-countries';
 import yourBuyerDetailsValidation from './validation';
+import { mockReq, mockRes, mockApplication, mockCountries } from '../../../test-mocks';
+import { Request, Response } from '../../../../types';
 
-describe('controllers/insurance/your-buyer/your-buyer-details', () => {
+const {
+  YOUR_BUYER: { COMPANY_OR_ORGANISATION },
+} = FIELD_IDS.INSURANCE;
+
+const { NAME, ADDRESS, COUNTRY } = COMPANY_OR_ORGANISATION;
+
+describe('controllers/insurance/your-buyer', () => {
   let req: Request;
   let res: Response;
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
-  const TEMPLATE = TEMPLATES.INSURANCE.YOUR_BUYER.BUYER_BUYER_DETAILS;
+
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
@@ -27,9 +33,32 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
     jest.resetAllMocks();
   });
 
+  describe('PAGE_VARIABLES', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        FIELDS: {
+          NAME: {
+            ID: NAME,
+            ...FIELDS.COMPANY_OR_ORGANISATION[NAME],
+          },
+          ADDRESS: {
+            ID: ADDRESS,
+            ...FIELDS.COMPANY_OR_ORGANISATION[ADDRESS],
+          },
+          COUNTRY: {
+            ID: COUNTRY,
+            ...FIELDS.COMPANY_OR_ORGANISATION[COUNTRY],
+          },
+        },
+      };
+
+      expect(PAGE_VARIABLES).toEqual(expected);
+    });
+  });
+
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATE);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION);
     });
   });
 
@@ -46,10 +75,10 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
       const expectedCountries = mapCountries(mockCountries);
       const expectedVariables = {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER_DETAILS,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION,
           BACK_LINK: req.headers.referer,
         }),
-        ...FIELDS,
+        ...PAGE_VARIABLES,
         countries: expectedCountries,
       };
 
@@ -92,7 +121,11 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
       api.keystone.countries.getAll = getCountriesSpy;
     });
 
-    const validBody = { organisation: 'test oraganisation', country: 'XAD' };
+    const validBody = {
+      [NAME]: 'Mock',
+      [ADDRESS]: 'Mock free text',
+      [COUNTRY]: mockCountries[0].isoCode,
+    };
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
@@ -101,7 +134,6 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
 
       it('should redirect to needs_to_redirect_at_do_you_need_broker', async () => {
         await post(req, res);
-        // This needs to replaced after broker page is completed
         const expected = '/needs_to_redirect_at_do_you_need_broker';
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
@@ -123,10 +155,10 @@ describe('controllers/insurance/your-buyer/your-buyer-details', () => {
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER_DETAILS,
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION,
             BACK_LINK: req.headers.referer,
           }),
-          ...FIELDS,
+          ...PAGE_VARIABLES,
           submittedValues: req.body,
           countries: expectedCountries,
           validationErrors,

@@ -1,8 +1,10 @@
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
-import { FIELDS } from '../../../../content-strings/fields/insurance';
+import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
+import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import { policyAndExportSummaryList } from '../../../../helpers/summary-lists/policy-and-export';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
@@ -27,7 +29,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWER
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Type of policy and exports - check your answers page
  */
-export const get = (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -37,14 +39,30 @@ export const get = (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
-  return res.render(TEMPLATE, {
-    ...insuranceCorePageVariables({
-      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS,
-      BACK_LINK: req.headers.referer,
-    }),
-    ...pageVariables(refNumber),
-    application,
-  });
+  try {
+    const countries = await api.keystone.countries.getAll();
+    const currencies = await api.external.getCurrencies();
+
+    if (!countries || !countries.length || !currencies || !currencies.length) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    const summaryList = policyAndExportSummaryList(application.policyAndExport, countries, currencies);
+
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(refNumber),
+      application,
+      SUMMARY_LIST: summaryList,
+    });
+  } catch (err) {
+    console.error('Error getting countries or currencies', { err });
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
 };
 
 /**

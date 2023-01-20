@@ -1,6 +1,7 @@
 import { FIELDS, PAGES } from '../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../constants';
 import fieldGroupItem from './generate-field-group-item';
+import getFieldById from '../get-field-by-id';
 import generateSummaryListRows from './generate-summary-list-rows';
 import { AnswersContent, AnswersFieldGroups } from '../../../types';
 
@@ -37,19 +38,19 @@ const generateFieldGroups = (answers: AnswersContent) => {
 
   fieldGroups.EXPORT_DETAILS = [
     fieldGroupItem({
-      field: { id: BUYER_COUNTRY, ...FIELDS[BUYER_COUNTRY] },
+      field: getFieldById(FIELDS, BUYER_COUNTRY),
       data: answers,
       renderChangeLink: true,
       href: `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`,
     }),
     fieldGroupItem({
-      field: { id: VALID_EXPORTER_LOCATION, ...FIELDS[VALID_EXPORTER_LOCATION] },
+      field: getFieldById(FIELDS, VALID_EXPORTER_LOCATION),
       data: answers,
       renderChangeLink: true,
       href: `${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}#heading`,
     }),
     fieldGroupItem({
-      field: { id: HAS_MINIMUM_UK_GOODS_OR_SERVICES, ...FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES] },
+      field: getFieldById(FIELDS, HAS_MINIMUM_UK_GOODS_OR_SERVICES),
       data: answers,
       renderChangeLink: true,
       href: `${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}#heading`,
@@ -59,25 +60,25 @@ const generateFieldGroups = (answers: AnswersContent) => {
   if (answers[SINGLE_POLICY_TYPE]) {
     fieldGroups.POLICY_DETAILS = [
       fieldGroupItem({
-        field: { id: SINGLE_POLICY_TYPE, ...FIELDS[SINGLE_POLICY_TYPE] },
+        field: getFieldById(FIELDS, SINGLE_POLICY_TYPE),
         data: answers,
         renderChangeLink: true,
         href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
       }),
       fieldGroupItem({
-        field: { id: SINGLE_POLICY_LENGTH, ...FIELDS[SINGLE_POLICY_LENGTH] },
+        field: getFieldById(FIELDS, SINGLE_POLICY_LENGTH),
         data: answers,
         renderChangeLink: true,
         href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
       }),
       fieldGroupItem({
-        field: { id: CONTRACT_VALUE, ...FIELDS[CONTRACT_VALUE] },
+        field: getFieldById(FIELDS, CONTRACT_VALUE),
         data: answers,
         renderChangeLink: true,
         href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`,
       }),
       fieldGroupItem({
-        field: { id: PERCENTAGE_OF_COVER, ...FIELDS[PERCENTAGE_OF_COVER] },
+        field: getFieldById(FIELDS, PERCENTAGE_OF_COVER),
         data: answers,
         renderChangeLink: true,
         href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
@@ -88,29 +89,29 @@ const generateFieldGroups = (answers: AnswersContent) => {
   if (answers[MULTI_POLICY_TYPE]) {
     fieldGroups.POLICY_DETAILS = [
       fieldGroupItem({
-        field: { id: MULTI_POLICY_TYPE, ...FIELDS[MULTI_POLICY_TYPE] },
+        field: getFieldById(FIELDS, MULTI_POLICY_TYPE),
         data: answers,
         renderChangeLink: true,
         href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
       }),
       fieldGroupItem({
-        field: { id: MULTI_POLICY_LENGTH, ...FIELDS[MULTI_POLICY_LENGTH] },
+        field: getFieldById(FIELDS, MULTI_POLICY_LENGTH),
         data: answers,
       }),
       fieldGroupItem({
-        field: { id: MAX_AMOUNT_OWED, ...FIELDS[MAX_AMOUNT_OWED] },
+        field: getFieldById(FIELDS, MAX_AMOUNT_OWED),
         data: answers,
         renderChangeLink: true,
         href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`,
       }),
       fieldGroupItem({
-        field: { id: PERCENTAGE_OF_COVER, ...FIELDS[PERCENTAGE_OF_COVER] },
+        field: getFieldById(FIELDS, PERCENTAGE_OF_COVER),
         data: answers,
         renderChangeLink: true,
         href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`,
       }),
       fieldGroupItem({
-        field: { id: CREDIT_PERIOD, ...FIELDS[CREDIT_PERIOD] },
+        field: getFieldById(FIELDS, CREDIT_PERIOD),
         data: answers,
         renderChangeLink: true,
         href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`,
