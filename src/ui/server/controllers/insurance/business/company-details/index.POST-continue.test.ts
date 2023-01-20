@@ -89,7 +89,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
