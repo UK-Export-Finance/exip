@@ -1,5 +1,5 @@
 import generateSingleContractPolicyFields from '.';
-import { FIELDS } from '../../../../content-strings/fields/insurance';
+import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { FIELD_IDS } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
