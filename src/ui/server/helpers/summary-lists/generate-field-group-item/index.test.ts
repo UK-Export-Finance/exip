@@ -24,7 +24,7 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
       const expected = {
         id: mockInput.field.id,
         title: getKeyText(mockInput.field),
-        value: getSummaryListItemDataValue(mockInput.data, mockInput.field.id),
+        value: getSummaryListItemDataValue(mockInput.field.id, mockInput.data),
       };
 
       expect(result).toEqual(expected);
@@ -34,7 +34,7 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
       it('should return the custom value via getSummaryListItemDataValue', () => {
         const result = generateSummaryListItemData(mockInput, mockCustomValue);
 
-        const expected = getSummaryListItemDataValue(mockInput.data, mockInput.field.id, mockCustomValue);
+        const expected = getSummaryListItemDataValue(mockInput.field.id, mockInput.data, mockCustomValue);
 
         expect(result.value).toEqual(expected);
       });
@@ -56,7 +56,7 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
   describe('getSummaryListItemDataValue', () => {
     describe('when customValue is passed', () => {
       it('should return the customValue', () => {
-        const result = getSummaryListItemDataValue(mockSubmittedData, mockField.id, mockCustomValue);
+        const result = getSummaryListItemDataValue(mockField.id, mockSubmittedData, mockCustomValue);
 
         expect(result).toEqual(mockCustomValue);
       });
@@ -64,7 +64,7 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
 
     describe('when no customValue is passed and the submitted data contains the field', () => {
       it('should return the value of the field in submitted data', () => {
-        const result = getSummaryListItemDataValue(mockSubmittedData, mockField.id);
+        const result = getSummaryListItemDataValue(mockField.id, mockSubmittedData);
 
         const expected = mockSubmittedData[mockField.id];
 
@@ -74,7 +74,7 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
 
     describe('when no customValue is passed and the submitted data does NOT contain the field', () => {
       it('should return an empty dash', () => {
-        const result = getSummaryListItemDataValue(mockSubmittedData, 'fieldC');
+        const result = getSummaryListItemDataValue('fieldC', mockSubmittedData);
 
         expect(result).toEqual(DEFAULT.EMPTY);
       });

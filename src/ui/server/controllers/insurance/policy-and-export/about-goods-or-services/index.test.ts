@@ -33,13 +33,21 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
   mapAndSave.policyAndExport = jest.fn(() => Promise.resolve(true));
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
 
+  const mockApplicationWithoutCountryCode = {
+    ...mockApplication,
+    policyAndExport: {
+      ...mockApplication.policyAndExport,
+      [FINAL_DESTINATION]: null,
+    },
+  };
+
   const countryIsoCode = mockCountries[0].isoCode;
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
+    res.locals.application = mockApplicationWithoutCountryCode;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     refNumber = Number(mockApplication.referenceNumber);
     api.keystone.countries.getAll = getCountriesSpy;
@@ -93,7 +101,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
-        application: mockApplication,
+        application: mockApplicationWithoutCountryCode,
         countries: mapCountries(mockCountries),
       };
 
@@ -234,7 +242,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
-          application: mockApplication,
+          application: mockApplicationWithoutCountryCode,
           submittedValues: req.body,
           countries: mapCountries(mockCountries),
           validationErrors: generateValidationErrors(req.body),
@@ -261,7 +269,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
               BACK_LINK: req.headers.referer,
             }),
             ...pageVariables(refNumber),
-            application: mockApplication,
+            application: mockApplicationWithoutCountryCode,
             submittedValues: req.body,
             countries: mapCountries(mockCountries, countryIsoCode),
             validationErrors: generateValidationErrors(req.body),

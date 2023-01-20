@@ -9,7 +9,7 @@ type SummaryListItemDataInputField = {
 };
 
 type SummaryListItemDataInput = {
-  data: object;
+  data?: object;
   field: SummaryListItemDataInputField;
   href?: string;
   renderChangeLink?: boolean;

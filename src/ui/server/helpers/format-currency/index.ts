@@ -6,12 +6,12 @@
  * @param {Number} Decimal points
  * @returns {String}
  */
-const formatCurrency = (number: number, currencyCode: string, decimalPoints: number): string =>
+const formatCurrency = (number: number, currencyCode: string, decimalPoints?: number): string =>
   number.toLocaleString('en', {
     style: 'currency',
     currency: currencyCode,
-    minimumFractionDigits: decimalPoints,
-    maximumFractionDigits: decimalPoints,
+    minimumFractionDigits: decimalPoints || 0,
+    maximumFractionDigits: decimalPoints || 0,
   });
 
 export default formatCurrency;

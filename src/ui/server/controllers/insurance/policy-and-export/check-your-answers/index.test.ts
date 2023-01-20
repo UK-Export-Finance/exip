@@ -3,8 +3,10 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
+import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { policyAndExportSummaryList } from '../../../../helpers/summary-lists/policy-and-export';
+import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const {
@@ -20,6 +22,9 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
   let res: Response;
   let refNumber: number;
 
+  let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
+  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
+
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
@@ -27,6 +32,9 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
     res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     refNumber = Number(mockApplication.referenceNumber);
+
+    api.keystone.countries.getAll = getCountriesSpy;
+    api.external.getCurrencies = getCurrenciesSpy;
   });
 
   afterAll(() => {
@@ -53,6 +61,18 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
   });
 
   describe('get', () => {
+    it('should call api.keystone.countries.getAll', async () => {
+      await get(req, res);
+
+      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call api.external.getCurrencies', async () => {
+      await get(req, res);
+
+      expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+    });
+
     it('should render template', async () => {
       await get(req, res);
 
@@ -63,6 +83,7 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
         }),
         ...pageVariables(refNumber),
         application: res.locals.application,
+        SUMMARY_LIST: policyAndExportSummaryList(mockApplication.policyAndExport, mockCountries, mockCurrencies),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -77,6 +98,60 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
         await get(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('when the get countries response is an empty array', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.resolve([]));
+          api.keystone.countries.getAll = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when there is an error with the get countries API call', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.reject());
+          api.keystone.countries.getAll = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get currencies response is an empty array', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+          api.external.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when there is an error with the get currencies API call', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.reject());
+          api.external.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });
