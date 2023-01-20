@@ -4,7 +4,7 @@ import {
   getYear,
 } from 'date-fns';
 import { FIELD_IDS } from '../../constants';
-import { GBP_CURRENCY_CODE } from '../fixtures/currencies';
+import { GBP_CURRENCY_CODE } from './currencies';
 
 const {
   INSURANCE: {
