@@ -30,12 +30,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   let referenceNumber;
 
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
@@ -44,12 +39,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
       natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 
-      cy.visit(url, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
+      cy.navigateToUrl(url);
 
       cy.url().should('eq', url);
     });
@@ -79,12 +69,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe(`when ${PHONE_NUMBER} is correctly entered`, () => {
     describe('valid landline phone number', () => {
       it('should not display validation errors', () => {
-        cy.visit(url, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
         partials.errorSummaryListItems().should('have.length', 0);
@@ -97,12 +82,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('valid landline phone number with brackets', () => {
       it('should not display validation errors', () => {
-        cy.visit(url, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.BRACKETS);
         partials.errorSummaryListItems().should('have.length', 0);
@@ -115,12 +95,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('valid landline phone number with dashes', () => {
       it('should not display validation errors', () => {
-        cy.visit(url, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.DASHES);
         partials.errorSummaryListItems().should('have.length', 0);
@@ -133,12 +108,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('valid landline phone number with country code without 0s', () => {
       it('should not display validation errors', () => {
-        cy.visit(url, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.FULL_NO_ZEROS);
         partials.errorSummaryListItems().should('have.length', 0);
@@ -151,12 +121,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('valid landline phone number with country code', () => {
       it('should not display validation errors', () => {
-        cy.visit(url, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.FULL);
         partials.errorSummaryListItems().should('have.length', 0);
@@ -169,12 +134,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('valid mobile phone number', () => {
       it('should not display validation errors', () => {
-        cy.visit(url, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.MOBILE.NORMAL);
         partials.errorSummaryListItems().should('have.length', 0);
@@ -187,12 +147,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('valid mobile phone number with dashes', () => {
       it('should not display validation errors', () => {
-        cy.visit(url, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.MOBILE.DASH);
         partials.errorSummaryListItems().should('have.length', 0);
@@ -205,12 +160,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('valid mobile phone number with full country code', () => {
       it('should not display validation errors', () => {
-        cy.visit(url, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.MOBILE.FULL_CODE);
         partials.errorSummaryListItems().should('have.length', 0);
@@ -223,12 +173,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('valid mobile phone number with full country code with brackets', () => {
       it('should not display validation errors', () => {
-        cy.visit(url, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.MOBILE.FULL_CODE_BRACKET);
         partials.errorSummaryListItems().should('have.length', 0);

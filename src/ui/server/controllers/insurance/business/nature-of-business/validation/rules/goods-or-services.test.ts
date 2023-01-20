@@ -34,7 +34,7 @@ describe('controllers/insurance/business/nature-of-business/validation/rules/goo
     });
   });
 
-  describe(`when the ${GOODS_OR_SERVICES} input is over 1000 characters`, () => {
+  describe(`when the ${GOODS_OR_SERVICES} input is over ${NATURE_OF_YOUR_BUSINESS_FIELDS[GOODS_OR_SERVICES].MAXIMUM}} characters`, () => {
     it('should return a validation error', () => {
       mockBody[GOODS_OR_SERVICES] = 'a'.repeat(NATURE_OF_YOUR_BUSINESS_FIELDS[GOODS_OR_SERVICES].MAXIMUM + 1);
       const response = goodsOrServices(mockBody, mockErrors);
