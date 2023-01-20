@@ -39,7 +39,7 @@ describe('controllers/insurance/business/nature-of-business/validation/rules/goo
       mockBody[GOODS_OR_SERVICES] = 'a'.repeat(NATURE_OF_YOUR_BUSINESS_FIELDS[GOODS_OR_SERVICES].MAXIMUM + 1);
       const response = goodsOrServices(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[GOODS_OR_SERVICES].TOO_MANY_CHARACTERS;
+      const errorMessage = EXPORTER_BUSINESS[GOODS_OR_SERVICES].ABOVE_MAXIMUM;
       const expected = generateValidationErrors(GOODS_OR_SERVICES, errorMessage, mockErrors);
 
       expect(response).toEqual(expected);

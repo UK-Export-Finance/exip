@@ -30,7 +30,7 @@ const goodsOrServices = (responseBody: RequestBody, errors: object) => {
 
   if (responseBody[GOODS_OR_SERVICES].length > NATURE_OF_YOUR_BUSINESS_FIELDS[GOODS_OR_SERVICES].MAXIMUM) {
     // check if the field is above the maximum
-    const errorMessage = EXPORTER_BUSINESS[GOODS_OR_SERVICES].TOO_MANY_CHARACTERS;
+    const errorMessage = EXPORTER_BUSINESS[GOODS_OR_SERVICES].ABOVE_MAXIMUM;
 
     return generateValidationErrors(GOODS_OR_SERVICES, errorMessage, errors);
   }

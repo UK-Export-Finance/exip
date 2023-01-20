@@ -17,6 +17,8 @@ const {
 
 const turnoverUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER}`;
 
+const { MAXIMUM } = FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES];
+
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - goods or services input validation', () => {
   let referenceNumber;
   let url;
@@ -44,6 +46,8 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
   describe(`${GOODS_OR_SERVICES} error`, () => {
     describe(`when ${GOODS_OR_SERVICES} is left empty`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY;
+
       it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
         const fieldId = GOODS_OR_SERVICES;
         const field = natureOfBusiness[fieldId];
@@ -51,7 +55,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         field.input().clear();
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 1);
-        checkText(partials.errorSummaryListItems().first(), NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY);
+        checkText(partials.errorSummaryListItems().first(), errorMessage);
       });
 
       it(`should focus to the ${GOODS_OR_SERVICES} section when clicking the error`, () => {
@@ -66,26 +70,28 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = GOODS_OR_SERVICES;
         const field = natureOfBusiness[fieldId];
 
-        checkText(field.error(), `Error: ${NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY}`);
+        checkText(field.error(), `Error: ${errorMessage}`);
+      });
+    });
+
+    describe(`when ${GOODS_OR_SERVICES} has over ${MAXIMUM} characters`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].ABOVE_MAXIMUM;
+
+      it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
+        const fieldId = GOODS_OR_SERVICES;
+        const field = natureOfBusiness[fieldId];
+
+        field.input().clear().type('a'.repeat(MAXIMUM + 1));
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 1);
+        checkText(partials.errorSummaryListItems().first(), errorMessage);
       });
 
-      describe(`when ${GOODS_OR_SERVICES} has over 1000 characters`, () => {
-        it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
-          const fieldId = GOODS_OR_SERVICES;
-          const field = natureOfBusiness[fieldId];
+      it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
+        const fieldId = GOODS_OR_SERVICES;
+        const field = natureOfBusiness[fieldId];
 
-          field.input().clear().type('a'.repeat(FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES].MAXIMUM + 1));
-          submitButton().click();
-          partials.errorSummaryListItems().should('have.length', 1);
-          checkText(partials.errorSummaryListItems().first(), NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].TOO_MANY_CHARACTERS);
-        });
-
-        it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
-          const fieldId = GOODS_OR_SERVICES;
-          const field = natureOfBusiness[fieldId];
-
-          checkText(field.error(), `Error: ${NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].TOO_MANY_CHARACTERS}`);
-        });
+        checkText(field.error(), `Error: ${errorMessage}`);
       });
     });
   });
