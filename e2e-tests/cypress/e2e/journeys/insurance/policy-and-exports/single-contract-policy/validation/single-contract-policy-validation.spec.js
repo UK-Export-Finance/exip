@@ -1,9 +1,11 @@
 import { submitButton } from '../../../../../pages/shared';
+import { singleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
 import checkText from '../../../../../helpers/check-text';
+import application from '../../../../../../fixtures/application';
 
 const { taskList } = partials.insurancePartials;
 
@@ -95,5 +97,15 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       partials.errorSummaryListItems().eq(4),
       CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
     );
+  });
+
+  describe(`when ${POLICY_CURRENCY_CODE} is submitted but there are other validation errors`, () => {
+    it(`should retain the submitted ${POLICY_CURRENCY_CODE}`, () => {
+      const currencyCode = application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE];
+
+      singleContractPolicyPage[POLICY_CURRENCY_CODE].input().select(currencyCode);
+
+      singleContractPolicyPage[POLICY_CURRENCY_CODE].inputOptionSelected().contains(currencyCode);
+    });
   });
 });
