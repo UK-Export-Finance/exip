@@ -109,7 +109,7 @@ export const ERROR_MESSAGES = {
           BEFORE_EARLIEST: 'You cannot enter a policy start date in the past - enter a future date',
         },
         [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
-          IS_EMPTY: "Select currency you'd like your policy to be issued in",
+          IS_EMPTY: 'Select currency you want your policy to be issued in',
         },
         SINGLE: {
           [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
@@ -117,7 +117,7 @@ export const ERROR_MESSAGES = {
             NOT_A_NUMBER: 'Enter a contract completion date in the correct format - for example, 06 11 2023',
             BEFORE_EARLIEST: 'You cannot enter a contract completion date in the past - enter a future date',
             AFTER_LATEST:
-              "Your contract completion date is more than 2 years after your policy start date. You'll need to speak with an EFM if you still want to apply",
+              "Your contract completion date is more than 2 years after your policy start date. You'll need to speak with an export finance manager, if you still want to apply",
             CANNOT_BE_THE_SAME: 'Your contract completion date cannot be the same as your policy start date',
             CANNOT_BE_BEFORE: 'Your contract completion date must be after your policy start date',
           },

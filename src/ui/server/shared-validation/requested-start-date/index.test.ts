@@ -106,6 +106,22 @@ describe('shared-validation/requested-start-date', () => {
     });
   });
 
+  describe('when the date is today', () => {
+    it('should NOT return a validation error', () => {
+      const now = new Date();
+
+      const mockSubmittedData = {
+        [`${FIELD_ID}-day`]: getDate(now),
+        [`${FIELD_ID}-month`]: getMonth(now) + 1,
+        [`${FIELD_ID}-year`]: getYear(now),
+      };
+
+      const result = requestedStartDateRules(mockSubmittedData, mockErrors);
+
+      expect(result).toEqual(mockErrors);
+    });
+  });
+
   describe('when there are no validation errors', () => {
     it('should return the provided errors object', () => {
       const date = new Date();

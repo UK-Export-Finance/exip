@@ -51,7 +51,7 @@ export const POLICY_AND_EXPORT_FIELDS = {
       },
     },
     [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
-      LABEL: "Select currency you'd like your policy to be issued in",
+      LABEL: 'Select currency you want your policy to be issued in',
       HINT: [
         {
           text: "UKEF usually issues policies in pounds sterling, US dollars or euros. If you need a different currency, you'll need to ",
