@@ -30,16 +30,25 @@ export const POLICY_AND_EXPORT_FIELDS = {
         ],
       },
     },
+    SUMMARY: {
+      TITLE: 'Policy type',
+    },
   },
   CONTRACT_POLICY: {
     [CONTRACT_POLICY.REQUESTED_START_DATE]: {
       LABEL: 'When do you want your policy to start?',
       HINT: 'For example, 6 11 2023',
+      SUMMARY: {
+        TITLE: 'Policy start date',
+      },
     },
     [CONTRACT_POLICY.CREDIT_PERIOD_WITH_BUYER]: {
       LABEL: 'What credit period do you have with your buyer?',
       HINT: 'For example, 60 days after dispatching goods from your premises or 90 days after invoicing.',
       MAXIMUM: 1000,
+      SUMMARY: {
+        TITLE: 'Credit period',
+      },
     },
     [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
       LABEL: "Select currency you want your policy to be issued in",
@@ -52,15 +61,24 @@ export const POLICY_AND_EXPORT_FIELDS = {
           href: LINKS.EXTERNAL.NBI_FORM,
         },
       ],
+      SUMMARY: {
+        TITLE: 'Policy currency',
+      },
     },
     SINGLE: {
       [CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
         LABEL: 'When do you expect to complete the export contract?',
         HINT: 'For example, 6 11 2024',
+        SUMMARY: {
+          TITLE: 'Date you expect contract to complete',
+        },
       },
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
         LABEL: "What's the total value of the contract you want to insure?",
         HINT: 'Enter a whole number - do not enter decimals.',
+        SUMMARY: {
+          TITLE: 'Contract value',
+        },
       },
     },
     MULTIPLE: {
@@ -68,10 +86,16 @@ export const POLICY_AND_EXPORT_FIELDS = {
         LABEL: 'How many months do you want to be insured for?',
         HINT: 'The maximum is 12 months.',
         MAXIMUM: 12,
+        SUMMARY: {
+          TITLE: 'How many months you want to be insured for',
+        },
       },
       [CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
         LABEL: 'Estimate total sales to your buyer during this time',
         HINT: 'Enter a whole number - do not enter decimals.',
+        SUMMARY: {
+          TITLE: 'Estimated sales during policy',
+        },
       },
       [CONTRACT_POLICY.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
         LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
@@ -84,6 +108,9 @@ export const POLICY_AND_EXPORT_FIELDS = {
           },
           NO_DECIMALS: 'Enter a whole number - do not enter decimals.',
         },
+        SUMMARY: {
+          TITLE: 'Maximum owed at any single point during policy',
+        },
       },
     },
   },
@@ -95,9 +122,15 @@ export const POLICY_AND_EXPORT_FIELDS = {
         LIST: ['clothing items for retail sale', 'construction materials to build commercial property', 'educational services such as teacher training'],
       },
       MAXIMUM: 1000,
+      SUMMARY: {
+        TITLE: "Goods or services you're exporting",
+      },
     },
     [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
       LABEL: "What's the final destination of the goods or services?",
+      SUMMARY: {
+        TITLE: 'Final destination of export',
+      },
     },
   },
 };

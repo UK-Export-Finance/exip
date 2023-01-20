@@ -11,7 +11,8 @@ import mapTotalMonthsOfCover from '../../../../helpers/mappings/map-total-months
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save';
-import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
+import { mockReq, mockRes, mockCurrencies } from '../../../../test-mocks';
+import { mockApplicationMultiplePolicy as mockApplication } from '../../../../test-mocks/mock-application';
 
 const {
   INSURANCE: {
@@ -41,6 +42,15 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
   mapAndSave.policyAndExport = jest.fn(() => Promise.resolve(true));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
 
+  const mockApplicationWithoutOptionsSubmission = {
+    ...mockApplication,
+    policyAndExport: {
+      ...mockApplication.policyAndExport,
+      [POLICY_CURRENCY_CODE]: null,
+      [TOTAL_MONTHS_OF_COVER]: null,
+    },
+  };
+
   const currencyCode = mockCurrencies[0].isoCode;
   const monthsOfCover = 1;
 
@@ -48,7 +58,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
+    res.locals.application = mockApplicationWithoutOptionsSubmission;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     refNumber = Number(mockApplication.referenceNumber);
     api.external.getCurrencies = getCurrenciesSpy;
@@ -128,7 +138,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
-        application: mapApplicationToFormFields(mockApplication),
+        application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
         currencies: expectedCurrencies,
         monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
       };
@@ -138,9 +148,9 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
 
     describe('when a policy currency code has been previously submitted', () => {
       const mockApplicationWithCurrency = {
-        ...mockApplication,
+        ...mockApplicationWithoutOptionsSubmission,
         policyAndExport: {
-          ...mockApplication.policyAndExport,
+          ...mockApplicationWithoutOptionsSubmission.policyAndExport,
           [POLICY_CURRENCY_CODE]: currencyCode,
         },
       };
@@ -171,9 +181,9 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
 
     describe('when total months of cover has been previously submitted', () => {
       const mockApplicationWithMonths = {
-        ...mockApplication,
+        ...mockApplicationWithoutOptionsSubmission,
         policyAndExport: {
-          ...mockApplication.policyAndExport,
+          ...mockApplicationWithoutOptionsSubmission.policyAndExport,
           [TOTAL_MONTHS_OF_COVER]: monthsOfCover,
         },
       };
@@ -316,7 +326,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
-          application: mapApplicationToFormFields(mockApplication),
+          application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
           submittedValues: req.body,
           currencies: expectedCurrencies,
           monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
@@ -346,7 +356,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
               BACK_LINK: req.headers.referer,
             }),
             ...pageVariables(refNumber),
-            application: mapApplicationToFormFields(mockApplication),
+            application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
             submittedValues: req.body,
             currencies: expectedCurrencies,
             monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
@@ -377,7 +387,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
               BACK_LINK: req.headers.referer,
             }),
             ...pageVariables(refNumber),
-            application: mapApplicationToFormFields(mockApplication),
+            application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
             submittedValues: req.body,
             currencies: mapCurrencies(mockCurrencies),
             monthOptions: expectedMonthOptions,
