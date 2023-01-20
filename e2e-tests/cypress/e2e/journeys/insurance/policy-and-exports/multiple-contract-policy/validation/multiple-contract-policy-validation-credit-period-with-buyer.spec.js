@@ -81,10 +81,14 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   });
 
   describe('when credit period with buyer is above the maximum', () => {
-    it('should render a validation error', () => {
-      field.input().type('a'.repeat(1001), { delay: 0 });
-      submitButton().click();
+    const submittedValue = 'a'.repeat(1001);
 
+    before(() => {
+      field.input().type(submittedValue, { delay: 0 });
+      submitButton().click();
+    });
+
+    it('should render a validation error', () => {
       checkText(
         partials.errorSummaryListItems().eq(4),
         CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].ABOVE_MAXIMUM,
@@ -94,6 +98,10 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].ABOVE_MAXIMUM}`,
       );
+    });
+
+    it('should retain the submitted value', () => {
+      field.input().should('have.value', submittedValue);
     });
   });
 });
