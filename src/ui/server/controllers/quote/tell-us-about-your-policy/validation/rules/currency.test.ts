@@ -1,5 +1,5 @@
 import rule from './currency';
-import { FIELD_IDS } from '../../../../../constants';
+import { FIELD_IDS, GBP_CURRENCY_CODE } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 
@@ -26,7 +26,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/currency'
   describe('when there are no validation errors', () => {
     it('should return the already provided errors', () => {
       const mockSubmittedData = {
-        [FIELD_IDS.CURRENCY]: 'GBP',
+        [FIELD_IDS.CURRENCY]: GBP_CURRENCY_CODE,
       };
 
       const result = rule(mockSubmittedData, mockErrors);

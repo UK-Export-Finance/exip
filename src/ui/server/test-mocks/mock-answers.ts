@@ -1,4 +1,4 @@
-import { FIELD_IDS, FIELD_VALUES } from '../constants';
+import { FIELD_IDS, FIELD_VALUES, GBP_CURRENCY_CODE } from '../constants';
 import { SubmittedDataQuoteEligibility } from '../../types';
 
 const {
@@ -19,7 +19,7 @@ const mockAnswers = {
   [VALID_EXPORTER_LOCATION]: true,
   [BUYER_COUNTRY]: 'Algeria',
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
-  [CURRENCY]: 'GBP',
+  [CURRENCY]: GBP_CURRENCY_CODE,
   [CONTRACT_VALUE]: '123456',
   [CREDIT_PERIOD]: 1,
   [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,

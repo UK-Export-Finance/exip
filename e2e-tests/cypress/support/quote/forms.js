@@ -1,6 +1,7 @@
 import { yesRadio, noRadio, submitButton } from '../../e2e/pages/shared';
 import { policyTypePage, tellUsAboutYourPolicyPage } from '../../e2e/pages/quote';
 import { FIELD_IDS } from '../../../constants';
+import { GBP_CURRENCY_CODE } from '../../fixtures/currencies';
 
 const {
   CONTRACT_VALUE,
@@ -41,14 +42,14 @@ export const completeAndSubmitPolicyTypeMultiForm = () => {
 };
 
 export const completeAndSubmitTellUsAboutYourSinglePolicyForm = () => {
-  tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
+  tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
   tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().type('150000');
   tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
   submitButton().click();
 };
 
 export const completeAndSubmitTellUsAboutYourMultiPolicyForm = () => {
-  tellUsAboutYourPolicyPage[CURRENCY].input().select('GBP');
+  tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
   tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('150000');
   tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
   tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
