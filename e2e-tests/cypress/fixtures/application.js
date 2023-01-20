@@ -24,8 +24,8 @@ const {
  * Application data we use and assert in E2E tests.
  */
 const date = new Date();
-const startDate = add(date, { months: 3 });
-const endDate = add(startDate, { months: 6 });
+export const startDate = add(date, { months: 3 });
+export const endDate = add(startDate, { months: 6 });
 
 const application = {
   POLICY_AND_EXPORTS: {

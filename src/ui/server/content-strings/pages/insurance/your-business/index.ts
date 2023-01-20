@@ -9,6 +9,10 @@ const EXPORTER_BUSINESS = {
     ...SHARED,
     ...COMPANY_DETAILS,
   },
+  NATURE_OF_YOUR_BUSINESS: {
+    ...SHARED,
+    PAGE_TITLE: 'Nature of your business',
+  },
 };
 
 export default EXPORTER_BUSINESS;

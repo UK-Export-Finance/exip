@@ -36,4 +36,12 @@ export const EXPORTER_BUSINESS_FIELDS = {
     LABEL: 'Your UK telephone number (optional)',
     HINT: 'We may need to contact you about your application',
   },
+
+  NATURE_OF_YOUR_BUSINESS: {
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
+      LABEL: 'What goods or services does your company supply?',
+      HINT: 'Give a general overview rather than just the exports you want to insure',
+      MAXIMUM: 1000,
+    },
+  },
 };

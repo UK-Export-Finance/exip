@@ -8,3 +8,8 @@ export const COMPANY_DETAILS = {
   TABLE_NAME: 'Your company',
   NO_COMPANY_HOUSE_NUMER: 'I do not have a UK Companies House registration number',
 };
+
+export const NATURE_OF_YOUR_BUSINESS = {
+  ...SHARED,
+  PAGE_TITLE: 'Nature of your business',
+};

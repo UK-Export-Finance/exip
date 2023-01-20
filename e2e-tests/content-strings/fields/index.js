@@ -3,6 +3,20 @@ import { FIELD_VALUES } from '../../constants/field-values';
 import { LINKS } from '../links';
 
 export const FIELDS = {
+  [FIELD_IDS.OPTIONAL_COOKIES]: {
+    OPTIONS: {
+      ACCEPT: {
+        ID: FIELD_VALUES.OPTIONAL_COOKIES.ACCEPT,
+        VALUE: FIELD_VALUES.OPTIONAL_COOKIES.ACCEPT,
+        TEXT: 'Use cookies that measure your use of this service',
+      },
+      REJECT: {
+        ID: FIELD_VALUES.OPTIONAL_COOKIES.REJECT,
+        VALUE: FIELD_VALUES.OPTIONAL_COOKIES.REJECT,
+        TEXT: 'Do not use cookies that measure your use of this service',
+      },
+    },
+  },
   [FIELD_IDS.BUYER_COUNTRY]: {
     HINT: 'Cover is based on the country your buyer is located in, not the destination of your goods or services.',
     SUMMARY: {
@@ -151,20 +165,6 @@ export const FIELDS = {
   [FIELD_IDS.MULTI_POLICY_LENGTH]: {
     SUMMARY: {
       TITLE: 'Policy length',
-    },
-  },
-  [FIELD_IDS.OPTIONAL_COOKIES]: {
-    OPTIONS: {
-      ACCEPT: {
-        ID: FIELD_VALUES.OPTIONAL_COOKIES.ACCEPT,
-        VALUE: FIELD_VALUES.OPTIONAL_COOKIES.ACCEPT,
-        TEXT: 'Use cookies that measure your use of this service',
-      },
-      REJECT: {
-        ID: FIELD_VALUES.OPTIONAL_COOKIES.REJECT,
-        VALUE: FIELD_VALUES.OPTIONAL_COOKIES.REJECT,
-        TEXT: 'Do not use cookies that measure your use of this service',
-      },
     },
   },
   INSURANCE: {

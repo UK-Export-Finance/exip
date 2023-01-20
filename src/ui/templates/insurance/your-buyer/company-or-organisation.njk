@@ -1,0 +1,133 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from 'govuk/components/label/macro.njk' import govukLabel %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <form method="POST" novalidate="novalidate">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half-from-desktop">
+
+        {{ govukInput({
+          label: {
+            text:  FIELDS.NAME.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+              id: FIELDS.NAME.ID + '-label',
+              'data-cy': FIELDS.NAME.ID + '-label'
+            }
+          },
+          classes: "govuk-!-width-three-quarters",
+          attributes: {
+            'data-cy': FIELDS.NAME.ID + '-input'
+          },
+          id: FIELDS.NAME.ID,
+          name: FIELDS.NAME.ID,
+          value: submittedValues[FIELDS.NAME.ID],
+          errorMessage: validationErrors.errorList[FIELDS.NAME.ID] and {
+            text: validationErrors.errorList[FIELDS.NAME.ID].text,
+            attributes: {
+              "data-cy": FIELDS.NAME.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukCharacterCount({
+          name: FIELDS.ADDRESS.ID,
+          id: FIELDS.ADDRESS.ID,
+          maxlength: FIELDS.ADDRESS.MAXIMUM,
+          classes: "govuk-!-width-two-thirds",
+          attributes: {
+              'data-cy': FIELDS.ADDRESS.ID + '-input'
+          },
+          value: submittedValues[FIELDS.ADDRESS.ID],
+          errorMessage: validationErrors.errorList[FIELDS.ADDRESS.ID] and {
+              text: validationErrors.errorList[FIELDS.ADDRESS.ID].text,
+              attributes: {
+                "data-cy": FIELDS.ADDRESS.ID + "-error-message"
+              }
+            },
+          label: {
+            text: FIELDS.ADDRESS.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+                id: FIELDS.ADDRESS.ID + '-label',
+                'data-cy': FIELDS.ADDRESS.ID + '-label'
+            }
+          }
+        }) }}
+
+        {{ govukSelect({
+          id: FIELDS.COUNTRY.ID,
+          name: FIELDS.COUNTRY.ID,
+          label: {
+            text: FIELDS.COUNTRY.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+              'data-cy': FIELDS.COUNTRY.ID + '-label'
+            }
+          },
+          classes: "govuk-!-width-three-quarters",
+          items: countries,
+          attributes: {
+            "data-cy": FIELDS.COUNTRY.ID  + "-input"
+          },
+          errorMessage: validationErrors.errorList[FIELDS.COUNTRY.ID] and {
+            text: validationErrors.errorList[FIELDS.COUNTRY.ID].text,
+            attributes: {
+              "data-cy": FIELDS.COUNTRY.ID + "-error-message"
+            }
+          }
+        }) }}
+
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+            attributes: {
+              'data-cy': 'submit-button'
+            }
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button'
+            }
+          }) }}
+        </div>
+      </div>
+    </div>
+  </form>
+
+{% endblock %}

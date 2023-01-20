@@ -17,7 +17,7 @@ const {
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
-const natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+let natureOfBusinessUrl;
 let url;
 
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - company website validation", () => {
@@ -37,6 +37,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       referenceNumber = id;
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 
       cy.visit(url, {
         auth: {
@@ -94,6 +95,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       yesRadioInput().eq(1).click();
       companyDetails.companyWebsite().clear();
       submitButton().click();
+    });
+
+    it(`should redirect to ${natureOfBusinessUrl}`, () => {
       cy.url().should('eq', natureOfBusinessUrl);
     });
   });
@@ -111,6 +115,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       yesRadioInput().eq(1).click();
       companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
       submitButton().click();
+    });
+
+    it(`should redirect to ${natureOfBusinessUrl}`, () => {
       cy.url().should('eq', natureOfBusinessUrl);
     });
   });
