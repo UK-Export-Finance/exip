@@ -1,5 +1,5 @@
 import { Request, Response, Application } from '../../../../../types';
-import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch } from '.';
+import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch, TEMPLATE } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
@@ -39,6 +39,12 @@ describe('controllers/insurance/business/companies-details', () => {
 
   afterAll(() => {
     jest.resetAllMocks();
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(companyDetailsTemplate);
+    });
   });
 
   describe('pageVariables', () => {

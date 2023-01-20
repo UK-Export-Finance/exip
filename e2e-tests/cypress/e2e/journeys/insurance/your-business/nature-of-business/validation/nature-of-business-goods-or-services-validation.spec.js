@@ -5,6 +5,7 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
+import checkText from '../../../../../helpers/check-text';
 
 const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -54,44 +55,47 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   describe(`${GOODS_OR_SERVICES} error`, () => {
     describe(`when ${GOODS_OR_SERVICES} is left empty`, () => {
       it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
-        natureOfBusiness.goodsOrServices().clear();
+        const fieldId = GOODS_OR_SERVICES;
+        const field = natureOfBusiness[fieldId];
+
+        field.input().clear();
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 1);
-        partials.errorSummaryListItems().first().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY);
-          });
+        checkText(partials.errorSummaryListItems().first(), NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY);
       });
 
       it(`should focus to the ${GOODS_OR_SERVICES} section when clicking the error`, () => {
+        const fieldId = GOODS_OR_SERVICES;
+        const field = natureOfBusiness[fieldId];
+
         partials.errorSummaryListItemLinks().first().click();
-        natureOfBusiness.goodsOrServices().should('have.focus');
+        field.input().should('have.focus');
       });
 
       it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
-        natureOfBusiness.goodsOrServicesError().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(`Error: ${NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY}`);
-          });
-      });
-    });
+        const fieldId = GOODS_OR_SERVICES;
+        const field = natureOfBusiness[fieldId];
 
-    describe(`when ${GOODS_OR_SERVICES} has over 1000 characters`, () => {
-      it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
-        natureOfBusiness.goodsOrServices().clear().type('a'.repeat(FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES].MAXIMUM + 1));
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 1);
-        partials.errorSummaryListItems().first().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].TOO_MANY_CHARACTERS);
-          });
+        checkText(field.error(), `Error: ${NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY}`);
       });
 
-      it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
-        natureOfBusiness.goodsOrServicesError().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(`Error: ${NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].TOO_MANY_CHARACTERS}`);
-          });
+      describe(`when ${GOODS_OR_SERVICES} has over 1000 characters`, () => {
+        it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
+          const fieldId = GOODS_OR_SERVICES;
+          const field = natureOfBusiness[fieldId];
+
+          field.input().clear().type('a'.repeat(FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES].MAXIMUM + 1));
+          submitButton().click();
+          partials.errorSummaryListItems().should('have.length', 1);
+          checkText(partials.errorSummaryListItems().first(), NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].TOO_MANY_CHARACTERS);
+        });
+
+        it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
+          const fieldId = GOODS_OR_SERVICES;
+          const field = natureOfBusiness[fieldId];
+
+          checkText(field.error(), `Error: ${NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].TOO_MANY_CHARACTERS}`);
+        });
       });
     });
   });
@@ -105,8 +109,15 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         },
       });
 
-      natureOfBusiness.goodsOrServices().clear().type('test');
+      const fieldId = GOODS_OR_SERVICES;
+      const field = natureOfBusiness[fieldId];
+
+      field.input().clear().type('test');
       submitButton().click();
+      partials.errorSummaryListItems().should('have.length', 0);
+    });
+
+    it(`should redirect to ${turnoverUrl}`, () => {
       cy.url().should('eq', turnoverUrl);
     });
   });

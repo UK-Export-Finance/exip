@@ -89,7 +89,8 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`
+        expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
       it('should call mapAndSave.companyDetails once with updateBody and application', async () => {

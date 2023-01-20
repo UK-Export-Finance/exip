@@ -7,10 +7,12 @@ const {
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const natureOfBusiness = {
-  goodsOrServices: () => cy.get(`[data-cy="${GOODS_OR_SERVICES}`),
-  goodsOrServicesLabel: () => cy.get(`[data-cy="${GOODS_OR_SERVICES}-label`),
-  goodsOrServicesHint: () => cy.get(`[data-cy="${GOODS_OR_SERVICES}-hint`),
-  goodsOrServicesError: () => cy.get(`[data-cy="${GOODS_OR_SERVICES}-error`),
+  [GOODS_OR_SERVICES]: {
+    input: () => cy.get(`[data-cy="${GOODS_OR_SERVICES}`),
+    label: () => cy.get(`[data-cy="${GOODS_OR_SERVICES}-label`),
+    hint: () => cy.get(`[data-cy="${GOODS_OR_SERVICES}-hint`),
+    error: () => cy.get(`[data-cy="${GOODS_OR_SERVICES}-error`),
+  },
 };
 
 export default natureOfBusiness;

@@ -5,6 +5,7 @@ import { PAGES, BUTTONS, LINKS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
+import checkText from '../../../../helpers/check-text';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
 
@@ -77,36 +78,28 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    checkText(partials.backLink(), LINKS.BACK);
   });
 
   it('should display the headings correctly', () => {
-    partials.headingCaption().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING_CAPTION);
-    });
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+
+    checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it(`should display ${GOODS_OR_SERVICES} input box`, () => {
-    natureOfBusiness.goodsOrServices().should('exist');
-    natureOfBusiness.goodsOrServicesLabel().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES].LABEL);
-    });
+    const fieldId = GOODS_OR_SERVICES;
+    const field = natureOfBusiness[fieldId];
 
-    natureOfBusiness.goodsOrServicesHint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES].HINT);
+    field.input().should('exist');
+    checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES].LABEL);
+
+    field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES].HINT);
   });
 
   it('should display the continue and save and go back button', () => {
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
+    checkText(submitButton(), BUTTONS.CONTINUE);
 
-    saveAndBackButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
-    });
+    checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 });

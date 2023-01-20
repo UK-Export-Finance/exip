@@ -33,15 +33,18 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   describe('continue to next page', () => {
-    it('should not display any validation errors and redirect to the next page if required fields entered correctly', () => {
+    it('should not display any validation errors required fields entered correctly', () => {
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       yesRadioInput().first().click();
       yesRadioInput().eq(1).click();
       submitButton().click();
+    });
+
+    it(`should redirect to ${natureOfBusinessUrl}`, () => {
       cy.url().should('eq', natureOfBusinessUrl);
     });
 
-    it('should not display any validation errors and redirect to the next page if required and optional fields entered correctly', () => {
+    it('should not display any validation errors if required and optional fields entered correctly', () => {
       cy.navigateToUrl(url);
 
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
@@ -50,6 +53,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
       companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
       submitButton().click();
+    });
+
+    it(`should redirect to ${natureOfBusinessUrl}`, () => {
       cy.url().should('eq', natureOfBusinessUrl);
     });
   });

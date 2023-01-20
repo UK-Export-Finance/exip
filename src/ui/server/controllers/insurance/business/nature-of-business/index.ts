@@ -3,13 +3,15 @@ import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import natureofBusinessValidation from './validation';
+import generateValidationErrors from './validation';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { GOODS_OR_SERVICES } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
 
 const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
-const { NAURE_OF_YOUR_BUSINESS: TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
+const { NAURE_OF_YOUR_BUSINESS: NAURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
+
+export const TEMPLATE = NAURE_OF_YOUR_BUSINESS_TEMPLATE;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
@@ -34,7 +36,7 @@ const pageVariables = (referenceNumber: number) => ({
  * gets the template for nature of business page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders company details page with/without previously submitted details
+ * @returns {Express.Response.render} renders nature of business page with/without previously submitted details
  */
 const get = (req: Request, res: Response) => {
   try {
@@ -80,7 +82,7 @@ const post = async (req: Request, res: Response) => {
     };
 
     // run validation on inputs
-    const validationErrors = natureofBusinessValidation(body);
+    const validationErrors = generateValidationErrors(body);
 
     // if any errors then render template with errors
     if (validationErrors && Object.keys(validationErrors).length) {
@@ -103,8 +105,8 @@ const post = async (req: Request, res: Response) => {
     // }
 
     return res.redirect(TURNOVER_ROOT);
-  } catch (error) {
-    console.error('Error posting company details', { error });
+  } catch (err) {
+    console.error('Error posting company details', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };

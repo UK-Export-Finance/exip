@@ -21,21 +21,21 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
  * @returns {object} errors
  */
 const goodsOrServices = (responseBody: RequestBody, errors: object) => {
-  let updatedErrors = errors;
-
   // if body is empty
   if (!objectHasProperty(responseBody, GOODS_OR_SERVICES)) {
     const errorMessage = EXPORTER_BUSINESS[GOODS_OR_SERVICES].IS_EMPTY;
 
-    updatedErrors = generateValidationErrors(GOODS_OR_SERVICES, errorMessage, errors);
-  } else if (responseBody[GOODS_OR_SERVICES].length > NATURE_OF_YOUR_BUSINESS_FIELDS[GOODS_OR_SERVICES].MAXIMUM) {
+    return generateValidationErrors(GOODS_OR_SERVICES, errorMessage, errors);
+  }
+
+  if (responseBody[GOODS_OR_SERVICES].length > NATURE_OF_YOUR_BUSINESS_FIELDS[GOODS_OR_SERVICES].MAXIMUM) {
     // if more than 1000 characters
     const errorMessage = EXPORTER_BUSINESS[GOODS_OR_SERVICES].TOO_MANY_CHARACTERS;
 
-    updatedErrors = generateValidationErrors(GOODS_OR_SERVICES, errorMessage, errors);
+    return generateValidationErrors(GOODS_OR_SERVICES, errorMessage, errors);
   }
 
-  return updatedErrors;
+  return errors;
 };
 
 export default goodsOrServices;

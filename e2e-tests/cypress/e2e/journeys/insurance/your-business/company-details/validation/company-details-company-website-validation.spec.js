@@ -95,6 +95,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       yesRadioInput().eq(1).click();
       companyDetails.companyWebsite().clear();
       submitButton().click();
+    });
+
+    it(`should redirect to ${natureOfBusinessUrl}`, () => {
       cy.url().should('eq', natureOfBusinessUrl);
     });
   });
@@ -112,6 +115,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       yesRadioInput().eq(1).click();
       companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
       submitButton().click();
+    });
+
+    it(`should redirect to ${natureOfBusinessUrl}`, () => {
       cy.url().should('eq', natureOfBusinessUrl);
     });
   });

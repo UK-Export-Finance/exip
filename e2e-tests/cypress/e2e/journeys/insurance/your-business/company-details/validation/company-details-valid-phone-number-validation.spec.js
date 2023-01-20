@@ -4,6 +4,7 @@ import {
   ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
 } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
+import partials from '../../../../../partials';
 
 const {
   EXPORTER_BUSINESS: {
@@ -57,12 +58,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');
-    cy.visit(url, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
   });
 
   describe(`when ${PHONE_NUMBER} is left empty`, () => {
@@ -73,6 +68,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
       companyDetails.phoneNumber().clear();
       submitButton().click();
+      partials.errorSummaryListItems().should('have.length', 0);
+    });
+
+    it('should redirect to next page', () => {
       cy.url().should('eq', natureOfBusinessUrl);
     });
   });
@@ -80,63 +79,162 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe(`when ${PHONE_NUMBER} is correctly entered`, () => {
     describe('valid landline phone number', () => {
       it('should not display validation errors', () => {
+        cy.visit(url, {
+          auth: {
+            username: Cypress.config('basicAuthKey'),
+            password: Cypress.config('basicAuthSecret'),
+          },
+        });
+
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+        partials.errorSummaryListItems().should('have.length', 0);
+      });
+
+      it('should redirect to next page', () => {
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid landline phone number with brackets', () => {
       it('should not display validation errors', () => {
+        cy.visit(url, {
+          auth: {
+            username: Cypress.config('basicAuthKey'),
+            password: Cypress.config('basicAuthSecret'),
+          },
+        });
+
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.BRACKETS);
+        partials.errorSummaryListItems().should('have.length', 0);
+      });
+
+      it('should redirect to next page', () => {
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid landline phone number with dashes', () => {
       it('should not display validation errors', () => {
+        cy.visit(url, {
+          auth: {
+            username: Cypress.config('basicAuthKey'),
+            password: Cypress.config('basicAuthSecret'),
+          },
+        });
+
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.DASHES);
+        partials.errorSummaryListItems().should('have.length', 0);
+      });
+
+      it('should redirect to next page', () => {
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid landline phone number with country code without 0s', () => {
       it('should not display validation errors', () => {
+        cy.visit(url, {
+          auth: {
+            username: Cypress.config('basicAuthKey'),
+            password: Cypress.config('basicAuthSecret'),
+          },
+        });
+
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.FULL_NO_ZEROS);
+        partials.errorSummaryListItems().should('have.length', 0);
+      });
+
+      it('should redirect to next page', () => {
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid landline phone number with country code', () => {
       it('should not display validation errors', () => {
+        cy.visit(url, {
+          auth: {
+            username: Cypress.config('basicAuthKey'),
+            password: Cypress.config('basicAuthSecret'),
+          },
+        });
+
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.FULL);
+        partials.errorSummaryListItems().should('have.length', 0);
+      });
+
+      it('should redirect to next page', () => {
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number', () => {
       it('should not display validation errors', () => {
+        cy.visit(url, {
+          auth: {
+            username: Cypress.config('basicAuthKey'),
+            password: Cypress.config('basicAuthSecret'),
+          },
+        });
+
         completeAllFields(VALID_PHONE_NUMBERS.MOBILE.NORMAL);
+        partials.errorSummaryListItems().should('have.length', 0);
+      });
+
+      it('should redirect to next page', () => {
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number with dashes', () => {
       it('should not display validation errors', () => {
+        cy.visit(url, {
+          auth: {
+            username: Cypress.config('basicAuthKey'),
+            password: Cypress.config('basicAuthSecret'),
+          },
+        });
+
         completeAllFields(VALID_PHONE_NUMBERS.MOBILE.DASH);
+        partials.errorSummaryListItems().should('have.length', 0);
+      });
+
+      it('should redirect to next page', () => {
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number with full country code', () => {
       it('should not display validation errors', () => {
+        cy.visit(url, {
+          auth: {
+            username: Cypress.config('basicAuthKey'),
+            password: Cypress.config('basicAuthSecret'),
+          },
+        });
+
         completeAllFields(VALID_PHONE_NUMBERS.MOBILE.FULL_CODE);
+        partials.errorSummaryListItems().should('have.length', 0);
+      });
+
+      it('should redirect to next page', () => {
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
 
     describe('valid mobile phone number with full country code with brackets', () => {
       it('should not display validation errors', () => {
+        cy.visit(url, {
+          auth: {
+            username: Cypress.config('basicAuthKey'),
+            password: Cypress.config('basicAuthSecret'),
+          },
+        });
+
         completeAllFields(VALID_PHONE_NUMBERS.MOBILE.FULL_CODE_BRACKET);
+        partials.errorSummaryListItems().should('have.length', 0);
+      });
+
+      it('should redirect to next page', () => {
         cy.url().should('eq', natureOfBusinessUrl);
       });
     });
