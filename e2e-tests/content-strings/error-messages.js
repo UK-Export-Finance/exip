@@ -105,7 +105,7 @@ export const ERROR_MESSAGES = {
           BEFORE_EARLIEST: 'You cannot enter a policy start date in the past - enter a future date',
         },
         [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
-          IS_EMPTY: "Select currency you want your policy to be issued in",
+          IS_EMPTY: 'Select currency you want your policy to be issued in',
         },
         SINGLE: {
           [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {

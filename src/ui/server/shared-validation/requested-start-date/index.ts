@@ -32,7 +32,7 @@ const {
  * @returns {Object} Validation errors
  */
 const requestedStartDateRules = (formBody: RequestBody, errors: object) => {
-  let updatedErrors = errors;
+  const updatedErrors = errors;
 
   const dayId = `${FIELD_ID}-day`;
   const monthId = `${FIELD_ID}-month`;
