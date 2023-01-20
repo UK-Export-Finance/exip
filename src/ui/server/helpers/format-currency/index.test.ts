@@ -1,8 +1,9 @@
 import formatCurrency from '.';
+import { GBP_CURRENCY_CODE } from '../../constants';
 
 describe('server/helpers/format-currency', () => {
   const mock = 123456;
-  const currencyCode = 'GBP';
+  const currencyCode = GBP_CURRENCY_CODE;
 
   it('should return a formatted currency', () => {
     const result = formatCurrency(mock, currencyCode, 2);

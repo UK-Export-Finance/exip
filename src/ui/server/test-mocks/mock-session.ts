@@ -1,4 +1,4 @@
-import { API, FIELD_IDS } from '../constants';
+import { API, FIELD_IDS, GBP_CURRENCY_CODE } from '../constants';
 import mockAnswers from './mock-answers';
 import { RequestSession } from '../../types';
 
@@ -17,7 +17,7 @@ const mockSession = {
       [BUYER_COUNTRY]: mockCountry,
       [CURRENCY]: {
         name: 'UK Sterling',
-        isoCode: 'GBP',
+        isoCode: GBP_CURRENCY_CODE,
       },
     },
     insuranceEligibility: {

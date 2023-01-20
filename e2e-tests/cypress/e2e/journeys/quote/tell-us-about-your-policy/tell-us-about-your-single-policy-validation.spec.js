@@ -11,6 +11,7 @@ import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../constants';
 import checkText from '../../../helpers/check-text';
+import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 context('Tell us about the policy you need page - form validation', () => {
   beforeEach(() => {
@@ -141,12 +142,12 @@ context('Tell us about the policy you need page - form validation', () => {
 
   describe('with any validation error', () => {
     it('should render submitted values', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
+      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(GBP_CURRENCY_CODE);
       tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('10');
 
       submitButton().click();
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].inputOptionSelected().contains('GBP');
+      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].inputOptionSelected().contains(GBP_CURRENCY_CODE);
 
       tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input()
         .should('have.attr', 'value', '10');

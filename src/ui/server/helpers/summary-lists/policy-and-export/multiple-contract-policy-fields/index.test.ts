@@ -1,6 +1,6 @@
 import generateMultipleContractPolicyFields from '.';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import { FIELD_IDS } from '../../../../constants';
+import { FIELD_IDS, GBP_CURRENCY_CODE } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatCurrency from '../../../format-currency';
@@ -36,14 +36,14 @@ describe('server/helpers/summary-lists/policy-and-export/multiple-contract-polic
           field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, TOTAL_SALES_TO_BUYER),
           data: mockAnswers,
         },
-        formatCurrency(mockAnswers[TOTAL_SALES_TO_BUYER], 'GBP'),
+        formatCurrency(mockAnswers[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE),
       ),
       fieldGroupItem(
         {
           field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, MAXIMUM_BUYER_WILL_OWE),
           data: mockAnswers,
         },
-        formatCurrency(mockAnswers[MAXIMUM_BUYER_WILL_OWE], 'GBP'),
+        formatCurrency(mockAnswers[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE),
       ),
     ];
 

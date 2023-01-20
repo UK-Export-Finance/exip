@@ -1,4 +1,4 @@
-import { PRODUCT } from '../../../constants';
+import { GBP_CURRENCY_CODE, PRODUCT } from '../../../constants';
 import { LINKS } from '../../links';
 import ELIGIBILITY from './eligibility';
 import POLICY_AND_EXPORTS from './policy-and-exports';
@@ -6,7 +6,7 @@ import EXPORTER_BUSINESS from './your-business';
 import YOUR_BUYER from './your-buyer';
 import formatCurrency from '../../../helpers/format-currency';
 
-const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, 'GBP', 0);
+const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
 
 const ALL_SECTIONS = {
   PAGE_TITLE: 'Apply for UKEF export insurance',
