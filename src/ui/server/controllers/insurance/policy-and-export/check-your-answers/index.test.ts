@@ -15,6 +15,7 @@ const {
     EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
   },
 } = ROUTES;
+
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 
 describe('controllers/insurance/policy-and-export/check-your-answers', () => {

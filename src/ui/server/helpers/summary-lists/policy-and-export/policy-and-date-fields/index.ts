@@ -3,7 +3,7 @@ import { FIELD_IDS, ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
-import { isSinglePolicyType, isMultiPolicyType } from '../../../policy-type';
+import changeLink from '../change-link';
 import { ApplicationPolicyAndExport, SummaryListItemData } from '../../../../../types';
 
 const {
@@ -18,36 +18,9 @@ const {
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: { TYPE_OF_POLICY_CHANGE, SINGLE_CONTRACT_POLICY_CHANGE, MULTIPLE_CONTRACT_POLICY_CHANGE },
+    POLICY_AND_EXPORTS: { TYPE_OF_POLICY_CHANGE },
   },
 } = ROUTES;
-
-/**
- * requestedStartDateChangeLink
- * Get requested start date change link depending on the policy type
- * @param {String} Policy type
- * @param {Number} Application reference number
- * @returns {Object} Requested start date object with link
- */
-export const requestedStartDateChangeLink = (policyType: string, referenceNumber: number) => {
-  if (isSinglePolicyType(policyType)) {
-    return {
-      renderChangeLink: true,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHANGE}#${REQUESTED_START_DATE}-label`,
-    };
-  }
-
-  if (isMultiPolicyType(policyType)) {
-    return {
-      renderChangeLink: true,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${REQUESTED_START_DATE}-label`,
-    };
-  }
-
-  return {
-    renderChangeLink: false,
-  };
-};
 
 /**
  * generatePolicyAndDateFields
@@ -66,7 +39,7 @@ const generatePolicyAndDateFields = (answers: ApplicationPolicyAndExport, refere
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.CONTRACT_POLICY, REQUESTED_START_DATE),
-        ...requestedStartDateChangeLink(answers[POLICY_TYPE], referenceNumber),
+        ...changeLink(answers[POLICY_TYPE], referenceNumber, REQUESTED_START_DATE),
       },
       formatDate(answers[REQUESTED_START_DATE]),
     ),

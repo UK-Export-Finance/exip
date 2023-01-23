@@ -31,7 +31,11 @@ const generateFields = (answers: ApplicationPolicyAndExport, referenceNumber: nu
     fields = [...fields, ...generateMultipleContractPolicyFields(answers, referenceNumber)];
   }
 
-  fields = [...fields, ...generateCreditPeriodAndCurrencyFields(answers, currencies), ...generateAboutGoodsOrServicesFields(answers, countries)];
+  fields = [
+    ...fields,
+    ...generateCreditPeriodAndCurrencyFields(answers, referenceNumber, currencies),
+    ...generateAboutGoodsOrServicesFields(answers, referenceNumber, countries),
+  ];
 
   return fields;
 };

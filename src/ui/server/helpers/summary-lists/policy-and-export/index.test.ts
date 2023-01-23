@@ -21,8 +21,8 @@ describe('server/helpers/summary-lists/policy-and-export', () => {
         const expected = [
           ...generatePolicyAndDateFields(mockAnswers, referenceNumber),
           ...generateSingleContractPolicyFields(mockAnswers, referenceNumber),
-          ...generateCreditPeriodAndCurrencyFields(mockAnswers, mockCurrencies),
-          ...generateAboutGoodsOrServicesFields(mockAnswers, mockCountries),
+          ...generateCreditPeriodAndCurrencyFields(mockAnswers, referenceNumber, mockCurrencies),
+          ...generateAboutGoodsOrServicesFields(mockAnswers, referenceNumber, mockCountries),
         ];
 
         expect(result).toEqual(expected);
@@ -38,8 +38,8 @@ describe('server/helpers/summary-lists/policy-and-export', () => {
         const expected = [
           ...generatePolicyAndDateFields(mockAnswers, referenceNumber),
           ...generateMultipleContractPolicyFields(mockAnswers, referenceNumber),
-          ...generateCreditPeriodAndCurrencyFields(mockAnswers, mockCurrencies),
-          ...generateAboutGoodsOrServicesFields(mockAnswers, mockCountries),
+          ...generateCreditPeriodAndCurrencyFields(mockAnswers, referenceNumber, mockCurrencies),
+          ...generateAboutGoodsOrServicesFields(mockAnswers, referenceNumber, mockCountries),
         ];
 
         expect(result).toEqual(expected);
