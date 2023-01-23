@@ -1,5 +1,6 @@
 import { checkYourAnswersPage } from '../../e2e/pages/insurance/policy-and-export';
 import { FIELD_IDS, FIELD_VALUES } from '../../../constants';
+import { LINKS } from '../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../content-strings/fields/insurance/policy-and-exports';
 import application from '../../fixtures/application';
 import countries from '../../fixtures/countries';
@@ -40,6 +41,11 @@ const assertRow = (fieldId, expectedKey, expectedValue) => {
   checkText(
     row.value(),
     expectedValue,
+  );
+
+  checkText(
+    row.changeLink(),
+    LINKS.CHANGE,
   );
 };
 
