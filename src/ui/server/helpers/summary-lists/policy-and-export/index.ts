@@ -40,8 +40,6 @@ const generateFields = (answers: ApplicationPolicyAndExport, referenceNumber: nu
   return fields;
 };
 
-// TODO: rename answersContent param.
-
 /**
  * policyAndExportSummaryList
  * Create multiple groups with govukSummaryList data structure
@@ -49,12 +47,12 @@ const generateFields = (answers: ApplicationPolicyAndExport, referenceNumber: nu
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const policyAndExportSummaryList = (
-  answersContent: ApplicationPolicyAndExport,
+  answers: ApplicationPolicyAndExport,
   referenceNumber: number,
   countries: Array<Country>,
   currencies: Array<Currency>,
 ) => {
-  const fields = generateFields(answersContent, referenceNumber, countries, currencies);
+  const fields = generateFields(answers, referenceNumber, countries, currencies);
 
   const summaryList = generateSummaryListRows(fields);
 
