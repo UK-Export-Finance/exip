@@ -9,6 +9,7 @@ import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save';
+import isChangeRoute from '../../../../helpers/is-change-route';
 
 const {
   INSURANCE: {
@@ -163,6 +164,10 @@ export const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);

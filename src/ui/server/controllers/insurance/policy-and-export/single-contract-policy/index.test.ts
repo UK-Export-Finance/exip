@@ -255,6 +255,18 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
     });
 
     describe('when there are validation errors', () => {

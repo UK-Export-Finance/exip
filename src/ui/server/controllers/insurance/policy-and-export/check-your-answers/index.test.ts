@@ -83,7 +83,7 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
         }),
         ...pageVariables(refNumber),
         application: res.locals.application,
-        SUMMARY_LIST: policyAndExportSummaryList(mockApplication.policyAndExport, mockCountries, mockCurrencies),
+        SUMMARY_LIST: policyAndExportSummaryList(mockApplication.policyAndExport, mockApplication.referenceNumber, mockCountries, mockCurrencies),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
