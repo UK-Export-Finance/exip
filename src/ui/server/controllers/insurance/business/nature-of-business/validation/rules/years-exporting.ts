@@ -26,8 +26,10 @@ const yearsExporting = (responseBody: RequestBody, errors: object) => {
     return generateValidationErrors(YEARS_EXPORTING, errorMessage, errors);
   }
 
+  const hasDecimal = numberHasDecimal(Number(responseBody[YEARS_EXPORTING]));
+  const isBelowMinimum = isNumberBelowMinimum(Number(responseBody[YEARS_EXPORTING]), 0);
   // if it isn't a number or has a decimal place, then will return an error
-  if (!isNumber(responseBody[YEARS_EXPORTING]) || numberHasDecimal(responseBody[YEARS_EXPORTING]) || isNumberBelowMinimum(responseBody[YEARS_EXPORTING], 0)) {
+  if (!isNumber(responseBody[YEARS_EXPORTING]) || hasDecimal || isBelowMinimum) {
     const errorMessage = EXPORTER_BUSINESS[YEARS_EXPORTING].INCORRECT_FORMAT;
 
     return generateValidationErrors(YEARS_EXPORTING, errorMessage, errors);

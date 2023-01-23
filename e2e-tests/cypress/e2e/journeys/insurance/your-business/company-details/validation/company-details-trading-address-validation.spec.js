@@ -1,5 +1,5 @@
 import { companyDetails } from '../../../../../pages/your-business';
-import { submitButton, yesRadioInput, inlineErrorMessage } from '../../../../../pages/shared';
+import { submitButton, inlineErrorMessage } from '../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../partials';
 import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER } from '../../../../../../../constants';
@@ -52,7 +52,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe('trading address error', () => {
     it('should display validation errors if trading address question is not answered', () => {
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-      yesRadioInput().first().click();
+      companyDetails.tradingNameYesRadioInput().click();
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);
       partials.errorSummaryListItems().first().invoke('text')
@@ -63,7 +63,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     it('should focus to the trading address section when clicking the error', () => {
       partials.errorSummaryListItemLinks().first().click();
-      yesRadioInput().eq(1).should('have.focus');
+      companyDetails.tradingAddressYesRadioInput().should('have.focus');
     });
 
     it('should display the validation error for trading address in radio error summary', () => {

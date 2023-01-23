@@ -1,5 +1,5 @@
 import { companyDetails } from '../../../../../pages/your-business';
-import { submitButton, yesRadioInput } from '../../../../../pages/shared';
+import { submitButton } from '../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../partials';
 import {
@@ -58,8 +58,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe(`${WEBSITE} error`, () => {
     it('should display validation errors if company website incorrectly entered', () => {
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-      yesRadioInput().eq(0).click();
-      yesRadioInput().eq(1).click();
+      companyDetails.tradingNameYesRadioInput().click();
+      companyDetails.tradingAddressYesRadioInput().click();
       companyDetails.companyWebsite().type(WEBSITE_EXAMPLES.INVALID);
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);
@@ -91,8 +91,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         },
       });
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-      yesRadioInput().eq(0).click();
-      yesRadioInput().eq(1).click();
+      companyDetails.tradingNameYesRadioInput().click();
+      companyDetails.tradingAddressYesRadioInput().click();
       companyDetails.companyWebsite().clear();
       submitButton().click();
     });
@@ -111,8 +111,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         },
       });
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-      yesRadioInput().eq(0).click();
-      yesRadioInput().eq(1).click();
+      companyDetails.tradingNameYesRadioInput().click();
+      companyDetails.tradingAddressYesRadioInput().click();
       companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
       submitButton().click();
     });

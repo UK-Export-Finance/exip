@@ -23,6 +23,13 @@ const numberHasDecimal = (value: number) => String(value).includes('.');
  */
 const getPercentageOfNumber = (percent: number, total: number) => ((percent / 100) * total).toFixed(2);
 
-const isNumberBelowMinimum = (value: number | string, minimum: number | string) => Number(value) < Number(minimum);
+/**
+ * isNumberBelowMinimum
+ * checks if number is less than a certain value
+ * @param {Number} value
+ * @param {Number} minimum
+ * @returns {Boolean}
+ */
+const isNumberBelowMinimum = (value: number, minimum: number) => value < minimum;
 
 export { isNumber, numberHasDecimal, getPercentageOfNumber, isNumberBelowMinimum };

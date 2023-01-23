@@ -1,5 +1,5 @@
 import { companyDetails } from '../../../../pages/your-business';
-import { submitButton, yesRadioInput } from '../../../../pages/shared';
+import { submitButton } from '../../../../pages/shared';
 import {
   ROUTES, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANIES_HOUSE_NUMBER,
 } from '../../../../../../constants';
@@ -35,8 +35,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe('continue to next page', () => {
     it('should not display any validation errors required fields entered correctly', () => {
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
+      companyDetails.tradingNameYesRadioInput().click();
+      companyDetails.tradingAddressYesRadioInput().click();
       submitButton().click();
     });
 
@@ -48,8 +48,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       cy.navigateToUrl(url);
 
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
+      companyDetails.tradingNameYesRadioInput().click();
+      companyDetails.tradingAddressYesRadioInput().click();
       companyDetails.phoneNumber().clear().type(VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
       companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
       submitButton().click();

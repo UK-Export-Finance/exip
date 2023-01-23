@@ -42,4 +42,4 @@ Cypress.Commands.add('completeAndSubmitMultipleContractPolicyForm', require('./i
 
 Cypress.Commands.add('completeAndSubmitAboutGoodsOrServicesForm', require('./insurance/complete-and-submit-about-goods-or-services-form'));
 
-Cypress.Commands.add('completeCompanyDetails', require('./insurance/complete-company-details'));
+Cypress.Commands.add('completeAndSubmitCompanyDetails', require('./insurance/complete-and-submit-company-details'));

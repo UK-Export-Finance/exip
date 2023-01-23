@@ -32,7 +32,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
     task.link().click();
 
-    cy.completeCompanyDetails();
+    cy.completeAndSubmitCompanyDetails();
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
