@@ -71,7 +71,7 @@ describe('routes/insurance', () => {
     );
     expect(get).toHaveBeenCalledWith(
       `${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY_CHANGE}`,
-      singleContractPolicyGet,
+      multipleContractPolicyGet,
     );
 
     expect(get).toHaveBeenCalledWith(

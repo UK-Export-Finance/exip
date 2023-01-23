@@ -37,7 +37,7 @@ describe('server/helpers/summary-lists/policy-and-export', () => {
 
         const expected = [
           ...generatePolicyAndDateFields(mockAnswers, referenceNumber),
-          ...generateMultipleContractPolicyFields(mockAnswers),
+          ...generateMultipleContractPolicyFields(mockAnswers, referenceNumber),
           ...generateCreditPeriodAndCurrencyFields(mockAnswers, mockCurrencies),
           ...generateAboutGoodsOrServicesFields(mockAnswers, mockCountries),
         ];

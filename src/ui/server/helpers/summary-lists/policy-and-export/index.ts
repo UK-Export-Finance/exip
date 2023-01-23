@@ -28,7 +28,7 @@ const generateFields = (answers: ApplicationPolicyAndExport, referenceNumber: nu
   }
 
   if (isMultiPolicyType(answers[POLICY_TYPE])) {
-    fields = [...fields, ...generateMultipleContractPolicyFields(answers)];
+    fields = [...fields, ...generateMultipleContractPolicyFields(answers, referenceNumber)];
   }
 
   fields = [...fields, ...generateCreditPeriodAndCurrencyFields(answers, currencies), ...generateAboutGoodsOrServicesFields(answers, countries)];
