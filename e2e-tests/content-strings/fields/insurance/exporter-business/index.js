@@ -43,5 +43,10 @@ export const EXPORTER_BUSINESS_FIELDS = {
       HINT: 'Give a general overview rather than just the exports you want to insure',
       MAXIMUM: 1000,
     },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.YEARS_EXPORTING]: {
+      LABEL: 'How many years have you been exporting for?',
+      HINT: 'Round to the nearest year',
+      SUFFIX: 'Years',
+    },
   },
 };

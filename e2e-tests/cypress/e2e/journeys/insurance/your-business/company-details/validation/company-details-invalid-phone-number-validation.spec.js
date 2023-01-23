@@ -1,5 +1,5 @@
 import { companyDetails } from '../../../../../pages/your-business';
-import { submitButton, yesRadioInput } from '../../../../../pages/shared';
+import { submitButton } from '../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../partials';
 import {
@@ -20,8 +20,8 @@ const errorMessage = COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT;
 
 const completeAllFields = (phoneNumber) => {
   companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-  yesRadioInput().eq(0).click();
-  yesRadioInput().eq(1).click();
+  companyDetails.tradingNameYesRadioInput().click();
+  companyDetails.tradingAddressYesRadioInput().click();
   companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
   companyDetails.phoneNumber().clear().type(phoneNumber);
   submitButton().click();

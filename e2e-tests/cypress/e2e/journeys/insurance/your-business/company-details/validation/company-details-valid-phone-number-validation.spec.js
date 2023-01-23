@@ -1,5 +1,5 @@
 import { companyDetails } from '../../../../../pages/your-business';
-import { submitButton, yesRadioInput } from '../../../../../pages/shared';
+import { submitButton } from '../../../../../pages/shared';
 import {
   ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
 } from '../../../../../../../constants';
@@ -19,8 +19,8 @@ let natureOfBusinessUrl;
 
 const completeAllFields = (phoneNumber) => {
   companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-  yesRadioInput().eq(0).click();
-  yesRadioInput().eq(1).click();
+  companyDetails.tradingNameYesRadioInput().click();
+  companyDetails.tradingAddressYesRadioInput().click();
   companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
   companyDetails.phoneNumber().clear().type(phoneNumber);
   submitButton().click();
@@ -53,8 +53,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe(`when ${PHONE_NUMBER} is left empty`, () => {
     it('should not display validation errors', () => {
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-      yesRadioInput().eq(0).click();
-      yesRadioInput().eq(1).click();
+      companyDetails.tradingNameYesRadioInput().click();
+      companyDetails.tradingAddressYesRadioInput().click();
       companyDetails.companyWebsite().clear().type(WEBSITE_EXAMPLES.VALID);
       companyDetails.phoneNumber().clear();
       submitButton().click();
