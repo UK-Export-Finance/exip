@@ -41,3 +41,5 @@ Cypress.Commands.add('completeAndSubmitSingleContractPolicyForm', require('./ins
 Cypress.Commands.add('completeAndSubmitMultipleContractPolicyForm', require('./insurance/complete-and-submit-multiple-contract-policy-form'));
 
 Cypress.Commands.add('completeAndSubmitAboutGoodsOrServicesForm', require('./insurance/complete-and-submit-about-goods-or-services-form'));
+
+Cypress.Commands.add('completeCompanyDetails', require('./insurance/complete-company-details'));

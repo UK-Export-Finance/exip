@@ -5,7 +5,7 @@ import { objectHasProperty } from '../../../../../../helpers/object';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { FIELDS } from '../../../../../../content-strings/fields/insurance/your-business';
 
-const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_FIELDS } = FIELDS;
+const { NATURE_OF_YOUR_BUSINESS } = FIELDS;
 
 const {
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES },
@@ -28,7 +28,9 @@ const goodsOrServices = (responseBody: RequestBody, errors: object) => {
     return generateValidationErrors(GOODS_OR_SERVICES, errorMessage, errors);
   }
 
-  if (responseBody[GOODS_OR_SERVICES].length > NATURE_OF_YOUR_BUSINESS_FIELDS[GOODS_OR_SERVICES].MAXIMUM) {
+  const { MAXIMUM } = NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES];
+  console.log('aaaaaaaaaaaaaaaaaaaaaaaaa', MAXIMUM);
+  if (responseBody[GOODS_OR_SERVICES].length > MAXIMUM) {
     // check if the field is above the maximum
     const errorMessage = EXPORTER_BUSINESS[GOODS_OR_SERVICES].ABOVE_MAXIMUM;
 

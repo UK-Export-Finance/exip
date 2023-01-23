@@ -12,10 +12,15 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINES
 const {
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
+    YEARS_EXPORTING,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const insuranceStart = ROUTES.INSURANCE.START;
+
+const { taskList } = partials.insurancePartials;
+
+const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 context('Insurance - Your business - Nature of your business page - As an Exporter I want to enter the nature of my business So that UKEF can have clarity on the type of business that I do while processing my Export Insurance Application', () => {
   let referenceNumber;
@@ -25,12 +30,14 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
+    task.link().click();
+
+    cy.completeCompanyDetails();
+
     getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
-
-      cy.navigateToUrl(url);
 
       cy.url().should('eq', url);
     });
@@ -85,6 +92,17 @@ context('Insurance - Your business - Nature of your business page - As an Export
     checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES].LABEL);
 
     field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES].HINT);
+  });
+
+  it(`should display ${YEARS_EXPORTING} input box`, () => {
+    const fieldId = YEARS_EXPORTING;
+    const field = natureOfBusiness[fieldId];
+
+    field.input().should('exist');
+    checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[YEARS_EXPORTING].LABEL);
+
+    field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[YEARS_EXPORTING].HINT);
+    checkText(field.suffix(), FIELDS.NATURE_OF_YOUR_BUSINESS[YEARS_EXPORTING].SUFFIX);
   });
 
   it('should display the continue and save and go back button', () => {

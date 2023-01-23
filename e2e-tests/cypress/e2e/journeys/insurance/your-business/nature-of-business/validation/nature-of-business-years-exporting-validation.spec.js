@@ -2,7 +2,6 @@ import { natureOfBusiness } from '../../../../../pages/your-business';
 import partials from '../../../../../partials';
 import { submitButton } from '../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
 import checkText from '../../../../../helpers/check-text';
@@ -22,15 +21,13 @@ const {
 
 const turnoverUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER}`;
 
-const { MAXIMUM } = FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES];
-
 const completeField = (fieldId, input) => {
   const field = natureOfBusiness[fieldId];
 
   field.input().clear().type(input);
 };
 
-describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - goods or services input validation', () => {
+describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - years exporting input validation', () => {
   let referenceNumber;
   let url;
 
@@ -57,15 +54,15 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  describe(`${GOODS_OR_SERVICES} error`, () => {
-    describe(`when ${GOODS_OR_SERVICES} is left empty`, () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY;
+  describe(`${YEARS_EXPORTING} error`, () => {
+    describe(`when ${YEARS_EXPORTING} is left empty`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[YEARS_EXPORTING].IS_EMPTY;
 
-      it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
-        const fieldId = GOODS_OR_SERVICES;
+      it(`should display validation errors if ${YEARS_EXPORTING} left empty`, () => {
+        const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
-        completeField(YEARS_EXPORTING, '5');
+        completeField(GOODS_OR_SERVICES, 'abc');
 
         field.input().clear();
         submitButton().click();
@@ -73,39 +70,62 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         checkText(partials.errorSummaryListItems().first(), errorMessage);
       });
 
-      it(`should focus to the ${GOODS_OR_SERVICES} section when clicking the error`, () => {
-        const fieldId = GOODS_OR_SERVICES;
+      it(`should focus to the ${YEARS_EXPORTING} section when clicking the error`, () => {
+        const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
         partials.errorSummaryListItemLinks().first().click();
         field.input().should('have.focus');
       });
 
-      it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
-        const fieldId = GOODS_OR_SERVICES;
+      it(`should display the validation error for ${YEARS_EXPORTING}`, () => {
+        const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
         checkText(field.error(), `Error: ${errorMessage}`);
       });
     });
 
-    describe(`when ${GOODS_OR_SERVICES} has over ${MAXIMUM} characters`, () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].ABOVE_MAXIMUM;
+    describe(`when ${YEARS_EXPORTING} is a decimal place number`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[YEARS_EXPORTING].INCORRECT_FORMAT;
 
-      it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
-        const fieldId = GOODS_OR_SERVICES;
+      it(`should display validation errors for ${YEARS_EXPORTING}`, () => {
+        const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
-        completeField(YEARS_EXPORTING, '5');
+        completeField(GOODS_OR_SERVICES, 'abc');
 
-        field.input().clear().type('a'.repeat(MAXIMUM + 1));
+        field.input().clear().type('5.5');
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 1);
         checkText(partials.errorSummaryListItems().first(), errorMessage);
       });
 
       it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
-        const fieldId = GOODS_OR_SERVICES;
+        const fieldId = YEARS_EXPORTING;
+        const field = natureOfBusiness[fieldId];
+
+        checkText(field.error(), `Error: ${errorMessage}`);
+      });
+    });
+
+    describe(`when ${YEARS_EXPORTING} has special characters`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[YEARS_EXPORTING].INCORRECT_FORMAT;
+
+      it(`should display validation errors for ${YEARS_EXPORTING}`, () => {
+        const fieldId = YEARS_EXPORTING;
+        const field = natureOfBusiness[fieldId];
+
+        completeField(GOODS_OR_SERVICES, 'abc');
+
+        field.input().clear().type('5O');
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 1);
+        checkText(partials.errorSummaryListItems().first(), errorMessage);
+      });
+
+      it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
+        const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
         checkText(field.error(), `Error: ${errorMessage}`);
@@ -113,16 +133,16 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     });
   });
 
-  describe(`when ${GOODS_OR_SERVICES} is correctly entered`, () => {
+  describe(`when ${YEARS_EXPORTING} is correctly entered`, () => {
     it('should not display validation errors', () => {
       cy.navigateToUrl(url);
 
-      const fieldId = GOODS_OR_SERVICES;
+      const fieldId = YEARS_EXPORTING;
       const field = natureOfBusiness[fieldId];
 
-      completeField(YEARS_EXPORTING, '5');
+      completeField(GOODS_OR_SERVICES, 'abc');
 
-      field.input().clear().type('test');
+      field.input().clear().type('5');
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 0);
     });

@@ -1,4 +1,4 @@
-import { isNumber, numberHasDecimal, getPercentageOfNumber } from '.';
+import { isNumber, numberHasDecimal, getPercentageOfNumber, isNumberBelowMinimum } from '.';
 
 describe('server/helpers/number', () => {
   describe('isNumber', () => {
@@ -47,6 +47,35 @@ describe('server/helpers/number', () => {
       const expected = '200.00';
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe('isNumberBelowMinimum', () => {
+    it('should return false if value is above minimum', () => {
+      const mockValue = 10;
+      const mockMinimum = 0;
+
+      const result = isNumberBelowMinimum(mockValue, mockMinimum);
+
+      expect(result).toEqual(false);
+    });
+
+    it('should return false if value is the same as minimum', () => {
+      const mockValue = 0;
+      const mockMinimum = 0;
+
+      const result = isNumberBelowMinimum(mockValue, mockMinimum);
+
+      expect(result).toEqual(false);
+    });
+
+    it('should return false if value is the below minimum', () => {
+      const mockValue = -1;
+      const mockMinimum = 0;
+
+      const result = isNumberBelowMinimum(mockValue, mockMinimum);
+
+      expect(result).toEqual(true);
     });
   });
 });

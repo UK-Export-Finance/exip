@@ -27,6 +27,7 @@ const EXPORTER_BUSINESS = {
   },
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES: 'goodsOrServicesSupplied',
+    YEARS_EXPORTING: 'yearsExporting',
   },
 };
 
