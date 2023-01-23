@@ -2,6 +2,20 @@ import { LINKS } from '../../../content-strings';
 import { SummaryListItemData, SummaryListItem } from '../../../../types';
 
 /**
+ * generateItemText
+ * Return "add" or "change" text depending on the passed boolean, for govukSummaryList row
+ * @param {Boolean} Should render change link flag
+ * @returns {String} "Add" or "change" text
+ */
+export const generateItemText = (renderChangeLink?: boolean) => {
+  if (renderChangeLink) {
+    return LINKS.CHANGE;
+  }
+
+  return LINKS.ADD;
+};
+
+/**
  * generateSummaryListRows
  * Map an array of fields with values for govukSummaryList component
  * @param {Array} Array of fields and answers
@@ -34,10 +48,10 @@ const generateSummaryListRows = (fields: Array<SummaryListItemData>, whiteText?:
       },
     } as SummaryListItem;
 
-    if (field.renderChangeLink) {
+    if (field.renderChangeLink || field.renderAddLink) {
       mapped.actions.items.push({
         href: field.href,
-        text: LINKS.CHANGE,
+        text: generateItemText(field.renderChangeLink),
         visuallyHiddenText: field.title,
         attributes: {
           'data-cy': `${field.id}-change-link`,

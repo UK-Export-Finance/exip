@@ -2,6 +2,8 @@ import { submitButton } from '../../../../pages/shared';
 import { typeOfPolicyPage, checkYourAnswersPage } from '../../../../pages/insurance/policy-and-export';
 import partials from '../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { DEFAULT, LINKS } from '../../../../../../content-strings';
+import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 import checkText from '../../../../helpers/check-text';
@@ -10,6 +12,7 @@ const {
   POLICY_AND_EXPORTS: {
     CHECK_YOUR_ANSWERS,
     TYPE_OF_POLICY_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_CHANGE,
   },
 } = ROUTES.INSURANCE;
 
@@ -17,15 +20,29 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
       TYPE_OF_POLICY: { POLICY_TYPE },
+      CONTRACT_POLICY: {
+        MULTIPLE: {
+          TOTAL_MONTHS_OF_COVER,
+          TOTAL_SALES_TO_BUYER,
+          MAXIMUM_BUYER_WILL_OWE,
+        },
+      },
     },
   },
 } = FIELD_IDS;
+
+const { CONTRACT_POLICY: { MULTIPLE: MULTIPLE_FIELD_STRINGS } } = FIELDS;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 const { summaryList } = checkYourAnswersPage;
+
+const assertChangePageUrl = (referenceNumber, fieldId) => {
+  const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${fieldId}-label`;
+  cy.url().should('eq', expected);
+};
 
 const assertAnswersPageUrl = (referenceNumber) => {
   const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}#heading`;
@@ -96,7 +113,56 @@ context('Insurance - Policy and exports - Check your answers - Policy type - As 
         );
       });
 
-      // TODO: it should render empty rows
+      it('should have empty summary list row values and `Add` links for the empty multiple policy specific fields', () => {
+        checkText(
+          summaryList[TOTAL_MONTHS_OF_COVER].value(),
+          DEFAULT.EMPTY,
+        );
+
+        checkText(
+          summaryList[TOTAL_MONTHS_OF_COVER].changeLink(),
+          `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[TOTAL_MONTHS_OF_COVER].SUMMARY.TITLE}`,
+        );
+
+        checkText(
+          summaryList[TOTAL_SALES_TO_BUYER].value(),
+          DEFAULT.EMPTY,
+        );
+
+        checkText(
+          summaryList[TOTAL_SALES_TO_BUYER].changeLink(),
+          `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[TOTAL_SALES_TO_BUYER].SUMMARY.TITLE}`,
+        );
+
+        checkText(
+          summaryList[MAXIMUM_BUYER_WILL_OWE].value(),
+          DEFAULT.EMPTY,
+        );
+
+        checkText(
+          summaryList[MAXIMUM_BUYER_WILL_OWE].changeLink(),
+          `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[MAXIMUM_BUYER_WILL_OWE].SUMMARY.TITLE}`,
+        );
+      });
+
+      describe('`Add` links', () => {
+        it(`should redirect to ${TYPE_OF_POLICY_CHANGE}`, () => {
+          summaryList[TOTAL_MONTHS_OF_COVER].changeLink().click();
+          assertChangePageUrl(referenceNumber, TOTAL_MONTHS_OF_COVER);
+
+          partials.backLink().click();
+
+          summaryList[TOTAL_SALES_TO_BUYER].changeLink().click();
+          assertChangePageUrl(referenceNumber, TOTAL_SALES_TO_BUYER);
+
+          partials.backLink().click();
+
+          summaryList[MAXIMUM_BUYER_WILL_OWE].changeLink().click();
+          assertChangePageUrl(referenceNumber, MAXIMUM_BUYER_WILL_OWE);
+
+          partials.backLink().click();
+        });
+      });
     });
   });
 

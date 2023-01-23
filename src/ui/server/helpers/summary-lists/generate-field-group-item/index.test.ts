@@ -13,7 +13,7 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
   const mockCustomValue = '<p>Mock html</p>';
 
   describe('generateSummaryListItemData', () => {
-    const mockInput = {
+    let mockInput = {
       field: mockField,
       data: mockSubmittedData,
     } as SummaryListItemDataInput;
@@ -40,15 +40,38 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
       });
     });
 
-    describe('when a href and renderChangeLink is passed', () => {
-      it('should return the field with href and renderChangeLink', () => {
+    describe('when a href is passed', () => {
+      beforeEach(() => {
         mockInput.href = '#';
-        mockInput.renderChangeLink = true;
+        mockInput.data = {};
+      });
 
-        const result = generateSummaryListItemData(mockInput);
+      describe(`when the passed value is ${DEFAULT.EMPTY}`, () => {
+        it('should return the field with href and renderAddLink', () => {
+          mockInput.value = DEFAULT.EMPTY;
 
-        expect(result.href).toEqual(mockInput.href);
-        expect(result.renderChangeLink).toEqual(mockInput.renderChangeLink);
+          const result = generateSummaryListItemData(mockInput);
+
+          expect(result.href).toEqual(mockInput.href);
+          expect(result.renderAddLink).toEqual(true);
+          expect(result.renderChangeLink).toEqual(undefined);
+        });
+      });
+
+      describe('when renderChangeLink is passed', () => {
+        it('should return the field with href and renderChangeLink', () => {
+          mockInput = {
+            field: mockField,
+            data: mockSubmittedData,
+            href: '#',
+            renderChangeLink: true,
+          };
+
+          const result = generateSummaryListItemData(mockInput);
+
+          expect(result.href).toEqual(mockInput.href);
+          expect(result.renderChangeLink).toEqual(mockInput.renderChangeLink);
+        });
       });
     });
   });
