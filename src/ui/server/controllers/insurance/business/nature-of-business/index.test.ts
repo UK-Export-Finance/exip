@@ -8,7 +8,7 @@ import generateValidationErrors from './validation';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
-const { GOODS_OR_SERVICES } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
+const { GOODS_OR_SERVICES, YEARS_EXPORTING } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
 
 const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { NAURE_OF_YOUR_BUSINESS: NAURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -49,6 +49,10 @@ describe('controllers/insurance/business/nature-of-business', () => {
           GOODS_OR_SERVICES: {
             ID: GOODS_OR_SERVICES,
             ...NATURE_OF_YOUR_BUSINESS_FIELDS[GOODS_OR_SERVICES],
+          },
+          YEARS_EXPORTING: {
+            ID: YEARS_EXPORTING,
+            ...NATURE_OF_YOUR_BUSINESS_FIELDS[YEARS_EXPORTING],
           },
         },
         POST_ROUTES: {
@@ -124,6 +128,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
       it('should redirect to next page', async () => {
         req.body = {
           [GOODS_OR_SERVICES]: 'test',
+          [YEARS_EXPORTING]: '5',
         };
 
         await post(req, res);
