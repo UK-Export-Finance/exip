@@ -4,6 +4,7 @@ import {
   getYear,
 } from 'date-fns';
 import { FIELD_IDS } from '../../constants';
+import { GBP_CURRENCY_CODE } from './currencies';
 
 const {
   INSURANCE: {
@@ -41,7 +42,7 @@ const application = {
     },
     [TOTAL_CONTRACT_VALUE]: '10000',
     [CREDIT_PERIOD_WITH_BUYER]: 'mock free text',
-    [POLICY_CURRENCY_CODE]: 'GBP',
+    [POLICY_CURRENCY_CODE]: GBP_CURRENCY_CODE,
     [TOTAL_MONTHS_OF_COVER]: '2',
     [TOTAL_SALES_TO_BUYER]: '1000',
     [MAXIMUM_BUYER_WILL_OWE]: '500',

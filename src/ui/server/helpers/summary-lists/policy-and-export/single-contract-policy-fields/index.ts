@@ -1,6 +1,6 @@
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
-import { ROUTES } from '../../../../constants';
+import { GBP_CURRENCY_CODE, ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
@@ -42,7 +42,7 @@ const generateSingleContractPolicyFields = (answers: ApplicationPolicyAndExport,
         renderChangeLink: true,
         href: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHANGE}#${TOTAL_CONTRACT_VALUE}-label`,
       },
-      formatCurrency(answers[TOTAL_CONTRACT_VALUE], 'GBP'),
+      formatCurrency(answers[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE),
     ),
   ] as Array<SummaryListItemData>;
 

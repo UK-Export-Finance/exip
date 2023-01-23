@@ -1,7 +1,7 @@
 import { companyDetails } from '../../../../pages/your-business';
 import partials from '../../../../partials';
 import {
-  heading, submitButton, saveAndBackButton, yesRadioInput, noRadioInput,
+  heading, submitButton, saveAndBackButton,
 } from '../../../../pages/shared';
 import {
   PAGES, BUTTONS, LINKS,
@@ -128,15 +128,15 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     companyDetails.tradingNameLabel().invoke('text').then((text) => {
       expect(text.trim()).equal(FIELDS[TRADING_NAME].LABEL);
     });
-    yesRadioInput().first().should('exist');
+    companyDetails.tradingNameYesRadioInput().should('exist');
 
-    yesRadioInput().first().invoke('attr', 'aria-label').then((text) => {
+    companyDetails.tradingNameYesRadioInput().invoke('attr', 'aria-label').then((text) => {
       expect(text.trim()).equal(`${FIELDS[TRADING_NAME].LABEL} yes radio`);
     });
 
-    noRadioInput().first().should('exist');
+    companyDetails.tradingNameNoRadioInput().should('exist');
 
-    noRadioInput().first().invoke('attr', 'aria-label').then((text) => {
+    companyDetails.tradingNameNoRadioInput().invoke('attr', 'aria-label').then((text) => {
       expect(text.trim()).equal(`${FIELDS[TRADING_NAME].LABEL} no radio`);
     });
   });
@@ -145,13 +145,13 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     companyDetails.tradingAddressLabel().invoke('text').then((text) => {
       expect(text.trim()).equal(FIELDS[TRADING_ADDRESS].LABEL);
     });
-    yesRadioInput().eq(1).should('exist');
-    yesRadioInput().eq(1).invoke('attr', 'aria-label').then((text) => {
+    companyDetails.tradingAddressYesRadioInput().should('exist');
+    companyDetails.tradingAddressYesRadioInput().invoke('attr', 'aria-label').then((text) => {
       expect(text.trim()).equal(`${FIELDS[TRADING_ADDRESS].LABEL} yes radio`);
     });
 
-    noRadioInput().eq(1).should('exist');
-    noRadioInput().eq(1).invoke('attr', 'aria-label').then((text) => {
+    companyDetails.tradingAddressNoRadioInput().should('exist');
+    companyDetails.tradingAddressNoRadioInput().invoke('attr', 'aria-label').then((text) => {
       expect(text.trim()).equal(`${FIELDS[TRADING_ADDRESS].LABEL} no radio`);
     });
   });

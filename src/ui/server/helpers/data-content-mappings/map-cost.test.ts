@@ -1,6 +1,6 @@
 import mapCost from './map-cost';
 import formatCurrency from '../format-currency';
-import { FIELD_IDS, FIELD_VALUES } from '../../constants';
+import { FIELD_IDS, FIELD_VALUES, GBP_CURRENCY_CODE } from '../../constants';
 import { SubmittedDataQuoteEligibility } from '../../../types';
 
 const { CONTRACT_VALUE, CURRENCY, MAX_AMOUNT_OWED, POLICY_TYPE } = FIELD_IDS;
@@ -11,7 +11,7 @@ describe('server/helpers/data-content-mappings/map-cost', () => {
       const mockDataSinglePolicyType = {
         [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
         [CURRENCY]: {
-          isoCode: 'GBP',
+          isoCode: GBP_CURRENCY_CODE,
         },
         [CONTRACT_VALUE]: 10,
       } as SubmittedDataQuoteEligibility;
@@ -31,7 +31,7 @@ describe('server/helpers/data-content-mappings/map-cost', () => {
       const mockDataMultiPolicyType = {
         [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
         [CURRENCY]: {
-          isoCode: 'GBP',
+          isoCode: GBP_CURRENCY_CODE,
         },
         [MAX_AMOUNT_OWED]: 10,
       } as SubmittedDataQuoteEligibility;

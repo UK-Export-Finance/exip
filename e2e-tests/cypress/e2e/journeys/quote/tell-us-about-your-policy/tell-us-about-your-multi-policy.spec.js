@@ -16,6 +16,7 @@ import {
   PAGES,
 } from '../../../../../content-strings';
 import { ROUTES, FIELD_IDS, SUPPORTED_CURRENCIES } from '../../../../../constants';
+import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
@@ -216,7 +217,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
   describe('when form is valid', () => {
     it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().type('100');
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
+      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(GBP_CURRENCY_CODE);
       tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
       tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().select('1');
 

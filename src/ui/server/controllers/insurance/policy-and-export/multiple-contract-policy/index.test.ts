@@ -1,6 +1,6 @@
 import { add, getMonth, getYear } from 'date-fns';
 import { pageVariables, TEMPLATE, totalMonthsOfCoverOptions, get, post } from '.';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, GBP_CURRENCY_CODE, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
@@ -283,7 +283,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
       [TOTAL_SALES_TO_BUYER]: '1000',
       [MAXIMUM_BUYER_WILL_OWE]: '500',
       [CREDIT_PERIOD_WITH_BUYER]: 'Mock',
-      [POLICY_CURRENCY_CODE]: 'GBP',
+      [POLICY_CURRENCY_CODE]: GBP_CURRENCY_CODE,
     };
 
     describe('when there are no validation errors', () => {

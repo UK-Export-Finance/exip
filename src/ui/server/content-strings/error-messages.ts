@@ -1,11 +1,11 @@
-import { FIELD_IDS, PRODUCT } from '../constants';
+import { FIELD_IDS, GBP_CURRENCY_CODE, PRODUCT } from '../constants';
 import formatCurrency from '../helpers/format-currency';
 
 type ErrorMessage = {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 };
 
-const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, 'GBP', 0);
+const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
 
 export const ERROR_MESSAGES = {
   [FIELD_IDS.BUYER_COUNTRY]: 'Select where your buyer is based',
@@ -91,6 +91,10 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
         IS_EMPTY: 'Enter the goods or services that your company supplies',
         ABOVE_MAXIMUM: 'Description of goods and services that your company supplies cannot be more than 1000 characters',
+      },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.YEARS_EXPORTING]: {
+        IS_EMPTY: "Enter how many years you've been exporting for as a whole number - for example, 3 or 7",
+        INCORRECT_FORMAT: "Enter how many years you've been exporting for as a whole number. You cannot enter letters or special characters",
       },
     },
     POLICY_AND_EXPORTS: {

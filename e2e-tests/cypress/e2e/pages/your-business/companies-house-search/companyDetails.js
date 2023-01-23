@@ -1,4 +1,5 @@
 import { FIELD_IDS } from '../../../../../constants/field-ids';
+import { yesRadioInput, noRadioInput } from '../../shared';
 
 const {
   YOUR_COMPANY: {
@@ -27,9 +28,13 @@ const companyDetails = {
 
   tradingName: () => cy.get(`[data-cy="${TRADING_NAME}`),
   tradingNameLabel: () => cy.get(`[data-cy="${TRADING_NAME}-heading`),
+  tradingNameYesRadioInput: () => yesRadioInput().first(),
+  tradingNameNoRadioInput: () => noRadioInput().first(),
 
   tradingAddress: () => cy.get(`[data-cy="${TRADING_ADDRESS}`),
   tradingAddressLabel: () => cy.get(`[data-cy="${TRADING_ADDRESS}-heading`),
+  tradingAddressYesRadioInput: () => yesRadioInput().eq(1),
+  tradingAddressNoRadioInput: () => noRadioInput().eq(1),
 
   companyWebsiteLabel: () => cy.get(`[data-cy="${WEBSITE}-label`),
   companyWebsite: () => cy.get(`[data-cy="${WEBSITE}`),
@@ -39,7 +44,6 @@ const companyDetails = {
   phoneNumberHint: () => cy.get(`[data-cy="${PHONE_NUMBER}-hint`),
   phoneNumber: () => cy.get(`[data-cy="${PHONE_NUMBER}`),
   phoneNumberError: () => cy.get(`[data-cy="${PHONE_NUMBER}-error`),
-
 };
 
 export default companyDetails;

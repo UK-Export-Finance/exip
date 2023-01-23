@@ -1,6 +1,6 @@
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
-import { ROUTES } from '../../../../constants';
+import { GBP_CURRENCY_CODE, ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatCurrency from '../../../format-currency';
@@ -44,7 +44,7 @@ const generateMultipleContractPolicyFields = (answers: ApplicationPolicyAndExpor
         renderChangeLink: true,
         href: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${TOTAL_SALES_TO_BUYER}-label`,
       },
-      answers[TOTAL_SALES_TO_BUYER] && formatCurrency(answers[TOTAL_SALES_TO_BUYER], 'GBP'),
+      answers[TOTAL_SALES_TO_BUYER] && formatCurrency(answers[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE),
     ),
     fieldGroupItem(
       {
@@ -53,7 +53,7 @@ const generateMultipleContractPolicyFields = (answers: ApplicationPolicyAndExpor
         renderChangeLink: true,
         href: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${MAXIMUM_BUYER_WILL_OWE}-label`,
       },
-      answers[MAXIMUM_BUYER_WILL_OWE] && formatCurrency(answers[MAXIMUM_BUYER_WILL_OWE], 'GBP'),
+      answers[MAXIMUM_BUYER_WILL_OWE] && formatCurrency(answers[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE),
     ),
   ] as Array<SummaryListItemData>;
 

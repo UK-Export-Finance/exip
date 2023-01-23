@@ -48,6 +48,8 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
     },
   };
 
+  const currencyCode = mockCurrencies[0].isoCode;
+
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
@@ -294,6 +296,36 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+
+      describe('when a policy currency code is submitted', () => {
+        const mockFormBody = {
+          [POLICY_CURRENCY_CODE]: currencyCode,
+        };
+
+        beforeEach(() => {
+          req.body = mockFormBody;
+        });
+
+        it('should render template with currencies mapped to submitted currency', async () => {
+          await post(req, res);
+
+          const expectedCurrencies = mapCurrencies(mockCurrencies, currencyCode);
+
+          const expectedVariables = {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY,
+              BACK_LINK: req.headers.referer,
+            }),
+            ...pageVariables(refNumber),
+            application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
+            submittedValues: req.body,
+            currencies: expectedCurrencies,
+            validationErrors: generateValidationErrors(req.body),
+          };
+
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+        });
       });
     });
 
