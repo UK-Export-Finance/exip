@@ -3,15 +3,16 @@ import { FIELD_IDS } from '../../../../../../constants';
 import { RequestBody } from '../../../../../../../types';
 import { objectHasProperty } from '../../../../../../helpers/object';
 import generateValidationErrors from '../../../../../../helpers/validation';
-import { FIELDS } from '../../../../../../content-strings/fields/insurance/your-business';
-
-const { NATURE_OF_YOUR_BUSINESS } = FIELDS;
 
 const {
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: FIELD_ID },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
-const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
+const {
+  EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },
+} = ERROR_MESSAGES.INSURANCE;
+
+export const MAXIMUM = 1000;
 
 /**
  * validates goods or services input
@@ -22,19 +23,13 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
  */
 const goodsOrServices = (responseBody: RequestBody, errors: object) => {
   // if body is empty
-  if (!objectHasProperty(responseBody, GOODS_OR_SERVICES)) {
-    const errorMessage = EXPORTER_BUSINESS[GOODS_OR_SERVICES].IS_EMPTY;
-
-    return generateValidationErrors(GOODS_OR_SERVICES, errorMessage, errors);
+  if (!objectHasProperty(responseBody, FIELD_ID)) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
   }
 
-  const { MAXIMUM } = NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES];
-  console.log('aaaaaaaaaaaaaaaaaaaaaaaaa', MAXIMUM);
-  if (responseBody[GOODS_OR_SERVICES].length > MAXIMUM) {
-    // check if the field is above the maximum
-    const errorMessage = EXPORTER_BUSINESS[GOODS_OR_SERVICES].ABOVE_MAXIMUM;
-
-    return generateValidationErrors(GOODS_OR_SERVICES, errorMessage, errors);
+  // check if the field is above the maximum
+  if (responseBody[FIELD_ID].length > MAXIMUM) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors);
   }
 
   return errors;

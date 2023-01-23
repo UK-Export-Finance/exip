@@ -10,7 +10,6 @@ export const FIELDS = {
     [GOODS_OR_SERVICES]: {
       LABEL: 'What goods or services does your company supply?',
       HINT: 'Give a general overview rather than just the exports you want to insure',
-      MAXIMUM: 1000,
     },
     [YEARS_EXPORTING]: {
       LABEL: 'How many years have you been exporting for?',
