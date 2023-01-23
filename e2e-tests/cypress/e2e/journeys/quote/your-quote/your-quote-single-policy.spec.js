@@ -7,6 +7,7 @@ import {
   QUOTE_TITLES,
 } from '../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
+import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.QUOTE.YOUR_QUOTE;
 
@@ -34,7 +35,7 @@ const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
   [CONTRACT_VALUE]: '150000',
-  [CURRENCY]: 'GBP',
+  [CURRENCY]: GBP_CURRENCY_CODE,
   [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
   [SINGLE_POLICY_LENGTH]: '3',
   [CREDIT_PERIOD]: '1',

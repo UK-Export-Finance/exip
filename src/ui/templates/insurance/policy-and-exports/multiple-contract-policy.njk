@@ -190,7 +190,7 @@
             'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-input'
           },
           maxlength: FIELDS.CREDIT_PERIOD_WITH_BUYER.MAXIMUM,
-          value: submittedValues[FIELDS.TOTAL_CONTRACT_VALUE.ID] or application.policyAndExport[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID],
+          value: submittedValues[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] or application.policyAndExport[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] and {
             text: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID].text,
             attributes: {

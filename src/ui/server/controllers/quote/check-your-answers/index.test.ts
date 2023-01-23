@@ -1,6 +1,6 @@
 import { TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../constants';
+import { FIELD_IDS, FIELD_VALUES, GBP_CURRENCY_CODE, ROUTES, TEMPLATES } from '../../../constants';
 import { mapAnswersToContent } from '../../../helpers/data-content-mappings/map-answers-to-content';
 import { answersSummaryList } from '../../../helpers/summary-lists/answers-summary-list';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
@@ -22,7 +22,7 @@ describe('controllers/quote/check-your-answers', () => {
       [CREDIT_PERIOD]: 2,
       [CURRENCY]: {
         name: 'UK Sterling',
-        isoCode: 'GBP',
+        isoCode: GBP_CURRENCY_CODE,
       },
       [MAX_AMOUNT_OWED]: 1234,
       [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,

@@ -1,4 +1,5 @@
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
+import { GBP_CURRENCY_CODE } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
@@ -20,8 +21,11 @@ const {
  */
 const generateSingleContractPolicyFields = (answers: ApplicationPolicyAndExport) => {
   const fields = [
+    fieldGroupItem(
+      { field: getFieldById(FIELDS.CONTRACT_POLICY.SINGLE, TOTAL_CONTRACT_VALUE) },
+      formatCurrency(answers[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE),
+    ),
     fieldGroupItem({ field: getFieldById(FIELDS.CONTRACT_POLICY.SINGLE, CONTRACT_COMPLETION_DATE) }, formatDate(answers[CONTRACT_COMPLETION_DATE])),
-    fieldGroupItem({ field: getFieldById(FIELDS.CONTRACT_POLICY.SINGLE, TOTAL_CONTRACT_VALUE) }, formatCurrency(answers[TOTAL_CONTRACT_VALUE], 'GBP')),
   ] as Array<SummaryListItemData>;
 
   return fields;

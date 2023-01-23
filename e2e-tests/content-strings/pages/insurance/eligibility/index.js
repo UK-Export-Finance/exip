@@ -1,11 +1,7 @@
 import { PRODUCT } from '../../../../constants';
+import formatCurrency from '../../../../cypress/e2e/helpers/format-currency';
 
-export const MAX_COVER_AMOUNT = PRODUCT.MAX_COVER_AMOUNT_IN_GBP.toLocaleString('en', {
-  style: 'currency',
-  currency: 'GBP',
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 0,
-});
+export const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP);
 
 export const CHECK_IF_ELIGIBLE = {
   PAGE_TITLE: 'Check you can apply for UKEF insurance for your export',
