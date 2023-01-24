@@ -109,12 +109,64 @@
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
+        <h2 class="govuk-label--m" data-cy="{{FIELDS.EMPLOYEES_UK.ID}}-heading">{{FIELDS.EMPLOYEES_UK.HEADING}}</h2>
+
+        {{ govukInput({
+          id: FIELDS.EMPLOYEES_UK.ID,
+          name: FIELDS.EMPLOYEES_UK.ID,
+          value: submittedValues[FIELDS.EMPLOYEES_UK.ID],
+          label: {
+            text: FIELDS.EMPLOYEES_UK.LABEL,
+            classes: "govuk-body",
+            isPageHeading: false,
+             attributes: {
+              "data-cy": FIELDS.EMPLOYEES_UK.ID + "-label"
+            }
+          },
+          classes: "govuk-input--width-10",
+          attributes: {
+            "data-cy": FIELDS.EMPLOYEES_UK.ID
+          },
+          errorMessage: validationErrors.errorList[FIELDS.EMPLOYEES_UK.ID] and {
+            text: validationErrors.errorList[FIELDS.EMPLOYEES_UK.ID].text,
+            attributes: {
+              "data-cy": FIELDS.EMPLOYEES_UK.ID + "-error"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          id: FIELDS.EMPLOYEES_INTERNATIONAL.ID,
+          name: FIELDS.EMPLOYEES_INTERNATIONAL.ID,
+          value: submittedValues[FIELDS.EMPLOYEES_INTERNATIONAL.ID],
+          label: {
+            text: FIELDS.EMPLOYEES_INTERNATIONAL.LABEL,
+            classes: "govuk-body",
+            isPageHeading: false,
+             attributes: {
+              "data-cy": FIELDS.EMPLOYEES_INTERNATIONAL.ID + "-label"
+            }
+          },
+          classes: "govuk-input--width-10",
+          attributes: {
+            "data-cy": FIELDS.EMPLOYEES_INTERNATIONAL.ID
+          },
+          errorMessage: validationErrors.errorList[FIELDS.EMPLOYEES_INTERNATIONAL.ID] and {
+            text: validationErrors.errorList[FIELDS.EMPLOYEES_INTERNATIONAL.ID].text,
+            attributes: {
+              "data-cy": FIELDS.EMPLOYEES_INTERNATIONAL.ID + "-error"
+            }
+          }
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="govuk-button-group">
           {{ govukButton({
             text: CONTENT_STRINGS.BUTTONS.CONTINUE,
             attributes: {
               'data-cy': 'submit-button',
-              'formaction' : POST_ROUTES.NATURE_OF_BUSINESS
+              'formaction': POST_ROUTES.NATURE_OF_BUSINESS
             }
           }) }}
 
@@ -123,7 +175,7 @@
             classes: "govuk-button--secondary",
             attributes: {
               'data-cy': 'save-and-back-button',
-              'formaction' : POST_ROUTES.SAVE_AND_BACK_URL
+              'formaction': POST_ROUTES.SAVE_AND_BACK_URL
             }
           }) }}
         </div>

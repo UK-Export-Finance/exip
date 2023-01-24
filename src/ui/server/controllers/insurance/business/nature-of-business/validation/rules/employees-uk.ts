@@ -6,7 +6,7 @@ import { objectHasProperty } from '../../../../../../helpers/object';
 import generateValidationErrors from '../../../../../../helpers/validation';
 
 const {
-  NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING: FIELD_ID },
+  NATURE_OF_YOUR_BUSINESS: { EMPLOYEES_UK: FIELD_ID },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const {
@@ -14,13 +14,13 @@ const {
 } = ERROR_MESSAGES.INSURANCE;
 
 /**
- * validates years exporting input
+ * validates number of uk employees input
  * only allows number without decimal
  * @param {RequestBody} responseBody
  * @param {object} errors
  * @returns {object} errors
  */
-const yearsExporting = (responseBody: RequestBody, errors: object) => {
+const employeesUK = (responseBody: RequestBody, errors: object) => {
   if (!objectHasProperty(responseBody, FIELD_ID)) {
     const errorMessage = ERROR_MESSAGE.IS_EMPTY;
 
@@ -31,4 +31,4 @@ const yearsExporting = (responseBody: RequestBody, errors: object) => {
   return wholeNumberValidation(responseBody, errors, errorMessage, FIELD_ID);
 };
 
-export default yearsExporting;
+export default employeesUK;
