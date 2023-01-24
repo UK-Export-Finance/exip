@@ -33,12 +33,7 @@ const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID]
 const { taskList } = partials.insurancePartials;
 
 const goToPageDirectly = (referenceNumber) => {
-  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`, {
-    auth: {
-      username: Cypress.config('basicAuthKey'),
-      password: Cypress.config('basicAuthSecret'),
-    },
-  });
+  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`);
 };
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;

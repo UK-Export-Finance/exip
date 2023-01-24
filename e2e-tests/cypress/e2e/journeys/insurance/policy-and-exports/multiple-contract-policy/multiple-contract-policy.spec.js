@@ -63,12 +63,7 @@ const {
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 const goToPageDirectly = (referenceNumber) => {
-  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`, {
-    auth: {
-      username: Cypress.config('basicAuthKey'),
-      password: Cypress.config('basicAuthSecret'),
-    },
-  });
+  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`);
 };
 
 context('Insurance - Policy and exports - Multiple contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {

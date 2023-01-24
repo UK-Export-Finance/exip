@@ -47,12 +47,7 @@ const {
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 const goToPageDirectly = (referenceNumber) => {
-  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`, {
-    auth: {
-      username: Cypress.config('basicAuthKey'),
-      password: Cypress.config('basicAuthSecret'),
-    },
-  });
+  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
 };
 
 context('Insurance - Policy and exports - About goods or services page - As an exporter, I want to enter the details of the export contract', () => {
