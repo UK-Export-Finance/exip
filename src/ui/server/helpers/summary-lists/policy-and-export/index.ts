@@ -46,12 +46,7 @@ const generateFields = (answers: ApplicationPolicyAndExport, referenceNumber: nu
  * @param {Object} All answers/submitted data in a simple object.text structure
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
-const policyAndExportSummaryList = (
-  answers: ApplicationPolicyAndExport,
-  referenceNumber: number,
-  countries: Array<Country>,
-  currencies: Array<Currency>,
-) => {
+const policyAndExportSummaryList = (answers: ApplicationPolicyAndExport, referenceNumber: number, countries: Array<Country>, currencies: Array<Currency>) => {
   const fields = generateFields(answers, referenceNumber, countries, currencies);
 
   const summaryList = generateSummaryListRows(fields);
