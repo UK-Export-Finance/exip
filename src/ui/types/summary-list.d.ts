@@ -13,6 +13,7 @@ type SummaryListItemDataInput = {
   field: SummaryListItemDataInputField;
   href?: string;
   renderChangeLink?: boolean;
+  renderAddLink?: boolean;
   title?: string;
   value?: string;
 };
@@ -21,6 +22,7 @@ type SummaryListItemData = {
   id: string;
   href?: string;
   renderChangeLink?: boolean;
+  renderAddLink?: boolean;
   title?: string;
   value?: string;
 };

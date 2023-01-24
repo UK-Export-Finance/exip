@@ -1,9 +1,10 @@
 import generatePolicyAndDateFields from '.';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import { FIELD_IDS } from '../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
+import changeLink from '../change-link';
 import { mockApplication } from '../../../../test-mocks';
 
 const {
@@ -15,18 +16,35 @@ const {
   },
 } = FIELD_IDS;
 
+const {
+  INSURANCE: {
+    INSURANCE_ROOT,
+    POLICY_AND_EXPORTS: { TYPE_OF_POLICY_CHANGE },
+  },
+} = ROUTES;
+
 describe('server/helpers/summary-lists/policy-and-export/policy-and-date-fields', () => {
+  const { referenceNumber } = mockApplication;
+
   const mockAnswers = mockApplication.policyAndExport;
 
   it('should return fields and values from the submitted data/answers', () => {
-    const result = generatePolicyAndDateFields(mockAnswers);
+    const result = generatePolicyAndDateFields(mockAnswers, referenceNumber);
 
     const expected = [
       fieldGroupItem({
         field: getFieldById(FIELDS, POLICY_TYPE),
         data: mockAnswers,
+        href: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHANGE}#heading`,
+        renderChangeLink: true,
       }),
-      fieldGroupItem({ field: getFieldById(FIELDS.CONTRACT_POLICY, REQUESTED_START_DATE) }, formatDate(mockAnswers[REQUESTED_START_DATE])),
+      fieldGroupItem(
+        {
+          field: getFieldById(FIELDS.CONTRACT_POLICY, REQUESTED_START_DATE),
+          ...changeLink(mockAnswers[POLICY_TYPE], referenceNumber, REQUESTED_START_DATE),
+        },
+        formatDate(mockAnswers[REQUESTED_START_DATE]),
+      ),
     ];
 
     expect(result).toEqual(expected);

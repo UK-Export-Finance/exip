@@ -43,3 +43,6 @@ Cypress.Commands.add('completeAndSubmitMultipleContractPolicyForm', require('./i
 Cypress.Commands.add('completeAndSubmitAboutGoodsOrServicesForm', require('./insurance/complete-and-submit-about-goods-or-services-form'));
 
 Cypress.Commands.add('completeAndSubmitCompanyDetails', require('./insurance/complete-and-submit-company-details'));
+
+Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-change-answers-page-url'));
+Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));

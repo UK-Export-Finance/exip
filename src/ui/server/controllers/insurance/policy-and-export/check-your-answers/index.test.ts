@@ -15,6 +15,7 @@ const {
     EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
   },
 } = ROUTES;
+
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 
 describe('controllers/insurance/policy-and-export/check-your-answers', () => {
@@ -83,7 +84,7 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
         }),
         ...pageVariables(refNumber),
         application: res.locals.application,
-        SUMMARY_LIST: policyAndExportSummaryList(mockApplication.policyAndExport, mockCountries, mockCurrencies),
+        SUMMARY_LIST: policyAndExportSummaryList(mockApplication.policyAndExport, mockApplication.referenceNumber, mockCountries, mockCurrencies),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
