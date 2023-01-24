@@ -306,12 +306,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     describe('after submitting the form', () => {
       it('should retain the `type of policy and exports` task status as `in progress`', () => {
-        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
         task.status().invoke('text').then((text) => {
           const expected = TASKS.STATUS.IN_PROGRESS;

@@ -194,12 +194,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
     describe('after submitting the form', () => {
       it('should retain the `type of policy and exports` task status as `completed`', () => {
-        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
         task.status().invoke('text').then((text) => {
           const expected = TASKS.STATUS.COMPLETED;

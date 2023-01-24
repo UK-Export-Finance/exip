@@ -245,12 +245,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     describe('after submitting an answer', () => {
       it('should update the status of task `type of policy and exports` to `in progress`', () => {
-        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
 
         task.status().invoke('text').then((text) => {
           const expected = TASKS.STATUS.IN_PROGRESS;

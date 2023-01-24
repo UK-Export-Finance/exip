@@ -74,12 +74,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe(`when ${WEBSITE} is left empty`, () => {
     it('should not display validation errors', () => {
-      cy.navigateToUrl(url, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
+      cy.navigateToUrl(url);
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       companyDetails.tradingNameYesRadioInput().click();
       companyDetails.tradingAddressYesRadioInput().click();
@@ -94,12 +89,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe(`when ${WEBSITE} is correctly entered`, () => {
     it('should not display validation errors', () => {
-      cy.navigateToUrl(url, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
+      cy.navigateToUrl(url);
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
       companyDetails.tradingNameYesRadioInput().click();
       companyDetails.tradingAddressYesRadioInput().click();
