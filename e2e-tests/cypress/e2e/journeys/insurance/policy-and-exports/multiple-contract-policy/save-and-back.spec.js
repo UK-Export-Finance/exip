@@ -22,6 +22,7 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
+        CREDIT_PERIOD_WITH_BUYER,
         MULTIPLE: { TOTAL_SALES_TO_BUYER },
       },
     },
@@ -149,6 +150,39 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
 
       it('should have the submitted value', () => {
         multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().should('have.value', application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
+      });
+    });
+  });
+
+  describe('when removing a previously submitted `buyer credit period` value', () => {
+    const field = multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
+
+    before(() => {
+      // submit a value
+      field.input().type('Test');
+      submitButton().click();
+
+      // go back to the page
+      partials.backLink().click();
+
+      field.input().clear();
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
+      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
+      cy.url().should('eq', expected);
+    });
+
+    describe('when going back to the page', () => {
+      before(() => {
+        task.link().click();
+        submitButton().click();
+      });
+
+      it('should have no value in `buyer credit period`', () => {
+        field.input().should('have.value', '');
       });
     });
   });
