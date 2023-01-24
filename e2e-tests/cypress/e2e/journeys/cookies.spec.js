@@ -311,12 +311,7 @@ context('Cookies page', () => {
 
       describe('when a user navigates to the cookies page directly via URL and optional cookies are submitted as `accept`', () => {
         beforeEach(() => {
-          cy.visit(ROUTES.COOKIES, {
-            auth: {
-              username: Cypress.config('basicAuthKey'),
-              password: Cypress.config('basicAuthSecret'),
-            },
-          });
+          cy.navigateToUrl(ROUTES.COOKIES);
 
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
           submitButton().click();
@@ -337,12 +332,7 @@ context('Cookies page', () => {
 
       describe('when a user navigates to the cookies page directly via URL and optional cookies are submitted as `reject`', () => {
         beforeEach(() => {
-          cy.visit(ROUTES.COOKIES, {
-            auth: {
-              username: Cypress.config('basicAuthKey'),
-              password: Cypress.config('basicAuthSecret'),
-            },
-          });
+          cy.navigateToUrl(ROUTES.COOKIES);
 
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
           submitButton().click();

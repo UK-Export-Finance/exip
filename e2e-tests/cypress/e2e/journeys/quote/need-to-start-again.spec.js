@@ -21,12 +21,7 @@ context('Get a Quote - Need to start again exit page', () => {
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
 
-    cy.visit(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
 
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');

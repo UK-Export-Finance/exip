@@ -11,12 +11,7 @@ const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
 context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover - submit `no - UK goods/services is below the minimum`', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     completeStartForm();
     completeCheckIfEligibleForm();

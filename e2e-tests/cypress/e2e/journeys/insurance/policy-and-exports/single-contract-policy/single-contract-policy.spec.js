@@ -57,12 +57,7 @@ const {
 } = FIELD_IDS;
 
 const goToPageDirectly = (referenceNumber) => {
-  cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`, {
-    auth: {
-      username: Cypress.config('basicAuthKey'),
-      password: Cypress.config('basicAuthSecret'),
-    },
-  });
+  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`);
 };
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
@@ -71,12 +66,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   let referenceNumber;
 
   before(() => {
-    cy.visit(START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
@@ -270,12 +260,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
     describe('after submitting the form', () => {
       it('should retain the `type of policy and exports` task status as `in progress`', () => {
-        cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
         task.status().invoke('text').then((text) => {
           const expected = TASKS.STATUS.IN_PROGRESS;

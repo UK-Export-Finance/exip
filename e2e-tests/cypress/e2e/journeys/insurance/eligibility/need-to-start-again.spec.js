@@ -11,12 +11,7 @@ const buyerCountryRoute = ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY;
 
 context('Insurance Eligibility - Need to start again exit page', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');
@@ -26,12 +21,7 @@ context('Insurance Eligibility - Need to start again exit page', () => {
 
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
 
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD);
 
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN);
   });

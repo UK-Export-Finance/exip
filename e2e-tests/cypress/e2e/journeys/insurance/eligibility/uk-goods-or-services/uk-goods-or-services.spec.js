@@ -30,12 +30,7 @@ const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
@@ -70,12 +65,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
 
     // go back to page
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {

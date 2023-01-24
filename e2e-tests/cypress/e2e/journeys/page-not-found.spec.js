@@ -7,12 +7,7 @@ const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
 
 context('404 Page not found', () => {
   before(() => {
-    cy.visit('/test', {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl('/test');
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {

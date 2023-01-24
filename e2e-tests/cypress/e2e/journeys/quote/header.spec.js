@@ -4,12 +4,7 @@ import { ROUTES } from '../../../../constants';
 
 context('Get a quote - header', () => {
   before(() => {
-    cy.visit(ROUTES.ROOT, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.ROOT);
   });
 
   beforeEach(() => {

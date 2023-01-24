@@ -30,12 +30,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
   let referenceNumber;
 
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
@@ -44,12 +39,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
 
       const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
-      cy.visit(url, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
+      cy.navigateToUrl(url);
 
       cy.url().should('eq', url);
     });

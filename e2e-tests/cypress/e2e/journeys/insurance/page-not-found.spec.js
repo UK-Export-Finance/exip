@@ -7,12 +7,7 @@ const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
 
 context('Insurance - page not found', () => {
   before(() => {
-    cy.visit(`${ROUTES.INSURANCE.ROOT}/invalid-ref-number${ROUTES.INSURANCE.ALL_SECTIONS}`, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(`${ROUTES.INSURANCE.ROOT}/invalid-ref-number${ROUTES.INSURANCE.ALL_SECTIONS}`);
   });
 
   beforeEach(() => {

@@ -45,12 +45,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   let referenceNumber;
 
   before(() => {
-    cy.visit(INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(INSURANCE.START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 

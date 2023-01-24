@@ -19,12 +19,7 @@ context('Insurance - All sections - new application', () => {
   let referenceNumber;
 
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
@@ -63,12 +58,7 @@ context('Insurance - All sections - new application', () => {
     cy.url().should('include', expectedUrl);
 
     // go back to page
-    cy.visit(`${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(`${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {

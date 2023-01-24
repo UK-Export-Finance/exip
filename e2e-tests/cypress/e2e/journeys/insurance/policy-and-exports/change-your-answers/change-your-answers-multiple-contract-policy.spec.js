@@ -39,12 +39,7 @@ context('Insurance - Policy and exports - Check your answers - Multiple contract
   let referenceNumber;
 
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 

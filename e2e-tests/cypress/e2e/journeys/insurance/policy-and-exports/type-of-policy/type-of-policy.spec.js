@@ -33,12 +33,7 @@ const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID]
 const { taskList } = partials.insurancePartials;
 
 const goToPageDirectly = (referenceNumber) => {
-  cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`, {
-    auth: {
-      username: Cypress.config('basicAuthKey'),
-      password: Cypress.config('basicAuthSecret'),
-    },
-  });
+  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`);
 };
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
@@ -47,12 +42,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
   let referenceNumber;
 
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
@@ -255,12 +245,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     describe('after submitting an answer', () => {
       it('should update the status of task `type of policy and exports` to `in progress`', () => {
-        cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
 
         task.status().invoke('text').then((text) => {
           const expected = TASKS.STATUS.IN_PROGRESS;

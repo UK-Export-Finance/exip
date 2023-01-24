@@ -47,24 +47,14 @@ const {
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 const goToPageDirectly = (referenceNumber) => {
-  cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`, {
-    auth: {
-      username: Cypress.config('basicAuthKey'),
-      password: Cypress.config('basicAuthSecret'),
-    },
-  });
+  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
 };
 
 context('Insurance - Policy and exports - About goods or services page - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
 
   before(() => {
-    cy.visit(START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
@@ -204,12 +194,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
     describe('after submitting the form', () => {
       it('should retain the `type of policy and exports` task status as `completed`', () => {
-        cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
         task.status().invoke('text').then((text) => {
           const expected = TASKS.STATUS.COMPLETED;

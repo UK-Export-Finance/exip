@@ -56,12 +56,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     cy.url().should('include', ROUTES.QUOTE.EXPORTER_LOCATION);
 
     // go back to page
-    cy.visit(ROUTES.QUOTE.UK_GOODS_OR_SERVICES, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {
