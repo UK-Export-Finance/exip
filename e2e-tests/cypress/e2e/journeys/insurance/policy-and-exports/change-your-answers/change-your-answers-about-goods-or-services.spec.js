@@ -4,7 +4,6 @@ import partials from '../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
-import checkText from '../../../../helpers/check-text';
 import application from '../../../../../fixtures/application';
 import countries from '../../../../../fixtures/countries';
 
@@ -28,24 +27,6 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 const { summaryList } = checkYourAnswersPage;
-
-const assertChangePageUrl = (referenceNumber, fieldId) => {
-  const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES_CHANGE}#${fieldId}-label`;
-  cy.url().should('eq', expected);
-};
-
-const assertAnswersPageUrl = (referenceNumber, fieldId) => {
-  const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}#${fieldId}-label`;
-
-  cy.url().should('eq', expected);
-};
-
-const assertSummaryListRowValue = (fieldId, expected) => {
-  checkText(
-    summaryList[fieldId].value(),
-    expected,
-  );
-};
 
 context('Insurance - Policy and exports - Check your answers - About goods or services- As an exporter, I want to change my answers to the type of policy and exports section', () => {
   let referenceNumber;
@@ -86,7 +67,7 @@ context('Insurance - Policy and exports - Check your answers - About goods or se
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHANGE}`, () => {
         summaryList[fieldId].changeLink().click();
 
-        assertChangePageUrl(referenceNumber, fieldId);
+        cy.assertChangeAnswersPageUrl(referenceNumber, ABOUT_GOODS_OR_SERVICES_CHANGE, fieldId);
       });
     });
 
@@ -99,14 +80,14 @@ context('Insurance - Policy and exports - Check your answers - About goods or se
         submitButton().click();
       });
 
-      it('should redirect to the check answers page', () => {
-        assertAnswersPageUrl(referenceNumber, fieldId);
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
       });
 
       it('should render the new answer', () => {
         const expected = newAnswer;
 
-        assertSummaryListRowValue(fieldId, expected);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expected);
       });
     });
   });
@@ -118,7 +99,7 @@ context('Insurance - Policy and exports - Check your answers - About goods or se
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHANGE}`, () => {
         summaryList[fieldId].changeLink().click();
 
-        assertChangePageUrl(referenceNumber, fieldId);
+        cy.assertChangeAnswersPageUrl(referenceNumber, ABOUT_GOODS_OR_SERVICES_CHANGE, fieldId);
       });
     });
 
@@ -131,14 +112,14 @@ context('Insurance - Policy and exports - Check your answers - About goods or se
         submitButton().click();
       });
 
-      it('should redirect to the check answers page', () => {
-        assertAnswersPageUrl(referenceNumber, fieldId);
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
       });
 
       it('should render the new answer', () => {
         const expected = countries[0].name;
 
-        assertSummaryListRowValue(fieldId, expected);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expected);
       });
     });
   });

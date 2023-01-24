@@ -6,7 +6,6 @@ import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 import { createTimestampFromNumbers, formatDate } from '../../../../helpers/date';
 import formatCurrency from '../../../../helpers/format-currency';
-import checkText from '../../../../helpers/check-text';
 import application from '../../../../../fixtures/application';
 import currencies from '../../../../../fixtures/currencies';
 
@@ -35,24 +34,6 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 const { summaryList } = checkYourAnswersPage;
-
-const assertChangePageUrl = (referenceNumber, fieldId) => {
-  const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHANGE}#${fieldId}-label`;
-  cy.url().should('eq', expected);
-};
-
-const assertAnswersPageUrl = (referenceNumber, fieldId) => {
-  const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}#${fieldId}-label`;
-
-  cy.url().should('eq', expected);
-};
-
-const assertSummaryListRowValue = (fieldId, expected) => {
-  checkText(
-    summaryList[fieldId].value(),
-    expected,
-  );
-};
 
 context('Insurance - Policy and exports - Check your answers - Single contract policy - As an exporter, I want to change my answers to the type of policy and exports section', () => {
   let referenceNumber;
@@ -94,7 +75,7 @@ context('Insurance - Policy and exports - Check your answers - Single contract p
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
           summaryList[fieldId].changeLink().click();
 
-          assertChangePageUrl(referenceNumber, fieldId);
+          cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
       });
 
@@ -113,13 +94,13 @@ context('Insurance - Policy and exports - Check your answers - Single contract p
         });
 
         it('should redirect to the check answers page', () => {
-          assertAnswersPageUrl(referenceNumber, fieldId);
+          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
         });
 
         it('should render the new answer', () => {
           const expected = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
 
-          assertSummaryListRowValue(fieldId, expected);
+          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
         });
       });
     });
@@ -131,7 +112,7 @@ context('Insurance - Policy and exports - Check your answers - Single contract p
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
           summaryList[fieldId].changeLink().click();
 
-          assertChangePageUrl(referenceNumber, fieldId);
+          cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
       });
 
@@ -149,14 +130,14 @@ context('Insurance - Policy and exports - Check your answers - Single contract p
           submitButton().click();
         });
 
-        it('should redirect to the check answers page', () => {
-          assertAnswersPageUrl(referenceNumber, fieldId);
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
         });
 
         it('should render the new answer', () => {
           const expected = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
 
-          assertSummaryListRowValue(fieldId, expected);
+          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
         });
       });
     });
@@ -168,7 +149,7 @@ context('Insurance - Policy and exports - Check your answers - Single contract p
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
           summaryList[fieldId].changeLink().click();
 
-          assertChangePageUrl(referenceNumber, fieldId);
+          cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
       });
 
@@ -181,14 +162,14 @@ context('Insurance - Policy and exports - Check your answers - Single contract p
           submitButton().click();
         });
 
-        it('should redirect to the check answers page', () => {
-          assertAnswersPageUrl(referenceNumber, fieldId);
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
         });
 
         it('should render the new answer', () => {
           const expected = formatCurrency(newAnswer);
 
-          assertSummaryListRowValue(fieldId, expected);
+          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
         });
       });
     });
@@ -200,7 +181,7 @@ context('Insurance - Policy and exports - Check your answers - Single contract p
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
           summaryList[fieldId].changeLink().click();
 
-          assertChangePageUrl(referenceNumber, fieldId);
+          cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
       });
 
@@ -213,14 +194,14 @@ context('Insurance - Policy and exports - Check your answers - Single contract p
           submitButton().click();
         });
 
-        it('should redirect to the check answers page', () => {
-          assertAnswersPageUrl(referenceNumber, fieldId);
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
         });
 
         it('should render the new answer', () => {
           const expected = newAnswer;
 
-          assertSummaryListRowValue(fieldId, expected);
+          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
         });
       });
     });
@@ -232,7 +213,7 @@ context('Insurance - Policy and exports - Check your answers - Single contract p
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
           summaryList[fieldId].changeLink().click();
 
-          assertChangePageUrl(referenceNumber, fieldId);
+          cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
       });
 
@@ -245,8 +226,8 @@ context('Insurance - Policy and exports - Check your answers - Single contract p
           submitButton().click();
         });
 
-        it('should redirect to the check answers page', () => {
-          assertAnswersPageUrl(referenceNumber, fieldId);
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
         });
 
         it('should render the new answer', () => {
@@ -254,7 +235,7 @@ context('Insurance - Policy and exports - Check your answers - Single contract p
 
           const expected = `${isoCode} ${name}`;
 
-          assertSummaryListRowValue(fieldId, expected);
+          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
         });
       });
     });
