@@ -2,12 +2,7 @@ import { ROUTES } from '../../../../../../constants';
 
 context('Manually going to the `Insured amount` page via URL without completing the previous forms', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
   });
 
   it('should redirect to the `need to start again` exit page', () => {

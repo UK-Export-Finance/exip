@@ -12,12 +12,7 @@ const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance Eligibility - start page', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
   });
 
   beforeEach(() => {

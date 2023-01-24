@@ -6,12 +6,7 @@ const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - header', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
   });
 
   beforeEach(() => {

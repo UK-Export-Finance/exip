@@ -41,12 +41,7 @@ context('Cookies consent - change via banner and cookies page', () => {
     });
 
     it('should NOT render the cookie consent banner when going to another page', () => {
-      cy.visit(ROUTES.QUOTE.BUYER_COUNTRY, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
+      cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
 
       partials.cookieBanner.heading().should('not.be.visible');
       partials.cookieBanner.hideButton().should('not.exist');
@@ -92,12 +87,7 @@ context('Cookies consent - change via banner and cookies page', () => {
     });
 
     it('should NOT render the cookie consent banner when going to another page', () => {
-      cy.visit(ROUTES.QUOTE.BUYER_COUNTRY, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
+      cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
 
       partials.cookieBanner.heading().should('not.be.visible');
       partials.cookieBanner.hideButton().should('not.exist');

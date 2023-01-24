@@ -4,6 +4,8 @@ const {
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
+    EMPLOYEES_INTERNATIONAL,
+    EMPLOYEES_UK,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -20,6 +22,17 @@ const natureOfBusiness = {
     hint: () => cy.get(`[data-cy="${YEARS_EXPORTING}-hint`),
     suffix: () => cy.get(`[data-cy="${YEARS_EXPORTING}-suffix`),
     error: () => cy.get(`[data-cy="${YEARS_EXPORTING}-error`),
+  },
+  [EMPLOYEES_UK]: {
+    input: () => cy.get(`[data-cy="${EMPLOYEES_UK}`),
+    heading: () => cy.get(`[data-cy="${EMPLOYEES_UK}-heading`),
+    label: () => cy.get(`[data-cy="${EMPLOYEES_UK}-label`),
+    error: () => cy.get(`[data-cy="${EMPLOYEES_UK}-error`),
+  },
+  [EMPLOYEES_INTERNATIONAL]: {
+    input: () => cy.get(`[data-cy="${EMPLOYEES_INTERNATIONAL}`),
+    label: () => cy.get(`[data-cy="${EMPLOYEES_INTERNATIONAL}-label`),
+    error: () => cy.get(`[data-cy="${EMPLOYEES_INTERNATIONAL}-error`),
   },
 };
 

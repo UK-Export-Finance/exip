@@ -24,12 +24,7 @@ const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maxium amount of cover available online', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
@@ -67,12 +62,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
 
     // go back to page
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {

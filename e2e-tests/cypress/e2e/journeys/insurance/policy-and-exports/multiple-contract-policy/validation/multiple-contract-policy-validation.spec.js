@@ -40,12 +40,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   let referenceNumber;
 
   before(() => {
-    cy.visit(INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(INSURANCE.START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 

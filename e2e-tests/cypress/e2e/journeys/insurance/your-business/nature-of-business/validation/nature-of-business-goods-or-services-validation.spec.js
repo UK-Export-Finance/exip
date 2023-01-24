@@ -16,19 +16,10 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 const {
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
-    YEARS_EXPORTING,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
-const turnoverUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER}`;
-
 const { MAXIMUM } = FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES];
-
-const completeField = (fieldId, input) => {
-  const field = natureOfBusiness[fieldId];
-
-  field.input().clear().type(input);
-};
 
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - goods or services input validation', () => {
   let referenceNumber;
@@ -65,11 +56,9 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = GOODS_OR_SERVICES;
         const field = natureOfBusiness[fieldId];
 
-        completeField(YEARS_EXPORTING, '5');
-
         field.input().clear();
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 1);
+        partials.errorSummaryListItems().should('have.length', 4);
         checkText(partials.errorSummaryListItems().first(), errorMessage);
       });
 
@@ -96,11 +85,9 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = GOODS_OR_SERVICES;
         const field = natureOfBusiness[fieldId];
 
-        completeField(YEARS_EXPORTING, '5');
-
         field.input().clear().type('a'.repeat(MAXIMUM + 1));
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 1);
+        partials.errorSummaryListItems().should('have.length', 4);
         checkText(partials.errorSummaryListItems().first(), errorMessage);
       });
 
@@ -120,15 +107,9 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       const fieldId = GOODS_OR_SERVICES;
       const field = natureOfBusiness[fieldId];
 
-      completeField(YEARS_EXPORTING, '5');
-
       field.input().clear().type('test');
       submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 0);
-    });
-
-    it(`should redirect to ${turnoverUrl}`, () => {
-      cy.url().should('eq', turnoverUrl);
+      partials.errorSummaryListItems().should('have.length', 3);
     });
   });
 });

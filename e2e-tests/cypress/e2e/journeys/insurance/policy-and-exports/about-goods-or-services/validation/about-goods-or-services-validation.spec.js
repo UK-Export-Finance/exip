@@ -29,12 +29,7 @@ context('Insurance - Policy and exports - About goods or services page - form va
   let referenceNumber;
 
   before(() => {
-    cy.visit(INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(INSURANCE.START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 

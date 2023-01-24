@@ -6,7 +6,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import generateValidationErrors from './validation';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
-const { GOODS_OR_SERVICES, YEARS_EXPORTING } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
+const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
 
 const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { NAURE_OF_YOUR_BUSINESS: NAURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -28,6 +28,14 @@ const pageVariables = (referenceNumber: number) => ({
     YEARS_EXPORTING: {
       ID: YEARS_EXPORTING,
       ...NATURE_OF_YOUR_BUSINESS_FIELDS[YEARS_EXPORTING],
+    },
+    EMPLOYEES_UK: {
+      ID: EMPLOYEES_UK,
+      ...NATURE_OF_YOUR_BUSINESS_FIELDS[EMPLOYEES_UK],
+    },
+    EMPLOYEES_INTERNATIONAL: {
+      ID: EMPLOYEES_INTERNATIONAL,
+      ...NATURE_OF_YOUR_BUSINESS_FIELDS[EMPLOYEES_INTERNATIONAL],
     },
   },
   POST_ROUTES: {
@@ -84,6 +92,8 @@ const post = async (req: Request, res: Response) => {
     const submittedValues = {
       [GOODS_OR_SERVICES]: body[GOODS_OR_SERVICES],
       [YEARS_EXPORTING]: body[YEARS_EXPORTING],
+      [EMPLOYEES_UK]: body[EMPLOYEES_UK],
+      [EMPLOYEES_INTERNATIONAL]: body[EMPLOYEES_INTERNATIONAL],
     };
 
     // run validation on inputs

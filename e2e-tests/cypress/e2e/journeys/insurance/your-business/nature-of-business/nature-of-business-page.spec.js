@@ -13,6 +13,8 @@ const {
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
+    EMPLOYEES_UK,
+    EMPLOYEES_INTERNATIONAL,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -89,9 +91,9 @@ context('Insurance - Your business - Nature of your business page - As an Export
     const field = natureOfBusiness[fieldId];
 
     field.input().should('exist');
-    checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES].LABEL);
+    checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
 
-    field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES].HINT);
+    field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
   });
 
   it(`should display ${YEARS_EXPORTING} input box`, () => {
@@ -99,10 +101,33 @@ context('Insurance - Your business - Nature of your business page - As an Export
     const field = natureOfBusiness[fieldId];
 
     field.input().should('exist');
-    checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[YEARS_EXPORTING].LABEL);
+    checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
 
-    field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[YEARS_EXPORTING].HINT);
-    checkText(field.suffix(), FIELDS.NATURE_OF_YOUR_BUSINESS[YEARS_EXPORTING].SUFFIX);
+    field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
+    checkText(field.suffix(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].SUFFIX);
+  });
+
+  it('should display the continue and save and go back button', () => {
+    checkText(submitButton(), BUTTONS.CONTINUE);
+
+    checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+  });
+
+  it(`should display ${EMPLOYEES_UK} input box`, () => {
+    const fieldId = EMPLOYEES_UK;
+    const field = natureOfBusiness[fieldId];
+
+    field.input().should('exist');
+    checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
+    checkText(field.heading(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HEADING);
+  });
+
+  it(`should display ${EMPLOYEES_INTERNATIONAL} input box`, () => {
+    const fieldId = EMPLOYEES_INTERNATIONAL;
+    const field = natureOfBusiness[fieldId];
+
+    field.input().should('exist');
+    checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
   });
 
   it('should display the continue and save and go back button', () => {

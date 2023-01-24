@@ -2,12 +2,7 @@ import { ROUTES } from '../../../../../constants';
 
 context('Manually going to the `Check your answers` via URL page without completing the previous forms', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.QUOTE.CHECK_YOUR_ANSWERS, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
   });
 
   it('should redirect to the `need to start again` exit page', () => {
