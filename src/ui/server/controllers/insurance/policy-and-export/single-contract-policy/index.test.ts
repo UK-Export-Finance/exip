@@ -15,7 +15,7 @@ import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../t
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: { SINGLE_CONTRACT_POLICY_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES },
+    POLICY_AND_EXPORTS: { SINGLE_CONTRACT_POLICY_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES, CHECK_YOUR_ANSWERS },
   },
 } = ROUTES;
 
@@ -259,12 +259,12 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
       });
 
       describe("when the url's last substring is `change`", () => {
-        it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`, async () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.originalUrl = ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

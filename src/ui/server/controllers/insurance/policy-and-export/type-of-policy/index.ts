@@ -9,7 +9,12 @@ import { isMultiPolicyType, isSinglePolicyType } from '../../../../helpers/polic
 import mapAndSave from '../map-and-save';
 import isChangeRoute from '../../../../helpers/is-change-route';
 
-const { INSURANCE_ROOT } = ROUTES.INSURANCE;
+const {
+  INSURANCE: {
+    INSURANCE_ROOT,
+    POLICY_AND_EXPORTS: { CHECK_YOUR_ANSWERS },
+  },
+} = ROUTES;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 const { INSURANCE } = ROUTES;
 
@@ -89,7 +94,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (isChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`);
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     if (isSinglePolicyType(req.body[FIELD_ID])) {
