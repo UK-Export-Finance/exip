@@ -29,7 +29,7 @@ const {
   },
 } = FIELD_IDS;
 
-const assertRow = (fieldId, expectedKey, expectedValue) => {
+const assertRow = (fieldId, expectedKey, expectedValue, expectedChangeLinkText) => {
   const { summaryList } = checkYourAnswersPage;
   const row = summaryList[fieldId];
 
@@ -45,7 +45,7 @@ const assertRow = (fieldId, expectedKey, expectedValue) => {
 
   checkText(
     row.changeLink(),
-    LINKS.CHANGE,
+    `${LINKS.CHANGE} ${expectedChangeLinkText}`,
   );
 };
 
@@ -58,14 +58,18 @@ const checkPolicyAndExportsSummaryList = ({
     const timestamp = createTimestampFromNumbers(day, month, year);
     const expectedValue = formatDate(timestamp);
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    const expectedChangeLinkText = FIELDS.CONTRACT_POLICY[fieldId].SUMMARY.TITLE;
+
+    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [CREDIT_PERIOD_WITH_BUYER]: () => {
     const fieldId = CREDIT_PERIOD_WITH_BUYER;
     const expectedKey = FIELDS.CONTRACT_POLICY[fieldId].SUMMARY.TITLE;
     const expectedValue = application.POLICY_AND_EXPORTS[fieldId];
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    const expectedChangeLinkText = FIELDS.CONTRACT_POLICY[fieldId].SUMMARY.TITLE;
+
+    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [POLICY_CURRENCY_CODE]: () => {
     const fieldId = POLICY_CURRENCY_CODE;
@@ -75,7 +79,9 @@ const checkPolicyAndExportsSummaryList = ({
 
     const expectedValue = `${currency.isoCode} ${currency.name}`;
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    const expectedChangeLinkText = FIELDS.CONTRACT_POLICY[fieldId].SUMMARY.TITLE;
+
+    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [DESCRIPTION]: () => {
     const fieldId = DESCRIPTION;
@@ -83,7 +89,9 @@ const checkPolicyAndExportsSummaryList = ({
 
     const expectedValue = application.POLICY_AND_EXPORTS[fieldId];
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    const expectedChangeLinkText = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY.TITLE;
+
+    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [FINAL_DESTINATION]: () => {
     const fieldId = FINAL_DESTINATION;
@@ -93,7 +101,9 @@ const checkPolicyAndExportsSummaryList = ({
 
     const expectedValue = country.name;
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    const expectedChangeLinkText = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY.TITLE;
+
+    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   singleContractPolicy: {
     [POLICY_TYPE]: () => {
@@ -101,7 +111,9 @@ const checkPolicyAndExportsSummaryList = ({
       const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
       const expectedValue = FIELD_VALUES.POLICY_TYPE.SINGLE;
 
-      assertRow(fieldId, expectedKey, expectedValue);
+      const expectedChangeLinkText = FIELDS[fieldId].SUMMARY.TITLE;
+
+      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
     [CONTRACT_COMPLETION_DATE]: () => {
       const fieldId = CONTRACT_COMPLETION_DATE;
@@ -112,14 +124,18 @@ const checkPolicyAndExportsSummaryList = ({
       const timestamp = createTimestampFromNumbers(day, month, year);
       const expectedValue = formatDate(timestamp);
 
-      assertRow(fieldId, expectedKey, expectedValue);
+      const expectedChangeLinkText = FIELDS.CONTRACT_POLICY.SINGLE[fieldId].SUMMARY.TITLE;
+
+      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
     [TOTAL_CONTRACT_VALUE]: () => {
       const fieldId = TOTAL_CONTRACT_VALUE;
       const expectedKey = FIELDS.CONTRACT_POLICY.SINGLE[fieldId].SUMMARY.TITLE;
       const expectedValue = formatCurrency(application.POLICY_AND_EXPORTS[fieldId]);
 
-      assertRow(fieldId, expectedKey, expectedValue);
+      const expectedChangeLinkText = FIELDS.CONTRACT_POLICY.SINGLE[fieldId].SUMMARY.TITLE;
+
+      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
   },
   multipleContractPolicy: {
@@ -128,7 +144,9 @@ const checkPolicyAndExportsSummaryList = ({
       const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
       const expectedValue = FIELD_VALUES.POLICY_TYPE.MULTI;
 
-      assertRow(fieldId, expectedKey, expectedValue);
+      const expectedChangeLinkText = FIELDS[fieldId].SUMMARY.TITLE;
+
+      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
     [TOTAL_MONTHS_OF_COVER]: () => {
       const fieldId = TOTAL_MONTHS_OF_COVER;
@@ -136,7 +154,9 @@ const checkPolicyAndExportsSummaryList = ({
 
       const expectedValue = `${application.POLICY_AND_EXPORTS[fieldId]} months`;
 
-      assertRow(fieldId, expectedKey, expectedValue);
+      const expectedChangeLinkText = FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].SUMMARY.TITLE;
+
+      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
     [TOTAL_SALES_TO_BUYER]: () => {
       const fieldId = TOTAL_SALES_TO_BUYER;
@@ -144,7 +164,9 @@ const checkPolicyAndExportsSummaryList = ({
 
       const expectedValue = formatCurrency(application.POLICY_AND_EXPORTS[fieldId]);
 
-      assertRow(fieldId, expectedKey, expectedValue);
+      const expectedChangeLinkText = FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].SUMMARY.TITLE;
+
+      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
     [MAXIMUM_BUYER_WILL_OWE]: () => {
       const fieldId = MAXIMUM_BUYER_WILL_OWE;
@@ -152,7 +174,9 @@ const checkPolicyAndExportsSummaryList = ({
 
       const expectedValue = formatCurrency(application.POLICY_AND_EXPORTS[fieldId]);
 
-      assertRow(fieldId, expectedKey, expectedValue);
+      const expectedChangeLinkText = FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].SUMMARY.TITLE;
+
+      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
   },
 });
