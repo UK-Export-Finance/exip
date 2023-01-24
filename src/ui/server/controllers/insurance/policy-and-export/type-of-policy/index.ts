@@ -7,8 +7,14 @@ import { objectHasValues } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import { isMultiPolicyType, isSinglePolicyType } from '../../../../helpers/policy-type';
 import mapAndSave from '../map-and-save';
+import isChangeRoute from '../../../../helpers/is-change-route';
 
-const { INSURANCE_ROOT } = ROUTES.INSURANCE;
+const {
+  INSURANCE: {
+    INSURANCE_ROOT,
+    POLICY_AND_EXPORTS: { CHECK_YOUR_ANSWERS },
+  },
+} = ROUTES;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 const { INSURANCE } = ROUTES;
 
@@ -85,6 +91,10 @@ export const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     if (isSinglePolicyType(req.body[FIELD_ID])) {

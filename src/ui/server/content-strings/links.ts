@@ -1,6 +1,7 @@
 import { ROUTES } from '../constants';
 
 export const LINKS = {
+  ADD: 'Add',
   BACK: 'Back',
   CHANGE: 'Change',
   START_AGAIN: {

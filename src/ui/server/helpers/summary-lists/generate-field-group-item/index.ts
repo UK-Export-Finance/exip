@@ -42,9 +42,16 @@ const generateSummaryListItemData = (obj: SummaryListItemDataInput, customValue?
 
   mapped.value = getSummaryListItemDataValue(field.id, obj.data, customValue);
 
-  if (obj.href && obj.renderChangeLink) {
-    mapped.renderChangeLink = obj.renderChangeLink;
+  if (obj.href) {
     mapped.href = obj.href;
+
+    // If the value has the default empty dash, a value can be added.
+    // Therefore, render the "add" link text instead of "change" link text.
+    if (mapped.value === DEFAULT.EMPTY) {
+      mapped.renderAddLink = true;
+    } else if (obj.href && obj.renderChangeLink) {
+      mapped.renderChangeLink = obj.renderChangeLink;
+    }
   }
 
   return mapped;

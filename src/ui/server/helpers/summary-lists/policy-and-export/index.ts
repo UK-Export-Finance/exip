@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '../../../constants';
+import FIELD_IDS from '../../../constants/field-ids/insurance/policy-and-exports';
 import generateSummaryListRows from '../generate-summary-list-rows';
 import { isSinglePolicyType, isMultiPolicyType } from '../../policy-type';
 import generatePolicyAndDateFields from './policy-and-date-fields';
@@ -9,11 +9,7 @@ import generateMultipleContractPolicyFields from './multiple-contract-policy-fie
 import { ApplicationPolicyAndExport, Country, Currency, SummaryListItemData } from '../../../../types';
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      TYPE_OF_POLICY: { POLICY_TYPE },
-    },
-  },
+  TYPE_OF_POLICY: { POLICY_TYPE },
 } = FIELD_IDS;
 
 /**
@@ -22,20 +18,24 @@ const {
  * @param {Object} All submitted policy and export data
  * @returns {Object} All policy and export values in an object structure for GOVUK summary list structure
  */
-const generateFields = (answers: ApplicationPolicyAndExport, countries: Array<Country>, currencies: Array<Currency>) => {
+const generateFields = (answers: ApplicationPolicyAndExport, referenceNumber: number, countries: Array<Country>, currencies: Array<Currency>) => {
   let fields = [] as Array<SummaryListItemData>;
 
-  fields = generatePolicyAndDateFields(answers);
+  fields = generatePolicyAndDateFields(answers, referenceNumber);
 
   if (isSinglePolicyType(answers[POLICY_TYPE])) {
-    fields = [...fields, ...generateSingleContractPolicyFields(answers)];
+    fields = [...fields, ...generateSingleContractPolicyFields(answers, referenceNumber)];
   }
 
   if (isMultiPolicyType(answers[POLICY_TYPE])) {
-    fields = [...fields, ...generateMultipleContractPolicyFields(answers)];
+    fields = [...fields, ...generateMultipleContractPolicyFields(answers, referenceNumber)];
   }
 
-  fields = [...fields, ...generateCreditPeriodAndCurrencyFields(answers, currencies), ...generateAboutGoodsOrServicesFields(answers, countries)];
+  fields = [
+    ...fields,
+    ...generateCreditPeriodAndCurrencyFields(answers, referenceNumber, currencies),
+    ...generateAboutGoodsOrServicesFields(answers, referenceNumber, countries),
+  ];
 
   return fields;
 };
@@ -46,8 +46,8 @@ const generateFields = (answers: ApplicationPolicyAndExport, countries: Array<Co
  * @param {Object} All answers/submitted data in a simple object.text structure
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
-const policyAndExportSummaryList = (answersContent: ApplicationPolicyAndExport, countries: Array<Country>, currencies: Array<Currency>) => {
-  const fields = generateFields(answersContent, countries, currencies);
+const policyAndExportSummaryList = (answers: ApplicationPolicyAndExport, referenceNumber: number, countries: Array<Country>, currencies: Array<Currency>) => {
+  const fields = generateFields(answers, referenceNumber, countries, currencies);
 
   const summaryList = generateSummaryListRows(fields);
 

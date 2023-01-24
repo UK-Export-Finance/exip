@@ -6,21 +6,23 @@ import generateSingleContractPolicyFields from './single-contract-policy-fields'
 import generateMultipleContractPolicyFields from './multiple-contract-policy-fields';
 import generateSummaryListRows from '../generate-summary-list-rows';
 import { mockCountries, mockCurrencies } from '../../../test-mocks';
-import { mockSinglePolicyAndExport, mockMultiplePolicyAndExport } from '../../../test-mocks/mock-application';
+import mockApplication, { mockSinglePolicyAndExport, mockMultiplePolicyAndExport } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/policy-and-export', () => {
+  const { referenceNumber } = mockApplication;
+
   describe('generateFields', () => {
     describe('when the policy type is single policy type', () => {
       const mockAnswers = mockSinglePolicyAndExport;
 
       it('should return fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, mockCountries, mockCurrencies);
+        const result = generateFields(mockAnswers, referenceNumber, mockCountries, mockCurrencies);
 
         const expected = [
-          ...generatePolicyAndDateFields(mockAnswers),
-          ...generateSingleContractPolicyFields(mockAnswers),
-          ...generateCreditPeriodAndCurrencyFields(mockAnswers, mockCurrencies),
-          ...generateAboutGoodsOrServicesFields(mockAnswers, mockCountries),
+          ...generatePolicyAndDateFields(mockAnswers, referenceNumber),
+          ...generateSingleContractPolicyFields(mockAnswers, referenceNumber),
+          ...generateCreditPeriodAndCurrencyFields(mockAnswers, referenceNumber, mockCurrencies),
+          ...generateAboutGoodsOrServicesFields(mockAnswers, referenceNumber, mockCountries),
         ];
 
         expect(result).toEqual(expected);
@@ -31,13 +33,13 @@ describe('server/helpers/summary-lists/policy-and-export', () => {
       const mockAnswers = mockMultiplePolicyAndExport;
 
       it('should return fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, mockCountries, mockCurrencies);
+        const result = generateFields(mockAnswers, referenceNumber, mockCountries, mockCurrencies);
 
         const expected = [
-          ...generatePolicyAndDateFields(mockAnswers),
-          ...generateMultipleContractPolicyFields(mockAnswers),
-          ...generateCreditPeriodAndCurrencyFields(mockAnswers, mockCurrencies),
-          ...generateAboutGoodsOrServicesFields(mockAnswers, mockCountries),
+          ...generatePolicyAndDateFields(mockAnswers, referenceNumber),
+          ...generateMultipleContractPolicyFields(mockAnswers, referenceNumber),
+          ...generateCreditPeriodAndCurrencyFields(mockAnswers, referenceNumber, mockCurrencies),
+          ...generateAboutGoodsOrServicesFields(mockAnswers, referenceNumber, mockCountries),
         ];
 
         expect(result).toEqual(expected);
@@ -46,12 +48,12 @@ describe('server/helpers/summary-lists/policy-and-export', () => {
   });
 
   describe('policyAndExportSummaryList', () => {
+    const mockAnswers = mockSinglePolicyAndExport;
+
     it('should return an array of summary list rows', () => {
-      const mockAnswers = mockSinglePolicyAndExport;
+      const result = policyAndExportSummaryList(mockAnswers, referenceNumber, mockCountries, mockCurrencies);
 
-      const result = policyAndExportSummaryList(mockAnswers, mockCountries, mockCurrencies);
-
-      const fields = generateFields(mockAnswers, mockCountries, mockCurrencies);
+      const fields = generateFields(mockAnswers, referenceNumber, mockCountries, mockCurrencies);
 
       const expected = generateSummaryListRows(fields);
 

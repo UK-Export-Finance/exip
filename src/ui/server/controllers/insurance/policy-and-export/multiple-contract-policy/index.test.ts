@@ -17,7 +17,7 @@ import { mockApplicationMultiplePolicy as mockApplication } from '../../../../te
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: { MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES },
+    POLICY_AND_EXPORTS: { MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES, CHECK_YOUR_ANSWERS },
   },
 } = ROUTES;
 
@@ -305,6 +305,18 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
         const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 
