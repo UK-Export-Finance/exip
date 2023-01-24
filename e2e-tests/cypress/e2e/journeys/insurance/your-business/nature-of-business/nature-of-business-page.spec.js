@@ -13,6 +13,8 @@ const {
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
+    EMPLOYEES_UK,
+    EMPLOYEES_INTERNATIONAL,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -103,6 +105,27 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
     field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[YEARS_EXPORTING].HINT);
     checkText(field.suffix(), FIELDS.NATURE_OF_YOUR_BUSINESS[YEARS_EXPORTING].SUFFIX);
+  });
+
+  it('should display the continue and save and go back button', () => {
+    checkText(submitButton(), BUTTONS.CONTINUE);
+
+    checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+  });
+
+  it(`should display ${EMPLOYEES_UK} and ${EMPLOYEES_INTERNATIONAL} input boxes`, () => {
+    const employeesUKFieldId = EMPLOYEES_UK;
+    const employeesUKField = natureOfBusiness[employeesUKFieldId];
+
+    const employeesInternationalFieldId = EMPLOYEES_INTERNATIONAL;
+    const employeesInternationalField = natureOfBusiness[employeesInternationalFieldId];
+
+    employeesUKField.input().should('exist');
+    checkText(employeesUKField.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[EMPLOYEES_UK].LABEL);
+    checkText(employeesUKField.heading(), FIELDS.NATURE_OF_YOUR_BUSINESS[EMPLOYEES_UK].HEADING);
+
+    employeesInternationalField.input().should('exist');
+    checkText(employeesInternationalField.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[EMPLOYEES_INTERNATIONAL].LABEL);
   });
 
   it('should display the continue and save and go back button', () => {

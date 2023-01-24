@@ -6,26 +6,26 @@ import { objectHasProperty } from '../../../../../../helpers/object';
 import generateValidationErrors from '../../../../../../helpers/validation';
 
 const {
-  NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING },
+  NATURE_OF_YOUR_BUSINESS: { EMPLOYEES_INTERNATIONAL },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
 /**
- * validates years exporting input
+ * validates  number of international employees input
  * only allows number without decimal
  * @param {RequestBody} responseBody
  * @param {object} errors
  * @returns {object} errors
  */
-const yearsExporting = (responseBody: RequestBody, errors: object) => {
-  if (!objectHasProperty(responseBody, YEARS_EXPORTING)) {
-    const errorMessage = EXPORTER_BUSINESS[YEARS_EXPORTING].IS_EMPTY;
+const employeesInternational = (responseBody: RequestBody, errors: object) => {
+  if (!objectHasProperty(responseBody, EMPLOYEES_INTERNATIONAL)) {
+    const errorMessage = EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL].IS_EMPTY;
 
-    return generateValidationErrors(YEARS_EXPORTING, errorMessage, errors);
+    return generateValidationErrors(EMPLOYEES_INTERNATIONAL, errorMessage, errors);
   }
 
-  return wholeNumberValidation(responseBody, errors, EXPORTER_BUSINESS, YEARS_EXPORTING);
+  return wholeNumberValidation(responseBody, errors, EXPORTER_BUSINESS, EMPLOYEES_INTERNATIONAL);
 };
 
-export default yearsExporting;
+export default employeesInternational;

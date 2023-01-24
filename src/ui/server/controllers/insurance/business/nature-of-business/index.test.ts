@@ -8,7 +8,7 @@ import generateValidationErrors from './validation';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
-const { GOODS_OR_SERVICES, YEARS_EXPORTING } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
+const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
 
 const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { NAURE_OF_YOUR_BUSINESS: NAURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -53,6 +53,14 @@ describe('controllers/insurance/business/nature-of-business', () => {
           YEARS_EXPORTING: {
             ID: YEARS_EXPORTING,
             ...NATURE_OF_YOUR_BUSINESS_FIELDS[YEARS_EXPORTING],
+          },
+          EMPLOYEES_UK: {
+            ID: EMPLOYEES_UK,
+            ...NATURE_OF_YOUR_BUSINESS_FIELDS[EMPLOYEES_UK],
+          },
+          EMPLOYEES_INTERNATIONAL: {
+            ID: EMPLOYEES_INTERNATIONAL,
+            ...NATURE_OF_YOUR_BUSINESS_FIELDS[EMPLOYEES_INTERNATIONAL],
           },
         },
         POST_ROUTES: {
@@ -129,6 +137,8 @@ describe('controllers/insurance/business/nature-of-business', () => {
         req.body = {
           [GOODS_OR_SERVICES]: 'test',
           [YEARS_EXPORTING]: '5',
+          [EMPLOYEES_UK]: '3',
+          [EMPLOYEES_INTERNATIONAL]: '25',
         };
 
         await post(req, res);

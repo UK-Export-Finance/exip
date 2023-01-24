@@ -17,6 +17,8 @@ const {
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
+    EMPLOYEES_INTERNATIONAL,
+    EMPLOYEES_UK,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -66,6 +68,8 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const field = natureOfBusiness[fieldId];
 
         completeField(YEARS_EXPORTING, '5');
+        completeField(EMPLOYEES_UK, '5');
+        completeField(EMPLOYEES_INTERNATIONAL, '5');
 
         field.input().clear();
         submitButton().click();
@@ -97,6 +101,8 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const field = natureOfBusiness[fieldId];
 
         completeField(YEARS_EXPORTING, '5');
+        completeField(EMPLOYEES_UK, '5');
+        completeField(EMPLOYEES_INTERNATIONAL, '5');
 
         field.input().clear().type('a'.repeat(MAXIMUM + 1));
         submitButton().click();
@@ -121,6 +127,8 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       const field = natureOfBusiness[fieldId];
 
       completeField(YEARS_EXPORTING, '5');
+      completeField(EMPLOYEES_UK, '5');
+      completeField(EMPLOYEES_INTERNATIONAL, '5');
 
       field.input().clear().type('test');
       submitButton().click();

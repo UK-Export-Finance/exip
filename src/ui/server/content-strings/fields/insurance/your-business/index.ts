@@ -2,7 +2,7 @@ import { FIELD_IDS } from '../../../../constants';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
 } = EXPORTER_BUSINESS;
 
 export const FIELDS = {
@@ -15,6 +15,13 @@ export const FIELDS = {
       LABEL: 'How many years have you been exporting for?',
       HINT: 'Round to the nearest year',
       SUFFIX: 'Years',
+    },
+    [EMPLOYEES_UK]: {
+      HEADING: 'How many employees do you have?',
+      LABEL: 'In the UK',
+    },
+    [EMPLOYEES_INTERNATIONAL]: {
+      LABEL: 'Worldwide including UK',
     },
   },
 };

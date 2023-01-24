@@ -48,5 +48,12 @@ export const EXPORTER_BUSINESS_FIELDS = {
       HINT: 'Round to the nearest year',
       SUFFIX: 'Years',
     },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
+      HEADING: 'How many employees do you have?',
+      LABEL: 'In the UK',
+    },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_INTERNATIONAL]: {
+      LABEL: 'Worldwide including UK',
+    },
   },
 };

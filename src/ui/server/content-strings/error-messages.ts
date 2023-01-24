@@ -96,6 +96,14 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: "Enter how many years you've been exporting for as a whole number - for example, 3 or 7",
         INCORRECT_FORMAT: "Enter how many years you've been exporting for as a whole number. You cannot enter letters or special characters",
       },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
+        IS_EMPTY: 'Enter how many employees you have in the UK as a whole number - for example, 100',
+        INCORRECT_FORMAT: 'Enter how many employees you have in the UK as a whole number. You cannot enter letters or special characters',
+      },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_INTERNATIONAL]: {
+        IS_EMPTY: 'Enter how many employees you have worldwide, including UK, as a whole number - for example, 100',
+        INCORRECT_FORMAT: 'Enter how many employees you have worldwide, including UK, as a whole number. You cannot enter  letters or special characters',
+      },
     },
     POLICY_AND_EXPORTS: {
       // TODO move to TYPE_OF_POLICY: {},
