@@ -10,11 +10,7 @@ const {
   POLICY_AND_EXPORTS: {
     CONTRACT_POLICY: {
       SINGLE: { TOTAL_CONTRACT_VALUE },
-      MULTIPLE: {
-        TOTAL_MONTHS_OF_COVER,
-        TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
-      },
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
     },
   },
 } = FIELD_IDS.INSURANCE;
@@ -174,12 +170,7 @@ describe('server/helpers/sanitise-data', () => {
 
   describe('NUMBER_FIELDS', () => {
     it('should return an Explicit array of field IDs', () => {
-      const expected = [
-        TOTAL_CONTRACT_VALUE,
-        TOTAL_MONTHS_OF_COVER,
-        TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
-      ];
+      const expected = [TOTAL_CONTRACT_VALUE, TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE];
 
       expect(NUMBER_FIELDS).toEqual(expected);
     });

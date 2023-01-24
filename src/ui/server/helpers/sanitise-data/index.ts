@@ -11,11 +11,7 @@ const {
   POLICY_AND_EXPORTS: {
     CONTRACT_POLICY: {
       SINGLE: { TOTAL_CONTRACT_VALUE },
-      MULTIPLE: {
-        TOTAL_MONTHS_OF_COVER,
-        TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
-      },
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
     },
   },
 } = FIELD_IDS.INSURANCE;
@@ -85,12 +81,7 @@ const isDayMonthYearField = (fieldName: string): boolean => {
  * Explicit list of field IDs in the insurance forms that are number fields.
  * @returns {Array} Field IDs
  */
-const NUMBER_FIELDS = [
-  TOTAL_CONTRACT_VALUE,
-  TOTAL_MONTHS_OF_COVER,
-  TOTAL_SALES_TO_BUYER,
-  MAXIMUM_BUYER_WILL_OWE,
-];
+const NUMBER_FIELDS = [TOTAL_CONTRACT_VALUE, TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE];
 
 /**
  * shouldIncludeAndSanitiseField

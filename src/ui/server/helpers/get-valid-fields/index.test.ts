@@ -1,13 +1,13 @@
 import getValidFields from '.';
 
 describe('helpers/get-valid-fields', () => {
-  let mockFormData = {
+  const mockFormData = {
     fieldA: true,
     fieldB: 'Mock',
-    fieldC: 'MOCK value'
+    fieldC: 'MOCK value',
   };
 
-  let mockErrorList = {
+  const mockErrorList = {
     fieldA: {
       text: 'Field A is incorrect',
       order: 1,
@@ -30,7 +30,7 @@ describe('helpers/get-valid-fields', () => {
   describe('when there are fields that do NOT have validation errors but have empty values', () => {
     it('should only return fields that do NOT have empty values', () => {
       mockFormData.fieldB = '';
-      
+
       const result = getValidFields(mockFormData, {});
 
       const expected = {
