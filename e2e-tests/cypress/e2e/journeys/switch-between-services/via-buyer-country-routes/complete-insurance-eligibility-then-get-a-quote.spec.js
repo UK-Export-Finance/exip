@@ -15,12 +15,7 @@ import { ROUTES } from '../../../../../constants';
 
 context('Complete insurance eligibility, get a quote and then re-visit the insurance eligibility - all by visiting the buyer country form instead of via `start now` route', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
 
     completeAndSubmitBuyerCountryForm();
     completeExporterLocationForm();
@@ -40,12 +35,7 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
   });
 
   it('allows an exporter to get a quote when visiting the buyer country page directly', () => {
-    cy.visit(ROUTES.QUOTE.BUYER_COUNTRY, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
 
     cy.submitAnswersHappyPathSinglePolicy();
     submitButton().click();
@@ -54,12 +44,7 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
   });
 
   it('allows an exporter to start another insurance eligibility when visiting the buyer country page directly', () => {
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
 
     completeAndSubmitBuyerCountryForm();
 

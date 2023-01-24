@@ -7,12 +7,7 @@ const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
 
 context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based - submit country that can only apply offline/via a physical form', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     completeStartForm();
     completeCheckIfEligibleForm();

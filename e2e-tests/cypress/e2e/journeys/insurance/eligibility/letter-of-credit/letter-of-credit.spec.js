@@ -27,12 +27,7 @@ const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - Eligibility - Letter of credit page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
@@ -75,12 +70,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
     cy.url().should('include', expectedUrl);
 
     // go back to page
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {

@@ -24,12 +24,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   let referenceNumber;
 
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
@@ -39,12 +34,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
       natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 
-      cy.visit(url, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
+      cy.navigateToUrl(url);
 
       cy.url().should('eq', url);
     });
@@ -84,7 +74,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe(`when ${WEBSITE} is left empty`, () => {
     it('should not display validation errors', () => {
-      cy.visit(url, {
+      cy.navigateToUrl(url, {
         auth: {
           username: Cypress.config('basicAuthKey'),
           password: Cypress.config('basicAuthSecret'),
@@ -104,7 +94,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe(`when ${WEBSITE} is correctly entered`, () => {
     it('should not display validation errors', () => {
-      cy.visit(url, {
+      cy.navigateToUrl(url, {
         auth: {
           username: Cypress.config('basicAuthKey'),
           password: Cypress.config('basicAuthSecret'),

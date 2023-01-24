@@ -4,12 +4,7 @@ import { ROUTES } from '../../../../../constants';
 
 context('Get a quote, Complete insurance eligibility and then re-visit the quote tool - all via `start now` route/beginning of the flow', () => {
   before(() => {
-    cy.visit(ROUTES.ROOT, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.ROOT);
 
     cy.submitAnswersHappyPathSinglePolicy();
     submitButton().click();
@@ -23,23 +18,13 @@ context('Get a quote, Complete insurance eligibility and then re-visit the quote
   });
 
   it('allows an exporter to complete insurance eligibility when visiting the beginning of the flow', () => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
   });
 
   it('allows an exporter to start another quote when visiting the beginning of the flow', () => {
-    cy.visit(ROUTES.ROOT, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.ROOT);
 
     completeAndSubmitBuyerCountryForm();
 

@@ -29,12 +29,7 @@ const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I do not have UK Companies House Registration Number', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
@@ -79,12 +74,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     cy.url().should('include', expectedUrl);
 
     // go back to page
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {

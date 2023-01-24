@@ -19,12 +19,7 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 context('Insurance - Policy and exports - Complete the entire section as a single contract policy', () => {
   before(() => {
-    cy.visit(START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 

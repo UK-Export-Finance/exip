@@ -16,12 +16,7 @@ const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - Eligibility - You are eligible to apply online page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction', () => {
   before(() => {
-    cy.visit(ROUTES.INSURANCE.START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     cy.submitInsuranceEligibilityAnswersHappyPath();
 
@@ -57,12 +52,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     cy.url().should('include', expectedUrl);
 
     // go back to page
-    cy.visit(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {

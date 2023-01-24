@@ -63,7 +63,7 @@ const {
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 const goToPageDirectly = (referenceNumber) => {
-  cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`, {
+  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`, {
     auth: {
       username: Cypress.config('basicAuthKey'),
       password: Cypress.config('basicAuthSecret'),
@@ -75,12 +75,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
   let referenceNumber;
 
   before(() => {
-    cy.visit(START, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
@@ -316,7 +311,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     describe('after submitting the form', () => {
       it('should retain the `type of policy and exports` task status as `in progress`', () => {
-        cy.visit(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`, {
+        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`, {
           auth: {
             username: Cypress.config('basicAuthKey'),
             password: Cypress.config('basicAuthSecret'),

@@ -18,12 +18,7 @@ context('Cookies consent - initial/default', () => {
       });
 
       it('should render a heading when on an Insurance/application page', () => {
-        cy.visit(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE);
 
         partials.cookieBanner.heading().invoke('text').then((text) => {
           expect(text.trim()).equal(`${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.APPLICATION}`);
@@ -31,12 +26,7 @@ context('Cookies consent - initial/default', () => {
       });
 
       it('should render a heading when on an root page', () => {
-        cy.visit(ROUTES.COOKIES, {
-          auth: {
-            username: Cypress.config('basicAuthKey'),
-            password: Cypress.config('basicAuthSecret'),
-          },
-        });
+        cy.navigateToUrl(ROUTES.COOKIES);
 
         partials.cookieBanner.heading().invoke('text').then((text) => {
           expect(text.trim()).equal(`${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.GENERIC}`);

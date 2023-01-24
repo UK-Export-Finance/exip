@@ -7,12 +7,7 @@ const clearCookies = () => {
 
 const refreshPage = () => {
   cy.url().then((currentUrl) => {
-    cy.visit(currentUrl, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(currentUrl);
   });
 };
 
