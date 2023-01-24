@@ -4,7 +4,7 @@ describe('helpers/get-valid-fields', () => {
   const mockFormData = {
     fieldA: true,
     fieldB: 'Mock',
-    fieldC: 'MOCK value',
+    fieldC: 'Mock value',
   };
 
   const mockErrorList = {
