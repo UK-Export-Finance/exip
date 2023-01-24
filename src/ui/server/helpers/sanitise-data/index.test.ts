@@ -1,4 +1,4 @@
-import { shouldChangeToNumber, sanitiseValue, isDayMonthYearField, sanitiseData } from '.';
+import { shouldChangeToNumber, sanitiseValue, isDayMonthYearField, NUMBER_FIELDS, shouldIncludeAndSanitiseField, sanitiseData } from '.';
 import { FIELD_IDS } from '../../constants';
 import { mockPhoneNumbers } from '../../test-mocks';
 
@@ -7,13 +7,25 @@ const {
     COMPANY_HOUSE: { COMPANY_NUMBER },
     YOUR_COMPANY: { PHONE_NUMBER },
   },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      SINGLE: { TOTAL_CONTRACT_VALUE },
+      MULTIPLE: {
+        TOTAL_MONTHS_OF_COVER,
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
+      },
+    },
+  },
 } = FIELD_IDS.INSURANCE;
 
 describe('server/helpers/sanitise-data', () => {
+  const mockFieldKey = 'fieldA';
+
   describe('shouldChangeToNumber', () => {
     describe('when the value is a string number', () => {
       it('should return true', () => {
-        const result = shouldChangeToNumber('123');
+        const result = shouldChangeToNumber(mockFieldKey, '123');
 
         expect(result).toEqual(true);
       });
@@ -21,7 +33,7 @@ describe('server/helpers/sanitise-data', () => {
 
     describe('when the value is a string number of 0', () => {
       it('should return true', () => {
-        const result = shouldChangeToNumber('0');
+        const result = shouldChangeToNumber(mockFieldKey, '0');
 
         expect(result).toEqual(true);
       });
@@ -29,7 +41,7 @@ describe('server/helpers/sanitise-data', () => {
 
     describe('when the value is a string number with commas and translates to a number', () => {
       it('should return true', () => {
-        const result = shouldChangeToNumber('123,456');
+        const result = shouldChangeToNumber(mockFieldKey, '123,456');
 
         expect(result).toEqual(true);
       });
@@ -37,14 +49,14 @@ describe('server/helpers/sanitise-data', () => {
 
     describe('when the value is a string number with commas that does NOT translate to a number', () => {
       it('should return true', () => {
-        const result = shouldChangeToNumber('£123,456');
+        const result = shouldChangeToNumber(mockFieldKey, '£123,456');
 
         expect(result).toEqual(false);
       });
     });
 
     it('should return false', () => {
-      const result = shouldChangeToNumber('mock');
+      const result = shouldChangeToNumber(mockFieldKey, 'mock');
 
       expect(result).toEqual(false);
     });
@@ -53,7 +65,7 @@ describe('server/helpers/sanitise-data', () => {
   describe('sanitiseValue', () => {
     describe('when value is a string of true', () => {
       it('should return boolean', () => {
-        const result = sanitiseValue('true');
+        const result = sanitiseValue(mockFieldKey, 'true');
 
         expect(result).toEqual(true);
       });
@@ -61,7 +73,7 @@ describe('server/helpers/sanitise-data', () => {
 
     describe('when value is a string of false', () => {
       it('should return boolean', () => {
-        const result = sanitiseValue('false');
+        const result = sanitiseValue(mockFieldKey, 'false');
 
         expect(result).toEqual(false);
       });
@@ -69,7 +81,7 @@ describe('server/helpers/sanitise-data', () => {
 
     describe('when value is a true boolean', () => {
       it('should return boolean', () => {
-        const result = sanitiseValue(true);
+        const result = sanitiseValue(mockFieldKey, true);
 
         expect(result).toEqual(true);
       });
@@ -77,7 +89,7 @@ describe('server/helpers/sanitise-data', () => {
 
     describe('when value is a false boolean', () => {
       it('should return boolean', () => {
-        const result = sanitiseValue(false);
+        const result = sanitiseValue(mockFieldKey, false);
 
         expect(result).toEqual(false);
       });
@@ -85,7 +97,7 @@ describe('server/helpers/sanitise-data', () => {
 
     describe('when value is a string number', () => {
       it('should return a number', () => {
-        const result = sanitiseValue('123');
+        const result = sanitiseValue(mockFieldKey, '123');
 
         expect(result).toEqual(123);
       });
@@ -93,7 +105,7 @@ describe('server/helpers/sanitise-data', () => {
 
     describe('when value is a string number with commas', () => {
       it('should return a number with commas removed', () => {
-        const result = sanitiseValue('1,234,567');
+        const result = sanitiseValue(mockFieldKey, '1,234,567');
 
         expect(result).toEqual(1234567);
       });
@@ -101,7 +113,7 @@ describe('server/helpers/sanitise-data', () => {
 
     describe('when value is a plain string', () => {
       it('should return value', () => {
-        const result = sanitiseValue('mock');
+        const result = sanitiseValue(mockFieldKey, 'mock');
 
         expect(result).toEqual('mock');
       });
@@ -109,7 +121,7 @@ describe('server/helpers/sanitise-data', () => {
 
     describe(`when value is ${COMPANY_NUMBER}`, () => {
       it('should return value', () => {
-        const result = sanitiseValue('12345', COMPANY_NUMBER);
+        const result = sanitiseValue(COMPANY_NUMBER, '12345');
 
         expect(result).toEqual('12345');
       });
@@ -119,7 +131,7 @@ describe('server/helpers/sanitise-data', () => {
       it('should return value', () => {
         const phoneNumber = mockPhoneNumbers.VALID_PHONE_NUMBERS.LANDLINE;
 
-        const result = sanitiseValue(phoneNumber, COMPANY_NUMBER);
+        const result = sanitiseValue(COMPANY_NUMBER, phoneNumber);
 
         expect(result).toEqual(phoneNumber);
       });
@@ -160,14 +172,52 @@ describe('server/helpers/sanitise-data', () => {
     });
   });
 
+  describe('NUMBER_FIELDS', () => {
+    it('should return an Explicit array of field IDs', () => {
+      const expected = [
+        TOTAL_CONTRACT_VALUE,
+        TOTAL_MONTHS_OF_COVER,
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
+      ];
+
+      expect(NUMBER_FIELDS).toEqual(expected);
+    });
+  });
+
+  describe('shouldIncludeAndSanitiseField', () => {
+    describe('when the field is a date related field', () => {
+      it('should return false', () => {
+        const result = shouldIncludeAndSanitiseField('fieldA-day', '10');
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when the field has a matching ID in NUMBER_FIELDS and the value is empty', () => {
+      it('should return false', () => {
+        const result = shouldIncludeAndSanitiseField(NUMBER_FIELDS[0], '');
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    it('should return true', () => {
+      const result = shouldIncludeAndSanitiseField('goodField', 'Mock value');
+
+      expect(result).toEqual(true);
+    });
+  });
+
   describe('sanitiseData', () => {
-    it('should return data without _csrf, empty fields and day/month/year fields', () => {
+    it('should return data without _csrf, day/month/year or empty number fields', () => {
       const mockFormData = {
         _csrf: '1234',
         a: 'mock',
         b: 'true',
         c: '100',
         d: '',
+        [TOTAL_CONTRACT_VALUE]: '',
         'date-day': '01',
         'date-month': '02',
         'date-year': '2022',
@@ -179,6 +229,7 @@ describe('server/helpers/sanitise-data', () => {
         a: mockFormData.a,
         b: true,
         c: 100,
+        d: '',
       };
 
       expect(result).toEqual(expected);
