@@ -82,13 +82,11 @@ context('Insurance - Policy and exports - Check your answers - Multiple contract
       describe('form submission with a new answer', () => {
         const newAnswer = {
           ...application.POLICY_AND_EXPORTS[fieldId],
-          day: application.POLICY_AND_EXPORTS[fieldId].day + 1,
-          month: application.POLICY_AND_EXPORTS[fieldId].month + 1,
+          year: application.POLICY_AND_EXPORTS[fieldId].year + 1,
         };
 
         before(() => {
-          multipleContractPolicyPage[fieldId].dayInput().clear().type(newAnswer.day);
-          multipleContractPolicyPage[fieldId].monthInput().clear().type(newAnswer.month);
+          multipleContractPolicyPage[fieldId].yearInput().clear().type(newAnswer.year);
 
           submitButton().click();
         });

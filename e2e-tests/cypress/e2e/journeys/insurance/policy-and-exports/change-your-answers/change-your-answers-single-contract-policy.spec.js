@@ -82,13 +82,12 @@ context('Insurance - Policy and exports - Check your answers - Single contract p
       describe('form submission with a new answer', () => {
         const newAnswer = {
           ...application.POLICY_AND_EXPORTS[fieldId],
-          day: application.POLICY_AND_EXPORTS[fieldId].day + 1,
-          month: application.POLICY_AND_EXPORTS[fieldId].month + 1,
+          year: application.POLICY_AND_EXPORTS[fieldId].year + 1,
         };
 
         before(() => {
-          singleContractPolicyPage[fieldId].dayInput().clear().type(newAnswer.day);
-          singleContractPolicyPage[fieldId].monthInput().clear().type(newAnswer.month);
+          singleContractPolicyPage[fieldId].yearInput().clear().type(newAnswer.year);
+          singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput().clear().type(newAnswer.year + 1);
 
           submitButton().click();
         });
@@ -119,13 +118,11 @@ context('Insurance - Policy and exports - Check your answers - Single contract p
       describe('form submission with a new answer', () => {
         const newAnswer = {
           ...application.POLICY_AND_EXPORTS[fieldId],
-          day: application.POLICY_AND_EXPORTS[fieldId].day + 2,
-          month: application.POLICY_AND_EXPORTS[fieldId].month + 2,
+          year: application.POLICY_AND_EXPORTS[fieldId].year + 2,
         };
 
         before(() => {
-          singleContractPolicyPage[fieldId].dayInput().clear().type(newAnswer.day);
-          singleContractPolicyPage[fieldId].monthInput().clear().type(newAnswer.month);
+          singleContractPolicyPage[fieldId].yearInput().clear().type(newAnswer.year);
 
           submitButton().click();
         });
