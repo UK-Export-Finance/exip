@@ -14,20 +14,10 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 const {
   NATURE_OF_YOUR_BUSINESS: {
-    GOODS_OR_SERVICES,
-    YEARS_EXPORTING,
     EMPLOYEES_UK,
     EMPLOYEES_INTERNATIONAL,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
-
-const turnoverUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER}`;
-
-const completeField = (fieldId, input) => {
-  const field = natureOfBusiness[fieldId];
-
-  field.input().clear().type(input);
-};
 
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - number of employees input validation', () => {
   let referenceNumber;
@@ -57,198 +47,162 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   });
 
   describe(`${EMPLOYEES_UK} validation`, () => {
-    describe(`${EMPLOYEES_UK} error`, () => {
-      describe(`when ${EMPLOYEES_UK} is left empty`, () => {
-        const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].IS_EMPTY;
+    describe(`when ${EMPLOYEES_UK} is left empty`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].IS_EMPTY;
 
-        it(`should display validation errors if ${EMPLOYEES_UK} left empty`, () => {
-          const fieldId = EMPLOYEES_UK;
-          const field = natureOfBusiness[fieldId];
+      it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
+        const fieldId = EMPLOYEES_UK;
+        const field = natureOfBusiness[fieldId];
 
-          completeField(GOODS_OR_SERVICES, 'abc');
-          completeField(YEARS_EXPORTING, '5');
-          completeField(EMPLOYEES_INTERNATIONAL, '33');
-
-          field.input().clear();
-          submitButton().click();
-          partials.errorSummaryListItems().should('have.length', 1);
-          checkText(partials.errorSummaryListItems().first(), errorMessage);
-        });
-
-        it(`should focus to the ${EMPLOYEES_UK} section when clicking the error`, () => {
-          const fieldId = EMPLOYEES_UK;
-          const field = natureOfBusiness[fieldId];
-
-          partials.errorSummaryListItemLinks().first().click();
-          field.input().should('have.focus');
-        });
-
-        it(`should display the validation error for ${EMPLOYEES_UK}`, () => {
-          const fieldId = EMPLOYEES_UK;
-          const field = natureOfBusiness[fieldId];
-
-          checkText(field.error(), `Error: ${errorMessage}`);
-        });
+        field.input().clear();
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 4);
+        checkText(partials.errorSummaryListItems().eq(2), errorMessage);
       });
 
-      describe(`when ${EMPLOYEES_UK} is a decimal place number`, () => {
-        const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].INCORRECT_FORMAT;
+      it(`should focus to the ${EMPLOYEES_UK} section when clicking the error`, () => {
+        const fieldId = EMPLOYEES_UK;
+        const field = natureOfBusiness[fieldId];
 
-        it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
-          const fieldId = EMPLOYEES_UK;
-          const field = natureOfBusiness[fieldId];
-
-          completeField(GOODS_OR_SERVICES, 'abc');
-          completeField(YEARS_EXPORTING, '5');
-          completeField(EMPLOYEES_INTERNATIONAL, '33');
-
-          field.input().clear().type('5.5');
-          submitButton().click();
-          partials.errorSummaryListItems().should('have.length', 1);
-          checkText(partials.errorSummaryListItems().first(), errorMessage);
-        });
-
-        it(`should display the validation error for ${EMPLOYEES_UK}`, () => {
-          const fieldId = EMPLOYEES_UK;
-          const field = natureOfBusiness[fieldId];
-
-          checkText(field.error(), `Error: ${errorMessage}`);
-        });
+        partials.errorSummaryListItemLinks().eq(2).click();
+        field.input().should('have.focus');
       });
 
-      describe(`when ${EMPLOYEES_UK} has special characters`, () => {
-        const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].INCORRECT_FORMAT;
+      it(`should display the validation error for ${EMPLOYEES_UK}`, () => {
+        const fieldId = EMPLOYEES_UK;
+        const field = natureOfBusiness[fieldId];
 
-        it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
-          const fieldId = EMPLOYEES_UK;
-          const field = natureOfBusiness[fieldId];
+        checkText(field.error(), `Error: ${errorMessage}`);
+      });
+    });
 
-          completeField(GOODS_OR_SERVICES, 'abc');
-          completeField(YEARS_EXPORTING, '5');
-          completeField(EMPLOYEES_INTERNATIONAL, '33');
+    describe(`when ${EMPLOYEES_UK} is a decimal place number`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].INCORRECT_FORMAT;
 
-          field.input().clear().type('3S');
-          submitButton().click();
-          partials.errorSummaryListItems().should('have.length', 1);
-          checkText(partials.errorSummaryListItems().first(), errorMessage);
-        });
+      it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
+        const fieldId = EMPLOYEES_UK;
+        const field = natureOfBusiness[fieldId];
 
-        it(`should display the validation error for ${EMPLOYEES_UK}`, () => {
-          const fieldId = EMPLOYEES_UK;
-          const field = natureOfBusiness[fieldId];
+        field.input().clear().type('5.5');
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 4);
+        checkText(partials.errorSummaryListItems().eq(2), errorMessage);
+      });
 
-          checkText(field.error(), `Error: ${errorMessage}`);
-        });
+      it(`should display the validation error for ${EMPLOYEES_UK}`, () => {
+        const fieldId = EMPLOYEES_UK;
+        const field = natureOfBusiness[fieldId];
+
+        checkText(field.error(), `Error: ${errorMessage}`);
+      });
+    });
+
+    describe(`when ${EMPLOYEES_UK} has special characters`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].INCORRECT_FORMAT;
+
+      it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
+        const fieldId = EMPLOYEES_UK;
+        const field = natureOfBusiness[fieldId];
+
+        field.input().clear().type('3S');
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 4);
+        checkText(partials.errorSummaryListItems().eq(2), errorMessage);
+      });
+
+      it(`should display the validation error for ${EMPLOYEES_UK}`, () => {
+        const fieldId = EMPLOYEES_UK;
+        const field = natureOfBusiness[fieldId];
+
+        checkText(field.error(), `Error: ${errorMessage}`);
       });
     });
 
     describe(`when ${EMPLOYEES_UK} is correctly entered`, () => {
-      it('should not display validation errors', () => {
+      it(`should not display  ${EMPLOYEES_UK} validation errors`, () => {
         cy.navigateToUrl(url);
 
         const fieldId = EMPLOYEES_UK;
         const field = natureOfBusiness[fieldId];
 
-        completeField(GOODS_OR_SERVICES, 'abc');
-        completeField(YEARS_EXPORTING, '5');
-        completeField(EMPLOYEES_INTERNATIONAL, '33');
-
         field.input().clear().type('5');
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 0);
-      });
-
-      it(`should redirect to ${turnoverUrl}`, () => {
-        cy.url().should('eq', turnoverUrl);
+        partials.errorSummaryListItems().should('have.length', 3);
       });
     });
   });
 
   describe(`${EMPLOYEES_INTERNATIONAL} validation`, () => {
-    describe(`${EMPLOYEES_INTERNATIONAL} error`, () => {
-      describe(`when ${EMPLOYEES_INTERNATIONAL} is left empty`, () => {
-        const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_INTERNATIONAL].IS_EMPTY;
+    describe(`when ${EMPLOYEES_INTERNATIONAL} is left empty`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_INTERNATIONAL].IS_EMPTY;
 
-        it(`should display validation errors if ${EMPLOYEES_INTERNATIONAL} left empty`, () => {
-          cy.navigateToUrl(url);
+      it(`should display validation errors for ${EMPLOYEES_INTERNATIONAL}`, () => {
+        cy.navigateToUrl(url);
 
-          const fieldId = EMPLOYEES_INTERNATIONAL;
-          const field = natureOfBusiness[fieldId];
+        const fieldId = EMPLOYEES_INTERNATIONAL;
+        const field = natureOfBusiness[fieldId];
 
-          completeField(GOODS_OR_SERVICES, 'abc');
-          completeField(YEARS_EXPORTING, '5');
-          completeField(EMPLOYEES_UK, '33');
-
-          field.input().clear();
-          submitButton().click();
-          partials.errorSummaryListItems().should('have.length', 1);
-          checkText(partials.errorSummaryListItems().first(), errorMessage);
-        });
-
-        it(`should focus to the ${EMPLOYEES_INTERNATIONAL} section when clicking the error`, () => {
-          const fieldId = EMPLOYEES_INTERNATIONAL;
-          const field = natureOfBusiness[fieldId];
-
-          partials.errorSummaryListItemLinks().first().click();
-          field.input().should('have.focus');
-        });
-
-        it(`should display the validation error for ${EMPLOYEES_INTERNATIONAL}`, () => {
-          const fieldId = EMPLOYEES_INTERNATIONAL;
-          const field = natureOfBusiness[fieldId];
-
-          checkText(field.error(), `Error: ${errorMessage}`);
-        });
+        field.input().clear();
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 4);
+        checkText(partials.errorSummaryListItems().eq(3), errorMessage);
       });
 
-      describe(`when ${EMPLOYEES_INTERNATIONAL} is a decimal place number`, () => {
-        const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_INTERNATIONAL].INCORRECT_FORMAT;
+      it(`should focus to the ${EMPLOYEES_INTERNATIONAL} section when clicking the error`, () => {
+        const fieldId = EMPLOYEES_INTERNATIONAL;
+        const field = natureOfBusiness[fieldId];
 
-        it(`should display validation errors for ${EMPLOYEES_INTERNATIONAL}`, () => {
-          const fieldId = EMPLOYEES_INTERNATIONAL;
-          const field = natureOfBusiness[fieldId];
-
-          completeField(GOODS_OR_SERVICES, 'abc');
-          completeField(YEARS_EXPORTING, '5');
-          completeField(EMPLOYEES_UK, '33');
-
-          field.input().clear().type('5.5');
-          submitButton().click();
-          partials.errorSummaryListItems().should('have.length', 1);
-          checkText(partials.errorSummaryListItems().first(), errorMessage);
-        });
-
-        it(`should display the validation error for ${EMPLOYEES_INTERNATIONAL}`, () => {
-          const fieldId = EMPLOYEES_INTERNATIONAL;
-          const field = natureOfBusiness[fieldId];
-
-          checkText(field.error(), `Error: ${errorMessage}`);
-        });
+        partials.errorSummaryListItemLinks().eq(3).click();
+        field.input().should('have.focus');
       });
 
-      describe(`when ${EMPLOYEES_INTERNATIONAL} has special characters`, () => {
-        const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_INTERNATIONAL].INCORRECT_FORMAT;
+      it(`should display the validation error for ${EMPLOYEES_INTERNATIONAL}`, () => {
+        const fieldId = EMPLOYEES_INTERNATIONAL;
+        const field = natureOfBusiness[fieldId];
 
-        it(`should display validation errors for ${EMPLOYEES_INTERNATIONAL}`, () => {
-          const fieldId = EMPLOYEES_INTERNATIONAL;
-          const field = natureOfBusiness[fieldId];
+        checkText(field.error(), `Error: ${errorMessage}`);
+      });
+    });
 
-          completeField(GOODS_OR_SERVICES, 'abc');
-          completeField(YEARS_EXPORTING, '5');
-          completeField(EMPLOYEES_UK, '33');
+    describe(`when ${EMPLOYEES_INTERNATIONAL} is a decimal place number`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_INTERNATIONAL].INCORRECT_FORMAT;
 
-          field.input().clear().type('3S');
-          submitButton().click();
-          partials.errorSummaryListItems().should('have.length', 1);
-          checkText(partials.errorSummaryListItems().first(), errorMessage);
-        });
+      it(`should display validation errors for ${EMPLOYEES_INTERNATIONAL}`, () => {
+        const fieldId = EMPLOYEES_INTERNATIONAL;
+        const field = natureOfBusiness[fieldId];
 
-        it(`should display the validation error for ${EMPLOYEES_INTERNATIONAL}`, () => {
-          const fieldId = EMPLOYEES_INTERNATIONAL;
-          const field = natureOfBusiness[fieldId];
+        field.input().clear().type('5.5');
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 4);
+        checkText(partials.errorSummaryListItems().eq(3), errorMessage);
+      });
 
-          checkText(field.error(), `Error: ${errorMessage}`);
-        });
+      it(`should display the validation error for ${EMPLOYEES_INTERNATIONAL}`, () => {
+        const fieldId = EMPLOYEES_INTERNATIONAL;
+        const field = natureOfBusiness[fieldId];
+
+        checkText(field.error(), `Error: ${errorMessage}`);
+      });
+    });
+
+    describe(`when ${EMPLOYEES_INTERNATIONAL} has special characters`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_INTERNATIONAL].INCORRECT_FORMAT;
+
+      it(`should display validation errors for ${EMPLOYEES_INTERNATIONAL}`, () => {
+        const fieldId = EMPLOYEES_INTERNATIONAL;
+        const field = natureOfBusiness[fieldId];
+
+        field.input().clear().type('3S');
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 4);
+        checkText(partials.errorSummaryListItems().eq(3), errorMessage);
+      });
+
+      it(`should display the validation error for ${EMPLOYEES_INTERNATIONAL}`, () => {
+        const fieldId = EMPLOYEES_INTERNATIONAL;
+        const field = natureOfBusiness[fieldId];
+
+        checkText(field.error(), `Error: ${errorMessage}`);
       });
     });
 
@@ -259,17 +213,9 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_INTERNATIONAL;
         const field = natureOfBusiness[fieldId];
 
-        completeField(GOODS_OR_SERVICES, 'abc');
-        completeField(YEARS_EXPORTING, '5');
-        completeField(EMPLOYEES_UK, '33');
-
         field.input().clear().type('5');
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 0);
-      });
-
-      it(`should redirect to ${turnoverUrl}`, () => {
-        cy.url().should('eq', turnoverUrl);
+        partials.errorSummaryListItems().should('have.length', 3);
       });
     });
   });

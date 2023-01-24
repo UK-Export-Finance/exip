@@ -6,10 +6,12 @@ import { objectHasProperty } from '../../../../../../helpers/object';
 import generateValidationErrors from '../../../../../../helpers/validation';
 
 const {
-  NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING },
+  NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING: FIELD_ID },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
-const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
+const {
+  EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },
+} = ERROR_MESSAGES.INSURANCE;
 
 /**
  * validates years exporting input
@@ -19,13 +21,14 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
  * @returns {object} errors
  */
 const yearsExporting = (responseBody: RequestBody, errors: object) => {
-  if (!objectHasProperty(responseBody, YEARS_EXPORTING)) {
-    const errorMessage = EXPORTER_BUSINESS[YEARS_EXPORTING].IS_EMPTY;
+  if (!objectHasProperty(responseBody, FIELD_ID)) {
+    const errorMessage = ERROR_MESSAGE.IS_EMPTY;
 
-    return generateValidationErrors(YEARS_EXPORTING, errorMessage, errors);
+    return generateValidationErrors(FIELD_ID, errorMessage, errors);
   }
 
-  return wholeNumberValidation(responseBody, errors, EXPORTER_BUSINESS, YEARS_EXPORTING);
+  const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
+  return wholeNumberValidation(responseBody, errors, errorMessage, FIELD_ID);
 };
 
 export default yearsExporting;

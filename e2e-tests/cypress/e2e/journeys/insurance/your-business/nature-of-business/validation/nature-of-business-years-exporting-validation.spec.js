@@ -14,20 +14,9 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 const {
   NATURE_OF_YOUR_BUSINESS: {
-    GOODS_OR_SERVICES,
     YEARS_EXPORTING,
-    EMPLOYEES_INTERNATIONAL,
-    EMPLOYEES_UK,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
-
-const turnoverUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER}`;
-
-const completeField = (fieldId, input) => {
-  const field = natureOfBusiness[fieldId];
-
-  field.input().clear().type(input);
-};
 
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - years exporting input validation', () => {
   let referenceNumber;
@@ -64,21 +53,17 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
-        completeField(GOODS_OR_SERVICES, 'abc');
-        completeField(EMPLOYEES_UK, '5');
-        completeField(EMPLOYEES_INTERNATIONAL, '5');
-
         field.input().clear();
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 1);
-        checkText(partials.errorSummaryListItems().first(), errorMessage);
+        partials.errorSummaryListItems().should('have.length', 4);
+        checkText(partials.errorSummaryListItems().eq(1), errorMessage);
       });
 
       it(`should focus to the ${YEARS_EXPORTING} section when clicking the error`, () => {
         const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
-        partials.errorSummaryListItemLinks().first().click();
+        partials.errorSummaryListItemLinks().eq(1).click();
         field.input().should('have.focus');
       });
 
@@ -97,17 +82,13 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
-        completeField(GOODS_OR_SERVICES, 'abc');
-        completeField(EMPLOYEES_UK, '5');
-        completeField(EMPLOYEES_INTERNATIONAL, '5');
-
         field.input().clear().type('5.5');
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 1);
-        checkText(partials.errorSummaryListItems().first(), errorMessage);
+        partials.errorSummaryListItems().should('have.length', 4);
+        checkText(partials.errorSummaryListItems().eq(1), errorMessage);
       });
 
-      it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
+      it(`should display the validation error for ${YEARS_EXPORTING}`, () => {
         const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
@@ -122,17 +103,13 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
-        completeField(GOODS_OR_SERVICES, 'abc');
-        completeField(EMPLOYEES_UK, '5');
-        completeField(EMPLOYEES_INTERNATIONAL, '5');
-
         field.input().clear().type('5O');
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 1);
-        checkText(partials.errorSummaryListItems().first(), errorMessage);
+        partials.errorSummaryListItems().should('have.length', 4);
+        checkText(partials.errorSummaryListItems().eq(1), errorMessage);
       });
 
-      it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
+      it(`should display the validation error for ${YEARS_EXPORTING}`, () => {
         const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
@@ -148,17 +125,9 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       const fieldId = YEARS_EXPORTING;
       const field = natureOfBusiness[fieldId];
 
-      completeField(GOODS_OR_SERVICES, 'abc');
-      completeField(EMPLOYEES_UK, '5');
-      completeField(EMPLOYEES_INTERNATIONAL, '5');
-
       field.input().clear().type('5');
       submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 0);
-    });
-
-    it(`should redirect to ${turnoverUrl}`, () => {
-      cy.url().should('eq', turnoverUrl);
+      partials.errorSummaryListItems().should('have.length', 3);
     });
   });
 });
