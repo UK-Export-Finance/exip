@@ -47,7 +47,6 @@ export {
   ApolloResponse,
   CisCountry,
   CompanyDetails,
-  CompanyDetailsFieldGroups,
   CompanyHouseResponse,
   CorePageVariablesInitialInput,
   CorePageVariablesInput,
