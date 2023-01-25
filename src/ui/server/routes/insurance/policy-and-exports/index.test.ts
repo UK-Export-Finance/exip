@@ -17,7 +17,6 @@ describe('routes/insurance/policy-and-exports', () => {
     require('.'); // eslint-disable-line global-require
   });
 
-
   afterEach(() => {
     jest.resetAllMocks();
   });
