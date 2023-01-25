@@ -35,7 +35,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (err) {
-    console.error('Error updating application', { err });
+    console.error('Error updating application - policy and exports - about goods or services (save and back)', { err });
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }

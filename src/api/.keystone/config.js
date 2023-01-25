@@ -51,7 +51,7 @@ var APPLICATION = {
   SUBMISSION_DEADLINE_IN_MONTHS: 3,
   POLICY_TYPE: {
     SINGLE: "Single contract policy",
-    MULTI: "Multiple contract policy"
+    MULTIPLE: "Multiple contract policy"
   },
   POLICY_AND_EXPORT: {
     TOTAL_VALUE_OF_CONTRACT: {
@@ -205,7 +205,7 @@ var lists = {
       policyType: (0, import_fields.select)({
         options: [
           { label: APPLICATION.POLICY_TYPE.SINGLE, value: APPLICATION.POLICY_TYPE.SINGLE },
-          { label: APPLICATION.POLICY_TYPE.MULTI, value: APPLICATION.POLICY_TYPE.MULTI }
+          { label: APPLICATION.POLICY_TYPE.MULTIPLE, value: APPLICATION.POLICY_TYPE.MULTIPLE }
         ]
       }),
       requestedStartDate: (0, import_fields.timestamp)(),
@@ -547,8 +547,8 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
             id: variables.companyId
           };
         } catch (err) {
-          console.error("Error updating application exporter company and exporter company address", { err });
-          throw new Error(`Updating application exporter company and exporter company address ${err}`);
+          console.error("Error updating application - exporter company and exporter company address", { err });
+          throw new Error(`Updating application - exporter company and exporter company address ${err}`);
         }
       },
       sendEmail: async (root, variables) => {

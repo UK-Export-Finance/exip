@@ -190,7 +190,7 @@ This is just an example with a very small amount of months.
       }
     ],  
   },
-  "MULTI_POLICY": {
+  "MULTIPLE_POLICY": {
     "STANDARD": [],
     "HIGH": [],
     "VERY_HIGH": []

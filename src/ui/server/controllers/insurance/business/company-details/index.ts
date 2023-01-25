@@ -166,8 +166,8 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     }
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-  } catch (error) {
-    console.error('Error posting companies house search', { error });
+  } catch (err) {
+    console.error('Error posting companise house search - your business - company details', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };
@@ -241,8 +241,8 @@ const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
-  } catch (error) {
-    console.error('Error posting company details', { error });
+  } catch (err) {
+    console.error('Error updating application - your business - company details', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };

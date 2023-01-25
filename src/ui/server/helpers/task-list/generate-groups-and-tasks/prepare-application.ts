@@ -20,7 +20,7 @@ export const getContractPolicyTasks = (policyType?: string): object => {
     return FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE;
   }
 
-  if (policyType === FIELD_VALUES.POLICY_TYPE.MULTI) {
+  if (policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE) {
     return FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE;
   }
 

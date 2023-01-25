@@ -36,7 +36,7 @@ export const completeAndSubmitPolicyTypeSingleForm = () => {
 };
 
 export const completeAndSubmitPolicyTypeMultiForm = () => {
-  policyTypePage[POLICY_TYPE].multi.input().click();
+  policyTypePage[POLICY_TYPE].multiple.input().click();
 
   submitButton().click();
 };

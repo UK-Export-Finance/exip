@@ -101,13 +101,13 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
         expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.SINGLE.HINT);
       });
 
-      field.multi.input().should('exist');
-      field.multi.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.MULTI.TEXT);
+      field.multiple.input().should('exist');
+      field.multiple.label().invoke('text').then((text) => {
+        expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.MULTIPLE.TEXT);
       });
 
-      field.multi.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.MULTI.HINT);
+      field.multiple.hint().invoke('text').then((text) => {
+        expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.MULTIPLE.HINT);
       });
     });
 
@@ -143,14 +143,14 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       });
     });
 
-    describe('when clicking `multi` policy type', () => {
+    describe('when clicking `multiple` policy type', () => {
       it('should reveal inset text and link', () => {
-        const multiPolicyType = policyTypePage[POLICY_TYPE].multi;
+        const multiPolicyType = policyTypePage[POLICY_TYPE].multiple;
         multiPolicyType.label().click();
 
         const field = FIELDS[POLICY_TYPE];
 
-        const insetText = field.OPTIONS.MULTI.INSET[0];
+        const insetText = field.OPTIONS.MULTIPLE.INSET[0];
 
         multiPolicyType.inset.text().invoke('text').then((text) => {
           expect(text.trim()).includes(insetText[0].text);

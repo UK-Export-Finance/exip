@@ -146,19 +146,19 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
   it('renders `multiple` radio input with label and hint text list', () => {
     multiplePolicyField.input().should('exist');
     multiplePolicyField.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.MULTI.TEXT);
+      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.MULTIPLE.TEXT);
     });
 
     multiplePolicyField.hintList.item1().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.MULTI.HINT_LIST[0]);
+      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[0]);
     });
 
     multiplePolicyField.hintList.item2().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.MULTI.HINT_LIST[1]);
+      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[1]);
     });
 
     multiplePolicyField.hintList.item3().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.MULTI.HINT_LIST[2]);
+      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[2]);
     });
   });
 
@@ -227,7 +227,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     describe('when submitting the answer as `multiple`', () => {
       it(`should redirect to ${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, () => {
-        cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTI);
+        cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
         const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 

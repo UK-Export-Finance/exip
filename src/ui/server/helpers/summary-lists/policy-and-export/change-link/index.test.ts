@@ -29,7 +29,7 @@ describe('server/helpers/summary-lists/policy-and-export/change-link', () => {
 
   describe('when the policy type is multiple policy type', () => {
     it('should return renderChangeLink with correct link', () => {
-      const result = changeLink(FIELD_VALUES.POLICY_TYPE.MULTI, referenceNumber, mockFieldId);
+      const result = changeLink(FIELD_VALUES.POLICY_TYPE.MULTIPLE, referenceNumber, mockFieldId);
 
       const expected = {
         renderChangeLink: true,

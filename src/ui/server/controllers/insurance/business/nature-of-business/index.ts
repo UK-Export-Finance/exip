@@ -121,7 +121,7 @@ const post = async (req: Request, res: Response) => {
 
     return res.redirect(TURNOVER_ROOT);
   } catch (err) {
-    console.error('Error posting company details', { err });
+    console.error('Error updating application - your business - nature of business', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };

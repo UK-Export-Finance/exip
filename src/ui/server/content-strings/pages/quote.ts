@@ -19,7 +19,7 @@ const POLICY_TYPE = {
 
 const TELL_US_ABOUT_YOUR_POLICY = {
   SINGLE_POLICY_PAGE_TITLE: 'Tell us about the single contract policy you need',
-  MULTI_POLICY_PAGE_TITLE: 'Tell us about the multiple contract policy you need',
+  MULTIPLE_POLICY_PAGE_TITLE: 'Tell us about the multiple contract policy you need',
 };
 
 const CHECK_YOUR_ANSWERS = {
