@@ -1,5 +1,3 @@
-import { SummaryListItemData } from './summary-list';
-
 interface CompanyDetails {
   companyRegistration?: string;
   companyName?: string;

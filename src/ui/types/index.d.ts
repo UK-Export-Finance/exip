@@ -2,7 +2,7 @@ import { AnswersContent, AnswersFieldGroups } from './answers';
 import { Application, ApplicationExporterCompany, ApplicationFlat, ApplicationPolicyAndExport } from './application';
 import { ApolloResponse } from './apollo';
 import { CisCountry } from './cis-country';
-import { CompanyDetails, CompanyDetailsFieldGroups, SicCode } from './company-details';
+import { CompanyDetails, SicCode } from './company-details';
 import { CompanyHouseResponse } from './company-house-response';
 import { Country } from './country';
 import { Currency } from './currency';
