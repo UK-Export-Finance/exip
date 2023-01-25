@@ -63,9 +63,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
 
     it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
-      partials.backLink().invoke('text').then((text) => {
-        expect(text.trim()).equal(LINKS.BACK);
-      });
+      cy.checkText(partials.backLink(), LINKS.BACK);
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.POLICY_TYPE}`;
 
@@ -76,9 +74,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       const expectedPageTitle = `${CONTENT_STRINGS.MULTI_POLICY_PAGE_TITLE} - ${ORGANISATION}`;
       cy.title().should('eq', expectedPageTitle);
 
-      heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.MULTI_POLICY_PAGE_TITLE);
-      });
+      cy.checkText(heading(), CONTENT_STRINGS.MULTI_POLICY_PAGE_TITLE);
     });
 
     it('renders `currency and amount` legend', () => {
@@ -87,9 +83,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.legend().should('exist');
-      field.legend().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LEGEND);
-      });
+      cy.checkText(field.legend(), FIELDS[fieldId].MULTI_POLICY.LEGEND);
     });
 
     it('renders `currency` legend, label and input', () => {
@@ -98,9 +92,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
-      });
+      cy.checkText(field.label(), FIELDS[fieldId].LABEL);
 
       field.input().should('exist');
     });
@@ -121,9 +113,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
-      });
+      cy.checkText(field.label(), FIELDS[fieldId].LABEL);
 
       field.input().should('exist');
     });
@@ -134,14 +124,10 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LABEL);
-      });
+      cy.checkText(field.label(), FIELDS[fieldId].MULTI_POLICY.LABEL);
 
       field.hint().should('exist');
-      field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.HINT);
-      });
+      cy.checkText(field.hint(), FIELDS[fieldId].MULTI_POLICY.HINT);
 
       field.input().should('exist');
     });
@@ -152,14 +138,10 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LABEL);
-      });
+      cy.checkText(field.label(), FIELDS[fieldId].MULTI_POLICY.LABEL);
 
       field.hint().should('exist');
-      field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.HINT);
-      });
+      cy.checkText(field.hint(), FIELDS[fieldId].MULTI_POLICY.HINT);
 
       field.input().should('exist');
 
@@ -177,19 +159,14 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.labelText().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
-      });
+      cy.checkText(field.labelText(), FIELDS[fieldId].LABEL);
 
       field.hint().should('exist');
 
       const { HINT } = FIELDS[fieldId];
 
-      field.hint().invoke('text').then((text) => {
-        const expectedHintText = `${HINT[0].text} ${HINT[1].text} ${HINT[2].text}`;
-
-        expect(text.trim()).equal(expectedHintText);
-      });
+      const expectedHintText = `${HINT[0].text} ${HINT[1].text} ${HINT[2].text}`;
+      cy.checkText(field.hint(), expectedHintText);
 
       const expectedHintHref = HINT[1].href;
 
@@ -208,9 +185,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
     it('renders a submit button', () => {
       submitButton().should('exist');
 
-      submitButton().invoke('text').then((text) => {
-        expect(text.trim()).equal(BUTTONS.CONTINUE);
-      });
+      cy.checkText(submitButton(), BUTTONS.CONTINUE);
     });
   });
 

@@ -9,7 +9,6 @@ import {
   ROUTES,
 } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
-import checkText from '../../../../../helpers/check-text';
 
 const { taskList } = partials.insurancePartials;
 
@@ -66,12 +65,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     it('should render a validation error', () => {
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(3),
         CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].IS_EMPTY}`,
       );
@@ -83,12 +82,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
       multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().clear().type('ten!');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(3),
         CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].NOT_A_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].NOT_A_NUMBER}`,
       );
@@ -100,12 +99,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
       multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().clear().type('1.2');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(3),
         CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].NOT_A_WHOLE_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].NOT_A_WHOLE_NUMBER}`,
       );
@@ -117,12 +116,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
       multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().clear().type('0');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(3),
         CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM}`,
       );
@@ -136,12 +135,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
       multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().clear().type(MAXIMUM + 1);
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(3),
         CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].ABOVE_MAXIMUM,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].ABOVE_MAXIMUM}`,
       );

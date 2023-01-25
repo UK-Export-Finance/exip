@@ -88,9 +88,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().click();
 
@@ -117,13 +115,9 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    headingCaption().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING_CAPTION);
-    });
+    cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `description` label, hint, prefix and input', () => {
@@ -131,25 +125,15 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     const field = aboutGoodsOrServicesPage[fieldId];
 
     field.label().should('exist');
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
 
-    field.hint.intro().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.INTRO);
-    });
+    cy.checkText(field.hint.intro(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.INTRO);
 
-    field.hint.list.item1().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[0]);
-    });
+    cy.checkText(field.hint.list.item1(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[0]);
 
-    field.hint.list.item2().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[1]);
-    });
+    cy.checkText(field.hint.list.item2(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[1]);
 
-    field.hint.list.item3().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[2]);
-    });
+    cy.checkText(field.hint.list.item3(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[2]);
 
     field.input().should('exist');
   });
@@ -159,9 +143,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     const field = aboutGoodsOrServicesPage[fieldId];
 
     field.label().should('exist');
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
 
     field.input().should('exist');
 
@@ -171,17 +153,13 @@ context('Insurance - Policy and exports - About goods or services page - As an e
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   it('renders a `save and back` button', () => {
     saveAndBackButton().should('exist');
 
-    saveAndBackButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
-    });
+    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 
   describe('form submission', () => {
@@ -196,11 +174,8 @@ context('Insurance - Policy and exports - About goods or services page - As an e
       it('should retain the `type of policy and exports` task status as `completed`', () => {
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-        task.status().invoke('text').then((text) => {
-          const expected = TASKS.STATUS.COMPLETED;
-
-          expect(text.trim()).equal(expected);
-        });
+        const expected = TASKS.STATUS.COMPLETED;
+        cy.checkText(task.status(), expected);
       });
     });
 
@@ -210,11 +185,8 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
         aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.POLICY_AND_EXPORTS[DESCRIPTION]);
 
-        aboutGoodsOrServicesPage[FINAL_DESTINATION].inputOptionSelected().invoke('text').then((text) => {
-          const country = countries.find((c) => c.isoCode === application.POLICY_AND_EXPORTS[FINAL_DESTINATION]);
-
-          expect(text.trim()).equal(country.name);
-        });
+        const country = countries.find((c) => c.isoCode === application.POLICY_AND_EXPORTS[FINAL_DESTINATION]);
+        cy.checkText(aboutGoodsOrServicesPage[FINAL_DESTINATION].inputOptionSelected(), country.name);
       });
     });
   });

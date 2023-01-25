@@ -58,9 +58,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().click();
 
@@ -92,34 +90,26 @@ context('Insurance - Other parties page - I want to check if I can use online se
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `yes` radio button', () => {
     yesRadio().should('exist');
 
-    yesRadio().invoke('text').then((text) => {
-      expect(text.trim()).equal('Yes');
-    });
+    cy.checkText(yesRadio(), 'Yes');
   });
 
   it('renders `no` radio button', () => {
     noRadio().should('exist');
 
-    noRadio().invoke('text').then((text) => {
-      expect(text.trim()).equal('No');
-    });
+    cy.checkText(noRadio(), 'No');
   });
 
   describe('expandable details', () => {
     it('renders summary text', () => {
       insurance.eligibility.otherPartiesPage.description.summary().should('exist');
 
-      insurance.eligibility.otherPartiesPage.description.summary().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.INTRO);
-      });
+      cy.checkText(insurance.eligibility.otherPartiesPage.description.summary(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.INTRO);
     });
 
     it('clicking summary text reveals details', () => {
@@ -129,38 +119,24 @@ context('Insurance - Other parties page - I want to check if I can use online se
     });
 
     it('renders expanded content', () => {
-      insurance.eligibility.otherPartiesPage.description.list.intro().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST_INTRO);
-      });
+      cy.checkText(insurance.eligibility.otherPartiesPage.description.list.intro(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST_INTRO);
 
-      insurance.eligibility.otherPartiesPage.description.list.item1().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[0].TEXT);
-      });
+      cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item1(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[0].TEXT);
 
-      insurance.eligibility.otherPartiesPage.description.list.item2().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[1].TEXT);
-      });
+      cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item2(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[1].TEXT);
 
-      insurance.eligibility.otherPartiesPage.description.list.item3().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[2].TEXT);
-      });
+      cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item3(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[2].TEXT);
 
-      insurance.eligibility.otherPartiesPage.description.list.item4().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[3].TEXT);
-      });
+      cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item4(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[3].TEXT);
 
-      insurance.eligibility.otherPartiesPage.description.list.item5().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[4].TEXT);
-      });
+      cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item5(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[4].TEXT);
     });
   });
 
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   describe('form submission', () => {
@@ -173,13 +149,9 @@ context('Insurance - Other parties page - I want to check if I can use online se
 
         const expectedMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED].IS_EMPTY;
 
-        partials.errorSummaryListItems().first().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedMessage);
-        });
+        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 
-        inlineErrorMessage().invoke('text').then((text) => {
-          expect(text.trim()).includes(expectedMessage);
-        });
+        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
       });
 
       it('should focus on input when clicking summary error message', () => {

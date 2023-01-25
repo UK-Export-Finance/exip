@@ -42,11 +42,8 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   });
 
   it('renders a specific reason', () => {
-    cannotApplyPage.reason().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES}`;
-
-      expect(text.trim()).equal(expected);
-    });
+    const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES}`;
+    cy.checkText(cannotApplyPage.reason(), expected);
   });
 
   describe('when going back to the page', () => {

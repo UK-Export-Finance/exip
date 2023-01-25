@@ -52,11 +52,9 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
   });
 
   it(`should contain "${CONTENT_STRINGS.REASON.NO_COMPANIES_HOUSE_NUMBER}" message on apply offline page`, () => {
-    cannotApplyPage.reason().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NO_COMPANIES_HOUSE_NUMBER}`;
+    const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NO_COMPANIES_HOUSE_NUMBER}`;
 
-      expect(text.trim()).equal(expected);
-    });
+    cy.checkText(cannotApplyPage.reason(), expected);
   });
 
   it('should contain link to proposal form on the apply offline page', () => {

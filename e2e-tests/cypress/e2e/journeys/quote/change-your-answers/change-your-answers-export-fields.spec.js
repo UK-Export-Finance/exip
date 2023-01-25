@@ -48,9 +48,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     it('has originally submitted answer selected', () => {
       const expectedValue = submissionData[BUYER_COUNTRY];
 
-      buyerCountryPage.results().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedValue);
-      });
+      cy.checkText(buyerCountryPage.results(), expectedValue);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
@@ -74,11 +72,8 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     it('renders the new answer in `Check your answers` page', () => {
       row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
 
-      row.value().invoke('text').then((text) => {
-        const expected = 'Brazil';
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = 'Brazil';
+      cy.checkText(row.value(), expected);
     });
   });
 

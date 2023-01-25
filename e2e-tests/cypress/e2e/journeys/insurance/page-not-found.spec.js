@@ -40,37 +40,23 @@ context('Insurance - page not found', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `typed` and `pasted` text', () => {
-    pageNotFoundPage.typedAddress().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.TYPED_ADDRESS);
-    });
+    cy.checkText(pageNotFoundPage.typedAddress(), CONTENT_STRINGS.TYPED_ADDRESS);
 
-    pageNotFoundPage.pastedAddress().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PASTED_ADDRESS);
-    });
+    cy.checkText(pageNotFoundPage.pastedAddress(), CONTENT_STRINGS.PASTED_ADDRESS);
   });
 
   it('renders contact text and link', () => {
-    pageNotFoundPage.contact1().invoke('text').then((text) => {
-      expect(text.trim()).eq(CONTENT_STRINGS.CONTACT.TEXT);
-    });
+    cy.checkText(pageNotFoundPage.contact1(), CONTENT_STRINGS.CONTACT.TEXT);
 
-    pageNotFoundPage.contact2().invoke('text').then((text) => {
-      expect(text.trim()).eq(CONTENT_STRINGS.CONTACT.LINK.TEXT);
-    });
+    cy.checkText(pageNotFoundPage.contact2(), CONTENT_STRINGS.CONTACT.LINK.TEXT);
 
-    pageNotFoundPage.contact3().invoke('text').then((text) => {
-      expect(text.trim()).eq(CONTENT_STRINGS.CONTACT.OUTRO);
-    });
+    cy.checkText(pageNotFoundPage.contact3(), CONTENT_STRINGS.CONTACT.OUTRO);
 
-    pageNotFoundPage.contactLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.CONTACT.LINK.TEXT);
-    });
+    cy.checkText(pageNotFoundPage.contactLink(), CONTENT_STRINGS.CONTACT.LINK.TEXT);
 
     pageNotFoundPage.contactLink().should('have.attr', 'href', CONTENT_STRINGS.CONTACT.LINK.HREF);
   });

@@ -1,5 +1,3 @@
-import checkText from '../e2e/helpers/check-text';
-
 /**
  * assertSummaryListRowValue
  * Assert a summary list row's value.
@@ -9,7 +7,7 @@ import checkText from '../e2e/helpers/check-text';
  * @param {String} Expected value
  */
 const assertSummaryListRowValue = (summaryList, fieldId, expected) => {
-  checkText(
+  cy.checkText(
     summaryList[fieldId].value(),
     expected,
   );

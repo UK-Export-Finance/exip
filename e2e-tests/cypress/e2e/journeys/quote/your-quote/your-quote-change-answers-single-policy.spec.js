@@ -67,11 +67,8 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
       const row = yourQuotePage.panel.summaryList[CONTRACT_VALUE];
 
-      row.value().invoke('text').then((text) => {
-        const expected = '£1,000';
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = '£1,000';
+      cy.checkText(row.value(), expected);
     });
   });
 
@@ -109,11 +106,8 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
       const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
 
-      row.value().invoke('text').then((text) => {
-        const expected = '85%';
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = '85%';
+      cy.checkText(row.value(), expected);
     });
   });
 
@@ -157,15 +151,11 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
       const insuredFor = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
 
-      insuredFor.value().invoke('text').then((text) => {
-        expect(text.trim()).equal('£102,000.00');
-      });
+      cy.checkText(insuredFor.value(), '£102,000.00');
 
       const policyLength = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
 
-      policyLength.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(`${FIELD_VALUES.POLICY_LENGTH.MULTI} months`);
-      });
+      cy.checkText(policyLength.value(), `${FIELD_VALUES.POLICY_LENGTH.MULTI} months`);
     });
   });
 
@@ -205,11 +195,8 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
       const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
 
-      row.value().invoke('text').then((text) => {
-        const expected = 'Bahrain';
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = 'Bahrain';
+      cy.checkText(row.value(), expected);
     });
   });
 
@@ -250,9 +237,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
 
       const buyerLocation = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
 
-      buyerLocation.value().invoke('text').then((text) => {
-        expect(text.trim()).equal('Brazil');
-      });
+      cy.checkText(buyerLocation.value(), 'Brazil');
     });
   });
 });

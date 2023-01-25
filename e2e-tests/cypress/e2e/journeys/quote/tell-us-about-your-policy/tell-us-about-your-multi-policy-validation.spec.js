@@ -10,7 +10,6 @@ import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../constants';
-import checkText from '../../../helpers/check-text';
 import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 context('Tell us about the multi policy you need - form validation', () => {
@@ -41,45 +40,45 @@ context('Tell us about the multi policy you need - form validation', () => {
       partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
       // currency
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(0),
         ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY}`,
       );
 
       // max amount owed
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].IS_EMPTY}`,
       );
 
       // percentage of cover
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(2),
         ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY}`,
       );
 
       // credit period
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(3),
         ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY}`,
       );
@@ -109,12 +108,12 @@ context('Tell us about the multi policy you need - form validation', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('a');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_NUMBER}`,
       );
@@ -126,12 +125,12 @@ context('Tell us about the multi policy you need - form validation', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('1234.56');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER}`,
       );
@@ -143,12 +142,12 @@ context('Tell us about the multi policy you need - form validation', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('0');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].BELOW_MINIMUM,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].BELOW_MINIMUM}`,
       );
@@ -159,12 +158,12 @@ context('Tell us about the multi policy you need - form validation', () => {
     it('should render a validation error', () => {
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(3),
         ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY}`,
       );

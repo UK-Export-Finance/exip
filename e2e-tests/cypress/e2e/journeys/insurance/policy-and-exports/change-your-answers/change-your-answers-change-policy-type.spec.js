@@ -6,7 +6,6 @@ import { DEFAULT, LINKS } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
-import checkText from '../../../../helpers/check-text';
 
 const {
   POLICY_AND_EXPORTS: {
@@ -102,21 +101,21 @@ context('Insurance - Policy and exports - Check your answers - Policy type - As 
         it('should have empty summary list row values and links for the empty multiple policy specific fields', () => {
           cy.assertSummaryListRowValue(summaryList, TOTAL_MONTHS_OF_COVER, DEFAULT.EMPTY);
 
-          checkText(
+          cy.checkText(
             summaryList[TOTAL_MONTHS_OF_COVER].changeLink(),
             `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[TOTAL_MONTHS_OF_COVER].SUMMARY.TITLE}`,
           );
 
           cy.assertSummaryListRowValue(summaryList, TOTAL_SALES_TO_BUYER, DEFAULT.EMPTY);
 
-          checkText(
+          cy.checkText(
             summaryList[TOTAL_SALES_TO_BUYER].changeLink(),
             `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[TOTAL_SALES_TO_BUYER].SUMMARY.TITLE}`,
           );
 
           cy.assertSummaryListRowValue(summaryList, MAXIMUM_BUYER_WILL_OWE, DEFAULT.EMPTY);
 
-          checkText(
+          cy.checkText(
             summaryList[MAXIMUM_BUYER_WILL_OWE].changeLink(),
             `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[MAXIMUM_BUYER_WILL_OWE].SUMMARY.TITLE}`,
           );

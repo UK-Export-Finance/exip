@@ -85,15 +85,11 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
 
   context('panel/quote', () => {
     it('renders `you can apply` heading', () => {
-      yourQuotePage.panel.headingText().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-      });
+      cy.checkText(yourQuotePage.panel.headingText(), CONTENT_STRINGS.PAGE_TITLE);
     });
 
     it('renders `your quote` heading', () => {
-      yourQuotePage.panel.subHeading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.QUOTE.SUB_HEADING);
-      });
+      cy.checkText(yourQuotePage.panel.subHeading(), CONTENT_STRINGS.QUOTE.SUB_HEADING);
     });
 
     context('summary list', () => {
@@ -103,20 +99,13 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         const row = summaryList[CONTRACT_VALUE];
         const expectedKeyText = QUOTE_TITLES[CONTRACT_VALUE];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '£150,000';
+        const expectedValue = '£150,000';
+        cy.checkText(row.value(), expectedValue);
 
-          expect(text.trim()).equal(expected);
-        });
-
-        row.changeLink().invoke('text').then((text) => {
-          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-          expect(text.trim()).equal(expected);
-        });
+        const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expectedChangeLink);
 
         const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
@@ -126,20 +115,13 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         const row = summaryList[PERCENTAGE_OF_COVER];
         const expectedKeyText = QUOTE_TITLES[PERCENTAGE_OF_COVER];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '90%';
+        const expectedValue = '90%';
+        cy.checkText(row.value(), expectedValue);
 
-          expect(text.trim()).equal(expected);
-        });
-
-        row.changeLink().invoke('text').then((text) => {
-          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-          expect(text.trim()).equal(expected);
-        });
+        const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expectedChangeLink);
 
         const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
@@ -149,15 +131,10 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         const row = summaryList[INSURED_FOR];
         const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_SINGLE_POLICY`];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '£135,000.00';
-
-          expect(text.trim()).equal(expected);
-        });
+        const expectedValue = '£135,000.00';
+        cy.checkText(row.value(), expectedValue);
 
         row.changeLink().should('not.exist');
       });
@@ -166,15 +143,10 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         const row = summaryList[PREMIUM_RATE_PERCENTAGE];
         const expectedKeyText = QUOTE_TITLES[PREMIUM_RATE_PERCENTAGE];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '1.18%';
-
-          expect(text.trim()).equal(expected);
-        });
+        const expected = '1.18%';
+        cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
       });
@@ -183,15 +155,10 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         const row = summaryList[ESTIMATED_COST];
         const expectedKeyText = QUOTE_TITLES[ESTIMATED_COST];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '£1,770.00';
-
-          expect(text.trim()).equal(expected);
-        });
+        const expected = '£1,770.00';
+        cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
       });
@@ -200,20 +167,13 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         const row = summaryList[SINGLE_POLICY_LENGTH];
         const expectedKeyText = QUOTE_TITLES[POLICY_LENGTH];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
+        const expectedValue = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
+        cy.checkText(row.value(), expectedValue);
 
-          expect(text.trim()).equal(expected);
-        });
-
-        row.changeLink().invoke('text').then((text) => {
-          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-          expect(text.trim()).equal(expected);
-        });
+        const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expectedChangeLink);
 
         const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
@@ -223,20 +183,13 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         const row = summaryList[BUYER_LOCATION];
         const expectedKeyText = QUOTE_TITLES[BUYER_LOCATION];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = submissionData[BUYER_COUNTRY];
+        const expectedValue = submissionData[BUYER_COUNTRY];
+        cy.checkText(row.value(), expectedValue);
 
-          expect(text.trim()).equal(expected);
-        });
-
-        row.changeLink().invoke('text').then((text) => {
-          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-          expect(text.trim()).equal(expected);
-        });
+        const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expectedChangeLink);
 
         const expectedHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
         row.changeLink().should('have.attr', 'href', expectedHref);
@@ -246,17 +199,11 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
 
   context('notice', () => {
     it('renders notice list items', () => {
-      yourQuotePage.noticeList.item1().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.NOTICE_1);
-      });
+      cy.checkText(yourQuotePage.noticeList.item1(), CONTENT_STRINGS.NOTICE_1);
 
-      yourQuotePage.noticeList.item2().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.NOTICE_2);
-      });
+      cy.checkText(yourQuotePage.noticeList.item2(), CONTENT_STRINGS.NOTICE_2);
 
-      yourQuotePage.noticeList.item3().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.NOTICE_3);
-      });
+      cy.checkText(yourQuotePage.noticeList.item3(), CONTENT_STRINGS.NOTICE_3);
     });
   });
 
@@ -279,9 +226,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
       it('renders', () => {
         yourQuotePage.links.feedback().should('exist');
 
-        yourQuotePage.links.feedback().invoke('text').then((text) => {
-          expect(text.trim()).equal(LINKS.GIVE_FEEDBACK);
-        });
+        cy.checkText(yourQuotePage.links.feedback(), LINKS.GIVE_FEEDBACK);
 
         yourQuotePage.links.feedback().should('have.attr', 'href', LINKS.EXTERNAL.FEEDBACK);
       });
@@ -291,9 +236,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
       it('renders', () => {
         yourQuotePage.links.startAgain().should('exist');
 
-        yourQuotePage.links.startAgain().invoke('text').then((text) => {
-          expect(text.trim()).equal(LINKS.START_AGAIN.TEXT);
-        });
+        cy.checkText(yourQuotePage.links.startAgain(), LINKS.START_AGAIN.TEXT);
 
         yourQuotePage.links.startAgain().should('have.attr', 'href', ROUTES.ROOT);
       });

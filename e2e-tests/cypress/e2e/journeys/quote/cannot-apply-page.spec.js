@@ -56,9 +56,7 @@ context('Cannot apply exit page', () => {
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().click();
 
@@ -69,9 +67,7 @@ context('Cannot apply exit page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders a reason', () => {
@@ -79,25 +75,19 @@ context('Cannot apply exit page', () => {
   });
 
   it('renders `actions` content', () => {
-    cannotApplyPage.actions.intro().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.ACTIONS.INTRO);
-    });
+    cy.checkText(cannotApplyPage.actions.intro(), CONTENT_STRINGS.ACTIONS.INTRO);
 
     const listItems = cannotApplyPage.actions.listItems();
 
     listItems.should('have.length', 2);
 
-    cannotApplyPage.actions.eligibility().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.TEXT} ${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT}`;
-      expect(text.trim()).equal(expected);
-    });
+    const expectedEligibility = `${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.TEXT} ${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT}`;
+    cy.checkText(cannotApplyPage.actions.eligibility(), expectedEligibility);
 
     cannotApplyPage.actions.eligibilityLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
 
-    cannotApplyPage.actions.approvedBroker().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT} ${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.TEXT}`;
-      expect(text.trim()).equal(expected);
-    });
+    const expectedBroker = `${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT} ${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.TEXT}`;
+    cy.checkText(cannotApplyPage.actions.approvedBroker(), expectedBroker);
 
     cannotApplyPage.actions.approvedBrokerLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF);
   });

@@ -5,7 +5,6 @@ import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../content-strings/fie
 import application from '../../fixtures/application';
 import countries from '../../fixtures/countries';
 import currencies from '../../fixtures/currencies';
-import checkText from '../../e2e/helpers/check-text';
 import formatCurrency from '../../e2e/helpers/format-currency';
 import { createTimestampFromNumbers, formatDate } from '../../e2e/helpers/date';
 
@@ -33,17 +32,17 @@ const assertRow = (fieldId, expectedKey, expectedValue, expectedChangeLinkText) 
   const { summaryList } = checkYourAnswersPage;
   const row = summaryList[fieldId];
 
-  checkText(
+  cy.checkText(
     row.key(),
     expectedKey,
   );
 
-  checkText(
+  cy.checkText(
     row.value(),
     expectedValue,
   );
 
-  checkText(
+  cy.checkText(
     row.changeLink(),
     `${LINKS.CHANGE} ${expectedChangeLinkText}`,
   );

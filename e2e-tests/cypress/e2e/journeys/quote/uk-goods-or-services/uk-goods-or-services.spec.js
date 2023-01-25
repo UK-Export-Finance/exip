@@ -47,9 +47,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().click();
 
@@ -79,25 +77,19 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `yes` radio button', () => {
     yesRadio().should('exist');
 
-    yesRadio().invoke('text').then((text) => {
-      expect(text.trim()).equal('Yes');
-    });
+    cy.checkText(yesRadio(), 'Yes');
   });
 
   it('renders `no` radio button', () => {
     noRadio().should('exist');
 
-    noRadio().invoke('text').then((text) => {
-      expect(text.trim()).equal('No');
-    });
+    cy.checkText(noRadio(), 'No');
   });
 
   describe('expandable details', () => {
@@ -114,19 +106,15 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     });
 
     it('renders `will calculate thoroughly` copy ', () => {
-      partials.ukGoodsOrServicesDescription.calculateThoroughly().invoke('text').then((text) => {
-        const expected = CONTENT_STRINGS.WILL_CALCULATE_THOROUGHLY;
-        expect(text.trim()).equal(expected);
-      });
+      const expected = CONTENT_STRINGS.WILL_CALCULATE_THOROUGHLY;
+      cy.checkText(partials.ukGoodsOrServicesDescription.calculateThoroughly(), expected);
     });
   });
 
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   describe('form submission', () => {
@@ -139,13 +127,9 @@ context('UK goods or services page - as an exporter, I want to check if my expor
 
         const expectedMessage = ERROR_MESSAGES[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES].IS_EMPTY;
 
-        partials.errorSummaryListItems().first().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedMessage);
-        });
+        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 
-        inlineErrorMessage().invoke('text').then((text) => {
-          expect(text.trim()).includes(expectedMessage);
-        });
+        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
       });
 
       it('should focus on input when clicking summary error message', () => {

@@ -56,11 +56,8 @@ context('Insurance - Eligibility - Companies house number page - I want to check
   });
 
   it('renders a specific reason', () => {
-    cannotApplyPage.reason().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NO_COMPANIES_HOUSE_NUMBER}`;
-
-      expect(text.trim()).equal(expected);
-    });
+    const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NO_COMPANIES_HOUSE_NUMBER}`;
+    cy.checkText(cannotApplyPage.reason(), expected);
   });
 
   describe('when going back to the page', () => {
