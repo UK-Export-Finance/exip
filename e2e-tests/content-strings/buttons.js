@@ -1,5 +1,6 @@
 export const BUTTONS = {
   CONTINUE: 'Continue',
+  CONTINUE_NEXT_SECTION: 'Continue to next section',
   SUBMIT: 'Submit',
   START_APPLICATION: 'Start an application',
   START_NOW: 'Start now',

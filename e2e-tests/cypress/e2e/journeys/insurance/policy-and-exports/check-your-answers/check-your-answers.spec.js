@@ -119,7 +119,7 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
     submitButton().should('exist');
 
     submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
+      expect(text.trim()).equal(BUTTONS.CONTINUE_NEXT_SECTION);
     });
   });
 
