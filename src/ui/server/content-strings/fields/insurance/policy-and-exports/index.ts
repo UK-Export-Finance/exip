@@ -19,9 +19,9 @@ export const POLICY_AND_EXPORTS_FIELDS = {
           'You pay for the insurance before the policy starts',
         ],
       },
-      MULTI: {
+      MULTIPLE: {
         ID: POLICY_AND_EXPORTS.MULTI_POLICY_TYPE,
-        VALUE: FIELD_VALUES.POLICY_TYPE.MULTI,
+        VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy',
         HINT_LIST: [
           'Covers multiple contracts with the same buyer, usually for 12 months',

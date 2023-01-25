@@ -118,7 +118,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
       it(`should add an ${MAX_AMOUNT_OWED} object`, () => {
         const mockQuoteContent = {
           ...mapQuoteToContent(mockQuote),
-          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
           [INSURED_FOR]: '£123',
           [MAX_AMOUNT_OWED]: '£567',
         };
@@ -141,7 +141,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
       it(`should add an ${INSURED_FOR} object`, () => {
         const mockQuoteContent = {
           ...mapQuoteToContent(mockQuote),
-          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
           [INSURED_FOR]: '£123',
           [MAX_AMOUNT_OWED]: '£567',
         };
@@ -164,7 +164,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
       it(`should add an ${MULTI_POLICY_LENGTH} object`, () => {
         const mockQuoteContent = {
           ...mapQuoteToContent(mockQuote),
-          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
           [MAX_AMOUNT_OWED]: '£567',
         };
 

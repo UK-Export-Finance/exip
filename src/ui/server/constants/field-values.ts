@@ -9,11 +9,11 @@ export const FIELD_VALUES = {
   },
   POLICY_TYPE: {
     SINGLE: POLICY_TYPE.SINGLE,
-    MULTI: POLICY_TYPE.MULTI,
+    MULTIPLE: POLICY_TYPE.MULTIPLE,
   },
   POLICY_LENGTH: {
     // default multi policy length in months
-    MULTI: 12,
+    MULTIPLE: 12,
   },
   TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY_AND_EXPORT.TOTAL_MONTHS_OF_COVER).keys()),
 };

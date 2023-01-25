@@ -6,7 +6,7 @@ const veryHighRisk3Months = getAvailableCover('MULTI_POLICY', 'VERY_HIGH', 3);
 
 describe('server/generate-quote/get-premium-rate', () => {
   const mockBase = {
-    policyType: FIELD_VALUES.POLICY_TYPE.MULTI,
+    policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
     insuredFor: 70,
   };
 

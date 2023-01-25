@@ -94,7 +94,7 @@ context('Insurance - Policy and exports - Check your answers - Policy type - As 
       });
 
       it('should render the new answer', () => {
-        const expected = FIELD_VALUES.POLICY_TYPE.MULTI;
+        const expected = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
         cy.assertSummaryListRowValue(summaryList, fieldId, expected);
       });
 

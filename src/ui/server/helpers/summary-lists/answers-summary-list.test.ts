@@ -155,7 +155,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         mockAnswersContent = {
           ...mapAnswersToContent(mockSession.submittedData.quoteEligibility),
           [MULTI_POLICY_TYPE]: {
-            text: FIELD_VALUES.POLICY_TYPE.MULTI,
+            text: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
           },
           [MULTI_POLICY_LENGTH]: {
             text: 2,

@@ -182,7 +182,7 @@ export const lists = {
       policyType: select({
         options: [
           { label: APPLICATION.POLICY_TYPE.SINGLE, value: APPLICATION.POLICY_TYPE.SINGLE },
-          { label: APPLICATION.POLICY_TYPE.MULTI, value: APPLICATION.POLICY_TYPE.MULTI },
+          { label: APPLICATION.POLICY_TYPE.MULTIPLE, value: APPLICATION.POLICY_TYPE.MULTI },
         ],
       }),
       requestedStartDate: timestamp(),

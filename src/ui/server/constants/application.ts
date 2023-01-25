@@ -5,7 +5,7 @@ export const APPLICATION = {
   SUBMISSION_DEADLINE_IN_MONTHS: 3,
   POLICY_TYPE: {
     SINGLE: 'Single contract policy',
-    MULTI: 'Multiple contract policy',
+    MULTIPLE: 'Multiple contract policy',
   },
   POLICY_AND_EXPORT: {
     TOTAL_VALUE_OF_CONTRACT: {

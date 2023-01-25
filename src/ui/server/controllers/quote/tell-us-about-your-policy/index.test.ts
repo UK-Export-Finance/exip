@@ -99,7 +99,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
     describe('when policy type is multi', () => {
       it('should return page variables with multi policy strings', () => {
-        const mockPolicyType = FIELD_VALUES.POLICY_TYPE.MULTI;
+        const mockPolicyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
         const result = generatePageVariables(mockPolicyType);
 

@@ -29,7 +29,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
     [BUYER_COUNTRY]: 'Algeria',
     [CREDIT_PERIOD]: '1',
     [PERCENTAGE_OF_COVER]: '90',
-    [MULTI_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+    [MULTI_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
   };
 

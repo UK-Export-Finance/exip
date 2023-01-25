@@ -90,7 +90,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_TYPE];
 
     row.value().invoke('text').then((text) => {
-      const expected = FIELD_VALUES.POLICY_TYPE.MULTI;
+      const expected = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
       expect(text.trim()).equal(expected);
     });

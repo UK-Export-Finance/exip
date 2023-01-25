@@ -122,7 +122,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       describe(`when ${FIELD_IDS.MAX_AMOUNT_OWED} is not provided`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
             [FIELD_IDS.MAX_AMOUNT_OWED]: '',
           };
 
@@ -137,7 +137,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       describe(`when ${FIELD_IDS.MAX_AMOUNT_OWED} is not a whole number`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
             [FIELD_IDS.MAX_AMOUNT_OWED]: '123,456.78',
           };
 
@@ -152,7 +152,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       describe(`when ${FIELD_IDS.MAX_AMOUNT_OWED} has invalid characters`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
             [FIELD_IDS.MAX_AMOUNT_OWED]: '£123,456',
           };
 
@@ -167,7 +167,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       describe(`when ${FIELD_IDS.MAX_AMOUNT_OWED} is not a number`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
             [FIELD_IDS.MAX_AMOUNT_OWED]: 'invalid',
           };
 
@@ -182,7 +182,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       describe(`when ${FIELD_IDS.MAX_AMOUNT_OWED} is below the minimum`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
             [FIELD_IDS.MAX_AMOUNT_OWED]: '0',
           };
 
@@ -197,7 +197,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       describe('when there are no validation errors', () => {
         it('should return the already provided errors', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
             [FIELD_IDS.MAX_AMOUNT_OWED]: '1,234,567',
           };
 

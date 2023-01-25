@@ -35,7 +35,7 @@ describe('server/helpers/map-answers-to-content', () => {
 
     describe('when policy type is single', () => {
       it(`should return an object with ${MULTI_POLICY_TYPE}`, () => {
-        const mockAnswer = FIELD_VALUES.POLICY_TYPE.MULTI;
+        const mockAnswer = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
         const result = mapPolicyType(mockAnswer);
 

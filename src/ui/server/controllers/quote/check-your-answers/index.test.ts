@@ -25,7 +25,7 @@ describe('controllers/quote/check-your-answers', () => {
         isoCode: GBP_CURRENCY_CODE,
       },
       [MAX_AMOUNT_OWED]: 1234,
-      [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+      [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
       [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
       [VALID_EXPORTER_LOCATION]: true,
     },

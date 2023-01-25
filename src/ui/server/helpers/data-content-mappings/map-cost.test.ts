@@ -29,7 +29,7 @@ describe('server/helpers/data-content-mappings/map-cost', () => {
   describe('when policy type is multi', () => {
     it(`should return an object with formatted ${MAX_AMOUNT_OWED}`, () => {
       const mockDataMultiPolicyType = {
-        [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+        [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         [CURRENCY]: {
           isoCode: GBP_CURRENCY_CODE,
         },

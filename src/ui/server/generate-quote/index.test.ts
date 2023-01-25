@@ -28,7 +28,7 @@ describe('server/generate-quote/index', () => {
       it('should return max amount owed', () => {
         const mockSubmittedData = {
           [MAX_AMOUNT_OWED]: 5678,
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         };
 
         const result = getContractValue(mockSubmittedData);
@@ -71,7 +71,7 @@ describe('server/generate-quote/index', () => {
           quoteEligibility: {
             [MAX_AMOUNT_OWED]: 5678,
             [PERCENTAGE_OF_COVER]: 80,
-            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
           },
         };
 
@@ -105,8 +105,8 @@ describe('server/generate-quote/index', () => {
 
     describe('when policy type is multi', () => {
       it('should return the total of credit period + policy length + business buffer months', () => {
-        const mockPolicyType = FIELD_VALUES.POLICY_TYPE.MULTI;
-        const mockPolicyLength = FIELD_VALUES.POLICY_LENGTH.MULTI;
+        const mockPolicyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+        const mockPolicyLength = FIELD_VALUES.POLICY_LENGTH.MULTIPLE;
         const mockCreditPeriod = 2;
 
         const result = getTotalMonths(mockPolicyType, mockPolicyLength, mockCreditPeriod);

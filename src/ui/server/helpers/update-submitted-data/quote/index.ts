@@ -28,7 +28,7 @@ const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): Submitt
   }
 
   if (isMultiPolicyType(submittedData[POLICY_TYPE])) {
-    mapped[POLICY_LENGTH] = FIELD_VALUES.POLICY_LENGTH.MULTI;
+    mapped[POLICY_LENGTH] = FIELD_VALUES.POLICY_LENGTH.MULTIPLE;
 
     delete mapped[SINGLE_POLICY_LENGTH];
     delete mapped[MULTI_POLICY_LENGTH];

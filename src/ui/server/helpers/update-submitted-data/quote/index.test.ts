@@ -31,16 +31,16 @@ describe('server/helpers/update-submitted-data/quote', () => {
       it('should return policy length field with multi specific fields and default multi policy length', () => {
         const mockFormData = {
           mock: '1',
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
         } as SubmittedDataQuoteEligibility;
 
         const result = mapSubmittedData(mockFormData);
 
         const expected = {
           mock: '1',
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+          [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
         };
 
         expect(result).toEqual(expected);
@@ -56,7 +56,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
         } as SubmittedDataQuoteEligibility;
 
         const mockExistingData = {
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
           [MAX_AMOUNT_OWED]: 200,
         } as SubmittedDataQuoteEligibility;
 
@@ -75,8 +75,8 @@ describe('server/helpers/update-submitted-data/quote', () => {
     describe(`when ${POLICY_TYPE} of 'multi' is submitted  and 'single' fields were previously provided`, () => {
       it('should return policy length field with only multi specific fields and default multi policy length', () => {
         const mockFormData = {
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
           [MAX_AMOUNT_OWED]: 200,
         } as SubmittedDataQuoteEligibility;
 
@@ -89,8 +89,8 @@ describe('server/helpers/update-submitted-data/quote', () => {
         const result = mapSubmittedData({ ...mockExistingData, ...mockFormData });
 
         const expected = {
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+          [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
           [MAX_AMOUNT_OWED]: 200,
         };
 

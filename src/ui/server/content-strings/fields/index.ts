@@ -107,9 +107,9 @@ export const FIELDS = {
         TEXT: 'Single contract policy',
         HINT: 'This covers a single export contract with a single buyer for one or more shipments. You need to pay before the policy starts.',
       },
-      MULTI: {
+      MULTIPLE: {
         ID: FIELD_IDS.MULTI_POLICY_TYPE,
-        VALUE: FIELD_VALUES.POLICY_TYPE.MULTI,
+        VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy (also known as a revolving policy)',
         HINT: "This covers multiple export contracts with the same buyer for a policy period of 12 months. You do not need to pay before the policy starts. You'll pay each time you declare a new export sale.",
         INSET: [
