@@ -19,12 +19,12 @@ import {
   FIELD_IDS,
   FIELD_VALUES,
   ROUTES,
-  SUPPORTED_CURRENCIES,
 } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
+import checkPolicyCurrencyCodeInput from '../../../../../support/insurance/check-policy-currency-code-input';
 
-const { taskList } = partials.insurancePartials;
+const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY;
 
@@ -255,28 +255,8 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
   });
 
   describe('currency', () => {
-    it('renders `currency` label and input', () => {
-      const fieldId = POLICY_CURRENCY_CODE;
-      const field = multipleContractPolicyPage[fieldId];
-
-      field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTRACT_POLICY[fieldId].LABEL);
-      });
-
-      field.input().should('exist');
-    });
-
-    it('renders only supported currencies in alphabetical order', () => {
-      const fieldId = POLICY_CURRENCY_CODE;
-      const field = multipleContractPolicyPage[fieldId];
-
-      field.inputOption().should('have.length', SUPPORTED_CURRENCIES.length + 1);
-
-      field.inputFirstOption().should('be.disabled');
-      field.input().select(1).should('have.value', SUPPORTED_CURRENCIES[0]);
-      field.input().select(2).should('have.value', SUPPORTED_CURRENCIES[1]);
-      field.input().select(3).should('have.value', SUPPORTED_CURRENCIES[2]);
+    it('renders `currency` label, hint and input with supported currencies ordered alphabetically', () => {
+      checkPolicyCurrencyCodeInput();
     });
   });
 
@@ -331,7 +311,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
         multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().should('have.value', application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
         multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().should('have.value', application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
         multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().should('have.value', application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
-        multipleContractPolicyPage[POLICY_CURRENCY_CODE].inputOptionSelected().contains(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);
+        policyCurrencyCodeFormField.inputOptionSelected().contains(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);
       });
     });
   });

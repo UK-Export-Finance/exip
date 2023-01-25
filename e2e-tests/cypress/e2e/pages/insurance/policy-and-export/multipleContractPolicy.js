@@ -6,7 +6,6 @@ const {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
         CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
         MULTIPLE: {
           TOTAL_MONTHS_OF_COVER,
           TOTAL_SALES_TO_BUYER,
@@ -61,14 +60,6 @@ const multipleContractPolicy = {
     hint: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-hint"]`),
     input: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-error-message"]`),
-  },
-  [POLICY_CURRENCY_CODE]: {
-    label: () => cy.get(`[data-cy="${POLICY_CURRENCY_CODE}-label"]`),
-    input: () => cy.get(`[data-cy="${POLICY_CURRENCY_CODE}-input"]`),
-    inputOption: () => cy.get(`[data-cy="${POLICY_CURRENCY_CODE}-input"]`).find('option'),
-    inputFirstOption: () => cy.get(`[data-cy="${POLICY_CURRENCY_CODE}-input"]`).find('option').eq(0),
-    inputOptionSelected: () => cy.get(`[data-cy="${POLICY_CURRENCY_CODE}-input"]`).find(':selected'),
-    errorMessage: () => cy.get(`[data-cy="${POLICY_CURRENCY_CODE}-error-message"]`),
   },
 };
 

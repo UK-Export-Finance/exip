@@ -1,12 +1,11 @@
 import { submitButton } from '../../../../../pages/shared';
-import { multipleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
 import checkText from '../../../../../helpers/check-text';
 
-const { taskList } = partials.insurancePartials;
+const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const { INSURANCE } = ROUTES;
 
@@ -53,8 +52,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  const field = multipleContractPolicyPage[POLICY_CURRENCY_CODE];
-
   describe('when policy currency code is not provided', () => {
     it('should render a validation error', () => {
       submitButton().click();
@@ -65,7 +62,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
       );
 
       checkText(
-        field.errorMessage(),
+        policyCurrencyCodeFormField.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY}`,
       );
     });

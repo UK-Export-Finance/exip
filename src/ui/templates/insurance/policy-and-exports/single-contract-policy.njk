@@ -7,6 +7,7 @@
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% import '../../components/date-input.njk' as dateInput %}
+{% import '../../components/policy-currency-code-hint.njk' as policyCurrencyCodeHint %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -133,6 +134,13 @@
           }
         }) }}
 
+        {% set currencyCodeHintHtml %}
+          {{policyCurrencyCodeHint.render({
+            id: FIELDS.POLICY_CURRENCY_CODE.ID,
+            hint:FIELDS.POLICY_CURRENCY_CODE.HINT
+          })}}
+        {% endset %}
+
         {{ govukSelect({
           id: FIELDS.POLICY_CURRENCY_CODE.ID,
           name: FIELDS.POLICY_CURRENCY_CODE.ID,
@@ -142,6 +150,9 @@
             attributes: {
               'data-cy': FIELDS.POLICY_CURRENCY_CODE.ID + '-label'
             }
+          },
+          hint: {
+            html: currencyCodeHintHtml
           },
           items: currencies,
           classes: "govuk-grid-column-one-quarter-from-desktop",

@@ -7,6 +7,7 @@
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% import '../../components/date-input.njk' as dateInput %}
+{% import '../../components/policy-currency-code-hint.njk' as policyCurrencyCodeHint %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -126,13 +127,13 @@
 
 
         {% set maximumBuyerWillOweId = FIELDS.MAXIMUM_BUYER_WILL_OWE.ID %}
-        {% set HINT = FIELDS.MAXIMUM_BUYER_WILL_OWE.HINT %}
+        {% set MAXIMUM_HINT = FIELDS.MAXIMUM_BUYER_WILL_OWE.HINT %}
 
         {% set maximumBuyerWillOweHintHtml %}
-          <p data-cy="{{ maximumBuyerWillOweId }}-hint-for-example">{{ HINT.FOR_EXAMPLE }}</p>
-          <p data-cy="{{ maximumBuyerWillOweId }}-hint-need-more-cover">{{ HINT.NEED_MORE_COVER }} <a class="govuk-link govuk-link" href="{{ HINT.FILL_IN_FORM.HREF }}" data-cy="{{ maximumBuyerWillOweId }}-hint-fill-in-form-link">{{ HINT.FILL_IN_FORM.TEXT }}</a></p>
+          <p data-cy="{{ maximumBuyerWillOweId }}-hint-for-example">{{ MAXIMUM_HINT.FOR_EXAMPLE }}</p>
+          <p data-cy="{{ maximumBuyerWillOweId }}-hint-need-more-cover">{{ MAXIMUM_HINT.NEED_MORE_COVER }} <a class="govuk-link govuk-link" href="{{ MAXIMUM_HINT.FILL_IN_FORM.HREF }}" data-cy="{{ maximumBuyerWillOweId }}-hint-fill-in-form-link">{{ MAXIMUM_HINT.FILL_IN_FORM.TEXT }}</a></p>
 
-          <p data-cy="{{ maximumBuyerWillOweId }}-hint-no-decimals">{{ HINT.NO_DECIMALS }}</p>
+          <p data-cy="{{ maximumBuyerWillOweId }}-hint-no-decimals">{{ MAXIMUM_HINT.NO_DECIMALS }}</p>
         {% endset %}
 
         {{ govukInput({
@@ -201,6 +202,13 @@
           }
         }) }}
 
+        {% set currencyCodeHintHtml %}
+          {{policyCurrencyCodeHint.render({
+            id: FIELDS.POLICY_CURRENCY_CODE.ID,
+            hint:FIELDS.POLICY_CURRENCY_CODE.HINT
+          })}}
+        {% endset %}
+
         {{ govukSelect({
           id: FIELDS.POLICY_CURRENCY_CODE.ID,
           name: FIELDS.POLICY_CURRENCY_CODE.ID,
@@ -211,6 +219,9 @@
               'data-cy': FIELDS.POLICY_CURRENCY_CODE.ID + '-label',
               id: FIELDS.POLICY_CURRENCY_CODE.ID + '-label'
             }
+          },
+          hint: {
+            html: currencyCodeHintHtml
           },
           items: currencies,
           classes: "govuk-grid-column-one-quarter-from-desktop",
