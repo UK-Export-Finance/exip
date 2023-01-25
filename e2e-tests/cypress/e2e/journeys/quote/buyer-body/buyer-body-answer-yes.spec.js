@@ -32,17 +32,11 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   });
 
   it('renders a specific reason and description', () => {
-    getAQuoteByEmailPage.reason().invoke('text').then((text) => {
-      const expected = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL.REASON.BUYER_BODY;
+    const expectedReason = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL.REASON.BUYER_BODY;
+    cy.checkText(getAQuoteByEmailPage.reason(), expectedReason);
 
-      expect(text.trim()).equal(expected);
-    });
-
-    getAQuoteByEmailPage.description().invoke('text').then((text) => {
-      const expected = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL.REASON.BUYER_BODY_DESCRIPTION;
-
-      expect(text.trim()).equal(expected);
-    });
+    const expectedDescription = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL.REASON.BUYER_BODY_DESCRIPTION;
+    cy.checkText(getAQuoteByEmailPage.description(), expectedDescription);
   });
 
   describe('navigating back to the buyer body page', () => {

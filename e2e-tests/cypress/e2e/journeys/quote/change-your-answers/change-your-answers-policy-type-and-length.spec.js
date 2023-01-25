@@ -81,27 +81,18 @@ context('Change your answers (policy type and length fields) - as an exporter, I
 
     row = checkYourAnswersPage.summaryLists.policy[MAX_AMOUNT_OWED];
 
-    row.value().invoke('text').then((text) => {
-      const expected = '£120,000';
-
-      expect(text.trim()).equal(expected);
-    });
+    const expectedValue = '£120,000';
+    cy.checkText(row.value(), expectedValue);
 
     row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_TYPE];
 
-    row.value().invoke('text').then((text) => {
-      const expected = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
-
-      expect(text.trim()).equal(expected);
-    });
+    const expectedValue2 = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+    cy.checkText(row.value(), expectedValue2);
 
     row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_LENGTH];
 
-    row.value().invoke('text').then((text) => {
-      const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`;
-
-      expect(text.trim()).equal(expected);
-    });
+    const expectedValue3 = `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`;
+    cy.checkText(row.value(), expectedValue3);
   });
 
   describe('change `Policy type` and `Policy length` for a second time (multiple to single 5 months)', () => {
@@ -144,27 +135,18 @@ context('Change your answers (policy type and length fields) - as an exporter, I
 
       row = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE];
 
-      row.value().invoke('text').then((text) => {
-        const expected = '£150';
-
-        expect(text.trim()).equal(expected);
-      });
+      const expectedValue = '£150';
+      cy.checkText(row.value(), expectedValue);
 
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
 
-      row.value().invoke('text').then((text) => {
-        const expected = FIELD_VALUES.POLICY_TYPE.SINGLE;
-
-        expect(text.trim()).equal(expected);
-      });
+      const expectedValue2 = FIELD_VALUES.POLICY_TYPE.SINGLE;
+      cy.checkText(row.value(), expectedValue2);
 
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_LENGTH];
 
-      row.value().invoke('text').then((text) => {
-        const expected = '5 months';
-
-        expect(text.trim()).equal(expected);
-      });
+      const expectedValue3 = '5 months';
+      cy.checkText(row.value(), expectedValue3);
     });
   });
 
@@ -242,11 +224,8 @@ context('Change your answers (policy type and length fields) - as an exporter, I
 
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_LENGTH];
 
-      row.value().invoke('text').then((text) => {
-        const expected = '7 months';
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = '7 months';
+      cy.checkText(row.value(), expected);
     });
   });
 });

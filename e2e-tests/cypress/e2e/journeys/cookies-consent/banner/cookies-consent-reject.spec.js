@@ -30,23 +30,18 @@ context('Cookies consent - reject', () => {
       partials.cookieBanner.heading().should('exist');
 
       partials.cookieBanner.rejected.copy().should('exist');
-      partials.cookieBanner.rejected.copy().invoke('text').then((text) => {
-        const { REJECTED } = COOKIES_CONSENT;
-        const expected = `${REJECTED.COPY_1} ${COOKIES_CONSENT.COOKIES_LINK} ${REJECTED.COPY_2}`;
 
-        expect(text.trim()).equal(expected);
-      });
+      const { REJECTED } = COOKIES_CONSENT;
+      const expected = `${REJECTED.COPY_1} ${COOKIES_CONSENT.COOKIES_LINK} ${REJECTED.COPY_2}`;
+      cy.checkText(partials.cookieBanner.rejected.copy(), expected);
 
       partials.cookieBanner.cookiesLink().should('exist');
-      partials.cookieBanner.cookiesLink().invoke('text').then((text) => {
-        expect(text.trim()).equal(COOKIES_CONSENT.COOKIES_LINK);
-      });
+      cy.checkText(partials.cookieBanner.cookiesLink(), COOKIES_CONSENT.COOKIES_LINK);
+
       partials.cookieBanner.cookiesLink().should('have.attr', 'href', ROUTES.COOKIES);
 
       partials.cookieBanner.hideButton().should('exist');
-      partials.cookieBanner.hideButton().invoke('text').then((text) => {
-        expect(text.trim()).equal(COOKIES_CONSENT.HIDE_BUTTON);
-      });
+      cy.checkText(partials.cookieBanner.hideButton(), COOKIES_CONSENT.HIDE_BUTTON);
     });
 
     it('should NOT render a google tag manager script and data layer script', () => {

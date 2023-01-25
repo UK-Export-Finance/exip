@@ -74,11 +74,8 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      task.status().invoke('text').then((text) => {
-        const expected = TASKS.STATUS.IN_PROGRESS;
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = TASKS.STATUS.IN_PROGRESS;
+      cy.checkText(task.status(), expected);
     });
   });
 
@@ -107,11 +104,8 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      task.status().invoke('text').then((text) => {
-        const expected = TASKS.STATUS.IN_PROGRESS;
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = TASKS.STATUS.IN_PROGRESS;
+      cy.checkText(task.status(), expected);
     });
 
     describe('when going back to the page', () => {
@@ -146,11 +140,8 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      task.status().invoke('text').then((text) => {
-        const expected = TASKS.STATUS.IN_PROGRESS;
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = TASKS.STATUS.IN_PROGRESS;
+      cy.checkText(task.status(), expected);
     });
 
     describe('when going back to the page', () => {

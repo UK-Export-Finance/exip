@@ -64,11 +64,8 @@ context('Insurance - Policy and exports - About goods or services page - Save an
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      task.status().invoke('text').then((text) => {
-        const expected = TASKS.STATUS.IN_PROGRESS;
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = TASKS.STATUS.IN_PROGRESS;
+      cy.checkText(task.status(), expected);
     });
   });
 
@@ -90,11 +87,8 @@ context('Insurance - Policy and exports - About goods or services page - Save an
     });
 
     it('should update the status of task `type of policy and exports`to `in progress`', () => {
-      task.status().invoke('text').then((text) => {
-        const expected = TASKS.STATUS.IN_PROGRESS;
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = TASKS.STATUS.IN_PROGRESS;
+      cy.checkText(task.status(), expected);
     });
 
     describe('when going back to the page', () => {

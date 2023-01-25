@@ -53,9 +53,7 @@ context('Get a quote via email exit page', () => {
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().click();
 
@@ -66,39 +64,27 @@ context('Get a quote via email exit page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders a reason and description ', () => {
-    getAQuoteByEmailPage.reason().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.REASON.BUYER_COUNTRY);
-    });
+    cy.checkText(getAQuoteByEmailPage.reason(), CONTENT_STRINGS.REASON.BUYER_COUNTRY);
 
-    getAQuoteByEmailPage.description().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.REASON.BUYER_COUNTRY_DESCRIPTION);
-    });
+    cy.checkText(getAQuoteByEmailPage.description(), CONTENT_STRINGS.REASON.BUYER_COUNTRY_DESCRIPTION);
   });
 
   it('renders `action` content', () => {
-    getAQuoteByEmailPage.action.text().invoke('text').then((text) => {
-      const actionStrings = CONTENT_STRINGS.ACTION[0];
-      const expected = `${actionStrings[0].text}${actionStrings[1].text}${actionStrings[2].text} ${actionStrings[3].text}`;
-      expect(text.trim()).equal(expected);
-    });
+    const actionStrings = CONTENT_STRINGS.ACTION[0];
+    const expectedText = `${actionStrings[0].text}${actionStrings[1].text}${actionStrings[2].text} ${actionStrings[3].text}`;
+    cy.checkText(getAQuoteByEmailPage.action.text(), expectedText);
 
-    getAQuoteByEmailPage.action.link1().invoke('text').then((text) => {
-      const expected = CONTENT_STRINGS.ACTION[0][0].text;
-      expect(text.trim()).equal(expected);
-    });
+    const expectedLink = CONTENT_STRINGS.ACTION[0][0].text;
+    cy.checkText(getAQuoteByEmailPage.action.link1(), expectedLink);
 
     getAQuoteByEmailPage.action.link1().should('have.attr', 'href', CONTENT_STRINGS.ACTION[0][0].href);
 
-    getAQuoteByEmailPage.action.link2().invoke('text').then((text) => {
-      const expected = CONTENT_STRINGS.ACTION[0][3].text;
-      expect(text.trim()).equal(expected);
-    });
+    const expectedLink2 = CONTENT_STRINGS.ACTION[0][3].text;
+    cy.checkText(getAQuoteByEmailPage.action.link2(), expectedLink2);
 
     getAQuoteByEmailPage.action.link2().should('have.attr', 'href', CONTENT_STRINGS.ACTION[0][3].href);
   });

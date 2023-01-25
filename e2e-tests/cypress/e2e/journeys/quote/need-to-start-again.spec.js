@@ -58,9 +58,7 @@ context('Get a Quote - Need to start again exit page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders a reason', () => {
@@ -70,9 +68,7 @@ context('Get a Quote - Need to start again exit page', () => {
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.START_AGAIN.TEXT);
-    });
+    cy.checkText(submitButton(), LINKS.START_AGAIN.TEXT);
   });
 
   describe('clicking the submit button', () => {

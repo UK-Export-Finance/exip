@@ -4,7 +4,6 @@ import { submitButton } from '../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
-import checkText from '../../../../../helpers/check-text';
 
 const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -56,7 +55,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         field.input().clear();
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 4);
-        checkText(partials.errorSummaryListItems().eq(1), errorMessage);
+        cy.checkText(partials.errorSummaryListItems().eq(1), errorMessage);
       });
 
       it(`should focus to the ${YEARS_EXPORTING} section when clicking the error`, () => {
@@ -71,7 +70,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
-        checkText(field.error(), `Error: ${errorMessage}`);
+        cy.checkText(field.error(), `Error: ${errorMessage}`);
       });
     });
 
@@ -85,14 +84,14 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         field.input().clear().type('5.5');
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 4);
-        checkText(partials.errorSummaryListItems().eq(1), errorMessage);
+        cy.checkText(partials.errorSummaryListItems().eq(1), errorMessage);
       });
 
       it(`should display the validation error for ${YEARS_EXPORTING}`, () => {
         const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
-        checkText(field.error(), `Error: ${errorMessage}`);
+        cy.checkText(field.error(), `Error: ${errorMessage}`);
       });
     });
 
@@ -106,14 +105,14 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         field.input().clear().type('5O');
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 4);
-        checkText(partials.errorSummaryListItems().eq(1), errorMessage);
+        cy.checkText(partials.errorSummaryListItems().eq(1), errorMessage);
       });
 
       it(`should display the validation error for ${YEARS_EXPORTING}`, () => {
         const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
-        checkText(field.error(), `Error: ${errorMessage}`);
+        cy.checkText(field.error(), `Error: ${errorMessage}`);
       });
     });
   });

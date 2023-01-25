@@ -4,7 +4,6 @@ import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
-import checkText from '../../../../../helpers/check-text';
 
 const { taskList } = partials.insurancePartials;
 
@@ -59,12 +58,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     it('should render a validation error', () => {
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(5),
         CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY}`,
       );

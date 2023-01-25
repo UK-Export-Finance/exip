@@ -31,11 +31,8 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   });
 
   it('renders a specific reason', () => {
-    cannotApplyPage.reason().invoke('text').then((text) => {
-      const { REASON } = CONTENT_STRINGS;
-      const expected = `${REASON.INTRO} ${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${COUNTRY_NAME_UNSUPPORTED}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
-
-      expect(text.trim()).equal(expected);
-    });
+    const { REASON } = CONTENT_STRINGS;
+    const expected = `${REASON.INTRO} ${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${COUNTRY_NAME_UNSUPPORTED}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
+    cy.checkText(cannotApplyPage.reason(), expected);
   });
 });

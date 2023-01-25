@@ -58,11 +58,8 @@ context('Your quote page - change answers (policy type and length from multiple 
 
       const row = yourQuotePage.panel.summaryList[MAX_AMOUNT_OWED];
 
-      row.value().invoke('text').then((text) => {
-        const expected = '£200';
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = '£200';
+      cy.checkText(row.value(), expected);
     });
   });
 
@@ -100,11 +97,8 @@ context('Your quote page - change answers (policy type and length from multiple 
 
       const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
 
-      row.value().invoke('text').then((text) => {
-        const expected = '95%';
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = '95%';
+      cy.checkText(row.value(), expected);
     });
   });
 
@@ -145,9 +139,7 @@ context('Your quote page - change answers (policy type and length from multiple 
 
       const buyerLocation = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
 
-      buyerLocation.value().invoke('text').then((text) => {
-        expect(text.trim()).equal('Brazil');
-      });
+      cy.checkText(buyerLocation.value(), 'Brazil');
     });
   });
 });

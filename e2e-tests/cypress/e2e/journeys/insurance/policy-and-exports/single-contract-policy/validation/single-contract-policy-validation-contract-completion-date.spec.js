@@ -16,7 +16,6 @@ import {
   ROUTES,
 } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
-import checkText from '../../../../../helpers/check-text';
 
 const { taskList } = partials.insurancePartials;
 
@@ -74,12 +73,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       field.yearInput().type('2023');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY}`,
       );
@@ -93,12 +92,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       field.yearInput().clear().type('2023');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY}`,
       );
@@ -112,12 +111,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       field.yearInput().clear();
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY}`,
       );
@@ -129,12 +128,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       field.dayInput().clear().type('Test');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].NOT_A_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].NOT_A_NUMBER}`,
       );
@@ -147,12 +146,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       field.monthInput().clear().type('Test');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].NOT_A_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].NOT_A_NUMBER}`,
       );
@@ -166,12 +165,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       field.yearInput().clear().type('Test');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].NOT_A_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].NOT_A_NUMBER}`,
       );
@@ -188,12 +187,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       field.yearInput().clear().type(getYear(yesterday));
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].BEFORE_EARLIEST,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].BEFORE_EARLIEST}`,
       );
@@ -217,12 +216,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
         field.yearInput().clear().type(getYear(startDate));
         submitButton().click();
 
-        checkText(
+        cy.checkText(
           partials.errorSummaryListItems().eq(0),
           CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].CANNOT_BE_THE_SAME,
         );
 
-        checkText(
+        cy.checkText(
           field.errorMessage(),
           `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].CANNOT_BE_THE_SAME}`,
         );
@@ -236,12 +235,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
         field.yearInput().clear().type(getYear(startDate));
         submitButton().click();
 
-        checkText(
+        cy.checkText(
           partials.errorSummaryListItems().eq(0),
           CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].CANNOT_BE_BEFORE,
         );
 
-        checkText(
+        cy.checkText(
           field.errorMessage(),
           `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].CANNOT_BE_BEFORE}`,
         );
@@ -257,12 +256,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
         field.yearInput().clear().type(getYear(endDate));
         submitButton().click();
 
-        checkText(
+        cy.checkText(
           partials.errorSummaryListItems().eq(0),
           CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].AFTER_LATEST,
         );
 
-        checkText(
+        cy.checkText(
           field.errorMessage(),
           `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].AFTER_LATEST}`,
         );

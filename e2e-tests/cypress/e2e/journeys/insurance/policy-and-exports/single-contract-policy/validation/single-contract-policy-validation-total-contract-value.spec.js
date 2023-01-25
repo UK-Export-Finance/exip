@@ -4,7 +4,6 @@ import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
-import checkText from '../../../../../helpers/check-text';
 
 const { taskList } = partials.insurancePartials;
 
@@ -61,12 +60,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     it('should render a validation error', () => {
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(2),
         CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].IS_EMPTY}`,
       );
@@ -78,12 +77,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       field.input().type('Fifty');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(2),
         CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_NUMBER}`,
       );
@@ -95,12 +94,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       field.input().clear().type('123.456');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(2),
         CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_WHOLE_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_WHOLE_NUMBER}`,
       );
@@ -112,12 +111,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       field.input().clear().type('0');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(2),
         CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM}`,
       );
@@ -129,12 +128,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       field.input().clear().type('500000');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(2),
         CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM}`,
       );

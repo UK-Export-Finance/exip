@@ -98,9 +98,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().click();
 
@@ -127,13 +125,9 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    headingCaption().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING_CAPTION);
-    });
+    cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `requested start date` label, hint and inputs', () => {
@@ -141,13 +135,9 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     const field = singleContractPolicyPage[fieldId];
 
     field.label().should('exist');
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), FIELDS.CONTRACT_POLICY[fieldId].LABEL);
 
-    field.hint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY[fieldId].HINT);
-    });
+    cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY[fieldId].HINT);
 
     field.dayInput().should('exist');
     field.monthInput().should('exist');
@@ -159,13 +149,9 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     const field = singleContractPolicyPage[fieldId];
 
     field.label().should('exist');
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
 
-    field.hint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
-    });
+    cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
 
     field.dayInput().should('exist');
     field.monthInput().should('exist');
@@ -177,17 +163,11 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     const field = singleContractPolicyPage[fieldId];
 
     field.label().should('exist');
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
 
-    field.hint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
-    });
+    cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
 
-    field.prefix().invoke('text').then((text) => {
-      expect(text.trim()).equal('£');
-    });
+    cy.checkText(field.prefix(), '£');
 
     field.input().should('exist');
   });
@@ -197,13 +177,9 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     const field = singleContractPolicyPage[fieldId];
 
     field.label().should('exist');
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), FIELDS.CONTRACT_POLICY[fieldId].LABEL);
 
-    field.hint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.CONTRACT_POLICY[fieldId].HINT);
-    });
+    cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY[fieldId].HINT);
 
     field.input().should('exist');
   });
@@ -214,9 +190,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       const field = singleContractPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS.CONTRACT_POLICY[fieldId].LABEL);
-      });
+      cy.checkText(field.label(), FIELDS.CONTRACT_POLICY[fieldId].LABEL);
 
       field.input().should('exist');
     });
@@ -237,17 +211,13 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   it('renders a `save and back` button', () => {
     saveAndBackButton().should('exist');
 
-    saveAndBackButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
-    });
+    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 
   describe('form submission', () => {
@@ -262,11 +232,8 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       it('should retain the `type of policy and exports` task status as `in progress`', () => {
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-        task.status().invoke('text').then((text) => {
-          const expected = TASKS.STATUS.IN_PROGRESS;
-
-          expect(text.trim()).equal(expected);
-        });
+        const expected = TASKS.STATUS.IN_PROGRESS;
+        cy.checkText(task.status(), expected);
       });
     });
 

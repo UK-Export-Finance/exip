@@ -6,29 +6,19 @@ const checkCookiesConsentBannerIsVisible = () => {
   partials.cookieBanner.heading().should('exist');
 
   partials.cookieBanner.question.copy1().should('exist');
-  partials.cookieBanner.question.copy1().invoke('text').then((text) => {
-    expect(text.trim()).equal(COOKIES_CONSENT.QUESTION.COPY_1);
-  });
+  cy.checkText(partials.cookieBanner.question.copy1(), COOKIES_CONSENT.QUESTION.COPY_1);
 
   partials.cookieBanner.question.copy2().should('exist');
-  partials.cookieBanner.question.copy2().invoke('text').then((text) => {
-    expect(text.trim()).equal(COOKIES_CONSENT.QUESTION.COPY_2);
-  });
+  cy.checkText(partials.cookieBanner.question.copy2(), COOKIES_CONSENT.QUESTION.COPY_2);
 
   partials.cookieBanner.question.acceptButton().should('exist');
-  partials.cookieBanner.question.acceptButton().invoke('text').then((text) => {
-    expect(text.trim()).equal(COOKIES_CONSENT.QUESTION.ACCEPT_BUTTON);
-  });
+  cy.checkText(partials.cookieBanner.question.acceptButton(), COOKIES_CONSENT.QUESTION.ACCEPT_BUTTON);
 
   partials.cookieBanner.question.rejectButton().should('exist');
-  partials.cookieBanner.question.rejectButton().invoke('text').then((text) => {
-    expect(text.trim()).equal(COOKIES_CONSENT.QUESTION.REJECT_BUTTON);
-  });
+  cy.checkText(partials.cookieBanner.question.rejectButton(), COOKIES_CONSENT.QUESTION.REJECT_BUTTON);
 
   partials.cookieBanner.cookiesLink().should('exist');
-  partials.cookieBanner.cookiesLink().invoke('text').then((text) => {
-    expect(text.trim()).equal(COOKIES_CONSENT.QUESTION.VIEW_COOKIES);
-  });
+  cy.checkText(partials.cookieBanner.cookiesLink(), COOKIES_CONSENT.QUESTION.VIEW_COOKIES);
 
   partials.cookieBanner.cookiesLink().should('have.attr', 'href', ROUTES.COOKIES);
 };

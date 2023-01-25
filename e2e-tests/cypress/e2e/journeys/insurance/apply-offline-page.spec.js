@@ -56,9 +56,7 @@ context('Insurance - apply offline exit page', () => {
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
 
@@ -69,31 +67,21 @@ context('Insurance - apply offline exit page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `download form` copy with link', () => {
-    insurance.applyOfflinePage.downloadFormCopy().invoke('text').then((text) => {
-      const expected = `${ACTIONS.DOWNLOAD_FORM.LINK.TEXT} ${ACTIONS.DOWNLOAD_FORM.TEXT}`;
+    const expected = `${ACTIONS.DOWNLOAD_FORM.LINK.TEXT} ${ACTIONS.DOWNLOAD_FORM.TEXT}`;
+    cy.checkText(insurance.applyOfflinePage.downloadFormCopy(), expected);
 
-      expect(text.trim()).equal(expected);
-    });
-
-    insurance.applyOfflinePage.downloadFormLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(ACTIONS.DOWNLOAD_FORM.LINK.TEXT);
-    });
+    cy.checkText(insurance.applyOfflinePage.downloadFormLink(), ACTIONS.DOWNLOAD_FORM.LINK.TEXT);
 
     insurance.applyOfflinePage.downloadFormLink().should('have.attr', 'href', ACTIONS.DOWNLOAD_FORM.LINK.HREF_NBI);
   });
 
   it('renders `contact` copy with link', () => {
-    insurance.applyOfflinePage.contactCopy().invoke('text').then((text) => {
-      const expected = `${ACTIONS.CONTACT.TEXT} ${ACTIONS.CONTACT.LINK.TEXT}`;
-
-      expect(text.trim()).equal(expected);
-    });
+    const expected = `${ACTIONS.CONTACT.TEXT} ${ACTIONS.CONTACT.LINK.TEXT}`;
+    cy.checkText(insurance.applyOfflinePage.contactCopy(), expected);
 
     insurance.applyOfflinePage.contactLink().should('have.attr', 'href', ACTIONS.CONTACT.LINK.HREF);
   });

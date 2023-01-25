@@ -76,9 +76,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().click();
 
@@ -105,77 +103,49 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    headingCaption().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING_CAPTION);
-    });
+    cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders an intro paragraph', () => {
-    insurance.policyAndExport.typeOfPolicyPage.intro().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.INTRO);
-    });
+    cy.checkText(insurance.policyAndExport.typeOfPolicyPage.intro(), CONTENT_STRINGS.INTRO);
   });
 
   it('renders `single` radio input with label and hint text list', () => {
     singlePolicyField.input().should('exist');
-    singlePolicyField.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.SINGLE.TEXT);
-    });
+    cy.checkText(singlePolicyField.label(), FIELDS[FIELD_ID].OPTIONS.SINGLE.TEXT);
 
-    singlePolicyField.hintList.item1().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[0]);
-    });
+    cy.checkText(singlePolicyField.hintList.item1(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[0]);
 
-    singlePolicyField.hintList.item2().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[1]);
-    });
+    cy.checkText(singlePolicyField.hintList.item2(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[1]);
 
-    singlePolicyField.hintList.item3().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[2]);
-    });
+    cy.checkText(singlePolicyField.hintList.item3(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[2]);
 
-    singlePolicyField.hintList.item4().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[3]);
-    });
+    cy.checkText(singlePolicyField.hintList.item4(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[3]);
   });
 
   it('renders `multiple` radio input with label and hint text list', () => {
     multiplePolicyField.input().should('exist');
-    multiplePolicyField.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.MULTIPLE.TEXT);
-    });
+    cy.checkText(multiplePolicyField.label(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.TEXT);
 
-    multiplePolicyField.hintList.item1().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[0]);
-    });
+    cy.checkText(multiplePolicyField.hintList.item1(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[0]);
 
-    multiplePolicyField.hintList.item2().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[1]);
-    });
+    cy.checkText(multiplePolicyField.hintList.item2(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[1]);
 
-    multiplePolicyField.hintList.item3().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[2]);
-    });
+    cy.checkText(multiplePolicyField.hintList.item3(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[2]);
   });
 
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   it('renders a `save and back` button', () => {
     saveAndBackButton().should('exist');
 
-    saveAndBackButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
-    });
+    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 
   describe('form submission', () => {
@@ -188,13 +158,9 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
         const expectedMessage = ERROR_MESSAGES.INSURANCE.POLICY_AND_EXPORTS[FIELD_ID].IS_EMPTY;
 
-        partials.errorSummaryListItems().first().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedMessage);
-        });
+        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 
-        inlineErrorMessage().invoke('text').then((text) => {
-          expect(text.trim()).includes(expectedMessage);
-        });
+        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
       });
 
       it('should focus on input when clicking summary error message', () => {
@@ -247,11 +213,8 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
       it('should update the status of task `type of policy and exports` to `in progress`', () => {
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
 
-        task.status().invoke('text').then((text) => {
-          const expected = TASKS.STATUS.IN_PROGRESS;
-
-          expect(text.trim()).equal(expected);
-        });
+        const expected = TASKS.STATUS.IN_PROGRESS;
+        cy.checkText(task.status(), expected);
       });
     });
   });

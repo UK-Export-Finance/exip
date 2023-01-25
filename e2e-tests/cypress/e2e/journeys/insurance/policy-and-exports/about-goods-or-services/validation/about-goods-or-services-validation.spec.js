@@ -3,7 +3,6 @@ import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
-import checkText from '../../../../../helpers/check-text';
 
 const { taskList } = partials.insurancePartials;
 
@@ -60,12 +59,12 @@ context('Insurance - Policy and exports - About goods or services page - form va
     const TOTAL_REQUIRED_FIELDS = 2;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
-    checkText(
+    cy.checkText(
       partials.errorSummaryListItems().eq(0),
       ABOUT_ERROR_MESSAGES[DESCRIPTION].IS_EMPTY,
     );
 
-    checkText(
+    cy.checkText(
       partials.errorSummaryListItems().eq(1),
       ABOUT_ERROR_MESSAGES[FINAL_DESTINATION].IS_EMPTY,
     );

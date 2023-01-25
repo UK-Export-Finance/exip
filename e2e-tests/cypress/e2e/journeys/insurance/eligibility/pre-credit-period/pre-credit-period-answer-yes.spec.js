@@ -54,11 +54,8 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
   });
 
   it('renders a specific reason', () => {
-    cannotApplyPage.reason().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NEED_PRE_CREDIT_PERIOD_COVER}`;
-
-      expect(text.trim()).equal(expected);
-    });
+    const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NEED_PRE_CREDIT_PERIOD_COVER}`;
+    cy.checkText(cannotApplyPage.reason(), expected);
   });
 
   describe('when going back to the page', () => {

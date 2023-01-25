@@ -46,3 +46,6 @@ Cypress.Commands.add('completeAndSubmitCompanyDetails', require('./insurance/com
 
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));
+
+Cypress.Commands.add('checkText', require('./check-text'));
+Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));

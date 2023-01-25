@@ -39,9 +39,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().should('have.attr', 'href', LINKS.EXTERNAL.BEFORE_YOU_START);
   });

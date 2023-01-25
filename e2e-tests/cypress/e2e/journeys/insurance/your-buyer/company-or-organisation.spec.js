@@ -61,9 +61,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     const field = companyOrOrganisationPage[fieldId];
 
     field.label().should('exist');
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
     field.input().should('exist');
   });
 
@@ -72,9 +70,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     const field = companyOrOrganisationPage[fieldId];
 
     field.label().should('exist');
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
     field.input().should('exist');
   });
 
@@ -83,9 +79,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     const field = companyOrOrganisationPage[fieldId];
 
     field.label().should('exist');
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
     field.input().should('exist');
   });
@@ -93,16 +87,12 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   it('renders a `save and back` button', () => {
     saveAndBackButton().should('exist');
 
-    saveAndBackButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
-    });
+    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 });

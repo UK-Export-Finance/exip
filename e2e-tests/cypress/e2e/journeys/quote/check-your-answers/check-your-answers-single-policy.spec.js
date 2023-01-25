@@ -58,9 +58,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY}`;
     partials.backLink().should('have.attr', 'href', expected);
@@ -81,9 +79,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.SUBMIT_BUTTON);
-    });
+    cy.checkText(submitButton(), CONTENT_STRINGS.SUBMIT_BUTTON);
   });
 
   it('should render a header with href to quote start', () => {
@@ -94,38 +90,27 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   context('export summary list', () => {
     const list = checkYourAnswersPage.summaryLists.export;
 
     it('renders a heading', () => {
-      list.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_EXPORT);
-      });
+      cy.checkText(list.heading(), CONTENT_STRINGS.GROUP_HEADING_EXPORT);
     });
 
     it('renders `Buyer based` key, value and change link', () => {
       const row = list[BUYER_COUNTRY];
       const expectedKeyText = FIELDS[BUYER_COUNTRY].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        const expected = submissionData[BUYER_COUNTRY];
+      const expectedValue = submissionData[BUYER_COUNTRY];
+      cy.checkText(row.value(), expectedValue);
 
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expectedChangeLink);
 
       const expectedHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
@@ -135,18 +120,12 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
       const row = list[VALID_EXPORTER_LOCATION];
       const expectedKeyText = FIELDS[VALID_EXPORTER_LOCATION].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION]);
-      });
+      cy.checkText(row.value(), SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION]);
 
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expected);
 
       const expectedHref = `${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
@@ -156,18 +135,12 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
       const row = list[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
       const expectedKeyText = FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]);
-      });
+      cy.checkText(row.value(), SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]);
 
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expected);
 
       const expectedHref = `${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
@@ -178,27 +151,19 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
     const list = checkYourAnswersPage.summaryLists.policy;
 
     it('renders a heading', () => {
-      list.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_POLICY);
-      });
+      cy.checkText(list.heading(), CONTENT_STRINGS.GROUP_HEADING_POLICY);
     });
 
     it('renders `Policy type` key, value and change link', () => {
       const row = list[SINGLE_POLICY_TYPE];
       const expectedKeyText = FIELDS[SINGLE_POLICY_TYPE].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(submissionData[SINGLE_POLICY_TYPE]);
-      });
+      cy.checkText(row.value(), submissionData[SINGLE_POLICY_TYPE]);
 
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expected);
 
       const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
@@ -208,20 +173,13 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
       const row = list[SINGLE_POLICY_LENGTH];
       const expectedKeyText = FIELDS[SINGLE_POLICY_LENGTH].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
+      const expectedValue = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
+      cy.checkText(row.value(), expectedValue);
 
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expectedChangeLink);
 
       const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
@@ -231,20 +189,13 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
       const row = list[CONTRACT_VALUE];
       const expectedKeyText = FIELDS[CONTRACT_VALUE].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        const expected = '£150,000';
+      const expectedValue = '£150,000';
+      cy.checkText(row.value(), expectedValue);
 
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expectedChangeLink);
 
       const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
@@ -254,20 +205,13 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
       const row = list[PERCENTAGE_OF_COVER];
       const expectedKeyText = FIELDS[PERCENTAGE_OF_COVER].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[PERCENTAGE_OF_COVER]}%`;
+      const expectedValue = `${submissionData[PERCENTAGE_OF_COVER]}%`;
+      cy.checkText(row.value(), expectedValue);
 
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expectedChangeLink);
 
       const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);

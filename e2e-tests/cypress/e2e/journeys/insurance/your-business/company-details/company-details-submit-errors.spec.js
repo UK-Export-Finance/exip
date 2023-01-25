@@ -54,65 +54,35 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 5);
 
-      partials.errorSummaryListItems().first().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[INPUT].INCORRECT_FORMAT);
-        });
+      cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[INPUT].INCORRECT_FORMAT);
 
-      partials.errorSummaryListItems().eq(1).invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
-        });
+      cy.checkText(partials.errorSummaryListItems().eq(1), COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
 
-      partials.errorSummaryListItems().eq(2).invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
-        });
+      cy.checkText(partials.errorSummaryListItems().eq(2), COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
 
-      partials.errorSummaryListItems().eq(3).invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
-        });
+      cy.checkText(partials.errorSummaryListItems().eq(3), COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
 
-      partials.errorSummaryListItems().eq(4).invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT);
-        });
+      cy.checkText(partials.errorSummaryListItems().eq(4), COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT);
     });
 
     it('should display the validation error for companies house input in companies house section', () => {
-      companyDetails.companiesHouseSearchError().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[INPUT].INCORRECT_FORMAT}`);
-        });
+      cy.checkText(companyDetails.companiesHouseSearchError(), `Error: ${COMPANY_DETAILS_ERRORS[INPUT].INCORRECT_FORMAT}`);
     });
 
     it('should display the validation error for trading name in radio error summary', () => {
-      inlineErrorMessage().first().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY}`);
-        });
+      cy.checkText(inlineErrorMessage().first(), `Error: ${COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY}`);
     });
 
     it('should display the validation error for trading address in radio error summary', () => {
-      inlineErrorMessage().eq(1).invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY}`);
-        });
+      cy.checkText(inlineErrorMessage().eq(1), `Error: ${COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY}`);
     });
 
     it('should display the validation error for company website in company website section', () => {
-      companyDetails.companyWebsiteError().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT}`);
-        });
+      cy.checkText(companyDetails.companyWebsiteError(), `Error: ${COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT}`);
     });
 
     it('should display the validation error for phone number in phone number section', () => {
-      companyDetails.phoneNumberError().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT}`);
-        });
+      cy.checkText(companyDetails.phoneNumberError(), `Error: ${COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT}`);
     });
 
     it('should display companies house error and trading name, address errors when companies house incorrectly entered', () => {
@@ -120,20 +90,12 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       companyDetails.companiesHouseSearchButton().click();
 
       submitButton().click();
-      partials.errorSummaryListItems().first().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[INPUT].INCORRECT_FORMAT);
-        });
 
-      partials.errorSummaryListItems().eq(1).invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
-        });
+      cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[INPUT].INCORRECT_FORMAT);
 
-      partials.errorSummaryListItems().eq(2).invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
-        });
+      cy.checkText(partials.errorSummaryListItems().eq(1), COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
+
+      cy.checkText(partials.errorSummaryListItems().eq(2), COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
     });
 
     it('should display companies house error and trading name, address errors when companies house not found', () => {
@@ -141,20 +103,12 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       companyDetails.companiesHouseSearchButton().click();
 
       submitButton().click();
-      partials.errorSummaryListItems().first().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[INPUT].NOT_FOUND);
-        });
 
-      partials.errorSummaryListItems().eq(1).invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
-        });
+      cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[INPUT].NOT_FOUND);
 
-      partials.errorSummaryListItems().eq(2).invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
-        });
+      cy.checkText(partials.errorSummaryListItems().eq(1), COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
+
+      cy.checkText(partials.errorSummaryListItems().eq(2), COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
     });
   });
 });

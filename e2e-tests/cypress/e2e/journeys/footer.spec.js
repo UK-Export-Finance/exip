@@ -10,52 +10,41 @@ context('Footer', () => {
   });
 
   it('renders a heading', () => {
-    footer.heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(FOOTER.HEADING);
-    });
+    cy.checkText(footer.heading(), FOOTER.HEADING);
   });
 
   it('renders an email address', () => {
-    footer.email().invoke('text').then((text) => {
-      const expected = `${FOOTER.EMAIL.HEADING}: ${FOOTER.EMAIL.VALUE}`;
-      expect(text.trim()).equal(expected);
-    });
+    const expected = `${FOOTER.EMAIL.HEADING}: ${FOOTER.EMAIL.VALUE}`;
+
+    cy.checkText(footer.email(), expected);
   });
 
   it('renders a phone number', () => {
-    footer.phone().invoke('text').then((text) => {
-      const expected = `${FOOTER.PHONE.HEADING}: ${FOOTER.PHONE.VALUE}`;
-      expect(text.trim()).equal(expected);
-    });
+    const expected = `${FOOTER.PHONE.HEADING}: ${FOOTER.PHONE.VALUE}`;
+
+    cy.checkText(footer.phone(), expected);
   });
 
   it('renders opening times', () => {
-    footer.openingTimes().invoke('text').then((text) => {
-      const expected = `${FOOTER.OPENING_TIMES.HEADING}: ${FOOTER.OPENING_TIMES.VALUE}`;
-      expect(text.trim()).equal(expected);
-    });
+    const expected = `${FOOTER.OPENING_TIMES.HEADING}: ${FOOTER.OPENING_TIMES.VALUE}`;
+
+    cy.checkText(footer.openingTimes(), expected);
   });
 
   describe('support links', () => {
     it('renders a heading', () => {
-      footer.supportLinks.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(FOOTER.SUPPORT_LINKS_HEADING);
-      });
+      cy.checkText(footer.supportLinks.heading(), FOOTER.SUPPORT_LINKS_HEADING);
     });
 
     it(`renders a link to ${FOOTER.COOKIES.TEXT} and redirects to the correct URL`, () => {
-      footer.supportLinks.cookies().invoke('text').then((text) => {
-        expect(text.trim()).equal(FOOTER.COOKIES.TEXT);
-      });
+      cy.checkText(footer.supportLinks.cookies(), FOOTER.COOKIES.TEXT);
 
       footer.supportLinks.cookies().click();
       cy.url().should('include', FOOTER.COOKIES.HREF);
     });
 
     it(`renders a link to ${FOOTER.REPORT_VULNERABILITY.TEXT} and redirects to the correct URL`, () => {
-      footer.supportLinks.reportVulnerability().invoke('text').then((text) => {
-        expect(text.trim()).equal(FOOTER.REPORT_VULNERABILITY.TEXT);
-      });
+      cy.checkText(footer.supportLinks.reportVulnerability(), FOOTER.REPORT_VULNERABILITY.TEXT);
 
       footer.supportLinks.reportVulnerability().should('have.attr', 'href', FOOTER.REPORT_VULNERABILITY.HREF);
     });
@@ -71,10 +60,9 @@ context('Footer', () => {
     });
 
     it(`renders a link to ${FOOTER.CROWN_COPYRIGHT.TEXT} and redirects to the correct URL`, () => {
-      footer.supportLinks.copyright().invoke('text').then((text) => {
-        const expected = `© ${FOOTER.CROWN_COPYRIGHT.TEXT}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expected = `© ${FOOTER.CROWN_COPYRIGHT.TEXT}`;
+
+      cy.checkText(footer.supportLinks.copyright(), expected);
 
       footer.supportLinks.copyright().should('have.attr', 'href', FOOTER.CROWN_COPYRIGHT.HREF);
     });

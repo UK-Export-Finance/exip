@@ -55,9 +55,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().click();
 
@@ -68,31 +66,23 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders yes and no radio buttons', () => {
     yesRadio().should('exist');
 
-    yesRadio().invoke('text').then((text) => {
-      expect(text.trim()).equal('Yes');
-    });
+    cy.checkText(yesRadio(), 'Yes');
 
     noRadio().should('exist');
 
-    noRadio().invoke('text').then((text) => {
-      expect(text.trim()).equal('No');
-    });
+    cy.checkText(noRadio(), 'No');
   });
 
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   describe('form submission', () => {
@@ -105,13 +95,9 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
 
         const expectedMessage = ERROR_MESSAGES[FIELD_IDS.VALID_EXPORTER_LOCATION];
 
-        partials.errorSummaryListItems().first().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedMessage);
-        });
+        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 
-        inlineErrorMessage().invoke('text').then((text) => {
-          expect(text.trim()).includes(expectedMessage);
-        });
+        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
       });
 
       it('should focus on input when clicking summary error message', () => {

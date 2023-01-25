@@ -19,9 +19,7 @@ context('Get a quote - header', () => {
   });
 
   it('renders service name link', () => {
-    partials.header.serviceName().invoke('text').then((text) => {
-      expect(text.trim()).equal(PRODUCT.DESCRIPTION.QUOTE);
-    });
+    cy.checkText(partials.header.serviceName(), PRODUCT.DESCRIPTION.QUOTE);
 
     partials.header.serviceName().should('have.attr', 'href', '/');
   });

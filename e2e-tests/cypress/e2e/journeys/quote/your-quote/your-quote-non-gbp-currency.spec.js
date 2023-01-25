@@ -48,14 +48,10 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
         const row = summaryList[INSURED_FOR];
         const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_SINGLE_POLICY`];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '€135,000.00';
-          expect(text.trim()).includes(expected);
-        });
+        const expected = '€135,000.00';
+        cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
       });
@@ -64,15 +60,10 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
         const row = summaryList[ESTIMATED_COST];
         const expectedKeyText = QUOTE_TITLES[ESTIMATED_COST];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '€1,770.00';
-
-          expect(text.trim()).equal(expected);
-        });
+        const expected = '€1,770.00';
+        cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
       });

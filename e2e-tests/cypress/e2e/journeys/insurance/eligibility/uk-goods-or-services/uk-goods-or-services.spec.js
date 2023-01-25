@@ -56,9 +56,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().click();
 
@@ -88,41 +86,31 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders radio button hint', () => {
     yesNoRadioHint().should('exist');
 
-    yesNoRadioHint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES].HINT);
-    });
+    cy.checkText(yesNoRadioHint(), FIELDS[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES].HINT);
   });
 
   it('renders `yes` radio button', () => {
     yesRadio().should('exist');
 
-    yesRadio().invoke('text').then((text) => {
-      expect(text.trim()).equal('Yes');
-    });
+    cy.checkText(yesRadio(), 'Yes');
   });
 
   it('renders `no` radio button', () => {
     noRadio().should('exist');
 
-    noRadio().invoke('text').then((text) => {
-      expect(text.trim()).equal('No');
-    });
+    cy.checkText(noRadio(), 'No');
   });
 
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   describe('expandable details - how to calculate percentage', () => {
@@ -167,13 +155,9 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
 
         const expectedMessage = ERROR_MESSAGES[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES].IS_EMPTY;
 
-        partials.errorSummaryListItems().first().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedMessage);
-        });
+        cy.checkText(partials.errorSummaryListItems(), expectedMessage);
 
-        inlineErrorMessage().invoke('text').then((text) => {
-          expect(text.trim()).includes(expectedMessage);
-        });
+        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
       });
 
       it('should focus on input when clicking summary error message', () => {
