@@ -4,7 +4,7 @@ import { FIELDS, PAGES } from '../../content-strings';
 import generateSummaryListRows from './generate-summary-list-rows';
 import fieldGroupItem from './generate-field-group-item';
 import getFieldById from '../get-field-by-id';
-import { CompanyHouseResponse, CompanyDetailsFieldGroups, ApplicationExporterCompany } from '../../../types';
+import { ApplicationExporterCompany, CompanyHouseResponse, SummaryListItemData } from '../../../types';
 
 const {
   EXPORTER_BUSINESS: { COMPANY_HOUSE },
@@ -39,12 +39,8 @@ const generateAddressHTML = (address: object) => {
  * @param {Object} Company details
  * @returns {Object} All quote values in an object structure for GOVUK summary list structure
  */
-const generateFieldGroups = (companyDetails: CompanyHouseResponse | ApplicationExporterCompany) => {
-  const fieldGroups = {
-    COMPANY_DETAILS: [],
-  } as CompanyDetailsFieldGroups;
-
-  fieldGroups.COMPANY_DETAILS = [
+const generateFields = (companyDetails: CompanyHouseResponse | ApplicationExporterCompany) => {
+  const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS, COMPANY_NUMBER),
       data: companyDetails,
@@ -74,9 +70,9 @@ const generateFieldGroups = (companyDetails: CompanyHouseResponse | ApplicationE
       },
       companyDetails[COMPANY_SIC].toString(),
     ),
-  ];
+  ] as Array<SummaryListItemData>;
 
-  return fieldGroups;
+  return fields;
 };
 
 /**
@@ -86,16 +82,16 @@ const generateFieldGroups = (companyDetails: CompanyHouseResponse | ApplicationE
  * @returns {Object} A group with multiple fields/answers in govukSummaryList data structure
  */
 const companyHouseSummaryList = (companyDetails: CompanyHouseResponse | ApplicationExporterCompany) => {
-  const fieldGroups = generateFieldGroups(companyDetails);
+  const fields = generateFields(companyDetails);
 
   const summaryList = {
     COMPANY_DETAILS: {
       GROUP_TITLE: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS.TABLE_NAME,
-      ROWS: generateSummaryListRows(fieldGroups.COMPANY_DETAILS),
+      ROWS: generateSummaryListRows(fields),
     },
   };
 
   return summaryList;
 };
 
-export { generateFieldGroups, companyHouseSummaryList, generateAddressHTML };
+export { generateFields, companyHouseSummaryList, generateAddressHTML };
