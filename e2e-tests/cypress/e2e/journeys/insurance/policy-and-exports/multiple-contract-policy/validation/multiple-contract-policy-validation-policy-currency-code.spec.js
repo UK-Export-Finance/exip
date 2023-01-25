@@ -61,7 +61,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
       );
 
       cy.checkText(
-        field.errorMessage(),
+        policyCurrencyCodeFormField.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY}`,
       );
     });

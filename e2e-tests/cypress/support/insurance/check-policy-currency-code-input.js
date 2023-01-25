@@ -2,7 +2,6 @@ import insurancePartials from '../../e2e/partials/insurance';
 import { POLICY_AND_EXPORT_FIELDS } from '../../../content-strings/fields/insurance/policy-and-exports';
 import { SUPPORTED_CURRENCIES } from '../../../constants';
 import { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
-import checkText from '../../e2e/helpers/check-text';
 
 const { POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
