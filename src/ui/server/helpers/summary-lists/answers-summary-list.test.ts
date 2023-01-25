@@ -12,8 +12,8 @@ const {
   CONTRACT_VALUE,
   CREDIT_PERIOD,
   MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
-  MULTI_POLICY_TYPE,
+  MULTIPLE_POLICY_LENGTH,
+  MULTIPLE_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -154,10 +154,10 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
       beforeEach(() => {
         mockAnswersContent = {
           ...mapAnswersToContent(mockSession.submittedData.quoteEligibility),
-          [MULTI_POLICY_TYPE]: {
+          [MULTIPLE_POLICY_TYPE]: {
             text: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
           },
-          [MULTI_POLICY_LENGTH]: {
+          [MULTIPLE_POLICY_LENGTH]: {
             text: 2,
           },
           [MAX_AMOUNT_OWED]: {
@@ -168,13 +168,13 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         delete mockAnswersContent[SINGLE_POLICY_TYPE];
       });
 
-      it(`should add a ${MULTI_POLICY_TYPE} object to POLICY_DETAILS`, () => {
+      it(`should add a ${MULTIPLE_POLICY_TYPE} object to POLICY_DETAILS`, () => {
         const result = generateFieldGroups(mockAnswersContent);
 
         const expectedField = result.POLICY_DETAILS[0];
 
         const expected = fieldGroupItem({
-          field: getFieldById(FIELDS, MULTI_POLICY_TYPE),
+          field: getFieldById(FIELDS, MULTIPLE_POLICY_TYPE),
           data: mockAnswersContent,
           renderChangeLink: true,
           href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
@@ -183,13 +183,13 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         expect(expectedField).toEqual(expected);
       });
 
-      it(`should add a ${MULTI_POLICY_LENGTH} object to POLICY_DETAILS with single policy length field values`, () => {
+      it(`should add a ${MULTIPLE_POLICY_LENGTH} object to POLICY_DETAILS with single policy length field values`, () => {
         const result = generateFieldGroups(mockAnswersContent);
 
         const expectedField = result.POLICY_DETAILS[1];
 
         const expected = fieldGroupItem({
-          field: getFieldById(FIELDS, MULTI_POLICY_LENGTH),
+          field: getFieldById(FIELDS, MULTIPLE_POLICY_LENGTH),
           data: mockAnswersContent,
         });
 

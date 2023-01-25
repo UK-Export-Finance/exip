@@ -10,7 +10,7 @@ import { mockAnswers } from '../../test-mocks';
 const {
   BUYER_COUNTRY,
   CREDIT_PERIOD,
-  MULTI_POLICY_TYPE,
+  MULTIPLE_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
@@ -34,13 +34,13 @@ describe('server/helpers/map-answers-to-content', () => {
     });
 
     describe('when policy type is single', () => {
-      it(`should return an object with ${MULTI_POLICY_TYPE}`, () => {
+      it(`should return an object with ${MULTIPLE_POLICY_TYPE}`, () => {
         const mockAnswer = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
         const result = mapPolicyType(mockAnswer);
 
         const expected = {
-          [MULTI_POLICY_TYPE]: mockAnswer,
+          [MULTIPLE_POLICY_TYPE]: mockAnswer,
         };
 
         expect(result).toEqual(expected);

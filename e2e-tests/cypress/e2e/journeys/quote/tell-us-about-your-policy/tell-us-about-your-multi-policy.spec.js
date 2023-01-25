@@ -22,7 +22,7 @@ const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
 const startRoute = ROUTES.QUOTE.START;
 
-context('Tell us about your multi policy page - as an exporter, I want to provide my Export insurance policy details', () => {
+context('Tell us about your multiplepolicy page - as an exporter, I want to provide my Export insurance policy details', () => {
   describe('rendering', () => {
     before(() => {
       cy.login();
@@ -73,11 +73,11 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
     });
 
     it('renders a page title and heading', () => {
-      const expectedPageTitle = `${CONTENT_STRINGS.MULTI_POLICY_PAGE_TITLE} - ${ORGANISATION}`;
+      const expectedPageTitle = `${CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE} - ${ORGANISATION}`;
       cy.title().should('eq', expectedPageTitle);
 
       heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.MULTI_POLICY_PAGE_TITLE);
+        expect(text.trim()).equal(CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE);
       });
     });
 
@@ -88,7 +88,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
 
       field.legend().should('exist');
       field.legend().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LEGEND);
+        expect(text.trim()).equal(FIELDS[fieldId].MULTIPLE_POLICY.LEGEND);
       });
     });
 
@@ -135,12 +135,12 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
 
       field.label().should('exist');
       field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LABEL);
+        expect(text.trim()).equal(FIELDS[fieldId].MULTIPLE_POLICY.LABEL);
       });
 
       field.hint().should('exist');
       field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.HINT);
+        expect(text.trim()).equal(FIELDS[fieldId].MULTIPLE_POLICY.HINT);
       });
 
       field.input().should('exist');
@@ -153,12 +153,12 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
 
       field.label().should('exist');
       field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LABEL);
+        expect(text.trim()).equal(FIELDS[fieldId].MULTIPLE_POLICY.LABEL);
       });
 
       field.hint().should('exist');
       field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.HINT);
+        expect(text.trim()).equal(FIELDS[fieldId].MULTIPLE_POLICY.HINT);
       });
 
       field.input().should('exist');

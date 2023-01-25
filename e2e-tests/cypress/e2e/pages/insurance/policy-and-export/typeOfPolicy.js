@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../../../constants';
 const { INSURANCE } = FIELD_IDS;
 
 const SINGLE_POLICY_TYPE_ID = INSURANCE.POLICY_AND_EXPORTS.SINGLE_POLICY_TYPE;
-const MULTI_POLICY_TYPE_ID = INSURANCE.POLICY_AND_EXPORTS.MULTI_POLICY_TYPE;
+const MULTIPLE_POLICY_TYPE_ID = INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_POLICY_TYPE;
 const SINGLE_POLICY_LENGTH_ID = FIELD_IDS.SINGLE_POLICY_LENGTH;
 
 const typeOfPolicy = {
@@ -20,12 +20,12 @@ const typeOfPolicy = {
       },
     },
     multiple: {
-      label: () => cy.get(`[data-cy="${MULTI_POLICY_TYPE_ID}-label"]`),
-      input: () => cy.get(`[data-cy="${MULTI_POLICY_TYPE_ID}-input"]`),
+      label: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE_ID}-label"]`),
+      input: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE_ID}-input"]`),
       hintList: {
-        item1: () => cy.get(`[data-cy="${MULTI_POLICY_TYPE_ID}-hint-list-item-1"]`),
-        item2: () => cy.get(`[data-cy="${MULTI_POLICY_TYPE_ID}-hint-list-item-2"]`),
-        item3: () => cy.get(`[data-cy="${MULTI_POLICY_TYPE_ID}-hint-list-item-3"]`),
+        item1: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE_ID}-hint-list-item-1"]`),
+        item2: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE_ID}-hint-list-item-2"]`),
+        item3: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE_ID}-hint-list-item-3"]`),
       },
     },
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-error-message"]`),

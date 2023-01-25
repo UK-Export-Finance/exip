@@ -98,7 +98,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     });
 
     describe('when policy type is multi', () => {
-      it('should return page variables with multi policy strings', () => {
+      it('should return page variables with multiplepolicy strings', () => {
         const mockPolicyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
         const result = generatePageVariables(mockPolicyType);
@@ -109,7 +109,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             COOKIES_CONSENT,
             FOOTER,
             LINKS,
-            PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.MULTI_POLICY_PAGE_TITLE,
+            PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.MULTIPLE_POLICY_PAGE_TITLE,
             PRODUCT: {
               DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
             },
@@ -132,7 +132,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
         expected.FIELDS.AMOUNT_CURRENCY = {
           ID: AMOUNT_CURRENCY,
-          ...FIELDS[AMOUNT_CURRENCY].MULTI_POLICY,
+          ...FIELDS[AMOUNT_CURRENCY].MULTIPLE_POLICY,
         };
 
         expected.FIELDS.MAX_AMOUNT_OWED = {
@@ -142,7 +142,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
         expected.FIELDS.PERCENTAGE_OF_COVER = {
           ID: PERCENTAGE_OF_COVER,
-          ...FIELDS[PERCENTAGE_OF_COVER].MULTI_POLICY,
+          ...FIELDS[PERCENTAGE_OF_COVER].MULTIPLE_POLICY,
         };
 
         expected.FIELDS.CREDIT_PERIOD = {

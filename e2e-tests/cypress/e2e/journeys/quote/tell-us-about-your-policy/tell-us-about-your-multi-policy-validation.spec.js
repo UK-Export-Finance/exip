@@ -13,7 +13,7 @@ import { FIELD_IDS } from '../../../../../constants';
 import checkText from '../../../helpers/check-text';
 import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
-context('Tell us about the multi policy you need - form validation', () => {
+context('Tell us about the multiplepolicy you need - form validation', () => {
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');

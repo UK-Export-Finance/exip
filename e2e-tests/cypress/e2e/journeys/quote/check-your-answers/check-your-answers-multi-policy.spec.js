@@ -13,14 +13,14 @@ const CONTENT_STRINGS = PAGES.QUOTE.CHECK_YOUR_ANSWERS;
 
 const startRoute = ROUTES.QUOTE.START;
 
-context('Check your answers page (multi policy) - as an exporter, I want to review the details before submitting the proposal', () => {
+context('Check your answers page (multiplepolicy) - as an exporter, I want to review the details before submitting the proposal', () => {
   const {
     BUYER_COUNTRY,
     CREDIT_PERIOD,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
     MAX_AMOUNT_OWED,
-    MULTI_POLICY_LENGTH,
-    MULTI_POLICY_TYPE,
+    MULTIPLE_POLICY_LENGTH,
+    MULTIPLE_POLICY_TYPE,
     PERCENTAGE_OF_COVER,
     VALID_EXPORTER_LOCATION,
   } = FIELD_IDS;
@@ -29,7 +29,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
     [BUYER_COUNTRY]: 'Algeria',
     [CREDIT_PERIOD]: '1',
     [PERCENTAGE_OF_COVER]: '90',
-    [MULTI_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+    [MULTIPLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
   };
 
@@ -134,15 +134,15 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
     });
 
     it('renders `Policy type` key, value and change link', () => {
-      const row = list[MULTI_POLICY_TYPE];
-      const expectedKeyText = FIELDS[MULTI_POLICY_TYPE].SUMMARY.TITLE;
+      const row = list[MULTIPLE_POLICY_TYPE];
+      const expectedKeyText = FIELDS[MULTIPLE_POLICY_TYPE].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);
       });
 
       row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(submissionData[MULTI_POLICY_TYPE]);
+        expect(text.trim()).equal(submissionData[MULTIPLE_POLICY_TYPE]);
       });
 
       row.changeLink().invoke('text').then((text) => {
@@ -155,8 +155,8 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
     });
 
     it('renders `Policy length` key and value (no change link)', () => {
-      const row = list[MULTI_POLICY_LENGTH];
-      const expectedKeyText = FIELDS[MULTI_POLICY_LENGTH].SUMMARY.TITLE;
+      const row = list[MULTIPLE_POLICY_LENGTH];
+      const expectedKeyText = FIELDS[MULTIPLE_POLICY_LENGTH].SUMMARY.TITLE;
 
       row.key().invoke('text').then((text) => {
         expect(text.trim()).equal(expectedKeyText);

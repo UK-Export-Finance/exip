@@ -20,7 +20,7 @@ export const POLICY_AND_EXPORTS_FIELDS = {
         ],
       },
       MULTIPLE: {
-        ID: POLICY_AND_EXPORTS.MULTI_POLICY_TYPE,
+        ID: POLICY_AND_EXPORTS.MULTIPLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy',
         HINT_LIST: [

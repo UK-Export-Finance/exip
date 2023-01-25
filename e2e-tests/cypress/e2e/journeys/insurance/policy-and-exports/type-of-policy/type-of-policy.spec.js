@@ -227,7 +227,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     describe('when submitting the answer as `multiple`', () => {
       it(`should redirect to ${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, () => {
-        cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTI);
+        cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
         const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 

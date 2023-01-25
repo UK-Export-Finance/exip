@@ -10,8 +10,8 @@ const {
   CONTRACT_VALUE,
   CREDIT_PERIOD,
   MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
-  MULTI_POLICY_TYPE,
+  MULTIPLE_POLICY_LENGTH,
+  MULTIPLE_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
   SINGLE_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -23,8 +23,8 @@ const {
  * generateFieldGroups
  * Create all field groups for govukSummaryList
  * The following fields depend on the submitted answers and design ordering requirements:
- * - Policy type depending on the Policy type (must have single/multi input ID)
- * - Policy length depending on the Policy type (must have single/multi input ID)
+ * - Policy type depending on the Policy type (must have single/multipleinput ID)
+ * - Policy length depending on the Policy type (must have single/multipleinput ID)
  * - Contract value or Max contract value depending on the Policy type
  * - Credit period if Policy type is multi
  * @param {Object} All submitted data
@@ -86,16 +86,16 @@ const generateFieldGroups = (answers: AnswersContent) => {
     ];
   }
 
-  if (answers[MULTI_POLICY_TYPE]) {
+  if (answers[MULTIPLE_POLICY_TYPE]) {
     fieldGroups.POLICY_DETAILS = [
       fieldGroupItem({
-        field: getFieldById(FIELDS, MULTI_POLICY_TYPE),
+        field: getFieldById(FIELDS, MULTIPLE_POLICY_TYPE),
         data: answers,
         renderChangeLink: true,
         href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
       }),
       fieldGroupItem({
-        field: getFieldById(FIELDS, MULTI_POLICY_LENGTH),
+        field: getFieldById(FIELDS, MULTIPLE_POLICY_LENGTH),
         data: answers,
       }),
       fieldGroupItem({

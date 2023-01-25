@@ -13,7 +13,7 @@ export default (policyType) => {
 
   if (policyType === FIELD_VALUES.POLICY_TYPE.SINGLE) {
     typeOfPolicyPage[fieldId].single.input().click();
-  } else if (policyType === FIELD_VALUES.POLICY_TYPE.MULTI) {
+  } else if (policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE) {
     typeOfPolicyPage[fieldId].multiple.input().click();
   }
 

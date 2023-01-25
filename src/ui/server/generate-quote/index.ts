@@ -56,8 +56,8 @@ const getInsuredFor = (submittedData: SubmittedDataQuoteEligibility): number => 
  * - If the policy type is multi:
  *   - credit period
  *   - an additional month for business buffer
- *   - Note: the policy length is not used for a multi policy
- *     - the multi policy length default is 12 months. The grid only goes up to 3 months.
+ *   - Note: the policy length is not used for a multiplepolicy
+ *     - the multiplepolicy length default is 12 months. The grid only goes up to 3 months.
  * @param {String} Policy type
  * @param {Number} Policy length
  * @param {Number} Credit period

@@ -21,7 +21,7 @@ const isSinglePolicyType = (policyType: string) => {
  * @returns {Boolean}
  */
 const isMultiPolicyType = (policyType: string) => {
-  if (policyType === FIELD_VALUES.POLICY_TYPE.MULTI) {
+  if (policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE) {
     return true;
   }
 

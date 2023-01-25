@@ -64,11 +64,11 @@ const generatePageVariables = (policyType: string) => {
   }
 
   if (isMultiPolicyType(policyType)) {
-    pageVariables.CONTENT_STRINGS.PAGE_TITLE = TELL_US_ABOUT_YOUR_POLICY.MULTI_POLICY_PAGE_TITLE;
+    pageVariables.CONTENT_STRINGS.PAGE_TITLE = TELL_US_ABOUT_YOUR_POLICY.MULTIPLE_POLICY_PAGE_TITLE;
 
     pageVariables.FIELDS.AMOUNT_CURRENCY = {
       ID: AMOUNT_CURRENCY,
-      ...FIELDS[AMOUNT_CURRENCY].MULTI_POLICY,
+      ...FIELDS[AMOUNT_CURRENCY].MULTIPLE_POLICY,
     };
 
     pageVariables.FIELDS.MAX_AMOUNT_OWED = {
@@ -78,7 +78,7 @@ const generatePageVariables = (policyType: string) => {
 
     pageVariables.FIELDS.PERCENTAGE_OF_COVER = {
       ID: PERCENTAGE_OF_COVER,
-      ...FIELDS[PERCENTAGE_OF_COVER].MULTI_POLICY,
+      ...FIELDS[PERCENTAGE_OF_COVER].MULTIPLE_POLICY,
     };
 
     pageVariables.FIELDS.CREDIT_PERIOD = {

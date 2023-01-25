@@ -12,7 +12,7 @@ export const FIELD_VALUES = {
     MULTIPLE: POLICY_TYPE.MULTIPLE,
   },
   POLICY_LENGTH: {
-    // default multi policy length in months
+    // default multiplepolicy length in months
     MULTIPLE: 12,
   },
   TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY_AND_EXPORT.TOTAL_MONTHS_OF_COVER).keys()),

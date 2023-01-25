@@ -10,7 +10,7 @@ import { SubmittedDataInsuranceEligibility, SubmittedDataQuoteEligibility } from
 const {
   BUYER_COUNTRY,
   CREDIT_PERIOD,
-  MULTI_POLICY_TYPE,
+  MULTIPLE_POLICY_TYPE,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
@@ -33,7 +33,7 @@ const mapPolicyType = (answer: string) => {
 
   if (isMultiPolicyType(answer)) {
     return {
-      [MULTI_POLICY_TYPE]: answer,
+      [MULTIPLE_POLICY_TYPE]: answer,
     };
   }
 

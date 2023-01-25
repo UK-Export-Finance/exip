@@ -11,14 +11,14 @@ const {
   CONTRACT_VALUE,
   CREDIT_PERIOD,
   MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
+  MULTIPLE_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   QUOTE,
   SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
-context('Your quote page - change answers (single policy type to multi policy type) - as an exporter, I want to get an Export insurance quote', () => {
+context('Your quote page - change answers (single policy type to multiplepolicy type) - as an exporter, I want to get an Export insurance quote', () => {
   before(() => {
     cy.login();
 
@@ -147,7 +147,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
     });
 
     it('renders the new answers in the quote', () => {
-      // max amount owed and credit period fields are now required because it's a multi policy
+      // max amount owed and credit period fields are now required because it's a multiplepolicy
       tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('120000');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
       submitButton().click();
@@ -161,7 +161,7 @@ context('Your quote page - change answers (single policy type to multi policy ty
         expect(text.trim()).equal('£102,000.00');
       });
 
-      const policyLength = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
+      const policyLength = yourQuotePage.panel.summaryList[MULTIPLE_POLICY_LENGTH];
 
       policyLength.value().invoke('text').then((text) => {
         expect(text.trim()).equal(`${FIELD_VALUES.POLICY_LENGTH.MULTI} months`);

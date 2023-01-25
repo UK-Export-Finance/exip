@@ -96,7 +96,7 @@ describe('controllers/quote/policy-type/validation/rules/policy-length', () => {
     });
   });
 
-  describe('when there are no validation errors - multi policy', () => {
+  describe('when there are no validation errors - multiplepolicy', () => {
     it('should return the already provided errors', () => {
       mockBody[FIELD_IDS.POLICY_TYPE] = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 

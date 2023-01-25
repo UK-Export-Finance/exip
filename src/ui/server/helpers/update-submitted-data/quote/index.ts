@@ -3,13 +3,13 @@ import { isSinglePolicyType, isMultiPolicyType } from '../../policy-type';
 import { sanitiseData } from '../../sanitise-data';
 import { RequestBody, SubmittedDataQuoteEligibility } from '../../../../types';
 
-const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
+const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTIPLE_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
 
 /**
  * mapSubmittedData
  * Delete policy specific fields depending on what is submitted
  * - Delete single policy length if policy type is multi.
- * - Delete multi policy length if policy type is single.
+ * - Delete multiplepolicy length if policy type is single.
  * - Delete contract value if policy type is multi.
  * - Delete maximum amount owed if policy type is single.
  * @param {Object} All submitted data
@@ -22,7 +22,7 @@ const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): Submitt
     mapped[POLICY_LENGTH] = submittedData[POLICY_LENGTH];
 
     delete mapped[SINGLE_POLICY_LENGTH];
-    delete mapped[MULTI_POLICY_LENGTH];
+    delete mapped[MULTIPLE_POLICY_LENGTH];
     delete mapped[CREDIT_PERIOD];
     delete mapped[MAX_AMOUNT_OWED];
   }
@@ -31,7 +31,7 @@ const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): Submitt
     mapped[POLICY_LENGTH] = FIELD_VALUES.POLICY_LENGTH.MULTIPLE;
 
     delete mapped[SINGLE_POLICY_LENGTH];
-    delete mapped[MULTI_POLICY_LENGTH];
+    delete mapped[MULTIPLE_POLICY_LENGTH];
     delete mapped[CONTRACT_VALUE];
   }
 

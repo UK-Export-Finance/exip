@@ -117,7 +117,7 @@ describe('server/generate-quote/index', () => {
       });
     });
 
-    describe('when policy type is not single or multi (invalid)', () => {
+    describe('when policy type is not single or multiple(invalid)', () => {
       it('should return 0', () => {
         const mockPolicyType = 'incorrect';
         const mockPolicyLength = 1;
