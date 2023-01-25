@@ -55,20 +55,13 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
         const row = summaryList[MAX_AMOUNT_OWED];
         const expectedKeyText = QUOTE_TITLES[MAX_AMOUNT_OWED];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '£150,000';
+        const expectedValue = '£150,000';
+        cy.checkText(row.value(), expectedValue);
 
-          expect(text.trim()).equal(expected);
-        });
-
-        row.changeLink().invoke('text').then((text) => {
-          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-          expect(text.trim()).equal(expected);
-        });
+        const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expectedChangeLink);
 
         const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
@@ -78,20 +71,13 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
         const row = summaryList[PERCENTAGE_OF_COVER];
         const expectedKeyText = QUOTE_TITLES[PERCENTAGE_OF_COVER];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '90%';
+        const expectedValue = '90%';
+        cy.checkText(row.value(), expectedValue);
 
-          expect(text.trim()).equal(expected);
-        });
-
-        row.changeLink().invoke('text').then((text) => {
-          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-          expect(text.trim()).equal(expected);
-        });
+        const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expectedChangeLink);
 
         const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
         row.changeLink().should('have.attr', 'href', expectedHref);
@@ -101,15 +87,10 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
         const row = summaryList[INSURED_FOR];
         const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_MULTIPLE_POLICY`];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '£135,000.00';
-
-          expect(text.trim()).equal(expected);
-        });
+        const expected = '£135,000.00';
+        cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
       });
@@ -118,15 +99,10 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
         const row = summaryList[PREMIUM_RATE_PERCENTAGE];
         const expectedKeyText = QUOTE_TITLES[PREMIUM_RATE_PERCENTAGE];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '1.15%';
-
-          expect(text.trim()).equal(expected);
-        });
+        const expected = '1.15%';
+        cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
       });
@@ -135,15 +111,10 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
         const row = summaryList[ESTIMATED_COST];
         const expectedKeyText = QUOTE_TITLES[ESTIMATED_COST];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '£1,725.00';
-
-          expect(text.trim()).equal(expected);
-        });
+        const expected = '£1,725.00';
+        cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
       });
@@ -152,15 +123,10 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
         const row = summaryList[MULTIPLE_POLICY_LENGTH];
         const expectedKeyText = QUOTE_TITLES[POLICY_LENGTH];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`;
-
-          expect(text.trim()).equal(expected);
-        });
+        const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`;
+        cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
       });
@@ -169,20 +135,13 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
         const row = summaryList[BUYER_LOCATION];
         const expectedKeyText = QUOTE_TITLES[BUYER_LOCATION];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = submissionData[BUYER_COUNTRY];
+        const expectedValue = submissionData[BUYER_COUNTRY];
+        cy.checkText(row.value(), expectedValue);
 
-          expect(text.trim()).equal(expected);
-        });
-
-        row.changeLink().invoke('text').then((text) => {
-          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-          expect(text.trim()).equal(expected);
-        });
+        const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expectedChangeLink);
 
         const expectedHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
         row.changeLink().should('have.attr', 'href', expectedHref);

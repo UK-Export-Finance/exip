@@ -5,7 +5,6 @@ import { ROUTES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
-import checkText from '../../../../helpers/check-text';
 
 const {
   COMPANY_OR_ORGANISATION: {
@@ -57,17 +56,17 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     const TOTAL_REQUIRED_FIELDS = 3;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
-    checkText(
+    cy.checkText(
       partials.errorSummaryListItems().eq(0),
       COMPANY_OR_ORG_ERROR_MESSAGES[NAME].IS_EMPTY,
     );
 
-    checkText(
+    cy.checkText(
       partials.errorSummaryListItems().eq(1),
       COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].IS_EMPTY,
     );
 
-    checkText(
+    cy.checkText(
       partials.errorSummaryListItems().eq(2),
       ERROR_MESSAGES[COUNTRY].IS_EMPTY,
     );

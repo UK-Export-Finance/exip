@@ -46,26 +46,17 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
     // Check contract value formatting in the answers page
     const answersAmount = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].value();
 
-    answersAmount.invoke('text').then((text) => {
-      const expected = '£12,345,678';
-
-      expect(text.trim()).equal(expected);
-    });
+    const expectedAmount = '£12,345,678';
+    cy.checkText(answersAmount, expectedAmount);
 
     submitButton().click();
 
     // Check contract value formatting in the quote
-    yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR].value().invoke('text').then((text) => {
-      const expected = '£11,111,110.20';
-
-      expect(text.trim()).equal(expected);
-    });
+    const expectedValue = '£11,111,110.20';
+    cy.checkText(yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR].value(), expectedValue);
 
     // Check estimated cost in the quote
-    yourQuotePage.panel.summaryList[QUOTE.ESTIMATED_COST].value().invoke('text').then((text) => {
-      const expected = '£145,679.00';
-
-      expect(text.trim()).equal(expected);
-    });
+    const expectedCost = '£145,679.00';
+    cy.checkText(yourQuotePage.panel.summaryList[QUOTE.ESTIMATED_COST].value(), expectedCost);
   });
 });

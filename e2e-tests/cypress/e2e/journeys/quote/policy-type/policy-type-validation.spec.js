@@ -3,7 +3,6 @@ import { policyTypePage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
-import checkText from '../../../helpers/check-text';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, completeAndSubmitUkContentForm } from '../../../../support/quote/forms';
 
@@ -32,12 +31,12 @@ context('Policy type page - policy type & length validation', () => {
       it('should render a validation error', () => {
         submitButton().click();
 
-        checkText(
+        cy.checkText(
           partials.errorSummaryListItems().eq(0),
           ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY,
         );
 
-        checkText(
+        cy.checkText(
           policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
           `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY}`,
         );
@@ -48,12 +47,12 @@ context('Policy type page - policy type & length validation', () => {
           policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('a');
           submitButton().click();
 
-          checkText(
+          cy.checkText(
             partials.errorSummaryListItems().eq(0),
             ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER,
           );
 
-          checkText(
+          cy.checkText(
             policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
             `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER}`,
           );
@@ -65,12 +64,12 @@ context('Policy type page - policy type & length validation', () => {
           policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('1.2');
           submitButton().click();
 
-          checkText(
+          cy.checkText(
             partials.errorSummaryListItems().eq(0),
             ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_WHOLE_NUMBER,
           );
 
-          checkText(
+          cy.checkText(
             policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
             `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_WHOLE_NUMBER}`,
           );
@@ -82,12 +81,12 @@ context('Policy type page - policy type & length validation', () => {
           policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('0');
           submitButton().click();
 
-          checkText(
+          cy.checkText(
             partials.errorSummaryListItems().eq(0),
             ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM,
           );
 
-          checkText(
+          cy.checkText(
             policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
             `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM}`,
           );
@@ -99,12 +98,12 @@ context('Policy type page - policy type & length validation', () => {
           policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('23');
           submitButton().click();
 
-          checkText(
+          cy.checkText(
             partials.errorSummaryListItems().eq(0),
             ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM,
           );
 
-          checkText(
+          cy.checkText(
             policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
             `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM}`,
           );

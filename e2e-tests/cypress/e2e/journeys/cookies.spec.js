@@ -38,9 +38,7 @@ context('Cookies page', () => {
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
 
@@ -48,92 +46,64 @@ context('Cookies page', () => {
   });
 
   it('renders a heading', () => {
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders a intro/description', () => {
-    cookiesPage.body1().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.BODY_1);
-    });
+    cy.checkText(cookiesPage.body1(), CONTENT_STRINGS.BODY_1);
 
-    cookiesPage.body2().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.BODY_2);
-    });
+    cy.checkText(cookiesPage.body2(), CONTENT_STRINGS.BODY_2);
   });
 
   describe('essential cookies', () => {
     it('renders a heading', () => {
-      cookiesPage.essentialCookies.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.HEADING);
-      });
+      cy.checkText(cookiesPage.essentialCookies.heading(), CONTENT_STRINGS.ESSENTIAL_COOKIES.HEADING);
     });
 
     it('renders an intro', () => {
-      cookiesPage.essentialCookies.intro().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.INTRO);
-      });
+      cy.checkText(cookiesPage.essentialCookies.intro(), CONTENT_STRINGS.ESSENTIAL_COOKIES.INTRO);
     });
 
     context('table', () => {
       context('headings', () => {
         it('renders name heading', () => {
-          cookiesPage.essentialCookies.table.head.cell1().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.TABLE_HEADINGS.NAME);
-          });
+          cy.checkText(cookiesPage.essentialCookies.table.head.cell1(), CONTENT_STRINGS.TABLE_HEADINGS.NAME);
         });
 
         it('renders purpose heading', () => {
-          cookiesPage.essentialCookies.table.head.cell2().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.TABLE_HEADINGS.PURPOSE);
-          });
+          cy.checkText(cookiesPage.essentialCookies.table.head.cell2(), CONTENT_STRINGS.TABLE_HEADINGS.PURPOSE);
         });
 
         it('renders an expires heading', () => {
-          cookiesPage.essentialCookies.table.head.cell3().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.TABLE_HEADINGS.EXPIRES);
-          });
+          cy.checkText(cookiesPage.essentialCookies.table.head.cell3(), CONTENT_STRINGS.TABLE_HEADINGS.EXPIRES);
         });
       });
 
       context('row 1', () => {
         it('renders name column', () => {
-          cookiesPage.essentialCookies.table.body.row1.cell1().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].NAME);
-          });
+          cy.checkText(cookiesPage.essentialCookies.table.body.row1.cell1(), CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].NAME);
         });
 
         it('renders purpose column', () => {
-          cookiesPage.essentialCookies.table.body.row1.cell2().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].PURPOSE);
-          });
+          cy.checkText(cookiesPage.essentialCookies.table.body.row1.cell2(), CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].PURPOSE);
         });
 
         it('renders expires column', () => {
-          cookiesPage.essentialCookies.table.body.row1.cell3().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].EXPIRES);
-          });
+          cy.checkText(cookiesPage.essentialCookies.table.body.row1.cell3(), CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].EXPIRES);
         });
       });
 
       context('row 2', () => {
         it('renders name column', () => {
-          cookiesPage.essentialCookies.table.body.row2.cell1().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].NAME);
-          });
+          cy.checkText(cookiesPage.essentialCookies.table.body.row2.cell1(), CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].NAME);
         });
 
         it('renders purpose column', () => {
-          cookiesPage.essentialCookies.table.body.row2.cell2().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].PURPOSE);
-          });
+          cy.checkText(cookiesPage.essentialCookies.table.body.row2.cell2(), CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].PURPOSE);
         });
 
         it('renders expires column', () => {
-          cookiesPage.essentialCookies.table.body.row2.cell3().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].EXPIRES);
-          });
+          cy.checkText(cookiesPage.essentialCookies.table.body.row2.cell3(), CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].EXPIRES);
         });
       });
     });
@@ -141,37 +111,23 @@ context('Cookies page', () => {
 
   describe('optional cookies', () => {
     it('renders a heading', () => {
-      cookiesPage.optionalCookies.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.HEADING);
-      });
+      cy.checkText(cookiesPage.optionalCookies.heading(), CONTENT_STRINGS.OPTIONAL_COOKIES.HEADING);
     });
 
     it('renders body text', () => {
-      cookiesPage.optionalCookies.body1().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_1);
-      });
+      cy.checkText(cookiesPage.optionalCookies.body1(), CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_1);
 
-      cookiesPage.optionalCookies.body2().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_2);
-      });
+      cy.checkText(cookiesPage.optionalCookies.body2(), CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_2);
 
-      cookiesPage.optionalCookies.body3().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_3);
-      });
+      cy.checkText(cookiesPage.optionalCookies.body3(), CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_3);
     });
 
     it('renders a text list of analytics information', () => {
-      cookiesPage.optionalCookies.analyticsInfoList.item1().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.ANALYTICS_INFO_LIST[0].text);
-      });
+      cy.checkText(cookiesPage.optionalCookies.analyticsInfoList.item1(), CONTENT_STRINGS.OPTIONAL_COOKIES.ANALYTICS_INFO_LIST[0].text);
 
-      cookiesPage.optionalCookies.analyticsInfoList.item2().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.ANALYTICS_INFO_LIST[1].text);
-      });
+      cy.checkText(cookiesPage.optionalCookies.analyticsInfoList.item2(), CONTENT_STRINGS.OPTIONAL_COOKIES.ANALYTICS_INFO_LIST[1].text);
 
-      cookiesPage.optionalCookies.analyticsInfoList.item3().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.ANALYTICS_INFO_LIST[2].text);
-      });
+      cy.checkText(cookiesPage.optionalCookies.analyticsInfoList.item3(), CONTENT_STRINGS.OPTIONAL_COOKIES.ANALYTICS_INFO_LIST[2].text);
     });
 
     it('renders accept and reject radio buttons', () => {
@@ -179,25 +135,19 @@ context('Cookies page', () => {
       acceptRadio.should('exist');
 
       const acceptRadioLabel = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptLabel();
-      acceptRadioLabel.invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[FIELD_IDS.OPTIONAL_COOKIES].OPTIONS.ACCEPT.TEXT);
-      });
+      cy.checkText(acceptRadioLabel, FIELDS[FIELD_IDS.OPTIONAL_COOKIES].OPTIONS.ACCEPT.TEXT);
 
       const rejectRadio = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput();
       rejectRadio.should('exist');
 
       const rejectRadioLabel = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectLabel();
-      rejectRadioLabel.invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[FIELD_IDS.OPTIONAL_COOKIES].OPTIONS.REJECT.TEXT);
-      });
+      cy.checkText(rejectRadioLabel, FIELDS[FIELD_IDS.OPTIONAL_COOKIES].OPTIONS.REJECT.TEXT);
     });
 
     it('renders a submit button', () => {
       submitButton().should('exist');
 
-      submitButton().invoke('text').then((text) => {
-        expect(text.trim()).equal(BUTTONS.SAVE_CHANGES);
-      });
+      cy.checkText(submitButton(), BUTTONS.SAVE_CHANGES);
     });
 
     describe('form submission', () => {
@@ -210,13 +160,9 @@ context('Cookies page', () => {
 
           const expectedMessage = ERROR_MESSAGES[FIELD_IDS.OPTIONAL_COOKIES];
 
-          partials.errorSummaryListItems().first().invoke('text').then((text) => {
-            expect(text.trim()).equal(expectedMessage);
-          });
+          cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 
-          inlineErrorMessage().invoke('text').then((text) => {
-            expect(text.trim()).includes(expectedMessage);
-          });
+          cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
         });
 
         it('should focus on input when clicking summary error message', () => {
@@ -238,18 +184,12 @@ context('Cookies page', () => {
         });
 
         it('should render a success message with correct content and `go back` link', () => {
-          cookiesPage.successBanner.heading().invoke('text').then((text) => {
-            expect(text.trim()).includes(CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
-          });
+          cy.checkText(cookiesPage.successBanner.heading(), CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
 
-          cookiesPage.successBanner.body().invoke('text').then((text) => {
-            expect(text.trim()).includes(CONTENT_STRINGS.SUCCESS_BANNER.BODY);
-          });
+          cy.checkText(cookiesPage.successBanner.body(), CONTENT_STRINGS.SUCCESS_BANNER.BODY);
 
           cookiesPage.successBanner.goBackLink().should('exist');
-          cookiesPage.successBanner.goBackLink().invoke('text').then((text) => {
-            expect(text.trim()).includes(CONTENT_STRINGS.SUCCESS_BANNER.GO_BACK);
-          });
+          cy.checkText(cookiesPage.successBanner.goBackLink(), CONTENT_STRINGS.SUCCESS_BANNER.GO_BACK);
 
           const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
           cookiesPage.successBanner.goBackLink().should('have.attr', 'href', expectedUrl);
@@ -279,18 +219,12 @@ context('Cookies page', () => {
         });
 
         it('should render a success message with correct content and `go back` link', () => {
-          cookiesPage.successBanner.heading().invoke('text').then((text) => {
-            expect(text.trim()).includes(CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
-          });
+          cy.checkText(cookiesPage.successBanner.heading(), CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
 
-          cookiesPage.successBanner.body().invoke('text').then((text) => {
-            expect(text.trim()).includes(CONTENT_STRINGS.SUCCESS_BANNER.BODY);
-          });
+          cy.checkText(cookiesPage.successBanner.body(), CONTENT_STRINGS.SUCCESS_BANNER.BODY);
 
           cookiesPage.successBanner.goBackLink().should('exist');
-          cookiesPage.successBanner.goBackLink().invoke('text').then((text) => {
-            expect(text.trim()).includes(CONTENT_STRINGS.SUCCESS_BANNER.GO_BACK);
-          });
+          cy.checkText(cookiesPage.successBanner.goBackLink(), CONTENT_STRINGS.SUCCESS_BANNER.GO_BACK);
 
           const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
           cookiesPage.successBanner.goBackLink().should('have.attr', 'href', expectedUrl);
@@ -318,13 +252,9 @@ context('Cookies page', () => {
         });
 
         it('should render a success message with correct content and no `go back` link', () => {
-          cookiesPage.successBanner.heading().invoke('text').then((text) => {
-            expect(text.trim()).includes(CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
-          });
+          cy.checkText(cookiesPage.successBanner.heading(), CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
 
-          cookiesPage.successBanner.body().invoke('text').then((text) => {
-            expect(text.trim()).includes(CONTENT_STRINGS.SUCCESS_BANNER.BODY);
-          });
+          cy.checkText(cookiesPage.successBanner.body(), CONTENT_STRINGS.SUCCESS_BANNER.BODY);
 
           cookiesPage.successBanner.goBackLink().should('not.exist');
         });
@@ -339,13 +269,9 @@ context('Cookies page', () => {
         });
 
         it('should render a success message with correct content and no `go back` link', () => {
-          cookiesPage.successBanner.heading().invoke('text').then((text) => {
-            expect(text.trim()).includes(CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
-          });
+          cy.checkText(cookiesPage.successBanner.heading(), CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
 
-          cookiesPage.successBanner.body().invoke('text').then((text) => {
-            expect(text.trim()).includes(CONTENT_STRINGS.SUCCESS_BANNER.BODY);
-          });
+          cy.checkText(cookiesPage.successBanner.body(), CONTENT_STRINGS.SUCCESS_BANNER.BODY);
 
           cookiesPage.successBanner.goBackLink().should('not.exist');
         });

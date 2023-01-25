@@ -36,10 +36,8 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
   it('renders a reason', () => {
     cannotApplyPage.reason().should('exist');
 
-    cannotApplyPage.reason().invoke('text').then((text) => {
-      const expected = `${REASON.INTRO} ${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${COUNTRY_NAME_UNSUPPORTED}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
-      expect(text.trim()).equal(expected);
-    });
+    const expected = `${REASON.INTRO} ${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${COUNTRY_NAME_UNSUPPORTED}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
+    cy.checkText(cannotApplyPage.reason(), expected);
   });
 
   it('renders a back link with correct url', () => {

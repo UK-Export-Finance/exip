@@ -59,9 +59,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
     it('renders a back link with correct url', () => {
       partials.backLink().should('exist');
-      partials.backLink().invoke('text').then((text) => {
-        expect(text.trim()).equal(LINKS.BACK);
-      });
+      cy.checkText(partials.backLink(), LINKS.BACK);
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.POLICY_TYPE}`;
 
@@ -84,9 +82,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       const expectedPageTitle = `${CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE} - ${ORGANISATION}`;
       cy.title().should('eq', expectedPageTitle);
 
-      heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE);
-      });
+      cy.checkText(heading(), CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE);
     });
 
     it('renders `currency and amount` legend', () => {
@@ -95,9 +91,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.legend().should('exist');
-      field.legend().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].SINGLE_POLICY.LEGEND);
-      });
+      cy.checkText(field.legend(), FIELDS[fieldId].SINGLE_POLICY.LEGEND);
     });
 
     it('renders `currency` legend, label and input', () => {
@@ -106,9 +100,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
-      });
+      cy.checkText(field.label(), FIELDS[fieldId].LABEL);
 
       field.input().should('exist');
     });
@@ -129,9 +121,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
-      });
+      cy.checkText(field.label(), FIELDS[fieldId].LABEL);
 
       field.input().should('exist');
     });
@@ -142,13 +132,9 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].SINGLE_POLICY.LABEL);
-      });
+      cy.checkText(field.label(), FIELDS[fieldId].SINGLE_POLICY.LABEL);
 
-      field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal('');
-      });
+      cy.checkText(field.hint(), '');
 
       field.input().should('exist');
 
@@ -175,9 +161,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
     it('renders a submit button', () => {
       submitButton().should('exist');
 
-      submitButton().invoke('text').then((text) => {
-        expect(text.trim()).equal(BUTTONS.CONTINUE);
-      });
+      cy.checkText(submitButton(), BUTTONS.CONTINUE);
     });
   });
 

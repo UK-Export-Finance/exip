@@ -43,9 +43,7 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE}`;
 
@@ -129,9 +127,7 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
 
           const expectedValue = 'Algeria';
 
-          buyerCountryPage.results().invoke('text').then((text) => {
-            expect(text.trim()).equal(expectedValue);
-          });
+          cy.checkText(buyerCountryPage.results(), expectedValue);
         });
       });
     });

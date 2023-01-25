@@ -52,11 +52,8 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
   });
 
   it('renders a specific reason', () => {
-    cannotApplyPage.reason().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.WILL_BE_PAID_BY_LETTER_OF_CREDIT}`;
-
-      expect(text.trim()).equal(expected);
-    });
+    const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.WILL_BE_PAID_BY_LETTER_OF_CREDIT}`;
+    cy.checkText(cannotApplyPage.reason(), expected);
   });
 
   describe('when going back to the page', () => {

@@ -12,25 +12,19 @@ context('Cookies consent - initial/default', () => {
   describe('question banner', () => {
     describe('heading', () => {
       it('should render a heading when on a Quote page/root', () => {
-        partials.cookieBanner.heading().invoke('text').then((text) => {
-          expect(text.trim()).equal(`${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.QUOTE}`);
-        });
+        cy.checkText(partials.cookieBanner.heading(), `${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.QUOTE}`);
       });
 
       it('should render a heading when on an Insurance/application page', () => {
         cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE);
 
-        partials.cookieBanner.heading().invoke('text').then((text) => {
-          expect(text.trim()).equal(`${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.APPLICATION}`);
-        });
+        cy.checkText(partials.cookieBanner.heading(), `${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.APPLICATION}`);
       });
 
       it('should render a heading when on an root page', () => {
         cy.navigateToUrl(ROUTES.COOKIES);
 
-        partials.cookieBanner.heading().invoke('text').then((text) => {
-          expect(text.trim()).equal(`${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.GENERIC}`);
-        });
+        cy.checkText(partials.cookieBanner.heading(), `${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.GENERIC}`);
 
         cy.login();
       });
@@ -38,35 +32,25 @@ context('Cookies consent - initial/default', () => {
 
     it('should render copy', () => {
       partials.cookieBanner.question.copy1().should('exist');
-      partials.cookieBanner.question.copy1().invoke('text').then((text) => {
-        expect(text.trim()).equal(COOKIES_CONSENT.QUESTION.COPY_1);
-      });
+      cy.checkText(partials.cookieBanner.question.copy1(), COOKIES_CONSENT.QUESTION.COPY_1);
 
       partials.cookieBanner.question.copy2().should('exist');
-      partials.cookieBanner.question.copy2().invoke('text').then((text) => {
-        expect(text.trim()).equal(COOKIES_CONSENT.QUESTION.COPY_2);
-      });
+      cy.checkText(partials.cookieBanner.question.copy2(), COOKIES_CONSENT.QUESTION.COPY_2);
     });
 
     it('should render an `accept` button', () => {
       partials.cookieBanner.question.acceptButton().should('exist');
-      partials.cookieBanner.question.acceptButton().invoke('text').then((text) => {
-        expect(text.trim()).equal(COOKIES_CONSENT.QUESTION.ACCEPT_BUTTON);
-      });
+      cy.checkText(partials.cookieBanner.question.acceptButton(), COOKIES_CONSENT.QUESTION.ACCEPT_BUTTON);
     });
 
     it('should render a `reject` button', () => {
       partials.cookieBanner.question.rejectButton().should('exist');
-      partials.cookieBanner.question.rejectButton().invoke('text').then((text) => {
-        expect(text.trim()).equal(COOKIES_CONSENT.QUESTION.REJECT_BUTTON);
-      });
+      cy.checkText(partials.cookieBanner.question.rejectButton(), COOKIES_CONSENT.QUESTION.REJECT_BUTTON);
     });
 
     it('should render a link to cookies', () => {
       partials.cookieBanner.cookiesLink().should('exist');
-      partials.cookieBanner.cookiesLink().invoke('text').then((text) => {
-        expect(text.trim()).equal(COOKIES_CONSENT.QUESTION.VIEW_COOKIES);
-      });
+      cy.checkText(partials.cookieBanner.cookiesLink(), COOKIES_CONSENT.QUESTION.VIEW_COOKIES);
 
       partials.cookieBanner.cookiesLink().should('have.attr', 'href', ROUTES.COOKIES);
     });

@@ -3,7 +3,6 @@ import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
-import checkText from '../../../../../helpers/check-text';
 import application from '../../../../../../fixtures/application';
 
 const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
@@ -67,27 +66,27 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     const TOTAL_REQUIRED_FIELDS = 5;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
-    checkText(
+    cy.checkText(
       partials.errorSummaryListItems().eq(0),
       CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY,
     );
 
-    checkText(
+    cy.checkText(
       partials.errorSummaryListItems().eq(1),
       CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY,
     );
 
-    checkText(
+    cy.checkText(
       partials.errorSummaryListItems().eq(2),
       CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].IS_EMPTY,
     );
 
-    checkText(
+    cy.checkText(
       partials.errorSummaryListItems().eq(3),
       CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].IS_EMPTY,
     );
 
-    checkText(
+    cy.checkText(
       partials.errorSummaryListItems().eq(4),
       CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
     );

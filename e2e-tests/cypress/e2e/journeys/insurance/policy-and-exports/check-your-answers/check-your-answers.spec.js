@@ -77,9 +77,7 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().click();
 
@@ -106,29 +104,21 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    headingCaption().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING_CAPTION);
-    });
+    cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   it('renders a `save and back` button', () => {
     saveAndBackButton().should('exist');
 
-    saveAndBackButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
-    });
+    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 
   describe('form submission', () => {

@@ -41,9 +41,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().click();
 
@@ -75,33 +73,25 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders inset text', () => {
     insurance.eligibility.eligibleToApplyOnlinePage.insetText().should('exist');
 
-    insurance.eligibility.eligibleToApplyOnlinePage.insetText().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.INSET);
-    });
+    cy.checkText(insurance.eligibility.eligibleToApplyOnlinePage.insetText(), CONTENT_STRINGS.INSET);
   });
 
   it('renders body text', () => {
     insurance.eligibility.eligibleToApplyOnlinePage.body().should('exist');
 
-    insurance.eligibility.eligibleToApplyOnlinePage.body().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.BODY);
-    });
+    cy.checkText(insurance.eligibility.eligibleToApplyOnlinePage.body(), CONTENT_STRINGS.BODY);
   });
 
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.SUBMIT_BUTTON);
-    });
+    cy.checkText(submitButton(), CONTENT_STRINGS.SUBMIT_BUTTON);
   });
 
   describe('form submission', () => {

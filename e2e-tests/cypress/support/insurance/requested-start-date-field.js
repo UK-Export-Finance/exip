@@ -9,7 +9,6 @@ import partials from '../../e2e/partials';
 import { submitButton } from '../../e2e/pages/shared';
 import { ERROR_MESSAGES } from '../../../content-strings';
 import { FIELD_IDS } from '../../../constants';
-import checkText from '../../e2e/helpers/check-text';
 
 const {
   INSURANCE: {
@@ -38,12 +37,12 @@ const checkValidation = {
       field.yearInput().type('2023');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(0),
         CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY}`,
       );
@@ -52,12 +51,12 @@ const checkValidation = {
       field.dayInput().clear().type('Test');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(0),
         CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].NOT_A_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].NOT_A_NUMBER}`,
       );
@@ -70,12 +69,12 @@ const checkValidation = {
       field.yearInput().clear().type('2023');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(0),
         CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY}`,
       );
@@ -85,12 +84,12 @@ const checkValidation = {
       field.monthInput().clear().type('Test');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(0),
         CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].NOT_A_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].NOT_A_NUMBER}`,
       );
@@ -103,12 +102,12 @@ const checkValidation = {
       field.yearInput().clear();
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(0),
         CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY}`,
       );
@@ -119,12 +118,12 @@ const checkValidation = {
       field.yearInput().clear().type('Test');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(0),
         CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].NOT_A_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].NOT_A_NUMBER}`,
       );
@@ -139,12 +138,12 @@ const checkValidation = {
     field.yearInput().clear().type(getYear(yesterday));
     submitButton().click();
 
-    checkText(
+    cy.checkText(
       partials.errorSummaryListItems().eq(0),
       CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].BEFORE_EARLIEST,
     );
 
-    checkText(
+    cy.checkText(
       field.errorMessage(),
       `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].BEFORE_EARLIEST}`,
     );
