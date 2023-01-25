@@ -4,7 +4,7 @@ import fieldGroupItem from './generate-field-group-item';
 import generateSummaryListRows from './generate-summary-list-rows';
 import { SummaryListItemData, QuoteContent } from '../../../types';
 
-const { BUYER_COUNTRY, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, PERCENTAGE_OF_COVER, POLICY_LENGTH, QUOTE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
+const { BUYER_COUNTRY, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTIPLE_POLICY_LENGTH, PERCENTAGE_OF_COVER, POLICY_LENGTH, QUOTE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
 
 const { BUYER_LOCATION, ESTIMATED_COST, INSURED_FOR, PREMIUM_RATE_PERCENTAGE } = QUOTE;
 
@@ -30,7 +30,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
     ];
   }
 
-  if (quote[MULTI_POLICY_LENGTH]) {
+  if (quote[MULTIPLE_POLICY_LENGTH]) {
     fields = [
       fieldGroupItem({
         field: { id: MAX_AMOUNT_OWED, title: QUOTE_TITLES[MAX_AMOUNT_OWED] },
@@ -61,11 +61,11 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
     ];
   }
 
-  if (quote[MULTI_POLICY_LENGTH]) {
+  if (quote[MULTIPLE_POLICY_LENGTH]) {
     fields = [
       ...fields,
       fieldGroupItem({
-        field: { id: INSURED_FOR, title: QUOTE_TITLES[`${INSURED_FOR}_MULTI_POLICY`] },
+        field: { id: INSURED_FOR, title: QUOTE_TITLES[`${INSURED_FOR}_MULTIPLE_POLICY`] },
         data: quote,
       }),
     ];
@@ -95,11 +95,11 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
     ];
   }
 
-  if (quote[MULTI_POLICY_LENGTH]) {
+  if (quote[MULTIPLE_POLICY_LENGTH]) {
     fields = [
       ...fields,
       fieldGroupItem({
-        field: { id: MULTI_POLICY_LENGTH, title: QUOTE_TITLES[POLICY_LENGTH] },
+        field: { id: MULTIPLE_POLICY_LENGTH, title: QUOTE_TITLES[POLICY_LENGTH] },
         data: quote,
       }),
     ];

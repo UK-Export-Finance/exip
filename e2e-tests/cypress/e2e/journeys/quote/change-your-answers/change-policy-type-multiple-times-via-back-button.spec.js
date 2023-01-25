@@ -43,7 +43,7 @@ context('Change your answers (policy type) - multiple times via back button - as
   });
 
   it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
-    policyTypePage[POLICY_TYPE].multi.input().click();
+    policyTypePage[POLICY_TYPE].multiple.input().click();
     submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
@@ -57,7 +57,7 @@ context('Change your answers (policy type) - multiple times via back button - as
     field.input().should('exist');
   });
 
-  context('change for a second time - policy type from multi to single', () => {
+  context('change for a second time - policy type from multiple to single', () => {
     before(() => {
       partials.backLink().click();
       cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
@@ -83,7 +83,7 @@ context('Change your answers (policy type) - multiple times via back button - as
       partials.backLink().click();
       cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
 
-      policyTypePage[POLICY_TYPE].multi.input().click();
+      policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);

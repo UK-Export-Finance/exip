@@ -49,8 +49,8 @@
 
         {% set multiPolicyTypeHintHtml %}
           <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
-            {% for item in FIELD.OPTIONS.MULTI.HINT_LIST %}
-              <li data-cy="{{ FIELD.OPTIONS.MULTI.ID }}-hint-list-item-{{ loop.index }}">{{ item }}</li>
+            {% for item in FIELD.OPTIONS.MULTIPLE.HINT_LIST %}
+              <li data-cy="{{ FIELD.OPTIONS.MULTIPLE.ID }}-hint-list-item-{{ loop.index }}">{{ item }}</li>
             {% endfor %}
           </ul>
         {% endset %}
@@ -84,12 +84,12 @@
                 checked: application.policyAndExport[FIELD.ID] === FIELD.OPTIONS.SINGLE.VALUE
               },
               {
-                id: FIELD.OPTIONS.MULTI.ID,
-                value: FIELD.OPTIONS.MULTI.VALUE,
-                text: FIELD.OPTIONS.MULTI.TEXT,
+                id: FIELD.OPTIONS.MULTIPLE.ID,
+                value: FIELD.OPTIONS.MULTIPLE.VALUE,
+                text: FIELD.OPTIONS.MULTIPLE.TEXT,
                 label: {
                   attributes: {
-                    'data-cy': FIELD.OPTIONS.MULTI.ID + '-label'
+                    'data-cy': FIELD.OPTIONS.MULTIPLE.ID + '-label'
                   },
                   classes: "govuk-!-font-weight-bold govuk-!-font-size-24 govuk-!-margin-bottom-4 govuk-!-padding-top-1"
                 },
@@ -97,9 +97,9 @@
                   html: multiPolicyTypeHintHtml
                 },
                 attributes: {
-                  'data-cy': FIELD.OPTIONS.MULTI.ID + '-input'
+                  'data-cy': FIELD.OPTIONS.MULTIPLE.ID + '-input'
                 },
-                checked: application.policyAndExport[FIELD.ID] === FIELD.OPTIONS.MULTI.VALUE
+                checked: application.policyAndExport[FIELD.ID] === FIELD.OPTIONS.MULTIPLE.VALUE
               }
             ],
             errorMessage: validationErrors.errorList[FIELD.OPTIONS.SINGLE.ID] and {

@@ -10,7 +10,7 @@ import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 const {
   BUYER_COUNTRY,
   MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
+  MULTIPLE_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   POLICY_LENGTH,
   QUOTE,
@@ -29,7 +29,7 @@ const submissionData = {
 
 const startRoute = ROUTES.QUOTE.START;
 
-context('Get a quote/your quote page (multi policy) - as an exporter, I want to get an Export insurance quote', () => {
+context('Get a quote/your quote page (multiple policy) - as an exporter, I want to get an Export insurance quote', () => {
   before(() => {
     cy.login();
 
@@ -85,7 +85,7 @@ context('Get a quote/your quote page (multi policy) - as an exporter, I want to 
 
       it('renders `insured for` key and value with decimal points (no change link)', () => {
         const row = summaryList[INSURED_FOR];
-        const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_MULTI_POLICY`];
+        const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_MULTIPLE_POLICY`];
 
         cy.checkText(row.key(), expectedKeyText);
 
@@ -119,13 +119,13 @@ context('Get a quote/your quote page (multi policy) - as an exporter, I want to 
         row.changeLink().should('not.exist');
       });
 
-      it('renders `policy length` key, value and no change link (multi policy)', () => {
-        const row = summaryList[MULTI_POLICY_LENGTH];
+      it('renders `policy length` key, value and no change link (multiple policy)', () => {
+        const row = summaryList[MULTIPLE_POLICY_LENGTH];
         const expectedKeyText = QUOTE_TITLES[POLICY_LENGTH];
 
         cy.checkText(row.key(), expectedKeyText);
 
-        const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTI} months`;
+        const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`;
         cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');

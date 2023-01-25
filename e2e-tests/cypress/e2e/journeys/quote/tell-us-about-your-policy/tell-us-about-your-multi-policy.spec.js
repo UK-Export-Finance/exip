@@ -22,7 +22,7 @@ const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
 const startRoute = ROUTES.QUOTE.START;
 
-context('Tell us about your multi policy page - as an exporter, I want to provide my Export insurance policy details', () => {
+context('Tell us about your multiple policy page - as an exporter, I want to provide my Export insurance policy details', () => {
   describe('rendering', () => {
     before(() => {
       cy.login();
@@ -71,10 +71,10 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
     });
 
     it('renders a page title and heading', () => {
-      const expectedPageTitle = `${CONTENT_STRINGS.MULTI_POLICY_PAGE_TITLE} - ${ORGANISATION}`;
+      const expectedPageTitle = `${CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE} - ${ORGANISATION}`;
       cy.title().should('eq', expectedPageTitle);
 
-      cy.checkText(heading(), CONTENT_STRINGS.MULTI_POLICY_PAGE_TITLE);
+      cy.checkText(heading(), CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE);
     });
 
     it('renders `currency and amount` legend', () => {
@@ -83,7 +83,7 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.legend().should('exist');
-      cy.checkText(field.legend(), FIELDS[fieldId].MULTI_POLICY.LEGEND);
+      cy.checkText(field.legend(), FIELDS[fieldId].MULTIPLE_POLICY.LEGEND);
     });
 
     it('renders `currency` legend, label and input', () => {
@@ -124,10 +124,10 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      cy.checkText(field.label(), FIELDS[fieldId].MULTI_POLICY.LABEL);
+      cy.checkText(field.label(), FIELDS[fieldId].MULTIPLE_POLICY.LABEL);
 
       field.hint().should('exist');
-      cy.checkText(field.hint(), FIELDS[fieldId].MULTI_POLICY.HINT);
+      cy.checkText(field.hint(), FIELDS[fieldId].MULTIPLE_POLICY.HINT);
 
       field.input().should('exist');
     });
@@ -138,10 +138,10 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      cy.checkText(field.label(), FIELDS[fieldId].MULTI_POLICY.LABEL);
+      cy.checkText(field.label(), FIELDS[fieldId].MULTIPLE_POLICY.LABEL);
 
       field.hint().should('exist');
-      cy.checkText(field.hint(), FIELDS[fieldId].MULTI_POLICY.HINT);
+      cy.checkText(field.hint(), FIELDS[fieldId].MULTIPLE_POLICY.HINT);
 
       field.input().should('exist');
 

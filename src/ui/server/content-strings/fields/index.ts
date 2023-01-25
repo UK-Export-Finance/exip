@@ -37,7 +37,7 @@ export const FIELDS = {
     SINGLE_POLICY: {
       LEGEND: "What's the total value of the contract you want to insure?",
     },
-    MULTI_POLICY: {
+    MULTIPLE_POLICY: {
       LEGEND: "What's the maximum amount your buyer will owe you at any single point during the policy?",
     },
   },
@@ -91,7 +91,7 @@ export const FIELDS = {
     SINGLE_POLICY: {
       LABEL: 'What percentage of your export contract value do you want to cover?',
     },
-    MULTI_POLICY: {
+    MULTIPLE_POLICY: {
       LABEL: 'What percentage of cover do you need?',
       HINT: 'Select a percentage of the maximum your buyer will owe at any single point.',
     },
@@ -107,9 +107,9 @@ export const FIELDS = {
         TEXT: 'Single contract policy',
         HINT: 'This covers a single export contract with a single buyer for one or more shipments. You need to pay before the policy starts.',
       },
-      MULTI: {
-        ID: FIELD_IDS.MULTI_POLICY_TYPE,
-        VALUE: FIELD_VALUES.POLICY_TYPE.MULTI,
+      MULTIPLE: {
+        ID: FIELD_IDS.MULTIPLE_POLICY_TYPE,
+        VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy (also known as a revolving policy)',
         HINT: "This covers multiple export contracts with the same buyer for a policy period of 12 months. You do not need to pay before the policy starts. You'll pay each time you declare a new export sale.",
         INSET: [
@@ -137,7 +137,7 @@ export const FIELDS = {
       TITLE: 'Policy type',
     },
   },
-  [FIELD_IDS.MULTI_POLICY_TYPE]: {
+  [FIELD_IDS.MULTIPLE_POLICY_TYPE]: {
     SUMMARY: {
       TITLE: 'Policy type',
     },
@@ -162,7 +162,7 @@ export const FIELDS = {
       TITLE: 'Policy length',
     },
   },
-  [FIELD_IDS.MULTI_POLICY_LENGTH]: {
+  [FIELD_IDS.MULTIPLE_POLICY_LENGTH]: {
     SUMMARY: {
       TITLE: 'Policy length',
     },

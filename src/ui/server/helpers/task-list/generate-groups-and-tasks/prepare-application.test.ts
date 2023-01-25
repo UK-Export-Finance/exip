@@ -27,9 +27,9 @@ describe('server/helpers/task-list/prepare-application', () => {
       });
     });
 
-    describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.MULTI}`, () => {
+    describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.MULTIPLE}`, () => {
       it('should return single contract policy specific fields that need to be completed', () => {
-        const result = getContractPolicyTasks(FIELD_VALUES.POLICY_TYPE.MULTI);
+        const result = getContractPolicyTasks(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
         const expected = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE;
 

@@ -6,12 +6,12 @@ import { isSinglePolicyType } from '../../../helpers/policy-type';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
 
-const { MULTI_POLICY_TYPE, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH, SINGLE_POLICY_TYPE } = FIELD_IDS;
+const { MULTIPLE_POLICY_TYPE, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH, SINGLE_POLICY_TYPE } = FIELD_IDS;
 
 export const PAGE_VARIABLES = {
   FIELDS: {
-    MULTI_POLICY_TYPE: {
-      ID: MULTI_POLICY_TYPE,
+    MULTIPLE_POLICY_TYPE: {
+      ID: MULTIPLE_POLICY_TYPE,
       ...FIELDS[POLICY_TYPE],
     },
     POLICY_LENGTH: {

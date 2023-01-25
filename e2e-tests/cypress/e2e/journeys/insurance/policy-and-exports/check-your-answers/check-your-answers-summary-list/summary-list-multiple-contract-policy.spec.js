@@ -33,7 +33,7 @@ context('Insurance - Policy and exports - Check your answers - Summary list - mu
 
     task.link().click();
 
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTI);
+    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
     cy.completeAndSubmitMultipleContractPolicyForm();
     cy.completeAndSubmitAboutGoodsOrServicesForm();
   });

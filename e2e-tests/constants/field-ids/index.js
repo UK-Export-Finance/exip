@@ -16,7 +16,7 @@ export const FIELD_IDS = {
   ...SHARED,
   POLICY_LENGTH: 'policyLength',
   SINGLE_POLICY_LENGTH: 'singlePolicyLengthMonths',
-  MULTI_POLICY_LENGTH: 'multiPolicyLengthMonths',
+  MULTIPLE_POLICY_LENGTH: 'multiplePolicyLengthMonths',
   PERCENTAGE_OF_COVER: 'percentageOfCover',
   QUOTE: {
     INSURED_FOR: 'insuredFor',

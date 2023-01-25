@@ -93,10 +93,10 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
 
       cy.checkText(field.single.hint(), FIELDS[fieldId].OPTIONS.SINGLE.HINT);
 
-      field.multi.input().should('exist');
-      cy.checkText(field.multi.label(), FIELDS[fieldId].OPTIONS.MULTI.TEXT);
+      field.multiple.input().should('exist');
+      cy.checkText(field.multiple.label(), FIELDS[fieldId].OPTIONS.MULTIPLE.TEXT);
 
-      cy.checkText(field.multi.hint(), FIELDS[fieldId].OPTIONS.MULTI.HINT);
+      cy.checkText(field.multiple.hint(), FIELDS[fieldId].OPTIONS.MULTIPLE.HINT);
     });
 
     it('should not render policy length inputs by default', () => {
@@ -129,14 +129,14 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       });
     });
 
-    describe('when clicking `multi` policy type', () => {
+    describe('when clicking `multiple` policy type', () => {
       it('should reveal inset text and link', () => {
-        const multiPolicyType = policyTypePage[POLICY_TYPE].multi;
+        const multiPolicyType = policyTypePage[POLICY_TYPE].multiple;
         multiPolicyType.label().click();
 
         const field = FIELDS[POLICY_TYPE];
 
-        const insetText = field.OPTIONS.MULTI.INSET[0];
+        const insetText = field.OPTIONS.MULTIPLE.INSET[0];
 
         multiPolicyType.inset.text().invoke('text').then((text) => {
           expect(text.trim()).includes(insetText[0].text);

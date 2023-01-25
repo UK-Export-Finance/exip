@@ -1,7 +1,7 @@
 import { Request, Response } from '../../../../../types';
 import { pageVariables, post } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
-import corePageVariables from '../../../../helpers/page-variables/core/insurance';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { PAGES } from '../../../../content-strings';
 import companiesHouseValidation from './validation/companies-house';
 import companyDetailsValidation from './validation/company-details';
@@ -56,8 +56,8 @@ describe('controllers/insurance/business/companies-details', () => {
 
         const submittedValues = {
           [INPUT]: req.body[INPUT],
-          [TRADING_NAME]: sanitiseValue(req.body[TRADING_NAME]),
-          [TRADING_ADDRESS]: sanitiseValue(req.body[TRADING_ADDRESS]),
+          [TRADING_NAME]: sanitiseValue(TRADING_NAME, req.body[TRADING_NAME]),
+          [TRADING_ADDRESS]: sanitiseValue(TRADING_ADDRESS, req.body[TRADING_ADDRESS]),
           [WEBSITE]: req.body[WEBSITE],
         };
 
@@ -67,7 +67,7 @@ describe('controllers/insurance/business/companies-details', () => {
         validationErrors = companyDetailsValidation(req.body, validationErrors);
 
         expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-          ...corePageVariables({
+          ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),

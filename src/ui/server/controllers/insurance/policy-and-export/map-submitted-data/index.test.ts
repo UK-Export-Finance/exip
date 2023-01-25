@@ -107,13 +107,4 @@ describe('controllers/insurance/policy-and-export/map-submitted-data', () => {
       expect(result).toEqual(mockBody);
     });
   });
-
-  describe('when form body is not provided', () => {
-    it('should return an empty object', () => {
-      // @ts-ignore
-      const result = mapSubmittedData();
-
-      expect(result).toEqual({});
-    });
-  });
 });

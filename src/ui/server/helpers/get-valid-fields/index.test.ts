@@ -2,13 +2,14 @@ import getValidFields from '.';
 
 describe('helpers/get-valid-fields', () => {
   const mockFormData = {
-    fieldA: '',
-    fieldB: true,
+    fieldA: true,
+    fieldB: 'Mock',
+    fieldC: 'Mock value',
   };
 
   const mockErrorList = {
     fieldA: {
-      text: 'Enter field A',
+      text: 'Field A is incorrect',
       order: 1,
     },
   };
@@ -18,28 +19,26 @@ describe('helpers/get-valid-fields', () => {
       const result = getValidFields(mockFormData, mockErrorList);
 
       const expected = {
-        fieldB: true,
+        fieldB: mockFormData.fieldB,
+        fieldC: mockFormData.fieldC,
       };
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe('when formData is not provided', () => {
-    it('should return an empty object', () => {
-      // @ts-ignore
-      const result = getValidFields(undefined, mockErrorList);
+  describe('when there are fields that do NOT have validation errors but have empty values', () => {
+    it('should only return fields that do NOT have empty values', () => {
+      mockFormData.fieldB = '';
 
-      expect(result).toEqual({});
-    });
-  });
+      const result = getValidFields(mockFormData, {});
 
-  describe('when formData is provided and errorList is not', () => {
-    it('should return formData as iss', () => {
-      // @ts-ignore
-      const result = getValidFields(mockFormData, undefined);
+      const expected = {
+        fieldA: mockFormData.fieldA,
+        fieldC: mockFormData.fieldC,
+      };
 
-      expect(result).toEqual(mockFormData);
+      expect(result).toEqual(expected);
     });
   });
 });

@@ -13,14 +13,14 @@ const CONTENT_STRINGS = PAGES.QUOTE.CHECK_YOUR_ANSWERS;
 
 const startRoute = ROUTES.QUOTE.START;
 
-context('Check your answers page (multi policy) - as an exporter, I want to review the details before submitting the proposal', () => {
+context('Check your answers page (multiple policy) - as an exporter, I want to review the details before submitting the proposal', () => {
   const {
     BUYER_COUNTRY,
     CREDIT_PERIOD,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
     MAX_AMOUNT_OWED,
-    MULTI_POLICY_LENGTH,
-    MULTI_POLICY_TYPE,
+    MULTIPLE_POLICY_LENGTH,
+    MULTIPLE_POLICY_TYPE,
     PERCENTAGE_OF_COVER,
     VALID_EXPORTER_LOCATION,
   } = FIELD_IDS;
@@ -29,7 +29,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
     [BUYER_COUNTRY]: 'Algeria',
     [CREDIT_PERIOD]: '1',
     [PERCENTAGE_OF_COVER]: '90',
-    [MULTI_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+    [MULTIPLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
   };
 
@@ -111,12 +111,12 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
     });
 
     it('renders `Policy type` key, value and change link', () => {
-      const row = list[MULTI_POLICY_TYPE];
-      const expectedKeyText = FIELDS[MULTI_POLICY_TYPE].SUMMARY.TITLE;
+      const row = list[MULTIPLE_POLICY_TYPE];
+      const expectedKeyText = FIELDS[MULTIPLE_POLICY_TYPE].SUMMARY.TITLE;
 
       cy.checkText(row.key(), expectedKeyText);
 
-      cy.checkText(row.value(), submissionData[MULTI_POLICY_TYPE]);
+      cy.checkText(row.value(), submissionData[MULTIPLE_POLICY_TYPE]);
 
       const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
       cy.checkText(row.changeLink(), expected);
@@ -126,12 +126,12 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
     });
 
     it('renders `Policy length` key and value (no change link)', () => {
-      const row = list[MULTI_POLICY_LENGTH];
-      const expectedKeyText = FIELDS[MULTI_POLICY_LENGTH].SUMMARY.TITLE;
+      const row = list[MULTIPLE_POLICY_LENGTH];
+      const expectedKeyText = FIELDS[MULTIPLE_POLICY_LENGTH].SUMMARY.TITLE;
 
       cy.checkText(row.key(), expectedKeyText);
 
-      const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTI} months`;
+      const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`;
       cy.checkText(row.value(), expected);
 
       row.changeLink().should('not.exist');

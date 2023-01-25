@@ -127,13 +127,13 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
   it('renders `multiple` radio input with label and hint text list', () => {
     multiplePolicyField.input().should('exist');
-    cy.checkText(multiplePolicyField.label(), FIELDS[FIELD_ID].OPTIONS.MULTI.TEXT);
+    cy.checkText(multiplePolicyField.label(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.TEXT);
 
-    cy.checkText(multiplePolicyField.hintList.item1(), FIELDS[FIELD_ID].OPTIONS.MULTI.HINT_LIST[0]);
+    cy.checkText(multiplePolicyField.hintList.item1(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[0]);
 
-    cy.checkText(multiplePolicyField.hintList.item2(), FIELDS[FIELD_ID].OPTIONS.MULTI.HINT_LIST[1]);
+    cy.checkText(multiplePolicyField.hintList.item2(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[1]);
 
-    cy.checkText(multiplePolicyField.hintList.item3(), FIELDS[FIELD_ID].OPTIONS.MULTI.HINT_LIST[2]);
+    cy.checkText(multiplePolicyField.hintList.item3(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[2]);
   });
 
   it('renders a submit button', () => {
@@ -193,7 +193,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     describe('when submitting the answer as `multiple`', () => {
       it(`should redirect to ${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, () => {
-        cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTI);
+        cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
         const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 

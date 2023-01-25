@@ -13,7 +13,7 @@ describe('server/helpers/policy-type', () => {
 
     describe('when policy type is NOT single', () => {
       it('should return false', () => {
-        const result = isSinglePolicyType(FIELD_VALUES.POLICY_TYPE.MULTI);
+        const result = isSinglePolicyType(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
         expect(result).toEqual(false);
       });
@@ -21,9 +21,9 @@ describe('server/helpers/policy-type', () => {
   });
 
   describe('isMultiPolicyType', () => {
-    describe('when policy type is multi', () => {
+    describe('when policy type is multiple', () => {
       it('should return true', () => {
-        const result = isMultiPolicyType(FIELD_VALUES.POLICY_TYPE.MULTI);
+        const result = isMultiPolicyType(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
         expect(result).toEqual(true);
       });

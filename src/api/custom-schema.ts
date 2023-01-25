@@ -142,9 +142,9 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
               id: variables.companyId,
             };
           } catch (err) {
-            console.error('Error updating application exporter company and exporter company address', { err });
+            console.error('Error updating application - exporter company and exporter company address', { err });
 
-            throw new Error(`Updating application exporter company and exporter company address ${err}`);
+            throw new Error(`Updating application - exporter company and exporter company address ${err}`);
           }
         },
         sendEmail: async (root, variables) => {

@@ -11,8 +11,8 @@ const {
   CONTRACT_VALUE,
   CREDIT_PERIOD,
   MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
-  MULTI_POLICY_TYPE,
+  MULTIPLE_POLICY_LENGTH,
+  MULTIPLE_POLICY_TYPE,
   POLICY_LENGTH,
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -67,14 +67,14 @@ context('Change your answers (policy type and length fields) - as an exporter, I
   });
 
   it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
-    policyTypePage[POLICY_TYPE].multi.input().click();
+    policyTypePage[POLICY_TYPE].multiple.input().click();
     submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
   });
 
   it('renders the new answers in `Check your answers` page (multi, 8 months)', () => {
-    // max amount owed and credit period fields are now required because it's a multi policy
+    // max amount owed and credit period fields are now required because it's a multiple policy
     tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('120000');
     tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
     submitButton().click();
@@ -84,20 +84,20 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     const expectedValue = '£120,000';
     cy.checkText(row.value(), expectedValue);
 
-    row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_TYPE];
+    row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_TYPE];
 
-    const expectedValue2 = FIELD_VALUES.POLICY_TYPE.MULTI;
+    const expectedValue2 = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
     cy.checkText(row.value(), expectedValue2);
 
-    row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_LENGTH];
+    row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_LENGTH];
 
-    const expectedValue3 = `${FIELD_VALUES.POLICY_LENGTH.MULTI} months`;
+    const expectedValue3 = `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`;
     cy.checkText(row.value(), expectedValue3);
   });
 
-  describe('change `Policy type` and `Policy length` for a second time (multi to single 5 months)', () => {
+  describe('change `Policy type` and `Policy length` for a second time (multiple to single 5 months)', () => {
     before(() => {
-      row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_TYPE];
+      row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_TYPE];
 
       row.changeLink().click();
 
@@ -118,7 +118,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     });
 
     it('has previously submitted `policy type` (multi)', () => {
-      policyTypePage[POLICY_TYPE].multi.input().should('be.checked');
+      policyTypePage[POLICY_TYPE].multiple.input().should('be.checked');
     });
 
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
@@ -174,7 +174,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     });
 
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
-      policyTypePage[POLICY_TYPE].multi.input().click();
+      policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
@@ -185,13 +185,13 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     });
   });
 
-  describe('change `Policy type` and `Policy length` for a fourth time (multi to single 7 months)', () => {
+  describe('change `Policy type` and `Policy length` for a fourth time (multiple to single 7 months)', () => {
     before(() => {
       tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('100');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('2');
       submitButton().click();
 
-      row = checkYourAnswersPage.summaryLists.policy[MULTI_POLICY_TYPE];
+      row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_TYPE];
       row.changeLink().click();
 
       const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;

@@ -24,8 +24,8 @@ describe('controllers/quote/policy-type', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELDS: {
-          MULTI_POLICY_TYPE: {
-            ID: FIELD_IDS.MULTI_POLICY_TYPE,
+          MULTIPLE_POLICY_TYPE: {
+            ID: FIELD_IDS.MULTIPLE_POLICY_TYPE,
             ...FIELDS[FIELD_IDS.POLICY_TYPE],
           },
           POLICY_LENGTH: {
