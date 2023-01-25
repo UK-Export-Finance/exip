@@ -18,17 +18,17 @@ const checkPolicyCurrencyCodeInput = () => {
 
   const hintContent = CONTENT_STRINGS.HINT;
 
-  checkText(
+  cy.checkText(
     field.hint.text.usuallyIssues(),
     hintContent.USUALLY_ISSUES,
   );
 
-  checkText(
+  cy.checkText(
     field.hint.text.differentCurrency(),
     hintContent.NEED_DIFFERENT_CURRENCY,
   );
 
-  checkText(
+  cy.checkText(
     field.hint.link(),
     hintContent.APPLY_USING_FORM.TEXT,
   );
