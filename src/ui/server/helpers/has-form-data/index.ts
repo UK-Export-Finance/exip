@@ -1,5 +1,4 @@
 import { RequestBody } from '../../../types';
-import stripEmptyFormFields from '../strip-empty-form-fields';
 
 /**
  * hasFormData
@@ -8,18 +7,10 @@ import stripEmptyFormFields from '../strip-empty-form-fields';
  * @returns {Boolean}
  */
 const hasFormData = (formBody: RequestBody) => {
-  if (!formBody) {
-    return false;
-  }
-
   const { _csrf, ...formData } = formBody;
 
   if (formData && Object.keys(formData).length) {
-    const fieldsWithValues = stripEmptyFormFields(formData);
-
-    if (Object.keys(fieldsWithValues).length) {
-      return true;
-    }
+    return true;
   }
 
   return false;

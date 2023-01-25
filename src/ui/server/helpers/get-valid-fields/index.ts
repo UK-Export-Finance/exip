@@ -1,3 +1,5 @@
+import { isEmptyString } from '../string';
+
 /**
  * getValidFields
  * Strip invalid fields from submitted form data
@@ -6,25 +8,20 @@
  * @returns {Object} Form data with invalid fields removed
  */
 const getValidFields = (formData: object, errorList: object) => {
-  if (formData) {
-    if (errorList) {
-      const fieldsWithErrors = Object.keys(errorList);
+  const fieldsWithErrors = Object.keys(errorList);
 
-      const validFields = {};
+  const validFields = {};
 
-      Object.keys(formData).forEach((fieldName) => {
-        if (!fieldsWithErrors.includes(fieldName)) {
-          validFields[fieldName] = formData[fieldName];
-        }
-      });
+  Object.keys(formData).forEach((fieldName) => {
+    const fieldValue = formData[fieldName];
 
-      return validFields;
+    // do not return fields that are in the errors list or are empty
+    if (!fieldsWithErrors.includes(fieldName) && !isEmptyString(fieldValue)) {
+      validFields[fieldName] = fieldValue;
     }
+  });
 
-    return formData;
-  }
-
-  return {};
+  return validFields;
 };
 
 export default getValidFields;
