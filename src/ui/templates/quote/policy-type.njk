@@ -77,8 +77,8 @@
           }) }}
         {% endset %}
 
-        {% set multiPolicyTypeInsetHtml %}
-          <div data-cy="multi-policy-inset">
+        {% set multiplePolicyTypeInsetHtml %}
+          <div data-cy="multiple-policy-inset">
             {{ detailsText.render({
               items: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.INSET
             }) }}
@@ -146,7 +146,7 @@
               },
               checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE,
               conditional: {
-                html: multiPolicyTypeInsetHtml
+                html: multiplePolicyTypeInsetHtml
               }
             }
           ],

@@ -140,7 +140,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
-      policyTypePage[POLICY_TYPE].multi.input().click();
+      policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
@@ -164,7 +164,7 @@ context('Your quote page - change answers (single policy type to multiple policy
       const policyLength = yourQuotePage.panel.summaryList[MULTIPLE_POLICY_LENGTH];
 
       policyLength.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(`${FIELD_VALUES.POLICY_LENGTH.MULTI} months`);
+        expect(text.trim()).equal(`${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`);
       });
     });
   });

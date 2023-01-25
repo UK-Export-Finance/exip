@@ -67,7 +67,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
   });
 
   it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
-    policyTypePage[POLICY_TYPE].multi.input().click();
+    policyTypePage[POLICY_TYPE].multiple.input().click();
     submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
@@ -98,7 +98,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_LENGTH];
 
     row.value().invoke('text').then((text) => {
-      const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTI} months`;
+      const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`;
 
       expect(text.trim()).equal(expected);
     });
@@ -127,7 +127,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     });
 
     it('has previously submitted `policy type` (multi)', () => {
-      policyTypePage[POLICY_TYPE].multi.input().should('be.checked');
+      policyTypePage[POLICY_TYPE].multiple.input().should('be.checked');
     });
 
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
@@ -192,7 +192,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     });
 
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
-      policyTypePage[POLICY_TYPE].multi.input().click();
+      policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);

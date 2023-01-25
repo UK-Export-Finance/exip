@@ -163,7 +163,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
       });
 
       row.value().invoke('text').then((text) => {
-        const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTI} months`;
+        const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`;
 
         expect(text.trim()).equal(expected);
       });

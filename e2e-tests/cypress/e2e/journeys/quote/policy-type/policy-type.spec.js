@@ -101,12 +101,12 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
         expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.SINGLE.HINT);
       });
 
-      field.multi.input().should('exist');
-      field.multi.label().invoke('text').then((text) => {
+      field.multiple.input().should('exist');
+      field.multiple.label().invoke('text').then((text) => {
         expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.MULTIPLE.TEXT);
       });
 
-      field.multi.hint().invoke('text').then((text) => {
+      field.multiple.hint().invoke('text').then((text) => {
         expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.MULTIPLE.HINT);
       });
     });
