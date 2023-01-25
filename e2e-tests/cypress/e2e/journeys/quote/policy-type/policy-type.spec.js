@@ -143,9 +143,9 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       });
     });
 
-    describe('when clicking `multi` policy type', () => {
+    describe('when clicking `multiple` policy type', () => {
       it('should reveal inset text and link', () => {
-        const multiPolicyType = policyTypePage[POLICY_TYPE].multi;
+        const multiPolicyType = policyTypePage[POLICY_TYPE].multiple;
         multiPolicyType.label().click();
 
         const field = FIELDS[POLICY_TYPE];
