@@ -26,7 +26,7 @@ describe('server/helpers/data-content-mappings/map-cost', () => {
     });
   });
 
-  describe('when policy type is multi', () => {
+  describe('when policy type is multiple', () => {
     it(`should return an object with formatted ${MAX_AMOUNT_OWED}`, () => {
       const mockDataMultiPolicyType = {
         [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,

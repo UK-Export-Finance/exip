@@ -18,7 +18,7 @@ const {
   SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
-context('Your quote page - change answers (single policy type to multiplepolicy type) - as an exporter, I want to get an Export insurance quote', () => {
+context('Your quote page - change answers (single policy type to multiple policy type) - as an exporter, I want to get an Export insurance quote', () => {
   before(() => {
     cy.login();
 
@@ -147,7 +147,7 @@ context('Your quote page - change answers (single policy type to multiplepolicy 
     });
 
     it('renders the new answers in the quote', () => {
-      // max amount owed and credit period fields are now required because it's a multiplepolicy
+      // max amount owed and credit period fields are now required because it's a multiple policy
       tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('120000');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
       submitButton().click();

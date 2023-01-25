@@ -57,7 +57,7 @@ context('Change your answers (policy type) - multiple times via back button - as
     field.input().should('exist');
   });
 
-  context('change for a second time - policy type from multipleto single', () => {
+  context('change for a second time - policy type from multiple to single', () => {
     before(() => {
       partials.backLink().click();
       cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);

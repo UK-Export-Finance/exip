@@ -74,7 +74,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
   });
 
   it('renders the new answers in `Check your answers` page (multi, 8 months)', () => {
-    // max amount owed and credit period fields are now required because it's a multiplepolicy
+    // max amount owed and credit period fields are now required because it's a multiple policy
     tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('120000');
     tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
     submitButton().click();
@@ -104,7 +104,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     });
   });
 
-  describe('change `Policy type` and `Policy length` for a second time (multipleto single 5 months)', () => {
+  describe('change `Policy type` and `Policy length` for a second time (multiple to single 5 months)', () => {
     before(() => {
       row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_TYPE];
 
@@ -203,7 +203,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     });
   });
 
-  describe('change `Policy type` and `Policy length` for a fourth time (multipleto single 7 months)', () => {
+  describe('change `Policy type` and `Policy length` for a fourth time (multiple to single 7 months)', () => {
     before(() => {
       tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('100');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('2');

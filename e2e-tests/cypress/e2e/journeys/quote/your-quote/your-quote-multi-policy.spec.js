@@ -29,7 +29,7 @@ const submissionData = {
 
 const startRoute = ROUTES.QUOTE.START;
 
-context('Get a quote/your quote page (multiplepolicy) - as an exporter, I want to get an Export insurance quote', () => {
+context('Get a quote/your quote page (multiple policy) - as an exporter, I want to get an Export insurance quote', () => {
   before(() => {
     cy.login();
 
@@ -148,7 +148,7 @@ context('Get a quote/your quote page (multiplepolicy) - as an exporter, I want t
         row.changeLink().should('not.exist');
       });
 
-      it('renders `policy length` key, value and no change link (multiplepolicy)', () => {
+      it('renders `policy length` key, value and no change link (multiple policy)', () => {
         const row = summaryList[MULTIPLE_POLICY_LENGTH];
         const expectedKeyText = QUOTE_TITLES[POLICY_LENGTH];
 

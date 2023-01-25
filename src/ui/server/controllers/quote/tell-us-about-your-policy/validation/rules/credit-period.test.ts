@@ -9,7 +9,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/credit-pe
     errorList: {},
   };
 
-  describe('when policy type is multi', () => {
+  describe('when policy type is multiple', () => {
     describe(`when ${FIELD_IDS.CREDIT_PERIOD} is not provided`, () => {
       it('should return validation error', () => {
         const mockSubmittedData = {

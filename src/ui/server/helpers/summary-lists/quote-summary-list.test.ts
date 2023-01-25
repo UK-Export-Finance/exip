@@ -114,7 +114,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
       });
     });
 
-    describe('when policy/policy length is multi', () => {
+    describe('when policy/policy length is multiple', () => {
       it(`should add an ${MAX_AMOUNT_OWED} object`, () => {
         const mockQuoteContent = {
           ...mapQuoteToContent(mockQuote),

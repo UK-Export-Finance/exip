@@ -148,7 +148,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
       });
     });
 
-    describe('when policy type is multi', () => {
+    describe('when policy type is multiple', () => {
       let mockAnswersContent: object;
 
       beforeEach(() => {

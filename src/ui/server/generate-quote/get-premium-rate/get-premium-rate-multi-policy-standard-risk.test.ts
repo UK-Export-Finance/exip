@@ -10,7 +10,7 @@ describe('server/generate-quote/get-premium-rate', () => {
     insuredFor: 70,
   };
 
-  describe('multiplepolicy - standard risk', () => {
+  describe('multiple policy - standard risk', () => {
     const riskCategory = API.MAPPINGS.RISK.STANDARD;
     const mock = {
       ...mockBase,

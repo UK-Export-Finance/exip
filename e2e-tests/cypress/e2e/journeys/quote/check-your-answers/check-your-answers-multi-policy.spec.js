@@ -13,7 +13,7 @@ const CONTENT_STRINGS = PAGES.QUOTE.CHECK_YOUR_ANSWERS;
 
 const startRoute = ROUTES.QUOTE.START;
 
-context('Check your answers page (multiplepolicy) - as an exporter, I want to review the details before submitting the proposal', () => {
+context('Check your answers page (multiple policy) - as an exporter, I want to review the details before submitting the proposal', () => {
   const {
     BUYER_COUNTRY,
     CREDIT_PERIOD,

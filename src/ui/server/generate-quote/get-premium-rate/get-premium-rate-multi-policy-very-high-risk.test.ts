@@ -10,7 +10,7 @@ describe('server/generate-quote/get-premium-rate', () => {
     insuredFor: 70,
   };
 
-  describe('multiplepolicy - very high risk', () => {
+  describe('multiple policy - very high risk', () => {
     const riskCategory = API.MAPPINGS.RISK.VERY_HIGH;
     const mock = {
       ...mockBase,

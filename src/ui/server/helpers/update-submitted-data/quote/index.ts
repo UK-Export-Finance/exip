@@ -9,7 +9,7 @@ const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTIPLE_POLICY_LENGTH, 
  * mapSubmittedData
  * Delete policy specific fields depending on what is submitted
  * - Delete single policy length if policy type is multi.
- * - Delete multiplepolicy length if policy type is single.
+ * - Delete multiple policy length if policy type is single.
  * - Delete contract value if policy type is multi.
  * - Delete maximum amount owed if policy type is single.
  * @param {Object} All submitted data

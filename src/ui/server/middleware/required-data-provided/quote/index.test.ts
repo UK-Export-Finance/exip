@@ -81,7 +81,7 @@ describe('middleware/required-data-provided/quote', () => {
       });
     });
 
-    describe('when policy type is multi', () => {
+    describe('when policy type is multiple', () => {
       it('should return an array of all required fields with single policy specific fields', () => {
         const mockSubmittedData = {
           quoteEligibility: {

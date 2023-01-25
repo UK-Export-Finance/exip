@@ -21,7 +21,7 @@ describe('server/helpers/policy-type', () => {
   });
 
   describe('isMultiPolicyType', () => {
-    describe('when policy type is multi', () => {
+    describe('when policy type is multiple', () => {
       it('should return true', () => {
         const result = isMultiPolicyType(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 

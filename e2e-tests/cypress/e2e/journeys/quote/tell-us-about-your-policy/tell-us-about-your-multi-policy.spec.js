@@ -22,7 +22,7 @@ const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
 const startRoute = ROUTES.QUOTE.START;
 
-context('Tell us about your multiplepolicy page - as an exporter, I want to provide my Export insurance policy details', () => {
+context('Tell us about your multiple policy page - as an exporter, I want to provide my Export insurance policy details', () => {
   describe('rendering', () => {
     before(() => {
       cy.login();

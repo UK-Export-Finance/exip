@@ -103,11 +103,11 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
 
       field.multi.input().should('exist');
       field.multi.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.MULTIPLETEXT);
+        expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.MULTIPLE.TEXT);
       });
 
       field.multi.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.MULTIPLEHINT);
+        expect(text.trim()).equal(FIELDS[fieldId].OPTIONS.MULTIPLE.HINT);
       });
     });
 
@@ -150,7 +150,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
 
         const field = FIELDS[POLICY_TYPE];
 
-        const insetText = field.OPTIONS.MULTIPLEINSET[0];
+        const insetText = field.OPTIONS.MULTIPLE.INSET[0];
 
         multiPolicyType.inset.text().invoke('text').then((text) => {
           expect(text.trim()).includes(insetText[0].text);

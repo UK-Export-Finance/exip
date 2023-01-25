@@ -118,7 +118,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       });
     });
 
-    describe('when policy type is multi', () => {
+    describe('when policy type is multiple', () => {
       describe(`when ${FIELD_IDS.MAX_AMOUNT_OWED} is not provided`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {

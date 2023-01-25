@@ -23,8 +23,8 @@ const {
  * generateFieldGroups
  * Create all field groups for govukSummaryList
  * The following fields depend on the submitted answers and design ordering requirements:
- * - Policy type depending on the Policy type (must have single/multipleinput ID)
- * - Policy length depending on the Policy type (must have single/multipleinput ID)
+ * - Policy type depending on the Policy type (must have single/multiple input ID)
+ * - Policy length depending on the Policy type (must have single/multiple input ID)
  * - Contract value or Max contract value depending on the Policy type
  * - Credit period if Policy type is multi
  * @param {Object} All submitted data

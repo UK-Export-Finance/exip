@@ -25,7 +25,7 @@ describe('server/helpers/map-policy-length', () => {
     });
   });
 
-  describe('when policy type is multi', () => {
+  describe('when policy type is multiple', () => {
     it(`should return an object with mapped ${MULTIPLE_POLICY_LENGTH}`, () => {
       const mockData = {
         ...mockQuote,

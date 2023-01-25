@@ -27,8 +27,8 @@ describe('server/helpers/update-submitted-data/quote', () => {
       });
     });
 
-    describe(`when ${POLICY_TYPE} is 'multi'`, () => {
-      it('should return policy length field with multiplespecific fields and default multiplepolicy length', () => {
+    describe(`when ${POLICY_TYPE} is 'multiple'`, () => {
+      it('should return policy length field with multiple specific fields and default multiple policy length', () => {
         const mockFormData = {
           mock: '1',
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
@@ -47,7 +47,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
       });
     });
 
-    describe(`when ${POLICY_TYPE} of 'single' is submitted  and 'multi' fields were previously provided`, () => {
+    describe(`when ${POLICY_TYPE} of 'single' is submitted  and 'multiple' fields were previously provided`, () => {
       it('should return policy length field with only single specific fields', () => {
         const mockFormData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
@@ -72,8 +72,8 @@ describe('server/helpers/update-submitted-data/quote', () => {
       });
     });
 
-    describe(`when ${POLICY_TYPE} of 'multi' is submitted  and 'single' fields were previously provided`, () => {
-      it('should return policy length field with only multiplespecific fields and default multiplepolicy length', () => {
+    describe(`when ${POLICY_TYPE} of 'multiple' is submitted  and 'single' fields were previously provided`, () => {
+      it('should return policy length field with only multiple specific fields and default multiple policy length', () => {
         const mockFormData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
           [MULTIPLE_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,

@@ -24,7 +24,7 @@ describe('server/generate-quote/index', () => {
       });
     });
 
-    describe('when policy type is multi', () => {
+    describe('when policy type is multiple', () => {
       it('should return max amount owed', () => {
         const mockSubmittedData = {
           [MAX_AMOUNT_OWED]: 5678,
@@ -65,7 +65,7 @@ describe('server/generate-quote/index', () => {
       });
     });
 
-    describe('when policy type is multi', () => {
+    describe('when policy type is multiple', () => {
       it('should return pecentage of max amount owed', () => {
         const mockSubmittedData = {
           quoteEligibility: {
@@ -103,7 +103,7 @@ describe('server/generate-quote/index', () => {
       });
     });
 
-    describe('when policy type is multi', () => {
+    describe('when policy type is multiple', () => {
       it('should return the total of credit period + policy length + business buffer months', () => {
         const mockPolicyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
         const mockPolicyLength = FIELD_VALUES.POLICY_LENGTH.MULTIPLE;
