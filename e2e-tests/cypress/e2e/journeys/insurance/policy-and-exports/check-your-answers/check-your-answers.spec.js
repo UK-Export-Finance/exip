@@ -112,7 +112,7 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
+    cy.checkText(submitButton(), BUTTONS.CONTINUE_NEXT_SECTION);
   });
 
   it('renders a `save and back` button', () => {
