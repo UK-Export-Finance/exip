@@ -1,5 +1,5 @@
 import { isNumber } from '../number';
-import { stripCommas } from '../string';
+import { isEmptyString, stripCommas } from '../string';
 import { RequestBody } from '../../../types';
 import { FIELD_IDS } from '../../constants';
 
@@ -23,7 +23,7 @@ const {
  * @returns {Boolean}
  */
 const shouldChangeToNumber = (key: string, value: string | number) => {
-  if (key === COMPANY_NUMBER || key === PHONE_NUMBER || value === '') {
+  if (key === COMPANY_NUMBER || key === PHONE_NUMBER || isEmptyString(String(value))) {
     return false;
   }
 
@@ -98,7 +98,7 @@ const shouldIncludeAndSanitiseField = (key: string, value: string) => {
 
   // EMS-793: do not include number fields that are empty.
   // empty number fields cannot be sent and saved via the API beacuse it is not a number.
-  if (NUMBER_FIELDS.includes(key) && value === '') {
+  if (NUMBER_FIELDS.includes(key) && isEmptyString(value)) {
     return false;
   }
 
