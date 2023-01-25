@@ -35,7 +35,7 @@ const getAvailableCover = (policyType: string, risk: string, coverMonths: number
 describe('server/generate-quote/get-premium-rate', () => {
   it('returns a number', () => {
     const mock = {
-      policyType: FIELD_VALUES.POLICY_TYPE.MULTI,
+      policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
       insuredFor: 80,
       riskCategory: API.MAPPINGS.RISK.STANDARD,
       totalMonths: 2,

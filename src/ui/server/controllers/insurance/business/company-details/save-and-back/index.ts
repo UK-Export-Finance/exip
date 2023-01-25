@@ -59,8 +59,9 @@ const post = async (req: Request, res: Response) => {
 
     // redirect to all sections page
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-  } catch (error) {
-    console.error('Error posting save and back company details', { error });
+  } catch (err) {
+    console.error('Error updating application - your business - company details (save and back)', { err });
+
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };

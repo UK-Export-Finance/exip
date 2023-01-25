@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../../constants';
 const {
   CONTRACT_VALUE,
   MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
+  MULTIPLE_POLICY_LENGTH,
   PERCENTAGE_OF_COVER,
   PREMIUM_RATE_PERCENTAGE,
   QUOTE,
@@ -55,10 +55,10 @@ const yourQuotePage = {
         value: () => cy.get(`.${SINGLE_POLICY_LENGTH}-value`),
         changeLink: () => cy.get(`[data-cy="${SINGLE_POLICY_LENGTH}-change-link"]`),
       },
-      [MULTI_POLICY_LENGTH]: {
-        key: () => cy.get(`.${MULTI_POLICY_LENGTH}-key`),
-        value: () => cy.get(`.${MULTI_POLICY_LENGTH}-value`),
-        changeLink: () => cy.get(`[data-cy="${MULTI_POLICY_LENGTH}-change-link"]`),
+      [MULTIPLE_POLICY_LENGTH]: {
+        key: () => cy.get(`.${MULTIPLE_POLICY_LENGTH}-key`),
+        value: () => cy.get(`.${MULTIPLE_POLICY_LENGTH}-value`),
+        changeLink: () => cy.get(`[data-cy="${MULTIPLE_POLICY_LENGTH}-change-link"]`),
       },
       [QUOTE.PREMIUM_RATE_PERCENTAGE]: {
         key: () => cy.get(`.${QUOTE.PREMIUM_RATE_PERCENTAGE}-key`),

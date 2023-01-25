@@ -3,7 +3,7 @@ import { FIELD_IDS, FIELD_VALUES } from '../../../constants';
 import { sanitiseData } from '../../sanitise-data';
 import { RequestBody, SubmittedDataQuoteEligibility } from '../../../../types';
 
-const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE } = FIELD_IDS;
+const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTIPLE_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE } = FIELD_IDS;
 
 describe('server/helpers/update-submitted-data/quote', () => {
   describe('mapSubmittedData', () => {
@@ -27,27 +27,27 @@ describe('server/helpers/update-submitted-data/quote', () => {
       });
     });
 
-    describe(`when ${POLICY_TYPE} is 'multi'`, () => {
-      it('should return policy length field with multi specific fields and default multi policy length', () => {
+    describe(`when ${POLICY_TYPE} is 'multiple'`, () => {
+      it('should return policy length field with multiple specific fields and default multiple policy length', () => {
         const mockFormData = {
           mock: '1',
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+          [MULTIPLE_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
         } as SubmittedDataQuoteEligibility;
 
         const result = mapSubmittedData(mockFormData);
 
         const expected = {
           mock: '1',
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+          [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
         };
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when ${POLICY_TYPE} of 'single' is submitted  and 'multi' fields were previously provided`, () => {
+    describe(`when ${POLICY_TYPE} of 'single' is submitted  and 'multiple' fields were previously provided`, () => {
       it('should return policy length field with only single specific fields', () => {
         const mockFormData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
@@ -56,7 +56,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
         } as SubmittedDataQuoteEligibility;
 
         const mockExistingData = {
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
           [MAX_AMOUNT_OWED]: 200,
         } as SubmittedDataQuoteEligibility;
 
@@ -72,11 +72,11 @@ describe('server/helpers/update-submitted-data/quote', () => {
       });
     });
 
-    describe(`when ${POLICY_TYPE} of 'multi' is submitted  and 'single' fields were previously provided`, () => {
-      it('should return policy length field with only multi specific fields and default multi policy length', () => {
+    describe(`when ${POLICY_TYPE} of 'multiple' is submitted  and 'single' fields were previously provided`, () => {
+      it('should return policy length field with only multiple specific fields and default multiple policy length', () => {
         const mockFormData = {
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+          [MULTIPLE_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
           [MAX_AMOUNT_OWED]: 200,
         } as SubmittedDataQuoteEligibility;
 
@@ -89,8 +89,8 @@ describe('server/helpers/update-submitted-data/quote', () => {
         const result = mapSubmittedData({ ...mockExistingData, ...mockFormData });
 
         const expected = {
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-          [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+          [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
           [MAX_AMOUNT_OWED]: 200,
         };
 

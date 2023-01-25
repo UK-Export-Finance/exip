@@ -116,7 +116,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
       describe('when the answer is `multi`', () => {
         it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, async () => {
-          req.body[FIELD_ID] = FIELDS[FIELD_ID]?.OPTIONS?.MULTI.VALUE;
+          req.body[FIELD_ID] = FIELDS[FIELD_ID]?.OPTIONS?.MULTIPLE.VALUE;
 
           await post(req, res);
 

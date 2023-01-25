@@ -22,7 +22,7 @@ export const mockSinglePolicyAndExport = {
 
 export const mockMultiplePolicyAndExport = {
   ...mockGenericPolicyAndExport,
-  policyType: APPLICATION.POLICY_TYPE.MULTI,
+  policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
   totalMonthsOfCover: 5,
   totalSalesToBuyer: 1500,
   maximumBuyerWillOwe: 1000,

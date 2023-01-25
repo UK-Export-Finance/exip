@@ -1,5 +1,5 @@
 import formatDate from '../date/format-date';
-import { generateFieldGroups, companyHouseSummaryList, generateAddressHTML } from './company-house-summary-list';
+import { generateFields, companyHouseSummaryList, generateAddressHTML } from './company-house-summary-list';
 import generateSummaryListRows from './generate-summary-list-rows';
 import fieldGroupItem from './generate-field-group-item';
 import getFieldById from '../get-field-by-id';
@@ -74,43 +74,41 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
     });
   });
 
-  describe('generateFieldGroups()', () => {
+  describe('generateFields()', () => {
     it('should populate field groups when provided with companyDetails', () => {
-      const result = generateFieldGroups(mockCompany);
+      const result = generateFields(mockCompany);
 
-      const expected = {
-        COMPANY_DETAILS: [
-          fieldGroupItem({
-            field: getFieldById(FIELDS, COMPANY_NUMBER),
+      const expected = [
+        fieldGroupItem({
+          field: getFieldById(FIELDS, COMPANY_NUMBER),
+          data: mockCompany,
+        }),
+        fieldGroupItem({
+          field: getFieldById(FIELDS, COMPANY_NAME),
+          data: mockCompany,
+        }),
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS, COMPANY_ADDRESS),
             data: mockCompany,
-          }),
-          fieldGroupItem({
-            field: getFieldById(FIELDS, COMPANY_NAME),
+          },
+          generateAddressHTML(mockCompany[COMPANY_ADDRESS]),
+        ),
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS, COMPANY_INCORPORATED),
             data: mockCompany,
-          }),
-          fieldGroupItem(
-            {
-              field: getFieldById(FIELDS, COMPANY_ADDRESS),
-              data: mockCompany,
-            },
-            generateAddressHTML(mockCompany[COMPANY_ADDRESS]),
-          ),
-          fieldGroupItem(
-            {
-              field: getFieldById(FIELDS, COMPANY_INCORPORATED),
-              data: mockCompany,
-            },
-            formatDate(mockCompany[COMPANY_INCORPORATED]),
-          ),
-          fieldGroupItem(
-            {
-              field: getFieldById(FIELDS, COMPANY_SIC),
-              data: mockCompany,
-            },
-            mockCompany[COMPANY_SIC].toString(),
-          ),
-        ],
-      };
+          },
+          formatDate(mockCompany[COMPANY_INCORPORATED]),
+        ),
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS, COMPANY_SIC),
+            data: mockCompany,
+          },
+          mockCompany[COMPANY_SIC].toString(),
+        ),
+      ];
 
       expect(result).toEqual(expected);
     });
@@ -118,14 +116,14 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
 
   describe('companyHouseSummaryList()', () => {
     it('should return a mapped summary list for companies house response', () => {
-      const fieldGroups = generateFieldGroups(mockCompany);
+      const fields = generateFields(mockCompany);
 
       const result = companyHouseSummaryList(mockCompany);
 
       const expected = {
         COMPANY_DETAILS: {
           GROUP_TITLE: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS.TABLE_NAME,
-          ROWS: generateSummaryListRows(fieldGroups.COMPANY_DETAILS),
+          ROWS: generateSummaryListRows(fields),
         },
       };
 

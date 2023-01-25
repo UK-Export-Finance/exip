@@ -10,13 +10,13 @@ const policyTypePage = {
       hint: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.SINGLE}-hint"]`),
       input: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.SINGLE}-input"]`),
     },
-    multi: {
-      label: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.MULTI}-label"]`),
-      hint: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.MULTI}-hint"]`),
-      input: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.MULTI}-input"]`),
+    multiple: {
+      label: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.MULTIPLE}-label"]`),
+      hint: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.MULTIPLE}-hint"]`),
+      input: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.MULTIPLE}-input"]`),
       inset: {
-        text: () => cy.get('[data-cy="multi-policy-inset"] [data-cy="details-1"]'),
-        link: () => cy.get('[data-cy="multi-policy-inset"] [data-cy="details-1"] a').eq(0),
+        text: () => cy.get('[data-cy="multiple-policy-inset"] [data-cy="details-1"]'),
+        link: () => cy.get('[data-cy="multiple-policy-inset"] [data-cy="details-1"] a').eq(0),
       },
     },
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-error-message"]`),

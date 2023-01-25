@@ -9,11 +9,11 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/credit-pe
     errorList: {},
   };
 
-  describe('when policy type is multi', () => {
+  describe('when policy type is multiple', () => {
     describe(`when ${FIELD_IDS.CREDIT_PERIOD} is not provided`, () => {
       it('should return validation error', () => {
         const mockSubmittedData = {
-          [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
           [FIELD_IDS.CREDIT_PERIOD]: '',
         };
 
@@ -28,7 +28,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/credit-pe
     describe(`when ${FIELD_IDS.CREDIT_PERIOD} is below the minimum`, () => {
       it('should return validation error', () => {
         const mockSubmittedData = {
-          [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
           [FIELD_IDS.CREDIT_PERIOD]: '0',
         };
 
@@ -43,7 +43,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/credit-pe
     describe(`when ${FIELD_IDS.CREDIT_PERIOD} is above the maximum`, () => {
       it('should return validation error', () => {
         const mockSubmittedData = {
-          [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
           [FIELD_IDS.CREDIT_PERIOD]: '3',
         };
 
@@ -58,7 +58,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/credit-pe
     describe('when there are no validation errors', () => {
       it('should return the already provided errors', () => {
         const mockSubmittedData = {
-          [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
           [FIELD_IDS.CREDIT_PERIOD]: '1',
         };
 

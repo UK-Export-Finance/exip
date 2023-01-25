@@ -142,7 +142,7 @@ const checkPolicyAndExportsSummaryList = ({
     [POLICY_TYPE]: () => {
       const fieldId = POLICY_TYPE;
       const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
-      const expectedValue = FIELD_VALUES.POLICY_TYPE.MULTI;
+      const expectedValue = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
       const expectedChangeLinkText = FIELDS[fieldId].SUMMARY.TITLE;
 

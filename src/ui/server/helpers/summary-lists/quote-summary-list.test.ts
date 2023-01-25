@@ -5,7 +5,7 @@ import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../constants';
 import generateSummaryListRows from './generate-summary-list-rows';
 import { mockQuote } from '../../test-mocks';
 
-const { BUYER_COUNTRY, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTI_POLICY_LENGTH, PERCENTAGE_OF_COVER, POLICY_LENGTH, QUOTE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
+const { BUYER_COUNTRY, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTIPLE_POLICY_LENGTH, PERCENTAGE_OF_COVER, POLICY_LENGTH, QUOTE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
 
 const { INSURED_FOR, PREMIUM_RATE_PERCENTAGE, ESTIMATED_COST, BUYER_LOCATION } = QUOTE;
 
@@ -114,11 +114,11 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
       });
     });
 
-    describe('when policy/policy length is multi', () => {
+    describe('when policy/policy length is multiple', () => {
       it(`should add an ${MAX_AMOUNT_OWED} object`, () => {
         const mockQuoteContent = {
           ...mapQuoteToContent(mockQuote),
-          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [MULTIPLE_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
           [INSURED_FOR]: '£123',
           [MAX_AMOUNT_OWED]: '£567',
         };
@@ -141,7 +141,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
       it(`should add an ${INSURED_FOR} object`, () => {
         const mockQuoteContent = {
           ...mapQuoteToContent(mockQuote),
-          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [MULTIPLE_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
           [INSURED_FOR]: '£123',
           [MAX_AMOUNT_OWED]: '£567',
         };
@@ -154,17 +154,17 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
 
         const expected = {
           id: FIELD_IDS.QUOTE.INSURED_FOR,
-          title: QUOTE_TITLES[`${QUOTE.INSURED_FOR}_MULTI_POLICY`],
+          title: QUOTE_TITLES[`${QUOTE.INSURED_FOR}_MULTIPLE_POLICY`],
           value: mockQuoteContent[INSURED_FOR],
         };
 
         expect(expectedField).toEqual(expected);
       });
 
-      it(`should add an ${MULTI_POLICY_LENGTH} object`, () => {
+      it(`should add an ${MULTIPLE_POLICY_LENGTH} object`, () => {
         const mockQuoteContent = {
           ...mapQuoteToContent(mockQuote),
-          [MULTI_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTI,
+          [MULTIPLE_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
           [MAX_AMOUNT_OWED]: '£567',
         };
 
@@ -173,9 +173,9 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const expectedField = result[result.length - 2];
 
         const expected = {
-          id: FIELD_IDS.MULTI_POLICY_LENGTH,
+          id: FIELD_IDS.MULTIPLE_POLICY_LENGTH,
           title: QUOTE_TITLES[POLICY_LENGTH],
-          value: mockQuoteContent[MULTI_POLICY_LENGTH],
+          value: mockQuoteContent[MULTIPLE_POLICY_LENGTH],
         };
 
         expect(expectedField).toEqual(expected);

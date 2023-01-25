@@ -69,7 +69,7 @@
 
 ### Features
 
-* **EMS-302:** update pricing grid. Do not use policy length in multi policy calculation ([df26d55](https://github.com/UK-Export-Finance/exip/commit/df26d553749ab5a9876f1eeb7d49897836fc2a26))
+* **EMS-302:** update pricing grid. Do not use policy length in multiple policy calculation ([df26d55](https://github.com/UK-Export-Finance/exip/commit/df26d553749ab5a9876f1eeb7d49897836fc2a26))
 
 ## [1.9.0](https://github.com/UK-Export-Finance/exip/compare/v1.8.0...v1.9.0) (2022-09-12)
 
@@ -88,8 +88,8 @@
 * **EMS-301:** answers list conditionally rendering change links. Remove all change links from policy length instances if policy type is multi. Use fixed/default policy length value ([7ebef7d](https://github.com/UK-Export-Finance/exip/commit/7ebef7d8b2a57e83e1b5b0fefebd0ed25ba05606))
 * **EMS-301:** fix e2e test ([a517df2](https://github.com/UK-Export-Finance/exip/commit/a517df2f211732e65c999ea8a4dec91f77fcbd96))
 * **EMS-301:** remove unused import ([8c42a78](https://github.com/UK-Export-Finance/exip/commit/8c42a78a556a6096cd8943ac8b25e26f963f3106))
-* **EMS-301:** replace multi policy length input with default value. Add multi policy conditional inset. Update required data checks ([13d7686](https://github.com/UK-Export-Finance/exip/commit/13d768660247f51c2e94b20af19cb1ff4b6753a8))
-* **EMS-301:** update e2e tests for multi policy length changes (no change link, default value) ([02da76b](https://github.com/UK-Export-Finance/exip/commit/02da76bc024bfa946fb17ba144e5f152b7209862))
+* **EMS-301:** replace multiple policy length input with default value. Add multiple policy conditional inset. Update required data checks ([13d7686](https://github.com/UK-Export-Finance/exip/commit/13d768660247f51c2e94b20af19cb1ff4b6753a8))
+* **EMS-301:** update e2e tests for multiple policy length changes (no change link, default value) ([02da76b](https://github.com/UK-Export-Finance/exip/commit/02da76bc024bfa946fb17ba144e5f152b7209862))
 
 ## [1.7.3](https://github.com/UK-Export-Finance/exip/compare/v1.7.2...v1.7.3) (2022-09-07)
 

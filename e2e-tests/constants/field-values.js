@@ -1,16 +1,19 @@
 import { APPLICATION } from './application';
 
+const { POLICY_TYPE, POLICY_AND_EXPORT } = APPLICATION;
+
 export const FIELD_VALUES = {
   OPTIONAL_COOKIES: {
     ACCEPT: 'accept',
     REJECT: 'reject',
   },
   POLICY_TYPE: {
-    SINGLE: APPLICATION.POLICY_TYPE.SINGLE,
-    MULTI: APPLICATION.POLICY_TYPE.MULTI,
+    SINGLE: POLICY_TYPE.SINGLE,
+    MULTIPLE: POLICY_TYPE.MULTIPLE,
   },
   POLICY_LENGTH: {
-    // default multi policy length in months
-    MULTI: 12,
+    // default multiple policy length in months
+    MULTIPLE: 12,
   },
+  TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY_AND_EXPORT.TOTAL_MONTHS_OF_COVER).keys()),
 };

@@ -1,4 +1,4 @@
-import { FIELD_IDS, FIELD_VALUES } from '../../../../constants';
+import { APPLICATION, FIELD_IDS, FIELD_VALUES } from '../../../../constants';
 import { LINKS } from '../../../links';
 
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
@@ -19,9 +19,9 @@ export const POLICY_AND_EXPORT_FIELDS = {
           'You pay for the insurance before the policy starts',
         ],
       },
-      MULTI: {
-        ID: POLICY_AND_EXPORTS.MULTI_POLICY_TYPE,
-        VALUE: FIELD_VALUES.POLICY_TYPE.MULTI,
+      MULTIPLE: {
+        ID: POLICY_AND_EXPORTS.MULTIPLE_POLICY_TYPE,
+        VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy',
         HINT_LIST: [
           'Covers multiple contracts with the same buyer, usually for 12 months',
@@ -83,8 +83,8 @@ export const POLICY_AND_EXPORT_FIELDS = {
     MULTIPLE: {
       [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
         LABEL: 'How many months do you want to be insured for?',
-        HINT: 'The maximum is 12 months.',
-        MAXIMUM: 12,
+        HINT: `The maximum is ${APPLICATION.POLICY_AND_EXPORT.TOTAL_MONTHS_OF_COVER} months.`,
+        OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
         SUMMARY: {
           TITLE: 'How many months you want to be insured for',
         },
