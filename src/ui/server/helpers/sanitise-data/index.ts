@@ -1,13 +1,18 @@
 import { isNumber } from '../number';
-import { stripCommas } from '../string';
+import { isEmptyString, stripCommas } from '../string';
 import { RequestBody } from '../../../types';
-import stripEmptyFormFields from '../strip-empty-form-fields';
 import { FIELD_IDS } from '../../constants';
 
 const {
   EXPORTER_BUSINESS: {
     COMPANY_HOUSE: { COMPANY_NUMBER },
     YOUR_COMPANY: { PHONE_NUMBER },
+  },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      SINGLE: { TOTAL_CONTRACT_VALUE },
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+    },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -17,9 +22,9 @@ const {
  * @param {String | Number} Field value
  * @returns {Boolean}
  */
-const shouldChangeToNumber = (value: string | number) => {
-  if (typeof value === 'string' && isNumber(value)) {
-    return true;
+const shouldChangeToNumber = (key: string, value: string | number) => {
+  if (key === COMPANY_NUMBER || key === PHONE_NUMBER || isEmptyString(String(value))) {
+    return false;
   }
 
   if (typeof value === 'string') {
@@ -39,7 +44,7 @@ const shouldChangeToNumber = (value: string | number) => {
  * @param {String | Number} Field value
  * @returns {Boolean}
  */
-const sanitiseValue = (value: string | number | boolean, key?: string) => {
+const sanitiseValue = (key: string, value: string | number | boolean) => {
   if (value === 'true' || value === true) {
     return true;
   }
@@ -48,8 +53,7 @@ const sanitiseValue = (value: string | number | boolean, key?: string) => {
     return false;
   }
 
-  // should not change number if COMPANY_NUMBER or PHONE_NUMBER
-  if (shouldChangeToNumber(value) && key !== COMPANY_NUMBER && key !== PHONE_NUMBER) {
+  if (shouldChangeToNumber(key, value)) {
     const stripped = stripCommas(String(value));
 
     return Number(stripped);
@@ -73,6 +77,35 @@ const isDayMonthYearField = (fieldName: string): boolean => {
 };
 
 /**
+ * NUMBER_FIELDS
+ * Explicit list of field IDs in the insurance forms that are number fields.
+ * @returns {Array} Field IDs
+ */
+const NUMBER_FIELDS = [TOTAL_CONTRACT_VALUE, TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE];
+
+/**
+ * shouldIncludeAndSanitiseField
+ * Check if we should include and sanitise a form field.
+ * @param {String} Form field key/ID
+ * @param {String} Form field value
+ * @returns {Boolean}
+ */
+const shouldIncludeAndSanitiseField = (key: string, value: string) => {
+  // do not include day/month/year fields, these should be captured as timestamps.
+  if (isDayMonthYearField(key)) {
+    return false;
+  }
+
+  // EMS-793: do not include number fields that are empty.
+  // empty number fields cannot be sent and saved via the API beacuse it is not a number.
+  if (NUMBER_FIELDS.includes(key) && isEmptyString(value)) {
+    return false;
+  }
+
+  return true;
+};
+
+/**
  * sanitiseData
  * Sanitise form data
  * @param {Express.Request.body} Form body
@@ -87,19 +120,17 @@ const sanitiseData = (formBody: RequestBody) => {
 
   const sanitised = {};
 
-  // strip any empty form fields
-  const keys = Object.keys(stripEmptyFormFields(formData));
+  const keys = Object.keys(formData);
 
   keys.forEach((key) => {
     const value = formData[key];
 
-    // do not include day/month/year fields, these should be captured as timestamps.
-    if (!isDayMonthYearField(key)) {
-      sanitised[key] = sanitiseValue(value, key);
+    if (shouldIncludeAndSanitiseField(key, value)) {
+      sanitised[key] = sanitiseValue(key, value);
     }
   });
 
   return sanitised;
 };
 
-export { shouldChangeToNumber, sanitiseValue, isDayMonthYearField, sanitiseData };
+export { shouldChangeToNumber, sanitiseValue, isDayMonthYearField, NUMBER_FIELDS, shouldIncludeAndSanitiseField, sanitiseData };

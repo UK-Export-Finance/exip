@@ -29,6 +29,7 @@ const {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
+        CREDIT_PERIOD_WITH_BUYER,
       },
     },
   },
@@ -162,6 +163,39 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
         field.dayInput().should('have.value', '1');
         field.monthInput().should('have.value', getMonth(futureDate));
         field.yearInput().should('have.value', getYear(futureDate));
+      });
+    });
+  });
+
+  describe('when removing a previously submitted `buyer credit period` value', () => {
+    const field = singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
+
+    before(() => {
+      // submit a value
+      field.input().type('Test');
+      submitButton().click();
+
+      // go back to the page
+      partials.backLink().click();
+
+      field.input().clear();
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
+      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
+      cy.url().should('eq', expected);
+    });
+
+    describe('when going back to the page', () => {
+      before(() => {
+        task.link().click();
+        submitButton().click();
+      });
+
+      it('should have no value in `buyer credit period`', () => {
+        field.input().should('have.value', '');
       });
     });
   });

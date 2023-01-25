@@ -18,10 +18,6 @@ const {
  * @returns {Object} Page variables
  */
 const mapSubmittedData = (formBody: RequestBody): object => {
-  if (!formBody) {
-    return {};
-  }
-
   const populatedData = formBody;
 
   const dateFieldIds = {
