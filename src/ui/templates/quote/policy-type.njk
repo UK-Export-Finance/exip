@@ -80,7 +80,7 @@
         {% set multiPolicyTypeInsetHtml %}
           <div data-cy="multi-policy-inset">
             {{ detailsText.render({
-              items: FIELDS.POLICY_TYPE.OPTIONS.MULTI.INSET
+              items: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.INSET
             }) }}
           </div>
         {% endset %}
@@ -127,24 +127,24 @@
               }
             },
             {
-              id: FIELDS.POLICY_TYPE.OPTIONS.MULTI.ID,
-              value: FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE,
-              text: FIELDS.POLICY_TYPE.OPTIONS.MULTI.TEXT,
+              id: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.ID,
+              value: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE,
+              text: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.TEXT,
               label: {
                 attributes: {
-                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE + '-label'
+                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE + '-label'
                 }
               },
               hint: {
-                text: FIELDS.POLICY_TYPE.OPTIONS.MULTI.HINT,
+                text: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.HINT,
                 attributes: {
-                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE + '-hint'
+                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE + '-hint'
                 }
               },
               attributes: {
-                'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE + '-input'
+                'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE + '-input'
               },
-              checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.MULTI.VALUE,
+              checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE,
               conditional: {
                 html: multiPolicyTypeInsetHtml
               }
