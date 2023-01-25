@@ -8,8 +8,8 @@ export const FIELD_VALUES = {
     REJECT: 'reject',
   },
   POLICY_TYPE: {
-    SINGLE: APPLICATION.POLICY_TYPE.SINGLE,
-    MULTIPLE: APPLICATION.POLICY_TYPE.MULTIPLE,
+    SINGLE: POLICY_TYPE.SINGLE,
+    MULTIPLE: POLICY_TYPE.MULTIPLE,
   },
   POLICY_LENGTH: {
     // default multiplepolicy length in months
