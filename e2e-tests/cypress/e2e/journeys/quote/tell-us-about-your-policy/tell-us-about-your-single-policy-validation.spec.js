@@ -10,7 +10,6 @@ import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../constants';
-import checkText from '../../../helpers/check-text';
 import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 context('Tell us about the policy you need page - form validation', () => {
@@ -41,34 +40,34 @@ context('Tell us about the policy you need page - form validation', () => {
       partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
       // currency
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(0),
         ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY}`,
       );
 
       // contract value
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].IS_EMPTY}`,
       );
 
       // percentage of cover
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(2),
         ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY}`,
       );
@@ -94,12 +93,12 @@ context('Tell us about the policy you need page - form validation', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('a');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER}`,
       );
@@ -111,12 +110,12 @@ context('Tell us about the policy you need page - form validation', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('1234.56');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_WHOLE_NUMBER,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_WHOLE_NUMBER}`,
       );
@@ -128,12 +127,12 @@ context('Tell us about the policy you need page - form validation', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('0');
       submitButton().click();
 
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
         ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].BELOW_MINIMUM,
       );
 
-      checkText(
+      cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
         `Error: ${ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].BELOW_MINIMUM}`,
       );

@@ -60,11 +60,8 @@ context('Change your answers (policy fields) - as an exporter, I want to change 
     it('renders the new answer in `Check your answers` page', () => {
       row = checkYourAnswersPage.summaryLists.policy[CREDIT_PERIOD];
 
-      row.value().invoke('text').then((text) => {
-        const expected = '2 months';
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = '2 months';
+      cy.checkText(row.value(), expected);
     });
   });
 });

@@ -26,9 +26,7 @@ context('404 Page not found', () => {
     });
 
     it('renders service name link', () => {
-      partials.header.serviceName().invoke('text').then((text) => {
-        expect(text.trim()).equal(PRODUCT.DESCRIPTION.GENERIC);
-      });
+      cy.checkText(partials.header.serviceName(), PRODUCT.DESCRIPTION.GENERIC);
 
       partials.header.serviceName().should('have.attr', 'href', '/');
     });
@@ -39,18 +37,12 @@ context('404 Page not found', () => {
   });
 
   it('renders a heading', () => {
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `typed` and `pasted` text', () => {
-    pageNotFoundPage.typedAddress().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.TYPED_ADDRESS);
-    });
+    cy.checkText(pageNotFoundPage.typedAddress(), CONTENT_STRINGS.TYPED_ADDRESS);
 
-    pageNotFoundPage.pastedAddress().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PASTED_ADDRESS);
-    });
+    cy.checkText(pageNotFoundPage.pastedAddress(), CONTENT_STRINGS.PASTED_ADDRESS);
   });
 });

@@ -56,10 +56,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       it('should display validation errors', () => {
         completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE.LONG);
         partials.errorSummaryListItems().should('have.length', 1);
-        partials.errorSummaryListItems().first().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(errorMessage);
-          });
+
+        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
       });
 
       it('should focus to the phone number section when clicking the error', () => {
@@ -68,10 +66,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display the validation error for phone number', () => {
-        companyDetails.phoneNumberError().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(`Error: ${errorMessage}`);
-          });
+        cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
       });
     });
 
@@ -80,14 +75,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         completeAllFields(INVALID_PHONE_NUMBERS.INTERNATIONAL);
 
         partials.errorSummaryListItems().should('have.length', 1);
-        partials.errorSummaryListItems().first().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(errorMessage);
-          });
-        companyDetails.phoneNumberError().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(`Error: ${errorMessage}`);
-          });
+
+        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+
+        cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
       });
     });
 
@@ -96,14 +87,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         completeAllFields(INVALID_PHONE_NUMBERS.INTERNATIONAL_PLUS);
 
         partials.errorSummaryListItems().should('have.length', 1);
-        partials.errorSummaryListItems().first().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(errorMessage);
-          });
-        companyDetails.phoneNumberError().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(`Error: ${errorMessage}`);
-          });
+
+        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+
+        cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
       });
     });
 
@@ -112,14 +99,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         completeAllFields(INVALID_PHONE_NUMBERS.MOBILE.LONG);
 
         partials.errorSummaryListItems().should('have.length', 1);
-        partials.errorSummaryListItems().first().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(errorMessage);
-          });
-        companyDetails.phoneNumberError().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(`Error: ${errorMessage}`);
-          });
+        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+
+        cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
       });
     });
 
@@ -128,14 +110,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE.SHORT);
 
         partials.errorSummaryListItems().should('have.length', 1);
-        partials.errorSummaryListItems().first().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(errorMessage);
-          });
-        companyDetails.phoneNumberError().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(`Error: ${errorMessage}`);
-          });
+        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+
+        cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
       });
     });
 
@@ -144,14 +121,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR);
 
         partials.errorSummaryListItems().should('have.length', 1);
-        partials.errorSummaryListItems().first().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(errorMessage);
-          });
-        companyDetails.phoneNumberError().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(`Error: ${errorMessage}`);
-          });
+        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+
+        cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
       });
     });
 
@@ -160,14 +132,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE.LETTER);
 
         partials.errorSummaryListItems().should('have.length', 1);
-        partials.errorSummaryListItems().first().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(errorMessage);
-          });
-        companyDetails.phoneNumberError().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(`Error: ${errorMessage}`);
-          });
+        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+
+        cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
       });
     });
 
@@ -176,14 +143,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         completeAllFields(INVALID_PHONE_NUMBERS.MOBILE.SPECIAL_CHAR);
 
         partials.errorSummaryListItems().should('have.length', 1);
-        partials.errorSummaryListItems().first().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(errorMessage);
-          });
-        companyDetails.phoneNumberError().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(`Error: ${errorMessage}`);
-          });
+        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+
+        cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
       });
     });
 
@@ -192,14 +154,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         completeAllFields(INVALID_PHONE_NUMBERS.TOO_SHORT);
 
         partials.errorSummaryListItems().should('have.length', 1);
-        partials.errorSummaryListItems().first().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(errorMessage);
-          });
-        companyDetails.phoneNumberError().invoke('text')
-          .then((text) => {
-            expect(text.trim()).equal(`Error: ${errorMessage}`);
-          });
+        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+
+        cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
       });
     });
   });

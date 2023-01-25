@@ -5,7 +5,6 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
-import checkText from '../../../../../helpers/check-text';
 
 const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -59,7 +58,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         field.input().clear();
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 4);
-        checkText(partials.errorSummaryListItems().first(), errorMessage);
+        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
       });
 
       it(`should focus to the ${GOODS_OR_SERVICES} section when clicking the error`, () => {
@@ -74,7 +73,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = GOODS_OR_SERVICES;
         const field = natureOfBusiness[fieldId];
 
-        checkText(field.error(), `Error: ${errorMessage}`);
+        cy.checkText(field.error(), `Error: ${errorMessage}`);
       });
     });
 
@@ -88,14 +87,14 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         field.input().clear().type('a'.repeat(MAXIMUM + 1));
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 4);
-        checkText(partials.errorSummaryListItems().first(), errorMessage);
+        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
       });
 
       it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
         const fieldId = GOODS_OR_SERVICES;
         const field = natureOfBusiness[fieldId];
 
-        checkText(field.error(), `Error: ${errorMessage}`);
+        cy.checkText(field.error(), `Error: ${errorMessage}`);
       });
     });
   });

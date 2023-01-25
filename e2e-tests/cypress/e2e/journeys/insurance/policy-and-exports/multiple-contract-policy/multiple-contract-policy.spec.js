@@ -102,9 +102,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().click();
 
@@ -131,13 +129,9 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    headingCaption().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING_CAPTION);
-    });
+    cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `requested start date` label, hint and inputs', () => {
@@ -145,13 +139,9 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
     const field = multipleContractPolicyPage[fieldId];
 
     field.label().should('exist');
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTRACT_POLICY[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), CONTRACT_POLICY[fieldId].LABEL);
 
-    field.hint().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTRACT_POLICY[fieldId].HINT);
-    });
+    cy.checkText(field.hint(), CONTRACT_POLICY[fieldId].HINT);
 
     field.dayInput().should('exist');
     field.monthInput().should('exist');
@@ -164,13 +154,9 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     it('renders `total months of insurance` label, hint and input', () => {
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
-      });
+      cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
 
-      field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
-      });
+      cy.checkText(field.hint(), CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
 
       field.input().should('exist');
     });
@@ -187,17 +173,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
     const field = multipleContractPolicyPage[fieldId];
 
     field.label().should('exist');
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
 
-    field.hint().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
-    });
+    cy.checkText(field.hint(), CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
 
-    field.prefix().invoke('text').then((text) => {
-      expect(text.trim()).equal('£');
-    });
+    cy.checkText(field.prefix(), '£');
 
     field.input().should('exist');
   });
@@ -208,32 +188,20 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
     const { HINT } = CONTRACT_POLICY.MULTIPLE[fieldId];
 
     field.label().should('exist');
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
 
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
 
-    field.hint.forExample().invoke('text').then((text) => {
-      expect(text.trim()).equal(HINT.FOR_EXAMPLE);
-    });
+    cy.checkText(field.hint.forExample(), HINT.FOR_EXAMPLE);
 
-    field.hint.needMoreCover().invoke('text').then((text) => {
-      const expected = `${HINT.NEED_MORE_COVER} ${HINT.FILL_IN_FORM.TEXT}`;
-      expect(text.trim()).equal(expected);
-    });
+    const expected = `${HINT.NEED_MORE_COVER} ${HINT.FILL_IN_FORM.TEXT}`;
+    cy.checkText(field.hint.needMoreCover(), expected);
 
-    field.hint.fillInFormLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(HINT.FILL_IN_FORM.TEXT);
-    });
+    cy.checkText(field.hint.fillInFormLink(), HINT.FILL_IN_FORM.TEXT);
 
     field.hint.fillInFormLink().should('have.attr', 'href', HINT.FILL_IN_FORM.HREF);
 
-    field.hint.noDecimals().invoke('text').then((text) => {
-      expect(text.trim()).equal(HINT.NO_DECIMALS);
-    });
+    cy.checkText(field.hint.noDecimals(), HINT.NO_DECIMALS);
 
     field.input().should('exist');
   });
@@ -243,13 +211,9 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
     const field = multipleContractPolicyPage[fieldId];
 
     field.label().should('exist');
-    field.label().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTRACT_POLICY[fieldId].LABEL);
-    });
+    cy.checkText(field.label(), CONTRACT_POLICY[fieldId].LABEL);
 
-    field.hint().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTRACT_POLICY[fieldId].HINT);
-    });
+    cy.checkText(field.hint(), CONTRACT_POLICY[fieldId].HINT);
 
     field.input().should('exist');
   });
@@ -260,9 +224,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
       const field = multipleContractPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTRACT_POLICY[fieldId].LABEL);
-      });
+      cy.checkText(field.label(), CONTRACT_POLICY[fieldId].LABEL);
 
       field.input().should('exist');
     });
@@ -283,17 +245,13 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   it('renders a `save and back` button', () => {
     saveAndBackButton().should('exist');
 
-    saveAndBackButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
-    });
+    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 
   describe('form submission', () => {
@@ -308,11 +266,8 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
       it('should retain the `type of policy and exports` task status as `in progress`', () => {
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-        task.status().invoke('text').then((text) => {
-          const expected = TASKS.STATUS.IN_PROGRESS;
-
-          expect(text.trim()).equal(expected);
-        });
+        const expected = TASKS.STATUS.IN_PROGRESS;
+        cy.checkText(task.status(), expected);
       });
     });
 
@@ -324,9 +279,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
         multipleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
         multipleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
 
-        multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER].inputOptionSelected().invoke('text').then((text) => {
-          expect(text.trim()).equal(`${application.POLICY_AND_EXPORTS[TOTAL_MONTHS_OF_COVER]} months`);
-        });
+        cy.checkText(multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER].inputOptionSelected(), `${application.POLICY_AND_EXPORTS[TOTAL_MONTHS_OF_COVER]} months`);
 
         multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().should('have.value', application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
         multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().should('have.value', application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);

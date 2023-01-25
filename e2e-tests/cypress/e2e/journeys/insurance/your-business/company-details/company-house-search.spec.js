@@ -50,10 +50,8 @@ context('Insurance - Your business - Company details page - company house search
   describe('when leaving companies house registration blank', () => {
     it('should display an error in the error summary', () => {
       companyDetails.companiesHouseSearchButton().click();
-      partials.errorSummaryListItems().first().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
-        });
+
+      cy.checkText(partials.errorSummaryListItems().first(), COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
     });
 
     it('should focus to the input box when clicking the error', () => {
@@ -62,10 +60,7 @@ context('Insurance - Your business - Company details page - company house search
     });
 
     it('should display the error in the input error summary', () => {
-      companyDetails.companiesHouseSearchError().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(`Error: ${COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT}`);
-        });
+      cy.checkText(companyDetails.companiesHouseSearchError(), `Error: ${COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT}`);
     });
   });
 
@@ -73,10 +68,8 @@ context('Insurance - Your business - Company details page - company house search
     it('should display an error in the error summary', () => {
       companyDetails.companiesHouseSearch().clear().type('1234');
       companyDetails.companiesHouseSearchButton().click();
-      partials.errorSummaryListItems().first().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
-        });
+
+      cy.checkText(partials.errorSummaryListItems().first(), COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
     });
 
     it('should focus to the input box when clicking the error', () => {
@@ -85,10 +78,7 @@ context('Insurance - Your business - Company details page - company house search
     });
 
     it('should display the error in the input error summary', () => {
-      companyDetails.companiesHouseSearchError().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(`Error: ${COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT}`);
-        });
+      cy.checkText(companyDetails.companiesHouseSearchError(), `Error: ${COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT}`);
     });
   });
 
@@ -96,10 +86,8 @@ context('Insurance - Your business - Company details page - company house search
     it('should display an error in the error summary', () => {
       companyDetails.companiesHouseSearch().clear().type('123456!');
       companyDetails.companiesHouseSearchButton().click();
-      partials.errorSummaryListItems().first().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
-        });
+
+      cy.checkText(partials.errorSummaryListItems().first(), COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
     });
 
     it('should focus to the input box when clicking the error', () => {
@@ -108,10 +96,7 @@ context('Insurance - Your business - Company details page - company house search
     });
 
     it('should display the error in the input error summary', () => {
-      companyDetails.companiesHouseSearchError().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(`Error: ${COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT}`);
-        });
+      cy.checkText(companyDetails.companiesHouseSearchError(), `Error: ${COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT}`);
     });
   });
 
@@ -119,10 +104,8 @@ context('Insurance - Your business - Company details page - company house search
     it('should display an error in the error summary', () => {
       companyDetails.companiesHouseSearch().clear().type('123456 ');
       companyDetails.companiesHouseSearchButton().click();
-      partials.errorSummaryListItems().first().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
-        });
+
+      cy.checkText(partials.errorSummaryListItems().first(), COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
     });
 
     it('should focus to the input box when clicking the error', () => {
@@ -131,10 +114,7 @@ context('Insurance - Your business - Company details page - company house search
     });
 
     it('should display the error in the input error summary', () => {
-      companyDetails.companiesHouseSearchError().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(`Error: ${COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT}`);
-        });
+      cy.checkText(companyDetails.companiesHouseSearchError(), `Error: ${COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT}`);
     });
   });
 
@@ -152,45 +132,30 @@ context('Insurance - Your business - Company details page - company house search
       partials.errorSummaryListItems().should('not.exist');
       companyDetails.companiesHouseSearchError().should('not.exist');
 
-      companyDetails.yourBusinessHeading().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_LIST_FIELDS.LABEL);
-      });
+      cy.checkText(companyDetails.yourBusinessHeading(), SUMMARY_LIST_FIELDS.LABEL);
 
-      partials.yourBusinessSummaryList[COMPANY_NUMBER].key().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_LIST_FIELDS.COMPANY_NUMBER.text);
-      });
-      partials.yourBusinessSummaryList[COMPANY_NUMBER].value().invoke('text').then((text) => {
-        expect(text.trim()).equal(COMPANIES_HOUSE_NUMBER);
-      });
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_NUMBER].key(), SUMMARY_LIST_FIELDS.COMPANY_NUMBER.text);
 
-      partials.yourBusinessSummaryList[COMPANY_NAME].key().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_LIST_FIELDS.COMPANY_NAME.text);
-      });
-      partials.yourBusinessSummaryList[COMPANY_NAME].value().invoke('text').then((text) => {
-        expect(text.trim()).equal('DHG PROPERTY FINANCE LIMITED');
-      });
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_NUMBER].value(), COMPANIES_HOUSE_NUMBER);
 
-      partials.yourBusinessSummaryList[COMPANY_ADDRESS].key().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_LIST_FIELDS.COMPANY_ADDRESS.text);
-      });
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_NAME].key(), SUMMARY_LIST_FIELDS.COMPANY_NAME.text);
+
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_NAME].value(), 'DHG PROPERTY FINANCE LIMITED');
+
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_ADDRESS].key(), SUMMARY_LIST_FIELDS.COMPANY_ADDRESS.text);
+
       partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains('Unit 3 Lewis Court');
       partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains('Cardiff');
       partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains('South Glamorgan');
       partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains('CF24 5HQ');
 
-      partials.yourBusinessSummaryList[COMPANY_INCORPORATED].key().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_LIST_FIELDS.COMPANY_INCORPORATED.text);
-      });
-      partials.yourBusinessSummaryList[COMPANY_INCORPORATED].value().invoke('text').then((text) => {
-        expect(text.trim()).equal('10 April 2014');
-      });
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_INCORPORATED].key(), SUMMARY_LIST_FIELDS.COMPANY_INCORPORATED.text);
 
-      partials.yourBusinessSummaryList[COMPANY_SIC].key().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
-      });
-      partials.yourBusinessSummaryList[COMPANY_SIC].value().invoke('text').then((text) => {
-        expect(text.trim()).equal('64999');
-      });
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_INCORPORATED].value(), '10 April 2014');
+
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].key(), SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
+
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), '64999');
     });
   });
 });

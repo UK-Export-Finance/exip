@@ -53,10 +53,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       companyDetails.companyWebsite().type(WEBSITE_EXAMPLES.INVALID);
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);
-      partials.errorSummaryListItems().first().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
-        });
+
+      cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
     });
 
     it('should focus to the company website section when clicking the error', () => {
@@ -65,10 +63,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should display the validation error for company website', () => {
-      companyDetails.companyWebsiteError().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT}`);
-        });
+      cy.checkText(companyDetails.companyWebsiteError(), `Error: ${COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT}`);
     });
   });
 

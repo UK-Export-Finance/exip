@@ -12,8 +12,6 @@ context('Skip link should take user to the main content of a page', () => {
 
     partials.skipLink().should('exist');
 
-    partials.skipLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.SKIP_TO_MAIN_CONTENT);
-    });
+    cy.checkText(partials.skipLink(), LINKS.SKIP_TO_MAIN_CONTENT);
   });
 });

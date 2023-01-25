@@ -45,10 +45,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       companyDetails.tradingNameYesRadioInput().click();
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);
-      partials.errorSummaryListItems().first().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
-        });
+
+      cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
     });
 
     it('should focus to the trading address section when clicking the error', () => {
@@ -57,10 +55,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should display the validation error for trading address in radio error summary', () => {
-      inlineErrorMessage().invoke('text')
-        .then((text) => {
-          expect(text.trim()).equal(`Error: ${COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY}`);
-        });
+      cy.checkText(inlineErrorMessage(), `Error: ${COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY}`);
     });
   });
 });

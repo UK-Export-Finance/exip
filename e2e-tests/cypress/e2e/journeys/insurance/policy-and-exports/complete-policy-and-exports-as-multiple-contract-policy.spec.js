@@ -3,7 +3,6 @@ import { saveAndBackButton } from '../../../pages/shared';
 import { TASKS } from '../../../../../content-strings';
 import { FIELD_VALUES, ROUTES } from '../../../../../constants';
 import getReferenceNumber from '../../../helpers/get-reference-number';
-import checkText from '../../../helpers/check-text';
 
 const { taskList } = partials.insurancePartials;
 
@@ -44,7 +43,7 @@ context('Insurance - Policy and exports - Complete the entire section as a multi
 
       cy.url().should('eq', expectedUrl);
 
-      checkText(
+      cy.checkText(
         task.status(),
         TASKS.STATUS.COMPLETED,
       );

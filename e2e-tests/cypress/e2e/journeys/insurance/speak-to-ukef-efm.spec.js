@@ -66,9 +66,7 @@ context('Insurance - speak to UKEF EFM exit page', () => {
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
 
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`;
 
@@ -79,23 +77,15 @@ context('Insurance - speak to UKEF EFM exit page', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `find your nearest EFM` copy with link', () => {
-    insurance.speakToUkefEfmPage.action.text().invoke('text').then((text) => {
-      const expected = `${ACTIONS.FIND_EFM[0][0].text} ${ACTIONS.FIND_EFM[0][1].text}${ACTIONS.FIND_EFM[0][2].text}`;
+    const expectedText = `${ACTIONS.FIND_EFM[0][0].text} ${ACTIONS.FIND_EFM[0][1].text}${ACTIONS.FIND_EFM[0][2].text}`;
+    cy.checkText(insurance.speakToUkefEfmPage.action.text(), expectedText);
 
-      expect(text.trim()).equal(expected);
-    });
-
-    insurance.speakToUkefEfmPage.action.link().invoke('text').then((text) => {
-      const expected = `${ACTIONS.FIND_EFM[0][1].text}`;
-
-      expect(text.trim()).equal(expected);
-    });
+    const expectedLink = `${ACTIONS.FIND_EFM[0][1].text}`;
+    cy.checkText(insurance.speakToUkefEfmPage.action.link(), expectedLink);
 
     const expectedHref = ACTIONS.FIND_EFM[0][1].href;
 

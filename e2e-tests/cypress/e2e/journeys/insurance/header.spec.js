@@ -21,9 +21,7 @@ context('Insurance - header', () => {
   });
 
   it('renders service name link', () => {
-    partials.header.serviceName().invoke('text').then((text) => {
-      expect(text.trim()).equal(PRODUCT.DESCRIPTION.APPLICATION);
-    });
+    cy.checkText(partials.header.serviceName(), PRODUCT.DESCRIPTION.APPLICATION);
 
     partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });

@@ -55,26 +55,17 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     // Check contract value formatting in the answers page
     const answersAmount = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].value();
 
-    answersAmount.invoke('text').then((text) => {
-      const expected = '$100,000';
-
-      expect(text.trim()).equal(expected);
-    });
+    const expectedAmount = '$100,000';
+    cy.checkText(answersAmount, expectedAmount);
 
     submitButton().click();
 
     // Check contract value formatting in the quote
-    yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR].value().invoke('text').then((text) => {
-      const expected = '$80,000.00';
-
-      expect(text.trim()).equal(expected);
-    });
+    const expectedValue = '$80,000.00';
+    cy.checkText(yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR].value(), expectedValue);
 
     // Check estimated cost in the quote
-    yourQuotePage.panel.summaryList[QUOTE.ESTIMATED_COST].value().invoke('text').then((text) => {
-      const expected = '$5,330.00';
-
-      expect(text.trim()).equal(expected);
-    });
+    const expectedCost = '$5,330.00';
+    cy.checkText(yourQuotePage.panel.summaryList[QUOTE.ESTIMATED_COST].value(), expectedCost);
   });
 });

@@ -5,7 +5,6 @@ import { PAGES, BUTTONS, LINKS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
-import checkText from '../../../../helpers/check-text';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
 
@@ -77,13 +76,13 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    checkText(partials.backLink(), LINKS.BACK);
+    cy.checkText(partials.backLink(), LINKS.BACK);
   });
 
   it('should display the headings correctly', () => {
-    checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
 
-    checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it(`should display ${GOODS_OR_SERVICES} input box`, () => {
@@ -91,7 +90,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
     const field = natureOfBusiness[fieldId];
 
     field.input().should('exist');
-    checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
+    cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
 
     field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
   });
@@ -101,16 +100,16 @@ context('Insurance - Your business - Nature of your business page - As an Export
     const field = natureOfBusiness[fieldId];
 
     field.input().should('exist');
-    checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
+    cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
 
     field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
-    checkText(field.suffix(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].SUFFIX);
+    cy.checkText(field.suffix(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].SUFFIX);
   });
 
   it('should display the continue and save and go back button', () => {
-    checkText(submitButton(), BUTTONS.CONTINUE);
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
 
-    checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 
   it(`should display ${EMPLOYEES_UK} input box`, () => {
@@ -118,8 +117,8 @@ context('Insurance - Your business - Nature of your business page - As an Export
     const field = natureOfBusiness[fieldId];
 
     field.input().should('exist');
-    checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
-    checkText(field.heading(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HEADING);
+    cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
+    cy.checkText(field.heading(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HEADING);
   });
 
   it(`should display ${EMPLOYEES_INTERNATIONAL} input box`, () => {
@@ -127,12 +126,12 @@ context('Insurance - Your business - Nature of your business page - As an Export
     const field = natureOfBusiness[fieldId];
 
     field.input().should('exist');
-    checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
+    cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
   });
 
   it('should display the continue and save and go back button', () => {
-    checkText(submitButton(), BUTTONS.CONTINUE);
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
 
-    checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 });

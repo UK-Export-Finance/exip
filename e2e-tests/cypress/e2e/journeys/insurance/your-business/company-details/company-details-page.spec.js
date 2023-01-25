@@ -77,31 +77,23 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
   });
 
   it('should display the headings correctly', () => {
-    partials.headingCaption().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING_CAPTION);
-    });
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('should display the companies house search box', () => {
     companyDetails.companiesHouseSearch().should('exist');
-    companyDetails.companiesHouseSearchLabel().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[INPUT].LABEL);
-    });
+
+    cy.checkText(companyDetails.companiesHouseSearchLabel(), FIELDS[INPUT].LABEL);
 
     companyDetails.companiesHouseSearchHint().contains(FIELDS[INPUT].HINT);
 
-    companyDetails.companiesHouseSearchButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.SEARCH);
-    });
+    cy.checkText(companyDetails.companiesHouseSearchButton(), BUTTONS.SEARCH);
   });
 
   it('should not display the companies house summary list', () => {
@@ -109,73 +101,50 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
   });
 
   it('should display the no companies house link', () => {
-    companyDetails.companiesHouseNoNumber().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.NO_COMPANY_HOUSE_NUMER);
-    });
+    cy.checkText(companyDetails.companiesHouseNoNumber(), CONTENT_STRINGS.NO_COMPANY_HOUSE_NUMER);
   });
 
   it('should display the trading name radios', () => {
-    companyDetails.tradingNameLabel().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[TRADING_NAME].LABEL);
-    });
+    cy.checkText(companyDetails.tradingNameLabel(), FIELDS[TRADING_NAME].LABEL);
+
     companyDetails.tradingNameYesRadioInput().should('exist');
 
-    companyDetails.tradingNameYesRadioInput().invoke('attr', 'aria-label').then((text) => {
-      expect(text.trim()).equal(`${FIELDS[TRADING_NAME].LABEL} yes radio`);
-    });
+    cy.checkAriaLabel(companyDetails.tradingNameYesRadioInput(), `${FIELDS[TRADING_NAME].LABEL} yes radio`);
 
     companyDetails.tradingNameNoRadioInput().should('exist');
 
-    companyDetails.tradingNameNoRadioInput().invoke('attr', 'aria-label').then((text) => {
-      expect(text.trim()).equal(`${FIELDS[TRADING_NAME].LABEL} no radio`);
-    });
+    cy.checkAriaLabel(companyDetails.tradingNameNoRadioInput(), `${FIELDS[TRADING_NAME].LABEL} no radio`);
   });
 
   it('should display the trading address radios', () => {
-    companyDetails.tradingAddressLabel().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[TRADING_ADDRESS].LABEL);
-    });
+    cy.checkText(companyDetails.tradingAddressLabel(), FIELDS[TRADING_ADDRESS].LABEL);
+
     companyDetails.tradingAddressYesRadioInput().should('exist');
-    companyDetails.tradingAddressYesRadioInput().invoke('attr', 'aria-label').then((text) => {
-      expect(text.trim()).equal(`${FIELDS[TRADING_ADDRESS].LABEL} yes radio`);
-    });
+    cy.checkAriaLabel(companyDetails.tradingAddressYesRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} yes radio`);
 
     companyDetails.tradingAddressNoRadioInput().should('exist');
-    companyDetails.tradingAddressNoRadioInput().invoke('attr', 'aria-label').then((text) => {
-      expect(text.trim()).equal(`${FIELDS[TRADING_ADDRESS].LABEL} no radio`);
-    });
+    cy.checkAriaLabel(companyDetails.tradingAddressNoRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} no radio`);
   });
 
   it('should display the company website text area', () => {
-    companyDetails.companyWebsiteLabel().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[WEBSITE].LABEL);
-    });
+    cy.checkText(companyDetails.companyWebsiteLabel(), FIELDS[WEBSITE].LABEL);
+
     companyDetails.companyWebsite().should('exist');
-    companyDetails.companyWebsite().invoke('attr', 'aria-label').then((text) => {
-      expect(text.trim()).equal(FIELDS[WEBSITE].LABEL);
-    });
+    cy.checkAriaLabel(companyDetails.companyWebsite(), FIELDS[WEBSITE].LABEL);
   });
 
   it('should display the phone number text area', () => {
-    companyDetails.phoneNumberLabel().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[PHONE_NUMBER].LABEL);
-    });
-    companyDetails.phoneNumberHint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS[PHONE_NUMBER].HINT);
-    });
+    cy.checkText(companyDetails.phoneNumberLabel(), FIELDS[PHONE_NUMBER].LABEL);
+
+    cy.checkText(companyDetails.phoneNumberHint(), FIELDS[PHONE_NUMBER].HINT);
+
     companyDetails.phoneNumber().should('exist');
-    companyDetails.phoneNumber().invoke('attr', 'aria-label').then((text) => {
-      expect(text.trim()).equal(FIELDS[PHONE_NUMBER].LABEL);
-    });
+    cy.checkAriaLabel(companyDetails.phoneNumber(), FIELDS[PHONE_NUMBER].LABEL);
   });
 
   it('should display the continue and save and go back button', () => {
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
 
-    saveAndBackButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.SAVE_AND_BACK);
-    });
+    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 });

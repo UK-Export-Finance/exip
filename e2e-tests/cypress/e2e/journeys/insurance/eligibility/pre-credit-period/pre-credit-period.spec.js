@@ -64,9 +64,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
+    cy.checkText(partials.backLink(), LINKS.BACK);
 
     partials.backLink().click();
 
@@ -98,42 +96,32 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
     cy.title().should('eq', expectedPageTitle);
 
-    heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.PAGE_TITLE);
-    });
+    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders radio button hint', () => {
     yesNoRadioHint().should('exist');
 
-    yesNoRadioHint().invoke('text').then((text) => {
-      expect(text.trim()).equal(FIELDS.INSURANCE.ELIGIBILITY[FIELD_ID].HINT);
-    });
+    cy.checkText(yesNoRadioHint(), FIELDS.INSURANCE.ELIGIBILITY[FIELD_ID].HINT);
   });
 
   it('renders `yes` radio button', () => {
     yesRadio().should('exist');
 
-    yesRadio().invoke('text').then((text) => {
-      expect(text.trim()).equal('Yes');
-    });
+    cy.checkText(yesRadio(), 'Yes');
   });
 
   it('renders `no` radio button', () => {
     noRadio().should('exist');
 
-    noRadio().invoke('text').then((text) => {
-      expect(text.trim()).equal('No');
-    });
+    cy.checkText(noRadio(), 'No');
   });
 
   describe('expandable details', () => {
     it('renders summary text', () => {
       insurance.eligibility.preCreditPeriodPage.description.summary().should('exist');
 
-      insurance.eligibility.preCreditPeriodPage.description.summary().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.INTRO);
-      });
+      cy.checkText(insurance.eligibility.preCreditPeriodPage.description.summary(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.INTRO);
     });
 
     it('clicking summary text reveals details', () => {
@@ -145,46 +133,32 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     it('renders body text', () => {
       insurance.eligibility.preCreditPeriodPage.description.body1().should('exist');
 
-      insurance.eligibility.preCreditPeriodPage.description.body1().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_1);
-      });
+      cy.checkText(insurance.eligibility.preCreditPeriodPage.description.body1(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_1);
     });
 
     it('renders expanded content', () => {
-      insurance.eligibility.preCreditPeriodPage.description.list.intro().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST_INTRO);
-      });
+      cy.checkText(insurance.eligibility.preCreditPeriodPage.description.list.intro(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST_INTRO);
 
-      insurance.eligibility.preCreditPeriodPage.description.list.item1().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST[0].TEXT);
-      });
+      cy.checkText(insurance.eligibility.preCreditPeriodPage.description.list.item1(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST[0].TEXT);
 
-      insurance.eligibility.preCreditPeriodPage.description.list.item2().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST[1].TEXT);
-      });
+      cy.checkText(insurance.eligibility.preCreditPeriodPage.description.list.item2(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST[1].TEXT);
     });
 
     it('renders outro body text', () => {
       insurance.eligibility.preCreditPeriodPage.description.body2().should('exist');
 
-      insurance.eligibility.preCreditPeriodPage.description.body2().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_2);
-      });
+      cy.checkText(insurance.eligibility.preCreditPeriodPage.description.body2(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_2);
 
       insurance.eligibility.preCreditPeriodPage.description.body3().should('exist');
 
-      insurance.eligibility.preCreditPeriodPage.description.body3().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_3);
-      });
+      cy.checkText(insurance.eligibility.preCreditPeriodPage.description.body3(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_3);
     });
   });
 
   it('renders a submit button', () => {
     submitButton().should('exist');
 
-    submitButton().invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
+    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   describe('form submission', () => {
@@ -197,13 +171,9 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
 
         const expectedMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY;
 
-        partials.errorSummaryListItems().first().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedMessage);
-        });
+        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 
-        inlineErrorMessage().invoke('text').then((text) => {
-          expect(text.trim()).includes(expectedMessage);
-        });
+        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
       });
 
       it('should focus on input when clicking summary error message', () => {
