@@ -203,10 +203,10 @@
         }) }}
 
         {% set currencyCodeHintHtml %}
-          {{policyCurrencyCodeHint.render({
+          {{ policyCurrencyCodeHint.render({
             id: FIELDS.POLICY_CURRENCY_CODE.ID,
-            hint:FIELDS.POLICY_CURRENCY_CODE.HINT
-          })}}
+            hint: FIELDS.POLICY_CURRENCY_CODE.HINT
+          }) }}
         {% endset %}
 
         {{ govukSelect({
