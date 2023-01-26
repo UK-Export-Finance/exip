@@ -28,13 +28,14 @@ describe('helpers/get-valid-fields', () => {
   });
 
   describe('when there are fields that do NOT have validation errors but have empty values', () => {
-    it('should only return fields that do NOT have empty values', () => {
+    it('should return all fields, including fields with empty values', () => {
       mockFormData.fieldB = '';
 
       const result = getValidFields(mockFormData, {});
 
       const expected = {
         fieldA: mockFormData.fieldA,
+        fieldB: mockFormData.fieldB,
         fieldC: mockFormData.fieldC,
       };
 

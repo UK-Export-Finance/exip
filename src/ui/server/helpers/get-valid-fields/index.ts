@@ -15,8 +15,9 @@ const getValidFields = (formData: object, errorList: object) => {
   Object.keys(formData).forEach((fieldName) => {
     const fieldValue = formData[fieldName];
 
-    // do not return fields that are in the errors list or are empty
-    if (!fieldsWithErrors.includes(fieldName) && !isEmptyString(fieldValue)) {
+    // do not return fields that are in the errors,
+    // but return fields that are empty - a user might have deleted an answer.
+    if (!fieldsWithErrors.includes(fieldName) || isEmptyString(fieldValue)) {
       validFields[fieldName] = fieldValue;
     }
   });
