@@ -69,7 +69,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
-      CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY,
+      CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT,
     );
 
     cy.checkText(
