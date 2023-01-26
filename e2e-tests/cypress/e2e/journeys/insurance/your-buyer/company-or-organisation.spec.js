@@ -2,6 +2,7 @@ import {
   submitButton,
   saveAndBackButton,
 } from '../../../pages/shared';
+import partials from '../../../partials';
 import { companyOrOrganisationPage } from '../../../pages/insurance/your-buyer';
 import { BUTTONS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
@@ -18,9 +19,9 @@ const {
   },
 } = FIELD_IDS;
 
-const goToPageDirectly = (referenceNumber) => {
-  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`);
-};
+const { taskList } = partials.insurancePartials;
+
+const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Company or organisation page - As an exporter, I want to enter the buyer details', () => {
   let referenceNumber;
@@ -30,11 +31,12 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
+    task.link().click();
+
     getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
-      goToPageDirectly(referenceNumber);
       cy.url().should('eq', expected);
     });
   });
