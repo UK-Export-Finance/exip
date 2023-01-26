@@ -42,7 +42,7 @@ const generateSingleContractPolicyFields = (answers: ApplicationPolicyAndExport,
         renderChangeLink: true,
         href: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHANGE}#${TOTAL_CONTRACT_VALUE}-label`,
       },
-      formatCurrency(answers[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE),
+      answers[TOTAL_CONTRACT_VALUE] && formatCurrency(answers[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE),
     ),
   ] as Array<SummaryListItemData>;
 

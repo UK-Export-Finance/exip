@@ -35,7 +35,7 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 const { summaryList } = checkYourAnswersPage;
 
-context('Insurance - Policy and exports - Check your answers - Single contract policy - As an exporter, I want to change my answers to the type of policy and exports section', () => {
+context('Insurance - Policy and exports - Change your answers - Single contract policy - As an exporter, I want to change my answers to the type of policy and exports section', () => {
   let referenceNumber;
 
   before(() => {
