@@ -36,7 +36,7 @@ describe('shared-validation/website', () => {
     });
 
     it('should display error when website is above 191 characters', () => {
-      const website = `www.google${'e'.repeat(190)}.com`;
+      const website = `www.google${'e'.repeat(178)}.com`;
 
       const result = validateWebsiteAddress(website, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
