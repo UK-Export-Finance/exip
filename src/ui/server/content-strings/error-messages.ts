@@ -116,7 +116,7 @@ export const ERROR_MESSAGES = {
           ABOVE_MAXIMUM: 'The credit period you have with your buyer cannot be more than 1000 characters.',
         },
         [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.REQUESTED_START_DATE]: {
-          IS_EMPTY: 'Enter a policy start date in the correct format - for example, 06 11 2023',
+          INCORRECT_FORMAT: 'Enter a policy start date in the correct format - for example, 06 11 2023',
           NOT_A_NUMBER: 'Enter a policy start date in the correct format - for example, 06 11 2023',
           BEFORE_EARLIEST: 'You cannot enter a policy start date in the past - enter a future date',
         },
@@ -125,7 +125,7 @@ export const ERROR_MESSAGES = {
         },
         SINGLE: {
           [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
-            IS_EMPTY: 'Enter a contract completion date in the correct format - for example, 06 11 2023',
+            INCORRECT_FORMAT: 'Enter a contract completion date in the correct format - for example, 06 11 2023',
             NOT_A_NUMBER: 'Enter a contract completion date in the correct format - for example, 06 11 2023',
             BEFORE_EARLIEST: 'You cannot enter a contract completion date in the past - enter a future date',
             AFTER_LATEST:
@@ -177,7 +177,7 @@ export const ERROR_MESSAGES = {
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.ADDRESS]: {
           IS_EMPTY: "Enter the buyer's address",
-          ABOVE_MAXIMUM: 'Buyer address cannot be more than 330 characters',
+          ABOVE_MAXIMUM: 'Buyer address cannot be more than 300 characters',
         },
       },
     },

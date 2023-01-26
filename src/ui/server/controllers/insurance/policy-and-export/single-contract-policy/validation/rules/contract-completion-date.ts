@@ -1,5 +1,5 @@
+import { add, isAfter, isBefore, isPast, isSameDay, isValid } from 'date-fns';
 import { FIELD_IDS, PRODUCT } from '../../../../../../constants';
-import { add, isAfter, isBefore, isPast, isSameDay } from 'date-fns';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
@@ -12,7 +12,7 @@ const {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
-        SINGLE: { CONTRACT_COMPLETION_DATE },
+        SINGLE: { CONTRACT_COMPLETION_DATE: FIELD_ID },
       },
     },
   },
@@ -22,7 +22,7 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
-        SINGLE: { [CONTRACT_COMPLETION_DATE]: ERROR_MESSAGE },
+        SINGLE: { [FIELD_ID]: ERROR_MESSAGE },
       },
     },
   },
@@ -37,9 +37,9 @@ const DATE_INPUT_IDS = {
     year: `${REQUESTED_START_DATE}-year`,
   },
   end: {
-    day: `${CONTRACT_COMPLETION_DATE}-day`,
-    month: `${CONTRACT_COMPLETION_DATE}-month`,
-    year: `${CONTRACT_COMPLETION_DATE}-year`,
+    day: `${FIELD_ID}-day`,
+    month: `${FIELD_ID}-month`,
+    year: `${FIELD_ID}-year`,
   },
 };
 
@@ -50,9 +50,9 @@ const getDateInputValues = (formBody: RequestBody) => ({
     year: Number(formBody[`${REQUESTED_START_DATE}-year`]),
   },
   end: {
-    day: Number(formBody[`${CONTRACT_COMPLETION_DATE}-day`]),
-    month: Number(formBody[`${CONTRACT_COMPLETION_DATE}-month`]),
-    year: Number(formBody[`${CONTRACT_COMPLETION_DATE}-year`]),
+    day: Number(formBody[`${FIELD_ID}-day`]),
+    month: Number(formBody[`${FIELD_ID}-month`]),
+    year: Number(formBody[`${FIELD_ID}-year`]),
   },
 });
 
@@ -65,9 +65,6 @@ const getDateInputValues = (formBody: RequestBody) => ({
  * @returns {Object} Validation errors
  */
 const contractCompletionDateRules = (formBody: RequestBody, errors: object) => {
-  const updatedErrors = errors;
-  let errorMessage;
-
   const inputValues = getDateInputValues(formBody);
 
   // check that no fields are empty.
@@ -76,19 +73,24 @@ const contractCompletionDateRules = (formBody: RequestBody, errors: object) => {
   const hasYear = objectHasProperty(formBody, DATE_INPUT_IDS.end.year);
 
   if (!hasDay || !hasMonth || !hasYear) {
-    errorMessage = ERROR_MESSAGE.IS_EMPTY;
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
   // check that all fields are numbers.
   if (!isNumber(inputValues.end.day) || !isNumber(inputValues.end.month) || !isNumber(inputValues.end.year)) {
-    errorMessage = ERROR_MESSAGE.NOT_A_NUMBER;
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, errors);
+  }
+
+  const submittedDate = createTimestampFromNumbers(inputValues.end.day, inputValues.end.month, inputValues.end.year);
+
+  // check that the date is valid e.g not a month value of 24.
+  if (submittedDate && !isValid(submittedDate)) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
   // check that the date is in the future.
-  const submittedDate = createTimestampFromNumbers(inputValues.end.day, inputValues.end.month, inputValues.end.year);
-
   if (submittedDate && isPast(submittedDate)) {
-    errorMessage = ERROR_MESSAGE.BEFORE_EARLIEST;
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BEFORE_EARLIEST, errors);
   }
 
   const requestedStartDate = createTimestampFromNumbers(inputValues.start.day, inputValues.start.month, inputValues.start.year);
@@ -96,27 +98,23 @@ const contractCompletionDateRules = (formBody: RequestBody, errors: object) => {
   if (submittedDate && requestedStartDate) {
     // check that the date is not the same as the requested start date.
     if (isSameDay(submittedDate, requestedStartDate)) {
-      errorMessage = ERROR_MESSAGE.CANNOT_BE_THE_SAME;
+      return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.CANNOT_BE_THE_SAME, errors);
     }
 
     // check that the date is not before the requested start date.
     if (isBefore(submittedDate, requestedStartDate)) {
-      errorMessage = ERROR_MESSAGE.CANNOT_BE_BEFORE;
+      return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.CANNOT_BE_BEFORE, errors);
     }
 
     // check that the end date is not past the maximum years of cover.
     const maximum = add(requestedStartDate, { years: PRODUCT.MAX_COVER_PERIOD_YEARS });
 
     if (isAfter(submittedDate, maximum)) {
-      errorMessage = ERROR_MESSAGE.AFTER_LATEST;
+      return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.AFTER_LATEST, errors);
     }
   }
 
-  if (errorMessage) {
-    return generateValidationErrors(CONTRACT_COMPLETION_DATE, errorMessage, errors);
-  }
-
-  return updatedErrors;
+  return errors;
 };
 
 export default contractCompletionDateRules;

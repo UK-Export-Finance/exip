@@ -11,7 +11,7 @@ export const YOUR_BUYER_FIELDS = {
     },
     [COMPANY_OR_ORGANISATION.ADDRESS]: {
       LABEL: 'Address',
-      MAXIMUM: 330,
+      MAXIMUM: 300,
     },
     [COMPANY_OR_ORGANISATION.COUNTRY]: {
       LABEL: 'Country',

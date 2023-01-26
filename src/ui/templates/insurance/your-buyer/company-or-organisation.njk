@@ -65,21 +65,21 @@
           maxlength: FIELDS.ADDRESS.MAXIMUM,
           classes: "govuk-!-width-two-thirds",
           attributes: {
-              'data-cy': FIELDS.ADDRESS.ID + '-input'
+            'data-cy': FIELDS.ADDRESS.ID + '-input'
           },
           value: submittedValues[FIELDS.ADDRESS.ID],
           errorMessage: validationErrors.errorList[FIELDS.ADDRESS.ID] and {
-              text: validationErrors.errorList[FIELDS.ADDRESS.ID].text,
-              attributes: {
-                "data-cy": FIELDS.ADDRESS.ID + "-error-message"
-              }
-            },
+            text: validationErrors.errorList[FIELDS.ADDRESS.ID].text,
+            attributes: {
+              "data-cy": FIELDS.ADDRESS.ID + "-error-message"
+            }
+          },
           label: {
             text: FIELDS.ADDRESS.LABEL,
             classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
             attributes: {
-                id: FIELDS.ADDRESS.ID + '-label',
-                'data-cy': FIELDS.ADDRESS.ID + '-label'
+              id: FIELDS.ADDRESS.ID + '-label',
+              'data-cy': FIELDS.ADDRESS.ID + '-label'
             }
           }
         }) }}
