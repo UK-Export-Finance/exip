@@ -56,10 +56,6 @@ const {
   },
 } = FIELD_IDS;
 
-const goToPageDirectly = (referenceNumber) => {
-  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`);
-};
-
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 context('Insurance - Policy and exports - Single contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
@@ -106,7 +102,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
     cy.url().should('eq', expectedUrl);
 
-    goToPageDirectly(referenceNumber);
+    cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {
@@ -221,7 +217,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
     describe('when going back to the page', () => {
       it('should have the submitted values', () => {
-        goToPageDirectly(referenceNumber);
+        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`);
 
         singleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
         singleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
@@ -234,6 +230,22 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
         singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', application.POLICY_AND_EXPORTS[TOTAL_CONTRACT_VALUE]);
         singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().should('have.value', application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
         policyCurrencyCodeFormField.inputOptionSelected().contains(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);
+      });
+    });
+
+    describe('when the credit period with buyer field is a pure number and there are no other validation errors', () => {
+      const creditPeriodField = singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
+      const submittedValue = '1234';
+
+      before(() => {
+        creditPeriodField.input().clear().type(submittedValue, { delay: 0 });
+        submitButton().click();
+      });
+
+      it('should retain the submitted value when going back to the page', () => {
+        partials.backLink().click();
+
+        creditPeriodField.input().should('have.value', submittedValue);
       });
     });
   });
