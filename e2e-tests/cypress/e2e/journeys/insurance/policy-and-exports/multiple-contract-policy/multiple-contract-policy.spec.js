@@ -62,10 +62,6 @@ const {
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
-const goToPageDirectly = (referenceNumber) => {
-  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`);
-};
-
 context('Insurance - Policy and exports - Multiple contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
 
@@ -110,7 +106,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     cy.url().should('eq', expectedUrl);
 
-    goToPageDirectly(referenceNumber);
+    cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {
@@ -255,7 +251,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     describe('when going back to the page', () => {
       it('should have the submitted values', () => {
-        goToPageDirectly(referenceNumber);
+        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`);
 
         multipleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
         multipleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
@@ -267,6 +263,22 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
         multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().should('have.value', application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
         multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().should('have.value', application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
         policyCurrencyCodeFormField.inputOptionSelected().contains(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);
+      });
+    });
+
+    describe('when the credit period with buyer field is a pure number and there are no other validation errors', () => {
+      const creditPeriodField = multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
+      const submittedValue = '1234';
+
+      before(() => {
+        creditPeriodField.input().clear().type(submittedValue, { delay: 0 });
+        submitButton().click();
+      });
+
+      it('should retain the submitted value when going back to the page', () => {
+        partials.backLink().click();
+
+        creditPeriodField.input().should('have.value', submittedValue);
       });
     });
   });
