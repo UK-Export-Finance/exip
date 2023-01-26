@@ -22,9 +22,9 @@ const {
   },
 } = ERROR_MESSAGES;
 
-const goToPageDirectly = (referenceNumber) => {
-  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`);
-};
+const { taskList } = partials.insurancePartials;
+
+const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Company or organisation page - form validation', () => {
   let referenceNumber;
@@ -34,10 +34,10 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
+    task.link().click();
+
     getReferenceNumber().then((id) => {
       referenceNumber = id;
-
-      goToPageDirectly(referenceNumber);
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
       cy.url().should('eq', expected);
