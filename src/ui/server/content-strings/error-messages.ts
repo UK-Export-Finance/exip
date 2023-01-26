@@ -134,7 +134,7 @@ export const ERROR_MESSAGES = {
             CANNOT_BE_BEFORE: 'Your contract completion date must be after your policy start date',
           },
           [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
-            INCORRECT_FORMAT: 'Enter your contract value as a whole number - do not enter decimals',
+            IS_EMPTY: 'Enter your contract value as a whole number - do not enter decimals',
             NOT_A_NUMBER: 'Enter your contract value as a whole number - do not enter decimals',
             NOT_A_WHOLE_NUMBER: 'Enter your contract value as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'Your contract value must be 1 or more',
