@@ -46,10 +46,6 @@ const {
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
-const goToPageDirectly = (referenceNumber) => {
-  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
-};
-
 context('Insurance - Policy and exports - About goods or services page - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
 
@@ -96,7 +92,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
     cy.url().should('eq', expectedUrl);
 
-    goToPageDirectly(referenceNumber);
+    cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {
@@ -181,12 +177,28 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
     describe('when going back to the page', () => {
       it('should have the submitted values', () => {
-        goToPageDirectly(referenceNumber);
+        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
 
         aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.POLICY_AND_EXPORTS[DESCRIPTION]);
 
         const country = countries.find((c) => c.isoCode === application.POLICY_AND_EXPORTS[FINAL_DESTINATION]);
         cy.checkText(aboutGoodsOrServicesPage[FINAL_DESTINATION].inputOptionSelected(), country.name);
+      });
+    });
+
+    describe('when the description field is a pure number and there are no other validation errors', () => {
+      const descriptionField = aboutGoodsOrServicesPage[DESCRIPTION];
+      const submittedValue = '1234';
+
+      before(() => {
+        descriptionField.input().clear().type(submittedValue, { delay: 0 });
+        submitButton().click();
+      });
+
+      it('should retain the submitted value when going back to the page', () => {
+        partials.backLink().click();
+
+        descriptionField.input().should('have.value', submittedValue);
       });
     });
   });

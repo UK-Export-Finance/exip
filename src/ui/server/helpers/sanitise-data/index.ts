@@ -7,14 +7,36 @@ const {
   EXPORTER_BUSINESS: {
     COMPANY_HOUSE: { COMPANY_NUMBER },
     YOUR_COMPANY: { PHONE_NUMBER },
+    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES },
   },
   POLICY_AND_EXPORTS: {
     CONTRACT_POLICY: {
+      CREDIT_PERIOD_WITH_BUYER,
       SINGLE: { TOTAL_CONTRACT_VALUE },
       MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
     },
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
   },
 } = FIELD_IDS.INSURANCE;
+
+/**
+ * NUMBER_FIELDS
+ * Explicit list of field IDs in the insurance forms that are number fields.
+ * @returns {Array} Field IDs
+ */
+const NUMBER_FIELDS = [TOTAL_CONTRACT_VALUE, TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE];
+
+/**
+ * STRING_NUMBER_FIELDS
+ * Explicit exemptions list of field IDs in the insurance forms that are string fields that could be submitted as a pure number.
+ * If one of these fields is pure numbers, our default "sanitise data" behaviour is to transform a string number into a number type.
+ * However, we do not want this to happen with these fields. This means that:
+ * - The data is saved correctly
+ * - We avoid adding additional error handling in the UI.
+ * - We avoid a "problem with service" page scenario where the data save fails, because it tries to save a number type as a text string type.
+ * @returns {Array} Field IDs
+ */
+const STRING_NUMBER_FIELDS = [CREDIT_PERIOD_WITH_BUYER, DESCRIPTION, COMPANY_NUMBER, PHONE_NUMBER, GOODS_OR_SERVICES];
 
 /**
  * shouldChangeToNumber
@@ -23,7 +45,7 @@ const {
  * @returns {Boolean}
  */
 const shouldChangeToNumber = (key: string, value: string | number) => {
-  if (key === COMPANY_NUMBER || key === PHONE_NUMBER || isEmptyString(String(value))) {
+  if (STRING_NUMBER_FIELDS.includes(key) || isEmptyString(String(value))) {
     return false;
   }
 
@@ -77,13 +99,6 @@ const isDayMonthYearField = (fieldName: string): boolean => {
 };
 
 /**
- * NUMBER_FIELDS
- * Explicit list of field IDs in the insurance forms that are number fields.
- * @returns {Array} Field IDs
- */
-const NUMBER_FIELDS = [TOTAL_CONTRACT_VALUE, TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE];
-
-/**
  * shouldIncludeAndSanitiseField
  * Check if we should include and sanitise a form field.
  * @param {String} Form field key/ID
@@ -133,4 +148,4 @@ const sanitiseData = (formBody: RequestBody) => {
   return sanitised;
 };
 
-export { shouldChangeToNumber, sanitiseValue, isDayMonthYearField, NUMBER_FIELDS, shouldIncludeAndSanitiseField, sanitiseData };
+export { NUMBER_FIELDS, STRING_NUMBER_FIELDS, shouldChangeToNumber, sanitiseValue, isDayMonthYearField, shouldIncludeAndSanitiseField, sanitiseData };
