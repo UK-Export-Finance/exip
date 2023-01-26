@@ -159,5 +159,16 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
       });
     });
+
+    describe('a number above the maximum allowed characters', () => {
+      it('should display validation errors', () => {
+        completeAllFields(INVALID_PHONE_NUMBERS.ABOVE_MAX_CHARS);
+
+        partials.errorSummaryListItems().should('have.length', 1);
+        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+
+        cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
+      });
+    });
   });
 });

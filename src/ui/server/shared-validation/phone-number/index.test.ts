@@ -89,6 +89,13 @@ describe('shared-validation/phone-number', () => {
 
       expect(result).toEqual(expected);
     });
+
+    it('should display error entering mobile number which is above 191 characters', () => {
+      const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.ABOVE_MAX_CHARS, fieldId, errorMessage, errors);
+      const expected = generateValidationErrors(fieldId, errorMessage);
+
+      expect(result).toEqual(expected);
+    });
   });
 
   describe('without errors', () => {

@@ -34,6 +34,15 @@ describe('shared-validation/website', () => {
 
       expect(result).toEqual(expected);
     });
+
+    it('should display error when website is above 191 characters', () => {
+      const website = `www.google${'e'.repeat(190)}.com`;
+
+      const result = validateWebsiteAddress(website, fieldId, errorMessage, errors);
+      const expected = generateValidationErrors(fieldId, errorMessage);
+
+      expect(result).toEqual(expected);
+    });
   });
 
   describe('without errors', () => {

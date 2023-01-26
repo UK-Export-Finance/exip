@@ -2,6 +2,7 @@ import Joi from 'joi';
 import { PhoneNumberUtil } from 'google-libphonenumber';
 import generateValidationErrors from '../../helpers/validation';
 import { DEFAULT_COUNTRY_UK } from '../../constants';
+import isAboveMaxLength from '../../helpers/is-above-max-length';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
@@ -42,7 +43,7 @@ const validatePhoneNumber = (phoneNumber: string, fieldId: string, errorMessage:
 
   // if not valid for UK, then returns validation error
   try {
-    if (!isPhoneNumberValid(phoneNumber) || phoneNumberPatternValidation(phoneNumber)) {
+    if (!isPhoneNumberValid(phoneNumber) || phoneNumberPatternValidation(phoneNumber) || isAboveMaxLength(phoneNumber, 191)) {
       updatedErrors = generateValidationErrors(fieldId, errorMessage, updatedErrors);
       return updatedErrors;
     }
