@@ -46,24 +46,43 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   describe(`${WEBSITE} error`, () => {
-    it('should display validation errors if company website incorrectly entered', () => {
-      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
-      companyDetails.tradingNameYesRadioInput().click();
-      companyDetails.tradingAddressYesRadioInput().click();
-      companyDetails.companyWebsite().type(WEBSITE_EXAMPLES.INVALID);
-      submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 1);
+    describe('invalid website format', () => {
+      it('should display validation errors', () => {
+        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
+        companyDetails.tradingNameYesRadioInput().click();
+        companyDetails.tradingAddressYesRadioInput().click();
+        companyDetails.companyWebsite().type(WEBSITE_EXAMPLES.INVALID);
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 1);
 
-      cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
+        cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
+      });
+
+      it('should focus to the company website section when clicking the error', () => {
+        partials.errorSummaryListItemLinks().first().click();
+        companyDetails.companyWebsite().should('have.focus');
+      });
+
+      it('should display the validation error for company website', () => {
+        cy.checkText(companyDetails.companyWebsiteError(), `Error: ${COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT}`);
+      });
     });
 
-    it('should focus to the company website section when clicking the error', () => {
-      partials.errorSummaryListItemLinks().first().click();
-      companyDetails.companyWebsite().should('have.focus');
-    });
+    describe('website above 191 characters', () => {
+      it('should display validation errors', () => {
+        companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
+        companyDetails.tradingNameYesRadioInput().click();
+        companyDetails.tradingAddressYesRadioInput().click();
+        companyDetails.companyWebsite().type(WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH);
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 1);
 
-    it('should display the validation error for company website', () => {
-      cy.checkText(companyDetails.companyWebsiteError(), `Error: ${COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT}`);
+        cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
+      });
+
+      it('should display the validation error for company website', () => {
+        cy.checkText(companyDetails.companyWebsiteError(), `Error: ${COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT}`);
+      });
     });
   });
 

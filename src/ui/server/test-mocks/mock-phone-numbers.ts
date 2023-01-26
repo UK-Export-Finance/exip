@@ -12,6 +12,7 @@ const mockPhoneNumbers = {
     TOO_SHORT: '44',
     TOO_SHORT_SPECIAL_CHAR: '*44',
     MOBILE_SPECIAL_CHAR: '07906208973*',
+    ABOVE_MAX_CHARS: '1'.repeat(192),
   },
   VALID_PHONE_NUMBERS: {
     LANDLINE: '02072718010',
