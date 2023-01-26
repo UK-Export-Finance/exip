@@ -1,4 +1,5 @@
 import { submitButton } from '../../../../pages/shared';
+import { companyOrOrganisationPage } from '../../../../pages/insurance/your-buyer';
 import partials from '../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
@@ -8,9 +9,7 @@ import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const {
   COMPANY_OR_ORGANISATION: {
-    NAME,
     ADDRESS,
-    COUNTRY,
   },
 } = FIELD_IDS;
 
@@ -26,7 +25,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.buyer;
 
-context('Insurance - Your Buyer - Company or organisation page - form validation', () => {
+context('Insurance - Your Buyer - Company or organisation page - form validation - address', () => {
   let referenceNumber;
 
   before(() => {
@@ -49,27 +48,30 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('should render validation errors for all required fields', () => {
-    submitButton().click();
+  const field = companyOrOrganisationPage[ADDRESS];
 
-    partials.errorSummaryListItems().should('exist');
+  describe('when address is above the maximum', () => {
+    const submittedValue = 'a'.repeat(301);
 
-    const TOTAL_REQUIRED_FIELDS = 3;
-    partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
+    before(() => {
+      field.input().type(submittedValue, { delay: 0 });
+      submitButton().click();
+    });
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      COMPANY_OR_ORG_ERROR_MESSAGES[NAME].IS_EMPTY,
-    );
+    it('should render a validation error', () => {
+      cy.checkText(
+        partials.errorSummaryListItems().eq(1),
+        COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].ABOVE_MAXIMUM,
+      );
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].IS_EMPTY,
-    );
+      cy.checkText(
+        field.errorMessage(),
+        `Error: ${COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].ABOVE_MAXIMUM}`,
+      );
+    });
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(2),
-      ERROR_MESSAGES[COUNTRY].IS_EMPTY,
-    );
+    it('should retain the submitted value', () => {
+      field.input().should('have.value', submittedValue);
+    });
   });
 });

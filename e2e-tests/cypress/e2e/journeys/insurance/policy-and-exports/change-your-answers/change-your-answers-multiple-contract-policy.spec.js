@@ -29,7 +29,7 @@ const {
   },
 } = FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
+const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
@@ -241,7 +241,7 @@ context('Insurance - Policy and exports - Check your answers - Multiple contract
         const newAnswer = currencies[3].isoCode;
 
         before(() => {
-          multipleContractPolicyPage[fieldId].input().select(newAnswer);
+          policyCurrencyCodeFormField.input().select(newAnswer);
 
           submitButton().click();
         });

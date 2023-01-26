@@ -1,12 +1,11 @@
 import { submitButton } from '../../../../../pages/shared';
-import { singleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
 import application from '../../../../../../fixtures/application';
 
-const { taskList } = partials.insurancePartials;
+const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const { INSURANCE } = ROUTES;
 
@@ -97,9 +96,9 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     it(`should retain the submitted ${POLICY_CURRENCY_CODE}`, () => {
       const currencyCode = application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE];
 
-      singleContractPolicyPage[POLICY_CURRENCY_CODE].input().select(currencyCode);
+      policyCurrencyCodeFormField.input().select(currencyCode);
 
-      singleContractPolicyPage[POLICY_CURRENCY_CODE].inputOptionSelected().contains(currencyCode);
+      policyCurrencyCodeFormField.inputOptionSelected().contains(currencyCode);
     });
   });
 });

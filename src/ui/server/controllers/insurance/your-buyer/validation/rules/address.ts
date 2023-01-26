@@ -20,7 +20,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-export const MAXIMUM = 330;
+export const MAXIMUM = 300;
 
 /**
  * addressRules

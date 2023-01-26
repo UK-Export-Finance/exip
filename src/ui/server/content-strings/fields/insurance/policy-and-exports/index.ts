@@ -52,15 +52,14 @@ export const POLICY_AND_EXPORTS_FIELDS = {
     },
     [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
       LABEL: 'Select currency you want your policy to be issued in',
-      HINT: [
-        {
-          text: "UKEF usually issues policies in pounds sterling, US dollars or euros. If you need a different currency, you'll need to ",
+      HINT: {
+        USUALLY_ISSUES: 'UKEF usually issues policies in pounds sterling, US dollars or euros.',
+        NEED_DIFFERENT_CURRENCY: "If you need a different currency, you'll need to",
+        APPLY_USING_FORM: {
+          TEXT: 'apply using our form.',
+          HREF: LINKS.EXTERNAL.NBI_FORM,
         },
-        {
-          text: 'apply using our form.',
-          href: LINKS.EXTERNAL.NBI_FORM,
-        },
-      ],
+      },
       SUMMARY: {
         TITLE: 'Policy currency',
       },
