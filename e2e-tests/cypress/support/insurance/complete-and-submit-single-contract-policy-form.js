@@ -1,5 +1,6 @@
 import { FIELD_IDS } from '../../../constants';
 import { singleContractPolicyPage } from '../../e2e/pages/insurance/policy-and-export';
+import insurancePartials from '../../e2e/partials/insurance';
 import { submitButton } from '../../e2e/pages/shared';
 import application from '../../fixtures/application';
 
@@ -27,7 +28,7 @@ export default () => {
 
   singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().type(application.POLICY_AND_EXPORTS[TOTAL_CONTRACT_VALUE]);
   singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().type(application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
-  singleContractPolicyPage[POLICY_CURRENCY_CODE].input().select(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);
+  insurancePartials.policyCurrencyCodeFormField.input().select(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);
 
   submitButton().click();
 };

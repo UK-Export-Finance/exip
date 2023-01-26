@@ -1,11 +1,10 @@
 import { submitButton } from '../../../../../pages/shared';
-import { singleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
 
-const { taskList } = partials.insurancePartials;
+const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const { INSURANCE } = ROUTES;
 
@@ -52,8 +51,6 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  const field = singleContractPolicyPage[POLICY_CURRENCY_CODE];
-
   describe('when policy currency code is not provided', () => {
     it('should render a validation error', () => {
       submitButton().click();
@@ -64,7 +61,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       );
 
       cy.checkText(
-        field.errorMessage(),
+        policyCurrencyCodeFormField.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY}`,
       );
     });
