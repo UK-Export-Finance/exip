@@ -75,12 +75,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY,
+        CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT}`,
       );
     });
   });
@@ -94,12 +94,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY,
+        CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT}`,
       );
     });
   });
@@ -113,12 +113,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY,
+        CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].IS_EMPTY}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT}`,
       );
     });
   });
@@ -195,6 +195,28 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       cy.checkText(
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].BEFORE_EARLIEST}`,
+      );
+    });
+  });
+
+  describe('when the date has an invalid format', () => {
+    it('should render a validation error', () => {
+      const date = new Date();
+      const futureDate = add(date, { days: 1 });
+
+      field.dayInput().clear().type(getDate(futureDate));
+      field.monthInput().clear().type('24');
+      field.yearInput().clear().type(getYear(futureDate));
+      submitButton().click();
+
+      cy.checkText(
+        partials.errorSummaryListItems().eq(1),
+        CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT,
+      );
+
+      cy.checkText(
+        field.errorMessage(),
+        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT}`,
       );
     });
   });

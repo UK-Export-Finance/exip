@@ -35,7 +35,7 @@ describe('shared-validation/requested-start-date', () => {
 
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -50,7 +50,7 @@ describe('shared-validation/requested-start-date', () => {
 
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -65,7 +65,7 @@ describe('shared-validation/requested-start-date', () => {
 
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -82,6 +82,25 @@ describe('shared-validation/requested-start-date', () => {
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);
 
       const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when the date is invalid', () => {
+    it('should return validation error', () => {
+      const date = new Date();
+      const futureDate = add(date, { days: 1, months: 1 });
+
+      const mockSubmittedData = {
+        [`${FIELD_ID}-day`]: getDate(futureDate),
+        [`${FIELD_ID}-month`]: '24',
+        [`${FIELD_ID}-year`]: getYear(futureDate),
+      };
+
+      const result = requestedStartDateRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });

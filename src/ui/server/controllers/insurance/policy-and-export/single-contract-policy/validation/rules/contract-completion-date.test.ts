@@ -40,7 +40,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
 
       const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -55,7 +55,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
 
       const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -70,7 +70,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
 
       const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -87,6 +87,25 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
       const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
 
       const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.NOT_A_NUMBER, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when the date is invalid', () => {
+    it('should return validation error', () => {
+      const date = new Date();
+      const futureDate = add(date, { days: 1, months: 1 });
+
+      const mockSubmittedData = {
+        [`${CONTRACT_COMPLETION_DATE}-day`]: getDate(futureDate),
+        [`${CONTRACT_COMPLETION_DATE}-month`]: '24',
+        [`${CONTRACT_COMPLETION_DATE}-year`]: getYear(futureDate),
+      };
+
+      const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -113,7 +132,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
 
   describe(`when ${REQUESTED_START_DATE} is also provided`, () => {
     const date = new Date();
-    const futureDate = sub(date, { months: 3 });
+    const futureDate = add(date, { months: 3 });
 
     const requestedStartDateFields = {
       [`${REQUESTED_START_DATE}-day`]: getDate(futureDate),

@@ -1,4 +1,5 @@
 import {
+  add,
   getDate,
   getMonth,
   getYear,
@@ -39,12 +40,12 @@ const checkValidation = {
 
       cy.checkText(
         partials.errorSummaryListItems().eq(0),
-        CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY,
+        CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT}`,
       );
     },
     notANumber: () => {
@@ -71,12 +72,12 @@ const checkValidation = {
 
       cy.checkText(
         partials.errorSummaryListItems().eq(0),
-        CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY,
+        CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT}`,
       );
     },
     notANumber: () => {
@@ -104,12 +105,12 @@ const checkValidation = {
 
       cy.checkText(
         partials.errorSummaryListItems().eq(0),
-        CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY,
+        CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].IS_EMPTY}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT}`,
       );
     },
     notANumber: () => {
@@ -146,6 +147,25 @@ const checkValidation = {
     cy.checkText(
       field.errorMessage(),
       `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].BEFORE_EARLIEST}`,
+    );
+  },
+  invalidFormat: () => {
+    const date = new Date();
+    const futureDate = add(date, { days: 1 });
+
+    field.dayInput().clear().type(getDate(futureDate));
+    field.monthInput().clear().type('24');
+    field.yearInput().clear().type(getYear(futureDate));
+    submitButton().click();
+
+    cy.checkText(
+      partials.errorSummaryListItems().eq(0),
+      CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT,
+    );
+
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT}`,
     );
   },
   isToday: () => {
