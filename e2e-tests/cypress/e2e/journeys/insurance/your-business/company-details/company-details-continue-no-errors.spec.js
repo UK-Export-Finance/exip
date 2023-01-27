@@ -70,11 +70,13 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   describe('when resubmitting company number on company details page', () => {
-    it('it should remove old sic codes', () => {
+    before(() => {
       partials.backLink().click();
       submitButton().click();
       partials.backLink().click();
+    });
 
+    it('it should remove old sic codes from company summary list', () => {
       cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), '64999');
     });
   });
