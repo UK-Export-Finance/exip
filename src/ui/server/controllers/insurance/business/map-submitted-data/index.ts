@@ -40,7 +40,7 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
 
   // convert and populate company number and delete the companies house input field
   if (objectHasProperty(populatedData, INPUT)) {
-    populatedData[COMPANY_NUMBER] = populatedData[INPUT].toString();
+    populatedData[COMPANY_NUMBER] = populatedData[COMPANY_NUMBER].toString();
 
     delete populatedData[INPUT];
   }
