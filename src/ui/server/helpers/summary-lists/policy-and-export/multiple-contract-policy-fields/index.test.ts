@@ -25,39 +25,47 @@ describe('server/helpers/summary-lists/policy-and-export/multiple-contract-polic
   const mockAnswers = mockMultiplePolicyAndExport;
   const { referenceNumber } = mockApplication;
 
+  const expectedBase = {
+    [TOTAL_MONTHS_OF_COVER]: {
+      field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, TOTAL_MONTHS_OF_COVER),
+      renderChangeLink: true,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${TOTAL_MONTHS_OF_COVER}-label`,
+    },
+    [TOTAL_SALES_TO_BUYER]: {
+      field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, TOTAL_SALES_TO_BUYER),
+      renderChangeLink: true,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${TOTAL_SALES_TO_BUYER}-label`,
+    },
+    [MAXIMUM_BUYER_WILL_OWE]: {
+      field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, MAXIMUM_BUYER_WILL_OWE),
+      renderChangeLink: true,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${MAXIMUM_BUYER_WILL_OWE}-label`,
+    },
+  };
+
   it('should return fields and values from the submitted data/answers', () => {
     const result = generateMultipleContractPolicyFields(mockAnswers, referenceNumber);
 
     const expected = [
-      fieldGroupItem(
-        {
-          field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, TOTAL_MONTHS_OF_COVER),
-          data: mockAnswers,
-          renderChangeLink: true,
-          href: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${TOTAL_MONTHS_OF_COVER}-label`,
-        },
-        mapMonthString(mockAnswers[TOTAL_MONTHS_OF_COVER]),
-      ),
-      fieldGroupItem(
-        {
-          field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, TOTAL_SALES_TO_BUYER),
-          data: mockAnswers,
-          renderChangeLink: true,
-          href: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${TOTAL_SALES_TO_BUYER}-label`,
-        },
-        formatCurrency(mockAnswers[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE),
-      ),
-      fieldGroupItem(
-        {
-          field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, MAXIMUM_BUYER_WILL_OWE),
-          data: mockAnswers,
-          renderChangeLink: true,
-          href: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${MAXIMUM_BUYER_WILL_OWE}-label`,
-        },
-        formatCurrency(mockAnswers[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE),
-      ),
+      fieldGroupItem(expectedBase[TOTAL_MONTHS_OF_COVER], mapMonthString(mockAnswers[TOTAL_MONTHS_OF_COVER])),
+      fieldGroupItem(expectedBase[TOTAL_SALES_TO_BUYER], formatCurrency(mockAnswers[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
+      fieldGroupItem(expectedBase[MAXIMUM_BUYER_WILL_OWE], formatCurrency(mockAnswers[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE)),
     ];
 
     expect(result).toEqual(expected);
+  });
+
+  describe('when there are no submitted data/answers', () => {
+    it('should return fields without values', () => {
+      const result = generateMultipleContractPolicyFields({ id: mockApplication.id }, referenceNumber);
+
+      const expected = [
+        fieldGroupItem(expectedBase[TOTAL_MONTHS_OF_COVER]),
+        fieldGroupItem(expectedBase[TOTAL_SALES_TO_BUYER]),
+        fieldGroupItem(expectedBase[MAXIMUM_BUYER_WILL_OWE]),
+      ];
+
+      expect(result).toEqual(expected);
+    });
   });
 });
