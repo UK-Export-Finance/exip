@@ -34,7 +34,7 @@ describe('controllers/insurance/business/map-and-save', () => {
         await mapAndSave.companyDetails(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(save.companyDetails).toHaveBeenCalledTimes(1);
-        expect(save.companyDetails).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+        expect(save.companyDetails).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody, mockApplication), mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
@@ -49,7 +49,7 @@ describe('controllers/insurance/business/map-and-save', () => {
         await mapAndSave.companyDetails(mockFormBody, mockApplication);
 
         expect(save.companyDetails).toHaveBeenCalledTimes(1);
-        expect(save.companyDetails).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
+        expect(save.companyDetails).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody, mockApplication));
       });
 
       it('should return true', async () => {

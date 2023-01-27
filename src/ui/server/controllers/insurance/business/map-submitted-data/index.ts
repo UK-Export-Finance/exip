@@ -1,10 +1,11 @@
-import { RequestBody } from '../../../../../types';
+import { RequestBody, Application } from '../../../../../types';
 import { objectHasProperty } from '../../../../helpers/object';
 import { FIELD_IDS } from '../../../../constants';
+import getSicCodeIDsFromApplication from '../../../../helpers/get-sic-code-ids-from-application';
 
 const {
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { INPUT, COMPANY_NUMBER, COMPANY_INCORPORATED },
+    COMPANY_HOUSE: { INPUT, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -13,7 +14,7 @@ const {
  * @param {RequestBody} formBody
  * @returns {Object} populatedData
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody, application: Application): object => {
   const { __typename, success, _csrf, apiError, ...populatedData } = formBody;
 
   if (!populatedData.registeredOfficeAddress) {
@@ -47,6 +48,12 @@ const mapSubmittedData = (formBody: RequestBody): object => {
   if (objectHasProperty(populatedData, COMPANY_INCORPORATED)) {
     // convert from string to timestamp
     populatedData[COMPANY_INCORPORATED] = new Date(populatedData[COMPANY_INCORPORATED]).toISOString();
+  }
+
+  // only delete existing sic codes if populatedData (update) has a sic code update
+  if (objectHasProperty(populatedData, COMPANY_SIC)) {
+    // generates array of objects for sic codes to delete from existing application
+    populatedData.oldSicCodes = [...getSicCodeIDsFromApplication(application)];
   }
 
   return populatedData;

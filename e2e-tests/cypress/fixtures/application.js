@@ -18,6 +18,11 @@ const {
       },
       ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     },
+    EXPORTER_BUSINESS: {
+      COMPANY_HOUSE: {
+        COMPANY_SIC,
+      },
+    },
   },
 } = FIELD_IDS;
 
@@ -48,6 +53,9 @@ const application = {
     [MAXIMUM_BUYER_WILL_OWE]: '500',
     [DESCRIPTION]: 'Mock description',
     [FINAL_DESTINATION]: 'DZA',
+  },
+  EXPORTER_COMPANY: {
+    [COMPANY_SIC]: ['64999'],
   },
 };
 

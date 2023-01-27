@@ -466,6 +466,10 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         premises: String
       }
 
+      input OldSicCodes {
+        id: String
+      }
+
       input ExporterCompanyAddressInput {
         addressLine1: String
         addressLine2: String
@@ -499,6 +503,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         hasTradingName: String
         companyWebsite: String
         phoneNumber: String
+        oldSicCodes: [OldSicCodes]
       }
 
       type Mutation {
@@ -528,7 +533,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);
-          const { address, sicCodes, ...exporterCompany } = variables.data;
+          const { address, sicCodes, oldSicCodes, ...exporterCompany } = variables.data;
           const company = await context.db.ExporterCompany.updateOne({
             where: { id: variables.companyId },
             data: exporterCompany
@@ -538,6 +543,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
             data: address
           });
           const mappedSicCodes = mapSicCodes(company, sicCodes);
+          if (mappedSicCodes.length && oldSicCodes.length) {
+            await context.db.ExporterCompanySicCode.deleteMany({
+              where: oldSicCodes
+            });
+          }
           mappedSicCodes.forEach(async (sicCodeObj) => {
             await context.db.ExporterCompanySicCode.createOne({
               data: sicCodeObj

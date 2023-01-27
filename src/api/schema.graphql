@@ -1097,6 +1097,10 @@ type CompaniesHouseResponse {
   apiError: Boolean
 }
 
+input OldSicCodes {
+  id: String
+}
+
 input ExporterCompanyAddressInput {
   addressLine1: String
   addressLine2: String
@@ -1130,4 +1134,5 @@ input ExporterCompanyAndCompanyAddressInput {
   hasTradingName: String
   companyWebsite: String
   phoneNumber: String
+  oldSicCodes: [OldSicCodes]
 }
