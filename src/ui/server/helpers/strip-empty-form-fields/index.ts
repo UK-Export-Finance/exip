@@ -7,25 +7,21 @@ import { RequestBody } from '../../../types';
  * @returns {Object} Form data without empty values
  */
 const stripEmptyFormFields = (formBody: RequestBody) => {
-  if (formBody) {
-    const fieldsWithValues = {};
+  const fieldsWithValues = {};
 
-    const keys = Object.keys(formBody);
+  const keys = Object.keys(formBody);
 
-    keys.forEach((key) => {
-      const value = formBody[key];
+  keys.forEach((key) => {
+    const value = formBody[key];
 
-      const hasValue = Boolean(value) || value === false;
+    const hasValue = Boolean(value) || value === false;
 
-      if (hasValue) {
-        fieldsWithValues[key] = value;
-      }
-    });
+    if (hasValue) {
+      fieldsWithValues[key] = value;
+    }
+  });
 
-    return fieldsWithValues;
-  }
-
-  return {};
+  return fieldsWithValues;
 };
 
 export default stripEmptyFormFields;

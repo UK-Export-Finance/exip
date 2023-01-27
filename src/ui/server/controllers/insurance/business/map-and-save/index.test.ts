@@ -7,7 +7,7 @@ import generateValidationErrors from '../../../../helpers/validation';
 
 const {
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { INPUT },
+    COMPANY_HOUSE: { INPUT, COMPANY_NUMBER },
     YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
   },
 } = FIELD_IDS.INSURANCE;
@@ -21,6 +21,7 @@ describe('controllers/insurance/business/map-and-save', () => {
     [TRADING_NAME]: 'true',
     [TRADING_ADDRESS]: 'false',
     [PHONE_NUMBER]: '*99',
+    [COMPANY_NUMBER]: mockApplication.exporterCompany.companyNumber,
   };
 
   const mockSaveCompanyDetails = jest.fn(() => Promise.resolve({}));

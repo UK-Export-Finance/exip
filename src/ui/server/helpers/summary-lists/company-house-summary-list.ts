@@ -1,6 +1,6 @@
 import formatDate from '../date/format-date';
 import { FIELD_IDS } from '../../constants';
-import { FIELDS, PAGES } from '../../content-strings';
+import { DEFAULT, FIELDS, PAGES } from '../../content-strings';
 import generateSummaryListRows from './generate-summary-list-rows';
 import fieldGroupItem from './generate-field-group-item';
 import getFieldById from '../get-field-by-id';
@@ -13,13 +13,14 @@ const {
 const { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC } = COMPANY_HOUSE;
 
 /**
- * able to handle addresses with all fields present or where some are null as not present
+ * generateAddressHTML
+ * Handle addresses with all fields present or where some are null as not present
  * maps through addrress object and contructs an html string containing line breaks
  * skips fields where the field is null or is typename
  * @param {Object} Address
- * @returns {String} Address as a string of HTMl
+ * @returns {String} Address as a string of HTML or default empty string
  */
-const generateAddressHTML = (address: object) => {
+const generateAddressHTML = (address: object): string => {
   let addressString = '';
 
   Object.keys(address).forEach((field) => {
@@ -29,7 +30,24 @@ const generateAddressHTML = (address: object) => {
     }
   });
 
-  return addressString;
+  if (addressString.length) {
+    return addressString;
+  }
+
+  return DEFAULT.EMPTY;
+};
+
+/**
+ * generateSicCodesValue
+ * @param {String} Sic codes
+ * @returns {String} Sic codes as a single string or default empty string
+ */
+const generateSicCodesValue = (sicCodes: Array<string>): string => {
+  if (sicCodes.length) {
+    return sicCodes.toString();
+  }
+
+  return DEFAULT.EMPTY;
 };
 
 /**
@@ -68,7 +86,7 @@ const generateFields = (companyDetails: CompanyHouseResponse | ApplicationExport
         field: getFieldById(FIELDS, COMPANY_SIC),
         data: companyDetails,
       },
-      companyDetails[COMPANY_SIC].toString(),
+      generateSicCodesValue(companyDetails[COMPANY_SIC]),
     ),
   ] as Array<SummaryListItemData>;
 
@@ -94,4 +112,4 @@ const companyHouseSummaryList = (companyDetails: CompanyHouseResponse | Applicat
   return summaryList;
 };
 
-export { generateFields, companyHouseSummaryList, generateAddressHTML };
+export { generateAddressHTML, generateSicCodesValue, generateFields, companyHouseSummaryList };
