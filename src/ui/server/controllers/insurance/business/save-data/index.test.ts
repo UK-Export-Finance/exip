@@ -2,6 +2,7 @@ import save from '.';
 import api from '../../../../api';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import getDataToSave from '../../../../helpers/get-data-to-save';
+import stripEmptyFormFields from '../../../../helpers/strip-empty-form-fields';
 import { FIELD_IDS } from '../../../../constants';
 import { mockApplication } from '../../../../test-mocks';
 import generateValidationErrors from '../../../../helpers/validation';
@@ -34,7 +35,7 @@ describe('controllers/insurance/business/save-data', () => {
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
-      const dataToSave = getDataToSave(mockFormBody, mockValidationErrors.errorList);
+      const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody, mockValidationErrors.errorList));
       const expectedSanitisedData = sanitiseData(dataToSave);
       expect(updateApplicationSpy).toHaveBeenCalledWith(
         mockApplication.exporterCompany.id,
@@ -56,7 +57,7 @@ describe('controllers/insurance/business/save-data', () => {
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
-      const dataToSave = getDataToSave(mockFormBody);
+      const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody));
       const expectedSanitisedData = sanitiseData(dataToSave);
       expect(updateApplicationSpy).toHaveBeenCalledWith(
         mockApplication.exporterCompany.id,
