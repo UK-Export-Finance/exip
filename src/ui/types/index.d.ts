@@ -1,5 +1,5 @@
 import { AnswersContent, AnswersFieldGroups } from './answers';
-import { Application, ApplicationExporterCompany, ApplicationFlat, ApplicationPolicyAndExport } from './application';
+import { Application, ApplicationExporterCompany, ApplicationFlat, ApplicationPolicyAndExport, ApplicationExporterSicCodes } from './application';
 import { ApolloResponse } from './apollo';
 import { CisCountry } from './cis-country';
 import { CompanyDetails, SicCode } from './company-details';
@@ -44,6 +44,7 @@ export {
   ApplicationFlat,
   ApplicationPolicyAndExport,
   ApplicationExporterCompany,
+  ApplicationExporterSicCodes,
   ApolloResponse,
   CisCountry,
   CompanyDetails,

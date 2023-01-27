@@ -15,7 +15,7 @@ const companyDetails = async (formBody: RequestBody, application: Application, v
   try {
     if (hasFormData(formBody)) {
       // maps through formBody and puts fields in correct format
-      const dataToSave = mapSubmittedData(formBody);
+      const dataToSave = mapSubmittedData(formBody, application);
       let saveResponse;
 
       if (validationErrors) {

@@ -2,6 +2,8 @@ import { RequestBody } from '../../../../../types';
 import { FIELD_IDS } from '../../../../constants';
 import mapSubmittedData from '.';
 import { mockBody } from './mocks';
+import { mockApplication } from '../../../../test-mocks';
+import getSicCodeIDsFromApplication from '../../../../helpers/get-sic-code-ids-from-application';
 
 const {
   COMPANY_HOUSE: { INPUT, COMPANY_INCORPORATED },
@@ -10,7 +12,7 @@ const {
 describe('controllers/insurance/business/map-submitted-data', () => {
   describe(`when ${INPUT} success,and __typename fields are provided`, () => {
     it(`should return the formBody without ${INPUT} success,and __typename fields and change null fields in address to empty strings`, () => {
-      const response = mapSubmittedData(mockBody);
+      const response = mapSubmittedData(mockBody, mockApplication);
 
       const expected = {
         companyName: mockBody.companyName,
@@ -27,6 +29,7 @@ describe('controllers/insurance/business/map-submitted-data', () => {
           country: '',
         },
         sicCodes: mockBody.sicCodes,
+        oldSicCodes: getSicCodeIDsFromApplication(mockApplication),
       };
 
       expect(response).toEqual(expected);
@@ -46,9 +49,10 @@ describe('controllers/insurance/business/map-submitted-data', () => {
     delete mockBodyWithoutFields.success;
     delete mockBodyWithoutFields.apiError;
     delete mockBodyWithoutFields.companyNumber;
+    delete mockBodyWithoutFields.sicCodes;
 
     it(`should return the formBody without ${INPUT} success,and __typename fields and add an empty address object`, () => {
-      const response = mapSubmittedData(mockBodyWithoutFields);
+      const response = mapSubmittedData(mockBodyWithoutFields, mockApplication);
 
       const { _csrf, ...expectedBody } = mockBodyWithoutFields;
       expectedBody.address = {};

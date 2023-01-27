@@ -1,9 +1,21 @@
 import { companyDetails } from '../../../../pages/your-business';
 import { submitButton } from '../../../../pages/shared';
+import partials from '../../../../partials';
 import {
-  ROUTES, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANIES_HOUSE_NUMBER,
+  ROUTES, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANIES_HOUSE_NUMBER, FIELD_IDS,
 } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
+import application from '../../../../../fixtures/application';
+
+const {
+  EXPORTER_BUSINESS: {
+    COMPANY_HOUSE: {
+      COMPANY_SIC,
+    },
+  },
+} = FIELD_IDS.INSURANCE;
+
+const { EXPORTER_COMPANY } = application;
 
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section", () => {
   let referenceNumber;
@@ -57,6 +69,21 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     it(`should redirect to ${natureOfBusinessUrl}`, () => {
       cy.url().should('eq', natureOfBusinessUrl);
+    });
+  });
+
+  describe('when resubmitting company number on company details page', () => {
+    before(() => {
+      // navigate back to company details page from nature of business
+      partials.backLink().click();
+      // resubmit form
+      submitButton().click();
+      // return to company details page after redirect to nature of business
+      partials.backLink().click();
+    });
+
+    it('should remove old sic codes from company summary list', () => {
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), EXPORTER_COMPANY[COMPANY_SIC][0]);
     });
   });
 });
