@@ -56,6 +56,10 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         premises: String
       }
 
+      input OldSicCodes {
+        id: String
+      }
+
       input ExporterCompanyAddressInput {
         addressLine1: String
         addressLine2: String
@@ -89,6 +93,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         hasTradingName: String
         companyWebsite: String
         phoneNumber: String
+        oldSicCodes: [OldSicCodes]
       }
 
       type Mutation {
@@ -118,7 +123,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);
-            const { address, sicCodes, ...exporterCompany } = variables.data;
+            const { address, sicCodes, oldSicCodes, ...exporterCompany } = variables.data;
 
             const company = await context.db.ExporterCompany.updateOne({
               where: { id: variables.companyId },
@@ -131,6 +136,12 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
             });
 
             const mappedSicCodes = mapSicCodes(company, sicCodes);
+
+            if (mappedSicCodes && oldSicCodes) {
+              await context.db.ExporterCompanySicCode.deleteMany({
+                where: [...oldSicCodes],
+              });
+            }
 
             mappedSicCodes.forEach(async (sicCodeObj: SicCodes) => {
               await context.db.ExporterCompanySicCode.createOne({
