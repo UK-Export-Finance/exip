@@ -161,7 +161,24 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     field.label().should('exist');
     cy.checkText(field.label(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
 
-    cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
+    const hintContent = FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT;
+
+    cy.checkText(
+      field.hint.needMoreCover(),
+      hintContent.NEED_MORE_COVER,
+    );
+
+    cy.checkText(
+      field.hint.link(),
+      hintContent.FILL_IN_FORM.TEXT,
+    );
+
+    field.hint.link().should('have.attr', 'href', hintContent.FILL_IN_FORM.HREF);
+
+    cy.checkText(
+      field.hint.noDecimals(),
+      hintContent.NO_DECIMALS,
+    );
 
     cy.checkText(field.prefix(), '£');
 
