@@ -34,7 +34,11 @@ const singleContractPolicy = {
   },
   [TOTAL_CONTRACT_VALUE]: {
     label: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-label"]`),
-    hint: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-hint"]`),
+    hint: {
+      needMoreCover: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-hint-need-more-cover"]`),
+      link: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-hint-link"]`),
+      noDecimals: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-hint-no-decimals"]`),
+    },
     prefix: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-prefix"]`),
     input: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-error-message"]`),
