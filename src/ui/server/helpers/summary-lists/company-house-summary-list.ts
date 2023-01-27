@@ -31,7 +31,7 @@ const generateAddressHTML = (address: object): string => {
   });
 
   if (addressString.length) {
-    return addressString; 
+    return addressString;
   }
 
   return DEFAULT.EMPTY;

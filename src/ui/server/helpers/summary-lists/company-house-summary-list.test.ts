@@ -79,7 +79,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
 
         const expected = DEFAULT.EMPTY;
 
-        expect(result).toEqual(expected)
+        expect(result).toEqual(expected);
       });
     });
   });
