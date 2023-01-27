@@ -1,5 +1,5 @@
 import getSicCodeIDsFromApplication from '.';
-import { mockApplication } from '../../test-mocks';
+import { mockApplication, mockSicCodes } from '../../test-mocks';
 
 describe('server/helpers/get-sic-code-ids-from-application', () => {
   describe('when there is one sic code in exporterCompany', () => {
@@ -14,10 +14,7 @@ describe('server/helpers/get-sic-code-ids-from-application', () => {
   describe('when there are multiple sic codes in exporterCompany', () => {
     it('should return a populated array array', () => {
       const applicationWithMultipleSicCodes = { ...mockApplication };
-      applicationWithMultipleSicCodes.exporterCompany.sicCodes.push({
-        id: 'clcyyxldc0634m8novkr94sss',
-        sicCode: '649955',
-      });
+      applicationWithMultipleSicCodes.exporterCompany.sicCodes.push(mockSicCodes[1]);
 
       const response = getSicCodeIDsFromApplication(applicationWithMultipleSicCodes);
 

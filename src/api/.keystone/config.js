@@ -543,9 +543,9 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
             data: address
           });
           const mappedSicCodes = mapSicCodes(company, sicCodes);
-          if (mappedSicCodes && oldSicCodes) {
+          if (mappedSicCodes.length && oldSicCodes.length) {
             await context.db.ExporterCompanySicCode.deleteMany({
-              where: [...oldSicCodes]
+              where: oldSicCodes
             });
           }
           mappedSicCodes.forEach(async (sicCodeObj) => {

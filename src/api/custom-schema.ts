@@ -137,9 +137,11 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
 
             const mappedSicCodes = mapSicCodes(company, sicCodes);
 
-            if (mappedSicCodes && oldSicCodes) {
+            // if sic codes are part of the update and there are previous sic codes in application
+            if (mappedSicCodes.length && oldSicCodes.length) {
+              // delete already existing sic codes from oldSicCodes
               await context.db.ExporterCompanySicCode.deleteMany({
-                where: [...oldSicCodes],
+                where: oldSicCodes,
               });
             }
 
