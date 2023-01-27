@@ -57,7 +57,7 @@ export const POLICY_AND_EXPORTS_FIELDS = {
         NEED_DIFFERENT_CURRENCY: "If you need a different currency, you'll need to",
         APPLY_USING_FORM: {
           TEXT: 'apply using our form.',
-          HREF: LINKS.EXTERNAL.NBI_FORM,
+          HREF: LINKS.EXTERNAL.FULL_APPLICATION,
         },
       },
       SUMMARY: {
@@ -110,7 +110,7 @@ export const POLICY_AND_EXPORTS_FIELDS = {
           NEED_MORE_COVER: 'If you need cover for more than £499,999, ',
           FILL_IN_FORM: {
             TEXT: 'fill in this form instead.',
-            HREF: LINKS.EXTERNAL.NBI_FORM,
+            HREF: LINKS.EXTERNAL.FULL_APPLICATION,
           },
           NO_DECIMALS: 'Enter a whole number - do not enter decimals.',
         },
