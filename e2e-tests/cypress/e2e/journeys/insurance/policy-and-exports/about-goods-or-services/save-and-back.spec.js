@@ -23,6 +23,8 @@ const {
   },
 } = FIELD_IDS;
 
+const { STATUS: { IN_PROGRESS } } = TASKS;
+
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
@@ -64,7 +66,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
   });
 
@@ -86,7 +88,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
     });
 
     it('should update the status of task `type of policy and exports`to `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
     describe('when going back to the page', () => {
@@ -125,7 +127,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
     describe('when going back to the page', () => {
