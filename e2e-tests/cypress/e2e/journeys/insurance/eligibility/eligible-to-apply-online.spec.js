@@ -110,7 +110,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
       getReferenceNumber().then((id) => {
         const referenceNumber = id;
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-        
+
         cy.url().should('eq', expectedUrl);
       });
     });

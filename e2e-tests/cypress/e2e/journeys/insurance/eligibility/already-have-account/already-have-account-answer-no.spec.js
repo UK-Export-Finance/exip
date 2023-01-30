@@ -3,7 +3,7 @@ import {
 } from '../../../../pages/shared';
 import { ROUTES } from '../../../../../../constants';
 
-const { START, ELIGIBILITY: { ALREADY_HAVE_ACCOUNT }, ACCOUNT: { CREATE_ACCOUNT I} } = ROUTES.INSURANCE;
+const { START, ELIGIBILITY: { ALREADY_HAVE_ACCOUNT }, ACCOUNT: { CREATE_ACCOUNT } } = ROUTES.INSURANCE;
 
 context('Insurance - Eligibility - Already have account page - I want to confirm if I am eligible to use UKEF digital service for this Export Insurance Application so that I can be sure of the correct process that I can follow to complete my Export Insurance Application', () => {
   before(() => {
