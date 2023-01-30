@@ -35,14 +35,14 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 75,
-  //     'best-practices': 100,
-  //     seo: 70,
-  //   });
-  // });
+  it('passes the audits', () => {
+    cy.lighthouse({
+      accessibility: 100,
+      performance: 75,
+      'best-practices': 100,
+      seo: 70,
+    });
+  });
 
   it('renders a back link with correct url', () => {
     partials.backLink().should('exist');

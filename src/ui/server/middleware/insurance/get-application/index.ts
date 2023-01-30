@@ -25,19 +25,11 @@ const getApplicationMiddleware = async (req: Request, res: Response, next: Next)
     return next();
   }
 
-  console.log('-------------- URL - getting application....', url);
-
-  console.log('-------------- req params ', req.params);
-
   const { referenceNumber } = req.params;
-
-  console.log('-------------- referenceNumber ', referenceNumber);
 
   if (referenceNumber) {
     try {
       const application = await getApplication(Number(referenceNumber));
-
-      console.log('-------------- application ', application);
 
       if (application) {
         res.locals.application = application;
