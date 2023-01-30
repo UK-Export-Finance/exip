@@ -2,13 +2,12 @@ import { FIELD_IDS, ROUTES } from '../../../../constants';
 import { Request, RequiredDataStateInsuranceEligibility, Response } from '../../../../../types';
 import { getRoutesAsArray, routeIsKnown, hasRequiredData } from '../../helpers';
 
-const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM } = ROUTES.INSURANCE;
+const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, ACCOUNT } = ROUTES.INSURANCE;
 
 const {
   CANNOT_APPLY,
   CHECK_IF_ELIGIBLE,
   NEED_TO_START_AGAIN,
-  ALREADY_HAVE_ACCOUNT,
   BUYER_COUNTRY,
   EXPORTER_LOCATION,
   UK_GOODS_OR_SERVICES,
@@ -19,7 +18,8 @@ const {
   PRE_CREDIT_PERIOD,
   COMPANIES_HOUSE_NUMBER,
   ELIGIBLE_TO_APPLY_ONLINE,
-} = ROUTES.INSURANCE.ELIGIBILITY;
+  ALREADY_HAVE_ACCOUNT,
+} = ELIGIBILITY;
 
 export const generateRequiredData = (): RequiredDataStateInsuranceEligibility => {
   const requiredData = {} as RequiredDataStateInsuranceEligibility;
@@ -63,7 +63,16 @@ export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Resp
   const routesArray = getRoutesAsArray(ROUTES.INSURANCE.ELIGIBILITY);
 
   // array of routes that do not require any data checks.
-  const irrelevantRoutes = [CANNOT_APPLY, APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, CHECK_IF_ELIGIBLE, NEED_TO_START_AGAIN, ALREADY_HAVE_ACCOUNT];
+  const irrelevantRoutes = [
+    CANNOT_APPLY,
+    APPLY_OFFLINE,
+    SPEAK_TO_UKEF_EFM,
+    CHECK_IF_ELIGIBLE,
+    NEED_TO_START_AGAIN,
+    ALREADY_HAVE_ACCOUNT,
+    ACCOUNT.CREATE_ACCOUNT.YOUR_DETAILS,
+    ACCOUNT.SIGN_IN.ROOT,
+  ];
 
   const isIrrelevantRoute = (route: string) => irrelevantRoutes.includes(route);
 
