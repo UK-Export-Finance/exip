@@ -6,7 +6,10 @@ import generateValidationErrors from '../../../../shared-validation/yes-no-radio
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
-const { SIGN_IN, CREATE_ACCOUNT } = ROUTES.INSURANCE;
+const {
+  INSURANCE_ROOT,
+  ACCOUNT: { CREATE_ACCOUNT, SIGN_IN },
+} = ROUTES.INSURANCE;
 
 describe('controllers/insurance/eligibility/already-have-account', () => {
   let req: Request;
@@ -64,7 +67,7 @@ describe('controllers/insurance/eligibility/already-have-account', () => {
       it(`should redirect to ${SIGN_IN.ROOT}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(SIGN_IN.ROOT);
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}${SIGN_IN.ROOT}`);
       });
     });
 
@@ -78,7 +81,7 @@ describe('controllers/insurance/eligibility/already-have-account', () => {
       it(`should redirect to ${CREATE_ACCOUNT.YOUR_DETAILS}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(CREATE_ACCOUNT.YOUR_DETAILS);
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}${CREATE_ACCOUNT.YOUR_DETAILS}`);
       });
     });
   });

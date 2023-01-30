@@ -7,8 +7,8 @@ import { Request, Response } from '../../../../../types';
 const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT;
 
 const {
-  ACCOUNT: { SIGN_IN, CREATE_ACCOUNT },
   INSURANCE_ROOT,
+  ACCOUNT: { SIGN_IN, CREATE_ACCOUNT },
 } = ROUTES.INSURANCE;
 
 export const PAGE_VARIABLES = {
