@@ -2,20 +2,10 @@ import { PRODUCT } from '../../product';
 import { POLICY_AND_EXPORTS } from './policy-and-export';
 import { EXPORTER_BUSINESS } from './exporter-business';
 import { YOUR_BUYER } from './your-buyer';
+import { ACCOUNT } from './account';
 
 export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY_ROOT = '/eligibility';
-
-const CREATE_ACCOUNT_ROOT = `${INSURANCE_ROOT}/create-account`;
-
-const CREATE_ACCOUNT = {
-  ROOT: CREATE_ACCOUNT_ROOT,
-  YOUR_DETAILS: `${CREATE_ACCOUNT_ROOT}/your-details`,
-};
-
-const SIGN_IN = {
-  ROOT: `${INSURANCE_ROOT}/sign-in`,
-};
 
 export const INSURANCE_ROUTES = {
   INSURANCE_ROOT,
@@ -41,8 +31,7 @@ export const INSURANCE_ROUTES = {
   APPLY_OFFLINE: `${INSURANCE_ROOT}/apply-using-our-form`,
   SPEAK_TO_UKEF_EFM: `${INSURANCE_ROOT}/speak-to-UKEF-EFM`,
   PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
-  CREATE_ACCOUNT,
-  SIGN_IN,
+  ACCOUNT,
   ALL_SECTIONS: '/all-sections',
   EXPORTER_BUSINESS,
   POLICY_AND_EXPORTS,

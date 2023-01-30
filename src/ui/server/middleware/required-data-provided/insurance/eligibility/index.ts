@@ -2,7 +2,7 @@ import { FIELD_IDS, ROUTES } from '../../../../constants';
 import { Request, RequiredDataStateInsuranceEligibility, Response } from '../../../../../types';
 import { getRoutesAsArray, routeIsKnown, hasRequiredData } from '../../helpers';
 
-const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, CREATE_ACCOUNT, SIGN_IN } = ROUTES.INSURANCE;
+const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, ACCOUNT } = ROUTES.INSURANCE;
 
 const {
   CANNOT_APPLY,
@@ -70,8 +70,8 @@ export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Resp
     CHECK_IF_ELIGIBLE,
     NEED_TO_START_AGAIN,
     ALREADY_HAVE_ACCOUNT,
-    CREATE_ACCOUNT.YOUR_DETAILS,
-    SIGN_IN.ROOT,
+    ACCOUNT.CREATE_ACCOUNT.YOUR_DETAILS,
+    ACCOUNT.SIGN_IN.ROOT,
   ];
 
   const isIrrelevantRoute = (route: string) => irrelevantRoutes.includes(route);

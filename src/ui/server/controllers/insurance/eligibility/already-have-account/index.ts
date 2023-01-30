@@ -6,7 +6,10 @@ import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT;
 
-const { SIGN_IN, CREATE_ACCOUNT } = ROUTES.INSURANCE;
+const {
+  ACCOUNT: { SIGN_IN, CREATE_ACCOUNT },
+  INSURANCE_ROOT,
+} = ROUTES.INSURANCE;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
@@ -47,8 +50,8 @@ export const post = (req: Request, res: Response) => {
   const answer = req.body[FIELD_ID];
 
   if (answer === 'true') {
-    return res.redirect(SIGN_IN.ROOT);
+    return res.redirect(`${INSURANCE_ROOT}${SIGN_IN.ROOT}`);
   }
 
-  return res.redirect(CREATE_ACCOUNT.YOUR_DETAILS);
+  return res.redirect(`${INSURANCE_ROOT}${CREATE_ACCOUNT.YOUR_DETAILS}`);
 };

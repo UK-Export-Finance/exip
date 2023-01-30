@@ -3,7 +3,7 @@ import { FIELD_IDS, ROUTES } from '../../../../constants';
 import { mockReq, mockRes, mockSession } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
-const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, CREATE_ACCOUNT, SIGN_IN } = ROUTES.INSURANCE;
+const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, ACCOUNT } = ROUTES.INSURANCE;
 
 const {
   CANNOT_APPLY,
@@ -148,18 +148,18 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       });
     });
 
-    describe(`when req.originalUrl is ${CREATE_ACCOUNT.YOUR_DETAILS}`, () => {
+    describe(`when req.originalUrl is ${ACCOUNT.CREATE_ACCOUNT.YOUR_DETAILS}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = CREATE_ACCOUNT.YOUR_DETAILS;
+        req.originalUrl = ACCOUNT.CREATE_ACCOUNT.YOUR_DETAILS;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
     });
 
-    describe(`when req.originalUrl is ${SIGN_IN.ROOT}`, () => {
+    describe(`when req.originalUrl is ${ACCOUNT.SIGN_IN.ROOT}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = SIGN_IN.ROOT;
+        req.originalUrl = ACCOUNT.SIGN_IN.ROOT;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
