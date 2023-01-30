@@ -100,7 +100,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use('/quote', requiredQuoteEligibilityDataProvided);
 app.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
-app.use('/insurance/:referenceNumber/*', getApplication);
+app.use('/insurance', getApplication);
 
 app.use('/', rootRoute);
 app.use('/', quoteRoutes);

@@ -75,6 +75,10 @@ const ELIGIBLE_TO_APPLY_ONLINE = {
   SUBMIT_BUTTON: 'Continue to application',
 };
 
+const ALREADY_HAVE_ACCOUNT = {
+  PAGE_TITLE: 'Do you already have an account for UKEF export insurance?',
+};
+
 export default {
   CHECK_IF_ELIGIBLE,
   INSURED_AMOUNT,
@@ -84,4 +88,5 @@ export default {
   PRE_CREDIT_PERIOD,
   COMPANIES_HOUSE_NUMBER,
   ELIGIBLE_TO_APPLY_ONLINE,
+  ALREADY_HAVE_ACCOUNT,
 };

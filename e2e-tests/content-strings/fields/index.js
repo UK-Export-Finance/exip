@@ -180,6 +180,9 @@ export const FIELDS = {
   [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
     HINT: 'This is known as the pre-credit period.',
   },
+  [FIELD_IDS.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT]: {
+    HINT: "If you've applied online before, you'll already have an account.",
+  },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
     SUMMARY: {
       TITLE: 'Companies House registration number',

@@ -4,6 +4,13 @@ import api from '../../../api';
 import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
 import { Next, Request, Response } from '../../../../types';
 
+const {
+  INSURANCE_ROOT,
+  ELIGIBILITY_ROOT,
+  ELIGIBILITY: { CHECK_IF_ELIGIBLE },
+  ALL_SECTIONS,
+} = ROUTES.INSURANCE;
+
 describe('middleware/insurance/get-application', () => {
   let req: Request;
   let res: Response;
@@ -19,9 +26,9 @@ describe('middleware/insurance/get-application', () => {
     req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
-  describe(`when the route contains ${ROUTES.INSURANCE.ELIGIBILITY_ROOT}`, () => {
+  describe('when the route is not relevant', () => {
     beforeEach(() => {
-      req.originalUrl = ROUTES.INSURANCE.ELIGIBILITY_ROOT;
+      req.originalUrl = `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}${CHECK_IF_ELIGIBLE}`;
       next = nextSpy;
     });
 
@@ -32,11 +39,9 @@ describe('middleware/insurance/get-application', () => {
     });
   });
 
-  describe('when an application exists', () => {
-    const getApplicationSpy = jest.fn(() => Promise.resolve(mockApplication));
-
+  describe('when req.method is not GET', () => {
     beforeEach(() => {
-      api.keystone.application.get = getApplicationSpy;
+      req.method = 'POST';
       next = nextSpy;
     });
 
@@ -45,48 +50,69 @@ describe('middleware/insurance/get-application', () => {
 
       expect(nextSpy).toHaveBeenCalledTimes(1);
     });
-
-    it('should add the application to res.locals', async () => {
-      await getApplicationMiddleware(req, res, next);
-
-      expect(res.locals.application).toEqual(mockApplication);
-    });
   });
 
-  describe('when an application is not returned from the API', () => {
-    const getApplicationSpy = jest.fn(() => Promise.resolve());
-
+  describe('when the route contains a relevant route', () => {
     beforeEach(() => {
-      api.keystone.application.get = getApplicationSpy;
+      req.originalUrl = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`;
     });
 
-    it(`should redirect to ${ROUTES.INSURANCE.PAGE_NOT_FOUND}`, async () => {
-      await getApplicationMiddleware(req, res, next);
+    describe('when an application exists', () => {
+      const getApplicationSpy = jest.fn(() => Promise.resolve(mockApplication));
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.PAGE_NOT_FOUND);
+      beforeEach(() => {
+        api.keystone.application.get = getApplicationSpy;
+        next = nextSpy;
+      });
+
+      it('should call next()', async () => {
+        await getApplicationMiddleware(req, res, next);
+
+        expect(nextSpy).toHaveBeenCalledTimes(1);
+      });
+
+      it('should add the application to res.locals', async () => {
+        await getApplicationMiddleware(req, res, next);
+
+        expect(res.locals.application).toEqual(mockApplication);
+      });
     });
-  });
 
-  describe('when the API call fails', () => {
-    const getApplicationSpy = jest.fn(() => Promise.reject());
+    describe('when an application is not returned from the API', () => {
+      const getApplicationSpy = jest.fn(() => Promise.resolve());
 
-    beforeEach(() => {
-      api.keystone.application.get = getApplicationSpy;
+      beforeEach(() => {
+        api.keystone.application.get = getApplicationSpy;
+      });
+
+      it(`should redirect to ${ROUTES.INSURANCE.PAGE_NOT_FOUND}`, async () => {
+        await getApplicationMiddleware(req, res, next);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.PAGE_NOT_FOUND);
+      });
     });
 
-    it(`should redirect to ${ROUTES.INSURANCE.PAGE_NOT_FOUND}`, async () => {
-      await getApplicationMiddleware(req, res, next);
+    describe('when the API call fails', () => {
+      const getApplicationSpy = jest.fn(() => Promise.reject());
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.PAGE_NOT_FOUND);
+      beforeEach(() => {
+        api.keystone.application.get = getApplicationSpy;
+      });
+
+      it(`should redirect to ${ROUTES.INSURANCE.PAGE_NOT_FOUND}`, async () => {
+        await getApplicationMiddleware(req, res, next);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.PAGE_NOT_FOUND);
+      });
     });
-  });
 
-  describe('when there no req.params.referenceNumber', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.PAGE_NOT_FOUND}`, async () => {
-      delete req.params.referenceNumber;
-      await getApplicationMiddleware(req, res, next);
+    describe('when there no req.params.referenceNumber', () => {
+      it(`should redirect to ${ROUTES.INSURANCE.PAGE_NOT_FOUND}`, async () => {
+        delete req.params.referenceNumber;
+        await getApplicationMiddleware(req, res, next);
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.PAGE_NOT_FOUND);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.PAGE_NOT_FOUND);
+      });
     });
   });
 });
