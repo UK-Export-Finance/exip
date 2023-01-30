@@ -3,7 +3,11 @@ import {
 } from '../../../../pages/shared';
 import { ROUTES } from '../../../../../../constants';
 
-const { START, ELIGIBILITY: { ALREADY_HAVE_ACCOUNT }, ACCOUNT: { CREATE_ACCOUNT } } = ROUTES.INSURANCE;
+const {
+  START,
+  ELIGIBILITY: { ALREADY_HAVE_ACCOUNT }, ACCOUNT: { CREATE_ACCOUNT },
+  ROOT: INSURANCE_ROOT,
+} = ROUTES.INSURANCE;
 
 context('Insurance - Eligibility - Already have account page - I want to confirm if I am eligible to use UKEF digital service for this Export Insurance Application so that I can be sure of the correct process that I can follow to complete my Export Insurance Application', () => {
   before(() => {
@@ -27,7 +31,7 @@ context('Insurance - Eligibility - Already have account page - I want to confirm
     noRadioInput().click();
     submitButton().click();
 
-    const expected = `${Cypress.config('baseUrl')}${CREATE_ACCOUNT.YOUR_DETAILS}`;
+    const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}${CREATE_ACCOUNT.YOUR_DETAILS}`;
     cy.url().should('eq', expected);
   });
 });
