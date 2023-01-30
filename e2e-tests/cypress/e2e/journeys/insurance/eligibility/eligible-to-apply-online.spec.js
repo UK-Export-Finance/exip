@@ -18,7 +18,7 @@ const {
   ROOT: INSURANCE_ROOT,
   ELIGIBILITY: {
     ELIGIBLE_TO_APPLY_ONLINE,
-    COMPANIES_HOUSE_NUMBER
+    COMPANIES_HOUSE_NUMBER,
   },
   ALL_SECTIONS,
 } = ROUTES.INSURANCE;
@@ -110,7 +110,6 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
       getReferenceNumber().then((id) => {
         const referenceNumber = id;
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
         
         cy.url().should('eq', expectedUrl);
       });
