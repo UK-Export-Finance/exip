@@ -76,5 +76,5 @@ export const ELIGIBLE_TO_APPLY_ONLINE = {
 };
 
 export const ALREADY_HAVE_ACCOUNT = {
-  PAGE_TITLE: "Do you already have an account for UKEF export insurance?",
+  PAGE_TITLE: 'Do you already have an account for UKEF export insurance?',
 };

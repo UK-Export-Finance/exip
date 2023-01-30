@@ -1,7 +1,6 @@
 import {
-  heading, submitButton, tempCreateAccountButton, inlineErrorMessage, yesRadioInput, yesRadio, yesNoRadioHint, noRadio
+  heading, submitButton, tempCreateAccountButton, inlineErrorMessage, yesRadioInput, yesRadio, yesNoRadioHint, noRadio,
 } from '../../../../pages/shared';
-import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import {
   BUTTONS,
@@ -14,7 +13,13 @@ import {
 import { INSURANCE_FIELD_IDS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 
-const { START, ELIGIBILITY: { ELIGIBLE_TO_APPLY_ONLINE, ALREADY_HAVE_ACCOUNT }, SIGN_IN, CREATE_ACCOUNT } = ROUTES;
+const {
+  START,
+  ELIGIBILITY: {
+    ELIGIBLE_TO_APPLY_ONLINE, ALREADY_HAVE_ACCOUNT,
+  },
+  SIGN_IN,
+} = ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT;
 
