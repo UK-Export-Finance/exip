@@ -1,4 +1,4 @@
-import getApplicationMiddleware from '.';
+import getApplicationMiddleware, { RELEVANT_ROUTES } from '.';
 import { ROUTES } from '../../../constants';
 import api from '../../../api';
 import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
@@ -9,6 +9,9 @@ const {
   ELIGIBILITY_ROOT,
   ELIGIBILITY: { CHECK_IF_ELIGIBLE },
   ALL_SECTIONS,
+  POLICY_AND_EXPORTS,
+  EXPORTER_BUSINESS,
+  YOUR_BUYER,
 } = ROUTES.INSURANCE;
 
 describe('middleware/insurance/get-application', () => {
@@ -24,6 +27,14 @@ describe('middleware/insurance/get-application', () => {
     next = nextSpy;
 
     req.params.referenceNumber = String(mockApplication.referenceNumber);
+  });
+
+  describe('RELEVANT_ROUTES', () => {
+    it('should return an array of routes', () => {
+      const expected = [ALL_SECTIONS, POLICY_AND_EXPORTS.ROOT, EXPORTER_BUSINESS.ROOT, YOUR_BUYER.ROOT];
+
+      expect(RELEVANT_ROUTES).toEqual(expected);
+    });
   });
 
   describe('when the route is not relevant', () => {
