@@ -15,7 +15,11 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
 const {
   START,
-  INSURANCE_ROOT,
+  ROOT: INSURANCE_ROOT,
+  ELIGIBILITY: {
+    ELIGIBLE_TO_APPLY_ONLINE,
+    COMPANIES_HOUSE_NUMBER
+  },
   ALL_SECTIONS,
 } = ROUTES.INSURANCE;
 
@@ -25,7 +29,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
 
     cy.submitInsuranceEligibilityAnswersHappyPath();
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE}`;
+    const expected = `${Cypress.config('baseUrl')}${ELIGIBLE_TO_APPLY_ONLINE}`;
 
     cy.url().should('eq', expected);
   });
@@ -50,12 +54,12 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
 
     partials.backLink().click();
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
+    const expectedUrl = `${Cypress.config('baseUrl')}${COMPANIES_HOUSE_NUMBER}`;
 
     cy.url().should('include', expectedUrl);
 
     // go back to page
-    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE);
+    cy.navigateToUrl(ELIGIBLE_TO_APPLY_ONLINE);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {

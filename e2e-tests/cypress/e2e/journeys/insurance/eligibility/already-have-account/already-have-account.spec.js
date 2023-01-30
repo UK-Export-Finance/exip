@@ -135,10 +135,8 @@ context('Insurance - Eligibility - Already have account page - I want to confirm
         yesRadioInput().click();
         submitButton().click();
 
-        cy.url().then((url) => {
-          const expected = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
-          cy.url().should('eq', expected);
-        });
+        const expected = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
+        cy.url().should('eq', expected);
       });
     });
   });
