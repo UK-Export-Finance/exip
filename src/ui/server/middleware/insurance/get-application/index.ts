@@ -19,9 +19,9 @@ export const RELEVANT_ROUTES = [ALL_SECTIONS, POLICY_AND_EXPORTS.ROOT, EXPORTER_
  * @returns {Express.Request.Next} request next or response redirect
  */
 const getApplicationMiddleware = async (req: Request, res: Response, next: Next) => {
-  const { method, originalUrl: url } = req;
+  const { originalUrl: url } = req;
 
-  if (method !== 'GET' || !RELEVANT_ROUTES.some((route) => url.includes(route))) {
+  if (!RELEVANT_ROUTES.some((route) => url.includes(route))) {
     return next();
   }
 

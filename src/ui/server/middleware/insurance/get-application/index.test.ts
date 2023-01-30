@@ -50,19 +50,6 @@ describe('middleware/insurance/get-application', () => {
     });
   });
 
-  describe('when req.method is not GET', () => {
-    beforeEach(() => {
-      req.method = 'POST';
-      next = nextSpy;
-    });
-
-    it('should call next()', async () => {
-      await getApplicationMiddleware(req, res, next);
-
-      expect(nextSpy).toHaveBeenCalledTimes(1);
-    });
-  });
-
   describe('when the route contains a relevant route', () => {
     beforeEach(() => {
       req.originalUrl = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`;
