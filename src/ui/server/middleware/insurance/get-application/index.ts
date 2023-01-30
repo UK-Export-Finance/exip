@@ -21,6 +21,10 @@ export const RELEVANT_ROUTES = [ALL_SECTIONS, POLICY_AND_EXPORTS.ROOT, EXPORTER_
 const getApplicationMiddleware = async (req: Request, res: Response, next: Next) => {
   const { originalUrl: url } = req;
 
+  // This middleware only needs to be run if we're in an application route.
+  // If we are on a route that does not require application data,
+  // skip these checks by calling next(), so that the user flow continues.
+  // Irrelevant route examples: eligibility, login, create account, problem with service.
   if (!RELEVANT_ROUTES.some((route) => url.includes(route))) {
     return next();
   }
