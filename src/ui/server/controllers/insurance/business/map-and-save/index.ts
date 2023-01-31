@@ -44,8 +44,8 @@ const companyDetails = async (formBody: RequestBody, application: Application, v
  * maps nature of business request and calls save function
  * returns true or false based on response from save function
  * @param {RequestBody} formBody
- * @param {Application} application
- * @param {ValidationErrors} validationErrors
+ * @param {Object} application
+ * @param {Object} validationErrors
  * @returns {Boolean}
  */
 const natureOfBusiness = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {

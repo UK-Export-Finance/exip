@@ -95,7 +95,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
   });
 
-  describe('save and back on a fully entered form', () => {
+  describe('When all fields are provided', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
