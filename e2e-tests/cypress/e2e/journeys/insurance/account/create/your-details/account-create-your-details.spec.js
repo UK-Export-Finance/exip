@@ -40,7 +40,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-context('Insurance - Account - Create - Your details page - TODO', () => {
+context('Insurance - Account - Create - Your details page - As an exporter, I want to provide my details when creating my UKEF digital service account, So that the details of the UKEF digital service account created can be unique to me', () => {
   before(() => {
     cy.navigateToUrl(START);
 
