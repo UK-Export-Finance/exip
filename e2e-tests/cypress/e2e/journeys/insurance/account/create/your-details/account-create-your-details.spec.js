@@ -1,6 +1,4 @@
-import {
-  heading, submitButton, tempCreateAccountButton, noRadioInput,
-} from '../../../../../pages/shared';
+import { heading, submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
 import {
@@ -46,13 +44,7 @@ context('Insurance - Account - Create - Your details page - TODO', () => {
   before(() => {
     cy.navigateToUrl(START);
 
-    cy.submitInsuranceEligibilityAnswersHappyPath();
-
-    tempCreateAccountButton().click();
-
-    noRadioInput().click();
-    submitButton().click();
-    // TODO: helper/command for getting here
+    cy.submitEligibilityAndStartAccountCreation();
 
     const expected = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
 
