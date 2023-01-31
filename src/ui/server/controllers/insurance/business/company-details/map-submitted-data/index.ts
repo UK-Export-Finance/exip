@@ -38,14 +38,13 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
     delete populatedData.registeredOfficeAddress;
   }
 
-  // deletes companies house input field
+  // convert and populate company number and delete the companies house input field
   if (objectHasProperty(populatedData, INPUT)) {
-    delete populatedData[INPUT];
-  }
+    if (populatedData[COMPANY_NUMBER]) {
+      populatedData[COMPANY_NUMBER] = populatedData[COMPANY_NUMBER].toString();
+    }
 
-  if (objectHasProperty(populatedData, COMPANY_NUMBER)) {
-    // convert company number from string to number
-    populatedData[COMPANY_NUMBER] = populatedData[COMPANY_NUMBER].toString();
+    delete populatedData[INPUT];
   }
 
   if (objectHasProperty(populatedData, COMPANY_INCORPORATED)) {

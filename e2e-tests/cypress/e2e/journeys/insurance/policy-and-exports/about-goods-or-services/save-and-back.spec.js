@@ -23,6 +23,8 @@ const {
   },
 } = FIELD_IDS;
 
+const { STATUS: { IN_PROGRESS } } = TASKS;
+
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
@@ -64,8 +66,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
   });
 
@@ -87,8 +88,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
     });
 
     it('should update the status of task `type of policy and exports`to `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
     describe('when going back to the page', () => {
@@ -101,6 +101,44 @@ context('Insurance - Policy and exports - About goods or services page - Save an
 
       it('should have the originally submitted answer selected', () => {
         aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.POLICY_AND_EXPORTS[DESCRIPTION]);
+      });
+    });
+  });
+
+  describe('when removing a previously submitted `buyer credit period` value', () => {
+    const field = aboutGoodsOrServicesPage[DESCRIPTION];
+
+    before(() => {
+      // submit a value
+      field.input().type('Test');
+      saveAndBackButton().click();
+
+      // go back to the page
+      partials.backLink().click();
+
+      field.input().clear();
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
+      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
+      cy.url().should('eq', expected);
+    });
+
+    it('should retain the `type of policy and exports` task status as `in progress`', () => {
+      cy.checkTaskStatus(task, IN_PROGRESS);
+    });
+
+    describe('when going back to the page', () => {
+      before(() => {
+        task.link().click();
+        submitButton().click();
+        submitButton().click();
+      });
+
+      it('should have no value in `buyer credit period`', () => {
+        field.input().should('have.value', '');
       });
     });
   });

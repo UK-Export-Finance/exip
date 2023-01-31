@@ -45,6 +45,16 @@
       }
     }) }}
 
+    {# temporary POST button whilst we develop account creation #}
+    {{ govukButton({
+      text: "Create an account",
+      classes: "govuk-button--secondary",
+      attributes: {
+        formaction: '/insurance/eligibility/eligible-to-apply-online/temp-create',
+        'data-cy': 'temp-create-an-account-button'
+      }
+    }) }}
+
   </form>
 
 {% endblock %}

@@ -20,7 +20,7 @@ const {
     POLICY_AND_EXPORTS: {
       TYPE_OF_POLICY: { POLICY_TYPE },
       CONTRACT_POLICY: {
-        SINGLE: { TOTAL_CONTRACT_VALUE },
+        SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
       },
     },
   },
@@ -94,6 +94,13 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
 
     describe('`Add` links', () => {
       it('should have empty summary list row values and links for the empty single policy specific fields', () => {
+        cy.assertSummaryListRowValue(summaryList, CONTRACT_COMPLETION_DATE, DEFAULT.EMPTY);
+
+        cy.checkText(
+          summaryList[CONTRACT_COMPLETION_DATE].changeLink(),
+          `${LINKS.ADD} ${SINGLE_FIELD_STRINGS[CONTRACT_COMPLETION_DATE].SUMMARY.TITLE}`,
+        );
+
         cy.assertSummaryListRowValue(summaryList, TOTAL_CONTRACT_VALUE, DEFAULT.EMPTY);
 
         cy.checkText(

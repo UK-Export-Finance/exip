@@ -34,7 +34,7 @@ const generateSingleContractPolicyFields = (answers: ApplicationPolicyAndExport,
         renderChangeLink: true,
         href: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHANGE}#${CONTRACT_COMPLETION_DATE}-label`,
       },
-      formatDate(answers[CONTRACT_COMPLETION_DATE]),
+      answers[CONTRACT_COMPLETION_DATE] && formatDate(answers[CONTRACT_COMPLETION_DATE]),
     ),
     fieldGroupItem(
       {

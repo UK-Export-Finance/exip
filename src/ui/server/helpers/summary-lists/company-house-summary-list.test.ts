@@ -1,10 +1,10 @@
 import formatDate from '../date/format-date';
-import { generateFields, companyHouseSummaryList, generateAddressHTML } from './company-house-summary-list';
+import { generateAddressHTML, generateSicCodesValue, generateFields, companyHouseSummaryList } from './company-house-summary-list';
 import generateSummaryListRows from './generate-summary-list-rows';
 import fieldGroupItem from './generate-field-group-item';
 import getFieldById from '../get-field-by-id';
 import { FIELD_IDS } from '../../constants';
-import { FIELDS, PAGES } from '../../content-strings';
+import { DEFAULT, FIELDS, PAGES } from '../../content-strings';
 import { mockCompany } from '../../test-mocks';
 
 const {
@@ -72,9 +72,39 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
       const expected = `${address.premises}<br>${address.addressLine1}<br>${address.locality}<br>${address.region}<br>${address.postalCode}<br>`;
       expect(result).toEqual(expected);
     });
+
+    describe('when there is no data', () => {
+      it('should return default empty string', () => {
+        const result = generateAddressHTML({});
+
+        const expected = DEFAULT.EMPTY;
+
+        expect(result).toEqual(expected);
+      });
+    });
   });
 
-  describe('generateFields()', () => {
+  describe('generateSicCodesValue', () => {
+    it('should return sic codes as a single string', () => {
+      const mockSicCodes = mockCompany.sicCodes;
+      const result = generateSicCodesValue(mockSicCodes);
+
+      const expected = mockSicCodes.toString();
+      expect(result).toEqual(expected);
+    });
+
+    describe('when sic codes is an empty array', () => {
+      it('should return default empty string', () => {
+        const result = generateSicCodesValue([]);
+
+        const expected = DEFAULT.EMPTY;
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
+
+  describe('generateFields', () => {
     it('should populate field groups when provided with companyDetails', () => {
       const result = generateFields(mockCompany);
 

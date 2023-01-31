@@ -74,3 +74,7 @@ export const ELIGIBLE_TO_APPLY_ONLINE = {
   BODY: 'You now need to fill in the application so we can assess the risks around your exports and your buyer.',
   SUBMIT_BUTTON: 'Continue to application',
 };
+
+export const ALREADY_HAVE_ACCOUNT = {
+  PAGE_TITLE: 'Do you already have an account for UKEF export insurance?',
+};

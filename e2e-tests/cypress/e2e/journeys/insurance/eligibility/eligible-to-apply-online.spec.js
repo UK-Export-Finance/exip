@@ -9,10 +9,19 @@ import {
   PAGES,
 } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
+import getReferenceNumber from '../../../helpers/get-reference-number';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
-const insuranceStartRoute = ROUTES.INSURANCE.START;
+const {
+  START,
+  ROOT: INSURANCE_ROOT,
+  ELIGIBILITY: {
+    ELIGIBLE_TO_APPLY_ONLINE,
+    COMPANIES_HOUSE_NUMBER,
+  },
+  ALL_SECTIONS,
+} = ROUTES.INSURANCE;
 
 context('Insurance - Eligibility - You are eligible to apply online page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction', () => {
   before(() => {
@@ -20,7 +29,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
 
     cy.submitInsuranceEligibilityAnswersHappyPath();
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE}`;
+    const expected = `${Cypress.config('baseUrl')}${ELIGIBLE_TO_APPLY_ONLINE}`;
 
     cy.url().should('eq', expected);
   });
@@ -45,12 +54,12 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
 
     partials.backLink().click();
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
+    const expectedUrl = `${Cypress.config('baseUrl')}${COMPANIES_HOUSE_NUMBER}`;
 
     cy.url().should('include', expectedUrl);
 
     // go back to page
-    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE);
+    cy.navigateToUrl(ELIGIBLE_TO_APPLY_ONLINE);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {
@@ -62,7 +71,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
   });
 
   it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
+    partials.header.serviceName().should('have.attr', 'href', START);
   });
 
   it('renders a phase banner', () => {
@@ -95,15 +104,14 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.ROOT}/[referenceNumber]${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
+    it(`should redirect to ${INSURANCE_ROOT}/[referenceNumber]${ALL_SECTIONS}`, () => {
       submitButton().click();
 
-      cy.url().then((url) => {
-        const splitUrl = url.split('/');
-        const applicationId = splitUrl[4];
+      getReferenceNumber().then((id) => {
+        const referenceNumber = id;
+        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${applicationId}${ROUTES.INSURANCE.ALL_SECTIONS}`;
-        cy.url().should('eq', expected);
+        cy.url().should('eq', expectedUrl);
       });
     });
   });

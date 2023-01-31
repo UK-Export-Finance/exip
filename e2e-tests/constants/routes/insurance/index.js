@@ -2,6 +2,7 @@ import { PRODUCT } from '../../product';
 import { POLICY_AND_EXPORTS } from './policy-and-export';
 import { EXPORTER_BUSINESS } from './exporter-business';
 import { YOUR_BUYER } from './your-buyer';
+import { ACCOUNT } from './account';
 
 export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY = '/eligibility';
@@ -25,10 +26,11 @@ export const INSURANCE_ROUTES = {
     ALREADY_HAVE_ACCOUNT: `${INSURANCE_ROOT}${ELIGIBILITY}/already-have-account`,
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY}/need-to-start-again`,
   },
-  SPEAK_TO_UKEF_EFM: `${INSURANCE_ROOT}/speak-to-UKEF-EFM`,
   APPLY_OFFLINE: `${INSURANCE_ROOT}/apply-using-our-form`,
-  ALL_SECTIONS: '/all-sections',
+  SPEAK_TO_UKEF_EFM: `${INSURANCE_ROOT}/speak-to-UKEF-EFM`,
   PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
+  ACCOUNT,
+  ALL_SECTIONS: '/all-sections',
   POLICY_AND_EXPORTS,
   YOUR_BUYER,
   EXPORTER_BUSINESS,

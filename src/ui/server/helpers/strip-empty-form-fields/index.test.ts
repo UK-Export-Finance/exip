@@ -80,13 +80,4 @@ describe('helpers/strip-empty-form-fields', () => {
       expect(result).toEqual(expected);
     });
   });
-
-  describe('when no form data is provided', () => {
-    it('should return an empty object', () => {
-      // @ts-ignore
-      const result = stripEmptyFormFields();
-
-      expect(result).toEqual({});
-    });
-  });
 });

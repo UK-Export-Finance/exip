@@ -2,6 +2,7 @@ import { PRODUCT } from '../../product';
 import { POLICY_AND_EXPORTS } from './policy-and-export';
 import { EXPORTER_BUSINESS } from './exporter-business';
 import { YOUR_BUYER } from './your-buyer';
+import { ACCOUNT } from './account';
 
 export const INSURANCE_ROOT = '/insurance';
 const ELIGIBILITY_ROOT = '/eligibility';
@@ -23,13 +24,15 @@ export const INSURANCE_ROUTES = {
     PRE_CREDIT_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/pre-credit-period`,
     COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/companies-house-number`,
     ELIGIBLE_TO_APPLY_ONLINE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/eligible-to-apply-online`,
+    ELIGIBLE_TO_APPLY_ONLINE_TEMP_CREATE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/eligible-to-apply-online/temp-create`,
     ALREADY_HAVE_ACCOUNT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/already-have-account`,
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/need-to-start-again`,
   },
   APPLY_OFFLINE: `${INSURANCE_ROOT}/apply-using-our-form`,
   SPEAK_TO_UKEF_EFM: `${INSURANCE_ROOT}/speak-to-UKEF-EFM`,
-  ALL_SECTIONS: '/all-sections',
   PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
+  ACCOUNT,
+  ALL_SECTIONS: '/all-sections',
   EXPORTER_BUSINESS,
   POLICY_AND_EXPORTS,
   YOUR_BUYER,

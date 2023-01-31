@@ -74,8 +74,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
     });
   });
 
@@ -104,8 +103,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
     });
 
     describe('when going back to the page', () => {
@@ -140,8 +138,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
     });
 
     describe('when going back to the page', () => {
@@ -164,7 +161,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     before(() => {
       // submit a value
       field.input().type('Test');
-      submitButton().click();
+      saveAndBackButton().click();
 
       // go back to the page
       partials.backLink().click();
@@ -177,6 +174,10 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
+    });
+
+    it('should retain the `type of policy and exports` task status as `in progress`', () => {
+      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
     });
 
     describe('when going back to the page', () => {
