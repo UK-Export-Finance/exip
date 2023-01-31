@@ -190,7 +190,7 @@ context('Insurance - Account - Create - Your details page - TODO', () => {
       it('should render validation errors for all required fields', () => {
         submitButton().click();
 
-        const TOTAL_REQUIRED_FIELDS = 1;
+        const TOTAL_REQUIRED_FIELDS = 2;
         partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
         describe('first name', () => {
@@ -204,6 +204,18 @@ context('Insurance - Account - Create - Your details page - TODO', () => {
 
           cy.checkText(inlineError, `Error: ${expectedMessage}`);
         });
+
+        describe('last name', () => {
+          const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY;
+          const inlineError = yourDetailsPage[LAST_NAME].errorMessage();
+
+          cy.checkText(
+            partials.errorSummaryListItems().eq(1),
+            expectedMessage,
+          );
+
+          cy.checkText(inlineError, `Error: ${expectedMessage}`);
+        });
       });
 
       it('should focus on input when clicking summary error message', () => {
@@ -211,12 +223,17 @@ context('Insurance - Account - Create - Your details page - TODO', () => {
 
         partials.errorSummaryListItemLinks().eq(0).click();
         yourDetailsPage[FIRST_NAME].input().should('have.focus');
+
+        partials.errorSummaryListItemLinks().eq(1).click();
+        yourDetailsPage[LAST_NAME].input().should('have.focus');
       });
     });
 
     describe('when submitting with all valid required fields', () => {
       it(`should redirect to ${CONFIRM_EMAIL}`, () => {
         yourDetailsPage[FIRST_NAME].input().type(account[FIRST_NAME], { delay: 0 });
+        yourDetailsPage[LAST_NAME].input().type(account[LAST_NAME], { delay: 0 });
+
         submitButton().click();
 
         const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
