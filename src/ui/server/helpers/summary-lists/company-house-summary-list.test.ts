@@ -25,7 +25,6 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
         region: 'Region',
         postalCode: 'Postcode',
         country: 'Country',
-        __typename: 'CompanyAddress',
       };
 
       const result = generateAddressHTML(address);
@@ -45,7 +44,6 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
         region: 'Region',
         postalCode: 'Postcode',
         country: 'Country',
-        __typename: 'CompanyAddress',
       };
 
       const result = generateAddressHTML(address);
@@ -64,7 +62,6 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
         region: 'Region',
         postalCode: 'Postcode',
         country: null,
-        __typename: 'CompanyAddress',
       };
 
       const result = generateAddressHTML(address);

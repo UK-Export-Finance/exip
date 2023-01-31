@@ -43,7 +43,7 @@ const generateAddressHTML = (address: object): string => {
  * @returns {String} Sic codes as a single string or default empty string
  */
 const generateSicCodesValue = (sicCodes: Array<string>): string => {
-  if (sicCodes.length) {
+  if (sicCodes && sicCodes.length) {
     return sicCodes.toString();
   }
 
