@@ -58,10 +58,18 @@ interface ApplicationExporterCompany {
   sicCodes: Array<ApplicationExporterSicCodes>;
 }
 
+interface ApplicationExporterBusiness {
+  id: string;
+  goodsOrServices?: string;
+  yearsExporting?: string;
+  employeesUK?: string;
+  employeesInternational?: string;
+}
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;
+  exporterBusiness: ApplicationExporterBusiness;
 }
 
 interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, ApplicationPolicyAndExport, ApplicationExporterCompany {

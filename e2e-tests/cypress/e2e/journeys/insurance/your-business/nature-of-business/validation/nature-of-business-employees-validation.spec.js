@@ -117,7 +117,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       });
     });
 
-    describe(`when ${EMPLOYEES_UK} is correctly entered`, () => {
+    describe(`when ${EMPLOYEES_UK} is correctly entered as a whole number`, () => {
       it(`should not display  ${EMPLOYEES_UK} validation errors`, () => {
         cy.navigateToUrl(url);
 
@@ -125,6 +125,19 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const field = natureOfBusiness[fieldId];
 
         field.input().clear().type('5');
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 3);
+      });
+    });
+
+    describe(`when ${EMPLOYEES_UK} is correctly entered with a comma`, () => {
+      it(`should not display  ${EMPLOYEES_UK} validation errors`, () => {
+        cy.navigateToUrl(url);
+
+        const fieldId = EMPLOYEES_UK;
+        const field = natureOfBusiness[fieldId];
+
+        field.input().clear().type('5,000');
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 3);
       });
@@ -205,7 +218,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       });
     });
 
-    describe(`when ${EMPLOYEES_INTERNATIONAL} is correctly entered`, () => {
+    describe(`when ${EMPLOYEES_INTERNATIONAL} is correctly entered as a whole number`, () => {
       it('should not display validation errors', () => {
         cy.navigateToUrl(url);
 
@@ -213,6 +226,19 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const field = natureOfBusiness[fieldId];
 
         field.input().clear().type('5');
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 3);
+      });
+    });
+
+    describe(`when ${EMPLOYEES_INTERNATIONAL} is correctly entered with a comma`, () => {
+      it('should not display validation errors', () => {
+        cy.navigateToUrl(url);
+
+        const fieldId = EMPLOYEES_INTERNATIONAL;
+        const field = natureOfBusiness[fieldId];
+
+        field.input().clear().type('5,000,000');
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 3);
       });

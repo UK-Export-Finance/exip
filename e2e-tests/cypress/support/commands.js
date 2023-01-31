@@ -44,6 +44,8 @@ Cypress.Commands.add('completeAndSubmitAboutGoodsOrServicesForm', require('./ins
 
 Cypress.Commands.add('completeAndSubmitCompanyDetails', require('./insurance/complete-and-submit-company-details'));
 
+Cypress.Commands.add('completeAndSubmitNatureOfYourBusiness', require('./insurance/complete-and-submit-nature-of-your-business'));
+
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));
 

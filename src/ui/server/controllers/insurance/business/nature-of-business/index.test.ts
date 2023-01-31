@@ -1,11 +1,12 @@
 import { PAGES } from '../../../../content-strings';
 import { pageVariables, get, TEMPLATE, post } from '.';
-import { Request, Response, Application } from '../../../../../types';
+import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import mapAndSave from '../map-and-save';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
@@ -15,11 +16,13 @@ const { NAURE_OF_YOUR_BUSINESS: NAURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.IN
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { NATURE_OF_BUSINESS_ROOT, TURNOVER_ROOT } = EXPORTER_BUSINESS_ROUTES;
+const { NATURE_OF_BUSINESS_ROOT, TURNOVER_ROOT, NATURE_OF_BUSINESS_SAVE_AND_BACK } = EXPORTER_BUSINESS_ROUTES;
 
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_FIELDS } = FIELDS;
 
 const MAXIMUM = 1000;
+
+jest.mock('../map-and-save');
 
 describe('controllers/insurance/business/nature-of-business', () => {
   let req: Request;
@@ -68,7 +71,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
         },
         POST_ROUTES: {
           NATURE_OF_BUSINESS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
-          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}`,
+          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_SAVE_AND_BACK}`,
         },
       };
 
@@ -79,11 +82,14 @@ describe('controllers/insurance/business/nature-of-business', () => {
   describe('get', () => {
     describe('when the application exists', () => {
       it('should render the nature-of-business template with correct variables', () => {
-        const mockApplicationNoData = {
-          ...mockApplication,
-        } as Application;
+        res.locals.application = mockApplication;
 
-        res.locals.application = mockApplicationNoData;
+        const submittedValues = {
+          [GOODS_OR_SERVICES]: mockApplication?.exporterBusiness[GOODS_OR_SERVICES],
+          [YEARS_EXPORTING]: mockApplication?.exporterBusiness[YEARS_EXPORTING],
+          [EMPLOYEES_UK]: mockApplication?.exporterBusiness[EMPLOYEES_UK],
+          [EMPLOYEES_INTERNATIONAL]: mockApplication?.exporterBusiness[EMPLOYEES_INTERNATIONAL],
+        };
 
         get(req, res);
 
@@ -92,7 +98,8 @@ describe('controllers/insurance/business/nature-of-business', () => {
             PAGE_CONTENT_STRINGS: NATURE_OF_YOUR_BUSINESS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(mockApplicationNoData.referenceNumber),
+          submittedValues,
+          ...pageVariables(mockApplication.referenceNumber),
         });
       });
     });
@@ -111,6 +118,8 @@ describe('controllers/insurance/business/nature-of-business', () => {
   });
 
   describe('post', () => {
+    mapAndSave.natureOfBusiness = jest.fn(() => Promise.resolve(true));
+
     describe('when there are validation errors', () => {
       it('should render template with validation errors', async () => {
         req.body = {};
@@ -146,9 +155,22 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
         await post(req, res);
 
+        expect(res.redirect).toHaveBeenCalledWith(TURNOVER_ROOT);
+      });
+
+      it('should call mapAndSave.companyDetails once with natureOfBusiness and application', async () => {
+        req.body = {
+          [GOODS_OR_SERVICES]: 'test',
+          [YEARS_EXPORTING]: '5',
+          [EMPLOYEES_UK]: '3',
+          [EMPLOYEES_INTERNATIONAL]: '25',
+        };
+
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(TURNOVER_ROOT);
+        expect(mapAndSave.natureOfBusiness).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.natureOfBusiness).toHaveBeenCalledWith(req.body, mockApplication);
       });
     });
 

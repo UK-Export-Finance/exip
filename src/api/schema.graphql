@@ -71,6 +71,7 @@ type Application {
   submissionDeadline: DateTime
   submissionType: String
   policyAndExport: PolicyAndExport
+  exporterBusiness: ExporterBusiness
   exporterCompany: ExporterCompany
 }
 
@@ -92,6 +93,7 @@ input ApplicationWhereInput {
   submissionDeadline: DateTimeNullableFilter
   submissionType: StringNullableFilter
   policyAndExport: PolicyAndExportWhereInput
+  exporterBusiness: ExporterBusinessWhereInput
   exporterCompany: ExporterCompanyWhereInput
 }
 
@@ -162,6 +164,7 @@ input ApplicationUpdateInput {
   submissionDeadline: DateTime
   submissionType: String
   policyAndExport: PolicyAndExportRelateToOneForUpdateInput
+  exporterBusiness: ExporterBusinessRelateToOneForUpdateInput
   exporterCompany: ExporterCompanyRelateToOneForUpdateInput
 }
 
@@ -174,6 +177,12 @@ input EligibilityRelateToOneForUpdateInput {
 input PolicyAndExportRelateToOneForUpdateInput {
   create: PolicyAndExportCreateInput
   connect: PolicyAndExportWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ExporterBusinessRelateToOneForUpdateInput {
+  create: ExporterBusinessCreateInput
+  connect: ExporterBusinessWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -196,6 +205,7 @@ input ApplicationCreateInput {
   submissionDeadline: DateTime
   submissionType: String
   policyAndExport: PolicyAndExportRelateToOneForCreateInput
+  exporterBusiness: ExporterBusinessRelateToOneForCreateInput
   exporterCompany: ExporterCompanyRelateToOneForCreateInput
 }
 
@@ -207,6 +217,11 @@ input EligibilityRelateToOneForCreateInput {
 input PolicyAndExportRelateToOneForCreateInput {
   create: PolicyAndExportCreateInput
   connect: PolicyAndExportWhereUniqueInput
+}
+
+input ExporterBusinessRelateToOneForCreateInput {
+  create: ExporterBusinessCreateInput
+  connect: ExporterBusinessWhereUniqueInput
 }
 
 input ExporterCompanyRelateToOneForCreateInput {
@@ -333,7 +348,11 @@ input PolicyAndExportCreateInput {
 
 type ExporterBusiness {
   id: ID!
-  company: ExporterCompany
+  application: Application
+  goodsOrServicesSupplied: String
+  yearsExporting: Int
+  employeesUK: Int
+  employeesInternational: Int
 }
 
 input ExporterBusinessWhereUniqueInput {
@@ -345,15 +364,27 @@ input ExporterBusinessWhereInput {
   OR: [ExporterBusinessWhereInput!]
   NOT: [ExporterBusinessWhereInput!]
   id: IDFilter
-  company: ExporterCompanyWhereInput
+  application: ApplicationWhereInput
+  goodsOrServicesSupplied: StringFilter
+  yearsExporting: IntNullableFilter
+  employeesUK: IntNullableFilter
+  employeesInternational: IntNullableFilter
 }
 
 input ExporterBusinessOrderByInput {
   id: OrderDirection
+  goodsOrServicesSupplied: OrderDirection
+  yearsExporting: OrderDirection
+  employeesUK: OrderDirection
+  employeesInternational: OrderDirection
 }
 
 input ExporterBusinessUpdateInput {
-  company: ExporterCompanyRelateToOneForUpdateInput
+  application: ApplicationRelateToOneForUpdateInput
+  goodsOrServicesSupplied: String
+  yearsExporting: Int
+  employeesUK: Int
+  employeesInternational: Int
 }
 
 input ExporterBusinessUpdateArgs {
@@ -362,7 +393,11 @@ input ExporterBusinessUpdateArgs {
 }
 
 input ExporterBusinessCreateInput {
-  company: ExporterCompanyRelateToOneForCreateInput
+  application: ApplicationRelateToOneForCreateInput
+  goodsOrServicesSupplied: String
+  yearsExporting: Int
+  employeesUK: Int
+  employeesInternational: Int
 }
 
 type ExporterCompanyAddress {
@@ -443,7 +478,6 @@ type ExporterCompany {
   id: ID!
   application: Application
   registeredOfficeAddress: ExporterCompanyAddress
-  business: ExporterBusiness
   sicCodes(where: ExporterCompanySicCodeWhereInput! = {}, orderBy: [ExporterCompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterCompanySicCode!]
   sicCodesCount(where: ExporterCompanySicCodeWhereInput! = {}): Int
   companyName: String
@@ -466,7 +500,6 @@ input ExporterCompanyWhereInput {
   id: IDFilter
   application: ApplicationWhereInput
   registeredOfficeAddress: ExporterCompanyAddressWhereInput
-  business: ExporterBusinessWhereInput
   sicCodes: ExporterCompanySicCodeManyRelationFilter
   companyName: StringFilter
   companyNumber: StringFilter
@@ -497,7 +530,6 @@ input ExporterCompanyOrderByInput {
 input ExporterCompanyUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   registeredOfficeAddress: ExporterCompanyAddressRelateToOneForUpdateInput
-  business: ExporterBusinessRelateToOneForUpdateInput
   sicCodes: ExporterCompanySicCodeRelateToManyForUpdateInput
   companyName: String
   companyNumber: String
@@ -511,12 +543,6 @@ input ExporterCompanyUpdateInput {
 input ExporterCompanyAddressRelateToOneForUpdateInput {
   create: ExporterCompanyAddressCreateInput
   connect: ExporterCompanyAddressWhereUniqueInput
-  disconnect: Boolean
-}
-
-input ExporterBusinessRelateToOneForUpdateInput {
-  create: ExporterBusinessCreateInput
-  connect: ExporterBusinessWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -535,7 +561,6 @@ input ExporterCompanyUpdateArgs {
 input ExporterCompanyCreateInput {
   application: ApplicationRelateToOneForCreateInput
   registeredOfficeAddress: ExporterCompanyAddressRelateToOneForCreateInput
-  business: ExporterBusinessRelateToOneForCreateInput
   sicCodes: ExporterCompanySicCodeRelateToManyForCreateInput
   companyName: String
   companyNumber: String
@@ -549,11 +574,6 @@ input ExporterCompanyCreateInput {
 input ExporterCompanyAddressRelateToOneForCreateInput {
   create: ExporterCompanyAddressCreateInput
   connect: ExporterCompanyAddressWhereUniqueInput
-}
-
-input ExporterBusinessRelateToOneForCreateInput {
-  create: ExporterBusinessCreateInput
-  connect: ExporterBusinessWhereUniqueInput
 }
 
 input ExporterCompanySicCodeRelateToManyForCreateInput {

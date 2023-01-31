@@ -22,6 +22,12 @@ const {
       COMPANY_HOUSE: {
         COMPANY_SIC,
       },
+      NATURE_OF_YOUR_BUSINESS: {
+        GOODS_OR_SERVICES,
+        YEARS_EXPORTING,
+        EMPLOYEES_UK,
+        EMPLOYEES_INTERNATIONAL,
+      },
     },
   },
 } = FIELD_IDS;
@@ -56,6 +62,12 @@ const application = {
   },
   EXPORTER_COMPANY: {
     [COMPANY_SIC]: ['64999'],
+  },
+  EXPORTER_BUSINESS: {
+    [GOODS_OR_SERVICES]: 'abc',
+    [YEARS_EXPORTING]: '2',
+    [EMPLOYEES_INTERNATIONAL]: '5',
+    [EMPLOYEES_UK]: '2000',
   },
 };
 

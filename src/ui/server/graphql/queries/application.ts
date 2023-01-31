@@ -64,6 +64,13 @@ const applicationQuery = gql`
             premises
           }
         }
+        exporterBusiness {
+          id
+          goodsOrServicesSupplied
+          yearsExporting
+          employeesUK
+          employeesInternational
+        }
       }
     }
   }
