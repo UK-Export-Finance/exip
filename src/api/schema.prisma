@@ -21,26 +21,30 @@ model ReferenceNumber {
 }
 
 model Application {
-  id                               String            @id @default(cuid())
-  createdAt                        DateTime?
-  updatedAt                        DateTime?
-  eligibility                      Eligibility?      @relation("Application_eligibility", fields: [eligibilityId], references: [id])
-  eligibilityId                    String?           @map("eligibility")
-  referenceNumber                  Int?
-  submissionDeadline               DateTime?
-  submissionType                   String?           @default("Manual Inclusion Application")
-  policyAndExport                  PolicyAndExport?  @relation("Application_policyAndExport", fields: [policyAndExportId], references: [id])
-  policyAndExportId                String?           @map("policyAndExport")
-  exporterCompany                  ExporterCompany?  @relation("Application_exporterCompany", fields: [exporterCompanyId], references: [id])
-  exporterCompanyId                String?           @map("exporterCompany")
-  from_ReferenceNumber_application ReferenceNumber[] @relation("ReferenceNumber_application")
-  from_PolicyAndExport_application PolicyAndExport[] @relation("PolicyAndExport_application")
-  from_ExporterCompany_application ExporterCompany[] @relation("ExporterCompany_application")
-  from_Eligibility_application     Eligibility[]     @relation("Eligibility_application")
+  id                                String             @id @default(cuid())
+  createdAt                         DateTime?
+  updatedAt                         DateTime?
+  eligibility                       Eligibility?       @relation("Application_eligibility", fields: [eligibilityId], references: [id])
+  eligibilityId                     String?            @map("eligibility")
+  referenceNumber                   Int?
+  submissionDeadline                DateTime?
+  submissionType                    String?            @default("Manual Inclusion Application")
+  policyAndExport                   PolicyAndExport?   @relation("Application_policyAndExport", fields: [policyAndExportId], references: [id])
+  policyAndExportId                 String?            @map("policyAndExport")
+  exporterBusiness                  ExporterBusiness?  @relation("Application_exporterBusiness", fields: [exporterBusinessId], references: [id])
+  exporterBusinessId                String?            @map("exporterBusiness")
+  exporterCompany                   ExporterCompany?   @relation("Application_exporterCompany", fields: [exporterCompanyId], references: [id])
+  exporterCompanyId                 String?            @map("exporterCompany")
+  from_ReferenceNumber_application  ReferenceNumber[]  @relation("ReferenceNumber_application")
+  from_PolicyAndExport_application  PolicyAndExport[]  @relation("PolicyAndExport_application")
+  from_ExporterBusiness_application ExporterBusiness[] @relation("ExporterBusiness_application")
+  from_ExporterCompany_application  ExporterCompany[]  @relation("ExporterCompany_application")
+  from_Eligibility_application      Eligibility[]      @relation("Eligibility_application")
 
   @@index([eligibilityId])
   @@index([referenceNumber])
   @@index([policyAndExportId])
+  @@index([exporterBusinessId])
   @@index([exporterCompanyId])
 }
 
@@ -53,11 +57,11 @@ model PolicyAndExport {
   contractCompletionDate           DateTime?
   totalValueOfContract             Int?
   creditPeriodWithBuyer            String        @default("")
-  policyCurrencyCode               String        @default("")
+  policyCurrencyCode               String        @default("") @mysql.VarChar(1000)
   totalMonthsOfCover               Int?
   totalSalesToBuyer                Int?
   maximumBuyerWillOwe              Int?
-  goodsOrServicesDescription       String        @default("")
+  goodsOrServicesDescription       String        @default("") @mysql.VarChar(1000)
   finalDestinationCountryCode      String        @default("")
   from_Application_policyAndExport Application[] @relation("Application_policyAndExport")
 
@@ -65,12 +69,16 @@ model PolicyAndExport {
 }
 
 model ExporterBusiness {
-  id                            String            @id @default(cuid())
-  company                       ExporterCompany?  @relation("ExporterBusiness_company", fields: [companyId], references: [id])
-  companyId                     String?           @map("company")
-  from_ExporterCompany_business ExporterCompany[] @relation("ExporterCompany_business")
+  id                                String        @id @default(cuid())
+  application                       Application?  @relation("ExporterBusiness_application", fields: [applicationId], references: [id])
+  applicationId                     String?       @map("application")
+  goodsOrServicesSupplied           String        @default("") @mysql.VarChar(1000)
+  totalYearsExporting               Int?
+  totalEmployeesUK                  Int?
+  totalEmployeesInternational       Int?
+  from_Application_exporterBusiness Application[] @relation("Application_exporterBusiness")
 
-  @@index([companyId])
+  @@index([applicationId])
 }
 
 model ExporterCompanyAddress {
@@ -92,8 +100,6 @@ model ExporterCompany {
   applicationId                    String?                  @map("application")
   registeredOfficeAddress          ExporterCompanyAddress?  @relation("ExporterCompany_registeredOfficeAddress", fields: [registeredOfficeAddressId], references: [id])
   registeredOfficeAddressId        String?                  @unique @map("registeredOfficeAddress")
-  business                         ExporterBusiness?        @relation("ExporterCompany_business", fields: [businessId], references: [id])
-  businessId                       String?                  @map("business")
   sicCodes                         ExporterCompanySicCode[] @relation("ExporterCompanySicCode_exporterCompany")
   companyName                      String                   @default("")
   companyNumber                    String                   @default("")
@@ -103,10 +109,8 @@ model ExporterCompany {
   companyWebsite                   String                   @default("")
   phoneNumber                      String                   @default("")
   from_Application_exporterCompany Application[]            @relation("Application_exporterCompany")
-  from_ExporterBusiness_company    ExporterBusiness[]       @relation("ExporterBusiness_company")
 
   @@index([applicationId])
-  @@index([businessId])
 }
 
 model ExporterCompanySicCode {

@@ -98,6 +98,10 @@ describe('controllers/insurance/business/companies-details', () => {
           ...mockApplication,
           exporterCompany: {
             id: '13456',
+            registeredOfficeAddress: {
+              id: '2345',
+            },
+            sicCodes: [],
           },
         } as Application;
 

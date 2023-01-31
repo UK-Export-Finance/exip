@@ -1,20 +1,17 @@
 import { Request, Response } from '../../../../../../types';
 import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
-import { mockReq, mockRes, mockApplication, mockPhoneNumbers } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockExporterBusiness } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
+    NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
   },
 } = FIELD_IDS.INSURANCE;
 
 const { INSURANCE_ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
-
-const { VALID_PHONE_NUMBERS, INVALID_PHONE_NUMBERS } = mockPhoneNumbers;
-
-describe('controllers/insurance/business/companies-details', () => {
+describe('controllers/insurance/business/nature-of-business/save-and-back', () => {
   let req: Request;
   let res: Response;
 
@@ -26,20 +23,18 @@ describe('controllers/insurance/business/companies-details', () => {
 
     res.locals.application = mockApplication;
 
-    mapAndSave.companyDetails = updateMapAndSave;
+    mapAndSave.natureOfBusiness = updateMapAndSave;
   });
 
   afterAll(() => {
     jest.resetAllMocks();
   });
 
-  describe('post', () => {
-    describe('when there are validation errors', () => {
-      it('should redirect to next page', async () => {
+  describe('post - save and back', () => {
+    describe('when there are no validation errors', () => {
+      it('should redirect to all sections page', async () => {
         req.body = {
-          [TRADING_NAME]: 'true',
-          [TRADING_ADDRESS]: 'false',
-          [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
+          ...mockExporterBusiness,
         };
 
         await post(req, res);
@@ -47,11 +42,9 @@ describe('controllers/insurance/business/companies-details', () => {
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call mapAndSave.companyDetails once', async () => {
+      it('should call mapAndSave.natureOfBusiness once', async () => {
         req.body = {
-          [TRADING_NAME]: 'true',
-          [TRADING_ADDRESS]: 'false',
-          [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
+          ...mockExporterBusiness,
         };
 
         await post(req, res);
@@ -60,12 +53,11 @@ describe('controllers/insurance/business/companies-details', () => {
       });
     });
 
-    describe('when there are no validation errors', () => {
-      it('should redirect to next page', async () => {
+    describe('when there are validation errors', () => {
+      it('should redirect to all sections page', async () => {
         req.body = {
-          [TRADING_NAME]: 'true',
-          [TRADING_ADDRESS]: 'false',
-          [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
+          [YEARS_EXPORTING]: '5O',
+          [EMPLOYEES_UK]: '2000',
         };
 
         await post(req, res);
@@ -73,11 +65,10 @@ describe('controllers/insurance/business/companies-details', () => {
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call mapAndSave.companyDetails once', async () => {
+      it('should call mapAndSave.natureOfBusiness once', async () => {
         req.body = {
-          [TRADING_NAME]: 'true',
-          [TRADING_ADDRESS]: 'false',
-          [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
+          [YEARS_EXPORTING]: '5O',
+          [EMPLOYEES_UK]: '2000',
         };
 
         await post(req, res);
@@ -98,11 +89,11 @@ describe('controllers/insurance/business/companies-details', () => {
       });
     });
 
-    describe('when mapAndSave.companyDetails fails', () => {
+    describe('when mapAndSave.natureOfBusiness fails', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
         updateMapAndSave = jest.fn(() => Promise.reject());
-        mapAndSave.companyDetails = updateMapAndSave;
+        mapAndSave.natureOfBusiness = updateMapAndSave;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {

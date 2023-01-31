@@ -14,6 +14,10 @@ interface ApplicationExporterCompanyAddress {
   id: string;
 }
 
+interface ApplicationExporterBusiness {
+  id: string;
+}
+
 interface Application {
   id: string;
   referenceNumber: number;
@@ -25,6 +29,7 @@ interface Application {
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;
   exporterCompanyAddress: ApplicationExporterCompanyAddress;
+  exporterBusiness: ApplicationExporterBusiness;
 }
 
 interface CompanyResponse {

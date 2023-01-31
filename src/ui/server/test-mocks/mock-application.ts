@@ -76,6 +76,13 @@ const mockApplication = {
     },
     __typename: 'ExporterCompany',
   },
+  exporterBusiness: {
+    id: 'clcyyopna0158m8noaglyy9gg',
+    goodsOrServicesSupplied: 'ABC',
+    totalYearsExporting: '20',
+    totalEmployeesInternational: '1000',
+    totalEmployeesUK: '400',
+  },
 };
 
 export const mockApplicationMultiplePolicy = {

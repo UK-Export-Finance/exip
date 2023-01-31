@@ -1,6 +1,6 @@
-import { mockCompany } from '../../../../../test-mocks';
-import { FIELD_IDS } from '../../../../../constants';
-import { RequestBody } from '../../../../../../types';
+import { mockCompany } from '../../../../../../test-mocks';
+import { FIELD_IDS } from '../../../../../../constants';
+import { RequestBody } from '../../../../../../../types';
 
 const {
   COMPANY_HOUSE: { INPUT },
