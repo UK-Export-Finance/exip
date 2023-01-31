@@ -1,4 +1,5 @@
 import { ELIGIBILITY_TEMPLATES } from './eligibility';
+import { ACCOUNT_TEMPLATES } from './account';
 import { POLICY_AND_EXPORTS_TEMPLATES } from './policy-and-exports';
 import { BUSINESS_TEMPLATES } from './business';
 import { YOUR_BUYER_TEMPLATES } from './your-buyer';
@@ -8,6 +9,7 @@ export const INSURANCE_TEMPLATES = {
   ELIGIBILITY: ELIGIBILITY_TEMPLATES,
   APPLY_OFFLINE: 'insurance/apply-offline.njk',
   SPEAK_TO_UKEF_EFM: 'insurance/speak-to-ukef-efm.njk',
+  ACCOUNT: ACCOUNT_TEMPLATES,
   ALL_SECTIONS: 'insurance/all-sections.njk',
   POLICY_AND_EXPORTS: POLICY_AND_EXPORTS_TEMPLATES,
   EXPORTER_BUSINESS: BUSINESS_TEMPLATES,

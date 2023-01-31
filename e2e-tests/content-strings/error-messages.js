@@ -180,5 +180,17 @@ export const ERROR_MESSAGES = {
         },
       },
     },
+    ACCOUNT: {
+      CREATE: {
+        YOUR_DETAILS: {
+          [FIELD_IDS.INSURANCE.ACCOUNT.FIRST_NAME]: {
+            IS_EMPTY: 'Enter your first name',
+          },
+          [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
+            IS_EMPTY: 'Enter your last name',
+          },
+        },
+      },
+    },
   },
 };

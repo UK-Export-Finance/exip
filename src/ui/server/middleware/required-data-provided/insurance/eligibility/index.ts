@@ -70,7 +70,7 @@ export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Resp
     CHECK_IF_ELIGIBLE,
     NEED_TO_START_AGAIN,
     ALREADY_HAVE_ACCOUNT,
-    ACCOUNT.CREATE_ACCOUNT.YOUR_DETAILS,
+    ACCOUNT.CREATE.YOUR_DETAILS,
     ACCOUNT.SIGN_IN.ROOT,
   ];
 

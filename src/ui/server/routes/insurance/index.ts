@@ -9,6 +9,7 @@ import insuranceEligibilityRoutes from './eligibility';
 import insurancePolicyAndExportsRouter from './policy-and-exports';
 import insuranceBusinessRouter from './business';
 import insuranceYourBuyerRouter from './your-buyer';
+import insuranceAccountRouter from './account';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
@@ -28,6 +29,7 @@ insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.ALL_SE
 insuranceRouter.get(INSURANCE_ROUTES.PAGE_NOT_FOUND, pageNotFoundGet);
 
 insuranceRouter.use('/', insuranceEligibilityRoutes);
+insuranceRouter.use('/', insuranceAccountRouter);
 insuranceRouter.use(INSURANCE_ROOT, insurancePolicyAndExportsRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceBusinessRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceYourBuyerRouter);
