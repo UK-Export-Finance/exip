@@ -1,6 +1,7 @@
 import SHARED_ELIGIBILITY_FIELD_IDS from '../shared-eligibility';
-import EXPORTER_BUSINESS from './exporter-business';
+import ACCOUNT from './account';
 import POLICY_AND_EXPORTS from './policy-and-exports';
+import EXPORTER_BUSINESS from './exporter-business';
 import YOUR_BUYER from './your-buyer';
 
 const INSURANCE_FIELD_IDS = {
@@ -15,8 +16,9 @@ const INSURANCE_FIELD_IDS = {
     ALREADY_HAVE_ACCOUNT: 'alreadyHaveAnAccount',
   },
   SUBMISSION_DEADLINE: 'submissionDeadline',
-  EXPORTER_BUSINESS,
+  ACCOUNT,
   POLICY_AND_EXPORTS,
+  EXPORTER_BUSINESS,
   YOUR_BUYER,
 };
 

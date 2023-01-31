@@ -1,6 +1,7 @@
 import { GBP_CURRENCY_CODE, PRODUCT } from '../../../constants';
 import { LINKS } from '../../links';
 import ELIGIBILITY from './eligibility';
+import ACCOUNT from './account';
 import POLICY_AND_EXPORTS from './policy-and-exports';
 import EXPORTER_BUSINESS from './your-business';
 import YOUR_BUYER from './your-buyer';
@@ -84,6 +85,7 @@ const START = {
 };
 
 export default {
+  ACCOUNT,
   ALL_SECTIONS,
   APPLY_OFFLINE,
   EXPORTER_BUSINESS,

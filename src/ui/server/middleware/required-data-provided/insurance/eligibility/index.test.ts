@@ -148,9 +148,9 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       });
     });
 
-    describe(`when req.originalUrl is ${ACCOUNT.CREATE_ACCOUNT.YOUR_DETAILS}`, () => {
+    describe(`when req.originalUrl is ${ACCOUNT.CREATE.YOUR_DETAILS}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = ACCOUNT.CREATE_ACCOUNT.YOUR_DETAILS;
+        req.originalUrl = ACCOUNT.CREATE.YOUR_DETAILS;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

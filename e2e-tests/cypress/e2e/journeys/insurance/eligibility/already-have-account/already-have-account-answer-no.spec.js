@@ -5,7 +5,7 @@ import { ROUTES } from '../../../../../../constants';
 
 const {
   START,
-  ELIGIBILITY: { ALREADY_HAVE_ACCOUNT }, ACCOUNT: { CREATE_ACCOUNT },
+  ELIGIBILITY: { ALREADY_HAVE_ACCOUNT }, ACCOUNT: { CREATE },
   ROOT: INSURANCE_ROOT,
 } = ROUTES.INSURANCE;
 
@@ -27,11 +27,11 @@ context('Insurance - Eligibility - Already have account page - I want to confirm
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it(`should redirect to ${CREATE_ACCOUNT.YOUR_DETAILS}`, () => {
+  it(`should redirect to ${CREATE.YOUR_DETAILS}`, () => {
     noRadioInput().click();
     submitButton().click();
 
-    const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}${CREATE_ACCOUNT.YOUR_DETAILS}`;
+    const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}${CREATE.YOUR_DETAILS}`;
     cy.url().should('eq', expected);
   });
 });

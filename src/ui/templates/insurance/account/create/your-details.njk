@@ -1,0 +1,151 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <p data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+
+  <form method="POST" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half-from-desktop">
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.FIRST_NAME.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.FIRST_NAME.ID + '-label',
+              'data-cy': FIELDS.FIRST_NAME.ID + '-label'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.FIRST_NAME.ID + '-input'
+          },
+          id: FIELDS.FIRST_NAME.ID,
+          name: FIELDS.FIRST_NAME.ID,
+          value: submittedValues[FIELDS.FIRST_NAME.ID],
+          errorMessage: validationErrors.errorList[FIELDS.FIRST_NAME.ID] and {
+            text: validationErrors.errorList[FIELDS.FIRST_NAME.ID].text,
+            attributes: {
+              "data-cy": FIELDS.FIRST_NAME.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.LAST_NAME.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.LAST_NAME.ID + '-label',
+              'data-cy': FIELDS.LAST_NAME.ID + '-label'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.LAST_NAME.ID + '-input'
+          },
+          id: FIELDS.LAST_NAME.ID,
+          name: FIELDS.LAST_NAME.ID,
+          value: submittedValues[FIELDS.LAST_NAME.ID],
+          errorMessage: validationErrors.errorList[FIELDS.LAST_NAME.ID] and {
+            text: validationErrors.errorList[FIELDS.LAST_NAME.ID].text,
+            attributes: {
+              "data-cy": FIELDS.LAST_NAME.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.EMAIL.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.EMAIL.ID + '-label',
+              'data-cy': FIELDS.EMAIL.ID + '-label'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.EMAIL.ID + '-input'
+          },
+          id: FIELDS.EMAIL.ID,
+          name: FIELDS.EMAIL.ID,
+          value: submittedValues[FIELDS.EMAIL.ID],
+          errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
+            text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
+            attributes: {
+              "data-cy": FIELDS.EMAIL.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.PASSWORD.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.PASSWORD.ID + '-label',
+              'data-cy': FIELDS.PASSWORD.ID + '-label'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.PASSWORD.ID + '-input'
+          },
+          id: FIELDS.PASSWORD.ID,
+          name: FIELDS.PASSWORD.ID,
+          value: submittedValues[FIELDS.PASSWORD.ID],
+          errorMessage: validationErrors.errorList[FIELDS.PASSWORD.ID] and {
+            text: validationErrors.errorList[FIELDS.PASSWORD.ID].text,
+            attributes: {
+              "data-cy": FIELDS.PASSWORD.ID + "-error-message"
+            }
+          }
+        }) }}
+
+      </div>
+    </div>
+
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+        attributes: {
+          'data-cy': 'submit-button'
+        }
+      }) }}
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <h2 class="govuk-heading-m" data-cy="already-got-an-account">{{ CONTENT_STRINGS.ALREADY_GOT_AN_ACCOUNT }}</h2>
+
+    <a class="govuk-button govuk-button--secondary" href="{{ SIGN_IN_LINK }}" data-cy="sign-in">{{ CONTENT_STRINGS.BUTTONS.SIGN_IN }}</a>
+
+  </form>
+
+{% endblock %}

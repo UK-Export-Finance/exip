@@ -1,5 +1,6 @@
 import POLICY_AND_EXPORTS from './policy-and-exports';
 import * as ELIGIBILITY_PAGES from './eligibility';
+import * as ACCOUNT_PAGES from './account';
 import * as EXPORTER_BUSINESS from './exporter-business';
 import { LINKS } from '../../links';
 import { PRODUCT } from '../../../constants';
@@ -89,6 +90,7 @@ const INSURANCE = {
   APPLY_OFFLINE,
   EXPORTER_BUSINESS,
   ELIGIBILITY: ELIGIBILITY_PAGES,
+  ACCOUNT: ACCOUNT_PAGES,
   POLICY_AND_EXPORTS,
   SPEAK_TO_UKEF_EFM,
   START,

@@ -1,15 +1,17 @@
-const CREATE_ACCOUNT_ROOT = '/create-account';
+const INSURANCE_ROOT = '/insurance';
+const CREATE_ROOT = '/create-account';
 
-const CREATE_ACCOUNT = {
-  ROOT: CREATE_ACCOUNT_ROOT,
-  YOUR_DETAILS: `${CREATE_ACCOUNT_ROOT}/your-details`,
+const CREATE = {
+  ROOT: CREATE_ROOT,
+  YOUR_DETAILS: `${INSURANCE_ROOT}${CREATE_ROOT}/your-details`,
+  CONFIRM_EMAIL: `${INSURANCE_ROOT}${CREATE_ROOT}/confirm-email`,
 };
 
 const SIGN_IN = {
-  ROOT: '/sign-in',
+  ROOT: `${INSURANCE_ROOT}/sign-in`,
 };
 
 export const ACCOUNT = {
-  CREATE_ACCOUNT,
+  CREATE,
   SIGN_IN,
 };

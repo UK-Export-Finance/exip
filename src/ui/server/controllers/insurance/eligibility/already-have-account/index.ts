@@ -7,8 +7,7 @@ import { Request, Response } from '../../../../../types';
 const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT;
 
 const {
-  INSURANCE_ROOT,
-  ACCOUNT: { SIGN_IN, CREATE_ACCOUNT },
+  ACCOUNT: { SIGN_IN, CREATE },
 } = ROUTES.INSURANCE;
 
 export const PAGE_VARIABLES = {
@@ -50,8 +49,8 @@ export const post = (req: Request, res: Response) => {
   const answer = req.body[FIELD_ID];
 
   if (answer === 'true') {
-    return res.redirect(`${INSURANCE_ROOT}${SIGN_IN.ROOT}`);
+    return res.redirect(SIGN_IN.ROOT);
   }
 
-  return res.redirect(`${INSURANCE_ROOT}${CREATE_ACCOUNT.YOUR_DETAILS}`);
+  return res.redirect(CREATE.YOUR_DETAILS);
 };
