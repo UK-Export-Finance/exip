@@ -42,7 +42,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call api.keystone.application.update.exporterBusiness once', async () => {
+      it('should call mapAndSave.natureOfBusiness once', async () => {
         req.body = {
           ...mockExporterBusiness,
         };
@@ -65,7 +65,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call api.keystone.application.update.exporterBusiness once', async () => {
+      it('should call mapAndSave.natureOfBusiness once', async () => {
         req.body = {
           [YEARS_EXPORTING]: '5O',
           [EMPLOYEES_UK]: '2000',
@@ -89,7 +89,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
       });
     });
 
-    describe('when api.keystone.application.update.exporterCompany fails', () => {
+    describe('when mapAndSave.natureOfBusiness fails', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
         updateMapAndSave = jest.fn(() => Promise.reject());
