@@ -18,7 +18,6 @@ const {
   ELIGIBILITY: {
     ELIGIBLE_TO_APPLY_ONLINE, ALREADY_HAVE_ACCOUNT,
   },
-  ROOT: INSURANCE_ROOT,
   ACCOUNT: { SIGN_IN },
 } = ROUTES;
 
@@ -136,7 +135,7 @@ context('Insurance - Eligibility - Already have account page - I want to confirm
         yesRadioInput().click();
         submitButton().click();
 
-        const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}${SIGN_IN.ROOT}`;
+        const expected = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
         cy.url().should('eq', expected);
       });
     });

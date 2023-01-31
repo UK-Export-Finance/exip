@@ -7,8 +7,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
 const {
-  INSURANCE_ROOT,
-  ACCOUNT: { CREATE_ACCOUNT, SIGN_IN },
+  ACCOUNT: { CREATE, SIGN_IN },
 } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/eligibility/already-have-account', () => {
@@ -67,7 +66,7 @@ describe('controllers/insurance/eligibility/already-have-account', () => {
       it(`should redirect to ${SIGN_IN.ROOT}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}${SIGN_IN.ROOT}`);
+        expect(res.redirect).toHaveBeenCalledWith(SIGN_IN.ROOT);
       });
     });
 
@@ -78,10 +77,10 @@ describe('controllers/insurance/eligibility/already-have-account', () => {
         };
       });
 
-      it(`should redirect to ${CREATE_ACCOUNT.YOUR_DETAILS}`, () => {
+      it(`should redirect to ${CREATE.YOUR_DETAILS}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}${CREATE_ACCOUNT.YOUR_DETAILS}`);
+        expect(res.redirect).toHaveBeenCalledWith(CREATE.YOUR_DETAILS);
       });
     });
   });
