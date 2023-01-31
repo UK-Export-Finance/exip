@@ -5,7 +5,7 @@ export default () => {
   submitInsuranceEligibilityAnswersHappyPath();
 
   tempCreateAccountButton().click();
-  
+
   // submit "I do not already have an account"
   noRadioInput().click();
   submitButton().click();
