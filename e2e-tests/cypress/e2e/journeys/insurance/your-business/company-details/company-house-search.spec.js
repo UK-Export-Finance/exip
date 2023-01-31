@@ -1,5 +1,5 @@
 import { companyDetails } from '../../../../pages/your-business';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { ERROR_MESSAGES, DEFAULT } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import partials from '../../../../partials';
 import { saveAndBackButton } from '../../../../pages/shared';
@@ -181,7 +181,7 @@ context('Insurance - Your business - Company details page - company house search
 
       cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].key(), SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), '-');
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), DEFAULT.EMPTY);
     });
   });
 });
