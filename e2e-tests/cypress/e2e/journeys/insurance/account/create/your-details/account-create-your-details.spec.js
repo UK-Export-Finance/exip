@@ -1,5 +1,5 @@
 import {
-  heading, submitButton, tempCreateAccountButton, inlineErrorMessage, noRadioInput,
+  heading, submitButton, tempCreateAccountButton, noRadioInput,
 } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
@@ -20,7 +20,6 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS;
 const {
   START,
   ELIGIBILITY: { ALREADY_HAVE_ACCOUNT },
-  ROOT: INSURANCE_ROOT,
   ACCOUNT: { CREATE: { YOUR_DETAILS, CONFIRM_EMAIL }, SIGN_IN },
 } = ROUTES;
 
@@ -36,7 +35,7 @@ const {
 const FIELD_STRINGS = ACCOUNT_FIELDS.CREATE.YOUR_DETAILS;
 
 const {
-  INSURANCE: { 
+  INSURANCE: {
     ACCOUNT: {
       CREATE: { YOUR_DETAILS: YOUR_DETAILS_ERROR_MESSAGES },
     },
@@ -112,7 +111,6 @@ context('Insurance - Account - Create - Your details page - TODO', () => {
   });
 
   it('renders intro text', () => {
-
     cy.checkText(yourDetailsPage.intro(), CONTENT_STRINGS.INTRO);
   });
 

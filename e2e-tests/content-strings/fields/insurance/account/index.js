@@ -1,7 +1,9 @@
 import { FIELD_IDS } from '../../../../constants';
 
 const { ACCOUNT } = FIELD_IDS.INSURANCE;
-const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD } = ACCOUNT;
+const {
+  FIRST_NAME, LAST_NAME, EMAIL, PASSWORD
+} = ACCOUNT;
 
 export const ACCOUNT_FIELDS = {
   CREATE: {
