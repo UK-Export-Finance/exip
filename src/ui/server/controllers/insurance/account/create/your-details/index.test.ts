@@ -1,4 +1,4 @@
-import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { PAGE_VARIABLES, TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
 import { PAGES } from '../../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
@@ -63,13 +63,19 @@ describe('controllers/insurance/account/create/your-details', () => {
     });
   });
 
+  describe('PAGE_CONTENT_STRINGS', () => {
+    it('should have the correct strings', () => {
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS);
+    });
+  });
+
   describe('get', () => {
     it('should render template', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS,
+          PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
@@ -84,7 +90,7 @@ describe('controllers/insurance/account/create/your-details', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS,
+            PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,

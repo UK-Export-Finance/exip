@@ -42,11 +42,12 @@ export const PAGE_VARIABLES = {
       ...FIELDS.CREATE.YOUR_DETAILS[PASSWORD],
     },
   },
-  // PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS,
   SIGN_IN_LINK: SIGN_IN.ROOT,
 };
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS;
+
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS;
 
 /**
  * get
@@ -58,7 +59,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS;
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
-      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS,
+      PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
     }),
     ...PAGE_VARIABLES,
@@ -77,7 +78,7 @@ export const post = (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS,
+        PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
       ...PAGE_VARIABLES,
