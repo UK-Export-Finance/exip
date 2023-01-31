@@ -91,7 +91,10 @@ describe('controllers/insurance/account/create/your-details', () => {
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
-        req.body = { [FIRST_NAME]: 'First' };
+        req.body = {
+          [FIRST_NAME]: 'First',
+          [LAST_NAME]: 'First',
+        };
       });
 
       it(`should redirect to ${CONFIRM_EMAIL}`, () => {
