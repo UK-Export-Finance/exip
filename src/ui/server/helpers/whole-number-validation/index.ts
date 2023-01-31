@@ -1,7 +1,7 @@
 import { RequestBody } from '../../../types';
 import generateValidationErrors from '../validation';
 import { isNumber, numberHasDecimal, isNumberBelowMinimum } from '../number';
-import removeCommasFromString from '../remove-commas-from-string';
+import { stripCommas } from '../string';
 
 /**
  * validates if field is whole number and above 0 and handles commas in the input
@@ -13,12 +13,13 @@ import removeCommasFromString from '../remove-commas-from-string';
  * @returns {object} errors
  */
 const wholeNumberValidation = (responseBody: RequestBody, errors: object, errorMessage: string, field: string) => {
-  // removes commas from validation test as commas are valid
-  const numberWithoutCommas = removeCommasFromString(responseBody[field]);
+  // remove commas from validation test as commas are valid
+  const numberWithoutCommas = stripCommas(responseBody[field]);
+  const isFieldANumber = isNumber(numberWithoutCommas);
   const hasDecimal = numberHasDecimal(Number(numberWithoutCommas));
   const isBelowMinimum = isNumberBelowMinimum(Number(numberWithoutCommas), 0);
 
-  if (!isNumber(numberWithoutCommas) || hasDecimal || isBelowMinimum) {
+  if (!isFieldANumber || hasDecimal || isBelowMinimum) {
     return generateValidationErrors(field, errorMessage, errors);
   }
 

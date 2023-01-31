@@ -61,10 +61,11 @@ interface ApplicationExporterCompany {
 interface ApplicationExporterBusiness {
   id: string;
   goodsOrServices?: string;
-  yearsExporting?: string;
-  employeesUK?: string;
-  employeesInternational?: string;
+  totalYearsExporting?: string;
+  totalEmployeesUK?: string;
+  totalEmployeesInternational?: string;
 }
+
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   policyAndExport: ApplicationPolicyAndExport;

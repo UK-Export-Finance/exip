@@ -18,8 +18,8 @@ export const EXPORTER_BUSINESS = {
   },
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES: 'goodsOrServicesSupplied',
-    YEARS_EXPORTING: 'yearsExporting',
-    EMPLOYEES_UK: 'employeesUK',
-    EMPLOYEES_INTERNATIONAL: 'employeesInternational',
+    YEARS_EXPORTING: 'totalYearsExporting',
+    EMPLOYEES_UK: 'totalEmployeesUK',
+    EMPLOYEES_INTERNATIONAL: 'totalEmployeesInternational',
   },
 };

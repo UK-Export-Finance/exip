@@ -1,8 +1,8 @@
 interface ExporterBusiness {
   goodsOrServicesSupplied?: string;
-  yearsExporting?: string;
-  employeesUK?: string;
-  employeesInternational?: string;
+  totalYearsExporting?: string;
+  totalEmployeesUK?: string;
+  totalEmployeesInternational?: string;
 }
 
 export { ExporterBusiness };

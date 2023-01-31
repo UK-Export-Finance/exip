@@ -255,9 +255,9 @@ var lists = {
       goodsOrServicesSupplied: (0, import_fields.text)({
         db: { nativeType: "VarChar(1000)" }
       }),
-      yearsExporting: (0, import_fields.integer)(),
-      employeesUK: (0, import_fields.integer)(),
-      employeesInternational: (0, import_fields.integer)()
+      totalYearsExporting: (0, import_fields.integer)(),
+      totalEmployeesUK: (0, import_fields.integer)(),
+      totalEmployeesInternational: (0, import_fields.integer)()
     },
     access: import_access.allowAll
   }),

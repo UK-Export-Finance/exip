@@ -55,7 +55,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  describe('save and back on an empty form', () => {
+  describe('When all fields are provided', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       saveAndBackButton().click();
 

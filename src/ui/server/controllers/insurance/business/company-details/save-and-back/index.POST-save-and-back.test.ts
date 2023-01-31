@@ -2,7 +2,7 @@ import { Request, Response } from '../../../../../../types';
 import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers } from '../../../../../test-mocks';
-import api from '../../../../../api';
+import mapAndSave from '../../map-and-save';
 
 const {
   EXPORTER_BUSINESS: {
@@ -18,8 +18,7 @@ describe('controllers/insurance/business/companies-details', () => {
   let req: Request;
   let res: Response;
 
-  const mockUpdateApplicationResponse = mockApplication;
-  let updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
+  let updateMapAndSave = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -27,7 +26,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
     res.locals.application = mockApplication;
 
-    api.keystone.application.update.exporterCompany = updateApplicationSpy;
+    mapAndSave.companyDetails = updateMapAndSave;
   });
 
   afterAll(() => {
@@ -57,7 +56,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
+        expect(updateMapAndSave).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -83,7 +82,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
+        expect(updateMapAndSave).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -102,8 +101,8 @@ describe('controllers/insurance/business/companies-details', () => {
     describe('when api.keystone.application.update.exporterCompany fails', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
-        updateApplicationSpy = jest.fn(() => Promise.reject());
-        api.keystone.application.update.exporterCompany = updateApplicationSpy;
+        updateMapAndSave = jest.fn(() => Promise.reject());
+        mapAndSave.companyDetails = updateMapAndSave;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {

@@ -79,9 +79,9 @@ const mockApplication = {
   exporterBusiness: {
     id: 'clcyyopna0158m8noaglyy9gg',
     goodsOrServicesSupplied: 'ABC',
-    yearsExporting: '20',
-    employeesInternational: '1000',
-    employeesUK: '400',
+    totalYearsExporting: '20',
+    totalEmployeesInternational: '1000',
+    totalEmployeesUK: '400',
   },
 };
 

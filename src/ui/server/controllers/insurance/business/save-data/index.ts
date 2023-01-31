@@ -41,7 +41,7 @@ const companyDetails = async (application: Application, formBody: RequestBody, e
  */
 const natureOfBusiness = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save
-  const dataToSave = getDataToSave(formBody, errorList);
+  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList));
 
   // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);

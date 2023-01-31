@@ -237,9 +237,9 @@ export const lists = {
       goodsOrServicesSupplied: text({
         db: { nativeType: 'VarChar(1000)' },
       }),
-      yearsExporting: integer(),
-      employeesUK: integer(),
-      employeesInternational: integer(),
+      totalYearsExporting: integer(),
+      totalEmployeesUK: integer(),
+      totalEmployeesInternational: integer(),
     },
     access: allowAll,
   }),

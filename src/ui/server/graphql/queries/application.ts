@@ -67,9 +67,9 @@ const applicationQuery = gql`
         exporterBusiness {
           id
           goodsOrServicesSupplied
-          yearsExporting
-          employeesUK
-          employeesInternational
+          totalYearsExporting
+          totalEmployeesUK
+          totalEmployeesInternational
         }
       }
     }

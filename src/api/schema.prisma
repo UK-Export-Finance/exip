@@ -73,9 +73,9 @@ model ExporterBusiness {
   application                       Application?  @relation("ExporterBusiness_application", fields: [applicationId], references: [id])
   applicationId                     String?       @map("application")
   goodsOrServicesSupplied           String        @default("") @mysql.VarChar(1000)
-  yearsExporting                    Int?
-  employeesUK                       Int?
-  employeesInternational            Int?
+  totalYearsExporting               Int?
+  totalEmployeesUK                  Int?
+  totalEmployeesInternational       Int?
   from_Application_exporterBusiness Application[] @relation("Application_exporterBusiness")
 
   @@index([applicationId])

@@ -2,7 +2,7 @@ import { Request, Response } from '../../../../../../types';
 import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { mockReq, mockRes, mockApplication, mockExporterBusiness } from '../../../../../test-mocks';
-import api from '../../../../../api';
+import mapAndSave from '../../map-and-save';
 
 const {
   EXPORTER_BUSINESS: {
@@ -15,8 +15,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
   let req: Request;
   let res: Response;
 
-  const mockUpdateApplicationResponse = mockApplication;
-  let updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
+  let updateMapAndSave = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -24,7 +23,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
 
     res.locals.application = mockApplication;
 
-    api.keystone.application.update.exporterBusiness = updateApplicationSpy;
+    mapAndSave.natureOfBusiness = updateMapAndSave;
   });
 
   afterAll(() => {
@@ -50,7 +49,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
 
         await post(req, res);
 
-        expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
+        expect(updateMapAndSave).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -74,7 +73,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
 
         await post(req, res);
 
-        expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
+        expect(updateMapAndSave).toHaveBeenCalledTimes(1);
       });
     });
 
@@ -93,8 +92,8 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
     describe('when api.keystone.application.update.exporterCompany fails', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
-        updateApplicationSpy = jest.fn(() => Promise.reject());
-        api.keystone.application.update.exporterBusiness = updateApplicationSpy;
+        updateMapAndSave = jest.fn(() => Promise.reject());
+        mapAndSave.natureOfBusiness = updateMapAndSave;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {

@@ -350,9 +350,9 @@ type ExporterBusiness {
   id: ID!
   application: Application
   goodsOrServicesSupplied: String
-  yearsExporting: Int
-  employeesUK: Int
-  employeesInternational: Int
+  totalYearsExporting: Int
+  totalEmployeesUK: Int
+  totalEmployeesInternational: Int
 }
 
 input ExporterBusinessWhereUniqueInput {
@@ -366,25 +366,25 @@ input ExporterBusinessWhereInput {
   id: IDFilter
   application: ApplicationWhereInput
   goodsOrServicesSupplied: StringFilter
-  yearsExporting: IntNullableFilter
-  employeesUK: IntNullableFilter
-  employeesInternational: IntNullableFilter
+  totalYearsExporting: IntNullableFilter
+  totalEmployeesUK: IntNullableFilter
+  totalEmployeesInternational: IntNullableFilter
 }
 
 input ExporterBusinessOrderByInput {
   id: OrderDirection
   goodsOrServicesSupplied: OrderDirection
-  yearsExporting: OrderDirection
-  employeesUK: OrderDirection
-  employeesInternational: OrderDirection
+  totalYearsExporting: OrderDirection
+  totalEmployeesUK: OrderDirection
+  totalEmployeesInternational: OrderDirection
 }
 
 input ExporterBusinessUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   goodsOrServicesSupplied: String
-  yearsExporting: Int
-  employeesUK: Int
-  employeesInternational: Int
+  totalYearsExporting: Int
+  totalEmployeesUK: Int
+  totalEmployeesInternational: Int
 }
 
 input ExporterBusinessUpdateArgs {
@@ -395,9 +395,9 @@ input ExporterBusinessUpdateArgs {
 input ExporterBusinessCreateInput {
   application: ApplicationRelateToOneForCreateInput
   goodsOrServicesSupplied: String
-  yearsExporting: Int
-  employeesUK: Int
-  employeesInternational: Int
+  totalYearsExporting: Int
+  totalEmployeesUK: Int
+  totalEmployeesInternational: Int
 }
 
 type ExporterCompanyAddress {

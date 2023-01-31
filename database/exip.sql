@@ -332,10 +332,10 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
 CREATE TABLE `ExporterBusiness` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `employeesInternational` int DEFAULT NULL,
-  `employeesUK` int DEFAULT NULL,
+  `totalEmployeesInternational` int DEFAULT NULL,
+  `totalEmployeesUK` int DEFAULT NULL,
   `goodsOrServicesSupplied` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `yearsExporting` int DEFAULT NULL,
+  `totalYearsExporting` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ExporterBusiness_application_idx` (`application`),
   CONSTRAINT `ExporterBusiness_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE

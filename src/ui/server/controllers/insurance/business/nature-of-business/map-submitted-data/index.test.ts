@@ -2,7 +2,7 @@ import { RequestBody } from '../../../../../../types';
 import { FIELD_IDS } from '../../../../../constants';
 import mapSubmittedData from '.';
 import { mockExporterBusiness } from '../../../../../test-mocks';
-import removeCommasFromString from '../../../../../helpers/remove-commas-from-string';
+import { stripCommas } from '../../../../../helpers/string';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
@@ -20,9 +20,9 @@ describe('controllers/insurance/business/nature-of-business/map-submitted-data',
 
       const expected = {
         [GOODS_OR_SERVICES]: mockBody[GOODS_OR_SERVICES],
-        [YEARS_EXPORTING]: removeCommasFromString(mockBody[YEARS_EXPORTING]),
-        [EMPLOYEES_UK]: removeCommasFromString(mockBody[EMPLOYEES_UK]),
-        [EMPLOYEES_INTERNATIONAL]: removeCommasFromString(mockBody[EMPLOYEES_INTERNATIONAL]),
+        [YEARS_EXPORTING]: stripCommas(mockBody[YEARS_EXPORTING]),
+        [EMPLOYEES_UK]: stripCommas(mockBody[EMPLOYEES_UK]),
+        [EMPLOYEES_INTERNATIONAL]: stripCommas(mockBody[EMPLOYEES_INTERNATIONAL]),
       };
 
       expect(response).toEqual(expected);
