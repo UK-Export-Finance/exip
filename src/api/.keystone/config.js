@@ -86,6 +86,7 @@ var lists = {
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
       }),
       policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
+      exporterBusiness: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
       exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" })
     },
     hooks: {
@@ -131,6 +132,14 @@ var lists = {
                 }
               }
             });
+            const { id: exporterBusinessId } = await context.db.ExporterBusiness.createOne({
+              data: {}
+            });
+            modifiedData.exporterBusiness = {
+              connect: {
+                id: exporterBusinessId
+              }
+            };
             const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
@@ -149,7 +158,7 @@ var lists = {
           try {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
-            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -190,6 +199,16 @@ var lists = {
                 }
               }
             });
+            await context.db.ExporterBusiness.updateOne({
+              where: { id: exporterBusinessId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                }
+              }
+            });
           } catch (err) {
             console.error("Error adding an application ID to relationships ", { err });
             return err;
@@ -217,18 +236,28 @@ var lists = {
         }
       }),
       creditPeriodWithBuyer: (0, import_fields.text)(),
-      policyCurrencyCode: (0, import_fields.text)(),
+      policyCurrencyCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      }),
       totalMonthsOfCover: (0, import_fields.integer)(),
       totalSalesToBuyer: (0, import_fields.integer)(),
       maximumBuyerWillOwe: (0, import_fields.integer)(),
-      goodsOrServicesDescription: (0, import_fields.text)(),
+      goodsOrServicesDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      }),
       finalDestinationCountryCode: (0, import_fields.text)()
     },
     access: import_access.allowAll
   },
   ExporterBusiness: (0, import_core.list)({
     fields: {
-      company: (0, import_fields.relationship)({ ref: "ExporterCompany" })
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      goodsOrServicesSupplied: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      }),
+      totalYearsExporting: (0, import_fields.integer)(),
+      totalEmployeesUK: (0, import_fields.integer)(),
+      totalEmployeesInternational: (0, import_fields.integer)()
     },
     access: import_access.allowAll
   }),
@@ -250,7 +279,6 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       registeredOfficeAddress: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress.exporterCompany" }),
-      business: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
       sicCodes: (0, import_fields.relationship)({
         ref: "ExporterCompanySicCode.exporterCompany",
         many: true

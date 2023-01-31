@@ -7,7 +7,7 @@ const {
   EXPORTER_BUSINESS: {
     COMPANY_HOUSE: { COMPANY_NUMBER },
     YOUR_COMPANY: { PHONE_NUMBER },
-    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES },
+    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK },
   },
   POLICY_AND_EXPORTS: {
     CONTRACT_POLICY: {
@@ -21,13 +21,23 @@ const {
 
 /**
  * NUMBER_FIELDS
+ * Add all number fields here
  * Explicit list of field IDs in the insurance forms that are number fields.
  * @returns {Array} Field IDs
  */
-const NUMBER_FIELDS = [TOTAL_CONTRACT_VALUE, TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE];
+const NUMBER_FIELDS = [
+  TOTAL_CONTRACT_VALUE,
+  TOTAL_MONTHS_OF_COVER,
+  TOTAL_SALES_TO_BUYER,
+  MAXIMUM_BUYER_WILL_OWE,
+  YEARS_EXPORTING,
+  EMPLOYEES_INTERNATIONAL,
+  EMPLOYEES_UK,
+];
 
 /**
  * STRING_NUMBER_FIELDS
+ * Add all string fields here that could be numbers
  * Explicit exemptions list of field IDs in the insurance forms that are string fields that could be submitted as a pure number.
  * If one of these fields is pure numbers, our default "sanitise data" behaviour is to transform a string number into a number type.
  * However, we do not want this to happen with these fields. This means that:
@@ -112,7 +122,7 @@ const shouldIncludeAndSanitiseField = (key: string, value: string) => {
   }
 
   // EMS-793: do not include number fields that are empty.
-  // empty number fields cannot be sent and saved via the API beacuse it is not a number.
+  // empty number fields cannot be sent and saved via the API because it is not a number.
   if (NUMBER_FIELDS.includes(key) && isEmptyString(value)) {
     return false;
   }

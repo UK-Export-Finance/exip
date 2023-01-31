@@ -1,15 +1,15 @@
-import { RequestBody } from '../../../../../types';
-import { FIELD_IDS } from '../../../../constants';
+import { RequestBody } from '../../../../../../types';
+import { FIELD_IDS } from '../../../../../constants';
 import mapSubmittedData from '.';
 import { mockBody } from './mocks';
-import { mockApplication } from '../../../../test-mocks';
-import getSicCodeIDsFromApplication from '../../../../helpers/get-sic-code-ids-from-application';
+import { mockApplication } from '../../../../../test-mocks';
+import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-ids-from-application';
 
 const {
   COMPANY_HOUSE: { INPUT, COMPANY_INCORPORATED },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
-describe('controllers/insurance/business/map-submitted-data', () => {
+describe('controllers/insurance/business/company-details/map-submitted-data', () => {
   describe(`when ${INPUT} success,and __typename fields are provided`, () => {
     it(`should return the formBody without ${INPUT} success,and __typename fields and change null fields in address to empty strings`, () => {
       const response = mapSubmittedData(mockBody, mockApplication);

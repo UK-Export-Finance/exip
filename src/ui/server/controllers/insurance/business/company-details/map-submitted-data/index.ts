@@ -1,7 +1,7 @@
-import { RequestBody, Application } from '../../../../../types';
-import { objectHasProperty } from '../../../../helpers/object';
-import { FIELD_IDS } from '../../../../constants';
-import getSicCodeIDsFromApplication from '../../../../helpers/get-sic-code-ids-from-application';
+import { RequestBody, Application } from '../../../../../../types';
+import { objectHasProperty } from '../../../../../helpers/object';
+import { FIELD_IDS } from '../../../../../constants';
+import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-ids-from-application';
 
 const {
   EXPORTER_BUSINESS: {

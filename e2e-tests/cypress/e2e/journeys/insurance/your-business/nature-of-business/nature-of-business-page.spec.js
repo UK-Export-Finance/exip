@@ -5,6 +5,7 @@ import { PAGES, BUTTONS, LINKS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
+import application from '../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
 
@@ -17,6 +18,15 @@ const {
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
+const {
+  ROOT,
+  START,
+  EXPORTER_BUSINESS: {
+    TURNOVER,
+    NATURE_OF_BUSINESS,
+  },
+} = ROUTES.INSURANCE;
+
 const insuranceStart = ROUTES.INSURANCE.START;
 
 const { taskList } = partials.insurancePartials;
@@ -27,7 +37,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
@@ -38,7 +48,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
     getReferenceNumber().then((id) => {
       referenceNumber = id;
 
-      const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
 
       cy.url().should('eq', url);
     });
@@ -133,5 +143,25 @@ context('Insurance - Your business - Nature of your business page - As an Export
     cy.checkText(submitButton(), BUTTONS.CONTINUE);
 
     cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+  });
+
+  describe('form submission', () => {
+    it(`should redirect to ${TURNOVER}`, () => {
+      cy.completeAndSubmitNatureOfYourBusiness();
+
+      const expectedUrl = `${Cypress.config('baseUrl')}${TURNOVER}`;
+      cy.url().should('eq', expectedUrl);
+    });
+  });
+
+  describe('when going back to the page', () => {
+    it('should have the submitted values', () => {
+      cy.navigateToUrl(`${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`);
+
+      natureOfBusiness[GOODS_OR_SERVICES].input().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
+      natureOfBusiness[YEARS_EXPORTING].input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
+      natureOfBusiness[EMPLOYEES_UK].input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
+      natureOfBusiness[EMPLOYEES_INTERNATIONAL].input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
+    });
   });
 });

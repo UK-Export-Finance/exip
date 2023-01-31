@@ -79,4 +79,13 @@ describe('server/helpers/whole-number-validation', () => {
       expect(response).toEqual(mockErrors);
     });
   });
+
+  describe('number has a comma', () => {
+    it('should not return a validation error', () => {
+      mockBody.testField = '3,000,000';
+      const response = wholeNumberValidation(mockBody, mockErrors, errorMessage, FIELD);
+
+      expect(response).toEqual(mockErrors);
+    });
+  });
 });

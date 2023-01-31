@@ -117,7 +117,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     });
   });
 
-  describe(`when ${YEARS_EXPORTING} is correctly entered`, () => {
+  describe(`when ${YEARS_EXPORTING} is correctly entered as a whole number`, () => {
     it('should not display validation errors', () => {
       cy.navigateToUrl(url);
 
@@ -125,6 +125,19 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       const field = natureOfBusiness[fieldId];
 
       field.input().clear().type('5');
+      submitButton().click();
+      partials.errorSummaryListItems().should('have.length', 3);
+    });
+  });
+
+  describe(`when ${YEARS_EXPORTING} is correctly entered with a comma`, () => {
+    it('should not display validation errors', () => {
+      cy.navigateToUrl(url);
+
+      const fieldId = YEARS_EXPORTING;
+      const field = natureOfBusiness[fieldId];
+
+      field.input().clear().type('5,00');
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 3);
     });

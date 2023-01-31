@@ -30,6 +30,7 @@ export const lists = {
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA,
       }),
       policyAndExport: relationship({ ref: 'PolicyAndExport' }),
+      exporterBusiness: relationship({ ref: 'ExporterBusiness' }),
       exporterCompany: relationship({ ref: 'ExporterCompany' }),
     },
     // TODO: add logs to the hooks
@@ -91,6 +92,17 @@ export const lists = {
               },
             });
 
+            // generate and attach a new 'exporter business' relationship
+            const { id: exporterBusinessId } = await context.db.ExporterBusiness.createOne({
+              data: {},
+            });
+
+            modifiedData.exporterBusiness = {
+              connect: {
+                id: exporterBusinessId,
+              },
+            };
+
             // add dates
             const now = new Date();
             modifiedData.createdAt = now;
@@ -117,7 +129,7 @@ export const lists = {
 
             const applicationId = item.id;
 
-            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -166,6 +178,18 @@ export const lists = {
                 },
               },
             });
+
+            // add the application ID to the exporter business entry.
+            await context.db.ExporterBusiness.updateOne({
+              where: { id: exporterBusinessId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId,
+                  },
+                },
+              },
+            });
           } catch (err) {
             console.error('Error adding an application ID to relationships ', { err });
 
@@ -194,18 +218,28 @@ export const lists = {
         },
       }),
       creditPeriodWithBuyer: text(),
-      policyCurrencyCode: text(),
+      policyCurrencyCode: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
       totalMonthsOfCover: integer(),
       totalSalesToBuyer: integer(),
       maximumBuyerWillOwe: integer(),
-      goodsOrServicesDescription: text(),
+      goodsOrServicesDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
       finalDestinationCountryCode: text(),
     },
     access: allowAll,
   },
   ExporterBusiness: list({
     fields: {
-      company: relationship({ ref: 'ExporterCompany' }),
+      application: relationship({ ref: 'Application' }),
+      goodsOrServicesSupplied: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      totalYearsExporting: integer(),
+      totalEmployeesUK: integer(),
+      totalEmployeesInternational: integer(),
     },
     access: allowAll,
   }),
@@ -227,7 +261,6 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       registeredOfficeAddress: relationship({ ref: 'ExporterCompanyAddress.exporterCompany' }),
-      business: relationship({ ref: 'ExporterBusiness' }),
       sicCodes: relationship({
         ref: 'ExporterCompanySicCode.exporterCompany',
         many: true,
