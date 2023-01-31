@@ -167,7 +167,7 @@ context('Insurance - Your business - Company details page - company house search
   });
 
   describe('when the company does not have a sic code', () => {
-    it('should display your business summary list with a "-" for sic code when coming back to the company details page', () => {
+    it(`should display your business summary list with a ${DEFAULT.EMPTY} for sic code when coming back to the company details page`, () => {
       companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER_NO_SIC_CODE);
       saveAndBackButton().click();
 
