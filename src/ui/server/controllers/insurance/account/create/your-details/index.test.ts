@@ -50,7 +50,6 @@ describe('controllers/insurance/account/create/your-details', () => {
             ...FIELDS.CREATE.YOUR_DETAILS[PASSWORD],
           },
         },
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS,
         SIGN_IN_LINK: SIGN_IN.ROOT,
       };
 
@@ -69,7 +68,10 @@ describe('controllers/insurance/account/create/your-details', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-        ...insuranceCorePageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+        ...insuranceCorePageVariables({
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS,
+          BACK_LINK: req.headers.referer,
+        }),
         ...PAGE_VARIABLES,
       });
     });
@@ -81,7 +83,10 @@ describe('controllers/insurance/account/create/your-details', () => {
         post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-          ...insuranceCorePageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS,
+            BACK_LINK: req.headers.referer,
+          }),
           ...PAGE_VARIABLES,
           submittedValues: req.body,
           validationErrors: generateValidationErrors(req.body),
