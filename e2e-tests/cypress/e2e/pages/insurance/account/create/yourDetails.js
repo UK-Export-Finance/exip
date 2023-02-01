@@ -33,6 +33,13 @@ const yourDetailsPage = {
     label: () => cy.get(`[data-cy="${PASSWORD}-label"]`),
     input: () => cy.get(`[data-cy="${PASSWORD}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${PASSWORD}-error-message"]`),
+    hint: {
+      intro: () => cy.get(`[data-cy="${PASSWORD}-hint-intro"]`),
+      listItem1: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-1"]`),
+      listItem2: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-2"]`),
+      listItem3: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-3"]`),
+      listItem4: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-4"]`),
+    },
   },
 };
 
