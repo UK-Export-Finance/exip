@@ -1,4 +1,5 @@
 import { mapCompaniesHouseFields, CompanyHouseResponse } from './mapCompaniesHouseFields';
+import createFullTimestampFromDayAndMonth from './create-full-timestamp-from-day-month';
 
 describe('mapCompaniesHouseFields()', () => {
   const companyHouseResponseMock = {
@@ -18,6 +19,12 @@ describe('mapCompaniesHouseFields()', () => {
     sic_codes: ['1'],
     success: true,
     apiError: false,
+    accounts: {
+      accounting_reference_date: {
+        day: '1',
+        month: '12',
+      },
+    },
   } as CompanyHouseResponse;
 
   describe('when some fields from the response are null', () => {
@@ -39,6 +46,10 @@ describe('mapCompaniesHouseFields()', () => {
         companyNumber: companyHouseResponseMock.company_number,
         dateOfCreation: companyHouseResponseMock.date_of_creation,
         sicCodes: companyHouseResponseMock.sic_codes,
+        financialYearEndDate: createFullTimestampFromDayAndMonth(
+          companyHouseResponseMock.accounts.accounting_reference_date.day,
+          companyHouseResponseMock.accounts.accounting_reference_date.month,
+        ),
       };
 
       expect(result).toEqual(expected);
@@ -69,6 +80,10 @@ describe('mapCompaniesHouseFields()', () => {
         companyNumber: companyHouseResponseMock.company_number,
         dateOfCreation: companyHouseResponseMock.date_of_creation,
         sicCodes: companyHouseResponseMock.sic_codes,
+        financialYearEndDate: createFullTimestampFromDayAndMonth(
+          companyHouseResponseMock.accounts.accounting_reference_date.day,
+          companyHouseResponseMock.accounts.accounting_reference_date.month,
+        ),
       };
 
       expect(result).toEqual(expected);

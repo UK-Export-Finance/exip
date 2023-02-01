@@ -13,3 +13,8 @@ export const NATURE_OF_YOUR_BUSINESS = {
   ...SHARED,
   PAGE_TITLE: 'Nature of your business',
 };
+
+export const TURNOVER = {
+  ...SHARED,
+  PAGE_TITLE: 'Turnover',
+};

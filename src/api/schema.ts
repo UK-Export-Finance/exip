@@ -284,6 +284,7 @@ export const lists = {
       }),
       companyWebsite: text(),
       phoneNumber: text(),
+      financialYearEndDate: timestamp(),
     },
     access: allowAll,
   }),

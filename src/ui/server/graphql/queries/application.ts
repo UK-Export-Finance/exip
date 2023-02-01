@@ -48,6 +48,7 @@ const applicationQuery = gql`
           hasTradingAddress
           dateOfCreation
           phoneNumber
+          financialYearEndDate
           sicCodes {
             id
             sicCode

@@ -13,6 +13,10 @@ const EXPORTER_BUSINESS = {
     ...SHARED,
     PAGE_TITLE: 'Nature of your business',
   },
+  TURNOVER: {
+    ...SHARED,
+    PAGE_TITLE: 'Turnover',
+  },
 };
 
 export default EXPORTER_BUSINESS;

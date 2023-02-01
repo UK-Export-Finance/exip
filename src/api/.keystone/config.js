@@ -301,7 +301,8 @@ var lists = {
         db: { isNullable: true }
       }),
       companyWebsite: (0, import_fields.text)(),
-      phoneNumber: (0, import_fields.text)()
+      phoneNumber: (0, import_fields.text)(),
+      financialYearEndDate: (0, import_fields.timestamp)()
     },
     access: import_access.allowAll
   }),
@@ -408,6 +409,15 @@ var import_notifications_node_client = require("notifications-node-client");
 var import_axios = __toESM(require("axios"));
 var import_dotenv = __toESM(require("dotenv"));
 
+// helpers/create-full-timestamp-from-day-month.ts
+var createFullTimestampFromDayAndMonth = (day, month) => {
+  if (day && month) {
+    return new Date(`${new Date().getFullYear()}-${month}-${day}`);
+  }
+  return null;
+};
+var create_full_timestamp_from_day_month_default = createFullTimestampFromDayAndMonth;
+
 // helpers/mapCompaniesHouseFields.ts
 var mapCompaniesHouseFields = (companiesHouseResponse) => {
   return {
@@ -424,7 +434,11 @@ var mapCompaniesHouseFields = (companiesHouseResponse) => {
     },
     companyNumber: companiesHouseResponse.company_number,
     dateOfCreation: companiesHouseResponse.date_of_creation,
-    sicCodes: companiesHouseResponse.sic_codes
+    sicCodes: companiesHouseResponse.sic_codes,
+    financialYearEndDate: create_full_timestamp_from_day_month_default(
+      companiesHouseResponse.accounts?.accounting_reference_date?.day,
+      companiesHouseResponse.accounts?.accounting_reference_date?.month
+    )
   };
 };
 
@@ -479,6 +493,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         companyNumber: String
         dateOfCreation: String
         sicCodes: [String]
+        financialYearEndDate: DateTime
         success: Boolean
         apiError: Boolean
       }
@@ -531,6 +546,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         hasTradingName: String
         companyWebsite: String
         phoneNumber: String
+        financialYearEndDate: DateTime
         oldSicCodes: [OldSicCodes]
       }
 

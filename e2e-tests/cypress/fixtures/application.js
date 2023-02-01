@@ -28,6 +28,9 @@ const {
         EMPLOYEES_UK,
         EMPLOYEES_INTERNATIONAL,
       },
+      TURNOVER: {
+        FINANCIAL_YEAR_END_DATE,
+      },
     },
   },
 } = FIELD_IDS;
@@ -62,6 +65,7 @@ const application = {
   },
   EXPORTER_COMPANY: {
     [COMPANY_SIC]: ['64999'],
+    [FINANCIAL_YEAR_END_DATE]: '31 July',
   },
   EXPORTER_BUSINESS: {
     [GOODS_OR_SERVICES]: 'abc',

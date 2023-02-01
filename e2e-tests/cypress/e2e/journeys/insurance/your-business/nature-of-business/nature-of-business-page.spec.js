@@ -35,6 +35,7 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 context('Insurance - Your business - Nature of your business page - As an Exporter I want to enter the nature of my business So that UKEF can have clarity on the type of business that I do while processing my Export Insurance Application', () => {
   let referenceNumber;
+  let turnoverUrl;
 
   before(() => {
     cy.navigateToUrl(START);
@@ -49,6 +50,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
       referenceNumber = id;
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      turnoverUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
 
       cy.url().should('eq', url);
     });
@@ -149,8 +151,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
     it(`should redirect to ${TURNOVER}`, () => {
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${TURNOVER}`;
-      cy.url().should('eq', expectedUrl);
+      cy.url().should('eq', turnoverUrl);
     });
   });
 
