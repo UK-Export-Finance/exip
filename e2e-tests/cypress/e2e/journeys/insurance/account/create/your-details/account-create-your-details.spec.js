@@ -135,7 +135,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
 
     field.input().should('exist');
-    
+
     cy.checkText(field.hint.intro(), FIELD_STRINGS[fieldId].HINT.INTRO);
     cy.checkText(field.hint.listItem1(), FIELD_STRINGS[fieldId].HINT.RULES[0]);
     cy.checkText(field.hint.listItem2(), FIELD_STRINGS[fieldId].HINT.RULES[1]);
