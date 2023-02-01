@@ -448,9 +448,7 @@ CREATE TABLE IF NOT EXISTS `ReferenceNumber` (
   PRIMARY KEY (`id`),
   KEY `ReferenceNumber_application_idx` (`application`),
   CONSTRAINT `ReferenceNumber_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-ALTER TABLE `ReferenceNumber` AUTO_INCREMENT = 10000;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 # Dump of table User
 # ------------------------------------------------------------
