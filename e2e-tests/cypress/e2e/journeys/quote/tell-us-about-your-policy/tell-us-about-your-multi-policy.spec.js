@@ -168,9 +168,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       const expectedHintText = `${HINT[0].text} ${HINT[1].text} ${HINT[2].text}`;
       cy.checkText(field.hint(), expectedHintText);
 
-      const expectedHintHref = HINT[1].href;
-
-      field.hintLink().should('have.attr', 'href', expectedHintHref);
+      field.hintLink().should('have.attr', 'href', LINKS.EXTERNAL.NBI_FORM);
 
       field.input().should('exist');
 
