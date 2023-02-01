@@ -16,7 +16,7 @@ const {
  * @returns {Object} populatedData
  */
 const mapSubmittedData = (formBody: RequestBody): object => {
-  const { __typename, _csrf, ...populatedData } = formBody;
+  const { _csrf, ...populatedData } = formBody;
 
   if (objectHasProperty(populatedData, YEARS_EXPORTING)) {
     populatedData[YEARS_EXPORTING] = stripCommas(populatedData[YEARS_EXPORTING]);

@@ -102,6 +102,16 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
         expect(result).toEqual(expected);
       });
     });
+
+    describe('when there are no sic codes (undefined)', () => {
+      it('should return default empty string', () => {
+        const result = generateSicCodesValue(undefined);
+
+        const expected = DEFAULT.EMPTY;
+
+        expect(result).toEqual(expected);
+      });
+    });
   });
 
   describe('generateFields', () => {

@@ -12,7 +12,6 @@ describe('controllers/insurance/business/nature-of-business/map-submitted-data',
     it('should return the formBody with the commas replaced', () => {
       const mockBody = {
         _csrf: '1234',
-        __typename: 'ExporterBusinessResponse',
         ...mockExporterBusiness,
       } as RequestBody;
 
@@ -33,7 +32,6 @@ describe('controllers/insurance/business/nature-of-business/map-submitted-data',
     it('should return the formBody', () => {
       const mockBody = {
         _csrf: '1234',
-        __typename: 'ExporterBusinessResponse',
         [GOODS_OR_SERVICES]: 'ABC',
         [YEARS_EXPORTING]: '20',
         [EMPLOYEES_INTERNATIONAL]: '1000',
@@ -57,7 +55,6 @@ describe('controllers/insurance/business/nature-of-business/map-submitted-data',
     it('should return the formBody with the populated fields populated, and the remaining as empty strings', () => {
       const mockBody = {
         _csrf: '1234',
-        __typename: 'ExporterBusinessResponse',
         [GOODS_OR_SERVICES]: 'ABC',
         [YEARS_EXPORTING]: '',
         [EMPLOYEES_INTERNATIONAL]: '',
@@ -81,7 +78,6 @@ describe('controllers/insurance/business/nature-of-business/map-submitted-data',
     it('should return the formBody with fields as empty strings', () => {
       const mockBody = {
         _csrf: '1234',
-        __typename: 'ExporterBusinessResponse',
         [GOODS_OR_SERVICES]: '',
         [YEARS_EXPORTING]: '',
         [EMPLOYEES_INTERNATIONAL]: '',

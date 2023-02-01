@@ -1,8 +1,11 @@
 import { companyDetails } from '../../../../pages/your-business';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { ERROR_MESSAGES, DEFAULT } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import partials from '../../../../partials';
-import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER } from '../../../../../../constants';
+import { saveAndBackButton } from '../../../../pages/shared';
+import {
+  ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_NO_SIC_CODE,
+} from '../../../../../../constants';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const {
@@ -22,6 +25,10 @@ const COMPANY_HOUSE_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const SUMMARY_LIST_FIELDS = FIELDS[SUMMARY_LIST];
 
 const COMPANIES_HOUSE_INPUT_FIELD_ID = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT;
+
+const { taskList } = partials.insurancePartials;
+
+const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 context('Insurance - Your business - Company details page - company house search - As an Exporter I want to enter my business\'s Companies House Registration Number (CRN)', () => {
   let referenceNumber;
@@ -156,6 +163,25 @@ context('Insurance - Your business - Company details page - company house search
       cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].key(), SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
 
       cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), '64999');
+    });
+  });
+
+  describe('when the company does not have a sic code', () => {
+    it(`should display your business summary list with a ${DEFAULT.EMPTY} for sic code when coming back to the company details page`, () => {
+      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER_NO_SIC_CODE);
+      saveAndBackButton().click();
+
+      task.link().click();
+
+      cy.checkText(companyDetails.yourBusinessHeading(), SUMMARY_LIST_FIELDS.LABEL);
+
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_NUMBER].key(), SUMMARY_LIST_FIELDS.COMPANY_NUMBER.text);
+
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_NUMBER].value(), COMPANIES_HOUSE_NUMBER_NO_SIC_CODE);
+
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].key(), SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
+
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), DEFAULT.EMPTY);
     });
   });
 });
