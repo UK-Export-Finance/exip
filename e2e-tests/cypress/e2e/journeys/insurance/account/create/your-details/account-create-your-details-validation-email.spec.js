@@ -24,6 +24,20 @@ const {
 
 const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT;
 
+const submitAndAssertErrors = (fieldValue) => {
+  const field = yourDetailsPage[EMAIL];
+
+  field.input().clear().type(fieldValue, { delay: 0 });
+  submitButton().click();
+
+  cy.checkText(
+    partials.errorSummaryListItems().eq(2),
+    expectedMessage,
+  );
+
+  cy.checkText(field.errorMessage(), `Error: ${expectedMessage}`);
+};
+
 context('Insurance - Account - Create - Your details page - form validation - email', () => {
   before(() => {
     cy.navigateToUrl(START);
@@ -40,21 +54,11 @@ context('Insurance - Account - Create - Your details page - form validation - em
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  const field = yourDetailsPage[EMAIL];
-
   describe('when email does not contain an @ symbol', () => {
     it('should render a validation error', () => {
       const invalidEmail = 'mockemail.com';
 
-      field.input().clear().type(invalidEmail, { delay: 0 });
-      submitButton().click();
-
-      cy.checkText(
-        partials.errorSummaryListItems().eq(2),
-        expectedMessage,
-      );
-
-      cy.checkText(field.errorMessage(), `Error: ${expectedMessage}`);
+      submitAndAssertErrors(invalidEmail);
     });
   });
 
@@ -62,15 +66,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
     it('should render a validation error', () => {
       const invalidEmail = 'mock@emailcom';
 
-      field.input().clear().type(invalidEmail, { delay: 0 });
-      submitButton().click();
-
-      cy.checkText(
-        partials.errorSummaryListItems().eq(2),
-        expectedMessage,
-      );
-
-      cy.checkText(field.errorMessage(), `Error: ${expectedMessage}`);
+      submitAndAssertErrors(invalidEmail);
     });
   });
 
@@ -78,15 +74,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
     it('should render a validation error', () => {
       const invalidEmail = 'mock@email .com';
 
-      field.input().clear().type(invalidEmail, { delay: 0 });
-      submitButton().click();
-
-      cy.checkText(
-        partials.errorSummaryListItems().eq(2),
-        expectedMessage,
-      );
-
-      cy.checkText(field.errorMessage(), `Error: ${expectedMessage}`);
+      submitAndAssertErrors(invalidEmail);
     });
   });
 
@@ -94,15 +82,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
     it('should render a validation error', () => {
       const invalidEmail = 'mock@email.';
 
-      field.input().clear().type(invalidEmail, { delay: 0 });
-      submitButton().click();
-
-      cy.checkText(
-        partials.errorSummaryListItems().eq(2),
-        expectedMessage,
-      );
-
-      cy.checkText(field.errorMessage(), `Error: ${expectedMessage}`);
+      submitAndAssertErrors(invalidEmail);
     });
   });
 });
