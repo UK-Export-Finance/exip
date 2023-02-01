@@ -1,4 +1,5 @@
 export * from './api';
+export * from './account';
 export * from './application';
 export * from './currencies';
 export * from './field-ids';
