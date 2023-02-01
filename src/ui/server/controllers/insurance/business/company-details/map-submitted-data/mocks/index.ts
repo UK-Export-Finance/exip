@@ -9,9 +9,11 @@ const {
 export const mockBody = {
   _csrf: '1234',
   [INPUT]: '8989898',
+  __typename: 'CompaniesHouseResponse',
   ...mockCompany,
   address: {
     ...mockCompany.registeredOfficeAddress,
+    __typename: 'CompanyAddress',
   },
   companyNumber: 8989898,
 } as RequestBody;

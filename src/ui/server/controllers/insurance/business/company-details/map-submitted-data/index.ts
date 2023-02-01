@@ -15,7 +15,7 @@ const {
  * @returns {Object} populatedData
  */
 const mapSubmittedData = (formBody: RequestBody, application: Application): object => {
-  const { success, _csrf, apiError, ...populatedData } = formBody;
+  const { __typename, success, _csrf, apiError, ...populatedData } = formBody;
 
   if (!populatedData.registeredOfficeAddress) {
     // create empty exporterCompanyAddress if not part of request
