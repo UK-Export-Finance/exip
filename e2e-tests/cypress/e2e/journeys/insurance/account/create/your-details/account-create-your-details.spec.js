@@ -127,7 +127,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     field.input().should('exist');
   });
 
-  it('renders `password` label and input', () => {
+  it('renders `password` label, hint and input', () => {
     const fieldId = PASSWORD;
     const field = yourDetailsPage[fieldId];
 
@@ -135,6 +135,12 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
 
     field.input().should('exist');
+
+    cy.checkText(field.hint.intro(), FIELD_STRINGS[fieldId].HINT.INTRO);
+    cy.checkText(field.hint.listItem1(), FIELD_STRINGS[fieldId].HINT.RULES[0]);
+    cy.checkText(field.hint.listItem2(), FIELD_STRINGS[fieldId].HINT.RULES[1]);
+    cy.checkText(field.hint.listItem3(), FIELD_STRINGS[fieldId].HINT.RULES[2]);
+    cy.checkText(field.hint.listItem4(), FIELD_STRINGS[fieldId].HINT.RULES[3]);
   });
 
   it('renders a submit button', () => {
@@ -171,6 +177,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
       yourDetailsPage[FIRST_NAME].input().type(account[FIRST_NAME], { delay: 0 });
       yourDetailsPage[LAST_NAME].input().type(account[LAST_NAME], { delay: 0 });
       yourDetailsPage[EMAIL].input().type(account[EMAIL], { delay: 0 });
+      yourDetailsPage[PASSWORD].input().type(account[PASSWORD], { delay: 0 });
 
       submitButton().click();
 

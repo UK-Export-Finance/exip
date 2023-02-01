@@ -1,9 +1,9 @@
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/account';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import emailValidation from '../../../../../../../shared-validation/email';
+import passwordValidation from '../../../../../../../shared-validation/password';
 import { RequestBody } from '../../../../../../../../types';
 
-const { EMAIL: FIELD_ID } = FIELD_IDS;
+const { PASSWORD: FIELD_ID } = FIELD_IDS;
 
 const {
   ACCOUNT: {
@@ -14,17 +14,17 @@ const {
 } = ERROR_MESSAGES.INSURANCE;
 
 /**
- * emailRules
- * Check submitted form data for errors with the email field
+ * passwordRules
+ * Check submitted form data for errors with the password field
  * Returns generateValidationErrors if there are any errors.
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */
-const emailRules = (formBody: RequestBody, errors: object) => {
+const passwordRules = (formBody: RequestBody, errors: object) => {
   const fieldValue = formBody[FIELD_ID];
 
-  return emailValidation(FIELD_ID, fieldValue, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
+  return passwordValidation(FIELD_ID, fieldValue, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
 };
 
-export default emailRules;
+export default passwordRules;

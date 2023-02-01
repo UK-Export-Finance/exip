@@ -48,7 +48,7 @@ context('Insurance - Account - Create - Your details page - form validation', ()
     });
 
     it('sHould render validation errors for all required fields', () => {
-      const TOTAL_REQUIRED_FIELDS = 3;
+      const TOTAL_REQUIRED_FIELDS = 4;
 
       partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
