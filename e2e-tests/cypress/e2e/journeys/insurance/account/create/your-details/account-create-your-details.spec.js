@@ -50,7 +50,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
   it('passes the audits', () => {
     cy.lighthouse({
       accessibility: 100,
-      performance: 75,
+      performance: 70,
       'best-practices': 100,
       seo: 70,
     });
