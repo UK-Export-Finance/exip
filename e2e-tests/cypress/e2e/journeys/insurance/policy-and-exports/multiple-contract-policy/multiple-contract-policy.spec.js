@@ -195,7 +195,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     cy.checkText(field.hint.fillInFormLink(), HINT.FILL_IN_FORM.TEXT);
 
-    field.hint.fillInFormLink().should('have.attr', 'href', HINT.FILL_IN_FORM.HREF);
+    field.hint.fillInFormLink().should('have.attr', 'href', LINKS.EXTERNAL.PROPOSAL_FORM);
 
     cy.checkText(field.hint.noDecimals(), HINT.NO_DECIMALS);
 

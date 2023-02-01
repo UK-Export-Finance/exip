@@ -173,7 +173,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       hintContent.FILL_IN_FORM.TEXT,
     );
 
-    field.hint.link().should('have.attr', 'href', hintContent.FILL_IN_FORM.HREF);
+    field.hint.link().should('have.attr', 'href', LINKS.EXTERNAL.PROPOSAL_FORM);
 
     cy.checkText(
       field.hint.noDecimals(),

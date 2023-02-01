@@ -1,4 +1,5 @@
 import insurancePartials from '../../e2e/partials/insurance';
+import { LINKS } from '../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS } from '../../../content-strings/fields/insurance/policy-and-exports';
 import { SUPPORTED_CURRENCIES } from '../../../constants';
 import { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
@@ -33,7 +34,7 @@ const checkPolicyCurrencyCodeInput = () => {
     hintContent.APPLY_USING_FORM.TEXT,
   );
 
-  field.hint.link().should('have.attr', 'href', hintContent.APPLY_USING_FORM.HREF);
+  field.hint.link().should('have.attr', 'href', LINKS.EXTERNAL.PROPOSAL_FORM);
 
   field.input().should('exist');
 
