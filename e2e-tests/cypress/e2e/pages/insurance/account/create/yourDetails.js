@@ -1,4 +1,3 @@
-// TODO: remove INSURANCE_FIELD_IDS as FIELD_IDS from other places
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 
 const {
@@ -32,6 +31,7 @@ const yourDetailsPage = {
   [PASSWORD]: {
     label: () => cy.get(`[data-cy="${PASSWORD}-label"]`),
     input: () => cy.get(`[data-cy="${PASSWORD}-input"]`),
+    revealButton: () => cy.get('.moj-password-reveal__button'),
     errorMessage: () => cy.get(`[data-cy="${PASSWORD}-error-message"]`),
     hint: {
       intro: () => cy.get(`[data-cy="${PASSWORD}-hint-intro"]`),
