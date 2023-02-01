@@ -7,6 +7,8 @@ const init = () => {
   initAll();
 
   window.MOJFrontend = MOJFrontend;
+
+  return MOJFrontend;
 };
 
 export default init();
