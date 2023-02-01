@@ -108,17 +108,17 @@
       </div>
     </div>
 
-    {% set passwordFieldId = FIELDS.PASSWORD.ID %}
+    {% set PASSWORD_FIELD_ID = FIELDS.PASSWORD.ID %}
 
     {% set passwordHintHtml %}
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-three-quarters-from-desktop">
 
-          <p class="govuk-hint" data-cy="{{ passwordFieldId }}-hint-intro">{{ FIELDS.PASSWORD.HINT.INTRO }}</p>
+          <p class="govuk-hint" data-cy="{{ PASSWORD_FIELD_ID }}-hint-intro">{{ FIELDS.PASSWORD.HINT.INTRO }}</p>
 
           <ul>
             {% for rule in FIELDS.PASSWORD.HINT.RULES %}
-              <li data-cy="{{ passwordFieldId }}-hint-list-item-{{ loop.index }}">{{ rule }}</li>
+              <li data-cy="{{ PASSWORD_FIELD_ID }}-hint-list-item-{{ loop.index }}">{{ rule }}</li>
             {% endfor %}
           </ul>
 
@@ -131,26 +131,25 @@
         text: FIELDS.PASSWORD.LABEL,
         classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
         attributes: {
-          id: passwordFieldId + '-label',
-          'data-cy': passwordFieldId + '-label'
+          id: PASSWORD_FIELD_ID + '-label',
+          'data-cy': PASSWORD_FIELD_ID + '-label'
         }
       },
       attributes: {
-        'data-cy': passwordFieldId + '-input',
+        'data-cy': PASSWORD_FIELD_ID + '-input',
         'data-module': 'moj-password-reveal'
       },
-      id: passwordFieldId,
-      name: passwordFieldId,
-      type: 'password',
+      id: PASSWORD_FIELD_ID,
+      name: PASSWORD_FIELD_ID,
       hint: {
         html: passwordHintHtml
       },
       classes: "govuk-!-width-one-half",
-      value: submittedValues[passwordFieldId],
-      errorMessage: validationErrors.errorList[passwordFieldId] and {
-        text: validationErrors.errorList[passwordFieldId].text,
+      value: submittedValues[PASSWORD_FIELD_ID],
+      errorMessage: validationErrors.errorList[PASSWORD_FIELD_ID] and {
+        text: validationErrors.errorList[PASSWORD_FIELD_ID].text,
         attributes: {
-          "data-cy": passwordFieldId + "-error-message"
+          "data-cy": PASSWORD_FIELD_ID + "-error-message"
         }
       }
     }) }}
