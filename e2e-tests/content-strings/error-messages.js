@@ -189,6 +189,9 @@ export const ERROR_MESSAGES = {
           [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
             IS_EMPTY: 'Enter your last name',
           },
+          [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
+            INCORRECT_FORMAT: 'Enter your email address in the correct format - for example name@example.com',
+          },
         },
       },
     },
