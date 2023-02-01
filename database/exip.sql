@@ -359,6 +359,7 @@ CREATE TABLE IF NOT EXISTS `ExporterCompany` (
   `companyWebsite` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `phoneNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	`registeredOfficeAddress` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+	`financialYearEndDate` datetime(3) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ExporterCompany_address_key` (`registeredOfficeAddress`),
   KEY `ExporterCompany_application_idx` (`application`),
