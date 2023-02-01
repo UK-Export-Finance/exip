@@ -127,20 +127,60 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     field.input().should('exist');
   });
 
-  it('renders `password` label, hint and input', () => {
+  describe('password', () => {
     const fieldId = PASSWORD;
     const field = yourDetailsPage[fieldId];
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
+    it('renders a label, hint, and input', () => {
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
 
-    field.input().should('exist');
-    
-    cy.checkText(field.hint.intro(), FIELD_STRINGS[fieldId].HINT.INTRO);
-    cy.checkText(field.hint.listItem1(), FIELD_STRINGS[fieldId].HINT.RULES[0]);
-    cy.checkText(field.hint.listItem2(), FIELD_STRINGS[fieldId].HINT.RULES[1]);
-    cy.checkText(field.hint.listItem3(), FIELD_STRINGS[fieldId].HINT.RULES[2]);
-    cy.checkText(field.hint.listItem4(), FIELD_STRINGS[fieldId].HINT.RULES[3]);
+      field.input().should('exist');
+
+      cy.checkText(field.hint.intro(), FIELD_STRINGS[fieldId].HINT.INTRO);
+      cy.checkText(field.hint.listItem1(), FIELD_STRINGS[fieldId].HINT.RULES[0]);
+      cy.checkText(field.hint.listItem2(), FIELD_STRINGS[fieldId].HINT.RULES[1]);
+      cy.checkText(field.hint.listItem3(), FIELD_STRINGS[fieldId].HINT.RULES[2]);
+      cy.checkText(field.hint.listItem4(), FIELD_STRINGS[fieldId].HINT.RULES[3]);
+    });
+
+    describe('reveal button', () => {
+      const expectedShowText = `${FIELD_STRINGS[fieldId].REVEAL.SHOW} password`;
+      const expectedHideText = `${FIELD_STRINGS[fieldId].REVEAL.HIDE} password`;
+
+      it('should be rendered', () => {
+        field.revealButton().should('exist');
+
+        cy.checkText(field.revealButton(), expectedShowText);
+      });
+
+      describe('when clicking the reveal button', () => {
+        it('should change the input type from `password` to `text`', () => {
+          field.input().should('have.attr', 'type', 'password');
+          field.input().type('Mock', { delay: 0 });
+
+          field.revealButton().click();
+
+          field.input().should('have.attr', 'type', 'text');
+        });
+
+        it('should change the reveal button text', () => {
+          cy.checkText(field.revealButton(), expectedHideText);
+        });
+
+        describe('when clicking the reveal button for a second time', () => {
+          it('should change the input type from `password`', () => {
+            field.revealButton().click();
+
+            field.input().should('have.attr', 'type', 'password');
+          });
+
+          it('should change the reveal button text', () => {
+            cy.checkText(field.revealButton(), expectedShowText);
+          });
+        });
+      });
+    });
   });
 
   it('renders a submit button', () => {
@@ -177,7 +217,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
       yourDetailsPage[FIRST_NAME].input().type(account[FIRST_NAME], { delay: 0 });
       yourDetailsPage[LAST_NAME].input().type(account[LAST_NAME], { delay: 0 });
       yourDetailsPage[EMAIL].input().type(account[EMAIL], { delay: 0 });
-      yourDetailsPage[PASSWORD].input().type(account[PASSWORD], { delay: 0 });
+      yourDetailsPage[PASSWORD].input().clear().type(account[PASSWORD], { delay: 0 });
 
       submitButton().click();
 

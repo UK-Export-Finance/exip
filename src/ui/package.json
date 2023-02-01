@@ -60,6 +60,7 @@
     "is-url": "^1.2.4",
     "joi": "^17.7.0",
     "joi-password": "^4.0.0",
+    "jquery": "^3.6.3",
     "morgan": "1.10.0",
     "node-notifier": "^10.0.1",
     "nodemon": "2.0.20",

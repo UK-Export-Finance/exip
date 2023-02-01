@@ -21,6 +21,10 @@ export const ACCOUNT_FIELDS = {
           INTRO: 'Your password must contain at least 14 characters and have:',
           RULES: ['an uppercase letter', 'a lowercase letter', 'a number', 'a special character'],
         },
+        REVEAL: {
+          SHOW: 'Show',
+          HIDE: 'Hide',
+        },
       },
     },
   },

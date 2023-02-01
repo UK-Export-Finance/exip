@@ -136,10 +136,12 @@
         }
       },
       attributes: {
-        'data-cy': passwordFieldId + '-input'
+        'data-cy': passwordFieldId + '-input',
+        'data-module': 'moj-password-reveal'
       },
       id: passwordFieldId,
       name: passwordFieldId,
+      type: 'password',
       hint: {
         html: passwordHintHtml
       },
@@ -169,5 +171,17 @@
     <a class="govuk-button govuk-button--secondary" href="{{ SIGN_IN_LINK }}" data-cy="sign-in">{{ CONTENT_STRINGS.BUTTONS.SIGN_IN }}</a>
 
   </form>
+
+  <script src="/assets/js/mojFrontend.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    var PasswordReveal = window.MOJFrontend.PasswordReveal
+    var $passwordReveal = document.querySelector('[data-module="moj-password-reveal"]')
+
+    if ($passwordReveal) {
+      new PasswordReveal($passwordReveal)
+    }
+  </script>
+
 
 {% endblock %}
