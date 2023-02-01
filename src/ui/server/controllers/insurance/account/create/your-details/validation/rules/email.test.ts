@@ -13,7 +13,7 @@ const {
   },
 } = ERROR_MESSAGES.INSURANCE;
 
-describe('controllers/insurance/account/create/your-details/validation/rules/first-name', () => {
+describe('controllers/insurance/account/create/your-details/validation/rules/email', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
