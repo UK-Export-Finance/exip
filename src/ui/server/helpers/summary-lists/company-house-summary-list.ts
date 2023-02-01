@@ -42,8 +42,8 @@ const generateAddressHTML = (address: object): string => {
  * @param {String} Sic codes
  * @returns {String} Sic codes as a single string or default empty string
  */
-const generateSicCodesValue = (sicCodes: Array<string>): string => {
-  if (sicCodes.length) {
+const generateSicCodesValue = (sicCodes?: Array<string>): string => {
+  if (sicCodes && sicCodes.length) {
     return sicCodes.toString();
   }
 

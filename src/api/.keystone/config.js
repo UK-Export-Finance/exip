@@ -571,16 +571,18 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
             data: address
           });
           const mappedSicCodes = mapSicCodes(company, sicCodes);
-          if (mappedSicCodes.length && oldSicCodes.length) {
+          if (exporterCompany && oldSicCodes && oldSicCodes.length) {
             await context.db.ExporterCompanySicCode.deleteMany({
               where: oldSicCodes
             });
           }
-          mappedSicCodes.forEach(async (sicCodeObj) => {
-            await context.db.ExporterCompanySicCode.createOne({
-              data: sicCodeObj
+          if (mappedSicCodes && mappedSicCodes.length) {
+            mappedSicCodes.forEach(async (sicCodeObj) => {
+              await context.db.ExporterCompanySicCode.createOne({
+                data: sicCodeObj
+              });
             });
-          });
+          }
           return {
             id: variables.companyId
           };

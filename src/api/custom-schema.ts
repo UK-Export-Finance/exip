@@ -137,19 +137,21 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
 
             const mappedSicCodes = mapSicCodes(company, sicCodes);
 
-            // if sic codes are part of the update and there are previous sic codes in application
-            if (mappedSicCodes.length && oldSicCodes.length) {
+            // if the update contains exporterCompany and there are oldSicCodes in the db, delete them
+            if (exporterCompany && oldSicCodes && oldSicCodes.length) {
               // delete already existing sic codes from oldSicCodes
               await context.db.ExporterCompanySicCode.deleteMany({
                 where: oldSicCodes,
               });
             }
 
-            mappedSicCodes.forEach(async (sicCodeObj: SicCodes) => {
-              await context.db.ExporterCompanySicCode.createOne({
-                data: sicCodeObj,
+            if (mappedSicCodes && mappedSicCodes.length) {
+              mappedSicCodes.forEach(async (sicCodeObj: SicCodes) => {
+                await context.db.ExporterCompanySicCode.createOne({
+                  data: sicCodeObj,
+                });
               });
-            });
+            }
 
             return {
               id: variables.companyId,

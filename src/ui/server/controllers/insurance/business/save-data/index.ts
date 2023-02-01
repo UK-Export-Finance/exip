@@ -46,11 +46,11 @@ const natureOfBusiness = async (application: Application, formBody: RequestBody,
   // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
-  const exporterBusiness = application.exporterBusiness?.id;
+  const exporterBusinessId = application.exporterBusiness?.id;
 
   try {
     // send the form data to the API for database update.
-    const saveResponse = await api.keystone.application.update.exporterBusiness(exporterBusiness, sanitisedData);
+    const saveResponse = await api.keystone.application.update.exporterBusiness(exporterBusinessId, sanitisedData);
     return saveResponse;
   } catch (err) {
     throw new Error("Updating application's natureOfBusiness");
