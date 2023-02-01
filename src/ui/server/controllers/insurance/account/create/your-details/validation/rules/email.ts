@@ -15,7 +15,7 @@ const {
 
 /**
  * emailRules
- * Check submitted form data for errors with the first name field
+ * Check submitted form data for errors with the email field
  * Returns generateValidationErrors if there are any errors.
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
