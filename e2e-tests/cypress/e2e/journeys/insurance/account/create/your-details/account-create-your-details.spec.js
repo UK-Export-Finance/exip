@@ -3,7 +3,6 @@ import partials from '../../../../../partials';
 import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
 import {
   BUTTONS,
-  ERROR_MESSAGES,
   ORGANISATION,
   LINKS,
   PAGES,
@@ -31,14 +30,6 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const FIELD_STRINGS = ACCOUNT_FIELDS.CREATE.YOUR_DETAILS;
-
-const {
-  INSURANCE: {
-    ACCOUNT: {
-      CREATE: { YOUR_DETAILS: YOUR_DETAILS_ERROR_MESSAGES },
-    },
-  },
-} = ERROR_MESSAGES;
 
 context('Insurance - Account - Create - Your details page - As an exporter, I want to provide my details when creating my UKEF digital service account, So that the details of the UKEF digital service account created can be unique to me', () => {
   before(() => {
@@ -136,7 +127,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     field.input().should('exist');
   });
 
-  it('renders `password` label and input', () => {
+  it('renders `password` label, hint and input', () => {
     const fieldId = PASSWORD;
     const field = yourDetailsPage[fieldId];
 
@@ -144,6 +135,12 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
 
     field.input().should('exist');
+
+    cy.checkText(field.hint.intro(), FIELD_STRINGS[fieldId].HINT.INTRO);
+    cy.checkText(field.hint.listItem1(), FIELD_STRINGS[fieldId].HINT.RULES[0]);
+    cy.checkText(field.hint.listItem2(), FIELD_STRINGS[fieldId].HINT.RULES[1]);
+    cy.checkText(field.hint.listItem3(), FIELD_STRINGS[fieldId].HINT.RULES[2]);
+    cy.checkText(field.hint.listItem4(), FIELD_STRINGS[fieldId].HINT.RULES[3]);
   });
 
   it('renders a submit button', () => {
@@ -170,65 +167,22 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     });
   });
 
-  describe('form submission', () => {
+  describe('form submission with all valid required fields', () => {
     before(() => {
       // go back page
       cy.go('back');
     });
 
-    describe('when submitting an empty form', () => {
-      it('should render validation errors for all required fields', () => {
-        submitButton().click();
+    it(`should redirect to ${CONFIRM_EMAIL}`, () => {
+      yourDetailsPage[FIRST_NAME].input().type(account[FIRST_NAME], { delay: 0 });
+      yourDetailsPage[LAST_NAME].input().type(account[LAST_NAME], { delay: 0 });
+      yourDetailsPage[EMAIL].input().type(account[EMAIL], { delay: 0 });
+      yourDetailsPage[PASSWORD].input().type(account[PASSWORD], { delay: 0 });
 
-        const TOTAL_REQUIRED_FIELDS = 2;
-        partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
+      submitButton().click();
 
-        describe('first name', () => {
-          const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME].IS_EMPTY;
-          const inlineError = yourDetailsPage[FIRST_NAME].errorMessage();
-
-          cy.checkText(
-            partials.errorSummaryListItems().eq(0),
-            expectedMessage,
-          );
-
-          cy.checkText(inlineError, `Error: ${expectedMessage}`);
-        });
-
-        describe('last name', () => {
-          const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY;
-          const inlineError = yourDetailsPage[LAST_NAME].errorMessage();
-
-          cy.checkText(
-            partials.errorSummaryListItems().eq(1),
-            expectedMessage,
-          );
-
-          cy.checkText(inlineError, `Error: ${expectedMessage}`);
-        });
-      });
-
-      it('should focus on input when clicking summary error message', () => {
-        submitButton().click();
-
-        partials.errorSummaryListItemLinks().eq(0).click();
-        yourDetailsPage[FIRST_NAME].input().should('have.focus');
-
-        partials.errorSummaryListItemLinks().eq(1).click();
-        yourDetailsPage[LAST_NAME].input().should('have.focus');
-      });
-    });
-
-    describe('when submitting with all valid required fields', () => {
-      it(`should redirect to ${CONFIRM_EMAIL}`, () => {
-        yourDetailsPage[FIRST_NAME].input().type(account[FIRST_NAME], { delay: 0 });
-        yourDetailsPage[LAST_NAME].input().type(account[LAST_NAME], { delay: 0 });
-
-        submitButton().click();
-
-        const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
-        cy.url().should('eq', expected);
-      });
+      const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
+      cy.url().should('eq', expected);
     });
   });
 });

@@ -105,31 +105,53 @@
           }
         }) }}
 
-        {{ govukInput({
-          label: {
-            text: FIELDS.PASSWORD.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              id: FIELDS.PASSWORD.ID + '-label',
-              'data-cy': FIELDS.PASSWORD.ID + '-label'
-            }
-          },
-          attributes: {
-            'data-cy': FIELDS.PASSWORD.ID + '-input'
-          },
-          id: FIELDS.PASSWORD.ID,
-          name: FIELDS.PASSWORD.ID,
-          value: submittedValues[FIELDS.PASSWORD.ID],
-          errorMessage: validationErrors.errorList[FIELDS.PASSWORD.ID] and {
-            text: validationErrors.errorList[FIELDS.PASSWORD.ID].text,
-            attributes: {
-              "data-cy": FIELDS.PASSWORD.ID + "-error-message"
-            }
-          }
-        }) }}
-
       </div>
     </div>
+
+    {% set PASSWORD_FIELD_ID = FIELDS.PASSWORD.ID %}
+
+    {% set passwordHintHtml %}
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters-from-desktop">
+
+          <p class="govuk-hint" data-cy="{{ PASSWORD_FIELD_ID }}-hint-intro">{{ FIELDS.PASSWORD.HINT.INTRO }}</p>
+
+          <ul>
+            {% for rule in FIELDS.PASSWORD.HINT.RULES %}
+              <li data-cy="{{ PASSWORD_FIELD_ID }}-hint-list-item-{{ loop.index }}">{{ rule }}</li>
+            {% endfor %}
+          </ul>
+
+        </div>
+      </div>
+    {% endset %}
+
+    {{ govukInput({
+      label: {
+        text: FIELDS.PASSWORD.LABEL,
+        classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+        attributes: {
+          id: PASSWORD_FIELD_ID + '-label',
+          'data-cy': PASSWORD_FIELD_ID + '-label'
+        }
+      },
+      attributes: {
+        'data-cy': PASSWORD_FIELD_ID + '-input'
+      },
+      id: PASSWORD_FIELD_ID,
+      name: PASSWORD_FIELD_ID,
+      hint: {
+        html: passwordHintHtml
+      },
+      classes: "govuk-!-width-one-half",
+      value: submittedValues[PASSWORD_FIELD_ID],
+      errorMessage: validationErrors.errorList[PASSWORD_FIELD_ID] and {
+        text: validationErrors.errorList[PASSWORD_FIELD_ID].text,
+        attributes: {
+          "data-cy": PASSWORD_FIELD_ID + "-error-message"
+        }
+      }
+    }) }}
 
     <div class="govuk-button-group">
       {{ govukButton({
