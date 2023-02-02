@@ -3,7 +3,7 @@ import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import mapFinancialYearEndDate from './helpers/map-financial-year-end-date';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { FINANCIAL_YEAR_END_DATE } = EXPORTER_BUSINESS.TURNOVER;
@@ -43,20 +43,12 @@ const get = (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const { exporterCompany } = application;
-
-    // values from application if they exist
-    const submittedValues = {
-      // if FINANCIAL_YEAR_END_DATE exists, then will display in correct format or will not render section if null
-      [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(exporterCompany[FINANCIAL_YEAR_END_DATE]),
-    };
-
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: TURNOVER,
         BACK_LINK: req.headers.referer,
       }),
-      submittedValues,
+      application: mapApplicationToFormFields(application),
       ...pageVariables(application.referenceNumber),
     });
   } catch (error) {

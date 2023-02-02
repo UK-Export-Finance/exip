@@ -3,7 +3,6 @@ import {
   getDate,
   getMonth,
   getYear,
-  sub,
 } from 'date-fns';
 import { multipleContractPolicyPage } from '../../e2e/pages/insurance/policy-and-export';
 import partials from '../../e2e/partials';
@@ -131,8 +130,8 @@ const checkValidation = {
     },
   },
   notInTheFuture: () => {
-    const date = new Date();
-    const yesterday = sub(date, { days: 1, months: 1 });
+    const today = new Date();
+    const yesterday = today.setDate(today.getDate() - 1);
 
     field.dayInput().clear().type(getDate(yesterday));
     field.monthInput().clear().type(getMonth(yesterday));

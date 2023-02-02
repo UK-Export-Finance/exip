@@ -4,7 +4,7 @@ import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import formatDate from '../../../../helpers/date/format-date';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
@@ -60,47 +60,18 @@ describe('controllers/insurance/business/turnover', () => {
 
   describe('get', () => {
     describe('when the application exists', () => {
-      describe(`when there is ${FINANCIAL_YEAR_END_DATE}`, () => {
-        it('should render the nature-of-business template with correct variables', () => {
-          res.locals.application = mockApplication;
+      it('should render the nature-of-business template with correct variables', () => {
+        res.locals.application = mockApplication;
 
-          const submittedValues = {
-            [FINANCIAL_YEAR_END_DATE]: formatDate(mockApplication.exporterCompany[FINANCIAL_YEAR_END_DATE], 'd MMMM'),
-          };
+        get(req, res);
 
-          get(req, res);
-
-          expect(res.render).toHaveBeenCalledWith(TURNOVER_TEMPLATE, {
-            ...insuranceCorePageVariables({
-              PAGE_CONTENT_STRINGS: TURNOVER,
-              BACK_LINK: req.headers.referer,
-            }),
-            submittedValues,
-            ...pageVariables(mockApplication.referenceNumber),
-          });
-        });
-      });
-
-      describe(`when there is no ${FINANCIAL_YEAR_END_DATE}`, () => {
-        it('should render the nature-of-business template with correct variables', () => {
-          const applicationWithoutYearEndDate = mockApplication;
-          applicationWithoutYearEndDate.exporterCompany[FINANCIAL_YEAR_END_DATE] = null;
-          res.locals.application = applicationWithoutYearEndDate;
-
-          const submittedValues = {
-            [FINANCIAL_YEAR_END_DATE]: null,
-          };
-
-          get(req, res);
-
-          expect(res.render).toHaveBeenCalledWith(TURNOVER_TEMPLATE, {
-            ...insuranceCorePageVariables({
-              PAGE_CONTENT_STRINGS: TURNOVER,
-              BACK_LINK: req.headers.referer,
-            }),
-            submittedValues,
-            ...pageVariables(applicationWithoutYearEndDate.referenceNumber),
-          });
+        expect(res.render).toHaveBeenCalledWith(TURNOVER_TEMPLATE, {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS: TURNOVER,
+            BACK_LINK: req.headers.referer,
+          }),
+          application: mapApplicationToFormFields(mockApplication),
+          ...pageVariables(mockApplication.referenceNumber),
         });
       });
     });

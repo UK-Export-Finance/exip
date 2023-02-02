@@ -36,7 +36,7 @@
         <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
       </div>
 
-      {% if submittedValues[FIELDS.FINANCIAL_YEAR_END_DATE.ID] %}
+      {% if submittedValues[FIELDS.FINANCIAL_YEAR_END_DATE.ID] or application.exporterCompany[FIELDS.FINANCIAL_YEAR_END_DATE.ID] %}
         <div class="govuk-grid-column-three-quarters-from-desktop">
           <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.FINANCIAL_YEAR_END_DATE.ID}}-label">{{ FIELDS.FINANCIAL_YEAR_END_DATE.LABEL }}</h2>
 
@@ -47,7 +47,7 @@
             }
           }) }}
 
-          <p class="govuk-body" data-cy="{{FIELDS.FINANCIAL_YEAR_END_DATE.ID}}">{{ submittedValues[FIELDS.FINANCIAL_YEAR_END_DATE.ID] }}</p>
+          <p class="govuk-body" data-cy="{{FIELDS.FINANCIAL_YEAR_END_DATE.ID}}">{{ submittedValues[FIELDS.FINANCIAL_YEAR_END_DATE.ID] or application.exporterCompany[FIELDS.FINANCIAL_YEAR_END_DATE.ID] }}</p>
         </div>
       {% endif %}
 
