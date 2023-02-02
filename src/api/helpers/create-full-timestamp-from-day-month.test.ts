@@ -20,7 +20,7 @@ describe('api/helpers/create-date-from-numbers', () => {
     });
   });
 
-  describe('when provided dates are correct', () => {
+  describe('when provided dates are provided', () => {
     it('should return timestamp', () => {
       const result = createTimestampFromNumbers(day, month);
 
