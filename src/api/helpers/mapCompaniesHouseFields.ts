@@ -1,3 +1,4 @@
+import createFullTimestampFromDayAndMonth from './create-full-timestamp-from-day-month';
 interface CompaniesHouseAddress {
   care_of: string | null;
   premises: string | null;
@@ -9,6 +10,15 @@ interface CompaniesHouseAddress {
   country: string | null;
 }
 
+interface CompaniesHouseAccountReferenceDate {
+  month: string;
+  day: string;
+}
+
+interface CompaniesHouseAccounts {
+  accounting_reference_date: CompaniesHouseAccountReferenceDate;
+}
+
 interface CompanyHouseResponse {
   company_name: string;
   registered_office_address: CompaniesHouseAddress;
@@ -17,6 +27,7 @@ interface CompanyHouseResponse {
   sic_codes: Array<string>;
   success: boolean;
   apiError: boolean;
+  accounts: CompaniesHouseAccounts;
 }
 
 /**
@@ -39,6 +50,11 @@ const mapCompaniesHouseFields = (companiesHouseResponse: CompanyHouseResponse) =
     companyNumber: companiesHouseResponse.company_number,
     dateOfCreation: companiesHouseResponse.date_of_creation,
     sicCodes: companiesHouseResponse.sic_codes,
+    // creates timestamp for financialYearEndDate from day and month if exist
+    financialYearEndDate: createFullTimestampFromDayAndMonth(
+      companiesHouseResponse.accounts?.accounting_reference_date?.day,
+      companiesHouseResponse.accounts?.accounting_reference_date?.month,
+    ),
   };
 };
 

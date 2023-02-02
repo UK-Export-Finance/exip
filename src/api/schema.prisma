@@ -108,6 +108,7 @@ model ExporterCompany {
   hasTradingName                   String?
   companyWebsite                   String                   @default("")
   phoneNumber                      String                   @default("")
+  financialYearEndDate             DateTime?
   from_Application_exporterCompany Application[]            @relation("Application_exporterCompany")
 
   @@index([applicationId])

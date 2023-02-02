@@ -31,6 +31,9 @@ const EXPORTER_BUSINESS = {
     EMPLOYEES_UK: 'totalEmployeesUK',
     EMPLOYEES_INTERNATIONAL: 'totalEmployeesInternational',
   },
+  TURNOVER: {
+    FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',
+  },
 };
 
 export default EXPORTER_BUSINESS;

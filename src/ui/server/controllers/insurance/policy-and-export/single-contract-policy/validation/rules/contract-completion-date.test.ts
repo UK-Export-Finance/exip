@@ -113,8 +113,8 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
 
   describe('when the date is in the past', () => {
     it('should return validation error', () => {
-      const date = new Date();
-      const yesterday = sub(date, { days: 1, months: 1 });
+      const today = new Date();
+      const yesterday = today.setDate(today.getDate() - 1);
 
       const mockSubmittedData = {
         [`${CONTRACT_COMPLETION_DATE}-day`]: getDate(yesterday),

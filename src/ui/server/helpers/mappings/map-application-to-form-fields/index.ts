@@ -2,6 +2,7 @@ import { Application } from '../../../../types';
 import { FIELD_IDS } from '../../../constants';
 import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
+import mapFinancialYearEndDate from '../map-financial-year-end-date';
 
 const {
   SUBMISSION_DEADLINE,
@@ -10,6 +11,9 @@ const {
       REQUESTED_START_DATE,
       SINGLE: { CONTRACT_COMPLETION_DATE },
     },
+  },
+  EXPORTER_BUSINESS: {
+    TURNOVER: { FINANCIAL_YEAR_END_DATE },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -42,6 +46,13 @@ const mapApplicationToFormFields = (application: Application): object => {
       mapped.policyAndExport = {
         ...mapped.policyAndExport,
         ...getDateFieldsFromTimestamp(timestamp, CONTRACT_COMPLETION_DATE),
+      };
+    }
+
+    if (application.exporterCompany && application.exporterCompany[FINANCIAL_YEAR_END_DATE]) {
+      mapped.exporterCompany = {
+        ...mapped.exporterCompany,
+        [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(application.exporterCompany[FINANCIAL_YEAR_END_DATE]),
       };
     }
 

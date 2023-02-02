@@ -1,4 +1,4 @@
-import { add, getDate, getMonth, getYear, sub } from 'date-fns';
+import { add, getDate, getMonth, getYear } from 'date-fns';
 import requestedStartDateRules from '.';
 import { FIELD_IDS } from '../../constants';
 import { ERROR_MESSAGES } from '../../content-strings';
@@ -108,8 +108,8 @@ describe('shared-validation/requested-start-date', () => {
 
   describe('when the date is in the past', () => {
     it('should return validation error', () => {
-      const date = new Date();
-      const yesterday = sub(date, { days: 1, months: 1 });
+      const today = new Date();
+      const yesterday = today.setDate(today.getDate() - 1);
 
       const mockSubmittedData = {
         [`${FIELD_ID}-day`]: getDate(yesterday),

@@ -487,6 +487,7 @@ type ExporterCompany {
   hasTradingName: String
   companyWebsite: String
   phoneNumber: String
+  financialYearEndDate: DateTime
 }
 
 input ExporterCompanyWhereUniqueInput {
@@ -508,6 +509,7 @@ input ExporterCompanyWhereInput {
   hasTradingName: StringNullableFilter
   companyWebsite: StringFilter
   phoneNumber: StringFilter
+  financialYearEndDate: DateTimeNullableFilter
 }
 
 input ExporterCompanySicCodeManyRelationFilter {
@@ -525,6 +527,7 @@ input ExporterCompanyOrderByInput {
   hasTradingName: OrderDirection
   companyWebsite: OrderDirection
   phoneNumber: OrderDirection
+  financialYearEndDate: OrderDirection
 }
 
 input ExporterCompanyUpdateInput {
@@ -538,6 +541,7 @@ input ExporterCompanyUpdateInput {
   hasTradingName: String
   companyWebsite: String
   phoneNumber: String
+  financialYearEndDate: DateTime
 }
 
 input ExporterCompanyAddressRelateToOneForUpdateInput {
@@ -569,6 +573,7 @@ input ExporterCompanyCreateInput {
   hasTradingName: String
   companyWebsite: String
   phoneNumber: String
+  financialYearEndDate: DateTime
 }
 
 input ExporterCompanyAddressRelateToOneForCreateInput {
@@ -1113,6 +1118,7 @@ type CompaniesHouseResponse {
   companyNumber: String
   dateOfCreation: String
   sicCodes: [String]
+  financialYearEndDate: DateTime
   success: Boolean
   apiError: Boolean
 }
@@ -1154,5 +1160,6 @@ input ExporterCompanyAndCompanyAddressInput {
   hasTradingName: String
   companyWebsite: String
   phoneNumber: String
+  financialYearEndDate: DateTime
   oldSicCodes: [OldSicCodes]
 }

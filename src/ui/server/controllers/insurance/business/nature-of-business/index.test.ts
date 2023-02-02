@@ -12,7 +12,7 @@ const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
 
 const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
-const { NAURE_OF_YOUR_BUSINESS: NAURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
+const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
@@ -41,7 +41,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(NAURE_OF_YOUR_BUSINESS_TEMPLATE);
+      expect(TEMPLATE).toEqual(NATURE_OF_YOUR_BUSINESS_TEMPLATE);
     });
   });
 
@@ -93,7 +93,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
         get(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(NAURE_OF_YOUR_BUSINESS_TEMPLATE, {
+        expect(res.render).toHaveBeenCalledWith(NATURE_OF_YOUR_BUSINESS_TEMPLATE, {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS: NATURE_OF_YOUR_BUSINESS,
             BACK_LINK: req.headers.referer,
@@ -155,7 +155,8 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(TURNOVER_ROOT);
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ROOT}`;
+        expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
       it('should call mapAndSave.companyDetails once with natureOfBusiness and application', async () => {
