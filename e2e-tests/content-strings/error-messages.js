@@ -137,7 +137,7 @@ export const ERROR_MESSAGES = {
             NOT_A_NUMBER: 'Enter your contract value as a whole number - do not enter decimals',
             NOT_A_WHOLE_NUMBER: 'Enter your contract value as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'Your contract value must be 1 or more',
-            ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £499.999. If you need cover for more than this, fill in this form instead.',
+            ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £499.999',
           },
         },
         MULTIPLE: {

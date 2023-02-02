@@ -110,7 +110,7 @@ export const POLICY_AND_EXPORT_FIELDS = {
           NEED_MORE_COVER: 'If you need cover for more than £499,999, ',
           FILL_IN_FORM: {
             TEXT: 'fill in this form instead.',
-            HREF: LINKS.EXTERNAL.FULL_APPLICATION,
+            HREF: LINKS.EXTERNAL.PROPOSAL_FORM,
           },
           NO_DECIMALS: 'Enter a whole number - do not enter decimals.',
         },
