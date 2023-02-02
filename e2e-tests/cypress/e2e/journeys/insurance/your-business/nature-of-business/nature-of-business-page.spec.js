@@ -49,10 +49,10 @@ context('Insurance - Your business - Nature of your business page - As an Export
     getReferenceNumber().then((id) => {
       referenceNumber = id;
 
-      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      const natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
       turnoverUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
 
-      cy.url().should('eq', url);
+      cy.url().should('eq', natureOfBusinessUrl);
     });
   });
 

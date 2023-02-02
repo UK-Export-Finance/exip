@@ -3,7 +3,7 @@ import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import chooseDateFormat from '../../../../helpers/date/choose-date-format';
+import mapFinancialYearEndDate from './helpers/map-financial-year-end-date';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { FINANCIAL_YEAR_END_DATE } = EXPORTER_BUSINESS.TURNOVER;
@@ -26,10 +26,7 @@ const pageVariables = (referenceNumber: number) => ({
       ...TURNOVER_FIELDS[FINANCIAL_YEAR_END_DATE],
     },
   },
-  POST_ROUTES: {
-    NATURE_OF_BUSINESS: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
-    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
-  },
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
 });
 
 /**
@@ -51,7 +48,7 @@ const get = (req: Request, res: Response) => {
     // values from application if they exist
     const submittedValues = {
       // if FINANCIAL_YEAR_END_DATE exists, then will display in correct format or will not render section if null
-      [FINANCIAL_YEAR_END_DATE]: exporterCompany[FINANCIAL_YEAR_END_DATE] ? chooseDateFormat(exporterCompany[FINANCIAL_YEAR_END_DATE], 'd MMMM') : null,
+      [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(exporterCompany[FINANCIAL_YEAR_END_DATE]),
     };
 
     return res.render(TEMPLATE, {

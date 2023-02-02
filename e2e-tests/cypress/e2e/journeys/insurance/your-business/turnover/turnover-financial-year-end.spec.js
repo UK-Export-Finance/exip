@@ -23,7 +23,10 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.exporterBusiness;
 
-context('Insurance - Your business - Turnover page - when financialYearEnd exists', () => {
+const fieldId = FINANCIAL_YEAR_END_DATE;
+const field = turnover[fieldId];
+
+context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, () => {
   let referenceNumber;
 
   before(() => {
@@ -51,9 +54,6 @@ context('Insurance - Your business - Turnover page - when financialYearEnd exist
   });
 
   it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
-    const fieldId = FINANCIAL_YEAR_END_DATE;
-    const field = turnover[fieldId];
-
     field.value().should('exist');
     cy.checkText(field.value(), application.EXPORTER_COMPANY[fieldId]);
 
@@ -63,7 +63,7 @@ context('Insurance - Your business - Turnover page - when financialYearEnd exist
   });
 });
 
-context('Insurance - Your business - Turnover page - when financialYearEnd does not exist', () => {
+context(`Insurance - Your business - Turnover page - when ${fieldId} does not exist`, () => {
   let referenceNumber;
 
   before(() => {
@@ -88,9 +88,6 @@ context('Insurance - Your business - Turnover page - when financialYearEnd does 
   });
 
   it(`should not display ${FINANCIAL_YEAR_END_DATE} section`, () => {
-    const fieldId = FINANCIAL_YEAR_END_DATE;
-    const field = turnover[fieldId];
-
     field.value().should('not.exist');
     field.hint().should('not.exist');
     field.label().should('not.exist');

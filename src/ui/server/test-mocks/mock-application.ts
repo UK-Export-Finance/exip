@@ -74,7 +74,7 @@ const mockApplication = {
       premises: '',
       __typename: 'ExporterCompanyAddress',
     },
-    financialYearEndDate: '2023-07-31 00:00:00.000',
+    financialYearEndDate: new Date(),
     __typename: 'ExporterCompany',
   },
   exporterBusiness: {

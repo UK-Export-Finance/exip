@@ -101,7 +101,7 @@ const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = application;
+    const { referenceNumber } = req.params;
 
     const { body } = req;
 

@@ -56,8 +56,7 @@
           {{ govukButton({
             text: CONTENT_STRINGS.BUTTONS.CONTINUE,
             attributes: {
-              'data-cy': 'submit-button',
-              'formaction': POST_ROUTES.TURNOVER
+              'data-cy': 'submit-button'
             }
           }) }}
 
@@ -66,7 +65,7 @@
             classes: "govuk-button--secondary",
             attributes: {
               'data-cy': 'save-and-back-button',
-              'formaction': POST_ROUTES.SAVE_AND_BACK_URL
+              'formaction': SAVE_AND_BACK_URL
             }
           }) }}
         </div>

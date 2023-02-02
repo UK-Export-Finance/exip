@@ -4,7 +4,7 @@ import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import chooseDateFormat from '../../../../helpers/date/choose-date-format';
+import formatDate from '../../../../helpers/date/format-date';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
@@ -51,10 +51,7 @@ describe('controllers/insurance/business/turnover', () => {
             ...TURNOVER_FIELDS[FINANCIAL_YEAR_END_DATE],
           },
         },
-        POST_ROUTES: {
-          NATURE_OF_BUSINESS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ROOT}`,
-          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ROOT}`,
-        },
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ROOT}`,
       };
 
       expect(result).toEqual(expected);
@@ -68,7 +65,7 @@ describe('controllers/insurance/business/turnover', () => {
           res.locals.application = mockApplication;
 
           const submittedValues = {
-            [FINANCIAL_YEAR_END_DATE]: chooseDateFormat(mockApplication.exporterCompany[FINANCIAL_YEAR_END_DATE], 'd MMMM'),
+            [FINANCIAL_YEAR_END_DATE]: formatDate(mockApplication.exporterCompany[FINANCIAL_YEAR_END_DATE], 'd MMMM'),
           };
 
           get(req, res);
