@@ -12,6 +12,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER;
 const {
   TURNOVER: {
     FINANCIAL_YEAR_END_DATE,
+    ESTIMATED_ANNUAL_TURNOVER,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -102,6 +103,17 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
     cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
 
     field.hint().contains(FIELDS.TURNOVER[fieldId].HINT);
+  });
+
+  it(`should display ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {
+    const fieldId = ESTIMATED_ANNUAL_TURNOVER;
+    const field = turnover[fieldId];
+
+    cy.checkText(field.heading(), FIELDS.TURNOVER[fieldId].HEADING);
+
+    cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
+
+    cy.checkText(field.prefix(), FIELDS.TURNOVER[fieldId].PREFIX);
   });
 
   it('should display the continue and save and go back button', () => {

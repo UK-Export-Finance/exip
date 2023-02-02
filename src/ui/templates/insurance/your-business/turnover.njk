@@ -36,7 +36,7 @@
         <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
       </div>
 
-      {% if submittedValues[FIELDS.FINANCIAL_YEAR_END_DATE.ID] or application.exporterCompany[FIELDS.FINANCIAL_YEAR_END_DATE.ID] %}
+      {% if application.exporterCompany[FIELDS.FINANCIAL_YEAR_END_DATE.ID] %}
         <div class="govuk-grid-column-three-quarters-from-desktop">
           <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.FINANCIAL_YEAR_END_DATE.ID}}-label">{{ FIELDS.FINANCIAL_YEAR_END_DATE.LABEL }}</h2>
 
@@ -47,9 +47,43 @@
             }
           }) }}
 
-          <p class="govuk-body" data-cy="{{FIELDS.FINANCIAL_YEAR_END_DATE.ID}}">{{ submittedValues[FIELDS.FINANCIAL_YEAR_END_DATE.ID] or application.exporterCompany[FIELDS.FINANCIAL_YEAR_END_DATE.ID] }}</p>
+          <p class="govuk-body" data-cy="{{FIELDS.FINANCIAL_YEAR_END_DATE.ID}}">{{ application.exporterCompany[FIELDS.FINANCIAL_YEAR_END_DATE.ID] }}</p>
         </div>
       {% endif %}
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID}}-heading">{{ FIELDS.ESTIMATED_ANNUAL_TURNOVER.HEADING }}</h2>
+
+        {{ govukInput({
+          id: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
+          name: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
+          value: submittedValues[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] or application.exporterCompany[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID],
+          label: {
+            text: FIELDS.ESTIMATED_ANNUAL_TURNOVER.LABEL,
+            classes: "govuk-body",
+            isPageHeading: false,
+             attributes: {
+              "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-label"
+            }
+          },
+          prefix: {
+            text: FIELDS.ESTIMATED_ANNUAL_TURNOVER.PREFIX,
+            attributes: {
+              "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-prefix"
+            }
+          },
+          classes: "govuk-input--width-5",
+          attributes: {
+            "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID
+          },
+          errorMessage: validationErrors.errorList[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] and {
+            text: validationErrors.errorList[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID].text,
+            attributes: {
+              "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-error"
+            }
+          }
+        }) }}
+      </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="govuk-button-group">

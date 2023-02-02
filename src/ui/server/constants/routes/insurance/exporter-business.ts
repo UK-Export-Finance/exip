@@ -2,6 +2,7 @@ const ROOT = '/your-business';
 const COMPANY_DETAILS_ROOT = `${ROOT}/company-details`;
 const NATURE_OF_BUSINESS_ROOT = `${ROOT}/nature-of-business`;
 const TURNOVER_ROOT = `${ROOT}/turnover`;
+const BROKER_ROOT = `${ROOT}/broker`;
 
 export const EXPORTER_BUSINESS = {
   ROOT,
@@ -13,4 +14,5 @@ export const EXPORTER_BUSINESS = {
   NATURE_OF_BUSINESS_ROOT,
   NATURE_OF_BUSINESS_SAVE_AND_BACK: `${NATURE_OF_BUSINESS_ROOT}/save-and-back`,
   TURNOVER_ROOT,
+  BROKER_ROOT,
 };

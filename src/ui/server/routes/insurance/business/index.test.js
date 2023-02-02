@@ -13,7 +13,7 @@ import { post as postCompanyDetailsSaveAndBack } from '../../../controllers/insu
 import { get as getNatureOfBusiness, post as postNatureofBusiness } from '../../../controllers/insurance/business/nature-of-business';
 import { post as postNatureOfBusinessSaveAndBack } from '../../../controllers/insurance/business/nature-of-business/save-and-back';
 
-import { get as getTurnover } from '../../../controllers/insurance/business/turnover';
+import { get as getTurnover, post as postTurnover } from '../../../controllers/insurance/business/turnover';
 
 describe('routes/insurance/your-business', () => {
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe('routes/insurance/your-business', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(4);
-    expect(post).toHaveBeenCalledTimes(5);
+    expect(post).toHaveBeenCalledTimes(6);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, getCompanyDetails);
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.NO_COMPANIES_HOUSE_NUMBER, redirectToExitPage.noCompaniesHouseNumber);
@@ -39,5 +39,6 @@ describe('routes/insurance/your-business', () => {
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_SAVE_AND_BACK, postNatureOfBusinessSaveAndBack);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ROOT, getTurnover);
+    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ROOT, postTurnover);
   });
 });

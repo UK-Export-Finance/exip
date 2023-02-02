@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../../constants';
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
-  TURNOVER: { FINANCIAL_YEAR_END_DATE },
+  TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER },
 } = EXPORTER_BUSINESS;
 
 export const FIELDS = {
@@ -30,6 +30,11 @@ export const FIELDS = {
       LABEL: 'Your financial year end date',
       HINT: 'This information comes from Companies House',
       DATE_FORMAT: 'd MMMM',
+    },
+    [ESTIMATED_ANNUAL_TURNOVER]: {
+      HEADING: 'Estimated annual turnover for this current financial year',
+      LABEL: 'Estimate this to the nearest pound. Do not use decimal points.',
+      PREFIX: '£',
     },
   },
 };
