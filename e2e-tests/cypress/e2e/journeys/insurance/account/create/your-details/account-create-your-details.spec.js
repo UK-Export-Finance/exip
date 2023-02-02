@@ -10,7 +10,6 @@ import {
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import account from '../../../../../../fixtures/account';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS;
 
@@ -214,12 +213,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     });
 
     it(`should redirect to ${CONFIRM_EMAIL}`, () => {
-      yourDetailsPage[FIRST_NAME].input().type(account[FIRST_NAME], { delay: 0 });
-      yourDetailsPage[LAST_NAME].input().type(account[LAST_NAME], { delay: 0 });
-      yourDetailsPage[EMAIL].input().type(account[EMAIL], { delay: 0 });
-      yourDetailsPage[PASSWORD].input().clear().type(account[PASSWORD], { delay: 0 });
-
-      submitButton().click();
+      cy.completeAndSubmitCreateAccountForm();
 
       const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
       cy.url().should('eq', expected);
