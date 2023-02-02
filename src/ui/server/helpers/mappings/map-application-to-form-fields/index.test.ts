@@ -3,6 +3,7 @@ import { FIELD_IDS } from '../../../constants';
 import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
 import { mockApplication } from '../../../test-mocks';
+import mapFinancialYearEndDate from '../map-financial-year-end-date';
 
 const {
   SUBMISSION_DEADLINE,
@@ -11,6 +12,9 @@ const {
       REQUESTED_START_DATE,
       SINGLE: { CONTRACT_COMPLETION_DATE },
     },
+  },
+  EXPORTER_BUSINESS: {
+    TURNOVER: { FINANCIAL_YEAR_END_DATE },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -60,6 +64,22 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
         policyAndExport: {
           ...mockApplication.policyAndExport,
           ...getDateFieldsFromTimestamp(timestamp, CONTRACT_COMPLETION_DATE),
+        },
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when an application has exporterCompany.${FINANCIAL_YEAR_END_DATE} field`, () => {
+    it('should return mapped date field', () => {
+      const result = mapApplicationToFormFields(mockApplication);
+
+      const expected = {
+        ...mockApplication,
+        exporterCompany: {
+          ...mockApplication.exporterCompany,
+          [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(mockApplication.exporterCompany[FINANCIAL_YEAR_END_DATE]),
         },
       };
 

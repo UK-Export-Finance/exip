@@ -1,0 +1,76 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <form method="POST" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <span class="govuk-caption-xl" data-cy="heading-caption">
+          {{CONTENT_STRINGS.HEADING_CAPTION}}
+        </span>
+        <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+      </div>
+
+      {% if submittedValues[FIELDS.FINANCIAL_YEAR_END_DATE.ID] or application.exporterCompany[FIELDS.FINANCIAL_YEAR_END_DATE.ID] %}
+        <div class="govuk-grid-column-three-quarters-from-desktop">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.FINANCIAL_YEAR_END_DATE.ID}}-label">{{ FIELDS.FINANCIAL_YEAR_END_DATE.LABEL }}</h2>
+
+          {{ govukHint({
+            text: FIELDS.FINANCIAL_YEAR_END_DATE.HINT,
+            attributes: {
+            "data-cy": FIELDS.FINANCIAL_YEAR_END_DATE.ID + "-hint"
+            }
+          }) }}
+
+          <p class="govuk-body" data-cy="{{FIELDS.FINANCIAL_YEAR_END_DATE.ID}}">{{ submittedValues[FIELDS.FINANCIAL_YEAR_END_DATE.ID] or application.exporterCompany[FIELDS.FINANCIAL_YEAR_END_DATE.ID] }}</p>
+        </div>
+      {% endif %}
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+            attributes: {
+              'data-cy': 'submit-button'
+            }
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              'formaction': SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

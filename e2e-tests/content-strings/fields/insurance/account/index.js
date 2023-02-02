@@ -28,6 +28,10 @@ export const ACCOUNT_FIELDS = {
             'a special character',
           ],
         },
+        REVEAL: {
+          SHOW: 'Show',
+          HIDE: 'Hide',
+        },
       },
     },
   },

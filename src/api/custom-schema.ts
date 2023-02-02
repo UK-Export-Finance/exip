@@ -41,6 +41,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         companyNumber: String
         dateOfCreation: String
         sicCodes: [String]
+        financialYearEndDate: DateTime
         success: Boolean
         apiError: Boolean
       }
@@ -93,6 +94,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         hasTradingName: String
         companyWebsite: String
         phoneNumber: String
+        financialYearEndDate: DateTime
         oldSicCodes: [OldSicCodes]
       }
 
