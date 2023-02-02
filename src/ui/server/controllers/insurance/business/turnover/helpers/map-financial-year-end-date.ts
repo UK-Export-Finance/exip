@@ -10,6 +10,13 @@ const {
   },
 } = FIELDS;
 
+/**
+ * maps financialYearEndDate field
+ * returns date formatted in correct format if provided
+ * or returns null if financialYearEndDate not provided
+ * @param {Date} financialYearEndDate
+ * @returns {Date} formatted year end date
+ */
 const mapFinancialYearEndDate = (financialYearEndDate?: Date) => (financialYearEndDate ? formatDate(financialYearEndDate, DATE_FORMAT) : null);
 
 export default mapFinancialYearEndDate;
