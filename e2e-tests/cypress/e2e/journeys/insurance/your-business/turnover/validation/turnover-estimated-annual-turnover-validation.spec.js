@@ -2,7 +2,8 @@ import { turnover } from '../../../../../pages/your-business';
 import partials from '../../../../../partials';
 import { submitButton } from '../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
+import { ROUTES } from '../../../../../../../constants';
+import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/exporter-business';
 import getReferenceNumber from '../../../../../helpers/get-reference-number';
 
 const TURNOVER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -15,9 +16,9 @@ const {
   TURNOVER: {
     ESTIMATED_ANNUAL_TURNOVER,
   },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+} = FIELD_IDS;
 
-describe('Insurance - Your business - Turnover page - As an Exporter I want to enter details about my turnover - estimated annual turnover input validation', () => {
+describe(`Insurance - Your business - Turnover page - form validation - ${ESTIMATED_ANNUAL_TURNOVER}`, () => {
   let referenceNumber;
   let url;
 

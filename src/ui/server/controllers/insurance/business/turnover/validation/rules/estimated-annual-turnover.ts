@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../../constants';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
 import { RequestBody } from '../../../../../../../types';
 import wholeNumberValidation from '../../../../../../helpers/whole-number-validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
@@ -7,7 +7,7 @@ import generateValidationErrors from '../../../../../../helpers/validation';
 
 const {
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: FIELD_ID },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+} = FIELD_IDS;
 
 const {
   EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },

@@ -3,7 +3,8 @@ import partials from '../../../../partials';
 import { heading, submitButton, saveAndBackButton } from '../../../../pages/shared';
 import { PAGES, BUTTONS, LINKS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { ROUTES } from '../../../../../../constants';
+import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/exporter-business';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
 
@@ -14,7 +15,7 @@ const {
     FINANCIAL_YEAR_END_DATE,
     ESTIMATED_ANNUAL_TURNOVER,
   },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+} = FIELD_IDS;
 
 const {
   ROOT,

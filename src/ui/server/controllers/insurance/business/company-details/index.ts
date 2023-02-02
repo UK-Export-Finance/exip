@@ -216,7 +216,7 @@ const post = async (req: Request, res: Response) => {
     validationErrors = companyDetailsValidation(body, validationErrors);
 
     // if any errors then render template with errors
-    if (validationErrors && Object.keys(validationErrors).length) {
+    if (validationErrors) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,

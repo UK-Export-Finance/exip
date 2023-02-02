@@ -1,13 +1,13 @@
 import { PAGES } from '../../../../content-strings';
 import { Request, Response } from '../../../../../types';
-import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
+import { TEMPLATES, ROUTES } from '../../../../constants';
+import FIELD_IDS from '../../../../constants/field-ids/insurance/exporter-business';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 
-const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
-const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER } = EXPORTER_BUSINESS.TURNOVER;
+const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER } = FIELD_IDS.TURNOVER;
 
 const { TURNOVER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { TURNOVER: TURNOVER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -90,7 +90,7 @@ const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(body);
 
     // if any errors then render template with errors
-    if (validationErrors && Object.keys(validationErrors).length) {
+    if (validationErrors) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: TURNOVER,
