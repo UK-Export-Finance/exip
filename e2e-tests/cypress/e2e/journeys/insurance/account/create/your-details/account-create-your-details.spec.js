@@ -174,12 +174,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     });
 
     it(`should redirect to ${CONFIRM_EMAIL}`, () => {
-      yourDetailsPage[FIRST_NAME].input().type(account[FIRST_NAME], { delay: 0 });
-      yourDetailsPage[LAST_NAME].input().type(account[LAST_NAME], { delay: 0 });
-      yourDetailsPage[EMAIL].input().type(account[EMAIL], { delay: 0 });
-      yourDetailsPage[PASSWORD].input().type(account[PASSWORD], { delay: 0 });
-
-      submitButton().click();
+      cy.completeAndSubmitCreateAccountForm();
 
       const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
       cy.url().should('eq', expected);
