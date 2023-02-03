@@ -4,6 +4,7 @@ import { mergeSchemas } from '@graphql-tools/schema';
 import { NotifyClient } from 'notifications-node-client';
 import axios from 'axios';
 import dotenv from 'dotenv';
+import crypto from 'crypto';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
 import { SicCodes } from './types';
@@ -19,6 +20,21 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
   mergeSchemas({
     schemas: [schema],
     typeDefs: `
+
+      type Account {
+        firstName: String
+        lastName: String
+        email: String
+        isActive: Boolean
+      }
+
+      input AccountInput {
+        firstName: String
+        lastName: String
+        email: String
+        password: String
+      }
+
       type EmailResponse {
         success: Boolean
       }
@@ -99,6 +115,10 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       }
 
       type Mutation {
+        """ create an account """
+        createAccount(
+          data: AccountInput!
+        ): Account
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -122,6 +142,39 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
     `,
     resolvers: {
       Mutation: {
+        createAccount: async (root, variables, context) => {
+          console.info('Creating new exporter account for ', variables.data.email);
+
+          try {
+            const {
+              firstName,
+              lastName,
+              email,
+              password
+            } = variables.data;
+
+            const salt = crypto.randomBytes(32).toString('hex');
+
+            // TODO: use constants for salt/hash requirements.
+            const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+
+            const account = {
+              firstName,
+              lastName,
+              email,
+              salt,
+              hash,
+            };
+
+            const response = await context.db.Exporter.createOne({
+              data: account,
+            });
+
+            return response;
+          } catch (err) {
+            throw new Error(`Creating new exporter account ${err}`);
+          }
+        },
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);

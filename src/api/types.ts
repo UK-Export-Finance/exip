@@ -23,7 +23,7 @@ interface Account {
   lastName: string;
   email: string;
   password: string;
-  emailIsVerified?: boolean;
+  isActive?: boolean;
 }
 
 interface Application {

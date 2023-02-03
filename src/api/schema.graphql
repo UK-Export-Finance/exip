@@ -351,12 +351,9 @@ type Exporter {
   firstName: String
   lastName: String
   email: String
-  password: PasswordState
-  emailIsVerified: Boolean
-}
-
-type PasswordState {
-  isSet: Boolean!
+  salt: String
+  hash: String
+  isActive: Boolean
 }
 
 input ExporterWhereUniqueInput {
@@ -371,7 +368,9 @@ input ExporterWhereInput {
   firstName: StringFilter
   lastName: StringFilter
   email: StringFilter
-  emailIsVerified: BooleanFilter
+  salt: StringFilter
+  hash: StringFilter
+  isActive: BooleanFilter
 }
 
 input BooleanFilter {
@@ -384,15 +383,18 @@ input ExporterOrderByInput {
   firstName: OrderDirection
   lastName: OrderDirection
   email: OrderDirection
-  emailIsVerified: OrderDirection
+  salt: OrderDirection
+  hash: OrderDirection
+  isActive: OrderDirection
 }
 
 input ExporterUpdateInput {
   firstName: String
   lastName: String
   email: String
-  password: String
-  emailIsVerified: Boolean
+  salt: String
+  hash: String
+  isActive: Boolean
 }
 
 input ExporterUpdateArgs {
@@ -404,8 +406,9 @@ input ExporterCreateInput {
   firstName: String
   lastName: String
   email: String
-  password: String
-  emailIsVerified: Boolean
+  salt: String
+  hash: String
+  isActive: Boolean
 }
 
 type ExporterBusiness {
@@ -870,6 +873,10 @@ type User {
   password: PasswordState
 }
 
+type PasswordState {
+  isSet: Boolean!
+}
+
 input UserWhereUniqueInput {
   id: ID
   email: String
@@ -988,6 +995,9 @@ type Mutation {
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
+
+  """ create an account """
+  createAccount(data: AccountInput!): Account
 
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
@@ -1157,6 +1167,21 @@ type KeystoneAdminUISort {
 enum KeystoneAdminUISortDirection {
   ASC
   DESC
+}
+
+type Account {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  isActive: Boolean
+}
+
+input AccountInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
 }
 
 type EmailResponse {

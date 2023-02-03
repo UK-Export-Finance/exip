@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 const createExporterMutation = gql`
-  mutation CreateExporter($data: ExporterCreateInput!) {
-    createExporter(data: $data) {
+  mutation CreateAccount($data: AccountInput!) {
+    createAccount(data: $data) {
       firstName
       lastName
       email

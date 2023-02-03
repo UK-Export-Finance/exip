@@ -5,29 +5,31 @@ import createExporterMutation from '../../../graphql/mutations/account/create';
 const account = {
   create: async (update: Account) => {
     try {
-      console.info('Creating account');
+      console.info('Creating exporter account');
 
       const variables = { data: update };
 
       const response = (await apollo('POST', createExporterMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error creating account ', response.errors);
+        console.error('GraphQL error creating exporter account ', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error creating account ', response.networkError.result.errors);
+        console.error('GraphQL network error creating exporter account ', response.networkError.result.errors);
       }
 
-      if (response?.data?.createExporter) {
+      if (response?.data?.createAccount) {
         const { data } = response;
 
-        return data.createExporter;
+        return data.createAccount;
       }
 
-      throw new Error('Creating account');
+      throw new Error(`Creating exporter account ${response}`);
     } catch (err) {
-      throw new Error(`Creating account ${err}`);
+      console.error(`Error creating exporter account ${err}`);
+
+      throw new Error('Creating exporter account');
     }
   },
 };

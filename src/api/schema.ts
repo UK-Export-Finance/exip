@@ -3,6 +3,7 @@ import { allowAll } from '@keystone-6/core/access';
 import { checkbox, integer, relationship, select, text, timestamp, password } from '@keystone-6/core/fields';
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
+import crypto from 'crypto';
 import { Lists } from '.keystone/types';  // eslint-disable-line
 import { ANSWERS, APPLICATION, EMAIL_TEMPLATE_IDS } from './constants';
 import notify from './integrations/notify';
@@ -240,8 +241,10 @@ export const lists = {
       firstName: text({ validation: { isRequired: true } }),
       lastName: text({ validation: { isRequired: true } }),
       email: text({ validation: { isRequired: true } }),
-      password: password({ validation: { isRequired: true } }),
-      emailIsVerified: checkbox({ defaultValue: false }),
+      salt: text({ validation: { isRequired: true } }),
+      hash: text({ validation: { isRequired: true } }),
+      // active flag will only be true if the exporter has verified their email address.
+      isActive: checkbox({ defaultValue: false }),
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData }): Promise<Account> => {
@@ -249,10 +252,9 @@ export const lists = {
 
         if (operation === 'create') {
           // TODO:
+          // - ensure there is not already an account with the same email.
           // - password checks
-          // - password encryption
           // - email confirmation token
-          // - ensure there is not already an account with the same email
 
           try {
             const emailResponse = await notify.sendEmail(

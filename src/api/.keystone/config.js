@@ -76,7 +76,7 @@ var notify = {
   sendEmail: async (templateId, sendToEmailAddress, firstName, confirmToken) => {
     try {
       console.info("Calling Notify API. templateId: ", templateId);
-      const response = await notifyClient.sendEmail(templateId, sendToEmailAddress, {
+      await notifyClient.sendEmail(templateId, sendToEmailAddress, {
         personalisation: {
           firstName,
           confirmToken
@@ -284,8 +284,9 @@ var lists = {
       firstName: (0, import_fields.text)({ validation: { isRequired: true } }),
       lastName: (0, import_fields.text)({ validation: { isRequired: true } }),
       email: (0, import_fields.text)({ validation: { isRequired: true } }),
-      password: (0, import_fields.password)({ validation: { isRequired: true } }),
-      emailIsVerified: (0, import_fields.checkbox)({ defaultValue: false })
+      salt: (0, import_fields.text)({ validation: { isRequired: true } }),
+      hash: (0, import_fields.text)({ validation: { isRequired: true } }),
+      isActive: (0, import_fields.checkbox)({ defaultValue: false })
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData }) => {
@@ -471,6 +472,7 @@ var import_schema = require("@graphql-tools/schema");
 var import_notifications_node_client2 = require("notifications-node-client");
 var import_axios = __toESM(require("axios"));
 var import_dotenv2 = __toESM(require("dotenv"));
+var import_crypto = __toESM(require("crypto"));
 
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -534,6 +536,22 @@ var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
   typeDefs: `
+
+      type Account {
+        firstName: String
+        lastName: String
+        email: String
+        password: String
+        isActive: Boolean
+      }
+
+      input AccountInput {
+        firstName: String
+        lastName: String
+        email: String
+        password: String
+      }
+
       type EmailResponse {
         success: Boolean
       }
@@ -614,6 +632,10 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
 
       type Mutation {
+        """ create an account """
+        createAccount(
+          data: AccountInput!
+        ): Account
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -637,6 +659,32 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
     `,
   resolvers: {
     Mutation: {
+      createAccount: async (root, variables, context) => {
+        console.info("Creating new exporter account for ", variables.data.email);
+        try {
+          const {
+            firstName,
+            lastName,
+            email,
+            password: password2
+          } = variables.data;
+          const salt = import_crypto.default.randomBytes(32).toString("hex");
+          const hash = import_crypto.default.pbkdf2Sync(password2, salt, 1e4, 64, "sha512").toString("hex");
+          const account = {
+            firstName,
+            lastName,
+            email,
+            salt,
+            hash
+          };
+          const response = await context.db.Exporter.createOne({
+            data: account
+          });
+          return response;
+        } catch (err) {
+          throw new Error(`Creating new exporter account ${err}`);
+        }
+      },
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);

@@ -69,12 +69,13 @@ model PolicyAndExport {
 }
 
 model Exporter {
-  id              String  @id @default(cuid())
-  firstName       String  @default("")
-  lastName        String  @default("")
-  email           String  @default("")
-  password        String
-  emailIsVerified Boolean @default(false)
+  id        String  @id @default(cuid())
+  firstName String  @default("")
+  lastName  String  @default("")
+  email     String  @default("")
+  salt      String  @default("")
+  hash      String  @default("")
+  isActive  Boolean @default(false)
 }
 
 model ExporterBusiness {
