@@ -254,7 +254,6 @@ export const lists = {
         if (operation === 'create') {
           // TODO:
           // - ensure there is not already an account with the same email.
-          // - password checks
           // - email confirmation token
 
           // add dates
