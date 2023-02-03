@@ -40,8 +40,6 @@ export const lists = {
       resolveInput: async ({ operation, resolvedData, context }) => {
         if (operation === 'create') {
           try {
-            // const emailResponse = await notify.sendEmail(EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL, 'Tony.Barnes@ukexportfinance.gov.uk');
-
             console.info('Adding default data to a new application');
             const modifiedData = resolvedData;
 
