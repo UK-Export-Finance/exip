@@ -9,7 +9,7 @@ import partials from '../e2e/partials';
  * @param {String} errorMessage
  */
 export default (field, fieldValue, errorIndex, errorSummaryLength, errorMessage) => {
-  // if fieldValue (null if want to test empty input)
+  // only type if a field value is provided
   if (fieldValue) {
     field.input().clear().type(fieldValue, { delay: 0 });
   } else {

@@ -62,7 +62,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
         const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
         const value = null;
 
-        cy.submitAndAssertErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
       });
     });
 
@@ -73,7 +73,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
         const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
         const value = '5.5';
 
-        cy.submitAndAssertErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
       });
     });
 
@@ -84,7 +84,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
         const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
         const value = '5O';
 
-        cy.submitAndAssertErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
       });
     });
 
@@ -95,7 +95,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
         const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
         const value = '101';
 
-        cy.submitAndAssertErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
       });
     });
 
@@ -106,7 +106,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
         const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
         const value = '-1';
 
-        cy.submitAndAssertErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
       });
     });
   });

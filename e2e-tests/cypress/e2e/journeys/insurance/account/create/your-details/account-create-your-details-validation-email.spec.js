@@ -24,7 +24,7 @@ const {
 
 const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT;
 
-const submitAndAssertErrors = (fieldValue) => {
+const submitAndAssertFieldErrors = (fieldValue) => {
   const field = yourDetailsPage[EMAIL];
 
   field.input().clear().type(fieldValue, { delay: 0 });
@@ -58,7 +58,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
     it('should render a validation error', () => {
       const invalidEmail = 'mockemail.com';
 
-      submitAndAssertErrors(invalidEmail);
+      submitAndAssertFieldErrors(invalidEmail);
     });
   });
 
@@ -66,7 +66,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
     it('should render a validation error', () => {
       const invalidEmail = 'mock@emailcom';
 
-      submitAndAssertErrors(invalidEmail);
+      submitAndAssertFieldErrors(invalidEmail);
     });
   });
 
@@ -74,7 +74,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
     it('should render a validation error', () => {
       const invalidEmail = 'mock@email .com';
 
-      submitAndAssertErrors(invalidEmail);
+      submitAndAssertFieldErrors(invalidEmail);
     });
   });
 
@@ -82,7 +82,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
     it('should render a validation error', () => {
       const invalidEmail = 'mock@email.';
 
-      submitAndAssertErrors(invalidEmail);
+      submitAndAssertFieldErrors(invalidEmail);
     });
   });
 });
