@@ -60,6 +60,15 @@ var APPLICATION = {
     }
   }
 };
+var PASSWORD = {
+  RANDOM_BYTES_SIZE: 32,
+  STRING_TYPE: "hex",
+  PBKDF2: {
+    ITERATIONS: 1e4,
+    KEY_LENGTH: 64,
+    DIGEST_ALGORITHM: "sha512"
+  }
+};
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
     CONFIRM_EMAIL: "24022e94-171c-4044-b0ee-d22418116575"
@@ -281,6 +290,8 @@ var lists = {
   },
   Exporter: (0, import_core.list)({
     fields: {
+      createdAt: (0, import_fields.timestamp)(),
+      updatedAt: (0, import_fields.timestamp)(),
       firstName: (0, import_fields.text)({ validation: { isRequired: true } }),
       lastName: (0, import_fields.text)({ validation: { isRequired: true } }),
       email: (0, import_fields.text)({ validation: { isRequired: true } }),
@@ -292,6 +303,9 @@ var lists = {
       resolveInput: async ({ operation, resolvedData }) => {
         const accountInputData = resolvedData;
         if (operation === "create") {
+          const now = new Date();
+          accountInputData.createdAt = now;
+          accountInputData.updatedAt = now;
           try {
             const emailResponse = await notify_default.sendEmail(
               EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL,
@@ -541,7 +555,6 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         firstName: String
         lastName: String
         email: String
-        password: String
         isActive: Boolean
       }
 
@@ -662,14 +675,14 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       createAccount: async (root, variables, context) => {
         console.info("Creating new exporter account for ", variables.data.email);
         try {
+          const { firstName, lastName, email, password: password2 } = variables.data;
           const {
-            firstName,
-            lastName,
-            email,
-            password: password2
-          } = variables.data;
-          const salt = import_crypto.default.randomBytes(32).toString("hex");
-          const hash = import_crypto.default.pbkdf2Sync(password2, salt, 1e4, 64, "sha512").toString("hex");
+            RANDOM_BYTES_SIZE,
+            STRING_TYPE,
+            PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM }
+          } = PASSWORD;
+          const salt = import_crypto.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
+          const hash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
           const account = {
             firstName,
             lastName,

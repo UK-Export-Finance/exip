@@ -3,7 +3,6 @@ import { allowAll } from '@keystone-6/core/access';
 import { checkbox, integer, relationship, select, text, timestamp, password } from '@keystone-6/core/fields';
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
-import crypto from 'crypto';
 import { Lists } from '.keystone/types';  // eslint-disable-line
 import { ANSWERS, APPLICATION, EMAIL_TEMPLATE_IDS } from './constants';
 import notify from './integrations/notify';
@@ -238,6 +237,8 @@ export const lists = {
   },
   Exporter: list({
     fields: {
+      createdAt: timestamp(),
+      updatedAt: timestamp(),
       firstName: text({ validation: { isRequired: true } }),
       lastName: text({ validation: { isRequired: true } }),
       email: text({ validation: { isRequired: true } }),
@@ -255,6 +256,11 @@ export const lists = {
           // - ensure there is not already an account with the same email.
           // - password checks
           // - email confirmation token
+
+          // add dates
+          const now = new Date();
+          accountInputData.createdAt = now;
+          accountInputData.updatedAt = now;
 
           try {
             const emailResponse = await notify.sendEmail(

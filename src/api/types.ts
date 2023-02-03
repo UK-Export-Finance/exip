@@ -19,6 +19,8 @@ interface ApplicationExporterBusiness {
 }
 
 interface Account {
+  createdAt: Date;
+  updatedAt: Date;
   firstName: string;
   lastName: string;
   email: string;

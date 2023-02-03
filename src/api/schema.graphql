@@ -348,6 +348,8 @@ input PolicyAndExportCreateInput {
 
 type Exporter {
   id: ID!
+  createdAt: DateTime
+  updatedAt: DateTime
   firstName: String
   lastName: String
   email: String
@@ -365,6 +367,8 @@ input ExporterWhereInput {
   OR: [ExporterWhereInput!]
   NOT: [ExporterWhereInput!]
   id: IDFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
   firstName: StringFilter
   lastName: StringFilter
   email: StringFilter
@@ -380,6 +384,8 @@ input BooleanFilter {
 
 input ExporterOrderByInput {
   id: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
   firstName: OrderDirection
   lastName: OrderDirection
   email: OrderDirection
@@ -389,6 +395,8 @@ input ExporterOrderByInput {
 }
 
 input ExporterUpdateInput {
+  createdAt: DateTime
+  updatedAt: DateTime
   firstName: String
   lastName: String
   email: String
@@ -403,6 +411,8 @@ input ExporterUpdateArgs {
 }
 
 input ExporterCreateInput {
+  createdAt: DateTime
+  updatedAt: DateTime
   firstName: String
   lastName: String
   email: String
@@ -1173,7 +1183,6 @@ type Account {
   firstName: String
   lastName: String
   email: String
-  password: String
   isActive: Boolean
 }
 

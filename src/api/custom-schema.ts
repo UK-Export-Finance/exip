@@ -5,6 +5,7 @@ import { NotifyClient } from 'notifications-node-client';
 import axios from 'axios';
 import dotenv from 'dotenv';
 import crypto from 'crypto';
+import { PASSWORD } from './constants';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
 import { SicCodes } from './types';
@@ -146,17 +147,18 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           console.info('Creating new exporter account for ', variables.data.email);
 
           try {
-            const {
-              firstName,
-              lastName,
-              email,
-              password
-            } = variables.data;
+            const { firstName, lastName, email, password } = variables.data;
 
-            const salt = crypto.randomBytes(32).toString('hex');
+            const {
+              RANDOM_BYTES_SIZE,
+              STRING_TYPE,
+              PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM },
+            } = PASSWORD;
+
+            const salt = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
 
             // TODO: use constants for salt/hash requirements.
-            const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+            const hash = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
 
             const account = {
               firstName,
