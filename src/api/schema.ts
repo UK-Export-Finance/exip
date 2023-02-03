@@ -273,7 +273,7 @@ export const lists = {
               return accountInputData;
             }
 
-            throw new Error(`Calling Notify API. Unable to send email ${emailResponse}`);
+            throw new Error(`Error sending email verification for account creation ${emailResponse}`);
           } catch (err) {
             console.error('Error sending email verification for account creation', { err });
             throw new Error();

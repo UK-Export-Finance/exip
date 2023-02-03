@@ -3,12 +3,9 @@ import { sanitiseData } from '../../../../../../helpers/sanitise-data';
 import { RequestBody, Account } from '../../../../../../../types';
 
 /**
- * policyAndExport
- * Strip invalid fields from submitted form data and update the application.
- * This is used for any save functionality in the Policy and export section of the application.
- * @param {Object} Application
+ * account
+ * Sanitise form data and update the application.
  * @param {Express.Request.body} Form data
- * @param {Express.Request.body} Field error list
  * @returns {Object} Saved data
  */
 const account = async (formBody: RequestBody) => {

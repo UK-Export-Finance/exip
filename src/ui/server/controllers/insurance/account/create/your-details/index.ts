@@ -96,9 +96,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    // TODO: is it safe to store in here?
-    // cookie? local storage?
-    // chat with Abhi
+    // store the submitted email in local session, for consumption in the next part of the flow.
     req.session.emailAddressToConfirm = req.body[EMAIL];
 
     return res.redirect(CONFIRM_EMAIL);
