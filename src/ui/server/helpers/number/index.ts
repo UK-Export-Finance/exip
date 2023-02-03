@@ -32,4 +32,13 @@ const getPercentageOfNumber = (percent: number, total: number) => ((percent / 10
  */
 const isNumberBelowMinimum = (value: number, minimum: number) => value < minimum;
 
-export { isNumber, numberHasDecimal, getPercentageOfNumber, isNumberBelowMinimum };
+/**
+ * isNumberAboveMaximum
+ * checks if number is more than a certain value
+ * @param {Number} value
+ * @param {Number} minimum
+ * @returns {Boolean}
+ */
+const isNumberAboveMaximum = (value: number, maximum: number) => value > maximum;
+
+export { isNumber, numberHasDecimal, getPercentageOfNumber, isNumberBelowMinimum, isNumberAboveMaximum };

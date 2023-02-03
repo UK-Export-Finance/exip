@@ -66,5 +66,9 @@ export const EXPORTER_BUSINESS_FIELDS = {
       LABEL: 'Estimate this to the nearest pound. Do not use decimal points.',
       PREFIX: '£',
     },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.PERCENTAGE_TURNOVER]: {
+      LABEL: 'Percentage of turnover from exports',
+      SUFFIX: '%',
+    },
   },
 };

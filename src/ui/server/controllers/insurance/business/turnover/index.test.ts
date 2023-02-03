@@ -9,7 +9,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import generateValidationErrors from './validation';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
-const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER } = EXPORTER_BUSINESS.TURNOVER;
+const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER } = EXPORTER_BUSINESS.TURNOVER;
 
 const { TURNOVER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { TURNOVER: TURNOVER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -54,6 +54,10 @@ describe('controllers/insurance/business/turnover', () => {
           ESTIMATED_ANNUAL_TURNOVER: {
             ID: ESTIMATED_ANNUAL_TURNOVER,
             ...TURNOVER_FIELDS[ESTIMATED_ANNUAL_TURNOVER],
+          },
+          PERCENTAGE_TURNOVER: {
+            ID: PERCENTAGE_TURNOVER,
+            ...TURNOVER_FIELDS[PERCENTAGE_TURNOVER],
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ROOT}`,
@@ -101,6 +105,7 @@ describe('controllers/insurance/business/turnover', () => {
 
         const submittedValues = {
           [ESTIMATED_ANNUAL_TURNOVER]: req.body[ESTIMATED_ANNUAL_TURNOVER],
+          [PERCENTAGE_TURNOVER]: req.body[PERCENTAGE_TURNOVER],
         };
 
         await post(req, res);
@@ -124,6 +129,7 @@ describe('controllers/insurance/business/turnover', () => {
       it('should redirect to next page', async () => {
         req.body = {
           [ESTIMATED_ANNUAL_TURNOVER]: '5',
+          [PERCENTAGE_TURNOVER]: '3',
         };
 
         await post(req, res);

@@ -7,7 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 
-const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER } = FIELD_IDS.TURNOVER;
+const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER } = FIELD_IDS.TURNOVER;
 
 const { TURNOVER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { TURNOVER: TURNOVER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -29,6 +29,10 @@ const pageVariables = (referenceNumber: number) => ({
     ESTIMATED_ANNUAL_TURNOVER: {
       ID: ESTIMATED_ANNUAL_TURNOVER,
       ...TURNOVER_FIELDS[ESTIMATED_ANNUAL_TURNOVER],
+    },
+    PERCENTAGE_TURNOVER: {
+      ID: PERCENTAGE_TURNOVER,
+      ...TURNOVER_FIELDS[PERCENTAGE_TURNOVER],
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
@@ -84,6 +88,7 @@ const post = async (req: Request, res: Response) => {
     // populate submittedValues
     const submittedValues = {
       [ESTIMATED_ANNUAL_TURNOVER]: body[ESTIMATED_ANNUAL_TURNOVER],
+      [PERCENTAGE_TURNOVER]: body[PERCENTAGE_TURNOVER],
     };
 
     // run validation on inputs
