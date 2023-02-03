@@ -1011,9 +1011,6 @@ type Mutation {
 
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
-
-  """ send an email """
-  sendEmail(templateId: String!, sendToEmailAddress: String!): EmailResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
@@ -1191,10 +1188,6 @@ input AccountInput {
   lastName: String
   email: String
   password: String
-}
-
-type EmailResponse {
-  success: Boolean
 }
 
 type CompaniesHouseCompanyAddress {

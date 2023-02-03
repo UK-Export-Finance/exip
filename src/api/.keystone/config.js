@@ -316,7 +316,7 @@ var lists = {
             if (emailResponse.success) {
               return accountInputData;
             }
-            throw new Error(`Calling Notify API. Unable to send email ${emailResponse}`);
+            throw new Error(`Error sending email verification for account creation ${emailResponse}`);
           } catch (err) {
             console.error("Error sending email verification for account creation", { err });
             throw new Error();
@@ -483,7 +483,6 @@ var session = (0, import_session.statelessSessions)({
 
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
-var import_notifications_node_client2 = require("notifications-node-client");
 var import_axios = __toESM(require("axios"));
 var import_dotenv2 = __toESM(require("dotenv"));
 var import_crypto = __toESM(require("crypto"));
@@ -543,8 +542,6 @@ var mapSicCodes = (company, sicCodes) => {
 
 // custom-schema.ts
 import_dotenv2.default.config();
-var notifyKey2 = process.env.GOV_NOTIFY_API_KEY;
-var notifyClient2 = new import_notifications_node_client2.NotifyClient(notifyKey2);
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
@@ -563,10 +560,6 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         lastName: String
         email: String
         password: String
-      }
-
-      type EmailResponse {
-        success: Boolean
       }
 
       # fields from registered_office_address object
@@ -655,12 +648,6 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           companyAddressId: ID!
           data: ExporterCompanyAndCompanyAddressInput!
         ): ExporterCompanyAndCompanyAddress
-
-        """ send an email """
-        sendEmail(
-          templateId: String!
-          sendToEmailAddress: String!
-        ): EmailResponse
       }
 
       type Query {
@@ -729,20 +716,6 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         } catch (err) {
           console.error("Error updating application - exporter company and exporter company address", { err });
           throw new Error(`Updating application - exporter company and exporter company address ${err}`);
-        }
-      },
-      sendEmail: async (root, variables) => {
-        try {
-          console.info("Calling Notify API. templateId: ", variables.templateId);
-          const { templateId, sendToEmailAddress } = variables;
-          await notifyClient2.sendEmail(templateId, sendToEmailAddress, {
-            personalisation: {},
-            reference: null
-          });
-          return { success: true };
-        } catch (err) {
-          console.error("Unable to send email", { err });
-          return { success: false };
         }
       }
     },
