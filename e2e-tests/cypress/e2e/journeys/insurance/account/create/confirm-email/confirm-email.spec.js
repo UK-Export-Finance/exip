@@ -2,9 +2,7 @@ import { heading } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import { confirmEmailPage } from '../../../../../pages/insurance/account/create';
 import { ORGANISATION, LINKS, PAGES } from '../../../../../../../content-strings';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import account from '../../../../../../fixtures/account';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL;
 
@@ -12,8 +10,6 @@ const {
   START,
   ACCOUNT: { CREATE: { YOUR_DETAILS, CONFIRM_EMAIL } },
 } = ROUTES;
-
-const { ACCOUNT: { EMAIL } } = INSURANCE_FIELD_IDS;
 
 context('Insurance - Account - Create - Confirm email page - I want to create an account for UKEF digital service, So that I can readily use it for my Export Insurance Application with UKEF', () => {
   before(() => {
