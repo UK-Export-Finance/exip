@@ -29,6 +29,12 @@ describe('controllers/insurance/account/create/confirm-email', () => {
   });
 
   describe('get', () => {
+    it('should delete emailAddressToConfirm from req.session', () => {
+      get(req, res);
+
+      expect(req.session.emailAddressToConfirm).toBeUndefined();
+    });
+
     it('should render template', () => {
       get(req, res);
 
@@ -37,7 +43,7 @@ describe('controllers/insurance/account/create/confirm-email', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        emailAddressToConfirm: req.session.emailAddressToConfirm,
+        email: mockAccount.email,
       });
     });
   });
