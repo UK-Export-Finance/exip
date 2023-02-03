@@ -81,7 +81,7 @@ describe('server/helpers/number', () => {
 
   describe('isNumberAboveMaximum', () => {
     it('should return true if value is above maximum', () => {
-      const mockValue = 120;
+      const mockValue = 101;
       const mockMaximum = 100;
 
       const result = isNumberAboveMaximum(mockValue, mockMaximum);

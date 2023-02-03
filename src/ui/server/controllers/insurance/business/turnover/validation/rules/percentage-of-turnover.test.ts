@@ -9,6 +9,7 @@ const {
 } = FIELD_IDS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
+const ERROR_MESSAGE = EXPORTER_BUSINESS[PERCENTAGE_TURNOVER];
 
 describe('controllers/insurance/business/turnover/validation/rules/percentage-of-turnover', () => {
   const mockErrors = {
@@ -24,7 +25,7 @@ describe('controllers/insurance/business/turnover/validation/rules/percentage-of
     it('should return a validation error', () => {
       const response = percentageTurnover(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[PERCENTAGE_TURNOVER].IS_EMPTY;
+      const errorMessage = ERROR_MESSAGE.IS_EMPTY;
       const expected = generateValidationErrors(PERCENTAGE_TURNOVER, errorMessage, mockErrors);
 
       expect(response).toEqual(expected);
@@ -36,7 +37,7 @@ describe('controllers/insurance/business/turnover/validation/rules/percentage-of
       mockBody[PERCENTAGE_TURNOVER] = 'I5';
       const response = percentageTurnover(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[PERCENTAGE_TURNOVER].INCORRECT_FORMAT;
+      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
       const expected = generateValidationErrors(PERCENTAGE_TURNOVER, errorMessage, mockErrors);
 
       expect(response).toEqual(expected);
@@ -48,7 +49,7 @@ describe('controllers/insurance/business/turnover/validation/rules/percentage-of
       mockBody[PERCENTAGE_TURNOVER] = '3.1';
       const response = percentageTurnover(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[PERCENTAGE_TURNOVER].INCORRECT_FORMAT;
+      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
       const expected = generateValidationErrors(PERCENTAGE_TURNOVER, errorMessage, mockErrors);
 
       expect(response).toEqual(expected);
@@ -60,7 +61,7 @@ describe('controllers/insurance/business/turnover/validation/rules/percentage-of
       mockBody[PERCENTAGE_TURNOVER] = '1*';
       const response = percentageTurnover(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[PERCENTAGE_TURNOVER].INCORRECT_FORMAT;
+      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
       const expected = generateValidationErrors(PERCENTAGE_TURNOVER, errorMessage, mockErrors);
 
       expect(response).toEqual(expected);
@@ -72,7 +73,7 @@ describe('controllers/insurance/business/turnover/validation/rules/percentage-of
       mockBody[PERCENTAGE_TURNOVER] = '-1*';
       const response = percentageTurnover(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[PERCENTAGE_TURNOVER].INCORRECT_FORMAT;
+      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
       const expected = generateValidationErrors(PERCENTAGE_TURNOVER, errorMessage, mockErrors);
 
       expect(response).toEqual(expected);
@@ -84,7 +85,7 @@ describe('controllers/insurance/business/turnover/validation/rules/percentage-of
       mockBody[PERCENTAGE_TURNOVER] = '-1';
       const response = percentageTurnover(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[PERCENTAGE_TURNOVER].BELOW_MINIMUM;
+      const errorMessage = ERROR_MESSAGE.BELOW_MINIMUM;
       const expected = generateValidationErrors(PERCENTAGE_TURNOVER, errorMessage, mockErrors);
 
       expect(response).toEqual(expected);
@@ -96,7 +97,7 @@ describe('controllers/insurance/business/turnover/validation/rules/percentage-of
       mockBody[PERCENTAGE_TURNOVER] = '125';
       const response = percentageTurnover(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[PERCENTAGE_TURNOVER].ABOVE_MAXIMUM;
+      const errorMessage = ERROR_MESSAGE.ABOVE_MAXIMUM;
       const expected = generateValidationErrors(PERCENTAGE_TURNOVER, errorMessage, mockErrors);
 
       expect(response).toEqual(expected);
