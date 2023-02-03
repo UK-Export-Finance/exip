@@ -4,6 +4,7 @@ const {
   TURNOVER: {
     FINANCIAL_YEAR_END_DATE,
     ESTIMATED_ANNUAL_TURNOVER,
+    PERCENTAGE_TURNOVER,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -18,7 +19,13 @@ const turnover = {
     label: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}-label`),
     prefix: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}-prefix`),
     input: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}`),
-    error: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}-error`),
+    errorMessage: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}-error`),
+  },
+  [PERCENTAGE_TURNOVER]: {
+    label: () => cy.get(`[data-cy="${PERCENTAGE_TURNOVER}-label`),
+    suffix: () => cy.get(`[data-cy="${PERCENTAGE_TURNOVER}-suffix`),
+    input: () => cy.get(`[data-cy="${PERCENTAGE_TURNOVER}`),
+    errorMessage: () => cy.get(`[data-cy="${PERCENTAGE_TURNOVER}-error`),
   },
 };
 
