@@ -103,6 +103,10 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Enter how many employees you have worldwide, including UK, as a whole number - for example, 100',
         INCORRECT_FORMAT: 'Enter how many employees you have worldwide, including UK, as a whole number. You cannot enter  letters or special characters',
       },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.ESTIMATED_ANNUAL_TURNOVER]: {
+        IS_EMPTY: 'Enter your estimated annual turnover for this current financial year',
+        INCORRECT_FORMAT: 'Enter your estimated annual turnover for the current financial year in the correct format - for example, whole numbers only',
+      },
     },
     POLICY_AND_EXPORTS: {
       // TODO move to TYPE_OF_POLICY: {},

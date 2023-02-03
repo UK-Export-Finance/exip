@@ -3,7 +3,8 @@ import partials from '../../../../partials';
 import { heading, submitButton, saveAndBackButton } from '../../../../pages/shared';
 import { PAGES, BUTTONS, LINKS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { ROUTES } from '../../../../../../constants';
+import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/exporter-business';
 import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
 
@@ -12,8 +13,9 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER;
 const {
   TURNOVER: {
     FINANCIAL_YEAR_END_DATE,
+    ESTIMATED_ANNUAL_TURNOVER,
   },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+} = FIELD_IDS;
 
 const {
   ROOT,
@@ -102,6 +104,17 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
     cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
 
     field.hint().contains(FIELDS.TURNOVER[fieldId].HINT);
+  });
+
+  it(`should display ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {
+    const fieldId = ESTIMATED_ANNUAL_TURNOVER;
+    const field = turnover[fieldId];
+
+    cy.checkText(field.heading(), FIELDS.TURNOVER[fieldId].HEADING);
+
+    cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
+
+    cy.checkText(field.prefix(), FIELDS.TURNOVER[fieldId].PREFIX);
   });
 
   it('should display the continue and save and go back button', () => {

@@ -61,5 +61,10 @@ export const EXPORTER_BUSINESS_FIELDS = {
       LABEL: 'Your financial year end date',
       HINT: 'This information comes from Companies House',
     },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.ESTIMATED_ANNUAL_TURNOVER]: {
+      HEADING: 'Estimated annual turnover for this current financial year',
+      LABEL: 'Estimate this to the nearest pound. Do not use decimal points.',
+      PREFIX: '£',
+    },
   },
 };

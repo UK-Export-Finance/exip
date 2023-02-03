@@ -24,5 +24,6 @@ export const EXPORTER_BUSINESS = {
   },
   TURNOVER: {
     FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',
+    ESTIMATED_ANNUAL_TURNOVER: 'estimatedAnnualTurnover',
   },
 };
