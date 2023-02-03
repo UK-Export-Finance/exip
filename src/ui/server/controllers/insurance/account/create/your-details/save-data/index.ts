@@ -4,7 +4,7 @@ import { RequestBody, Account } from '../../../../../../../types';
 
 /**
  * account
- * Sanitise form data and update the application.
+ * Sanitise form data for user account creation and save the data.
  * @param {Express.Request.body} Form data
  * @returns {Object} Saved data
  */
