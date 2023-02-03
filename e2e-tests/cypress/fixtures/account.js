@@ -11,7 +11,8 @@ const {
 const account = {
   [FIRST_NAME]: 'Joe',
   [LAST_NAME]: 'Bloggs',
-  [EMAIL]: 'mock@email.com',
+  // [EMAIL]: 'mock@email.com',
+  [EMAIL]: 'Tony.Barnes@ukexportfinance.gov.uk',
   [PASSWORD]: 'Mockpassword1!',
 };
 

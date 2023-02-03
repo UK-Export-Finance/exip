@@ -60,6 +60,36 @@ var APPLICATION = {
     }
   }
 };
+var EMAIL_TEMPLATE_IDS = {
+  ACCOUNT: {
+    CONFIRM_EMAIL: "24022e94-171c-4044-b0ee-d22418116575"
+  }
+};
+
+// integrations/notify/index.ts
+var import_dotenv = __toESM(require("dotenv"));
+var import_notifications_node_client = require("notifications-node-client");
+import_dotenv.default.config();
+var notifyKey = process.env.GOV_NOTIFY_API_KEY;
+var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
+var notify = {
+  sendEmail: async (templateId, sendToEmailAddress, firstName, confirmToken) => {
+    try {
+      console.info("Calling Notify API. templateId: ", templateId);
+      const response = await notifyClient.sendEmail(templateId, sendToEmailAddress, {
+        personalisation: {
+          firstName,
+          confirmToken
+        },
+        reference: null
+      });
+      return { success: true };
+    } catch (err) {
+      throw new Error(`Calling Notify API. Unable to send email ${err}`);
+    }
+  }
+};
+var notify_default = notify;
 
 // schema.ts
 var lists = {
@@ -249,6 +279,39 @@ var lists = {
     },
     access: import_access.allowAll
   },
+  Exporter: (0, import_core.list)({
+    fields: {
+      firstName: (0, import_fields.text)({ validation: { isRequired: true } }),
+      lastName: (0, import_fields.text)({ validation: { isRequired: true } }),
+      email: (0, import_fields.text)({ validation: { isRequired: true } }),
+      password: (0, import_fields.password)({ validation: { isRequired: true } }),
+      emailIsVerified: (0, import_fields.checkbox)({ defaultValue: false })
+    },
+    hooks: {
+      resolveInput: async ({ operation, resolvedData }) => {
+        const accountInputData = resolvedData;
+        if (operation === "create") {
+          try {
+            const emailResponse = await notify_default.sendEmail(
+              EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL,
+              accountInputData.email,
+              accountInputData.firstName,
+              "mockConfirmToken"
+            );
+            if (emailResponse.success) {
+              return accountInputData;
+            }
+            throw new Error(`Calling Notify API. Unable to send email ${emailResponse}`);
+          } catch (err) {
+            console.error("Error sending email verification for account creation", { err });
+            throw new Error();
+          }
+        }
+        return accountInputData;
+      }
+    },
+    access: import_access.allowAll
+  }),
   ExporterBusiness: (0, import_core.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
@@ -405,9 +468,9 @@ var session = (0, import_session.statelessSessions)({
 
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
-var import_notifications_node_client = require("notifications-node-client");
+var import_notifications_node_client2 = require("notifications-node-client");
 var import_axios = __toESM(require("axios"));
-var import_dotenv = __toESM(require("dotenv"));
+var import_dotenv2 = __toESM(require("dotenv"));
 
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -463,9 +526,9 @@ var mapSicCodes = (company, sicCodes) => {
 };
 
 // custom-schema.ts
-import_dotenv.default.config();
-var notifyKey = process.env.GOV_NOTIFY_API_KEY;
-var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
+import_dotenv2.default.config();
+var notifyKey2 = process.env.GOV_NOTIFY_API_KEY;
+var notifyClient2 = new import_notifications_node_client2.NotifyClient(notifyKey2);
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
@@ -611,7 +674,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         try {
           console.info("Calling Notify API. templateId: ", variables.templateId);
           const { templateId, sendToEmailAddress } = variables;
-          await notifyClient.sendEmail(templateId, sendToEmailAddress, {
+          await notifyClient2.sendEmail(templateId, sendToEmailAddress, {
             personalisation: {},
             reference: null
           });

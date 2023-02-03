@@ -18,6 +18,14 @@ interface ApplicationExporterBusiness {
   id: string;
 }
 
+interface Account {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  emailIsVerified?: boolean;
+}
+
 interface Application {
   id: string;
   referenceNumber: number;
@@ -51,4 +59,4 @@ interface SicCodes {
   application: ConnectObj;
 }
 
-export { Application, CompanyResponse, SicCodes };
+export { Account, Application, CompanyResponse, SicCodes };

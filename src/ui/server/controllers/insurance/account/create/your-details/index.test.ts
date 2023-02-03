@@ -4,6 +4,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
+import saveData from './save-data';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes } from '../../../../../test-mocks';
 
@@ -23,6 +24,10 @@ const {
 describe('controllers/insurance/account/create/your-details', () => {
   let req: Request;
   let res: Response;
+
+  jest.mock('./save-data');
+
+  saveData.account = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -84,9 +89,16 @@ describe('controllers/insurance/account/create/your-details', () => {
   });
 
   describe('post', () => {
+    const validBody = {
+      [FIRST_NAME]: 'First',
+      [LAST_NAME]: 'Last',
+      [EMAIL]: 'mock@email.com',
+      [PASSWORD]: 'Mockpassword1!',
+    };
+
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submitted values', () => {
-        post(req, res);
+      it('should render template with validation errors and submitted values', async () => {
+        await post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...insuranceCorePageVariables({
@@ -102,16 +114,63 @@ describe('controllers/insurance/account/create/your-details', () => {
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
-        req.body = {
-          [FIRST_NAME]: 'First',
-          [LAST_NAME]: 'First',
-        };
+        req.body = validBody;
       });
 
-      it(`should redirect to ${CONFIRM_EMAIL}`, () => {
-        post(req, res);
+      it('should call saveData.account with req.body', async () => {
+        await post(req, res);
+
+        expect(saveData.account).toHaveBeenCalledTimes(1);
+
+        expect(saveData.account).toHaveBeenCalledWith(req.body);
+      });
+
+      it('should add the submitted email to req.session.emailAddressToConfirm', async () => {
+        await post(req, res);
+
+        expect(req.session.emailAddressToConfirm).toEqual(validBody[EMAIL]);
+      });
+
+      it(`should redirect to ${CONFIRM_EMAIL}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(CONFIRM_EMAIL);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('saveData.account call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when no application is returned', () => {
+          beforeEach(() => {
+            const saveDataSpy = jest.fn(() => Promise.resolve(false));
+
+            saveData.account = saveDataSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const saveDataSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
+
+            saveData.account = saveDataSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

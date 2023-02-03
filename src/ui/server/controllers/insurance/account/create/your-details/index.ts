@@ -3,6 +3,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
+import saveData from './save-data';
 import { Request, Response } from '../../../../../../types';
 
 const {
@@ -72,7 +73,7 @@ export const get = (req: Request, res: Response) =>
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body);
 
   if (validationErrors) {
@@ -87,5 +88,23 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  return res.redirect(CONFIRM_EMAIL);
+  try {
+    // save the account
+    const saveResponse = await saveData.account(req.body);
+
+    if (!saveResponse) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    // TODO: is it safe to store in here?
+    // cookie? local storage?
+    // chat with Abhi
+    req.session.emailAddressToConfirm = req.body[EMAIL];
+
+    return res.redirect(CONFIRM_EMAIL);
+  } catch (err) {
+    console.error('Error creating account', { err });
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
 };

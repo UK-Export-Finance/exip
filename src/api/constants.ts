@@ -19,3 +19,9 @@ export const APPLICATION = {
     },
   },
 };
+
+export const EMAIL_TEMPLATE_IDS = {
+  ACCOUNT: {
+    CONFIRM_EMAIL: '24022e94-171c-4044-b0ee-d22418116575',
+  },
+};

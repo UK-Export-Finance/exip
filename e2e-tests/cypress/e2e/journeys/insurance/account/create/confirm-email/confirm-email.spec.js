@@ -2,7 +2,9 @@ import { heading } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import { confirmEmailPage } from '../../../../../pages/insurance/account/create';
 import { ORGANISATION, LINKS, PAGES } from '../../../../../../../content-strings';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import account from '../../../../../../fixtures/account';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL;
 
@@ -10,6 +12,8 @@ const {
   START,
   ACCOUNT: { CREATE: { YOUR_DETAILS, CONFIRM_EMAIL } },
 } = ROUTES;
+
+const { ACCOUNT: { EMAIL } } = INSURANCE_FIELD_IDS;
 
 context('Insurance - Account - Create - Confirm email page - I want to create an account for UKEF digital service, So that I can readily use it for my Export Insurance Application with UKEF', () => {
   before(() => {
@@ -74,8 +78,10 @@ context('Insurance - Account - Create - Confirm email page - I want to create an
     cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
-  it('renders `sent a link to`', () => {
-    const expected = `${CONTENT_STRINGS.WE_SENT_LINK_TO} TODO`;
+  it('renders `sent a link to` with the submitted email', () => {
+    const expectedEmail = account[EMAIL];
+
+    const expected = `${CONTENT_STRINGS.WE_SENT_LINK_TO} ${expectedEmail}`;
 
     cy.checkText(confirmEmailPage.weSentLinkTo(), expected);
   });

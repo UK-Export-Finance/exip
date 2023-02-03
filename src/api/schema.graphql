@@ -346,6 +346,68 @@ input PolicyAndExportCreateInput {
   finalDestinationCountryCode: String
 }
 
+type Exporter {
+  id: ID!
+  firstName: String
+  lastName: String
+  email: String
+  password: PasswordState
+  emailIsVerified: Boolean
+}
+
+type PasswordState {
+  isSet: Boolean!
+}
+
+input ExporterWhereUniqueInput {
+  id: ID
+}
+
+input ExporterWhereInput {
+  AND: [ExporterWhereInput!]
+  OR: [ExporterWhereInput!]
+  NOT: [ExporterWhereInput!]
+  id: IDFilter
+  firstName: StringFilter
+  lastName: StringFilter
+  email: StringFilter
+  emailIsVerified: BooleanFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input ExporterOrderByInput {
+  id: OrderDirection
+  firstName: OrderDirection
+  lastName: OrderDirection
+  email: OrderDirection
+  emailIsVerified: OrderDirection
+}
+
+input ExporterUpdateInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  emailIsVerified: Boolean
+}
+
+input ExporterUpdateArgs {
+  where: ExporterWhereUniqueInput!
+  data: ExporterUpdateInput!
+}
+
+input ExporterCreateInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  emailIsVerified: Boolean
+}
+
 type ExporterBusiness {
   id: ID!
   application: Application
@@ -700,11 +762,6 @@ input EligibilityWhereInput {
   wantCoverOverMaxPeriod: BooleanFilter
 }
 
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
-}
-
 input EligibilityOrderByInput {
   id: OrderDirection
   hasMinimumUkGoodsOrServices: OrderDirection
@@ -813,10 +870,6 @@ type User {
   password: PasswordState
 }
 
-type PasswordState {
-  isSet: Boolean!
-}
-
 input UserWhereUniqueInput {
   id: ID
   email: String
@@ -878,6 +931,12 @@ type Mutation {
   updatePolicyAndExports(data: [PolicyAndExportUpdateArgs!]!): [PolicyAndExport]
   deletePolicyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
   deletePolicyAndExports(where: [PolicyAndExportWhereUniqueInput!]!): [PolicyAndExport]
+  createExporter(data: ExporterCreateInput!): Exporter
+  createExporters(data: [ExporterCreateInput!]!): [Exporter]
+  updateExporter(where: ExporterWhereUniqueInput!, data: ExporterUpdateInput!): Exporter
+  updateExporters(data: [ExporterUpdateArgs!]!): [Exporter]
+  deleteExporter(where: ExporterWhereUniqueInput!): Exporter
+  deleteExporters(where: [ExporterWhereUniqueInput!]!): [Exporter]
   createExporterBusiness(data: ExporterBusinessCreateInput!): ExporterBusiness
   createExporterBusinesses(data: [ExporterBusinessCreateInput!]!): [ExporterBusiness]
   updateExporterBusiness(where: ExporterBusinessWhereUniqueInput!, data: ExporterBusinessUpdateInput!): ExporterBusiness
@@ -964,6 +1023,9 @@ type Query {
   policyAndExports(where: PolicyAndExportWhereInput! = {}, orderBy: [PolicyAndExportOrderByInput!]! = [], take: Int, skip: Int! = 0): [PolicyAndExport!]
   policyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
   policyAndExportsCount(where: PolicyAndExportWhereInput! = {}): Int
+  exporters(where: ExporterWhereInput! = {}, orderBy: [ExporterOrderByInput!]! = [], take: Int, skip: Int! = 0): [Exporter!]
+  exporter(where: ExporterWhereUniqueInput!): Exporter
+  exportersCount(where: ExporterWhereInput! = {}): Int
   exporterBusinesses(where: ExporterBusinessWhereInput! = {}, orderBy: [ExporterBusinessOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterBusiness!]
   exporterBusiness(where: ExporterBusinessWhereUniqueInput!): ExporterBusiness
   exporterBusinessesCount(where: ExporterBusinessWhereInput! = {}): Int

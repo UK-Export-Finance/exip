@@ -4,7 +4,9 @@ import { checkbox, integer, relationship, select, text, timestamp, password } fr
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types';  // eslint-disable-line
-import { ANSWERS, APPLICATION } from './constants';
+import { ANSWERS, APPLICATION, EMAIL_TEMPLATE_IDS } from './constants';
+import notify from './integrations/notify';
+import { Account } from './types';
 
 export const lists = {
   ReferenceNumber: {
@@ -38,6 +40,8 @@ export const lists = {
       resolveInput: async ({ operation, resolvedData, context }) => {
         if (operation === 'create') {
           try {
+            // const emailResponse = await notify.sendEmail(EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL, 'Tony.Barnes@ukexportfinance.gov.uk');
+
             console.info('Adding default data to a new application');
             const modifiedData = resolvedData;
 
@@ -231,6 +235,49 @@ export const lists = {
     },
     access: allowAll,
   },
+  Exporter: list({
+    fields: {
+      firstName: text({ validation: { isRequired: true } }),
+      lastName: text({ validation: { isRequired: true } }),
+      email: text({ validation: { isRequired: true } }),
+      password: password({ validation: { isRequired: true } }),
+      emailIsVerified: checkbox({ defaultValue: false }),
+    },
+    hooks: {
+      resolveInput: async ({ operation, resolvedData }): Promise<Account> => {
+        const accountInputData = resolvedData as Account;
+
+        if (operation === 'create') {
+          // TODO:
+          // - password checks
+          // - password encryption
+          // - email confirmation token
+          // - ensure there is not already an account with the same email
+
+          try {
+            const emailResponse = await notify.sendEmail(
+              EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL,
+              accountInputData.email,
+              accountInputData.firstName,
+              'mockConfirmToken',
+            );
+
+            if (emailResponse.success) {
+              return accountInputData;
+            }
+
+            throw new Error(`Calling Notify API. Unable to send email ${emailResponse}`);
+          } catch (err) {
+            console.error('Error sending email verification for account creation', { err });
+            throw new Error();
+          }
+        }
+
+        return accountInputData;
+      },
+    },
+    access: allowAll,
+  }),
   ExporterBusiness: list({
     fields: {
       application: relationship({ ref: 'Application' }),

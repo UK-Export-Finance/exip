@@ -68,6 +68,15 @@ model PolicyAndExport {
   @@index([applicationId])
 }
 
+model Exporter {
+  id              String  @id @default(cuid())
+  firstName       String  @default("")
+  lastName        String  @default("")
+  email           String  @default("")
+  password        String
+  emailIsVerified Boolean @default(false)
+}
+
 model ExporterBusiness {
   id                                String        @id @default(cuid())
   application                       Application?  @relation("ExporterBusiness_application", fields: [applicationId], references: [id])
