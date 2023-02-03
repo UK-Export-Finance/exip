@@ -56,7 +56,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${ESTIMA
 
         field.input().clear();
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 1);
+        partials.errorSummaryListItems().should('have.length', 2);
         cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
       });
 
@@ -85,7 +85,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${ESTIMA
 
         field.input().clear().type('5.5');
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 1);
+        partials.errorSummaryListItems().should('have.length', 2);
         cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
       });
 
@@ -106,7 +106,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${ESTIMA
 
         field.input().clear().type('5O');
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 1);
+        partials.errorSummaryListItems().should('have.length', 2);
         cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
       });
 
@@ -128,7 +128,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${ESTIMA
 
       field.input().clear().type('5');
       submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 0);
+      partials.errorSummaryListItems().should('have.length', 1);
     });
   });
 
@@ -141,7 +141,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${ESTIMA
 
       field.input().clear().type('5,00');
       submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 0);
+      partials.errorSummaryListItems().should('have.length', 1);
     });
   });
 
@@ -154,7 +154,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${ESTIMA
 
       field.input().clear().type('0');
       submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 0);
+      partials.errorSummaryListItems().should('have.length', 1);
     });
   });
 });
