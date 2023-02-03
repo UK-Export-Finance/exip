@@ -14,6 +14,7 @@ const {
   TURNOVER: {
     FINANCIAL_YEAR_END_DATE,
     ESTIMATED_ANNUAL_TURNOVER,
+    PERCENTAGE_TURNOVER,
   },
 } = FIELD_IDS;
 
@@ -110,11 +111,24 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
     const fieldId = ESTIMATED_ANNUAL_TURNOVER;
     const field = turnover[fieldId];
 
+    field.input().should('exist');
+
     cy.checkText(field.heading(), FIELDS.TURNOVER[fieldId].HEADING);
 
     cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
 
     cy.checkText(field.prefix(), FIELDS.TURNOVER[fieldId].PREFIX);
+  });
+
+  it(`should display ${PERCENTAGE_TURNOVER} section`, () => {
+    const fieldId = PERCENTAGE_TURNOVER;
+    const field = turnover[fieldId];
+
+    field.input().should('exist');
+
+    cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
+
+    cy.checkText(field.suffix(), FIELDS.TURNOVER[fieldId].SUFFIX);
   });
 
   it('should display the continue and save and go back button', () => {

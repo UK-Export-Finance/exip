@@ -1,4 +1,4 @@
-import { isNumber, numberHasDecimal, getPercentageOfNumber, isNumberBelowMinimum } from '.';
+import { isNumber, numberHasDecimal, getPercentageOfNumber, isNumberBelowMinimum, isNumberAboveMaximum } from '.';
 
 describe('server/helpers/number', () => {
   describe('isNumber', () => {
@@ -76,6 +76,35 @@ describe('server/helpers/number', () => {
       const result = isNumberBelowMinimum(mockValue, mockMinimum);
 
       expect(result).toEqual(true);
+    });
+  });
+
+  describe('isNumberAboveMaximum', () => {
+    it('should return true if value is above maximum', () => {
+      const mockValue = 101;
+      const mockMaximum = 100;
+
+      const result = isNumberAboveMaximum(mockValue, mockMaximum);
+
+      expect(result).toEqual(true);
+    });
+
+    it('should return false if value is the same as maximum', () => {
+      const mockValue = 100;
+      const mockMaximum = 100;
+
+      const result = isNumberAboveMaximum(mockValue, mockMaximum);
+
+      expect(result).toEqual(false);
+    });
+
+    it('should return false if value is the below maximum', () => {
+      const mockValue = 50;
+      const mockMaximum = 100;
+
+      const result = isNumberAboveMaximum(mockValue, mockMaximum);
+
+      expect(result).toEqual(false);
     });
   });
 });

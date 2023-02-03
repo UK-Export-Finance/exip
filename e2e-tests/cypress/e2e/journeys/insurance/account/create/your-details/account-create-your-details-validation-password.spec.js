@@ -24,7 +24,7 @@ const {
 
 const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT;
 
-const submitAndAssertErrors = (fieldValue) => {
+const submitAndAssertFieldErrors = (fieldValue) => {
   const field = yourDetailsPage[PASSWORD];
 
   field.input().clear().type(fieldValue, { delay: 0 });
@@ -58,7 +58,7 @@ context('Insurance - Account - Create - Your details page - form validation - pa
     it('should render a validation error', () => {
       const invalidPassword = 'Mock1!';
 
-      submitAndAssertErrors(invalidPassword);
+      submitAndAssertFieldErrors(invalidPassword);
     });
   });
 
@@ -66,7 +66,7 @@ context('Insurance - Account - Create - Your details page - form validation - pa
     it('should render a validation error', () => {
       const invalidPassword = 'mockpassword1!';
 
-      submitAndAssertErrors(invalidPassword);
+      submitAndAssertFieldErrors(invalidPassword);
     });
   });
 
@@ -74,7 +74,7 @@ context('Insurance - Account - Create - Your details page - form validation - pa
     it('should render a validation error', () => {
       const invalidPassword = 'MOCKPASSWORD1!';
 
-      submitAndAssertErrors(invalidPassword);
+      submitAndAssertFieldErrors(invalidPassword);
     });
   });
 
@@ -82,7 +82,7 @@ context('Insurance - Account - Create - Your details page - form validation - pa
     it('should render a validation error', () => {
       const invalidPassword = 'Mockpassword!';
 
-      submitAndAssertErrors(invalidPassword);
+      submitAndAssertFieldErrors(invalidPassword);
     });
   });
 
@@ -90,7 +90,7 @@ context('Insurance - Account - Create - Your details page - form validation - pa
     it('should render a validation error', () => {
       const invalidPassword = 'Mockpassword1';
 
-      submitAndAssertErrors(invalidPassword);
+      submitAndAssertFieldErrors(invalidPassword);
     });
   });
 });

@@ -85,6 +85,37 @@
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ govukInput({
+          id: FIELDS.PERCENTAGE_TURNOVER.ID,
+          name: FIELDS.PERCENTAGE_TURNOVER.ID,
+          value: submittedValues[FIELDS.PERCENTAGE_TURNOVER.ID] or application.exporterCompany[FIELDS.PERCENTAGE_TURNOVER.ID],
+          label: {
+            text: FIELDS.PERCENTAGE_TURNOVER.LABEL,
+            classes: "govuk-body",
+            attributes: {
+              "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-label"
+            }
+          },
+          suffix: {
+            text: FIELDS.PERCENTAGE_TURNOVER.SUFFIX,
+            attributes: {
+              "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-suffix"
+            }
+          },
+          classes: "govuk-input--width-5",
+          attributes: {
+            "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID
+          },
+          errorMessage: validationErrors.errorList[FIELDS.PERCENTAGE_TURNOVER.ID] and {
+            text: validationErrors.errorList[FIELDS.PERCENTAGE_TURNOVER.ID].text,
+            attributes: {
+              "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-error"
+            }
+          }
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="govuk-button-group">
           {{ govukButton({
             text: CONTENT_STRINGS.BUTTONS.CONTINUE,

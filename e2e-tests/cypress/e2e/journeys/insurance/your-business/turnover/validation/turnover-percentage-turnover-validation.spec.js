@@ -12,7 +12,7 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 const {
   TURNOVER: {
-    ESTIMATED_ANNUAL_TURNOVER: FIELD_ID,
+    PERCENTAGE_TURNOVER: FIELD_ID,
   },
 } = FIELD_IDS;
 
@@ -23,7 +23,7 @@ const ERROR_MESSAGE = TURNOVER_ERRORS[FIELD_ID];
 const ERROR_ASSERTIONS = {
   field: turnover[FIELD_ID],
   numberOfExpectedErrors: 2,
-  errorIndex: 0,
+  errorIndex: 1,
 };
 
 describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_ID}`, () => {
@@ -87,14 +87,34 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
         cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
       });
     });
+
+    describe(`when ${FIELD_ID} is over 100`, () => {
+      const errorMessage = ERROR_MESSAGE.ABOVE_MAXIMUM;
+
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const value = '101';
+
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+      });
+    });
+
+    describe(`when ${FIELD_ID} is below 0`, () => {
+      const errorMessage = ERROR_MESSAGE.BELOW_MINIMUM;
+
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const value = '-1';
+
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+      });
+    });
   });
 
   describe(`when ${FIELD_ID} is correctly entered as a whole number`, () => {
     it('should not display validation errors', () => {
       cy.navigateToUrl(url);
-
-      const fieldId = FIELD_ID;
-      const field = turnover[fieldId];
+      const field = turnover[FIELD_ID];
 
       field.input().clear().type('5');
       submitButton().click();
@@ -105,11 +125,9 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
   describe(`when ${FIELD_ID} is correctly entered with a comma`, () => {
     it('should not display validation errors', () => {
       cy.navigateToUrl(url);
+      const field = turnover[FIELD_ID];
 
-      const fieldId = FIELD_ID;
-      const field = turnover[fieldId];
-
-      field.input().clear().type('5,00');
+      field.input().clear().type('5,0');
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);
     });
@@ -118,9 +136,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
   describe(`when ${FIELD_ID} is correctly entered as 0`, () => {
     it('should not display validation errors', () => {
       cy.navigateToUrl(url);
-
-      const fieldId = FIELD_ID;
-      const field = turnover[fieldId];
+      const field = turnover[FIELD_ID];
 
       field.input().clear().type('0');
       submitButton().click();
