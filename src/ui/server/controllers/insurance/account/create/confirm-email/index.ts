@@ -15,7 +15,7 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL
  * @returns {Express.Response.render} Confirm email page
  */
 export const get = (req: Request, res: Response) => {
-  const email = req.session.emailAddressToConfirm;
+  const { emailAddressToConfirm: email } = req.session;
 
   delete req.session.emailAddressToConfirm;
 
