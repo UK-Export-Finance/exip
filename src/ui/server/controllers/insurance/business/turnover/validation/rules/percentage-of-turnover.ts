@@ -51,7 +51,6 @@ const percentageTurnover = (responseBody: RequestBody, errors: object) => {
 
   // checks if number is below 0 and returns different error message
   if (isNumberBelowMinimum(Number(numberWithoutCommas), MINIMUM)) {
-    s
     const errorMessage = ERROR_MESSAGE.BELOW_MINIMUM;
 
     return generateValidationErrors(FIELD_ID, errorMessage, updatedErrors);
