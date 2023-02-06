@@ -22,14 +22,14 @@ const {
 } = FIELD_IDS;
 
 export default () => {
-  multipleContractPolicyPage[REQUESTED_START_DATE].dayInput().type(application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
-  multipleContractPolicyPage[REQUESTED_START_DATE].monthInput().type(application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
-  multipleContractPolicyPage[REQUESTED_START_DATE].yearInput().type(application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
+  multipleContractPolicyPage[REQUESTED_START_DATE].dayInput().clear().type(application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
+  multipleContractPolicyPage[REQUESTED_START_DATE].monthInput().clear().type(application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
+  multipleContractPolicyPage[REQUESTED_START_DATE].yearInput().clear().type(application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
 
   multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER].input().select(application.POLICY_AND_EXPORTS[TOTAL_MONTHS_OF_COVER]);
-  multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().type(application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
-  multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().type(application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
-  multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().type(application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
+  multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().clear().type(application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
+  multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().clear().type(application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
+  multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().clear().type(application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
 
   insurancePartials.policyCurrencyCodeFormField.input().select(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);
 

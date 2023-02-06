@@ -36,7 +36,7 @@ const percentageTurnover = (responseBody: RequestBody, errors: object) => {
     return generateValidationErrors(FIELD_ID, errorMessage, errors);
   }
 
-  // removes any commas from number
+  // strip commas - commas are valid.
   const numberWithoutCommas = stripCommas(value);
 
   /**

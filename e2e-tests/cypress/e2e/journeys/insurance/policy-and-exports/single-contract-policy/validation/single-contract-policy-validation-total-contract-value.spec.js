@@ -7,7 +7,16 @@ import getReferenceNumber from '../../../../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
 
-const { INSURANCE } = ROUTES;
+const {
+  INSURANCE: {
+    ROOT: INSURANCE_ROOT,
+    START,
+    POLICY_AND_EXPORTS: {
+      SINGLE_CONTRACT_POLICY,
+      ABOUT_GOODS_OR_SERVICES,
+    },
+  },
+} = ROUTES;
 
 const {
   INSURANCE: {
@@ -33,7 +42,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(INSURANCE.START);
+    cy.navigateToUrl(START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
@@ -43,7 +52,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
       cy.url().should('eq', expectedUrl);
     });
@@ -62,12 +71,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].IS_EMPTY,
+        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].IS_EMPTY}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
       );
     });
   });
@@ -79,12 +88,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_NUMBER,
+        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_NUMBER}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
       );
     });
   });
@@ -96,12 +105,46 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_WHOLE_NUMBER,
+        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_WHOLE_NUMBER}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
+      );
+    });
+  });
+
+  describe('when total sales to buyer contains a decimal', () => {
+    it('should render a validation error', () => {
+      field.input().clear().type('1.2');
+      submitButton().click();
+
+      cy.checkText(
+        partials.errorSummaryListItems().eq(2),
+        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
+      );
+
+      cy.checkText(
+        field.errorMessage(),
+        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
+      );
+    });
+  });
+
+  describe('when total sales to buyer contains a comma and decimal', () => {
+    it('should render a validation error', () => {
+      field.input().clear().type('1,234.56');
+      submitButton().click();
+
+      cy.checkText(
+        partials.errorSummaryListItems().eq(2),
+        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
+      );
+
+      cy.checkText(
+        field.errorMessage(),
+        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
       );
     });
   });
@@ -137,6 +180,19 @@ context('Insurance - Policy and exports - Single contract policy page - form val
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM}`,
       );
+    });
+  });
+
+  describe('when total contract value is valid and contains a comma', () => {
+    it('should redirect to the next page as all fields are valid', () => {
+      cy.completeAndSubmitSingleContractPolicyForm();
+      partials.backLink().click();
+
+      field.input().clear().type('1,234');
+      submitButton().click();
+
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      cy.url().should('eq', expectedUrl);
     });
   });
 });

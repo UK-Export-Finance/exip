@@ -78,7 +78,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].IS_EMPTY,
+      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
     );
 
     cy.checkText(

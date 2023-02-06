@@ -35,7 +35,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/valid
 
       const result = maximumBuyerWillOweRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -49,7 +49,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/valid
 
       const result = maximumBuyerWillOweRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -63,7 +63,21 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/valid
 
       const result = maximumBuyerWillOweRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_WHOLE_NUMBER, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when maximum buyer will owe contains a comma and decimal', () => {
+    it('should return validation error', () => {
+      const mockSubmittedData = {
+        [FIELD_ID]: '123,456.78',
+      };
+
+      const result = maximumBuyerWillOweRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -101,6 +115,18 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/valid
     it('should return the provided errors object', () => {
       const mockSubmittedData = {
         [FIELD_ID]: '10000',
+      };
+
+      const result = maximumBuyerWillOweRules(mockSubmittedData, mockErrors);
+
+      expect(result).toEqual(mockErrors);
+    });
+  });
+
+  describe('when there are no validation errors and the value contains a comma', () => {
+    it('should return the provided errors object', () => {
+      const mockSubmittedData = {
+        [FIELD_ID]: '10,000',
       };
 
       const result = maximumBuyerWillOweRules(mockSubmittedData, mockErrors);
