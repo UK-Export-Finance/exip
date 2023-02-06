@@ -4,7 +4,7 @@ import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
 import { mockApplication } from '../../../test-mocks';
 import mapFinancialYearEndDate from '../map-financial-year-end-date';
-import displayNumberFieldValue from '../../display-number-field-value';
+import transformNumberToString from '../../display-number-field-value';
 
 const {
   SUBMISSION_DEADLINE,
@@ -55,7 +55,7 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
   });
 
   describe('when an application has exporterBusiness fields', () => {
-    it('should return the relevant exporterBusiness fields as timestamps', () => {
+    it('should return the relevant exporterBusiness fields', () => {
       const result = mapApplicationToFormFields(mockApplication);
 
       const expected = {
@@ -63,36 +63,9 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
         [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
         exporterBusiness: {
           ...mockApplication.exporterBusiness,
-          [YEARS_EXPORTING]: displayNumberFieldValue(mockApplication.exporterBusiness[YEARS_EXPORTING]),
-          [EMPLOYEES_UK]: displayNumberFieldValue(mockApplication.exporterBusiness[EMPLOYEES_UK]),
-          [EMPLOYEES_INTERNATIONAL]: displayNumberFieldValue(mockApplication.exporterBusiness[EMPLOYEES_INTERNATIONAL]),
-        },
-      };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when an application has exporterBusiness fields set to 0', () => {
-    it('should return the relevant exporterBusiness fields as string 0s', () => {
-      const mockApplicationWithZeros = {
-        ...mockApplication,
-        exporterBusiness: {
-          ...mockApplication.exporterBusiness,
-          [YEARS_EXPORTING]: 0,
-        },
-      };
-
-      const result = mapApplicationToFormFields(mockApplicationWithZeros);
-
-      const expected = {
-        ...mockApplicationWithZeros,
-        [SUBMISSION_DEADLINE]: formatDate(mockApplicationWithZeros[SUBMISSION_DEADLINE]),
-        exporterBusiness: {
-          ...mockApplicationWithZeros.exporterBusiness,
-          [YEARS_EXPORTING]: '0',
-          [EMPLOYEES_UK]: displayNumberFieldValue(mockApplicationWithZeros.exporterBusiness[EMPLOYEES_UK]),
-          [EMPLOYEES_INTERNATIONAL]: displayNumberFieldValue(mockApplicationWithZeros.exporterBusiness[EMPLOYEES_INTERNATIONAL]),
+          [YEARS_EXPORTING]: transformNumberToString(mockApplication.exporterBusiness[YEARS_EXPORTING]),
+          [EMPLOYEES_UK]: transformNumberToString(mockApplication.exporterBusiness[EMPLOYEES_UK]),
+          [EMPLOYEES_INTERNATIONAL]: transformNumberToString(mockApplication.exporterBusiness[EMPLOYEES_INTERNATIONAL]),
         },
       };
 

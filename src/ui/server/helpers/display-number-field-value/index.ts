@@ -4,12 +4,6 @@
  * @param {Number} value
  * @returns value - either number or string or null
  */
-const displayNumberFieldValue = (value?: number) => {
-  if (value === 0) {
-    return String(value);
-  }
+const transformNumberToString = (value?: number) => (value === 0 ? String(value) : value);
 
-  return value;
-};
-
-export default displayNumberFieldValue;
+export default transformNumberToString;

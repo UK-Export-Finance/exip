@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../constants';
 import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
 import mapFinancialYearEndDate from '../map-financial-year-end-date';
-import displayNumberFieldValue from '../../display-number-field-value';
+import transformNumberToString from '../../display-number-field-value';
 
 const {
   SUBMISSION_DEADLINE,
@@ -61,9 +61,9 @@ const mapApplicationToFormFields = (application: Application): object => {
     if (application.exporterBusiness) {
       mapped.exporterBusiness = {
         ...mapped.exporterBusiness,
-        [YEARS_EXPORTING]: displayNumberFieldValue(application.exporterBusiness[YEARS_EXPORTING]),
-        [EMPLOYEES_UK]: displayNumberFieldValue(application.exporterBusiness[EMPLOYEES_UK]),
-        [EMPLOYEES_INTERNATIONAL]: displayNumberFieldValue(application.exporterBusiness[EMPLOYEES_INTERNATIONAL]),
+        [YEARS_EXPORTING]: transformNumberToString(application.exporterBusiness[YEARS_EXPORTING]),
+        [EMPLOYEES_UK]: transformNumberToString(application.exporterBusiness[EMPLOYEES_UK]),
+        [EMPLOYEES_INTERNATIONAL]: transformNumberToString(application.exporterBusiness[EMPLOYEES_INTERNATIONAL]),
       };
     }
 
