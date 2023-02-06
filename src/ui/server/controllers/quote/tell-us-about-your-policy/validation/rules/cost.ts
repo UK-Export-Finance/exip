@@ -50,6 +50,7 @@ const costRules = (formBody: RequestBody, errors: object) => {
     return updatedErrors;
   }
 
+  // strip commas - commas are valid.
   const cleanString = stripCommas(formBody[fieldId]);
 
   if (Number(cleanString) < MINIMUM) {
