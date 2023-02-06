@@ -42,7 +42,6 @@ export const getAllTasksFieldsInAGroup = (group: TaskListDataGroup): Array<strin
 // Note: this assumes that any data in submitted fields is a valid answer. E.g, false boolean is a valid answer.
 export const hasSubmittedField = (submittedData: ApplicationFlat, fieldId: string) => {
   // if array, check it is not empty array
-  // if (submittedData && fieldId && Array.isArray(submittedData[fieldId]) && submittedData[fieldId].length > 0) {
   if (submittedData && fieldId && isPopulatedArray(submittedData[fieldId])) {
     return true;
   }
