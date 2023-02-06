@@ -11,7 +11,7 @@ const {
 const account = {
   [FIRST_NAME]: 'Joe',
   [LAST_NAME]: 'Bloggs',
-  [EMAIL]: 'mock@email.com',
+  [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT'),
   [PASSWORD]: 'Mockpassword1!',
 };
 

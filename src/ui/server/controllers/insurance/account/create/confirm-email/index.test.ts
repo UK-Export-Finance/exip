@@ -3,7 +3,7 @@ import { PAGES } from '../../../../../content-strings';
 import { TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
 
 describe('controllers/insurance/account/create/confirm-email', () => {
   let req: Request;
@@ -11,6 +11,8 @@ describe('controllers/insurance/account/create/confirm-email', () => {
 
   beforeEach(() => {
     req = mockReq();
+    req.session.emailAddressToConfirm = mockAccount.email;
+
     res = mockRes();
   });
 
@@ -27,6 +29,12 @@ describe('controllers/insurance/account/create/confirm-email', () => {
   });
 
   describe('get', () => {
+    it('should delete emailAddressToConfirm from req.session', () => {
+      get(req, res);
+
+      expect(req.session.emailAddressToConfirm).toBeUndefined();
+    });
+
     it('should render template', () => {
       get(req, res);
 
@@ -35,6 +43,7 @@ describe('controllers/insurance/account/create/confirm-email', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
+        email: mockAccount.email,
       });
     });
   });

@@ -1,17 +1,15 @@
 import type { GraphQLSchema } from 'graphql';
 import { mergeSchemas } from '@graphql-tools/schema';
-// @ts-ignore
-import { NotifyClient } from 'notifications-node-client';
 import axios from 'axios';
 import dotenv from 'dotenv';
+import crypto from 'crypto';
+import { PASSWORD } from './constants';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
 import { SicCodes } from './types';
 
 dotenv.config();
 
-const notifyKey = process.env.GOV_NOTIFY_API_KEY;
-const notifyClient = new NotifyClient(notifyKey);
 const username: any = process.env.COMPANIES_HOUSE_API_KEY;
 const companiesHouseURL: any = process.env.COMPANIES_HOUSE_API_URL;
 
@@ -19,8 +17,19 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
   mergeSchemas({
     schemas: [schema],
     typeDefs: `
-      type EmailResponse {
-        success: Boolean
+
+      type Account {
+        firstName: String
+        lastName: String
+        email: String
+        isActive: Boolean
+      }
+
+      input AccountInput {
+        firstName: String
+        lastName: String
+        email: String
+        password: String
       }
 
       # fields from registered_office_address object
@@ -99,18 +108,16 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       }
 
       type Mutation {
+        """ create an account """
+        createAccount(
+          data: AccountInput!
+        ): Account
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
           companyAddressId: ID!
           data: ExporterCompanyAndCompanyAddressInput!
         ): ExporterCompanyAndCompanyAddress
-
-        """ send an email """
-        sendEmail(
-          templateId: String!
-          sendToEmailAddress: String!
-        ): EmailResponse
       }
 
       type Query {
@@ -122,6 +129,40 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
     `,
     resolvers: {
       Mutation: {
+        createAccount: async (root, variables, context) => {
+          console.info('Creating new exporter account for ', variables.data.email);
+
+          try {
+            const { firstName, lastName, email, password } = variables.data;
+
+            const {
+              RANDOM_BYTES_SIZE,
+              STRING_TYPE,
+              PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM },
+            } = PASSWORD;
+
+            const salt = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
+
+            // TODO: use constants for salt/hash requirements.
+            const hash = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+
+            const account = {
+              firstName,
+              lastName,
+              email,
+              salt,
+              hash,
+            };
+
+            const response = await context.db.Exporter.createOne({
+              data: account,
+            });
+
+            return response;
+          } catch (err) {
+            throw new Error(`Creating new exporter account ${err}`);
+          }
+        },
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);
@@ -162,22 +203,6 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
             console.error('Error updating application - exporter company and exporter company address', { err });
 
             throw new Error(`Updating application - exporter company and exporter company address ${err}`);
-          }
-        },
-        sendEmail: async (root, variables) => {
-          try {
-            console.info('Calling Notify API. templateId: ', variables.templateId);
-            const { templateId, sendToEmailAddress } = variables;
-
-            await notifyClient.sendEmail(templateId, sendToEmailAddress, {
-              personalisation: {},
-              reference: null,
-            });
-
-            return { success: true };
-          } catch (err) {
-            console.error('Unable to send email', { err });
-            return { success: false };
           }
         },
       },
