@@ -1,4 +1,4 @@
-import { natureOfBusiness } from '../../../../pages/your-business';
+import { turnover } from '../../../../pages/your-business';
 import partials from '../../../../partials';
 import { submitButton, saveAndBackButton } from '../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
@@ -7,11 +7,9 @@ import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
 
 const {
-  NATURE_OF_YOUR_BUSINESS: {
-    GOODS_OR_SERVICES,
-    YEARS_EXPORTING,
-    EMPLOYEES_UK,
-    EMPLOYEES_INTERNATIONAL,
+  TURNOVER: {
+    ESTIMATED_ANNUAL_TURNOVER,
+    PERCENTAGE_TURNOVER,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -20,7 +18,7 @@ const {
   START,
   ALL_SECTIONS,
   EXPORTER_BUSINESS: {
-    NATURE_OF_BUSINESS,
+    TURNOVER,
   },
 } = ROUTES.INSURANCE;
 
@@ -28,7 +26,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.exporterBusiness;
 
-context('Insurance - Your business - Nature of your business page - Save and back', () => {
+context('Insurance - Your business - Turnover page - Save and back', () => {
   let referenceNumber;
   let url;
 
@@ -40,11 +38,12 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     task.link().click();
 
     cy.completeAndSubmitCompanyDetails();
+    cy.completeAndSubmitNatureOfYourBusiness();
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
 
       cy.url().should('eq', url);
     });
@@ -72,7 +71,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      natureOfBusiness[GOODS_OR_SERVICES].input().clear().type(application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
+      turnover[ESTIMATED_ANNUAL_TURNOVER].input().clear().type(application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
 
       saveAndBackButton().click();
 
@@ -84,14 +83,13 @@ context('Insurance - Your business - Nature of your business page - Save and bac
       cy.checkText(task.status(), expected);
     });
 
-    it(`should retain the ${GOODS_OR_SERVICES} input on the page and the other fields should be empty`, () => {
+    it(`should retain the ${ESTIMATED_ANNUAL_TURNOVER} input on the page and the other fields should be empty`, () => {
       task.link().click();
       submitButton().click();
+      submitButton().click();
 
-      natureOfBusiness[GOODS_OR_SERVICES].input().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
-      natureOfBusiness[YEARS_EXPORTING].input().should('have.value', '');
-      natureOfBusiness[EMPLOYEES_UK].input().should('have.value', '');
-      natureOfBusiness[EMPLOYEES_INTERNATIONAL].input().should('have.value', '');
+      turnover[ESTIMATED_ANNUAL_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      turnover[PERCENTAGE_TURNOVER].input().should('have.value', '');
     });
   });
 
@@ -99,10 +97,8 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      natureOfBusiness[GOODS_OR_SERVICES].input().clear().type(application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
-      natureOfBusiness[YEARS_EXPORTING].input().clear().type(application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
-      natureOfBusiness[EMPLOYEES_UK].input().clear().type(application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
-      natureOfBusiness[EMPLOYEES_INTERNATIONAL].input().clear().type(application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
+      turnover[ESTIMATED_ANNUAL_TURNOVER].input().clear().type(application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      turnover[PERCENTAGE_TURNOVER].input().clear().type(application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
 
       saveAndBackButton().click();
 
@@ -114,14 +110,13 @@ context('Insurance - Your business - Nature of your business page - Save and bac
       cy.checkText(task.status(), expected);
     });
 
-    it(`should retain the ${GOODS_OR_SERVICES} input on the page and the other fields should be empty`, () => {
+    it('should retain the all fields on the page', () => {
       task.link().click();
       submitButton().click();
+      submitButton().click();
 
-      natureOfBusiness[GOODS_OR_SERVICES].input().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
-      natureOfBusiness[YEARS_EXPORTING].input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
-      natureOfBusiness[EMPLOYEES_UK].input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
-      natureOfBusiness[EMPLOYEES_INTERNATIONAL].input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
+      turnover[ESTIMATED_ANNUAL_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      turnover[PERCENTAGE_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
     });
   });
 });

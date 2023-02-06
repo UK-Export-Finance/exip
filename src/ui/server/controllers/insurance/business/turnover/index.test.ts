@@ -7,6 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER } = EXPORTER_BUSINESS.TURNOVER;
@@ -16,9 +17,11 @@ const { TURNOVER: TURNOVER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { TURNOVER_ROOT, BROKER_ROOT } = EXPORTER_BUSINESS_ROUTES;
+const { TURNOVER_SAVE_AND_BACK, BROKER_ROOT } = EXPORTER_BUSINESS_ROUTES;
 
 const { TURNOVER: TURNOVER_FIELDS } = FIELDS;
+
+jest.mock('../map-and-save');
 
 describe('controllers/insurance/business/turnover', () => {
   let req: Request;
@@ -60,7 +63,7 @@ describe('controllers/insurance/business/turnover', () => {
             ...TURNOVER_FIELDS[PERCENTAGE_TURNOVER],
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ROOT}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -99,6 +102,8 @@ describe('controllers/insurance/business/turnover', () => {
   });
 
   describe('post', () => {
+    mapAndSave.turnover = jest.fn(() => Promise.resolve(true));
+
     describe('when there are validation errors', () => {
       it('should render template with validation errors', async () => {
         req.body = {};
@@ -136,6 +141,19 @@ describe('controllers/insurance/business/turnover', () => {
 
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      it('should call mapAndSave.companyDetails once with natureOfBusiness and application', async () => {
+        req.body = {
+          [ESTIMATED_ANNUAL_TURNOVER]: '5',
+          [PERCENTAGE_TURNOVER]: '3',
+        };
+
+        await post(req, res);
+
+        expect(mapAndSave.turnover).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.turnover).toHaveBeenCalledWith(req.body, mockApplication);
       });
     });
 

@@ -88,6 +88,8 @@ model ExporterBusiness {
   totalYearsExporting               Int?
   totalEmployeesUK                  Int?
   totalEmployeesInternational       Int?
+  estimatedAnnualTurnover           Int?
+  exportsTurnoverPercentage         Int?
   from_Application_exporterBusiness Application[] @relation("Application_exporterBusiness")
 
   @@index([applicationId])

@@ -92,7 +92,7 @@ describe('controllers/insurance/business/save-data', () => {
       const mockValidationErrors = generateValidationErrors(EMPLOYEES_UK, 'error', {});
 
       it(`should call api.keystone.application.update.exporterBusiness with ${GOODS_OR_SERVICES}, ${YEARS_EXPORTING}, ${EMPLOYEES_INTERNATIONAL} but not ${EMPLOYEES_UK}`, async () => {
-        await save.natureOfBusiness(mockApplication, mockFormBody, mockValidationErrors.errorList);
+        await save.exporterBusiness(mockApplication, mockFormBody, mockValidationErrors.errorList);
 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
@@ -102,7 +102,7 @@ describe('controllers/insurance/business/save-data', () => {
       });
 
       it('should return the API response', async () => {
-        const result = await save.natureOfBusiness(mockApplication, mockFormBody);
+        const result = await save.exporterBusiness(mockApplication, mockFormBody);
 
         expect(result).toEqual(mockUpdateApplicationResponse);
       });
@@ -110,7 +110,7 @@ describe('controllers/insurance/business/save-data', () => {
 
     describe('when errorList is NOT provided', () => {
       it(`should call api.keystone.application.update.exporterBusiness with ${GOODS_OR_SERVICES}, ${YEARS_EXPORTING}, ${EMPLOYEES_INTERNATIONAL} and ${EMPLOYEES_UK}`, async () => {
-        await save.natureOfBusiness(mockApplication, mockFormBody);
+        await save.exporterBusiness(mockApplication, mockFormBody);
 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
@@ -120,7 +120,7 @@ describe('controllers/insurance/business/save-data', () => {
       });
 
       it('should return the API response', async () => {
-        const result = await save.natureOfBusiness(mockApplication, mockFormBody);
+        const result = await save.exporterBusiness(mockApplication, mockFormBody);
 
         expect(result).toEqual(mockUpdateApplicationResponse);
       });
@@ -168,9 +168,9 @@ describe('controllers/insurance/business/save-data', () => {
 
         it('should throw an error', async () => {
           try {
-            await save.natureOfBusiness(mockApplication, mockFormBody);
+            await save.exporterBusiness(mockApplication, mockFormBody);
           } catch (err) {
-            const expected = new Error("Updating application's natureOfBusiness");
+            const expected = new Error("Updating application's exporterBusiness");
             expect(err).toEqual(expected);
           }
         });

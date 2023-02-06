@@ -428,6 +428,8 @@ type ExporterBusiness {
   totalYearsExporting: Int
   totalEmployeesUK: Int
   totalEmployeesInternational: Int
+  estimatedAnnualTurnover: Int
+  exportsTurnoverPercentage: Int
 }
 
 input ExporterBusinessWhereUniqueInput {
@@ -444,6 +446,8 @@ input ExporterBusinessWhereInput {
   totalYearsExporting: IntNullableFilter
   totalEmployeesUK: IntNullableFilter
   totalEmployeesInternational: IntNullableFilter
+  estimatedAnnualTurnover: IntNullableFilter
+  exportsTurnoverPercentage: IntNullableFilter
 }
 
 input ExporterBusinessOrderByInput {
@@ -452,6 +456,8 @@ input ExporterBusinessOrderByInput {
   totalYearsExporting: OrderDirection
   totalEmployeesUK: OrderDirection
   totalEmployeesInternational: OrderDirection
+  estimatedAnnualTurnover: OrderDirection
+  exportsTurnoverPercentage: OrderDirection
 }
 
 input ExporterBusinessUpdateInput {
@@ -460,6 +466,8 @@ input ExporterBusinessUpdateInput {
   totalYearsExporting: Int
   totalEmployeesUK: Int
   totalEmployeesInternational: Int
+  estimatedAnnualTurnover: Int
+  exportsTurnoverPercentage: Int
 }
 
 input ExporterBusinessUpdateArgs {
@@ -473,6 +481,8 @@ input ExporterBusinessCreateInput {
   totalYearsExporting: Int
   totalEmployeesUK: Int
   totalEmployeesInternational: Int
+  estimatedAnnualTurnover: Int
+  exportsTurnoverPercentage: Int
 }
 
 type ExporterCompanyAddress {
