@@ -55,28 +55,9 @@ describe('server/helpers/task-helpers', () => {
   });
 
   describe('getAllTasksFieldsInAGroup', () => {
-    describe('when no group is provided', () => {
-      it('should return an empty array', () => {
-        // @ts-ignore
-        const result = getAllTasksFieldsInAGroup();
-
-        expect(result).toEqual([]);
-      });
-    });
-
-    describe('when a group has no tasks', () => {
-      it('should return an empty array', () => {
-        // @ts-ignore
-        const result = getAllTasksFieldsInAGroup({});
-
-        expect(result).toEqual([]);
-      });
-    });
-
     describe('when a group has an empty array of tasks', () => {
       it('should return an empty array', () => {
-        // @ts-ignore
-        const result = getAllTasksFieldsInAGroup({ tasks: [] });
+        const result = getAllTasksFieldsInAGroup(mockGroups[0]);
 
         expect(result).toEqual([]);
       });

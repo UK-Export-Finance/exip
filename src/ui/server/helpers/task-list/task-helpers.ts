@@ -1,5 +1,6 @@
-import { ApplicationFlat, TaskListData, TaskListDataGroup, TaskListDataTask } from '../../../types';
 import { DEFAULT, TASKS } from '../../content-strings';
+import isPopulatedArray from '../is-populated-array';
+import { ApplicationFlat, TaskListData, TaskListDataGroup, TaskListDataTask } from '../../../types';
 
 /**
  * getTaskById
@@ -25,7 +26,7 @@ export const getTaskById = (groupTasks: Array<TaskListDataTask>, taskId: string)
  * @returns {Array} All field IDs from all tasks in the provided group. Flattens the task fields into a 1 level array.
  */
 export const getAllTasksFieldsInAGroup = (group: TaskListDataGroup): Array<string> => {
-  if (group && group.tasks && group.tasks.length) {
+  if (isPopulatedArray(group.tasks)) {
     return group.tasks.map((task: TaskListDataTask) => task.fields).flat();
   }
 
@@ -41,9 +42,11 @@ export const getAllTasksFieldsInAGroup = (group: TaskListDataGroup): Array<strin
 // Note: this assumes that any data in submitted fields is a valid answer. E.g, false boolean is a valid answer.
 export const hasSubmittedField = (submittedData: ApplicationFlat, fieldId: string) => {
   // if array, check it is not empty array
-  if (submittedData && fieldId && Array.isArray(submittedData[fieldId]) && submittedData[fieldId].length > 0) {
+  // if (submittedData && fieldId && Array.isArray(submittedData[fieldId]) && submittedData[fieldId].length > 0) {
+  if (submittedData && fieldId && isPopulatedArray(submittedData[fieldId])) {
     return true;
   }
+
   if (submittedData && fieldId && (submittedData[fieldId] || submittedData[fieldId] === false) && !Array.isArray(submittedData[fieldId])) {
     return true;
   }
@@ -80,7 +83,7 @@ export const getSubmittedFields = (fields: Array<string>, submittedData: Applica
 export const taskIsInProgress = (taskFields: Array<string>, submittedData: ApplicationFlat) => {
   const submittedFields = getSubmittedFields(taskFields, submittedData);
 
-  if (submittedFields.length > 0 && submittedFields.length < taskFields.length) {
+  if (isPopulatedArray(submittedFields) && submittedFields.length < taskFields.length) {
     return true;
   }
 

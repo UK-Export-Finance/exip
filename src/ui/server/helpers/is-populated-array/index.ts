@@ -4,7 +4,7 @@
  * @param {Array}
  * @returns {Boolean}
  */
-const isPopulatedArray = (arr?: Array<any>) => {
+const isPopulatedArray = (arr?: Array<any>): boolean => {
   if (arr && arr.length) {
     return true;
   }

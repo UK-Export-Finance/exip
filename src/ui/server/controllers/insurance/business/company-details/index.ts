@@ -5,6 +5,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import companiesHouseSearch from './helpers/companies-house-search.helper';
 import companyDetailsValidation from './validation/company-details';
+import isPopulatedArray from '../../../../helpers/is-populated-array';
 import mapAndSave from '../map-and-save';
 import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
 
@@ -137,7 +138,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    if (validationErrors && Object.keys(validationErrors).length) {
+    if (validationErrors && isPopulatedArray(Object.keys(validationErrors))) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
@@ -216,7 +217,7 @@ const post = async (req: Request, res: Response) => {
     validationErrors = companyDetailsValidation(body, validationErrors);
 
     // if any errors then render template with errors
-    if (validationErrors && Object.keys(validationErrors).length) {
+    if (validationErrors && isPopulatedArray(Object.keys(validationErrors))) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,

@@ -1,3 +1,4 @@
+import isPopulatedArray from '../is-populated-array';
 import { ValidationErrors } from '../../../types';
 
 /**
@@ -16,7 +17,7 @@ const generateValidationErrors = (fieldId: string, errorText: string, errors: Va
     },
   ];
 
-  if (errors && errors.summary && errors.summary.length) {
+  if (errors && errors.summary && isPopulatedArray(errors.summary)) {
     summary = [
       ...errors.summary,
       {
