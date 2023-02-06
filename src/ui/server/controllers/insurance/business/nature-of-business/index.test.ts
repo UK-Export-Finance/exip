@@ -7,6 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import generateValidationErrors from './validation';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import mapAndSave from '../map-and-save';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
@@ -84,13 +85,6 @@ describe('controllers/insurance/business/nature-of-business', () => {
       it('should render the nature-of-business template with correct variables', () => {
         res.locals.application = mockApplication;
 
-        const submittedValues = {
-          [GOODS_OR_SERVICES]: mockApplication?.exporterBusiness[GOODS_OR_SERVICES],
-          [YEARS_EXPORTING]: mockApplication?.exporterBusiness[YEARS_EXPORTING],
-          [EMPLOYEES_UK]: mockApplication?.exporterBusiness[EMPLOYEES_UK],
-          [EMPLOYEES_INTERNATIONAL]: mockApplication?.exporterBusiness[EMPLOYEES_INTERNATIONAL],
-        };
-
         get(req, res);
 
         expect(res.render).toHaveBeenCalledWith(NATURE_OF_YOUR_BUSINESS_TEMPLATE, {
@@ -98,7 +92,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
             PAGE_CONTENT_STRINGS: NATURE_OF_YOUR_BUSINESS,
             BACK_LINK: req.headers.referer,
           }),
-          submittedValues,
+          application: mapApplicationToFormFields(mockApplication),
           ...pageVariables(mockApplication.referenceNumber),
         });
       });
@@ -139,6 +133,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
           }),
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
+          application: mapApplicationToFormFields(mockApplication),
           submittedValues,
         });
       });

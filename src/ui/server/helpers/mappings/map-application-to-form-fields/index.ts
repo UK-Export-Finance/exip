@@ -3,6 +3,7 @@ import { FIELD_IDS } from '../../../constants';
 import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
 import mapFinancialYearEndDate from '../map-financial-year-end-date';
+import transformNumberToString from '../../display-number-field-value';
 
 const {
   SUBMISSION_DEADLINE,
@@ -13,6 +14,7 @@ const {
     },
   },
   EXPORTER_BUSINESS: {
+    NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK },
     TURNOVER: { FINANCIAL_YEAR_END_DATE },
   },
 } = FIELD_IDS.INSURANCE;
@@ -53,6 +55,15 @@ const mapApplicationToFormFields = (application: Application): object => {
       mapped.exporterCompany = {
         ...mapped.exporterCompany,
         [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(application.exporterCompany[FINANCIAL_YEAR_END_DATE]),
+      };
+    }
+
+    if (application.exporterBusiness) {
+      mapped.exporterBusiness = {
+        ...mapped.exporterBusiness,
+        [YEARS_EXPORTING]: transformNumberToString(application.exporterBusiness[YEARS_EXPORTING]),
+        [EMPLOYEES_UK]: transformNumberToString(application.exporterBusiness[EMPLOYEES_UK]),
+        [EMPLOYEES_INTERNATIONAL]: transformNumberToString(application.exporterBusiness[EMPLOYEES_INTERNATIONAL]),
       };
     }
 

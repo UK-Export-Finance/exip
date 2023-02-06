@@ -5,6 +5,7 @@ import { FIELDS } from '../../../../content-strings/fields/insurance/your-busine
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
@@ -62,22 +63,12 @@ const get = (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const { exporterBusiness } = application;
-
-    // values from application if they exist
-    const submittedValues = {
-      [GOODS_OR_SERVICES]: exporterBusiness?.[GOODS_OR_SERVICES],
-      [YEARS_EXPORTING]: exporterBusiness?.[YEARS_EXPORTING],
-      [EMPLOYEES_UK]: exporterBusiness?.[EMPLOYEES_UK],
-      [EMPLOYEES_INTERNATIONAL]: exporterBusiness?.[EMPLOYEES_INTERNATIONAL],
-    };
-
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: NATURE_OF_YOUR_BUSINESS,
         BACK_LINK: req.headers.referer,
       }),
-      submittedValues,
+      application: mapApplicationToFormFields(application),
       ...pageVariables(application.referenceNumber),
     });
   } catch (error) {
@@ -125,6 +116,7 @@ const post = async (req: Request, res: Response) => {
         }),
         ...pageVariables(application.referenceNumber),
         validationErrors,
+        application: mapApplicationToFormFields(application),
         submittedValues,
       });
     }
