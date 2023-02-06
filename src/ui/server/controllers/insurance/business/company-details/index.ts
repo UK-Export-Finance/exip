@@ -138,7 +138,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    if (validationErrors && isPopulatedArray(Object.keys(validationErrors))) {
+    if (isPopulatedArray(Object.keys(validationErrors))) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
@@ -217,7 +217,7 @@ const post = async (req: Request, res: Response) => {
     validationErrors = companyDetailsValidation(body, validationErrors);
 
     // if any errors then render template with errors
-    if (validationErrors && isPopulatedArray(Object.keys(validationErrors))) {
+    if (isPopulatedArray(Object.keys(validationErrors))) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
