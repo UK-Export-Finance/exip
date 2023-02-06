@@ -151,7 +151,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
     });
 
     describe('api error handling', () => {
-      describe('when there is an error with the get countries API call', () => {
+      describe('when the get countries API call fails', () => {
         beforeEach(() => {
           getCountriesSpy = jest.fn(() => Promise.reject());
           api.keystone.countries.getAll = getCountriesSpy;
@@ -280,7 +280,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
 
     describe('api error handling', () => {
       describe('get countries call', () => {
-        describe('when there is an error with the get countries API call', () => {
+        describe('when the get countries API call fails', () => {
           beforeEach(() => {
             getCountriesSpy = jest.fn(() => Promise.reject());
             api.keystone.countries.getAll = getCountriesSpy;

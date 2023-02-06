@@ -327,7 +327,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         });
       });
 
-      describe('when the get currencies API response does not return a populated array', () => {
+      describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
           api.external.getCurrencies = getCurrenciesSpy;
@@ -525,7 +525,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         });
       });
 
-      describe('when the get currencies API response does not return a populated array', () => {
+      describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
           api.external.getCurrencies = getCurrenciesSpy;

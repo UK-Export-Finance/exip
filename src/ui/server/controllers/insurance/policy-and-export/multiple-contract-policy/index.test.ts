@@ -225,7 +225,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
     });
 
     describe('api error handling', () => {
-      describe('when there is an error with the getCurrencies API call', () => {
+      describe('when the get currencies API call fails', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.reject());
           api.external.getCurrencies = getCurrenciesSpy;
@@ -238,7 +238,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
         });
       });
 
-      describe('when there currencies response does not return a populated array', () => {
+      describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
           api.external.getCurrencies = getCurrenciesSpy;
@@ -424,7 +424,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
           });
         });
 
-        describe('when the get currencies API response does not return a populated array', () => {
+        describe('when the get currencies response does not return a populated array', () => {
           beforeEach(() => {
             getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
             api.external.getCurrencies = getCurrenciesSpy;
