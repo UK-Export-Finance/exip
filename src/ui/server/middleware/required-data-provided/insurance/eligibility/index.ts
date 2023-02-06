@@ -18,7 +18,7 @@ const {
   PRE_CREDIT_PERIOD,
   COMPANIES_HOUSE_NUMBER,
   ELIGIBLE_TO_APPLY_ONLINE,
-  ALREADY_HAVE_ACCOUNT,
+  ACCOUNT_TO_APPLY_ONLINE,
 } = ELIGIBILITY;
 
 export const generateRequiredData = (): RequiredDataStateInsuranceEligibility => {
@@ -69,7 +69,7 @@ export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Resp
     SPEAK_TO_UKEF_EFM,
     CHECK_IF_ELIGIBLE,
     NEED_TO_START_AGAIN,
-    ALREADY_HAVE_ACCOUNT,
+    ACCOUNT_TO_APPLY_ONLINE,
     ACCOUNT.CREATE.YOUR_DETAILS,
     ACCOUNT.SIGN_IN.ROOT,
   ];

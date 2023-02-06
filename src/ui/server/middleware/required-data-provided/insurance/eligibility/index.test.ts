@@ -9,7 +9,7 @@ const {
   CANNOT_APPLY,
   CHECK_IF_ELIGIBLE,
   NEED_TO_START_AGAIN,
-  ALREADY_HAVE_ACCOUNT,
+  ACCOUNT_TO_APPLY_ONLINE,
   BUYER_COUNTRY,
   EXPORTER_LOCATION,
   UK_GOODS_OR_SERVICES,
@@ -139,9 +139,9 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       });
     });
 
-    describe(`when req.originalUrl is ${ALREADY_HAVE_ACCOUNT}`, () => {
+    describe(`when req.originalUrl is ${ACCOUNT_TO_APPLY_ONLINE}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = ALREADY_HAVE_ACCOUNT;
+        req.originalUrl = ACCOUNT_TO_APPLY_ONLINE;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

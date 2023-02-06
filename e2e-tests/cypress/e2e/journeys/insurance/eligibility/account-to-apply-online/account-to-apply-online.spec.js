@@ -16,16 +16,16 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/i
 const {
   START,
   ELIGIBILITY: {
-    ELIGIBLE_TO_APPLY_ONLINE, ALREADY_HAVE_ACCOUNT,
+    ELIGIBLE_TO_APPLY_ONLINE, ACCOUNT_TO_APPLY_ONLINE,
   },
   ACCOUNT: { SIGN_IN },
 } = ROUTES;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
 
-const FIELD_ID = FIELD_IDS.ELIGIBILITY.ALREADY_HAVE_ACCOUNT;
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
 
-context('Insurance - Eligibility - Already have account page - I want to confirm that I have an account for UKEF digital servicel so that I can get guidance on how to sign in to my digital account that I can use for UKEF Export Insurance Applications', () => {
+context('Insurance - Eligibility - Account to apply online page - I want to confirm that I have an account for UKEF digital servicel so that I can get guidance on how to sign in to my digital account that I can use for UKEF Export Insurance Applications', () => {
   before(() => {
     cy.navigateToUrl(START);
 
@@ -33,7 +33,7 @@ context('Insurance - Eligibility - Already have account page - I want to confirm
 
     tempCreateAccountButton().click();
 
-    const expected = `${Cypress.config('baseUrl')}${ALREADY_HAVE_ACCOUNT}`;
+    const expected = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
 
     cy.url().should('eq', expected);
   });
@@ -63,7 +63,7 @@ context('Insurance - Eligibility - Already have account page - I want to confirm
     cy.url().should('eq', expectedUrl);
 
     // go back to page
-    cy.navigateToUrl(ALREADY_HAVE_ACCOUNT);
+    cy.navigateToUrl(ACCOUNT_TO_APPLY_ONLINE);
   });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {

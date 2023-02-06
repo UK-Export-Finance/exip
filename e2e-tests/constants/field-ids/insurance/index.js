@@ -13,7 +13,7 @@ export const INSURANCE_FIELD_IDS = {
     LETTER_OF_CREDIT: 'paidByLetterOfCredit',
     PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
     COMPANIES_HOUSE_NUMBER: 'hasCompaniesHouseNumber',
-    ALREADY_HAVE_ACCOUNT: 'alreadyHaveAnAccount',
+    ACCOUNT_TO_APPLY_ONLINE: 'alreadyHaveAnAccount',
   },
   SUBMISSION_DEADLINE: 'submissionDeadline',
   ACCOUNT,
