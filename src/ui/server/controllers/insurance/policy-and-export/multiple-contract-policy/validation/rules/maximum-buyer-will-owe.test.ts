@@ -108,4 +108,16 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/valid
       expect(result).toEqual(mockErrors);
     });
   });
+
+  describe('when there are no validation errors and the value contains a comma', () => {
+    it('should return the provided errors object', () => {
+      const mockSubmittedData = {
+        [FIELD_ID]: '10,000',
+      };
+
+      const result = maximumBuyerWillOweRules(mockSubmittedData, mockErrors);
+
+      expect(result).toEqual(mockErrors);
+    });
+  });
 });

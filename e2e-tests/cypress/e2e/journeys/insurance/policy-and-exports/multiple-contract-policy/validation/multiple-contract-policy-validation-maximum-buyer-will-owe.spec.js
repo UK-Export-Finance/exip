@@ -12,7 +12,16 @@ import getReferenceNumber from '../../../../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
 
-const { INSURANCE } = ROUTES;
+const {
+  INSURANCE: {
+    ROOT: INSURANCE_ROOT,
+    START,
+    POLICY_AND_EXPORTS: {
+      MULTIPLE_CONTRACT_POLICY,
+      ABOUT_GOODS_OR_SERVICES,
+    },
+  },
+} = ROUTES;
 
 const {
   INSURANCE: {
@@ -38,7 +47,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(INSURANCE.START);
+    cy.navigateToUrl(START);
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
@@ -48,7 +57,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
     getReferenceNumber().then((id) => {
       referenceNumber = id;
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
       cy.url().should('eq', expectedUrl);
     });
@@ -61,7 +70,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   const field = multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE];
 
-  describe('when total sales to buyer is not provided', () => {
+  describe('when maximum buyer will owe is not provided', () => {
     it('should render a validation error', () => {
       submitButton().click();
 
@@ -77,7 +86,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     });
   });
 
-  describe('when total sales to buyer is not a number', () => {
+  describe('when maximum buyer will owe is not a number', () => {
     it('should render a validation error', () => {
       multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().clear().type('ten!');
       submitButton().click();
@@ -94,7 +103,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     });
   });
 
-  describe('when total sales to buyer contains a decimal', () => {
+  describe('when maximum buyer will owe contains a decimal', () => {
     it('should render a validation error', () => {
       multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().clear().type('1.2');
       submitButton().click();
@@ -111,7 +120,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     });
   });
 
-  describe('when total sales to buyer is below the minimum', () => {
+  describe('when maximum buyer will owe is below the minimum', () => {
     it('should render a validation error', () => {
       multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().clear().type('0');
       submitButton().click();
@@ -128,7 +137,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     });
   });
 
-  describe('when total sales to buyer is above the maximum', () => {
+  describe('when maximum buyer will owe is above the maximum', () => {
     it('should render a validation error', () => {
       const MAXIMUM = APPLICATION.POLICY_AND_EXPORT.MAXIMUM_BUYER_CAN_OWE;
 
@@ -144,6 +153,19 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
         field.errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].ABOVE_MAXIMUM}`,
       );
+    });
+  });
+
+  describe('when maximum buyer will owe is valid and contains a comma', () => {
+    it('should redirect to the next page as all fields are valid', () => {
+      cy.completeAndSubmitMultipleContractPolicyForm();
+      partials.backLink().click();
+
+      multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().clear().type('1,234');
+      submitButton().click();
+
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      cy.url().should('eq', expectedUrl);
     });
   });
 });

@@ -2,6 +2,7 @@ import { APPLICATION, FIELD_IDS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
+import { stripCommas } from '../../../../../../helpers/string';
 import { isNumber, numberHasDecimal } from '../../../../../../helpers/number';
 import { RequestBody } from '../../../../../../../types';
 
@@ -44,23 +45,26 @@ const maximumBuyerWillOweRules = (formBody: RequestBody, errors: object) => {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
   }
 
+  // strip commas - commas are valid.
+  const numberWithoutCommas = stripCommas(formBody[FIELD_ID]);
+
   // check if the field is not a number
-  if (!isNumber(formBody[FIELD_ID])) {
+  if (!isNumber(numberWithoutCommas)) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, errors);
   }
 
   // check if the field is not a whole number
-  if (numberHasDecimal(formBody[FIELD_ID])) {
+  if (numberHasDecimal(Number(numberWithoutCommas))) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_WHOLE_NUMBER, errors);
   }
 
   // check if the field is below the minimum
-  if (Number(formBody[FIELD_ID]) < MINIMUM) {
+  if (Number(numberWithoutCommas) < MINIMUM) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, errors);
   }
 
   // check if the field is above the maximum
-  if (Number(formBody[FIELD_ID]) > MAXIMUM) {
+  if (Number(numberWithoutCommas) > MAXIMUM) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors);
   }
 

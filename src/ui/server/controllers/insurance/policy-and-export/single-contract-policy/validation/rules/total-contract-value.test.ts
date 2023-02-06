@@ -100,7 +100,19 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
   describe('when there are no validation errors', () => {
     it('should return the provided errors object', () => {
       const mockSubmittedData = {
-        [FIELD_ID]: '10000',
+        [FIELD_ID]: '40000',
+      };
+
+      const result = totalContractValueRules(mockSubmittedData, mockErrors);
+
+      expect(result).toEqual(mockErrors);
+    });
+  });
+
+  describe('when there are no validation errors and the value contains a comma', () => {
+    it('should return the provided errors object', () => {
+      const mockSubmittedData = {
+        [FIELD_ID]: '40,000',
       };
 
       const result = totalContractValueRules(mockSubmittedData, mockErrors);
