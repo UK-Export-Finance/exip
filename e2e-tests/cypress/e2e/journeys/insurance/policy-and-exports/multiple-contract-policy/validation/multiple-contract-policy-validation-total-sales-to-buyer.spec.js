@@ -115,6 +115,23 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     });
   });
 
+  describe('when total sales to buyer contains a comma and decimal', () => {
+    it('should render a validation error', () => {
+      multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().clear().type('1,234.56');
+      submitButton().click();
+
+      cy.checkText(
+        partials.errorSummaryListItems().eq(2),
+        CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
+      );
+
+      cy.checkText(
+        field.errorMessage(),
+        `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT}`,
+      );
+    });
+  });
+
   describe('when total sales to buyer is below the minimum', () => {
     it('should render a validation error', () => {
       multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().clear().type('0');

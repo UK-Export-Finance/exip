@@ -69,6 +69,20 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
     });
   });
 
+  describe('when total contract value contains a comma and decimal', () => {
+    it('should return validation error', () => {
+      const mockSubmittedData = {
+        [FIELD_ID]: '123,456.78',
+      };
+
+      const result = totalContractValueRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when total contract value is below the minimum', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {

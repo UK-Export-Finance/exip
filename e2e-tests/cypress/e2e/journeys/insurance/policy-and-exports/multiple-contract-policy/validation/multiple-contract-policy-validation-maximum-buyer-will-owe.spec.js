@@ -120,6 +120,23 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     });
   });
 
+  describe('when maximum buyer will owe contains a comma and decimal', () => {
+    it('should render a validation error', () => {
+      multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().clear().type('1,234.56');
+      submitButton().click();
+
+      cy.checkText(
+        partials.errorSummaryListItems().eq(3),
+        CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
+      );
+
+      cy.checkText(
+        field.errorMessage(),
+        `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
+      );
+    });
+  });
+
   describe('when maximum buyer will owe is below the minimum', () => {
     it('should render a validation error', () => {
       multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().clear().type('0');
