@@ -41,7 +41,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
     });
   });
 
-  describe('when total contract is not a number', () => {
+  describe('when total contract value is not a number', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
         [FIELD_ID]: 'One hundred!',
@@ -55,7 +55,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
     });
   });
 
-  describe('when total contract contains a decimal', () => {
+  describe('when total contract value contains a decimal', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
         [FIELD_ID]: '123.456',
@@ -69,7 +69,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
     });
   });
 
-  describe('when total contract is below the minimum', () => {
+  describe('when total contract value is below the minimum', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
         [FIELD_ID]: '0',
@@ -83,7 +83,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
     });
   });
 
-  describe('when total contract is above the maximum', () => {
+  describe('when total contract value is above the maximum', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
         [FIELD_ID]: '500000',
