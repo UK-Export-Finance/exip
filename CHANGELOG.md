@@ -1,5 +1,56 @@
 # Changelog
 
+## [1.14.11](https://github.com/UK-Export-Finance/exip/compare/v1.14.10...v1.14.11) (2023-01-10)
+
+
+### Miscellaneous
+
+* **deps:** bump json5 ([23b7dd9](https://github.com/UK-Export-Finance/exip/commit/23b7dd9c202e64c69a848ccb3ac6c11f72901f52))
+
+## [1.14.10](https://github.com/UK-Export-Finance/exip/compare/v1.14.9...v1.14.10) (2022-12-12)
+
+
+### Miscellaneous
+
+* **EMS-653:** add string check to getLastSubstring function ([f9b5c81](https://github.com/UK-Export-Finance/exip/commit/f9b5c814803701fdca1403f9ac706c7bcceeb387))
+* **EMS-653:** remove eslint ignore line ([b5c5643](https://github.com/UK-Export-Finance/exip/commit/b5c56436a4da3b7394a054e60ebb303115243285))
+* **EMS-653:** UI helpers documentation, cleaner structure ([e1ab281](https://github.com/UK-Export-Finance/exip/commit/e1ab281c8a822ac34c8f628c80f8dd9aae6d5a9a))
+
+## [1.14.9](https://github.com/UK-Export-Finance/exip/compare/v1.14.8...v1.14.9) (2022-12-09)
+
+
+### Miscellaneous
+
+* **EMS-662:** update README.md ([#180](https://github.com/UK-Export-Finance/exip/issues/180)) ([c87a4c6](https://github.com/UK-Export-Finance/exip/commit/c87a4c67c7b983b62b2fe0cef76625fdaf477a4b))
+
+## [1.14.8](https://github.com/UK-Export-Finance/exip/compare/v1.14.7...v1.14.8) (2022-12-08)
+
+
+### Miscellaneous
+
+* Dependency vulnerability removal ([#178](https://github.com/UK-Export-Finance/exip/issues/178)) ([49bfb56](https://github.com/UK-Export-Finance/exip/commit/49bfb566068b2b2af8d6b3cd3839489bb4d52d49))
+
+## [1.14.7](https://github.com/UK-Export-Finance/exip/compare/v1.14.6...v1.14.7) (2022-12-06)
+
+
+### Miscellaneous
+
+* High vulenerability - jpeg-js updated from 0.4.3 to 0.4.4 ([#173](https://github.com/UK-Export-Finance/exip/issues/173)) ([5ac714e](https://github.com/UK-Export-Finance/exip/commit/5ac714e26f98d36086246f12f3b2470f5e5b4358))
+
+## [1.14.6](https://github.com/UK-Export-Finance/exip/compare/v1.14.5...v1.14.6) (2022-12-06)
+
+
+### Miscellaneous
+
+* **dependencies:** Bumped various dependencies ([5d9328d](https://github.com/UK-Export-Finance/exip/commit/5d9328d8c18cb47657f6d275bcfa8de658e72bb2))
+
+## [1.14.5](https://github.com/UK-Export-Finance/exip/compare/v1.14.4...v1.14.5) (2022-12-01)
+
+
+### Miscellaneous
+
+* **security:** Remove file-loader and bump all packages ([#168](https://github.com/UK-Export-Finance/exip/issues/168)) ([24bb235](https://github.com/UK-Export-Finance/exip/commit/24bb2359d52c560bcab59e60cffa084fd2debba6))
+
 ## [1.14.4](https://github.com/UK-Export-Finance/exip/compare/v1.14.3...v1.14.4) (2022-10-28)
 
 
