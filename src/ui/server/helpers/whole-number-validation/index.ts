@@ -13,8 +13,9 @@ import { stripCommas } from '../string';
  * @returns {object} errors
  */
 const wholeNumberValidation = (responseBody: RequestBody, errors: object, errorMessage: string, field: string) => {
-  // remove commas from validation test as commas are valid
+  // strip commas - commas are valid.
   const numberWithoutCommas = stripCommas(responseBody[field]);
+
   const isFieldANumber = isNumber(numberWithoutCommas);
   const hasDecimal = numberHasDecimal(Number(numberWithoutCommas));
   const isBelowMinimum = isNumberBelowMinimum(Number(numberWithoutCommas), 0);

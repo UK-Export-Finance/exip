@@ -2,7 +2,8 @@ import { APPLICATION, FIELD_IDS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
-import { isNumber, numberHasDecimal } from '../../../../../../helpers/number';
+import wholeNumberValidation from '../../../../../../helpers/whole-number-validation';
+import { stripCommas } from '../../../../../../helpers/string';
 import { RequestBody } from '../../../../../../../types';
 
 const {
@@ -37,31 +38,27 @@ const MAXIMUM = APPLICATION.POLICY_AND_EXPORT.MAXIMUM_BUYER_CAN_OWE;
  * @returns {Object} Validation errors
  */
 const maximumBuyerWillOweRules = (formBody: RequestBody, errors: object) => {
-  const updatedErrors = errors;
+  let updatedErrors = errors;
 
   // check if the field is empty.
   if (!objectHasProperty(formBody, FIELD_ID)) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
-  // check if the field is not a number
-  if (!isNumber(formBody[FIELD_ID])) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, errors);
-  }
+  // check if the field is a whole number.
+  updatedErrors = wholeNumberValidation(formBody, updatedErrors, ERROR_MESSAGE.INCORRECT_FORMAT, FIELD_ID);
 
-  // check if the field is not a whole number
-  if (numberHasDecimal(formBody[FIELD_ID])) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_WHOLE_NUMBER, errors);
-  }
+  // strip commas - commas are valid.
+  const numberWithoutCommas = stripCommas(formBody[FIELD_ID]);
 
   // check if the field is below the minimum
-  if (Number(formBody[FIELD_ID]) < MINIMUM) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, errors);
+  if (Number(numberWithoutCommas) < MINIMUM) {
+    updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, errors);
   }
 
   // check if the field is above the maximum
-  if (Number(formBody[FIELD_ID]) > MAXIMUM) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors);
+  if (Number(numberWithoutCommas) > MAXIMUM) {
+    updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors);
   }
 
   return updatedErrors;

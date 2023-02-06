@@ -79,12 +79,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.MULTIPLE[TOTAL_SALES_TO_BUYER].IS_EMPTY,
+      CONTRACT_ERROR_MESSAGES.MULTIPLE[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
     );
 
     cy.checkText(
       partials.errorSummaryListItems().eq(3),
-      CONTRACT_ERROR_MESSAGES.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].IS_EMPTY,
+      CONTRACT_ERROR_MESSAGES.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
     );
 
     cy.checkText(

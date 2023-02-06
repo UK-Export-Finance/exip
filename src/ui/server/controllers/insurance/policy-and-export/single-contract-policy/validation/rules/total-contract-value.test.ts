@@ -35,13 +35,13 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
 
       const result = totalContractValueRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe('when total contract is not a number', () => {
+  describe('when total contract value is not a number', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
         [FIELD_ID]: 'One hundred!',
@@ -49,13 +49,13 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
 
       const result = totalContractValueRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe('when total contract contains a decimal', () => {
+  describe('when total contract value contains a decimal', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
         [FIELD_ID]: '123.456',
@@ -63,13 +63,27 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
 
       const result = totalContractValueRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_WHOLE_NUMBER, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe('when total contract is below the minimum', () => {
+  describe('when total contract value contains a comma and decimal', () => {
+    it('should return validation error', () => {
+      const mockSubmittedData = {
+        [FIELD_ID]: '123,456.78',
+      };
+
+      const result = totalContractValueRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when total contract value is below the minimum', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
         [FIELD_ID]: '0',
@@ -83,7 +97,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
     });
   });
 
-  describe('when total contract is above the maximum', () => {
+  describe('when total contract value is above the maximum', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
         [FIELD_ID]: '500000',
@@ -100,7 +114,19 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
   describe('when there are no validation errors', () => {
     it('should return the provided errors object', () => {
       const mockSubmittedData = {
-        [FIELD_ID]: '10000',
+        [FIELD_ID]: '40000',
+      };
+
+      const result = totalContractValueRules(mockSubmittedData, mockErrors);
+
+      expect(result).toEqual(mockErrors);
+    });
+  });
+
+  describe('when there are no validation errors and the value contains a comma', () => {
+    it('should return the provided errors object', () => {
+      const mockSubmittedData = {
+        [FIELD_ID]: '40,000',
       };
 
       const result = totalContractValueRules(mockSubmittedData, mockErrors);

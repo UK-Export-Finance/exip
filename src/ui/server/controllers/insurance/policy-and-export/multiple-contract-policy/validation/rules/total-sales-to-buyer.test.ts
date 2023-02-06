@@ -1,4 +1,4 @@
-import totalContractValueRules from './total-sales-to-buyer';
+import totalSalesToBuyerRules from './total-sales-to-buyer';
 import { FIELD_IDS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
@@ -33,9 +33,9 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/valid
     it('should return validation error', () => {
       const mockSubmittedData = {};
 
-      const result = totalContractValueRules(mockSubmittedData, mockErrors);
+      const result = totalSalesToBuyerRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -47,9 +47,9 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/valid
         [FIELD_ID]: 'One hundred!',
       };
 
-      const result = totalContractValueRules(mockSubmittedData, mockErrors);
+      const result = totalSalesToBuyerRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -61,9 +61,23 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/valid
         [FIELD_ID]: '123.456',
       };
 
-      const result = totalContractValueRules(mockSubmittedData, mockErrors);
+      const result = totalSalesToBuyerRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_WHOLE_NUMBER, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when total sales to buyer contains a comma and decimal', () => {
+    it('should return validation error', () => {
+      const mockSubmittedData = {
+        [FIELD_ID]: '123,456.78',
+      };
+
+      const result = totalSalesToBuyerRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -75,7 +89,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/valid
         [FIELD_ID]: '0',
       };
 
-      const result = totalContractValueRules(mockSubmittedData, mockErrors);
+      const result = totalSalesToBuyerRules(mockSubmittedData, mockErrors);
 
       const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, mockErrors);
 
@@ -86,10 +100,22 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/valid
   describe('when there are no validation errors', () => {
     it('should return the provided errors object', () => {
       const mockSubmittedData = {
-        [FIELD_ID]: '10000',
+        [FIELD_ID]: '10,000',
       };
 
-      const result = totalContractValueRules(mockSubmittedData, mockErrors);
+      const result = totalSalesToBuyerRules(mockSubmittedData, mockErrors);
+
+      expect(result).toEqual(mockErrors);
+    });
+  });
+
+  describe('when there are no validation errors and the value contains a comma', () => {
+    it('should return the provided errors object', () => {
+      const mockSubmittedData = {
+        [FIELD_ID]: '10,000',
+      };
+
+      const result = totalSalesToBuyerRules(mockSubmittedData, mockErrors);
 
       expect(result).toEqual(mockErrors);
     });
