@@ -326,6 +326,27 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+# Dump of table Exporter
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `Exporter`;
+
+CREATE TABLE `Exporter` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `firstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `lastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `hash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `salt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `isActive` tinyint(1) NOT NULL DEFAULT '0',
+  `createdAt` datetime(3) DEFAULT NULL,
+  `updatedAt` datetime(3) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+
 # Dump of table ExporterBusiness
 # ------------------------------------------------------------
 

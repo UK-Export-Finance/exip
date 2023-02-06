@@ -14,10 +14,16 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Confirm email page
  */
-export const get = (req: Request, res: Response) =>
-  res.render(TEMPLATE, {
+export const get = (req: Request, res: Response) => {
+  const { emailAddressToConfirm: email } = req.session;
+
+  delete req.session.emailAddressToConfirm;
+
+  return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
     }),
+    email,
   });
+};
