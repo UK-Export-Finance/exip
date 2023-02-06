@@ -1,22 +1,25 @@
-name: Release & Publish
+name: Automated release
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, main-application ]
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
     steps:
-      - name: Release action
+      - name: Release a new version 🚀
         uses: google-github-actions/release-please-action@v3
         id: release
         with:
           release-type: node
           package-name: uk-export-finance/exip
-          changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
+          changelog-types: '[
+              { "type": "feat", "section": "Features", "hidden": false},
+              { "type": "fix", "section": "Bug Fixes", "hidden": false},
+              { "type": "chore", "section": "Miscellaneous", "hidden": false},
+              { "type": "docs", "section": "Documentation", "hidden": false}
+            ]'
           extra-files: |
             README.md
             CHANGELOG.md
-      - name: Checkout the repository
-        uses: actions/checkout@v3
