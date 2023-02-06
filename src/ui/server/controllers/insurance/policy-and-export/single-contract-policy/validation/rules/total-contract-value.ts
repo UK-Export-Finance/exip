@@ -2,8 +2,8 @@ import { FIELD_IDS, APPLICATION } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
+import wholeNumberValidation from '../../../../../../helpers/whole-number-validation';
 import { stripCommas } from '../../../../../../helpers/string';
-import { isNumber, numberHasDecimal } from '../../../../../../helpers/number';
 import { RequestBody } from '../../../../../../../types';
 
 const { MINIMUM, MAXIMUM } = APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT;
@@ -37,25 +37,18 @@ const {
  * @returns {Object} Validation errors
  */
 const totalContractValueRules = (formBody: RequestBody, errors: object) => {
-  const updatedErrors = errors;
+  let updatedErrors = errors;
 
   // check if the field is empty.
   if (!objectHasProperty(formBody, FIELD_ID)) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
+  // check if the field is a whole number.
+  updatedErrors = wholeNumberValidation(formBody, updatedErrors, ERROR_MESSAGE.INCORRECT_FORMAT, FIELD_ID);
+
   // strip commas - commas are valid.
   const numberWithoutCommas = stripCommas(formBody[FIELD_ID]);
-
-  // check if the field is not a number
-  if (!isNumber(numberWithoutCommas)) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
-  }
-
-  // check if the field is not a whole number
-  if (numberHasDecimal(Number(numberWithoutCommas))) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
-  }
 
   // check if the field is below the minimum
   if (Number(numberWithoutCommas) < MINIMUM) {
