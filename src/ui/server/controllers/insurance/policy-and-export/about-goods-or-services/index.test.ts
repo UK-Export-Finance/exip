@@ -151,36 +151,22 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
     });
 
     describe('api error handling', () => {
-      describe('when there are no countries returned from the API', () => {
-        beforeEach(() => {
-          // @ts-ignore
-          getCountriesSpy = jest.fn(() => Promise.resolve());
-          api.keystone.countries.getAll = getCountriesSpy;
-        });
-
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-        });
-      });
-
-      describe('when the get countries response is an empty array', () => {
-        beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.resolve([]));
-          api.keystone.countries.getAll = getCountriesSpy;
-        });
-
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-        });
-      });
-
       describe('when there is an error with the get countries API call', () => {
         beforeEach(() => {
           getCountriesSpy = jest.fn(() => Promise.reject());
+          api.keystone.countries.getAll = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get countries response does not return a populated array', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.resolve([]));
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
@@ -294,36 +280,22 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
 
     describe('api error handling', () => {
       describe('get countries call', () => {
-        describe('when there are no countries returned from the API', () => {
-          beforeEach(() => {
-            // @ts-ignore
-            getCountriesSpy = jest.fn(() => Promise.resolve());
-            api.keystone.countries.getAll = getCountriesSpy;
-          });
-
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-            await post(req, res);
-
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-          });
-        });
-
-        describe('when the get countries response is an empty array', () => {
-          beforeEach(() => {
-            getCountriesSpy = jest.fn(() => Promise.resolve([]));
-            api.keystone.countries.getAll = getCountriesSpy;
-          });
-
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-            await post(req, res);
-
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-          });
-        });
-
         describe('when there is an error with the get countries API call', () => {
           beforeEach(() => {
             getCountriesSpy = jest.fn(() => Promise.reject());
+            api.keystone.countries.getAll = getCountriesSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when the get countries response does not return a populated array', () => {
+          beforeEach(() => {
+            getCountriesSpy = jest.fn(() => Promise.resolve([]));
             api.keystone.countries.getAll = getCountriesSpy;
           });
 
