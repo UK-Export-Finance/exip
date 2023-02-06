@@ -11,7 +11,7 @@ const {
 const account = {
   [FIRST_NAME]: 'Joe',
   [LAST_NAME]: 'Bloggs',
-  [EMAIL]: 'Tony.Barnes@ukexportfinance.gov.uk',
+  [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT'),
   [PASSWORD]: 'Mockpassword1!',
 };
 
