@@ -60,6 +60,45 @@ var APPLICATION = {
     }
   }
 };
+var PASSWORD = {
+  RANDOM_BYTES_SIZE: 32,
+  STRING_TYPE: "hex",
+  PBKDF2: {
+    ITERATIONS: 1e4,
+    KEY_LENGTH: 64,
+    DIGEST_ALGORITHM: "sha512"
+  }
+};
+var EMAIL_TEMPLATE_IDS = {
+  ACCOUNT: {
+    CONFIRM_EMAIL: "24022e94-171c-4044-b0ee-d22418116575"
+  }
+};
+
+// integrations/notify/index.ts
+var import_dotenv = __toESM(require("dotenv"));
+var import_notifications_node_client = require("notifications-node-client");
+import_dotenv.default.config();
+var notifyKey = process.env.GOV_NOTIFY_API_KEY;
+var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
+var notify = {
+  sendEmail: async (templateId, sendToEmailAddress, firstName, confirmToken) => {
+    try {
+      console.info("Calling Notify API. templateId: ", templateId);
+      await notifyClient.sendEmail(templateId, sendToEmailAddress, {
+        personalisation: {
+          firstName,
+          confirmToken
+        },
+        reference: null
+      });
+      return { success: true };
+    } catch (err) {
+      throw new Error(`Calling Notify API. Unable to send email ${err}`);
+    }
+  }
+};
+var notify_default = notify;
 
 // schema.ts
 var lists = {
@@ -249,6 +288,45 @@ var lists = {
     },
     access: import_access.allowAll
   },
+  Exporter: (0, import_core.list)({
+    fields: {
+      createdAt: (0, import_fields.timestamp)(),
+      updatedAt: (0, import_fields.timestamp)(),
+      firstName: (0, import_fields.text)({ validation: { isRequired: true } }),
+      lastName: (0, import_fields.text)({ validation: { isRequired: true } }),
+      email: (0, import_fields.text)({ validation: { isRequired: true } }),
+      salt: (0, import_fields.text)({ validation: { isRequired: true } }),
+      hash: (0, import_fields.text)({ validation: { isRequired: true } }),
+      isActive: (0, import_fields.checkbox)({ defaultValue: false })
+    },
+    hooks: {
+      resolveInput: async ({ operation, resolvedData }) => {
+        const accountInputData = resolvedData;
+        if (operation === "create") {
+          const now = new Date();
+          accountInputData.createdAt = now;
+          accountInputData.updatedAt = now;
+          try {
+            const emailResponse = await notify_default.sendEmail(
+              EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL,
+              accountInputData.email,
+              accountInputData.firstName,
+              "mockConfirmToken"
+            );
+            if (emailResponse.success) {
+              return accountInputData;
+            }
+            throw new Error(`Error sending email verification for account creation ${emailResponse}`);
+          } catch (err) {
+            console.error("Error sending email verification for account creation", { err });
+            throw new Error();
+          }
+        }
+        return accountInputData;
+      }
+    },
+    access: import_access.allowAll
+  }),
   ExporterBusiness: (0, import_core.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
@@ -405,9 +483,9 @@ var session = (0, import_session.statelessSessions)({
 
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
-var import_notifications_node_client = require("notifications-node-client");
 var import_axios = __toESM(require("axios"));
-var import_dotenv = __toESM(require("dotenv"));
+var import_dotenv2 = __toESM(require("dotenv"));
+var import_crypto = __toESM(require("crypto"));
 
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -463,16 +541,25 @@ var mapSicCodes = (company, sicCodes) => {
 };
 
 // custom-schema.ts
-import_dotenv.default.config();
-var notifyKey = process.env.GOV_NOTIFY_API_KEY;
-var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
+import_dotenv2.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
   typeDefs: `
-      type EmailResponse {
-        success: Boolean
+
+      type Account {
+        firstName: String
+        lastName: String
+        email: String
+        isActive: Boolean
+      }
+
+      input AccountInput {
+        firstName: String
+        lastName: String
+        email: String
+        password: String
       }
 
       # fields from registered_office_address object
@@ -551,18 +638,16 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
 
       type Mutation {
+        """ create an account """
+        createAccount(
+          data: AccountInput!
+        ): Account
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
           companyAddressId: ID!
           data: ExporterCompanyAndCompanyAddressInput!
         ): ExporterCompanyAndCompanyAddress
-
-        """ send an email """
-        sendEmail(
-          templateId: String!
-          sendToEmailAddress: String!
-        ): EmailResponse
       }
 
       type Query {
@@ -574,6 +659,32 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
     `,
   resolvers: {
     Mutation: {
+      createAccount: async (root, variables, context) => {
+        console.info("Creating new exporter account for ", variables.data.email);
+        try {
+          const { firstName, lastName, email, password: password2 } = variables.data;
+          const {
+            RANDOM_BYTES_SIZE,
+            STRING_TYPE,
+            PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM }
+          } = PASSWORD;
+          const salt = import_crypto.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
+          const hash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+          const account = {
+            firstName,
+            lastName,
+            email,
+            salt,
+            hash
+          };
+          const response = await context.db.Exporter.createOne({
+            data: account
+          });
+          return response;
+        } catch (err) {
+          throw new Error(`Creating new exporter account ${err}`);
+        }
+      },
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);
@@ -605,20 +716,6 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         } catch (err) {
           console.error("Error updating application - exporter company and exporter company address", { err });
           throw new Error(`Updating application - exporter company and exporter company address ${err}`);
-        }
-      },
-      sendEmail: async (root, variables) => {
-        try {
-          console.info("Calling Notify API. templateId: ", variables.templateId);
-          const { templateId, sendToEmailAddress } = variables;
-          await notifyClient.sendEmail(templateId, sendToEmailAddress, {
-            personalisation: {},
-            reference: null
-          });
-          return { success: true };
-        } catch (err) {
-          console.error("Unable to send email", { err });
-          return { success: false };
         }
       }
     },

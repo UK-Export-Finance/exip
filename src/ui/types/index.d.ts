@@ -1,3 +1,4 @@
+import { Account } from './account';
 import { AnswersContent, AnswersFieldGroups } from './answers';
 import { Application, ApplicationExporterCompany, ApplicationFlat, ApplicationPolicyAndExport, ApplicationExporterSicCodes } from './application';
 import { ApolloResponse } from './apollo';
@@ -39,6 +40,7 @@ import {
 } from './page-variables';
 
 export {
+  Account,
   AnswersContent,
   AnswersFieldGroups,
   Application,

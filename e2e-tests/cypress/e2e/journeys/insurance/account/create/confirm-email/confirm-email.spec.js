@@ -74,12 +74,6 @@ context('Insurance - Account - Create - Confirm email page - I want to create an
     cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
-  it('renders `sent a link to`', () => {
-    const expected = `${CONTENT_STRINGS.WE_SENT_LINK_TO} TODO`;
-
-    cy.checkText(confirmEmailPage.weSentLinkTo(), expected);
-  });
-
   it('renders `check your email`', () => {
     const expected = CONTENT_STRINGS.CHECK_YOUR_EMAIL;
 

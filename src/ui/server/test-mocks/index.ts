@@ -1,4 +1,5 @@
 import { Request, Response } from '../../types';
+import mockAccount from './mock-account';
 import mockAnswers from './mock-answers';
 import mockSession from './mock-session';
 import mockQuote from './mock-quote';
@@ -55,6 +56,7 @@ const mockRes = () => {
 const mockNext = jest.fn();
 
 export {
+  mockAccount,
   mockAnswers,
   mockApplication,
   mockCisCountries,

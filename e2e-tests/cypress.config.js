@@ -1,4 +1,7 @@
 const { defineConfig } = require('cypress');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const cypressConfig = defineConfig({
   projectId: 'sefntb',
@@ -7,8 +10,9 @@ const cypressConfig = defineConfig({
   basicAuthSecret: 'test',
   chromeWebSecurity: false,
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
+    env: {
+      GOV_NOTIFY_EMAIL_RECIPIENT: process.env.GOV_NOTIFY_EMAIL_RECIPIENT,
+    },
     setupNodeEvents(on, config) {
       return require('./cypress/plugins')(on, config); // eslint-disable-line global-require
     },

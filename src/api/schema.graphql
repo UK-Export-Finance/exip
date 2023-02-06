@@ -346,6 +346,81 @@ input PolicyAndExportCreateInput {
   finalDestinationCountryCode: String
 }
 
+type Exporter {
+  id: ID!
+  createdAt: DateTime
+  updatedAt: DateTime
+  firstName: String
+  lastName: String
+  email: String
+  salt: String
+  hash: String
+  isActive: Boolean
+}
+
+input ExporterWhereUniqueInput {
+  id: ID
+}
+
+input ExporterWhereInput {
+  AND: [ExporterWhereInput!]
+  OR: [ExporterWhereInput!]
+  NOT: [ExporterWhereInput!]
+  id: IDFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  firstName: StringFilter
+  lastName: StringFilter
+  email: StringFilter
+  salt: StringFilter
+  hash: StringFilter
+  isActive: BooleanFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input ExporterOrderByInput {
+  id: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  firstName: OrderDirection
+  lastName: OrderDirection
+  email: OrderDirection
+  salt: OrderDirection
+  hash: OrderDirection
+  isActive: OrderDirection
+}
+
+input ExporterUpdateInput {
+  createdAt: DateTime
+  updatedAt: DateTime
+  firstName: String
+  lastName: String
+  email: String
+  salt: String
+  hash: String
+  isActive: Boolean
+}
+
+input ExporterUpdateArgs {
+  where: ExporterWhereUniqueInput!
+  data: ExporterUpdateInput!
+}
+
+input ExporterCreateInput {
+  createdAt: DateTime
+  updatedAt: DateTime
+  firstName: String
+  lastName: String
+  email: String
+  salt: String
+  hash: String
+  isActive: Boolean
+}
+
 type ExporterBusiness {
   id: ID!
   application: Application
@@ -700,11 +775,6 @@ input EligibilityWhereInput {
   wantCoverOverMaxPeriod: BooleanFilter
 }
 
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
-}
-
 input EligibilityOrderByInput {
   id: OrderDirection
   hasMinimumUkGoodsOrServices: OrderDirection
@@ -878,6 +948,12 @@ type Mutation {
   updatePolicyAndExports(data: [PolicyAndExportUpdateArgs!]!): [PolicyAndExport]
   deletePolicyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
   deletePolicyAndExports(where: [PolicyAndExportWhereUniqueInput!]!): [PolicyAndExport]
+  createExporter(data: ExporterCreateInput!): Exporter
+  createExporters(data: [ExporterCreateInput!]!): [Exporter]
+  updateExporter(where: ExporterWhereUniqueInput!, data: ExporterUpdateInput!): Exporter
+  updateExporters(data: [ExporterUpdateArgs!]!): [Exporter]
+  deleteExporter(where: ExporterWhereUniqueInput!): Exporter
+  deleteExporters(where: [ExporterWhereUniqueInput!]!): [Exporter]
   createExporterBusiness(data: ExporterBusinessCreateInput!): ExporterBusiness
   createExporterBusinesses(data: [ExporterBusinessCreateInput!]!): [ExporterBusiness]
   updateExporterBusiness(where: ExporterBusinessWhereUniqueInput!, data: ExporterBusinessUpdateInput!): ExporterBusiness
@@ -930,11 +1006,11 @@ type Mutation {
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
 
+  """ create an account """
+  createAccount(data: AccountInput!): Account
+
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
-
-  """ send an email """
-  sendEmail(templateId: String!, sendToEmailAddress: String!): EmailResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
@@ -964,6 +1040,9 @@ type Query {
   policyAndExports(where: PolicyAndExportWhereInput! = {}, orderBy: [PolicyAndExportOrderByInput!]! = [], take: Int, skip: Int! = 0): [PolicyAndExport!]
   policyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
   policyAndExportsCount(where: PolicyAndExportWhereInput! = {}): Int
+  exporters(where: ExporterWhereInput! = {}, orderBy: [ExporterOrderByInput!]! = [], take: Int, skip: Int! = 0): [Exporter!]
+  exporter(where: ExporterWhereUniqueInput!): Exporter
+  exportersCount(where: ExporterWhereInput! = {}): Int
   exporterBusinesses(where: ExporterBusinessWhereInput! = {}, orderBy: [ExporterBusinessOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterBusiness!]
   exporterBusiness(where: ExporterBusinessWhereUniqueInput!): ExporterBusiness
   exporterBusinessesCount(where: ExporterBusinessWhereInput! = {}): Int
@@ -1097,8 +1176,18 @@ enum KeystoneAdminUISortDirection {
   DESC
 }
 
-type EmailResponse {
-  success: Boolean
+type Account {
+  firstName: String
+  lastName: String
+  email: String
+  isActive: Boolean
+}
+
+input AccountInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
 }
 
 type CompaniesHouseCompanyAddress {
