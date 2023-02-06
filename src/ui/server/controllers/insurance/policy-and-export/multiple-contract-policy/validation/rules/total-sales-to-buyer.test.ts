@@ -35,7 +35,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/valid
 
       const result = totalSalesToBuyerRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -49,7 +49,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/valid
 
       const result = totalSalesToBuyerRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -63,7 +63,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/valid
 
       const result = totalSalesToBuyerRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_WHOLE_NUMBER, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
     });

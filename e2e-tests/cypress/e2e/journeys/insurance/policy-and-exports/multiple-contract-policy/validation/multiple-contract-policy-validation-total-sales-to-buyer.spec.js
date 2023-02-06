@@ -71,12 +71,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].IS_EMPTY,
+        CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].IS_EMPTY}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT}`,
       );
     });
   });
@@ -88,12 +88,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].NOT_A_NUMBER,
+        CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].NOT_A_NUMBER}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT}`,
       );
     });
   });
@@ -105,12 +105,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].NOT_A_WHOLE_NUMBER,
+        CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].NOT_A_WHOLE_NUMBER}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT}`,
       );
     });
   });

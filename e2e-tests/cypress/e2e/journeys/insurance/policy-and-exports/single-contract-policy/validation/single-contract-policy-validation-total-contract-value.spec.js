@@ -71,12 +71,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].IS_EMPTY,
+        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].IS_EMPTY}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
       );
     });
   });
@@ -88,12 +88,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_NUMBER,
+        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_NUMBER}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
       );
     });
   });
@@ -105,12 +105,12 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_WHOLE_NUMBER,
+        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].NOT_A_WHOLE_NUMBER}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
       );
     });
   });

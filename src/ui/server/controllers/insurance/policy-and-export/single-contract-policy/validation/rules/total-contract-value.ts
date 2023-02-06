@@ -41,7 +41,7 @@ const totalContractValueRules = (formBody: RequestBody, errors: object) => {
 
   // check if the field is empty.
   if (!objectHasProperty(formBody, FIELD_ID)) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
   // strip commas - commas are valid.
@@ -49,12 +49,12 @@ const totalContractValueRules = (formBody: RequestBody, errors: object) => {
 
   // check if the field is not a number
   if (!isNumber(numberWithoutCommas)) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, errors);
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
   // check if the field is not a whole number
   if (numberHasDecimal(Number(numberWithoutCommas))) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_WHOLE_NUMBER, errors);
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
   // check if the field is below the minimum

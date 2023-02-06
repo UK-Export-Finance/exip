@@ -76,12 +76,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
       cy.checkText(
         partials.errorSummaryListItems().eq(3),
-        CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].IS_EMPTY,
+        CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].IS_EMPTY}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
       );
     });
   });
@@ -93,12 +93,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
       cy.checkText(
         partials.errorSummaryListItems().eq(3),
-        CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].NOT_A_NUMBER,
+        CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].NOT_A_NUMBER}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
       );
     });
   });
@@ -110,12 +110,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
       cy.checkText(
         partials.errorSummaryListItems().eq(3),
-        CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].NOT_A_WHOLE_NUMBER,
+        CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
       );
 
       cy.checkText(
         field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].NOT_A_WHOLE_NUMBER}`,
+        `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
       );
     });
   });
