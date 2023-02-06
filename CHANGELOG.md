@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.12](https://github.com/UK-Export-Finance/exip/compare/v1.14.11...v1.14.12) (2023-02-06)
+
+
+### Miscellaneous
+
+* **npm:** Package update ([2d13590](https://github.com/UK-Export-Finance/exip/commit/2d13590e108c3ffe31ea045ed1af739f76b7fb73))
+
 ## [1.14.11](https://github.com/UK-Export-Finance/exip/compare/v1.14.10...v1.14.11) (2023-01-10)
 
 
