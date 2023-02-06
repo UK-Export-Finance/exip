@@ -69,7 +69,7 @@ const application = {
   },
   EXPORTER_BUSINESS: {
     [GOODS_OR_SERVICES]: 'abc',
-    [YEARS_EXPORTING]: '2',
+    [YEARS_EXPORTING]: '0',
     [EMPLOYEES_INTERNATIONAL]: '5',
     [EMPLOYEES_UK]: '2000',
   },

@@ -4,6 +4,7 @@ import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
 import { mockApplication } from '../../../test-mocks';
 import mapFinancialYearEndDate from '../map-financial-year-end-date';
+import displayNumberFieldValue from '../../display-number-field-value';
 
 const {
   SUBMISSION_DEADLINE,
@@ -14,6 +15,7 @@ const {
     },
   },
   EXPORTER_BUSINESS: {
+    NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK },
     TURNOVER: { FINANCIAL_YEAR_END_DATE },
   },
 } = FIELD_IDS.INSURANCE;
@@ -45,6 +47,52 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
         policyAndExport: {
           ...mockApplication.policyAndExport,
           ...getDateFieldsFromTimestamp(timestamp, REQUESTED_START_DATE),
+        },
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when an application has exporterBusiness fields', () => {
+    it('should return the relevant exporterBusiness fields as timestamps', () => {
+      const result = mapApplicationToFormFields(mockApplication);
+
+      const expected = {
+        ...mockApplication,
+        [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
+        exporterBusiness: {
+          ...mockApplication.exporterBusiness,
+          [YEARS_EXPORTING]: displayNumberFieldValue(mockApplication.exporterBusiness[YEARS_EXPORTING]),
+          [EMPLOYEES_UK]: displayNumberFieldValue(mockApplication.exporterBusiness[EMPLOYEES_UK]),
+          [EMPLOYEES_INTERNATIONAL]: displayNumberFieldValue(mockApplication.exporterBusiness[EMPLOYEES_INTERNATIONAL]),
+        },
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when an application has exporterBusiness fields set to 0', () => {
+    it('should return the relevant exporterBusiness fields as string 0s', () => {
+      const mockApplicationWithZeros = {
+        ...mockApplication,
+        exporterBusiness: {
+          ...mockApplication.exporterBusiness,
+          [YEARS_EXPORTING]: 0,
+        },
+      };
+
+      const result = mapApplicationToFormFields(mockApplicationWithZeros);
+
+      const expected = {
+        ...mockApplicationWithZeros,
+        [SUBMISSION_DEADLINE]: formatDate(mockApplicationWithZeros[SUBMISSION_DEADLINE]),
+        exporterBusiness: {
+          ...mockApplicationWithZeros.exporterBusiness,
+          [YEARS_EXPORTING]: '0',
+          [EMPLOYEES_UK]: displayNumberFieldValue(mockApplicationWithZeros.exporterBusiness[EMPLOYEES_UK]),
+          [EMPLOYEES_INTERNATIONAL]: displayNumberFieldValue(mockApplicationWithZeros.exporterBusiness[EMPLOYEES_INTERNATIONAL]),
         },
       };
 
