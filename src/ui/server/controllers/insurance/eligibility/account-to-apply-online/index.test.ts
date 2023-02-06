@@ -10,7 +10,7 @@ const {
   ACCOUNT: { CREATE, SIGN_IN },
 } = ROUTES.INSURANCE;
 
-describe('controllers/insurance/eligibility/already-have-account', () => {
+describe('controllers/insurance/eligibility/account-to-apply-online', () => {
   let req: Request;
   let res: Response;
 
@@ -22,8 +22,8 @@ describe('controllers/insurance/eligibility/already-have-account', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT,
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT,
+        FIELD_ID: FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE,
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -32,7 +32,7 @@ describe('controllers/insurance/eligibility/already-have-account', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE);
     });
   });
 

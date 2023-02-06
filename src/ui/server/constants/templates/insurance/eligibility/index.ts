@@ -8,5 +8,5 @@ export const ELIGIBILITY_TEMPLATES = {
   PRE_CREDIT_PERIOD: 'insurance/eligibility/pre-credit-period.njk',
   COMPANIES_HOUSE_NUMBER: 'insurance/eligibility/companies-house-number.njk',
   ELIGIBLE_TO_APPLY_ONLINE: 'insurance/eligibility/eligible-to-apply-online.njk',
-  ALREADY_HAVE_ACCOUNT: 'insurance/eligibility/already-have-account.njk',
+  ACCOUNT_TO_APPLY_ONLINE: 'insurance/eligibility/account-to-apply-online.njk',
 };

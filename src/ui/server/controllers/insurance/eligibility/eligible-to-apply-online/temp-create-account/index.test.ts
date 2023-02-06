@@ -13,10 +13,10 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online/temp-create
   });
 
   describe('post', () => {
-    it(`should redirect to ${INSURANCE_ROUTES.ELIGIBILITY.ALREADY_HAVE_ACCOUNT}`, () => {
+    it(`should redirect to ${INSURANCE_ROUTES.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE}`, () => {
       post(req, res);
 
-      const expected = `${INSURANCE_ROUTES.ELIGIBILITY.ALREADY_HAVE_ACCOUNT}`;
+      const expected = `${INSURANCE_ROUTES.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

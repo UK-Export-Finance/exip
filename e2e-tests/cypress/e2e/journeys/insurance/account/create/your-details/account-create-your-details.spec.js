@@ -15,7 +15,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS;
 
 const {
   START,
-  ELIGIBILITY: { ALREADY_HAVE_ACCOUNT },
+  ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE },
   ACCOUNT: { CREATE: { YOUR_DETAILS, CONFIRM_EMAIL }, SIGN_IN },
 } = ROUTES;
 
@@ -61,7 +61,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
     partials.backLink().click();
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${ALREADY_HAVE_ACCOUNT}`;
+    const expectedUrl = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
 
     cy.url().should('eq', expectedUrl);
 

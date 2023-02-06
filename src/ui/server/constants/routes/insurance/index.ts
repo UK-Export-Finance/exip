@@ -25,7 +25,7 @@ export const INSURANCE_ROUTES = {
     COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/companies-house-number`,
     ELIGIBLE_TO_APPLY_ONLINE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/eligible-to-apply-online`,
     ELIGIBLE_TO_APPLY_ONLINE_TEMP_CREATE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/eligible-to-apply-online/temp-create`,
-    ALREADY_HAVE_ACCOUNT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/already-have-account`,
+    ACCOUNT_TO_APPLY_ONLINE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/account-to-apply-online`,
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/need-to-start-again`,
   },
   APPLY_OFFLINE: `${INSURANCE_ROOT}/apply-using-our-form`,

@@ -69,7 +69,7 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: {
         IS_EMPTY: 'Select whether you have a UK Companies House registration number or not',
       },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT]: {
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE]: {
         IS_EMPTY: 'Select whether you have an account for UKEF export insurance',
       },
     },
