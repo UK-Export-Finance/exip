@@ -132,23 +132,9 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       });
     });
 
-    describe('when the CIS (country information system) API has no data', () => {
+    describe('when the CIS (country information system) API call fails', () => {
       beforeEach(() => {
-        // @ts-ignore
-        getCountriesSpy = jest.fn(() => Promise.resolve());
-        api.external.getCountries = getCountriesSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-
-    describe('when the CIS (country information system) API does not return an array', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCountriesSpy = jest.fn(() => Promise.resolve({}));
+        getCountriesSpy = jest.fn(() => Promise.reject());
         api.external.getCountries = getCountriesSpy;
       });
 
@@ -277,23 +263,9 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       });
     });
 
-    describe('when the CIS (country information system) API has no data', () => {
+    describe('when the CIS (country information system) API call fails', () => {
       beforeEach(() => {
-        // @ts-ignore
-        getCountriesSpy = jest.fn(() => Promise.resolve());
-        api.external.getCountries = getCountriesSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-
-    describe('when the CIS (country information system) API does not return an array', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCountriesSpy = jest.fn(() => Promise.resolve({}));
+        getCountriesSpy = jest.fn(() => Promise.reject());
         api.external.getCountries = getCountriesSpy;
       });
 

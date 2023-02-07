@@ -2,8 +2,9 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
-import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
+import isPopulatedArray from '../../../../helpers/is-populated-array';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
@@ -64,7 +65,7 @@ export const get = async (req: Request, res: Response) => {
   try {
     const countries = await api.keystone.countries.getAll();
 
-    if (!countries || !countries.length) {
+    if (!isPopulatedArray(countries)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
@@ -115,7 +116,7 @@ export const post = async (req: Request, res: Response) => {
     try {
       const countries = await api.keystone.countries.getAll();
 
-      if (!countries || !countries.length) {
+      if (!isPopulatedArray(countries)) {
         return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
       }
 

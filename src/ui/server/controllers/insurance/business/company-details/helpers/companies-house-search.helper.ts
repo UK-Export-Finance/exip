@@ -1,5 +1,6 @@
 import api from '../../../../../api';
 import companiesHouseValidation from '../validation/companies-house';
+import isPopulatedArray from '../../../../../helpers/is-populated-array';
 import companyHouseResponseValidation from '../validation/companies-house-response';
 import { RequestBody, CompanyHouseResponse } from '../../../../../../types';
 import { FIELD_IDS } from '../../../../../constants';
@@ -45,7 +46,7 @@ const companiesHouseSearch = async (formBody: RequestBody) => {
   }
 
   // if company exists and has a value
-  if (company && Object.keys(company).length) {
+  if (company && isPopulatedArray(Object.keys(company))) {
     // checks that success flag is not false and apiError flag is not set
     const responseValidationErrors = companyHouseResponseValidation(company);
 
