@@ -3,8 +3,8 @@ import { PAGES } from '../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../content-strings/fields/insurance';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
-import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import mapCountries from '../../../helpers/mappings/map-countries';
+import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import yourBuyerDetailsValidation from './validation';
 import { mockReq, mockRes, mockApplication, mockCountries } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
@@ -86,10 +86,9 @@ describe('controllers/insurance/your-buyer', () => {
     });
 
     describe('api error handling', () => {
-      describe('when there are no countries returned from the API', () => {
+      describe('when the get countries API call fails', () => {
         beforeEach(() => {
-          // @ts-ignore
-          getCountriesSpy = jest.fn(() => Promise.resolve());
+          getCountriesSpy = jest.fn(() => Promise.reject());
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
@@ -100,7 +99,7 @@ describe('controllers/insurance/your-buyer', () => {
         });
       });
 
-      describe('when there countries response is an empty array', () => {
+      describe('when the get countries response does not return a populated array', () => {
         beforeEach(() => {
           getCountriesSpy = jest.fn(() => Promise.resolve([]));
           api.keystone.countries.getAll = getCountriesSpy;
@@ -164,6 +163,34 @@ describe('controllers/insurance/your-buyer', () => {
           validationErrors,
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('when the get countries API call fails', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.reject());
+          api.keystone.countries.getAll = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get countries response does not return a populated array', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.resolve([]));
+          api.keystone.countries.getAll = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });

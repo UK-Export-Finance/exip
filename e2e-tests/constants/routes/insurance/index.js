@@ -23,7 +23,7 @@ export const INSURANCE_ROUTES = {
     PRE_CREDIT_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY}/pre-credit-period`,
     COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}${ELIGIBILITY}/companies-house-number`,
     ELIGIBLE_TO_APPLY_ONLINE: `${INSURANCE_ROOT}${ELIGIBILITY}/eligible-to-apply-online`,
-    ALREADY_HAVE_ACCOUNT: `${INSURANCE_ROOT}${ELIGIBILITY}/already-have-account`,
+    ACCOUNT_TO_APPLY_ONLINE: `${INSURANCE_ROOT}${ELIGIBILITY}/account-to-apply-online`,
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY}/need-to-start-again`,
   },
   APPLY_OFFLINE: `${INSURANCE_ROOT}/apply-using-our-form`,

@@ -4,6 +4,7 @@ import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
+import isPopulatedArray from '../../../../helpers/is-populated-array';
 import { objectHasProperty } from '../../../../helpers/object';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
@@ -83,7 +84,7 @@ export const get = async (req: Request, res: Response) => {
   try {
     const currencies = await api.external.getCurrencies();
 
-    if (!currencies || !currencies.length) {
+    if (!isPopulatedArray(currencies)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
@@ -134,7 +135,7 @@ export const post = async (req: Request, res: Response) => {
     try {
       const currencies = await api.external.getCurrencies();
 
-      if (!currencies || !currencies.length) {
+      if (!isPopulatedArray(currencies)) {
         return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
       }
 

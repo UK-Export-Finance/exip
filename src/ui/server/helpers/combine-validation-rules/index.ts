@@ -1,3 +1,4 @@
+import isPopulatedArray from '../is-populated-array';
 import { ValidationErrors } from '../../../types';
 
 /**
@@ -16,7 +17,7 @@ const combineValidationRules = (rules: Array<(formBody: object, errors: Validati
     errors = rule(data, errors);
   });
 
-  if (Object.keys(errors).length) {
+  if (isPopulatedArray(Object.keys(errors))) {
     return errors;
   }
 

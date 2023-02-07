@@ -1,6 +1,7 @@
 import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import api from '../../../../api';
+import isPopulatedArray from '../../../../helpers/is-populated-array';
 import { mapCisCountries } from '../../../../helpers/mappings/map-cis-countries';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
@@ -19,104 +20,114 @@ export const PAGE_VARIABLES = {
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;
 
 export const get = async (req: Request, res: Response) => {
-  if (!req.session.submittedData || !req.session.submittedData.insuranceEligibility) {
-    req.session.submittedData = {
-      ...req.session.submittedData,
-      insuranceEligibility: {},
-    };
-  }
+  try {
+    if (!req.session.submittedData || !req.session.submittedData.insuranceEligibility) {
+      req.session.submittedData = {
+        ...req.session.submittedData,
+        insuranceEligibility: {},
+      };
+    }
 
-  const countries = await api.external.getCountries();
+    const countries = await api.external.getCountries();
 
-  if (!countries || !countries.length) {
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-  }
+    if (!isPopulatedArray(countries)) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
 
-  let countryValue;
+    let countryValue;
 
-  if (req.session.submittedData && req.session.submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY]) {
-    countryValue = req.session.submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY];
-  }
+    if (req.session.submittedData && req.session.submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY]) {
+      countryValue = req.session.submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY];
+    }
 
-  let mappedCountries;
+    let mappedCountries;
 
-  if (countryValue) {
-    mappedCountries = mapCisCountries(countries, countryValue.isoCode);
-  } else {
-    mappedCountries = mapCisCountries(countries);
-  }
+    if (countryValue) {
+      mappedCountries = mapCisCountries(countries, countryValue.isoCode);
+    } else {
+      mappedCountries = mapCisCountries(countries);
+    }
 
-  return res.render(TEMPLATE, {
-    ...singleInputPageVariables({
-      ...PAGE_VARIABLES,
-      BACK_LINK: req.headers.referer,
-    }),
-    countries: mappedCountries,
-    submittedValues: req.session.submittedData.insuranceEligibility,
-  });
-};
-
-export const post = async (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body);
-
-  const countries = await api.external.getCountries();
-
-  if (!countries || !countries.length) {
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-  }
-
-  const mappedCountries = mapCisCountries(countries);
-
-  if (validationErrors) {
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
       }),
       countries: mappedCountries,
-      validationErrors,
+      submittedValues: req.session.submittedData.insuranceEligibility,
     });
+  } catch (err) {
+    console.error('Error getting insurance - eligibility - buyer-country ', { err });
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
+};
 
-  const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY];
+export const post = async (req: Request, res: Response) => {
+  try {
+    const validationErrors = generateValidationErrors(req.body);
 
-  const country = getCountryByName(mappedCountries, submittedCountryName);
+    const countries = await api.external.getCountries();
 
-  if (!country) {
-    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+    if (!isPopulatedArray(countries)) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    const mappedCountries = mapCisCountries(countries);
+
+    if (validationErrors) {
+      return res.render(TEMPLATE, {
+        ...singleInputPageVariables({
+          ...PAGE_VARIABLES,
+          BACK_LINK: req.headers.referer,
+        }),
+        countries: mappedCountries,
+        validationErrors,
+      });
+    }
+
+    const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY];
+
+    const country = getCountryByName(mappedCountries, submittedCountryName);
+
+    if (!country) {
+      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+    }
+
+    if (canApplyOnline(country)) {
+      const populatedData = {
+        [FIELD_IDS.BUYER_COUNTRY]: {
+          name: country.name,
+          isoCode: country.isoCode,
+          riskCategory: country.riskCategory,
+        },
+      };
+
+      req.session.submittedData = {
+        ...req.session.submittedData,
+        insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
+      };
+
+      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
+    }
+
+    if (canApplyOffline(country)) {
+      return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
+    }
+
+    if (cannotApply(country)) {
+      const { CANNOT_APPLY } = PAGES;
+      const { REASON } = CANNOT_APPLY;
+
+      const reason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${country.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
+
+      req.flash('exitReason', reason);
+
+      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+    }
+  } catch (err) {
+    console.error('Error posting insurance - eligibility - buyer-country ', { err });
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
-
-  if (canApplyOnline(country)) {
-    const populatedData = {
-      [FIELD_IDS.BUYER_COUNTRY]: {
-        name: country.name,
-        isoCode: country.isoCode,
-        riskCategory: country.riskCategory,
-      },
-    };
-
-    req.session.submittedData = {
-      ...req.session.submittedData,
-      insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
-    };
-
-    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
-  }
-
-  if (canApplyOffline(country)) {
-    return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
-  }
-
-  if (cannotApply(country)) {
-    const { CANNOT_APPLY } = PAGES;
-    const { REASON } = CANNOT_APPLY;
-
-    const reason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${country.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
-
-    req.flash('exitReason', reason);
-
-    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
-  }
-
-  return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
 };

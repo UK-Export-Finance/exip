@@ -4,7 +4,7 @@ import singleInputPageVariables from '../../../../helpers/page-variables/single-
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../types';
 
-const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT;
+const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
 
 const {
   ACCOUNT: { SIGN_IN, CREATE },
@@ -12,10 +12,10 @@ const {
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
-  PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT,
+  PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE,
 };
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT;
+export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
 
 /**
  * get

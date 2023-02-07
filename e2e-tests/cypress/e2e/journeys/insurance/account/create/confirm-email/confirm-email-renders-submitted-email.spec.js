@@ -1,4 +1,5 @@
 import { confirmEmailPage } from '../../../../../pages/insurance/account/create';
+import partials from '../../../../../partials';
 import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -36,5 +37,15 @@ context('Insurance - Account - Create - Confirm email page should render the sub
     const expected = `${CONTENT_STRINGS.WE_SENT_LINK_TO} ${expectedEmail}`;
 
     cy.checkText(confirmEmailPage.weSentLinkTo(), expected);
+  });
+
+  describe('when submitting the cookie consent form', () => {
+    before(() => {
+      partials.cookieBanner.question.acceptButton().click();
+    });
+
+    it('should NOT render `sent a link to` with the submitted email, because it is no longer in the session', () => {
+      confirmEmailPage.weSentLinkTo().should('not.exist');
+    });
   });
 });

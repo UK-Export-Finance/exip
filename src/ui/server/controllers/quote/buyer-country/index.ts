@@ -1,6 +1,7 @@
 import { LINKS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
+import isPopulatedArray from '../../../helpers/is-populated-array';
 import { mapCisCountries } from '../../../helpers/mappings/map-cis-countries';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
@@ -59,7 +60,7 @@ export const get = async (req: Request, res: Response) => {
   try {
     const countries = await api.external.getCountries();
 
-    if (!countries || !countries.length) {
+    if (!isPopulatedArray(countries)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
@@ -94,7 +95,7 @@ export const post = async (req: Request, res: Response) => {
   try {
     const countries = await api.external.getCountries();
 
-    if (!countries || !countries.length) {
+    if (!isPopulatedArray(countries)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 

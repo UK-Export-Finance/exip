@@ -12,7 +12,7 @@ import { get as preCreditPeriodGet, post as preCreditPeriodPost } from '../../..
 import { get as companiesHouseNumberGet, post as companiesHouseNumberPost } from '../../../controllers/insurance/eligibility/companies-house-number';
 import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } from '../../../controllers/insurance/eligibility/eligible-to-apply-online';
 import { post as eligibleToApplyOnlineTempCreatePost } from '../../../controllers/insurance/eligibility/eligible-to-apply-online/temp-create-account';
-import { get as alreadyHaveAccountGet, post as alreadyHaveAccountPost } from '../../../controllers/insurance/eligibility/already-have-account';
+import { get as alreadyHaveAccountGet, post as alreadyHaveAccountPost } from '../../../controllers/insurance/eligibility/account-to-apply-online';
 import { get as cannotApplyGet } from '../../../controllers/insurance/eligibility/cannot-apply';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../../controllers/insurance/eligibility/need-to-start-again';
 
@@ -58,8 +58,8 @@ insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_O
 // This is to avoid interrupting the testing/flow for other areas, whilst we develop account creation.
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE_TEMP_CREATE, eligibleToApplyOnlineTempCreatePost);
 
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT, alreadyHaveAccountGet);
-insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.ALREADY_HAVE_ACCOUNT, alreadyHaveAccountPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE, alreadyHaveAccountGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE, alreadyHaveAccountPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY, cannotApplyGet);
 
