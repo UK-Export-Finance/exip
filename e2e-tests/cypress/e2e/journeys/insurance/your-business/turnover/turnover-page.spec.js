@@ -141,8 +141,8 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${BROKER} form`, () => {
-      cy.completeAndSubmitTurnover();
+    it(`should redirect to ${BROKER}`, () => {
+      cy.completeAndSubmitTurnoverForm();
 
       cy.url().should('eq', brokerUrl);
     });

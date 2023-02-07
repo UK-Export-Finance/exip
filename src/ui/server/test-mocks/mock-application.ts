@@ -83,6 +83,8 @@ const mockApplication = {
     totalYearsExporting: '20',
     totalEmployeesInternational: '1000',
     totalEmployeesUK: '400',
+    estimatedAnnualTurnover: '155220',
+    exportsTurnoverPercentage: '20',
   },
 };
 

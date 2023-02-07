@@ -143,7 +143,7 @@ describe('controllers/insurance/business/turnover', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.companyDetails once with natureOfBusiness and application', async () => {
+      it('should call mapAndSave.turnover once with turnover and application', async () => {
         req.body = {
           [ESTIMATED_ANNUAL_TURNOVER]: '5',
           [PERCENTAGE_TURNOVER]: '3',

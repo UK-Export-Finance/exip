@@ -1,7 +1,7 @@
 import { ExporterBusiness } from '../../types';
 
 const mockExporterBusinessTurnover = {
-  estimatedAnnualTurnover: 'ABC',
+  estimatedAnnualTurnover: '155220',
   exportsTurnoverPercentage: '2,0',
 } as ExporterBusiness;
 
