@@ -166,7 +166,7 @@ Keystone will automatically generate the following graphQL resolvers in the back
 - `currency`
 - `currenciesCount`
 
-Keystone will also automatically create a countries table in the database with any fields listed in the keystone schema as columns in the said table.
+Keystone will also automatically create a currencies table in the database with any fields listed in the keystone schema as columns in the said table.
 
 ### Keystone hooks
 
