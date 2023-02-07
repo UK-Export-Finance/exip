@@ -31,11 +31,11 @@ describe('controllers/insurance/business/turnover/save-and-back', () => {
   });
 
   describe('post - save and back', () => {
+    const validBody = mockExporterBusinessTurnover;
+
     describe('when there are no validation errors', () => {
       it('should redirect to all sections page', async () => {
-        req.body = {
-          ...mockExporterBusinessTurnover,
-        };
+        req.body = validBody;
 
         await post(req, res);
 
@@ -43,9 +43,7 @@ describe('controllers/insurance/business/turnover/save-and-back', () => {
       });
 
       it('should call mapAndSave.turnover once', async () => {
-        req.body = {
-          ...mockExporterBusinessTurnover,
-        };
+        req.body = validBody;
 
         await post(req, res);
 

@@ -10,7 +10,7 @@ import mockCompany from './mock-company';
 import mockApplication from './mock-application';
 import mockPhoneNumbers from './mock-phone-numbers';
 import mockSicCodes from './mock-sic-codes';
-import mockExporterBusinessNatureOfBusiness from './mock-exporter-business-nature-of-business';
+import mockExporterNatureOfBusiness from './mock-exporter-business-nature-of-business';
 import mockExporterBusinessTurnover from './mock-exporter-business-turnover';
 
 const mockReq = () => {
@@ -64,7 +64,7 @@ export {
   mockCountries,
   mockCompany,
   mockCurrencies,
-  mockExporterBusinessNatureOfBusiness,
+  mockExporterNatureOfBusiness,
   mockExporterBusinessTurnover,
   mockNext,
   mockSession,

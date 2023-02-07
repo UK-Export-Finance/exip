@@ -85,7 +85,9 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
     it(`should retain the ${ESTIMATED_ANNUAL_TURNOVER} input on the page and the other fields should be empty`, () => {
       task.link().click();
+      // submit company details form
       submitButton().click();
+      // submit nature of business form
       submitButton().click();
 
       turnover[ESTIMATED_ANNUAL_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
@@ -95,8 +97,6 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
   describe('When all fields are provided', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.navigateToUrl(url);
-
       turnover[ESTIMATED_ANNUAL_TURNOVER].input().clear().type(application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
       turnover[PERCENTAGE_TURNOVER].input().clear().type(application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
 
@@ -107,12 +107,14 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
     it('should retain the `your business` task status as `in progress`', () => {
       const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskStatus(task.status(), expected);
     });
 
-    it('should retain the all fields on the page', () => {
+    it('should retain all the fields on the page', () => {
       task.link().click();
+      // submit company details form
       submitButton().click();
+      // submit nature of business form
       submitButton().click();
 
       turnover[ESTIMATED_ANNUAL_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);

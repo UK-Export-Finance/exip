@@ -1,7 +1,7 @@
 import { RequestBody } from '../../../../../../types';
 import { FIELD_IDS } from '../../../../../constants';
 import mapSubmittedData from '.';
-import { mockExporterBusinessNatureOfBusiness } from '../../../../../test-mocks';
+import { mockExporterNatureOfBusiness } from '../../../../../test-mocks';
 import { stripCommas } from '../../../../../helpers/string';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
@@ -12,7 +12,7 @@ describe('controllers/insurance/business/nature-of-business/map-submitted-data',
     it('should return the formBody with the commas replaced', () => {
       const mockBody = {
         _csrf: '1234',
-        ...mockExporterBusinessNatureOfBusiness,
+        ...mockExporterNatureOfBusiness,
       } as RequestBody;
 
       const response = mapSubmittedData(mockBody);
