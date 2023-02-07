@@ -103,20 +103,7 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
     });
 
     describe('api error handling', () => {
-      describe('when the get countries response is an empty array', () => {
-        beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.resolve([]));
-          api.keystone.countries.getAll = getCountriesSpy;
-        });
-
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-        });
-      });
-
-      describe('when there is an error with the get countries API call', () => {
+      describe('when the get countries API call fails', () => {
         beforeEach(() => {
           getCountriesSpy = jest.fn(() => Promise.reject());
           api.keystone.countries.getAll = getCountriesSpy;
@@ -129,9 +116,22 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
         });
       });
 
-      describe('when the get currencies response is an empty array', () => {
+      describe('when the get countries response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+          getCountriesSpy = jest.fn(() => Promise.resolve([]));
+          api.keystone.countries.getAll = getCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get currencies API call fails', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.reject());
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
@@ -142,9 +142,9 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
         });
       });
 
-      describe('when there is an error with the get currencies API call', () => {
+      describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject());
+          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
           api.external.getCurrencies = getCurrenciesSpy;
         });
 

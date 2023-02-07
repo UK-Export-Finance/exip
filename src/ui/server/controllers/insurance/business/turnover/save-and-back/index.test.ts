@@ -1,17 +1,17 @@
 import { Request, Response } from '../../../../../../types';
 import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
-import { mockReq, mockRes, mockApplication, mockExporterNatureOfBusiness } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockExporterBusinessTurnover } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save';
 
 const {
   EXPORTER_BUSINESS: {
-    NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
+    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   },
 } = FIELD_IDS.INSURANCE;
 
 const { INSURANCE_ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
-describe('controllers/insurance/business/nature-of-business/save-and-back', () => {
+describe('controllers/insurance/business/turnover/save-and-back', () => {
   let req: Request;
   let res: Response;
 
@@ -23,7 +23,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
 
     res.locals.application = mockApplication;
 
-    mapAndSave.natureOfBusiness = updateMapAndSave;
+    mapAndSave.turnover = updateMapAndSave;
   });
 
   afterAll(() => {
@@ -31,21 +31,19 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
   });
 
   describe('post - save and back', () => {
+    const validBody = mockExporterBusinessTurnover;
+
     describe('when there are no validation errors', () => {
       it('should redirect to all sections page', async () => {
-        req.body = {
-          ...mockExporterNatureOfBusiness,
-        };
+        req.body = validBody;
 
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call mapAndSave.natureOfBusiness once', async () => {
-        req.body = {
-          ...mockExporterNatureOfBusiness,
-        };
+      it('should call mapAndSave.turnover once', async () => {
+        req.body = validBody;
 
         await post(req, res);
 
@@ -56,8 +54,8 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
     describe('when there are validation errors', () => {
       it('should redirect to all sections page', async () => {
         req.body = {
-          [YEARS_EXPORTING]: '5O',
-          [EMPLOYEES_UK]: '2000',
+          [ESTIMATED_ANNUAL_TURNOVER]: '5O',
+          [PERCENTAGE_TURNOVER]: '101',
         };
 
         await post(req, res);
@@ -65,10 +63,10 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call mapAndSave.natureOfBusiness once', async () => {
+      it('should call mapAndSave.turnover once', async () => {
         req.body = {
-          [YEARS_EXPORTING]: '5O',
-          [EMPLOYEES_UK]: '2000',
+          [ESTIMATED_ANNUAL_TURNOVER]: '5O',
+          [PERCENTAGE_TURNOVER]: '101',
         };
 
         await post(req, res);
@@ -89,11 +87,11 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
       });
     });
 
-    describe('when mapAndSave.natureOfBusiness fails', () => {
+    describe('when mapAndSave.turnover fails', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
         updateMapAndSave = jest.fn(() => Promise.reject());
-        mapAndSave.natureOfBusiness = updateMapAndSave;
+        mapAndSave.turnover = updateMapAndSave;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {

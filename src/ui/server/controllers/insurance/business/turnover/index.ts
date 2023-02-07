@@ -6,6 +6,7 @@ import { FIELDS } from '../../../../content-strings/fields/insurance/your-busine
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save';
 
 const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER } = FIELD_IDS.TURNOVER;
 
@@ -16,7 +17,7 @@ export const TEMPLATE = TURNOVER_TEMPLATE;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { TURNOVER_ROOT, BROKER_ROOT } = EXPORTER_BUSINESS_ROUTES;
+const { TURNOVER_SAVE_AND_BACK, BROKER_ROOT } = EXPORTER_BUSINESS_ROUTES;
 
 const { TURNOVER: TURNOVER_FIELDS } = FIELDS;
 
@@ -35,7 +36,7 @@ const pageVariables = (referenceNumber: number) => ({
       ...TURNOVER_FIELDS[PERCENTAGE_TURNOVER],
     },
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
 });
 
 /**
@@ -108,12 +109,12 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
-    // // if no errors, then runs save api call to db
-    // const saveResponse = await mapAndSave.turnover(body, application);
+    // if no errors, then runs save api call to db
+    const saveResponse = await mapAndSave.turnover(body, application);
 
-    // if (!saveResponse) {
-    //   return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-    // }
+    if (!saveResponse) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
   } catch (err) {

@@ -314,41 +314,29 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       });
     });
 
-    describe('when the currencies API has no data', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCurrenciesSpy = jest.fn(() => Promise.resolve());
-        api.external.getCurrencies = getCurrenciesSpy;
+    describe('api error handling', () => {
+      describe('when the get currencies API call fails', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.reject());
+          api.external.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
+      describe('when the get currencies response does not return a populated array', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+          api.external.getCurrencies = getCurrenciesSpy;
+        });
 
-    describe('when the currencies API does not return an array', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCurrenciesSpy = jest.fn(() => Promise.resolve({}));
-        api.external.getCurrencies = getCurrenciesSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-
-    describe('when the currencies API does not return a populated array', () => {
-      beforeEach(() => {
-        getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
-        api.external.getCurrencies = getCurrenciesSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });
@@ -524,41 +512,29 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       });
     });
 
-    describe('when the currencies API has no data', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCurrenciesSpy = jest.fn(() => Promise.resolve());
-        api.external.getCurrencies = getCurrenciesSpy;
+    describe('api error handling', () => {
+      describe('when the get currencies API call fails', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.reject());
+          api.external.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
+      describe('when the get currencies response does not return a populated array', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+          api.external.getCurrencies = getCurrenciesSpy;
+        });
 
-    describe('when the currencies API does not return an array', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCurrenciesSpy = jest.fn(() => Promise.resolve({}));
-        api.external.getCurrencies = getCurrenciesSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-
-    describe('when the currencies API does not return a populated array', () => {
-      beforeEach(() => {
-        getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
-        api.external.getCurrencies = getCurrenciesSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });

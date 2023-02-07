@@ -1,3 +1,4 @@
+import isPopulatedArray from '../is-populated-array';
 import { RequestBody } from '../../../types';
 
 /**
@@ -9,7 +10,7 @@ import { RequestBody } from '../../../types';
 const hasFormData = (formBody: RequestBody) => {
   const { _csrf, ...formData } = formBody;
 
-  if (formData && Object.keys(formData).length) {
+  if (formData && isPopulatedArray(Object.keys(formData))) {
     return true;
   }
 

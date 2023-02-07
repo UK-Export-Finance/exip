@@ -22,6 +22,7 @@ const {
   START,
   EXPORTER_BUSINESS: {
     TURNOVER,
+    BROKER,
   },
 } = ROUTES.INSURANCE;
 
@@ -33,6 +34,7 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 context('Insurance - Your business - Turnover page - As an Exporter I want to enter the I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
+  let brokerUrl;
 
   before(() => {
     cy.navigateToUrl(START);
@@ -48,6 +50,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       referenceNumber = id;
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
+      brokerUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
 
       cy.url().should('eq', url);
     });
@@ -134,5 +137,23 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
     cy.checkText(submitButton(), BUTTONS.CONTINUE);
 
     cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+  });
+
+  describe('form submission', () => {
+    it(`should redirect to ${BROKER}`, () => {
+      cy.completeAndSubmitTurnoverForm();
+
+      cy.url().should('eq', brokerUrl);
+    });
+  });
+
+  describe('when going back to the page', () => {
+    it('should have the submitted values', () => {
+      cy.navigateToUrl(`${ROOT}/${referenceNumber}${TURNOVER}`);
+
+      cy.checkText(turnover[FINANCIAL_YEAR_END_DATE].value(), application.EXPORTER_COMPANY[FINANCIAL_YEAR_END_DATE]);
+      turnover[ESTIMATED_ANNUAL_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      turnover[PERCENTAGE_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
+    });
   });
 });

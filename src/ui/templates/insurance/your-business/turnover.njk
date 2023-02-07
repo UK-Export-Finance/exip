@@ -57,7 +57,7 @@
         {{ govukInput({
           id: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
           name: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
-          value: submittedValues[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] or application.exporterCompany[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID],
+          value: submittedValues[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] or application.exporterBusiness[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID],
           label: {
             text: FIELDS.ESTIMATED_ANNUAL_TURNOVER.LABEL,
             classes: "govuk-body",
@@ -88,7 +88,7 @@
         {{ govukInput({
           id: FIELDS.PERCENTAGE_TURNOVER.ID,
           name: FIELDS.PERCENTAGE_TURNOVER.ID,
-          value: submittedValues[FIELDS.PERCENTAGE_TURNOVER.ID] or application.exporterCompany[FIELDS.PERCENTAGE_TURNOVER.ID],
+          value: submittedValues[FIELDS.PERCENTAGE_TURNOVER.ID] or application.exporterBusiness[FIELDS.PERCENTAGE_TURNOVER.ID],
           label: {
             text: FIELDS.PERCENTAGE_TURNOVER.LABEL,
             classes: "govuk-body",

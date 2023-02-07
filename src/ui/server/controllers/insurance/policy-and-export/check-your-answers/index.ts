@@ -3,6 +3,7 @@ import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import api from '../../../../api';
+import isPopulatedArray from '../../../../helpers/is-populated-array';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { policyAndExportSummaryList } from '../../../../helpers/summary-lists/policy-and-export';
 
@@ -43,7 +44,7 @@ export const get = async (req: Request, res: Response) => {
     const countries = await api.keystone.countries.getAll();
     const currencies = await api.external.getCurrencies();
 
-    if (!countries || !countries.length || !currencies || !currencies.length) {
+    if (!isPopulatedArray(countries) || !isPopulatedArray(currencies)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 

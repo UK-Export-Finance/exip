@@ -2,6 +2,7 @@ import mapAndSave from '.';
 import { FIELD_IDS } from '../../../../constants';
 import mapCompanyDetailsSubmittedData from '../company-details/map-submitted-data';
 import mapNatureOfBusinessSubmittedData from '../nature-of-business/map-submitted-data';
+import mapTurnoverSubmittedData from '../turnover/map-submitted-data';
 import save from '../save-data';
 import { mockApplication } from '../../../../test-mocks';
 import generateValidationErrors from '../../../../helpers/validation';
@@ -11,6 +12,7 @@ const {
     COMPANY_HOUSE: { INPUT, COMPANY_NUMBER },
     YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
+    TURNOVER: { PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -89,17 +91,17 @@ describe('controllers/insurance/business/map-and-save', () => {
     };
 
     const mockSaveExporterBusiness = jest.fn(() => Promise.resolve({}));
-    save.natureOfBusiness = mockSaveExporterBusiness;
+    save.exporterBusiness = mockSaveExporterBusiness;
 
     const mockValidationErrors = generateValidationErrors(YEARS_EXPORTING, 'error', {});
 
     describe('when the form has data', () => {
       describe('when the form has validation errors ', () => {
-        it('should call save.natureOfBusiness with application, populated submitted data and validationErrors.errorList', async () => {
+        it('should call save.exporterBusiness with application, populated submitted data and validationErrors.errorList', async () => {
           await mapAndSave.natureOfBusiness(mockFormBody, mockApplication, mockValidationErrors);
 
-          expect(save.natureOfBusiness).toHaveBeenCalledTimes(1);
-          expect(save.natureOfBusiness).toHaveBeenCalledWith(mockApplication, mapNatureOfBusinessSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+          expect(save.exporterBusiness).toHaveBeenCalledTimes(1);
+          expect(save.exporterBusiness).toHaveBeenCalledWith(mockApplication, mapNatureOfBusinessSubmittedData(mockFormBody), mockValidationErrors?.errorList);
         });
 
         it('should return true', async () => {
@@ -118,11 +120,11 @@ describe('controllers/insurance/business/map-and-save', () => {
           [EMPLOYEES_INTERNATIONAL]: '25',
         };
 
-        it('should call save.natureOfBusiness with application and populated submitted data', async () => {
+        it('should call save.exporterBusiness with application and populated submitted data', async () => {
           await mapAndSave.natureOfBusiness(mockFormBody, mockApplication);
 
-          expect(save.natureOfBusiness).toHaveBeenCalledTimes(1);
-          expect(save.natureOfBusiness).toHaveBeenCalledWith(mockApplication, mapNatureOfBusinessSubmittedData(mockFormBody));
+          expect(save.exporterBusiness).toHaveBeenCalledTimes(1);
+          expect(save.exporterBusiness).toHaveBeenCalledWith(mockApplication, mapNatureOfBusinessSubmittedData(mockFormBody));
         });
 
         it('should return true', async () => {
@@ -138,6 +140,67 @@ describe('controllers/insurance/business/map-and-save', () => {
         mockFormBody = { _csrf: '1234' };
 
         const result = await mapAndSave.natureOfBusiness(mockFormBody, mockApplication, mockValidationErrors);
+
+        expect(result).toEqual(true);
+      });
+    });
+  });
+
+  describe('turnover', () => {
+    let mockFormBody = {
+      _csrf: '1234',
+      [PERCENTAGE_TURNOVER]: '25',
+      [ESTIMATED_ANNUAL_TURNOVER]: '35000',
+    };
+
+    const mockSaveExporterBusiness = jest.fn(() => Promise.resolve({}));
+    save.exporterBusiness = mockSaveExporterBusiness;
+
+    const mockValidationErrors = generateValidationErrors(PERCENTAGE_TURNOVER, 'error', {});
+
+    describe('when the form has data', () => {
+      describe('when the form has validation errors ', () => {
+        it('should call save.exporterBusiness with application, populated submitted data and validationErrors.errorList', async () => {
+          await mapAndSave.natureOfBusiness(mockFormBody, mockApplication, mockValidationErrors);
+
+          expect(save.exporterBusiness).toHaveBeenCalledTimes(1);
+          expect(save.exporterBusiness).toHaveBeenCalledWith(mockApplication, mapTurnoverSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+        });
+
+        it('should return true', async () => {
+          const result = await mapAndSave.turnover(mockFormBody, mockApplication, mockValidationErrors);
+
+          expect(result).toEqual(true);
+        });
+      });
+
+      describe('when the form does NOT have validation errors ', () => {
+        mockFormBody = {
+          _csrf: '1234',
+          [PERCENTAGE_TURNOVER]: '25',
+          [ESTIMATED_ANNUAL_TURNOVER]: '35000',
+        };
+
+        it('should call save.exporterBusiness with application and populated submitted data', async () => {
+          await mapAndSave.natureOfBusiness(mockFormBody, mockApplication);
+
+          expect(save.exporterBusiness).toHaveBeenCalledTimes(1);
+          expect(save.exporterBusiness).toHaveBeenCalledWith(mockApplication, mapTurnoverSubmittedData(mockFormBody));
+        });
+
+        it('should return true', async () => {
+          const result = await mapAndSave.turnover(mockFormBody, mockApplication, mockValidationErrors);
+
+          expect(result).toEqual(true);
+        });
+      });
+    });
+
+    describe('when the form does not have any data', () => {
+      it('should return true', async () => {
+        mockFormBody = { _csrf: '1234' };
+
+        const result = await mapAndSave.turnover(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });

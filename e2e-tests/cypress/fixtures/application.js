@@ -30,6 +30,8 @@ const {
       },
       TURNOVER: {
         FINANCIAL_YEAR_END_DATE,
+        ESTIMATED_ANNUAL_TURNOVER,
+        PERCENTAGE_TURNOVER,
       },
     },
   },
@@ -72,6 +74,8 @@ const application = {
     [YEARS_EXPORTING]: '0',
     [EMPLOYEES_INTERNATIONAL]: '5',
     [EMPLOYEES_UK]: '2000',
+    [ESTIMATED_ANNUAL_TURNOVER]: '65000',
+    [PERCENTAGE_TURNOVER]: '0',
   },
 };
 
