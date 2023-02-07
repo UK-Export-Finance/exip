@@ -3,6 +3,8 @@ interface ExporterBusiness {
   totalYearsExporting?: string;
   totalEmployeesUK?: string;
   totalEmployeesInternational?: string;
+  estimatedAnnualTurnover?: string;
+  exportsTurnoverPercentage?: string;
 }
 
 export { ExporterBusiness };

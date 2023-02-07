@@ -71,6 +71,8 @@ const applicationQuery = gql`
           totalYearsExporting
           totalEmployeesUK
           totalEmployeesInternational
+          estimatedAnnualTurnover
+          exportsTurnoverPercentage
         }
       }
     }

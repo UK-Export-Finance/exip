@@ -39,7 +39,7 @@ const companyDetails = async (application: Application, formBody: RequestBody, e
  * @param {Object} errorList
  * @returns {Object} saveResponse from api
  */
-const natureOfBusiness = async (application: Application, formBody: RequestBody, errorList?: object) => {
+const exporterBusiness = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save
   const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList));
 
@@ -53,11 +53,11 @@ const natureOfBusiness = async (application: Application, formBody: RequestBody,
     const saveResponse = await api.keystone.application.update.exporterBusiness(exporterBusinessId, sanitisedData);
     return saveResponse;
   } catch (err) {
-    throw new Error("Updating application's natureOfBusiness");
+    throw new Error("Updating application's exporterBusiness");
   }
 };
 
 export default {
   companyDetails,
-  natureOfBusiness,
+  exporterBusiness,
 };

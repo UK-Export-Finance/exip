@@ -154,7 +154,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.companyDetails once with natureOfBusiness and application', async () => {
+      it('should call mapAndSave.natureOfBusiness once with natureOfBusiness and application', async () => {
         req.body = {
           [GOODS_OR_SERVICES]: 'test',
           [YEARS_EXPORTING]: '5',
