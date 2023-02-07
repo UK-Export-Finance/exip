@@ -107,7 +107,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
     it('should retain the `your business` task status as `in progress`', () => {
       const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkTaskStatus(task.status(), expected);
+      cy.checkTaskStatus(task, expected);
     });
 
     it('should retain all the fields on the page', () => {
