@@ -8,7 +8,6 @@ import {
 } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS;
 
@@ -34,7 +33,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;

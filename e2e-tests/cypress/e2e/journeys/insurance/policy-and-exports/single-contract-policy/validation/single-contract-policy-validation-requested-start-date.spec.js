@@ -1,6 +1,5 @@
 import partials from '../../../../../partials';
 import { FIELD_VALUES, ROUTES } from '../../../../../../../constants';
-import getReferenceNumber from '../../../../../helpers/get-reference-number';
 import requestedCoverStartDate from '../../../../../../support/insurance/requested-start-date-field';
 
 const { taskList } = partials.insurancePartials;
@@ -21,7 +20,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
 

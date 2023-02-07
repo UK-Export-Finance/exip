@@ -3,7 +3,6 @@ import { submitButton, inlineErrorMessage } from '../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../partials';
 import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER } from '../../../../../../../constants';
-import getReferenceNumber from '../../../../../helpers/get-reference-number';
 
 const {
   EXPORTER_BUSINESS: {
@@ -23,7 +22,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;

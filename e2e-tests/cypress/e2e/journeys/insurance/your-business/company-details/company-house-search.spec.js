@@ -6,7 +6,6 @@ import { saveAndBackButton } from '../../../../pages/shared';
 import {
   ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_NO_SIC_CODE,
 } from '../../../../../../constants';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const {
   EXPORTER_BUSINESS: {
@@ -38,7 +37,7 @@ context('Insurance - Your business - Company details page - company house search
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;

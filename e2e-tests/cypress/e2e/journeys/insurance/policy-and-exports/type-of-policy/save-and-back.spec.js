@@ -3,7 +3,6 @@ import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
@@ -21,7 +20,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
 
     task.link().click();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;

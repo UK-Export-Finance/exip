@@ -20,7 +20,6 @@ import {
   FIELD_VALUES,
   ROUTES,
 } from '../../../../../../constants';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
 import checkPolicyCurrencyCodeInput from '../../../../../support/insurance/check-policy-currency-code-input';
 
@@ -74,7 +73,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 

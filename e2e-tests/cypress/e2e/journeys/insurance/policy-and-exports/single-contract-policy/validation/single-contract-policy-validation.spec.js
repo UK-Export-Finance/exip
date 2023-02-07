@@ -2,7 +2,6 @@ import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
-import getReferenceNumber from '../../../../../helpers/get-reference-number';
 import application from '../../../../../../fixtures/application';
 
 const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
@@ -45,7 +44,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
 

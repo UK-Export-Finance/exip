@@ -19,7 +19,6 @@ import {
   FIELD_VALUES,
   ROUTES,
 } from '../../../../../../constants';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
 import checkPolicyCurrencyCodeInput from '../../../../../support/insurance/check-policy-currency-code-input';
 
@@ -70,7 +69,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
     cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 

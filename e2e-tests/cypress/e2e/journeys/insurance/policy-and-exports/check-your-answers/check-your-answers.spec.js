@@ -13,7 +13,6 @@ import {
 } from '../../../../../../content-strings';
 import { FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const {
   POLICY_AND_EXPORTS,
@@ -49,7 +48,7 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
     cy.completeAndSubmitSingleContractPolicyForm();
     cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;

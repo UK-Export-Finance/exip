@@ -6,7 +6,6 @@ import {
 } from '../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 const { ACTIONS } = CONTENT_STRINGS;
@@ -28,7 +27,7 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;

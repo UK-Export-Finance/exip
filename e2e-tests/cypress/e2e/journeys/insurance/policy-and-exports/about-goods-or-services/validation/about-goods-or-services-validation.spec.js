@@ -2,7 +2,6 @@ import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
-import getReferenceNumber from '../../../../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
 
@@ -38,7 +37,7 @@ context('Insurance - Policy and exports - About goods or services page - form va
 
     cy.completeAndSubmitSingleContractPolicyForm();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
 

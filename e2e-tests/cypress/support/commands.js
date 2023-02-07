@@ -56,3 +56,4 @@ Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-
 Cypress.Commands.add('checkText', require('./check-text'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
 Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));
+Cypress.Commands.add('getReferenceNumber', require('./get-reference-number'));

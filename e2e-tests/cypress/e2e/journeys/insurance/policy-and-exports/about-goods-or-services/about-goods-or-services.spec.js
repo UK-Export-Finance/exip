@@ -15,7 +15,6 @@ import {
 } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
 import countries from '../../../../../fixtures/countries';
 
@@ -60,7 +59,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
     cy.completeAndSubmitSingleContractPolicyForm();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
