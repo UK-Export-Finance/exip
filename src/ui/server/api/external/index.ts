@@ -22,6 +22,7 @@ const external = {
 
       return response.data;
     } catch (err) {
+      console.error(err);
       throw new Error(`Getting CIS countries ${err}`);
     }
   },
@@ -43,6 +44,7 @@ const external = {
 
       return response.data;
     } catch (err) {
+      console.error(err);
       throw new Error(`Getting MDM-EA currencies ${err}`);
     }
   },
