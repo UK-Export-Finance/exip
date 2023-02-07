@@ -357,6 +357,8 @@ CREATE TABLE `ExporterBusiness` (
   `totalEmployeesUK` int DEFAULT NULL,
   `goodsOrServicesSupplied` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `totalYearsExporting` int DEFAULT NULL,
+	`estimatedAnnualTurnover` int DEFAULT NULL,
+  `exportsTurnoverPercentage` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ExporterBusiness_application_idx` (`application`),
   CONSTRAINT `ExporterBusiness_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
