@@ -25,9 +25,11 @@ const page = {
         return response.data.page;
       }
 
-      throw new Error(`Getting page data ${response}`);
+      console.error(response);
+      throw new Error('Getting page data');
     } catch (err) {
-      throw new Error(`Getting page data ${err}`);
+      console.error(err);
+      throw new Error('Getting page data');
     }
   },
 };

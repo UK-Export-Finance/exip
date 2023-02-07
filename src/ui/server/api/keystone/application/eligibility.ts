@@ -28,9 +28,11 @@ const eligibility = {
         return response.data.updateEligibility;
       }
 
-      throw new Error(`Updating eligibility ${response}`);
+      console.error(response);
+      throw new Error('Updating eligibility');
     } catch (err) {
-      throw new Error(`Updating eligibility ${err}`);
+      console.error(err);
+      throw new Error('Updating eligibility');
     }
   },
 };

@@ -25,9 +25,11 @@ const account = {
         return data.createAccount;
       }
 
-      throw new Error(`Creating exporter account ${response}`);
+      console.error(response);
+      throw new Error('Creating exporter account');
     } catch (err) {
-      throw new Error(`Creating exporter account ${err}`);
+      console.error(err);
+      throw new Error('Creating exporter account');
     }
   },
 };

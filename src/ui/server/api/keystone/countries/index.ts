@@ -22,9 +22,11 @@ const countries = {
         return response.data.countries;
       }
 
-      throw new Error(`Getting countries ${response}`);
+      console.error(response);
+      throw new Error('Getting countries');
     } catch (err) {
-      throw new Error(`Getting countries ${err}`);
+      console.error(err);
+      throw new Error('Getting countries');
     }
   },
   get: async (isoCode: string) => {
@@ -47,9 +49,11 @@ const countries = {
         return response.data.countries[0];
       }
 
-      throw new Error(`Getting country ${response}`);
+      console.error(response);
+      throw new Error('Getting country');
     } catch (err) {
-      throw new Error(`Getting country ${err}`);
+      console.error(err);
+      throw new Error('Getting country');
     }
   },
 };

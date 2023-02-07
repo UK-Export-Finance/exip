@@ -1,4 +1,3 @@
-import { ApolloError } from 'apollo-client';
 import { ApolloResponse, SubmittedDataInsuranceEligibility } from '../../../../types';
 import apollo from '../../../graphql/apollo';
 import eligibility from './eligibility';
@@ -27,10 +26,10 @@ const createEmptyApplication = async () => {
       return response.data.createApplication;
     }
 
-    if (response instanceof ApolloError) {
-      throw new Error('Creating empty application');
-    }
-  } catch {
+    console.error(response);
+    throw new Error('Creating empty application');
+  } catch (err) {
+    console.error(err);
     throw new Error('Creating empty application');
   }
 };
@@ -59,7 +58,8 @@ const application = {
         return newApplication;
       }
     } catch (err) {
-      throw new Error(`Creating application with relationships ${err}`);
+      console.error(err);
+      throw new Error('Creating application with relationships');
     }
   },
   get: async (referenceNumber: number) => {
@@ -85,9 +85,11 @@ const application = {
         };
       }
 
-      throw new Error(`Getting application ${response}`);
+      console.error(response);
+      throw new Error('Getting application');
     } catch (err) {
-      throw new Error(`Getting application ${err}`);
+      console.error(err);
+      throw new Error('Getting application');
     }
   },
   update: {
@@ -116,9 +118,11 @@ const application = {
           return data.updatePolicyAndExport;
         }
 
-        throw new Error(`Updating application policy and export ${response}`);
+        console.error(response);
+        throw new Error('Updating application policy and export');
       } catch (err) {
-        throw new Error(`Updating application policy and export ${err}`);
+        console.error(err);
+        throw new Error('Updating application policy and export');
       }
     },
     exporterBusiness: async (id: string, update: object) => {
@@ -146,9 +150,11 @@ const application = {
           return data.updateExporterBusiness;
         }
 
-        throw new Error(`Updating application exporter business ${response}`);
+        console.error(response);
+        throw new Error('Updating application exporter business');
       } catch (err) {
-        throw new Error(`Updating application exporter business ${err}`);
+        console.error(err);
+        throw new Error('Updating application exporter business');
       }
     },
     exporterCompany: async (companyId: string, companyAddressId: string, update: object) => {
@@ -177,9 +183,11 @@ const application = {
           return data.updateExporterCompanyAndCompanyAddress;
         }
 
-        throw new Error(`Updating application exporter company ${response}`);
+        console.error(response);
+        throw new Error('Updating application exporter company');
       } catch (err) {
-        throw new Error(`Updating application exporter company ${err}`);
+        console.error(err);
+        throw new Error('Updating application exporter company');
       }
     },
   },
