@@ -18,7 +18,6 @@ import {
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const { POLICY_AND_EXPORTS, START } = ROUTES.INSURANCE;
 const insuranceStartRoute = START;
@@ -48,7 +47,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
     task.link().click();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;

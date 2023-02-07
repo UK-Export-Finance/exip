@@ -9,7 +9,6 @@ import {
   PAGES,
 } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
-import getReferenceNumber from '../../../helpers/get-reference-number';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
@@ -107,7 +106,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     it(`should redirect to ${INSURANCE_ROOT}/[referenceNumber]${ALL_SECTIONS}`, () => {
       submitButton().click();
 
-      getReferenceNumber().then((id) => {
+      cy.getReferenceNumber().then((id) => {
         const referenceNumber = id;
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 

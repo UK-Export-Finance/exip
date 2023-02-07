@@ -9,7 +9,6 @@ import {
   TASKS,
 } from '../../../../content-strings';
 import { APPLICATION, ROUTES } from '../../../../constants';
-import getReferenceNumber from '../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
 
@@ -23,7 +22,7 @@ context('Insurance - All sections - new application', () => {
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;

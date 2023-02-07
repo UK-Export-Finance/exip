@@ -5,7 +5,6 @@ import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { DEFAULT, LINKS } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const {
   POLICY_AND_EXPORTS: {
@@ -48,7 +47,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
     cy.completeAndSubmitMultipleContractPolicyForm();
     cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
