@@ -26,4 +26,13 @@ describe('server/helpers/is-populated-array', () => {
       expect(result).toEqual(false);
     });
   });
+
+  describe('when an object is passed', () => {
+    it('should return false', () => {
+      // @ts-ignore
+      const result = isPopulatedArray({});
+
+      expect(result).toEqual(false);
+    });
+  });
 });
