@@ -22,8 +22,7 @@ const external = {
 
       return response.data;
     } catch (err) {
-      console.error('Unable to fetch CIS countries', err);
-      return err;
+      throw new Error(`Getting CIS countries ${err}`);
     }
   },
   getCurrencies: async () => {
@@ -44,8 +43,7 @@ const external = {
 
       return response.data;
     } catch (err) {
-      console.error('Unable to fetch MDM-EA currencies', err);
-      return err;
+      throw new Error(`Getting MDM-EA currencies ${err}`);
     }
   },
 };

@@ -27,9 +27,7 @@ const account = {
 
       throw new Error(`Creating exporter account ${response}`);
     } catch (err) {
-      console.error(`Error creating exporter account ${err}`);
-
-      throw new Error('Creating exporter account');
+      throw new Error(`Creating exporter account ${err}`);
     }
   },
 };

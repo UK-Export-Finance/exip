@@ -24,10 +24,9 @@ const getCompaniesHouseInformation = async (companiesHouseNumber: string) => {
       return response.data?.getCompaniesHouseInformation;
     }
 
-    return {};
-  } catch (error) {
-    console.error('Error getting Companies house information ', { error });
-    return {};
+    throw new Error(`Getting Companies house information ${response}`);
+  } catch (err) {
+    throw new Error(`Getting Companies house information ${err}`);
   }
 };
 

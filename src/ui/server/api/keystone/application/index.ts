@@ -58,8 +58,8 @@ const application = {
 
         return newApplication;
       }
-    } catch {
-      throw new Error('Creating application with relationships');
+    } catch (err) {
+      throw new Error(`Creating application with relationships ${err}`);
     }
   },
   get: async (referenceNumber: number) => {
@@ -85,7 +85,7 @@ const application = {
         };
       }
 
-      throw new Error('Getting application');
+      throw new Error(`Getting application ${response}`);
     } catch (err) {
       throw new Error(`Getting application ${err}`);
     }
@@ -116,7 +116,7 @@ const application = {
           return data.updatePolicyAndExport;
         }
 
-        throw new Error('Updating application policy and export');
+        throw new Error(`Updating application policy and export ${response}`);
       } catch (err) {
         throw new Error(`Updating application policy and export ${err}`);
       }
@@ -146,7 +146,7 @@ const application = {
           return data.updateExporterBusiness;
         }
 
-        throw new Error('Updating application exporter business');
+        throw new Error(`Updating application exporter business ${response}`);
       } catch (err) {
         throw new Error(`Updating application exporter business ${err}`);
       }
@@ -177,7 +177,7 @@ const application = {
           return data.updateExporterCompanyAndCompanyAddress;
         }
 
-        throw new Error('Updating application exporter company');
+        throw new Error(`Updating application exporter company ${response}`);
       } catch (err) {
         throw new Error(`Updating application exporter company ${err}`);
       }

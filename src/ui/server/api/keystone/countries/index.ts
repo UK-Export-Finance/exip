@@ -1,4 +1,3 @@
-import { ApolloError } from 'apollo-client';
 import apollo from '../../../graphql/apollo';
 import { ApolloResponse } from '../../../../types';
 import getCountries from '../../../graphql/queries/countries';
@@ -23,11 +22,9 @@ const countries = {
         return response.data.countries;
       }
 
-      if (response instanceof ApolloError) {
-        throw new Error('Getting countries');
-      }
-    } catch {
-      throw new Error('Getting countries');
+      throw new Error(`Getting countries ${response}`);
+    } catch (err) {
+      throw new Error(`Getting countries ${err}`);
     }
   },
   get: async (isoCode: string) => {
@@ -50,11 +47,9 @@ const countries = {
         return response.data.countries[0];
       }
 
-      if (response instanceof ApolloError) {
-        throw new Error('Getting country');
-      }
-    } catch {
-      throw new Error('Getting country');
+      throw new Error(`Getting country ${response}`);
+    } catch (err) {
+      throw new Error(`Getting country ${err}`);
     }
   },
 };

@@ -25,9 +25,9 @@ const page = {
         return response.data.page;
       }
 
-      throw new Error('Getting page data');
-    } catch {
-      throw new Error('Getting page data');
+      throw new Error(`Getting page data ${response}`);
+    } catch (err) {
+      throw new Error(`Getting page data ${err}`);
     }
   },
 };
