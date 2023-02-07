@@ -16,7 +16,7 @@ const {
   },
   EXPORTER_BUSINESS: {
     NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK },
-    TURNOVER: { FINANCIAL_YEAR_END_DATE },
+    TURNOVER: { FINANCIAL_YEAR_END_DATE, PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -66,6 +66,8 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
           [YEARS_EXPORTING]: transformNumberToString(mockApplication.exporterBusiness[YEARS_EXPORTING]),
           [EMPLOYEES_UK]: transformNumberToString(mockApplication.exporterBusiness[EMPLOYEES_UK]),
           [EMPLOYEES_INTERNATIONAL]: transformNumberToString(mockApplication.exporterBusiness[EMPLOYEES_INTERNATIONAL]),
+          [PERCENTAGE_TURNOVER]: transformNumberToString(mockApplication.exporterBusiness[PERCENTAGE_TURNOVER]),
+          [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(mockApplication.exporterBusiness[ESTIMATED_ANNUAL_TURNOVER]),
         },
       };
 
