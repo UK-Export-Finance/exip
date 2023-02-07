@@ -1,29 +1,23 @@
 import { PAGES } from '../../../../content-strings';
 import { pageVariables, get, post, TEMPLATE } from '.';
 import { Request, Response } from '../../../../../types';
-import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
-import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
+import { TEMPLATES, ROUTES } from '../../../../constants';
+import FIELD_IDS from '../../../../constants/field-ids/insurance/exporter-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import generateValidationErrors from './validation';
-import mapAndSave from '../map-and-save';
 
-const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
-const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER } = EXPORTER_BUSINESS.TURNOVER;
+const { USING_BROKER } = FIELD_IDS.BROKER;
 
-const { TURNOVER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
-const { TURNOVER: TURNOVER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
+const { BROKER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
+const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { TURNOVER_SAVE_AND_BACK, BROKER_ROOT } = EXPORTER_BUSINESS_ROUTES;
+const { BROKER_ROOT, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
 
-const { TURNOVER: TURNOVER_FIELDS } = FIELDS;
-
-jest.mock('../map-and-save');
-
-describe('controllers/insurance/business/turnover', () => {
+describe('controllers/insurance/business/broker', () => {
   let req: Request;
   let res: Response;
 
@@ -40,7 +34,7 @@ describe('controllers/insurance/business/turnover', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TURNOVER_TEMPLATE);
+      expect(TEMPLATE).toEqual(BROKER_TEMPLATE);
     });
   });
 
@@ -50,20 +44,11 @@ describe('controllers/insurance/business/turnover', () => {
 
       const expected = {
         FIELDS: {
-          FINANCIAL_YEAR_END_DATE: {
-            ID: FINANCIAL_YEAR_END_DATE,
-            ...TURNOVER_FIELDS[FINANCIAL_YEAR_END_DATE],
-          },
-          ESTIMATED_ANNUAL_TURNOVER: {
-            ID: ESTIMATED_ANNUAL_TURNOVER,
-            ...TURNOVER_FIELDS[ESTIMATED_ANNUAL_TURNOVER],
-          },
-          PERCENTAGE_TURNOVER: {
-            ID: PERCENTAGE_TURNOVER,
-            ...TURNOVER_FIELDS[PERCENTAGE_TURNOVER],
+          USING_BROKER: {
+            ID: USING_BROKER,
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_ROOT}`,
       };
 
       expect(result).toEqual(expected);
@@ -72,14 +57,14 @@ describe('controllers/insurance/business/turnover', () => {
 
   describe('get', () => {
     describe('when the application exists', () => {
-      it('should render the turnover template with correct variables', () => {
+      it('should render the broker template with correct variables', () => {
         res.locals.application = mockApplication;
 
         get(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TURNOVER_TEMPLATE, {
+        expect(res.render).toHaveBeenCalledWith(BROKER_TEMPLATE, {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: TURNOVER,
+            PAGE_CONTENT_STRINGS: BROKER,
             BACK_LINK: req.headers.referer,
           }),
           application: mapApplicationToFormFields(mockApplication),
@@ -102,15 +87,12 @@ describe('controllers/insurance/business/turnover', () => {
   });
 
   describe('post', () => {
-    mapAndSave.turnover = jest.fn(() => Promise.resolve(true));
-
     describe('when there are validation errors', () => {
       it('should render template with validation errors', async () => {
         req.body = {};
 
         const submittedValues = {
-          [ESTIMATED_ANNUAL_TURNOVER]: req.body[ESTIMATED_ANNUAL_TURNOVER],
-          [PERCENTAGE_TURNOVER]: req.body[PERCENTAGE_TURNOVER],
+          [USING_BROKER]: req.body[USING_BROKER],
         };
 
         await post(req, res);
@@ -119,7 +101,7 @@ describe('controllers/insurance/business/turnover', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: TURNOVER,
+            PAGE_CONTENT_STRINGS: BROKER,
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(mockApplication.referenceNumber),
@@ -133,27 +115,13 @@ describe('controllers/insurance/business/turnover', () => {
     describe('when there are no validation errors', () => {
       it('should redirect to next page', async () => {
         req.body = {
-          [ESTIMATED_ANNUAL_TURNOVER]: '5',
-          [PERCENTAGE_TURNOVER]: '3',
+          [USING_BROKER]: 'true',
         };
 
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
-
-      it('should call mapAndSave.turnover once with turnover and application', async () => {
-        req.body = {
-          [ESTIMATED_ANNUAL_TURNOVER]: '5',
-          [PERCENTAGE_TURNOVER]: '3',
-        };
-
-        await post(req, res);
-
-        expect(mapAndSave.turnover).toHaveBeenCalledTimes(1);
-
-        expect(mapAndSave.turnover).toHaveBeenCalledWith(req.body, mockApplication);
       });
     });
 

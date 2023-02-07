@@ -17,6 +17,10 @@ const EXPORTER_BUSINESS = {
     ...SHARED,
     PAGE_TITLE: 'Turnover',
   },
+  BROKER: {
+    ...SHARED,
+    PAGE_TITLE: 'Are you using a broker to get this insurance?',
+  },
 };
 
 export default EXPORTER_BUSINESS;

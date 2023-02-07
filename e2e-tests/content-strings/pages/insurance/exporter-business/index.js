@@ -18,3 +18,8 @@ export const TURNOVER = {
   ...SHARED,
   PAGE_TITLE: 'Turnover',
 };
+
+export const BROKER = {
+  ...SHARED,
+  PAGE_TITLE: 'Are you using a broker to get this insurance?',
+};

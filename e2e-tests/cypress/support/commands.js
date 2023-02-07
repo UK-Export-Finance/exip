@@ -52,7 +52,8 @@ Cypress.Commands.add('completeAndSubmitTurnoverForm', require('./insurance/compl
 
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));
-Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-errors'));
+Cypress.Commands.add('submitAndAssertRadioErrors', require('./submit-and-assert-radio-errors'));
+Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-field-errors'));
 
 Cypress.Commands.add('checkText', require('./check-text'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
