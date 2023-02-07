@@ -19,6 +19,10 @@ const { MIN_LENGTH, MIN_LOWERCASE, MIN_UPPERCASE, MIN_NUMERIC, MIN_SPECIAL_CHARA
  */
 const passwordValidation = (fieldId: string, password: string, errorMessage: string, errors: object) => {
   try {
+    if (!password) {
+      return generateValidationErrors(fieldId, errorMessage, errors);
+    }
+
     if (password.length < MIN_LENGTH) {
       return generateValidationErrors(fieldId, errorMessage, errors);
     }
