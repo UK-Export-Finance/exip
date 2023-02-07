@@ -15,9 +15,6 @@ export const ACCOUNT_FIELDS = {
       [LAST_NAME]: {
         LABEL: 'Last name',
       },
-      // [EMAIL]: {
-      //   LABEL: 'Email address',
-      // },
       [PASSWORD]: {
         LABEL: 'Create a password',
         HINT: {

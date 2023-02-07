@@ -121,7 +121,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     const field = yourDetailsPage[fieldId];
 
     field.label().should('exist');
-    cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
+    cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
 
     field.input().should('exist');
   });

@@ -48,7 +48,7 @@ describe('controllers/insurance/account/create/your-details', () => {
           },
           EMAIL: {
             ID: EMAIL,
-            ...FIELDS.CREATE.YOUR_DETAILS[EMAIL],
+            ...FIELDS[EMAIL],
           },
           PASSWORD: {
             ID: PASSWORD,
