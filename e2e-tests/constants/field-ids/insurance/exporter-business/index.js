@@ -28,6 +28,6 @@ export const EXPORTER_BUSINESS = {
     PERCENTAGE_TURNOVER: 'exportsTurnoverPercentage',
   },
   BROKER: {
-    USING_BROKER: 'usingBroker',
+    USING_BROKER: 'isUsingBroker',
   },
 };
