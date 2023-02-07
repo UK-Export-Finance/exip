@@ -3,7 +3,6 @@ import { aboutGoodsOrServicesPage, checkYourAnswersPage } from '../../../../page
 import partials from '../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
 import countries from '../../../../../fixtures/countries';
 
@@ -42,7 +41,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
     cy.completeAndSubmitSingleContractPolicyForm();
     cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

@@ -4,7 +4,6 @@ import { submitButton } from '../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
-import getReferenceNumber from '../../../../../helpers/get-reference-number';
 
 const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -33,7 +32,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
     cy.completeAndSubmitCompanyDetails();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;

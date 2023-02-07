@@ -4,7 +4,6 @@ import partials from '../../../../partials';
 import {
   ROUTES, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANIES_HOUSE_NUMBER, FIELD_IDS,
 } from '../../../../../../constants';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
 
 const {
@@ -27,7 +26,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;

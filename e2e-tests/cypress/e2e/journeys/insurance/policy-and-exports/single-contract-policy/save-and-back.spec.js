@@ -10,7 +10,6 @@ import { singleContractPolicyPage } from '../../../../pages/insurance/policy-and
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
 
@@ -51,7 +50,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
 
     cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
