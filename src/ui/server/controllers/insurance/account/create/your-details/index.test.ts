@@ -6,7 +6,7 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import generateValidationErrors from './validation';
 import saveData from './save-data';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
 
 const {
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD },
@@ -90,10 +90,10 @@ describe('controllers/insurance/account/create/your-details', () => {
 
   describe('post', () => {
     const validBody = {
-      [FIRST_NAME]: 'First',
-      [LAST_NAME]: 'Last',
-      [EMAIL]: 'mock@email.com',
-      [PASSWORD]: 'Mockpassword1!',
+      [FIRST_NAME]: mockAccount.firstName,
+      [LAST_NAME]: mockAccount.lastName,
+      [EMAIL]: mockAccount.email,
+      [PASSWORD]: mockAccount.password,
     };
 
     describe('when there are validation errors', () => {

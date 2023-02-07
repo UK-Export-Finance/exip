@@ -31,6 +31,22 @@ const ACCOUNT = {
       },
     },
   },
+  SIGN_IN: {
+    ROOT: {
+      PAGE_TITLE: 'Sign in',
+      RESET_PASSWORD: {
+        TEXT: 'Reset password',
+        HREF: INSURANCE_ROUTES.ACCOUNT.RESET_PASSWORD.ROOT,
+      },
+      NEED_TO_CREATE_ACCOUNT: {
+        HEADING: 'If you need to create an account',
+        LINK: {
+          TEXT: 'Create your account',
+          HREF: INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS,
+        },
+      },
+    },
+  },
 };
 
 export default ACCOUNT;

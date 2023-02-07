@@ -4,6 +4,9 @@ const { ACCOUNT } = FIELD_IDS.INSURANCE;
 const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD } = ACCOUNT;
 
 export const ACCOUNT_FIELDS = {
+  [EMAIL]: {
+    LABEL: 'Email address',
+  },
   CREATE: {
     YOUR_DETAILS: {
       [FIRST_NAME]: {
@@ -12,9 +15,9 @@ export const ACCOUNT_FIELDS = {
       [LAST_NAME]: {
         LABEL: 'Last name',
       },
-      [EMAIL]: {
-        LABEL: 'Email address',
-      },
+      // [EMAIL]: {
+      //   LABEL: 'Email address',
+      // },
       [PASSWORD]: {
         LABEL: 'Create a password',
         HINT: {
@@ -26,6 +29,11 @@ export const ACCOUNT_FIELDS = {
           HIDE: 'Hide',
         },
       },
+    },
+  },
+  SIGN_IN: {
+    [PASSWORD]: {
+      LABEL: 'Password',
     },
   },
 };

@@ -1,5 +1,4 @@
 import Joi from 'joi';
-import { objectHasProperty } from '../../helpers/object';
 import generateValidationErrors from '../../helpers/validation';
 
 /**
