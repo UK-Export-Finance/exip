@@ -3,7 +3,6 @@ import partials from '../../../../partials';
 import { submitButton, saveAndBackButton } from '../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
 
 const {
@@ -40,7 +39,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     cy.completeAndSubmitCompanyDetails();
     cy.completeAndSubmitNatureOfYourBusiness();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
