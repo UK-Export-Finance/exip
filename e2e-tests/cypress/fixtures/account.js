@@ -12,7 +12,7 @@ const account = {
   [FIRST_NAME]: 'Joe',
   [LAST_NAME]: 'Bloggs',
   [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT'),
-  [PASSWORD]: 'Mockpassword1!',
+  [PASSWORD]: Cypress.env('MOCK_ACCOUNT_PASSWORD'),
 };
 
 export default account;
