@@ -11,6 +11,7 @@ const accountFormFields = {
   [PASSWORD]: {
     label: () => cy.get(`[data-cy="${PASSWORD}-label"]`),
     input: () => cy.get(`[data-cy="${PASSWORD}-input"]`),
+    revealButton: () => cy.get('.moj-password-reveal__button'),
     errorMessage: () => cy.get(`[data-cy="${PASSWORD}-error-message"]`),
   },
 };

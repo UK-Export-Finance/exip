@@ -135,7 +135,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
 
   describe('when clicking `need to create an account`', () => {
     it(`should go to ${YOUR_DETAILS}`, () => {
-      signInPage.signInButtonLink().click();
+      signInPage.createAccountLink().click();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
 
@@ -150,7 +150,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
     });
 
     it(`should redirect to ${ENTER_CODE}`, () => {
-      cy.completeAndSubmitCreateAccountForm();
+      cy.completeAndSubmitSignInAccountForm();
 
       const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
       cy.url().should('eq', expected);
