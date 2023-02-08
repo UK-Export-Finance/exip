@@ -48,7 +48,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
   it('passes the audits', () => {
     cy.lighthouse({
       accessibility: 100,
-      performance: 70,
+      performance: 75,
       'best-practices': 100,
       seo: 70,
     });
