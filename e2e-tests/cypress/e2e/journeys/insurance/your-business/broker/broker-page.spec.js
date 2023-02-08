@@ -1,7 +1,9 @@
 import { broker } from '../../../../pages/your-business';
 import partials from '../../../../partials';
 import { submitButton, saveAndBackButton } from '../../../../pages/shared';
-import { PAGES, BUTTONS, LINKS } from '../../../../../../content-strings';
+import {
+  PAGES, BUTTONS, LINKS, ERROR_MESSAGES,
+} from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/exporter-business';
 
@@ -26,6 +28,15 @@ const insuranceStart = ROUTES.INSURANCE.START;
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.exporterBusiness;
+
+const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
+const ERROR_MESSAGE_BROKER = BROKER_ERRORS[USING_BROKER];
+
+const ERROR_ASSERTIONS = {
+  field: broker[USING_BROKER],
+  numberOfExpectedErrors: 1,
+  errorIndex: 0,
+};
 
 context('Insurance - Your business - Broker Page - As an Exporter I want to confirm if I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my export insurance', () => {
   let referenceNumber;
@@ -106,5 +117,15 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.checkText(submitButton(), BUTTONS.CONTINUE);
 
     cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+  });
+
+  describe('when submitting an empty form', () => {
+    const errorMessage = ERROR_MESSAGE_BROKER.IS_EMPTY;
+
+    it(`should display validation errors if ${USING_BROKER} radio not selected`, () => {
+      const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+
+      cy.submitAndAssertRadioErrors(field, errorIndex, numberOfExpectedErrors, errorMessage);
+    });
   });
 });

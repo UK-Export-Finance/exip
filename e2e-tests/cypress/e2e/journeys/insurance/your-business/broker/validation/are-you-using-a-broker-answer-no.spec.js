@@ -1,7 +1,6 @@
 import { broker } from '../../../../../pages/your-business';
 import partials from '../../../../../partials';
 import { submitButton } from '../../../../../pages/shared';
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/exporter-business';
 
@@ -23,15 +22,6 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.exporterBusiness;
-
-const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
-const ERROR_MESSAGE = BROKER_ERRORS[FIELD_ID];
-
-const ERROR_ASSERTIONS = {
-  field: broker[FIELD_ID],
-  numberOfExpectedErrors: 1,
-  errorIndex: 0,
-};
 
 context('Insurance - Your business - Broker Page - As an Exporter I want to confirm that I am not using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my export insurance', () => {
   let referenceNumber;
@@ -61,16 +51,6 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');
-  });
-
-  describe('when radio is not clicked', () => {
-    const errorMessage = ERROR_MESSAGE.IS_EMPTY;
-
-    it(`should display validation errors if ${FIELD_ID} radio not selected`, () => {
-      const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-
-      cy.submitAndAssertRadioErrors(field, errorIndex, numberOfExpectedErrors, errorMessage);
-    });
   });
 
   describe('when the no radio is selected', () => {
