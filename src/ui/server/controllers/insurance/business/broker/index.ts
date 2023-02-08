@@ -76,11 +76,6 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    // populate submittedValues
-    const submittedValues = {
-      [USING_BROKER]: body[USING_BROKER],
-    };
-
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);
 
@@ -94,7 +89,7 @@ const post = async (req: Request, res: Response) => {
         ...pageVariables(application.referenceNumber),
         validationErrors,
         application: mapApplicationToFormFields(application),
-        submittedValues,
+        submittedValues: body,
       });
     }
 
