@@ -33,7 +33,7 @@ describe('controllers/insurance/business/broker/validation/rules/using-broker', 
   });
 
   describe(`when the ${USING_BROKER} input is valid`, () => {
-    it('should return a validation error', () => {
+    it('should not return a validation error', () => {
       mockBody[USING_BROKER] = 'true';
       const response = usingBroker(mockBody, mockErrors);
 

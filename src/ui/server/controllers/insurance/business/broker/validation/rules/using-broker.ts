@@ -1,8 +1,7 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
 import { RequestBody } from '../../../../../../../types';
-import { objectHasProperty } from '../../../../../../helpers/object';
-import generateValidationErrors from '../../../../../../helpers/validation';
+import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
 const {
   BROKER: { USING_BROKER: FIELD_ID },
@@ -19,14 +18,6 @@ const {
  * @param {object} errors
  * @returns {object} errors
  */
-const usingExporter = (responseBody: RequestBody, errors: object) => {
-  if (!objectHasProperty(responseBody, FIELD_ID)) {
-    const errorMessage = ERROR_MESSAGE.IS_EMPTY;
+const isUsingBrokerRules = (responseBody: RequestBody, errors: object) => emptyFieldValidation(responseBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
 
-    return generateValidationErrors(FIELD_ID, errorMessage, errors);
-  }
-
-  return errors;
-};
-
-export default usingExporter;
+export default isUsingBrokerRules;

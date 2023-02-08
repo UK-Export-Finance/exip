@@ -3,7 +3,6 @@ import partials from '../e2e/partials';
 
 /**
  * @param {String} field
- * @param {String} fieldValue - the value to input - can be null
  * @param {Number} errorIndex - index of error in errorSummary
  * @param {Number} errorSummaryLength - the number of expected errors in errorSummary
  * @param {String} errorMessage

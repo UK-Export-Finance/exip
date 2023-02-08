@@ -4,7 +4,6 @@ import { submitButton } from '../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/exporter-business';
-import getReferenceNumber from '../../../../../helpers/get-reference-number';
 
 const {
   BROKER: {
@@ -49,7 +48,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.completeAndSubmitNatureOfYourBusiness();
     cy.completeAndSubmitTurnoverForm();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
