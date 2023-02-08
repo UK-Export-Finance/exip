@@ -1,5 +1,6 @@
 import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
+import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -78,7 +79,7 @@ context('Insurance - Account - Create - Your details page - form validation', ()
 
       describe('email', () => {
         const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT;
-        const inlineError = yourDetailsPage[EMAIL].errorMessage();
+        const inlineError = accountFormFields[EMAIL].errorMessage();
 
         cy.checkText(
           partials.errorSummaryListItems().eq(2),
@@ -97,7 +98,7 @@ context('Insurance - Account - Create - Your details page - form validation', ()
       yourDetailsPage[LAST_NAME].input().should('have.focus');
 
       partials.errorSummaryListItemLinks().eq(2).click();
-      yourDetailsPage[EMAIL].input().should('have.focus');
+      accountFormFields[EMAIL].input().should('have.focus');
     });
   });
 });

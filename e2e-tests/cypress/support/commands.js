@@ -36,6 +36,7 @@ Cypress.Commands.add('submitInsuranceEligibilityAnswersHappyPath', require('./in
 Cypress.Commands.add('submitInsuranceEligibilityAndStartApplication', require('./insurance/submit-eligibility-and-start-an-application'));
 
 Cypress.Commands.add('submitEligibilityAndStartAccountCreation', require('./insurance/submit-eligibility-and-start-account-creation'));
+Cypress.Commands.add('submitEligibilityAndStartAccountSignIn', require('./insurance/submit-eligibility-and-start-account-sign-in'));
 
 Cypress.Commands.add('completeAndSubmitCreateAccountForm', require('./insurance/account/complete-and-submit-create-account-form'));
 

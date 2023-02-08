@@ -1,5 +1,7 @@
 const INSURANCE_ROOT = '/insurance';
 const CREATE_ROOT = '/create-account';
+const SIGN_IN_ROOT = '/sign-in';
+const RESET_PASSWORD_ROOT = '/password-reset';
 
 const CREATE = {
   ROOT: CREATE_ROOT,

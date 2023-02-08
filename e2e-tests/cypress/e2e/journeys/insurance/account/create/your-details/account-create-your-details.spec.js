@@ -1,5 +1,6 @@
 import { heading, submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
+import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
 import {
   BUTTONS,
@@ -118,7 +119,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
   it('renders `email` label and input', () => {
     const fieldId = EMAIL;
-    const field = yourDetailsPage[fieldId];
+    const field = accountFormFields[fieldId];
 
     field.label().should('exist');
     cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
@@ -128,7 +129,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
   describe('password', () => {
     const fieldId = PASSWORD;
-    const field = yourDetailsPage[fieldId];
+    const field = accountFormFields[fieldId];
 
     it('renders a label, hint, and input', () => {
       field.label().should('exist');
@@ -208,7 +209,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
   describe('form submission with all valid required fields', () => {
     before(() => {
-      // go back page
+      // go back to the page
       cy.go('back');
     });
 

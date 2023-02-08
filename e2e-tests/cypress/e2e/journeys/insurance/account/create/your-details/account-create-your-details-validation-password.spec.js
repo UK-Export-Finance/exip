@@ -1,6 +1,6 @@
 import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
-import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
+import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -25,7 +25,7 @@ const {
 const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT;
 
 const submitAndAssertFieldErrors = (fieldValue) => {
-  const field = yourDetailsPage[PASSWORD];
+  const field = accountFormFields[PASSWORD];
 
   field.input().clear().type(fieldValue, { delay: 0 });
   submitButton().click();
