@@ -27,12 +27,12 @@ const natureOfBusiness = {
     input: () => cy.get(`[data-cy="${EMPLOYEES_UK}`),
     heading: () => cy.get(`[data-cy="${EMPLOYEES_UK}-heading`),
     label: () => cy.get(`[data-cy="${EMPLOYEES_UK}-label`),
-    error: () => cy.get(`[data-cy="${EMPLOYEES_UK}-error`),
+    errorMessage: () => cy.get(`[data-cy="${EMPLOYEES_UK}-error`),
   },
   [EMPLOYEES_INTERNATIONAL]: {
     input: () => cy.get(`[data-cy="${EMPLOYEES_INTERNATIONAL}`),
     label: () => cy.get(`[data-cy="${EMPLOYEES_INTERNATIONAL}-label`),
-    error: () => cy.get(`[data-cy="${EMPLOYEES_INTERNATIONAL}-error`),
+    errorMessage: () => cy.get(`[data-cy="${EMPLOYEES_INTERNATIONAL}-error`),
   },
 };
 
