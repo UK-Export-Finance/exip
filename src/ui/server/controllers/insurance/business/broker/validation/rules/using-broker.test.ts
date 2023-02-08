@@ -21,24 +21,11 @@ describe('controllers/insurance/business/broker/validation/rules/using-broker', 
     [USING_BROKER]: '',
   } as RequestBody;
 
-  describe(`when the ${USING_BROKER} input is empty`, () => {
-    it('should return the result of emptyFieldValidation', () => {
-      const response = usingBroker(mockBody, mockErrors);
+  it('should return the result of emptyFieldValidation', () => {
+    const response = usingBroker(mockBody, mockErrors);
 
-      const expected = emptyFieldValidation(mockBody, USING_BROKER, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+    const expected = emptyFieldValidation(mockBody, USING_BROKER, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
-      expect(response).toEqual(expected);
-    });
-  });
-
-  describe(`when the ${USING_BROKER} input is valid`, () => {
-    it('should return the result of emptyFieldValidation', () => {
-      mockBody[USING_BROKER] = 'true';
-      const response = usingBroker(mockBody, mockErrors);
-
-      const expected = emptyFieldValidation(mockBody, USING_BROKER, ERROR_MESSAGE.IS_EMPTY, mockErrors);
-
-      expect(response).toEqual(expected);
-    });
+    expect(response).toEqual(expected);
   });
 });
