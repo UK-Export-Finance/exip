@@ -3,6 +3,7 @@ const COMPANY_DETAILS_ROOT = `${ROOT}/company-details`;
 const NATURE_OF_BUSINESS_ROOT = `${ROOT}/nature-of-business`;
 const TURNOVER_ROOT = `${ROOT}/turnover`;
 const BROKER_ROOT = `${ROOT}/broker`;
+const CHECK_YOUR_ANSWERS = `${ROOT}/check-your-answers`;
 
 export const EXPORTER_BUSINESS = {
   ROOT,
@@ -16,4 +17,5 @@ export const EXPORTER_BUSINESS = {
   TURNOVER_ROOT,
   TURNOVER_SAVE_AND_BACK: `${TURNOVER_ROOT}/save-and-back`,
   BROKER_ROOT,
+  CHECK_YOUR_ANSWERS,
 };

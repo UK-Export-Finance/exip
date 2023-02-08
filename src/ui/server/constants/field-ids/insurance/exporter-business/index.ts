@@ -36,6 +36,9 @@ const EXPORTER_BUSINESS = {
     ESTIMATED_ANNUAL_TURNOVER: 'estimatedAnnualTurnover',
     PERCENTAGE_TURNOVER: 'exportsTurnoverPercentage',
   },
+  BROKER: {
+    USING_BROKER: 'isUsingBroker',
+  },
 };
 
 export default EXPORTER_BUSINESS;
