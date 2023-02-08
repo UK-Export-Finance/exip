@@ -2,7 +2,6 @@ import usingBroker from './using-broker';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
 import { RequestBody } from '../../../../../../../types';
-import generateValidationErrors from '../../../../../../helpers/validation';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
 const {
