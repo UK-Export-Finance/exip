@@ -1,5 +1,5 @@
 import accountFormFields from './accountFormFields';
-import taskList from './task-list';
+import taskList from './taskList';
 import policyCurrencyCodeFormField from './policyCurrencyCodeFormField';
 
 const partials = {
