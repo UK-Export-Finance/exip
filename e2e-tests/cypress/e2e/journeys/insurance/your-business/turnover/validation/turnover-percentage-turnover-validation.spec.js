@@ -4,7 +4,6 @@ import { submitButton } from '../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/exporter-business';
-import getReferenceNumber from '../../../../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
 
@@ -40,7 +39,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     cy.completeAndSubmitCompanyDetails();
     cy.completeAndSubmitNatureOfYourBusiness();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER}`;

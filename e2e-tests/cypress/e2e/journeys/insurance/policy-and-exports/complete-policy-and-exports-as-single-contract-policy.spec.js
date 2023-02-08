@@ -2,7 +2,6 @@ import partials from '../../../partials';
 import { saveAndBackButton } from '../../../pages/shared';
 import { TASKS } from '../../../../../content-strings';
 import { FIELD_VALUES, ROUTES } from '../../../../../constants';
-import getReferenceNumber from '../../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
 
@@ -38,7 +37,7 @@ context('Insurance - Policy and exports - Complete the entire section as a singl
   });
 
   it(`should change the 'type of policy and exports' task status to 'completed' in the ${ALL_SECTIONS} page`, () => {
-    getReferenceNumber().then((referenceNumber) => {
+    cy.getReferenceNumber().then((referenceNumber) => {
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', expectedUrl);

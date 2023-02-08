@@ -3,7 +3,6 @@ import { multipleContractPolicyPage } from '../../../../pages/insurance/policy-a
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
 
 const { taskList } = partials.insurancePartials;
@@ -43,7 +42,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
 
     cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;

@@ -25,8 +25,10 @@ const page = {
         return response.data.page;
       }
 
+      console.error(response);
       throw new Error('Getting page data');
-    } catch {
+    } catch (err) {
+      console.error(err);
       throw new Error('Getting page data');
     }
   },

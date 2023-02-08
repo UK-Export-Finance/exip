@@ -1,4 +1,3 @@
-import { ApolloError } from 'apollo-client';
 import { ApolloResponse } from '../../../../types';
 import apollo from '../../../graphql/apollo';
 import updateEligibilityMutation from '../../../graphql/mutations/update-eligibility';
@@ -29,11 +28,11 @@ const eligibility = {
         return response.data.updateEligibility;
       }
 
-      if (response instanceof ApolloError) {
-        throw new Error('Updating eligibility');
-      }
+      console.error(response);
+      throw new Error('Updating eligibility');
     } catch (err) {
-      throw new Error(`Updating eligibility ${err}`);
+      console.error(err);
+      throw new Error('Updating eligibility');
     }
   },
 };

@@ -8,7 +8,6 @@ import {
   FIELD_VALUES,
   ROUTES,
 } from '../../../../../../../constants';
-import getReferenceNumber from '../../../../../helpers/get-reference-number';
 
 const { taskList } = partials.insurancePartials;
 
@@ -55,7 +54,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
     cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 

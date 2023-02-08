@@ -2,7 +2,6 @@ import { turnover } from '../../../../pages/your-business';
 import partials from '../../../../partials';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
-import getReferenceNumber from '../../../../helpers/get-reference-number';
 import application from '../../../../../fixtures/application';
 
 const {
@@ -39,7 +38,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
     cy.completeAndSubmitCompanyDetails();
     cy.completeAndSubmitNatureOfYourBusiness();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
@@ -71,7 +70,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
-    getReferenceNumber().then((id) => {
+    cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;

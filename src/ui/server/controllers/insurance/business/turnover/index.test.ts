@@ -72,7 +72,7 @@ describe('controllers/insurance/business/turnover', () => {
 
   describe('get', () => {
     describe('when the application exists', () => {
-      it('should render the nature-of-business template with correct variables', () => {
+      it('should render the turnover template with correct variables', () => {
         res.locals.application = mockApplication;
 
         get(req, res);
