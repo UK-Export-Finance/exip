@@ -1,5 +1,6 @@
 import { heading, submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
+import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
 import {
   BUTTONS,
@@ -118,27 +119,27 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
   it('renders `email` label and input', () => {
     const fieldId = EMAIL;
-    const field = yourDetailsPage[fieldId];
+    const field = accountFormFields[fieldId];
 
     field.label().should('exist');
-    cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
+    cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
 
     field.input().should('exist');
   });
 
   describe('password', () => {
     const fieldId = PASSWORD;
-    const field = yourDetailsPage[fieldId];
+    const field = accountFormFields[fieldId];
 
     it('renders a label, hint, and input', () => {
       field.label().should('exist');
       cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
 
-      cy.checkText(field.hint.intro(), FIELD_STRINGS[fieldId].HINT.INTRO);
-      cy.checkText(field.hint.listItem1(), FIELD_STRINGS[fieldId].HINT.RULES[0]);
-      cy.checkText(field.hint.listItem2(), FIELD_STRINGS[fieldId].HINT.RULES[1]);
-      cy.checkText(field.hint.listItem3(), FIELD_STRINGS[fieldId].HINT.RULES[2]);
-      cy.checkText(field.hint.listItem4(), FIELD_STRINGS[fieldId].HINT.RULES[3]);
+      cy.checkText(yourDetailsPage[fieldId].hint.intro(), FIELD_STRINGS[fieldId].HINT.INTRO);
+      cy.checkText(yourDetailsPage[fieldId].hint.listItem1(), FIELD_STRINGS[fieldId].HINT.RULES[0]);
+      cy.checkText(yourDetailsPage[fieldId].hint.listItem2(), FIELD_STRINGS[fieldId].HINT.RULES[1]);
+      cy.checkText(yourDetailsPage[fieldId].hint.listItem3(), FIELD_STRINGS[fieldId].HINT.RULES[2]);
+      cy.checkText(yourDetailsPage[fieldId].hint.listItem4(), FIELD_STRINGS[fieldId].HINT.RULES[3]);
 
       field.input().should('exist');
     });
@@ -208,7 +209,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
   describe('form submission with all valid required fields', () => {
     before(() => {
-      // go back page
+      // go back to the page
       cy.go('back');
     });
 

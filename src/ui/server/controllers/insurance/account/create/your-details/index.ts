@@ -36,7 +36,7 @@ export const PAGE_VARIABLES = {
     },
     EMAIL: {
       ID: EMAIL,
-      ...FIELDS.CREATE.YOUR_DETAILS[EMAIL],
+      ...FIELDS[EMAIL],
     },
     PASSWORD: {
       ID: PASSWORD,
