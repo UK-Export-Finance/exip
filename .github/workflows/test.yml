@@ -86,7 +86,7 @@ jobs:
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
         run: |
           docker-compose up --build -d
-          npm i --prefix ./src/api
+          npm i --legacy-peer-deps --prefix ./src/api
           npm run test --prefix ./src/api
 
       - name: Notification
