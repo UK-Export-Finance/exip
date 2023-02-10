@@ -7,6 +7,12 @@ export const ACCOUNT_FIELDS = {
   [EMAIL]: {
     LABEL: 'Email address',
   },
+  [PASSWORD]: {
+    REVEAL: {
+      SHOW: 'Show',
+      HIDE: 'Hide',
+    },
+  },
   CREATE: {
     YOUR_DETAILS: {
       [FIRST_NAME]: {
@@ -20,11 +26,7 @@ export const ACCOUNT_FIELDS = {
         HINT: {
           INTRO: 'Your password must contain at least 14 characters and have:',
           RULES: ['an uppercase letter', 'a lowercase letter', 'a number', 'a special character'],
-        },
-        REVEAL: {
-          SHOW: 'Show',
-          HIDE: 'Hide',
-        },
+        },,
       },
     },
   },
