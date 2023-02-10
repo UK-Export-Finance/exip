@@ -9,7 +9,7 @@ import csrf from 'csurf';
 import path from 'path';
 import flash from 'connect-flash';
 import basicAuth from 'express-basic-auth';
-
+// TODO: Replace `csurf` package https://ukef-dtfs.atlassian.net/browse/EMS-1011
 import { csrf as csrfToken, cookiesConsent, security, seo } from './middleware';
 import { Request, Response } from '../types';
 
@@ -19,12 +19,9 @@ dotenv.config();
 
 import configureNunjucks from './nunjucks-configuration';
 
-import { rootRoute, quoteRoutes, insuranceRoutes } from './routes';
-import { ROUTES } from './constants';
+import { rootRoute, quoteRoutes, applicationRoutes } from './routes';
 import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from './content-strings';
-import { requiredQuoteEligibilityDataProvided } from './middleware/required-data-provided/quote';
-import { requiredInsuranceEligibilityDataProvided } from './middleware/required-data-provided/insurance/eligibility';
-import getApplication from './middleware/insurance/get-application';
+import { requiredDataProvided } from './middleware/required-data-provided';
 
 // @ts-ignore
 const app = express();
@@ -44,6 +41,7 @@ const cookie = {
 } as csrf.CookieOptions;
 
 const sessionOptions = {
+  name: '__Secure-exip-session',
   secret: process.env.SESSION_SECRET || crypto.randomBytes(256 / 8).toString('hex'),
   resave: false,
   saveUninitialized: true,
@@ -98,13 +96,11 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-app.use('/quote', requiredQuoteEligibilityDataProvided);
-app.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
-app.use('/insurance/:referenceNumber/*', getApplication);
+app.use(requiredDataProvided);
 
 app.use('/', rootRoute);
 app.use('/', quoteRoutes);
-app.use('/', insuranceRoutes);
+app.use('/', applicationRoutes);
 
 app.use(
   '/assets',
@@ -117,8 +113,7 @@ app.use(
 /* eslint-disable no-unused-vars, prettier/prettier */
 // @ts-ignore
 const errorHandler: express.ErrorRequestHandler = (err, req, res, next) => {
-  console.error('Error with EXIP UI app', err);
-  res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  res.redirect('/problem-with-service');
 };
 /* eslint-enable no-unused-vars, prettier/prettier */
 
@@ -130,13 +125,9 @@ app.get('*', (req: Request, res: Response) =>
       COOKIES_CONSENT,
       FOOTER,
       LINKS,
-      PRODUCT: {
-        ...PRODUCT,
-        DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC,
-      },
+      PRODUCT,
       ...PAGES.PAGE_NOT_FOUND_PAGE,
     },
-    START_ROUTE: ROUTES.QUOTE.START,
   }),
 );
 
