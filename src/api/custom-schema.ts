@@ -14,13 +14,6 @@ dotenv.config();
 const username: any = process.env.COMPANIES_HOUSE_API_KEY;
 const companiesHouseURL: any = process.env.COMPANIES_HOUSE_API_URL;
 
-// TODO rename verifyEmail to verifyEmailAddress
-
-// TODO:
-// instead of this:
-// """ verify an email """   verifyEmail
-// should it be "verify account email" / "verify account" ?
-
 const { EMAIL, PASSWORD } = ACCOUNT;
 
 const {
