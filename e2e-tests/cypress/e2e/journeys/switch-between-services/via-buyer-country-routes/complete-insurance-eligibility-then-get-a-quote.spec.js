@@ -31,7 +31,7 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   it('allows an exporter to get a quote when visiting the buyer country page directly', () => {

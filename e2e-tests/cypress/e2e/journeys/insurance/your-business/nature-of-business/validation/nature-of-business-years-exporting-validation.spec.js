@@ -40,7 +40,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   describe(`${YEARS_EXPORTING} error`, () => {

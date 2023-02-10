@@ -37,7 +37,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
 
     beforeEach(() => {
       Cypress.Cookies.preserveOnce('_csrf');
-      Cypress.Cookies.preserveOnce('connect.sid');
+      Cypress.Cookies.preserveOnce('exip-session');
     });
 
     it('passes the audits', () => {

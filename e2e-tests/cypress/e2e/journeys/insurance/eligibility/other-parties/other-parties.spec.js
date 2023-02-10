@@ -44,7 +44,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   it('passes the audits', () => {

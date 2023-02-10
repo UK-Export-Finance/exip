@@ -83,7 +83,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   it('passes the audits', () => {

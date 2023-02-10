@@ -51,7 +51,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   describe('When no fields are provided', () => {
