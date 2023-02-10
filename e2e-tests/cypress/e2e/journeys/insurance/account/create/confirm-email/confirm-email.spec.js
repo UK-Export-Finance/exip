@@ -3,6 +3,7 @@ import partials from '../../../../../partials';
 import { confirmEmailPage } from '../../../../../pages/insurance/account/create';
 import { ORGANISATION, LINKS, PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import api from '../../../../../../support/api';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL;
 

@@ -514,7 +514,10 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       take: 1
     });
     if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
-      throw new Error("Verifying exporter email - no exporter exists with the provided token");
+      console.info("Verifying exporter email - no exporter exists with the provided token");
+      return {
+        expired: true
+      };
     }
     const exporter = exportersArray[0];
     const now = new Date();

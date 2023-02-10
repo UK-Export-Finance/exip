@@ -30,7 +30,11 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
 
     // ensure that we have found an acount with the requsted verification hash.
     if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
-      throw new Error('Verifying exporter email - no exporter exists with the provided token');
+      console.info('Verifying exporter email - no exporter exists with the provided token');
+
+      return {
+        expired: true,
+      };
     }
 
     const exporter = exportersArray[0] as Account;
