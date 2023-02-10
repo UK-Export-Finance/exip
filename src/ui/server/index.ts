@@ -30,7 +30,7 @@ import getApplication from './middleware/insurance/get-application';
 const app = express();
 const PORT = process.env.PORT || 5000;
 const https = Boolean(process.env.HTTPS || 0);
-const secureCookieName = https ? '__Secure-exip-session' : 'exip-session';
+const secureCookieName = https ? '__Host-exip-session' : 'exip-session';
 
 app.use(seo);
 app.use(security);
