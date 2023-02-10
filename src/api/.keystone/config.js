@@ -63,8 +63,9 @@ var APPLICATION = {
 var ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
-      const date = new Date();
-      return new Date(date.setDate(date.getDate() + 1));
+      const now = new Date();
+      const day = now.getDate();
+      return new Date(now.setDate(day + 1));
     }
   },
   PASSWORD: {
