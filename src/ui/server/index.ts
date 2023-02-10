@@ -19,9 +19,12 @@ dotenv.config();
 
 import configureNunjucks from './nunjucks-configuration';
 
-import { rootRoute, quoteRoutes, applicationRoutes } from './routes';
+import { rootRoute, quoteRoutes, insuranceRoutes } from './routes';
+import { ROUTES } from './constants';
 import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from './content-strings';
-import { requiredDataProvided } from './middleware/required-data-provided';
+import { requiredQuoteEligibilityDataProvided } from './middleware/required-data-provided/quote';
+import { requiredInsuranceEligibilityDataProvided } from './middleware/required-data-provided/insurance/eligibility';
+import getApplication from './middleware/insurance/get-application';
 
 // @ts-ignore
 const app = express();
@@ -96,11 +99,13 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-app.use(requiredDataProvided);
+app.use('/quote', requiredQuoteEligibilityDataProvided);
+app.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
+app.use('/insurance/:referenceNumber/*', getApplication);
 
 app.use('/', rootRoute);
 app.use('/', quoteRoutes);
-app.use('/', applicationRoutes);
+app.use('/', insuranceRoutes);
 
 app.use(
   '/assets',
@@ -113,7 +118,8 @@ app.use(
 /* eslint-disable no-unused-vars, prettier/prettier */
 // @ts-ignore
 const errorHandler: express.ErrorRequestHandler = (err, req, res, next) => {
-  res.redirect('/problem-with-service');
+  console.error('Error with EXIP UI app', err);
+  res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
 };
 /* eslint-enable no-unused-vars, prettier/prettier */
 
@@ -125,9 +131,13 @@ app.get('*', (req: Request, res: Response) =>
       COOKIES_CONSENT,
       FOOTER,
       LINKS,
-      PRODUCT,
+      PRODUCT: {
+        ...PRODUCT,
+        DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC,
+      },
       ...PAGES.PAGE_NOT_FOUND_PAGE,
     },
+    START_ROUTE: ROUTES.QUOTE.START,
   }),
 );
 
