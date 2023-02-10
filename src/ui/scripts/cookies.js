@@ -1,12 +1,13 @@
-const hideButton = document.querySelector('.js-hide');
-const cookieBanner = document.querySelector('.govuk-cookie-banner');
-const acceptButton = document.querySelector('.js-cookies-button-accept');
-const rejectButton = document.querySelector('.js-cookies-button-reject');
-const changeCookiesSubmitButton = document.querySelector('.change-cookies-submit-button');
+var hideButton = document.querySelector('.js-hide');
+var cookieBanner = document.querySelector('.govuk-cookie-banner');
+var acceptButton = document.querySelector('.js-cookies-button-accept');
+var rejectButton = document.querySelector('.js-cookies-button-reject');
+var changeCookiesSubmitButton = document.querySelector('.change-cookies-submit-button');
+var https = window.location.protocol == 'https:';
 // `__Secure` prefix will only work with Secure flag i.e. HTTPS
-const cookieName = '__Secure-optionalCookies';
+var cookieName = https ? '__Secure-optionalCookies' : 'optionalCookies';
 
-const expiryDate = function () {
+var expiryDate = function () {
   const date = new Date();
 
   // 1 day.
@@ -21,12 +22,12 @@ const domain = function () {
   return 'domain=' + window.location.hostname;
 };
 
-const createRejectCookie = function () {
-  document.cookie = cookieName + '=false; path=/; SameSite=Strict; secure; HttpOnly;' + expiryDate() + domain();
+var createRejectCookie = function () {
+  document.cookie = cookieName + '=false; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
 };
 
-const createAcceptCookie = function () {
-  document.cookie = cookieName + '=true; path=/; SameSite=Strict; secure; HttpOnly;' + expiryDate() + domain();
+var createAcceptCookie = function () {
+  document.cookie = cookieName + '=true; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
 };
 
 if (rejectButton) {
