@@ -6,12 +6,20 @@ import {
 } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/exporter-business';
+import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.BROKER;
 
 const {
   BROKER: {
     USING_BROKER,
+    BROKER_HEADING,
+    BROKER_NAME,
+    BROKER_ADDRESS_LINE_1,
+    BROKER_ADDRESS_LINE_2,
+    BROKER_TOWN,
+    BROKER_COUNTY,
+    BROKER_POSTCODE,
   },
 } = FIELD_IDS;
 
@@ -40,6 +48,7 @@ const ERROR_ASSERTIONS = {
 
 context('Insurance - Your business - Broker Page - As an Exporter I want to confirm if I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my export insurance', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.navigateToUrl(START);
@@ -55,7 +64,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
-      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
 
       cy.url().should('eq', url);
     });
@@ -113,6 +122,32 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.checkAriaLabel(field.noRadioInput(), `${CONTENT_STRINGS.PAGE_TITLE} no radio`);
   });
 
+  it('should display additional broker section when yes radio is selected', () => {
+    const fieldId = USING_BROKER;
+    const field = broker[fieldId];
+    field.yesRadioInput().click();
+
+    cy.checkText(broker[BROKER_HEADING].heading(), FIELDS.BROKER[BROKER_HEADING].HEADING);
+
+    cy.checkText(broker[BROKER_NAME].label(), FIELDS.BROKER[BROKER_NAME].LABEL);
+    broker[BROKER_NAME].input().should('exist');
+
+    cy.checkText(broker[BROKER_ADDRESS_LINE_1].label(), FIELDS.BROKER[BROKER_ADDRESS_LINE_1].LABEL);
+    broker[BROKER_ADDRESS_LINE_1].input().should('exist');
+
+    cy.checkText(broker[BROKER_ADDRESS_LINE_2].label(), FIELDS.BROKER[BROKER_ADDRESS_LINE_2].LABEL);
+    broker[BROKER_ADDRESS_LINE_2].input().should('exist');
+
+    cy.checkText(broker[BROKER_TOWN].label(), FIELDS.BROKER[BROKER_TOWN].LABEL);
+    broker[BROKER_TOWN].input().should('exist');
+
+    cy.checkText(broker[BROKER_COUNTY].label(), FIELDS.BROKER[BROKER_COUNTY].LABEL);
+    broker[BROKER_COUNTY].input().should('exist');
+
+    cy.checkText(broker[BROKER_POSTCODE].label(), FIELDS.BROKER[BROKER_POSTCODE].LABEL);
+    broker[BROKER_POSTCODE].input().should('exist');
+  });
+
   it('should display the continue and save and go back button', () => {
     cy.checkText(submitButton(), BUTTONS.CONTINUE);
 
@@ -123,6 +158,9 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     const errorMessage = ERROR_MESSAGE_BROKER.IS_EMPTY;
 
     it(`should display validation errors if ${USING_BROKER} radio not selected`, () => {
+      // visit url to refresh form and radios
+      cy.navigateToUrl(url);
+
       const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
       cy.submitAndAssertRadioErrors(field, errorIndex, numberOfExpectedErrors, errorMessage);

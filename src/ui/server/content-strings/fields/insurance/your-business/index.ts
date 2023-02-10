@@ -4,6 +4,7 @@ const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+  BROKER: { BROKER_HEADING, BROKER_NAME, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_COUNTY, BROKER_POSTCODE, BROKER_TOWN, BROKER_EMAIL },
 } = EXPORTER_BUSINESS;
 
 export const FIELDS = {
@@ -39,6 +40,32 @@ export const FIELDS = {
     [PERCENTAGE_TURNOVER]: {
       LABEL: 'Percentage of turnover from exports',
       SUFFIX: '%',
+    },
+  },
+  BROKER: {
+    [BROKER_HEADING]: {
+      HEADING: 'Enter contact details for your broker',
+    },
+    [BROKER_NAME]: {
+      LABEL: 'Name of broker or company',
+    },
+    [BROKER_ADDRESS_LINE_1]: {
+      LABEL: 'Address line 1',
+    },
+    [BROKER_ADDRESS_LINE_2]: {
+      LABEL: 'Address line 2 (optional)',
+    },
+    [BROKER_TOWN]: {
+      LABEL: 'Town or city',
+    },
+    [BROKER_COUNTY]: {
+      LABEL: 'County (optional)',
+    },
+    [BROKER_POSTCODE]: {
+      LABEL: 'Postcode',
+    },
+    [BROKER_EMAIL]: {
+      LABEL: 'Email address',
     },
   },
 };

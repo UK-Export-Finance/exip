@@ -71,4 +71,30 @@ export const EXPORTER_BUSINESS_FIELDS = {
       SUFFIX: '%',
     },
   },
+  BROKER: {
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.BROKER_HEADING]: {
+      HEADING: 'Enter contact details for your broker',
+    },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.BROKER_NAME]: {
+      LABEL: 'Name of broker or company',
+    },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.BROKER_ADDRESS_LINE_1]: {
+      LABEL: 'Address line 1',
+    },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.BROKER_ADDRESS_LINE_2]: {
+      LABEL: 'Address line 2 (optional)',
+    },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.BROKER_TOWN]: {
+      LABEL: 'Town or city',
+    },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.BROKER_COUNTY]: {
+      LABEL: 'County (optional)',
+    },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.BROKER_POSTCODE]: {
+      LABEL: 'Postcode',
+    },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.BROKER_EMAIL]: {
+      LABEL: 'Email address',
+    },
+  },
 };

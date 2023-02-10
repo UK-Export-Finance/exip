@@ -7,8 +7,14 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import generateValidationErrors from './validation';
+import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 
-const { USING_BROKER } = FIELD_IDS.BROKER;
+const { BROKER: BROKER_FIELDS } = FIELDS;
+
+// below will be removed on next PR, linting not working for this line
+// eslint-disable-next-line operator-linebreak
+const { USING_BROKER, BROKER_HEADING, BROKER_NAME, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_COUNTY, BROKER_TOWN, BROKER_POSTCODE } =
+  FIELD_IDS.BROKER;
 
 const { BROKER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -46,6 +52,34 @@ describe('controllers/insurance/business/broker', () => {
         FIELDS: {
           USING_BROKER: {
             ID: USING_BROKER,
+          },
+          BROKER_HEADING: {
+            ID: BROKER_HEADING,
+            ...BROKER_FIELDS[BROKER_HEADING],
+          },
+          BROKER_NAME: {
+            ID: BROKER_NAME,
+            ...BROKER_FIELDS[BROKER_NAME],
+          },
+          BROKER_ADDRESS_LINE_1: {
+            ID: BROKER_ADDRESS_LINE_1,
+            ...BROKER_FIELDS[BROKER_ADDRESS_LINE_1],
+          },
+          BROKER_ADDRESS_LINE_2: {
+            ID: BROKER_ADDRESS_LINE_2,
+            ...BROKER_FIELDS[BROKER_ADDRESS_LINE_2],
+          },
+          BROKER_TOWN: {
+            ID: BROKER_TOWN,
+            ...BROKER_FIELDS[BROKER_TOWN],
+          },
+          BROKER_COUNTY: {
+            ID: BROKER_COUNTY,
+            ...BROKER_FIELDS[BROKER_COUNTY],
+          },
+          BROKER_POSTCODE: {
+            ID: BROKER_POSTCODE,
+            ...BROKER_FIELDS[BROKER_POSTCODE],
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_ROOT}`,
@@ -116,6 +150,9 @@ describe('controllers/insurance/business/broker', () => {
       it('should redirect to next page', async () => {
         req.body = {
           [USING_BROKER]: 'true',
+          [BROKER_NAME]: 'test',
+          [BROKER_ADDRESS_LINE_1]: '1',
+          [BROKER_TOWN]: 'test',
         };
 
         await post(req, res);

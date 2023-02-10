@@ -2,12 +2,15 @@ import { PAGES } from '../../../../content-strings';
 import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/exporter-business';
-// import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
+import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 
-const { USING_BROKER } = FIELD_IDS.BROKER;
+// below will be removed on next PR, linting not working for this line
+// eslint-disable-next-line operator-linebreak
+const { USING_BROKER, BROKER_HEADING, BROKER_NAME, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_TOWN, BROKER_COUNTY, BROKER_POSTCODE } =
+  FIELD_IDS.BROKER;
 
 const { BROKER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -18,12 +21,40 @@ const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.I
 
 const { BROKER_ROOT, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
 
-// const { BROKER: BROKER_FIELDS } = FIELDS;
+const { BROKER: BROKER_FIELDS } = FIELDS;
 
 const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     USING_BROKER: {
       ID: USING_BROKER,
+    },
+    BROKER_HEADING: {
+      ID: BROKER_HEADING,
+      ...BROKER_FIELDS[BROKER_HEADING],
+    },
+    BROKER_NAME: {
+      ID: BROKER_NAME,
+      ...BROKER_FIELDS[BROKER_NAME],
+    },
+    BROKER_ADDRESS_LINE_1: {
+      ID: BROKER_ADDRESS_LINE_1,
+      ...BROKER_FIELDS[BROKER_ADDRESS_LINE_1],
+    },
+    BROKER_ADDRESS_LINE_2: {
+      ID: BROKER_ADDRESS_LINE_2,
+      ...BROKER_FIELDS[BROKER_ADDRESS_LINE_2],
+    },
+    BROKER_TOWN: {
+      ID: BROKER_TOWN,
+      ...BROKER_FIELDS[BROKER_TOWN],
+    },
+    BROKER_COUNTY: {
+      ID: BROKER_COUNTY,
+      ...BROKER_FIELDS[BROKER_COUNTY],
+    },
+    BROKER_POSTCODE: {
+      ID: BROKER_POSTCODE,
+      ...BROKER_FIELDS[BROKER_POSTCODE],
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`,

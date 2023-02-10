@@ -4,6 +4,46 @@
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../../components/address-input.njk' as addressInput %}
+
+{% set brokerHTML %}
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-5 govuk-!-margin-top-5" data-cy="{{FIELDS.BROKER_HEADING.ID}}-heading">{{ FIELDS.BROKER_HEADING.HEADING }}</h2>
+
+  {{ govukInput({
+    id: FIELDS.BROKER_NAME.ID,
+    name: FIELDS.BROKER_NAME.ID,
+    value: submittedValues[FIELDS.BROKER_NAME.ID] or application.exporterBusiness[FIELDS.BROKER_NAME.ID],
+    label: {
+      text: FIELDS.BROKER_NAME.LABEL,
+      classes: "govuk-body govuk-!-font-weight-bold",
+      attributes: {
+        "data-cy": FIELDS.BROKER_NAME.ID + "-label"
+      }
+    },
+    classes: "govuk-input--width-20",
+    attributes: {
+      "data-cy": FIELDS.BROKER_NAME.ID
+    },
+    errorMessage: validationErrors.errorList[FIELDS.BROKER_NAME.ID] and {
+      text: validationErrors.errorList[FIELDS.BROKER_NAME.ID].text,
+      attributes: {
+        "data-cy": FIELDS.BROKER_NAME.ID + "-error"
+      }
+    }
+  }) }}
+
+  {{ addressInput.render({
+    addressLineOne: FIELDS.BROKER_ADDRESS_LINE_1,
+    addressLineTwo: FIELDS.BROKER_ADDRESS_LINE_2,
+    town: FIELDS.BROKER_TOWN,
+    country: FIELDS.BROKER_COUNTY,
+    postcode: FIELDS.BROKER_POSTCODE,
+    validationErrors: validationErrors,
+    submittedValues: submittedValues,
+    application: application.exporterBusiness
+  }) }}
+
+{% endset %}
 
 {% block content %}
 
@@ -43,7 +83,9 @@
           errorMessage: validationErrors.errorList[FIELDS.USING_BROKER.ID],
           headerClass: 'govuk-fieldset__legend--xl',
           datacyHeading: FIELDS.USING_BROKER.ID + '-heading',
-          yesNoValueString: true
+          yesNoValueString: true,
+          conditionalYesHtml: brokerHTML,
+          notInlineRadios: true
         }) }}
       </div>
 
