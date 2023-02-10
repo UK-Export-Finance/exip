@@ -220,6 +220,14 @@ export const ERROR_MESSAGES = {
           },
         },
       },
+      SIGN_IN: {
+        [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
+          INCORRECT: "Email address - either the email address or password you've entered is incorrect",
+        },
+        [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {
+          INCORRECT: "Password - either the email address or password you've entered is incorrect",
+        },
+      },
     },
   },
 } as ErrorMessage;

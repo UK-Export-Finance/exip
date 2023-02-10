@@ -4,7 +4,6 @@ const {
   ACCOUNT: {
     FIRST_NAME,
     LAST_NAME,
-    EMAIL,
     PASSWORD,
   },
 } = INSURANCE_FIELD_IDS;
@@ -23,16 +22,7 @@ const yourDetailsPage = {
     input: () => cy.get(`[data-cy="${LAST_NAME}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${LAST_NAME}-error-message"]`),
   },
-  [EMAIL]: {
-    label: () => cy.get(`[data-cy="${EMAIL}-label"]`),
-    input: () => cy.get(`[data-cy="${EMAIL}-input"]`),
-    errorMessage: () => cy.get(`[data-cy="${EMAIL}-error-message"]`),
-  },
   [PASSWORD]: {
-    label: () => cy.get(`[data-cy="${PASSWORD}-label"]`),
-    input: () => cy.get(`[data-cy="${PASSWORD}-input"]`),
-    revealButton: () => cy.get('.moj-password-reveal__button'),
-    errorMessage: () => cy.get(`[data-cy="${PASSWORD}-error-message"]`),
     hint: {
       intro: () => cy.get(`[data-cy="${PASSWORD}-hint-intro"]`),
       listItem1: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-1"]`),

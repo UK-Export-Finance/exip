@@ -13,6 +13,10 @@ import generateValidationErrors from '../../helpers/validation';
  */
 const emailValidation = (fieldId: string, email: string, errorMessage: string, errors: object) => {
   try {
+    if (!email) {
+      return generateValidationErrors(fieldId, errorMessage, errors);
+    }
+
     const schema = Joi.string().email();
 
     const validation = schema.validate(email);

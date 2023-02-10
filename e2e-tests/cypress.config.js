@@ -12,6 +12,7 @@ const cypressConfig = defineConfig({
   e2e: {
     env: {
       GOV_NOTIFY_EMAIL_RECIPIENT: process.env.GOV_NOTIFY_EMAIL_RECIPIENT,
+      MOCK_ACCOUNT_PASSWORD: process.env.MOCK_ACCOUNT_PASSWORD,
     },
     setupNodeEvents(on, config) {
       return require('./cypress/plugins')(on, config); // eslint-disable-line global-require
