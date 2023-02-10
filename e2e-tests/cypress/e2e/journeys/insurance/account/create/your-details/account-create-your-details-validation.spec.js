@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import { submitButton } from '../../../../../pages/shared';
-import partials from '../../../../../partials';
-=======
->>>>>>> main-application
 import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
