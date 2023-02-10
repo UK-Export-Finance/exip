@@ -106,6 +106,8 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_INTERNATIONAL]: {
         IS_EMPTY: 'Enter how many employees you have worldwide, including UK, as a whole number - for example, 100',
         INCORRECT_FORMAT: 'Enter how many employees you have worldwide, including UK, as a whole number. You cannot enter  letters or special characters',
+        BELOW_UK: 'Number of employees worldwide including UK must be greater or equal to the number of employees in the UK',
+        BELOW_MINIMUM: 'Number of employees worldwide must be more than 0',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.ESTIMATED_ANNUAL_TURNOVER]: {
         IS_EMPTY: 'Enter your estimated annual turnover for this current financial year',

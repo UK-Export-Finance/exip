@@ -5,7 +5,7 @@ import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
 
 const {
-  NATURE_OF_YOUR_BUSINESS: { EMPLOYEES_INTERNATIONAL: FIELD_ID },
+  NATURE_OF_YOUR_BUSINESS: { EMPLOYEES_INTERNATIONAL: FIELD_ID, EMPLOYEES_UK },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const {
@@ -74,7 +74,33 @@ describe('controllers/insurance/business/nature-of-business/validation/rules/emp
       mockBody[FIELD_ID] = '-5';
       const response = employeesInternational(mockBody, mockErrors);
 
-      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
+      const errorMessage = ERROR_MESSAGE.BELOW_MINIMUM;
+      const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
+
+      expect(response).toEqual(expected);
+    });
+  });
+
+  describe(`when the ${FIELD_ID} input is 0`, () => {
+    it('should return a validation error', () => {
+      mockBody[FIELD_ID] = '0';
+      const response = employeesInternational(mockBody, mockErrors);
+
+      const errorMessage = ERROR_MESSAGE.BELOW_MINIMUM;
+      const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
+
+      expect(response).toEqual(expected);
+    });
+  });
+
+  describe(`when the ${FIELD_ID} input less than ${EMPLOYEES_UK}`, () => {
+    it('should return a validation error', () => {
+      mockBody[FIELD_ID] = '2';
+      mockBody[EMPLOYEES_UK] = '5';
+
+      const response = employeesInternational(mockBody, mockErrors);
+
+      const errorMessage = ERROR_MESSAGE.BELOW_UK;
       const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
 
       expect(response).toEqual(expected);

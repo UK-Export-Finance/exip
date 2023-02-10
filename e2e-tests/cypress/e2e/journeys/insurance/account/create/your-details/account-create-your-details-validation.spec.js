@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
+=======
+>>>>>>> main-application
 import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
@@ -16,6 +19,7 @@ const {
     FIRST_NAME,
     LAST_NAME,
     EMAIL,
+    PASSWORD,
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -27,7 +31,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-context('Insurance - Account - Create - Your details page - form validation', () => {
+context('Insurance - Account - Create - Your details page - empty form validation', () => {
   before(() => {
     cy.navigateToUrl(START);
 
@@ -43,62 +47,49 @@ context('Insurance - Account - Create - Your details page - form validation', ()
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  describe('when submitting an empty form', () => {
-    beforeEach(() => {
-      submitButton().click();
+  const TOTAL_REQUIRED_FIELDS = 4;
+
+  describe('first name', () => {
+    it('should render a validation error', () => {
+      const field = yourDetailsPage[FIRST_NAME];
+      const value = null;
+      const fieldIndex = 0;
+      const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME].IS_EMPTY;
+
+      cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
     });
+  });
 
-    it('sHould render validation errors for all required fields', () => {
-      const TOTAL_REQUIRED_FIELDS = 4;
+  describe('last name', () => {
+    it('should render a validation error', () => {
+      const field = yourDetailsPage[LAST_NAME];
+      const value = null;
+      const fieldIndex = 1;
+      const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY;
 
-      partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
-
-      describe('first name', () => {
-        const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME].IS_EMPTY;
-        const inlineError = yourDetailsPage[FIRST_NAME].errorMessage();
-
-        cy.checkText(
-          partials.errorSummaryListItems().eq(0),
-          expectedMessage,
-        );
-
-        cy.checkText(inlineError, `Error: ${expectedMessage}`);
-      });
-
-      describe('last name', () => {
-        const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY;
-        const inlineError = yourDetailsPage[LAST_NAME].errorMessage();
-
-        cy.checkText(
-          partials.errorSummaryListItems().eq(1),
-          expectedMessage,
-        );
-
-        cy.checkText(inlineError, `Error: ${expectedMessage}`);
-      });
-
-      describe('email', () => {
-        const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT;
-        const inlineError = accountFormFields[EMAIL].errorMessage();
-
-        cy.checkText(
-          partials.errorSummaryListItems().eq(2),
-          expectedMessage,
-        );
-
-        cy.checkText(inlineError, `Error: ${expectedMessage}`);
-      });
+      cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
     });
+  });
 
-    it('should focus on input when clicking summary error message', () => {
-      partials.errorSummaryListItemLinks().eq(0).click();
-      yourDetailsPage[FIRST_NAME].input().should('have.focus');
+  describe('email', () => {
+    it('should render a validation error', () => {
+      const field = accountFormFields[EMAIL];
+      const value = null;
+      const fieldIndex = 2;
+      const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT;
 
-      partials.errorSummaryListItemLinks().eq(1).click();
-      yourDetailsPage[LAST_NAME].input().should('have.focus');
+      cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+    });
+  });
 
-      partials.errorSummaryListItemLinks().eq(2).click();
-      accountFormFields[EMAIL].input().should('have.focus');
+  describe('password', () => {
+    it('should render a validation error', () => {
+      const field = accountFormFields[PASSWORD];
+      const value = null;
+      const fieldIndex = 3;
+      const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT;
+
+      cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
     });
   });
 });

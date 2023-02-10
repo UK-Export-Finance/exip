@@ -45,6 +45,12 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   });
 
   describe(`${EMPLOYEES_UK} validation`, () => {
+    // for error assertion - common fields
+    const ERROR_ASSERTIONS = {
+      numberOfExpectedErrors: 4,
+      errorIndex: 2,
+    };
+
     describe(`when ${EMPLOYEES_UK} is left empty`, () => {
       const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].IS_EMPTY;
 
@@ -52,25 +58,10 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_UK;
         const field = natureOfBusiness[fieldId];
 
-        field.input().clear();
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 4);
-        cy.checkText(partials.errorSummaryListItems().eq(2), errorMessage);
-      });
+        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const value = null;
 
-      it(`should focus to the ${EMPLOYEES_UK} section when clicking the error`, () => {
-        const fieldId = EMPLOYEES_UK;
-        const field = natureOfBusiness[fieldId];
-
-        partials.errorSummaryListItemLinks().eq(2).click();
-        field.input().should('have.focus');
-      });
-
-      it(`should display the validation error for ${EMPLOYEES_UK}`, () => {
-        const fieldId = EMPLOYEES_UK;
-        const field = natureOfBusiness[fieldId];
-
-        cy.checkText(field.error(), `Error: ${errorMessage}`);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
       });
     });
 
@@ -81,17 +72,10 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_UK;
         const field = natureOfBusiness[fieldId];
 
-        field.input().clear().type('5.5');
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 4);
-        cy.checkText(partials.errorSummaryListItems().eq(2), errorMessage);
-      });
+        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const value = '5.5';
 
-      it(`should display the validation error for ${EMPLOYEES_UK}`, () => {
-        const fieldId = EMPLOYEES_UK;
-        const field = natureOfBusiness[fieldId];
-
-        cy.checkText(field.error(), `Error: ${errorMessage}`);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
       });
     });
 
@@ -102,17 +86,23 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_UK;
         const field = natureOfBusiness[fieldId];
 
-        field.input().clear().type('3S');
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 4);
-        cy.checkText(partials.errorSummaryListItems().eq(2), errorMessage);
-      });
+        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const value = '3S';
 
-      it(`should display the validation error for ${EMPLOYEES_UK}`, () => {
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+      });
+    });
+
+    describe(`when ${EMPLOYEES_UK} is correctly entered as 0`, () => {
+      it(`should not display  ${EMPLOYEES_UK} validation errors`, () => {
+        cy.navigateToUrl(url);
+
         const fieldId = EMPLOYEES_UK;
         const field = natureOfBusiness[fieldId];
 
-        cy.checkText(field.error(), `Error: ${errorMessage}`);
+        field.input().clear().type('0');
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 3);
       });
     });
 
@@ -144,6 +134,11 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   });
 
   describe(`${EMPLOYEES_INTERNATIONAL} validation`, () => {
+    // for error assertion - common fields
+    const ERROR_ASSERTIONS = {
+      numberOfExpectedErrors: 4,
+      errorIndex: 3,
+    };
     describe(`when ${EMPLOYEES_INTERNATIONAL} is left empty`, () => {
       const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_INTERNATIONAL].IS_EMPTY;
 
@@ -153,25 +148,10 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_INTERNATIONAL;
         const field = natureOfBusiness[fieldId];
 
-        field.input().clear();
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 4);
-        cy.checkText(partials.errorSummaryListItems().eq(3), errorMessage);
-      });
+        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const value = null;
 
-      it(`should focus to the ${EMPLOYEES_INTERNATIONAL} section when clicking the error`, () => {
-        const fieldId = EMPLOYEES_INTERNATIONAL;
-        const field = natureOfBusiness[fieldId];
-
-        partials.errorSummaryListItemLinks().eq(3).click();
-        field.input().should('have.focus');
-      });
-
-      it(`should display the validation error for ${EMPLOYEES_INTERNATIONAL}`, () => {
-        const fieldId = EMPLOYEES_INTERNATIONAL;
-        const field = natureOfBusiness[fieldId];
-
-        cy.checkText(field.error(), `Error: ${errorMessage}`);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
       });
     });
 
@@ -182,17 +162,10 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_INTERNATIONAL;
         const field = natureOfBusiness[fieldId];
 
-        field.input().clear().type('5.5');
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 4);
-        cy.checkText(partials.errorSummaryListItems().eq(3), errorMessage);
-      });
+        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const value = '5.5';
 
-      it(`should display the validation error for ${EMPLOYEES_INTERNATIONAL}`, () => {
-        const fieldId = EMPLOYEES_INTERNATIONAL;
-        const field = natureOfBusiness[fieldId];
-
-        cy.checkText(field.error(), `Error: ${errorMessage}`);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
       });
     });
 
@@ -203,17 +176,40 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_INTERNATIONAL;
         const field = natureOfBusiness[fieldId];
 
-        field.input().clear().type('3S');
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 4);
-        cy.checkText(partials.errorSummaryListItems().eq(3), errorMessage);
-      });
+        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const value = '3S';
 
-      it(`should display the validation error for ${EMPLOYEES_INTERNATIONAL}`, () => {
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+      });
+    });
+
+    describe(`when ${EMPLOYEES_INTERNATIONAL} is 0`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_INTERNATIONAL].BELOW_MINIMUM;
+
+      it(`should display validation errors for ${EMPLOYEES_INTERNATIONAL}`, () => {
         const fieldId = EMPLOYEES_INTERNATIONAL;
         const field = natureOfBusiness[fieldId];
 
-        cy.checkText(field.error(), `Error: ${errorMessage}`);
+        natureOfBusiness[EMPLOYEES_UK].input().clear();
+
+        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const value = '0';
+
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+      });
+    });
+
+    describe(`when ${EMPLOYEES_INTERNATIONAL} is below the value of ${EMPLOYEES_UK}`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_INTERNATIONAL].BELOW_UK;
+
+      it(`should display validation errors for ${EMPLOYEES_INTERNATIONAL}`, () => {
+        const fieldId = EMPLOYEES_INTERNATIONAL;
+        const field = natureOfBusiness[fieldId];
+
+        natureOfBusiness[EMPLOYEES_UK].input().type('20');
+        const value = '10';
+
+        cy.submitAndAssertFieldErrors(field, value, 2, 3, errorMessage);
       });
     });
 
