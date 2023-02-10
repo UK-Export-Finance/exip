@@ -5,11 +5,11 @@ import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
 const {
-  BROKER: { BROKER_ADDRESS_LINE_1, USING_BROKER },
+  BROKER: { ADDRESS_LINE_1, USING_BROKER },
 } = FIELD_IDS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
-const ERROR_MESSAGE = EXPORTER_BUSINESS[BROKER_ADDRESS_LINE_1];
+const ERROR_MESSAGE = EXPORTER_BUSINESS[ADDRESS_LINE_1];
 
 describe('controllers/insurance/business/broker/validation/rules/broker-address-line-one', () => {
   const mockErrors = {
@@ -18,7 +18,7 @@ describe('controllers/insurance/business/broker/validation/rules/broker-address-
   };
 
   const mockBody = {
-    [BROKER_ADDRESS_LINE_1]: '',
+    [ADDRESS_LINE_1]: '',
   } as RequestBody;
 
   it('should return the result of emptyFieldValidation if using broker is "Yes"', () => {
@@ -26,7 +26,7 @@ describe('controllers/insurance/business/broker/validation/rules/broker-address-
 
     const response = brokerAddressLineOne(mockBody, mockErrors);
 
-    const expected = emptyFieldValidation(mockBody, BROKER_ADDRESS_LINE_1, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+    const expected = emptyFieldValidation(mockBody, ADDRESS_LINE_1, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
     expect(response).toEqual(expected);
   });

@@ -1,0 +1,33 @@
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% macro render(params) %}
+
+  {% set FIELD = params.field %}
+  {% set application = params.application %}
+  {% set validationErrors = params.validationErrors %}
+  {% set submittedValues = params.submittedValues %}
+
+  {{ govukInput({
+    id: FIELD.ID,
+    name: FIELD.ID,
+    value: submittedValues[FIELD.ID] or application[FIELD.ID],
+    label: {
+      text: FIELD.LABEL,
+      classes: "govuk-body govuk-!-font-weight-bold",
+      attributes: {
+        "data-cy": FIELD.ID + "-label"
+      }
+    },
+    classes: "govuk-input--width-20",
+    attributes: {
+      "data-cy": FIELD.ID
+    },
+    errorMessage: validationErrors.errorList[FIELD.ID] and {
+      text: validationErrors.errorList[FIELD.ID].text,
+      attributes: {
+        "data-cy": FIELD.ID + "-error"
+      }
+    }
+  }) }}
+
+{% endmacro %}

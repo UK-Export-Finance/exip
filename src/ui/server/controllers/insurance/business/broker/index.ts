@@ -7,10 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 
-// below will be removed on next PR, linting not working for this line
-// eslint-disable-next-line operator-linebreak
-const { USING_BROKER, BROKER_HEADING, BROKER_NAME, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_TOWN, BROKER_COUNTY, BROKER_POSTCODE } =
-  FIELD_IDS.BROKER;
+const { USING_BROKER, HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE } = FIELD_IDS.BROKER;
 
 const { BROKER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -28,33 +25,33 @@ const pageVariables = (referenceNumber: number) => ({
     USING_BROKER: {
       ID: USING_BROKER,
     },
-    BROKER_HEADING: {
-      ID: BROKER_HEADING,
-      ...BROKER_FIELDS[BROKER_HEADING],
+    HEADING: {
+      ID: HEADING,
+      ...BROKER_FIELDS[HEADING],
     },
-    BROKER_NAME: {
-      ID: BROKER_NAME,
-      ...BROKER_FIELDS[BROKER_NAME],
+    NAME: {
+      ID: NAME,
+      ...BROKER_FIELDS[NAME],
     },
-    BROKER_ADDRESS_LINE_1: {
-      ID: BROKER_ADDRESS_LINE_1,
-      ...BROKER_FIELDS[BROKER_ADDRESS_LINE_1],
+    ADDRESS_LINE_1: {
+      ID: ADDRESS_LINE_1,
+      ...BROKER_FIELDS[ADDRESS_LINE_1],
     },
-    BROKER_ADDRESS_LINE_2: {
-      ID: BROKER_ADDRESS_LINE_2,
-      ...BROKER_FIELDS[BROKER_ADDRESS_LINE_2],
+    ADDRESS_LINE_2: {
+      ID: ADDRESS_LINE_2,
+      ...BROKER_FIELDS[ADDRESS_LINE_2],
     },
-    BROKER_TOWN: {
-      ID: BROKER_TOWN,
-      ...BROKER_FIELDS[BROKER_TOWN],
+    TOWN: {
+      ID: TOWN,
+      ...BROKER_FIELDS[TOWN],
     },
-    BROKER_COUNTY: {
-      ID: BROKER_COUNTY,
-      ...BROKER_FIELDS[BROKER_COUNTY],
+    COUNTY: {
+      ID: COUNTY,
+      ...BROKER_FIELDS[COUNTY],
     },
-    BROKER_POSTCODE: {
-      ID: BROKER_POSTCODE,
-      ...BROKER_FIELDS[BROKER_POSTCODE],
+    POSTCODE: {
+      ID: POSTCODE,
+      ...BROKER_FIELDS[POSTCODE],
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`,

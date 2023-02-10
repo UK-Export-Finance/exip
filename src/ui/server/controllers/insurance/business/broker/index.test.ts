@@ -11,10 +11,7 @@ import { FIELDS } from '../../../../content-strings/fields/insurance/your-busine
 
 const { BROKER: BROKER_FIELDS } = FIELDS;
 
-// below will be removed on next PR, linting not working for this line
-// eslint-disable-next-line operator-linebreak
-const { USING_BROKER, BROKER_HEADING, BROKER_NAME, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_COUNTY, BROKER_TOWN, BROKER_POSTCODE } =
-  FIELD_IDS.BROKER;
+const { USING_BROKER, HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, TOWN, POSTCODE } = FIELD_IDS.BROKER;
 
 const { BROKER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -53,33 +50,33 @@ describe('controllers/insurance/business/broker', () => {
           USING_BROKER: {
             ID: USING_BROKER,
           },
-          BROKER_HEADING: {
-            ID: BROKER_HEADING,
-            ...BROKER_FIELDS[BROKER_HEADING],
+          HEADING: {
+            ID: HEADING,
+            ...BROKER_FIELDS[HEADING],
           },
-          BROKER_NAME: {
-            ID: BROKER_NAME,
-            ...BROKER_FIELDS[BROKER_NAME],
+          NAME: {
+            ID: NAME,
+            ...BROKER_FIELDS[NAME],
           },
-          BROKER_ADDRESS_LINE_1: {
-            ID: BROKER_ADDRESS_LINE_1,
-            ...BROKER_FIELDS[BROKER_ADDRESS_LINE_1],
+          ADDRESS_LINE_1: {
+            ID: ADDRESS_LINE_1,
+            ...BROKER_FIELDS[ADDRESS_LINE_1],
           },
-          BROKER_ADDRESS_LINE_2: {
-            ID: BROKER_ADDRESS_LINE_2,
-            ...BROKER_FIELDS[BROKER_ADDRESS_LINE_2],
+          ADDRESS_LINE_2: {
+            ID: ADDRESS_LINE_2,
+            ...BROKER_FIELDS[ADDRESS_LINE_2],
           },
-          BROKER_TOWN: {
-            ID: BROKER_TOWN,
-            ...BROKER_FIELDS[BROKER_TOWN],
+          TOWN: {
+            ID: TOWN,
+            ...BROKER_FIELDS[TOWN],
           },
-          BROKER_COUNTY: {
-            ID: BROKER_COUNTY,
-            ...BROKER_FIELDS[BROKER_COUNTY],
+          COUNTY: {
+            ID: COUNTY,
+            ...BROKER_FIELDS[COUNTY],
           },
-          BROKER_POSTCODE: {
-            ID: BROKER_POSTCODE,
-            ...BROKER_FIELDS[BROKER_POSTCODE],
+          POSTCODE: {
+            ID: POSTCODE,
+            ...BROKER_FIELDS[POSTCODE],
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_ROOT}`,
@@ -150,9 +147,9 @@ describe('controllers/insurance/business/broker', () => {
       it('should redirect to next page', async () => {
         req.body = {
           [USING_BROKER]: 'true',
-          [BROKER_NAME]: 'test',
-          [BROKER_ADDRESS_LINE_1]: '1',
-          [BROKER_TOWN]: 'test',
+          [NAME]: 'test',
+          [ADDRESS_LINE_1]: '1',
+          [TOWN]: 'test',
         };
 
         await post(req, res);

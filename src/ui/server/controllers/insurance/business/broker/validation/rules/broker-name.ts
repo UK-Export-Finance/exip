@@ -4,7 +4,7 @@ import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
 const {
-  BROKER: { BROKER_NAME: FIELD_ID, USING_BROKER },
+  BROKER: { NAME: FIELD_ID, USING_BROKER },
 } = FIELD_IDS;
 
 const {

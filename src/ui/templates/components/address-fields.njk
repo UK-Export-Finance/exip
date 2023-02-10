@@ -1,0 +1,51 @@
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import './address-field-input.njk' as addressFieldInput %}
+
+{% macro render(params) %}
+
+  {% set ADDRESS_LINE_ONE_FIELD = params.addressLineOne %}
+  {% set ADDRESS_LINE_TWO_FIELD = params.addressLineTwo %}
+  {% set COUNTY_FIELD = params.country %}
+  {% set TOWN_FIELD = params.town %}
+  {% set POSTCODE_FIELD = params.postcode %}
+  {% set validationErrors = params.validationErrors %}
+  {% set application = params.application %}
+  {% set submittedValues = params.submittedValues %}
+
+
+  {{ addressFieldInput.render({
+    field: ADDRESS_LINE_ONE_FIELD,
+    submittedValues: submittedValues,
+    application: application.exporterBusiness,
+    validationErrors: validationErrors
+  }) }}
+
+  {{ addressFieldInput.render({
+    field: ADDRESS_LINE_TWO_FIELD,
+    submittedValues: submittedValues,
+    application: application.exporterBusiness,
+    validationErrors: validationErrors
+  }) }}
+
+  {{ addressFieldInput.render({
+    field: TOWN_FIELD,
+    submittedValues: submittedValues,
+    application: application.exporterBusiness,
+    validationErrors: validationErrors
+  }) }}
+
+  {{ addressFieldInput.render({
+    field: COUNTY_FIELD,
+    submittedValues: submittedValues,
+    application: application.exporterBusiness,
+    validationErrors: validationErrors
+  }) }}
+
+  {{ addressFieldInput.render({
+    field: POSTCODE_FIELD,
+    submittedValues: submittedValues,
+    application: application.exporterBusiness,
+    validationErrors: validationErrors
+  }) }}
+
+{% endmacro %}

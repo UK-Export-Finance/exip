@@ -8,9 +8,9 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 const {
   BROKER: {
     USING_BROKER: FIELD_ID,
-    BROKER_NAME,
-    BROKER_ADDRESS_LINE_1,
-    BROKER_TOWN,
+    NAME,
+    ADDRESS_LINE_1,
+    TOWN,
   },
 } = FIELD_IDS;
 
@@ -68,14 +68,14 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
       field.yesRadioInput().click();
 
-      // BROKER_NAME error check
-      cy.submitAndAssertFieldErrors(broker[BROKER_NAME], null, 0, expectedErrorsCount, BROKER_ERRORS[BROKER_NAME].IS_EMPTY);
+      // NAME error check
+      cy.submitAndAssertFieldErrors(broker[NAME], null, 0, expectedErrorsCount, BROKER_ERRORS[NAME].IS_EMPTY);
 
-      // BROKER_ADDRESS_LINE_1 error check
-      cy.submitAndAssertFieldErrors(broker[BROKER_ADDRESS_LINE_1], null, 1, expectedErrorsCount, BROKER_ERRORS[BROKER_ADDRESS_LINE_1].IS_EMPTY);
+      // ADDRESS_LINE_1 error check
+      cy.submitAndAssertFieldErrors(broker[ADDRESS_LINE_1], null, 1, expectedErrorsCount, BROKER_ERRORS[ADDRESS_LINE_1].IS_EMPTY);
 
-      // BROKER_TOWN error check
-      cy.submitAndAssertFieldErrors(broker[BROKER_TOWN], null, 2, expectedErrorsCount, BROKER_ERRORS[BROKER_TOWN].IS_EMPTY);
+      // TOWN error check
+      cy.submitAndAssertFieldErrors(broker[TOWN], null, 2, expectedErrorsCount, BROKER_ERRORS[TOWN].IS_EMPTY);
     });
   });
 
@@ -85,9 +85,9 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
       field.yesRadioInput().click();
 
-      broker[BROKER_NAME].input().clear().type('name');
-      broker[BROKER_ADDRESS_LINE_1].input().clear().type('Address line 1');
-      broker[BROKER_TOWN].input().clear().type('town');
+      broker[NAME].input().clear().type('name');
+      broker[ADDRESS_LINE_1].input().clear().type('Address line 1');
+      broker[TOWN].input().clear().type('town');
 
       submitButton().click();
 

@@ -5,11 +5,11 @@ import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
 const {
-  BROKER: { BROKER_TOWN, USING_BROKER },
+  BROKER: { TOWN, USING_BROKER },
 } = FIELD_IDS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
-const ERROR_MESSAGE = EXPORTER_BUSINESS[BROKER_TOWN];
+const ERROR_MESSAGE = EXPORTER_BUSINESS[TOWN];
 
 describe('controllers/insurance/business/broker/validation/rules/brokerTown', () => {
   const mockErrors = {
@@ -18,7 +18,7 @@ describe('controllers/insurance/business/broker/validation/rules/brokerTown', ()
   };
 
   const mockBody = {
-    [BROKER_TOWN]: '',
+    [TOWN]: '',
   } as RequestBody;
 
   it('should return the result of emptyFieldValidation', () => {
@@ -26,7 +26,7 @@ describe('controllers/insurance/business/broker/validation/rules/brokerTown', ()
 
     const response = brokerTown(mockBody, mockErrors);
 
-    const expected = emptyFieldValidation(mockBody, BROKER_TOWN, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+    const expected = emptyFieldValidation(mockBody, TOWN, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
     expect(response).toEqual(expected);
   });

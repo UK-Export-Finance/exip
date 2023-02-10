@@ -4,7 +4,7 @@ const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { BROKER_HEADING, BROKER_NAME, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_COUNTY, BROKER_POSTCODE, BROKER_TOWN, BROKER_EMAIL },
+  BROKER: { HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
 } = EXPORTER_BUSINESS;
 
 export const FIELDS = {
@@ -43,28 +43,28 @@ export const FIELDS = {
     },
   },
   BROKER: {
-    [BROKER_HEADING]: {
+    [HEADING]: {
       HEADING: 'Enter contact details for your broker',
     },
-    [BROKER_NAME]: {
+    [NAME]: {
       LABEL: 'Name of broker or company',
     },
-    [BROKER_ADDRESS_LINE_1]: {
+    [ADDRESS_LINE_1]: {
       LABEL: 'Address line 1',
     },
-    [BROKER_ADDRESS_LINE_2]: {
+    [ADDRESS_LINE_2]: {
       LABEL: 'Address line 2 (optional)',
     },
-    [BROKER_TOWN]: {
+    [TOWN]: {
       LABEL: 'Town or city',
     },
-    [BROKER_COUNTY]: {
+    [COUNTY]: {
       LABEL: 'County (optional)',
     },
-    [BROKER_POSTCODE]: {
+    [POSTCODE]: {
       LABEL: 'Postcode',
     },
-    [BROKER_EMAIL]: {
+    [EMAIL]: {
       LABEL: 'Email address',
     },
   },
