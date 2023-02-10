@@ -27,7 +27,9 @@ export const ACCOUNT = {
       const now = new Date();
       const day = now.getDate();
 
-      return new Date(now.setDate(day + 1));
+      const tomorrow = new Date(now.setDate(day + 1));
+
+      return tomorrow;
     },
   },
   PASSWORD: {
