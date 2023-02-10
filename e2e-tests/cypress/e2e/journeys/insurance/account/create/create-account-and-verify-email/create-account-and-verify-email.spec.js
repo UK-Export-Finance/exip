@@ -39,14 +39,10 @@ context('Insurance - Account - Create - I want the system to generate account ve
     });
 
     it(`should validate the exporter and redirect to ${SIGN_IN.ROOT}`, () => {
-      /**
-       * Mimic "clicking email verification link"
-       */
+      // mimic "clicking email verification link"
       cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${exporter.verificationHash}`);
 
-      /**
-       * User should be verified and therefore redirected to the "sign in" page.
-       */
+      // User should be verified and therefore redirected to the "sign in" page.
       const expected = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
 
       cy.url().should('eq', expected);
