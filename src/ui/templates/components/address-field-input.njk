@@ -2,30 +2,31 @@
 
 {% macro render(params) %}
 
-  {% set FIELD = params.field %}
+  {% set ID = params.ID %}
+  {% set LABEL = params.LABEL %}
   {% set application = params.application %}
   {% set validationErrors = params.validationErrors %}
   {% set submittedValues = params.submittedValues %}
 
   {{ govukInput({
-    id: FIELD.ID,
-    name: FIELD.ID,
-    value: submittedValues[FIELD.ID] or application[FIELD.ID],
+    id: ID,
+    name: ID,
+    value: submittedValues[ID] or application[ID],
     label: {
-      text: FIELD.LABEL,
+      text: LABEL,
       classes: "govuk-body govuk-!-font-weight-bold",
       attributes: {
-        "data-cy": FIELD.ID + "-label"
+        "data-cy": ID + "-label"
       }
     },
     classes: "govuk-input--width-20",
     attributes: {
-      "data-cy": FIELD.ID
+      "data-cy": ID
     },
-    errorMessage: validationErrors.errorList[FIELD.ID] and {
-      text: validationErrors.errorList[FIELD.ID].text,
+    errorMessage: validationErrors.errorList[ID] and {
+      text: validationErrors.errorList[ID].text,
       attributes: {
-        "data-cy": FIELD.ID + "-error"
+        "data-cy": ID + "-error"
       }
     }
   }) }}
