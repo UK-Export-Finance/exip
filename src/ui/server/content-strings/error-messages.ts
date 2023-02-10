@@ -122,6 +122,15 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.USING_BROKER]: {
         IS_EMPTY: 'Select whether you are using a broker to get this insurance',
       },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.NAME]: {
+        IS_EMPTY: 'Enter the name of your broker',
+      },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.ADDRESS_LINE_1]: {
+        IS_EMPTY: 'Enter address line 1 for your broker',
+      },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.TOWN]: {
+        IS_EMPTY: 'Enter the town or city for your broker',
+      },
     },
     POLICY_AND_EXPORTS: {
       // TODO move to TYPE_OF_POLICY: {},

@@ -7,8 +7,11 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import generateValidationErrors from './validation';
+import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 
-const { USING_BROKER } = FIELD_IDS.BROKER;
+const { BROKER: BROKER_FIELDS } = FIELDS;
+
+const { USING_BROKER, HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, TOWN, POSTCODE } = FIELD_IDS.BROKER;
 
 const { BROKER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -46,6 +49,34 @@ describe('controllers/insurance/business/broker', () => {
         FIELDS: {
           USING_BROKER: {
             ID: USING_BROKER,
+          },
+          HEADING: {
+            ID: HEADING,
+            ...BROKER_FIELDS[HEADING],
+          },
+          NAME: {
+            ID: NAME,
+            ...BROKER_FIELDS[NAME],
+          },
+          ADDRESS_LINE_1: {
+            ID: ADDRESS_LINE_1,
+            ...BROKER_FIELDS[ADDRESS_LINE_1],
+          },
+          ADDRESS_LINE_2: {
+            ID: ADDRESS_LINE_2,
+            ...BROKER_FIELDS[ADDRESS_LINE_2],
+          },
+          TOWN: {
+            ID: TOWN,
+            ...BROKER_FIELDS[TOWN],
+          },
+          COUNTY: {
+            ID: COUNTY,
+            ...BROKER_FIELDS[COUNTY],
+          },
+          POSTCODE: {
+            ID: POSTCODE,
+            ...BROKER_FIELDS[POSTCODE],
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_ROOT}`,
@@ -116,6 +147,9 @@ describe('controllers/insurance/business/broker', () => {
       it('should redirect to next page', async () => {
         req.body = {
           [USING_BROKER]: 'true',
+          [NAME]: 'test',
+          [ADDRESS_LINE_1]: '1',
+          [TOWN]: 'test',
         };
 
         await post(req, res);

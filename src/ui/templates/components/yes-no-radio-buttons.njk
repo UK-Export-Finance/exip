@@ -8,6 +8,8 @@
   {% set submittedAnswer = params.submittedAnswer %}
   {% set errorMessage = params.errorMessage %}
   {% set yesNoValueString = params.yesNoValueString %}
+  {% set conditionalYesHtml = params.conditionalYesHtml %}
+  {% set conditionalNoHtml = params.conditionalNoHtml %}
 
   {% if params.headerClass %}
     {% set headerClass = params.headerClass %}
@@ -29,9 +31,12 @@
     {% set noValue = 'No' %}
   {% endif %}
 
+  {% if not params.horizontalRadios %}
+    {% set radioClass = 'govuk-radios--inline' %}
+  {% endif %}
 
   {{ govukRadios({
-    classes: "govuk-radios--inline",
+    classes: radioClass,
     idPrefix: fieldId,
     name: fieldId,
     fieldset: {
@@ -54,6 +59,9 @@
             "data-cy": "yes"
           }
         },
+        conditional: {
+          html: conditionalYesHtml
+        },
         attributes: {
           "data-cy": "yes-input",
           'aria-label': heading + ' yes radio'
@@ -67,6 +75,9 @@
           attributes: {
             "data-cy": "no"
           }
+        },
+        conditional: {
+          html: conditionalNoHtml
         },
         attributes: {
           "data-cy": "no-input",
