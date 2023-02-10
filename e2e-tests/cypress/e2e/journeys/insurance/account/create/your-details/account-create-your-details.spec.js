@@ -145,40 +145,8 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     });
 
     describe('reveal button', () => {
-      const expectedShowText = `${FIELD_STRINGS[fieldId].REVEAL.SHOW} password`;
-      const expectedHideText = `${FIELD_STRINGS[fieldId].REVEAL.HIDE} password`;
-
-      it('should be rendered', () => {
-        field.revealButton().should('exist');
-
-        cy.checkText(field.revealButton(), expectedShowText);
-      });
-
-      describe('when clicking the reveal button', () => {
-        it('should change the input type from `password` to `text`', () => {
-          field.input().should('have.attr', 'type', 'password');
-          field.input().type('Mock', { delay: 0 });
-
-          field.revealButton().click();
-
-          field.input().should('have.attr', 'type', 'text');
-        });
-
-        it('should change the reveal button text', () => {
-          cy.checkText(field.revealButton(), expectedHideText);
-        });
-
-        describe('when clicking the reveal button for a second time', () => {
-          it('should change the input type from `password`', () => {
-            field.revealButton().click();
-
-            field.input().should('have.attr', 'type', 'password');
-          });
-
-          it('should change the reveal button text', () => {
-            cy.checkText(field.revealButton(), expectedShowText);
-          });
-        });
+      it('should be rendered and show/reveal the password input', () => {
+        cy.assertPasswordRevealButton();
       });
     });
   });
