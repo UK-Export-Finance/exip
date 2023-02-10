@@ -144,10 +144,8 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
       field.input().should('exist');
     });
 
-    describe('reveal button', () => {
-      it('should be rendered and show/reveal the password input', () => {
-        cy.assertPasswordRevealButton();
-      });
+    it('should render a revreal button that shows/reveals the password input', () => {
+      cy.assertPasswordRevealButton();
     });
   });
 
