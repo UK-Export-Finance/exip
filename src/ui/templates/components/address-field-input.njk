@@ -2,31 +2,31 @@
 
 {% macro render(params) %}
 
-  {% set ID = params.ID %}
-  {% set LABEL = params.LABEL %}
+  {% set id = params.id %}
+  {% set label = params.label %}
   {% set application = params.application %}
   {% set validationErrors = params.validationErrors %}
   {% set submittedValues = params.submittedValues %}
 
   {{ govukInput({
-    id: ID,
-    name: ID,
-    value: submittedValues[ID] or application[ID],
+    id: id,
+    name: id,
+    value: submittedValues[id] or application[id],
     label: {
-      text: LABEL,
+      text: label,
       classes: "govuk-body govuk-!-font-weight-bold",
       attributes: {
-        "data-cy": ID + "-label"
+        "data-cy": id + "-label"
       }
     },
     classes: "govuk-input--width-20",
     attributes: {
-      "data-cy": ID
+      "data-cy": id
     },
-    errorMessage: validationErrors.errorList[ID] and {
-      text: validationErrors.errorList[ID].text,
+    errorMessage: validationErrors.errorList[id] and {
+      text: validationErrors.errorList[id].text,
       attributes: {
-        "data-cy": ID + "-error"
+        "data-cy": id + "-error"
       }
     }
   }) }}
