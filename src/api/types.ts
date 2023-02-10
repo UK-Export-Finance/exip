@@ -1,3 +1,5 @@
+import { ExporterUpdateInput } from '.keystone/types'; // eslint-disable-line
+
 interface ApplicationEligibility {
   id: string;
 }
@@ -18,14 +20,20 @@ interface ApplicationExporterBusiness {
   id: string;
 }
 
-interface Account {
+interface AccountInput {
   createdAt: Date;
   updatedAt: Date;
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  isActive?: boolean;
+  isVerified?: boolean;
+  verificationHash: string;
+  verificationExpiry: Date;
+}
+
+interface Account extends ExporterUpdateInput {
+  id?: string;
 }
 
 interface Application {
@@ -61,4 +69,8 @@ interface SicCodes {
   application: ConnectObj;
 }
 
-export { Account, Application, CompanyResponse, SicCodes };
+interface VerifyEmailAddressVariables {
+  token: string;
+}
+
+export { Account, AccountInput, Application, CompanyResponse, SicCodes, VerifyEmailAddressVariables };

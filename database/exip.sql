@@ -338,7 +338,7 @@ CREATE TABLE `Exporter` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `hash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `salt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `isActive` tinyint(1) NOT NULL DEFAULT '0',
+  `isVerified` tinyint(1) NOT NULL DEFAULT '0',
   `createdAt` datetime(3) DEFAULT NULL,
   `updatedAt` datetime(3) DEFAULT NULL,
   PRIMARY KEY (`id`)

@@ -3,7 +3,8 @@ import { mergeSchemas } from '@graphql-tools/schema';
 import axios from 'axios';
 import dotenv from 'dotenv';
 import crypto from 'crypto';
-import { PASSWORD } from './constants';
+import { ACCOUNT } from './constants';
+import { verifyAccountEmailAddress } from './custom-resolvers';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
 import { SicCodes } from './types';
@@ -13,16 +14,30 @@ dotenv.config();
 const username: any = process.env.COMPANIES_HOUSE_API_KEY;
 const companiesHouseURL: any = process.env.COMPANIES_HOUSE_API_URL;
 
+// TODO rename verifyEmail to verifyEmailAddress
+
+// TODO:
+// instead of this:
+// """ verify an email """   verifyEmail
+// should it be "verify account email" / "verify account" ?
+
+const { EMAIL, PASSWORD } = ACCOUNT;
+
+const {
+  RANDOM_BYTES_SIZE,
+  STRING_TYPE,
+  PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM },
+} = PASSWORD;
+
 export const extendGraphqlSchema = (schema: GraphQLSchema) =>
   mergeSchemas({
     schemas: [schema],
     typeDefs: `
-
       type Account {
         firstName: String
         lastName: String
         email: String
-        isActive: Boolean
+        isVerified: Boolean
       }
 
       input AccountInput {
@@ -107,11 +122,19 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         oldSicCodes: [OldSicCodes]
       }
 
+      type VerifyAccountEmailAddressResponse {
+        success: Boolean
+      }
+
       type Mutation {
         """ create an account """
         createAccount(
           data: AccountInput!
         ): Account
+        """ verify an an account's email address """
+        verifyAccountEmailAddress(
+          token: String!
+        ): VerifyAccountEmailAddressResponse
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -135,23 +158,22 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           try {
             const { firstName, lastName, email, password } = variables.data;
 
-            const {
-              RANDOM_BYTES_SIZE,
-              STRING_TYPE,
-              PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM },
-            } = PASSWORD;
-
             const salt = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
 
-            // TODO: use constants for salt/hash requirements.
-            const hash = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+            const passwordHash = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+
+            const verificationHash = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+
+            const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
 
             const account = {
               firstName,
               lastName,
               email,
               salt,
-              hash,
+              hash: passwordHash,
+              verificationHash,
+              verificationExpiry,
             };
 
             const response = await context.db.Exporter.createOne({
@@ -163,6 +185,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
             throw new Error(`Creating new exporter account ${err}`);
           }
         },
+        verifyAccountEmailAddress,
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);

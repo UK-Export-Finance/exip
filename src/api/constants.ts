@@ -20,13 +20,22 @@ export const APPLICATION = {
   },
 };
 
-export const PASSWORD = {
-  RANDOM_BYTES_SIZE: 32,
-  STRING_TYPE: 'hex',
-  PBKDF2: {
-    ITERATIONS: 10000,
-    KEY_LENGTH: 64,
-    DIGEST_ALGORITHM: 'sha512',
+export const ACCOUNT = {
+  EMAIL: {
+    VERIFICATION_EXPIRY: () => {
+      // 24 hours
+      const date = new Date();
+      return new Date(date.setDate(date.getDate() + 1));
+    },
+  },
+  PASSWORD: {
+    RANDOM_BYTES_SIZE: 32,
+    STRING_TYPE: 'hex',
+    PBKDF2: {
+      ITERATIONS: 10000,
+      KEY_LENGTH: 64,
+      DIGEST_ALGORITHM: 'sha512',
+    },
   },
 };
 
