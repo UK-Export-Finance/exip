@@ -43,7 +43,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES,
       expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,

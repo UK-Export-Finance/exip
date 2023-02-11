@@ -47,7 +47,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.CHECK_YOUR_ANSWERS,
       expectedBackLink: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,

@@ -43,7 +43,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT,
       expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED,

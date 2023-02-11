@@ -42,7 +42,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED,
       expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD,

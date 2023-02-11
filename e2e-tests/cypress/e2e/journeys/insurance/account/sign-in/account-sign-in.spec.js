@@ -40,7 +40,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: SIGN_IN_ROOT,
       expectedBackLink: ACCOUNT_TO_APPLY_ONLINE,

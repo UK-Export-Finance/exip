@@ -10,7 +10,7 @@ context('404 Page not found', () => {
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: '/test',
     });

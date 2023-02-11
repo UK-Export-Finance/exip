@@ -40,7 +40,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     });
 
     it('renders core page elements', () => {
-      cy.assertCorePageElements({
+      cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
         expectedBackLink: ROUTES.QUOTE.POLICY_TYPE,

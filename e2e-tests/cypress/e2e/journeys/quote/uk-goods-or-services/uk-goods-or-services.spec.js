@@ -31,7 +31,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
       expectedBackLink: ROUTES.QUOTE.EXPORTER_LOCATION,

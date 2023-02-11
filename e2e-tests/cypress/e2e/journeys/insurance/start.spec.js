@@ -19,7 +19,7 @@ context('Insurance Eligibility - start page', () => {
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: insuranceStartRoute,
       expectedBackLink: '#',

@@ -17,7 +17,7 @@ context('Insurance - page not found', () => {
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: invalidUrl,
     });

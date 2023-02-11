@@ -23,7 +23,7 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
       expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,

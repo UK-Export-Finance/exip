@@ -59,7 +59,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.YOUR_QUOTE,
       expectedBackLink: ROUTES.QUOTE.CHECK_YOUR_ANSWERS,

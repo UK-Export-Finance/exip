@@ -27,7 +27,7 @@ context('Get a quote via email exit page', () => {
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL,
       expectedBackLink: ROUTES.QUOTE.BUYER_COUNTRY,

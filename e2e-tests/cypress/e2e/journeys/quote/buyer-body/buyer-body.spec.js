@@ -23,7 +23,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.NEED_TO_START_AGAIN,
       expectedBackLink: ROUTES.QUOTE.BUYER_COUNTRY,

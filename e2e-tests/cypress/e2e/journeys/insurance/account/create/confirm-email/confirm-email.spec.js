@@ -27,7 +27,7 @@ context('Insurance - Account - Create - Confirm email page - I want to create an
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: CONFIRM_EMAIL,
       expectedBackLink: YOUR_DETAILS,

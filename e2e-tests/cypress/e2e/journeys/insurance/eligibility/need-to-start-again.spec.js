@@ -27,7 +27,7 @@ context('Insurance Eligibility - Need to start again exit page', () => {
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN,
       expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,

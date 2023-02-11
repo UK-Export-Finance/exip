@@ -1,6 +1,6 @@
 import { buyerCountryPage, submitButton } from '../../../pages/shared';
 import partials from '../../../partials';
-import { LINKS } from '../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import {
   checkInputHint,
@@ -9,7 +9,7 @@ import {
   checkFocusOnInputWhenClickingSummaryErrorMessage,
 } from '../../../../support/check-buyer-country-form';
 
-const CONTENT_STRINGS = PAGEES.BUYER_COUNTRY;
+const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
 context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based', () => {
   beforeEach(() => {
@@ -19,7 +19,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   });
 
   it('renders core page elements', () => {
-    cy.assertCorePageElements({
+    cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.BUYER_COUNTRY,
       expectedBackLink: LINKS.EXTERNAL.BEFORE_YOU_START,
