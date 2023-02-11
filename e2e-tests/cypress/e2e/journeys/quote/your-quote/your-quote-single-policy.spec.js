@@ -58,25 +58,12 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 60,
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.QUOTE.YOUR_QUOTE,
+      expectedBackLink: ROUTES.QUOTE.CHECK_YOUR_ANSWERS,
     });
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
   });
 
   it('should render a header with href to quote start', () => {

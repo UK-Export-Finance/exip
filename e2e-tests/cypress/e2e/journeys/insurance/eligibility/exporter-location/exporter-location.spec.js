@@ -1,14 +1,8 @@
 import {
-  heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
+  yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
-import {
-  ORGANISATION,
-  BUTTONS,
-  LINKS,
-  PAGES,
-  ERROR_MESSAGES,
-} from '../../../../../../content-strings';
+import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
@@ -28,45 +22,17 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
     cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,
+      expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+      assertSubmitButton: true,
     });
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
   });
 
   it('should render a header with href to insurance start', () => {
     partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    partials.backLink().click();
-
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders yes and no radio buttons', () => {
@@ -77,12 +43,6 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
     noRadio().should('exist');
 
     cy.checkText(noRadio(), 'No');
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   describe('form submission', () => {

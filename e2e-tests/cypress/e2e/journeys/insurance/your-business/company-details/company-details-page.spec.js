@@ -1,13 +1,11 @@
 import { companyDetails } from '../../../../pages/your-business';
 import partials from '../../../../partials';
-import {
-  heading, submitButton, saveAndBackButton,
-} from '../../../../pages/shared';
-import {
-  PAGES, BUTTONS, LINKS,
-} from '../../../../../../content-strings';
+import { saveAndBackButton } from '../../../../pages/shared';
+import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+
+const { ROOT } = ROUTES.INSURANCE;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS;
 
@@ -36,7 +34,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
-      const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
       cy.navigateToUrl(url);
 
@@ -49,40 +47,21 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 93,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: `${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`,
+      expectedBackLink: `${ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
+      assertSubmitButton: true,
     });
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
   });
 
   it('should render a header with href to insurance start', () => {
     partials.header.serviceName().should('have.attr', 'href', insuranceStart);
   });
 
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-  });
-
-  it('should display the headings correctly', () => {
+  it('renders a heading caption', () => {
     cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('should display the companies house search box', () => {
@@ -141,9 +120,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     cy.checkAriaLabel(companyDetails.phoneNumber(), FIELDS[PHONE_NUMBER].LABEL);
   });
 
-  it('should display the continue and save and go back button', () => {
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
-
+  it('should display save and go back button', () => {
     cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 });

@@ -1,8 +1,8 @@
 import { broker } from '../../../../pages/your-business';
 import partials from '../../../../partials';
-import { submitButton, saveAndBackButton } from '../../../../pages/shared';
+import { saveAndBackButton } from '../../../../pages/shared';
 import {
-  PAGES, BUTTONS, LINKS, ERROR_MESSAGES,
+  PAGES, BUTTONS, ERROR_MESSAGES,
 } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/exporter-business';
@@ -30,8 +30,6 @@ const {
     BROKER,
   },
 } = ROUTES.INSURANCE;
-
-const insuranceStart = ROUTES.INSURANCE.START;
 
 const { taskList } = partials.insurancePartials;
 
@@ -75,40 +73,22 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      // accessibility threshold is reduced here because
-      // the radio component from design system has an invalid aria attribute.
-      // this is out of our control
-      accessibility: 90,
-      performance: 75,
-      'best-practices': 93,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: `${ROOT}/${referenceNumber}${BROKER}`,
+      expectedBackLink: `${ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
+      assertSubmitButton: true,
+      lightHouseThresholds: {
+        // accessibility threshold is reduced here because
+        // the radio component from design system has an invalid aria attribute.
+        // this is out of our control
+        accessibility: 90,
+      },
     });
   });
 
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStart);
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-  });
-
-  it('should display the headings correctly', () => {
+  it('renders a heading caption', () => {
     cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
   });
 
@@ -151,9 +131,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     broker[POSTCODE].input().should('exist');
   });
 
-  it('should display the continue and save and go back button', () => {
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
-
+  it('should display save and go back button', () => {
     cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 

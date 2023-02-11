@@ -1,6 +1,5 @@
 import {
   headingCaption,
-  heading,
   inlineErrorMessage,
   submitButton,
   saveAndBackButton,
@@ -10,8 +9,6 @@ import partials from '../../../../partials';
 import {
   BUTTONS,
   ERROR_MESSAGES,
-  LINKS,
-  ORGANISATION,
   PAGES,
   TASKS,
 } from '../../../../../../content-strings';
@@ -60,12 +57,12 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`,
+      expectedBackLink: `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
+      assertSubmitButton: true,
     });
   });
 
@@ -73,38 +70,8 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    partials.backLink().click();
-
-    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
-
-    cy.url().should('eq', expectedUrl);
-
-    goToPageDirectly(referenceNumber);
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a page title and heading with caption', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
+  it('renders a heading caption', () => {
     cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders an intro paragraph', () => {
@@ -133,12 +100,6 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     cy.checkText(multiplePolicyField.hintList.item2(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[1]);
 
     cy.checkText(multiplePolicyField.hintList.item3(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[2]);
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   it('renders a `save and back` button', () => {

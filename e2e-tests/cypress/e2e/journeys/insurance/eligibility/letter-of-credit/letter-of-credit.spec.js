@@ -1,14 +1,8 @@
 import {
-  heading, yesRadio, yesRadioInput, noRadio, noRadioInput, inlineErrorMessage, submitButton,
+  yesRadio, yesRadioInput, noRadio, noRadioInput, inlineErrorMessage, submitButton,
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
-import {
-  ORGANISATION,
-  BUTTONS,
-  LINKS,
-  PAGES,
-  ERROR_MESSAGES,
-} from '../../../../../../content-strings';
+import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
@@ -48,50 +42,17 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT,
+      expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED,
+      assertSubmitButton: true,
     });
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    partials.backLink().click();
-
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED}`;
-
-    cy.url().should('include', expectedUrl);
-
-    // go back to page
-    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT);
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
   });
 
   it('should render a header with href to insurance start', () => {
     partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `yes` radio button', () => {
@@ -104,12 +65,6 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
     noRadio().should('exist');
 
     cy.checkText(noRadio(), 'No');
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   describe('form submission', () => {

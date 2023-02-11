@@ -1,12 +1,9 @@
 import {
-  heading, yesNoRadioHint, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
+  yesNoRadioHint, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import {
-  ORGANISATION,
-  BUTTONS,
   FIELDS,
-  LINKS,
   PAGES,
   ERROR_MESSAGES,
 } from '../../../../../../content-strings';
@@ -45,48 +42,17 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES,
+      expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,
+      assertSubmitButton: true,
     });
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    partials.backLink().click();
-
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
-
-    // go back to page
-    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
   });
 
   it('should render a header with href to insurance start', () => {
     partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders radio button hint', () => {
@@ -105,12 +71,6 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     noRadio().should('exist');
 
     cy.checkText(noRadio(), 'No');
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   describe('expandable details - how to calculate percentage', () => {

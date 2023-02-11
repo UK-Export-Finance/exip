@@ -1,13 +1,7 @@
-import {
-  heading, submitButton,
-} from '../../../pages/shared';
+import { submitButton } from '../../../pages/shared';
 import { insurance } from '../../../pages';
 import partials from '../../../partials';
-import {
-  ORGANISATION,
-  LINKS,
-  PAGES,
-} from '../../../../../content-strings';
+import { PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
@@ -38,50 +32,17 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ELIGIBLE_TO_APPLY_ONLINE,
+      expectedBackLink: COMPANIES_HOUSE_NUMBER,
+      assertSubmitButton: true,
     });
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    partials.backLink().click();
-
-    const expectedUrl = `${Cypress.config('baseUrl')}${COMPANIES_HOUSE_NUMBER}`;
-
-    cy.url().should('include', expectedUrl);
-
-    // go back to page
-    cy.navigateToUrl(ELIGIBLE_TO_APPLY_ONLINE);
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
   });
 
   it('should render a header with href to insurance start', () => {
     partials.header.serviceName().should('have.attr', 'href', START);
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders inset text', () => {
@@ -94,12 +55,6 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     insurance.eligibility.eligibleToApplyOnlinePage.body().should('exist');
 
     cy.checkText(insurance.eligibility.eligibleToApplyOnlinePage.body(), CONTENT_STRINGS.BODY);
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), CONTENT_STRINGS.SUBMIT_BUTTON);
   });
 
   describe('form submission', () => {

@@ -1,13 +1,14 @@
-import { heading } from '../../pages/shared';
 import { pageNotFoundPage } from '../../pages';
-import { ORGANISATION, PAGES } from '../../../../content-strings';
+import { PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
 
 context('Insurance - page not found', () => {
+  const invalidUrl = `${ROUTES.INSURANCE.ROOT}/invalid-ref-number${ROUTES.INSURANCE.ALL_SECTIONS}`;
+
   before(() => {
-    cy.navigateToUrl(`${ROUTES.INSURANCE.ROOT}/invalid-ref-number${ROUTES.INSURANCE.ALL_SECTIONS}`);
+    cy.navigateToUrl(invalidUrl);
   });
 
   beforeEach(() => {
@@ -15,32 +16,11 @@ context('Insurance - page not found', () => {
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: invalidUrl,
     });
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `typed` and `pasted` text', () => {

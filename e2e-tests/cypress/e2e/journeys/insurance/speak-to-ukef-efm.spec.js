@@ -1,9 +1,6 @@
-import {
-  heading, yesRadio, submitButton,
-} from '../../pages/shared';
+import { yesRadio, submitButton } from '../../pages/shared';
 import { insurance } from '../../pages';
-import partials from '../../partials';
-import { LINKS, ORGANISATION, PAGES } from '../../../../content-strings';
+import { PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 import {
   completeStartForm,
@@ -16,8 +13,6 @@ import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.SPEAK_TO_UKEF_EFM;
 const { ACTIONS } = CONTENT_STRINGS;
-
-const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - speak to UKEF EFM exit page', () => {
   beforeEach(() => {
@@ -38,46 +33,12 @@ context('Insurance - speak to UKEF EFM exit page', () => {
     cy.url().should('include', ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM);
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 60,
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM,
+      expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD,
     });
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`;
-
-    partials.backLink().should('have.attr', 'href', expected);
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `find your nearest EFM` copy with link', () => {

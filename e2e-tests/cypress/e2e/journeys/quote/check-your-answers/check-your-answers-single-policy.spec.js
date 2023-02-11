@@ -1,8 +1,7 @@
-import { heading, submitButton } from '../../../pages/shared';
+import { submitButton } from '../../../pages/shared';
 import { checkYourAnswersPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import {
-  ORGANISATION,
   FIELDS,
   LINKS,
   PAGES,
@@ -47,50 +46,17 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 60,
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.QUOTE.CHECK_YOUR_ANSWERS,
+      expectedBackLink: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+      assertSubmitButton: true,
     });
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY}`;
-    partials.backLink().should('have.attr', 'href', expected);
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), CONTENT_STRINGS.SUBMIT_BUTTON);
   });
 
   it('should render a header with href to quote start', () => {
     partials.header.serviceName().should('have.attr', 'href', startRoute);
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   context('export summary list', () => {

@@ -1,14 +1,8 @@
 import {
-  heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
+  yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
 } from '../../../pages/shared';
 import partials from '../../../partials';
-import {
-  ORGANISATION,
-  BUTTONS,
-  LINKS,
-  PAGES,
-  ERROR_MESSAGES,
-} from '../../../../../content-strings';
+import { PAGES, ERROR_MESSAGES } from '../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../support/quote/forms';
@@ -36,48 +30,17 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 60,
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
+      expectedBackLink: ROUTES.QUOTE.EXPORTER_LOCATION,
+      assertSubmitButton: true,
     });
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    partials.backLink().click();
-
-    cy.url().should('include', ROUTES.QUOTE.EXPORTER_LOCATION);
-
-    // go back to page
-    cy.navigateToUrl(ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
   });
 
   it('should render a header with href to quote start', () => {
     partials.header.serviceName().should('have.attr', 'href', startRoute);
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `yes` radio button', () => {
@@ -109,12 +72,6 @@ context('UK goods or services page - as an exporter, I want to check if my expor
       const expected = CONTENT_STRINGS.WILL_CALCULATE_THOROUGHLY;
       cy.checkText(partials.ukGoodsOrServicesDescription.calculateThoroughly(), expected);
     });
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   describe('form submission', () => {

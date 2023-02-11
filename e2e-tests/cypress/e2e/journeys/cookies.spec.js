@@ -1,8 +1,8 @@
-import { heading, inlineErrorMessage, submitButton } from '../pages/shared';
+import { inlineErrorMessage, submitButton } from '../pages/shared';
 import { cookiesPage } from '../pages';
 import partials from '../partials';
 import {
-  BUTTONS, ERROR_MESSAGES, FIELDS, LINKS, PAGES,
+  BUTTONS, ERROR_MESSAGES, FIELDS, PAGES,
 } from '../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../constants';
 
@@ -19,34 +19,12 @@ context('Cookies page', () => {
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 65,
-      'best-practices': 100,
-      seo: 60,
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.COOKIES,
+      expectedBackLink: ROUTES.QUOTE.BUYER_COUNTRY,
     });
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
-
-    partials.backLink().should('have.attr', 'href', expected);
-  });
-
-  it('renders a heading', () => {
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders a intro/description', () => {

@@ -5,22 +5,13 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
-import { heading, submitButton } from '../../../pages/shared';
+import { submitButton } from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
-import partials from '../../../partials';
-import {
-  ORGANISATION,
-  BUTTONS,
-  LINKS,
-  FIELDS,
-  PAGES,
-} from '../../../../../content-strings';
+import { FIELDS, PAGES } from '../../../../../content-strings';
 import { ROUTES, FIELD_IDS, SUPPORTED_CURRENCIES } from '../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
-
-const startRoute = ROUTES.QUOTE.START;
 
 context('Tell us about your single policy page - as an exporter, I want to provide my Export insurance policy details', () => {
   describe('rendering', () => {
@@ -41,48 +32,13 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       Cypress.Cookies.preserveOnce('connect.sid');
     });
 
-    it('passes the audits', () => {
-      cy.lighthouse({
-        // accessibility threshold is reduced here because
-        // the radio component from design system has an invalid aria attribute.
-        // this is out of our control
-        accessibility: 92,
-        performance: 75,
-        'best-practices': 100,
-        seo: 60,
+    it('renders core page elements', () => {
+      cy.assertCorePageElements({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+        expectedBackLink: ROUTES.QUOTE.POLICY_TYPE,
+        assertSubmitButton: true,
       });
-    });
-
-    it('should render a header with href to quote start', () => {
-      partials.header.serviceName().should('have.attr', 'href', startRoute);
-    });
-
-    it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
-      cy.checkText(partials.backLink(), LINKS.BACK);
-
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.POLICY_TYPE}`;
-
-      partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('renders an analytics cookies consent banner that can be accepted', () => {
-      cy.checkAnalyticsCookiesConsentAndAccept();
-    });
-
-    it('renders an analytics cookies consent banner that can be rejected', () => {
-      cy.rejectAnalyticsCookies();
-    });
-
-    it('renders a phase banner', () => {
-      cy.checkPhaseBanner();
-    });
-
-    it('renders a page title and heading', () => {
-      const expectedPageTitle = `${CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE} - ${ORGANISATION}`;
-      cy.title().should('eq', expectedPageTitle);
-
-      cy.checkText(heading(), CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE);
     });
 
     it('renders `currency and amount` legend', () => {
@@ -156,12 +112,6 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       field.hint().should('not.exist');
 
       field.input().should('not.exist');
-    });
-
-    it('renders a submit button', () => {
-      submitButton().should('exist');
-
-      cy.checkText(submitButton(), BUTTONS.CONTINUE);
     });
   });
 

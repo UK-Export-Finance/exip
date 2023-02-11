@@ -1,8 +1,8 @@
 import { BUTTONS, LINKS, ORGANISATION } from '../../content-strings';
 import partials from '../e2e/partials';
-import { submitButton } from '../e2e/pages/shared';
+import { heading, submitButton } from '../e2e/pages/shared';
 
-const lighthouseAudit = (lightHouseThresholds) => {
+const lighthouseAudit = (lightHouseThresholds = {}) => {
   cy.lighthouse({
     accessibility: 100,
     performance: 75,
@@ -26,14 +26,6 @@ const backLink = (currentHref, expectedHref) => {
   cy.navigateToUrl(`${Cypress.config('baseUrl')}${currentHref}`);
 };
 
-const cookiesConsentBannerCanBeAccepted = () => {
-  cy.checkAnalyticsCookiesConsentAndAccept();
-};
-
-const cookiesConsentBannerCanBeRejected = () => {
-  cy.rejectAnalyticsCookies();
-};
-
 const pageTitleAndHeading = (pageTitle) => {
   const expectedPageTitle = `${pageTitle} - ${ORGANISATION}`;
   cy.title().should('eq', expectedPageTitle);
@@ -46,18 +38,25 @@ export default ({
   currentHref,
   expectedBackLink,
   assertSubmitButton = false,
-  lightHouseThresholds
+  lightHouseThresholds,
 }) => {
+  // run lighthouse audit
   lighthouseAudit(lightHouseThresholds);
 
+  // check back link
   backLink(currentHref, expectedBackLink);
 
+  // check analytics cookie banner
   cy.checkAnalyticsCookiesConsentAndAccept();
-
   cy.rejectAnalyticsCookies();
 
+  // check phase banner
   cy.checkPhaseBanner();
 
+  // check page title and heading
+  pageTitleAndHeading(pageTitle);
+
+  // check submit button
   if (assertSubmitButton) {
     submitButton().should('exist');
 

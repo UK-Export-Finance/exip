@@ -1,14 +1,13 @@
-import {
-  submitButton,
-  saveAndBackButton,
-} from '../../../pages/shared';
+import { saveAndBackButton } from '../../../pages/shared';
 import partials from '../../../partials';
 import { companyOrOrganisationPage } from '../../../pages/insurance/your-buyer';
-import { BUTTONS } from '../../../../../content-strings';
+import { BUTTONS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROOT } from '../../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
+
+const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_OR_ORGANISATION;
 
 const {
   COMPANY_OR_ORGANISATION: {
@@ -45,16 +44,13 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
+  it('renders core page elements', () => {
+    cy.assertCorePageElements({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`,
+      expectedBackLink: `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
+      assertSubmitButton: true,
+    });
   });
 
   it('renders an `organisation or company name` label, and input', () => {
@@ -83,12 +79,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
     field.input().should('exist');
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   it('renders a `save and back` button', () => {
