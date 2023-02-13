@@ -28,7 +28,9 @@ const estimatedAnnualTurnover = (responseBody: RequestBody, errors: object) => {
   }
 
   const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
+
   const allowNegativeValue = true;
+
   return wholeNumberValidation(responseBody, errors, errorMessage, FIELD_ID, allowNegativeValue);
 };
 
