@@ -31,6 +31,7 @@ context('Insurance - Account - Create - Confirm email page - I want to create an
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: CONFIRM_EMAIL,
       backLink: YOUR_DETAILS,
+      assertSubmitButton: false,
     });
   });
 

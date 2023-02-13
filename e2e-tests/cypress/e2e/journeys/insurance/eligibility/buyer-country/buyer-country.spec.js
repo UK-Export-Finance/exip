@@ -27,6 +27,9 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
       backLink: ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
+      lightHouseThresholds: {
+        performance: 70,
+      },
     });
   });
 

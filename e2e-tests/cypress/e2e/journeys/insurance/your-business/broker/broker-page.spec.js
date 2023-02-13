@@ -28,6 +28,7 @@ const {
   START,
   EXPORTER_BUSINESS: {
     BROKER,
+    TURNOVER,
   },
 } = ROUTES.INSURANCE;
 
@@ -77,7 +78,8 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${BROKER}`,
-      backLink: `${ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
+      backLink: `${ROOT}/${referenceNumber}${TURNOVER}`,
+      assertSubmitButton: true,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.
@@ -95,8 +97,6 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     const fieldId = USING_BROKER;
     const field = broker[fieldId];
 
-    cy.checkText(field.heading(), CONTENT_STRINGS.PAGE_TITLE);
-
     field.yesRadioInput().should('exist');
     cy.checkAriaLabel(field.yesRadioInput(), `${CONTENT_STRINGS.PAGE_TITLE} yes radio`);
 
@@ -109,7 +109,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     const field = broker[fieldId];
     field.yesRadioInput().click();
 
-    cy.checkText(broker[HEADING].heading(), FIELDS.BROKER[HEADING].HEADING);
+    cy.checkText(broker[HEADING](), FIELDS.BROKER[HEADING].HEADING);
 
     cy.checkText(broker[NAME].label(), FIELDS.BROKER[NAME].LABEL);
     broker[NAME].input().should('exist');

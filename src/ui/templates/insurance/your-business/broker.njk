@@ -6,8 +6,12 @@
 {% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
 {% import '../../components/address-fields.njk' as addressInput %}
 
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
 {% set brokerHTML %}
-  <h2 class="govuk-heading-m govuk-!-margin-bottom-5 govuk-!-margin-top-5" data-cy="{{FIELDS.HEADING.ID}}-heading">{{ FIELDS.HEADING.HEADING }}</h2>
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-5 govuk-!-margin-top-5" data-cy="{{ FIELDS.HEADING.ID }}-heading">{{ FIELDS.HEADING.HEADING }}</h2>
 
   {{ govukInput({
     id: FIELDS.NAME.ID,
@@ -82,7 +86,6 @@
           submittedAnswer: submittedValues[FIELDS.USING_BROKER.ID],
           errorMessage: validationErrors.errorList[FIELDS.USING_BROKER.ID],
           headerClass: 'govuk-fieldset__legend--xl',
-          datacyHeading: FIELDS.USING_BROKER.ID + '-heading',
           yesNoValueString: true,
           conditionalYesHtml: brokerHTML,
           horizontalRadios: true

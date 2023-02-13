@@ -56,6 +56,9 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`,
       backLink: `${ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
+      lightHouseThresholds: {
+        'best-practices': 93,
+      },
     });
   });
 

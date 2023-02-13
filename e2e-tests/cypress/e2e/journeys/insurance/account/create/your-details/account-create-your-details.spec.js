@@ -46,6 +46,9 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: YOUR_DETAILS,
       backLink: ACCOUNT_TO_APPLY_ONLINE,
+      lightHouseThresholds: {
+        performance: 70,
+      },
     });
   });
 

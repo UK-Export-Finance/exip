@@ -15,15 +15,12 @@ const {
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const broker = {
+  [HEADING]: () => cy.get(`[data-cy="${HEADING}-heading`),
   [USING_BROKER]: {
-    heading: () => cy.get(`[data-cy="${USING_BROKER}-heading`),
     value: () => cy.get(`[data-cy="${USING_BROKER}`),
     yesRadioInput: () => yesRadioInput().eq(0),
     noRadioInput: () => noRadioInput().eq(0),
     errorMessage: () => cy.get(`[data-cy="${USING_BROKER}-error`),
-  },
-  [HEADING]: {
-    heading: () => cy.get(`[data-cy="${HEADING}-heading`),
   },
   [NAME]: {
     label: () => cy.get(`[data-cy="${NAME}-label`),
