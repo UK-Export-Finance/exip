@@ -73,7 +73,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
       field.input().should('exist');
     });
 
-    it('should render a revreal button that shows/reveals the password input', () => {
+    it('should render a reveal button that shows/reveals the password input', () => {
       cy.assertPasswordRevealButton();
     });
   });

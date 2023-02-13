@@ -105,7 +105,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
       field.input().should('exist');
     });
 
-    it('should render a revreal button that shows/reveals the password input', () => {
+    it('should render a reveal button that shows/reveals the password input', () => {
       cy.assertPasswordRevealButton();
     });
   });
