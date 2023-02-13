@@ -37,7 +37,7 @@ context('Insurance - speak to UKEF EFM exit page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM,
-      expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD,
+      backLink: ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD,
       assertSubmitButton: false,
     });
   });

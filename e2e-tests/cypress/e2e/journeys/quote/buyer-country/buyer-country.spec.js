@@ -22,7 +22,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.BUYER_COUNTRY,
-      expectedBackLink: LINKS.EXTERNAL.BEFORE_YOU_START,
+      backLink: LINKS.EXTERNAL.BEFORE_YOU_START,
     });
   });
 

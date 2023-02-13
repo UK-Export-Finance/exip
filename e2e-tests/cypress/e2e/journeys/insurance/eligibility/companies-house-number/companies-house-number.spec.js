@@ -50,7 +50,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER,
-      expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD,
+      backLink: ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD,
     });
   });
 

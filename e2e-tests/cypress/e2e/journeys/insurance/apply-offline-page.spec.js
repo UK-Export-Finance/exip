@@ -30,7 +30,7 @@ context('Insurance - apply offline exit page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.APPLY_OFFLINE,
-      expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+      backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
       assertSubmitButton: false,
     });
   });

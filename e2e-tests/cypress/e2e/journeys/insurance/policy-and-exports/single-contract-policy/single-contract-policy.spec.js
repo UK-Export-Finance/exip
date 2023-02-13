@@ -84,7 +84,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`,
-      expectedBackLink: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
     });
   });
 

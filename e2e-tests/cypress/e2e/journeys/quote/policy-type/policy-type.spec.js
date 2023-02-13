@@ -42,7 +42,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: ROUTES.QUOTE.POLICY_TYPE,
-        expectedBackLink: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
+        backLink: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
         lightHouseThresholds: {
           // accessibility threshold is reduced here because
           // the radio component from design system has an invalid aria attribute.

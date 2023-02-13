@@ -88,7 +88,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`,
-      expectedBackLink: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
     });
   });
 

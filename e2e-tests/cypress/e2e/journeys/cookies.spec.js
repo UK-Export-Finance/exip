@@ -23,7 +23,7 @@ context('Cookies page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.COOKIES,
-      expectedBackLink: ROUTES.QUOTE.BUYER_COUNTRY,
+      backLink: ROUTES.QUOTE.BUYER_COUNTRY,
     });
   });
 

@@ -41,10 +41,21 @@ const pageTitleAndHeading = (pageTitle) => {
   cy.checkText(heading(), pageTitle);
 };
 
-export default ({
+/**
+ * corePageChecks
+ * Check core/common page elements.
+ * @param {String} pageTitle - Expected page title
+ * @param {String} currentHref - Expected page HREF
+ * @param {String} backLink - Expected "back" HREF
+ * @param {Boolean} assertSubmitButton - Should check submit button (some pages don't have a submit button)
+ * @param {String} submitButtonCopy - Expected submit button copy
+ * @param {Boolean} assertBackLink - Should check "back" link (some pages don't have a back link)
+ * @param {Object} lightHouseThresholds - Custom expected lighthouse thresholds
+ */
+const corePageChecks = ({
   pageTitle,
   currentHref,
-  expectedBackLink,
+  backLink,
   assertSubmitButton = true,
   submitButtonCopy = BUTTONS.CONTINUE,
   assertBackLink = true,
@@ -55,7 +66,7 @@ export default ({
 
   if (assertBackLink) {
     // check back link
-    backLink(currentHref, expectedBackLink);
+    backLink(currentHref, backLink);
   }
 
   // check analytics cookie banner
@@ -75,3 +86,5 @@ export default ({
     cy.checkText(submitButton(), submitButtonCopy);
   }
 };
+
+export default corePageChecks;

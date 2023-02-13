@@ -31,7 +31,7 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY,
-      expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+      backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
     });
   });
 

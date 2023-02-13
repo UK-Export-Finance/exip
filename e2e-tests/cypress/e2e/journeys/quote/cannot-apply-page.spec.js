@@ -29,7 +29,7 @@ context('Cannot apply exit page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.CANNOT_APPLY,
-      expectedBackLink: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
+      backLink: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
       assertSubmitButton: false,
     });
   });

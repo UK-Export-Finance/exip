@@ -54,7 +54,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD,
-      expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT,
+      backLink: ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT,
     });
   });
 

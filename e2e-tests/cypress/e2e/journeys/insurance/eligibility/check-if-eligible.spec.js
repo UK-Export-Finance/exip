@@ -26,7 +26,7 @@ context('Insurance Eligibility - check if eligible page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
-      expectedBackLink: insuranceStartRoute,
+      backLink: insuranceStartRoute,
     });
   });
 

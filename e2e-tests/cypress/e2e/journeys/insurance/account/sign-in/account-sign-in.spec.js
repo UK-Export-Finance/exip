@@ -43,7 +43,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: SIGN_IN_ROOT,
-      expectedBackLink: ACCOUNT_TO_APPLY_ONLINE,
+      backLink: ACCOUNT_TO_APPLY_ONLINE,
     });
   });
 
