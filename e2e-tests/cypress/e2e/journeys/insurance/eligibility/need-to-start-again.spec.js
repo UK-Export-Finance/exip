@@ -1,5 +1,5 @@
 import { submitButton, needToStartAgainPage } from '../../../pages/shared';
-import { BUTTONS, LINKS, PAGES } from '../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import partials from '../../../partials';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';

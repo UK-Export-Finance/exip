@@ -2,11 +2,7 @@ import {
   yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
 } from '../../../pages/shared';
 import partials from '../../../partials';
-import {
-  ERROR_MESSAGES,
-  LINKS,
-  PAGES,
-} from '../../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 

@@ -12,7 +12,7 @@ const lighthouseAudit = (lightHouseThresholds = {}) => {
   });
 };
 
-const backLink = (currentHref, expectedHref) => {
+const checkBackLink = (currentHref, expectedHref) => {
   partials.backLink().should('exist');
   cy.checkText(partials.backLink(), LINKS.BACK);
 
@@ -34,7 +34,7 @@ const backLink = (currentHref, expectedHref) => {
   cy.navigateToUrl(`${Cypress.config('baseUrl')}${currentHref}`);
 };
 
-const pageTitleAndHeading = (pageTitle) => {
+const checkPageTitleAndHeading = (pageTitle) => {
   const expectedPageTitle = `${pageTitle} - ${ORGANISATION}`;
   cy.title().should('eq', expectedPageTitle);
 
@@ -66,7 +66,7 @@ const corePageChecks = ({
 
   if (assertBackLink) {
     // check back link
-    backLink(currentHref, backLink);
+    checkBackLink(currentHref, backLink);
   }
 
   // check analytics cookie banner
@@ -77,7 +77,7 @@ const corePageChecks = ({
   cy.checkPhaseBanner();
 
   // check page title and heading
-  pageTitleAndHeading(pageTitle);
+  checkPageTitleAndHeading(pageTitle);
 
   if (assertSubmitButton) {
     // check submit button
