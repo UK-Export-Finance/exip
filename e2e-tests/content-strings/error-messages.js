@@ -127,6 +127,9 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.TOWN]: {
         IS_EMPTY: 'Enter the town or city for your broker',
       },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.EMAIL]: {
+        INCORRECT_FORMAT: 'Enter the email address for the broker in the correct format - for example name@example.com',
+      },
     },
     POLICY_AND_EXPORTS: {
       // TODO move to TYPE_OF_POLICY: {},

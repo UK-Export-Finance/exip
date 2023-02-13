@@ -11,6 +11,7 @@ const {
     NAME,
     ADDRESS_LINE_1,
     TOWN,
+    EMAIL,
   },
 } = FIELD_IDS;
 
@@ -61,7 +62,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
   describe('when the yes radio is selected and no required fields are entered', () => {
     // for error assertion - common fields
-    const expectedErrorsCount = 3;
+    const expectedErrorsCount = 4;
 
     it('should display validation errors', () => {
       const field = broker[FIELD_ID];
@@ -76,6 +77,9 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
       // TOWN error check
       cy.submitAndAssertFieldErrors(broker[TOWN], null, 2, expectedErrorsCount, BROKER_ERRORS[TOWN].IS_EMPTY);
+
+      // EMAIL error check
+      cy.submitAndAssertFieldErrors(broker[EMAIL], null, 3, expectedErrorsCount, BROKER_ERRORS[EMAIL].INCORRECT_FORMAT);
     });
   });
 
@@ -88,6 +92,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       broker[NAME].input().clear().type('name');
       broker[ADDRESS_LINE_1].input().clear().type('Address line 1');
       broker[TOWN].input().clear().type('town');
+      broker[EMAIL].input().clear().type('test@test.com');
 
       submitButton().click();
 
