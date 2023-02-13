@@ -78,27 +78,8 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       // TOWN error check
       cy.submitAndAssertFieldErrors(broker[TOWN], null, 2, expectedErrorsCount, BROKER_ERRORS[TOWN].IS_EMPTY);
 
-      // // EMAIL error check
-      cy.submitAndAssertFieldErrors(broker[EMAIL], null, 3, expectedErrorsCount, BROKER_ERRORS[EMAIL].IS_EMPTY);
-    });
-  });
-
-  describe(`when the ${EMAIL} input is in the wrong format`, () => {
-    // for error assertion - common fields
-    const expectedErrorsCount = 1;
-
-    it(`should display a validation error for ${EMAIL}`, () => {
-      const field = broker[FIELD_ID];
-
-      field.yesRadioInput().click();
-
-      broker[NAME].input().clear().type('name');
-      broker[ADDRESS_LINE_1].input().clear().type('Address line 1');
-      broker[TOWN].input().clear().type('town');
-
-      const inputValue = 'test@test';
-      // // EMAIL error check
-      cy.submitAndAssertFieldErrors(broker[EMAIL], inputValue, 0, expectedErrorsCount, BROKER_ERRORS[EMAIL].IS_EMPTY);
+      // EMAIL error check
+      cy.submitAndAssertFieldErrors(broker[EMAIL], null, 3, expectedErrorsCount, BROKER_ERRORS[EMAIL].INCORRECT_FORMAT);
     });
   });
 

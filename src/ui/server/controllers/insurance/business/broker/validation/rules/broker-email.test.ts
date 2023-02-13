@@ -2,7 +2,6 @@ import brokerEmail from './broker-email';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
 import { RequestBody } from '../../../../../../../types';
-import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 import emailValidation from '../../../../../../shared-validation/email';
 
 const {
@@ -22,49 +21,61 @@ describe('controllers/insurance/business/broker/validation/rules/broker-email', 
     [EMAIL]: '',
   } as RequestBody;
 
-  it('should return the result of emptyFieldValidation if using broker is "Yes" and email is empty', () => {
-    mockBody[USING_BROKER] = 'Yes';
+  describe('when using broker is "Yes"', () => {
+    describe('if email is empty', () => {
+      it('should return the result of emailValidation', () => {
+        mockBody[USING_BROKER] = 'Yes';
 
-    const response = brokerEmail(mockBody, mockErrors);
+        const response = brokerEmail(mockBody, mockErrors);
 
-    const expected = emptyFieldValidation(mockBody, EMAIL, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+        const expected = emailValidation(EMAIL, mockBody[EMAIL], ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
-    expect(response).toEqual(expected);
+        expect(response).toEqual(expected);
+      });
+    });
+
+    describe('if email is the incorrect format', () => {
+      it('should return the result of emailValidation', () => {
+        mockBody[USING_BROKER] = 'Yes';
+        mockBody[EMAIL] = 'aaa.com';
+
+        const response = brokerEmail(mockBody, mockErrors);
+
+        const expected = emailValidation(EMAIL, mockBody[EMAIL], ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
+
+        expect(response).toEqual(expected);
+      });
+    });
+
+    describe('if email is valid', () => {
+      it('should return the mockErrors', () => {
+        mockBody[USING_BROKER] = 'Yes';
+        mockBody[EMAIL] = 'test@test.com';
+
+        const response = brokerEmail(mockBody, mockErrors);
+
+        expect(response).toEqual(mockErrors);
+      });
+    });
   });
 
-  it('should return the result of emailValidation if using broker is "Yes" and email is the incorrect format', () => {
-    mockBody[USING_BROKER] = 'Yes';
-    mockBody[EMAIL] = 'aaa.com';
+  describe('if using broker is "No"', () => {
+    it('should return the mockErrors"', () => {
+      mockBody[USING_BROKER] = 'No';
 
-    const response = brokerEmail(mockBody, mockErrors);
+      const response = brokerEmail(mockBody, mockErrors);
 
-    const expected = emailValidation(EMAIL, mockBody[EMAIL], ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
-
-    expect(response).toEqual(expected);
+      expect(response).toEqual(mockErrors);
+    });
   });
 
-  it('should return the mockErrors if using broker is "Yes" and email is valid', () => {
-    mockBody[USING_BROKER] = 'Yes';
-    mockBody[EMAIL] = 'test@test.com';
+  describe('if using broker is "null"', () => {
+    it('should return the mockErrors', () => {
+      mockBody[USING_BROKER] = null;
 
-    const response = brokerEmail(mockBody, mockErrors);
+      const response = brokerEmail(mockBody, mockErrors);
 
-    expect(response).toEqual(mockErrors);
-  });
-
-  it('should return the mockErrors if using broker is "No"', () => {
-    mockBody[USING_BROKER] = 'No';
-
-    const response = brokerEmail(mockBody, mockErrors);
-
-    expect(response).toEqual(mockErrors);
-  });
-
-  it('should return the mockErrors if using broker is "null"', () => {
-    mockBody[USING_BROKER] = null;
-
-    const response = brokerEmail(mockBody, mockErrors);
-
-    expect(response).toEqual(mockErrors);
+      expect(response).toEqual(mockErrors);
+    });
   });
 });
