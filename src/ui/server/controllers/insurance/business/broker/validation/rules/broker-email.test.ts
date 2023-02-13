@@ -38,7 +38,7 @@ describe('controllers/insurance/business/broker/validation/rules/broker-email', 
 
     const response = brokerEmail(mockBody, mockErrors);
 
-    const expected = emailValidation(EMAIL, mockBody[EMAIL], ERROR_MESSAGE.IS_EMPTY, mockErrors);
+    const expected = emailValidation(EMAIL, mockBody[EMAIL], ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
     expect(response).toEqual(expected);
   });
