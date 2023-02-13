@@ -11,6 +11,7 @@ const {
     TOWN,
     COUNTY,
     POSTCODE,
+    EMAIL,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -27,30 +28,35 @@ const broker = {
   },
   [NAME]: {
     label: () => cy.get(`[data-cy="${NAME}-label`),
-    input: () => cy.get(`[data-cy="${NAME}`),
+    input: () => cy.get(`[data-cy="${NAME}-input`),
     errorMessage: () => cy.get(`[data-cy="${NAME}-error`),
   },
   [ADDRESS_LINE_1]: {
     label: () => cy.get(`[data-cy="${ADDRESS_LINE_1}-label`),
-    input: () => cy.get(`[data-cy="${ADDRESS_LINE_1}`),
+    input: () => cy.get(`[data-cy="${ADDRESS_LINE_1}-input`),
     errorMessage: () => cy.get(`[data-cy="${ADDRESS_LINE_1}-error`),
   },
   [ADDRESS_LINE_2]: {
     label: () => cy.get(`[data-cy="${ADDRESS_LINE_2}-label`),
-    input: () => cy.get(`[data-cy="${ADDRESS_LINE_2}`),
+    input: () => cy.get(`[data-cy="${ADDRESS_LINE_2}-input`),
   },
   [TOWN]: {
     label: () => cy.get(`[data-cy="${TOWN}-label`),
-    input: () => cy.get(`[data-cy="${TOWN}`),
+    input: () => cy.get(`[data-cy="${TOWN}-input`),
     errorMessage: () => cy.get(`[data-cy="${TOWN}-error`),
   },
   [COUNTY]: {
     label: () => cy.get(`[data-cy="${COUNTY}-label`),
-    input: () => cy.get(`[data-cy="${COUNTY}`),
+    input: () => cy.get(`[data-cy="${COUNTY}-input`),
   },
   [POSTCODE]: {
     label: () => cy.get(`[data-cy="${POSTCODE}-label`),
-    input: () => cy.get(`[data-cy="${POSTCODE}`),
+    input: () => cy.get(`[data-cy="${POSTCODE}-input`),
+  },
+  [EMAIL]: {
+    label: () => cy.get(`[data-cy="${EMAIL}-label`),
+    input: () => cy.get(`[data-cy="${EMAIL}-input`),
+    errorMessage: () => cy.get(`[data-cy="${EMAIL}-error`),
   },
 };
 

@@ -11,7 +11,7 @@ import { FIELDS } from '../../../../content-strings/fields/insurance/your-busine
 
 const { BROKER: BROKER_FIELDS } = FIELDS;
 
-const { USING_BROKER, HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, TOWN, POSTCODE } = FIELD_IDS.BROKER;
+const { USING_BROKER, HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, TOWN, POSTCODE, EMAIL } = FIELD_IDS.BROKER;
 
 const { BROKER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -77,6 +77,10 @@ describe('controllers/insurance/business/broker', () => {
           POSTCODE: {
             ID: POSTCODE,
             ...BROKER_FIELDS[POSTCODE],
+          },
+          EMAIL: {
+            ID: EMAIL,
+            ...BROKER_FIELDS[EMAIL],
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_ROOT}`,

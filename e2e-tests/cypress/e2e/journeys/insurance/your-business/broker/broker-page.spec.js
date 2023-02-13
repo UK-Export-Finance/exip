@@ -20,6 +20,7 @@ const {
     TOWN,
     COUNTY,
     POSTCODE,
+    EMAIL,
   },
 } = FIELD_IDS;
 
@@ -149,6 +150,9 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
     cy.checkText(broker[POSTCODE].label(), FIELDS.BROKER[POSTCODE].LABEL);
     broker[POSTCODE].input().should('exist');
+
+    cy.checkText(broker[EMAIL].label(), FIELDS.BROKER[EMAIL].LABEL);
+    broker[EMAIL].input().should('exist');
   });
 
   it('should display the continue and save and go back button', () => {
