@@ -72,10 +72,6 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
   });
 
   context('panel/quote', () => {
-    it('renders `you can apply` heading', () => {
-      cy.checkText(yourQuotePage.panel.headingText(), CONTENT_STRINGS.PAGE_TITLE);
-    });
-
     it('renders `your quote` heading', () => {
       cy.checkText(yourQuotePage.panel.subHeading(), CONTENT_STRINGS.QUOTE.SUB_HEADING);
     });
