@@ -11,7 +11,7 @@ import { stripCommas } from '../string';
  * @param {object} errors
  * @param {string} errorMessage
  * @param {string} field fieldId of the field being checked
- * @param {Boolean} allowNegativeValue optional field set to false which allows for negative numbers below 0
+ * @param {Boolean} allowNegativeValue false as default, if false then allows for negative numbers below 0.
  * @returns {object} errors
  */
 const wholeNumberValidation = (responseBody: RequestBody, errors: object, errorMessage: string, field: string, allowNegativeValue = false) => {
