@@ -25,7 +25,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.QUOTE.NEED_TO_START_AGAIN,
+      currentHref: ROUTES.QUOTE.BUYER_BODY,
       expectedBackLink: ROUTES.QUOTE.BUYER_COUNTRY,
       assertSubmitButton: true,
     });
@@ -33,14 +33,6 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
 
   it('should render a header with href to quote start', () => {
     partials.header.serviceName().should('have.attr', 'href', startRoute);
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
-    partials.backLink().should('have.attr', 'href', expected);
   });
 
   it('renders yes and no radio buttons', () => {

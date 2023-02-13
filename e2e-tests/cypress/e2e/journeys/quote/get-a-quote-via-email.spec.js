@@ -21,7 +21,7 @@ context('Get a quote via email exit page', () => {
 
     submitButton().click();
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CANNOT_APPLY}`;
+    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`;
 
     cy.url().should('eq', expectedUrl);
   });

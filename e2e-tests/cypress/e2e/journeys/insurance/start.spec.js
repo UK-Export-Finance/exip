@@ -1,7 +1,7 @@
 import { insurance } from '../../pages';
 import { submitButton } from '../../pages/shared';
 import partials from '../../partials';
-import { PAGES } from '../../../../content-strings';
+import { BUTTONS, PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.START;
@@ -22,8 +22,9 @@ context('Insurance Eligibility - start page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: insuranceStartRoute,
-      expectedBackLink: '#',
+      expectedBackLink: `${insuranceStartRoute}#`,
       assertSubmitButton: true,
+      submitButtonCopy: BUTTONS.START_NOW,
     });
   });
 

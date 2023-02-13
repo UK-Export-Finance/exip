@@ -23,6 +23,10 @@ const {
 
 const insuranceStart = ROUTES.INSURANCE.START;
 
+const { taskList } = partials.insurancePartials;
+
+const task = taskList.prepareApplication.tasks.exporterBusiness;
+
 context('Insurance - Your business - Company details page - As an Exporter I want to enter my business\'s CRN So that I can apply for UKEF Export Insurance policy', () => {
   let referenceNumber;
 
@@ -31,12 +35,12 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
 
     cy.submitInsuranceEligibilityAndStartApplication();
 
+    task.link().click();
+
     cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
-
-      cy.navigateToUrl(url);
 
       cy.url().should('eq', url);
     });

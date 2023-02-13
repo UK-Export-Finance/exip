@@ -7,7 +7,7 @@ import { YOUR_BUYER as FIELD_IDS } from '../../../../../constants/field-ids/insu
 import { INSURANCE_ROOT } from '../../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/your-buyer';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_OR_ORGANISATION;
+const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION;
 
 const {
   COMPANY_OR_ORGANISATION: {

@@ -2,6 +2,7 @@ import POLICY_AND_EXPORTS from './policy-and-exports';
 import * as ELIGIBILITY_PAGES from './eligibility';
 import * as ACCOUNT_PAGES from './account';
 import * as EXPORTER_BUSINESS from './exporter-business';
+import * as YOUR_BUYER from './your-buyer';
 import { LINKS } from '../../links';
 import { PRODUCT } from '../../../constants';
 import formatCurrency from '../../../cypress/e2e/helpers/format-currency';
@@ -94,6 +95,7 @@ const INSURANCE = {
   POLICY_AND_EXPORTS,
   SPEAK_TO_UKEF_EFM,
   START,
+  YOUR_BUYER,
 };
 
 export default INSURANCE;

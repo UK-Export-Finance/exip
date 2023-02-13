@@ -18,7 +18,15 @@ const backLink = (currentHref, expectedHref) => {
 
   partials.backLink().click();
 
-  const expectedUrl = `${Cypress.config('baseUrl')}${expectedHref}`;
+  let expectedUrl = `${Cypress.config('baseUrl')}${expectedHref}`;
+
+  /**
+   * Some back links (start of the eligibility flow) can have external links.
+   * Therefore we don't want to include the cypress baseUrl for these links.
+   */
+  if (expectedHref.includes('http')) {
+    expectedUrl = expectedHref;
+  }
 
   cy.url().should('eq', expectedUrl);
 
@@ -38,13 +46,17 @@ export default ({
   currentHref,
   expectedBackLink,
   assertSubmitButton = false,
+  submitButtonCopy = BUTTONS.CONTINUE,
+  assertBackLink = true,
   lightHouseThresholds,
 }) => {
   // run lighthouse audit
   lighthouseAudit(lightHouseThresholds);
 
-  // check back link
-  backLink(currentHref, expectedBackLink);
+  if (assertBackLink) {
+    // check back link
+    backLink(currentHref, expectedBackLink);
+  }
 
   // check analytics cookie banner
   cy.checkAnalyticsCookiesConsentAndAccept();
@@ -56,10 +68,10 @@ export default ({
   // check page title and heading
   pageTitleAndHeading(pageTitle);
 
-  // check submit button
   if (assertSubmitButton) {
+    // check submit button
     submitButton().should('exist');
 
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
+    cy.checkText(submitButton(), submitButtonCopy);
   }
 };

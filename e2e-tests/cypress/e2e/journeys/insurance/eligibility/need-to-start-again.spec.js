@@ -1,5 +1,5 @@
 import { submitButton, needToStartAgainPage } from '../../../pages/shared';
-import { PAGES } from '../../../../../content-strings';
+import { BUTTONS, LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import partials from '../../../partials';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
@@ -32,6 +32,8 @@ context('Insurance Eligibility - Need to start again exit page', () => {
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN,
       expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
       assertSubmitButton: true,
+      assertBackLink: false,
+      submitButtonCopy: LINKS.START_AGAIN.TEXT,
     });
   });
 

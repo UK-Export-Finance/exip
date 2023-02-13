@@ -10,7 +10,7 @@ import {
   checkFocusOnInputWhenClickingSummaryErrorMessage,
 } from '../../../../../support/check-buyer-country-form';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY;
+const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
 context('Insurance - Buyer location page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based', () => {
   beforeEach(() => {

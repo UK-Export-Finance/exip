@@ -1,6 +1,6 @@
 import { submitButton, needToStartAgainPage } from '../../pages/shared';
 import partials from '../../partials';
-import { PAGES } from '../../../../content-strings';
+import { LINKS, PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 import { completeAndSubmitBuyerBodyForm } from '../../../support/quote/forms';
@@ -28,6 +28,8 @@ context('Get a Quote - Need to start again exit page', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.NEED_TO_START_AGAIN,
       assertSubmitButton: true,
+      submitButtonCopy: LINKS.START_AGAIN.TEXT,
+      assertBackLink: false,
     });
   });
 

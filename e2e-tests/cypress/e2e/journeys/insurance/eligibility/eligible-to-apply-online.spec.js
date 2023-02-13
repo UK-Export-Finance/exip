@@ -38,6 +38,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
       currentHref: ELIGIBLE_TO_APPLY_ONLINE,
       expectedBackLink: COMPANIES_HOUSE_NUMBER,
       assertSubmitButton: true,
+      submitButtonCopy: CONTENT_STRINGS.SUBMIT_BUTTON,
     });
   });
 

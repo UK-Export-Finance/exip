@@ -30,6 +30,8 @@
     }) }}
   {% endif %}
 
+  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
   <form method="POST" novalidate="novalidate">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <div class="govuk-grid-row">
