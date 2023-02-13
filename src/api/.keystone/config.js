@@ -65,7 +65,8 @@ var ACCOUNT = {
     VERIFICATION_EXPIRY: () => {
       const now = new Date();
       const day = now.getDate();
-      return new Date(now.setDate(day + 1));
+      const tomorrow = new Date(now.setDate(day + 1));
+      return tomorrow;
     }
   },
   PASSWORD: {
@@ -831,6 +832,9 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 // keystone.ts
 var keystone_default = withAuth(
   (0, import_core2.config)({
+    server: {
+      port: 5001
+    },
     db: {
       provider: "mysql",
       url: String(process.env.DATABASE_URL),

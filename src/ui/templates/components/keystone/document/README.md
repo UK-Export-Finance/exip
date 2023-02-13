@@ -16,7 +16,7 @@ Providing you can fetch the data from Keystone API, e.g:
 const getKeystonePage = async (pageId) => {
   const config = {
     method: 'GET',
-    url: `http://localhost:3000/api/graphql?query={page(where: { id: "${pageId}" }) {heading, content {document}}}`,
+    url: `http://localhost:5001/api/graphql?query={page(where: { id: "${pageId}" }) {heading, content {document}}}`,
     headers: {
       'Content-Type': 'application/json',
     },

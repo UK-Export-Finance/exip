@@ -18,7 +18,7 @@ const cypressConfig = defineConfig({
       return require('./cypress/plugins')(on, config); // eslint-disable-line global-require
     },
     baseUrl: 'http://localhost:5000',
-    apiUrl: 'http://localhost:3000/api/graphql',
+    apiUrl: 'http://localhost:5001/api/graphql',
     specPattern: 'cypress/e2e/**/*.spec.js',
   },
 });
