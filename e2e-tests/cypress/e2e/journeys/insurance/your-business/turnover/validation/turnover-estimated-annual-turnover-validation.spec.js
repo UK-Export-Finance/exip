@@ -86,6 +86,17 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
         cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
       });
     });
+
+    describe(`when ${FIELD_ID} is negative but has a decimal place`, () => {
+      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
+
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const value = '-256.123';
+
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+      });
+    });
   });
 
   describe(`when ${FIELD_ID} is correctly entered as a whole number`, () => {

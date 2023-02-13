@@ -4,9 +4,9 @@ import { isNumber, numberHasDecimal, isNumberBelowMinimum } from '../number';
 import { stripCommas } from '../string';
 
 /**
- * validates if field is whole number and above 0 and handles commas in the input
- * if allowNegativeNumbers is set to true, then will return validation error if number below 0
- * returns validation error if is not a number, has a decimal place or special characters
+ * validates if field is whole number and above 0 and handles commas in the input.
+ * if allowNegativeNumbers is set to true, then will return validation error if number below 0.
+ * returns validation error if is not a number, has a decimal place or special characters.
  * @param {RequestBody} responseBody
  * @param {object} errors
  * @param {string} errorMessage
