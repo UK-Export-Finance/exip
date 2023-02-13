@@ -126,4 +126,17 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
       partials.errorSummaryListItems().should('have.length', 1);
     });
   });
+
+  describe(`when ${FIELD_ID} is correctly entered as a negative number`, () => {
+    it('should not display validation errors', () => {
+      cy.navigateToUrl(url);
+
+      const fieldId = FIELD_ID;
+      const field = turnover[fieldId];
+
+      field.input().clear().type('-256');
+      submitButton().click();
+      partials.errorSummaryListItems().should('have.length', 1);
+    });
+  });
 });

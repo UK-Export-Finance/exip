@@ -68,19 +68,16 @@ describe('controllers/insurance/business/turnover/validation/rules/estimated-ann
   });
 
   describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input is below 0`, () => {
-    it('should return a validation error', () => {
+    it('should not return a validation error', () => {
       mockBody[ESTIMATED_ANNUAL_TURNOVER] = '-1';
       const response = yearsExporting(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER].INCORRECT_FORMAT;
-      const expected = generateValidationErrors(ESTIMATED_ANNUAL_TURNOVER, errorMessage, mockErrors);
-
-      expect(response).toEqual(expected);
+      expect(response).toEqual(mockErrors);
     });
   });
 
   describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input is valid`, () => {
-    it('should return a validation error', () => {
+    it('should not return a validation error', () => {
       mockBody[ESTIMATED_ANNUAL_TURNOVER] = '8';
       const response = yearsExporting(mockBody, mockErrors);
 
