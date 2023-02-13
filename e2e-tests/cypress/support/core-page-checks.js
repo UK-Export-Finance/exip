@@ -12,6 +12,13 @@ const lighthouseAudit = (lightHouseThresholds = {}) => {
   });
 };
 
+/**
+ * checkBackLink
+ * - Check the back link copy, HREF and previous page URL
+ * - Navigate to the original page to continue the tests
+ * @param {String} currentHref - Current HREF/route
+ * @param {String} expectedHref - Expected "back" HREF/route
+ */
 const checkBackLink = (currentHref, expectedHref) => {
   partials.backLink().should('exist');
   cy.checkText(partials.backLink(), LINKS.BACK);
@@ -34,6 +41,11 @@ const checkBackLink = (currentHref, expectedHref) => {
   cy.navigateToUrl(`${Cypress.config('baseUrl')}${currentHref}`);
 };
 
+/**
+ * checkPageTitleAndHeading
+ * Check the page title and heading
+ * @param {String} pageTitle - Expected page title
+ */
 const checkPageTitleAndHeading = (pageTitle) => {
   const expectedPageTitle = `${pageTitle} - ${ORGANISATION}`;
   cy.title().should('eq', expectedPageTitle);
