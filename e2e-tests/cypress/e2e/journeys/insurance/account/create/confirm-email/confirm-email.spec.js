@@ -1,7 +1,5 @@
-import { heading } from '../../../../../pages/shared';
-import partials from '../../../../../partials';
 import { confirmEmailPage } from '../../../../../pages/insurance/account/create';
-import { ORGANISATION, LINKS, PAGES } from '../../../../../../../content-strings';
+import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL;
@@ -28,50 +26,13 @@ context('Insurance - Account - Create - Confirm email page - I want to create an
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: CONFIRM_EMAIL,
+      backLink: YOUR_DETAILS,
+      assertSubmitButton: false,
     });
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    partials.backLink().click();
-
-    const expectedUrl = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
-
-    cy.url().should('eq', expectedUrl);
-
-    // go back to page
-    cy.navigateToUrl(CONFIRM_EMAIL);
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', START);
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `check your email`', () => {

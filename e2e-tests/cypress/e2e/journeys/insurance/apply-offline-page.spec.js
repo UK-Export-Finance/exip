@@ -1,7 +1,6 @@
-import { buyerCountryPage, heading, submitButton } from '../../pages/shared';
+import { buyerCountryPage, submitButton } from '../../pages/shared';
 import { insurance } from '../../pages';
-import partials from '../../partials';
-import { LINKS, ORGANISATION, PAGES } from '../../../../content-strings';
+import { PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../support/insurance/eligibility/forms';
 
@@ -9,8 +8,6 @@ const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 const { ACTIONS } = CONTENT_STRINGS;
 
 const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
-
-const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - apply offline exit page', () => {
   beforeEach(() => {
@@ -29,45 +26,13 @@ context('Insurance - apply offline exit page', () => {
     cy.url().should('include', ROUTES.INSURANCE.APPLY_OFFLINE);
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 60,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.INSURANCE.APPLY_OFFLINE,
+      backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+      assertSubmitButton: false,
     });
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
-
-    partials.backLink().should('have.attr', 'href', expected);
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `download form` copy with link', () => {

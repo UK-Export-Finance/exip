@@ -1,13 +1,7 @@
-import { heading, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { signInPage } from '../../../../pages/insurance/account/sign-in';
 import accountFormFields from '../../../../partials/insurance/accountFormFields';
-import {
-  BUTTONS,
-  ORGANISATION,
-  LINKS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
@@ -45,50 +39,19 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 70,
-      'best-practices': 100,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: SIGN_IN_ROOT,
+      backLink: ACCOUNT_TO_APPLY_ONLINE,
+      lightHouseThresholds: {
+        performance: 70,
+      },
     });
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    partials.backLink().click();
-
-    const expectedUrl = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
-
-    cy.url().should('eq', expectedUrl);
-
-    // go back to page
-    cy.navigateToUrl(SIGN_IN_ROOT);
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
   });
 
   it('should render a header with href to insurance start', () => {
     partials.header.serviceName().should('have.attr', 'href', START);
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `email` label and input', () => {
@@ -112,15 +75,9 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
       field.input().should('exist');
     });
 
-    it('should render a revreal button that shows/reveals the password input', () => {
+    it('should render a reveal button that shows/reveals the password input', () => {
       cy.assertPasswordRevealButton();
     });
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   it('renders a `reset password` link', () => {

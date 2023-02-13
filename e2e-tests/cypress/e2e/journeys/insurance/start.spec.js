@@ -1,9 +1,7 @@
-import { heading, submitButton } from '../../pages/shared';
 import { insurance } from '../../pages';
+import { submitButton } from '../../pages/shared';
 import partials from '../../partials';
-import {
-  BUTTONS, LINKS, ORGANISATION, PAGES,
-} from '../../../../content-strings';
+import { BUTTONS, PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.START;
@@ -12,7 +10,7 @@ const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance Eligibility - start page', () => {
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(insuranceStartRoute);
   });
 
   beforeEach(() => {
@@ -20,35 +18,17 @@ context('Insurance Eligibility - start page', () => {
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 70,
-      'best-practices': 100,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: insuranceStartRoute,
+      backLink: `${insuranceStartRoute}#`,
+      submitButtonCopy: BUTTONS.START_NOW,
     });
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
   });
 
   it('should render a header with href to insurance start', () => {
     partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    partials.backLink().should('have.attr', 'href', '#');
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders an intro', () => {
@@ -79,12 +59,6 @@ context('Insurance Eligibility - start page', () => {
     cy.checkText(insurance.startPage.body3(), CONTENT_STRINGS.BODY_3);
 
     cy.checkText(insurance.startPage.body4(), CONTENT_STRINGS.BODY_4);
-  });
-
-  it('renders a start now button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), BUTTONS.START_NOW);
   });
 
   context('form submission', () => {

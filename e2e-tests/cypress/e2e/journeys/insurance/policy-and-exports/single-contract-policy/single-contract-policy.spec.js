@@ -1,6 +1,5 @@
 import {
   headingCaption,
-  heading,
   submitButton,
   saveAndBackButton,
 } from '../../../../pages/shared';
@@ -9,7 +8,6 @@ import partials from '../../../../partials';
 import {
   BUTTONS,
   LINKS,
-  ORGANISATION,
   PAGES,
   TASKS,
 } from '../../../../../../content-strings';
@@ -82,47 +80,16 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
     });
   });
 
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    partials.backLink().click();
-
-    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
-
-    cy.url().should('eq', expectedUrl);
-
-    cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`);
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a page title and heading with caption', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
+  it('renders a heading caption', () => {
     cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `requested start date` label, hint and inputs', () => {
@@ -200,12 +167,6 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     it('renders `currency` label, hint and input with supported currencies ordered alphabetically', () => {
       checkPolicyCurrencyCodeInput();
     });
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   it('renders a `save and back` button', () => {

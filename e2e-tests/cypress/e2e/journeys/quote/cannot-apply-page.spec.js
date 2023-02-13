@@ -1,12 +1,8 @@
 import {
-  cannotApplyPage, heading, noRadio, submitButton,
+  cannotApplyPage, noRadio, submitButton,
 } from '../../pages/shared';
 import partials from '../../partials';
-import {
-  ORGANISATION,
-  LINKS,
-  PAGES,
-} from '../../../../content-strings';
+import { PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../support/quote/forms';
@@ -29,45 +25,20 @@ context('Cannot apply exit page', () => {
     cy.url().should('include', ROUTES.QUOTE.CANNOT_APPLY);
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 60,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.QUOTE.CANNOT_APPLY,
+      backLink: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
+      assertSubmitButton: false,
+      lightHouseThresholds: {
+        seo: 60,
+      },
     });
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
   });
 
   it('should render a header with href to quote start', () => {
     partials.header.serviceName().should('have.attr', 'href', startRoute);
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    partials.backLink().click();
-
-    cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders a reason', () => {

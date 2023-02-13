@@ -9,6 +9,10 @@
 {%- from "moj/components/search/macro.njk" import mojSearch -%}
 {% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
 
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
 {% block content %}
 
   {{ govukBackLink({

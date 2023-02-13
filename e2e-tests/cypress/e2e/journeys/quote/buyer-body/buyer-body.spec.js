@@ -1,14 +1,8 @@
 import {
-  heading, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
+  yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
 } from '../../../pages/shared';
 import partials from '../../../partials';
-import {
-  BUTTONS,
-  ERROR_MESSAGES,
-  LINKS,
-  ORGANISATION,
-  PAGES,
-} from '../../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
@@ -24,44 +18,16 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 60,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.QUOTE.BUYER_BODY,
+      backLink: ROUTES.QUOTE.BUYER_COUNTRY,
     });
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
   });
 
   it('should render a header with href to quote start', () => {
     partials.header.serviceName().should('have.attr', 'href', startRoute);
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
-    partials.backLink().should('have.attr', 'href', expected);
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders yes and no radio buttons', () => {
@@ -72,12 +38,6 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     noRadio().should('exist');
 
     cy.checkText(noRadio(), 'No');
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   describe('form submission', () => {
