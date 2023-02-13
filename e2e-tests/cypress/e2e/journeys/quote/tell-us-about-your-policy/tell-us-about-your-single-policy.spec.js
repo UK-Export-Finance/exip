@@ -37,7 +37,6 @@ context('Tell us about your single policy page - as an exporter, I want to provi
         pageTitle: CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE,
         currentHref: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
         expectedBackLink: ROUTES.QUOTE.POLICY_TYPE,
-        assertSubmitButton: true,
       });
     });
 

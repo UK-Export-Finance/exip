@@ -65,7 +65,6 @@ context('Insurance - Your business - Nature of your business page - As an Export
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`,
       expectedBackLink: `${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`,
-      assertSubmitButton: true,
     });
   });
 

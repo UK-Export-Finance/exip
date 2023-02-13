@@ -27,7 +27,6 @@ context('Get a Quote - Need to start again exit page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.NEED_TO_START_AGAIN,
-      assertSubmitButton: true,
       submitButtonCopy: LINKS.START_AGAIN.TEXT,
       assertBackLink: false,
     });

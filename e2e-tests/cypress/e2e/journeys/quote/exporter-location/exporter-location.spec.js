@@ -27,7 +27,6 @@ context('Exporter location page - as an exporter, I want to check if my company 
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.EXPORTER_LOCATION,
       expectedBackLink: ROUTES.QUOTE.BUYER_BODY,
-      assertSubmitButton: true,
     });
   });
 

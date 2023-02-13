@@ -27,7 +27,6 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,
       expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
-      assertSubmitButton: true,
     });
   });
 

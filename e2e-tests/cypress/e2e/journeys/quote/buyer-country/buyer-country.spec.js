@@ -23,7 +23,6 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.BUYER_COUNTRY,
       expectedBackLink: LINKS.EXTERNAL.BEFORE_YOU_START,
-      assertSubmitButton: true,
     });
   });
 

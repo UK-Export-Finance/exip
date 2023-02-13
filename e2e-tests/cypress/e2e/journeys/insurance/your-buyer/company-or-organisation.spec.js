@@ -49,7 +49,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`,
       expectedBackLink: `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
-      assertSubmitButton: true,
     });
   });
 

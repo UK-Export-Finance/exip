@@ -45,7 +45,7 @@ export default ({
   pageTitle,
   currentHref,
   expectedBackLink,
-  assertSubmitButton = false,
+  assertSubmitButton = true,
   submitButtonCopy = BUTTONS.CONTINUE,
   assertBackLink = true,
   lightHouseThresholds,

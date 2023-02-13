@@ -31,7 +31,6 @@ context('Insurance Eligibility - Need to start again exit page', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN,
       expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
-      assertSubmitButton: true,
       assertBackLink: false,
       submitButtonCopy: LINKS.START_AGAIN.TEXT,
     });

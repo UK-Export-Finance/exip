@@ -55,7 +55,6 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD,
       expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT,
-      assertSubmitButton: true,
     });
   });
 

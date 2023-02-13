@@ -62,7 +62,6 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`,
       expectedBackLink: `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
-      assertSubmitButton: true,
     });
   });
 

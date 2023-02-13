@@ -59,7 +59,6 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`,
       expectedBackLink: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`,
-      assertSubmitButton: true,
       submitButtonCopy: BUTTONS.CONTINUE_NEXT_SECTION,
     });
   });

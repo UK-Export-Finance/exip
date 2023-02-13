@@ -67,7 +67,6 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${TURNOVER}`,
       expectedBackLink: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`,
-      assertSubmitButton: true,
     });
   });
 

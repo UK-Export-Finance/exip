@@ -44,7 +44,6 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
         pageTitle: CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE,
         currentHref: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
         expectedBackLink: ROUTES.QUOTE.POLICY_TYPE,
-        assertSubmitButton: true,
         lightHouseThresholds: {
           // accessibility threshold is reduced here because
           // the radio component from design system has an invalid aria attribute.

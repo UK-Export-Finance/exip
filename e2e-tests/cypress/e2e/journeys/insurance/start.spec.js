@@ -23,7 +23,6 @@ context('Insurance Eligibility - start page', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: insuranceStartRoute,
       expectedBackLink: `${insuranceStartRoute}#`,
-      assertSubmitButton: true,
       submitButtonCopy: BUTTONS.START_NOW,
     });
   });

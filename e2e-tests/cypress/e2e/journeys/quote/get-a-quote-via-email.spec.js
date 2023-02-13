@@ -31,6 +31,7 @@ context('Get a quote via email exit page', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL,
       expectedBackLink: ROUTES.QUOTE.BUYER_COUNTRY,
+      assertSubmitButton: false,
     });
   });
 

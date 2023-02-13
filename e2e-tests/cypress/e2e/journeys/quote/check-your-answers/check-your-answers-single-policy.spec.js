@@ -51,7 +51,6 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.CHECK_YOUR_ANSWERS,
       expectedBackLink: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
-      assertSubmitButton: true,
       submitButtonCopy: CONTENT_STRINGS.SUBMIT_BUTTON,
     });
   });

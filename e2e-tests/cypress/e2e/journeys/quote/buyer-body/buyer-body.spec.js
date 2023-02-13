@@ -27,7 +27,6 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.BUYER_BODY,
       expectedBackLink: ROUTES.QUOTE.BUYER_COUNTRY,
-      assertSubmitButton: true,
     });
   });
 

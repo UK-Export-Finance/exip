@@ -41,7 +41,6 @@ context('Insurance - Insured amount page - I want to check if I can use online s
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT,
       expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES,
-      assertSubmitButton: true,
     });
   });
 

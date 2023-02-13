@@ -74,7 +74,6 @@ context('Insurance - Policy and exports - About goods or services page - As an e
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
       expectedBackLink: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`,
-      assertSubmitButton: true,
     });
   });
 

@@ -38,6 +38,7 @@ context('Insurance - speak to UKEF EFM exit page', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM,
       expectedBackLink: ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD,
+      assertSubmitButton: false,
     });
   });
 
