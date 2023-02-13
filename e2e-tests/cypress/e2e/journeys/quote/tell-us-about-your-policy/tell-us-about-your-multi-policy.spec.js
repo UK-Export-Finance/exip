@@ -5,12 +5,10 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
 } from '../../../../support/quote/forms';
-import { heading, submitButton } from '../../../pages/shared';
+import { submitButton } from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import {
-  ORGANISATION,
-  BUTTONS,
   LINKS,
   FIELDS,
   PAGES,
@@ -41,40 +39,22 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       Cypress.Cookies.preserveOnce('connect.sid');
     });
 
-    it('passes the audits', () => {
-      cy.lighthouse({
-        // accessibility threshold is reduced here because
-        // the radio component from design system has an invalid aria attribute.
-        // this is out of our control
-        accessibility: 92,
-        performance: 76,
-        'best-practices': 100,
-        seo: 60,
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE,
+        currentHref: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+        backLink: ROUTES.QUOTE.POLICY_TYPE,
+        lightHouseThresholds: {
+          // accessibility threshold is reduced here because
+          // the radio component from design system has an invalid aria attribute.
+          // this is out of our control
+          accessibility: 92,
+        },
       });
-    });
-
-    it('renders a phase banner', () => {
-      cy.checkPhaseBanner();
     });
 
     it('should render a header with href to quote start', () => {
       partials.header.serviceName().should('have.attr', 'href', startRoute);
-    });
-
-    it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
-      cy.checkText(partials.backLink(), LINKS.BACK);
-
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.POLICY_TYPE}`;
-
-      partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('renders a page title and heading', () => {
-      const expectedPageTitle = `${CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE} - ${ORGANISATION}`;
-      cy.title().should('eq', expectedPageTitle);
-
-      cy.checkText(heading(), CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE);
     });
 
     it('renders `currency and amount` legend', () => {
@@ -178,12 +158,6 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
         const expected = ['', '1', '2'];
         expect(actual).to.deep.eq(expected);
       });
-    });
-
-    it('renders a submit button', () => {
-      submitButton().should('exist');
-
-      cy.checkText(submitButton(), BUTTONS.CONTINUE);
     });
   });
 

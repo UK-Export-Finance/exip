@@ -1,14 +1,11 @@
 import {
   headingCaption,
-  heading,
   submitButton,
   saveAndBackButton,
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import {
   BUTTONS,
-  LINKS,
-  ORGANISATION,
   PAGES,
 } from '../../../../../../content-strings';
 import { FIELD_VALUES, ROUTES } from '../../../../../../constants';
@@ -27,10 +24,6 @@ const insuranceStartRoute = START;
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS;
 
 const { taskList } = partials.insurancePartials;
-
-const goToPageDirectly = (referenceNumber) => {
-  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`);
-};
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
@@ -61,12 +54,12 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`,
+      submitButtonCopy: BUTTONS.CONTINUE_NEXT_SECTION,
     });
   });
 
@@ -74,44 +67,8 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
     partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    partials.backLink().click();
-
-    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
-
-    cy.url().should('eq', expectedUrl);
-
-    goToPageDirectly(referenceNumber);
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a page title and heading with caption', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
+  it('renders a heading caption', () => {
     cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), BUTTONS.CONTINUE_NEXT_SECTION);
   });
 
   it('renders a `save and back` button', () => {

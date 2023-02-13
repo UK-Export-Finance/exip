@@ -1,12 +1,6 @@
-import {
-  heading, submitButton, needToStartAgainPage,
-} from '../../pages/shared';
+import { submitButton, needToStartAgainPage } from '../../pages/shared';
 import partials from '../../partials';
-import {
-  ORGANISATION,
-  LINKS,
-  PAGES,
-} from '../../../../content-strings';
+import { LINKS, PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 import { completeAndSubmitBuyerBodyForm } from '../../../support/quote/forms';
@@ -29,46 +23,21 @@ context('Get a Quote - Need to start again exit page', () => {
     cy.url().should('include', ROUTES.QUOTE.NEED_TO_START_AGAIN);
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 60,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.QUOTE.NEED_TO_START_AGAIN,
+      submitButtonCopy: LINKS.START_AGAIN.TEXT,
+      assertBackLink: false,
     });
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
   });
 
   it('should render a header with href to quote start', () => {
     partials.header.serviceName().should('have.attr', 'href', startRoute);
   });
 
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
-  });
-
   it('renders a reason', () => {
     needToStartAgainPage.reason().should('exist');
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), LINKS.START_AGAIN.TEXT);
   });
 
   describe('clicking the submit button', () => {

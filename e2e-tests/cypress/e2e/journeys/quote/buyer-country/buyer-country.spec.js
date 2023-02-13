@@ -1,17 +1,15 @@
 import { buyerCountryPage, submitButton } from '../../../pages/shared';
 import partials from '../../../partials';
-import { LINKS } from '../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import {
-  checkPageTitleAndHeading,
   checkInputHint,
   checkAutocompleteInput,
-  checkSubmitButton,
   checkValidationErrors,
   checkFocusOnInputWhenClickingSummaryErrorMessage,
 } from '../../../../support/check-buyer-country-form';
 
-const startRoute = ROUTES.QUOTE.START;
+const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
 context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based', () => {
   beforeEach(() => {
@@ -20,32 +18,15 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 70,
-      'best-practices': 100,
-      seo: 60,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.QUOTE.BUYER_COUNTRY,
+      backLink: LINKS.EXTERNAL.BEFORE_YOU_START,
+      lightHouseThresholds: {
+        performance: 70,
+      },
     });
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('should render a header with href to quote start', () => {
-    partials.header.serviceName().should('have.attr', 'href', startRoute);
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    partials.backLink().should('have.attr', 'href', LINKS.EXTERNAL.BEFORE_YOU_START);
-  });
-
-  it('renders a page title and heading', () => {
-    checkPageTitleAndHeading();
   });
 
   it('renders a hint', () => {
@@ -72,10 +53,6 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     it('allows user to remove a selected country and search again', () => {
       checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain();
     });
-  });
-
-  it('renders a submit button', () => {
-    checkSubmitButton();
   });
 
   describe('form submission', () => {

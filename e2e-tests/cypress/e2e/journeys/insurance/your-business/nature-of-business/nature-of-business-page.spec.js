@@ -1,7 +1,7 @@
 import { natureOfBusiness } from '../../../../pages/your-business';
 import partials from '../../../../partials';
-import { heading, submitButton, saveAndBackButton } from '../../../../pages/shared';
-import { PAGES, BUTTONS, LINKS } from '../../../../../../content-strings';
+import { submitButton, saveAndBackButton } from '../../../../pages/shared';
+import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import application from '../../../../../fixtures/application';
@@ -60,40 +60,20 @@ context('Insurance - Your business - Nature of your business page - As an Export
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 93,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`,
+      backLink: `${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`,
     });
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
   });
 
   it('should render a header with href to insurance start', () => {
     partials.header.serviceName().should('have.attr', 'href', insuranceStart);
   });
 
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-  });
-
-  it('should display the headings correctly', () => {
+  it('renders a heading caption', () => {
     cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it(`should display ${GOODS_OR_SERVICES} input box`, () => {
@@ -117,9 +97,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
     cy.checkText(field.suffix(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].SUFFIX);
   });
 
-  it('should display the continue and save and go back button', () => {
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
-
+  it('should display save and go back button', () => {
     cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 

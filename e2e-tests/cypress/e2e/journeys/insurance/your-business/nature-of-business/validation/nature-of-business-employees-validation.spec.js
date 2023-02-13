@@ -47,7 +47,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   describe(`${EMPLOYEES_UK} validation`, () => {
     // for error assertion - common fields
     const ERROR_ASSERTIONS = {
-      numberOfExpectedErrors: 4,
+      expectedErrorsCount: 4,
       errorIndex: 2,
     };
 
@@ -58,10 +58,10 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_UK;
         const field = natureOfBusiness[fieldId];
 
-        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = null;
 
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
       });
     });
 
@@ -72,10 +72,10 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_UK;
         const field = natureOfBusiness[fieldId];
 
-        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = '5.5';
 
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
       });
     });
 
@@ -86,10 +86,10 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_UK;
         const field = natureOfBusiness[fieldId];
 
-        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = '3S';
 
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
       });
     });
 
@@ -136,7 +136,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   describe(`${EMPLOYEES_INTERNATIONAL} validation`, () => {
     // for error assertion - common fields
     const ERROR_ASSERTIONS = {
-      numberOfExpectedErrors: 4,
+      expectedErrorsCount: 4,
       errorIndex: 3,
     };
     describe(`when ${EMPLOYEES_INTERNATIONAL} is left empty`, () => {
@@ -148,10 +148,10 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_INTERNATIONAL;
         const field = natureOfBusiness[fieldId];
 
-        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = null;
 
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
       });
     });
 
@@ -162,10 +162,10 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_INTERNATIONAL;
         const field = natureOfBusiness[fieldId];
 
-        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = '5.5';
 
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
       });
     });
 
@@ -176,10 +176,10 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_INTERNATIONAL;
         const field = natureOfBusiness[fieldId];
 
-        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = '3S';
 
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
       });
     });
 
@@ -192,10 +192,10 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
         natureOfBusiness[EMPLOYEES_UK].input().clear();
 
-        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = '0';
 
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
       });
     });
 

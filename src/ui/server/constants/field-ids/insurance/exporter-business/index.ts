@@ -37,7 +37,15 @@ const EXPORTER_BUSINESS = {
     PERCENTAGE_TURNOVER: 'exportsTurnoverPercentage',
   },
   BROKER: {
+    HEADING: 'broker',
     USING_BROKER: 'isUsingBroker',
+    NAME: 'brokerName',
+    ADDRESS_LINE_1: 'addressLineOne',
+    ADDRESS_LINE_2: 'addressLineTwo',
+    TOWN: 'town',
+    COUNTY: 'county',
+    POSTCODE: 'postcode',
+    EMAIL: 'email',
   },
 };
 

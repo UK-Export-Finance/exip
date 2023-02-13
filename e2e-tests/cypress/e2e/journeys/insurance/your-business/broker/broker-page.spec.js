@@ -1,17 +1,26 @@
 import { broker } from '../../../../pages/your-business';
 import partials from '../../../../partials';
-import { submitButton, saveAndBackButton } from '../../../../pages/shared';
+import { saveAndBackButton } from '../../../../pages/shared';
 import {
-  PAGES, BUTTONS, LINKS, ERROR_MESSAGES,
+  PAGES, BUTTONS, ERROR_MESSAGES,
 } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/exporter-business';
+import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.BROKER;
 
 const {
   BROKER: {
     USING_BROKER,
+    HEADING,
+    NAME,
+    ADDRESS_LINE_1,
+    ADDRESS_LINE_2,
+    TOWN,
+    COUNTY,
+    POSTCODE,
+    EMAIL,
   },
 } = FIELD_IDS;
 
@@ -20,10 +29,9 @@ const {
   START,
   EXPORTER_BUSINESS: {
     BROKER,
+    TURNOVER,
   },
 } = ROUTES.INSURANCE;
-
-const insuranceStart = ROUTES.INSURANCE.START;
 
 const { taskList } = partials.insurancePartials;
 
@@ -40,6 +48,7 @@ const ERROR_ASSERTIONS = {
 
 context('Insurance - Your business - Broker Page - As an Exporter I want to confirm if I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my export insurance', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.navigateToUrl(START);
@@ -55,7 +64,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
-      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
 
       cy.url().should('eq', url);
     });
@@ -66,45 +75,28 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 93,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: `${ROOT}/${referenceNumber}${BROKER}`,
+      backLink: `${ROOT}/${referenceNumber}${TURNOVER}`,
+      assertSubmitButton: true,
+      lightHouseThresholds: {
+        // accessibility threshold is reduced here because
+        // the radio component from design system has an invalid aria attribute.
+        // this is out of our control
+        accessibility: 90,
+      },
     });
   });
 
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStart);
-  });
-
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-  });
-
-  it('should display the headings correctly', () => {
+  it('renders a heading caption', () => {
     cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
   });
 
   it(`should display ${USING_BROKER} section`, () => {
     const fieldId = USING_BROKER;
     const field = broker[fieldId];
-
-    cy.checkText(field.heading(), CONTENT_STRINGS.PAGE_TITLE);
 
     field.yesRadioInput().should('exist');
     cy.checkAriaLabel(field.yesRadioInput(), `${CONTENT_STRINGS.PAGE_TITLE} yes radio`);
@@ -113,9 +105,36 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.checkAriaLabel(field.noRadioInput(), `${CONTENT_STRINGS.PAGE_TITLE} no radio`);
   });
 
-  it('should display the continue and save and go back button', () => {
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
+  it('should display additional broker section when yes radio is selected', () => {
+    const fieldId = USING_BROKER;
+    const field = broker[fieldId];
+    field.yesRadioInput().click();
 
+    cy.checkText(broker[HEADING](), FIELDS.BROKER[HEADING].HEADING);
+
+    cy.checkText(broker[NAME].label(), FIELDS.BROKER[NAME].LABEL);
+    broker[NAME].input().should('exist');
+
+    cy.checkText(broker[ADDRESS_LINE_1].label(), FIELDS.BROKER[ADDRESS_LINE_1].LABEL);
+    broker[ADDRESS_LINE_1].input().should('exist');
+
+    cy.checkText(broker[ADDRESS_LINE_2].label(), FIELDS.BROKER[ADDRESS_LINE_2].LABEL);
+    broker[ADDRESS_LINE_2].input().should('exist');
+
+    cy.checkText(broker[TOWN].label(), FIELDS.BROKER[TOWN].LABEL);
+    broker[TOWN].input().should('exist');
+
+    cy.checkText(broker[COUNTY].label(), FIELDS.BROKER[COUNTY].LABEL);
+    broker[COUNTY].input().should('exist');
+
+    cy.checkText(broker[POSTCODE].label(), FIELDS.BROKER[POSTCODE].LABEL);
+    broker[POSTCODE].input().should('exist');
+
+    cy.checkText(broker[EMAIL].label(), FIELDS.BROKER[EMAIL].LABEL);
+    broker[EMAIL].input().should('exist');
+  });
+
+  it('should display save and go back button', () => {
     cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
   });
 
@@ -123,6 +142,9 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     const errorMessage = ERROR_MESSAGE_BROKER.IS_EMPTY;
 
     it(`should display validation errors if ${USING_BROKER} radio not selected`, () => {
+      // visit url to refresh form and radios
+      cy.navigateToUrl(url);
+
       const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
       cy.submitAndAssertRadioErrors(field, errorIndex, numberOfExpectedErrors, errorMessage);

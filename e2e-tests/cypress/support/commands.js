@@ -18,6 +18,8 @@ Cypress.Commands.add('navigateToUrl', require('./navigate-to-url'));
 Cypress.Commands.add('submitAnswersHappyPathSinglePolicy', require('./quote/submit-answers-happy-path-single-policy'));
 Cypress.Commands.add('submitAnswersHappyPathMultiPolicy', require('./quote/submit-answers-happy-path-multi-policy'));
 
+Cypress.Commands.add('corePageChecks', require('./core-page-checks'));
+
 Cypress.Commands.add('checkAnalyticsCookiesConsentAndAccept', analytics.checkAnalyticsCookiesConsentAndAccept);
 Cypress.Commands.add('checkAnalyticsCookieDoesNotExist', analytics.checkAnalyticsCookieDoesNotExist);
 Cypress.Commands.add('checkAnalyticsCookieIsFalse', analytics.checkAnalyticsCookieIsFalse);
@@ -56,6 +58,8 @@ Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-c
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));
 Cypress.Commands.add('submitAndAssertRadioErrors', require('./submit-and-assert-radio-errors'));
 Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-field-errors'));
+
+Cypress.Commands.add('assertPasswordRevealButton', require('./insurance/account/assert-password-reveal-button'));
 
 Cypress.Commands.add('checkText', require('./check-text'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));

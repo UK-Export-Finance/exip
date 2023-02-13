@@ -4,6 +4,73 @@
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../../components/address-fields.njk' as addressInput %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% set brokerHTML %}
+  <h2 class="govuk-heading-m govuk-!-margin-bottom-5 govuk-!-margin-top-5" data-cy="{{ FIELDS.HEADING.ID }}-heading">{{ FIELDS.HEADING.HEADING }}</h2>
+
+  {{ govukInput({
+    id: FIELDS.NAME.ID,
+    name: FIELDS.NAME.ID,
+    value: submittedValues[FIELDS.NAME.ID] or application.exporterBusiness[FIELDS.NAME.ID],
+    label: {
+      text: FIELDS.NAME.LABEL,
+      classes: "govuk-body govuk-!-font-weight-bold",
+      attributes: {
+        "data-cy": FIELDS.NAME.ID + "-label"
+      }
+    },
+    classes: "govuk-input--width-20",
+    attributes: {
+      "data-cy": FIELDS.NAME.ID + "-input"
+    },
+    errorMessage: validationErrors.errorList[FIELDS.NAME.ID] and {
+      text: validationErrors.errorList[FIELDS.NAME.ID].text,
+      attributes: {
+        "data-cy": FIELDS.NAME.ID + "-error"
+      }
+    }
+  }) }}
+
+  {{ addressInput.render({
+    addressLineOne: FIELDS.ADDRESS_LINE_1,
+    addressLineTwo: FIELDS.ADDRESS_LINE_2,
+    town: FIELDS.TOWN,
+    country: FIELDS.COUNTY,
+    postcode: FIELDS.POSTCODE,
+    validationErrors: validationErrors,
+    submittedValues: submittedValues,
+    application: application.exporterBusiness
+  }) }}
+
+  {{ govukInput({
+    id: FIELDS.EMAIL.ID,
+    name: FIELDS.EMAIL.ID,
+    value: submittedValues[FIELDS.EMAIL.ID] or application.exporterBusiness[FIELDS.EMAIL.ID],
+    label: {
+      text: FIELDS.EMAIL.LABEL,
+      classes: "govuk-body govuk-!-font-weight-bold",
+      attributes: {
+        "data-cy": FIELDS.EMAIL.ID + "-label"
+      }
+    },
+    classes: "govuk-input--width-20",
+    attributes: {
+      "data-cy": FIELDS.EMAIL.ID + "-input"
+    },
+    errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
+      text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
+      attributes: {
+        "data-cy": FIELDS.EMAIL.ID + "-error"
+      }
+    }
+  }) }}
+
+{% endset %}
 
 {% block content %}
 
@@ -42,8 +109,9 @@
           submittedAnswer: submittedValues[FIELDS.USING_BROKER.ID],
           errorMessage: validationErrors.errorList[FIELDS.USING_BROKER.ID],
           headerClass: 'govuk-fieldset__legend--xl',
-          datacyHeading: FIELDS.USING_BROKER.ID + '-heading',
-          yesNoValueString: true
+          yesNoValueString: true,
+          conditionalYesHtml: brokerHTML,
+          horizontalRadios: true
         }) }}
       </div>
 

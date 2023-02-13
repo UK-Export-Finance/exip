@@ -4,12 +4,10 @@ import {
   completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
 } from '../../../../support/quote/forms';
-import { heading, submitButton } from '../../../pages/shared';
+import { submitButton } from '../../../pages/shared';
 import { policyTypePage } from '../../../pages/quote';
 import partials from '../../../partials';
 import {
-  ORGANISATION,
-  BUTTONS,
   LINKS,
   FIELDS,
   PAGES,
@@ -40,48 +38,22 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       Cypress.Cookies.preserveOnce('connect.sid');
     });
 
-    it('passes the audits', () => {
-      cy.lighthouse({
-        // accessibility threshold is reduced here because
-        // the radio component from design system has an invalid aria attribute.
-        // this is out of our control
-        accessibility: 90,
-        performance: 75,
-        'best-practices': 100,
-        seo: 60,
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: ROUTES.QUOTE.POLICY_TYPE,
+        backLink: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
+        lightHouseThresholds: {
+          // accessibility threshold is reduced here because
+          // the radio component from design system has an invalid aria attribute.
+          // this is out of our control
+          accessibility: 90,
+        },
       });
-    });
-
-    it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
-      cy.checkText(partials.backLink(), LINKS.BACK);
-
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.UK_GOODS_OR_SERVICES}`;
-
-      partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('renders an analytics cookies consent banner that can be accepted', () => {
-      cy.checkAnalyticsCookiesConsentAndAccept();
-    });
-
-    it('renders an analytics cookies consent banner that can be rejected', () => {
-      cy.rejectAnalyticsCookies();
-    });
-
-    it('renders a phase banner', () => {
-      cy.checkPhaseBanner();
     });
 
     it('should render a header with href to quote start', () => {
       partials.header.serviceName().should('have.attr', 'href', startRoute);
-    });
-
-    it('renders a page title and heading', () => {
-      const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-      cy.title().should('eq', expectedPageTitle);
-
-      cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
     });
 
     it('renders `policy type` radio inputs with labels and hints', () => {
@@ -147,12 +119,6 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
         const expectedHref = LINKS.EXTERNAL.NBI_FORM;
         multiPolicyType.inset.link().should('have.attr', 'href', expectedHref);
       });
-    });
-
-    it('renders a submit button', () => {
-      submitButton().should('exist');
-
-      cy.checkText(submitButton(), BUTTONS.CONTINUE);
     });
   });
 

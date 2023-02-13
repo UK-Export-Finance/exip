@@ -1,4 +1,3 @@
-import { heading } from '../pages/shared';
 import { pageNotFoundPage } from '../pages';
 import partials from '../partials';
 import { PAGES, PRODUCT } from '../../../content-strings';
@@ -10,12 +9,13 @@ context('404 Page not found', () => {
     cy.navigateToUrl('/test');
   });
 
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: '/test',
+      assertSubmitButton: false,
+      assertBackLink: false,
+    });
   });
 
   describe('header', () => {
@@ -30,14 +30,6 @@ context('404 Page not found', () => {
 
       partials.header.serviceName().should('have.attr', 'href', '/');
     });
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a heading', () => {
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `typed` and `pasted` text', () => {

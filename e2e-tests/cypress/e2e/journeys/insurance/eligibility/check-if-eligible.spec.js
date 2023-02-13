@@ -1,9 +1,6 @@
-import { heading, submitButton } from '../../../pages/shared';
+import { submitButton } from '../../../pages/shared';
 import { insurance } from '../../../pages';
-import partials from '../../../partials';
-import {
-  BUTTONS, LINKS, ORGANISATION, PAGES,
-} from '../../../../../content-strings';
+import { PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeStartForm } from '../../../../support/insurance/eligibility/forms';
 
@@ -25,47 +22,16 @@ context('Insurance Eligibility - check if eligible page', () => {
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 70,
-      'best-practices': 100,
-      seo: 70,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
+      backLink: insuranceStartRoute,
     });
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    cy.checkText(partials.backLink(), LINKS.BACK);
-
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.START}`;
-
-    partials.backLink().should('have.attr', 'href', expected);
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    cy.checkText(heading(), CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders a body text', () => {
     cy.checkText(insurance.eligibility.checkIfEligiblePage.body(), CONTENT_STRINGS.BODY);
-  });
-
-  it('renders a submit button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
   });
 
   context('form submission', () => {
