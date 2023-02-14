@@ -102,13 +102,36 @@ var notify = {
         },
         reference: null
       });
-      return { success: true };
+      return {
+        success: true,
+        emailRecipient: sendToEmailAddress
+      };
     } catch (err) {
       throw new Error(`Calling Notify API. Unable to send email ${err}`);
     }
   }
 };
 var notify_default = notify;
+
+// emails/index.ts
+var confirmEmailAddress = async (account) => {
+  try {
+    console.info("Sending email verification for account creation");
+    const { email, firstName, verificationHash } = account;
+    const emailResponse = await notify_default.sendEmail(EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL, email, firstName, verificationHash);
+    if (emailResponse.success) {
+      return emailResponse;
+    }
+    throw new Error(`Sending email verification for account creation ${emailResponse}`);
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending email verification for account creation ${err}`);
+  }
+};
+var sendEmail = {
+  confirmEmailAddress
+};
+var emails_default = sendEmail;
 
 // schema.ts
 var lists = {
@@ -319,18 +342,18 @@ var lists = {
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
           try {
-            const emailResponse = await notify_default.sendEmail(
-              EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL,
-              accountInputData.email,
-              accountInputData.firstName,
-              accountInputData.verificationHash
-            );
+            const exporter = {
+              firstName: accountInputData.firstName,
+              email: accountInputData.email,
+              verificationHash: accountInputData.verificationHash
+            };
+            const emailResponse = await emails_default.confirmEmailAddress(exporter);
             if (emailResponse.success) {
               return accountInputData;
             }
-            throw new Error(`Error sending email verification for account creation ${emailResponse}`);
+            throw new Error(`Sending email verification for account creation (resolveInput hook) ${emailResponse}`);
           } catch (err) {
-            console.error("Error sending email verification for account creation", { err });
+            console.error("Sending email verification for account creation (resolveInput hook) ", { err });
             throw new Error();
           }
         }
@@ -543,6 +566,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       emailRecipient: exporter.email
     };
   } catch (err) {
+    console.error(err);
     throw new Error(`Verifying exporter email address ${err}`);
   }
 };
@@ -550,7 +574,6 @@ var verify_account_email_address_default = verifyAccountEmailAddress;
 
 // custom-resolvers/send-email-confirm-email-address.ts
 var sendEmailConfirmEmailAddress = async (root, variables, context) => {
-  console.info("Sending email verification for account creation");
   try {
     const exporter = await context.db.Exporter.findOne({
       where: {
@@ -563,17 +586,13 @@ var sendEmailConfirmEmailAddress = async (root, variables, context) => {
         success: false
       };
     }
-    const { email, firstName, verificationHash } = exporter;
-    const emailResponse = await notify_default.sendEmail(EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL, email, firstName, verificationHash);
+    const emailResponse = await emails_default.confirmEmailAddress(exporter);
     if (emailResponse.success) {
-      return {
-        success: true,
-        emailRecipient: exporter.email
-      };
+      return emailResponse;
     }
-    throw new Error(`Sending email verification for account creation ${emailResponse}`);
+    throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${emailResponse}`);
   } catch (err) {
-    throw new Error(`Sending email verification for account creation ${err}`);
+    throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${err}`);
   }
 };
 var send_email_confirm_email_address_default = sendEmailConfirmEmailAddress;
@@ -835,26 +854,6 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
     },
     Query: {
-      getAccountByEmail: async (root, variables, context) => {
-        try {
-          console.info("Getting exporter by email ", variables.email);
-          const exportersArray = await context.db.Exporter.findMany({
-            where: {
-              email: { equals: variables.email }
-            },
-            take: 1
-          });
-          if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
-            console.info("Getting exporter by email - no exporter exists with the provided email");
-            return {};
-          }
-          const exporter = exportersArray[0];
-          return exporter;
-        } catch (err) {
-          console.error("Error getting exporter by email", { err });
-          throw new Error(`Getting exporter by email ${err}`);
-        }
-      },
       getCompaniesHouseInformation: async (root, variables) => {
         try {
           const { companiesHouseNumber } = variables;

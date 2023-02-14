@@ -22,17 +22,19 @@ export const get = async (req: Request, res: Response) => {
   try {
     const { id } = req.query;
 
-    let email;
-
-    if (id) {
-      const exporter = await api.keystone.account.sendEmailConfirmEmailAddress(id);
-
-      if (!exporter.success) {
-        return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-      }
-
-      email = exporter.emailRecipient;
+    if (!id) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
+
+    const exporter = await api.keystone.account.sendEmailConfirmEmailAddress(id);
+
+    if (!exporter.success) {
+      console.error("Error sending new email verification for account creation and rendering 'new link sent' page");
+
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    const email = exporter.emailRecipient;
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

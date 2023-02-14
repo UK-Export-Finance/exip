@@ -10,20 +10,20 @@ describe('controllers/insurance/account/create/confirm-email', () => {
   let req: Request;
   let res: Response;
 
-  const mockGetByEmailResponse = {
+  const mockGetAccountResponse = {
     id: mockAccount.id,
     email: mockAccount.email,
   };
 
-  let getByEmailSpy = jest.fn(() => Promise.resolve(mockGetByEmailResponse));
+  let getAccountSpy = jest.fn(() => Promise.resolve(mockGetAccountResponse));
 
   beforeEach(() => {
     req = mockReq();
-    req.session.emailAddressToConfirm = mockAccount.email;
+    req.session.accountIdToConfirm = mockAccount.id;
 
     res = mockRes();
 
-    api.keystone.account.getByEmail = getByEmailSpy;
+    api.keystone.account.get = getAccountSpy;
   });
 
   describe('TEMPLATE', () => {
@@ -39,18 +39,18 @@ describe('controllers/insurance/account/create/confirm-email', () => {
   });
 
   describe('get', () => {
-    it('should delete emailAddressToConfirm from req.session', async () => {
+    it('should delete accountIdToConfirm from req.session', async () => {
       get(req, res);
 
-      expect(req.session.emailAddressToConfirm).toBeUndefined();
+      expect(req.session.accountIdToConfirm).toBeUndefined();
     });
 
-    it('should call api.keystone.account.getByEmail with email from session', async () => {
+    it('should call api.keystone.account.get with ID from session', async () => {
       await get(req, res);
 
-      expect(getByEmailSpy).toHaveBeenCalledTimes(1);
+      expect(getAccountSpy).toHaveBeenCalledTimes(1);
 
-      expect(getByEmailSpy).toHaveBeenCalledWith(mockAccount.email);
+      expect(getAccountSpy).toHaveBeenCalledWith(mockAccount.id);
     });
 
     it('should render template', async () => {
@@ -61,16 +61,16 @@ describe('controllers/insurance/account/create/confirm-email', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        exporterEmail: mockGetByEmailResponse.email,
-        exporterId: mockGetByEmailResponse.id,
+        exporterEmail: mockGetAccountResponse.email,
+        exporterId: mockGetAccountResponse.id,
       });
     });
 
     describe('api error handling', () => {
       describe('when there is an error', () => {
         beforeEach(() => {
-          getByEmailSpy = jest.fn(() => Promise.reject());
-          api.keystone.account.getByEmail = getByEmailSpy;
+          getAccountSpy = jest.fn(() => Promise.reject());
+          api.keystone.account.get = getAccountSpy;
         });
 
         it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {

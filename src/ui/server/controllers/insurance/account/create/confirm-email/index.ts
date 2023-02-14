@@ -17,18 +17,15 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL
  */
 export const get = async (req: Request, res: Response) => {
   try {
-    const { emailAddressToConfirm: email } = req.session;
+    const { accountIdToConfirm: exporterId } = req.session;
 
-    delete req.session.emailAddressToConfirm;
+    delete req.session.accountIdToConfirm;
 
-    let exporterId;
     let exporterEmail;
 
-    if (email) {
-      const exporter = await api.keystone.account.getByEmail(email);
+    if (exporterId) {
+      const exporter = await api.keystone.account.get(exporterId);
 
-      // TODO: check for success flag.
-      exporterId = exporter.id;
       exporterEmail = exporter.email;
     }
 

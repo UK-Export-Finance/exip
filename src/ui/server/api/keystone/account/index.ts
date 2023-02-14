@@ -1,7 +1,7 @@
 import { ApolloResponse, Account } from '../../../../types';
 import apollo from '../../../graphql/apollo';
 import createExporterMutation from '../../../graphql/mutations/account/create';
-import getExporterByEmailQuery from '../../../graphql/queries/account/get-by-email';
+import getExporterQuery from '../../../graphql/queries/account/get';
 import verifyExporterEmailAddressMutation from '../../../graphql/mutations/account/verify-email-address';
 import sendEmailConfirmEmailAddressMutation from '../../../graphql/mutations/account/send-email-confirm-email-address';
 
@@ -35,33 +35,33 @@ const account = {
       throw new Error('Creating exporter account');
     }
   },
-  getByEmail: async (email: string) => {
+  get: async (id: string) => {
     try {
-      console.info('Getting exporter account by email');
+      console.info('Getting exporter account');
 
-      const variables = { email };
+      const variables = { id };
 
-      const response = (await apollo('POST', getExporterByEmailQuery, variables)) as ApolloResponse;
+      const response = (await apollo('POST', getExporterQuery, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error getting exporter account by email ', response.errors);
+        console.error('GraphQL error getting exporter account ', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error getting exporter account by email ', response.networkError.result.errors);
+        console.error('GraphQL network error getting exporter account ', response.networkError.result.errors);
       }
 
-      if (response?.data?.getAccountByEmail) {
+      if (response?.data?.exporter) {
         const { data } = response;
 
-        return data.getAccountByEmail;
+        return data.exporter;
       }
 
       console.error(response);
-      throw new Error('Getting exporter account by email');
+      throw new Error('Getting exporter account');
     } catch (err) {
       console.error(err);
-      throw new Error('Getting exporter account by email');
+      throw new Error('Getting exporter account');
     }
   },
   verifyEmailAddress: async (token: string) => {

@@ -7,7 +7,7 @@ import { ACCOUNT } from './constants';
 import { verifyAccountEmailAddress, sendEmailConfirmEmailAddress } from './custom-resolvers';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
-import { Account, SicCodes } from './types';
+import { SicCodes } from './types';
 
 dotenv.config();
 
@@ -234,34 +234,6 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         },
       },
       Query: {
-        getAccountByEmail: async (root, variables, context) => {
-          try {
-            console.info('Getting exporter by email ', variables.email);
-
-            // TODO: DRY. getExporterByX byCustomProperty
-            const exportersArray = await context.db.Exporter.findMany({
-              where: {
-                email: { equals: variables.email },
-              },
-              take: 1,
-            });
-
-            // ensure that we have found an acount with the requsted email.
-            if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
-              console.info('Getting exporter by email - no exporter exists with the provided email');
-
-              return {};
-            }
-
-            const exporter = exportersArray[0] as Account;
-
-            return exporter;
-          } catch (err) {
-            console.error('Error getting exporter by email', { err });
-
-            throw new Error(`Getting exporter by email ${err}`);
-          }
-        },
         /**
          * Call for companies house API
          * @param variables - companies house number is received as a string within variables
