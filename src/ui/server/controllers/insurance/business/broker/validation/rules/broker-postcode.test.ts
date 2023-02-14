@@ -21,29 +21,35 @@ describe('controllers/insurance/business/broker/validation/rules/broker-postcode
     [POSTCODE]: '',
   } as RequestBody;
 
-  it('should return the result of emptyFieldValidation if using broker is "Yes"', () => {
-    mockBody[USING_BROKER] = 'Yes';
+  describe('when using broker is "Yes"', () => {
+    it('should return the result of emptyFieldValidation', () => {
+      mockBody[USING_BROKER] = 'Yes';
 
-    const response = brokerPostcode(mockBody, mockErrors);
+      const response = brokerPostcode(mockBody, mockErrors);
 
-    const expected = postCodeValidation(POSTCODE, mockBody[POSTCODE], ERROR_MESSAGE.IS_EMPTY, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
+      const expected = postCodeValidation(POSTCODE, mockBody[POSTCODE], ERROR_MESSAGE.IS_EMPTY, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
 
-    expect(response).toEqual(expected);
+      expect(response).toEqual(expected);
+    });
   });
 
-  it('should return the mockErrors if using broker is "No"', () => {
-    mockBody[USING_BROKER] = 'No';
+  describe('when using broker is "No"', () => {
+    it('should return the provided errors object', () => {
+      mockBody[USING_BROKER] = 'No';
 
-    const response = brokerPostcode(mockBody, mockErrors);
+      const response = brokerPostcode(mockBody, mockErrors);
 
-    expect(response).toEqual(mockErrors);
+      expect(response).toEqual(mockErrors);
+    });
   });
 
-  it('should return the mockErrors if using broker is "null"', () => {
-    mockBody[USING_BROKER] = null;
+  describe('when using broker is "null"', () => {
+    it('should return the provided errors object', () => {
+      mockBody[USING_BROKER] = null;
 
-    const response = brokerPostcode(mockBody, mockErrors);
+      const response = brokerPostcode(mockBody, mockErrors);
 
-    expect(response).toEqual(mockErrors);
+      expect(response).toEqual(mockErrors);
+    });
   });
 });
