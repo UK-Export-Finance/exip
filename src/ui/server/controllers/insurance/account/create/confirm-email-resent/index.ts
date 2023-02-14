@@ -13,7 +13,7 @@ export const PAGE_CONTENT_STRINGS = {
 
 /**
  * get
- * TODO - Call API to send "confirm email" email and render the Confirm email resent page
+ * Call API to send "confirm email" email and render the Confirm email resent page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Confirm email resent page

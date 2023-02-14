@@ -1,16 +1,16 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { EMAIL_TEMPLATE_IDS } from '../constants';
 import notify from '../integrations/notify';
-import { SendEmailConfirmEmailAddress } from '../types';
+import { SendEmailConfirmEmailAddressVariables } from '../types';
 
 /**
  * sendEmailConfirmEmailAddress
  * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the SendEmailConfirmEmailAddress mutation
+ * @param {Object} GrappL variables for the SendEmailConfirmEmailAddress mutation
  * @param {Object} KeystoneJS context API
  * @returns {Object} Object with success flag and emailRecipient
  */
-const sendEmailConfirmEmailAddress = async (root: any, variables: SendEmailConfirmEmailAddress, context: Context) => {
+const sendEmailConfirmEmailAddress = async (root: any, variables: SendEmailConfirmEmailAddressVariables, context: Context) => {
   console.info('Sending email verification for account creation');
 
   try {

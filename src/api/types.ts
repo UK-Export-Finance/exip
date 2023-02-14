@@ -76,8 +76,8 @@ interface VerifyEmailAddressVariables {
   token: string;
 }
 
-interface SendEmailConfirmEmailAddress {
+interface SendEmailConfirmEmailAddressVariables {
   exporterId: string;
 }
 
-export { Account, AccountInput, Application, CompanyResponse, SicCodes, VerifyEmailAddressVariables, SendEmailConfirmEmailAddress };
+export { Account, AccountInput, Application, CompanyResponse, SicCodes, VerifyEmailAddressVariables, SendEmailConfirmEmailAddressVariables };
