@@ -50,7 +50,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   describe('When no fields are provided', () => {

@@ -49,7 +49,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   describe(`when only ${TRADING_ADDRESS} and ${TRADING_NAME} fields are completed`, () => {

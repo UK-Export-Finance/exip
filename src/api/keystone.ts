@@ -6,6 +6,9 @@ import { extendGraphqlSchema } from './custom-schema';
 
 export default withAuth(
   config({
+    server: {
+      port: 5001,
+    },
     db: {
       provider: 'mysql',
       url: String(process.env.DATABASE_URL),

@@ -69,15 +69,17 @@ model PolicyAndExport {
 }
 
 model Exporter {
-  id        String    @id @default(cuid())
-  createdAt DateTime?
-  updatedAt DateTime?
-  firstName String    @default("")
-  lastName  String    @default("")
-  email     String    @default("")
-  salt      String    @default("")
-  hash      String    @default("")
-  isActive  Boolean   @default(false)
+  id                 String    @id @default(cuid())
+  createdAt          DateTime?
+  updatedAt          DateTime?
+  firstName          String    @default("")
+  lastName           String    @default("")
+  email              String    @default("")
+  salt               String    @default("")
+  hash               String    @default("")
+  isVerified         Boolean   @default(false)
+  verificationHash   String    @default("")
+  verificationExpiry DateTime?
 }
 
 model ExporterBusiness {

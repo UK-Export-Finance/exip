@@ -49,7 +49,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
@@ -83,7 +83,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   it(`should not display ${FINANCIAL_YEAR_END_DATE} section`, () => {

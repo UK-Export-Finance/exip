@@ -50,7 +50,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   describe('when the no radio is selected', () => {

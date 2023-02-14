@@ -34,6 +34,10 @@ interface RequestParams {
   referenceNumber?: string;
 }
 
+interface RequestQuery {
+  token?: string;
+}
+
 interface RequestSession {
   submittedData: SubmittedData;
   quote?: Quote;
@@ -51,6 +55,7 @@ interface Request {
   originalUrl: string;
   redirect: (str: string) => any;
   params: RequestParams;
+  query: RequestQuery;
   session: RequestSession;
 }
 

@@ -77,7 +77,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   it('renders core page elements', () => {

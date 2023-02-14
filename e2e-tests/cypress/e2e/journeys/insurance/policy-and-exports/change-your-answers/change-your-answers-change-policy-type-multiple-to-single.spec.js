@@ -57,7 +57,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   const fieldId = POLICY_TYPE;

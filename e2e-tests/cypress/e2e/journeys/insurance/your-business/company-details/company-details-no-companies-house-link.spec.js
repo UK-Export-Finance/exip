@@ -40,7 +40,7 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   it(`should redirect to ${APPLY_OFFLINE} page when pressing the no companies house number link`, () => {

@@ -15,7 +15,7 @@ CRUD API for EXIP applications. This API is built with [keystone](https://keysto
 ## Running locally
 
 1. Execute `npm run dev` or `npm run build && npm run start`.
-2. GraphQL API is now available on [http://localhost:3000/api/graphql](http://localhost:3000/api/graphql).
+2. GraphQL API is now available on [http://localhost:5001/api/graphql](http://localhost:5001/api/graphql).
 
 GraphQL playground is also setup with the same URL.
 

@@ -52,7 +52,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {

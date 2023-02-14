@@ -56,7 +56,7 @@ const employeesInternational = (responseBody: RequestBody, errors: object) => {
 
   const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
   // checks that it does not contain special characters
-  return wholeNumberValidation(responseBody, errors, errorMessage, FIELD_ID, MINIMUM);
+  return wholeNumberValidation(responseBody, errors, errorMessage, FIELD_ID);
 };
 
 export default employeesInternational;
