@@ -65,6 +65,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
       emailRecipient: exporter.email,
     };
   } catch (err) {
+    console.error(err);
     throw new Error(`Verifying exporter email address ${err}`);
   }
 };

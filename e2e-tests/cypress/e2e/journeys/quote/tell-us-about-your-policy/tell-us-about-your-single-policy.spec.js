@@ -29,7 +29,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
     beforeEach(() => {
       Cypress.Cookies.preserveOnce('_csrf');
-      Cypress.Cookies.preserveOnce('connect.sid');
+      Cypress.Cookies.preserveOnce('exip-session');
     });
 
     it('renders core page elements', () => {

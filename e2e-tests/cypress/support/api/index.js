@@ -25,6 +25,10 @@ const getExporterByEmail = async (email) => {
 
     const response = await cy.request(url);
 
+    if (!response.body || !response.body.data) {
+      throw new Error('Getting exporter by email', { response });
+    }
+
     const { data } = response.body;
 
     const exporter = data.exporters[0];

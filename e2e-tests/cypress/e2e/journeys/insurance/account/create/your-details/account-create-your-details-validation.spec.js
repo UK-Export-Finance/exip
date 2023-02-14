@@ -39,7 +39,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   const TOTAL_REQUIRED_FIELDS = 4;

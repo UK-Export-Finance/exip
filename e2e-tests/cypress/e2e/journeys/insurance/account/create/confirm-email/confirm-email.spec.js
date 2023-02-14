@@ -24,7 +24,7 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   let exporter;

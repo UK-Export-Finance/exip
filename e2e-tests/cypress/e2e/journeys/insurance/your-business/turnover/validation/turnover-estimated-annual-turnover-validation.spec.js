@@ -50,7 +50,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   describe(`${FIELD_ID} error`, () => {
@@ -82,6 +82,17 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
       it(`should display validation errors for ${FIELD_ID}`, () => {
         const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
         const value = '5O';
+
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+      });
+    });
+
+    describe(`when ${FIELD_ID} is negative but has a decimal place`, () => {
+      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
+
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const value = '-256.123';
 
         cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
       });
@@ -122,6 +133,19 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
       const field = turnover[fieldId];
 
       field.input().clear().type('0');
+      submitButton().click();
+      partials.errorSummaryListItems().should('have.length', 1);
+    });
+  });
+
+  describe(`when ${FIELD_ID} is correctly entered as a negative number`, () => {
+    it('should not display validation errors', () => {
+      cy.navigateToUrl(url);
+
+      const fieldId = FIELD_ID;
+      const field = turnover[fieldId];
+
+      field.input().clear().type('-256');
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);
     });

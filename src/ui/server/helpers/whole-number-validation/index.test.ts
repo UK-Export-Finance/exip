@@ -71,6 +71,15 @@ describe('server/helpers/whole-number-validation', () => {
     });
   });
 
+  describe('number is negative but "allowNegativeValue" is set to "true"', () => {
+    it('should not return a validation error', () => {
+      mockBody.testField = '-3';
+      const response = wholeNumberValidation(mockBody, mockErrors, errorMessage, FIELD, true);
+
+      expect(response).toEqual(mockErrors);
+    });
+  });
+
   describe('number is valid', () => {
     it('should not return a validation error', () => {
       mockBody.testField = '3';

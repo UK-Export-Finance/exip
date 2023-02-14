@@ -28,7 +28,7 @@ context('Insurance - Account - Create - Confirm email page should render the sub
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   it('renders `sent a link to` with the submitted email', () => {

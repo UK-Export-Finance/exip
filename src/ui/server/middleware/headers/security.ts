@@ -26,9 +26,10 @@ export const security = (req: Request, res: Response, next: () => void) => {
   res.setHeader('X-Frame-Options', 'deny');
   res.setHeader('X-XSS-Protection', '1; mode=block');
   res.setHeader('X-Content-Type-Options', 'nosniff');
+  // TODO: script-src nounce https://developers.google.com/tag-platform/tag-manager/web/csp
   res.setHeader(
     'Content-Security-Policy',
-    "default-src 'none';connect-src https://region1.google-analytics.com 'self';base-uri 'self';block-all-mixed-content;font-src 'self';form-action 'self';frame-ancestors 'self';img-src 'self';object-src 'none';script-src https://www.googletagmanager.com 'self' 'unsafe-inline';script-src-attr 'self' 'unsafe-inline';style-src 'self';upgrade-insecure-requests",
+    "default-src 'none';connect-src https://region1.google-analytics.com 'self';base-uri 'self';block-all-mixed-content;font-src 'self' data:;form-action 'self';frame-ancestors 'none';img-src 'self';object-src 'none';script-src https://www.googletagmanager.com 'self';script-src-attr 'self';style-src 'self';upgrade-insecure-requests",
   );
   res.setHeader('Cache-Control', 'no-cache, must-revalidate, max-age=604800');
   res.setHeader('Referrer-Policy', 'same-origin');

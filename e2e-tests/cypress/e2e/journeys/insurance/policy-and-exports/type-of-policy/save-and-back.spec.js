@@ -30,7 +30,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {

@@ -6,7 +6,7 @@ context('Footer', () => {
     cy.login();
 
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   it('renders a heading', () => {

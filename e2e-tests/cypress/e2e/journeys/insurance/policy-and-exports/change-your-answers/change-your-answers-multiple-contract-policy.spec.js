@@ -58,7 +58,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   describe('single policy type answers', () => {
