@@ -54,7 +54,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   it('should render validation errors for all required fields', () => {

@@ -36,7 +36,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   it('redirects to exit page', () => {

@@ -51,7 +51,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   describe('when email does not contain an @ symbol', () => {

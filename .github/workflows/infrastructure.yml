@@ -69,6 +69,7 @@ jobs:
 
           az webapp config appsettings set --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
           --settings \
+          HTTPS=1 \
           WEBSITE_DNS_SERVER="168.63.129.16" \
           WEBSITE_VNET_ROUTE_ALL=1 \
           SESSION_SECRET=${{ secrets.SESSION_SECRET }} \

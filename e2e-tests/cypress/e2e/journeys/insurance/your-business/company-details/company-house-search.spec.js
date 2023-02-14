@@ -50,7 +50,7 @@ context('Insurance - Your business - Company details page - company house search
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   describe('when leaving companies house registration blank', () => {
