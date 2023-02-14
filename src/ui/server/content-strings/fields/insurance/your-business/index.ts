@@ -4,7 +4,7 @@ const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
+  BROKER: { HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL, DETAILS },
 } = EXPORTER_BUSINESS;
 
 export const FIELDS = {
@@ -66,6 +66,14 @@ export const FIELDS = {
     },
     [EMAIL]: {
       LABEL: 'Email address',
+    },
+    [DETAILS]: {
+      SUMMARY: 'Why appoint a broker?',
+      LINE_1: 'A broker can advise you during the application process and lifetime of any UKEF insurance policy.',
+      LINE_2: 'You can find your nearest one on',
+      LINK_TEXT: "UKEF's list of approved brokers.",
+      LINE_3: 'Alternatively, you can use any broker you prefer. They do not have to be approved by UKEF.',
+      LINE_4: 'Appointing a broker does not change the cost to you of any UKEF export insurance policy.',
     },
   },
 };

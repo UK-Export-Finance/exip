@@ -64,4 +64,5 @@ Cypress.Commands.add('assertPasswordRevealButton', require('./insurance/account/
 Cypress.Commands.add('checkText', require('./check-text'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
 Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));
+Cypress.Commands.add('checkHref', require('./check-href'));
 Cypress.Commands.add('getReferenceNumber', require('./get-reference-number'));

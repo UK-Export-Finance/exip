@@ -46,6 +46,7 @@ const EXPORTER_BUSINESS = {
     COUNTY: 'county',
     POSTCODE: 'postcode',
     EMAIL: 'email',
+    DETAILS: 'whyAppointBroker',
   },
 };
 

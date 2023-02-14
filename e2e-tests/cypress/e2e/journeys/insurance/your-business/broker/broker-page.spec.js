@@ -2,7 +2,7 @@ import { broker } from '../../../../pages/your-business';
 import partials from '../../../../partials';
 import { saveAndBackButton } from '../../../../pages/shared';
 import {
-  PAGES, BUTTONS, ERROR_MESSAGES,
+  PAGES, BUTTONS, ERROR_MESSAGES, LINKS,
 } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/exporter-business';
@@ -21,6 +21,7 @@ const {
     COUNTY,
     POSTCODE,
     EMAIL,
+    DETAILS,
   },
 } = FIELD_IDS;
 
@@ -39,6 +40,8 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const ERROR_MESSAGE_BROKER = BROKER_ERRORS[USING_BROKER];
+
+const { APPROVED_BROKER_LIST } = LINKS.EXTERNAL;
 
 const ERROR_ASSERTIONS = {
   field: broker[USING_BROKER],
@@ -132,6 +135,17 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
     cy.checkText(broker[EMAIL].label(), FIELDS.BROKER[EMAIL].LABEL);
     broker[EMAIL].input().should('exist');
+
+    cy.checkText(broker[DETAILS].summary(), FIELDS.BROKER[DETAILS].SUMMARY);
+
+    broker[DETAILS].summary().click();
+
+    cy.checkText(broker[DETAILS].line_1(), FIELDS.BROKER[DETAILS].LINE_1);
+    cy.checkText(broker[DETAILS].line_2(), FIELDS.BROKER[DETAILS].LINE_2);
+    cy.checkText(broker[DETAILS].line_3(), FIELDS.BROKER[DETAILS].LINE_3);
+    cy.checkText(broker[DETAILS].line_4(), FIELDS.BROKER[DETAILS].LINE_4);
+
+    cy.checkHref(broker[DETAILS].link(), APPROVED_BROKER_LIST);
   });
 
   it('should display save and go back button', () => {

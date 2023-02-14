@@ -1,4 +1,4 @@
-import { PAGES } from '../../../../content-strings';
+import { PAGES, LINKS } from '../../../../content-strings';
 import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/exporter-business';
@@ -7,7 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 
-const { USING_BROKER, HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL } = FIELD_IDS.BROKER;
+const { USING_BROKER, HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL, DETAILS } = FIELD_IDS.BROKER;
 
 const { BROKER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -19,6 +19,8 @@ const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.I
 const { BROKER_ROOT, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
 
 const { BROKER: BROKER_FIELDS } = FIELDS;
+
+const { APPROVED_BROKER_LIST: BROKER_LINK } = LINKS.EXTERNAL;
 
 const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
@@ -56,6 +58,11 @@ const pageVariables = (referenceNumber: number) => ({
     EMAIL: {
       ID: EMAIL,
       ...BROKER_FIELDS[EMAIL],
+    },
+    DETAILS: {
+      ID: DETAILS,
+      LINK: BROKER_LINK,
+      ...BROKER_FIELDS[DETAILS],
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`,
