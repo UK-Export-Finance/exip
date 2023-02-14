@@ -67,9 +67,9 @@ describe('controllers/insurance/business/turnover/validation/rules/estimated-ann
     });
   });
 
-  describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input is below 0`, () => {
+  describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input is below 0 but has a decimal place`, () => {
     it('should return a validation error', () => {
-      mockBody[ESTIMATED_ANNUAL_TURNOVER] = '-1';
+      mockBody[ESTIMATED_ANNUAL_TURNOVER] = '-3.123';
       const response = yearsExporting(mockBody, mockErrors);
 
       const errorMessage = EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER].INCORRECT_FORMAT;
@@ -79,8 +79,29 @@ describe('controllers/insurance/business/turnover/validation/rules/estimated-ann
     });
   });
 
-  describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input is valid`, () => {
+  describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input is below 0 but has a decimal place and letters`, () => {
     it('should return a validation error', () => {
+      mockBody[ESTIMATED_ANNUAL_TURNOVER] = '-3.AB123';
+      const response = yearsExporting(mockBody, mockErrors);
+
+      const errorMessage = EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER].INCORRECT_FORMAT;
+      const expected = generateValidationErrors(ESTIMATED_ANNUAL_TURNOVER, errorMessage, mockErrors);
+
+      expect(response).toEqual(expected);
+    });
+  });
+
+  describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input is below 0`, () => {
+    it('should not return a validation error', () => {
+      mockBody[ESTIMATED_ANNUAL_TURNOVER] = '-1';
+      const response = yearsExporting(mockBody, mockErrors);
+
+      expect(response).toEqual(mockErrors);
+    });
+  });
+
+  describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input is valid`, () => {
+    it('should not return a validation error', () => {
       mockBody[ESTIMATED_ANNUAL_TURNOVER] = '8';
       const response = yearsExporting(mockBody, mockErrors);
 
