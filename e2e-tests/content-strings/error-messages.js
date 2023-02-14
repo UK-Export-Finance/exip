@@ -130,6 +130,10 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.EMAIL]: {
         INCORRECT_FORMAT: 'Enter the email address for the broker in the correct format - for example name@example.com',
       },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.POSTCODE]: {
+        IS_EMPTY: 'Enter the postcode for your broker',
+        INCORRECT_FORMAT: 'Enter the postcode for your broker in the correct format, like KT3 3QQ',
+      },
     },
     POLICY_AND_EXPORTS: {
       // TODO move to TYPE_OF_POLICY: {},

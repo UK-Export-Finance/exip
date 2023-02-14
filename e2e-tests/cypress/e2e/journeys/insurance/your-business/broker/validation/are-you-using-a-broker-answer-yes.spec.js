@@ -12,6 +12,7 @@ const {
     ADDRESS_LINE_1,
     TOWN,
     EMAIL,
+    POSTCODE,
   },
 } = FIELD_IDS;
 
@@ -62,7 +63,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
   describe('when the yes radio is selected and no required fields are entered', () => {
     // for error assertion - common fields
-    const expectedErrorsCount = 4;
+    const expectedErrorsCount = 5;
 
     it('should display validation errors', () => {
       const field = broker[FIELD_ID];
@@ -93,6 +94,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       broker[ADDRESS_LINE_1].input().clear().type('Address line 1');
       broker[TOWN].input().clear().type('town');
       broker[EMAIL].input().clear().type('test@test.com');
+      broker[POSTCODE].input().clear().type('SW1A 2AA');
 
       submitButton().click();
 

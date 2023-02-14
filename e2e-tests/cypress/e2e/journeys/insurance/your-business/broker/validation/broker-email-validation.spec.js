@@ -27,7 +27,7 @@ const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const ERROR_ASSERTIONS = {
   errorField: broker[EMAIL],
-  expectedErrorsCount: 4,
+  expectedErrorsCount: 5,
   errorIndex: 3,
   errorMessage: BROKER_ERRORS[EMAIL].INCORRECT_FORMAT,
 };
