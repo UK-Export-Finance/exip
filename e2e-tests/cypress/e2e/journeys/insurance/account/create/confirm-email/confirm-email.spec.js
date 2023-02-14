@@ -1,4 +1,3 @@
-import { confirmEmailPage } from '../../../../../pages/insurance/account/create';
 import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../support/api';
@@ -28,7 +27,6 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
   });
 
   let exporter;
-  let expectedUrl;
 
   describe('page URL and content', () => {
     before(() => {

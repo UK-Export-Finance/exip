@@ -7,7 +7,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL_RESENT;
 
 const {
   START,
-  ACCOUNT: { CREATE: { YOUR_DETAILS, CONFIRM_EMAIL, CONFIRM_EMAIL_RESENT } },
+  ACCOUNT: { CREATE: { CONFIRM_EMAIL, CONFIRM_EMAIL_RESENT } },
 } = ROUTES;
 
 context('Insurance - Account - Create - Resend confirm email page - As an Exporter I want to request a new link to confirm my email address, So that I can readily use my email address to set up an account that I can use for UKEF digital service such as EXIP digital service', () => {

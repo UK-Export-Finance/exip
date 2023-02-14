@@ -4,9 +4,9 @@ import { checkbox, integer, relationship, select, text, timestamp, password } fr
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types'; // eslint-disable-line
-import { ANSWERS, APPLICATION, EMAIL_TEMPLATE_IDS } from './constants';
-import notify from './integrations/notify';
-import { AccountInput } from './types';
+import { ANSWERS, APPLICATION } from './constants';
+import sendEmail from './emails';
+import { Account, AccountInput } from './types';
 
 export const lists = {
   ReferenceNumber: {
@@ -257,22 +257,23 @@ export const lists = {
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
 
+          // send "confirm email" email
           try {
-            // send "confirm email" email with verification token/hash.
-            const emailResponse = await notify.sendEmail(
-              EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL,
-              accountInputData.email,
-              accountInputData.firstName,
-              accountInputData.verificationHash,
-            );
+            const exporter = {
+              firstName: accountInputData.firstName,
+              email: accountInputData.email,
+              verificationHash: accountInputData.verificationHash,
+            } as Account;
+
+            const emailResponse = await sendEmail.confirmEmailAddress(exporter);
 
             if (emailResponse.success) {
               return accountInputData;
             }
 
-            throw new Error(`Error sending email verification for account creation ${emailResponse}`);
+            throw new Error(`Sending email verification for account creation (resolveInput hook) ${emailResponse}`);
           } catch (err) {
-            console.error('Error sending email verification for account creation', { err });
+            console.error('Sending email verification for account creation (resolveInput hook) ', { err });
             throw new Error();
           }
         }
