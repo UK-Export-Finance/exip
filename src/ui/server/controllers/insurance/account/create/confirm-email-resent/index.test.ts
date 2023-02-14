@@ -60,7 +60,7 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        email: mockGetByEmailResponse.emailRecipient,
+        exporterEmail: mockGetByEmailResponse.emailRecipient,
         exporterId: req.query.id,
       });
     });

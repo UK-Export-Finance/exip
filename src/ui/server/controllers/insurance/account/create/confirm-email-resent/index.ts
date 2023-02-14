@@ -34,14 +34,14 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const email = exporter.emailRecipient;
+    const exporterEmail = exporter.emailRecipient;
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
-      email,
+      exporterEmail,
       exporterId: id,
     });
   } catch (err) {
