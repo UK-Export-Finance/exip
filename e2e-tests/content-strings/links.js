@@ -17,7 +17,7 @@ export const LINKS = {
     PRIVACY: 'https://www.gov.uk/government/publications/ukef-privacy-notice',
     FEEDBACK: 'https://forms.office.com/r/TacytrRCgJ',
     EXPORT_FINANCE_MANAGERS: 'https://www.gov.uk/government/publications/find-an-export-finance-manager',
-    APPROVED_BROKER_LIST: 'https://www.gov.uk/government/publications/uk-export-finance-insurance-list-of-approved-brokers',
+    APPROVED_BROKER_LIST: 'https://www.gov.uk/government/publications/uk-export-finance-insurance-list-of-approved-brokers/export-insurance-approved-brokers',
     PROPOSAL_FORM:
     'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1075267/10489_UKEF_Export_Insurance_Proposal_Form_20220513-fillable.pdf',
     NBI_FORM:
