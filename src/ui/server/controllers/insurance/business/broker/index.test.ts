@@ -1,4 +1,4 @@
-import { PAGES, LINKS } from '../../../../content-strings';
+import { PAGES } from '../../../../content-strings';
 import { pageVariables, get, post, TEMPLATE } from '.';
 import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../constants';
@@ -19,8 +19,6 @@ const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
 const { BROKER_ROOT, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
-
-const { APPROVED_BROKER_LIST: BROKER_LINK } = LINKS.EXTERNAL;
 
 describe('controllers/insurance/business/broker', () => {
   let req: Request;
@@ -86,7 +84,6 @@ describe('controllers/insurance/business/broker', () => {
           },
           DETAILS: {
             ID: DETAILS,
-            LINK: BROKER_LINK,
             ...BROKER_FIELDS[DETAILS],
           },
         },

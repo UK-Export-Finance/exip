@@ -135,17 +135,21 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
     cy.checkText(broker[EMAIL].label(), FIELDS.BROKER[EMAIL].LABEL);
     broker[EMAIL].input().should('exist');
+  });
 
-    cy.checkText(broker[DETAILS].summary(), FIELDS.BROKER[DETAILS].SUMMARY);
+  describe('when clicking the "Why appoint a broker" details section', () => {
+    it('should display the details section', () => {
+      cy.checkText(broker[DETAILS].summary(), FIELDS.BROKER[DETAILS].SUMMARY);
 
-    broker[DETAILS].summary().click();
+      broker[DETAILS].summary().click();
 
-    cy.checkText(broker[DETAILS].line_1(), FIELDS.BROKER[DETAILS].LINE_1);
-    cy.checkText(broker[DETAILS].line_2(), FIELDS.BROKER[DETAILS].LINE_2);
-    cy.checkText(broker[DETAILS].line_3(), FIELDS.BROKER[DETAILS].LINE_3);
-    cy.checkText(broker[DETAILS].line_4(), FIELDS.BROKER[DETAILS].LINE_4);
+      cy.checkText(broker[DETAILS].line_1(), FIELDS.BROKER[DETAILS].LINE_1);
+      cy.checkText(broker[DETAILS].line_2(), FIELDS.BROKER[DETAILS].LINE_2);
+      cy.checkText(broker[DETAILS].line_3(), FIELDS.BROKER[DETAILS].LINE_3);
+      cy.checkText(broker[DETAILS].line_4(), FIELDS.BROKER[DETAILS].LINE_4);
 
-    cy.checkHref(broker[DETAILS].link(), APPROVED_BROKER_LIST);
+      cy.checkLink(broker[DETAILS].link(), APPROVED_BROKER_LIST, FIELDS.BROKER[DETAILS].LINK_TEXT);
+    });
   });
 
   it('should display save and go back button', () => {

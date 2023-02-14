@@ -1,4 +1,4 @@
-import { PAGES, LINKS } from '../../../../content-strings';
+import { PAGES } from '../../../../content-strings';
 import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/exporter-business';
@@ -19,8 +19,6 @@ const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.I
 const { BROKER_ROOT, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
 
 const { BROKER: BROKER_FIELDS } = FIELDS;
-
-const { APPROVED_BROKER_LIST: BROKER_LINK } = LINKS.EXTERNAL;
 
 const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
@@ -61,8 +59,6 @@ const pageVariables = (referenceNumber: number) => ({
     },
     DETAILS: {
       ID: DETAILS,
-      LINK: BROKER_LINK,
-      ...BROKER_FIELDS[DETAILS],
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`,
