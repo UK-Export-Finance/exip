@@ -65,4 +65,5 @@ Cypress.Commands.add('assertConfirmEmailPageContent', require('./insurance/accou
 Cypress.Commands.add('checkText', require('./check-text'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
 Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));
+Cypress.Commands.add('checkLink', require('./check-link'));
 Cypress.Commands.add('getReferenceNumber', require('./get-reference-number'));

@@ -96,5 +96,13 @@ export const EXPORTER_BUSINESS_FIELDS = {
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.EMAIL]: {
       LABEL: 'Email address',
     },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.DETAILS]: {
+      SUMMARY: 'Why appoint a broker?',
+      LINE_1: 'A broker can advise you during the application process and lifetime of any UKEF insurance policy.',
+      LINE_2: "You can find your nearest one on UKEF's list of approved brokers.",
+      LINK_TEXT: "UKEF's list of approved brokers.",
+      LINE_3: 'Alternatively, you can use any broker you prefer. They do not have to be approved by UKEF.',
+      LINE_4: 'Appointing a broker does not change the cost to you of any UKEF export insurance policy.',
+    },
   },
 };
