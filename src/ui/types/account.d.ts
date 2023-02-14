@@ -3,7 +3,7 @@ interface Account {
   lastName: string;
   email: string;
   password: string;
-  isActive?: boolean;
+  isVerified?: boolean;
 }
 
 export { Account };

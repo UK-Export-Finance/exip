@@ -355,7 +355,9 @@ type Exporter {
   email: String
   salt: String
   hash: String
-  isActive: Boolean
+  isVerified: Boolean
+  verificationHash: String
+  verificationExpiry: DateTime
 }
 
 input ExporterWhereUniqueInput {
@@ -374,7 +376,9 @@ input ExporterWhereInput {
   email: StringFilter
   salt: StringFilter
   hash: StringFilter
-  isActive: BooleanFilter
+  isVerified: BooleanFilter
+  verificationHash: StringFilter
+  verificationExpiry: DateTimeNullableFilter
 }
 
 input BooleanFilter {
@@ -391,7 +395,9 @@ input ExporterOrderByInput {
   email: OrderDirection
   salt: OrderDirection
   hash: OrderDirection
-  isActive: OrderDirection
+  isVerified: OrderDirection
+  verificationHash: OrderDirection
+  verificationExpiry: OrderDirection
 }
 
 input ExporterUpdateInput {
@@ -402,7 +408,9 @@ input ExporterUpdateInput {
   email: String
   salt: String
   hash: String
-  isActive: Boolean
+  isVerified: Boolean
+  verificationHash: String
+  verificationExpiry: DateTime
 }
 
 input ExporterUpdateArgs {
@@ -418,7 +426,9 @@ input ExporterCreateInput {
   email: String
   salt: String
   hash: String
-  isActive: Boolean
+  isVerified: Boolean
+  verificationHash: String
+  verificationExpiry: DateTime
 }
 
 type ExporterBusiness {
@@ -1019,6 +1029,9 @@ type Mutation {
   """ create an account """
   createAccount(data: AccountInput!): Account
 
+  """ verify an an account's email address """
+  verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
+
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
 }
@@ -1190,7 +1203,7 @@ type Account {
   firstName: String
   lastName: String
   email: String
-  isActive: Boolean
+  isVerified: Boolean
 }
 
 input AccountInput {
@@ -1261,4 +1274,8 @@ input ExporterCompanyAndCompanyAddressInput {
   phoneNumber: String
   financialYearEndDate: DateTime
   oldSicCodes: [OldSicCodes]
+}
+
+type VerifyAccountEmailAddressResponse {
+  success: Boolean
 }

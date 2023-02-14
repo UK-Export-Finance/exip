@@ -3,10 +3,10 @@ import { allowAll } from '@keystone-6/core/access';
 import { checkbox, integer, relationship, select, text, timestamp, password } from '@keystone-6/core/fields';
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
-import { Lists } from '.keystone/types';  // eslint-disable-line
+import { Lists } from '.keystone/types'; // eslint-disable-line
 import { ANSWERS, APPLICATION, EMAIL_TEMPLATE_IDS } from './constants';
 import notify from './integrations/notify';
-import { Account } from './types';
+import { AccountInput } from './types';
 
 export const lists = {
   ReferenceNumber: {
@@ -242,29 +242,28 @@ export const lists = {
       email: text({ validation: { isRequired: true } }),
       salt: text({ validation: { isRequired: true } }),
       hash: text({ validation: { isRequired: true } }),
-      // active flag will only be true if the exporter has verified their email address.
-      isActive: checkbox({ defaultValue: false }),
+      // isVerified flag will only be true if the exporter has verified their email address.
+      isVerified: checkbox({ defaultValue: false }),
+      verificationHash: text(),
+      verificationExpiry: timestamp(),
     },
     hooks: {
-      resolveInput: async ({ operation, resolvedData }): Promise<Account> => {
-        const accountInputData = resolvedData as Account;
+      resolveInput: async ({ operation, resolvedData }): Promise<AccountInput> => {
+        const accountInputData = resolvedData as AccountInput;
 
         if (operation === 'create') {
-          // TODO:
-          // - ensure there is not already an account with the same email.
-          // - email confirmation token
-
           // add dates
           const now = new Date();
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
 
           try {
+            // send "confirm email" email with verification token/hash.
             const emailResponse = await notify.sendEmail(
               EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL,
               accountInputData.email,
               accountInputData.firstName,
-              'mockConfirmToken',
+              accountInputData.verificationHash,
             );
 
             if (emailResponse.success) {
@@ -276,6 +275,11 @@ export const lists = {
             console.error('Error sending email verification for account creation', { err });
             throw new Error();
           }
+        }
+
+        if (operation === 'update') {
+          // add dates
+          accountInputData.updatedAt = new Date();
         }
 
         return accountInputData;

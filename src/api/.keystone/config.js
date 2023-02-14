@@ -60,13 +60,23 @@ var APPLICATION = {
     }
   }
 };
-var PASSWORD = {
-  RANDOM_BYTES_SIZE: 32,
-  STRING_TYPE: "hex",
-  PBKDF2: {
-    ITERATIONS: 1e4,
-    KEY_LENGTH: 64,
-    DIGEST_ALGORITHM: "sha512"
+var ACCOUNT = {
+  EMAIL: {
+    VERIFICATION_EXPIRY: () => {
+      const now = new Date();
+      const day = now.getDate();
+      const tomorrow = new Date(now.setDate(day + 1));
+      return tomorrow;
+    }
+  },
+  PASSWORD: {
+    RANDOM_BYTES_SIZE: 32,
+    STRING_TYPE: "hex",
+    PBKDF2: {
+      ITERATIONS: 1e4,
+      KEY_LENGTH: 64,
+      DIGEST_ALGORITHM: "sha512"
+    }
   }
 };
 var EMAIL_TEMPLATE_IDS = {
@@ -297,7 +307,9 @@ var lists = {
       email: (0, import_fields.text)({ validation: { isRequired: true } }),
       salt: (0, import_fields.text)({ validation: { isRequired: true } }),
       hash: (0, import_fields.text)({ validation: { isRequired: true } }),
-      isActive: (0, import_fields.checkbox)({ defaultValue: false })
+      isVerified: (0, import_fields.checkbox)({ defaultValue: false }),
+      verificationHash: (0, import_fields.text)(),
+      verificationExpiry: (0, import_fields.timestamp)()
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData }) => {
@@ -311,7 +323,7 @@ var lists = {
               EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL,
               accountInputData.email,
               accountInputData.firstName,
-              "mockConfirmToken"
+              accountInputData.verificationHash
             );
             if (emailResponse.success) {
               return accountInputData;
@@ -321,6 +333,9 @@ var lists = {
             console.error("Error sending email verification for account creation", { err });
             throw new Error();
           }
+        }
+        if (operation === "update") {
+          accountInputData.updatedAt = new Date();
         }
         return accountInputData;
       }
@@ -489,6 +504,49 @@ var import_axios = __toESM(require("axios"));
 var import_dotenv2 = __toESM(require("dotenv"));
 var import_crypto = __toESM(require("crypto"));
 
+// custom-resolvers/verify-account-email-address.ts
+var import_date_fns2 = require("date-fns");
+var verifyAccountEmailAddress = async (root, variables, context) => {
+  console.info("Verifying exporter email address");
+  try {
+    const exportersArray = await context.db.Exporter.findMany({
+      where: {
+        verificationHash: { equals: variables.token }
+      },
+      take: 1
+    });
+    if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
+      console.info("Verifying exporter email - no exporter exists with the provided token");
+      return {
+        expired: true
+      };
+    }
+    const exporter = exportersArray[0];
+    const now = new Date();
+    const canActivateExporter = (0, import_date_fns2.isBefore)(now, exporter.verificationExpiry);
+    if (!canActivateExporter) {
+      console.info("Unable to verify exporter email - verifcation period has expired");
+      return {
+        expired: true
+      };
+    }
+    await context.db.Exporter.updateOne({
+      where: { id: exporter.id },
+      data: {
+        isVerified: true,
+        verificationHash: "",
+        verificationExpiry: null
+      }
+    });
+    return {
+      success: true
+    };
+  } catch (err) {
+    throw new Error(`Verifying exporter email address ${err}`);
+  }
+};
+var verify_account_email_address_default = verifyAccountEmailAddress;
+
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
@@ -546,15 +604,20 @@ var mapSicCodes = (company, sicCodes) => {
 import_dotenv2.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
+var { EMAIL, PASSWORD } = ACCOUNT;
+var {
+  RANDOM_BYTES_SIZE,
+  STRING_TYPE,
+  PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM }
+} = PASSWORD;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
   typeDefs: `
-
       type Account {
         firstName: String
         lastName: String
         email: String
-        isActive: Boolean
+        isVerified: Boolean
       }
 
       input AccountInput {
@@ -639,11 +702,19 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         oldSicCodes: [OldSicCodes]
       }
 
+      type VerifyAccountEmailAddressResponse {
+        success: Boolean
+      }
+
       type Mutation {
         """ create an account """
         createAccount(
           data: AccountInput!
         ): Account
+        """ verify an an account's email address """
+        verifyAccountEmailAddress(
+          token: String!
+        ): VerifyAccountEmailAddressResponse
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -665,19 +736,18 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         console.info("Creating new exporter account for ", variables.data.email);
         try {
           const { firstName, lastName, email, password: password2 } = variables.data;
-          const {
-            RANDOM_BYTES_SIZE,
-            STRING_TYPE,
-            PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM }
-          } = PASSWORD;
           const salt = import_crypto.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
-          const hash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+          const passwordHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+          const verificationHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+          const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
           const account = {
             firstName,
             lastName,
             email,
             salt,
-            hash
+            hash: passwordHash,
+            verificationHash,
+            verificationExpiry
           };
           const response = await context.db.Exporter.createOne({
             data: account
@@ -687,6 +757,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           throw new Error(`Creating new exporter account ${err}`);
         }
       },
+      verifyAccountEmailAddress: verify_account_email_address_default,
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);
@@ -761,6 +832,9 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 // keystone.ts
 var keystone_default = withAuth(
   (0, import_core2.config)({
+    server: {
+      port: 5001
+    },
     db: {
       provider: "mysql",
       url: String(process.env.DATABASE_URL),

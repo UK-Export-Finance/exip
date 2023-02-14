@@ -29,6 +29,7 @@ const mockReq = () => {
     params: {
       referenceNumber: mockApplication.referenceNumber.toString(),
     },
+    query: {},
     redirect: jest.fn(),
     session: {
       submittedData: {

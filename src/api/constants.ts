@@ -20,13 +20,26 @@ export const APPLICATION = {
   },
 };
 
-export const PASSWORD = {
-  RANDOM_BYTES_SIZE: 32,
-  STRING_TYPE: 'hex',
-  PBKDF2: {
-    ITERATIONS: 10000,
-    KEY_LENGTH: 64,
-    DIGEST_ALGORITHM: 'sha512',
+export const ACCOUNT = {
+  EMAIL: {
+    VERIFICATION_EXPIRY: () => {
+      // 24 hours from now
+      const now = new Date();
+      const day = now.getDate();
+
+      const tomorrow = new Date(now.setDate(day + 1));
+
+      return tomorrow;
+    },
+  },
+  PASSWORD: {
+    RANDOM_BYTES_SIZE: 32,
+    STRING_TYPE: 'hex',
+    PBKDF2: {
+      ITERATIONS: 10000,
+      KEY_LENGTH: 64,
+      DIGEST_ALGORITHM: 'sha512',
+    },
   },
 };
 

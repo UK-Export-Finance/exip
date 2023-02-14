@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import express from 'express';
 import compression from 'compression';
+import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 import crypto from 'crypto';
 import session from 'express-session';
@@ -34,6 +35,15 @@ const https = Boolean(process.env.HTTPS || 0);
 app.use(seo);
 app.use(security);
 app.use(compression());
+
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 1000, // 1K requests / 1 window
+  standardHeaders: false,
+  legacyHeaders: false,
+});
+
+app.use(limiter);
 
 const cookie = {
   path: '/',
