@@ -14,7 +14,7 @@ describe('controllers/account/create/your-details/save-data', () => {
     api.keystone.account.create = accountCreateSpy;
   });
 
-  it('should call api.keystone.account.create form body and sanitised data', async () => {
+  it('should call api.keystone.account.create with sanitised form data', async () => {
     await save.account(mockFormBody);
 
     expect(accountCreateSpy).toHaveBeenCalledTimes(1);

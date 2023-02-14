@@ -6,6 +6,7 @@ const queryStrings = {
         where: { email: { equals: "${email}" } },
         take: 1
       ) {
+        id
         verificationHash
       }
     }`,
@@ -30,7 +31,7 @@ const getExporterByEmail = async (email) => {
 
     return exporter;
   } catch (err) {
-    console.error('Error getting exporter by email');
+    console.error(err);
 
     throw new Error('Getting exporter by email', { err });
   }

@@ -36,6 +36,7 @@ interface RequestParams {
 
 interface RequestQuery {
   token?: string;
+  id?: string;
 }
 
 interface RequestSession {

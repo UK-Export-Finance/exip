@@ -15,10 +15,14 @@
     }
   }) }}
 
-  <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+    </div>
+  </div>
 
-  {% if exporterEmail %}
-    <p data-cy="we-sent-link-to">{{ CONTENT_STRINGS.WE_SENT_LINK_TO }} {{ exporterEmail }}</p>
+  {% if email %}
+    <p data-cy="we-sent-link-to">{{ CONTENT_STRINGS.WE_SENT_LINK_TO }} {{ email }}</p>
   {% endif %}
   
   <p class="govuk-!-margin-bottom-9" data-cy="check-your-email">{{ CONTENT_STRINGS.CHECK_YOUR_EMAIL }}</p>

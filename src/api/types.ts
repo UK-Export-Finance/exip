@@ -33,7 +33,10 @@ interface AccountInput {
 }
 
 interface Account extends ExporterUpdateInput {
-  id?: string;
+  id: string;
+  email: string;
+  firstName: string;
+  verificationHash: string;
 }
 
 interface Application {
@@ -73,4 +76,8 @@ interface VerifyEmailAddressVariables {
   token: string;
 }
 
-export { Account, AccountInput, Application, CompanyResponse, SicCodes, VerifyEmailAddressVariables };
+interface SendEmailConfirmEmailAddress {
+  exporterId: string;
+}
+
+export { Account, AccountInput, Application, CompanyResponse, SicCodes, VerifyEmailAddressVariables, SendEmailConfirmEmailAddress };

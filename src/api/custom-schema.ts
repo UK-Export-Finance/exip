@@ -4,10 +4,10 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 import crypto from 'crypto';
 import { ACCOUNT } from './constants';
-import { verifyAccountEmailAddress } from './custom-resolvers';
+import { verifyAccountEmailAddress, sendEmailConfirmEmailAddress } from './custom-resolvers';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
-import { SicCodes } from './types';
+import { Account, SicCodes } from './types';
 
 dotenv.config();
 
@@ -27,6 +27,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
     schemas: [schema],
     typeDefs: `
       type Account {
+        id: String
         firstName: String
         lastName: String
         email: String
@@ -115,8 +116,9 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         oldSicCodes: [OldSicCodes]
       }
 
-      type VerifyAccountEmailAddressResponse {
+      type EmailResponse {
         success: Boolean
+        emailRecipient: String
       }
 
       type Mutation {
@@ -127,7 +129,11 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         """ verify an an account's email address """
         verifyAccountEmailAddress(
           token: String!
-        ): VerifyAccountEmailAddressResponse
+        ): EmailResponse
+        """ verify an an account's email address """
+        sendEmailConfirmEmailAddress(
+          exporterId: String!
+        ): EmailResponse
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -137,6 +143,10 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       }
 
       type Query {
+        """ get an account by email """
+        getAccountByEmail(
+          email: String!
+        ): Account
         """ get companies house information """
         getCompaniesHouseInformation(
           companiesHouseNumber: String!
@@ -179,6 +189,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           }
         },
         verifyAccountEmailAddress,
+        sendEmailConfirmEmailAddress,
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);
@@ -223,6 +234,34 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         },
       },
       Query: {
+        getAccountByEmail: async (root, variables, context) => {
+          try {
+            console.info('Getting exporter by email ', variables.email);
+
+            // TODO: DRY. getExporterByX byCustomProperty
+            const exportersArray = await context.db.Exporter.findMany({
+              where: {
+                email: { equals: variables.email },
+              },
+              take: 1,
+            });
+
+            // ensure that we have found an acount with the requsted email.
+            if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
+              console.info('Getting exporter by email - no exporter exists with the provided email');
+
+              return {};
+            }
+
+            const exporter = exportersArray[0] as Account;
+
+            return exporter;
+          } catch (err) {
+            console.error('Error getting exporter by email', { err });
+
+            throw new Error(`Getting exporter by email ${err}`);
+          }
+        },
         /**
          * Call for companies house API
          * @param variables - companies house number is received as a string within variables

@@ -525,7 +525,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     const now = new Date();
     const canActivateExporter = (0, import_date_fns2.isBefore)(now, exporter.verificationExpiry);
     if (!canActivateExporter) {
-      console.info("Unable to verify exporter email - verifcation period has expired");
+      console.info("Unable to verify exporter email - verification period has expired");
       return {
         expired: true
       };
@@ -539,13 +539,44 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       }
     });
     return {
-      success: true
+      success: true,
+      emailRecipient: exporter.email
     };
   } catch (err) {
     throw new Error(`Verifying exporter email address ${err}`);
   }
 };
 var verify_account_email_address_default = verifyAccountEmailAddress;
+
+// custom-resolvers/send-email-confirm-email-address.ts
+var sendEmailConfirmEmailAddress = async (root, variables, context) => {
+  console.info("Sending email verification for account creation");
+  try {
+    const exporter = await context.db.Exporter.findOne({
+      where: {
+        id: variables.exporterId
+      }
+    });
+    if (!exporter || !exporter.id) {
+      console.info("Sending email verification for account creation - no exporter exists with the provided ID");
+      return {
+        success: false
+      };
+    }
+    const { email, firstName, verificationHash } = exporter;
+    const emailResponse = await notify_default.sendEmail(EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL, email, firstName, verificationHash);
+    if (emailResponse.success) {
+      return {
+        success: true,
+        emailRecipient: exporter.email
+      };
+    }
+    throw new Error(`Sending email verification for account creation ${emailResponse}`);
+  } catch (err) {
+    throw new Error(`Sending email verification for account creation ${err}`);
+  }
+};
+var send_email_confirm_email_address_default = sendEmailConfirmEmailAddress;
 
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -614,6 +645,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
   typeDefs: `
       type Account {
+        id: String
         firstName: String
         lastName: String
         email: String
@@ -702,8 +734,9 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         oldSicCodes: [OldSicCodes]
       }
 
-      type VerifyAccountEmailAddressResponse {
+      type EmailResponse {
         success: Boolean
+        emailRecipient: String
       }
 
       type Mutation {
@@ -714,7 +747,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         """ verify an an account's email address """
         verifyAccountEmailAddress(
           token: String!
-        ): VerifyAccountEmailAddressResponse
+        ): EmailResponse
+        """ verify an an account's email address """
+        sendEmailConfirmEmailAddress(
+          exporterId: String!
+        ): EmailResponse
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -724,6 +761,10 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
 
       type Query {
+        """ get an account by email """
+        getAccountByEmail(
+          email: String!
+        ): Account
         """ get companies house information """
         getCompaniesHouseInformation(
           companiesHouseNumber: String!
@@ -758,6 +799,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         }
       },
       verifyAccountEmailAddress: verify_account_email_address_default,
+      sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);
@@ -793,6 +835,26 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
     },
     Query: {
+      getAccountByEmail: async (root, variables, context) => {
+        try {
+          console.info("Getting exporter by email ", variables.email);
+          const exportersArray = await context.db.Exporter.findMany({
+            where: {
+              email: { equals: variables.email }
+            },
+            take: 1
+          });
+          if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
+            console.info("Getting exporter by email - no exporter exists with the provided email");
+            return {};
+          }
+          const exporter = exportersArray[0];
+          return exporter;
+        } catch (err) {
+          console.error("Error getting exporter by email", { err });
+          throw new Error(`Getting exporter by email ${err}`);
+        }
+      },
       getCompaniesHouseInformation: async (root, variables) => {
         try {
           const { companiesHouseNumber } = variables;
