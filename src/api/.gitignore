@@ -3,4 +3,4 @@
 .env
 *.log
 node_modules
-.keystone/admin
+.keystone
