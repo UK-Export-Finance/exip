@@ -1,4 +1,4 @@
-const yourDetailsPage = {
+const signInPage = {
   successBanner: {
     container: () => cy.get('[data-cy="success-banner"]'),
     heading: () => cy.get('[data-cy="success-banner-heading"]'),
@@ -9,4 +9,4 @@ const yourDetailsPage = {
   createAccountLink: () => cy.get('[data-cy="create-account"]'),
 };
 
-export default yourDetailsPage;
+export default signInPage;

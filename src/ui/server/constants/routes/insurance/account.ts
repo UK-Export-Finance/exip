@@ -15,6 +15,7 @@ const CREATE = {
 const SIGN_IN = {
   ROOT: `${INSURANCE_ROOT}${SIGN_IN_ROOT}`,
   ENTER_CODE: `${INSURANCE_ROOT}${SIGN_IN_ROOT}/enter-code`,
+  REQUEST_NEW_CODE: `${INSURANCE_ROOT}${SIGN_IN_ROOT}/request-new-code`,
 };
 
 const RESET_PASSWORD = {

@@ -6,5 +6,6 @@ export const ACCOUNT_TEMPLATES = {
   },
   SIGN_IN: {
     ROOT: 'insurance/account/sign-in/sign-in.njk',
+    ENTER_CODE: 'insurance/account/sign-in/enter-code.njk',
   },
 };
