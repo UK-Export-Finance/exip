@@ -1,5 +1,9 @@
+import { signInPage } from '../../../../../pages/insurance/account/sign-in';
+import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../support/api';
+
+const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGN_IN.ROOT;
 
 const {
   START,
@@ -38,7 +42,7 @@ context('Insurance - Account - Create - I want the system to generate account ve
       });
     });
 
-    it(`should validate the exporter and redirect to ${SIGN_IN.ROOT}`, () => {
+    it(`should validate the exporter, redirect to ${SIGN_IN.ROOT} and display a success banner`, () => {
       // mimic "clicking email verification link"
       cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${exporter.verificationHash}`);
 
@@ -46,6 +50,13 @@ context('Insurance - Account - Create - I want the system to generate account ve
       const expected = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
 
       cy.url().should('eq', expected);
+
+      const { successBanner } = signInPage;
+
+      successBanner.container().should('exist');
+
+      cy.checkText(successBanner.heading(), CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
+      cy.checkText(successBanner.continue(), CONTENT_STRINGS.SUCCESS_BANNER.SIGN_IN_TO_CONTINUE);
     });
   });
 });

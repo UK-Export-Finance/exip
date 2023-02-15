@@ -37,6 +37,10 @@ const ACCOUNT = {
   },
   SIGN_IN: {
     ROOT: {
+      SUCCESS_BANNER: {
+        HEADING: "You've confirmed your email address and activated your account.",
+        SIGN_IN_TO_CONTINUE: 'Sign in to continue your application.',
+      },
       PAGE_TITLE: 'Sign in',
       RESET_PASSWORD: {
         TEXT: 'Reset password',
