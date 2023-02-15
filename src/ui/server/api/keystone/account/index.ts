@@ -23,9 +23,7 @@ const account = {
       }
 
       if (response?.data?.createAccount) {
-        const { data } = response;
-
-        return data.createAccount;
+        return response.data.createAccount;
       }
 
       console.error(response);
@@ -52,9 +50,7 @@ const account = {
       }
 
       if (response?.data?.exporter) {
-        const { data } = response;
-
-        return data.exporter;
+        return response.data.exporter;
       }
 
       console.error(response);
@@ -81,9 +77,7 @@ const account = {
       }
 
       if (response?.data?.verifyAccountEmailAddress) {
-        const { data } = response;
-
-        return data.verifyAccountEmailAddress;
+        return response.data.verifyAccountEmailAddress;
       }
 
       console.error(response);
@@ -110,9 +104,7 @@ const account = {
       }
 
       if (response?.data?.sendEmailConfirmEmailAddress) {
-        const { data } = response;
-
-        return data.sendEmailConfirmEmailAddress;
+        return response.data.sendEmailConfirmEmailAddress;
       }
 
       console.error(response);
