@@ -24,6 +24,8 @@ export const get = async (req: Request, res: Response) => {
       const response = await api.keystone.account.verifyEmailAddress(token);
 
       if (response.success) {
+        req.flash('successBanner', 'newAccountVerified');
+
         return res.redirect(SIGN_IN.ROOT);
       }
 

@@ -25,6 +25,8 @@ describe('controllers/insurance/account/sign-in', () => {
 
   beforeEach(() => {
     req = mockReq();
+    req.flash = () => 'mock';
+
     res = mockRes();
   });
 
@@ -69,6 +71,32 @@ describe('controllers/insurance/account/sign-in', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
+        renderSuccessBanner: false,
+      });
+    });
+
+    describe("when req.flash('successBanner') includes 'newAccountVerified')", () => {
+      beforeEach(() => {
+        req.flash = (property: string) => {
+          const obj = {
+            successBanner: 'newAccountVerified',
+          };
+
+          return obj[property];
+        };
+      });
+
+      it('should render template with renderSuccessBanner', () => {
+        get(req, res);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...PAGE_VARIABLES,
+          renderSuccessBanner: true,
+        });
       });
     });
   });

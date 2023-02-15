@@ -46,14 +46,20 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGN_IN.ROOT;
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Sign in page
  */
-export const get = (req: Request, res: Response) =>
-  res.render(TEMPLATE, {
+export const get = (req: Request, res: Response) => {
+  const flash = req.flash('successBanner');
+
+  const renderSuccessBanner = flash.includes('newAccountVerified') || false;
+
+  return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
     }),
     ...PAGE_VARIABLES,
+    renderSuccessBanner,
   });
+};
 
 /**
  * post
