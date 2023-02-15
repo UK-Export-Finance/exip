@@ -542,6 +542,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       success: true
     };
   } catch (err) {
+    console.error(err);
     throw new Error(`Verifying exporter email address ${err}`);
   }
 };

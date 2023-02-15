@@ -50,6 +50,7 @@ const broker = {
   [POSTCODE]: {
     label: () => cy.get(`[data-cy="${POSTCODE}-label`),
     input: () => cy.get(`[data-cy="${POSTCODE}-input`),
+    errorMessage: () => cy.get(`[data-cy="${POSTCODE}-error`),
   },
   [EMAIL]: {
     label: () => cy.get(`[data-cy="${EMAIL}-label`),

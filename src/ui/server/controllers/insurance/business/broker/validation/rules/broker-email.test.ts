@@ -48,7 +48,7 @@ describe('controllers/insurance/business/broker/validation/rules/broker-email', 
     });
 
     describe('if email is valid', () => {
-      it('should return the mockErrors', () => {
+      it('should return the provided errors object', () => {
         mockBody[USING_BROKER] = 'Yes';
         mockBody[EMAIL] = 'test@test.com';
 
@@ -60,7 +60,7 @@ describe('controllers/insurance/business/broker/validation/rules/broker-email', 
   });
 
   describe('if using broker is "No"', () => {
-    it('should return the mockErrors"', () => {
+    it('should return the provided errors object"', () => {
       mockBody[USING_BROKER] = 'No';
 
       const response = brokerEmail(mockBody, mockErrors);
@@ -70,7 +70,7 @@ describe('controllers/insurance/business/broker/validation/rules/broker-email', 
   });
 
   describe('if using broker is "null"', () => {
-    it('should return the mockErrors', () => {
+    it('should return the provided errors object', () => {
       mockBody[USING_BROKER] = null;
 
       const response = brokerEmail(mockBody, mockErrors);
