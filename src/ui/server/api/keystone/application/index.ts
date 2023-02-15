@@ -144,16 +144,14 @@ const application = {
         }
 
         if (response?.data?.updateExporterBroker) {
-          const { data } = response;
-
-          return data.updateExporterBroker;
+          return response.data.updateExporterBroker;
         }
 
         console.error(response);
         throw new Error('Updating application exporter broker');
       } catch (err) {
         console.error(err);
-        throw new Error('Updating application exporter business');
+        throw new Error('Updating application exporter broker');
       }
     },
     exporterBusiness: async (id: string, update: object) => {

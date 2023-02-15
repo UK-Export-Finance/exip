@@ -1,3 +1,3 @@
 export default (selector, expectedValue) => {
-  selector.should('have.value', expectedValue);
+  selector.input().should('have.value', expectedValue);
 };

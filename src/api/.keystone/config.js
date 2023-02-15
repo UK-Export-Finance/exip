@@ -406,7 +406,7 @@ var lists = {
       addressLine1: (0, import_fields.text)(),
       addressLine2: (0, import_fields.text)(),
       town: (0, import_fields.text)(),
-      country: (0, import_fields.text)(),
+      county: (0, import_fields.text)(),
       postcode: (0, import_fields.text)(),
       email: (0, import_fields.text)()
     },

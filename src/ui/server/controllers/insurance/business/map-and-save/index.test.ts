@@ -3,7 +3,6 @@ import { FIELD_IDS } from '../../../../constants';
 import mapCompanyDetailsSubmittedData from '../company-details/map-submitted-data';
 import mapNatureOfBusinessSubmittedData from '../nature-of-business/map-submitted-data';
 import mapTurnoverSubmittedData from '../turnover/map-submitted-data';
-import mapBrokerSubmittedData from '../broker/map-submitted-data';
 import save from '../save-data';
 import { mockApplication, mockBroker } from '../../../../test-mocks';
 import generateValidationErrors from '../../../../helpers/validation';
@@ -226,7 +225,7 @@ describe('controllers/insurance/business/map-and-save', () => {
           await mapAndSave.broker(mockFormBody, mockApplication, mockValidationErrors);
 
           expect(save.exporterBroker).toHaveBeenCalledTimes(1);
-          expect(save.exporterBroker).toHaveBeenCalledWith(mockApplication, mapBrokerSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+          expect(save.exporterBroker).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
         });
 
         it('should return true', async () => {
@@ -241,7 +240,7 @@ describe('controllers/insurance/business/map-and-save', () => {
           await mapAndSave.broker(mockFormBody, mockApplication);
 
           expect(save.exporterBroker).toHaveBeenCalledTimes(1);
-          expect(save.exporterBroker).toHaveBeenCalledWith(mockApplication, mapBrokerSubmittedData(mockFormBody));
+          expect(save.exporterBroker).toHaveBeenCalledWith(mockApplication, mockFormBody);
         });
 
         it('should return true', async () => {

@@ -110,7 +110,7 @@ model ExporterBroker {
   addressLine1                    String        @default("")
   addressLine2                    String        @default("")
   town                            String        @default("")
-  country                         String        @default("")
+  county                          String        @default("")
   postcode                        String        @default("")
   email                           String        @default("")
   from_Application_exporterBroker Application[] @relation("Application_exporterBroker")

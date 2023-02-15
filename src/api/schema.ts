@@ -335,7 +335,7 @@ export const lists = {
       addressLine1: text(),
       addressLine2: text(),
       town: text(),
-      country: text(),
+      county: text(),
       postcode: text(),
       email: text(),
     },

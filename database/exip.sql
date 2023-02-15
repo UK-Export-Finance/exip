@@ -362,7 +362,7 @@ CREATE TABLE `ExporterBroker` (
   `addressLine1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `town` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `county` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `postcode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),

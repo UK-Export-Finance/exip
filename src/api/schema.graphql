@@ -518,7 +518,7 @@ type ExporterBroker {
   addressLine1: String
   addressLine2: String
   town: String
-  country: String
+  county: String
   postcode: String
   email: String
 }
@@ -538,7 +538,7 @@ input ExporterBrokerWhereInput {
   addressLine1: StringFilter
   addressLine2: StringFilter
   town: StringFilter
-  country: StringFilter
+  county: StringFilter
   postcode: StringFilter
   email: StringFilter
 }
@@ -550,7 +550,7 @@ input ExporterBrokerOrderByInput {
   addressLine1: OrderDirection
   addressLine2: OrderDirection
   town: OrderDirection
-  country: OrderDirection
+  county: OrderDirection
   postcode: OrderDirection
   email: OrderDirection
 }
@@ -562,7 +562,7 @@ input ExporterBrokerUpdateInput {
   addressLine1: String
   addressLine2: String
   town: String
-  country: String
+  county: String
   postcode: String
   email: String
 }
@@ -579,7 +579,7 @@ input ExporterBrokerCreateInput {
   addressLine1: String
   addressLine2: String
   town: String
-  country: String
+  county: String
   postcode: String
   email: String
 }

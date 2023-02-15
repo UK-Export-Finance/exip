@@ -36,7 +36,9 @@ const {
       BROKER: {
         NAME,
         ADDRESS_LINE_1,
+        ADDRESS_LINE_2,
         TOWN,
+        COUNTY,
         POSTCODE,
         EMAIL,
       },
@@ -87,9 +89,11 @@ const application = {
   EXPORTER_BROKER: {
     [NAME]: 'name',
     [ADDRESS_LINE_1]: 'Address line 1',
+    [ADDRESS_LINE_2]: 'Address line 2',
     [TOWN]: 'town',
-    [POSTCODE]: 'SW1A 2AA',
-    [EMAIL]: 'test@test.com',
+    [COUNTY]: 'county',
+    [POSTCODE]: 'SW1A 2HQ',
+    [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT'),
   },
 };
 

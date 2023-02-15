@@ -81,7 +81,7 @@ const applicationQuery = gql`
           addressLine1
           addressLine2
           town
-          country
+          county
           postcode
           email
         }

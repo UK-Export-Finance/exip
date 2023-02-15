@@ -102,11 +102,13 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       submitButton().click();
 
       broker[USING_BROKER].yesRadioInput().should('be.checked');
-      cy.checkValue(broker[NAME].input(), application.EXPORTER_BROKER[NAME]);
-      cy.checkValue(broker[ADDRESS_LINE_1].input(), '');
-      cy.checkValue(broker[TOWN].input(), '');
-      cy.checkValue(broker[POSTCODE].input(), '');
-      cy.checkValue(broker[EMAIL].input(), '');
+      cy.checkValue(broker[NAME], application.EXPORTER_BROKER[NAME]);
+      cy.checkValue(broker[ADDRESS_LINE_1], '');
+      cy.checkValue(broker[ADDRESS_LINE_2], '');
+      cy.checkValue(broker[TOWN], '');
+      cy.checkValue(broker[COUNTY], '');
+      cy.checkValue(broker[POSTCODE], '');
+      cy.checkValue(broker[EMAIL], '');
     });
   });
 
@@ -116,7 +118,9 @@ context('Insurance - Your business - Broker page - Save and back', () => {
         broker[USING_BROKER].yesRadioInput().click();
         broker[NAME].input().clear().type(application.EXPORTER_BROKER[NAME], { delay: 0 });
         broker[ADDRESS_LINE_1].input().clear().type(application.EXPORTER_BROKER[ADDRESS_LINE_1], { delay: 0 });
+        broker[ADDRESS_LINE_2].input().clear().type(application.EXPORTER_BROKER[ADDRESS_LINE_2], { delay: 0 });
         broker[TOWN].input().clear().type(application.EXPORTER_BROKER[TOWN], { delay: 0 });
+        broker[COUNTY].input().clear().type(application.EXPORTER_BROKER[COUNTY], { delay: 0 });
         broker[EMAIL].input().clear().type(application.EXPORTER_BROKER[EMAIL], { delay: 0 });
         broker[POSTCODE].input().clear().type(application.EXPORTER_BROKER[POSTCODE], { delay: 0 });
 
@@ -140,13 +144,13 @@ context('Insurance - Your business - Broker page - Save and back', () => {
         submitButton().click();
 
         broker[USING_BROKER].yesRadioInput().should('be.checked');
-        cy.checkValue(broker[NAME].input(), application.EXPORTER_BROKER[NAME]);
-        cy.checkValue(broker[ADDRESS_LINE_1].input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
-        cy.checkValue(broker[ADDRESS_LINE_2].input(), '');
-        cy.checkValue(broker[TOWN].input(), application.EXPORTER_BROKER[TOWN]);
-        cy.checkValue(broker[COUNTY].input(), '');
-        cy.checkValue(broker[POSTCODE].input(), application.EXPORTER_BROKER[POSTCODE]);
-        cy.checkValue(broker[EMAIL].input(), application.EXPORTER_BROKER[EMAIL]);
+        cy.checkValue(broker[NAME], application.EXPORTER_BROKER[NAME]);
+        cy.checkValue(broker[ADDRESS_LINE_1], application.EXPORTER_BROKER[ADDRESS_LINE_1]);
+        cy.checkValue(broker[ADDRESS_LINE_2], application.EXPORTER_BROKER[ADDRESS_LINE_2]);
+        cy.checkValue(broker[TOWN], application.EXPORTER_BROKER[TOWN]);
+        cy.checkValue(broker[COUNTY], application.EXPORTER_BROKER[COUNTY]);
+        cy.checkValue(broker[POSTCODE], application.EXPORTER_BROKER[POSTCODE]);
+        cy.checkValue(broker[EMAIL], application.EXPORTER_BROKER[EMAIL]);
       });
     });
 

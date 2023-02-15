@@ -164,7 +164,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     describe('when submitting an empty form', () => {
       const errorMessage = ERROR_MESSAGE_BROKER.IS_EMPTY;
 
-      it(`should display validation errors if ${USING_BROKER} radio not selected`, () => {
+      it(`should display validation errors if ${USING_BROKER} radio is not selected`, () => {
       // visit url to refresh form and radios
         cy.navigateToUrl(url);
 
@@ -187,13 +187,13 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
             cy.navigateToUrl(url);
 
             broker[USING_BROKER].yesRadioInput().should('be.checked');
-            cy.checkValue(broker[NAME].input(), application.EXPORTER_BROKER[NAME]);
-            cy.checkValue(broker[ADDRESS_LINE_1].input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
-            cy.checkValue(broker[ADDRESS_LINE_2].input(), '');
-            cy.checkValue(broker[TOWN].input(), application.EXPORTER_BROKER[TOWN]);
-            cy.checkValue(broker[COUNTY].input(), '');
-            cy.checkValue(broker[POSTCODE].input(), application.EXPORTER_BROKER[POSTCODE]);
-            cy.checkValue(broker[EMAIL].input(), application.EXPORTER_BROKER[EMAIL]);
+            cy.checkValue(broker[NAME], application.EXPORTER_BROKER[NAME]);
+            cy.checkValue(broker[ADDRESS_LINE_1], application.EXPORTER_BROKER[ADDRESS_LINE_1]);
+            cy.checkValue(broker[ADDRESS_LINE_2], application.EXPORTER_BROKER[ADDRESS_LINE_2]);
+            cy.checkValue(broker[TOWN], application.EXPORTER_BROKER[TOWN]);
+            cy.checkValue(broker[COUNTY], application.EXPORTER_BROKER[COUNTY]);
+            cy.checkValue(broker[POSTCODE], application.EXPORTER_BROKER[POSTCODE]);
+            cy.checkValue(broker[EMAIL], application.EXPORTER_BROKER[EMAIL]);
           });
         });
       });

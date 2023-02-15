@@ -85,7 +85,7 @@ describe('shared-validation/postcode', () => {
 
   describe('when the postcode has more than 7 characters', () => {
     it('should return validation error', () => {
-      const mockValue = 'SW1A 2AAA';
+      const mockValue = 'SW1A 2HQA';
 
       const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 
@@ -98,7 +98,7 @@ describe('shared-validation/postcode', () => {
   describe('when there are no validation errors', () => {
     describe('when the postcode has a space', () => {
       it('should return the provided errors object', () => {
-        const mockValue = 'SW1A 2AA';
+        const mockValue = 'SW1A 2HQ';
 
         const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 
@@ -108,7 +108,7 @@ describe('shared-validation/postcode', () => {
 
     describe('when the postcode doesnt have a space', () => {
       it('should return the provided errors object', () => {
-        const mockValue = 'SW1A2AA';
+        const mockValue = 'SW1A2HQ';
 
         const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 

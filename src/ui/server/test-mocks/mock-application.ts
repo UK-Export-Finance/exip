@@ -1,8 +1,12 @@
+import dotenv from 'dotenv';
 import { add, addMonths } from 'date-fns';
 import { APPLICATION } from '../constants';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
 import { Application } from '../../types';
+import mockBroker from './mock-broker';
+
+dotenv.config();
 
 const mockGenericPolicyAndExport = {
   id: 'clav8by1i0007kgoqies0dbfc',
@@ -88,14 +92,7 @@ const mockApplication = {
   },
   exporterBroker: {
     id: 'clcyyopna0158m8noaglyy4gg',
-    isUsingBroker: true,
-    name: 'test',
-    addressLine1: 'test line 1',
-    addressLine2: 'test line 2',
-    town: 'town',
-    county: 'county',
-    postcode: 'SW1A 2AA',
-    email: 'test@test.com',
+    ...mockBroker,
   },
 };
 
