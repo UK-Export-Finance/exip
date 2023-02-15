@@ -209,7 +209,7 @@ describe('controllers/insurance/business/map-and-save', () => {
   });
 
   describe('broker', () => {
-    let mockFormBody = {
+    const mockFormBody = {
       _csrf: '1234',
       ...mockBroker,
     };
