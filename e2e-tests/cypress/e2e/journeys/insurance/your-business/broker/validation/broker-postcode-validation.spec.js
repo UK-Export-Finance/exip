@@ -173,6 +173,22 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
       });
     });
 
+    describe('when the postcode has more than 7 characters without spaces', () => {
+      it('should display validation errors', () => {
+        const field = broker[FIELD_ID];
+
+        field.yesRadioInput().click();
+
+        const {
+          errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
+        } = ERROR_ASSERTIONS;
+
+        const inputValue = INVALID_POSTCODES.TOO_MANY_CHARACTERS_WITHOUT_SPACE;
+
+        cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
+      });
+    });
+
     describe('when the postcode has less than 5 characters', () => {
       it('should display validation errors', () => {
         const field = broker[FIELD_ID];
@@ -184,6 +200,22 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
         } = ERROR_ASSERTIONS;
 
         const inputValue = INVALID_POSTCODES.TOO_FEW_CHARACTERS;
+
+        cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
+      });
+    });
+
+    describe('when the postcode has less than 5 characters without spaces', () => {
+      it('should display validation errors', () => {
+        const field = broker[FIELD_ID];
+
+        field.yesRadioInput().click();
+
+        const {
+          errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
+        } = ERROR_ASSERTIONS;
+
+        const inputValue = INVALID_POSTCODES.TOO_FEW_CHARACTERS_WITHOUT_SPACE;
 
         cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
       });
