@@ -114,9 +114,7 @@ const application = {
         }
 
         if (response?.data?.updatePolicyAndExport) {
-          const { data } = response;
-
-          return data.updatePolicyAndExport;
+          return response.data.updatePolicyAndExport;
         }
 
         console.error(response);
@@ -178,9 +176,7 @@ const application = {
         }
 
         if (response?.data?.updateExporterBusiness) {
-          const { data } = response;
-
-          return data.updateExporterBusiness;
+          return response.data.updateExporterBusiness;
         }
 
         console.error(response);
@@ -211,9 +207,7 @@ const application = {
         }
 
         if (response?.data?.updateExporterCompanyAndCompanyAddress) {
-          const { data } = response;
-
-          return data.updateExporterCompanyAndCompanyAddress;
+          return response.data.updateExporterCompanyAndCompanyAddress;
         }
 
         console.error(response);

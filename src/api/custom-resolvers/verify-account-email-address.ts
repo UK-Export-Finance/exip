@@ -7,8 +7,7 @@ import { Account, VerifyEmailAddressVariables } from '../types';
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the VerifyEmailAddress mutation
  * @param {Object} KeystoneJS context API
- * @param {String} errorMessage
- * @returns {Object} Object with success of expired flag.
+ * @returns {Object} Object with success or expired flag.
  */
 const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddressVariables, context: Context) => {
   console.info('Verifying exporter email address');
@@ -44,7 +43,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
     const canActivateExporter = isBefore(now, exporter.verificationExpiry);
 
     if (!canActivateExporter) {
-      console.info('Unable to verify exporter email - verifcation period has expired');
+      console.info('Unable to verify exporter email - verification period has expired');
 
       return {
         expired: true,
@@ -63,6 +62,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
 
     return {
       success: true,
+      emailRecipient: exporter.email,
     };
   } catch (err) {
     console.error(err);

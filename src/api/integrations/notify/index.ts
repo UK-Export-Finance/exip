@@ -20,7 +20,10 @@ const notify = {
         reference: null,
       });
 
-      return { success: true };
+      return {
+        success: true,
+        emailRecipient: sendToEmailAddress,
+      };
     } catch (err) {
       throw new Error(`Calling Notify API. Unable to send email ${err}`);
     }

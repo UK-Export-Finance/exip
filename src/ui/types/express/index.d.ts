@@ -36,13 +36,14 @@ interface RequestParams {
 
 interface RequestQuery {
   token?: string;
+  id?: string;
 }
 
 interface RequestSession {
   submittedData: SubmittedData;
   quote?: Quote;
   cookieConsentNewDecision?: boolean;
-  emailAddressToConfirm?: string;
+  accountIdToConfirm?: string;
 }
 
 interface Request {

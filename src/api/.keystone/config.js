@@ -102,13 +102,35 @@ var notify = {
         },
         reference: null
       });
-      return { success: true };
+      return {
+        success: true,
+        emailRecipient: sendToEmailAddress
+      };
     } catch (err) {
       throw new Error(`Calling Notify API. Unable to send email ${err}`);
     }
   }
 };
 var notify_default = notify;
+
+// emails/index.ts
+var confirmEmailAddress = async (email, firstName, verificationHash) => {
+  try {
+    console.info("Sending email verification for account creation");
+    const emailResponse = await notify_default.sendEmail(EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL, email, firstName, verificationHash);
+    if (emailResponse.success) {
+      return emailResponse;
+    }
+    throw new Error(`Sending email verification for account creation ${emailResponse}`);
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending email verification for account creation ${err}`);
+  }
+};
+var sendEmail = {
+  confirmEmailAddress
+};
+var emails_default = sendEmail;
 
 // schema.ts
 var lists = {
@@ -338,19 +360,14 @@ var lists = {
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
           try {
-            const emailResponse = await notify_default.sendEmail(
-              EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL,
-              accountInputData.email,
-              accountInputData.firstName,
-              accountInputData.verificationHash
-            );
+            const { firstName, email, verificationHash } = accountInputData;
+            const emailResponse = await emails_default.confirmEmailAddress(email, firstName, verificationHash);
             if (emailResponse.success) {
               return accountInputData;
             }
-            throw new Error(`Error sending email verification for account creation ${emailResponse}`);
+            throw new Error(`Sending email verification for account creation (resolveInput hook) ${emailResponse}`);
           } catch (err) {
-            console.error("Error sending email verification for account creation", { err });
-            throw new Error();
+            throw new Error(`Sending email verification for account creation (resolveInput hook) { err }`);
           }
         }
         if (operation === "update") {
@@ -564,7 +581,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     const now = new Date();
     const canActivateExporter = (0, import_date_fns2.isBefore)(now, exporter.verificationExpiry);
     if (!canActivateExporter) {
-      console.info("Unable to verify exporter email - verifcation period has expired");
+      console.info("Unable to verify exporter email - verification period has expired");
       return {
         expired: true
       };
@@ -578,7 +595,8 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       }
     });
     return {
-      success: true
+      success: true,
+      emailRecipient: exporter.email
     };
   } catch (err) {
     console.error(err);
@@ -586,6 +604,32 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
   }
 };
 var verify_account_email_address_default = verifyAccountEmailAddress;
+
+// custom-resolvers/send-email-confirm-email-address.ts
+var sendEmailConfirmEmailAddress = async (root, variables, context) => {
+  try {
+    const exporter = await context.db.Exporter.findOne({
+      where: {
+        id: variables.exporterId
+      }
+    });
+    if (!exporter) {
+      console.info("Sending email verification for account creation - no exporter exists with the provided ID");
+      return {
+        success: false
+      };
+    }
+    const { email, firstName, verificationHash } = exporter;
+    const emailResponse = await emails_default.confirmEmailAddress(email, firstName, verificationHash);
+    if (emailResponse.success) {
+      return emailResponse;
+    }
+    throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${emailResponse}`);
+  } catch (err) {
+    throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${err}`);
+  }
+};
+var send_email_confirm_email_address_default = sendEmailConfirmEmailAddress;
 
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -654,6 +698,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
   typeDefs: `
       type Account {
+        id: String
         firstName: String
         lastName: String
         email: String
@@ -742,8 +787,9 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         oldSicCodes: [OldSicCodes]
       }
 
-      type VerifyAccountEmailAddressResponse {
+      type EmailResponse {
         success: Boolean
+        emailRecipient: String
       }
 
       type Mutation {
@@ -754,7 +800,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         """ verify an an account's email address """
         verifyAccountEmailAddress(
           token: String!
-        ): VerifyAccountEmailAddressResponse
+        ): EmailResponse
+        """ verify an an account's email address """
+        sendEmailConfirmEmailAddress(
+          exporterId: String!
+        ): EmailResponse
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -764,6 +814,10 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
 
       type Query {
+        """ get an account by email """
+        getAccountByEmail(
+          email: String!
+        ): Account
         """ get companies house information """
         getCompaniesHouseInformation(
           companiesHouseNumber: String!
@@ -798,6 +852,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         }
       },
       verifyAccountEmailAddress: verify_account_email_address_default,
+      sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);

@@ -27,7 +27,12 @@ describe('controllers/insurance/account/create/your-details', () => {
 
   jest.mock('./save-data');
 
-  saveData.account = jest.fn(() => Promise.resolve(true));
+  const mockSaveDataResponse = {
+    id: mockAccount.id,
+    email: mockAccount.email,
+  };
+
+  saveData.account = jest.fn(() => Promise.resolve(mockSaveDataResponse));
 
   beforeEach(() => {
     req = mockReq();
@@ -125,10 +130,10 @@ describe('controllers/insurance/account/create/your-details', () => {
         expect(saveData.account).toHaveBeenCalledWith(req.body);
       });
 
-      it('should add the submitted email to req.session.emailAddressToConfirm', async () => {
+      it('should add the exporter ID to req.session.accountIdToConfirm', async () => {
         await post(req, res);
 
-        expect(req.session.emailAddressToConfirm).toEqual(validBody[EMAIL]);
+        expect(req.session.accountIdToConfirm).toEqual(mockSaveDataResponse.id);
       });
 
       it(`should redirect to ${CONFIRM_EMAIL}`, async () => {
