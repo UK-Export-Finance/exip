@@ -33,6 +33,12 @@ describe('controllers/insurance/account/create/verify-email', () => {
           api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
         });
 
+        it('should add successBanner to req.flash', async () => {
+          await get(req, res);
+
+          expect(req.flash).toHaveBeenCalledWith('successBanner', 'newAccountVerified');
+        });
+
         it(`should redirect to ${SIGN_IN.ROOT}`, async () => {
           await get(req, res);
 
