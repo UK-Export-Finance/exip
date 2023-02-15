@@ -74,6 +74,17 @@ const applicationQuery = gql`
           estimatedAnnualTurnover
           exportsTurnoverPercentage
         }
+        exporterBroker {
+          id
+          isUsingBroker
+          brokerName
+          addressLine1
+          addressLine2
+          town
+          country
+          postcode
+          email
+        }
       }
     }
   }

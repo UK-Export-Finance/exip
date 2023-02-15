@@ -53,6 +53,7 @@ Cypress.Commands.add('completeAndSubmitCompanyDetails', require('./insurance/com
 
 Cypress.Commands.add('completeAndSubmitNatureOfYourBusiness', require('./insurance/complete-and-submit-nature-of-your-business'));
 Cypress.Commands.add('completeAndSubmitTurnoverForm', require('./insurance/complete-and-submit-turnover-form'));
+Cypress.Commands.add('completeAndSubmitBrokerForm', require('./insurance/complete-and-submit-broker-form'));
 
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));
@@ -62,6 +63,7 @@ Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-
 Cypress.Commands.add('assertPasswordRevealButton', require('./insurance/account/assert-password-reveal-button'));
 
 Cypress.Commands.add('checkText', require('./check-text'));
+Cypress.Commands.add('checkValue', require('./check-value'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
 Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));
 Cypress.Commands.add('checkLink', require('./check-link'));

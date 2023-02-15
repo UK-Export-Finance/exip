@@ -57,7 +57,34 @@ const exporterBusiness = async (application: Application, formBody: RequestBody,
   }
 };
 
+/**
+ * gets fields to add to the database and sanitises them
+ * saves to exporterBroker tables in database via api call
+ * @param {Application} application
+ * @param {RequestBody} formBody
+ * @param {Object} errorList
+ * @returns {Object} saveResponse from api
+ */
+const exporterBroker = async (application: Application, formBody: RequestBody, errorList?: object) => {
+  // determines which fields to save
+  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList));
+
+  // sanitise the form data.
+  const sanitisedData = sanitiseData(dataToSave);
+
+  const exporterBrokerId = application.exporterBroker?.id;
+
+  try {
+    // send the form data to the API for database update.
+    const saveResponse = await api.keystone.application.update.exporterBroker(exporterBrokerId, sanitisedData);
+    return saveResponse;
+  } catch (err) {
+    throw new Error("Updating application's exporterBroker");
+  }
+};
+
 export default {
   companyDetails,
   exporterBusiness,
+  exporterBroker,
 };

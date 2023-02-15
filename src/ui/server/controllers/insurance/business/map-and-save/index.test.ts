@@ -3,8 +3,9 @@ import { FIELD_IDS } from '../../../../constants';
 import mapCompanyDetailsSubmittedData from '../company-details/map-submitted-data';
 import mapNatureOfBusinessSubmittedData from '../nature-of-business/map-submitted-data';
 import mapTurnoverSubmittedData from '../turnover/map-submitted-data';
+import mapBrokerSubmittedData from '../broker/map-submitted-data';
 import save from '../save-data';
-import { mockApplication } from '../../../../test-mocks';
+import { mockApplication, mockBroker } from '../../../../test-mocks';
 import generateValidationErrors from '../../../../helpers/validation';
 
 const {
@@ -13,6 +14,7 @@ const {
     YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
     TURNOVER: { PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER },
+    BROKER: { NAME },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -201,6 +203,60 @@ describe('controllers/insurance/business/map-and-save', () => {
         mockFormBody = { _csrf: '1234' };
 
         const result = await mapAndSave.turnover(mockFormBody, mockApplication, mockValidationErrors);
+
+        expect(result).toEqual(true);
+      });
+    });
+  });
+
+  describe('broker', () => {
+    let mockFormBody = {
+      _csrf: '1234',
+      ...mockBroker,
+    };
+
+    const mockSaveExporterBroker = jest.fn(() => Promise.resolve({}));
+    save.exporterBroker = mockSaveExporterBroker;
+
+    const mockValidationErrors = generateValidationErrors(NAME, 'error', {});
+
+    describe('when the form has data', () => {
+      describe('when the form has validation errors ', () => {
+        it('should call save.exporterBroker with application, populated submitted data and validationErrors.errorList', async () => {
+          await mapAndSave.broker(mockFormBody, mockApplication, mockValidationErrors);
+
+          expect(save.exporterBroker).toHaveBeenCalledTimes(1);
+          expect(save.exporterBroker).toHaveBeenCalledWith(mockApplication, mapBrokerSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+        });
+
+        it('should return true', async () => {
+          const result = await mapAndSave.broker(mockFormBody, mockApplication, mockValidationErrors);
+
+          expect(result).toEqual(true);
+        });
+      });
+
+      describe('when the form does NOT have validation errors ', () => {
+        it('should call save.exporterBroker with application and populated submitted data', async () => {
+          await mapAndSave.broker(mockFormBody, mockApplication);
+
+          expect(save.exporterBroker).toHaveBeenCalledTimes(1);
+          expect(save.exporterBroker).toHaveBeenCalledWith(mockApplication, mapBrokerSubmittedData(mockFormBody));
+        });
+
+        it('should return true', async () => {
+          const result = await mapAndSave.broker(mockFormBody, mockApplication, mockValidationErrors);
+
+          expect(result).toEqual(true);
+        });
+      });
+    });
+
+    describe('when the form does not have any data', () => {
+      it('should return true', async () => {
+        mockFormBody = { _csrf: '1234' };
+
+        const result = await mapAndSave.broker(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });

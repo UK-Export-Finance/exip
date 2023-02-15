@@ -7,6 +7,7 @@ import getApplicationQuery from '../../../graphql/queries/application';
 import updateApplicationPolicyAndExportMutation from '../../../graphql/mutations/update-application/policy-and-export';
 import updateApplicationExporterCompanyMutation from '../../../graphql/mutations/update-application/exporter-company';
 import updateExporterBusinessMutation from '../../../graphql/mutations/update-application/exporter-business';
+import updateExporterBrokerMutation from '../../../graphql/mutations/update-application/exporter-broker';
 
 const createEmptyApplication = async () => {
   try {
@@ -123,6 +124,38 @@ const application = {
       } catch (err) {
         console.error(err);
         throw new Error('Updating application policy and export');
+      }
+    },
+    exporterBroker: async (id: string, update: object) => {
+      try {
+        console.info('Updating application exporter broker');
+
+        const variables = {
+          where: { id },
+          data: update,
+        };
+
+        const response = (await apollo('POST', updateExporterBrokerMutation, variables)) as ApolloResponse;
+
+        if (response.errors) {
+          console.error('GraphQL error updating application exporter broker ', response.errors);
+        }
+
+        if (response?.networkError?.result?.errors) {
+          console.error('GraphQL network error updating application exporter broker ', response.networkError.result.errors);
+        }
+
+        if (response?.data?.updateExporterBroker) {
+          const { data } = response;
+
+          return data.updateExporterBroker;
+        }
+
+        console.error(response);
+        throw new Error('Updating application exporter broker');
+      } catch (err) {
+        console.error(err);
+        throw new Error('Updating application exporter business');
       }
     },
     exporterBusiness: async (id: string, update: object) => {

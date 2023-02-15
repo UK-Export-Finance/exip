@@ -86,6 +86,17 @@ const mockApplication = {
     estimatedAnnualTurnover: '155220',
     exportsTurnoverPercentage: '20',
   },
+  exporterBroker: {
+    id: 'clcyyopna0158m8noaglyy4gg',
+    isUsingBroker: true,
+    brokerName: 'test',
+    addressLine1: 'test line 1',
+    addressLine2: 'test line 2',
+    town: 'town',
+    county: 'county',
+    postcode: 'SW1A 2AA',
+    email: 'test@test.com',
+  },
 };
 
 export const mockApplicationMultiplePolicy = {

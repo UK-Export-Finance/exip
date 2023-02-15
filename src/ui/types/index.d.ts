@@ -8,6 +8,7 @@ import { CompanyHouseResponse } from './company-house-response';
 import { Country } from './country';
 import { Currency } from './currency';
 import { ExporterBusiness } from './exporter-business';
+import { ExporterBroker } from './exporter-broker';
 import { Next, Request, RequestBody, RequestSession, Response } from './express';
 import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibility } from './required-data-state';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
@@ -58,6 +59,7 @@ export {
   Country,
   Currency,
   ExporterBusiness,
+  ExporterBroker,
   InsuranceEligibility,
   InsuranceEligibilityCore,
   Next,

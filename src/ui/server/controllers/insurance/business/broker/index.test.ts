@@ -5,9 +5,10 @@ import { TEMPLATES, ROUTES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/exporter-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../test-mocks';
 import generateValidationErrors from './validation';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
+import mapAndSave from '../map-and-save';
 
 const { BROKER: BROKER_FIELDS } = FIELDS;
 
@@ -18,7 +19,7 @@ const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { BROKER_ROOT, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
+const { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
 
 describe('controllers/insurance/business/broker', () => {
   let req: Request;
@@ -87,7 +88,7 @@ describe('controllers/insurance/business/broker', () => {
             ...BROKER_FIELDS[DETAILS],
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_ROOT}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -126,6 +127,8 @@ describe('controllers/insurance/business/broker', () => {
   });
 
   describe('post', () => {
+    mapAndSave.broker = jest.fn(() => Promise.resolve(true));
+
     describe('when there are validation errors', () => {
       it('should render template with validation errors', async () => {
         req.body = {};
@@ -153,17 +156,22 @@ describe('controllers/insurance/business/broker', () => {
 
     describe('when there are no validation errors', () => {
       it('should redirect to next page', async () => {
-        req.body = {
-          [USING_BROKER]: 'true',
-          [NAME]: 'test',
-          [ADDRESS_LINE_1]: '1',
-          [TOWN]: 'test',
-        };
+        req.body = mockBroker;
 
         await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      it('should call mapAndSave.broker once with broker and application', async () => {
+        req.body = mockBroker;
+
+        await post(req, res);
+
+        expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.broker).toHaveBeenCalledWith(req.body, mockApplication);
       });
     });
 

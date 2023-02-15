@@ -6,6 +6,7 @@ import { FIELDS } from '../../../../content-strings/fields/insurance/your-busine
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save';
 
 const { USING_BROKER, HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL, DETAILS } = FIELD_IDS.BROKER;
 
@@ -16,7 +17,7 @@ export const TEMPLATE = BROKER_TEMPLATE;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { BROKER_ROOT, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
+const { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
 
 const { BROKER: BROKER_FIELDS } = FIELDS;
 
@@ -61,7 +62,7 @@ const pageVariables = (referenceNumber: number) => ({
       ID: DETAILS,
     },
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_SAVE_AND_BACK}`,
 });
 
 /**
@@ -129,11 +130,11 @@ const post = async (req: Request, res: Response) => {
     }
 
     // if no errors, then runs save api call to db
-    // const saveResponse = await mapAndSave.turnover(body, application);
+    const saveResponse = await mapAndSave.broker(body, application);
 
-    // if (!saveResponse) {
-    //   return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-    // }
+    if (!saveResponse) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {

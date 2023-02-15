@@ -20,6 +20,10 @@ interface ApplicationExporterBusiness {
   id: string;
 }
 
+interface ApplicationExporterBroker {
+  id: string;
+}
+
 interface AccountInput {
   createdAt: Date;
   updatedAt: Date;
@@ -48,6 +52,7 @@ interface Application {
   exporterCompany: ApplicationExporterCompany;
   exporterCompanyAddress: ApplicationExporterCompanyAddress;
   exporterBusiness: ApplicationExporterBusiness;
+  exporterBroker: ApplicationExporterBroker;
 }
 
 interface CompanyResponse {

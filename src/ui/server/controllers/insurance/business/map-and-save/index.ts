@@ -4,6 +4,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../types
 import mapCompanyDetailsSubmittedData from '../company-details/map-submitted-data';
 import mapNatureOfBusinessSubmittedData from '../nature-of-business/map-submitted-data';
 import mapTurnoverSubmittedData from '../turnover/map-submitted-data';
+import mapBrokerSubmittedData from '../broker/map-submitted-data';
 
 /**
  * maps company details request and calls save function
@@ -109,8 +110,36 @@ const turnover = async (formBody: RequestBody, application: Application, validat
     return false;
   }
 };
+
+const broker = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
+  try {
+    if (hasFormData(formBody)) {
+      // maps through formBody and puts fields in correct format
+      const dataToSave = mapBrokerSubmittedData(formBody);
+      let saveResponse;
+
+      if (validationErrors) {
+        saveResponse = await save.exporterBroker(application, dataToSave, validationErrors.errorList);
+      } else {
+        saveResponse = await save.exporterBroker(application, dataToSave);
+      }
+
+      if (!saveResponse) {
+        return false;
+      }
+
+      return true;
+    }
+
+    return true;
+  } catch (err) {
+    console.error('Error mapping and saving business section of application', { err });
+    return false;
+  }
+};
 export default {
   companyDetails,
   natureOfBusiness,
   turnover,
+  broker,
 };

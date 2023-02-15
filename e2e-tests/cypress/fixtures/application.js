@@ -33,6 +33,13 @@ const {
         ESTIMATED_ANNUAL_TURNOVER,
         PERCENTAGE_TURNOVER,
       },
+      BROKER: {
+        NAME,
+        ADDRESS_LINE_1,
+        TOWN,
+        POSTCODE,
+        EMAIL,
+      },
     },
   },
 } = FIELD_IDS;
@@ -76,6 +83,13 @@ const application = {
     [EMPLOYEES_UK]: '2000',
     [ESTIMATED_ANNUAL_TURNOVER]: '65000',
     [PERCENTAGE_TURNOVER]: '0',
+  },
+  EXPORTER_BROKER: {
+    [NAME]: 'name',
+    [ADDRESS_LINE_1]: 'Address line 1',
+    [TOWN]: 'town',
+    [POSTCODE]: 'SW1A 2AA',
+    [EMAIL]: 'test@test.com',
   },
 };
 
