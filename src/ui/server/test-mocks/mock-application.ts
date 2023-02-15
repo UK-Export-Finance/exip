@@ -91,8 +91,9 @@ const mockApplication = {
     exportsTurnoverPercentage: '20',
   },
   exporterBroker: {
-    id: 'clcyyopna0158m8noaglyy4gg',
+    id: 'clcyyopna0158m8noaglyy9gg',
     ...mockBroker,
+    isUsingBroker: true,
   },
 };
 

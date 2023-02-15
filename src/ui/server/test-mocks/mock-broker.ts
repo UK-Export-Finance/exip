@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import { ExporterBroker } from '../../types';
 
 dotenv.config();
 
@@ -12,6 +11,6 @@ const mockBroker = {
   county: 'Test',
   postcode: 'SW1A 2HQ',
   email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT,
-} as ExporterBroker;
+};
 
 export default mockBroker;

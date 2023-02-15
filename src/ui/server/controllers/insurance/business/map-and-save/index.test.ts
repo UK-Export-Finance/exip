@@ -253,9 +253,9 @@ describe('controllers/insurance/business/map-and-save', () => {
 
     describe('when the form does not have any data', () => {
       it('should return true', async () => {
-        mockFormBody = { _csrf: '1234' };
+        const emptyMockFormBody = { _csrf: '1234' };
 
-        const result = await mapAndSave.broker(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.broker(emptyMockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
