@@ -402,7 +402,7 @@ var lists = {
         ],
         db: { isNullable: true }
       }),
-      brokerName: (0, import_fields.text)(),
+      name: (0, import_fields.text)(),
       addressLine1: (0, import_fields.text)(),
       addressLine2: (0, import_fields.text)(),
       town: (0, import_fields.text)(),

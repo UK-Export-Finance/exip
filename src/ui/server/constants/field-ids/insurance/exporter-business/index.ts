@@ -39,7 +39,7 @@ const EXPORTER_BUSINESS = {
   BROKER: {
     HEADING: 'broker',
     USING_BROKER: 'isUsingBroker',
-    NAME: 'brokerName',
+    NAME: 'name',
     ADDRESS_LINE_1: 'addressLine1',
     ADDRESS_LINE_2: 'addressLine2',
     TOWN: 'town',

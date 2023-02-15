@@ -1,6 +1,6 @@
 interface ExporterBroker {
   isUsingBroker?: string;
-  brokerName?: string;
+  name?: string;
   addressLine1?: string;
   addressLine2?: string;
   town?: string;

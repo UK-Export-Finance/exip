@@ -2,7 +2,7 @@ import { ExporterBroker } from '../../types';
 
 const mockBroker = {
   isUsingBroker: 'Yes',
-  brokerName: 'Test',
+  name: 'Test',
   addressLine1: 'Test',
   addressLine2: 'Test',
   town: 'Test',

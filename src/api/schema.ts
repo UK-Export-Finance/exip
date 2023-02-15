@@ -331,7 +331,7 @@ export const lists = {
         ],
         db: { isNullable: true },
       }),
-      brokerName: text(),
+      name: text(),
       addressLine1: text(),
       addressLine2: text(),
       town: text(),

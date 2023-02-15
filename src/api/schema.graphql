@@ -514,7 +514,7 @@ type ExporterBroker {
   id: ID!
   application: Application
   isUsingBroker: String
-  brokerName: String
+  name: String
   addressLine1: String
   addressLine2: String
   town: String
@@ -534,7 +534,7 @@ input ExporterBrokerWhereInput {
   id: IDFilter
   application: ApplicationWhereInput
   isUsingBroker: StringNullableFilter
-  brokerName: StringFilter
+  name: StringFilter
   addressLine1: StringFilter
   addressLine2: StringFilter
   town: StringFilter
@@ -546,7 +546,7 @@ input ExporterBrokerWhereInput {
 input ExporterBrokerOrderByInput {
   id: OrderDirection
   isUsingBroker: OrderDirection
-  brokerName: OrderDirection
+  name: OrderDirection
   addressLine1: OrderDirection
   addressLine2: OrderDirection
   town: OrderDirection
@@ -558,7 +558,7 @@ input ExporterBrokerOrderByInput {
 input ExporterBrokerUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   isUsingBroker: String
-  brokerName: String
+  name: String
   addressLine1: String
   addressLine2: String
   town: String
@@ -575,7 +575,7 @@ input ExporterBrokerUpdateArgs {
 input ExporterBrokerCreateInput {
   application: ApplicationRelateToOneForCreateInput
   isUsingBroker: String
-  brokerName: String
+  name: String
   addressLine1: String
   addressLine2: String
   town: String

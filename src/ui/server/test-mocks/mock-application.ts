@@ -89,7 +89,7 @@ const mockApplication = {
   exporterBroker: {
     id: 'clcyyopna0158m8noaglyy4gg',
     isUsingBroker: true,
-    brokerName: 'test',
+    name: 'test',
     addressLine1: 'test line 1',
     addressLine2: 'test line 2',
     town: 'town',

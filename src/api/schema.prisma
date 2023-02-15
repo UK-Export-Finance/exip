@@ -106,7 +106,7 @@ model ExporterBroker {
   application                     Application?  @relation("ExporterBroker_application", fields: [applicationId], references: [id])
   applicationId                   String?       @map("application")
   isUsingBroker                   String?
-  brokerName                      String        @default("")
+  name                            String        @default("")
   addressLine1                    String        @default("")
   addressLine2                    String        @default("")
   town                            String        @default("")

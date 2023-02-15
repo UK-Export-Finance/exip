@@ -77,7 +77,7 @@ const applicationQuery = gql`
         exporterBroker {
           id
           isUsingBroker
-          brokerName
+          name
           addressLine1
           addressLine2
           town

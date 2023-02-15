@@ -69,7 +69,7 @@ interface ApplicationExporterBusiness {
 interface ApplicationExporterBroker {
   id: string;
   isUsingBroker?: boolean;
-  brokerName?: string;
+  name?: string;
   addressLine1?: string;
   addressLine2?: string;
   town?: string;
