@@ -96,8 +96,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    // store the submitted email in local session, for consumption in the next part of the flow.
-    req.session.emailAddressToConfirm = req.body[EMAIL];
+    // store the exporter account ID in local session, for consumption in the next part of the flow.
+    req.session.accountIdToConfirm = saveResponse.id;
 
     return res.redirect(CONFIRM_EMAIL);
   } catch (err) {

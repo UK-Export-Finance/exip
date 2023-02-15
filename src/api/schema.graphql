@@ -1030,7 +1030,10 @@ type Mutation {
   createAccount(data: AccountInput!): Account
 
   """ verify an an account's email address """
-  verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
+  verifyAccountEmailAddress(token: String!): EmailResponse
+
+  """ verify an an account's email address """
+  sendEmailConfirmEmailAddress(exporterId: String!): EmailResponse
 
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
@@ -1092,6 +1095,9 @@ type Query {
   usersCount(where: UserWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
+
+  """ get an account by email """
+  getAccountByEmail(email: String!): Account
 
   """ get companies house information """
   getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
@@ -1200,6 +1206,7 @@ enum KeystoneAdminUISortDirection {
 }
 
 type Account {
+  id: String
   firstName: String
   lastName: String
   email: String
@@ -1276,6 +1283,7 @@ input ExporterCompanyAndCompanyAddressInput {
   oldSicCodes: [OldSicCodes]
 }
 
-type VerifyAccountEmailAddressResponse {
+type EmailResponse {
   success: Boolean
+  emailRecipient: String
 }

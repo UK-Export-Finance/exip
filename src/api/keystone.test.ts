@@ -3,8 +3,9 @@ import dotenv from 'dotenv';
 import { addMonths } from 'date-fns';
 import baseConfig from './keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import { ACCOUNT, APPLICATION, EMAIL_TEMPLATE_IDS } from './constants';
-import notify from './integrations/notify';
+import { APPLICATION } from './constants';
+import sendEmail from './emails';
+import { mockAccount } from './test-mocks';
 import { Application, Account } from './types';
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -169,28 +170,18 @@ describe('Create an Application', () => {
 describe('Create an Exporter', () => {
   let exporter: Account;
 
-  let mockAccountInputData = {
-    firstName: 'First',
-    lastName: 'Last',
-    email: process.env.GOV_NOTIFY_API_KEY,
-    salt: 'mockSalt',
-    hash: 'mockHash',
-    verificationHash: 'mockVerificationHash',
-    verificationExpiry: ACCOUNT.EMAIL.VERIFICATION_EXPIRY(),
-  };
-
-  const sendEmailSpySuccessSpy = jest.fn(() => Promise.resolve({ success: true }));
-
-  let sendEmailSpy = sendEmailSpySuccessSpy;
-
   describe('create', () => {
-    jest.mock('./integrations/notify');
+    jest.mock('./emails');
+
+    const sendEmailResponse = { success: true, emailRecipient: mockAccount.email };
+
+    const sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(sendEmailResponse));
 
     beforeAll(async () => {
-      notify.sendEmail = sendEmailSpy;
+      sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
 
       exporter = (await context.query.Exporter.createOne({
-        data: mockAccountInputData,
+        data: mockAccount,
         query: 'id createdAt updatedAt firstName lastName email salt hash isVerified verificationHash verificationExpiry',
       })) as Account;
     });
@@ -222,47 +213,38 @@ describe('Create an Exporter', () => {
       expect(updatedAtYear).toEqual(expectedYear);
     });
 
-    test('it should call notify.sendEmail', () => {
-      expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendEmailSpy).toHaveBeenCalledWith(
-        EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL,
-        mockAccountInputData.email,
-        mockAccountInputData.firstName,
-        mockAccountInputData.verificationHash,
-      );
+    test('it should call sendEmail.confirmEmailAddress', () => {
+      const { email, firstName, verificationHash } = exporter;
+
+      expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
+      expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, firstName, verificationHash);
     });
   });
 
   describe('update', () => {
-    const update = { firstName: 'Updated' };
+    let updatedExporter: Account;
+
+    const accountUpdate = { firstName: 'Updated' };
 
     beforeAll(async () => {
-      mockAccountInputData = {
-        ...mockAccountInputData,
-        ...update,
-      };
-
-      sendEmailSpy = sendEmailSpySuccessSpy;
-      notify.sendEmail = sendEmailSpy;
-
       exporter = (await context.query.Exporter.createOne({
-        data: mockAccountInputData,
+        data: mockAccount,
         query: 'id',
       })) as Account;
 
-      exporter = (await context.query.Exporter.updateOne({
+      updatedExporter = (await context.query.Exporter.updateOne({
         where: { id: exporter.id },
-        data: mockAccountInputData,
+        data: accountUpdate,
         query: 'id createdAt updatedAt firstName lastName email salt hash isVerified verificationHash verificationExpiry',
       })) as Account;
     });
 
     test('it should update the provided fields', () => {
-      expect(exporter.firstName).toEqual(update.firstName);
+      expect(updatedExporter.firstName).toEqual(accountUpdate.firstName);
     });
 
     test('it should update updatedAt', () => {
-      expect(exporter.updatedAt).not.toEqual(exporter.createdAt);
+      expect(updatedExporter.updatedAt).not.toEqual(exporter.createdAt);
     });
   });
 });

@@ -1,7 +1,9 @@
 import { ApolloResponse, Account } from '../../../../types';
 import apollo from '../../../graphql/apollo';
 import createExporterMutation from '../../../graphql/mutations/account/create';
+import getExporterQuery from '../../../graphql/queries/account/get';
 import verifyExporterEmailAddressMutation from '../../../graphql/mutations/account/verify-email-address';
+import sendEmailConfirmEmailAddressMutation from '../../../graphql/mutations/account/send-email-confirm-email-address';
 
 const account = {
   create: async (update: Account) => {
@@ -21,9 +23,7 @@ const account = {
       }
 
       if (response?.data?.createAccount) {
-        const { data } = response;
-
-        return data.createAccount;
+        return response.data.createAccount;
       }
 
       console.error(response);
@@ -31,6 +31,33 @@ const account = {
     } catch (err) {
       console.error(err);
       throw new Error('Creating exporter account');
+    }
+  },
+  get: async (id: string) => {
+    try {
+      console.info('Getting exporter account');
+
+      const variables = { id };
+
+      const response = (await apollo('POST', getExporterQuery, variables)) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error getting exporter account ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error getting exporter account ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.exporter) {
+        return response.data.exporter;
+      }
+
+      console.error(response);
+      throw new Error('Getting exporter account');
+    } catch (err) {
+      console.error(err);
+      throw new Error('Getting exporter account');
     }
   },
   verifyEmailAddress: async (token: string) => {
@@ -50,9 +77,7 @@ const account = {
       }
 
       if (response?.data?.verifyAccountEmailAddress) {
-        const { data } = response;
-
-        return data.verifyAccountEmailAddress;
+        return response.data.verifyAccountEmailAddress;
       }
 
       console.error(response);
@@ -60,6 +85,33 @@ const account = {
     } catch (err) {
       console.error(err);
       throw new Error('Verifying exporter email address');
+    }
+  },
+  sendEmailConfirmEmailAddress: async (exporterId: string) => {
+    try {
+      console.info('Sending email verification for account creation');
+
+      const variables = { exporterId };
+
+      const response = (await apollo('POST', sendEmailConfirmEmailAddressMutation, variables)) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error sending email verification for account creation ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error sending email verification for account creation ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.sendEmailConfirmEmailAddress) {
+        return response.data.sendEmailConfirmEmailAddress;
+      }
+
+      console.error(response);
+      throw new Error('Sending email verification for account creation');
+    } catch (err) {
+      console.error(err);
+      throw new Error('Sending email verification for account creation');
     }
   },
 };

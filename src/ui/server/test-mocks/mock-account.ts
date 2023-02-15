@@ -4,6 +4,7 @@ import { Account } from '../../types';
 dotenv.config();
 
 const mockAccount = {
+  id: 'cldync34w0180ivoqvke7clz8',
   firstName: 'Joe',
   lastName: 'Bloggs',
   email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT,
