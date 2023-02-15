@@ -49,11 +49,7 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGN_IN.ROOT;
 export const get = (req: Request, res: Response) => {
   const flash = req.flash('successBanner');
 
-  let renderSuccessBanner = false;
-
-  if (flash.includes('newAccountVerified')) {
-    renderSuccessBanner = true;
-  }
+  const renderSuccessBanner = flash.includes('newAccountVerified') || false;
 
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
