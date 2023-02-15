@@ -358,7 +358,7 @@ CREATE TABLE `ExporterBroker` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `brokerName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `town` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
