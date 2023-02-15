@@ -4,7 +4,9 @@ import { EmailResponse } from '../types';
 
 /**
  * confirmEmailAddress
- * @param {Object} Exporter account
+ * @param {String} Email address
+ * @param {String} First name
+ * @param {String} Verification hash
  * @returns {Object} Object with success flag and emailRecipient
  */
 const confirmEmailAddress = async (email: string, firstName: string, verificationHash: string): Promise<EmailResponse> => {

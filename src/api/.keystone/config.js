@@ -114,10 +114,9 @@ var notify = {
 var notify_default = notify;
 
 // emails/index.ts
-var confirmEmailAddress = async (account) => {
+var confirmEmailAddress = async (email, firstName, verificationHash) => {
   try {
     console.info("Sending email verification for account creation");
-    const { email, firstName, verificationHash } = account;
     const emailResponse = await notify_default.sendEmail(EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL, email, firstName, verificationHash);
     if (emailResponse.success) {
       return emailResponse;
@@ -342,19 +341,14 @@ var lists = {
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
           try {
-            const exporter = {
-              firstName: accountInputData.firstName,
-              email: accountInputData.email,
-              verificationHash: accountInputData.verificationHash
-            };
-            const emailResponse = await emails_default.confirmEmailAddress(exporter);
+            const { firstName, email, verificationHash } = accountInputData;
+            const emailResponse = await emails_default.confirmEmailAddress(email, firstName, verificationHash);
             if (emailResponse.success) {
               return accountInputData;
             }
             throw new Error(`Sending email verification for account creation (resolveInput hook) ${emailResponse}`);
           } catch (err) {
-            console.error("Sending email verification for account creation (resolveInput hook) ", { err });
-            throw new Error();
+            throw new Error(`Sending email verification for account creation (resolveInput hook) { err }`);
           }
         }
         if (operation === "update") {
@@ -580,13 +574,14 @@ var sendEmailConfirmEmailAddress = async (root, variables, context) => {
         id: variables.exporterId
       }
     });
-    if (!exporter || !exporter.id) {
+    if (!exporter) {
       console.info("Sending email verification for account creation - no exporter exists with the provided ID");
       return {
         success: false
       };
     }
-    const emailResponse = await emails_default.confirmEmailAddress(exporter);
+    const { email, firstName, verificationHash } = exporter;
+    const emailResponse = await emails_default.confirmEmailAddress(email, firstName, verificationHash);
     if (emailResponse.success) {
       return emailResponse;
     }
