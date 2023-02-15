@@ -80,4 +80,9 @@ interface SendEmailConfirmEmailAddressVariables {
   exporterId: string;
 }
 
-export { Account, AccountInput, Application, CompanyResponse, SicCodes, VerifyEmailAddressVariables, SendEmailConfirmEmailAddressVariables };
+interface EmailResponse {
+  success: boolean;
+  emailRecipient: string;
+}
+
+export { Account, AccountInput, Application, CompanyResponse, EmailResponse, SicCodes, VerifyEmailAddressVariables, SendEmailConfirmEmailAddressVariables };

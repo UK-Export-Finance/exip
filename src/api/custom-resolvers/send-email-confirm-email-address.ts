@@ -19,7 +19,7 @@ const sendEmailConfirmEmailAddress = async (root: any, variables: SendEmailConfi
     })) as Account;
 
     // ensure that we have found an acount with the requsted ID.
-    if (!exporter || !exporter.id) {
+    if (!exporter) {
       console.info('Sending email verification for account creation - no exporter exists with the provided ID');
 
       return {
@@ -27,8 +27,10 @@ const sendEmailConfirmEmailAddress = async (root: any, variables: SendEmailConfi
       };
     }
 
+    const { email, firstName, verificationHash } = exporter;
+
     // send "confirm email" email
-    const emailResponse = await sendEmail.confirmEmailAddress(exporter);
+    const emailResponse = await sendEmail.confirmEmailAddress(email, firstName, verificationHash);
 
     if (emailResponse.success) {
       return emailResponse;

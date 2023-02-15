@@ -6,7 +6,7 @@ import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types'; // eslint-disable-line
 import { ANSWERS, APPLICATION } from './constants';
 import sendEmail from './emails';
-import { Account, AccountInput } from './types';
+import { AccountInput } from './types';
 
 export const lists = {
   ReferenceNumber: {
@@ -259,13 +259,9 @@ export const lists = {
 
           // send "confirm email" email
           try {
-            const exporter = {
-              firstName: accountInputData.firstName,
-              email: accountInputData.email,
-              verificationHash: accountInputData.verificationHash,
-            } as Account;
+            const { firstName, email, verificationHash } = accountInputData;
 
-            const emailResponse = await sendEmail.confirmEmailAddress(exporter);
+            const emailResponse = await sendEmail.confirmEmailAddress(email, firstName, verificationHash);
 
             if (emailResponse.success) {
               return accountInputData;
@@ -273,8 +269,7 @@ export const lists = {
 
             throw new Error(`Sending email verification for account creation (resolveInput hook) ${emailResponse}`);
           } catch (err) {
-            console.error('Sending email verification for account creation (resolveInput hook) ', { err });
-            throw new Error();
+            throw new Error(`Sending email verification for account creation (resolveInput hook) { err }`);
           }
         }
 
