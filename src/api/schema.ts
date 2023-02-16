@@ -246,6 +246,10 @@ export const lists = {
       isVerified: checkbox({ defaultValue: false }),
       verificationHash: text(),
       verificationExpiry: timestamp(),
+
+      otpSalt: text(),
+      otpHash: text(),
+      otpExpiry: timestamp(),
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData }): Promise<AccountInput> => {

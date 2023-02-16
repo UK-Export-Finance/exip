@@ -4,6 +4,7 @@ import createExporterMutation from '../../../graphql/mutations/account/create';
 import getExporterQuery from '../../../graphql/queries/account/get';
 import verifyExporterEmailAddressMutation from '../../../graphql/mutations/account/verify-email-address';
 import sendEmailConfirmEmailAddressMutation from '../../../graphql/mutations/account/send-email-confirm-email-address';
+import accountSignInMutation from '../../../graphql/mutations/account/sign-in';
 
 const account = {
   create: async (update: Account) => {
@@ -112,6 +113,33 @@ const account = {
     } catch (err) {
       console.error(err);
       throw new Error('Sending email verification for account creation');
+    }
+  },
+  signIn: async (email: string, password: string) => {
+    try {
+      console.info('Signing in exporter account');
+
+      const variables = { email, password };
+
+      const response = (await apollo('POST', accountSignInMutation, variables)) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error signing in exporter account ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error signing in exporter account ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.accountSignIn) {
+        return response.data.accountSignIn;
+      }
+
+      console.error(response);
+      throw new Error('Signing in exporter account');
+    } catch (err) {
+      console.error(err);
+      throw new Error('Signing in exporter account');
     }
   },
 };

@@ -36,6 +36,8 @@ interface Account extends ExporterUpdateInput {
   id: string;
   email: string;
   firstName: string;
+  salt: string;
+  hash: string;
   verificationHash: string;
 }
 
@@ -80,9 +82,24 @@ interface SendEmailConfirmEmailAddressVariables {
   exporterId: string;
 }
 
+interface AccountSignInVariables {
+  email: string;
+  password: string;
+}
+
 interface EmailResponse {
   success: boolean;
   emailRecipient: string;
 }
 
-export { Account, AccountInput, Application, CompanyResponse, EmailResponse, SicCodes, VerifyEmailAddressVariables, SendEmailConfirmEmailAddressVariables };
+export {
+  Account,
+  AccountInput,
+  AccountSignInVariables,
+  Application,
+  CompanyResponse,
+  EmailResponse,
+  SicCodes,
+  VerifyEmailAddressVariables,
+  SendEmailConfirmEmailAddressVariables,
+};

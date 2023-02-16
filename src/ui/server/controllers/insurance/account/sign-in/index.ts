@@ -3,6 +3,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
+import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -68,7 +69,7 @@ export const get = (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body);
 
   if (validationErrors) {
@@ -83,6 +84,23 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  // TODO: check sign in details are correct and generate a code.
-  return res.redirect(ENTER_CODE);
+  try {
+    // validate credentials
+    const email = req.body[EMAIL];
+    const password = req.body[PASSWORD];
+
+    const response = await api.keystone.account.signIn(email, password);
+
+    if (response.success) {
+      return res.redirect(ENTER_CODE);
+    }
+
+    // invalid credentials.
+    // TODO: render the page with validation errors
+    return res.redirect('/invalid-credentials');
+  } catch (err) {
+    console.error('Error signing in account', { err });
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
 };

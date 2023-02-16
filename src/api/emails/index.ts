@@ -13,7 +13,9 @@ const confirmEmailAddress = async (email: string, firstName: string, verificatio
   try {
     console.info('Sending email verification for account creation');
 
-    const emailResponse = await notify.sendEmail(EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL, email, firstName, verificationHash);
+    const variables = { confirmToken: verificationHash };
+
+    const emailResponse = await notify.sendEmail(EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL, email, firstName, variables);
 
     if (emailResponse.success) {
       return emailResponse;
@@ -27,8 +29,29 @@ const confirmEmailAddress = async (email: string, firstName: string, verificatio
   }
 };
 
+const securityCodeEmail = async (email: string, firstName: string, securityCode: string): Promise<EmailResponse> => {
+  try {
+    console.info('Sending security code email for account sign in');
+
+    const variables = { securityCode };
+
+    const emailResponse = await notify.sendEmail(EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE, email, firstName, variables);
+
+    if (emailResponse.success) {
+      return emailResponse;
+    }
+
+    throw new Error(`Sending security code email for account sign in ${emailResponse}`);
+  } catch (err) {
+    console.error(err);
+
+    throw new Error(`Sending security code email for account sign in ${err}`);
+  }
+};
+
 const sendEmail = {
   confirmEmailAddress,
+  securityCodeEmail,
 };
 
 export default sendEmail;

@@ -80,6 +80,9 @@ model Exporter {
   isVerified         Boolean   @default(false)
   verificationHash   String    @default("")
   verificationExpiry DateTime?
+  otpSalt            String    @default("")
+  otpHash            String    @default("")
+  otpExpiry          DateTime?
 }
 
 model ExporterBusiness {

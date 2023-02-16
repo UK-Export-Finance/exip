@@ -23,7 +23,7 @@ describe('emails', () => {
     const result = await sendEmail.confirmEmailAddress(email, firstName, verificationHash);
 
     expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-    expect(sendEmailSpy).toHaveBeenCalledWith(EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL, email, firstName, verificationHash);
+    expect(sendEmailSpy).toHaveBeenCalledWith(EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL, email, firstName, { confirmToken: verificationHash });
 
     const expected = sendEmailResponse;
 
