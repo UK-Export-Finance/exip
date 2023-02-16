@@ -83,8 +83,8 @@ const get = (req: Request, res: Response) => {
       // summary list for company details
       SUMMARY_LIST: populateCompaniesHouseSummaryList(exporterCompany),
     });
-  } catch (error) {
-    console.error('Error getting company details', { error });
+  } catch (err) {
+    console.error('Error getting company details', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };
