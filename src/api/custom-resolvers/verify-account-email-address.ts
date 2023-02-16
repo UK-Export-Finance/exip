@@ -1,6 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { isBefore } from 'date-fns';
-import { Account, VerifyEmailAddressVariables } from '../types';
+import getAccountByField from '../helpers/get-account-by-field';
+import { VerifyEmailAddressVariables } from '../types';
 
 /**
  * verifyAccountEmailAddress
@@ -10,59 +11,44 @@ import { Account, VerifyEmailAddressVariables } from '../types';
  * @returns {Object} Object with success or expired flag.
  */
 const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddressVariables, context: Context) => {
-  console.info('Verifying exporter email address');
-
   try {
-    /**
-     * Get the account this token is associated with.
-     * NOTE: Keystone has a limitation where you can't findOne by a field that is NOT the id.
-     * Therefore we have to use findMany, which has a performance impact.
-     * Because this is low volume service, there is no need to improve this.
-     * However if volumes increase dramatically we will need to improve this.
-     */
-    const exportersArray = await context.db.Exporter.findMany({
-      where: {
-        verificationHash: { equals: variables.token },
-      },
-      take: 1,
-    });
+    console.info('Verifying exporter email address');
 
-    // ensure that we have found an acount with the requsted verification hash.
-    if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
-      console.info('Verifying exporter email - no exporter exists with the provided token');
+    // get the account the token is associated with.
+    const exporter = await getAccountByField(context, 'verificationHash', variables.token);
+
+    if (exporter) {
+      // check that the verification period has not expired.
+      const now = new Date();
+      const canActivateExporter = isBefore(now, exporter.verificationExpiry);
+
+      if (!canActivateExporter) {
+        console.info('Unable to verify exporter email - verification period has expired');
+
+        return {
+          expired: true,
+        };
+      }
+
+      // mark the account has verified and nullify the verification hash and expiry.
+      await context.db.Exporter.updateOne({
+        where: { id: exporter.id },
+        data: {
+          isVerified: true,
+          verificationHash: '',
+          verificationExpiry: null,
+        },
+      });
 
       return {
-        expired: true,
+        success: true,
+        emailRecipient: exporter.email,
       };
     }
 
-    const exporter = exportersArray[0] as Account;
-
-    // check that the verification period has not expired.
-    const now = new Date();
-    const canActivateExporter = isBefore(now, exporter.verificationExpiry);
-
-    if (!canActivateExporter) {
-      console.info('Unable to verify exporter email - verification period has expired');
-
-      return {
-        expired: true,
-      };
-    }
-
-    // mark the account has verified and nullify the verification hash and expiry.
-    await context.db.Exporter.updateOne({
-      where: { id: exporter.id },
-      data: {
-        isVerified: true,
-        verificationHash: '',
-        verificationExpiry: null,
-      },
-    });
-
+    // no account associated with the provided token.
     return {
-      success: true,
-      emailRecipient: exporter.email,
+      success: false,
     };
   } catch (err) {
     console.error(err);
