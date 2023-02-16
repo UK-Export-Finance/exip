@@ -27,9 +27,9 @@ const sendEmailConfirmEmailAddress = async (root: any, variables: SendEmailConfi
       };
     }
 
+    // send "confirm email" email.
     const { email, firstName, verificationHash } = exporter;
 
-    // send "confirm email" email
     const emailResponse = await sendEmail.confirmEmailAddress(email, firstName, verificationHash);
 
     if (emailResponse.success) {
@@ -38,6 +38,7 @@ const sendEmailConfirmEmailAddress = async (root: any, variables: SendEmailConfi
 
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${emailResponse}`);
   } catch (err) {
+    console.error(err);
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${err}`);
   }
 };

@@ -46,7 +46,8 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
       };
     }
 
-    // no account associated with the provided token.
+    console.info('Unable to verify exporter email - no account found');
+
     return {
       success: false,
     };
