@@ -26,11 +26,9 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELDS: {
-          SECURITY_CODE: {
-            ID: SECURITY_CODE,
-            ...FIELDS[SECURITY_CODE],
-          },
+        FIELD: {
+          ID: SECURITY_CODE,
+          ...FIELDS[SECURITY_CODE],
         },
       };
 
