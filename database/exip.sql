@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `Application` (
   KEY `Application_policyAndExport_idx` (`policyAndExport`),
   KEY `Application_exporterCompany_idx` (`exporterCompany`),
 	KEY `Application_exporterBusiness_idx` (`exporterBusiness`),
+	KEY `Application_exporterBroker_idx` (`exporterBroker`),
   CONSTRAINT `Application_eligibility_fkey` FOREIGN KEY (`eligibility`) REFERENCES `Eligibility` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT `Application_exporterBroker_fkey` FOREIGN KEY (`exporterBroker`) REFERENCES `ExporterBroker` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT `Application_exporterBusiness_fkey` FOREIGN KEY (`exporterBusiness`) REFERENCES `ExporterBusiness` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -357,6 +358,7 @@ DROP TABLE IF EXISTS `ExporterBroker`;
 CREATE TABLE `ExporterBroker` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isUsingBroker` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
