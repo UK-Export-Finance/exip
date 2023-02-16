@@ -15,7 +15,7 @@ Cypress.Commands.add('checkPhaseBanner', require('./check-phase-banner'));
 Cypress.Commands.add('navigateToUrl', require('./navigate-to-url'));
 
 Cypress.Commands.add('submitQuoteAnswersHappyPathSinglePolicy', require('./quote/submit-answers-happy-path-single-policy'));
-Cypress.Commands.add('submitQuoteAnswersHappyPathMultiPolicy', require('./quote/submit-answers-happy-path-multi-policy'));
+Cypress.Commands.add('submitQuoteAnswersHappyPathMultiplePolicy', require('./quote/submit-answers-happy-path-multiple-policy'));
 
 Cypress.Commands.add('corePageChecks', require('./core-page-checks'));
 

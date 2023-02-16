@@ -13,7 +13,7 @@ context('Your quote page - change answers (policy type and length from multiple 
   before(() => {
     cy.login();
 
-    cy.submitQuoteAnswersHappyPathMultiPolicy();
+    cy.submitQuoteAnswersHappyPathMultiplePolicy();
     submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
