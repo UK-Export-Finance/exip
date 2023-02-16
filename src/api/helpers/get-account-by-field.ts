@@ -3,6 +3,8 @@ import { Account } from '../types';
 
 const getAccountByField = async (context: Context, field: string, value: string) => {
   try {
+    console.info('Getting exporter account by field/value');
+
     /**
      * Get an account by a particular field and value.
      * NOTE: Keystone has a limitation where you can't findOne by a field that is NOT the id.
@@ -29,7 +31,7 @@ const getAccountByField = async (context: Context, field: string, value: string)
     return exporter;
   } catch (err) {
     console.error(err);
-    throw new Error(`Getting exporter by field ${err}`);
+    throw new Error(`Getting exporter account by field/value ${err}`);
   }
 };
 
