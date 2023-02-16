@@ -11,7 +11,7 @@ const { CREDIT_PERIOD } = FIELD_IDS;
 context('Change your answers (policy fields) - as an exporter, I want to change the details before submitting the proposal', () => {
   before(() => {
     cy.login();
-    cy.submitAnswersHappyPathMultiPolicy();
+    cy.submitQuoteAnswersHappyPathMultiPolicy();
     cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
   });
 

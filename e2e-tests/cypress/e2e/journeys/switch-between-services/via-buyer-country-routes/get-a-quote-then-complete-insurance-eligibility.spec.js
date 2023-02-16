@@ -17,7 +17,7 @@ context('Get a quote, complete insurance eligibility and then re-visit the quote
   before(() => {
     cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
 
-    cy.submitAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy();
     submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);

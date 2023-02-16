@@ -33,7 +33,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
   before(() => {
     cy.login();
 
-    cy.submitAnswersHappyPathMultiPolicy();
+    cy.submitQuoteAnswersHappyPathMultiPolicy();
     submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);

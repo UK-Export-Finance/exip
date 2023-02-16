@@ -35,12 +35,13 @@ export const lists = {
       exporterBusiness: relationship({ ref: 'ExporterBusiness' }),
       exporterCompany: relationship({ ref: 'ExporterCompany' }),
     },
-    // TODO: add logs to the hooks
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
         if (operation === 'create') {
           try {
+            console.info('Creating new application');
             console.info('Adding default data to a new application');
+
             const modifiedData = resolvedData;
 
             // generate and attach a new unique reference number
@@ -252,6 +253,8 @@ export const lists = {
         const accountInputData = resolvedData as AccountInput;
 
         if (operation === 'create') {
+          console.info('Creating new exporter account');
+
           // add dates
           const now = new Date();
           accountInputData.createdAt = now;
@@ -274,6 +277,8 @@ export const lists = {
         }
 
         if (operation === 'update') {
+          console.info('Updating exporter account');
+
           // add dates
           accountInputData.updatedAt = new Date();
         }
