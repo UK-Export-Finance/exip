@@ -3,25 +3,47 @@ import notify from '../integrations/notify';
 import { EmailResponse } from '../types';
 
 /**
- * confirmEmailAddress
+ * callNotify
+ * @param {String} Notify template ID
  * @param {String} Email address
  * @param {String} First name
- * @param {String} Verification hash
- * @returns {Object} Object with success flag and emailRecipient
+ * @param {Object} Email variables
+ * @returns {Object} Object with success flag
  */
-const confirmEmailAddress = async (email: string, firstName: string, verificationHash: string): Promise<EmailResponse> => {
+export const callNotify = async (templateId: string, emailAddress: string, firstName: string, variables: object): Promise<EmailResponse> => {
   try {
-    console.info('Sending email verification for account creation');
-
-    const variables = { confirmToken: verificationHash };
-
-    const emailResponse = await notify.sendEmail(EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL, email, firstName, variables);
+    const emailResponse = await notify.sendEmail(templateId, emailAddress, firstName, variables);
 
     if (emailResponse.success) {
       return emailResponse;
     }
 
-    throw new Error(`Sending email verification for account creation ${emailResponse}`);
+    throw new Error(`Sending email ${emailResponse}`);
+  } catch (err) {
+    console.error(err);
+
+    throw new Error(`Sending email ${err}`);
+  }
+};
+
+/**
+ * confirmEmailAddress
+ * @param {String} Email address
+ * @param {String} First name
+ * @param {String} Verification hash
+ * @returns {Object} callNotify response
+ */
+const confirmEmailAddress = async (emailAddress: string, firstName: string, verificationHash: string): Promise<EmailResponse> => {
+  try {
+    console.info('Sending email verification for account creation');
+
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
+
+    const variables = { confirmToken: verificationHash };
+
+    const response = await callNotify(templateId, emailAddress, firstName, variables);
+
+    return response;
   } catch (err) {
     console.error(err);
 
@@ -29,19 +51,24 @@ const confirmEmailAddress = async (email: string, firstName: string, verificatio
   }
 };
 
-const securityCodeEmail = async (email: string, firstName: string, securityCode: string): Promise<EmailResponse> => {
+/**
+ * securityCodeEmail
+ * @param {String} Email address
+ * @param {String} First name
+ * @param {String} Security code
+ * @returns {Object} callNotify response
+ */
+const securityCodeEmail = async (emailAddress: string, firstName: string, securityCode: string): Promise<EmailResponse> => {
   try {
     console.info('Sending security code email for account sign in');
 
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
+
     const variables = { securityCode };
 
-    const emailResponse = await notify.sendEmail(EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE, email, firstName, variables);
+    const response = await callNotify(templateId, emailAddress, firstName, variables);
 
-    if (emailResponse.success) {
-      return emailResponse;
-    }
-
-    throw new Error(`Sending security code email for account sign in ${emailResponse}`);
+    return response;
   } catch (err) {
     console.error(err);
 
