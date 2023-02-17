@@ -27,29 +27,28 @@ SET FOREIGN_KEY_CHECKS = 0;
 # Dump of table Application
 # ------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `Application` (
+CREATE TABLE `Application` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `createdAt` datetime(3) DEFAULT NULL,
   `updatedAt` datetime(3) DEFAULT NULL,
-	`eligibility` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `eligibility` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `referenceNumber` int DEFAULT NULL,
   `submissionDeadline` datetime(3) DEFAULT NULL,
   `submissionType` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'Manual Inclusion Application',
-  `eligibility` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `policyAndExport` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `exporterCompany` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-	`exporterBusiness` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-	`exporterBroker` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `exporterBusiness` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `exporterBroker` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `Application_referenceNumber_idx` (`referenceNumber`),
   KEY `Application_eligibility_idx` (`eligibility`),
+  KEY `Application_referenceNumber_idx` (`referenceNumber`),
   KEY `Application_policyAndExport_idx` (`policyAndExport`),
   KEY `Application_exporterCompany_idx` (`exporterCompany`),
-	KEY `Application_exporterBusiness_idx` (`exporterBusiness`),
-	KEY `Application_exporterBroker_idx` (`exporterBroker`),
+  KEY `Application_exporterBusiness_idx` (`exporterBusiness`),
+  KEY `Application_exporterBroker_idx` (`exporterBroker`),
   CONSTRAINT `Application_eligibility_fkey` FOREIGN KEY (`eligibility`) REFERENCES `Eligibility` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-	CONSTRAINT `Application_exporterBroker_fkey` FOREIGN KEY (`exporterBroker`) REFERENCES `ExporterBroker` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-	CONSTRAINT `Application_exporterBusiness_fkey` FOREIGN KEY (`exporterBusiness`) REFERENCES `ExporterBusiness` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Application_exporterBroker_fkey` FOREIGN KEY (`exporterBroker`) REFERENCES `ExporterBroker` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Application_exporterBusiness_fkey` FOREIGN KEY (`exporterBusiness`) REFERENCES `ExporterBusiness` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_exporterCompany_fkey` FOREIGN KEY (`exporterCompany`) REFERENCES `ExporterCompany` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_policyAndExport_fkey` FOREIGN KEY (`policyAndExport`) REFERENCES `PolicyAndExport` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
