@@ -51,7 +51,7 @@ const afterSecondClick = {
 export default () => {
   shouldRender();
 
-  afterClick.changeskeyboardInput();
+  afterClick.changesInputType();
 
-  afterSecondClick.changeskeyboardInput();
+  afterSecondClick.changesInputType();
 };
