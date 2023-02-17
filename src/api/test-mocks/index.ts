@@ -9,7 +9,7 @@ const {
   RANDOM_BYTES_SIZE,
   STRING_TYPE,
   PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM },
-} = ACCOUNT.PASSWORD;
+} = ACCOUNT.ENCRYPTION;
 
 const generatePassword = (password: string) => {
   const salt = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
@@ -26,7 +26,7 @@ export const mockAccount = {
   firstName: 'first',
   lastName: 'last',
   email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT,
-  ...generatePassword(process.env.MOCK_ACCOUNT_PASSWORD),
+  ...generatePassword(String(process.env.MOCK_ACCOUNT_PASSWORD)),
   isVerified: false,
   verificationHash: 'mockVerificationHash',
   verificationExpiry: ACCOUNT.EMAIL.VERIFICATION_EXPIRY(),

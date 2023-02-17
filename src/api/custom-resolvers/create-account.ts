@@ -2,13 +2,13 @@ import { Context } from '.keystone/types'; // eslint-disable-line
 import crypto from 'crypto';
 import { ACCOUNT } from '../constants';
 
-const { EMAIL, PASSWORD } = ACCOUNT;
+const { EMAIL, ENCRYPTION } = ACCOUNT;
 
 const {
   RANDOM_BYTES_SIZE,
   STRING_TYPE,
   PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM },
-} = PASSWORD;
+} = ENCRYPTION;
 
 const createAccount = async (root: any, variables: object, context: Context) => {
   // @ts-ignore

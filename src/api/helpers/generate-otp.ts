@@ -2,14 +2,19 @@ import crypto from 'crypto';
 import { authenticator } from 'otplib';
 import { ACCOUNT } from '../constants';
 
-const { PASSWORD, OTP } = ACCOUNT;
+const { ENCRYPTION, OTP } = ACCOUNT;
 
 const {
   RANDOM_BYTES_SIZE,
   STRING_TYPE,
   PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM },
-} = PASSWORD;
+} = ENCRYPTION;
 
+/**
+ * generateOtp
+ * Generate a one time password/security code
+ * @returns {Object} Security code, salt, hash, expiry date
+ */
 const generateOtp = () => {
   try {
     console.info('Generating OTP');

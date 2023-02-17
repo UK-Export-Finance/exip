@@ -5,16 +5,16 @@ import isValidAccountPassword from './is-valid-account-password';
 
 dotenv.config();
 
-const { PASSWORD } = ACCOUNT;
+const { ENCRYPTION } = ACCOUNT;
 
 const {
   RANDOM_BYTES_SIZE,
   STRING_TYPE,
   PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM },
-} = PASSWORD;
+} = ENCRYPTION;
 
 describe('api/helpers/is-valid-account-password', () => {
-  const mockPassword = process.env.MOCK_ACCOUNT_PASSWORD;
+  const mockPassword = String(process.env.MOCK_ACCOUNT_PASSWORD);
 
   const salt = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
 

@@ -1,12 +1,12 @@
 import crypto from 'crypto';
 import { ACCOUNT } from '../constants';
 
-const { PASSWORD } = ACCOUNT;
+const { ENCRYPTION } = ACCOUNT;
 
 const {
   STRING_TYPE,
   PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM },
-} = PASSWORD;
+} = ENCRYPTION;
 
 /**
  * isValidAccountPassword

@@ -32,7 +32,7 @@ export const ACCOUNT = {
       return tomorrow;
     },
   },
-  PASSWORD: {
+  ENCRYPTION: {
     RANDOM_BYTES_SIZE: 32,
     STRING_TYPE: 'hex',
     PBKDF2: {

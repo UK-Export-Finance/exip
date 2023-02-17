@@ -41,7 +41,7 @@ describe('emails', () => {
 
   describe('confirmEmailAddress', () => {
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
-    
+
     test('it should call notify.sendEmail and return the response', async () => {
       const result = await sendEmail.confirmEmailAddress(email, firstName, verificationHash);
 

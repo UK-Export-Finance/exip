@@ -59,7 +59,7 @@ describe('custom-resolvers/account-sign-in', () => {
     beforeEach(async () => {
       await accountSignIn({}, variables, context);
     });
-  
+
     test('it should generate an OTP and save to the account', async () => {
       const account = await context.query.Exporter.findOne({
         where: { id: exporter.id },

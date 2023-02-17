@@ -1,11 +1,11 @@
 import { ACCOUNT } from '../constants';
 import generate from './generate-otp';
 
-const { OTP, PASSWORD } = ACCOUNT;
+const { OTP, ENCRYPTION } = ACCOUNT;
 
 const {
   PBKDF2: { KEY_LENGTH },
-} = PASSWORD;
+} = ENCRYPTION;
 
 describe('api/helpers/generate-otp', () => {
   it('should return a security code', () => {
