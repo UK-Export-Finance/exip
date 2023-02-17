@@ -1,7 +1,7 @@
 import emailRules from './email';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/account';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import emailValidation from '../../../../../../shared-validation/email';
+import emailAndPasswordValidation from '../../../../../../shared-validation/email-and-password';
 
 const { EMAIL: FIELD_ID } = FIELD_IDS;
 
@@ -17,11 +17,11 @@ describe('controllers/insurance/account/sign-in/validation/rules/email', () => {
     errorList: {},
   };
 
-  it('should return the result of emailValidation', () => {
+  it('should return the result of emailAndPasswordValidation', () => {
     const mockFormBody = {};
     const result = emailRules(mockFormBody, mockErrors);
 
-    const expected = emailValidation(FIELD_ID, mockFormBody[FIELD_ID], ERROR_MESSAGE.INCORRECT, mockErrors);
+    const expected = emailAndPasswordValidation(mockFormBody, FIELD_ID, ERROR_MESSAGE.INCORRECT, mockErrors);
 
     expect(result).toEqual(expected);
   });
