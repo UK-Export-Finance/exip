@@ -54,6 +54,14 @@ const ACCOUNT = {
         },
       },
     },
+    ENTER_CODE: {
+      PAGE_TITLE: 'Check your email',
+      INTRO: "We've sent you an email with a security code. This code will expire after 5 minutes.",
+      REQUEST_NEW_CODE: {
+        TEXT: 'Request a new security code',
+        HREF: INSURANCE_ROUTES.ACCOUNT.SIGN_IN.REQUEST_NEW_CODE,
+      },
+    },
   },
 };
 
