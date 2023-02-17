@@ -8,7 +8,10 @@ const { EMAIL, ENCRYPTION } = ACCOUNT;
 const {
   RANDOM_BYTES_SIZE,
   STRING_TYPE,
-  PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM },
+  PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
+  PASSWORD: {
+    PBKDF2: { KEY_LENGTH },
+  },
 } = ENCRYPTION;
 
 const createAccount = async (root: any, variables: AccountCreationVariables, context: Context) => {

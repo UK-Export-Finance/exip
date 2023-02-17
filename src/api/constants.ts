@@ -37,8 +37,18 @@ export const ACCOUNT = {
     STRING_TYPE: 'hex',
     PBKDF2: {
       ITERATIONS: 10000,
-      KEY_LENGTH: 64,
       DIGEST_ALGORITHM: 'sha512',
+    },
+
+    PASSWORD: {
+      PBKDF2: {
+        KEY_LENGTH: 64,
+      },
+    },
+    OTP: {
+      PBKDF2: {
+        KEY_LENGTH: 128,
+      },
     },
   },
   // One time password

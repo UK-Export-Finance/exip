@@ -4,7 +4,10 @@ import generate from './generate-otp';
 const { OTP, ENCRYPTION } = ACCOUNT;
 
 const {
-  PBKDF2: { KEY_LENGTH },
+  RANDOM_BYTES_SIZE,
+  OTP: {
+    PBKDF2: { KEY_LENGTH },
+  },
 } = ENCRYPTION;
 
 describe('api/helpers/generate-otp', () => {
@@ -17,7 +20,7 @@ describe('api/helpers/generate-otp', () => {
   it('should return a salt', () => {
     const result = generate.otp();
 
-    expect(result.salt.length).toEqual(KEY_LENGTH);
+    expect(result.salt.length).toEqual(RANDOM_BYTES_SIZE * 2);
   });
 
   it('should return a hash', () => {

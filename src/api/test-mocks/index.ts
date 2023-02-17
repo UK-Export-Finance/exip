@@ -8,7 +8,10 @@ dotenv.config();
 const {
   RANDOM_BYTES_SIZE,
   STRING_TYPE,
-  PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM },
+  PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
+  PASSWORD: {
+    PBKDF2: { KEY_LENGTH },
+  },
 } = ACCOUNT.ENCRYPTION;
 
 const generatePassword = (password: string) => {
