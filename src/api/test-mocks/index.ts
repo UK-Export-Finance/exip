@@ -1,6 +1,9 @@
+import dotenv from 'dotenv';
 import crypto from 'crypto';
 import { ACCOUNT } from '../constants';
 import { Account } from '../types';
+
+dotenv.config();
 
 const {
   RANDOM_BYTES_SIZE,
@@ -19,15 +22,11 @@ const generatePassword = (password: string) => {
   };
 };
 
-// TODO: mock password as .env
-
 export const mockAccount = {
   firstName: 'first',
   lastName: 'last',
   email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT,
-  // salt: 'mockSalt',
-  // hash: 'mockHash',
-  ...generatePassword('AmazingPassword123!'),
+  ...generatePassword(process.env.MOCK_ACCOUNT_PASSWORD),
   isVerified: false,
   verificationHash: 'mockVerificationHash',
   verificationExpiry: ACCOUNT.EMAIL.VERIFICATION_EXPIRY(),

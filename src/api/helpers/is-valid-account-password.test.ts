@@ -1,6 +1,9 @@
+import dotenv from 'dotenv';
 import crypto from 'crypto';
 import { ACCOUNT } from '../constants';
 import isValidAccountPassword from './is-valid-account-password';
+
+dotenv.config();
 
 const { PASSWORD } = ACCOUNT;
 
@@ -11,7 +14,7 @@ const {
 } = PASSWORD;
 
 describe('api/helpers/is-valid-account-password', () => {
-  const mockPassword = 'AmazingPassword123!';
+  const mockPassword = process.env.MOCK_ACCOUNT_PASSWORD;
 
   const salt = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
 

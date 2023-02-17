@@ -38,7 +38,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
   sendEmail.securityCodeEmail = securityCodeEmailSpy;
 
-  const mockPassword = 'AmazingPassword123!';
+  const mockPassword = String(process.env.MOCK_ACCOUNT_PASSWORD);
 
   const variables = {
     firstName: 'a',
@@ -56,12 +56,14 @@ describe('custom-resolvers/account-sign-in', () => {
   });
 
   describe('when the provided password is valid', () => {
-    test('it should generate an OTP and save to the account', async () => {
+    beforeEach(async () => {
       await accountSignIn({}, variables, context);
-
+    });
+  
+    test('it should generate an OTP and save to the account', async () => {
       const account = await context.query.Exporter.findOne({
         where: { id: exporter.id },
-        query: 'id otpSalt otpHash otpExpiry',
+        query: 'id email otpSalt otpHash otpExpiry',
       });
 
       expect(account.otpSalt).toEqual(mockOtp.salt);
