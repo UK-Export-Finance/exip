@@ -29,7 +29,7 @@ context('Change your answers (policy fields) - as an exporter, I want to change 
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   describe('change `Credit period`', () => {

@@ -38,7 +38,7 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   context('export summary list', () => {
