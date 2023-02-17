@@ -24,7 +24,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
   before(() => {
     cy.login();
 
-    buyerCountryPage.searchInput().type('Kenya');
+    cy.inputType(buyerCountryPage.searchInput(), 'Kenya');
     const results = buyerCountryPage.results();
     results.first().click();
     submitButton().click();
@@ -34,7 +34,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     completeAndSubmitUkContentForm();
 
     policyTypePage[POLICY_TYPE].single.input().click();
-    policyTypePage[SINGLE_POLICY_LENGTH].input().type('18');
+    cy.inputType(policyTypePage[SINGLE_POLICY_LENGTH].input(), '18');
 
     submitButton().click();
   });
@@ -44,7 +44,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
   });
 
   it('should get a quote with a large contract value and render in the correct format', () => {
-    tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().type('100,000');
+    cy.inputType(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), '100,000');
     tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(USD_CURRENCY_CODE);
     tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('80');
 

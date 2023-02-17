@@ -150,7 +150,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
       const submittedValue = '1234';
 
       before(() => {
-        descriptionField.input().clear().type(submittedValue, { delay: 0 });
+        cy.inputType(descriptionField.input(), submittedValue);
         submitButton().click();
       });
 

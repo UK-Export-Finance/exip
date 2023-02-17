@@ -78,7 +78,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      aboutGoodsOrServicesPage[DESCRIPTION].input().type(application.POLICY_AND_EXPORTS[DESCRIPTION]);
+      cy.inputType(aboutGoodsOrServicesPage[DESCRIPTION].input(), application.POLICY_AND_EXPORTS[DESCRIPTION]);
       saveAndBackButton().click();
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
@@ -109,7 +109,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
 
     before(() => {
       // submit a value
-      field.input().type('Test');
+      cy.inputType(field.input(), 'Test');
       saveAndBackButton().click();
 
       // go back to the page

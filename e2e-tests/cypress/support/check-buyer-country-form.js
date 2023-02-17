@@ -25,7 +25,7 @@ const checkAutocompleteInput = {
     buyerCountryPage.searchInput().should('exist');
   },
   rendersNoResultsMessage: () => {
-    buyerCountryPage.searchInput().type('test');
+    cy.inputType(buyerCountryPage.searchInput(), 'test');
 
     const noResults = buyerCountryPage.noResults();
     noResults.should('exist');
@@ -35,7 +35,7 @@ const checkAutocompleteInput = {
   },
   rendersSingleResult: () => {
     // start searching for Algeria
-    buyerCountryPage.searchInput().type('Alg');
+    cy.inputType(buyerCountryPage.searchInput(), 'Alg');
 
     const noResults = buyerCountryPage.noResults();
     noResults.should('not.exist');
@@ -45,7 +45,7 @@ const checkAutocompleteInput = {
     results.should('have.length', 1);
   },
   rendersMultipleResults: () => {
-    buyerCountryPage.searchInput().type('Be');
+    cy.inputType(buyerCountryPage.searchInput(), 'Be');
 
     const noResults = buyerCountryPage.noResults();
     noResults.should('not.exist');
@@ -55,7 +55,7 @@ const checkAutocompleteInput = {
     results.should('have.length.greaterThan', 1);
   },
   allowsUserToRemoveCountryAndSearchAgain: () => {
-    buyerCountryPage.searchInput().type('Algeria');
+    cy.inputType(buyerCountryPage.searchInput(), 'Algeria');
     const results = buyerCountryPage.results();
 
     // select the first result (Algeria)
@@ -65,7 +65,7 @@ const checkAutocompleteInput = {
     buyerCountryPage.searchInput().clear();
 
     // search for a different country, submit with enter key
-    buyerCountryPage.searchInput().type('Brazil{enter}');
+    cy.inputType(buyerCountryPage.searchInput(), 'Brazil{enter}');
 
     // check hidden input value
     const expectedValue = 'Brazil';

@@ -27,7 +27,8 @@ const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT;
 const submitAndAssertFieldErrors = (fieldValue) => {
   const field = accountFormFields[EMAIL];
 
-  field.input().clear().type(fieldValue, { delay: 0 });
+  cy.inputType(field.input(), fieldValue);
+
   submitButton().click();
 
   cy.checkText(

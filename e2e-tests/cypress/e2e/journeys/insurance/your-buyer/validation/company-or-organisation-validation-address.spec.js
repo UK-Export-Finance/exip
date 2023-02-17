@@ -53,7 +53,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     const submittedValue = 'a'.repeat(301);
 
     before(() => {
-      field.input().type(submittedValue, { delay: 0 });
+      cy.inputType(field.input(), submittedValue);
       submitButton().click();
     });
 

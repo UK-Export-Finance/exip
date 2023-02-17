@@ -40,7 +40,7 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
 
   describe('trading name error', () => {
     it('should display validation errors if trading name question is not answered', () => {
-      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
+      cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.tradingAddressYesRadioInput().click();
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);

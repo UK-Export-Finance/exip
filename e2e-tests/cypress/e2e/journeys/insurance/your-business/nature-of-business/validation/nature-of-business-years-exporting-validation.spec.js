@@ -80,7 +80,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
-        field.input().clear().type('5.5');
+        cy.inputType(field.input(), '5.5');
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 4);
         cy.checkText(partials.errorSummaryListItems().eq(1), errorMessage);
@@ -101,7 +101,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = YEARS_EXPORTING;
         const field = natureOfBusiness[fieldId];
 
-        field.input().clear().type('5O');
+        cy.inputType(field.input(), '5O');
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 4);
         cy.checkText(partials.errorSummaryListItems().eq(1), errorMessage);
@@ -123,7 +123,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       const fieldId = YEARS_EXPORTING;
       const field = natureOfBusiness[fieldId];
 
-      field.input().clear().type('5');
+      cy.inputType(field.input(), '5');
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 3);
     });
@@ -136,7 +136,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       const fieldId = YEARS_EXPORTING;
       const field = natureOfBusiness[fieldId];
 
-      field.input().clear().type('5,00');
+      cy.inputType(field.input(), '5,00');
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 3);
     });

@@ -90,7 +90,7 @@ context('Tell us about the policy you need page - form validation', () => {
 
   describe('when `contract value` has a non-numeric value', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('a');
+      cy.inputType(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), 'a');
       submitButton().click();
 
       cy.checkText(
@@ -107,7 +107,7 @@ context('Tell us about the policy you need page - form validation', () => {
 
   describe('when `contract value` is not a whole number', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('1234.56');
+      cy.inputType(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), '1234.56');
       submitButton().click();
 
       cy.checkText(
@@ -124,7 +124,7 @@ context('Tell us about the policy you need page - form validation', () => {
 
   describe('when `contract value` has a value less than the minimum', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('0');
+      cy.inputType(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), '0');
       submitButton().click();
 
       cy.checkText(
@@ -142,7 +142,7 @@ context('Tell us about the policy you need page - form validation', () => {
   describe('with any validation error', () => {
     it('should render submitted values', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(GBP_CURRENCY_CODE);
-      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('10');
+      cy.inputType(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), '10');
 
       submitButton().click();
 

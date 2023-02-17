@@ -72,7 +72,7 @@ context('Insurance - Your business - Company details page - company house search
 
   describe('when the companies house number is too short', () => {
     it('should display an error in the error summary', () => {
-      companyDetails.companiesHouseSearch().clear().type('1234');
+      cy.inputType(companyDetails.companiesHouseSearch(), '1234');
       companyDetails.companiesHouseSearchButton().click();
 
       cy.checkText(partials.errorSummaryListItems().first(), COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
@@ -90,7 +90,7 @@ context('Insurance - Your business - Company details page - company house search
 
   describe('when the companies house number has special characters', () => {
     it('should display an error in the error summary', () => {
-      companyDetails.companiesHouseSearch().clear().type('123456!');
+      cy.inputType(companyDetails.companiesHouseSearch(), '123456!');
       companyDetails.companiesHouseSearchButton().click();
 
       cy.checkText(partials.errorSummaryListItems().first(), COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
@@ -108,7 +108,7 @@ context('Insurance - Your business - Company details page - company house search
 
   describe('when the companies house number has a space', () => {
     it('should display an error in the error summary', () => {
-      companyDetails.companiesHouseSearch().clear().type('123456 ');
+      cy.inputType(companyDetails.companiesHouseSearch(), '123456 ');
       companyDetails.companiesHouseSearchButton().click();
 
       cy.checkText(partials.errorSummaryListItems().first(), COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
@@ -126,14 +126,14 @@ context('Insurance - Your business - Company details page - company house search
 
   describe('when the companies house number is correctly entered', () => {
     it('should not display errors', () => {
-      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
+      cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.companiesHouseSearchButton().click();
       partials.errorSummaryListItems().should('not.exist');
       companyDetails.companiesHouseSearchError().should('not.exist');
     });
 
     it('should display your business summary list', () => {
-      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
+      cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.companiesHouseSearchButton().click();
       partials.errorSummaryListItems().should('not.exist');
       companyDetails.companiesHouseSearchError().should('not.exist');
@@ -167,7 +167,7 @@ context('Insurance - Your business - Company details page - company house search
 
   describe('when the company does not have a sic code', () => {
     it(`should display your business summary list with a ${DEFAULT.EMPTY} for sic code when coming back to the company details page`, () => {
-      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER_NO_SIC_CODE);
+      cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER_NO_SIC_CODE);
       saveAndBackButton().click();
 
       task.link().click();

@@ -80,7 +80,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         };
 
         before(() => {
-          multipleContractPolicyPage[fieldId].yearInput().clear().type(newAnswer.year);
+          cy.typeInput(multipleContractPolicyPage[fieldId].yearInput(), newAnswer.year);
 
           submitButton().click();
         });
@@ -144,7 +144,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         const newAnswer = application.POLICY_AND_EXPORTS[fieldId] - 500;
 
         before(() => {
-          multipleContractPolicyPage[fieldId].input().clear().type(newAnswer);
+          cy.typeInput(multipleContractPolicyPage[fieldId].input(), newAnswer);
 
           submitButton().click();
         });
@@ -176,7 +176,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         const newAnswer = Number(application.POLICY_AND_EXPORTS[fieldId]) + 1000;
 
         before(() => {
-          multipleContractPolicyPage[fieldId].input().clear().type(newAnswer);
+          cy.typeInput(multipleContractPolicyPage[fieldId].input(), newAnswer);
 
           submitButton().click();
         });
@@ -208,7 +208,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         const newAnswer = `${application.POLICY_AND_EXPORTS[fieldId]} additional text`;
 
         before(() => {
-          multipleContractPolicyPage[fieldId].input().clear().type(newAnswer);
+          cy.inputType(multipleContractPolicyPage[fieldId].input(), newAnswer);
 
           submitButton().click();
         });

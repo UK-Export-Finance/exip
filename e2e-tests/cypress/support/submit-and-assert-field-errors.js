@@ -11,7 +11,7 @@ import partials from '../e2e/partials';
 export default (field, fieldValue, errorIndex, errorSummaryLength, errorMessage) => {
   // only type if a field value is provided
   if (fieldValue) {
-    field.input().clear().type(fieldValue, { delay: 0 });
+    cy.inputType(field.input(), fieldValue);
   } else {
     field.input().clear();
   }

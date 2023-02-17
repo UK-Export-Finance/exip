@@ -30,7 +30,7 @@ export const completeAndSubmitUkContentForm = () => {
 
 export const completeAndSubmitPolicyTypeSingleForm = () => {
   policyTypePage[POLICY_TYPE].single.input().click();
-  policyTypePage[SINGLE_POLICY_LENGTH].input().type('3');
+  cy.inputType(policyTypePage[SINGLE_POLICY_LENGTH].input(), '3');
 
   submitButton().click();
 };
@@ -43,14 +43,14 @@ export const completeAndSubmitPolicyTypeMultiForm = () => {
 
 export const completeAndSubmitTellUsAboutYourSinglePolicyForm = () => {
   tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
-  tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().type('150000');
+  cy.inputType(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '150000');
   tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
   submitButton().click();
 };
 
 export const completeAndSubmitTellUsAboutYourMultiPolicyForm = () => {
   tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
-  tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('150000');
+  cy.inputType(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '150000');
   tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
   tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
   submitButton().click();

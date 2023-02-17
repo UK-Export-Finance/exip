@@ -18,16 +18,16 @@ const {
 } = FIELD_IDS;
 
 export default () => {
-  singleContractPolicyPage[REQUESTED_START_DATE].dayInput().clear().type(application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
-  singleContractPolicyPage[REQUESTED_START_DATE].monthInput().clear().type(application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
-  singleContractPolicyPage[REQUESTED_START_DATE].yearInput().clear().type(application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
+  cy.inputType(singleContractPolicyPage[REQUESTED_START_DATE].dayInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
+  cy.inputType(singleContractPolicyPage[REQUESTED_START_DATE].monthInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
+  cy.inputType(singleContractPolicyPage[REQUESTED_START_DATE].yearInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
 
-  singleContractPolicyPage[CONTRACT_COMPLETION_DATE].dayInput().clear().type(application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].day);
-  singleContractPolicyPage[CONTRACT_COMPLETION_DATE].monthInput().clear().type(application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].month);
-  singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput().clear().type(application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].year);
+  cy.inputType(singleContractPolicyPage[CONTRACT_COMPLETION_DATE].dayInput(), application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].day);
+  cy.inputType(singleContractPolicyPage[CONTRACT_COMPLETION_DATE].monthInput(), application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].month);
+  cy.inputType(singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput(), application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].year);
 
-  singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().clear().type(application.POLICY_AND_EXPORTS[TOTAL_CONTRACT_VALUE]);
-  singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().clear().type(application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
+  cy.inputType(singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input(), application.POLICY_AND_EXPORTS[TOTAL_CONTRACT_VALUE]);
+  cy.inputType(singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input(), application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
   insurancePartials.policyCurrencyCodeFormField.input().select(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);
 
   submitButton().click();

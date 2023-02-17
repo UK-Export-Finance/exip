@@ -40,7 +40,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe('trading address error', () => {
     it('should display validation errors if trading address question is not answered', () => {
-      companyDetails.companiesHouseSearch().clear().type(COMPANIES_HOUSE_NUMBER);
+      cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.tradingNameYesRadioInput().click();
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);

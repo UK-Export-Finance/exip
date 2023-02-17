@@ -44,7 +44,7 @@ context('Policy type page - policy type & length validation', () => {
 
       describe('when `single policy length` has a non-numeric value', () => {
         it('should render a validation error', () => {
-          policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('a');
+          cy.inputType(policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input(), 'a');
           submitButton().click();
 
           cy.checkText(
@@ -61,7 +61,7 @@ context('Policy type page - policy type & length validation', () => {
 
       describe('when `single policy length` contains a decimal', () => {
         it('should render a validation error', () => {
-          policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('1.2');
+          cy.inputType(policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input(), '1.2');
           submitButton().click();
 
           cy.checkText(
@@ -78,7 +78,7 @@ context('Policy type page - policy type & length validation', () => {
 
       describe('when `single policy length` is less than the minimum', () => {
         it('should render a validation error', () => {
-          policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('0');
+          cy.inputType(policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input(), '0');
           submitButton().click();
 
           cy.checkText(
@@ -95,7 +95,7 @@ context('Policy type page - policy type & length validation', () => {
 
       describe('when `single policy length` is greater than the maximum', () => {
         it('should render a validation error', () => {
-          policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('23');
+          cy.inputType(policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input(), '23');
           submitButton().click();
 
           cy.checkText(

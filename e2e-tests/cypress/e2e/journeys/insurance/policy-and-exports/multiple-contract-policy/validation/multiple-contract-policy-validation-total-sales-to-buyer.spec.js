@@ -82,7 +82,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   describe('when total sales to buyer is not a number', () => {
     it('should render a validation error', () => {
-      multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().clear().type('ten!');
+      cy.inputType(multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input(), 'ten!');
       submitButton().click();
 
       cy.checkText(
@@ -99,7 +99,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   describe('when total sales to buyer contains a decimal', () => {
     it('should render a validation error', () => {
-      multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().clear().type('1.2');
+      cy.inputType(multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input(), '1.2');
       submitButton().click();
 
       cy.checkText(
@@ -116,7 +116,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   describe('when total sales to buyer contains a comma and decimal', () => {
     it('should render a validation error', () => {
-      multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().clear().type('1,234.56');
+      cy.inputType(multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input(), '1,234.56');
       submitButton().click();
 
       cy.checkText(
@@ -133,7 +133,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   describe('when total sales to buyer is below the minimum', () => {
     it('should render a validation error', () => {
-      multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().clear().type('0');
+      cy.inputType(multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input(), '0');
       submitButton().click();
 
       cy.checkText(
@@ -153,7 +153,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
       cy.completeAndSubmitMultipleContractPolicyForm();
       partials.backLink().click();
 
-      multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().clear().type('1,234');
+      cy.inputType(multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input(), '1,234');
       submitButton().click();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;

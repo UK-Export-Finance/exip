@@ -115,7 +115,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
       cy.navigateToUrl(url);
       const field = turnover[FIELD_ID];
 
-      field.input().clear().type('5');
+      cy.inputType(field.input(), '5');
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);
     });
@@ -126,7 +126,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
       cy.navigateToUrl(url);
       const field = turnover[FIELD_ID];
 
-      field.input().clear().type('5,0');
+      cy.inputType(field.input(), '5,0');
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);
     });
@@ -137,7 +137,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
       cy.navigateToUrl(url);
       const field = turnover[FIELD_ID];
 
-      field.input().clear().type('0');
+      cy.inputType(field.input(), '0');
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);
     });

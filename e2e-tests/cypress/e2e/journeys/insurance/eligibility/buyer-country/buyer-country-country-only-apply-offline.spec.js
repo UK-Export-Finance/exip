@@ -12,7 +12,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     completeStartForm();
     completeCheckIfEligibleForm();
 
-    buyerCountryPage.searchInput().type(COUNTRY_NAME_APPLY_OFFLINE_ONLY);
+    cy.inputType(buyerCountryPage.searchInput(), COUNTRY_NAME_APPLY_OFFLINE_ONLY);
 
     const results = buyerCountryPage.results();
     results.first().click();
