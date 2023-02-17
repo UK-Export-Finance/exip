@@ -48,16 +48,17 @@ describe('custom-resolvers/account-sign-in', () => {
   };
 
   beforeAll(async () => {
-    exporter = await createAccount({}, { data: variables }, context);
+    exporter = await createAccount({}, variables, context);
   });
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  // beforeEach(() => {
+  //   jest.clearAllMocks();
+  // });
 
   describe('when the provided password is valid', () => {
     beforeEach(async () => {
       await accountSignIn({}, variables, context);
+      jest.clearAllMocks();
     });
 
     test('it should generate an OTP and save to the account', async () => {
