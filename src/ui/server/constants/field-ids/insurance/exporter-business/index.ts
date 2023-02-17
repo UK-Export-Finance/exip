@@ -39,9 +39,9 @@ const EXPORTER_BUSINESS = {
   BROKER: {
     HEADING: 'broker',
     USING_BROKER: 'isUsingBroker',
-    NAME: 'brokerName',
-    ADDRESS_LINE_1: 'addressLineOne',
-    ADDRESS_LINE_2: 'addressLineTwo',
+    NAME: 'name',
+    ADDRESS_LINE_1: 'addressLine1',
+    ADDRESS_LINE_2: 'addressLine2',
     TOWN: 'town',
     COUNTY: 'county',
     POSTCODE: 'postcode',

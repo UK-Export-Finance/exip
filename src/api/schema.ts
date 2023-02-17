@@ -34,6 +34,7 @@ export const lists = {
       policyAndExport: relationship({ ref: 'PolicyAndExport' }),
       exporterBusiness: relationship({ ref: 'ExporterBusiness' }),
       exporterCompany: relationship({ ref: 'ExporterCompany' }),
+      exporterBroker: relationship({ ref: 'ExporterBroker' }),
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -106,6 +107,17 @@ export const lists = {
               },
             };
 
+            // generate and attach a new 'exporter broker' relationship
+            const { id: exporterBrokerId } = await context.db.ExporterBroker.createOne({
+              data: {},
+            });
+
+            modifiedData.exporterBroker = {
+              connect: {
+                id: exporterBrokerId,
+              },
+            };
+
             // add dates
             const now = new Date();
             modifiedData.createdAt = now;
@@ -132,7 +144,7 @@ export const lists = {
 
             const applicationId = item.id;
 
-            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -185,6 +197,18 @@ export const lists = {
             // add the application ID to the exporter business entry.
             await context.db.ExporterBusiness.updateOne({
               where: { id: exporterBusinessId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId,
+                  },
+                },
+              },
+            });
+
+            // add the application ID to the exporter broker entry.
+            await context.db.ExporterBroker.updateOne({
+              where: { id: exporterBrokerId },
               data: {
                 application: {
                   connect: {
@@ -299,6 +323,26 @@ export const lists = {
       totalEmployeesInternational: integer(),
       estimatedAnnualTurnover: integer(),
       exportsTurnoverPercentage: integer(),
+    },
+    access: allowAll,
+  }),
+  ExporterBroker: list({
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      isUsingBroker: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+        db: { isNullable: true },
+      }),
+      name: text(),
+      addressLine1: text(),
+      addressLine2: text(),
+      town: text(),
+      county: text(),
+      postcode: text(),
+      email: text(),
     },
     access: allowAll,
   }),

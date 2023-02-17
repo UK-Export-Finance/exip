@@ -3,4 +3,5 @@ export const ACCOUNT = {
   LAST_NAME: 'lastName',
   EMAIL: 'email',
   PASSWORD: 'password',
+  SECURITY_CODE: 'securityCode',
 };

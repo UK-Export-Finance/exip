@@ -12,12 +12,11 @@
   {% set application = params.application %}
   {% set submittedValues = params.submittedValues %}
 
-
   {{ addressFieldInput.render({
     id: ADDRESS_LINE_ONE_FIELD.ID,
     label: ADDRESS_LINE_ONE_FIELD.LABEL,
     submittedValues: submittedValues,
-    application: application.exporterBusiness,
+    application: application,
     validationErrors: validationErrors
   }) }}
 
@@ -25,7 +24,7 @@
     id: ADDRESS_LINE_TWO_FIELD.ID,
     label: ADDRESS_LINE_TWO_FIELD.LABEL,
     submittedValues: submittedValues,
-    application: application.exporterBusiness,
+    application: application,
     validationErrors: validationErrors
   }) }}
 
@@ -33,7 +32,7 @@
     id: TOWN_FIELD.ID,
     label: TOWN_FIELD.LABEL,
     submittedValues: submittedValues,
-    application: application.exporterBusiness,
+    application: application,
     validationErrors: validationErrors
   }) }}
 
@@ -41,7 +40,7 @@
     id: COUNTY_FIELD.ID,
     label: COUNTY_FIELD.LABEL,
     submittedValues: submittedValues,
-    application: application.exporterBusiness,
+    application: application,
     validationErrors: validationErrors
   }) }}
 
@@ -49,7 +48,7 @@
     id: POSTCODE_FIELD.ID,
     label: POSTCODE_FIELD.LABEL,
     submittedValues: submittedValues,
-    application: application.exporterBusiness,
+    application: application,
     validationErrors: validationErrors
   }) }}
 
