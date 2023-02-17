@@ -18,11 +18,9 @@ const {
  * @returns {Object} Page variables
  */
 export const PAGE_VARIABLES = {
-  FIELDS: {
-    SECURITY_CODE: {
-      ID: SECURITY_CODE,
-      ...FIELDS[SECURITY_CODE],
-    },
+  FIELD: {
+    ID: SECURITY_CODE,
+    ...FIELDS[SECURITY_CODE],
   },
 };
 
