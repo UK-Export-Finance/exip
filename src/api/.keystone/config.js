@@ -69,7 +69,7 @@ var ACCOUNT = {
       return tomorrow;
     }
   },
-  PASSWORD: {
+  ENCRYPTION: {
     RANDOM_BYTES_SIZE: 32,
     STRING_TYPE: "hex",
     PBKDF2: {
@@ -559,12 +559,12 @@ var import_dotenv2 = __toESM(require("dotenv"));
 
 // custom-resolvers/create-account.ts
 var import_crypto = __toESM(require("crypto"));
-var { EMAIL, PASSWORD } = ACCOUNT;
+var { EMAIL, ENCRYPTION } = ACCOUNT;
 var {
   RANDOM_BYTES_SIZE,
   STRING_TYPE,
   PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM }
-} = PASSWORD;
+} = ENCRYPTION;
 var createAccount = async (root, variables, context) => {
   console.info("Creating new exporter account for ", variables.data.email);
   try {
@@ -685,11 +685,11 @@ var send_email_confirm_email_address_default = sendEmailConfirmEmailAddress;
 
 // helpers/is-valid-account-password.ts
 var import_crypto2 = __toESM(require("crypto"));
-var { PASSWORD: PASSWORD2 } = ACCOUNT;
+var { ENCRYPTION: ENCRYPTION2 } = ACCOUNT;
 var {
   STRING_TYPE: STRING_TYPE2,
   PBKDF2: { ITERATIONS: ITERATIONS2, KEY_LENGTH: KEY_LENGTH2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 }
-} = PASSWORD2;
+} = ENCRYPTION2;
 var isValidAccountPassword = (password2, salt, hash) => {
   console.info("Validating exporter account password");
   const hashVerify = import_crypto2.default.pbkdf2Sync(password2, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
@@ -705,12 +705,12 @@ var is_valid_account_password_default = isValidAccountPassword;
 // helpers/generate-otp.ts
 var import_crypto3 = __toESM(require("crypto"));
 var import_otplib = require("otplib");
-var { PASSWORD: PASSWORD3, OTP } = ACCOUNT;
+var { ENCRYPTION: ENCRYPTION3, OTP } = ACCOUNT;
 var {
   RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
   STRING_TYPE: STRING_TYPE3,
   PBKDF2: { ITERATIONS: ITERATIONS3, KEY_LENGTH: KEY_LENGTH3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 }
-} = PASSWORD3;
+} = ENCRYPTION3;
 var generateOtp = () => {
   try {
     console.info("Generating OTP");
@@ -752,7 +752,7 @@ var accountSignIn = async (root, variables, context) => {
         otpHash: hash,
         otpExpiry: expiry
       };
-      const updated = await context.db.Exporter.updateOne({
+      await context.db.Exporter.updateOne({
         where: { id: exporter.id },
         data: accountUpdate
       });
