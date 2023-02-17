@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.13](https://github.com/UK-Export-Finance/exip/compare/v1.14.12...v1.14.13) (2023-02-17)
+
+
+### Bug Fixes
+
+* **cookie:** Docker image update + Cookie security ([a829229](https://github.com/UK-Export-Finance/exip/commit/a829229e92e77e28aa1d4d9b63beee1773eea5e4))
+
 ## [1.14.12](https://github.com/UK-Export-Finance/exip/compare/v1.14.11...v1.14.12) (2023-02-06)
 
 
