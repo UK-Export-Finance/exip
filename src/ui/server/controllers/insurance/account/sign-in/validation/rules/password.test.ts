@@ -1,7 +1,7 @@
 import passwordRules from './password';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/account';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import passwordValidation from '../../../../../../shared-validation/password';
+import emailAndPasswordValidation from '../../../../../../shared-validation/email-and-password';
 
 const { PASSWORD: FIELD_ID } = FIELD_IDS;
 
@@ -21,7 +21,7 @@ describe('controllers/insurance/account/sign-in/validation/rules/password', () =
     const mockFormBody = {};
     const result = passwordRules(mockFormBody, mockErrors);
 
-    const expected = passwordValidation(FIELD_ID, mockFormBody[FIELD_ID], ERROR_MESSAGE.INCORRECT, mockErrors);
+    const expected = emailAndPasswordValidation(mockFormBody, FIELD_ID, ERROR_MESSAGE.INCORRECT, mockErrors);
 
     expect(result).toEqual(expected);
   });

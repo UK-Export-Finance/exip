@@ -66,11 +66,23 @@ interface ApplicationExporterBusiness {
   totalEmployeesInternational?: string;
 }
 
+interface ApplicationExporterBroker {
+  id: string;
+  isUsingBroker?: boolean;
+  name?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  town?: string;
+  county?: string;
+  postcode?: string;
+  email?: string;
+}
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;
   exporterBusiness: ApplicationExporterBusiness;
+  exporterBroker: ApplicationExporterBroker;
 }
 
 interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, ApplicationPolicyAndExport, ApplicationExporterCompany {

@@ -15,7 +15,10 @@ describe('controllers/insurance/policy-and-export/type-of-policy/validation', ()
 
       const result = validation(mockBody);
 
-      const expected = generateValidationErrors(POLICY_AND_EXPORTS.SINGLE_POLICY_TYPE, ERROR_MESSAGES.INSURANCE.POLICY_AND_EXPORTS[FIELD_ID].IS_EMPTY);
+      const expected = generateValidationErrors(
+        POLICY_AND_EXPORTS.SINGLE_POLICY_TYPE,
+        ERROR_MESSAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY[FIELD_ID].IS_EMPTY,
+      );
 
       expect(result).toEqual(expected);
     });

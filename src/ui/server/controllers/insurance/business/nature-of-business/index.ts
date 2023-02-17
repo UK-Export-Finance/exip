@@ -71,8 +71,8 @@ const get = (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
       ...pageVariables(application.referenceNumber),
     });
-  } catch (error) {
-    console.error('Error getting nature of business', { error });
+  } catch (err) {
+    console.error('Error getting nature of business', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };

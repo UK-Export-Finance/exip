@@ -8,6 +8,7 @@ const {
     YOUR_COMPANY: { PHONE_NUMBER },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+    BROKER: { ADDRESS_LINE_1, ADDRESS_LINE_2, POSTCODE, NAME: BROKER_NAME },
   },
   POLICY_AND_EXPORTS: {
     CONTRACT_POLICY: {
@@ -42,7 +43,17 @@ describe('server/helpers/sanitise-data', () => {
 
   describe('STRING_NUMBER_FIELDS', () => {
     it('should return an explicit array of field IDs that are string fields that could have a pure number value', () => {
-      const expected = [CREDIT_PERIOD_WITH_BUYER, DESCRIPTION, COMPANY_NUMBER, PHONE_NUMBER, GOODS_OR_SERVICES];
+      const expected = [
+        CREDIT_PERIOD_WITH_BUYER,
+        DESCRIPTION,
+        COMPANY_NUMBER,
+        PHONE_NUMBER,
+        GOODS_OR_SERVICES,
+        ADDRESS_LINE_1,
+        ADDRESS_LINE_2,
+        POSTCODE,
+        BROKER_NAME,
+      ];
 
       expect(STRING_NUMBER_FIELDS).toEqual(expected);
     });

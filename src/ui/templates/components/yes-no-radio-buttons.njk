@@ -17,10 +17,10 @@
     {% set headerClass = 'govuk-heading-l' %}
   {% endif %}
 
-  {% if params.datacyHeading %}
-    {% set datacyHeading = params.datacyHeading %}
+  {% if params.dataCyHeading %}
+    {% set dataCyHeading = params.dataCyHeading %}
   {% else %}
-    {% set datacyHeading = 'heading' %}
+    {% set dataCyHeading = 'heading' %}
   {% endif %}
 
   {% set yesValue = true %}
@@ -41,7 +41,7 @@
     name: fieldId,
     fieldset: {
       legend: {
-        html: "<h1 class=" + headerClass + " id='heading' data-cy='" + datacyHeading + "'>" + heading + "</h1>"
+        html: "<h1 class=" + headerClass + " id='heading' data-cy='" + dataCyHeading + "'>" + heading + "</h1>"
       }
     },
     hint: {

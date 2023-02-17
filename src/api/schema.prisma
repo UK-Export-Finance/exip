@@ -35,9 +35,12 @@ model Application {
   exporterBusinessId                String?            @map("exporterBusiness")
   exporterCompany                   ExporterCompany?   @relation("Application_exporterCompany", fields: [exporterCompanyId], references: [id])
   exporterCompanyId                 String?            @map("exporterCompany")
+  exporterBroker                    ExporterBroker?    @relation("Application_exporterBroker", fields: [exporterBrokerId], references: [id])
+  exporterBrokerId                  String?            @map("exporterBroker")
   from_ReferenceNumber_application  ReferenceNumber[]  @relation("ReferenceNumber_application")
   from_PolicyAndExport_application  PolicyAndExport[]  @relation("PolicyAndExport_application")
   from_ExporterBusiness_application ExporterBusiness[] @relation("ExporterBusiness_application")
+  from_ExporterBroker_application   ExporterBroker[]   @relation("ExporterBroker_application")
   from_ExporterCompany_application  ExporterCompany[]  @relation("ExporterCompany_application")
   from_Eligibility_application      Eligibility[]      @relation("Eligibility_application")
 
@@ -46,6 +49,7 @@ model Application {
   @@index([policyAndExportId])
   @@index([exporterBusinessId])
   @@index([exporterCompanyId])
+  @@index([exporterBrokerId])
 }
 
 model PolicyAndExport {
@@ -96,6 +100,23 @@ model ExporterBusiness {
   estimatedAnnualTurnover           Int?
   exportsTurnoverPercentage         Int?
   from_Application_exporterBusiness Application[] @relation("Application_exporterBusiness")
+
+  @@index([applicationId])
+}
+
+model ExporterBroker {
+  id                              String        @id @default(cuid())
+  application                     Application?  @relation("ExporterBroker_application", fields: [applicationId], references: [id])
+  applicationId                   String?       @map("application")
+  isUsingBroker                   String?
+  name                            String        @default("")
+  addressLine1                    String        @default("")
+  addressLine2                    String        @default("")
+  town                            String        @default("")
+  county                          String        @default("")
+  postcode                        String        @default("")
+  email                           String        @default("")
+  from_Application_exporterBroker Application[] @relation("Application_exporterBroker")
 
   @@index([applicationId])
 }

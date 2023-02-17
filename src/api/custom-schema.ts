@@ -238,8 +238,8 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
               ...mappedResponse,
               success: true,
             };
-          } catch (error) {
-            console.error('Error calling Companies House API', { error });
+          } catch (err) {
+            console.error('Error calling Companies House API', { err });
             return {
               apiError: true,
               success: false,

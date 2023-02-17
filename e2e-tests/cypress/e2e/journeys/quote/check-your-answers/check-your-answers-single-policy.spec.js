@@ -37,7 +37,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
 
   before(() => {
     cy.login();
-    cy.submitAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy();
     cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
   });
 

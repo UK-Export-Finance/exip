@@ -14,9 +14,8 @@ Cypress.Commands.add('login', require('./login'));
 Cypress.Commands.add('checkPhaseBanner', require('./check-phase-banner'));
 Cypress.Commands.add('navigateToUrl', require('./navigate-to-url'));
 
-// TODO: rename
-Cypress.Commands.add('submitAnswersHappyPathSinglePolicy', require('./quote/submit-answers-happy-path-single-policy'));
-Cypress.Commands.add('submitAnswersHappyPathMultiPolicy', require('./quote/submit-answers-happy-path-multi-policy'));
+Cypress.Commands.add('submitQuoteAnswersHappyPathSinglePolicy', require('./quote/submit-answers-happy-path-single-policy'));
+Cypress.Commands.add('submitQuoteAnswersHappyPathMultiplePolicy', require('./quote/submit-answers-happy-path-multiple-policy'));
 
 Cypress.Commands.add('corePageChecks', require('./core-page-checks'));
 
@@ -41,7 +40,7 @@ Cypress.Commands.add('submitEligibilityAndStartAccountCreation', require('./insu
 Cypress.Commands.add('submitEligibilityAndStartAccountSignIn', require('./insurance/submit-eligibility-and-start-account-sign-in'));
 
 Cypress.Commands.add('completeAndSubmitCreateAccountForm', require('./insurance/account/complete-and-submit-create-account-form'));
-Cypress.Commands.add('completeAndSubmitSignInAccountForm', require('./insurance/account/complete-and-submit-sign-in-form'));
+Cypress.Commands.add('completeAndSubmitSignInAccountForm', require('./insurance/account/complete-and-submit-sign-in-account-form'));
 
 Cypress.Commands.add('completeAndSubmitPolicyTypeForm', require('./insurance/complete-and-submit-policy-type-form'));
 Cypress.Commands.add('completeAndSubmitSingleContractPolicyForm', require('./insurance/complete-and-submit-single-contract-policy-form'));
@@ -53,6 +52,7 @@ Cypress.Commands.add('completeAndSubmitCompanyDetails', require('./insurance/com
 
 Cypress.Commands.add('completeAndSubmitNatureOfYourBusiness', require('./insurance/complete-and-submit-nature-of-your-business'));
 Cypress.Commands.add('completeAndSubmitTurnoverForm', require('./insurance/complete-and-submit-turnover-form'));
+Cypress.Commands.add('completeAndSubmitBrokerForm', require('./insurance/complete-and-submit-broker-form'));
 
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));
@@ -63,6 +63,7 @@ Cypress.Commands.add('assertPasswordRevealButton', require('./insurance/account/
 Cypress.Commands.add('assertConfirmEmailPageContent', require('./insurance/account/assert-confirm-email-page-content'));
 
 Cypress.Commands.add('checkText', require('./check-text'));
+Cypress.Commands.add('checkValue', require('./check-value'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
 Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));
 Cypress.Commands.add('checkLink', require('./check-link'));
