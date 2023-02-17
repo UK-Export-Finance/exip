@@ -84,7 +84,7 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
 
     describe('when submitting with a supported country', () => {
       beforeEach(() => {
-        cy.inputType(buyerCountryPage.searchInput(), 'Algeria');
+        cy.keyboardInput(buyerCountryPage.searchInput(), 'Algeria');
 
         const results = buyerCountryPage.results();
         results.first().click();

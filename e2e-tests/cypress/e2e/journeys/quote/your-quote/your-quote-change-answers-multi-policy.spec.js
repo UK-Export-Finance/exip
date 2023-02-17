@@ -47,7 +47,7 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.inputType(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '200');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '200');
       submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
@@ -125,7 +125,7 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.inputType(buyerCountryPage.searchInput(), 'Brazil');
+      cy.keyboardInput(buyerCountryPage.searchInput(), 'Brazil');
       const results = buyerCountryPage.results();
       results.first().click();
       submitButton().click();

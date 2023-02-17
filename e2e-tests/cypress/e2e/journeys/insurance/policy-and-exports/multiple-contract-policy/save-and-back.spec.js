@@ -78,7 +78,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
       submitButton().click();
 
-      cy.inputType(field.input(), invalidValue);
+      cy.keyboardInput(field.input(), invalidValue);
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -109,7 +109,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
     const field = multipleContractPolicyPage[TOTAL_SALES_TO_BUYER];
 
     before(() => {
-      cy.inputType(field.input(), application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
+      cy.keyboardInput(field.input(), application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
 
       saveAndBackButton().click();
     });
@@ -141,7 +141,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
 
     before(() => {
       // submit a value
-      cy.inputType(field.input(), 'Test');
+      cy.keyboardInput(field.input(), 'Test');
       saveAndBackButton().click();
 
       // go back to the page

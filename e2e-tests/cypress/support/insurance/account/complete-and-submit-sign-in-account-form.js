@@ -11,8 +11,8 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 export default () => {
-  cy.inputType(accountFormFields[EMAIL].input(), account[EMAIL]);
-  cy.inputType(accountFormFields[PASSWORD].input(), account[PASSWORD]);
+  cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
+  cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
 
   submitButton().click();
 };

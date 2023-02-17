@@ -80,7 +80,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
     describe('when submitting with a supported country', () => {
       it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, () => {
-        cy.inputType(buyerCountryPage.searchInput(), 'Algeria');
+        cy.keyboardInput(buyerCountryPage.searchInput(), 'Algeria');
 
         const results = buyerCountryPage.results();
         results.first().click();

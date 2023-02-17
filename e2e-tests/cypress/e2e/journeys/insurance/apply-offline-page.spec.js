@@ -16,7 +16,7 @@ context('Insurance - apply offline exit page', () => {
     completeStartForm();
     completeCheckIfEligibleForm();
 
-    cy.inputType(buyerCountryPage.searchInput(), COUNTRY_NAME_APPLY_OFFLINE_ONLY);
+    cy.keyboardInput(buyerCountryPage.searchInput(), COUNTRY_NAME_APPLY_OFFLINE_ONLY);
 
     const results = buyerCountryPage.results();
     results.first().click();

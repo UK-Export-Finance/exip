@@ -83,7 +83,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = GOODS_OR_SERVICES;
         const field = natureOfBusiness[fieldId];
 
-        cy.inputType(field.input(), 'a'.repeat(MAXIMUM + 1));
+        cy.keyboardInput(field.input(), 'a'.repeat(MAXIMUM + 1));
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 4);
         cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
@@ -105,7 +105,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       const fieldId = GOODS_OR_SERVICES;
       const field = natureOfBusiness[fieldId];
 
-      cy.inputType(field.input(), 'test');
+      cy.keyboardInput(field.input(), 'test');
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 3);
     });

@@ -57,7 +57,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when resubmitting a new answer`, () => {
-      cy.inputType(buyerCountryPage.searchInput(), 'Brazil');
+      cy.keyboardInput(buyerCountryPage.searchInput(), 'Brazil');
       const results = buyerCountryPage.results();
       results.first().click();
       submitButton().click();

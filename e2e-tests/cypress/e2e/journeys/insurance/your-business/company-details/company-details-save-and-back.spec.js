@@ -76,7 +76,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list', () => {
       cy.navigateToUrl(url);
 
-      cy.inputType(companyDetails.companiesHouseSearch(), '**/*');
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), '**/*');
       companyDetails.tradingNameYesRadioInput().click();
       companyDetails.tradingAddressYesRadioInput().click();
       saveAndBackButton().click();
@@ -98,10 +98,10 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list', () => {
       cy.navigateToUrl(url);
 
-      cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.tradingNameYesRadioInput().click();
       companyDetails.tradingAddressYesRadioInput().click();
-      cy.inputType(companyDetails.phoneNumber(), INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR);
+      cy.keyboardInput(companyDetails.phoneNumber(), INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR);
       saveAndBackButton().click();
 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
@@ -122,11 +122,11 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list', () => {
       cy.navigateToUrl(url);
 
-      cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.tradingNameYesRadioInput().click();
       companyDetails.tradingAddressYesRadioInput().click();
-      cy.inputType(companyDetails.phoneNumber(), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
-      cy.inputType(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.INVALID);
+      cy.keyboardInput(companyDetails.phoneNumber(), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+      cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.INVALID);
       saveAndBackButton().click();
 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
@@ -148,11 +148,11 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list if all fields are entered correctly', () => {
       cy.navigateToUrl(url);
 
-      cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.tradingNameYesRadioInput().click();
       companyDetails.tradingAddressYesRadioInput().click();
-      cy.inputType(companyDetails.phoneNumber(), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
-      cy.inputType(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
+      cy.keyboardInput(companyDetails.phoneNumber(), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+      cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
       saveAndBackButton().click();
 
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);

@@ -87,7 +87,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   describe('when maximum buyer will owe is not a number', () => {
     it('should render a validation error', () => {
-      cy.inputType(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), 'ten!');
+      cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), 'ten!');
       submitButton().click();
 
       cy.checkText(
@@ -104,7 +104,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   describe('when maximum buyer will owe contains a decimal', () => {
     it('should render a validation error', () => {
-      cy.inputType(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1.2');
+      cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1.2');
       submitButton().click();
 
       cy.checkText(
@@ -121,7 +121,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   describe('when maximum buyer will owe contains a comma and decimal', () => {
     it('should render a validation error', () => {
-      cy.inputType(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234.56');
+      cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234.56');
       submitButton().click();
 
       cy.checkText(
@@ -138,7 +138,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   describe('when maximum buyer will owe is below the minimum', () => {
     it('should render a validation error', () => {
-      cy.inputType(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '0');
+      cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '0');
       submitButton().click();
 
       cy.checkText(
@@ -157,7 +157,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     it('should render a validation error', () => {
       const MAXIMUM = APPLICATION.POLICY_AND_EXPORT.MAXIMUM_BUYER_CAN_OWE;
 
-      cy.inputType(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), MAXIMUM + 1);
+      cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), MAXIMUM + 1);
       submitButton().click();
 
       cy.checkText(
@@ -177,7 +177,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
       cy.completeAndSubmitMultipleContractPolicyForm();
       partials.backLink().click();
 
-      cy.inputType(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234');
+      cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234');
       submitButton().click();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;

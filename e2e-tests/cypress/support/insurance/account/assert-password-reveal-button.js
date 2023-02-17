@@ -24,7 +24,7 @@ const shouldRender = () => {
 const afterClick = {
   changesInputType: () => {
     field.input().should('have.attr', 'type', 'password');
-    cy.inputType(field.input(), 'Mock');
+    cy.keyboardInput(field.input(), 'Mock');
 
     field.revealButton().click();
 
@@ -51,7 +51,7 @@ const afterSecondClick = {
 export default () => {
   shouldRender();
 
-  afterClick.changesInputType();
+  afterClick.changeskeyboardInput();
 
-  afterSecondClick.changesInputType();
+  afterSecondClick.changeskeyboardInput();
 };

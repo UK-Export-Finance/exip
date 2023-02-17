@@ -80,7 +80,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
       broker[USING_BROKER].yesRadioInput().click();
 
-      cy.inputType(broker[NAME].input(), application.EXPORTER_BROKER[NAME]);
+      cy.keyboardInput(broker[NAME].input(), application.EXPORTER_BROKER[NAME]);
 
       saveAndBackButton().click();
 
@@ -116,13 +116,13 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     describe(`when selecting yes for ${USING_BROKER}`, () => {
       it(`should redirect to ${ALL_SECTIONS}`, () => {
         broker[USING_BROKER].yesRadioInput().click();
-        cy.inputType(broker[NAME].input(), application.EXPORTER_BROKER[NAME]);
-        cy.inputType(broker[ADDRESS_LINE_1].input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
-        cy.inputType(broker[ADDRESS_LINE_2].input(), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
-        cy.inputType(broker[TOWN].input(), application.EXPORTER_BROKER[TOWN]);
-        cy.inputType(broker[COUNTY].input(), application.EXPORTER_BROKER[COUNTY]);
-        cy.inputType(broker[EMAIL].input(), application.EXPORTER_BROKER[EMAIL]);
-        cy.inputType(broker[POSTCODE].input(), application.EXPORTER_BROKER[POSTCODE]);
+        cy.keyboardInput(broker[NAME].input(), application.EXPORTER_BROKER[NAME]);
+        cy.keyboardInput(broker[ADDRESS_LINE_1].input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
+        cy.keyboardInput(broker[ADDRESS_LINE_2].input(), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
+        cy.keyboardInput(broker[TOWN].input(), application.EXPORTER_BROKER[TOWN]);
+        cy.keyboardInput(broker[COUNTY].input(), application.EXPORTER_BROKER[COUNTY]);
+        cy.keyboardInput(broker[EMAIL].input(), application.EXPORTER_BROKER[EMAIL]);
+        cy.keyboardInput(broker[POSTCODE].input(), application.EXPORTER_BROKER[POSTCODE]);
 
         saveAndBackButton().click();
 

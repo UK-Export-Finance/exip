@@ -231,7 +231,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
       const submittedValue = '1234';
 
       before(() => {
-        cy.inputType(creditPeriodField.input(), submittedValue);
+        cy.keyboardInput(creditPeriodField.input(), submittedValue);
         submitButton().click();
       });
 

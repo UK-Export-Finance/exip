@@ -70,7 +70,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.inputType(turnover[ESTIMATED_ANNUAL_TURNOVER].input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      cy.keyboardInput(turnover[ESTIMATED_ANNUAL_TURNOVER].input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
 
       saveAndBackButton().click();
 
@@ -96,8 +96,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
   describe('When all fields are provided', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.inputType(turnover[ESTIMATED_ANNUAL_TURNOVER].input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
-      cy.inputType(turnover[PERCENTAGE_TURNOVER].input(), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
+      cy.keyboardInput(turnover[ESTIMATED_ANNUAL_TURNOVER].input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      cy.keyboardInput(turnover[PERCENTAGE_TURNOVER].input(), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
 
       saveAndBackButton().click();
 

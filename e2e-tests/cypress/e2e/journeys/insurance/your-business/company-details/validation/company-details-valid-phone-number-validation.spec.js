@@ -17,11 +17,11 @@ let url;
 let natureOfBusinessUrl;
 
 const completeAllFields = (phoneNumber) => {
-  cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+  cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
   companyDetails.tradingNameYesRadioInput().click();
   companyDetails.tradingAddressYesRadioInput().click();
-  cy.inputType(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
-  cy.inputType(companyDetails.phoneNumber(), phoneNumber);
+  cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
+  cy.keyboardInput(companyDetails.phoneNumber(), phoneNumber);
   submitButton().click();
 };
 
@@ -51,10 +51,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe(`when ${PHONE_NUMBER} is left empty`, () => {
     it('should not display validation errors', () => {
-      cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.tradingNameYesRadioInput().click();
       companyDetails.tradingAddressYesRadioInput().click();
-      cy.inputType(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
+      cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
       companyDetails.phoneNumber().clear();
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 0);

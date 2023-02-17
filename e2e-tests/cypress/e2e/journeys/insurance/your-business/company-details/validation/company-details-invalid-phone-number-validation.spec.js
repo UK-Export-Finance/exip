@@ -18,11 +18,11 @@ const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const errorMessage = COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT;
 
 const completeAllFields = (phoneNumber) => {
-  cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+  cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
   companyDetails.tradingNameYesRadioInput().click();
   companyDetails.tradingAddressYesRadioInput().click();
-  cy.inputType(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
-  cy.inputType(companyDetails.phoneNumber(), phoneNumber);
+  cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
+  cy.keyboardInput(companyDetails.phoneNumber(), phoneNumber);
   submitButton().click();
 };
 

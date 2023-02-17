@@ -11,7 +11,7 @@ import partials from '../e2e/partials';
 export default (field, fieldValue, errorIndex, errorSummaryLength, errorMessage) => {
   // only type if a field value is provided
   if (fieldValue) {
-    cy.inputType(field.input(), fieldValue);
+    cy.keyboardInput(field.input(), fieldValue);
   } else {
     field.input().clear();
   }

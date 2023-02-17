@@ -68,8 +68,8 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe('when day is not provided', () => {
     it('should render a validation error', () => {
-      cy.inputType(field.monthInput(), '1');
-      cy.inputType(field.yearInput(), '2023');
+      cy.keyboardInput(field.monthInput(), '1');
+      cy.keyboardInput(field.yearInput(), '2023');
       submitButton().click();
 
       cy.checkText(
@@ -86,9 +86,9 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe('when month is not provided', () => {
     it('should render a validation error', () => {
-      cy.inputType(field.dayInput().clear(), '1');
+      cy.keyboardInput(field.dayInput().clear(), '1');
       field.monthInput().clear();
-      cy.inputType(field.yearInput(), '2023');
+      cy.keyboardInput(field.yearInput(), '2023');
       submitButton().click();
 
       cy.checkText(
@@ -105,7 +105,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe('when year is not provided', () => {
     it('should render a validation error', () => {
-      cy.inputType(field.dayInput(), '1');
+      cy.keyboardInput(field.dayInput(), '1');
       field.monthInput().clear('2');
       field.yearInput().clear();
       submitButton().click();
@@ -124,7 +124,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe('when day is not a number', () => {
     it('should render a validation error', () => {
-      cy.inputType(field.dayInput(), 'Test');
+      cy.keyboardInput(field.dayInput(), 'Test');
       submitButton().click();
 
       cy.checkText(
@@ -142,7 +142,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   describe('when month is not a number', () => {
     it('should render a validation error', () => {
       field.dayInput().clear();
-      cy.inputType(field.monthInput(), 'Test');
+      cy.keyboardInput(field.monthInput(), 'Test');
       submitButton().click();
 
       cy.checkText(
@@ -161,7 +161,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     it('should render a validation error', () => {
       field.dayInput().clear();
       field.monthInput().clear();
-      cy.inputType(field.yearInput(), 'Test');
+      cy.keyboardInput(field.yearInput(), 'Test');
       submitButton().click();
 
       cy.checkText(
@@ -181,9 +181,9 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       const date = new Date();
       const yesterday = sub(date, { days: 1 });
 
-      cy.inputType(field.dayInput(), getDate(yesterday));
-      cy.inputType(field.monthInput(), getMonth(add(yesterday, { months: 1 })));
-      cy.inputType(field.yearInput(), getYear(yesterday));
+      cy.keyboardInput(field.dayInput(), getDate(yesterday));
+      cy.keyboardInput(field.monthInput(), getMonth(add(yesterday, { months: 1 })));
+      cy.keyboardInput(field.yearInput(), getYear(yesterday));
       submitButton().click();
 
       cy.checkText(
@@ -203,9 +203,9 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       const date = new Date();
       const futureDate = add(date, { days: 1 });
 
-      cy.inputType(field.dayInput(), getDate(futureDate));
-      cy.inputType(field.monthInput(), '24');
-      cy.inputType(field.yearInput(), getYear(futureDate));
+      cy.keyboardInput(field.dayInput(), getDate(futureDate));
+      cy.keyboardInput(field.monthInput(), '24');
+      cy.keyboardInput(field.yearInput(), getYear(futureDate));
       submitButton().click();
 
       cy.checkText(
@@ -225,16 +225,16 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     const startDate = add(date, { months: 3 });
 
     beforeEach(() => {
-      cy.inputType(singleContractPolicyPage[REQUESTED_START_DATE].dayInput(), '2');
-      cy.inputType(singleContractPolicyPage[REQUESTED_START_DATE].monthInput(), getMonth(startDate));
-      cy.inputType(singleContractPolicyPage[REQUESTED_START_DATE].yearInput(), getYear(startDate));
+      cy.keyboardInput(singleContractPolicyPage[REQUESTED_START_DATE].dayInput(), '2');
+      cy.keyboardInput(singleContractPolicyPage[REQUESTED_START_DATE].monthInput(), getMonth(startDate));
+      cy.keyboardInput(singleContractPolicyPage[REQUESTED_START_DATE].yearInput(), getYear(startDate));
     });
 
     describe(`when the date is the same as ${REQUESTED_START_DATE}`, () => {
       it('should render a validation error', () => {
-        cy.inputType(field.dayInput(), '2');
-        cy.inputType(field.monthInput(), getMonth(startDate));
-        cy.inputType(field.yearInput(), getYear(startDate));
+        cy.keyboardInput(field.dayInput(), '2');
+        cy.keyboardInput(field.monthInput(), getMonth(startDate));
+        cy.keyboardInput(field.yearInput(), getYear(startDate));
         submitButton().click();
 
         cy.checkText(
@@ -251,9 +251,9 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
     describe(`when the date is before the ${REQUESTED_START_DATE}`, () => {
       it('should render a validation error', () => {
-        cy.inputType(field.dayInput(), '1');
-        cy.inputType(field.monthInput(), getMonth(startDate));
-        cy.inputType(field.yearInput(), getYear(startDate));
+        cy.keyboardInput(field.dayInput(), '1');
+        cy.keyboardInput(field.monthInput(), getMonth(startDate));
+        cy.keyboardInput(field.yearInput(), getYear(startDate));
         submitButton().click();
 
         cy.checkText(
@@ -272,9 +272,9 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       it('should render a validation error', () => {
         const endDate = add(new Date(startDate), { years: PRODUCT.MAX_COVER_PERIOD_YEARS });
 
-        cy.inputType(field.dayInput(), '3');
-        cy.inputType(field.monthInput(), getMonth(endDate));
-        cy.inputType(field.yearInput(), getYear(endDate));
+        cy.keyboardInput(field.dayInput(), '3');
+        cy.keyboardInput(field.monthInput(), getMonth(endDate));
+        cy.keyboardInput(field.yearInput(), getYear(endDate));
         submitButton().click();
 
         cy.checkText(

@@ -56,7 +56,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.inputType(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '1000');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '1000');
       submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
@@ -142,7 +142,7 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     it('renders the new answers in the quote', () => {
       // max amount owed and credit period fields are now required because it's a multiple policy
-      cy.inputType(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '120000');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '120000');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
       submitButton().click();
 
@@ -182,7 +182,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.inputType(buyerCountryPage.searchInput(), 'Bahrain');
+      cy.keyboardInput(buyerCountryPage.searchInput(), 'Bahrain');
       const results = buyerCountryPage.results();
       results.first().click();
       submitButton().click();
@@ -223,7 +223,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.inputType(buyerCountryPage.searchInput(), 'Brazil');
+      cy.keyboardInput(buyerCountryPage.searchInput(), 'Brazil');
       const results = buyerCountryPage.results();
       results.first().click();
       submitButton().click();

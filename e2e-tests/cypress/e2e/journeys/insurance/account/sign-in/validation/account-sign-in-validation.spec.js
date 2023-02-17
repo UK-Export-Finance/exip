@@ -51,7 +51,7 @@ context('Insurance - Account - Sign in - Validation', () => {
 
   describe('when email is provided, but password is not', () => {
     it('should render a validation error for both fields', () => {
-      cy.inputType(accountFormFields[EMAIL].input(), account[EMAIL]);
+      cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
 
       submitButton().click();
 
@@ -62,7 +62,7 @@ context('Insurance - Account - Sign in - Validation', () => {
   describe('when password is provided, but email is not', () => {
     it('should render a validation error for both fields', () => {
       accountFormFields[EMAIL].input().clear();
-      cy.inputType(accountFormFields[PASSWORD].input(), account[PASSWORD]);
+      cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
 
       submitButton().click();
 
@@ -73,8 +73,8 @@ context('Insurance - Account - Sign in - Validation', () => {
   // TODO: EMS-870 - create an account and enable these tests
   // describe('when email does not match the created account, but password is correct', () => {
   //   it('should render a validation error for both fields', () => {
-  //     cy.inputType(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
-  //     cy.inputType(accountFormFields[PASSWORD].input(), account[PASSWORD]);
+  //     cy.keyboardInput(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
+  //     cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
 
   //     submitButton().click();
 
@@ -84,8 +84,8 @@ context('Insurance - Account - Sign in - Validation', () => {
 
   // describe('when password does not match the created account, but email is correct', () => {
   //   it('should render a validation error for both fields', () => {
-  //     cy.inputType(accountFormFields[EMAIL].input(), account[EMAIL]);
-  //     cy.inputType(accountFormFields[PASSWORD].input(), `incorrect-${account[PASSWORD]}`);
+  //     cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
+  //     cy.keyboardInput(accountFormFields[PASSWORD].input(), `incorrect-${account[PASSWORD]}`);
 
   //     submitButton().click();
 

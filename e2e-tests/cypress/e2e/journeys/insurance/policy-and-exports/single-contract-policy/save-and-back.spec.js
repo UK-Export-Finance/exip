@@ -88,9 +88,9 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
       // enter an invalid date
       const yesterday = sub(date, { days: 1 });
 
-      cy.inputType(field.dayInput(), getDate(yesterday));
-      cy.inputType(field.monthInput(), getMonth(yesterday));
-      cy.inputType(field.yearInput(), getYear(yesterday));
+      cy.keyboardInput(field.dayInput(), getDate(yesterday));
+      cy.keyboardInput(field.monthInput(), getMonth(yesterday));
+      cy.keyboardInput(field.yearInput(), getYear(yesterday));
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -123,9 +123,9 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     const field = singleContractPolicyPage[REQUESTED_START_DATE];
 
     before(() => {
-      cy.inputType(field.dayInput(), '1');
-      cy.inputType(field.monthInput(), getMonth(futureDate));
-      cy.inputType(field.yearInput(), getYear(futureDate));
+      cy.keyboardInput(field.dayInput(), '1');
+      cy.keyboardInput(field.monthInput(), getMonth(futureDate));
+      cy.keyboardInput(field.yearInput(), getYear(futureDate));
 
       saveAndBackButton().click();
     });
@@ -159,7 +159,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
 
     before(() => {
       // submit a value
-      cy.inputType(field.input(), 'Test');
+      cy.keyboardInput(field.input(), 'Test');
       saveAndBackButton().click();
 
       // go back to the page

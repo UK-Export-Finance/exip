@@ -14,7 +14,7 @@ context('Get a quote via email exit page', () => {
   beforeEach(() => {
     cy.login();
 
-    cy.inputType(buyerCountryPage.searchInput(), COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY);
+    cy.keyboardInput(buyerCountryPage.searchInput(), COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY);
 
     const results = buyerCountryPage.results();
     results.first().click();

@@ -68,4 +68,4 @@ Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
 Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));
 Cypress.Commands.add('checkLink', require('./check-link'));
 Cypress.Commands.add('getReferenceNumber', require('./get-reference-number'));
-Cypress.Commands.add('inputType', require('./input-type'));
+Cypress.Commands.add('keyboardInput', require('./keyboard-input'));

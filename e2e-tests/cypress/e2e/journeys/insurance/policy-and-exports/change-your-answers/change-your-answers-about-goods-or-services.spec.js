@@ -69,7 +69,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
       const newAnswer = `${application.POLICY_AND_EXPORTS[fieldId]} additional text`;
 
       before(() => {
-        cy.inputType(aboutGoodsOrServicesPage[fieldId].input(), newAnswer);
+        cy.keyboardInput(aboutGoodsOrServicesPage[fieldId].input(), newAnswer);
 
         submitButton().click();
       });

@@ -47,10 +47,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe(`${WEBSITE} error`, () => {
     describe('invalid website format', () => {
       it('should display validation errors', () => {
-        cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+        cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
         companyDetails.tradingNameYesRadioInput().click();
         companyDetails.tradingAddressYesRadioInput().click();
-        cy.inputType(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.INVALID);
+        cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.INVALID);
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 1);
 
@@ -69,10 +69,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     describe('website above 191 characters', () => {
       it('should display validation errors', () => {
-        cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+        cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
         companyDetails.tradingNameYesRadioInput().click();
         companyDetails.tradingAddressYesRadioInput().click();
-        cy.inputType(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH);
+        cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH);
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 1);
 
@@ -88,7 +88,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe(`when ${WEBSITE} is left empty`, () => {
     it('should not display validation errors', () => {
       cy.navigateToUrl(url);
-      cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.tradingNameYesRadioInput().click();
       companyDetails.tradingAddressYesRadioInput().click();
       companyDetails.companyWebsite().clear();
@@ -103,10 +103,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe(`when ${WEBSITE} is correctly entered`, () => {
     it('should not display validation errors', () => {
       cy.navigateToUrl(url);
-      cy.inputType(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.tradingNameYesRadioInput().click();
       companyDetails.tradingAddressYesRadioInput().click();
-      cy.inputType(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
+      cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
       submitButton().click();
     });
 

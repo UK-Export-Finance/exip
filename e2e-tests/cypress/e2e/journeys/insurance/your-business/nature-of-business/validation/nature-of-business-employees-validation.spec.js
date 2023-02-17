@@ -100,7 +100,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_UK;
         const field = natureOfBusiness[fieldId];
 
-        cy.inputType(field.input(), '0');
+        cy.keyboardInput(field.input(), '0');
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 3);
       });
@@ -113,7 +113,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_UK;
         const field = natureOfBusiness[fieldId];
 
-        cy.inputType(field.input(), '5');
+        cy.keyboardInput(field.input(), '5');
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 3);
       });
@@ -126,7 +126,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_UK;
         const field = natureOfBusiness[fieldId];
 
-        cy.inputType(field.input(), '5,000');
+        cy.keyboardInput(field.input(), '5,000');
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 3);
       });
@@ -206,7 +206,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_INTERNATIONAL;
         const field = natureOfBusiness[fieldId];
 
-        cy.inputType(natureOfBusiness[EMPLOYEES_UK].input(), '20');
+        cy.keyboardInput(natureOfBusiness[EMPLOYEES_UK].input(), '20');
         const value = '10';
 
         cy.submitAndAssertFieldErrors(field, value, 2, 3, errorMessage);
@@ -220,7 +220,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_INTERNATIONAL;
         const field = natureOfBusiness[fieldId];
 
-        cy.inputType(field.input(), '5');
+        cy.keyboardInput(field.input(), '5');
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 3);
       });
@@ -233,7 +233,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const fieldId = EMPLOYEES_INTERNATIONAL;
         const field = natureOfBusiness[fieldId];
 
-        cy.inputType(field.input(), '5,000,000');
+        cy.keyboardInput(field.input(), '5,000,000');
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 3);
       });

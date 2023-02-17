@@ -215,7 +215,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       const submittedValue = '1234';
 
       before(() => {
-        cy.inputType(creditPeriodField.input(), submittedValue);
+        cy.keyboardInput(creditPeriodField.input(), submittedValue);
         submitButton().click();
       });
 

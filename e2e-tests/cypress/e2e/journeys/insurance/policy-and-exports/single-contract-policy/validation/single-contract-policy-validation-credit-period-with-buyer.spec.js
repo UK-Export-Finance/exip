@@ -73,7 +73,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     const submittedValue = 'a'.repeat(1001);
 
     before(() => {
-      cy.inputType(field.input(), submittedValue);
+      cy.keyboardInput(field.input(), submittedValue);
       submitButton().click();
     });
 
