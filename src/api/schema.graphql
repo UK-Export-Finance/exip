@@ -1137,7 +1137,7 @@ type Mutation {
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
 
   """ create an account """
-  createAccount(data: AccountInput!): Account
+  createAccount(firstName: String!, lastName: String!, email: String!, password: String!): Account
 
   """ verify an an account's email address """
   verifyAccountEmailAddress(token: String!): EmailResponse

@@ -118,7 +118,10 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       type Mutation {
         """ create an account """
         createAccount(
-          data: AccountInput!
+          firstName: String!
+          lastName: String!
+          email: String!
+          password: String!
         ): Account
         """ verify an an account's email address """
         verifyAccountEmailAddress(

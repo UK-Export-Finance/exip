@@ -31,12 +31,12 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     }
 
     if (isValidAccountPassword(password, exporter.salt, exporter.hash)) {
-      // generate OTP
+      // generate OTP.
       const otp = generate.otp();
 
       const { securityCode, salt, hash, expiry } = otp;
 
-      // update the account
+      // update the account.
       const accountUpdate = {
         otpSalt: salt,
         otpHash: hash,

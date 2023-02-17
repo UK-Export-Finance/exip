@@ -199,7 +199,7 @@ var lists = {
       resolveInput: async ({ operation, resolvedData, context }) => {
         if (operation === "create") {
           try {
-            console.info("Adding default data to a new application");
+            console.info("Creating new application - adding default data to a new application");
             const modifiedData = resolvedData;
             const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
               data: {}
@@ -393,6 +393,7 @@ var lists = {
       resolveInput: async ({ operation, resolvedData }) => {
         const accountInputData = resolvedData;
         if (operation === "create") {
+          console.info("Creating new exporter account");
           const now = new Date();
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
@@ -408,6 +409,7 @@ var lists = {
           }
         }
         if (operation === "update") {
+          console.info("Updating exporter account");
           accountInputData.updatedAt = new Date();
         }
         return accountInputData;
@@ -605,9 +607,9 @@ var {
   PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM }
 } = ENCRYPTION;
 var createAccount = async (root, variables, context) => {
-  console.info("Creating new exporter account for ", variables.data.email);
+  console.info("Creating new exporter account for ", variables.email);
   try {
-    const { firstName, lastName, email, password: password2 } = variables.data;
+    const { firstName, lastName, email, password: password2 } = variables;
     const salt = import_crypto.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
     const passwordHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
     const verificationHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
@@ -973,7 +975,10 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       type Mutation {
         """ create an account """
         createAccount(
-          data: AccountInput!
+          firstName: String!
+          lastName: String!
+          email: String!
+          password: String!
         ): Account
         """ verify an an account's email address """
         verifyAccountEmailAddress(
@@ -1073,8 +1078,8 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
             ...mappedResponse,
             success: true
           };
-        } catch (error) {
-          console.error("Error calling Companies House API", { error });
+        } catch (err) {
+          console.error("Error calling Companies House API", { err });
           return {
             apiError: true,
             success: false

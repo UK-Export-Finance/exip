@@ -87,6 +87,13 @@ interface SendEmailConfirmEmailAddressVariables {
   exporterId: string;
 }
 
+interface AccountCreationVariables {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
 interface AccountSignInVariables {
   email: string;
   password: string;
@@ -99,6 +106,7 @@ interface EmailResponse {
 
 export {
   Account,
+  AccountCreationVariables,
   AccountInput,
   AccountSignInVariables,
   Application,

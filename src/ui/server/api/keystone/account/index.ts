@@ -7,11 +7,9 @@ import sendEmailConfirmEmailAddressMutation from '../../../graphql/mutations/acc
 import accountSignInMutation from '../../../graphql/mutations/account/sign-in';
 
 const account = {
-  create: async (update: Account) => {
+  create: async (variables: Account) => {
     try {
       console.info('Creating exporter account');
-
-      const variables = { data: update };
 
       const response = (await apollo('POST', createExporterMutation, variables)) as ApolloResponse;
 

@@ -1,6 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import crypto from 'crypto';
 import { ACCOUNT } from '../constants';
+import { AccountCreationVariables } from '../types';
 
 const { EMAIL, ENCRYPTION } = ACCOUNT;
 
@@ -10,13 +11,11 @@ const {
   PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM },
 } = ENCRYPTION;
 
-const createAccount = async (root: any, variables: object, context: Context) => {
-  // @ts-ignore
-  console.info('Creating new exporter account for ', variables.data.email);
+const createAccount = async (root: any, variables: AccountCreationVariables, context: Context) => {
+  console.info('Creating new exporter account for ', variables.email);
 
   try {
-    // @ts-ignore
-    const { firstName, lastName, email, password } = variables.data;
+    const { firstName, lastName, email, password } = variables;
 
     const salt = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
 
