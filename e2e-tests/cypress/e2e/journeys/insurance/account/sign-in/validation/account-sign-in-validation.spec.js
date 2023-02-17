@@ -1,4 +1,3 @@
-import partials from '../../../../../partials';
 import { submitButton } from '../../../../../pages/shared';
 import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
@@ -21,22 +20,11 @@ const {
   INSURANCE: { ACCOUNT: { SIGN_IN: SIGN_IN_ERROR_MESSAGES } },
 } = ERROR_MESSAGES;
 
-const assertErrorMessages = () => {
-  const TOTAL_REQUIRED_FIELDS = 2;
+const TOTAL_REQUIRED_FIELDS = 2;
 
-  partials.errorSummaryListItems().should('exist');
-
-  partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
-
-  cy.checkText(
-    partials.errorSummaryListItems().eq(0),
-    SIGN_IN_ERROR_MESSAGES[EMAIL].INCORRECT,
-  );
-
-  cy.checkText(
-    partials.errorSummaryListItems().eq(1),
-    SIGN_IN_ERROR_MESSAGES[PASSWORD].INCORRECT,
-  );
+const assertAllFieldErrors = () => {
+  cy.submitAndAssertFieldErrors(accountFormFields[EMAIL], null, 0, TOTAL_REQUIRED_FIELDS, SIGN_IN_ERROR_MESSAGES[EMAIL].INCORRECT);
+  cy.submitAndAssertFieldErrors(accountFormFields[PASSWORD], null, 1, TOTAL_REQUIRED_FIELDS, SIGN_IN_ERROR_MESSAGES[PASSWORD].INCORRECT);
 };
 
 context('Insurance - Account - Sign in - Validation', () => {
@@ -58,7 +46,7 @@ context('Insurance - Account - Sign in - Validation', () => {
   it('should render validation errors for all required fields', () => {
     submitButton().click();
 
-    assertErrorMessages();
+    assertAllFieldErrors();
   });
 
   describe('when email is provided, but password is not', () => {
@@ -67,7 +55,7 @@ context('Insurance - Account - Sign in - Validation', () => {
 
       submitButton().click();
 
-      assertErrorMessages();
+      assertAllFieldErrors();
     });
   });
 
@@ -78,7 +66,7 @@ context('Insurance - Account - Sign in - Validation', () => {
 
       submitButton().click();
 
-      assertErrorMessages();
+      assertAllFieldErrors();
     });
   });
 
@@ -90,7 +78,7 @@ context('Insurance - Account - Sign in - Validation', () => {
 
   //     submitButton().click();
 
-  //     assertErrorMessages();
+  //     assertAllFieldErrors();
   //   });
   // });
 
@@ -101,7 +89,7 @@ context('Insurance - Account - Sign in - Validation', () => {
 
   //     submitButton().click();
 
-  //     assertErrorMessages();
+  //     assertAllFieldErrors();
   //   });
   // });
 });
