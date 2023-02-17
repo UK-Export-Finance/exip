@@ -16,7 +16,7 @@ const { FIELD_IDS } = CONSTANTS;
 context('Tell us about the multi policy you need - form validation', () => {
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   describe('when submitting an empty form', () => {

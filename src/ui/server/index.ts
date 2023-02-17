@@ -27,6 +27,7 @@ import { requiredDataProvided } from './middleware/required-data-provided';
 const app = express();
 const PORT = process.env.PORT || 5000;
 const https = Boolean(process.env.HTTPS || 0);
+const secureCookieName = https ? '__Host-exip-session' : 'exip-session';
 
 app.use(seo);
 app.use(security);
@@ -41,6 +42,7 @@ const cookie = {
 } as csrf.CookieOptions;
 
 const sessionOptions = {
+  name: secureCookieName,
   secret: process.env.SESSION_SECRET || crypto.randomBytes(256 / 8).toString('hex'),
   resave: false,
   saveUninitialized: true,
