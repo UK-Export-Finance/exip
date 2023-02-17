@@ -18,13 +18,13 @@ const {
 
 export default () => {
   broker[USING_BROKER].yesRadioInput().click();
-  broker[NAME].input().clear().type(application.EXPORTER_BROKER[NAME], { delay: 0 });
-  broker[ADDRESS_LINE_1].input().clear().type(application.EXPORTER_BROKER[ADDRESS_LINE_1], { delay: 0 });
-  broker[ADDRESS_LINE_2].input().clear().type(application.EXPORTER_BROKER[ADDRESS_LINE_2], { delay: 0 });
-  broker[TOWN].input().clear().type(application.EXPORTER_BROKER[TOWN], { delay: 0 });
-  broker[COUNTY].input().clear().type(application.EXPORTER_BROKER[COUNTY], { delay: 0 });
-  broker[EMAIL].input().clear().type(application.EXPORTER_BROKER[EMAIL], { delay: 0 });
-  broker[POSTCODE].input().clear().type(application.EXPORTER_BROKER[POSTCODE], { delay: 0 });
+  cy.keyboardInput(broker[NAME].input(), application.EXPORTER_BROKER[NAME]);
+  cy.keyboardInput(broker[ADDRESS_LINE_1].input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
+  cy.keyboardInput(broker[ADDRESS_LINE_2].input(), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
+  cy.keyboardInput(broker[TOWN].input(), application.EXPORTER_BROKER[TOWN]);
+  cy.keyboardInput(broker[COUNTY].input(), application.EXPORTER_BROKER[COUNTY]);
+  cy.keyboardInput(broker[EMAIL].input(), application.EXPORTER_BROKER[EMAIL]);
+  cy.keyboardInput(broker[POSTCODE].input(), application.EXPORTER_BROKER[POSTCODE]);
 
   submitButton().click();
 };

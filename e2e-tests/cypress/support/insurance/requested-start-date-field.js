@@ -33,8 +33,8 @@ const field = multipleContractPolicyPage[REQUESTED_START_DATE];
 const checkValidation = {
   day: {
     notProvided: () => {
-      field.monthInput().type('1');
-      field.yearInput().type('2023');
+      cy.keyboardInput(field.monthInput(), '1');
+      cy.keyboardInput(field.yearInput(), '2023');
       submitButton().click();
 
       cy.checkText(
@@ -48,7 +48,7 @@ const checkValidation = {
       );
     },
     notANumber: () => {
-      field.dayInput().clear().type('Test');
+      cy.keyboardInput(field.dayInput().clear(), 'Test');
       submitButton().click();
 
       cy.checkText(
@@ -64,9 +64,9 @@ const checkValidation = {
   },
   month: {
     notProvided: () => {
-      field.dayInput().clear().type('1');
+      cy.keyboardInput(field.dayInput(), '1');
       field.monthInput().clear();
-      field.yearInput().clear().type('2023');
+      cy.keyboardInput(field.yearInput(), '2023');
       submitButton().click();
 
       cy.checkText(
@@ -81,7 +81,7 @@ const checkValidation = {
     },
     notANumber: () => {
       field.dayInput().clear();
-      field.monthInput().clear().type('Test');
+      cy.keyboardInput(field.monthInput(), 'Test');
       submitButton().click();
 
       cy.checkText(
@@ -97,7 +97,7 @@ const checkValidation = {
   },
   year: {
     notProvided: () => {
-      field.dayInput().clear().type('1');
+      cy.keyboardInput(field.dayInput(), '1');
       field.monthInput().clear('2');
       field.yearInput().clear();
       submitButton().click();
@@ -115,7 +115,7 @@ const checkValidation = {
     notANumber: () => {
       field.dayInput().clear();
       field.monthInput().clear();
-      field.yearInput().clear().type('Test');
+      cy.keyboardInput(field.yearInput(), 'Test');
       submitButton().click();
 
       cy.checkText(
@@ -133,9 +133,9 @@ const checkValidation = {
     const today = new Date();
     const yesterday = today.setDate(today.getDate() - 1);
 
-    field.dayInput().clear().type(getDate(yesterday));
-    field.monthInput().clear().type(getMonth(yesterday));
-    field.yearInput().clear().type(getYear(yesterday));
+    cy.keyboardInput(field.dayInput(), getDate(yesterday));
+    cy.keyboardInput(field.monthInput(), getMonth(yesterday));
+    cy.keyboardInput(field.yearInput(), getYear(yesterday));
     submitButton().click();
 
     cy.checkText(
@@ -152,9 +152,9 @@ const checkValidation = {
     const date = new Date();
     const futureDate = add(date, { days: 1 });
 
-    field.dayInput().clear().type(getDate(futureDate));
-    field.monthInput().clear().type('24');
-    field.yearInput().clear().type(getYear(futureDate));
+    cy.keyboardInput(field.dayInput(), getDate(futureDate));
+    cy.keyboardInput(field.monthInput(), '24');
+    cy.keyboardInput(field.yearInput(), getYear(futureDate));
     submitButton().click();
 
     cy.checkText(
@@ -170,9 +170,9 @@ const checkValidation = {
   isToday: () => {
     const date = new Date();
 
-    field.dayInput().clear().type(getDate(date));
-    field.monthInput().clear().type(getMonth(date) + 1);
-    field.yearInput().clear().type(getYear(date));
+    cy.keyboardInput(field.dayInput(), getDate(date));
+    cy.keyboardInput(field.monthInput(), getMonth(date) + 1);
+    cy.keyboardInput(field.yearInput(), getYear(date));
 
     submitButton().click();
 

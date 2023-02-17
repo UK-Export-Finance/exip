@@ -12,7 +12,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
     cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
 
-    buyerCountryPage.searchInput().type(COUNTRY_NAME_UNSUPPORTED);
+    cy.keyboardInput(buyerCountryPage.searchInput(), COUNTRY_NAME_UNSUPPORTED);
 
     const results = buyerCountryPage.results();
     results.first().click();

@@ -11,8 +11,8 @@ const {
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 export default () => {
-  turnover[ESTIMATED_ANNUAL_TURNOVER].input().clear().type(application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
-  turnover[PERCENTAGE_TURNOVER].input().clear().type(application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
+  cy.keyboardInput(turnover[ESTIMATED_ANNUAL_TURNOVER].input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+  cy.keyboardInput(turnover[PERCENTAGE_TURNOVER].input(), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
 
   submitButton().click();
 };

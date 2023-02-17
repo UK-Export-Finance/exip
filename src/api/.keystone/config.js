@@ -165,7 +165,7 @@ var lists = {
       resolveInput: async ({ operation, resolvedData, context }) => {
         if (operation === "create") {
           try {
-            console.info("Adding default data to a new application");
+            console.info("Creating new application - adding default data to a new application");
             const modifiedData = resolvedData;
             const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
               data: {}
@@ -356,6 +356,7 @@ var lists = {
       resolveInput: async ({ operation, resolvedData }) => {
         const accountInputData = resolvedData;
         if (operation === "create") {
+          console.info("Creating new exporter account");
           const now = new Date();
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
@@ -371,6 +372,7 @@ var lists = {
           }
         }
         if (operation === "update") {
+          console.info("Updating exporter account");
           accountInputData.updatedAt = new Date();
         }
         return accountInputData;
@@ -912,8 +914,8 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
             ...mappedResponse,
             success: true
           };
-        } catch (error) {
-          console.error("Error calling Companies House API", { error });
+        } catch (err) {
+          console.error("Error calling Companies House API", { err });
           return {
             apiError: true,
             success: false

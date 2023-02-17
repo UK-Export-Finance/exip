@@ -18,7 +18,7 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
     completeStartForm();
     completeCheckIfEligibleForm();
 
-    buyerCountryPage.searchInput().type(COUNTRY_NAME_UNSUPPORTED);
+    cy.keyboardInput(buyerCountryPage.searchInput(), COUNTRY_NAME_UNSUPPORTED);
     const results = buyerCountryPage.results();
     results.first().click();
 

@@ -13,10 +13,10 @@ const {
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 export default () => {
-  natureOfBusiness[GOODS_OR_SERVICES].input().clear().type(application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
-  natureOfBusiness[YEARS_EXPORTING].input().clear().type(application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
-  natureOfBusiness[EMPLOYEES_UK].input().clear().type(application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
-  natureOfBusiness[EMPLOYEES_INTERNATIONAL].input().clear().type(application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
+  cy.keyboardInput(natureOfBusiness[GOODS_OR_SERVICES].input(), application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
+  cy.keyboardInput(natureOfBusiness[YEARS_EXPORTING].input(), application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
+  cy.keyboardInput(natureOfBusiness[EMPLOYEES_UK].input(), application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
+  cy.keyboardInput(natureOfBusiness[EMPLOYEES_INTERNATIONAL].input(), application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
 
   submitButton().click();
 };

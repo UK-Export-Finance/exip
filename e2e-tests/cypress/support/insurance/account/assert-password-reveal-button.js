@@ -24,7 +24,7 @@ const shouldRender = () => {
 const afterClick = {
   changesInputType: () => {
     field.input().should('have.attr', 'type', 'password');
-    field.input().type('Mock', { delay: 0 });
+    cy.keyboardInput(field.input(), 'Mock');
 
     field.revealButton().click();
 

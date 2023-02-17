@@ -77,7 +77,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     const submittedValue = 'a'.repeat(1001);
 
     before(() => {
-      field.input().type(submittedValue, { delay: 0 });
+      cy.keyboardInput(field.input(), submittedValue);
       submitButton().click();
     });
 

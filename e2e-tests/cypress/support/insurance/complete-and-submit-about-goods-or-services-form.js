@@ -15,7 +15,7 @@ const {
 } = FIELD_IDS;
 
 export default () => {
-  aboutGoodsOrServicesPage[DESCRIPTION].input().type(application.POLICY_AND_EXPORTS[DESCRIPTION]);
+  cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].input(), application.POLICY_AND_EXPORTS[DESCRIPTION]);
   aboutGoodsOrServicesPage[FINAL_DESTINATION].input().select(application.POLICY_AND_EXPORTS[FINAL_DESTINATION]);
 
   submitButton().click();

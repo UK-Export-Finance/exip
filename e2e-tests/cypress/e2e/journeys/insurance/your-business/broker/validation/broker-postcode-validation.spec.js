@@ -229,7 +229,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
 
         field.yesRadioInput().click();
 
-        broker[POSTCODE].input().clear().type(VALID_POSTCODES.WITH_SPACE);
+        cy.keyboardInput(broker[POSTCODE].input(), VALID_POSTCODES.WITH_SPACE);
         submitButton().click();
 
         partials.errorSummaryListItems().should('have.length', 4);
@@ -242,7 +242,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
 
         field.yesRadioInput().click();
 
-        broker[POSTCODE].input().clear().type(VALID_POSTCODES.WITHOUT_SPACE);
+        cy.keyboardInput(broker[POSTCODE].input(), VALID_POSTCODES.WITHOUT_SPACE);
         submitButton().click();
 
         partials.errorSummaryListItems().should('have.length', 4);

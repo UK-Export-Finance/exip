@@ -16,7 +16,7 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
     completeStartForm();
     completeCheckIfEligibleForm();
 
-    buyerCountryPage.searchInput().type(COUNTRY_NAME_UNSUPPORTED);
+    cy.keyboardInput(buyerCountryPage.searchInput(), COUNTRY_NAME_UNSUPPORTED);
 
     const results = buyerCountryPage.results();
     results.first().click();

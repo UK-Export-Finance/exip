@@ -82,7 +82,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe('when total contract value is not a number', () => {
     it('should render a validation error', () => {
-      field.input().type('Fifty');
+      cy.keyboardInput(field.input(), 'Fifty');
       submitButton().click();
 
       cy.checkText(
@@ -99,7 +99,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe('when total contract value is not a whole number', () => {
     it('should render a validation error', () => {
-      field.input().clear().type('123.456');
+      cy.keyboardInput(field.input().clear(), '123.456');
       submitButton().click();
 
       cy.checkText(
@@ -116,7 +116,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe('when total sales to buyer contains a decimal', () => {
     it('should render a validation error', () => {
-      field.input().clear().type('1.2');
+      cy.keyboardInput(field.input().clear(), '1.2');
       submitButton().click();
 
       cy.checkText(
@@ -133,7 +133,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe('when total sales to buyer contains a comma and decimal', () => {
     it('should render a validation error', () => {
-      field.input().clear().type('1,234.56');
+      cy.keyboardInput(field.input(), '1,234.56');
       submitButton().click();
 
       cy.checkText(
@@ -150,7 +150,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe('when total contract value is below the minimum', () => {
     it('should render a validation error', () => {
-      field.input().clear().type('0');
+      cy.keyboardInput(field.input(), '0');
       submitButton().click();
 
       cy.checkText(
@@ -167,7 +167,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe('when total contract value is above the maximum', () => {
     it('should render a validation error', () => {
-      field.input().clear().type('500000');
+      cy.keyboardInput(field.input(), '500000');
       submitButton().click();
 
       cy.checkText(
@@ -187,7 +187,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
       cy.completeAndSubmitSingleContractPolicyForm();
       partials.backLink().click();
 
-      field.input().clear().type('1,234');
+      cy.keyboardInput(field.input(), '1,234');
       submitButton().click();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;

@@ -48,8 +48,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe('all page errors', () => {
     it('should display validation errors if required inputs are not correctly answered', () => {
-      companyDetails.companyWebsite().type(WEBSITE_EXAMPLES.INVALID);
-      companyDetails.phoneNumber().type(INVALID_PHONE_NUMBERS.LANDLINE.LONG);
+      cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.INVALID);
+      cy.keyboardInput(companyDetails.phoneNumber(), INVALID_PHONE_NUMBERS.LANDLINE.LONG);
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 5);
 
@@ -85,7 +85,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should display companies house error and trading name, address errors when companies house incorrectly entered', () => {
-      companyDetails.companiesHouseSearch().clear().type('123456!');
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), '123456!');
       companyDetails.companiesHouseSearchButton().click();
 
       submitButton().click();
@@ -98,7 +98,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should display companies house error and trading name, address errors when companies house not found', () => {
-      companyDetails.companiesHouseSearch().clear().type('123456');
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), '123456');
       companyDetails.companiesHouseSearchButton().click();
 
       submitButton().click();
