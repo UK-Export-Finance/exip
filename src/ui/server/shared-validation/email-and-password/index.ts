@@ -12,8 +12,8 @@ const {
  * Check if both an email and password provided.
  * If not, return a validation error for both fields.
  * @param {Express.Response.body} Express response body
- * @param {String} Email error message
- * @param {String} Password error message
+ * @param {String} Field ID
+ * @param {String} Error message
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */
