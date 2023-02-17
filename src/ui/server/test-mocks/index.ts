@@ -12,6 +12,7 @@ import mockPhoneNumbers from './mock-phone-numbers';
 import mockSicCodes from './mock-sic-codes';
 import mockExporterNatureOfBusiness from './mock-exporter-business-nature-of-business';
 import mockExporterBusinessTurnover from './mock-exporter-business-turnover';
+import mockBroker from './mock-broker';
 
 const mockReq = () => {
   let req = {} as Request;
@@ -61,6 +62,7 @@ export {
   mockAccount,
   mockAnswers,
   mockApplication,
+  mockBroker,
   mockCisCountries,
   mockCountries,
   mockCompany,

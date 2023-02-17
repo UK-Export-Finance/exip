@@ -9,7 +9,7 @@ const mockCompany = {
     addressLine1: 'Test road',
     locality: 'Test',
     region: 'Test',
-    postalCode: 'SW1A 2AA',
+    postalCode: 'SW1A 2HQ',
     country: null,
   },
   dateOfCreation: '2012-08-23',

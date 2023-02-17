@@ -73,6 +73,7 @@ type Application {
   policyAndExport: PolicyAndExport
   exporterBusiness: ExporterBusiness
   exporterCompany: ExporterCompany
+  exporterBroker: ExporterBroker
 }
 
 scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
@@ -95,6 +96,7 @@ input ApplicationWhereInput {
   policyAndExport: PolicyAndExportWhereInput
   exporterBusiness: ExporterBusinessWhereInput
   exporterCompany: ExporterCompanyWhereInput
+  exporterBroker: ExporterBrokerWhereInput
 }
 
 input DateTimeNullableFilter {
@@ -166,6 +168,7 @@ input ApplicationUpdateInput {
   policyAndExport: PolicyAndExportRelateToOneForUpdateInput
   exporterBusiness: ExporterBusinessRelateToOneForUpdateInput
   exporterCompany: ExporterCompanyRelateToOneForUpdateInput
+  exporterBroker: ExporterBrokerRelateToOneForUpdateInput
 }
 
 input EligibilityRelateToOneForUpdateInput {
@@ -192,6 +195,12 @@ input ExporterCompanyRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input ExporterBrokerRelateToOneForUpdateInput {
+  create: ExporterBrokerCreateInput
+  connect: ExporterBrokerWhereUniqueInput
+  disconnect: Boolean
+}
+
 input ApplicationUpdateArgs {
   where: ApplicationWhereUniqueInput!
   data: ApplicationUpdateInput!
@@ -207,6 +216,7 @@ input ApplicationCreateInput {
   policyAndExport: PolicyAndExportRelateToOneForCreateInput
   exporterBusiness: ExporterBusinessRelateToOneForCreateInput
   exporterCompany: ExporterCompanyRelateToOneForCreateInput
+  exporterBroker: ExporterBrokerRelateToOneForCreateInput
 }
 
 input EligibilityRelateToOneForCreateInput {
@@ -227,6 +237,11 @@ input ExporterBusinessRelateToOneForCreateInput {
 input ExporterCompanyRelateToOneForCreateInput {
   create: ExporterCompanyCreateInput
   connect: ExporterCompanyWhereUniqueInput
+}
+
+input ExporterBrokerRelateToOneForCreateInput {
+  create: ExporterBrokerCreateInput
+  connect: ExporterBrokerWhereUniqueInput
 }
 
 type PolicyAndExport {
@@ -493,6 +508,80 @@ input ExporterBusinessCreateInput {
   totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+}
+
+type ExporterBroker {
+  id: ID!
+  application: Application
+  isUsingBroker: String
+  name: String
+  addressLine1: String
+  addressLine2: String
+  town: String
+  county: String
+  postcode: String
+  email: String
+}
+
+input ExporterBrokerWhereUniqueInput {
+  id: ID
+}
+
+input ExporterBrokerWhereInput {
+  AND: [ExporterBrokerWhereInput!]
+  OR: [ExporterBrokerWhereInput!]
+  NOT: [ExporterBrokerWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  isUsingBroker: StringNullableFilter
+  name: StringFilter
+  addressLine1: StringFilter
+  addressLine2: StringFilter
+  town: StringFilter
+  county: StringFilter
+  postcode: StringFilter
+  email: StringFilter
+}
+
+input ExporterBrokerOrderByInput {
+  id: OrderDirection
+  isUsingBroker: OrderDirection
+  name: OrderDirection
+  addressLine1: OrderDirection
+  addressLine2: OrderDirection
+  town: OrderDirection
+  county: OrderDirection
+  postcode: OrderDirection
+  email: OrderDirection
+}
+
+input ExporterBrokerUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  isUsingBroker: String
+  name: String
+  addressLine1: String
+  addressLine2: String
+  town: String
+  county: String
+  postcode: String
+  email: String
+}
+
+input ExporterBrokerUpdateArgs {
+  where: ExporterBrokerWhereUniqueInput!
+  data: ExporterBrokerUpdateInput!
+}
+
+input ExporterBrokerCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  isUsingBroker: String
+  name: String
+  addressLine1: String
+  addressLine2: String
+  town: String
+  county: String
+  postcode: String
+  email: String
 }
 
 type ExporterCompanyAddress {
@@ -980,6 +1069,12 @@ type Mutation {
   updateExporterBusinesses(data: [ExporterBusinessUpdateArgs!]!): [ExporterBusiness]
   deleteExporterBusiness(where: ExporterBusinessWhereUniqueInput!): ExporterBusiness
   deleteExporterBusinesses(where: [ExporterBusinessWhereUniqueInput!]!): [ExporterBusiness]
+  createExporterBroker(data: ExporterBrokerCreateInput!): ExporterBroker
+  createExporterBrokers(data: [ExporterBrokerCreateInput!]!): [ExporterBroker]
+  updateExporterBroker(where: ExporterBrokerWhereUniqueInput!, data: ExporterBrokerUpdateInput!): ExporterBroker
+  updateExporterBrokers(data: [ExporterBrokerUpdateArgs!]!): [ExporterBroker]
+  deleteExporterBroker(where: ExporterBrokerWhereUniqueInput!): ExporterBroker
+  deleteExporterBrokers(where: [ExporterBrokerWhereUniqueInput!]!): [ExporterBroker]
   createExporterCompanyAddress(data: ExporterCompanyAddressCreateInput!): ExporterCompanyAddress
   createExporterCompanyAddresses(data: [ExporterCompanyAddressCreateInput!]!): [ExporterCompanyAddress]
   updateExporterCompanyAddress(where: ExporterCompanyAddressWhereUniqueInput!, data: ExporterCompanyAddressUpdateInput!): ExporterCompanyAddress
@@ -1072,6 +1167,9 @@ type Query {
   exporterBusinesses(where: ExporterBusinessWhereInput! = {}, orderBy: [ExporterBusinessOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterBusiness!]
   exporterBusiness(where: ExporterBusinessWhereUniqueInput!): ExporterBusiness
   exporterBusinessesCount(where: ExporterBusinessWhereInput! = {}): Int
+  exporterBrokers(where: ExporterBrokerWhereInput! = {}, orderBy: [ExporterBrokerOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterBroker!]
+  exporterBroker(where: ExporterBrokerWhereUniqueInput!): ExporterBroker
+  exporterBrokersCount(where: ExporterBrokerWhereInput! = {}): Int
   exporterCompanyAddresses(where: ExporterCompanyAddressWhereInput! = {}, orderBy: [ExporterCompanyAddressOrderByInput!]! = [], take: Int, skip: Int! = 0): [ExporterCompanyAddress!]
   exporterCompanyAddress(where: ExporterCompanyAddressWhereUniqueInput!): ExporterCompanyAddress
   exporterCompanyAddressesCount(where: ExporterCompanyAddressWhereInput! = {}): Int

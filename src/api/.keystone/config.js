@@ -158,7 +158,8 @@ var lists = {
       }),
       policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
       exporterBusiness: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
-      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" })
+      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
+      exporterBroker: (0, import_fields.relationship)({ ref: "ExporterBroker" })
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -211,6 +212,14 @@ var lists = {
                 id: exporterBusinessId
               }
             };
+            const { id: exporterBrokerId } = await context.db.ExporterBroker.createOne({
+              data: {}
+            });
+            modifiedData.exporterBroker = {
+              connect: {
+                id: exporterBrokerId
+              }
+            };
             const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
@@ -229,7 +238,7 @@ var lists = {
           try {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
-            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -272,6 +281,16 @@ var lists = {
             });
             await context.db.ExporterBusiness.updateOne({
               where: { id: exporterBusinessId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                }
+              }
+            });
+            await context.db.ExporterBroker.updateOne({
+              where: { id: exporterBrokerId },
               data: {
                 application: {
                   connect: {
@@ -370,6 +389,26 @@ var lists = {
       totalEmployeesInternational: (0, import_fields.integer)(),
       estimatedAnnualTurnover: (0, import_fields.integer)(),
       exportsTurnoverPercentage: (0, import_fields.integer)()
+    },
+    access: import_access.allowAll
+  }),
+  ExporterBroker: (0, import_core.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      isUsingBroker: (0, import_fields.select)({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO }
+        ],
+        db: { isNullable: true }
+      }),
+      name: (0, import_fields.text)(),
+      addressLine1: (0, import_fields.text)(),
+      addressLine2: (0, import_fields.text)(),
+      town: (0, import_fields.text)(),
+      county: (0, import_fields.text)(),
+      postcode: (0, import_fields.text)(),
+      email: (0, import_fields.text)()
     },
     access: import_access.allowAll
   }),

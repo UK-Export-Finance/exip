@@ -17,7 +17,7 @@
   {{ govukInput({
     id: FIELDS.NAME.ID,
     name: FIELDS.NAME.ID,
-    value: submittedValues[FIELDS.NAME.ID] or application.exporterBusiness[FIELDS.NAME.ID],
+    value: submittedValues[FIELDS.NAME.ID] or application.exporterBroker[FIELDS.NAME.ID],
     label: {
       text: FIELDS.NAME.LABEL,
       classes: "govuk-body govuk-!-font-weight-bold",
@@ -45,13 +45,13 @@
     postcode: FIELDS.POSTCODE,
     validationErrors: validationErrors,
     submittedValues: submittedValues,
-    application: application.exporterBusiness
+    application: application.exporterBroker
   }) }}
 
   {{ govukInput({
     id: FIELDS.EMAIL.ID,
     name: FIELDS.EMAIL.ID,
-    value: submittedValues[FIELDS.EMAIL.ID] or application.exporterBusiness[FIELDS.EMAIL.ID],
+    value: submittedValues[FIELDS.EMAIL.ID] or application.exporterBroker[FIELDS.EMAIL.ID],
     label: {
       text: FIELDS.EMAIL.LABEL,
       classes: "govuk-body govuk-!-font-weight-bold",
@@ -107,7 +107,7 @@
         {{ yesNoRadioButtons.render({
           fieldId: FIELDS.USING_BROKER.ID,
           heading: CONTENT_STRINGS.PAGE_TITLE,
-          submittedAnswer: submittedValues[FIELDS.USING_BROKER.ID],
+          submittedAnswer: submittedValues[FIELDS.USING_BROKER.ID] or application.exporterBroker[FIELDS.USING_BROKER.ID],
           errorMessage: validationErrors.errorList[FIELDS.USING_BROKER.ID],
           headerClass: 'govuk-fieldset__legend--xl',
           yesNoValueString: true,
@@ -144,7 +144,7 @@
             classes: "govuk-button--secondary",
             attributes: {
               'data-cy': 'save-and-back-button',
-              'formaction': POST_ROUTES.SAVE_AND_BACK_URL
+              'formaction': SAVE_AND_BACK_URL
             }
           }) }}
         </div>

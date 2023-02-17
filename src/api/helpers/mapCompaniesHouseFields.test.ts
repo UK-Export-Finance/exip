@@ -11,7 +11,7 @@ describe('mapCompaniesHouseFields()', () => {
       address_line_2: null,
       locality: 'Westminster',
       region: 'London',
-      postal_code: 'SW1A 2AA',
+      postal_code: 'SW1A 2HQ',
       country: null,
     },
     company_number: '123',

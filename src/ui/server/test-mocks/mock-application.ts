@@ -1,8 +1,12 @@
+import dotenv from 'dotenv';
 import { add, addMonths } from 'date-fns';
 import { APPLICATION } from '../constants';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
 import { Application } from '../../types';
+import mockBroker from './mock-broker';
+
+dotenv.config();
 
 const mockGenericPolicyAndExport = {
   id: 'clav8by1i0007kgoqies0dbfc',
@@ -85,6 +89,11 @@ const mockApplication = {
     totalEmployeesUK: '400',
     estimatedAnnualTurnover: '155220',
     exportsTurnoverPercentage: '20',
+  },
+  exporterBroker: {
+    id: 'clcyyopna0158m8noaglyy9gg',
+    ...mockBroker,
+    isUsingBroker: true,
   },
 };
 

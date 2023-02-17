@@ -1,8 +1,11 @@
+import dotenv from 'dotenv';
 import brokerEmail from './broker-email';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
 import { RequestBody } from '../../../../../../../types';
 import emailValidation from '../../../../../../shared-validation/email';
+
+dotenv.config();
 
 const {
   BROKER: { EMAIL, USING_BROKER },
@@ -50,7 +53,7 @@ describe('controllers/insurance/business/broker/validation/rules/broker-email', 
     describe('if email is valid', () => {
       it('should return the provided errors object', () => {
         mockBody[USING_BROKER] = 'Yes';
-        mockBody[EMAIL] = 'test@test.com';
+        mockBody[EMAIL] = process.env.GOV_NOTIFY_EMAIL_RECIPIENT;
 
         const response = brokerEmail(mockBody, mockErrors);
 
