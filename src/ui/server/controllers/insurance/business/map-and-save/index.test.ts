@@ -125,6 +125,7 @@ describe('controllers/insurance/business/map-and-save', () => {
           await mapAndSave.natureOfBusiness(mockFormBody, mockApplication);
 
           expect(save.exporterBusiness).toHaveBeenCalledTimes(1);
+
           expect(save.exporterBusiness).toHaveBeenCalledWith(mockApplication, mapNatureOfBusinessSubmittedData(mockFormBody));
         });
 
