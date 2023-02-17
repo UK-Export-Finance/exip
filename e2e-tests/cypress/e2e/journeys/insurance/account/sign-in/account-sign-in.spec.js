@@ -1,5 +1,6 @@
 import partials from '../../../../partials';
 import { signInPage } from '../../../../pages/insurance/account/sign-in';
+import { yourDetailsPage } from '../../../../pages/insurance/account/create';
 import accountFormFields from '../../../../partials/insurance/accountFormFields';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -27,7 +28,14 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
   before(() => {
     cy.navigateToUrl(START);
 
-    cy.submitEligibilityAndStartAccountSignIn();
+    cy.submitEligibilityAndStartAccountCreation();
+    cy.completeAndSubmitCreateAccountForm();
+
+    // go back to the create account page
+    cy.go('back');
+
+    // navigate to sign in page
+    yourDetailsPage.signInButtonLink().click();
 
     const expected = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
 
@@ -104,17 +112,18 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
     });
   });
 
-  describe('form submission with all valid required fields', () => {
+  describe('when the account is verified', () => {
     before(() => {
-      // go back to the page
-      cy.go('back');
+      cy.verifyAccountEmail();
     });
 
-    it(`should redirect to ${ENTER_CODE}`, () => {
-      cy.completeAndSubmitSignInAccountForm();
+    describe('form submission with all valid required fields', () => {
+      it(`should redirect to ${ENTER_CODE}`, () => {
+        cy.completeAndSubmitSignInAccountForm();
 
-      const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
-      cy.url().should('eq', expected);
+        const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+        cy.url().should('eq', expected);
+      });
     });
   });
 });
