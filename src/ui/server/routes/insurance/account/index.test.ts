@@ -5,6 +5,7 @@ import { get as confirmEmailGet } from '../../../controllers/insurance/account/c
 import { get as confirmEmailResentGet } from '../../../controllers/insurance/account/create/confirm-email-resent';
 import { get as verifyEmailGet } from '../../../controllers/insurance/account/create/verify-email';
 import { get as signInGet, post as signInPost } from '../../../controllers/insurance/account/sign-in';
+import { get as enterCodeGet, post as enterCodePost } from '../../../controllers/insurance/account/sign-in/enter-code';
 
 describe('routes/insurance/account', () => {
   beforeEach(() => {
@@ -16,8 +17,8 @@ describe('routes/insurance/account', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(5);
-    expect(post).toHaveBeenCalledTimes(2);
+    expect(get).toHaveBeenCalledTimes(6);
+    expect(post).toHaveBeenCalledTimes(3);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS, yourDetailsGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS, yourDetailsPost);
@@ -29,5 +30,8 @@ describe('routes/insurance/account', () => {
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ROOT, signInGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ROOT, signInPost);
+
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ENTER_CODE, enterCodeGet);
+    expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ENTER_CODE, enterCodePost);
   });
 });
