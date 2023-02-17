@@ -157,7 +157,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     it('should render a validation error', () => {
       const MAXIMUM = APPLICATION.POLICY_AND_EXPORT.MAXIMUM_BUYER_CAN_OWE;
 
-      cy.inputType(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE], MAXIMUM + 1);
+      cy.inputType(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), MAXIMUM + 1);
       submitButton().click();
 
       cy.checkText(
