@@ -13,7 +13,7 @@ const validation = (formBody: RequestBody) => {
   const hasErrors = !objectHasValues(formBody) || !objectHasProperty(formBody, FIELD_ID);
 
   if (hasErrors) {
-    errors = generateValidationErrors(POLICY_AND_EXPORTS.SINGLE_POLICY_TYPE, ERROR_MESSAGES.INSURANCE.POLICY_AND_EXPORTS[FIELD_ID].IS_EMPTY);
+    errors = generateValidationErrors(POLICY_AND_EXPORTS.SINGLE_POLICY_TYPE, ERROR_MESSAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY[FIELD_ID].IS_EMPTY);
 
     return errors;
   }

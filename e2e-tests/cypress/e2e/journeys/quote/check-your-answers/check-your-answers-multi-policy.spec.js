@@ -35,7 +35,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
 
   before(() => {
     cy.login();
-    cy.submitAnswersHappyPathMultiPolicy();
+    cy.submitQuoteAnswersHappyPathMultiplePolicy();
     cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
   });
 

@@ -95,7 +95,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
   });
 
   describe('when clicking `need to create an account`', () => {
-    it(`should go to ${YOUR_DETAILS}`, () => {
+    it(`should redirect to ${YOUR_DETAILS}`, () => {
       signInPage.createAccountLink().click();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;

@@ -29,7 +29,7 @@ context('Change your answers (policy type and length fields) - as an exporter, I
 
   before(() => {
     cy.login();
-    cy.submitAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy();
     cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
   });

@@ -121,7 +121,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
   });
 
   describe('when clicking `already got an account`', () => {
-    it(`should go to ${SIGN_IN.ROOT}`, () => {
+    it(`should redirect to ${SIGN_IN.ROOT}`, () => {
       yourDetailsPage.signInButtonLink().click();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
