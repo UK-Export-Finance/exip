@@ -40,8 +40,7 @@ export const lists = {
       resolveInput: async ({ operation, resolvedData, context }) => {
         if (operation === 'create') {
           try {
-            console.info('Creating new application');
-            console.info('Adding default data to a new application');
+            console.info('Creating new application - adding default data to a new application');
 
             const modifiedData = resolvedData;
 
