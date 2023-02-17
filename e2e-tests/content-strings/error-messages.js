@@ -136,9 +136,10 @@ export const ERROR_MESSAGES = {
       },
     },
     POLICY_AND_EXPORTS: {
-      // TODO move to TYPE_OF_POLICY: {},
-      [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE]: {
-        IS_EMPTY: 'Select the type of policy you need',
+      TYPE_OF_POLICY: {
+        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE]: {
+          IS_EMPTY: 'Select the type of policy you need',
+        },
       },
       CONTRACT_POLICY: {
         [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.CREDIT_PERIOD_WITH_BUYER]: {

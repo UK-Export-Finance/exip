@@ -47,7 +47,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
   before(() => {
     cy.login();
 
-    cy.submitAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy();
     submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);

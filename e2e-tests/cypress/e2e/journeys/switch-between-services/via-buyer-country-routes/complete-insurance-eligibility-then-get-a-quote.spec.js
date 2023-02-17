@@ -37,7 +37,7 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
   it('allows an exporter to get a quote when visiting the buyer country page directly', () => {
     cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
 
-    cy.submitAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy();
     submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);

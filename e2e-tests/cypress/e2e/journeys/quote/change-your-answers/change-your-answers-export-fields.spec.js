@@ -19,7 +19,7 @@ const startRoute = ROUTES.QUOTE.START;
 context('Change your answers (export fields) - as an exporter, I want to change the details before submitting the proposal', () => {
   before(() => {
     cy.login();
-    cy.submitAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy();
     cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
   });
 
