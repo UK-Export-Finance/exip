@@ -43,7 +43,16 @@ context('Footer', () => {
       });
     });
 
-    it(`renders a link to ${FOOTER.COOKIES.TEXT} and redirects to the correct URL`, () => {
+    it(`renders a ${FOOTER.ACCESSIBILITY_STATEMENT.TEXT} link with the correct URL`, () => {
+      footer.supportLinks.accessibilityStatement().invoke('text').then((text) => {
+        expect(text.trim()).equal(FOOTER.ACCESSIBILITY_STATEMENT.TEXT);
+      });
+
+      footer.supportLinks.accessibilityStatement().click();
+      cy.url().should('include', FOOTER.ACCESSIBILITY_STATEMENT.HREF);
+    });
+
+    it(`renders a ${FOOTER.COOKIES.TEXT} link with the correct URL`, () => {
       footer.supportLinks.cookies().invoke('text').then((text) => {
         expect(text.trim()).equal(FOOTER.COOKIES.TEXT);
       });
@@ -52,7 +61,7 @@ context('Footer', () => {
       cy.url().should('include', FOOTER.COOKIES.HREF);
     });
 
-    it(`renders a link to ${FOOTER.REPORT_VULNERABILITY.TEXT} and redirects to the correct URL`, () => {
+    it(`renders a ${FOOTER.REPORT_VULNERABILITY.TEXT} link with the correct URL`, () => {
       footer.supportLinks.reportVulnerability().invoke('text').then((text) => {
         expect(text.trim()).equal(FOOTER.REPORT_VULNERABILITY.TEXT);
       });
@@ -60,7 +69,7 @@ context('Footer', () => {
       footer.supportLinks.reportVulnerability().should('have.attr', 'href', FOOTER.REPORT_VULNERABILITY.HREF);
     });
 
-    it(`renders a link to ${FOOTER.OGL_LICENCE.LICENCE} and redirects to the correct URL`, () => {
+    it(`renders a ${FOOTER.OGL_LICENCE.LICENCE} link with the correct URL`, () => {
       footer.supportLinks.license().invoke('text').then((text) => {
         expect(text.trim()).includes(FOOTER.OGL_LICENCE.INTRO);
         expect(text.trim()).includes(FOOTER.OGL_LICENCE.LICENCE);
@@ -70,7 +79,7 @@ context('Footer', () => {
       footer.supportLinks.licenseLink().should('have.attr', 'href', FOOTER.OGL_LICENCE.HREF);
     });
 
-    it(`renders a link to ${FOOTER.CROWN_COPYRIGHT.TEXT} and redirects to the correct URL`, () => {
+    it(`renders a ${FOOTER.CROWN_COPYRIGHT.TEXT} link with the correct URL`, () => {
       footer.supportLinks.copyright().invoke('text').then((text) => {
         const expected = `© ${FOOTER.CROWN_COPYRIGHT.TEXT}`;
         expect(text.trim()).equal(expected);
