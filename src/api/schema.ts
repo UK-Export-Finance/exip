@@ -272,7 +272,9 @@ export const lists = {
       verificationExpiry: timestamp(),
 
       otpSalt: text(),
-      otpHash: text(),
+      otpHash: text({
+        db: { nativeType: 'VarChar(256)' },
+      }),
       otpExpiry: timestamp(),
     },
     hooks: {

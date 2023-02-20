@@ -74,8 +74,17 @@ var ACCOUNT = {
     STRING_TYPE: "hex",
     PBKDF2: {
       ITERATIONS: 1e4,
-      KEY_LENGTH: 64,
       DIGEST_ALGORITHM: "sha512"
+    },
+    PASSWORD: {
+      PBKDF2: {
+        KEY_LENGTH: 64
+      }
+    },
+    OTP: {
+      PBKDF2: {
+        KEY_LENGTH: 128
+      }
     }
   },
   OTP: {
@@ -386,7 +395,9 @@ var lists = {
       verificationHash: (0, import_fields.text)(),
       verificationExpiry: (0, import_fields.timestamp)(),
       otpSalt: (0, import_fields.text)(),
-      otpHash: (0, import_fields.text)(),
+      otpHash: (0, import_fields.text)({
+        db: { nativeType: "VarChar(256)" }
+      }),
       otpExpiry: (0, import_fields.timestamp)()
     },
     hooks: {
@@ -604,7 +615,10 @@ var { EMAIL, ENCRYPTION } = ACCOUNT;
 var {
   RANDOM_BYTES_SIZE,
   STRING_TYPE,
-  PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM }
+  PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
+  PASSWORD: {
+    PBKDF2: { KEY_LENGTH }
+  }
 } = ENCRYPTION;
 var createAccount = async (root, variables, context) => {
   console.info("Creating new exporter account for ", variables.email);
@@ -729,7 +743,10 @@ var import_crypto2 = __toESM(require("crypto"));
 var { ENCRYPTION: ENCRYPTION2 } = ACCOUNT;
 var {
   STRING_TYPE: STRING_TYPE2,
-  PBKDF2: { ITERATIONS: ITERATIONS2, KEY_LENGTH: KEY_LENGTH2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 }
+  PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
+  PASSWORD: {
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
+  }
 } = ENCRYPTION2;
 var isValidAccountPassword = (password2, salt, hash) => {
   console.info("Validating exporter account password");
@@ -750,7 +767,10 @@ var { ENCRYPTION: ENCRYPTION3, OTP } = ACCOUNT;
 var {
   RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
   STRING_TYPE: STRING_TYPE3,
-  PBKDF2: { ITERATIONS: ITERATIONS3, KEY_LENGTH: KEY_LENGTH3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 }
+  PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
+  OTP: {
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH3 }
+  }
 } = ENCRYPTION3;
 var generateOtp = () => {
   try {
@@ -767,6 +787,7 @@ var generateOtp = () => {
       expiry
     };
   } catch (err) {
+    console.error(err);
     throw new Error(`Error generating OTP ${err}`);
   }
 };
@@ -787,6 +808,7 @@ var accountSignIn = async (root, variables, context) => {
     }
     if (is_valid_account_password_default(password2, exporter.salt, exporter.hash)) {
       const otp = generate_otp_default.otp();
+      console.log("=========== otp \n", otp);
       const { securityCode, salt, hash, expiry } = otp;
       const accountUpdate = {
         otpSalt: salt,

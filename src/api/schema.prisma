@@ -85,7 +85,7 @@ model Exporter {
   verificationHash   String    @default("")
   verificationExpiry DateTime?
   otpSalt            String    @default("")
-  otpHash            String    @default("")
+  otpHash            String    @default("") @mysql.VarChar(256)
   otpExpiry          DateTime?
 }
 
