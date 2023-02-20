@@ -8,12 +8,8 @@ describe('controllers/root/cookies', () => {
   let req: Request;
   let res: Response;
 
-  const mockFlash = jest.fn();
-
   beforeEach(() => {
     req = mockReq();
-    req.flash = mockFlash;
-
     res = mockRes();
   });
 
