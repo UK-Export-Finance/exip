@@ -808,7 +808,6 @@ var accountSignIn = async (root, variables, context) => {
     }
     if (is_valid_account_password_default(password2, exporter.salt, exporter.hash)) {
       const otp = generate_otp_default.otp();
-      console.log("=========== otp \n", otp);
       const { securityCode, salt, hash, expiry } = otp;
       const accountUpdate = {
         otpSalt: salt,

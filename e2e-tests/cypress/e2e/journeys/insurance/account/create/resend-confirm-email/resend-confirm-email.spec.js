@@ -39,7 +39,8 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
       api.getExporterByEmail(exporterEmail).then((response) => {
         const { data } = response.body;
 
-        exporter = data.exporters[0];
+        const [firstExporter] = data.exporters;
+        exporter = firstExporter;
 
         expectedUrl = `${CONFIRM_EMAIL_RESENT}?id=${exporter.id}`;
       });

@@ -17,9 +17,9 @@ const verifyAccountEmail = () => {
     cy.getExporterByEmail(exporterEmail).then((response) => {
       const { data } = response.body;
 
-      const exporter = data.exporters[0];
+      const [firstExporter] = data.exporters;
 
-      const { verificationHash } = exporter;
+      const { verificationHash } = firstExporter;
 
       // mimic "clicking email verification link"
       cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`);

@@ -39,7 +39,8 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
       api.getExporterByEmail(exporterEmail).then((response) => {
         const { data } = response.body;
 
-        exporter = data.exporters[0];
+        const [firstExporter] = data.exporters;
+        exporter = firstExporter;
       });
     });
 
