@@ -2,9 +2,7 @@ import type { GraphQLSchema } from 'graphql';
 import { mergeSchemas } from '@graphql-tools/schema';
 import axios from 'axios';
 import dotenv from 'dotenv';
-import crypto from 'crypto';
-import { ACCOUNT } from './constants';
-import { verifyAccountEmailAddress, sendEmailConfirmEmailAddress } from './custom-resolvers';
+import { createAccount, verifyAccountEmailAddress, sendEmailConfirmEmailAddress, accountSignIn } from './custom-resolvers';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
 import { SicCodes } from './types';
@@ -13,14 +11,6 @@ dotenv.config();
 
 const username: any = process.env.COMPANIES_HOUSE_API_KEY;
 const companiesHouseURL: any = process.env.COMPANIES_HOUSE_API_URL;
-
-const { EMAIL, PASSWORD } = ACCOUNT;
-
-const {
-  RANDOM_BYTES_SIZE,
-  STRING_TYPE,
-  PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM },
-} = PASSWORD;
 
 export const extendGraphqlSchema = (schema: GraphQLSchema) =>
   mergeSchemas({
@@ -121,19 +111,32 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         emailRecipient: String
       }
 
+      type SuccessResponse {
+        success: Boolean
+      }
+
       type Mutation {
         """ create an account """
         createAccount(
-          data: AccountInput!
+          firstName: String!
+          lastName: String!
+          email: String!
+          password: String!
         ): Account
         """ verify an an account's email address """
         verifyAccountEmailAddress(
           token: String!
         ): EmailResponse
-        """ verify an an account's email address """
+        """ send confirm email address email """
         sendEmailConfirmEmailAddress(
           exporterId: String!
         ): EmailResponse
+
+        """ send confirm email address email """
+        accountSignIn(
+          email: String!
+          password: String!
+        ): SuccessResponse
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -155,39 +158,8 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
     `,
     resolvers: {
       Mutation: {
-        createAccount: async (root, variables, context) => {
-          console.info('Creating new exporter account for ', variables.data.email);
-
-          try {
-            const { firstName, lastName, email, password } = variables.data;
-
-            const salt = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
-
-            const passwordHash = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
-
-            const verificationHash = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
-
-            const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
-
-            const account = {
-              firstName,
-              lastName,
-              email,
-              salt,
-              hash: passwordHash,
-              verificationHash,
-              verificationExpiry,
-            };
-
-            const response = await context.db.Exporter.createOne({
-              data: account,
-            });
-
-            return response;
-          } catch (err) {
-            throw new Error(`Creating new exporter account ${err}`);
-          }
-        },
+        createAccount,
+        accountSignIn,
         verifyAccountEmailAddress,
         sendEmailConfirmEmailAddress,
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {

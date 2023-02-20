@@ -32,13 +32,36 @@ export const ACCOUNT = {
       return tomorrow;
     },
   },
-  PASSWORD: {
+  ENCRYPTION: {
     RANDOM_BYTES_SIZE: 32,
     STRING_TYPE: 'hex',
     PBKDF2: {
       ITERATIONS: 10000,
-      KEY_LENGTH: 64,
       DIGEST_ALGORITHM: 'sha512',
+    },
+
+    PASSWORD: {
+      PBKDF2: {
+        KEY_LENGTH: 64,
+      },
+    },
+    OTP: {
+      PBKDF2: {
+        KEY_LENGTH: 128,
+      },
+    },
+  },
+  // One time password
+  OTP: {
+    DIGITS: 6,
+    VERIFICATION_EXPIRY: () => {
+      // 5 minutes from now
+      const now = new Date();
+
+      const milliseconds = 300000;
+      const future = new Date(now.setMilliseconds(milliseconds));
+
+      return future;
     },
   },
 };
@@ -46,5 +69,6 @@ export const ACCOUNT = {
 export const EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
     CONFIRM_EMAIL: '24022e94-171c-4044-b0ee-d22418116575',
+    SECURITY_CODE: 'b92650d1-9187-4510-ace2-5eec7ca7e626',
   },
 };

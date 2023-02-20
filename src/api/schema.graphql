@@ -373,6 +373,9 @@ type Exporter {
   isVerified: Boolean
   verificationHash: String
   verificationExpiry: DateTime
+  otpSalt: String
+  otpHash: String
+  otpExpiry: DateTime
 }
 
 input ExporterWhereUniqueInput {
@@ -394,6 +397,9 @@ input ExporterWhereInput {
   isVerified: BooleanFilter
   verificationHash: StringFilter
   verificationExpiry: DateTimeNullableFilter
+  otpSalt: StringFilter
+  otpHash: StringFilter
+  otpExpiry: DateTimeNullableFilter
 }
 
 input BooleanFilter {
@@ -413,6 +419,9 @@ input ExporterOrderByInput {
   isVerified: OrderDirection
   verificationHash: OrderDirection
   verificationExpiry: OrderDirection
+  otpSalt: OrderDirection
+  otpHash: OrderDirection
+  otpExpiry: OrderDirection
 }
 
 input ExporterUpdateInput {
@@ -426,6 +435,9 @@ input ExporterUpdateInput {
   isVerified: Boolean
   verificationHash: String
   verificationExpiry: DateTime
+  otpSalt: String
+  otpHash: String
+  otpExpiry: DateTime
 }
 
 input ExporterUpdateArgs {
@@ -444,6 +456,9 @@ input ExporterCreateInput {
   isVerified: Boolean
   verificationHash: String
   verificationExpiry: DateTime
+  otpSalt: String
+  otpHash: String
+  otpExpiry: DateTime
 }
 
 type ExporterBusiness {
@@ -1122,13 +1137,16 @@ type Mutation {
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
 
   """ create an account """
-  createAccount(data: AccountInput!): Account
+  createAccount(firstName: String!, lastName: String!, email: String!, password: String!): Account
 
   """ verify an an account's email address """
   verifyAccountEmailAddress(token: String!): EmailResponse
 
-  """ verify an an account's email address """
+  """ send confirm email address email """
   sendEmailConfirmEmailAddress(exporterId: String!): EmailResponse
+
+  """ send confirm email address email """
+  accountSignIn(email: String!, password: String!): SuccessResponse
 
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
@@ -1384,4 +1402,8 @@ input ExporterCompanyAndCompanyAddressInput {
 type EmailResponse {
   success: Boolean
   emailRecipient: String
+}
+
+type SuccessResponse {
+  success: Boolean
 }
