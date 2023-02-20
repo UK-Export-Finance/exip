@@ -7,17 +7,23 @@ import api from '../../api';
  * @returns {Object} Exporter account
  */
 const getExporterByEmail = (email) => {
-  api.getExporterByEmail(email).then((response) => {
-    if (!response.body || !response.body.data) {
-      throw new Error('Getting exporter by email', { response });
-    }
+  try {
+    api.getExporterByEmail(email).then((response) => {
+      if (!response.body || !response.body.data) {
+        throw new Error('Getting exporter by email', { response });
+      }
 
-    const { data } = response.body;
+      const { data } = response.body;
 
-    const exporter = data.exporters[0];
+      const exporter = data.exporters[0];
 
-    return exporter;
-  });
+      return exporter;
+    });
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Getting exporter by email');
+  }
 };
 
 export default getExporterByEmail;

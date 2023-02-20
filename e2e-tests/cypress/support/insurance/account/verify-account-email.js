@@ -12,22 +12,28 @@ const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
  * Mimic "cliking email verification link" in an email inbox by manually navigating to the URL
  */
 const verifyAccountEmail = () => {
-  // get exporter
-  cy.getExporterByEmail(exporterEmail).then((response) => {
-    const { data } = response.body;
+  try {
+    // get exporter
+    cy.getExporterByEmail(exporterEmail).then((response) => {
+      const { data } = response.body;
 
-    const exporter = data.exporters[0];
+      const exporter = data.exporters[0];
 
-    const { verificationHash } = exporter;
+      const { verificationHash } = exporter;
 
-    // mimic "clicking email verification link"
-    cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`);
+      // mimic "clicking email verification link"
+      cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`);
 
-    // User should be verified and therefore redirected to the "sign in" page.
-    const expected = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
+      // User should be verified and therefore redirected to the "sign in" page.
+      const expected = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
 
-    cy.url().should('eq', expected);
-  });
+      cy.url().should('eq', expected);
+    });
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Verifying exporter account email');
+  }
 };
 
 export default verifyAccountEmail;

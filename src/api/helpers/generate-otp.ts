@@ -39,6 +39,8 @@ const generateOtp = () => {
       expiry,
     };
   } catch (err) {
+    console.error(err);
+
     throw new Error(`Error generating OTP ${err}`);
   }
 };
