@@ -5,6 +5,7 @@ const footer = {
   openingTimes: () => cy.get('[data-cy="opening-times"]'),
   supportLinks: {
     heading: () => cy.get('[data-cy="support-links-heading"]'),
+    accessibilityStatement: () => cy.get('[data-cy="accessibility-statement"]'),
     privacy: () => cy.get('[data-cy="privacy"]'),
     cookies: () => cy.get('[data-cy="cookies"]'),
     reportVulnerability: () => cy.get('[data-cy="report-vulnerability"]'),

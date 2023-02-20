@@ -234,6 +234,11 @@ const YOUR_QUOTE_PAGE = {
   },
 };
 
+const ACCESSIBILITY_STATEMENT_PAGE = {
+  PAGE_TITLE: 'Accessibility statement',
+  HEADING: 'Accessibility statement',
+};
+
 const COOKIES_PAGE = {
   PAGE_TITLE: 'Cookies',
   HEADING: 'Cookies',
@@ -314,6 +319,7 @@ export const PAGES = {
   CANNOT_OBTAIN_COVER_PAGE,
   GET_A_QUOTE_BY_EMAIL_PAGE,
   YOUR_QUOTE_PAGE,
+  ACCESSIBILITY_STATEMENT_PAGE,
   COOKIES_PAGE,
   NEED_TO_START_AGAIN,
   PAGE_NOT_FOUND_PAGE,
