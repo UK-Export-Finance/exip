@@ -13,11 +13,7 @@ const getExporterByEmail = (email) => {
         throw new Error('Getting exporter by email', { response });
       }
 
-      const { data } = response.body;
-
-      const exporter = data.exporters[0];
-
-      return exporter;
+      return response;
     });
   } catch (err) {
     console.error(err);

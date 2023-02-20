@@ -37,7 +37,9 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
       const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
 
       api.getExporterByEmail(exporterEmail).then((response) => {
-        exporter = response;
+        const { data } = response.body;
+
+        exporter = data.exporters[0];
 
         expectedUrl = `${CONFIRM_EMAIL_RESENT}?id=${exporter.id}`;
       });

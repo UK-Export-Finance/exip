@@ -37,7 +37,9 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
       const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
 
       api.getExporterByEmail(exporterEmail).then((response) => {
-        exporter = response;
+        const { data } = response.body;
+
+        exporter = data.exporters[0];
       });
     });
 
