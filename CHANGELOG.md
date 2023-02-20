@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/UK-Export-Finance/exip/compare/v1.14.13...v1.15.0) (2023-02-20)
+
+
+### Features
+
+* **EMS-1046:** Accessibility statement ([#330](https://github.com/UK-Export-Finance/exip/issues/330)) ([0df7857](https://github.com/UK-Export-Finance/exip/commit/0df7857cc9d5a635bb43e4c1bb27b1793188622f))
+
 ## [1.14.13](https://github.com/UK-Export-Finance/exip/compare/v1.14.12...v1.14.13) (2023-02-17)
 
 
