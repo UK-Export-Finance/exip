@@ -48,12 +48,16 @@ describe('custom-resolvers/account-sign-in', () => {
   };
 
   beforeAll(async () => {
+    // wipe the table so we have a clean slate.
+    const exporters = await context.query.Exporter.findMany();
+
+    await context.query.Exporter.deleteMany({
+      where: exporters,
+    });
+
+    // create a new exporter
     exporter = await createAccount({}, variables, context);
   });
-
-  // beforeEach(() => {
-  //   jest.clearAllMocks();
-  // });
 
   describe('when the provided password is valid', () => {
     beforeEach(async () => {
