@@ -234,6 +234,82 @@ const YOUR_QUOTE_PAGE = {
   },
 };
 
+const ACCESSIBILITY_STATEMENT_PAGE = {
+  PAGE_TITLE: 'Accessibility Statement for the EXIP Get a Quote Service',
+  HEADING: 'Accessibility Statement for the EXIP Get a Quote Service',
+  SERVICE_LINK: {
+    TEXT: 'Get a quote for UKEF export insurance - GOV.UK (www.gov.uk)',
+    HREF: LINKS.EXTERNAL.BEFORE_YOU_START,
+  },
+  USING_OUR_SERVICE: {
+    HEADING: 'Using our service',
+    INTRO: 'This service is run by UK Export Finance. We want as many people as possible to use this service. For example, that means you should be able to:',
+    LIST: [
+      'change colours, contrast levels and fonts',
+      'zoom in up to 300 % without the text spilling off the screen',
+      'navigate most of the website using just a keyboard',
+      'navigate most of the website using speech recognition software',
+      'listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)',
+    ],
+    OUTRO: {
+      WEBSITE_TEXT: "We've also made the website text as simple as possible to understand.",
+      ABILITY_NET: {
+        LINK: {
+          TEXT: 'AbilityNet',
+          HREF: LINKS.EXTERNAL.ABILITY_NET,
+        },
+        DESCRIPTION: 'has advice on making your device easier to use if you have a disability.',
+      },
+    },
+  },
+  FEEDBACK_AND_CONTACT: {
+    HEADING: 'Feedback and contact information',
+    INTRO: 'If you need information on this website in a different format like accessible PDF, large print, easy read, contact us:',
+    LIST: ['customer.service@ukexportfinance.gov.uk', '+44(0)207 271 8010'],
+    OUTRO: "We'll consider your request and get back to you in 2 days.",
+  },
+  REPORTING_PROBLEMS: {
+    HEADING: 'Reporting accessibility problems with this website',
+    DESCRIPTION:
+      "We're always looking to improve the accessibility of this website. If you find any additional problems not listed above or think we're not meeting accessibility requirements, contact: customer.service@ukexportfinance.gov.uk.",
+  },
+  ENFORCEMENT_PROCEDURE: {
+    HEADING: 'Enforcement procedure',
+    DESCRIPTION:
+      "The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the'accessibility regulations'). If you're not happy with how we respond to your complaint,",
+    CONTACT: {
+      TEXT: 'contact the Equality Advisory and Support Service (EASS)',
+      HREF: LINKS.EXTERNAL.EQUALITY_ADVISORY_SERVICE,
+    },
+  },
+  TECHNICAL_INFO: {
+    HEADING: "Technical information about this website's accessibility",
+    DESCRIPTION:
+      'UK Export Finance is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.',
+  },
+  COMPLIANCE_STATUS: {
+    HEADING: 'Compliance status',
+    INTRO: 'This website is compliant with the',
+    GUIDLINES_LINK: {
+      TEXT: 'Web Content Accessibility Guidelines version 2.1',
+      HREF: LINKS.EXTERNAL.ACCESSIBILITY_GUIDLINES,
+    },
+    OUTRO: 'AA standard.',
+  },
+  IMPROVING_ACCESSIBILITY: {
+    HEADING: "What we're doing to improve accessibility",
+    DESCRIPTION:
+      'UK Export Finance is committed to address any issues with the service. The team responsible for the service regularly tests and monitors the accessibility of the service.',
+  },
+  PREPERATION_OF_STATEMENT: {
+    HEADING: 'Preparation of this accessibility statement',
+    LIST: [
+      'This statement was prepared 17th February 2023. It was last reviewed on 17th February 2023.',
+      'This website was last tested on 17th February 2023. The test was carried out by UK Export Finance.',
+    ],
+  },
+};
+
 const COOKIES_PAGE = {
   PAGE_TITLE: 'Cookies',
   HEADING: 'Cookies',
@@ -314,6 +390,7 @@ module.exports = {
   CANNOT_OBTAIN_COVER_PAGE,
   GET_A_QUOTE_BY_EMAIL_PAGE,
   YOUR_QUOTE_PAGE,
+  ACCESSIBILITY_STATEMENT_PAGE,
   COOKIES_PAGE,
   NEED_TO_START_AGAIN,
   PAGE_NOT_FOUND_PAGE,
