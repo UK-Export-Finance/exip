@@ -43,6 +43,15 @@ context('Footer', () => {
       });
     });
 
+    it(`renders a link to ${FOOTER.ACCESSIBILITY_STATEMENT.TEXT} and redirects to the correct URL`, () => {
+      footer.supportLinks.accessibilityStatement().invoke('text').then((text) => {
+        expect(text.trim()).equal(FOOTER.ACCESSIBILITY_STATEMENT.TEXT);
+      });
+
+      footer.supportLinks.accessibilityStatement().click();
+      cy.url().should('include', FOOTER.ACCESSIBILITY_STATEMENT.HREF);
+    });
+
     it(`renders a link to ${FOOTER.COOKIES.TEXT} and redirects to the correct URL`, () => {
       footer.supportLinks.cookies().invoke('text').then((text) => {
         expect(text.trim()).equal(FOOTER.COOKIES.TEXT);
