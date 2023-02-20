@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.1](https://github.com/UK-Export-Finance/exip/compare/v1.15.0...v1.15.1) (2023-02-20)
+
+
+### Bug Fixes
+
+* **EMS-1046:** accessibility statement - add missing E2E test for footer link ([#332](https://github.com/UK-Export-Finance/exip/issues/332)) ([66552b4](https://github.com/UK-Export-Finance/exip/commit/66552b486a900a0817043a422890d42666561c49))
+
 ## [1.15.0](https://github.com/UK-Export-Finance/exip/compare/v1.14.13...v1.15.0) (2023-02-20)
 
 
