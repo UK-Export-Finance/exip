@@ -19,6 +19,9 @@ import { post as postTurnoverSaveAndBack } from '../../../controllers/insurance/
 import { get as getBroker, post as postBroker } from '../../../controllers/insurance/business/broker';
 import { post as postBrokerSaveAndBack } from '../../../controllers/insurance/business/broker/save-and-back';
 
+import { get as getCheckYourAnswers } from '../../../controllers/insurance/business/check-your-answers';
+
+
 // @ts-ignore
 const insuranceBusinessRouter = express.Router();
 
@@ -39,5 +42,7 @@ insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSIN
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_ROOT}`, getBroker);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_ROOT}`, postBroker);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_SAVE_AND_BACK}`, postBrokerSaveAndBack);
+
+insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.CHECK_YOUR_ANSWERS}`, getCheckYourAnswers);
 
 export default insuranceBusinessRouter;

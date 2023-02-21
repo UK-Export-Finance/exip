@@ -32,6 +32,36 @@ export const mockMultiplePolicyAndExport = {
   maximumBuyerWillOwe: 1000,
 };
 
+export const mockExporterCompany = {
+  id: 'clcyyopn40148m8noyar9wxrn',
+  companyName: 'Test Name',
+  companyNumber: '0123456',
+  companyWebsite: '',
+  hasTradingName: false,
+  hasTradingAddress: false,
+  dateOfCreation: '2014-04-10T00:00:00.000Z',
+  sicCodes: [
+    {
+      id: 'clcyyxldc0634m8novkr94spo',
+      sicCode: '64999',
+    },
+  ],
+  registeredOfficeAddress: {
+    id: 'clcyyopna0158m8noaglyy94t',
+    addressLine1: 'Line 1',
+    addressLine2: 'Line 2',
+    careOf: '',
+    locality: 'Locality',
+    region: 'Region',
+    postalCode: 'Post code',
+    country: '',
+    premises: '',
+    __typename: 'ExporterCompanyAddress',
+  },
+  financialYearEndDate: new Date(),
+  __typename: 'ExporterCompany',
+};
+
 const mockApplication = {
   id: 'clacdgc630000kdoqn7wcgrz1',
   referenceNumber: 10001,
@@ -52,35 +82,7 @@ const mockApplication = {
     wantCoverOverMaxPeriod: false,
   },
   policyAndExport: mockSinglePolicyAndExport,
-  exporterCompany: {
-    id: 'clcyyopn40148m8noyar9wxrn',
-    companyName: 'Test Name',
-    companyNumber: '0123456',
-    companyWebsite: '',
-    hasTradingName: false,
-    hasTradingAddress: false,
-    dateOfCreation: '2014-04-10T00:00:00.000Z',
-    sicCodes: [
-      {
-        id: 'clcyyxldc0634m8novkr94spo',
-        sicCode: '64999',
-      },
-    ],
-    registeredOfficeAddress: {
-      id: 'clcyyopna0158m8noaglyy94t',
-      addressLine1: 'Line 1',
-      addressLine2: 'Line 2',
-      careOf: '',
-      locality: 'Locality',
-      region: 'Region',
-      postalCode: 'Post code',
-      country: '',
-      premises: '',
-      __typename: 'ExporterCompanyAddress',
-    },
-    financialYearEndDate: new Date(),
-    __typename: 'ExporterCompany',
-  },
+  exporterCompany: mockExporterCompany,
   exporterBusiness: {
     id: 'clcyyopna0158m8noaglyy9gg',
     goodsOrServicesSupplied: 'ABC',

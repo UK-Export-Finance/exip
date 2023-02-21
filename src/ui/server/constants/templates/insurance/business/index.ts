@@ -3,4 +3,5 @@ export const BUSINESS_TEMPLATES = {
   NATURE_OF_YOUR_BUSINESS: 'insurance/your-business/nature-of-your-business.njk',
   TURNOVER: 'insurance/your-business/turnover.njk',
   BROKER: 'insurance/your-business/broker.njk',
+  CHECK_YOUR_ANSWERS: 'insurance/your-business/check-your-answers.njk',
 };

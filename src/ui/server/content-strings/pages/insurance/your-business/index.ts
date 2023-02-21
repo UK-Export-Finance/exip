@@ -27,6 +27,10 @@ const EXPORTER_BUSINESS = {
     LINE_3: 'Alternatively, you can use any broker you prefer. They do not have to be approved by UKEF.',
     LINE_4: 'Appointing a broker does not change the cost to you of any UKEF export insurance policy.',
   },
+  CHECK_YOUR_ANSWERS: {
+    ...SHARED,
+    PAGE_TITLE: 'Check your answers for this section',
+  },
 };
 
 export default EXPORTER_BUSINESS;
