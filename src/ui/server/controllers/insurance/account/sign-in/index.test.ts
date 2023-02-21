@@ -4,6 +4,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
+import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../test-mocks';
 
@@ -23,11 +24,17 @@ describe('controllers/insurance/account/sign-in', () => {
   let req: Request;
   let res: Response;
 
+  const accountSignInResponse = { success: true };
+
+  let accountSignInSpy = jest.fn(() => Promise.resolve(accountSignInResponse));
+
   beforeEach(() => {
     req = mockReq();
     req.flash = () => 'mock';
 
     res = mockRes();
+
+    api.keystone.account.signIn = accountSignInSpy;
   });
 
   describe('PAGE_VARIABLES', () => {
@@ -108,8 +115,8 @@ describe('controllers/insurance/account/sign-in', () => {
     };
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submitted values', () => {
-        post(req, res);
+      it('should render template with validation errors and submitted values', async () => {
+        await post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...insuranceCorePageVariables({
@@ -128,10 +135,49 @@ describe('controllers/insurance/account/sign-in', () => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${ENTER_CODE}`, () => {
-        post(req, res);
+      it('should call api.keystone.account.signIn', async () => {
+        await post(req, res);
+
+        expect(accountSignInSpy).toHaveBeenCalledTimes(1);
+
+        expect(accountSignInSpy).toHaveBeenCalledWith(validBody[EMAIL], validBody[PASSWORD]);
+      });
+
+      it(`should redirect to ${ENTER_CODE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ENTER_CODE);
+      });
+
+      describe('when the api.keystone.account.signIn does not return success=true', () => {
+        beforeEach(() => {
+          accountSignInSpy = jest.fn(() => Promise.resolve({ success: false }));
+
+          api.keystone.account.signIn = accountSignInSpy;
+        });
+
+        it('should redirect to /invalid-credentials', async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith('/invalid-credentials');
+        });
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('when there is an error', () => {
+        beforeEach(() => {
+          req.body = validBody;
+
+          accountSignInSpy = jest.fn(() => Promise.reject());
+          api.keystone.account.signIn = accountSignInSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });

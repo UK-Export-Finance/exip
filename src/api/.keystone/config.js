@@ -69,19 +69,38 @@ var ACCOUNT = {
       return tomorrow;
     }
   },
-  PASSWORD: {
+  ENCRYPTION: {
     RANDOM_BYTES_SIZE: 32,
     STRING_TYPE: "hex",
     PBKDF2: {
       ITERATIONS: 1e4,
-      KEY_LENGTH: 64,
       DIGEST_ALGORITHM: "sha512"
+    },
+    PASSWORD: {
+      PBKDF2: {
+        KEY_LENGTH: 64
+      }
+    },
+    OTP: {
+      PBKDF2: {
+        KEY_LENGTH: 128
+      }
+    }
+  },
+  OTP: {
+    DIGITS: 6,
+    VERIFICATION_EXPIRY: () => {
+      const now = new Date();
+      const milliseconds = 3e5;
+      const future = new Date(now.setMilliseconds(milliseconds));
+      return future;
     }
   }
 };
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
-    CONFIRM_EMAIL: "24022e94-171c-4044-b0ee-d22418116575"
+    CONFIRM_EMAIL: "24022e94-171c-4044-b0ee-d22418116575",
+    SECURITY_CODE: "b92650d1-9187-4510-ace2-5eec7ca7e626"
   }
 };
 
@@ -92,13 +111,13 @@ import_dotenv.default.config();
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
 var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
 var notify = {
-  sendEmail: async (templateId, sendToEmailAddress, firstName, confirmToken) => {
+  sendEmail: async (templateId, sendToEmailAddress, firstName, variables) => {
     try {
       console.info("Calling Notify API. templateId: ", templateId);
       await notifyClient.sendEmail(templateId, sendToEmailAddress, {
         personalisation: {
           firstName,
-          confirmToken
+          ...variables
         },
         reference: null
       });
@@ -114,21 +133,45 @@ var notify = {
 var notify_default = notify;
 
 // emails/index.ts
-var confirmEmailAddress = async (email, firstName, verificationHash) => {
+var callNotify = async (templateId, emailAddress, firstName, variables) => {
   try {
-    console.info("Sending email verification for account creation");
-    const emailResponse = await notify_default.sendEmail(EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL, email, firstName, verificationHash);
+    const emailResponse = await notify_default.sendEmail(templateId, emailAddress, firstName, variables);
     if (emailResponse.success) {
       return emailResponse;
     }
-    throw new Error(`Sending email verification for account creation ${emailResponse}`);
+    throw new Error(`Sending email ${emailResponse}`);
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending email ${err}`);
+  }
+};
+var confirmEmailAddress = async (emailAddress, firstName, verificationHash) => {
+  try {
+    console.info("Sending email verification for account creation");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
+    const variables = { confirmToken: verificationHash };
+    const response = await callNotify(templateId, emailAddress, firstName, variables);
+    return response;
   } catch (err) {
     console.error(err);
     throw new Error(`Sending email verification for account creation ${err}`);
   }
 };
+var securityCodeEmail = async (emailAddress, firstName, securityCode) => {
+  try {
+    console.info("Sending security code email for account sign in");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
+    const variables = { securityCode };
+    const response = await callNotify(templateId, emailAddress, firstName, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending security code email for account sign in ${err}`);
+  }
+};
 var sendEmail = {
-  confirmEmailAddress
+  confirmEmailAddress,
+  securityCodeEmail
 };
 var emails_default = sendEmail;
 
@@ -350,7 +393,12 @@ var lists = {
       hash: (0, import_fields.text)({ validation: { isRequired: true } }),
       isVerified: (0, import_fields.checkbox)({ defaultValue: false }),
       verificationHash: (0, import_fields.text)(),
-      verificationExpiry: (0, import_fields.timestamp)()
+      verificationExpiry: (0, import_fields.timestamp)(),
+      otpSalt: (0, import_fields.text)(),
+      otpHash: (0, import_fields.text)({
+        db: { nativeType: "VarChar(256)" }
+      }),
+      otpExpiry: (0, import_fields.timestamp)()
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData }) => {
@@ -560,45 +608,101 @@ var session = (0, import_session.statelessSessions)({
 var import_schema = require("@graphql-tools/schema");
 var import_axios = __toESM(require("axios"));
 var import_dotenv2 = __toESM(require("dotenv"));
+
+// custom-resolvers/create-account.ts
 var import_crypto = __toESM(require("crypto"));
+var { EMAIL, ENCRYPTION } = ACCOUNT;
+var {
+  RANDOM_BYTES_SIZE,
+  STRING_TYPE,
+  PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
+  PASSWORD: {
+    PBKDF2: { KEY_LENGTH }
+  }
+} = ENCRYPTION;
+var createAccount = async (root, variables, context) => {
+  console.info("Creating new exporter account for ", variables.email);
+  try {
+    const { firstName, lastName, email, password: password2 } = variables;
+    const salt = import_crypto.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
+    const passwordHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+    const verificationHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+    const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
+    const account = {
+      firstName,
+      lastName,
+      email,
+      salt,
+      hash: passwordHash,
+      verificationHash,
+      verificationExpiry
+    };
+    const response = await context.db.Exporter.createOne({
+      data: account
+    });
+    return response;
+  } catch (err) {
+    throw new Error(`Creating new exporter account ${err}`);
+  }
+};
+var create_account_default = createAccount;
 
 // custom-resolvers/verify-account-email-address.ts
 var import_date_fns2 = require("date-fns");
-var verifyAccountEmailAddress = async (root, variables, context) => {
-  console.info("Verifying exporter email address");
+
+// helpers/get-account-by-field.ts
+var getAccountByField = async (context, field, value) => {
   try {
+    console.info("Getting exporter account by field/value");
     const exportersArray = await context.db.Exporter.findMany({
       where: {
-        verificationHash: { equals: variables.token }
+        [field]: { equals: value }
       },
       take: 1
     });
     if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
-      console.info("Verifying exporter email - no exporter exists with the provided token");
-      return {
-        expired: true
-      };
+      console.info("Getting exporter by field - no exporter exists with the provided field/value");
+      return false;
     }
     const exporter = exportersArray[0];
-    const now = new Date();
-    const canActivateExporter = (0, import_date_fns2.isBefore)(now, exporter.verificationExpiry);
-    if (!canActivateExporter) {
-      console.info("Unable to verify exporter email - verification period has expired");
+    return exporter;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Getting exporter account by field/value ${err}`);
+  }
+};
+var get_account_by_field_default = getAccountByField;
+
+// custom-resolvers/verify-account-email-address.ts
+var verifyAccountEmailAddress = async (root, variables, context) => {
+  try {
+    console.info("Verifying exporter email address");
+    const exporter = await get_account_by_field_default(context, "verificationHash", variables.token);
+    if (exporter) {
+      const now = new Date();
+      const canActivateExporter = (0, import_date_fns2.isBefore)(now, exporter.verificationExpiry);
+      if (!canActivateExporter) {
+        console.info("Unable to verify exporter email - verification period has expired");
+        return {
+          expired: true
+        };
+      }
+      await context.db.Exporter.updateOne({
+        where: { id: exporter.id },
+        data: {
+          isVerified: true,
+          verificationHash: "",
+          verificationExpiry: null
+        }
+      });
       return {
-        expired: true
+        success: true,
+        emailRecipient: exporter.email
       };
     }
-    await context.db.Exporter.updateOne({
-      where: { id: exporter.id },
-      data: {
-        isVerified: true,
-        verificationHash: "",
-        verificationExpiry: null
-      }
-    });
+    console.info("Unable to verify exporter email - no account found");
     return {
-      success: true,
-      emailRecipient: exporter.email
+      success: false
     };
   } catch (err) {
     console.error(err);
@@ -628,10 +732,107 @@ var sendEmailConfirmEmailAddress = async (root, variables, context) => {
     }
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${emailResponse}`);
   } catch (err) {
+    console.error(err);
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${err}`);
   }
 };
 var send_email_confirm_email_address_default = sendEmailConfirmEmailAddress;
+
+// helpers/is-valid-account-password.ts
+var import_crypto2 = __toESM(require("crypto"));
+var { ENCRYPTION: ENCRYPTION2 } = ACCOUNT;
+var {
+  STRING_TYPE: STRING_TYPE2,
+  PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
+  PASSWORD: {
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
+  }
+} = ENCRYPTION2;
+var isValidAccountPassword = (password2, salt, hash) => {
+  console.info("Validating exporter account password");
+  const hashVerify = import_crypto2.default.pbkdf2Sync(password2, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
+  if (hash === hashVerify) {
+    console.info("Valid exporter account password");
+    return true;
+  }
+  console.info("Invalid exporter account password");
+  return false;
+};
+var is_valid_account_password_default = isValidAccountPassword;
+
+// helpers/generate-otp.ts
+var import_crypto3 = __toESM(require("crypto"));
+var import_otplib = require("otplib");
+var { ENCRYPTION: ENCRYPTION3, OTP } = ACCOUNT;
+var {
+  RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
+  STRING_TYPE: STRING_TYPE3,
+  PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
+  OTP: {
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH3 }
+  }
+} = ENCRYPTION3;
+var generateOtp = () => {
+  try {
+    console.info("Generating OTP");
+    const salt = import_crypto3.default.randomBytes(RANDOM_BYTES_SIZE2).toString(STRING_TYPE3);
+    import_otplib.authenticator.options = { digits: OTP.DIGITS };
+    const securityCode = import_otplib.authenticator.generate(salt);
+    const hash = import_crypto3.default.pbkdf2Sync(securityCode, salt, ITERATIONS3, KEY_LENGTH3, DIGEST_ALGORITHM3).toString(STRING_TYPE3);
+    const expiry = OTP.VERIFICATION_EXPIRY();
+    return {
+      securityCode,
+      salt,
+      hash,
+      expiry
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Error generating OTP ${err}`);
+  }
+};
+var generate = {
+  otp: generateOtp
+};
+var generate_otp_default = generate;
+
+// custom-resolvers/account-sign-in.ts
+var accountSignIn = async (root, variables, context) => {
+  try {
+    console.info("Signing in exporter account");
+    const { email, password: password2 } = variables;
+    const exporter = await get_account_by_field_default(context, "email", email);
+    if (!exporter) {
+      console.info("Unable to validate exporter account - no account found");
+      return { success: false };
+    }
+    if (is_valid_account_password_default(password2, exporter.salt, exporter.hash)) {
+      const otp = generate_otp_default.otp();
+      const { securityCode, salt, hash, expiry } = otp;
+      const accountUpdate = {
+        otpSalt: salt,
+        otpHash: hash,
+        otpExpiry: expiry
+      };
+      await context.db.Exporter.updateOne({
+        where: { id: exporter.id },
+        data: accountUpdate
+      });
+      const emailResponse = await emails_default.securityCodeEmail(email, exporter.firstName, securityCode);
+      if (emailResponse.success) {
+        return emailResponse;
+      }
+      return {
+        success: false
+      };
+    }
+    return { success: false };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${err}`);
+  }
+};
+var account_sign_in_default = accountSignIn;
 
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -690,12 +891,6 @@ var mapSicCodes = (company, sicCodes) => {
 import_dotenv2.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
-var { EMAIL, PASSWORD } = ACCOUNT;
-var {
-  RANDOM_BYTES_SIZE,
-  STRING_TYPE,
-  PBKDF2: { ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM }
-} = PASSWORD;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
   typeDefs: `
@@ -794,19 +989,32 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         emailRecipient: String
       }
 
+      type SuccessResponse {
+        success: Boolean
+      }
+
       type Mutation {
         """ create an account """
         createAccount(
-          data: AccountInput!
+          firstName: String!
+          lastName: String!
+          email: String!
+          password: String!
         ): Account
         """ verify an an account's email address """
         verifyAccountEmailAddress(
           token: String!
         ): EmailResponse
-        """ verify an an account's email address """
+        """ send confirm email address email """
         sendEmailConfirmEmailAddress(
           exporterId: String!
         ): EmailResponse
+
+        """ send confirm email address email """
+        accountSignIn(
+          email: String!
+          password: String!
+        ): SuccessResponse
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -828,31 +1036,8 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
     `,
   resolvers: {
     Mutation: {
-      createAccount: async (root, variables, context) => {
-        console.info("Creating new exporter account for ", variables.data.email);
-        try {
-          const { firstName, lastName, email, password: password2 } = variables.data;
-          const salt = import_crypto.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
-          const passwordHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
-          const verificationHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
-          const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
-          const account = {
-            firstName,
-            lastName,
-            email,
-            salt,
-            hash: passwordHash,
-            verificationHash,
-            verificationExpiry
-          };
-          const response = await context.db.Exporter.createOne({
-            data: account
-          });
-          return response;
-        } catch (err) {
-          throw new Error(`Creating new exporter account ${err}`);
-        }
-      },
+      createAccount: create_account_default,
+      accountSignIn: account_sign_in_default,
       verifyAccountEmailAddress: verify_account_email_address_default,
       sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {

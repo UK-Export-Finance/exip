@@ -41,6 +41,8 @@ Cypress.Commands.add('submitEligibilityAndStartAccountSignIn', require('./insura
 
 Cypress.Commands.add('completeAndSubmitCreateAccountForm', require('./insurance/account/complete-and-submit-create-account-form'));
 Cypress.Commands.add('completeAndSubmitSignInAccountForm', require('./insurance/account/complete-and-submit-sign-in-account-form'));
+Cypress.Commands.add('getExporterByEmail', require('./insurance/account/get-exporter-by-email'));
+Cypress.Commands.add('verifyAccountEmail', require('./insurance/account/verify-account-email'));
 
 Cypress.Commands.add('completeAndSubmitPolicyTypeForm', require('./insurance/complete-and-submit-policy-type-form'));
 Cypress.Commands.add('completeAndSubmitSingleContractPolicyForm', require('./insurance/complete-and-submit-single-contract-policy-form'));
