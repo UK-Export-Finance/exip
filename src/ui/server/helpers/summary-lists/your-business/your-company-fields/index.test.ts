@@ -23,6 +23,12 @@ const {
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, WEBSITE, PHONE_NUMBER },
 } = FIELD_IDS;
 
+const {
+  TURNOVER: {
+    [FINANCIAL_YEAR_END_DATE]: { DATE_FORMAT },
+  },
+} = FIELDS;
+
 describe('server/helpers/summary-lists/your-business/your-company-fields', () => {
   const mockAnswers = mockExporterCompany;
   const { referenceNumber } = mockApplication;
@@ -69,7 +75,7 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
         data: mockAnswers,
         renderChangeLink: false,
       },
-      formatDate(mockAnswers[FINANCIAL_YEAR_END_DATE]),
+      formatDate(mockAnswers[FINANCIAL_YEAR_END_DATE], DATE_FORMAT),
     ),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_NAME),

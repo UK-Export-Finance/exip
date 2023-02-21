@@ -97,7 +97,7 @@ const application = {
       premises: '',
     },
     [COMPANY_SIC]: ['64999'],
-    [FINANCIAL_YEAR_END_DATE]: '31 July 2023',
+    [FINANCIAL_YEAR_END_DATE]: '31 July',
     [TRADING_NAME]: 'Yes',
     [TRADING_ADDRESS]: 'Yes',
   },
