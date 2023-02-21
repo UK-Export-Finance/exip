@@ -9,18 +9,17 @@ const {
         COMPANY_ADDRESS,
         COMPANY_INCORPORATED,
         COMPANY_SIC,
-        FINANCIAL_YEAR_END_DATE
+        FINANCIAL_YEAR_END_DATE,
       },
       YOUR_COMPANY: {
         TRADING_ADDRESS,
         TRADING_NAME,
         WEBSITE,
         PHONE_NUMBER,
-      }
+      },
     },
   },
 } = FIELD_IDS;
-
 
 const checkYourAnswers = {
   summaryList: {
