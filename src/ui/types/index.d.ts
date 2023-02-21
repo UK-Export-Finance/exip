@@ -7,7 +7,7 @@ import {
   ApplicationPolicyAndExport,
   ApplicationExporterSicCodes,
   ApplicationExporterBusiness,
-  ApplicationExporterBroker
+  ApplicationExporterBroker,
 } from './application';
 import { ApolloResponse } from './apollo';
 import { CisCountry } from './cis-country';
