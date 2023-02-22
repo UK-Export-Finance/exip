@@ -71,7 +71,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROOT),
           validationErrors,
           submittedValues,
         });
