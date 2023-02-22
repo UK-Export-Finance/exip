@@ -8,7 +8,7 @@ import { ApplicationExporterSicCodes } from '../../../../../types';
  * @param {Array<ApplicationExporterSicCodes>} applicationSicCodes
  * @returns {String} sicCodes
  */
-const sicCodeMapping = (applicationSicCodes?: Array<ApplicationExporterSicCodes>) => {
+const mapSicCodes = (applicationSicCodes?: Array<ApplicationExporterSicCodes>) => {
   if (!applicationSicCodes || !applicationSicCodes.length) {
     return DEFAULT.EMPTY;
   }
@@ -18,4 +18,4 @@ const sicCodeMapping = (applicationSicCodes?: Array<ApplicationExporterSicCodes>
   return generateSicCodesValue(sicCodes);
 };
 
-export default sicCodeMapping;
+export default mapSicCodes;

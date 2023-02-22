@@ -6,14 +6,14 @@ import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
 import { ApplicationExporterCompany, SummaryListItemData } from '../../../../../types';
 import { generateAddressHTML } from '../../company-house-summary-list';
-import sicCodeMapping from '../sic-code-mapping';
+import mapSicCodes from '../map-sic-codes';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
+    EXPORTER_BUSINESS: { COMPANY_DETAILS_CHANGE },
   },
 } = ROUTES;
 
@@ -31,7 +31,8 @@ const {
 /**
  * generateYourCompanyFields
  * Create all your company fields and values for the Insurance - Company details govukSummaryList
- * @param {Object} answers exporter company data
+ * @param {ApplicationExporterCompany} answers exporter company data
+ * @param {number} referenceNumber application reference number
  * @returns {Object} All exporter company fields and values in an object structure for GOVUK summary list structure
  */
 const generateYourCompanyFields = (answers: ApplicationExporterCompany, referenceNumber: number) => {
@@ -39,7 +40,7 @@ const generateYourCompanyFields = (answers: ApplicationExporterCompany, referenc
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, COMPANY_NUMBER),
       data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}#${INPUT}`,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${INPUT}`,
       renderChangeLink: true,
     }),
     fieldGroupItem({
@@ -69,7 +70,7 @@ const generateYourCompanyFields = (answers: ApplicationExporterCompany, referenc
         data: answers,
         renderChangeLink: false,
       },
-      sicCodeMapping(answers[COMPANY_SIC]),
+      mapSicCodes(answers[COMPANY_SIC]),
     ),
     fieldGroupItem(
       {
@@ -82,25 +83,25 @@ const generateYourCompanyFields = (answers: ApplicationExporterCompany, referenc
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_NAME),
       data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}#${TRADING_NAME}`,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${TRADING_NAME}`,
       renderChangeLink: true,
     }),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_ADDRESS),
       data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}#${TRADING_ADDRESS}`,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${TRADING_ADDRESS}`,
       renderChangeLink: true,
     }),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, WEBSITE),
       data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}#${WEBSITE}`,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${WEBSITE}`,
       renderChangeLink: true,
     }),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, PHONE_NUMBER),
       data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}#${PHONE_NUMBER}`,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${PHONE_NUMBER}`,
       renderChangeLink: true,
     }),
   ] as Array<SummaryListItemData>;

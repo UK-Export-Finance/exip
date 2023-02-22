@@ -5,7 +5,8 @@ import { ApplicationExporterCompany, SummaryListItemData } from '../../../../typ
 /**
  * generateFields
  * Create all fields for the insurance - Your business govukSummaryList
- * @param {Object} All submitted your business data
+ * @param {ApplicationExporterCompany} answersExporterCompany application exporterCompany object
+ * @param {number} referenceNumber application reference number
  * @returns {Object} All your business values in an object structure for GOVUK summary list structure
  */
 const generateFields = (answers: ApplicationExporterCompany, referenceNumber: number) => {
@@ -13,15 +14,14 @@ const generateFields = (answers: ApplicationExporterCompany, referenceNumber: nu
 
   fields = generateYourCompanyFields(answers, referenceNumber);
 
-  fields = [...fields];
-
   return fields;
 };
 
 /**
  * yourBusinessSummaryList
  * Create multiple groups with govukSummaryList data structure
- * @param {Object} All answers/submitted data in a simple object.text structure
+ * @param {ApplicationExporterCompany} answersExporterCompany application exporterCompany object
+ * @param {number} referenceNumber application reference number
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const yourBusinessSummaryList = (answersExporterCompany: ApplicationExporterCompany, referenceNumber: number) => {

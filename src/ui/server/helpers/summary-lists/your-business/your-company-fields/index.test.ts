@@ -6,7 +6,7 @@ import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
 import generateYourCompanyFields from '.';
 import { generateAddressHTML } from '../../company-house-summary-list';
-import sicCodeMapping from '../sic-code-mapping';
+import sicCodeMapping from '../map-sic-codes';
 import mockApplication, { mockExporterCompany } from '../../../../test-mocks/mock-application';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;

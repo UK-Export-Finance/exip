@@ -1,4 +1,5 @@
 import checkYourAnswersPage from '../../e2e/pages/your-business/check-your-answers/checkYourAnswers';
+import getSummaryListField from './get-summary-list-field';
 import { FIELD_IDS } from '../../../constants';
 import { LINKS, DEFAULT } from '../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../content-strings/fields/insurance/exporter-business';
@@ -75,18 +76,16 @@ const assertRow = (fieldId, expectedKey, expectedValue, expectedChangeLinkText) 
 const checkYourBusinessSummaryList = ({
   [COMPANY_NUMBER]: () => {
     const fieldId = COMPANY_NUMBER;
-    const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
 
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.EXPORTER_COMPANY[fieldId];
-
-    const expectedChangeLinkText = FIELDS[fieldId].SUMMARY.TITLE;
 
     assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [COMPANY_NAME]: () => {
     const fieldId = COMPANY_NAME;
-    const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
 
+    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.EXPORTER_COMPANY[fieldId];
 
     assertRow(fieldId, expectedKey, expectedValue);
@@ -114,65 +113,57 @@ const checkYourBusinessSummaryList = ({
   },
   [COMPANY_INCORPORATED]: () => {
     const fieldId = COMPANY_INCORPORATED;
-    const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
 
+    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.EXPORTER_COMPANY[fieldId];
 
     assertRow(fieldId, expectedKey, expectedValue);
   },
   [COMPANY_SIC]: () => {
     const fieldId = COMPANY_SIC;
-    const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
 
+    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.EXPORTER_COMPANY[fieldId][0];
 
     assertRow(fieldId, expectedKey, expectedValue);
   },
   [FINANCIAL_YEAR_END_DATE]: () => {
     const fieldId = FINANCIAL_YEAR_END_DATE;
-    const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
 
+    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.EXPORTER_COMPANY[fieldId];
 
     assertRow(fieldId, expectedKey, expectedValue);
   },
   [TRADING_NAME]: () => {
     const fieldId = TRADING_NAME;
-    const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
 
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.EXPORTER_COMPANY[fieldId];
-
-    const expectedChangeLinkText = FIELDS[fieldId].SUMMARY.TITLE;
 
     assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [TRADING_ADDRESS]: () => {
     const fieldId = TRADING_ADDRESS;
-    const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
 
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.EXPORTER_COMPANY[fieldId];
-
-    const expectedChangeLinkText = FIELDS[fieldId].SUMMARY.TITLE;
 
     assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [WEBSITE]: () => {
     const fieldId = WEBSITE;
-    const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
 
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.EXPORTER_COMPANY[fieldId];
-
-    const expectedChangeLinkText = FIELDS[fieldId].SUMMARY.TITLE;
 
     assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [PHONE_NUMBER]: () => {
     const fieldId = PHONE_NUMBER;
-    const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
 
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.EXPORTER_COMPANY[fieldId];
-
-    const expectedChangeLinkText = FIELDS[fieldId].SUMMARY.TITLE;
 
     assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
