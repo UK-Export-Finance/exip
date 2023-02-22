@@ -10,12 +10,16 @@ import { INSURANCE_ROOT } from '../../../constants/routes/insurance';
  * @param {String} Optional fragment suffix for the URL. E.g 'heading', 'label'. Defaults to label.
  */
 const assertChangeAnswersPageUrl = (referenceNumber, route, fieldId, fragmentSuffix) => {
-  let expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${route}#${fieldId}`;
+  let expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${route}`;
 
-  if (fragmentSuffix) {
-    expected = `${expected}-${fragmentSuffix}`;
-  } else {
-    expected = `${expected}-label`;
+  if (fieldId) {
+    expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${route}#${fieldId}`;
+
+    if (fragmentSuffix) {
+      expected = `${expected}-${fragmentSuffix}`;
+    } else {
+      expected = `${expected}-label`;
+    }
   }
 
   cy.url().should('eq', expected);
