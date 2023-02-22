@@ -1,6 +1,6 @@
-import partials from '../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../constants';
-import checkSummaryList from '../../../../../support/insurance/check-your-business-summary-list';
+import partials from '../../../../../partials';
+import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
+import checkSummaryList from '../../../../../../support/insurance/check-your-business-summary-list';
 
 const {
   INSURANCE: {

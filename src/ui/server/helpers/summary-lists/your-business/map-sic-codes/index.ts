@@ -3,7 +3,7 @@ import { DEFAULT } from '../../../../content-strings';
 import { ApplicationExporterSicCodes } from '../../../../../types';
 
 /**
- * sicCodeMapping
+ * mapSicCodes
  * maps application sic code response to generate a string of the sic code values
  * @param {Array<ApplicationExporterSicCodes>} applicationSicCodes
  * @returns {String} sicCodes
