@@ -14,7 +14,7 @@ const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
+    EXPORTER_BUSINESS: { COMPANY_DETAILS_CHANGE },
   },
 } = ROUTES;
 
@@ -37,7 +37,7 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, COMPANY_NUMBER),
       data: mockAnswers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}#${INPUT}`,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${INPUT}-label`,
       renderChangeLink: true,
     }),
     fieldGroupItem({
@@ -80,25 +80,25 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_NAME),
       data: mockAnswers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}#${TRADING_NAME}`,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${TRADING_NAME}-label`,
       renderChangeLink: true,
     }),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_ADDRESS),
       data: mockAnswers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}#${TRADING_ADDRESS}`,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${TRADING_ADDRESS}-label`,
       renderChangeLink: true,
     }),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, WEBSITE),
       data: mockAnswers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}#${WEBSITE}`,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${WEBSITE}-label`,
       renderChangeLink: true,
     }),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, PHONE_NUMBER),
       data: mockAnswers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}#${PHONE_NUMBER}`,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${PHONE_NUMBER}-label`,
       renderChangeLink: true,
     }),
   ];
