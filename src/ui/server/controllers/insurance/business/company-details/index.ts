@@ -30,7 +30,6 @@ const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.I
 const {
   COMPANY_HOUSE_SEARCH,
   COMPANY_DETAILS: COMPANY_DETAILS_ROUTE,
-  COMPANY_DETAILS_CHANGE,
   NO_COMPANIES_HOUSE_NUMBER,
   COMPANY_DETAILS_SAVE_AND_BACK,
   NATURE_OF_BUSINESS_ROOT,
@@ -42,7 +41,7 @@ const pageVariables = (referenceNumber: number, originalUrl: string) => {
 
   // if change route, then should use change url to go back to check your answers
   if (isChangeRoute(originalUrl)) {
-    companyDetailsPostRoute = `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}`;
+    companyDetailsPostRoute = originalUrl;
   }
 
   return {
