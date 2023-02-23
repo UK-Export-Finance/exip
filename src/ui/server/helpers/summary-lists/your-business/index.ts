@@ -6,17 +6,17 @@ import { ApplicationExporterCompany, ApplicationExporterBusiness, SummaryListIte
 /**
  * generateFields
  * Create all fields for the insurance - Your business govukSummaryList
- * @param {ApplicationExporterCompany} answersExporterCompany application exporterCompany object
- * @param {ApplicationExporterBusiness} anwersExporterBusiness application exporterCompany object
+ * @param {ApplicationExporterCompany} answersExporterCompany Application exporterCompany object
+ * @param {ApplicationExporterBusiness} answersExporterBusiness Application exporterCompany object
  * @param {Number} referenceNumber Application reference number
  * @returns {Object} All your business values in an object structure for GOVUK summary list structure
  */
-const generateFields = (answersExporterCompany: ApplicationExporterCompany, anwersExporterBusiness: ApplicationExporterBusiness, referenceNumber: number) => {
+const generateFields = (answersExporterCompany: ApplicationExporterCompany, answersExporterBusiness: ApplicationExporterBusiness, referenceNumber: number) => {
   let fields = [] as Array<SummaryListItemData>;
 
   fields = [
     ...generateYourCompanyFields(answersExporterCompany, referenceNumber),
-    ...generateNatureOfYourBusinessFields(anwersExporterBusiness, referenceNumber),
+    ...generateNatureOfYourBusinessFields(answersExporterBusiness, referenceNumber),
   ];
 
   return fields;
@@ -25,17 +25,17 @@ const generateFields = (answersExporterCompany: ApplicationExporterCompany, anwe
 /**
  * yourBusinessSummaryList
  * Create multiple groups with govukSummaryList data structure
- * @param {ApplicationExporterCompany} answersExporterCompany application exporterCompany object
- * @param {ApplicationExporterBusiness} anwersExporterBusiness application exporterBusiness object
+ * @param {ApplicationExporterCompany} answersExporterCompany Application exporterCompany object
+ * @param {ApplicationExporterBusiness} answersExporterBusiness Application exporterBusiness object
  * @param {Number} referenceNumber Application reference number
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const yourBusinessSummaryList = (
   answersExporterCompany: ApplicationExporterCompany,
-  anwersExporterBusiness: ApplicationExporterBusiness,
+  answersExporterBusiness: ApplicationExporterBusiness,
   referenceNumber: number,
 ) => {
-  const fields = generateFields(answersExporterCompany, anwersExporterBusiness, referenceNumber);
+  const fields = generateFields(answersExporterCompany, answersExporterBusiness, referenceNumber);
 
   const summaryList = generateSummaryListRows(fields);
 

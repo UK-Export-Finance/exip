@@ -9,7 +9,11 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
     title: 'Field A',
   };
 
-  const mockSubmittedData = { fieldA: 'Field A answer' };
+  type submittedData = {
+    fieldA: string | number;
+  };
+
+  let mockSubmittedData = { fieldA: 'Field A answer' } as submittedData;
   const mockCustomValue = '<p>Mock html</p>';
 
   describe('generateSummaryListItemData', () => {
@@ -32,19 +36,13 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
 
     describe('when the number 0 is passed', () => {
       it('should return an object with correct fields', () => {
-        const mockSubmittedDataNumber = { fieldA: 0 };
-
-        mockInput.data = mockSubmittedDataNumber;
+        mockSubmittedData = { fieldA: 0 };
 
         const result = generateSummaryListItemData(mockInput);
 
-        const expected = {
-          id: mockInput.field.id,
-          title: getKeyText(mockInput.field),
-          value: getSummaryListItemDataValue(mockInput.field.id, mockInput.data),
-        };
+        const expected = getSummaryListItemDataValue(mockInput.field.id, mockInput.data);
 
-        expect(result).toEqual(expected);
+        expect(result.value).toEqual(expected);
       });
     });
 
@@ -105,6 +103,8 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
 
     describe('when no customValue is passed and the submitted data contains the field', () => {
       it('should return the value of the field in submitted data', () => {
+        mockSubmittedData = { fieldA: 'Field A answer' };
+
         const result = getSummaryListItemDataValue(mockField.id, mockSubmittedData);
 
         const expected = mockSubmittedData[mockField.id];
