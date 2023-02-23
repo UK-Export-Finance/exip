@@ -22,7 +22,7 @@ const {
         GOODS_OR_SERVICES,
         EMPLOYEES_INTERNATIONAL,
         EMPLOYEES_UK,
-      }
+      },
     },
   },
 } = FIELD_IDS;
