@@ -28,6 +28,10 @@ const {
         EMPLOYEES_INTERNATIONAL,
         EMPLOYEES_UK,
       },
+      TURNOVER: {
+        ESTIMATED_ANNUAL_TURNOVER,
+        PERCENTAGE_TURNOVER,
+      },
     },
   },
 } = FIELD_IDS;
@@ -202,6 +206,22 @@ const checkYourBusinessSummaryList = ({
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.NATURE_OF_YOUR_BUSINESS);
     const expectedValue = application.EXPORTER_BUSINESS[fieldId];
+
+    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [ESTIMATED_ANNUAL_TURNOVER]: () => {
+    const fieldId = ESTIMATED_ANNUAL_TURNOVER;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.TURNOVER);
+    const expectedValue = application.EXPORTER_BUSINESS[fieldId];
+
+    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [PERCENTAGE_TURNOVER]: () => {
+    const fieldId = PERCENTAGE_TURNOVER;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.TURNOVER);
+    const expectedValue = `${application.EXPORTER_BUSINESS[fieldId]}%`;
 
     assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },

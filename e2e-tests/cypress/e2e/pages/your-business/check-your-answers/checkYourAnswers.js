@@ -23,6 +23,10 @@ const {
         EMPLOYEES_INTERNATIONAL,
         EMPLOYEES_UK,
       },
+      TURNOVER: {
+        ESTIMATED_ANNUAL_TURNOVER,
+        PERCENTAGE_TURNOVER,
+      },
     },
   },
 } = FIELD_IDS;
@@ -98,6 +102,16 @@ const checkYourAnswers = {
       key: () => cy.get(`.${EMPLOYEES_INTERNATIONAL}-key`),
       value: () => cy.get(`.${EMPLOYEES_INTERNATIONAL}-value`),
       changeLink: () => cy.get(`[data-cy="${EMPLOYEES_INTERNATIONAL}-change-link"]`),
+    },
+    [ESTIMATED_ANNUAL_TURNOVER]: {
+      key: () => cy.get(`.${ESTIMATED_ANNUAL_TURNOVER}-key`),
+      value: () => cy.get(`.${ESTIMATED_ANNUAL_TURNOVER}-value`),
+      changeLink: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}-change-link"]`),
+    },
+    [PERCENTAGE_TURNOVER]: {
+      key: () => cy.get(`.${PERCENTAGE_TURNOVER}-key`),
+      value: () => cy.get(`.${PERCENTAGE_TURNOVER}-value`),
+      changeLink: () => cy.get(`[data-cy="${PERCENTAGE_TURNOVER}-change-link"]`),
     },
   },
 };
