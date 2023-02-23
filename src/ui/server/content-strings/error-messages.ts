@@ -237,7 +237,7 @@ export const ERROR_MESSAGES = {
         },
       },
       [FIELD_IDS.INSURANCE.ACCOUNT.SECURITY_CODE]: {
-        IS_EMPTY: 'Enter your 6-digit security code - for example, 356515. You cannot enter letters or special characters.',
+        INCORRECT: 'Enter your 6-digit security code - for example, 356515. You cannot enter letters or special characters.',
       },
     },
   },

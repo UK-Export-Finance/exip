@@ -83,6 +83,7 @@ export const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
+        submittedValues: req.body,
         validationErrors,
       });
     }

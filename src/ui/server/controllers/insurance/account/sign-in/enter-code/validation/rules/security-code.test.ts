@@ -25,7 +25,7 @@ describe('controllers/insurance/account/sign-in/enter-code/validation/rules/secu
 
       const result = securityCodeRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT, mockErrors);
 
       expect(result).toEqual(expected);
     });

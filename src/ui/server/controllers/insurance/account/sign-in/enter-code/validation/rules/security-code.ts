@@ -20,7 +20,7 @@ const {
 const securityCodeRules = (formBody: RequestBody, errors: object) => {
   // check if the field is empty.
   if (!objectHasProperty(formBody, FIELD_ID)) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT, errors);
   }
 
   return errors;

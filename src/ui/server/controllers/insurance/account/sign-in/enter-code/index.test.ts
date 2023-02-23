@@ -124,6 +124,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,
+          submittedValues: req.body,
           validationErrors: generateValidationErrors(req.body),
         });
       });
