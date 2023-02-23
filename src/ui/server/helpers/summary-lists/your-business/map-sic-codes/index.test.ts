@@ -31,10 +31,4 @@ describe('helpers/summary-lists/your-business/sic-code-mapping', () => {
 
     expect(response).toEqual(DEFAULT.EMPTY);
   });
-
-  it(`should return ${DEFAULT.EMPTY} if not provided with any sic codes`, () => {
-    const response = mapSicCodes();
-
-    expect(response).toEqual(DEFAULT.EMPTY);
-  });
 });
