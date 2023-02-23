@@ -40,9 +40,12 @@ interface Account extends ExporterUpdateInput {
   id: string;
   email: string;
   firstName: string;
+  lastName: string;
   salt: string;
   hash: string;
   verificationHash: string;
+  optSalt?: string;
+  optHash?: string;
 }
 
 interface Application {
@@ -63,6 +66,11 @@ interface Application {
 interface CompanyResponse {
   id: string;
   applicationId: string;
+}
+
+interface EmailResponse {
+  success: boolean;
+  emailRecipient: string;
 }
 
 interface ConnectId {
@@ -99,9 +107,23 @@ interface AccountSignInVariables {
   password: string;
 }
 
-interface EmailResponse {
+interface VerifyAccountSignInCodeVariables {
+  accountId: string;
+  securityCode: string;
+}
+
+interface VerifyAccountSignInCodeResponse {
   success: boolean;
-  emailRecipient: string;
+  accountId?: string;
+  firstName?: string;
+  lastName?: string;
+  token?: string;
+  expires?: string;
+  sessionIdentifier?: string;
+}
+
+interface VerifyAccountSesssionVariables {
+  token: string;
 }
 
 export {
@@ -113,6 +135,9 @@ export {
   CompanyResponse,
   EmailResponse,
   SicCodes,
-  VerifyEmailAddressVariables,
   SendEmailConfirmEmailAddressVariables,
+  VerifyEmailAddressVariables,
+  VerifyAccountSignInCodeVariables,
+  VerifyAccountSignInCodeResponse,
+  VerifyAccountSesssionVariables,
 };

@@ -2,7 +2,14 @@ import type { GraphQLSchema } from 'graphql';
 import { mergeSchemas } from '@graphql-tools/schema';
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { createAccount, verifyAccountEmailAddress, sendEmailConfirmEmailAddress, accountSignIn } from './custom-resolvers';
+import {
+  createAccount,
+  verifyAccountEmailAddress,
+  sendEmailConfirmEmailAddress,
+  accountSignIn,
+  verifyAccountSignInCode,
+  verifyAccountSession,
+} from './custom-resolvers';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
 import { SicCodes } from './types';
@@ -111,8 +118,14 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         emailRecipient: String
       }
 
+      """ TODO rename, as it has sign in/session specific things now """
       type SuccessResponse {
-        success: Boolean
+        accountId: String
+        firstName: String
+        lastName: String
+        token: String
+        sessionIdentifier: String
+        success: Boolean!
       }
 
       type Mutation {
@@ -123,7 +136,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           email: String!
           password: String!
         ): Account
-        """ verify an an account's email address """
+        """ verify an account's email address """
         verifyAccountEmailAddress(
           token: String!
         ): EmailResponse
@@ -137,6 +150,18 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           email: String!
           password: String!
         ): SuccessResponse
+
+        """ verify an account's OTP security code """
+        verifyAccountSignInCode(
+          accountId: String!
+          securityCode: String!
+        ): SuccessResponse
+
+        """ verify an account session """
+        verifyAccountSession(
+          token: String!
+        ): SuccessResponse
+
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -162,6 +187,8 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         accountSignIn,
         verifyAccountEmailAddress,
         sendEmailConfirmEmailAddress,
+        verifyAccountSignInCode,
+        verifyAccountSession,
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);

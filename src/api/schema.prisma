@@ -87,6 +87,8 @@ model Exporter {
   otpSalt            String    @default("")
   otpHash            String    @default("") @mysql.VarChar(256)
   otpExpiry          DateTime?
+  sessionExpiry      DateTime?
+  sessionIdentifier  String    @default("")
 }
 
 model ExporterBusiness {

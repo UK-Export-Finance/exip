@@ -398,7 +398,9 @@ var lists = {
       otpHash: (0, import_fields.text)({
         db: { nativeType: "VarChar(256)" }
       }),
-      otpExpiry: (0, import_fields.timestamp)()
+      otpExpiry: (0, import_fields.timestamp)(),
+      sessionExpiry: (0, import_fields.timestamp)(),
+      sessionIdentifier: (0, import_fields.text)()
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData }) => {
@@ -607,7 +609,7 @@ var session = (0, import_session.statelessSessions)({
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
 var import_axios = __toESM(require("axios"));
-var import_dotenv2 = __toESM(require("dotenv"));
+var import_dotenv5 = __toESM(require("dotenv"));
 
 // custom-resolvers/create-account.ts
 var import_crypto = __toESM(require("crypto"));
@@ -820,7 +822,10 @@ var accountSignIn = async (root, variables, context) => {
       });
       const emailResponse = await emails_default.securityCodeEmail(email, exporter.firstName, securityCode);
       if (emailResponse.success) {
-        return emailResponse;
+        return {
+          ...emailResponse,
+          accountId: exporter.id
+        };
       }
       return {
         success: false
@@ -833,6 +838,125 @@ var accountSignIn = async (root, variables, context) => {
   }
 };
 var account_sign_in_default = accountSignIn;
+
+// custom-resolvers/verify-account-sign-in-code.ts
+var import_dotenv3 = __toESM(require("dotenv"));
+var import_crypto5 = __toESM(require("crypto"));
+var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
+
+// helpers/is-valid-otp.ts
+var import_dotenv2 = __toESM(require("dotenv"));
+var import_crypto4 = __toESM(require("crypto"));
+import_dotenv2.default.config();
+var { ENCRYPTION: ENCRYPTION4 } = ACCOUNT;
+var {
+  STRING_TYPE: STRING_TYPE4,
+  PBKDF2: { ITERATIONS: ITERATIONS4, DIGEST_ALGORITHM: DIGEST_ALGORITHM4 },
+  OTP: {
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH4 }
+  }
+} = ENCRYPTION4;
+var isValidOTP = (securityCode, otpSalt, otpHash) => {
+  try {
+    console.info("Validating OTP");
+    const hashVerify = import_crypto4.default.pbkdf2Sync(securityCode, otpSalt, ITERATIONS4, KEY_LENGTH4, DIGEST_ALGORITHM4).toString(STRING_TYPE4);
+    if (otpHash === hashVerify) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Error validating OTP ${err}`);
+  }
+};
+var is_valid_otp_default = isValidOTP;
+
+// custom-resolvers/verify-account-sign-in-code.ts
+import_dotenv3.default.config();
+var PRIV_KEY = Buffer.from(String(process.env.JWT_SIGNING_KEY), "base64").toString("ascii");
+var createJWT = (accountId) => {
+  const sessionIdentifier = import_crypto5.default.randomBytes(32).toString("hex");
+  const expiresIn = "8h";
+  const payload = {
+    sub: accountId,
+    iat: Date.now(),
+    sessionIdentifier
+  };
+  const signedToken = import_jsonwebtoken.default.sign(payload, PRIV_KEY, { expiresIn, algorithm: "RS256" });
+  return {
+    token: `Bearer ${signedToken}`,
+    expires: expiresIn,
+    sessionIdentifier
+  };
+};
+var verifyAccountSignInCode = async (root, variables, context) => {
+  try {
+    console.info("Verifying exporter account sign in code");
+    const { accountId, securityCode } = variables;
+    const exporter = await context.db.Exporter.findOne({
+      where: { id: accountId }
+    });
+    if (!exporter) {
+      return {
+        success: false
+      };
+    }
+    const { otpSalt, otpHash } = exporter;
+    const isValid = otpSalt && otpHash && is_valid_otp_default(securityCode, otpSalt, otpHash);
+    if (isValid) {
+      const jwt = createJWT(accountId);
+      const { sessionIdentifier } = jwt;
+      const accountUpdate = {
+        sessionIdentifier,
+        sessionExpiry: new Date(),
+        otpSalt: "",
+        otpHash: "",
+        otpExpiry: null
+      };
+      await context.db.Exporter.updateOne({
+        where: { id: accountId },
+        data: accountUpdate
+      });
+      return {
+        success: true,
+        accountId: exporter.id,
+        lastName: exporter.lastName,
+        firstName: exporter.firstName,
+        ...jwt
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Verifying exporter account sign in code and generating JWT (verifyAccountSignInCode mutation) ${err}`);
+  }
+};
+var verify_account_sign_in_code_default = verifyAccountSignInCode;
+
+// custom-resolvers/verify-account-session.ts
+var import_dotenv4 = __toESM(require("dotenv"));
+var import_jsonwebtoken2 = __toESM(require("jsonwebtoken"));
+import_dotenv4.default.config();
+var PRIV_KEY2 = Buffer.from(String(process.env.JWT_SIGNING_KEY), "base64").toString("ascii");
+var verifyAccountSesssion = async (root, variables) => {
+  try {
+    console.info("Verifying exporter account session");
+    const { token } = variables;
+    const decode = import_jsonwebtoken2.default.verify(token, PRIV_KEY2);
+    if (decode.sub) {
+      return {
+        success: true
+      };
+    }
+    return { success: false };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Verifying exporter account session ${err}`);
+  }
+};
+var verify_account_session_default = verifyAccountSesssion;
 
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -888,7 +1012,7 @@ var mapSicCodes = (company, sicCodes) => {
 };
 
 // custom-schema.ts
-import_dotenv2.default.config();
+import_dotenv5.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
@@ -989,8 +1113,14 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         emailRecipient: String
       }
 
+      """ TODO rename, as it has sign in/session specific things now """
       type SuccessResponse {
-        success: Boolean
+        accountId: String
+        firstName: String
+        lastName: String
+        token: String
+        sessionIdentifier: String
+        success: Boolean!
       }
 
       type Mutation {
@@ -1001,7 +1131,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           email: String!
           password: String!
         ): Account
-        """ verify an an account's email address """
+        """ verify an account's email address """
         verifyAccountEmailAddress(
           token: String!
         ): EmailResponse
@@ -1015,6 +1145,18 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           email: String!
           password: String!
         ): SuccessResponse
+
+        """ verify an account's OTP security code """
+        verifyAccountSignInCode(
+          accountId: String!
+          securityCode: String!
+        ): SuccessResponse
+
+        """ verify an account session """
+        verifyAccountSession(
+          token: String!
+        ): SuccessResponse
+
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -1040,6 +1182,8 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       accountSignIn: account_sign_in_default,
       verifyAccountEmailAddress: verify_account_email_address_default,
       sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
+      verifyAccountSignInCode: verify_account_sign_in_code_default,
+      verifyAccountSession: verify_account_session_default,
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);

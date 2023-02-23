@@ -60,17 +60,19 @@ describe('custom-resolvers/account-sign-in', () => {
   });
 
   describe('when the provided password is valid', () => {
+    let account: Account;
+
     beforeEach(async () => {
       await accountSignIn({}, variables, context);
       jest.clearAllMocks();
+
+      account = (await context.query.Exporter.findOne({
+        where: { id: exporter.id },
+        query: 'id email otpSalt otpHash otpExpiry',
+      })) as Account;
     });
 
     test('it should generate an OTP and save to the account', async () => {
-      const account = await context.query.Exporter.findOne({
-        where: { id: exporter.id },
-        query: 'id email otpSalt otpHash otpExpiry',
-      });
-
       expect(account.otpSalt).toEqual(mockOtp.salt);
       expect(account.otpHash).toEqual(mockOtp.hash);
       expect(new Date(account.otpExpiry)).toEqual(mockOtp.expiry);
@@ -85,10 +87,15 @@ describe('custom-resolvers/account-sign-in', () => {
       expect(securityCodeEmailSpy).toHaveBeenCalledWith(email, firstName, mockOtp.securityCode);
     });
 
-    test('it should return the eamil response', async () => {
+    test('it should return the email response and accountId', async () => {
       const result = await accountSignIn({}, variables, context);
 
-      expect(result).toEqual(sendEmailResponse);
+      const expected = {
+        ...sendEmailResponse,
+        accountId: account.id,
+      };
+
+      expect(result).toEqual(expected);
     });
   });
 

@@ -376,6 +376,8 @@ type Exporter {
   otpSalt: String
   otpHash: String
   otpExpiry: DateTime
+  sessionExpiry: DateTime
+  sessionIdentifier: String
 }
 
 input ExporterWhereUniqueInput {
@@ -400,6 +402,8 @@ input ExporterWhereInput {
   otpSalt: StringFilter
   otpHash: StringFilter
   otpExpiry: DateTimeNullableFilter
+  sessionExpiry: DateTimeNullableFilter
+  sessionIdentifier: StringFilter
 }
 
 input BooleanFilter {
@@ -422,6 +426,8 @@ input ExporterOrderByInput {
   otpSalt: OrderDirection
   otpHash: OrderDirection
   otpExpiry: OrderDirection
+  sessionExpiry: OrderDirection
+  sessionIdentifier: OrderDirection
 }
 
 input ExporterUpdateInput {
@@ -438,6 +444,8 @@ input ExporterUpdateInput {
   otpSalt: String
   otpHash: String
   otpExpiry: DateTime
+  sessionExpiry: DateTime
+  sessionIdentifier: String
 }
 
 input ExporterUpdateArgs {
@@ -459,6 +467,8 @@ input ExporterCreateInput {
   otpSalt: String
   otpHash: String
   otpExpiry: DateTime
+  sessionExpiry: DateTime
+  sessionIdentifier: String
 }
 
 type ExporterBusiness {
@@ -1139,7 +1149,7 @@ type Mutation {
   """ create an account """
   createAccount(firstName: String!, lastName: String!, email: String!, password: String!): Account
 
-  """ verify an an account's email address """
+  """ verify an account's email address """
   verifyAccountEmailAddress(token: String!): EmailResponse
 
   """ send confirm email address email """
@@ -1147,6 +1157,12 @@ type Mutation {
 
   """ send confirm email address email """
   accountSignIn(email: String!, password: String!): SuccessResponse
+
+  """ verify an account's OTP security code """
+  verifyAccountSignInCode(accountId: String!, securityCode: String!): SuccessResponse
+
+  """ verify an account session """
+  verifyAccountSession(token: String!): SuccessResponse
 
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
@@ -1404,6 +1420,12 @@ type EmailResponse {
   emailRecipient: String
 }
 
+""" TODO rename, as it has sign in/session specific things now """
 type SuccessResponse {
-  success: Boolean
+  accountId: String
+  firstName: String
+  lastName: String
+  token: String
+  sessionIdentifier: String
+  success: Boolean!
 }

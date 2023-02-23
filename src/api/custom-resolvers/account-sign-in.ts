@@ -52,7 +52,10 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
       const emailResponse = await sendEmail.securityCodeEmail(email, exporter.firstName, securityCode);
 
       if (emailResponse.success) {
-        return emailResponse;
+        return {
+          ...emailResponse,
+          accountId: exporter.id,
+        };
       }
 
       return {
