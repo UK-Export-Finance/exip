@@ -32,7 +32,7 @@ const {
  * generateYourCompanyFields
  * Create all your company fields and values for the Insurance - Company details govukSummaryList
  * @param {ApplicationExporterCompany} answers exporter company data
- * @param {number} referenceNumber application reference number
+ * @param {Number} referenceNumber application reference number
  * @returns {Object} All exporter company fields and values in an object structure for GOVUK summary list structure
  */
 const generateYourCompanyFields = (answers: ApplicationExporterCompany, referenceNumber: number) => {

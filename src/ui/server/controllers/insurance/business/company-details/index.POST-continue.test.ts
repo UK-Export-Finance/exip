@@ -79,40 +79,20 @@ describe('controllers/insurance/business/companies-details', () => {
     });
 
     describe('when there are no validation errors', () => {
-      describe('when the originalUrl contains change', () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.body = {
-            [INPUT]: '8989898',
-            [TRADING_NAME]: 'true',
-            [TRADING_ADDRESS]: 'false',
-            [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
-          };
+      it('should redirect to next page', async () => {
+        req.body = {
+          [INPUT]: '8989898',
+          [TRADING_NAME]: 'true',
+          [TRADING_ADDRESS]: 'false',
+          [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
+        };
 
-          req.originalUrl = COMPANY_DETAILS_CHANGE;
+        req.originalUrl = `insurance/${mockApplication.referenceNumber}/${COMPANY_DETAILS_ROOT}`;
 
-          await post(req, res);
+        await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-      });
-
-      describe('when the originalUrl does not contain change', () => {
-        it('should redirect to next page', async () => {
-          req.body = {
-            [INPUT]: '8989898',
-            [TRADING_NAME]: 'true',
-            [TRADING_ADDRESS]: 'false',
-            [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
-          };
-
-          req.originalUrl = `insurance/${mockApplication.referenceNumber}/${COMPANY_DETAILS_ROOT}`;
-
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
+        expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
       it('should call mapAndSave.companyDetails once with updateBody and application', async () => {
@@ -132,6 +112,24 @@ describe('controllers/insurance/business/companies-details', () => {
           ...mockCompany,
         };
         expect(mapAndSave.companyDetails).toHaveBeenCalledWith(updateBody, mockApplication);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = {
+            [INPUT]: '8989898',
+            [TRADING_NAME]: 'true',
+            [TRADING_ADDRESS]: 'false',
+            [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
+          };
+
+          req.originalUrl = COMPANY_DETAILS_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 
