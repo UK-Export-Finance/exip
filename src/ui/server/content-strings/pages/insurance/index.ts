@@ -9,6 +9,10 @@ import formatCurrency from '../../../helpers/format-currency';
 
 const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
 
+const DASHBOARD = {
+  PAGE_TITLE: 'Dashboard',
+};
+
 const ALL_SECTIONS = {
   PAGE_TITLE: 'Apply for UKEF export insurance',
   DEADLINE_TO_SUBMIT: 'Deadline to submit',
@@ -86,6 +90,7 @@ const START = {
 
 export default {
   ACCOUNT,
+  DASHBOARD,
   ALL_SECTIONS,
   APPLY_OFFLINE,
   EXPORTER_BUSINESS,
