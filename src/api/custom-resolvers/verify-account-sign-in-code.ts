@@ -1,43 +1,14 @@
-import dotenv from 'dotenv';
-import crypto from 'crypto';
-import jsonwebtoken from 'jsonwebtoken';
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { ACCOUNT } from '../constants';
 import isValidOTP from '../helpers/is-valid-otp';
+import create from '../helpers/create-jwt';
 import { Account, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../types';
 
-dotenv.config();
-
 const {
-  ENCRYPTION: { RANDOM_BYTES_SIZE, STRING_TYPE },
   JWT: {
-    KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
-    TOKEN: { EXPIRY },
     SESSION_EXPIRY,
   },
 } = ACCOUNT;
-
-const PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
-
-const createJWT = (accountId: string) => {
-  const sessionIdentifier = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
-
-  const expiresIn = EXPIRY;
-
-  const payload = {
-    sub: accountId,
-    iat: Date.now(),
-    sessionIdentifier,
-  };
-
-  const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, { expiresIn, algorithm: 'RS256' });
-
-  return {
-    token: `Bearer ${signedToken}`,
-    expires: expiresIn,
-    sessionIdentifier,
-  };
-};
 
 /**
  * verifyAccountSignInCode
@@ -73,7 +44,7 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
 
     if (isValid) {
       // create JWT
-      const jwt = createJWT(accountId);
+      const jwt = create.JWT(accountId);
 
       // update the account and nullify OTP fields.
       const { sessionIdentifier } = jwt;

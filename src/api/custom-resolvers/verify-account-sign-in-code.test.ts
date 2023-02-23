@@ -1,6 +1,8 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import verifyAccountSignInCode from './verify-account-sign-in-code';
+import create from '../helpers/create-jwt';
+import { ACCOUNT } from '../constants';
 import generate from '../helpers/generate-otp';
 import baseConfig from '../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
@@ -15,11 +17,28 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
+
+const {
+  JWT: {
+    TOKEN: { EXPIRY },
+  },
+} = ACCOUNT;
+
 describe('custom-resolvers/verify-account-sign-in-code', () => {
   let exporter: Account;
   let updatedExporter: Account;
   let variables: VerifyAccountSignInCodeVariables;
   let result: VerifyAccountSignInCodeResponse;
+
+  jest.mock('../helpers/create-jwt');
+
+  const mockJWT = {
+    token: `Bearer 123-MOCK`,
+    expires: EXPIRY,
+    sessionIdentifier: '1234',
+  };
+
+  create.JWT = () => mockJWT;
 
   beforeEach(async () => {
     // create an account
@@ -67,25 +86,18 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
 
   // TODO transform createJWT into module like OTP so we can stub it and test actual generation.
   test('it should return JWT', async () => {
-    expect(typeof result.token).toEqual('string');
-    expect(typeof result.expires).toEqual('string');
-    expect(typeof result.sessionIdentifier).toEqual('string');
+    expect(result.token).toEqual(mockJWT.token);
+    expect(result.expires).toEqual(mockJWT.expires);
+    expect(result.sessionIdentifier).toEqual(mockJWT.sessionIdentifier);
   });
 
   it('should save a session identifier', () => {
-    expect(typeof updatedExporter.sessionIdentifier).toEqual('string');
+    expect(updatedExporter.sessionIdentifier).toEqual(mockJWT.sessionIdentifier);
 
     expect(typeof updatedExporter.sessionExpiry).toEqual('object');
   });
 
   it('should save a session expiry date to the account', () => {
-    const now = new Date();
-
-    const nowDay = now.getDay();
-    const nowMonth = now.getMonth();
-    const nowYear = now.getFullYear();
-    const nowHours = now.getHours();
-
     const expiry = new Date(updatedExporter.sessionExpiry);
 
     const expiryDay = expiry.getDay();
@@ -93,10 +105,20 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     const expiryYear = expiry.getFullYear();
     const expiryHours = expiry.getHours();
 
-    expect(expiryDay).toEqual(nowDay);
-    expect(expiryMonth).toEqual(nowMonth);
-    expect(expiryYear).toEqual(nowYear);
-    expect(expiryHours).toEqual(nowHours + 8);
+    const now = new Date();
+
+    const hours = 8;
+    const expected = new Date(now.getTime() + hours * 60 * 60 * 1000)
+
+    const expectedDay = expected.getDay();
+    const expectedMonth = expected.getMonth();
+    const expectedYear = expected.getFullYear();
+    const expectedHours = expected.getHours();
+
+    expect(expiryDay).toEqual(expectedDay);
+    expect(expiryMonth).toEqual(expectedMonth);
+    expect(expiryYear).toEqual(expectedYear);
+    expect(expiryHours).toEqual(expectedHours);
   });
 
   it("should nullify thhe account's OTP fields", () => {
