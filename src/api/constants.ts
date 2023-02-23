@@ -78,7 +78,15 @@ export const ACCOUNT = {
     },
     TOKEN: {
       EXPIRY: '8h',
-      // ALGORITHM: 'RS256' as Algorithm,
+    },
+    SESSION_EXPIRY: () => {
+      // 8 hours from now
+      const now = new Date();
+
+      const hours = 8;
+      const future = new Date(now.getTime() + hours * 60 * 60 * 1000);
+
+      return future;
     },
   },
 };

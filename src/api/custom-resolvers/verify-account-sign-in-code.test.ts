@@ -72,9 +72,31 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     expect(typeof result.sessionIdentifier).toEqual('string');
   });
 
-  it('should save a session identifier and expiry date to the account', () => {
+  it('should save a session identifier', () => {
     expect(typeof updatedExporter.sessionIdentifier).toEqual('string');
+
     expect(typeof updatedExporter.sessionExpiry).toEqual('object');
+  });
+
+  it('should save a session expiry date to the account', () => {
+    const now = new Date();
+
+    const nowDay = now.getDay();
+    const nowMonth = now.getMonth();
+    const nowYear = now.getFullYear();
+    const nowHours = now.getHours();
+
+    const expiry = new Date(updatedExporter.sessionExpiry);
+
+    const expiryDay = expiry.getDay();
+    const expiryMonth = expiry.getMonth();
+    const expiryYear = expiry.getFullYear();
+    const expiryHours = expiry.getHours();
+
+    expect(expiryDay).toEqual(nowDay);
+    expect(expiryMonth).toEqual(nowMonth);
+    expect(expiryYear).toEqual(nowYear);
+    expect(expiryHours).toEqual(nowHours + 8);
   });
 
   it("should nullify thhe account's OTP fields", () => {

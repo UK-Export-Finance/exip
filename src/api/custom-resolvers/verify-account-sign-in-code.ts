@@ -13,6 +13,7 @@ const {
   JWT: {
     KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
     TOKEN: { EXPIRY },
+    SESSION_EXPIRY,
   },
 } = ACCOUNT;
 
@@ -79,8 +80,7 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
 
       const accountUpdate = {
         sessionIdentifier,
-        // TODO: actual expiry time.
-        sessionExpiry: new Date(),
+        sessionExpiry: SESSION_EXPIRY(),
         otpSalt: '',
         otpHash: '',
         otpExpiry: null,
