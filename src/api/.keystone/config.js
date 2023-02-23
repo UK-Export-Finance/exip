@@ -886,16 +886,9 @@ var is_valid_otp_default = isValidOTP;
 // custom-resolvers/verify-account-sign-in-code.ts
 import_dotenv4.default.config();
 var {
-  ENCRYPTION: {
-    RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3,
-    STRING_TYPE: STRING_TYPE5
-  },
+  ENCRYPTION: { RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3, STRING_TYPE: STRING_TYPE5 },
   JWT: {
-    KEY: {
-      SIGNATURE,
-      ENCODING,
-      STRING_ENCODING
-    },
+    KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
     TOKEN: { EXPIRY }
   }
 } = ACCOUNT;
@@ -960,6 +953,38 @@ var verifyAccountSignInCode = async (root, variables, context) => {
   }
 };
 var verify_account_sign_in_code_default = verifyAccountSignInCode;
+
+// custom-resolvers/add-and-get-otp.ts
+var addAndGetOtp = async (root, variables, context) => {
+  try {
+    console.info("Adding OTP to exporter account");
+    const { email } = variables;
+    const exporter = await get_account_by_field_default(context, "email", email);
+    if (!exporter) {
+      console.info("Unable to generate and add OTP to exporter account - no account found");
+      return { success: false };
+    }
+    const otp = generate_otp_default.otp();
+    const { securityCode, salt, hash, expiry } = otp;
+    const accountUpdate = {
+      otpSalt: salt,
+      otpHash: hash,
+      otpExpiry: expiry
+    };
+    await context.db.Exporter.updateOne({
+      where: { id: exporter.id },
+      data: accountUpdate
+    });
+    return {
+      success: true,
+      securityCode
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Adding OTP to exporter account (addAndGetOtp mutation) ${err}`);
+  }
+};
+var add_and_get_otp_default = addAndGetOtp;
 
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -1126,6 +1151,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         success: Boolean!
       }
 
+      type AddAndGetOtpResponse {
+        success: Boolean!
+        securityCode: String!
+      }
+
       type Mutation {
         """ create an account """
         createAccount(
@@ -1155,6 +1185,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           securityCode: String!
         ): SuccessResponse
 
+        """ add an OTP security code to an account """
+        addAndGetOtp(
+          email: String!
+        ): AddAndGetOtpResponse
+
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -1181,6 +1216,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       verifyAccountEmailAddress: verify_account_email_address_default,
       sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
       verifyAccountSignInCode: verify_account_sign_in_code_default,
+      addAndGetOtp: add_and_get_otp_default,
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);

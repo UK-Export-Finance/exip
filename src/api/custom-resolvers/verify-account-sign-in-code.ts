@@ -9,17 +9,10 @@ import { Account, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeRespo
 dotenv.config();
 
 const {
-  ENCRYPTION: {
-    RANDOM_BYTES_SIZE,
-    STRING_TYPE,
-  },
+  ENCRYPTION: { RANDOM_BYTES_SIZE, STRING_TYPE },
   JWT: {
-    KEY: {
-      SIGNATURE,
-      ENCODING,
-      STRING_ENCODING,
-    },
-    TOKEN: { EXPIRY }
+    KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
+    TOKEN: { EXPIRY },
   },
 } = ACCOUNT;
 

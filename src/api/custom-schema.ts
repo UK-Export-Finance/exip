@@ -8,6 +8,7 @@ import {
   sendEmailConfirmEmailAddress,
   accountSignIn,
   verifyAccountSignInCode,
+  addAndGetOtp,
 } from './custom-resolvers';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
@@ -127,6 +128,11 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         success: Boolean!
       }
 
+      type AddAndGetOtpResponse {
+        success: Boolean!
+        securityCode: String!
+      }
+
       type Mutation {
         """ create an account """
         createAccount(
@@ -156,6 +162,11 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           securityCode: String!
         ): SuccessResponse
 
+        """ add an OTP security code to an account """
+        addAndGetOtp(
+          email: String!
+        ): AddAndGetOtpResponse
+
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -182,6 +193,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         verifyAccountEmailAddress,
         sendEmailConfirmEmailAddress,
         verifyAccountSignInCode,
+        addAndGetOtp,
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);

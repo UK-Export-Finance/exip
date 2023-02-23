@@ -1161,6 +1161,9 @@ type Mutation {
   """ verify an account's OTP security code """
   verifyAccountSignInCode(accountId: String!, securityCode: String!): SuccessResponse
 
+  """ add an OTP security code to an account """
+  addAndGetOtp(email: String!): AddAndGetOtpResponse
+
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
 }
@@ -1425,4 +1428,9 @@ type SuccessResponse {
   token: String
   sessionIdentifier: String
   success: Boolean!
+}
+
+type AddAndGetOtpResponse {
+  success: Boolean!
+  securityCode: String!
 }
