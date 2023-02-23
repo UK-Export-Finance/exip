@@ -8,7 +8,6 @@ import {
   sendEmailConfirmEmailAddress,
   accountSignIn,
   verifyAccountSignInCode,
-  verifyAccountSession,
 } from './custom-resolvers';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
@@ -157,11 +156,6 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           securityCode: String!
         ): SuccessResponse
 
-        """ verify an account session """
-        verifyAccountSession(
-          token: String!
-        ): SuccessResponse
-
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -188,7 +182,6 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         verifyAccountEmailAddress,
         sendEmailConfirmEmailAddress,
         verifyAccountSignInCode,
-        verifyAccountSession,
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);

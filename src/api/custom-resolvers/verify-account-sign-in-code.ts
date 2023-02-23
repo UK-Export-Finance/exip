@@ -2,17 +2,33 @@ import dotenv from 'dotenv';
 import crypto from 'crypto';
 import jsonwebtoken from 'jsonwebtoken';
 import { Context } from '.keystone/types'; // eslint-disable-line
+import { ACCOUNT } from '../constants';
 import isValidOTP from '../helpers/is-valid-otp';
 import { Account, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../types';
 
 dotenv.config();
 
-const PRIV_KEY = Buffer.from(String(process.env.JWT_SIGNING_KEY), 'base64').toString('ascii');
+const {
+  ENCRYPTION: {
+    RANDOM_BYTES_SIZE,
+    STRING_TYPE,
+  },
+  JWT: {
+    KEY: {
+      SIGNATURE,
+      ENCODING,
+      STRING_ENCODING,
+    },
+    TOKEN: { EXPIRY }
+  },
+} = ACCOUNT;
+
+const PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
 
 const createJWT = (accountId: string) => {
-  const sessionIdentifier = crypto.randomBytes(32).toString('hex');
+  const sessionIdentifier = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
 
-  const expiresIn = '8h';
+  const expiresIn = EXPIRY;
 
   const payload = {
     sub: accountId,

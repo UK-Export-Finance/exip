@@ -1161,9 +1161,6 @@ type Mutation {
   """ verify an account's OTP security code """
   verifyAccountSignInCode(accountId: String!, securityCode: String!): SuccessResponse
 
-  """ verify an account session """
-  verifyAccountSession(token: String!): SuccessResponse
-
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
 }

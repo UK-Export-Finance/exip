@@ -40,6 +40,8 @@ var import_fields_document = require("@keystone-6/fields-document");
 var import_date_fns = require("date-fns");
 
 // constants.ts
+var import_dotenv = __toESM(require("dotenv"));
+import_dotenv.default.config();
 var ANSWERS = {
   YES: "Yes",
   NO: "No"
@@ -95,6 +97,16 @@ var ACCOUNT = {
       const future = new Date(now.setMilliseconds(milliseconds));
       return future;
     }
+  },
+  JWT: {
+    KEY: {
+      SIGNATURE: String(process.env.JWT_SIGNING_KEY),
+      ENCODING: "base64",
+      STRING_ENCODING: "ascii"
+    },
+    TOKEN: {
+      EXPIRY: "8h"
+    }
   }
 };
 var EMAIL_TEMPLATE_IDS = {
@@ -105,9 +117,9 @@ var EMAIL_TEMPLATE_IDS = {
 };
 
 // integrations/notify/index.ts
-var import_dotenv = __toESM(require("dotenv"));
+var import_dotenv2 = __toESM(require("dotenv"));
 var import_notifications_node_client = require("notifications-node-client");
-import_dotenv.default.config();
+import_dotenv2.default.config();
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
 var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
 var notify = {
@@ -840,14 +852,14 @@ var accountSignIn = async (root, variables, context) => {
 var account_sign_in_default = accountSignIn;
 
 // custom-resolvers/verify-account-sign-in-code.ts
-var import_dotenv3 = __toESM(require("dotenv"));
+var import_dotenv4 = __toESM(require("dotenv"));
 var import_crypto5 = __toESM(require("crypto"));
 var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
 
 // helpers/is-valid-otp.ts
-var import_dotenv2 = __toESM(require("dotenv"));
+var import_dotenv3 = __toESM(require("dotenv"));
 var import_crypto4 = __toESM(require("crypto"));
-import_dotenv2.default.config();
+import_dotenv3.default.config();
 var { ENCRYPTION: ENCRYPTION4 } = ACCOUNT;
 var {
   STRING_TYPE: STRING_TYPE4,
@@ -872,11 +884,28 @@ var isValidOTP = (securityCode, otpSalt, otpHash) => {
 var is_valid_otp_default = isValidOTP;
 
 // custom-resolvers/verify-account-sign-in-code.ts
-import_dotenv3.default.config();
-var PRIV_KEY = Buffer.from(String(process.env.JWT_SIGNING_KEY), "base64").toString("ascii");
+import_dotenv4.default.config();
+var {
+  ENCRYPTION: {
+    RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3,
+    STRING_TYPE: STRING_TYPE5
+  },
+  JWT: {
+    KEY: {
+      SIGNATURE,
+      ENCODING,
+      STRING_ENCODING
+    },
+    TOKEN: {
+      EXPIRY,
+      ALGORITHM
+    }
+  }
+} = ACCOUNT;
+var PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
 var createJWT = (accountId) => {
-  const sessionIdentifier = import_crypto5.default.randomBytes(32).toString("hex");
-  const expiresIn = "8h";
+  const sessionIdentifier = import_crypto5.default.randomBytes(RANDOM_BYTES_SIZE3).toString(STRING_TYPE5);
+  const expiresIn = EXPIRY;
   const payload = {
     sub: accountId,
     iat: Date.now(),
@@ -934,29 +963,6 @@ var verifyAccountSignInCode = async (root, variables, context) => {
   }
 };
 var verify_account_sign_in_code_default = verifyAccountSignInCode;
-
-// custom-resolvers/verify-account-session.ts
-var import_dotenv4 = __toESM(require("dotenv"));
-var import_jsonwebtoken2 = __toESM(require("jsonwebtoken"));
-import_dotenv4.default.config();
-var PRIV_KEY2 = Buffer.from(String(process.env.JWT_SIGNING_KEY), "base64").toString("ascii");
-var verifyAccountSesssion = async (root, variables) => {
-  try {
-    console.info("Verifying exporter account session");
-    const { token } = variables;
-    const decode = import_jsonwebtoken2.default.verify(token, PRIV_KEY2);
-    if (decode.sub) {
-      return {
-        success: true
-      };
-    }
-    return { success: false };
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Verifying exporter account session ${err}`);
-  }
-};
-var verify_account_session_default = verifyAccountSesssion;
 
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -1152,11 +1158,6 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           securityCode: String!
         ): SuccessResponse
 
-        """ verify an account session """
-        verifyAccountSession(
-          token: String!
-        ): SuccessResponse
-
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -1183,7 +1184,6 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       verifyAccountEmailAddress: verify_account_email_address_default,
       sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
       verifyAccountSignInCode: verify_account_sign_in_code_default,
-      verifyAccountSession: verify_account_session_default,
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);
