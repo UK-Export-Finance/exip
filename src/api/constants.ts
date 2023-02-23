@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import { BufferEncoding } from './types';
 
 dotenv.config();
 

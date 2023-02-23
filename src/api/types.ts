@@ -63,6 +63,8 @@ interface Application {
   exporterBroker: ApplicationExporterBroker;
 }
 
+type BufferEncoding = 'hex' | 'base64' | 'ascii';
+
 interface CompanyResponse {
   id: string;
   applicationId: string;
@@ -126,12 +128,18 @@ interface VerifyAccountSesssionVariables {
   token: string;
 }
 
+interface AddOtpToAccountVariables {
+  email: string;
+  accountId: string;
+}
+
 export {
   Account,
   AccountCreationVariables,
   AccountInput,
   AccountSignInVariables,
   Application,
+  BufferEncoding,
   CompanyResponse,
   EmailResponse,
   SicCodes,
@@ -140,4 +148,5 @@ export {
   VerifyAccountSignInCodeVariables,
   VerifyAccountSignInCodeResponse,
   VerifyAccountSesssionVariables,
+  AddOtpToAccountVariables,
 };
