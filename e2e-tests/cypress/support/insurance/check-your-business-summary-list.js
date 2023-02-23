@@ -22,6 +22,12 @@ const {
         WEBSITE,
         PHONE_NUMBER,
       },
+      NATURE_OF_YOUR_BUSINESS: {
+        YEARS_EXPORTING,
+        GOODS_OR_SERVICES,
+        EMPLOYEES_INTERNATIONAL,
+        EMPLOYEES_UK,
+      },
     },
   },
 } = FIELD_IDS;
@@ -164,6 +170,38 @@ const checkYourBusinessSummaryList = ({
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.EXPORTER_COMPANY[fieldId];
+
+    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [GOODS_OR_SERVICES]: () => {
+    const fieldId = GOODS_OR_SERVICES;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.NATURE_OF_YOUR_BUSINESS);
+    const expectedValue = application.EXPORTER_BUSINESS[fieldId];
+
+    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [YEARS_EXPORTING]: () => {
+    const fieldId = YEARS_EXPORTING;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.NATURE_OF_YOUR_BUSINESS);
+    const expectedValue = application.EXPORTER_BUSINESS[fieldId];
+
+    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [EMPLOYEES_UK]: () => {
+    const fieldId = EMPLOYEES_UK;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.NATURE_OF_YOUR_BUSINESS);
+    const expectedValue = application.EXPORTER_BUSINESS[fieldId];
+
+    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [EMPLOYEES_INTERNATIONAL]: () => {
+    const fieldId = EMPLOYEES_INTERNATIONAL;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.NATURE_OF_YOUR_BUSINESS);
+    const expectedValue = application.EXPORTER_BUSINESS[fieldId];
 
     assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },

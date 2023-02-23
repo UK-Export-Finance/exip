@@ -19,6 +19,12 @@ const {
         WEBSITE,
         PHONE_NUMBER,
       },
+      NATURE_OF_YOUR_BUSINESS: {
+        GOODS_OR_SERVICES,
+        YEARS_EXPORTING,
+        EMPLOYEES_INTERNATIONAL,
+        EMPLOYEES_UK,
+      },
     },
   },
 } = FIELD_IDS;
@@ -84,5 +90,21 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
 
   it(`should render a ${PHONE_NUMBER} summary list row`, () => {
     checkSummaryList[PHONE_NUMBER]();
+  });
+
+  it(`should render a ${GOODS_OR_SERVICES} summary list row`, () => {
+    checkSummaryList[GOODS_OR_SERVICES]();
+  });
+
+  it(`should render a ${YEARS_EXPORTING} summary list row`, () => {
+    checkSummaryList[YEARS_EXPORTING]();
+  });
+
+  it(`should render a ${EMPLOYEES_UK} summary list row`, () => {
+    checkSummaryList[EMPLOYEES_UK]();
+  });
+
+  it(`should render a ${EMPLOYEES_INTERNATIONAL} summary list row`, () => {
+    checkSummaryList[EMPLOYEES_INTERNATIONAL]();
   });
 });

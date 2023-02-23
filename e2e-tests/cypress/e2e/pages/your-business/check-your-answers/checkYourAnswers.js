@@ -17,6 +17,12 @@ const {
         WEBSITE,
         PHONE_NUMBER,
       },
+      NATURE_OF_YOUR_BUSINESS: {
+        YEARS_EXPORTING,
+        GOODS_OR_SERVICES,
+        EMPLOYEES_INTERNATIONAL,
+        EMPLOYEES_UK,
+      },
     },
   },
 } = FIELD_IDS;
@@ -72,6 +78,26 @@ const checkYourAnswers = {
       key: () => cy.get(`.${PHONE_NUMBER}-key`),
       value: () => cy.get(`.${PHONE_NUMBER}-value`),
       changeLink: () => cy.get(`[data-cy="${PHONE_NUMBER}-change-link"]`),
+    },
+    [GOODS_OR_SERVICES]: {
+      key: () => cy.get(`.${GOODS_OR_SERVICES}-key`),
+      value: () => cy.get(`.${GOODS_OR_SERVICES}-value`),
+      changeLink: () => cy.get(`[data-cy="${GOODS_OR_SERVICES}-change-link"]`),
+    },
+    [YEARS_EXPORTING]: {
+      key: () => cy.get(`.${YEARS_EXPORTING}-key`),
+      value: () => cy.get(`.${YEARS_EXPORTING}-value`),
+      changeLink: () => cy.get(`[data-cy="${YEARS_EXPORTING}-change-link"]`),
+    },
+    [EMPLOYEES_UK]: {
+      key: () => cy.get(`.${EMPLOYEES_UK}-key`),
+      value: () => cy.get(`.${EMPLOYEES_UK}-value`),
+      changeLink: () => cy.get(`[data-cy="${EMPLOYEES_UK}-change-link"]`),
+    },
+    [EMPLOYEES_INTERNATIONAL]: {
+      key: () => cy.get(`.${EMPLOYEES_INTERNATIONAL}-key`),
+      value: () => cy.get(`.${EMPLOYEES_INTERNATIONAL}-value`),
+      changeLink: () => cy.get(`[data-cy="${EMPLOYEES_INTERNATIONAL}-change-link"]`),
     },
   },
 };

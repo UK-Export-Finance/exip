@@ -66,18 +66,30 @@ export const FIELDS = {
     [GOODS_OR_SERVICES]: {
       LABEL: 'What goods or services does your company supply?',
       HINT: 'Give a general overview rather than just the exports you want to insure',
+      SUMMARY: {
+        TITLE: 'Goods or services your business supplies',
+      },
     },
     [YEARS_EXPORTING]: {
       LABEL: 'How many years have you been exporting for?',
       HINT: 'Round to the nearest year',
       SUFFIX: 'Years',
+      SUMMARY: {
+        TITLE: 'Years exporting',
+      },
     },
     [EMPLOYEES_UK]: {
       HEADING: 'How many employees do you have?',
       LABEL: 'In the UK',
+      SUMMARY: {
+        TITLE: 'UK employees',
+      },
     },
     [EMPLOYEES_INTERNATIONAL]: {
       LABEL: 'Worldwide including UK',
+      SUMMARY: {
+        TITLE: 'Worldwide employees including UK employees',
+      },
     },
   },
   TURNOVER: {

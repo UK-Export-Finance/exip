@@ -1,28 +1,30 @@
 import { generateFields, yourBusinessSummaryList } from '.';
 import generateSummaryListRows from '../generate-summary-list-rows';
+import generateNatureOfYourBusinessFields from './nature-of-your-business-fields';
 import generateYourCompanyFields from './your-company-fields';
-import mockApplication, { mockExporterCompany } from '../../../test-mocks/mock-application';
+import mockApplication, { mockExporterCompany, mockExporterBusiness } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/your-business', () => {
   const { referenceNumber } = mockApplication;
 
   describe('generateFields', () => {
     it('should return fields and values from the submitted data/answers', () => {
-      const result = generateFields(mockExporterCompany, referenceNumber);
+      const result = generateFields(mockExporterCompany, mockExporterBusiness, referenceNumber);
 
-      const expected = [...generateYourCompanyFields(mockExporterCompany, referenceNumber)];
+      const expected = [
+        ...generateYourCompanyFields(mockExporterCompany, referenceNumber),
+        ...generateNatureOfYourBusinessFields(mockExporterBusiness, referenceNumber),
+      ];
 
       expect(result).toEqual(expected);
     });
   });
 
   describe('yourBusinessSummaryList', () => {
-    const mockAnswers = mockExporterCompany;
-
     it('should return an array of summary list rows', () => {
-      const result = yourBusinessSummaryList(mockAnswers, referenceNumber);
+      const result = yourBusinessSummaryList(mockExporterCompany, mockExporterBusiness, referenceNumber);
 
-      const fields = generateFields(mockAnswers, referenceNumber);
+      const fields = generateFields(mockExporterCompany, mockExporterBusiness, referenceNumber);
 
       const expected = generateSummaryListRows(fields);
 
