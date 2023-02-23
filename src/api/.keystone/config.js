@@ -896,10 +896,7 @@ var {
       ENCODING,
       STRING_ENCODING
     },
-    TOKEN: {
-      EXPIRY,
-      ALGORITHM
-    }
+    TOKEN: { EXPIRY }
   }
 } = ACCOUNT;
 var PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
