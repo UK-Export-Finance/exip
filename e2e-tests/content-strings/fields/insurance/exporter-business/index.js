@@ -84,18 +84,30 @@ export const EXPORTER_BUSINESS_FIELDS = {
       LABEL: 'What goods or services does your company supply?',
       HINT: 'Give a general overview rather than just the exports you want to insure',
       MAXIMUM: 1000,
+      SUMMARY: {
+        TITLE: 'Goods or services your business supplies',
+      },
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.YEARS_EXPORTING]: {
       LABEL: 'How many years have you been exporting for?',
       HINT: 'Round to the nearest year',
       SUFFIX: 'Years',
+      SUMMARY: {
+        TITLE: 'Years exporting',
+      },
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
       HEADING: 'How many employees do you have?',
       LABEL: 'In the UK',
+      SUMMARY: {
+        TITLE: 'UK employees',
+      },
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_INTERNATIONAL]: {
       LABEL: 'Worldwide including UK',
+      SUMMARY: {
+        TITLE: 'Worldwide employees including UK employees',
+      },
     },
   },
   TURNOVER: {

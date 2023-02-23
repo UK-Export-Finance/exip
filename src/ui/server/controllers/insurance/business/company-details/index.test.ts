@@ -55,27 +55,25 @@ describe('controllers/insurance/business/companies-details', () => {
   });
 
   describe('pageVariables', () => {
-    describe('originalUrl does not contain "change"', () => {
-      it('should have correct properties', () => {
-        const originalUrl = COMPANY_DETAILS_ROUTE;
+    it('should have correct properties', () => {
+      const originalUrl = COMPANY_DETAILS_ROUTE;
 
-        const result = pageVariables(mockApplication.referenceNumber, originalUrl);
+      const result = pageVariables(mockApplication.referenceNumber, originalUrl);
 
-        const expected = {
-          POST_ROUTES: {
-            COMPANIES_HOUSE: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_HOUSE_SEARCH}`,
-            COMPANY_DETAILS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROUTE}`,
-            NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
-            SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
-          },
-          FIELDS: EXPORTER_BUSINESS,
-        };
+      const expected = {
+        POST_ROUTES: {
+          COMPANIES_HOUSE: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_HOUSE_SEARCH}`,
+          COMPANY_DETAILS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROUTE}`,
+          NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
+          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
+        },
+        FIELDS: EXPORTER_BUSINESS,
+      };
 
-        expect(result).toEqual(expected);
-      });
+      expect(result).toEqual(expected);
     });
 
-    describe('originalUrl contains "change"', () => {
+    describe("when the url's last substring is `change`", () => {
       it('should have correct properties', () => {
         const originalUrl = COMPANY_DETAILS_CHANGE;
 

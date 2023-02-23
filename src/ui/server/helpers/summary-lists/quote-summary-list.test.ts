@@ -105,7 +105,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const expected = {
           id: FIELD_IDS.SINGLE_POLICY_LENGTH,
           title: QUOTE_TITLES[POLICY_LENGTH],
-          value: mockQuoteContent[SINGLE_POLICY_LENGTH],
+          value: String(mockQuoteContent[SINGLE_POLICY_LENGTH]),
           renderChangeLink: true,
           href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
         };
@@ -155,7 +155,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const expected = {
           id: FIELD_IDS.QUOTE.INSURED_FOR,
           title: QUOTE_TITLES[`${QUOTE.INSURED_FOR}_MULTIPLE_POLICY`],
-          value: mockQuoteContent[INSURED_FOR],
+          value: String(mockQuoteContent[INSURED_FOR]),
         };
 
         expect(expectedField).toEqual(expected);
@@ -175,7 +175,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const expected = {
           id: FIELD_IDS.MULTIPLE_POLICY_LENGTH,
           title: QUOTE_TITLES[POLICY_LENGTH],
-          value: mockQuoteContent[MULTIPLE_POLICY_LENGTH],
+          value: String(mockQuoteContent[MULTIPLE_POLICY_LENGTH]),
         };
 
         expect(expectedField).toEqual(expected);

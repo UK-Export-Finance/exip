@@ -17,7 +17,7 @@ const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { NATURE_OF_BUSINESS_ROOT, TURNOVER_ROOT, NATURE_OF_BUSINESS_SAVE_AND_BACK } = EXPORTER_BUSINESS_ROUTES;
+const { NATURE_OF_BUSINESS_ROOT, TURNOVER_ROOT, NATURE_OF_BUSINESS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, NATURE_OF_BUSINESS_CHANGE } = EXPORTER_BUSINESS_ROUTES;
 
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_FIELDS } = FIELDS;
 
@@ -140,13 +140,15 @@ describe('controllers/insurance/business/nature-of-business', () => {
     });
 
     describe('when there are no validation errors', () => {
+      const body = {
+        [GOODS_OR_SERVICES]: 'test',
+        [YEARS_EXPORTING]: '5',
+        [EMPLOYEES_UK]: '3',
+        [EMPLOYEES_INTERNATIONAL]: '25',
+      };
+
       it('should redirect to next page', async () => {
-        req.body = {
-          [GOODS_OR_SERVICES]: 'test',
-          [YEARS_EXPORTING]: '5',
-          [EMPLOYEES_UK]: '3',
-          [EMPLOYEES_INTERNATIONAL]: '25',
-        };
+        req.body = body;
 
         await post(req, res);
 
@@ -155,18 +157,26 @@ describe('controllers/insurance/business/nature-of-business', () => {
       });
 
       it('should call mapAndSave.natureOfBusiness once with natureOfBusiness and application', async () => {
-        req.body = {
-          [GOODS_OR_SERVICES]: 'test',
-          [YEARS_EXPORTING]: '5',
-          [EMPLOYEES_UK]: '3',
-          [EMPLOYEES_INTERNATIONAL]: '25',
-        };
+        req.body = body;
 
         await post(req, res);
 
         expect(mapAndSave.natureOfBusiness).toHaveBeenCalledTimes(1);
 
         expect(mapAndSave.natureOfBusiness).toHaveBeenCalledWith(req.body, mockApplication);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = body;
+
+          req.originalUrl = NATURE_OF_BUSINESS_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

@@ -6,6 +6,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import isChangeRoute from '../../../../helpers/is-change-route';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
@@ -17,7 +18,7 @@ export const TEMPLATE = NATURE_OF_YOUR_BUSINESS_TEMPLATE;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { NATURE_OF_BUSINESS_ROOT, NATURE_OF_BUSINESS_SAVE_AND_BACK, TURNOVER_ROOT } = EXPORTER_BUSINESS_ROUTES;
+const { NATURE_OF_BUSINESS_ROOT, NATURE_OF_BUSINESS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TURNOVER_ROOT } = EXPORTER_BUSINESS_ROUTES;
 
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_FIELDS } = FIELDS;
 
@@ -126,6 +127,10 @@ const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`);

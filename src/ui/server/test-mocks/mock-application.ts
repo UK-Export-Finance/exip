@@ -62,6 +62,16 @@ export const mockExporterCompany = {
   __typename: 'ExporterCompany',
 };
 
+export const mockExporterBusiness = {
+  id: 'clcyyopna0158m8noaglyy9gg',
+  goodsOrServicesSupplied: 'ABC',
+  totalYearsExporting: '20',
+  totalEmployeesInternational: '1000',
+  totalEmployeesUK: '400',
+  estimatedAnnualTurnover: '155220',
+  exportsTurnoverPercentage: '20',
+};
+
 const mockApplication = {
   id: 'clacdgc630000kdoqn7wcgrz1',
   referenceNumber: 10001,
@@ -83,15 +93,7 @@ const mockApplication = {
   },
   policyAndExport: mockSinglePolicyAndExport,
   exporterCompany: mockExporterCompany,
-  exporterBusiness: {
-    id: 'clcyyopna0158m8noaglyy9gg',
-    goodsOrServicesSupplied: 'ABC',
-    totalYearsExporting: '20',
-    totalEmployeesInternational: '1000',
-    totalEmployeesUK: '400',
-    estimatedAnnualTurnover: '155220',
-    exportsTurnoverPercentage: '20',
-  },
+  exporterBusiness: mockExporterBusiness,
   exporterBroker: {
     id: 'clcyyopna0158m8noaglyy9gg',
     ...mockBroker,

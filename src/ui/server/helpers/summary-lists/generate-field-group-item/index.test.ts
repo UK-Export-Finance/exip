@@ -30,6 +30,24 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
       expect(result).toEqual(expected);
     });
 
+    describe('when the number 0 is passed', () => {
+      it('should return an object with correct fields', () => {
+        const mockSubmittedDataNumber = { fieldA: 0 };
+
+        mockInput.data = mockSubmittedDataNumber;
+
+        const result = generateSummaryListItemData(mockInput);
+
+        const expected = {
+          id: mockInput.field.id,
+          title: getKeyText(mockInput.field),
+          value: getSummaryListItemDataValue(mockInput.field.id, mockInput.data),
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
     describe('when a customValue is passed', () => {
       it('should return the custom value via getSummaryListItemDataValue', () => {
         const result = generateSummaryListItemData(mockInput, mockCustomValue);

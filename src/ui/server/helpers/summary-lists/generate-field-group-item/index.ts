@@ -2,6 +2,7 @@ import getKeyText from '../get-key-text';
 import { DEFAULT } from '../../../content-strings';
 import { objectHasProperty } from '../../object';
 import { SummaryListItemData, SummaryListItemDataInput } from '../../../../types';
+import transformNumberToString from '../../display-number-field-value';
 
 /**
  * getSummaryListItemDataValue
@@ -14,11 +15,21 @@ import { SummaryListItemData, SummaryListItemDataInput } from '../../../../types
  */
 export const getSummaryListItemDataValue = (fieldId: string, data?: object, customValue?: string): string => {
   if (customValue) {
-    return customValue;
+    return String(customValue);
   }
 
   if (data && objectHasProperty(data, fieldId)) {
-    return data[fieldId];
+    return String(data[fieldId]);
+  }
+
+  /**
+   * if data is the number 0, then transform to string
+   * 0 fails the objectHasProperty(data, fieldId) as read as false
+   */
+  if (data && transformNumberToString(data[fieldId])) {
+    const value = transformNumberToString(data[fieldId]);
+
+    return String(value);
   }
 
   return DEFAULT.EMPTY;
