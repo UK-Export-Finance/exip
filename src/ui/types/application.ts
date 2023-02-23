@@ -89,4 +89,12 @@ interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, App
   buyerCountry: string;
 }
 
-export { Application, ApplicationExporterCompany, ApplicationFlat, ApplicationPolicyAndExport, ApplicationExporterSicCodes };
+export {
+  Application,
+  ApplicationExporterCompany,
+  ApplicationFlat,
+  ApplicationPolicyAndExport,
+  ApplicationExporterSicCodes,
+  ApplicationExporterBusiness,
+  ApplicationExporterBroker,
+};

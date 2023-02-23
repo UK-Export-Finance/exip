@@ -2,12 +2,66 @@ import { FIELD_IDS } from '../../../../constants';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
+  COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
+  YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   BROKER: { HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
 } = EXPORTER_BUSINESS;
 
 export const FIELDS = {
+  COMPANY_DETAILS: {
+    [COMPANY_NUMBER]: {
+      SUMMARY: {
+        TITLE: 'Companies House registration number',
+      },
+    },
+    [COMPANY_NAME]: {
+      SUMMARY: {
+        TITLE: 'Company name',
+      },
+    },
+    [COMPANY_ADDRESS]: {
+      SUMMARY: {
+        TITLE: 'Registered office address',
+      },
+    },
+    [COMPANY_INCORPORATED]: {
+      SUMMARY: {
+        TITLE: 'Date incorporated',
+      },
+    },
+    [COMPANY_SIC]: {
+      SUMMARY: {
+        TITLE: 'Standard industry classification (SIC) codes and nature of business',
+      },
+    },
+    [FINANCIAL_YEAR_END_DATE]: {
+      SUMMARY: {
+        TITLE: 'Financial year end date',
+      },
+    },
+    [TRADING_NAME]: {
+      SUMMARY: {
+        TITLE: 'Different trading name?',
+      },
+    },
+    [TRADING_ADDRESS]: {
+      SUMMARY: {
+        TITLE: 'Different trading address?',
+      },
+    },
+    [WEBSITE]: {
+      SUMMARY: {
+        TITLE: 'Company website (optional)',
+      },
+    },
+    [PHONE_NUMBER]: {
+      SUMMARY: {
+        TITLE: 'UK telephone number (optional)',
+      },
+    },
+  },
   NATURE_OF_YOUR_BUSINESS: {
     [GOODS_OR_SERVICES]: {
       LABEL: 'What goods or services does your company supply?',

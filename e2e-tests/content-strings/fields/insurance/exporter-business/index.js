@@ -23,18 +23,60 @@ export const EXPORTER_BUSINESS_FIELDS = {
     LABEL: 'Enter your Companies House registration number (CRN)',
     HINT: 'For example, 8989898 or SC907816. You\'ll find it on your incorporation certificate or on the Companies House website',
   },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
+    SUMMARY: {
+      TITLE: 'Companies House registration number',
+    },
+  },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NAME]: {
+    SUMMARY: {
+      TITLE: 'Company name',
+    },
+  },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_ADDRESS]: {
+    SUMMARY: {
+      TITLE: 'Registered office address',
+    },
+  },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_INCORPORATED]: {
+    SUMMARY: {
+      TITLE: 'Date incorporated',
+    },
+  },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_SIC]: {
+    SUMMARY: {
+      TITLE: 'Standard industry classification (SIC) codes and nature of business',
+    },
+  },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.FINANCIAL_YEAR_END_DATE]: {
+    SUMMARY: {
+      TITLE: 'Financial year end date',
+    },
+  },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_NAME]: {
     LABEL: 'Do you use a different trading name for this company?',
+    SUMMARY: {
+      TITLE: 'Different trading name?',
+    },
   },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_ADDRESS]: {
     LABEL: 'Do you trade from a different address to your registered office address for this company?',
+    SUMMARY: {
+      TITLE: 'Different trading address?',
+    },
   },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.WEBSITE]: {
     LABEL: 'Enter your company website, if you have one (optional)',
+    SUMMARY: {
+      TITLE: 'Company website (optional)',
+    },
   },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
     LABEL: 'Your UK telephone number (optional)',
     HINT: 'We may need to contact you about your application',
+    SUMMARY: {
+      TITLE: 'UK telephone number (optional)',
+    },
   },
 
   NATURE_OF_YOUR_BUSINESS: {

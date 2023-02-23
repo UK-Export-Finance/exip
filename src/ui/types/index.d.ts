@@ -1,6 +1,14 @@
 import { Account } from './account';
 import { AnswersContent, AnswersFieldGroups } from './answers';
-import { Application, ApplicationExporterCompany, ApplicationFlat, ApplicationPolicyAndExport, ApplicationExporterSicCodes } from './application';
+import {
+  Application,
+  ApplicationExporterCompany,
+  ApplicationFlat,
+  ApplicationPolicyAndExport,
+  ApplicationExporterSicCodes,
+  ApplicationExporterBusiness,
+  ApplicationExporterBroker,
+} from './application';
 import { ApolloResponse } from './apollo';
 import { CisCountry } from './cis-country';
 import { CompanyDetails, SicCode } from './company-details';
@@ -48,6 +56,8 @@ export {
   ApplicationPolicyAndExport,
   ApplicationExporterCompany,
   ApplicationExporterSicCodes,
+  ApplicationExporterBusiness,
+  ApplicationExporterBroker,
   ApolloResponse,
   CisCountry,
   CompanyDetails,
