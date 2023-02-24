@@ -1159,7 +1159,7 @@ type Mutation {
   accountSignIn(email: String!, password: String!): SuccessResponse
 
   """ verify an account's OTP security code """
-  verifyAccountSignInCode(accountId: String!, securityCode: String!): SuccessResponse
+  verifyAccountSignInCode(accountId: String!, securityCode: String!): verifyAccountSignInCodeResponse
 
   """ add an OTP security code to an account """
   addAndGetOtp(email: String!): AddAndGetOtpResponse
@@ -1420,8 +1420,11 @@ type EmailResponse {
   emailRecipient: String
 }
 
-""" TODO rename, as it has sign in/session specific things now """
 type SuccessResponse {
+  success: Boolean!
+}
+
+type verifyAccountSignInCodeResponse {
   accountId: String
   firstName: String
   lastName: String

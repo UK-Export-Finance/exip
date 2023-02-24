@@ -920,9 +920,7 @@ var create_jwt_default = create;
 
 // custom-resolvers/verify-account-sign-in-code.ts
 var {
-  JWT: {
-    SESSION_EXPIRY
-  }
+  JWT: { SESSION_EXPIRY }
 } = ACCOUNT;
 var verifyAccountSignInCode = async (root, variables, context) => {
   try {
@@ -944,8 +942,6 @@ var verifyAccountSignInCode = async (root, variables, context) => {
     }
     const { otpSalt, otpHash, otpExpiry } = exporter;
     const now = new Date();
-    console.log("-------- now ", now);
-    console.log("-------- otpExpiry ", otpExpiry);
     const hasExpired = (0, import_date_fns3.isAfter)(now, otpExpiry);
     if (hasExpired) {
       console.info("Unable to verify exporter account sign in code - verification period has expired");
@@ -1174,8 +1170,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         emailRecipient: String
       }
 
-      """ TODO rename, as it has sign in/session specific things now """
       type SuccessResponse {
+        success: Boolean!
+      }
+
+      type verifyAccountSignInCodeResponse {
         accountId: String
         firstName: String
         lastName: String
@@ -1216,7 +1215,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         verifyAccountSignInCode(
           accountId: String!
           securityCode: String!
-        ): SuccessResponse
+        ): verifyAccountSignInCodeResponse
 
         """ add an OTP security code to an account """
         addAndGetOtp(
