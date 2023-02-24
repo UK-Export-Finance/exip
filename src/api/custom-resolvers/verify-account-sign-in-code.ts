@@ -1,9 +1,10 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { isAfter } from 'date-fns';
 import { ACCOUNT } from '../constants';
+import getExporterById from '../helpers/get-exporter-by-id';
 import isValidOTP from '../helpers/is-valid-otp';
 import create from '../helpers/create-jwt';
-import { Account, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../types';
+import { VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../types';
 
 const {
   JWT: { SESSION_EXPIRY },
@@ -23,11 +24,12 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
 
     const { accountId, securityCode } = variables;
 
-    const exporter = (await context.db.Exporter.findOne({
-      where: { id: accountId },
-    })) as Account;
+    // get the exporter
+    const exporter = await getExporterById(context, accountId);
 
     if (!exporter) {
+      console.info('Unable to verify exporter account sign in code - no exporter exists with the provided ID');
+
       return {
         success: false,
       };

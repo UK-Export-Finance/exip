@@ -4,6 +4,7 @@ import { subMinutes } from 'date-fns';
 import verifyAccountSignInCode from './verify-account-sign-in-code';
 import create from '../helpers/create-jwt';
 import { ACCOUNT } from '../constants';
+import getExporterById from '../helpers/get-exporter-by-id';
 import generate from '../helpers/generate-otp';
 import baseConfig from '../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
@@ -69,9 +70,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
 
     result = await verifyAccountSignInCode({}, variables, context);
 
-    updatedExporter = (await context.db.Exporter.findOne({
-      where: { id: exporter.id },
-    })) as Account;
+    updatedExporter = await getExporterById(context, exporter.id);
   });
 
   afterEach(async () => {
