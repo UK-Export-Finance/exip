@@ -1,8 +1,5 @@
 import gql from 'graphql-tag';
-import dotenv from 'dotenv';
 import apollo from './apollo';
-
-dotenv.config();
 
 const queryStrings = {
   getExporterByEmail: (email) => `

@@ -6,8 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const createHttpLinkOptions = {
-  uri: Cypress.config('apiUrl'),
-  // fetch,
+  uri: Cypress.config('apiUrl')
 };
 
 const httpLink = createHttpLink(createHttpLinkOptions);
