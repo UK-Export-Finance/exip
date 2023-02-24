@@ -157,15 +157,16 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     });
   });
 
-  describe(`when the exporter's OTP has expired`, () => {
+  describe.only(`when the exporter's OTP has expired`, () => {
     beforeAll(async () => {
       // create an account
       exporter = (await context.query.Exporter.createOne({
         data: mockAccount,
         query: 'id firstName lastName email salt hash verificationHash otpExpiry',
       })) as Account;
+    });
 
-      // generate a OTP
+    test('it should return success=false and expired=true', async () => {
       const otp = generate.otp();
 
       // add OTP to the account
@@ -175,6 +176,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
 
       const previousTime = subMinutes(today, 6);
 
+      // update the account
       const updateResponse = await context.db.Exporter.updateOne({
         where: { id: exporter.id },
         data: {
@@ -184,13 +186,12 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
         },
       });
 
+      // update variables
       updatedExporter = {
         ...exporter,
         ...updateResponse,
       } as Account;
-    });
 
-    test('it should return success=false and expired=true', async () => {
       variables = {
         accountId: updatedExporter.id,
         securityCode: '1',
