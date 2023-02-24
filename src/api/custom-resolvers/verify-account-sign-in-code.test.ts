@@ -156,7 +156,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     });
   });
 
-  describe.only(`when the exporter's OTP has expired`, () => {
+  describe(`when the exporter's OTP has expired`, () => {
     beforeAll(async () => {
       // create an account
       exporter = (await context.query.Exporter.createOne({
