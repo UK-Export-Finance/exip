@@ -17,7 +17,7 @@ const { TURNOVER: TURNOVER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { TURNOVER_SAVE_AND_BACK, BROKER_ROOT } = EXPORTER_BUSINESS_ROUTES;
+const { TURNOVER_SAVE_AND_BACK, BROKER_ROOT, CHECK_YOUR_ANSWERS, TURNOVER_CHANGE } = EXPORTER_BUSINESS_ROUTES;
 
 const { TURNOVER: TURNOVER_FIELDS } = FIELDS;
 
@@ -131,11 +131,13 @@ describe('controllers/insurance/business/turnover', () => {
     });
 
     describe('when there are no validation errors', () => {
+      const body = {
+        [ESTIMATED_ANNUAL_TURNOVER]: '5',
+        [PERCENTAGE_TURNOVER]: '3',
+      };
+
       it('should redirect to next page', async () => {
-        req.body = {
-          [ESTIMATED_ANNUAL_TURNOVER]: '5',
-          [PERCENTAGE_TURNOVER]: '3',
-        };
+        req.body = body;
 
         await post(req, res);
 
@@ -144,16 +146,26 @@ describe('controllers/insurance/business/turnover', () => {
       });
 
       it('should call mapAndSave.turnover once with turnover and application', async () => {
-        req.body = {
-          [ESTIMATED_ANNUAL_TURNOVER]: '5',
-          [PERCENTAGE_TURNOVER]: '3',
-        };
+        req.body = body;
 
         await post(req, res);
 
         expect(mapAndSave.turnover).toHaveBeenCalledTimes(1);
 
         expect(mapAndSave.turnover).toHaveBeenCalledWith(req.body, mockApplication);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = body;
+
+          req.originalUrl = TURNOVER_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 
