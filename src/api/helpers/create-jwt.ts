@@ -33,7 +33,7 @@ const createJWT = (accountId: string) => {
 };
 
 const create = {
-  JWT: createJWT
+  JWT: createJWT,
 };
 
 export default create;
