@@ -25,6 +25,10 @@ const {
         EMPLOYEES_INTERNATIONAL,
         EMPLOYEES_UK,
       },
+      TURNOVER: {
+        ESTIMATED_ANNUAL_TURNOVER,
+        PERCENTAGE_TURNOVER,
+      },
     },
   },
 } = FIELD_IDS;
@@ -106,5 +110,13 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
 
   it(`should render a ${EMPLOYEES_INTERNATIONAL} summary list row`, () => {
     checkSummaryList[EMPLOYEES_INTERNATIONAL]();
+  });
+
+  it(`should render a ${ESTIMATED_ANNUAL_TURNOVER} summary list row`, () => {
+    checkSummaryList[ESTIMATED_ANNUAL_TURNOVER]();
+  });
+
+  it(`should render a ${PERCENTAGE_TURNOVER} summary list row`, () => {
+    checkSummaryList[PERCENTAGE_TURNOVER]();
   });
 });

@@ -2,6 +2,7 @@ import { generateFields, yourBusinessSummaryList } from '.';
 import generateSummaryListRows from '../generate-summary-list-rows';
 import generateNatureOfYourBusinessFields from './nature-of-your-business-fields';
 import generateYourCompanyFields from './your-company-fields';
+import generateTurnoverFields from './turnover-fields';
 import mockApplication, { mockExporterCompany, mockExporterBusiness } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/your-business', () => {
@@ -14,6 +15,7 @@ describe('server/helpers/summary-lists/your-business', () => {
       const expected = [
         ...generateYourCompanyFields(mockExporterCompany, referenceNumber),
         ...generateNatureOfYourBusinessFields(mockExporterBusiness, referenceNumber),
+        ...generateTurnoverFields(mockExporterBusiness, referenceNumber),
       ];
 
       expect(result).toEqual(expected);

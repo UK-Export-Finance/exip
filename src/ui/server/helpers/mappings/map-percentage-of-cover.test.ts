@@ -1,3 +1,4 @@
+import mapPercentage from '../map-percentage';
 import mapPercentageOfCover from './map-percentage-of-cover';
 
 describe('server/helpers/mappings/map-percentage-of-cover', () => {
@@ -14,19 +15,19 @@ describe('server/helpers/mappings/map-percentage-of-cover', () => {
           value: '',
         },
         {
-          text: `${mockPercentages[0]}%`,
+          text: mapPercentage(mockPercentages[0]),
           value: mockPercentages[0],
         },
         {
-          text: `${mockPercentages[1]}%`,
+          text: mapPercentage(mockPercentages[1]),
           value: mockPercentages[1],
         },
         {
-          text: `${mockPercentages[2]}%`,
+          text: mapPercentage(mockPercentages[2]),
           value: mockPercentages[2],
         },
         {
-          text: `${mockPercentages[3]}%`,
+          text: mapPercentage(mockPercentages[3]),
           value: mockPercentages[3],
         },
       ];
@@ -42,20 +43,20 @@ describe('server/helpers/mappings/map-percentage-of-cover', () => {
 
         const expected = [
           {
-            text: `${mockPercentages[0]}%`,
+            text: mapPercentage(mockPercentages[0]),
             value: mockPercentages[0],
           },
           {
-            text: `${mockPercentages[1]}%`,
+            text: mapPercentage(mockPercentages[1]),
             value: mockPercentages[1],
             selected: true,
           },
           {
-            text: `${mockPercentages[2]}%`,
+            text: mapPercentage(mockPercentages[2]),
             value: mockPercentages[2],
           },
           {
-            text: `${mockPercentages[3]}%`,
+            text: mapPercentage(mockPercentages[3]),
             value: mockPercentages[3],
           },
         ];

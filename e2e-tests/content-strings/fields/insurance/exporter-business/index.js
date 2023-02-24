@@ -119,10 +119,16 @@ export const EXPORTER_BUSINESS_FIELDS = {
       HEADING: 'Estimated annual turnover for this current financial year',
       LABEL: 'Estimate this to the nearest pound. Do not use decimal points.',
       PREFIX: '£',
+      SUMMARY: {
+        TITLE: 'Estimated annual turnover for this current financial year',
+      },
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.PERCENTAGE_TURNOVER]: {
       LABEL: 'Percentage of turnover from exports',
       SUFFIX: '%',
+      SUMMARY: {
+        TITLE: 'Percentage of turnover from exports',
+      },
     },
   },
   BROKER: {

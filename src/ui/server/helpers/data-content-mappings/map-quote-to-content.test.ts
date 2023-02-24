@@ -5,6 +5,7 @@ import mapPolicyLength from './map-policy-length';
 import formatCurrency from '../format-currency';
 import { mockQuote } from '../../test-mocks';
 import mapCost from './map-cost';
+import mapPercentage from '../map-percentage';
 
 const { BUYER_COUNTRY, CURRENCY, PERCENTAGE_OF_COVER, QUOTE } = FIELD_IDS;
 
@@ -17,9 +18,9 @@ describe('server/helpers/map-quote-to-content', () => {
 
       const expected = {
         ...mapCost(mockQuote),
-        [PERCENTAGE_OF_COVER]: `${mockQuote[PERCENTAGE_OF_COVER]}%`,
+        [PERCENTAGE_OF_COVER]: mapPercentage(mockQuote[PERCENTAGE_OF_COVER]),
         [INSURED_FOR]: formatCurrency(mockQuote[INSURED_FOR], mockQuote[CURRENCY].isoCode, 2),
-        [PREMIUM_RATE_PERCENTAGE]: `${mockQuote[PREMIUM_RATE_PERCENTAGE]}%`,
+        [PREMIUM_RATE_PERCENTAGE]: mapPercentage(mockQuote[PREMIUM_RATE_PERCENTAGE]),
         [ESTIMATED_COST]: formatCurrency(mockQuote[ESTIMATED_COST], mockQuote[CURRENCY].isoCode, 2),
         ...mapPolicyLength(mockQuote),
         [BUYER_LOCATION]: mapCountry(mockQuote[BUYER_COUNTRY]),
