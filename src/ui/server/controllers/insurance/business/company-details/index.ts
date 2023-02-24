@@ -8,6 +8,7 @@ import companyDetailsValidation from './validation/company-details';
 import isPopulatedArray from '../../../../helpers/is-populated-array';
 import mapAndSave from '../map-and-save';
 import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
+import isChangeRoute from '../../../../helpers/is-change-route';
 
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 
@@ -32,17 +33,27 @@ const {
   NO_COMPANIES_HOUSE_NUMBER,
   COMPANY_DETAILS_SAVE_AND_BACK,
   NATURE_OF_BUSINESS_ROOT,
+  CHECK_YOUR_ANSWERS,
 } = EXPORTER_BUSINESS_ROUTES;
 
-const pageVariables = (referenceNumber: number) => ({
-  POST_ROUTES: {
-    COMPANIES_HOUSE: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_HOUSE_SEARCH}`,
-    COMPANY_DETAILS: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROUTE}`,
-    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
-    NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
-  },
-  FIELDS: EXPORTER_BUSINESS,
-});
+const pageVariables = (referenceNumber: number, originalUrl: string) => {
+  let companyDetailsPostRoute = `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROUTE}`;
+
+  // if change route, then should use change url to go back to check your answers
+  if (isChangeRoute(originalUrl)) {
+    companyDetailsPostRoute = originalUrl;
+  }
+
+  return {
+    POST_ROUTES: {
+      COMPANIES_HOUSE: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_HOUSE_SEARCH}`,
+      COMPANY_DETAILS: companyDetailsPostRoute,
+      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
+      NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
+    },
+    FIELDS: EXPORTER_BUSINESS,
+  };
+};
 
 const exitReason = {
   noCompaniesHouseNumber: PAGES.INSURANCE.APPLY_OFFLINE.REASON.NO_COMPANIES_HOUSE_NUMBER,
@@ -78,7 +89,7 @@ const get = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(application.referenceNumber),
+      ...pageVariables(application.referenceNumber, req.originalUrl),
       submittedValues,
       // summary list for company details
       SUMMARY_LIST: populateCompaniesHouseSummaryList(exporterCompany),
@@ -144,7 +155,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(application.referenceNumber),
+        ...pageVariables(application.referenceNumber, req.originalUrl),
         validationErrors,
         submittedValues,
       });
@@ -159,7 +170,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(application.referenceNumber),
+        ...pageVariables(application.referenceNumber, req.originalUrl),
         validationErrors,
         SUMMARY_LIST: summaryList,
         submittedValues,
@@ -223,7 +234,7 @@ const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(application.referenceNumber),
+        ...pageVariables(application.referenceNumber, req.originalUrl),
         validationErrors,
         submittedValues,
       });
@@ -239,6 +250,10 @@ const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);

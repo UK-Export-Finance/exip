@@ -80,8 +80,8 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         };
 
         before(() => {
-          singleContractPolicyPage[fieldId].yearInput().clear().type(newAnswer.year);
-          singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput().clear().type(newAnswer.year + 1);
+          cy.keyboardInput(singleContractPolicyPage[fieldId].yearInput(), newAnswer.year);
+          cy.keyboardInput(singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput(), newAnswer.year + 1);
 
           submitButton().click();
         });
@@ -116,7 +116,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         };
 
         before(() => {
-          singleContractPolicyPage[fieldId].yearInput().clear().type(newAnswer.year);
+          cy.keyboardInput(singleContractPolicyPage[fieldId].yearInput(), newAnswer.year);
 
           submitButton().click();
         });
@@ -148,7 +148,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         const newAnswer = application.POLICY_AND_EXPORTS[fieldId] - 500;
 
         before(() => {
-          singleContractPolicyPage[fieldId].input().clear().type(newAnswer);
+          cy.keyboardInput(singleContractPolicyPage[fieldId].input(), newAnswer);
 
           submitButton().click();
         });
@@ -180,7 +180,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         const newAnswer = `${application.POLICY_AND_EXPORTS[fieldId]} additional text`;
 
         before(() => {
-          singleContractPolicyPage[fieldId].input().clear().type(newAnswer);
+          cy.keyboardInput(singleContractPolicyPage[fieldId].input(), newAnswer);
 
           submitButton().click();
         });

@@ -3,7 +3,7 @@ import {
   getMonth,
   getYear,
 } from 'date-fns';
-import { FIELD_IDS } from '../../constants';
+import { FIELD_IDS, COMPANIES_HOUSE_NUMBER } from '../../constants';
 import { GBP_CURRENCY_CODE } from './currencies';
 
 const {
@@ -21,6 +21,14 @@ const {
     EXPORTER_BUSINESS: {
       COMPANY_HOUSE: {
         COMPANY_SIC,
+        COMPANY_NUMBER,
+        COMPANY_NAME,
+        COMPANY_ADDRESS,
+        COMPANY_INCORPORATED,
+      },
+      YOUR_COMPANY: {
+        TRADING_ADDRESS,
+        TRADING_NAME,
       },
       NATURE_OF_YOUR_BUSINESS: {
         GOODS_OR_SERVICES,
@@ -75,8 +83,23 @@ const application = {
     [FINAL_DESTINATION]: 'DZA',
   },
   EXPORTER_COMPANY: {
+    [COMPANY_NUMBER]: COMPANIES_HOUSE_NUMBER,
+    [COMPANY_NAME]: 'DHG PROPERTY FINANCE LIMITED',
+    [COMPANY_INCORPORATED]: '10 April 2014',
+    [COMPANY_ADDRESS]: {
+      addressLine1: 'Unit 3 Lewis Court',
+      addressLine2: 'Portmanmoor Road',
+      careOf: '',
+      locality: 'Cardiff',
+      region: 'South Glamorgan',
+      postalCode: 'CF24 5HQ',
+      country: '',
+      premises: '',
+    },
     [COMPANY_SIC]: ['64999'],
     [FINANCIAL_YEAR_END_DATE]: '31 July',
+    [TRADING_NAME]: 'Yes',
+    [TRADING_ADDRESS]: 'Yes',
   },
   EXPORTER_BUSINESS: {
     [GOODS_OR_SERVICES]: 'abc',

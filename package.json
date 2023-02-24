@@ -4,8 +4,8 @@
   "description": "Export Insurance Policies",
   "engineStrict": true,
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=6.0.0"
+    "node": ">=18",
+    "npm": ">=9.5.0"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
@@ -13,7 +13,10 @@
     "prepublishOnly": "npm run build",
     "lint": "npm i && npm i --legacy-peer-deps --prefix ./src/ui && eslint --ext .ts src/ui && npm i --prefix ./src/api && eslint --ext .ts src/api && eslint --ext .js e2e-tests",
     "lint:fix": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "install:all": "npm i && npm i --legacy-peer-deps --prefix ./src/ui && npm i --legacy-peer-deps --prefix ./src/api && npm i --legacy-peer-deps --prefix ./src/generate-exip-pricing-grid",
+    "update:all": "npm update && npm update --legacy-peer-deps --prefix ./src/ui && npm update --prefix ./src/api && npm update --prefix ./src/generate-exip-pricing-grid",
+    "audit:all": "npm audit && npm audit --prefix ./src/ui && npm audit --prefix ./src/api && npm audit --prefix ./src/generate-exip-pricing-grid"
   },
   "repository": {
     "type": "git",

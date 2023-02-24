@@ -27,7 +27,8 @@ const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT;
 const submitAndAssertFieldErrors = (fieldValue) => {
   const field = accountFormFields[PASSWORD];
 
-  field.input().clear().type(fieldValue, { delay: 0 });
+  cy.keyboardInput(field.input(), fieldValue);
+
   submitButton().click();
 
   cy.checkText(

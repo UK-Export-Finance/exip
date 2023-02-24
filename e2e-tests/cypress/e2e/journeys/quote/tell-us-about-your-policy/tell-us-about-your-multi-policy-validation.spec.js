@@ -105,7 +105,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
   describe('when `max amount owed` has a non-numeric value', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('a');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), 'a');
       submitButton().click();
 
       cy.checkText(
@@ -122,7 +122,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
   describe('when `max amount owed` is not a whole number', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('1234.56');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), '1234.56');
       submitButton().click();
 
       cy.checkText(
@@ -139,7 +139,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
   describe('when `max amount owed` has a value less than the minimum', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('0');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), '0');
       submitButton().click();
 
       cy.checkText(
@@ -173,7 +173,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
   describe('with any validation error', () => {
     it('should render submitted values', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(GBP_CURRENCY_CODE);
-      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('10');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), '10');
 
       submitButton().click();
 

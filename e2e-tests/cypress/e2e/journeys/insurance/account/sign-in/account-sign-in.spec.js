@@ -11,7 +11,6 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGN_IN.ROOT;
 
 const {
   START,
-  ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE },
   ACCOUNT: {
     SIGN_IN: { ROOT: SIGN_IN_ROOT, ENTER_CODE },
     CREATE: { YOUR_DETAILS },
@@ -51,7 +50,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: SIGN_IN_ROOT,
-      backLink: ACCOUNT_TO_APPLY_ONLINE,
+      backLink: YOUR_DETAILS,
       lightHouseThresholds: {
         performance: 70,
       },

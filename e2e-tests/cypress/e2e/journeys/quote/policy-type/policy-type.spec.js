@@ -125,7 +125,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
   describe('when form is valid', () => {
     it(`should redirect to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY}`, () => {
       policyTypePage[POLICY_TYPE].single.input().click();
-      policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().type('8');
+      cy.keyboardInput(policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input(), '8');
 
       submitButton().click();
 

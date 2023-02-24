@@ -35,7 +35,7 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
   });
 
   it('should get a quote with a large contract value and render in the correct format', () => {
-    tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().type('12,345,678');
+    cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), '12,345,678');
     tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(GBP_CURRENCY_CODE);
     tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
 

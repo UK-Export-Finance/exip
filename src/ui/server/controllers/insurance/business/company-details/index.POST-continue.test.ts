@@ -24,7 +24,7 @@ const { VALID_PHONE_NUMBERS } = mockPhoneNumbers;
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT },
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT, CHECK_YOUR_ANSWERS, COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_ROOT },
 } = ROUTES.INSURANCE;
 
 jest.mock('../map-and-save');
@@ -71,7 +71,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROOT),
           validationErrors,
           submittedValues,
         });
@@ -86,6 +86,8 @@ describe('controllers/insurance/business/companies-details', () => {
           [TRADING_ADDRESS]: 'false',
           [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
         };
+
+        req.originalUrl = `insurance/${mockApplication.referenceNumber}/${COMPANY_DETAILS_ROOT}`;
 
         await post(req, res);
 
@@ -110,6 +112,24 @@ describe('controllers/insurance/business/companies-details', () => {
           ...mockCompany,
         };
         expect(mapAndSave.companyDetails).toHaveBeenCalledWith(updateBody, mockApplication);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = {
+            [INPUT]: '8989898',
+            [TRADING_NAME]: 'true',
+            [TRADING_ADDRESS]: 'false',
+            [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
+          };
+
+          req.originalUrl = COMPANY_DETAILS_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

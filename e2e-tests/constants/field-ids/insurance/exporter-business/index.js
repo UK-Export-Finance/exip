@@ -7,6 +7,7 @@ export const EXPORTER_BUSINESS = {
     COMPANY_NUMBER: 'companyNumber',
     COMPANY_INCORPORATED: 'dateOfCreation',
     COMPANY_SIC: 'sicCodes',
+    FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',
     SUMMARY_LIST: 'summaryList',
   },
   YOUR_COMPANY: {

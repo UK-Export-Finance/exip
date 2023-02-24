@@ -4,7 +4,7 @@ import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
 import { mockApplication } from '../../../test-mocks';
 import mapFinancialYearEndDate from '../map-financial-year-end-date';
-import transformNumberToString from '../../display-number-field-value';
+import transformNumberToString from '../../transform-number-to-string';
 
 const {
   SUBMISSION_DEADLINE,
