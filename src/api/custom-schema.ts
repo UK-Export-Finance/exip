@@ -118,8 +118,11 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         emailRecipient: String
       }
 
-      """ TODO rename, as it has sign in/session specific things now """
       type SuccessResponse {
+        success: Boolean!
+      }
+
+      type verifyAccountSignInCodeResponse {
         accountId: String
         firstName: String
         lastName: String
@@ -160,7 +163,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         verifyAccountSignInCode(
           accountId: String!
           securityCode: String!
-        ): SuccessResponse
+        ): verifyAccountSignInCodeResponse
 
         """ add an OTP security code to an account """
         addAndGetOtp(
