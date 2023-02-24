@@ -68,7 +68,7 @@ interface ApplicationExporterBusiness {
 
 interface ApplicationExporterBroker {
   id: string;
-  isUsingBroker?: boolean;
+  isUsingBroker?: string;
   name?: string;
   addressLine1?: string;
   addressLine2?: string;
@@ -85,7 +85,13 @@ interface Application extends ApplicationCore {
   exporterBroker: ApplicationExporterBroker;
 }
 
-interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, ApplicationPolicyAndExport, ApplicationExporterCompany {
+interface ApplicationFlat
+  extends ApplicationCore,
+    InsuranceEligibilityCore,
+    ApplicationPolicyAndExport,
+    ApplicationExporterCompany,
+    ApplicationExporterBusiness,
+    ApplicationExporterBroker {
   buyerCountry: string;
 }
 

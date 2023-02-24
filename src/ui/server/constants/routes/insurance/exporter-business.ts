@@ -21,5 +21,6 @@ export const EXPORTER_BUSINESS = {
   TURNOVER_SAVE_AND_BACK: `${TURNOVER_ROOT}/save-and-back`,
   BROKER_ROOT,
   BROKER_SAVE_AND_BACK: `${BROKER_ROOT}/save-and-back`,
+  BROKER_CHANGE: `${BROKER_ROOT}/change`,
   CHECK_YOUR_ANSWERS,
 };

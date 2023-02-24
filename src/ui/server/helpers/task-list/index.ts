@@ -8,6 +8,7 @@ import { TaskListData, TaskListDataTask, TaskListGroup, ApplicationFlat } from '
  * @returns {Object} Task list groups and tasks with added statuses and links.
  */
 export const generateTaskStatusesAndLinks = (taskListData: TaskListData, submittedData: ApplicationFlat): TaskListData => {
+  console.log(submittedData);
   const tasksList = taskListData.map((group) => {
     return {
       ...group,

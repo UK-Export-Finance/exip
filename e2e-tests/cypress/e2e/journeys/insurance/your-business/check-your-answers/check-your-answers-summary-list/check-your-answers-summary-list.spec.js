@@ -29,6 +29,12 @@ const {
         ESTIMATED_ANNUAL_TURNOVER,
         PERCENTAGE_TURNOVER,
       },
+      BROKER: {
+        USING_BROKER,
+        NAME,
+        ADDRESS_LINE_1,
+        EMAIL,
+      },
     },
   },
 } = FIELD_IDS;
@@ -118,5 +124,21 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
 
   it(`should render a ${PERCENTAGE_TURNOVER} summary list row`, () => {
     checkSummaryList[PERCENTAGE_TURNOVER]();
+  });
+
+  it(`should render a ${USING_BROKER} summary list row`, () => {
+    checkSummaryList[USING_BROKER]();
+  });
+
+  it(`should render a ${NAME} summary list row`, () => {
+    checkSummaryList[NAME]();
+  });
+
+  it(`should render a ${ADDRESS_LINE_1} summary list row`, () => {
+    checkSummaryList[ADDRESS_LINE_1]();
+  });
+
+  it(`should render a ${EMAIL} summary list row`, () => {
+    checkSummaryList[EMAIL]();
   });
 });

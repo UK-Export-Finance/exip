@@ -97,7 +97,7 @@ export const taskIsInProgress = (taskFields: Array<string>, submittedData: Appli
  */
 export const taskIsComplete = (taskFields: Array<string>, submittedData: ApplicationFlat): boolean => {
   const submittedFields = getSubmittedFields(taskFields, submittedData);
-
+  console.log(submittedFields);
   if (submittedFields && submittedFields.length && taskFields && taskFields.length) {
     if (submittedFields.length === taskFields.length) {
       return true;
