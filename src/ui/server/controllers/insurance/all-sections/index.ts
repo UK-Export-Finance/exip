@@ -18,7 +18,11 @@ export const get = (req: Request, res: Response) => {
 
   const flatApplicationData = flattenApplicationData(application);
 
-  const taskListStructure = generateGroupsAndTasks(application.referenceNumber, application.policyAndExport.policyType);
+  const taskListStructure = generateGroupsAndTasks(
+    application.referenceNumber,
+    application.policyAndExport.policyType,
+    application.exporterBroker.isUsingBroker,
+  );
 
   const taskListData = generateTaskList(taskListStructure, flatApplicationData);
 

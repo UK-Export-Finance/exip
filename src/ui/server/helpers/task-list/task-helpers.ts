@@ -1,6 +1,7 @@
 import { DEFAULT, TASKS } from '../../content-strings';
 import isPopulatedArray from '../is-populated-array';
 import { ApplicationFlat, TaskListData, TaskListDataGroup, TaskListDataTask } from '../../../types';
+import isFieldFalseOrZero from '../is-field-false-or-zero';
 
 /**
  * getTaskById
@@ -46,7 +47,7 @@ export const hasSubmittedField = (submittedData: ApplicationFlat, fieldId: strin
     return true;
   }
 
-  if (submittedData && fieldId && (submittedData[fieldId] || submittedData[fieldId] === false) && !Array.isArray(submittedData[fieldId])) {
+  if (submittedData && fieldId && (submittedData[fieldId] || isFieldFalseOrZero(submittedData[fieldId])) && !Array.isArray(submittedData[fieldId])) {
     return true;
   }
 
@@ -97,7 +98,6 @@ export const taskIsInProgress = (taskFields: Array<string>, submittedData: Appli
  */
 export const taskIsComplete = (taskFields: Array<string>, submittedData: ApplicationFlat): boolean => {
   const submittedFields = getSubmittedFields(taskFields, submittedData);
-  console.log(submittedFields);
   if (submittedFields && submittedFields.length && taskFields && taskFields.length) {
     if (submittedFields.length === taskFields.length) {
       return true;

@@ -13,7 +13,7 @@ const { PREPARE_APPLICATION } = TASKS.LIST;
  * getContractPolicyTasks
  * Get contract policy tasks depending on the type of policy
  * @param {String} Application policy type
- * @returns {Objecvt} Contract policy tasks
+ * @returns {Object} Contract policy tasks
  */
 export const getContractPolicyTasks = (policyType?: string): object => {
   if (policyType === FIELD_VALUES.POLICY_TYPE.SINGLE) {
@@ -28,13 +28,34 @@ export const getContractPolicyTasks = (policyType?: string): object => {
 };
 
 /**
+ * getBrokerTasks
+ * returns tasks required for broker section based on isUsingBroker field
+ * @param {String} isUsingBroker
+ * @returns {Array} Array of tasks
+ */
+export const getBrokerTasks = (isUsingBroker?: string) => {
+  const { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER;
+
+  if (isUsingBroker && isUsingBroker === 'Yes') {
+    return [USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL];
+  }
+
+  return [USING_BROKER];
+};
+
+/**
  * createPrepareApplicationTasks
  * @param {Number} Application reference number
  * @param {String} Application policy type
  * @param {Array} otherGroups Task list groups
  * @returns {Array} Tasks
  */
-const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: TaskListData, policyType?: string): Array<TaskListDataTask> => {
+const createPrepareApplicationTasks = (
+  referenceNumber: number,
+  otherGroups: TaskListData,
+  policyType?: string,
+  isUsingBroker?: string,
+): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
 
   const allInitialChecksFields = getAllTasksFieldsInAGroup(initialChecksGroup);
@@ -64,8 +85,6 @@ const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: Tas
   } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE;
   const { PHONE_NUMBER, WEBSITE, YOUR_BUSINESS, ...YOUR_COMPANY_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY;
   const { FINANCIAL_YEAR_END_DATE, ...TURNOVER_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER;
-  const { HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, POSTCODE, DETAILS, COUNTY, EMAIL, ...BROKER_FIELDS } =
-    FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER;
 
   const EXPORTER_BUSINESS = {
     href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROUTES.COMPANY_DETAILS}`,
@@ -76,7 +95,7 @@ const createPrepareApplicationTasks = (referenceNumber: number, otherGroups: Tas
       ...COMPANIES_HOUSE_FIELDS,
       ...FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS,
       ...TURNOVER_FIELDS,
-      ...BROKER_FIELDS,
+      ...getBrokerTasks(isUsingBroker),
     }),
     dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
   };

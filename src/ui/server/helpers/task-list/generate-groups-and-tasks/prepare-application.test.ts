@@ -1,4 +1,4 @@
-import createPrepareApplicationTasks, { getContractPolicyTasks } from './prepare-application';
+import createPrepareApplicationTasks, { getContractPolicyTasks, getBrokerTasks } from './prepare-application';
 import { TaskListData } from '../../../../types';
 import createInitialChecksTasks from './initial-checks';
 import { FIELD_IDS, FIELD_VALUES, GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
@@ -48,8 +48,43 @@ describe('server/helpers/task-list/prepare-application', () => {
     });
   });
 
+  describe('getBrokerTasks', () => {
+    const { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER;
+
+    describe('when isUsingBroker is "Yes"', () => {
+      it('should return multiple field ids in an array', () => {
+        const result = getBrokerTasks('Yes');
+
+        const expected = [USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when isUsingBroker is "No"', () => {
+      it('should return a single field id in an array', () => {
+        const result = getBrokerTasks('No');
+
+        const expected = [USING_BROKER];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when isUsingBroker is undefined', () => {
+      it('should return a single field id in an array', () => {
+        const result = getBrokerTasks();
+
+        const expected = [USING_BROKER];
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
+
   describe('createPrepareApplicationTasks', () => {
     const initialChecksTasks = createInitialChecksTasks();
+    const isUsingBroker = 'Yes';
 
     const previousGroups = [
       {
@@ -60,7 +95,7 @@ describe('server/helpers/task-list/prepare-application', () => {
     ] as TaskListData;
 
     it('should return EXIP `prepare application` tasks', () => {
-      const result = createPrepareApplicationTasks(referenceNumber, previousGroups, policyType);
+      const result = createPrepareApplicationTasks(referenceNumber, previousGroups, policyType, isUsingBroker);
 
       const expectedDependencies = getAllTasksFieldsInAGroup(previousGroups[0]);
 
@@ -77,8 +112,19 @@ describe('server/helpers/task-list/prepare-application', () => {
         dependencies: expectedDependencies,
       };
 
-      const { COMPANY_ADDRESS, SEARCH, INPUT, ...COMPANIES_HOUSE_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE;
-      const { PHONE_NUMBER, WEBSITE, ...YOUR_COMPANY_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY;
+      const {
+        COMPANY_ADDRESS,
+        SEARCH,
+        INPUT,
+        REGISTED_OFFICE_ADDRESS,
+        COMPANY_SIC,
+        COMPANY_INCORPORATED,
+        FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE_COMPANY_HOUSE,
+        ...COMPANIES_HOUSE_FIELDS
+      } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE;
+      const { PHONE_NUMBER, WEBSITE, YOUR_BUSINESS, ...YOUR_COMPANY_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY;
+      const { FINANCIAL_YEAR_END_DATE, ...TURNOVER_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER;
+
       const EXPORTER_BUSINESS = {
         href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${EXPORTER_BUSINESS_ROUTES.COMPANY_DETAILS}`,
         title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
@@ -86,6 +132,9 @@ describe('server/helpers/task-list/prepare-application', () => {
         fields: Object.values({
           ...YOUR_COMPANY_FIELDS,
           ...COMPANIES_HOUSE_FIELDS,
+          ...FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS,
+          ...TURNOVER_FIELDS,
+          ...getBrokerTasks(isUsingBroker),
         }),
         dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
       };

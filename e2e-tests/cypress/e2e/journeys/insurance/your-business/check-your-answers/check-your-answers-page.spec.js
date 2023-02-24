@@ -1,5 +1,6 @@
 import {
   headingCaption,
+  submitButton,
   saveAndBackButton,
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
@@ -13,9 +14,13 @@ import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 const {
   ROOT,
   START,
+  ALL_SECTIONS,
   EXPORTER_BUSINESS: {
     BROKER,
     CHECK_YOUR_ANSWERS,
+  },
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION,
   },
 } = ROUTES.INSURANCE;
 
@@ -29,6 +34,7 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 context('Insurance - Your Business - Check your answers - As an exporter, I want to check my answers to the your business section', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
@@ -45,7 +51,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
     cy.getReferenceNumber().then((id) => {
       referenceNumber = id;
 
-      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.url().should('eq', url);
     });
@@ -74,8 +80,32 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
   });
 
   it('renders a `save and back` button', () => {
-    saveAndBackButton().should('exist');
+    submitButton().should('exist');
+    cy.checkText(submitButton(), BUTTONS.CONTINUE_NEXT_SECTION);
 
+    saveAndBackButton().should('exist');
     cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+  });
+
+  describe('form submission', () => {
+    describe('continue', () => {
+      it(`should redirect to ${COMPANY_OR_ORGANISATION}`, () => {
+        submitButton().click();
+
+        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
+        cy.url().should('eq', expectedUrl);
+      });
+    });
+
+    describe('save and back', () => {
+      it(`should redirect to ${ALL_SECTIONS}`, () => {
+        cy.navigateToUrl(url);
+
+        saveAndBackButton().click();
+
+        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        cy.url().should('eq', expectedUrl);
+      });
+    });
   });
 });

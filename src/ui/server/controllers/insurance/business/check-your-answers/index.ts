@@ -10,9 +10,11 @@ const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.
 
 export const TEMPLATE = CHECK_YOUR_ANSWERS_TEMPLATE;
 
-const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, YOUR_BUYER: YOUR_BUYER_ROUTES } = ROUTES.INSURANCE;
 
-const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_ROUTE } = EXPORTER_BUSINESS_ROUTES;
+const { CHECK_YOUR_ANSWERS_SAVE_AND_BACK } = EXPORTER_BUSINESS_ROUTES;
+
+const { COMPANY_OR_ORGANISATION } = YOUR_BUYER_ROUTES;
 
 /**
  * gets the template for check your answers page
@@ -38,7 +40,7 @@ const get = (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       application: mapApplicationToFormFields(application),
-      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS_ROUTE}`,
+      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`,
       SUMMARY_LIST: summaryList,
     });
   } catch (err) {
@@ -47,4 +49,17 @@ const get = (req: Request, res: Response) => {
   }
 };
 
-export { get };
+/**
+ * post
+ * Redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow
+ */
+const post = (req: Request, res: Response) => {
+  const { referenceNumber } = req.params;
+
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`);
+};
+
+export { get, post };

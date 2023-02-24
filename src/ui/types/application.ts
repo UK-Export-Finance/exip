@@ -85,13 +85,7 @@ interface Application extends ApplicationCore {
   exporterBroker: ApplicationExporterBroker;
 }
 
-interface ApplicationFlat
-  extends ApplicationCore,
-    InsuranceEligibilityCore,
-    ApplicationPolicyAndExport,
-    ApplicationExporterCompany,
-    ApplicationExporterBusiness,
-    ApplicationExporterBroker {
+interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, ApplicationPolicyAndExport, ApplicationExporterCompany {
   buyerCountry: string;
 }
 
