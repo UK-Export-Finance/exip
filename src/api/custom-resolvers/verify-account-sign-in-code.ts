@@ -1,13 +1,12 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
+import { isAfter } from 'date-fns';
 import { ACCOUNT } from '../constants';
 import isValidOTP from '../helpers/is-valid-otp';
 import create from '../helpers/create-jwt';
 import { Account, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../types';
 
 const {
-  JWT: {
-    SESSION_EXPIRY,
-  },
+  JWT: { SESSION_EXPIRY },
 } = ACCOUNT;
 
 /**
@@ -34,10 +33,29 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
       };
     }
 
-    const { otpSalt, otpHash } = exporter;
+    if (!exporter.otpSalt || !exporter.otpHash || !exporter.otpExpiry) {
+      console.info('Unable to verify exporter account sign in code - no OTP available for this account');
 
-    // TODO:
-    // check that the verification period has not expired. If so, return expired=true
+      return {
+        success: false,
+      };
+    }
+
+    const { otpSalt, otpHash, otpExpiry } = exporter;
+
+    // check that the verification period has not expired.
+    const now = new Date();
+
+    const hasExpired = isAfter(now, otpExpiry);
+
+    if (hasExpired) {
+      console.info('Unable to verify exporter account sign in code - verification period has expired');
+
+      return {
+        success: false,
+        expired: true,
+      };
+    }
 
     // check if the sign in code is valid
     const isValid = otpSalt && otpHash && isValidOTP(securityCode, otpSalt, otpHash);

@@ -46,6 +46,8 @@ interface Account extends ExporterUpdateInput {
   verificationHash: string;
   optSalt?: string;
   optHash?: string;
+  otpExpiry?: Date;
+  sessionIdentifier?: string;
 }
 
 interface Application {
@@ -116,6 +118,7 @@ interface VerifyAccountSignInCodeVariables {
 
 interface VerifyAccountSignInCodeResponse {
   success: boolean;
+  expired?: boolean;
   accountId?: string;
   firstName?: string;
   lastName?: string;

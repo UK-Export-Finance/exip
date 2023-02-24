@@ -106,6 +106,12 @@ var ACCOUNT = {
     },
     TOKEN: {
       EXPIRY: "8h"
+    },
+    SESSION_EXPIRY: () => {
+      const now = new Date();
+      const hours = 8;
+      const future = new Date(now.getTime() + hours * 60 * 60 * 1e3);
+      return future;
     }
   }
 };
@@ -621,7 +627,7 @@ var session = (0, import_session.statelessSessions)({
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
 var import_axios = __toESM(require("axios"));
-var import_dotenv5 = __toESM(require("dotenv"));
+var import_dotenv4 = __toESM(require("dotenv"));
 
 // custom-resolvers/create-account.ts
 var import_crypto = __toESM(require("crypto"));
@@ -852,9 +858,7 @@ var accountSignIn = async (root, variables, context) => {
 var account_sign_in_default = accountSignIn;
 
 // custom-resolvers/verify-account-sign-in-code.ts
-var import_dotenv4 = __toESM(require("dotenv"));
-var import_crypto5 = __toESM(require("crypto"));
-var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
+var import_date_fns3 = require("date-fns");
 
 // helpers/is-valid-otp.ts
 var import_dotenv3 = __toESM(require("dotenv"));
@@ -883,8 +887,9 @@ var isValidOTP = (securityCode, otpSalt, otpHash) => {
 };
 var is_valid_otp_default = isValidOTP;
 
-// custom-resolvers/verify-account-sign-in-code.ts
-import_dotenv4.default.config();
+// helpers/create-jwt.ts
+var import_crypto5 = __toESM(require("crypto"));
+var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
 var {
   ENCRYPTION: { RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3, STRING_TYPE: STRING_TYPE5 },
   JWT: {
@@ -908,6 +913,17 @@ var createJWT = (accountId) => {
     sessionIdentifier
   };
 };
+var create = {
+  JWT: createJWT
+};
+var create_jwt_default = create;
+
+// custom-resolvers/verify-account-sign-in-code.ts
+var {
+  JWT: {
+    SESSION_EXPIRY
+  }
+} = ACCOUNT;
 var verifyAccountSignInCode = async (root, variables, context) => {
   try {
     console.info("Verifying exporter account sign in code");
@@ -920,14 +936,31 @@ var verifyAccountSignInCode = async (root, variables, context) => {
         success: false
       };
     }
-    const { otpSalt, otpHash } = exporter;
+    if (!exporter.otpSalt || !exporter.otpHash || !exporter.otpExpiry) {
+      console.info("Unable to verify exporter account sign in code - no OTP available for this account");
+      return {
+        success: false
+      };
+    }
+    const { otpSalt, otpHash, otpExpiry } = exporter;
+    const now = new Date();
+    console.log("-------- now ", now);
+    console.log("-------- otpExpiry ", otpExpiry);
+    const hasExpired = (0, import_date_fns3.isAfter)(now, otpExpiry);
+    if (hasExpired) {
+      console.info("Unable to verify exporter account sign in code - verification period has expired");
+      return {
+        success: false,
+        expired: true
+      };
+    }
     const isValid = otpSalt && otpHash && is_valid_otp_default(securityCode, otpSalt, otpHash);
     if (isValid) {
-      const jwt = createJWT(accountId);
+      const jwt = create_jwt_default.JWT(accountId);
       const { sessionIdentifier } = jwt;
       const accountUpdate = {
         sessionIdentifier,
-        sessionExpiry: new Date(),
+        sessionExpiry: SESSION_EXPIRY(),
         otpSalt: "",
         otpHash: "",
         otpExpiry: null
@@ -1040,7 +1073,7 @@ var mapSicCodes = (company, sicCodes) => {
 };
 
 // custom-schema.ts
-import_dotenv5.default.config();
+import_dotenv4.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({

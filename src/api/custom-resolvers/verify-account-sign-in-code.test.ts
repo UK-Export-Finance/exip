@@ -1,5 +1,6 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
+import { subMinutes } from 'date-fns';
 import verifyAccountSignInCode from './verify-account-sign-in-code';
 import create from '../helpers/create-jwt';
 import { ACCOUNT } from '../constants';
@@ -16,7 +17,6 @@ const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
 dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
-
 
 const {
   JWT: {
@@ -74,6 +74,12 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     })) as Account;
   });
 
+  afterEach(async () => {
+    await context.query.Exporter.deleteOne({
+      where: { id: exporter.id },
+    });
+  });
+
   test('it should return success=true', async () => {
     expect(result.success).toEqual(true);
   });
@@ -84,7 +90,6 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     expect(result.lastName).toEqual(exporter.lastName);
   });
 
-  // TODO transform createJWT into module like OTP so we can stub it and test actual generation.
   test('it should return JWT', async () => {
     expect(result.token).toEqual(mockJWT.token);
     expect(result.expires).toEqual(mockJWT.expires);
@@ -108,7 +113,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     const now = new Date();
 
     const hours = 8;
-    const expected = new Date(now.getTime() + hours * 60 * 60 * 1000)
+    const expected = new Date(now.getTime() + hours * 60 * 60 * 1000);
 
     const expectedDay = expected.getDay();
     const expectedMonth = expected.getMonth();
@@ -142,10 +147,73 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
 
   describe('when no exporter is found', () => {
     test('it should return success=false', async () => {
-      // delete the exporter
-      await context.query.Exporter.deleteOne({
+      // no need to delete here - exporter is (correctly) already deleted due to afterEach()
+
+      result = await verifyAccountSignInCode({}, variables, context);
+
+      const expected = { success: false };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when the exporter's OTP has expired`, () => {
+    beforeAll(async () => {
+      // create an account
+      exporter = (await context.query.Exporter.createOne({
+        data: mockAccount,
+        query: 'id firstName lastName email salt hash verificationHash otpExpiry',
+      })) as Account;
+
+      // generate a OTP
+      const otp = generate.otp();
+
+      // add OTP to the account
+      const { salt, hash } = otp;
+
+      const today = new Date();
+
+      const previousTime = subMinutes(today, 6);
+
+      const updateResponse = await context.db.Exporter.updateOne({
         where: { id: exporter.id },
+        data: {
+          otpSalt: salt,
+          otpHash: hash,
+          otpExpiry: previousTime,
+        },
       });
+
+      updatedExporter = {
+        ...exporter,
+        ...updateResponse,
+      } as Account;
+    });
+
+    test('it should return success=false and expired=true', async () => {
+      variables = {
+        accountId: updatedExporter.id,
+        securityCode: '1',
+      };
+
+      result = await verifyAccountSignInCode({}, variables, context);
+
+      const expected = {
+        success: false,
+        expired: true,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when the exporter does not have OTP salt, hash or expiry', () => {
+    test('it should return success=false', async () => {
+      // create an account
+      exporter = (await context.query.Exporter.createOne({
+        data: mockAccount,
+        query: 'id firstName lastName email salt hash verificationHash',
+      })) as Account;
 
       result = await verifyAccountSignInCode({}, variables, context);
 
