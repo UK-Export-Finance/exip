@@ -23,10 +23,9 @@ const getExporterByEmail = async (email) => {
     const baseUrl = Cypress.config('apiUrl');
     const url = `${baseUrl}?query=${queryStrings.getExporterByEmail(email)}`;
 
-    // const response = await cy.request(url);
     const response = await cy.request({
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
       },
       url,
     });
