@@ -24,9 +24,6 @@ const defaultOptions = {
 
 const apollo = new ApolloClient({
   link: httpLink,
-  fetchOptions: {
-    mode: 'no-cors',
-  },
   cache: new InMemoryCache(),
   defaultOptions,
 });
