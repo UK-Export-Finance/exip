@@ -42,7 +42,7 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
         const [firstExporter] = data.exporters;
         exporter = firstExporter;
 
-        expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL_RESENT}?id=${exporter.id}`;
+        expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL_RESENT}a`;
 
         cy.url().should('eq', expectedUrl);
       });
