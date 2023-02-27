@@ -2,8 +2,6 @@ import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
 import { NumberErrorMessage, RequestBody } from '../../../../../../../types';
 import percentageNumberValidation from '../../../../../../helpers/percentage-number-validation';
-import { objectHasProperty } from '../../../../../../helpers/object';
-import generateValidationErrors from '../../../../../../helpers/validation';
 
 const {
   TURNOVER: { PERCENTAGE_TURNOVER: FIELD_ID },
@@ -13,6 +11,13 @@ const {
   EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },
 } = ERROR_MESSAGES.INSURANCE;
 
+const errorMessages = {
+  IS_EMPTY: ERROR_MESSAGE.IS_EMPTY,
+  INCORRECT_FORMAT: ERROR_MESSAGE.INCORRECT_FORMAT,
+  BELOW_MINIMUM: ERROR_MESSAGE.BELOW_MINIMUM,
+  ABOVE_MAXIMUM: ERROR_MESSAGE.ABOVE_MAXIMUM,
+} as NumberErrorMessage;
+
 /**
  * validates percentage turnover
  * only numbers without decimals, special characters or commas
@@ -21,20 +26,6 @@ const {
  * @param {object} errors
  * @returns {object} errors
  */
-const percentageTurnover = (responseBody: RequestBody, errors: object) => {
-  if (!objectHasProperty(responseBody, FIELD_ID)) {
-    const errorMessage = ERROR_MESSAGE.IS_EMPTY;
-
-    return generateValidationErrors(FIELD_ID, errorMessage, errors);
-  }
-
-  const errorMessages = {
-    INCORRECT_FORMAT: ERROR_MESSAGE.INCORRECT_FORMAT,
-    BELOW_MINIMUM: ERROR_MESSAGE.BELOW_MINIMUM,
-    ABOVE_MAXIMUM: ERROR_MESSAGE.ABOVE_MAXIMUM,
-  } as NumberErrorMessage;
-
-  return percentageNumberValidation(responseBody, FIELD_ID, errors, errorMessages);
-};
+const percentageTurnover = (responseBody: RequestBody, errors: object) => percentageNumberValidation(responseBody, FIELD_ID, errors, errorMessages);
 
 export default percentageTurnover;

@@ -15,10 +15,33 @@ describe('server/helpers/percentage-number-validation', () => {
   const FIELD = 'testField';
 
   const errorMessages = {
+    IS_EMPTY: 'Is empty',
     INCORRECT_FORMAT: 'Incorrect format',
     BELOW_MINIMUM: 'Below minimum',
     ABOVE_MAXIMUM: 'Above maximum',
   } as NumberErrorMessage;
+
+  describe('percentage is an empty string', () => {
+    it('should return a validation error', () => {
+      mockBody.testField = '';
+      const response = percentageNumberValidation(mockBody, FIELD, mockErrors, errorMessages);
+
+      const expected = generateValidationErrors(FIELD, errorMessages.IS_EMPTY, mockErrors);
+
+      expect(response).toEqual(expected);
+    });
+  });
+
+  describe('percentage is null', () => {
+    it('should return a validation error', () => {
+      mockBody.testField = null;
+      const response = percentageNumberValidation(mockBody, FIELD, mockErrors, errorMessages);
+
+      const expected = generateValidationErrors(FIELD, errorMessages.IS_EMPTY, mockErrors);
+
+      expect(response).toEqual(expected);
+    });
+  });
 
   describe('percentage is a letter', () => {
     it('should return a validation error', () => {

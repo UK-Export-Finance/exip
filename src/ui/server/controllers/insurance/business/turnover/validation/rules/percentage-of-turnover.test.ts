@@ -2,7 +2,6 @@ import percentageTurnover from './percentage-of-turnover';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
 import { RequestBody, NumberErrorMessage } from '../../../../../../../types';
-import generateValidationErrors from '../../../../../../helpers/validation';
 import percentageNumberValidation from '../../../../../../helpers/percentage-number-validation';
 
 const {
@@ -23,17 +22,17 @@ describe('controllers/insurance/business/turnover/validation/rules/percentage-of
   } as RequestBody;
 
   const errorMessages = {
+    IS_EMPTY: ERROR_MESSAGE.IS_EMPTY,
     INCORRECT_FORMAT: ERROR_MESSAGE.INCORRECT_FORMAT,
     BELOW_MINIMUM: ERROR_MESSAGE.BELOW_MINIMUM,
     ABOVE_MAXIMUM: ERROR_MESSAGE.ABOVE_MAXIMUM,
   } as NumberErrorMessage;
 
   describe(`when the ${PERCENTAGE_TURNOVER} input is empty`, () => {
-    it('should return a validation error', () => {
+    it('should return result of `percentageNumberValidation`', () => {
       const response = percentageTurnover(mockBody, mockErrors);
 
-      const errorMessage = ERROR_MESSAGE.IS_EMPTY;
-      const expected = generateValidationErrors(PERCENTAGE_TURNOVER, errorMessage, mockErrors);
+      const expected = percentageNumberValidation(mockBody, PERCENTAGE_TURNOVER, mockErrors, errorMessages);
 
       expect(response).toEqual(expected);
     });
