@@ -133,6 +133,30 @@
           }
         }) }}
 
+        {{ govukInput({
+          label: {
+            text:  FIELDS.WEBSITE.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+              id: FIELDS.WEBSITE.ID + '-label',
+              'data-cy': FIELDS.WEBSITE.ID + '-label'
+            }
+          },
+          classes: "govuk-!-width-three-quarters",
+          attributes: {
+            'data-cy': FIELDS.WEBSITE.ID + '-input'
+          },
+          id: FIELDS.WEBSITE.ID,
+          name: FIELDS.WEBSITE.ID,
+          value: submittedValues[FIELDS.WEBSITE.ID],
+          errorMessage: validationErrors.errorList[FIELDS.WEBSITE.ID] and {
+            text: validationErrors.errorList[FIELDS.WEBSITE.ID].text,
+            attributes: {
+              "data-cy": FIELDS.WEBSITE.ID + "-error-message"
+            }
+          }
+        }) }}
+
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
