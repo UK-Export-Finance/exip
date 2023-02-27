@@ -54,14 +54,11 @@ describe('controllers/insurance/account/create/confirm-email', () => {
     });
 
     describe('when accountIdToConfirm is not in the session but there is an ID query param', () => {
-      const mockId = '1234';
-
-      beforeEach(() => {
+      it('should call api.keystone.account.get with ID from query param', async () => {
+        const mockId = '1234';
         delete req.session.accountIdToConfirm;
         req.query.id = mockId;
-      });
 
-      it('should call api.keystone.account.get with ID from query param', async () => {
         await get(req, res);
 
         expect(getAccountSpy).toHaveBeenCalledTimes(1);
@@ -84,12 +81,10 @@ describe('controllers/insurance/account/create/confirm-email', () => {
     });
 
     describe('when there is no accountIdToConfirm in the session and no ID query param', () => {
-      beforeEach(() => {
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
         delete req.session.accountIdToConfirm;
         req.query = {};
-      });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
@@ -98,7 +93,7 @@ describe('controllers/insurance/account/create/confirm-email', () => {
 
     describe('api error handling', () => {
       describe('when there is an error', () => {
-        beforeEach(() => {
+        beforeAll(() => {
           getAccountSpy = jest.fn(() => Promise.reject());
           api.keystone.account.get = getAccountSpy;
         });
