@@ -42,6 +42,7 @@ const {
         PERCENTAGE_TURNOVER,
       },
       BROKER: {
+        USING_BROKER,
         NAME,
         ADDRESS_LINE_1,
         ADDRESS_LINE_2,
@@ -110,6 +111,7 @@ const application = {
     [PERCENTAGE_TURNOVER]: '0',
   },
   EXPORTER_BROKER: {
+    [USING_BROKER]: 'Yes',
     [NAME]: 'name',
     [ADDRESS_LINE_1]: 'Address line 1',
     [ADDRESS_LINE_2]: 'Address line 2',

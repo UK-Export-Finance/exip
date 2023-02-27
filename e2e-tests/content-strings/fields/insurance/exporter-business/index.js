@@ -135,11 +135,22 @@ export const EXPORTER_BUSINESS_FIELDS = {
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.HEADING]: {
       HEADING: 'Enter contact details for your broker',
     },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.USING_BROKER]: {
+      SUMMARY: {
+        TITLE: 'Using a broker for this insurance?',
+      },
+    },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.NAME]: {
       LABEL: 'Name of broker or company',
+      SUMMARY: {
+        TITLE: "Broker's name or company",
+      },
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.ADDRESS_LINE_1]: {
       LABEL: 'Address line 1',
+      SUMMARY: {
+        TITLE: "Broker's address",
+      },
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.ADDRESS_LINE_2]: {
       LABEL: 'Address line 2 (optional)',
@@ -155,6 +166,9 @@ export const EXPORTER_BUSINESS_FIELDS = {
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.EMAIL]: {
       LABEL: 'Email address',
+      SUMMARY: {
+        TITLE: "Broker's email",
+      },
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.DETAILS]: {
       SUMMARY: 'Why appoint a broker?',

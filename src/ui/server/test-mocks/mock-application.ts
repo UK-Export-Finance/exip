@@ -72,6 +72,11 @@ export const mockExporterBusiness = {
   exportsTurnoverPercentage: '20',
 };
 
+export const mockExporterBroker = {
+  id: 'clcyyopna0158m8noaglyy9gg',
+  ...mockBroker,
+};
+
 const mockApplication = {
   id: 'clacdgc630000kdoqn7wcgrz1',
   referenceNumber: 10001,
@@ -94,11 +99,7 @@ const mockApplication = {
   policyAndExport: mockSinglePolicyAndExport,
   exporterCompany: mockExporterCompany,
   exporterBusiness: mockExporterBusiness,
-  exporterBroker: {
-    id: 'clcyyopna0158m8noaglyy9gg',
-    ...mockBroker,
-    isUsingBroker: true,
-  },
+  exporterBroker: mockExporterBroker,
 };
 
 export const mockApplicationMultiplePolicy = {

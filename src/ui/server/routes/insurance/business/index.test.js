@@ -19,7 +19,8 @@ import { post as postTurnoverSaveAndBack } from '../../../controllers/insurance/
 import { get as getBroker, post as postBroker } from '../../../controllers/insurance/business/broker';
 import { post as postBrokerSaveAndBack } from '../../../controllers/insurance/business/broker/save-and-back';
 
-import { get as getCheckYourAnswers } from '../../../controllers/insurance/business/check-your-answers';
+import { get as getCheckYourAnswers, post as postCheckYourAnswers } from '../../../controllers/insurance/business/check-your-answers';
+import { post as postCheckYourAnswersSaveAndBack } from '../../../controllers/insurance/business/check-your-answers/save-and-back';
 
 describe('routes/insurance/your-business', () => {
   beforeEach(() => {
@@ -31,8 +32,8 @@ describe('routes/insurance/your-business', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(9);
-    expect(post).toHaveBeenCalledTimes(12);
+    expect(get).toHaveBeenCalledTimes(10);
+    expect(post).toHaveBeenCalledTimes(15);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, getCompanyDetails);
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.NO_COMPANIES_HOUSE_NUMBER, redirectToExitPage.noCompaniesHouseNumber);
@@ -57,7 +58,11 @@ describe('routes/insurance/your-business', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_ROOT, getBroker);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_ROOT, postBroker);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_SAVE_AND_BACK, postBrokerSaveAndBack);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_CHANGE, getBroker);
+    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_CHANGE, postBroker);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CHECK_YOUR_ANSWERS, getCheckYourAnswers);
+    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CHECK_YOUR_ANSWERS, postCheckYourAnswers);
+    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CHECK_YOUR_ANSWERS_SAVE_AND_BACK, postCheckYourAnswersSaveAndBack);
   });
 });

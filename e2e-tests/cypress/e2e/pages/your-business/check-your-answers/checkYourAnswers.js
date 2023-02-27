@@ -27,6 +27,12 @@ const {
         ESTIMATED_ANNUAL_TURNOVER,
         PERCENTAGE_TURNOVER,
       },
+      BROKER: {
+        USING_BROKER,
+        NAME,
+        ADDRESS_LINE_1,
+        EMAIL,
+      },
     },
   },
 } = FIELD_IDS;
@@ -112,6 +118,26 @@ const checkYourAnswers = {
       key: () => cy.get(`.${PERCENTAGE_TURNOVER}-key`),
       value: () => cy.get(`.${PERCENTAGE_TURNOVER}-value`),
       changeLink: () => cy.get(`[data-cy="${PERCENTAGE_TURNOVER}-change-link"]`),
+    },
+    [USING_BROKER]: {
+      key: () => cy.get(`.${USING_BROKER}-key`),
+      value: () => cy.get(`.${USING_BROKER}-value`),
+      changeLink: () => cy.get(`[data-cy="${USING_BROKER}-change-link"]`),
+    },
+    [NAME]: {
+      key: () => cy.get(`.${NAME}-key`),
+      value: () => cy.get(`.${NAME}-value`),
+      changeLink: () => cy.get(`[data-cy="${NAME}-change-link"]`),
+    },
+    [ADDRESS_LINE_1]: {
+      key: () => cy.get(`.${ADDRESS_LINE_1}-key`),
+      value: () => cy.get(`.${ADDRESS_LINE_1}-value`),
+      changeLink: () => cy.get(`[data-cy="${ADDRESS_LINE_1}-change-link"]`),
+    },
+    [EMAIL]: {
+      key: () => cy.get(`.${EMAIL}-key`),
+      value: () => cy.get(`.${EMAIL}-value`),
+      changeLink: () => cy.get(`[data-cy="${EMAIL}-change-link"]`),
     },
   },
 };

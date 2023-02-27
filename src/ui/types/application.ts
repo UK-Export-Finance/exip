@@ -68,7 +68,7 @@ interface ApplicationExporterBusiness {
 
 interface ApplicationExporterBroker {
   id: string;
-  isUsingBroker?: boolean;
+  isUsingBroker?: string;
   name?: string;
   addressLine1?: string;
   addressLine2?: string;
