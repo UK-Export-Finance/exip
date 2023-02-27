@@ -731,14 +731,27 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
 };
 var verify_account_email_address_default = verifyAccountEmailAddress;
 
+// helpers/get-exporter-by-id.ts
+var getExporterById = async (context, exporterId) => {
+  try {
+    console.info("Getting exporter by ID");
+    const exporter = await context.db.Exporter.findOne({
+      where: {
+        id: exporterId
+      }
+    });
+    return exporter;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Getting exporter by ID ${err}`);
+  }
+};
+var get_exporter_by_id_default = getExporterById;
+
 // custom-resolvers/send-email-confirm-email-address.ts
 var sendEmailConfirmEmailAddress = async (root, variables, context) => {
   try {
-    const exporter = await context.db.Exporter.findOne({
-      where: {
-        id: variables.exporterId
-      }
-    });
+    const exporter = await get_exporter_by_id_default(context, variables.exporterId);
     if (!exporter) {
       console.info("Sending email verification for account creation - no exporter exists with the provided ID");
       return {
@@ -926,10 +939,9 @@ var verifyAccountSignInCode = async (root, variables, context) => {
   try {
     console.info("Verifying exporter account sign in code");
     const { accountId, securityCode } = variables;
-    const exporter = await context.db.Exporter.findOne({
-      where: { id: accountId }
-    });
+    const exporter = await get_exporter_by_id_default(context, accountId);
     if (!exporter) {
+      console.info("Unable to verify exporter account sign in code - no exporter exists with the provided ID");
       return {
         success: false
       };
@@ -1174,7 +1186,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         success: Boolean!
       }
 
-      type verifyAccountSignInCodeResponse {
+      type AccountSignInResponse {
         accountId: String
         firstName: String
         lastName: String
@@ -1209,13 +1221,13 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         accountSignIn(
           email: String!
           password: String!
-        ): SuccessResponse
+        ): AccountSignInResponse
 
         """ verify an account's OTP security code """
         verifyAccountSignInCode(
           accountId: String!
           securityCode: String!
-        ): verifyAccountSignInCodeResponse
+        ): AccountSignInResponse
 
         """ add an OTP security code to an account """
         addAndGetOtp(

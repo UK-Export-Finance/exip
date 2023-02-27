@@ -1156,10 +1156,10 @@ type Mutation {
   sendEmailConfirmEmailAddress(exporterId: String!): EmailResponse
 
   """ send confirm email address email """
-  accountSignIn(email: String!, password: String!): SuccessResponse
+  accountSignIn(email: String!, password: String!): AccountSignInResponse
 
   """ verify an account's OTP security code """
-  verifyAccountSignInCode(accountId: String!, securityCode: String!): verifyAccountSignInCodeResponse
+  verifyAccountSignInCode(accountId: String!, securityCode: String!): AccountSignInResponse
 
   """ add an OTP security code to an account """
   addAndGetOtp(email: String!): AddAndGetOtpResponse
@@ -1424,7 +1424,7 @@ type SuccessResponse {
   success: Boolean!
 }
 
-type verifyAccountSignInCodeResponse {
+type AccountSignInResponse {
   accountId: String
   firstName: String
   lastName: String

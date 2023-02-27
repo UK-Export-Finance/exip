@@ -122,7 +122,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         success: Boolean!
       }
 
-      type verifyAccountSignInCodeResponse {
+      type AccountSignInResponse {
         accountId: String
         firstName: String
         lastName: String
@@ -157,13 +157,13 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         accountSignIn(
           email: String!
           password: String!
-        ): SuccessResponse
+        ): AccountSignInResponse
 
         """ verify an account's OTP security code """
         verifyAccountSignInCode(
           accountId: String!
           securityCode: String!
-        ): verifyAccountSignInCodeResponse
+        ): AccountSignInResponse
 
         """ add an OTP security code to an account """
         addAndGetOtp(
