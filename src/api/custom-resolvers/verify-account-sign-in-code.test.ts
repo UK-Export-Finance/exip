@@ -6,6 +6,7 @@ import create from '../helpers/create-jwt';
 import { ACCOUNT } from '../constants';
 import getExporterById from '../helpers/get-exporter-by-id';
 import generate from '../helpers/generate-otp';
+import generateOTPAndUpdateAccount from '../helpers/generate-otp-and-update-account';
 import baseConfig from '../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { mockAccount } from '../test-mocks';
@@ -48,20 +49,8 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
       query: 'id firstName lastName email salt hash verificationHash',
     })) as Account;
 
-    // generate a OTP
-    const otp = generate.otp();
-
-    // add OTP to the account
-    const { securityCode, salt, hash, expiry } = otp;
-
-    await context.db.Exporter.updateOne({
-      where: { id: exporter.id },
-      data: {
-        otpSalt: salt,
-        otpHash: hash,
-        otpExpiry: expiry,
-      },
-    });
+    // generate OTP and update the account
+    const { securityCode } = await generateOTPAndUpdateAccount(context, exporter.id);
 
     variables = {
       accountId: exporter.id,
