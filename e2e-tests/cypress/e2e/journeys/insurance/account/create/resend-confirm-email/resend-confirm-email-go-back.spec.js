@@ -43,9 +43,9 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
         expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL_RESENT}?id=${exporter.id}`;
 
         cy.url().should('eq', expectedUrl);
-      });
 
-      partials.backLink().click();
+        partials.backLink().click();
+      });
     });
 
     it('renders the page without error', () => {
