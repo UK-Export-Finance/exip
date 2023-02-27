@@ -3,7 +3,7 @@ import getAccountByField from '../helpers/get-account-by-field';
 import isValidAccountPassword from '../helpers/is-valid-account-password';
 import generateOTPAndUpdateAccount from '../helpers/generate-otp-and-update-account';
 import sendEmail from '../emails';
-import { AccountSignInVariables } from '../types';
+import { AccountSignInVariables, AccountSignInResponse } from '../types';
 
 /**
  * accountSignIn
@@ -15,7 +15,7 @@ import { AccountSignInVariables } from '../types';
  * @param {Object} KeystoneJS context API
  * @returns {Object} Object with success flag
  */
-const accountSignIn = async (root: any, variables: AccountSignInVariables, context: Context) => {
+const accountSignIn = async (root: any, variables: AccountSignInVariables, context: Context): Promise<AccountSignInResponse> => {
   try {
     console.info('Signing in exporter account');
 

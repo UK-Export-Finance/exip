@@ -3,11 +3,10 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import accountSignIn from './account-sign-in';
 import baseConfig from '../keystone';
-import createAccount from './create-account';
 import generate from '../helpers/generate-otp';
 import sendEmail from '../emails';
 import { mockAccount } from '../test-mocks';
-import { Account } from '../types';
+import { Account, AccountSignInResponse } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -34,9 +33,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
   const sendEmailResponse = { success: true, emailRecipient: mockAccount.email };
 
-  const securityCodeEmailSpy = jest.fn(() => Promise.resolve(sendEmailResponse));
-
-  sendEmail.securityCodeEmail = securityCodeEmailSpy;
+  let securityCodeEmailSpy = jest.fn();
 
   const mockPassword = String(process.env.MOCK_ACCOUNT_PASSWORD);
 
@@ -47,7 +44,15 @@ describe('custom-resolvers/account-sign-in', () => {
     password: mockPassword,
   };
 
-  beforeAll(async () => {
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
+
+  let account: Account;
+
+  let result: AccountSignInResponse;
+
+  beforeEach(async () => {
     // wipe the table so we have a clean slate.
     const exporters = await context.query.Exporter.findMany();
 
@@ -55,41 +60,41 @@ describe('custom-resolvers/account-sign-in', () => {
       where: exporters,
     });
 
-    // create a new exporter
-    exporter = await createAccount({}, variables, context);
+    // create an account
+    exporter = (await context.query.Exporter.createOne({
+      data: mockAccount,
+      query: 'id',
+    })) as Account;
+
+    jest.resetAllMocks();
+
+    securityCodeEmailSpy = jest.fn(() => Promise.resolve(sendEmailResponse));
+
+    sendEmail.securityCodeEmail = securityCodeEmailSpy;
+
+    result = await accountSignIn({}, variables, context);
+
+    account = (await context.query.Exporter.findOne({
+      where: { id: exporter.id },
+      query: 'id firstName email otpSalt otpHash otpExpiry',
+    })) as Account;
   });
 
   describe('when the provided password is valid', () => {
-    let account: Account;
-
-    beforeEach(async () => {
-      await accountSignIn({}, variables, context);
-      jest.clearAllMocks();
-
-      account = (await context.query.Exporter.findOne({
-        where: { id: exporter.id },
-        query: 'id email otpSalt otpHash otpExpiry',
-      })) as Account;
-    });
-
-    test('it should generate an OTP and save to the account', async () => {
+    test('it should generate an OTP and save to the account', () => {
       expect(account.otpSalt).toEqual(mockOtp.salt);
       expect(account.otpHash).toEqual(mockOtp.hash);
       expect(new Date(account.otpExpiry)).toEqual(mockOtp.expiry);
     });
 
-    test('it should call sendEmail.securityCodeEmail', async () => {
-      await accountSignIn({}, variables, context);
-
-      const { email, firstName } = exporter;
+    test('it should call sendEmail.securityCodeEmail', () => {
+      const { email, firstName } = account;
 
       expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
       expect(securityCodeEmailSpy).toHaveBeenCalledWith(email, firstName, mockOtp.securityCode);
     });
 
-    test('it should return the email response and accountId', async () => {
-      const result = await accountSignIn({}, variables, context);
-
+    test('it should return the email response and accountId', () => {
       const expected = {
         ...sendEmailResponse,
         accountId: account.id,
@@ -103,7 +108,7 @@ describe('custom-resolvers/account-sign-in', () => {
     test('it should return success=false', async () => {
       variables.password = `${mockPassword}-incorrect`;
 
-      const result = await accountSignIn({}, variables, context);
+      result = await accountSignIn({}, variables, context);
 
       const expected = { success: false };
 
@@ -119,7 +124,8 @@ describe('custom-resolvers/account-sign-in', () => {
       await context.query.Exporter.deleteMany({
         where: exporters,
       });
-      const result = await accountSignIn({}, variables, context);
+
+      result = await accountSignIn({}, variables, context);
 
       const expected = { success: false };
 

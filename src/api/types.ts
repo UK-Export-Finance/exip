@@ -111,6 +111,11 @@ interface AccountSignInVariables {
   password: string;
 }
 
+interface AccountSignInResponse {
+  success: boolean;
+  accountId?: string;
+}
+
 interface VerifyAccountSignInCodeVariables {
   accountId: string;
   securityCode: string;
@@ -145,6 +150,7 @@ export {
   AccountCreationVariables,
   AccountInput,
   AccountSignInVariables,
+  AccountSignInResponse,
   AddOtpToAccountVariables,
   AddAndGetOtpResponse,
   Application,
