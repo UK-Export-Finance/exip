@@ -70,7 +70,7 @@ export const get = (req: Request, res: Response) => {
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
 export const post = async (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body);
+  let validationErrors = generateValidationErrors(req.body);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
@@ -97,9 +97,18 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ENTER_CODE);
     }
 
-    // invalid credentials.
-    // TODO: render the page with validation errors
-    return res.redirect('/invalid-credentials');
+    // invalid credentials - force validation errors by mimicking empty form submission)
+    validationErrors = generateValidationErrors({});
+
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...PAGE_VARIABLES,
+      submittedValues: req.body,
+      validationErrors,
+    });
   } catch (err) {
     console.error('Error signing in account', { err });
 

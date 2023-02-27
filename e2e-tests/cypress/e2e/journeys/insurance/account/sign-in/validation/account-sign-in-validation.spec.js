@@ -70,26 +70,25 @@ context('Insurance - Account - Sign in - Validation', () => {
     });
   });
 
-  // TODO: EMS-870 - create an account and enable these tests
-  // describe('when email does not match the created account, but password is correct', () => {
-  //   it('should render a validation error for both fields', () => {
-  //     cy.keyboardInput(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
-  //     cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
+  describe('when email and password is provided, but email is incorrect', () => {
+    it('should render a validation error for both fields', () => {
+      cy.keyboardInput(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
+      cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
 
-  //     submitButton().click();
+      submitButton().click();
 
-  //     assertAllFieldErrors();
-  //   });
-  // });
+      assertAllFieldErrors();
+    });
+  });
 
-  // describe('when password does not match the created account, but email is correct', () => {
-  //   it('should render a validation error for both fields', () => {
-  //     cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
-  //     cy.keyboardInput(accountFormFields[PASSWORD].input(), `incorrect-${account[PASSWORD]}`);
+  describe('when email and password is provided, but password is incorrect', () => {
+    it('should render a validation error for both fields', () => {
+      cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
+      cy.keyboardInput(accountFormFields[PASSWORD].input(), `incorrect-${account[PASSWORD]}`);
 
-  //     submitButton().click();
+      submitButton().click();
 
-  //     assertAllFieldErrors();
-  //   });
-  // });
+      assertAllFieldErrors();
+    });
+  });
 });
