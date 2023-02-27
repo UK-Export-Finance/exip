@@ -5,7 +5,7 @@ import generateOTPAndUpdateAccount from './generate-otp-and-update-account';
 import baseConfig from '../keystone';
 import generate from './generate-otp';
 import { mockAccount } from '../test-mocks';
-import { Account } from '../types';
+import { Account, AddAndGetOtpResponse } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -29,6 +29,8 @@ describe('helpers/generate-otp-and-update-account', () => {
 
   generate.otp = () => mockOtp;
 
+  let result: AddAndGetOtpResponse;
+
   beforeAll(async () => {
     // wipe the table so we have a clean slate.
     const exporters = await context.query.Exporter.findMany();
@@ -43,7 +45,7 @@ describe('helpers/generate-otp-and-update-account', () => {
       query: 'id firstName lastName email salt hash verificationHash',
     })) as Account;
 
-    await generateOTPAndUpdateAccount(context, account.id);
+    result = await generateOTPAndUpdateAccount(context, account.id);
 
     jest.clearAllMocks();
 
@@ -61,8 +63,6 @@ describe('helpers/generate-otp-and-update-account', () => {
   });
 
   test('it should return the success response and securityCode', async () => {
-    const result = await generateOTPAndUpdateAccount(context, account.id);
-
     const expected = {
       success: true,
       securityCode: mockOtp.securityCode,

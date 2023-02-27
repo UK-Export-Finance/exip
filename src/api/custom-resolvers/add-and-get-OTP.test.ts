@@ -5,7 +5,7 @@ import baseConfig from '../keystone';
 import addAndGetOTP from './add-and-get-OTP';
 import generate from '../helpers/generate-otp';
 import { mockAccount } from '../test-mocks';
-import { Account, AddAndGetOtpResponseResponse } from '../types';
+import { Account, AddAndGetOtpResponse } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -33,7 +33,7 @@ describe('helpers/add-and-get-OTP', () => {
     email: mockAccount.email,
   };
 
-  let result: AddAndGetOtpResponseResponse;
+  let result: AddAndGetOtpResponse;
 
   beforeAll(async () => {
     // wipe the table so we have a clean slate.

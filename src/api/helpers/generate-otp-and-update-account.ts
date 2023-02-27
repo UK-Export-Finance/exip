@@ -1,5 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import generate from './generate-otp';
+import { AddAndGetOtpResponse } from '../types';
 
 /**
  * generateOTPAndUpdateAccount
@@ -8,7 +9,7 @@ import generate from './generate-otp';
  * @param {String} Exporter account ID
  * @returns {Object} Object with success flag and security code
  */
-const generateOTPAndUpdateAccount = async (context: Context, accountId: string) => {
+const generateOTPAndUpdateAccount = async (context: Context, accountId: string): Promise<AddAndGetOtpResponse> => {
   try {
     console.info('Adding OTP to exporter account');
     // generate OTP.

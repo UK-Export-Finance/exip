@@ -135,7 +135,7 @@ interface AddOtpToAccountVariables {
   email: string;
 }
 
-interface AddAndGetOtpResponseResponse {
+interface AddAndGetOtpResponse {
   success: boolean;
   securityCode?: string;
 }
@@ -146,7 +146,7 @@ export {
   AccountInput,
   AccountSignInVariables,
   AddOtpToAccountVariables,
-  AddAndGetOtpResponseResponse,
+  AddAndGetOtpResponse,
   Application,
   BufferEncoding,
   CompanyResponse,
