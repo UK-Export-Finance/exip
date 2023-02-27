@@ -57,14 +57,14 @@ describe('helpers/add-and-get-OTP', () => {
     })) as Account;
   });
 
-  test('it should generate an OTP and save to the account', async () => {
+  test('it should generate an OTP and save to the account', () => {
     expect(account.otpSalt).toEqual(mockOtp.salt);
     expect(account.otpHash).toEqual(mockOtp.hash);
     // @ts-ignore
     expect(new Date(account.otpExpiry)).toEqual(mockOtp.expiry);
   });
 
-  it('should return success=true with OTP security code', async () => {
+  it('should return success=true with OTP security code', () => {
     const expected = {
       success: true,
       securityCode: mockOtp.securityCode,
