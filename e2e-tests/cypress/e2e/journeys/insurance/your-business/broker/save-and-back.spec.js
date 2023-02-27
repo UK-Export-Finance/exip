@@ -129,7 +129,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
         cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should retain the `your business` task status as `completed`', () => {
+      it('should change the `your business` task status as `completed`', () => {
         const expected = TASKS.STATUS.COMPLETED;
         cy.checkTaskStatus(task, expected);
       });
@@ -163,7 +163,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
         cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should retain the `your business` task status as `Completed`', () => {
+      it('should change the `your business` task status as `Completed`', () => {
         const expected = TASKS.STATUS.COMPLETED;
         cy.checkTaskStatus(task, expected);
       });
