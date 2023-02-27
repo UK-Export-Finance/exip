@@ -97,7 +97,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ENTER_CODE);
     }
 
-    // invalid credentials - force validation errors by mimicking empty form submission)
+    // invalid credentials - force validation errors by mimicking empty form submission
     validationErrors = generateValidationErrors({});
 
     return res.render(TEMPLATE, {
