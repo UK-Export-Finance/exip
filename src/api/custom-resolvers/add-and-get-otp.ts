@@ -4,7 +4,7 @@ import generateOTPAndUpdateAccount from '../helpers/generate-otp-and-update-acco
 import { AddOtpToAccountVariables } from '../types';
 
 /**
- * addAndGetOtp
+ * addAndGetOTP
  * - Generate and add a OTP to an account and return in the response.
  * - NOTE: this is used for E2E testing purposes only.
  * - The alternative approach is to have email inbox testing capabilities which can be risky/flaky.
@@ -13,7 +13,7 @@ import { AddOtpToAccountVariables } from '../types';
  * @param {Object} KeystoneJS context API
  * @returns {Object} Object with success flag and OTP
  */
-const addAndGetOtp = async (root: any, variables: AddOtpToAccountVariables, context: Context) => {
+const addAndGetOTP = async (root: any, variables: AddOtpToAccountVariables, context: Context) => {
   try {
     console.info('Adding OTP to exporter account');
 
@@ -37,8 +37,8 @@ const addAndGetOtp = async (root: any, variables: AddOtpToAccountVariables, cont
     };
   } catch (err) {
     console.error(err);
-    throw new Error(`Adding OTP to exporter account (addAndGetOtp mutation) ${err}`);
+    throw new Error(`Adding OTP to exporter account (addAndGetOTP mutation) ${err}`);
   }
 };
 
-export default addAndGetOtp;
+export default addAndGetOTP;

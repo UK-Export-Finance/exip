@@ -8,7 +8,7 @@ import {
   sendEmailConfirmEmailAddress,
   accountSignIn,
   verifyAccountSignInCode,
-  addAndGetOtp,
+  addAndGetOTP,
 } from './custom-resolvers';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
@@ -166,7 +166,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         ): AccountSignInResponse
 
         """ add an OTP security code to an account """
-        addAndGetOtp(
+        addAndGetOTP(
           email: String!
         ): AddAndGetOtpResponse
 
@@ -196,7 +196,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         verifyAccountEmailAddress,
         sendEmailConfirmEmailAddress,
         verifyAccountSignInCode,
-        addAndGetOtp,
+        addAndGetOTP,
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);
