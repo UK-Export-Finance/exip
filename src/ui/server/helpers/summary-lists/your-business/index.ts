@@ -2,7 +2,8 @@ import generateSummaryListRows from '../generate-summary-list-rows';
 import generateYourCompanyFields from './your-company-fields';
 import generateNatureOfYourBusinessFields from './nature-of-your-business-fields';
 import generateTurnoverFields from './turnover-fields';
-import { ApplicationExporterCompany, ApplicationExporterBusiness, SummaryListItemData } from '../../../../types';
+import { generateBrokerFields } from './broker-fields';
+import { ApplicationExporterCompany, ApplicationExporterBusiness, ApplicationExporterBroker, SummaryListItemData } from '../../../../types';
 
 /**
  * generateFields
@@ -12,13 +13,19 @@ import { ApplicationExporterCompany, ApplicationExporterBusiness, SummaryListIte
  * @param {Number} referenceNumber
  * @returns {Object} All your business values in an object structure for GOVUK summary list structure
  */
-const generateFields = (answersExporterCompany: ApplicationExporterCompany, answersExporterBusiness: ApplicationExporterBusiness, referenceNumber: number) => {
+const generateFields = (
+  answersExporterCompany: ApplicationExporterCompany,
+  answersExporterBusiness: ApplicationExporterBusiness,
+  answersExporterBroker: ApplicationExporterBroker,
+  referenceNumber: number,
+) => {
   let fields = [] as Array<SummaryListItemData>;
 
   fields = [
     ...generateYourCompanyFields(answersExporterCompany, referenceNumber),
     ...generateNatureOfYourBusinessFields(answersExporterBusiness, referenceNumber),
     ...generateTurnoverFields(answersExporterBusiness, referenceNumber),
+    ...generateBrokerFields(answersExporterBroker, referenceNumber),
   ];
 
   return fields;
@@ -35,9 +42,10 @@ const generateFields = (answersExporterCompany: ApplicationExporterCompany, answ
 const yourBusinessSummaryList = (
   answersExporterCompany: ApplicationExporterCompany,
   answersExporterBusiness: ApplicationExporterBusiness,
+  answersExporterBroker: ApplicationExporterBroker,
   referenceNumber: number,
 ) => {
-  const fields = generateFields(answersExporterCompany, answersExporterBusiness, referenceNumber);
+  const fields = generateFields(answersExporterCompany, answersExporterBusiness, answersExporterBroker, referenceNumber);
 
   const summaryList = generateSummaryListRows(fields);
 

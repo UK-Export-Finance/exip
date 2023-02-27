@@ -30,10 +30,10 @@ describe('controllers/insurance/all-sections', () => {
     it('should render template', () => {
       get(req, res);
 
-      const { referenceNumber, policyAndExport } = mockApplication;
+      const { referenceNumber, policyAndExport, exporterBroker } = mockApplication;
 
       const flatApplicationData = flattenApplicationData(mockApplication);
-      const taskListStructure = generateGroupsAndTasks(referenceNumber, policyAndExport.policyType);
+      const taskListStructure = generateGroupsAndTasks(referenceNumber, policyAndExport.policyType, exporterBroker.isUsingBroker);
       const expectedTaskListData = generateTaskList(taskListStructure, flatApplicationData);
 
       const expectedVariables = {

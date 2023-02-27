@@ -6,7 +6,7 @@ const {
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
+  BROKER: { HEADING, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
 } = EXPORTER_BUSINESS;
 
 export const FIELDS = {
@@ -118,11 +118,22 @@ export const FIELDS = {
     [HEADING]: {
       HEADING: 'Enter contact details for your broker',
     },
+    [USING_BROKER]: {
+      SUMMARY: {
+        TITLE: 'Using a broker for this insurance?',
+      },
+    },
     [NAME]: {
       LABEL: 'Name of broker or company',
+      SUMMARY: {
+        TITLE: "Broker's name or company",
+      },
     },
     [ADDRESS_LINE_1]: {
       LABEL: 'Address line 1',
+      SUMMARY: {
+        TITLE: "Broker's address",
+      },
     },
     [ADDRESS_LINE_2]: {
       LABEL: 'Address line 2 (optional)',
@@ -138,6 +149,9 @@ export const FIELDS = {
     },
     [EMAIL]: {
       LABEL: 'Email address',
+      SUMMARY: {
+        TITLE: "Broker's email",
+      },
     },
   },
 };
