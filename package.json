@@ -29,9 +29,9 @@
   },
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "dependencies": {
-    "@keystone-6/auth": "^6.0.0",
-    "@keystone-6/core": "^4.0.1",
-    "@keystone-6/fields-document": "^6.0.0",
+    "@keystone-6/auth": "^7.0.0",
+    "@keystone-6/core": "^5.0.0",
+    "@keystone-6/fields-document": "^7.0.0",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
