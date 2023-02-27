@@ -58,7 +58,7 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
-          BACK_LINK: req.headers.referer,
+          BACK_LINK: `${req.headers.referer}?id=${req.query.id}`,
         }),
         exporterEmail: mockGetByEmailResponse.emailRecipient,
         exporterId: req.query.id,

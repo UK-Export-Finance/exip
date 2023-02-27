@@ -53,6 +53,23 @@ describe('controllers/insurance/account/create/confirm-email', () => {
       expect(getAccountSpy).toHaveBeenCalledWith(mockAccount.id);
     });
 
+    describe('when accountIdToConfirm is not in the session but there is an ID query param', () => {
+      const mockId = '1234';
+
+      beforeEach(() => {
+        delete req.session.accountIdToConfirm;
+        req.query.id = mockId;
+      });
+
+      it('should call api.keystone.account.get with ID from query param', async () => {
+        await get(req, res);
+
+        expect(getAccountSpy).toHaveBeenCalledTimes(1);
+
+        expect(getAccountSpy).toHaveBeenCalledWith(mockId);
+      });
+    });
+
     it('should render template', async () => {
       await get(req, res);
 
@@ -63,6 +80,19 @@ describe('controllers/insurance/account/create/confirm-email', () => {
         }),
         exporterEmail: mockGetAccountResponse.email,
         exporterId: mockGetAccountResponse.id,
+      });
+    });
+
+    describe('when there is no accountIdToConfirm in the session and no ID query param', () => {
+      beforeEach(() => {
+        delete req.session.accountIdToConfirm;
+        req.query = {};
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });
     });
 
