@@ -6,12 +6,17 @@ const {
   ENCRYPTION: { RANDOM_BYTES_SIZE, STRING_TYPE },
   JWT: {
     KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
-    TOKEN: { EXPIRY },
+    TOKEN: { EXPIRY, ALGORITHM },
   },
 } = ACCOUNT;
 
 const PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
 
+/**
+ * createJWT
+ * Generate a JWT
+ * @returns {Object} JWT token
+ */
 const createJWT = (accountId: string) => {
   const sessionIdentifier = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
 
@@ -23,7 +28,7 @@ const createJWT = (accountId: string) => {
     sessionIdentifier,
   };
 
-  const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, { expiresIn, algorithm: 'RS256' });
+  const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, { expiresIn, algorithm: ALGORITHM });
 
   return {
     token: `Bearer ${signedToken}`,

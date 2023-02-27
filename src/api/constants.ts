@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import { Algorithm } from 'jsonwebtoken';
 import { BufferEncoding } from './types';
 
 dotenv.config();
@@ -78,6 +79,7 @@ export const ACCOUNT = {
     },
     TOKEN: {
       EXPIRY: '8h',
+      ALGORITHM: 'RS256' as Algorithm,
     },
     SESSION_EXPIRY: () => {
       // 8 hours from now
