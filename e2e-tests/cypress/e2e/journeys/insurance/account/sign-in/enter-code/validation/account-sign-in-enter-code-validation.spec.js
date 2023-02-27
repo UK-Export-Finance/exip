@@ -82,7 +82,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
         const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
 
         api.addAndGetOtp(exporterEmail).then((validSecurityCode) => {
-          enterCodePage[SECURITY_CODE].input().clear().type(validSecurityCode);
+          cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), validSecurityCode);
 
           submitButton().click();
 
