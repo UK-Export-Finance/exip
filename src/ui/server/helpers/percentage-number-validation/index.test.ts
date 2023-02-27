@@ -1,5 +1,5 @@
 import percentageNumberValidation from '.';
-import { RequestBody, Errors } from '../../../types';
+import { RequestBody, NumberErrorMessage } from '../../../types';
 import generateValidationErrors from '../validation';
 
 describe('server/helpers/percentage-number-validation', () => {
@@ -18,7 +18,7 @@ describe('server/helpers/percentage-number-validation', () => {
     INCORRECT_FORMAT: 'Incorrect format',
     BELOW_MINIMUM: 'Below minimum',
     ABOVE_MAXIMUM: 'Above maximum',
-  } as Errors;
+  } as NumberErrorMessage;
 
   describe('percentage is a letter', () => {
     it('should return a validation error', () => {

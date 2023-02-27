@@ -1,7 +1,7 @@
 import percentageTurnover from './percentage-of-turnover';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
-import { RequestBody, Errors } from '../../../../../../../types';
+import { RequestBody, NumberErrorMessage } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import percentageNumberValidation from '../../../../../../helpers/percentage-number-validation';
 
@@ -26,7 +26,7 @@ describe('controllers/insurance/business/turnover/validation/rules/percentage-of
     INCORRECT_FORMAT: ERROR_MESSAGE.INCORRECT_FORMAT,
     BELOW_MINIMUM: ERROR_MESSAGE.BELOW_MINIMUM,
     ABOVE_MAXIMUM: ERROR_MESSAGE.ABOVE_MAXIMUM,
-  } as Errors;
+  } as NumberErrorMessage;
 
   describe(`when the ${PERCENTAGE_TURNOVER} input is empty`, () => {
     it('should return a validation error', () => {
@@ -39,7 +39,7 @@ describe('controllers/insurance/business/turnover/validation/rules/percentage-of
     });
   });
 
-  describe(`when the ${PERCENTAGE_TURNOVER} input is invaluid`, () => {
+  describe(`when the ${PERCENTAGE_TURNOVER} input is invalid`, () => {
     it('should return result of `percentageNumberValidation`', () => {
       mockBody[PERCENTAGE_TURNOVER] = '-1,5';
       const response = percentageTurnover(mockBody, mockErrors);

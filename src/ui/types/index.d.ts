@@ -15,7 +15,7 @@ import { CompanyDetails, SicCode } from './company-details';
 import { CompanyHouseResponse } from './company-house-response';
 import { Country } from './country';
 import { Currency } from './currency';
-import { Errors } from './errors';
+import { NumberErrorMessage } from './errors';
 import { ExporterBusiness } from './exporter-business';
 import { Next, Request, RequestBody, RequestSession, Response } from './express';
 import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibility } from './required-data-state';
@@ -68,7 +68,7 @@ export {
   CorePageVariables,
   Country,
   Currency,
-  Errors,
+  NumberErrorMessage,
   ExporterBusiness,
   InsuranceEligibility,
   InsuranceEligibilityCore,
