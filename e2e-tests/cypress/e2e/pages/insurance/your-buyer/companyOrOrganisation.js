@@ -5,6 +5,7 @@ const {
     NAME,
     ADDRESS,
     COUNTRY,
+    REGISTRATION_NUMBER,
   },
 } = FIELD_IDS;
 
@@ -26,6 +27,10 @@ const companyOrOrganisation = {
     inputFirstOption: () => cy.get(`[data-cy="${COUNTRY}-input"]`).find('option').eq(0),
     inputOptionSelected: () => cy.get(`[data-cy="${COUNTRY}-input"]`).find(':selected'),
     errorMessage: () => cy.get(`[data-cy="${COUNTRY}-error-message"]`),
+  },
+  [REGISTRATION_NUMBER]: {
+    label: () => cy.get(`[data-cy="${REGISTRATION_NUMBER}-label"]`),
+    input: () => cy.get(`[data-cy="${REGISTRATION_NUMBER}-input"]`),
   },
 };
 
