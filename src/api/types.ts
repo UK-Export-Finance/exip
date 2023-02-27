@@ -133,7 +133,11 @@ interface VerifyAccountSesssionVariables {
 
 interface AddOtpToAccountVariables {
   email: string;
-  accountId: string;
+}
+
+interface AddAndGetOtpResponseResponse {
+  success: boolean;
+  securityCode?: string;
 }
 
 export {
@@ -141,6 +145,8 @@ export {
   AccountCreationVariables,
   AccountInput,
   AccountSignInVariables,
+  AddOtpToAccountVariables,
+  AddAndGetOtpResponseResponse,
   Application,
   BufferEncoding,
   CompanyResponse,
@@ -151,5 +157,4 @@ export {
   VerifyAccountSignInCodeVariables,
   VerifyAccountSignInCodeResponse,
   VerifyAccountSesssionVariables,
-  AddOtpToAccountVariables,
 };

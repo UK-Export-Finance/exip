@@ -1,7 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import getAccountByField from '../helpers/get-account-by-field';
 import generateOTPAndUpdateAccount from '../helpers/generate-otp-and-update-account';
-import { AddOtpToAccountVariables } from '../types';
+import { AddOtpToAccountVariables, AddAndGetOtpResponseResponse } from '../types';
 
 /**
  * addAndGetOTP
@@ -13,7 +13,7 @@ import { AddOtpToAccountVariables } from '../types';
  * @param {Object} KeystoneJS context API
  * @returns {Object} Object with success flag and OTP
  */
-const addAndGetOTP = async (root: any, variables: AddOtpToAccountVariables, context: Context) => {
+const addAndGetOTP = async (root: any, variables: AddOtpToAccountVariables, context: Context): Promise<AddAndGetOtpResponseResponse> => {
   try {
     console.info('Adding OTP to exporter account');
 
