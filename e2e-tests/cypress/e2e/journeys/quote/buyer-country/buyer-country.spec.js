@@ -34,6 +34,10 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   });
 
   describe('searchable autocomplete input', () => {
+    it('has working client side JS', () => {
+      checkAutocompleteInput.hasWorkingClientSideJS();
+    });
+
     it('renders an input', () => {
       checkAutocompleteInput.rendersInput();
     });

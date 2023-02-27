@@ -27,6 +27,7 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
   });
 
   let exporter;
+  let expectedUrl;
 
   describe('page URL and content', () => {
     before(() => {
@@ -41,6 +42,10 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
 
         const [firstExporter] = data.exporters;
         exporter = firstExporter;
+
+        expectedUrl = CONFIRM_EMAIL;
+
+        cy.url().should('eq', `${Cypress.config('baseUrl')}${expectedUrl}`);
       });
     });
 
@@ -51,7 +56,7 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
     it('renders core page elements', () => {
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: CONFIRM_EMAIL,
+        currentHref: `${CONFIRM_EMAIL}?id=${exporter.id}`,
         backLink: YOUR_DETAILS,
         assertSubmitButton: false,
       });

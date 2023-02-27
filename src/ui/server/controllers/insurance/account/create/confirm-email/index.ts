@@ -17,7 +17,14 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL
  */
 export const get = async (req: Request, res: Response) => {
   try {
-    const { accountIdToConfirm: exporterId } = req.session;
+    const { accountIdToConfirm } = req.session;
+    const { id } = req.query;
+
+    const exporterId = accountIdToConfirm || id;
+
+    if (!exporterId) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
 
     delete req.session.accountIdToConfirm;
 
