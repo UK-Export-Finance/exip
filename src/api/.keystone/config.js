@@ -829,6 +829,32 @@ var generate = {
 };
 var generate_otp_default = generate;
 
+// helpers/generate-otp-and-update-account.ts
+var generateOTPAndUpdateAccount = async (context, accountId) => {
+  try {
+    console.info("Adding OTP to exporter account");
+    const otp = generate_otp_default.otp();
+    const { securityCode, salt, hash, expiry } = otp;
+    const accountUpdate = {
+      otpSalt: salt,
+      otpHash: hash,
+      otpExpiry: expiry
+    };
+    await context.db.Exporter.updateOne({
+      where: { id: accountId },
+      data: accountUpdate
+    });
+    return {
+      success: true,
+      securityCode
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Adding OTP to exporter account ${err}`);
+  }
+};
+var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
+
 // custom-resolvers/account-sign-in.ts
 var accountSignIn = async (root, variables, context) => {
   try {
@@ -840,17 +866,7 @@ var accountSignIn = async (root, variables, context) => {
       return { success: false };
     }
     if (is_valid_account_password_default(password2, exporter.salt, exporter.hash)) {
-      const otp = generate_otp_default.otp();
-      const { securityCode, salt, hash, expiry } = otp;
-      const accountUpdate = {
-        otpSalt: salt,
-        otpHash: hash,
-        otpExpiry: expiry
-      };
-      await context.db.Exporter.updateOne({
-        where: { id: exporter.id },
-        data: accountUpdate
-      });
+      const { securityCode } = await generate_otp_and_update_account_default(context, exporter.id);
       const emailResponse = await emails_default.securityCodeEmail(email, exporter.firstName, securityCode);
       if (emailResponse.success) {
         return {
@@ -996,7 +1012,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
 var verify_account_sign_in_code_default = verifyAccountSignInCode;
 
 // custom-resolvers/add-and-get-otp.ts
-var addAndGetOtp = async (root, variables, context) => {
+var addAndGetOTP = async (root, variables, context) => {
   try {
     console.info("Adding OTP to exporter account");
     const { email } = variables;
@@ -1005,27 +1021,17 @@ var addAndGetOtp = async (root, variables, context) => {
       console.info("Unable to generate and add OTP to exporter account - no account found");
       return { success: false };
     }
-    const otp = generate_otp_default.otp();
-    const { securityCode, salt, hash, expiry } = otp;
-    const accountUpdate = {
-      otpSalt: salt,
-      otpHash: hash,
-      otpExpiry: expiry
-    };
-    await context.db.Exporter.updateOne({
-      where: { id: exporter.id },
-      data: accountUpdate
-    });
+    const { securityCode } = await generate_otp_and_update_account_default(context, exporter.id);
     return {
       success: true,
       securityCode
     };
   } catch (err) {
     console.error(err);
-    throw new Error(`Adding OTP to exporter account (addAndGetOtp mutation) ${err}`);
+    throw new Error(`Adding OTP to exporter account (addAndGetOTP mutation) ${err}`);
   }
 };
-var add_and_get_otp_default = addAndGetOtp;
+var add_and_get_otp_default = addAndGetOTP;
 
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -1230,7 +1236,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         ): AccountSignInResponse
 
         """ add an OTP security code to an account """
-        addAndGetOtp(
+        addAndGetOTP(
           email: String!
         ): AddAndGetOtpResponse
 
@@ -1260,7 +1266,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       verifyAccountEmailAddress: verify_account_email_address_default,
       sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
       verifyAccountSignInCode: verify_account_sign_in_code_default,
-      addAndGetOtp: add_and_get_otp_default,
+      addAndGetOTP: add_and_get_otp_default,
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);

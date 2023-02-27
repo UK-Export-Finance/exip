@@ -1162,7 +1162,7 @@ type Mutation {
   verifyAccountSignInCode(accountId: String!, securityCode: String!): AccountSignInResponse
 
   """ add an OTP security code to an account """
-  addAndGetOtp(email: String!): AddAndGetOtpResponse
+  addAndGetOTP(email: String!): AddAndGetOtpResponse
 
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
