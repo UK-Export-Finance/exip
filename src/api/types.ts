@@ -104,11 +104,17 @@ interface EmailResponse {
   emailRecipient: string;
 }
 
+interface AccountSignInResponse {
+  success: boolean;
+  accountId?: string;
+}
+
 export {
   Account,
   AccountCreationVariables,
   AccountInput,
   AccountSignInVariables,
+  AccountSignInResponse,
   Application,
   CompanyResponse,
   EmailResponse,
