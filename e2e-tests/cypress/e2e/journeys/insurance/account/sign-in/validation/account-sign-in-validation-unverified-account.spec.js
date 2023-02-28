@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../pages/shared';
 import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
 import partials from '../../../../../partials';
@@ -45,7 +44,6 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
   });
 
   describe('when valid credentials are submitted, but the account is not verifed', () => {
-
     it('should render a validation error for both fields and retain the submitted values', () => {
       cy.submitAndAssertFieldErrors(accountFormFields[EMAIL], account[EMAIL], 0, TOTAL_REQUIRED_FIELDS, SIGN_IN_ERROR_MESSAGES[EMAIL].INCORRECT);
       cy.submitAndAssertFieldErrors(accountFormFields[PASSWORD], account[PASSWORD], 1, TOTAL_REQUIRED_FIELDS, SIGN_IN_ERROR_MESSAGES[PASSWORD].INCORRECT);
