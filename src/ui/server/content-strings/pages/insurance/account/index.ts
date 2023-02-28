@@ -62,6 +62,19 @@ const ACCOUNT = {
         HREF: INSURANCE_ROUTES.ACCOUNT.SIGN_IN.REQUEST_NEW_CODE,
       },
     },
+    REQUEST_NEW_CODE: {
+      PAGE_TITLE: 'Request a new security code',
+      INTRO: 'Emails sometimes take a few minutes to arrive. If you do not receive the email, after this you can request a new one.',
+      DO_NOT_HAVE_EMAIL_ACCESS: {
+        INTRO: 'I do not have access to this email inbox',
+        CANNOT_ACCESS: 'If you cannot access your email',
+        CONTACT_US: {
+          TEXT: 'contact us',
+          HREF: '#',
+        },
+        OUTRO: 'for help signing in.',
+      },
+    },
   },
 };
 
