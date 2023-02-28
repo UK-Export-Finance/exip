@@ -40,9 +40,14 @@ interface Account extends ExporterUpdateInput {
   id: string;
   email: string;
   firstName: string;
+  lastName: string;
   salt: string;
   hash: string;
   verificationHash: string;
+  optSalt?: string;
+  optHash?: string;
+  otpExpiry?: Date;
+  sessionIdentifier?: string;
 }
 
 interface Application {
@@ -60,9 +65,16 @@ interface Application {
   exporterBroker: ApplicationExporterBroker;
 }
 
+type BufferEncoding = 'hex' | 'base64' | 'ascii';
+
 interface CompanyResponse {
   id: string;
   applicationId: string;
+}
+
+interface EmailResponse {
+  success: boolean;
+  emailRecipient: string;
 }
 
 interface ConnectId {
@@ -99,14 +111,38 @@ interface AccountSignInVariables {
   password: string;
 }
 
-interface EmailResponse {
-  success: boolean;
-  emailRecipient: string;
-}
-
 interface AccountSignInResponse {
   success: boolean;
   accountId?: string;
+}
+
+interface VerifyAccountSignInCodeVariables {
+  accountId: string;
+  securityCode: string;
+}
+
+interface VerifyAccountSignInCodeResponse {
+  success: boolean;
+  expired?: boolean;
+  accountId?: string;
+  firstName?: string;
+  lastName?: string;
+  token?: string;
+  expires?: string;
+  sessionIdentifier?: string;
+}
+
+interface VerifyAccountSesssionVariables {
+  token: string;
+}
+
+interface AddOtpToAccountVariables {
+  email: string;
+}
+
+interface AddAndGetOtpResponse {
+  success: boolean;
+  securityCode?: string;
 }
 
 export {
@@ -115,10 +151,16 @@ export {
   AccountInput,
   AccountSignInVariables,
   AccountSignInResponse,
+  AddOtpToAccountVariables,
+  AddAndGetOtpResponse,
   Application,
+  BufferEncoding,
   CompanyResponse,
   EmailResponse,
   SicCodes,
-  VerifyEmailAddressVariables,
   SendEmailConfirmEmailAddressVariables,
+  VerifyEmailAddressVariables,
+  VerifyAccountSignInCodeVariables,
+  VerifyAccountSignInCodeResponse,
+  VerifyAccountSesssionVariables,
 };

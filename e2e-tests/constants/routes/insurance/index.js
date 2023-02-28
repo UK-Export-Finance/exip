@@ -30,6 +30,7 @@ export const INSURANCE_ROUTES = {
   SPEAK_TO_UKEF_EFM: `${INSURANCE_ROOT}/speak-to-UKEF-EFM`,
   PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
   ACCOUNT,
+  DASHBOARD: '/dashboard',
   ALL_SECTIONS: '/all-sections',
   POLICY_AND_EXPORTS,
   YOUR_BUYER,

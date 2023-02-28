@@ -92,6 +92,8 @@ export const post = async (req: Request, res: Response) => {
     const response = await api.keystone.account.signIn(email, password);
 
     if (response.success) {
+      req.session.accountId = response.accountId;
+
       return res.redirect(ENTER_CODE);
     }
 

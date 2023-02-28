@@ -39,11 +39,21 @@ interface RequestQuery {
   id?: string;
 }
 
+interface RequestSessionUser {
+  firstName: string;
+  lastName: string;
+  id: string;
+  token?: string;
+  expires: string;
+}
+
 interface RequestSession {
   submittedData: SubmittedData;
   quote?: Quote;
   cookieConsentNewDecision?: boolean;
   accountIdToConfirm?: string;
+  accountId?: string;
+  user?: RequestSessionUser;
 }
 
 interface Request {

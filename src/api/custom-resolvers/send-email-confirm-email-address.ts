@@ -1,6 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import sendEmail from '../emails';
-import { Account, SendEmailConfirmEmailAddressVariables } from '../types';
+import getExporterById from '../helpers/get-exporter-by-id';
+import { SendEmailConfirmEmailAddressVariables } from '../types';
 
 /**
  * sendEmailConfirmEmailAddress
@@ -11,12 +12,8 @@ import { Account, SendEmailConfirmEmailAddressVariables } from '../types';
  */
 const sendEmailConfirmEmailAddress = async (root: any, variables: SendEmailConfirmEmailAddressVariables, context: Context) => {
   try {
-    // Get the account the ID is associated with.
-    const exporter = (await context.db.Exporter.findOne({
-      where: {
-        id: variables.exporterId,
-      },
-    })) as Account;
+    // get the exporter
+    const exporter = await getExporterById(context, variables.exporterId);
 
     // ensure that we have found an acount with the requsted ID.
     if (!exporter) {

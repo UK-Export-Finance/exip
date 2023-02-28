@@ -37,6 +37,8 @@ services:
       GOV_NOTIFY_API_KEY:
       COMPANIES_HOUSE_API_URL:
       COMPANIES_HOUSE_API_KEY:
+      JWT_SIGNING_KEY:
+      JWT_VALIDATING_KEY:
 
   ui:
     build: ./src/ui

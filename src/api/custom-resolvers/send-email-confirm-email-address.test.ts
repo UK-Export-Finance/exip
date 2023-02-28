@@ -57,9 +57,11 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
 
   describe('when no exporter is found', () => {
     test('it should return success=false', async () => {
-      // delete the exporter
-      await context.query.Exporter.deleteOne({
-        where: { id: exporter.id },
+      // wipe the table so we have a clean slate.
+      const exporters = await context.query.Exporter.findMany();
+
+      await context.query.Exporter.deleteMany({
+        where: exporters,
       });
 
       const result = await sendEmailConfirmEmailAddress({}, variables, context);

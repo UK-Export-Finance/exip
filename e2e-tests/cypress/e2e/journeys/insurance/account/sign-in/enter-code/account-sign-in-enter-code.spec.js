@@ -39,6 +39,10 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
       cy.verifyAccountEmail();
 
       cy.completeAndSubmitSignInAccountForm();
+
+      const expectedUrl = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+
+      cy.url().should('eq', expectedUrl);
     });
 
     it('renders core page elements', () => {

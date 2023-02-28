@@ -24,7 +24,10 @@ describe('controllers/insurance/account/sign-in', () => {
   let req: Request;
   let res: Response;
 
-  const accountSignInResponse = { success: true };
+  const accountSignInResponse = {
+    success: true,
+    accountId: mockAccount.id,
+  };
 
   let accountSignInSpy = jest.fn(() => Promise.resolve(accountSignInResponse));
 
@@ -149,9 +152,20 @@ describe('controllers/insurance/account/sign-in', () => {
         expect(res.redirect).toHaveBeenCalledWith(ENTER_CODE);
       });
 
+      it('should add the accountId from response to the session', async () => {
+        await post(req, res);
+
+        expect(req.session.accountId).toEqual(accountSignInResponse.accountId);
+      });
+
       describe('when the api.keystone.account.signIn does not return success=true', () => {
         beforeEach(() => {
-          accountSignInSpy = jest.fn(() => Promise.resolve({ success: false }));
+          accountSignInSpy = jest.fn(() =>
+            Promise.resolve({
+              ...accountSignInResponse,
+              success: false,
+            }),
+          );
 
           api.keystone.account.signIn = accountSignInSpy;
         });
