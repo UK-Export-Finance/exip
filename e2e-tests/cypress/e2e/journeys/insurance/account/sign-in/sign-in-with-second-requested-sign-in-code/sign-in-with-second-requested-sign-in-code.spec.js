@@ -9,7 +9,6 @@ const {
   ACCOUNT: {
     SIGN_IN: { ENTER_CODE },
   },
-  ROOT,
   DASHBOARD,
 } = ROUTES;
 
