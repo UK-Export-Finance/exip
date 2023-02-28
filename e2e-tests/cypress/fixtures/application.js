@@ -52,6 +52,12 @@ const {
         EMAIL,
       },
     },
+    YOUR_BUYER: {
+      COMPANY_OR_ORGANISATION: {
+        FIRST_NAME,
+        LAST_NAME,
+      },
+    },
   },
 } = FIELD_IDS;
 
@@ -119,6 +125,10 @@ const application = {
     [COUNTY]: 'county',
     [POSTCODE]: 'SW1A 2HQ',
     [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT'),
+  },
+  BUYER: {
+    [FIRST_NAME]: 'Bob',
+    [LAST_NAME]: 'Smith',
   },
 };
 

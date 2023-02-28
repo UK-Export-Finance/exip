@@ -7,6 +7,8 @@ const {
     COUNTRY,
     REGISTRATION_NUMBER,
     WEBSITE,
+    FIRST_NAME,
+    LAST_NAME,
   },
 } = FIELD_IDS;
 
@@ -37,6 +39,18 @@ const companyOrOrganisation = {
     label: () => cy.get(`[data-cy="${WEBSITE}-label"]`),
     input: () => cy.get(`[data-cy="${WEBSITE}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${WEBSITE}-error-message"]`),
+  },
+  [FIRST_NAME]: {
+    heading: () => cy.get(`[data-cy="${FIRST_NAME}-heading"]`),
+    hint: () => cy.get(`[data-cy="${FIRST_NAME}-hint"]`),
+    label: () => cy.get(`[data-cy="${FIRST_NAME}-label"]`),
+    input: () => cy.get(`[data-cy="${FIRST_NAME}-input"]`),
+    errorMessage: () => cy.get(`[data-cy="${FIRST_NAME}-error-message"]`),
+  },
+  [LAST_NAME]: {
+    label: () => cy.get(`[data-cy="${LAST_NAME}-label"]`),
+    input: () => cy.get(`[data-cy="${LAST_NAME}-input"]`),
+    errorMessage: () => cy.get(`[data-cy="${LAST_NAME}-error-message"]`),
   },
 };
 
