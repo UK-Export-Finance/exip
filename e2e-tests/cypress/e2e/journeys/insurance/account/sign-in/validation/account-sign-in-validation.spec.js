@@ -70,7 +70,7 @@ context('Insurance - Account - Sign in - Validation', () => {
     });
   });
 
-  describe('when email and password is provided, but email is incorrect', () => {
+  describe('when email and password are provided, but email is incorrect', () => {
     it('should render a validation error for both fields', () => {
       cy.keyboardInput(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
       cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
@@ -81,9 +81,20 @@ context('Insurance - Account - Sign in - Validation', () => {
     });
   });
 
-  describe('when email and password is provided, but password is incorrect', () => {
+  describe('when email and password are provided, but password is incorrect', () => {
     it('should render a validation error for both fields', () => {
       cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
+      cy.keyboardInput(accountFormFields[PASSWORD].input(), `incorrect-${account[PASSWORD]}`);
+
+      submitButton().click();
+
+      assertAllFieldErrors();
+    });
+  });
+
+  describe('when email and password are provided and both are incorrect', () => {
+    it('should render a validation error for both fields', () => {
+      cy.keyboardInput(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
       cy.keyboardInput(accountFormFields[PASSWORD].input(), `incorrect-${account[PASSWORD]}`);
 
       submitButton().click();
