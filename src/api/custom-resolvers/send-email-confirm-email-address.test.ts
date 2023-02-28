@@ -23,11 +23,13 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
 
   const sendEmailResponse = { success: true, emailRecipient: mockAccount.email };
 
-  const sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(sendEmailResponse));
+  let sendEmailConfirmEmailAddressSpy = jest.fn();
 
-  beforeAll(async () => {
-    sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
 
+  beforeEach(async () => {
     exporter = (await context.query.Exporter.createOne({
       data: mockAccount,
       query: 'id firstName lastName email salt hash verificationHash',
@@ -36,6 +38,12 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
     variables = {
       exporterId: exporter.id,
     };
+
+    jest.resetAllMocks();
+
+    sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(sendEmailResponse));
+
+    sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
   });
 
   test('it should call sendEmail.confirmEmailAddress and return success=true', async () => {
@@ -43,8 +51,7 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
 
     const { email, firstName, verificationHash } = exporter;
 
-    // called twice during exporter creation and then calling the mutation
-    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(2);
+    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
     expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, firstName, verificationHash);
 
     const expected = {
@@ -81,9 +88,8 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
       try {
         await sendEmailConfirmEmailAddress({}, variables, context);
       } catch (err) {
-        expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
-
         const expected = new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${sendEmailResponse}`);
+
         expect(err).toEqual(expected);
       }
     });

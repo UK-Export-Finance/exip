@@ -31,7 +31,7 @@ describe('helpers/generate-otp-and-update-account', () => {
 
   let result: AddAndGetOtpResponse;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     // wipe the table so we have a clean slate.
     const exporters = await context.query.Exporter.findMany();
 
