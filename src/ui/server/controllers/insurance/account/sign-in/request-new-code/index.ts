@@ -53,6 +53,8 @@ export const post = async (req: Request, res: Response) => {
     const response = await api.keystone.account.signInSendNewCode(req.session.accountId);
 
     if (response.success) {
+      req.flash('successBanner', 'newSecurityCodeSent');
+
       return res.redirect(ENTER_CODE);
     }
   } catch (err) {

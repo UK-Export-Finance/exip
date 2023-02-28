@@ -48,12 +48,17 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(SIGN_IN_ROOT);
   }
 
+  const flash = req.flash('successBanner');
+
+  const renderSuccessBanner = flash.includes('newSecurityCodeSent') || false;
+
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
     }),
     ...PAGE_VARIABLES,
+    renderSuccessBanner,
   });
 };
 

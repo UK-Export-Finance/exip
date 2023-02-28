@@ -61,6 +61,9 @@ const ACCOUNT = {
         TEXT: 'Request a new security code',
         HREF: INSURANCE_ROUTES.ACCOUNT.SIGN_IN.REQUEST_NEW_CODE,
       },
+      SUCCESS_BANNER: {
+        NEW_CODE_SENT: "We've sent a new security code to your email address.",
+      },
     },
     REQUEST_NEW_CODE: {
       PAGE_TITLE: 'Request a new security code',

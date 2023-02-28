@@ -87,5 +87,15 @@ context('Insurance - Account - Sign in - Request new code page- I want to enter 
       const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
       cy.url().should('eq', expected);
     });
+
+    it('should render a success message', () => {
+      enterCodePage.successBanner.container().should('exist');
+
+      const { ENTER_CODE } = PAGES.INSURANCE.ACCOUNT.SIGN_IN;
+
+      const expected = ENTER_CODE.SUCCESS_BANNER.NEW_CODE_SENT;
+
+      cy.checkText(enterCodePage.successBanner.newCodeSent(), expected);
+    });
   });
 });

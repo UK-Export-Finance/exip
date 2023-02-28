@@ -93,6 +93,12 @@ describe('controllers/insurance/account/sign-in/request-new-code', () => {
       expect(signInSendNewCodeSpy).toHaveBeenCalledWith(req.session.accountId);
     });
 
+    it('should add successBanner to req.flash', async () => {
+      await post(req, res);
+
+      expect(req.flash).toHaveBeenCalledWith('successBanner', 'newSecurityCodeSent');
+    });
+
     it(`should redirect to ${ENTER_CODE}`, async () => {
       await post(req, res);
 

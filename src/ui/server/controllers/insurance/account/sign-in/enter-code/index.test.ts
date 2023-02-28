@@ -28,6 +28,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
 
   beforeEach(() => {
     req = mockReq();
+    req.flash = () => 'mock';
 
     req.session.accountId = mockAccount.id;
 
@@ -69,6 +70,32 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
+        renderSuccessBanner: false,
+      });
+    });
+
+    describe("when req.flash('successBanner') includes 'newSecurityCodeSent')", () => {
+      beforeEach(() => {
+        req.flash = (property: string) => {
+          const obj = {
+            successBanner: 'newSecurityCodeSent',
+          };
+
+          return obj[property];
+        };
+      });
+
+      it('should render template with renderSuccessBanner', () => {
+        get(req, res);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...PAGE_VARIABLES,
+          renderSuccessBanner: true,
+        });
       });
     });
 
