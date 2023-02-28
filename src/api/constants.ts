@@ -1,3 +1,9 @@
+import dotenv from 'dotenv';
+import { Algorithm } from 'jsonwebtoken';
+import { BufferEncoding } from './types';
+
+dotenv.config();
+
 export const ANSWERS = {
   YES: 'Yes',
   NO: 'No',
@@ -34,7 +40,7 @@ export const ACCOUNT = {
   },
   ENCRYPTION: {
     RANDOM_BYTES_SIZE: 32,
-    STRING_TYPE: 'hex',
+    STRING_TYPE: 'hex' as BufferEncoding,
     PBKDF2: {
       ITERATIONS: 10000,
       DIGEST_ALGORITHM: 'sha512',
@@ -60,6 +66,29 @@ export const ACCOUNT = {
 
       const milliseconds = 300000;
       const future = new Date(now.setMilliseconds(milliseconds));
+
+      return future;
+    },
+  },
+  // JSON web token
+  JWT: {
+    KEY: {
+      SIGNATURE: String(process.env.JWT_SIGNING_KEY),
+      ENCODING: 'base64' as BufferEncoding,
+      STRING_ENCODING: 'ascii' as BufferEncoding,
+    },
+    TOKEN: {
+      EXPIRY: '8h',
+      ALGORITHM: 'RS256' as Algorithm,
+    },
+    SESSION_EXPIRY: () => {
+      // 8 hours from now
+      const now = new Date();
+
+      const hours = 8;
+      const seconds = 60 * 60 * 1000;
+
+      const future = new Date(now.getTime() + hours * seconds);
 
       return future;
     },

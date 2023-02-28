@@ -5,6 +5,8 @@ import getExporterQuery from '../../../graphql/queries/account/get';
 import verifyExporterEmailAddressMutation from '../../../graphql/mutations/account/verify-email-address';
 import sendEmailConfirmEmailAddressMutation from '../../../graphql/mutations/account/send-email-confirm-email-address';
 import accountSignInMutation from '../../../graphql/mutations/account/sign-in';
+import verifyAccountSignInCodeMutation from '../../../graphql/mutations/account/verify-sign-in-code';
+import verifyAccountSessionMutation from '../../../graphql/mutations/account/verify-session';
 
 const account = {
   create: async (variables: Account) => {
@@ -138,6 +140,60 @@ const account = {
     } catch (err) {
       console.error(err);
       throw new Error('Signing in exporter account');
+    }
+  },
+  verifyAccountSignInCode: async (accountId: string, securityCode: string) => {
+    try {
+      console.info('Verifying exporter account sign in code');
+
+      const variables = { accountId, securityCode };
+
+      const response = (await apollo('POST', verifyAccountSignInCodeMutation, variables)) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error verifying exporter account sign in code ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error verifying exporter account sign in code ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.verifyAccountSignInCode) {
+        return response.data.verifyAccountSignInCode;
+      }
+
+      console.error(response);
+      throw new Error('Verifying exporter account sign in code');
+    } catch (err) {
+      console.error(err);
+      throw new Error('Verifying exporter account sign in code');
+    }
+  },
+  verifyAccountSession: async (token: string) => {
+    try {
+      console.info('Verifying exporter account session');
+
+      const variables = { token };
+
+      const response = (await apollo('POST', verifyAccountSessionMutation, variables)) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error verifying exporter account session ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error verifying exporter account session ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.verifyAccountSession) {
+        return response.data.verifyAccountSession;
+      }
+
+      console.error(response);
+      throw new Error('Verifying exporter account session');
+    } catch (err) {
+      console.error(err);
+      throw new Error('Verifying exporter account session');
     }
   },
 };

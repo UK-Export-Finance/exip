@@ -10,6 +10,7 @@ export const INSURANCE_TEMPLATES = {
   APPLY_OFFLINE: 'insurance/apply-offline.njk',
   SPEAK_TO_UKEF_EFM: 'insurance/speak-to-ukef-efm.njk',
   ACCOUNT: ACCOUNT_TEMPLATES,
+  DASHBOARD: 'insurance/dashboard.njk',
   ALL_SECTIONS: 'insurance/all-sections.njk',
   POLICY_AND_EXPORTS: POLICY_AND_EXPORTS_TEMPLATES,
   EXPORTER_BUSINESS: BUSINESS_TEMPLATES,

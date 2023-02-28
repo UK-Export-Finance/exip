@@ -34,7 +34,7 @@
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-half-from-desktop">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
 
         {{ govukInput({
           label: {
@@ -57,7 +57,8 @@
             attributes: {
               "data-cy": FIELD.ID + "-error-message"
             }
-          }
+          },
+          value: submittedValues[FIELD.ID]
         }) }}
 
         <div class="govuk-button-group">

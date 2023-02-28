@@ -349,6 +349,8 @@ CREATE TABLE `Exporter` (
 	`otpExpiry` datetime(3) DEFAULT NULL,
   `otpHash` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `otpSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+	`sessionExpiry` datetime(3) DEFAULT NULL,
+  `sessionIdentifier` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

@@ -270,12 +270,13 @@ export const lists = {
       isVerified: checkbox({ defaultValue: false }),
       verificationHash: text(),
       verificationExpiry: timestamp(),
-
       otpSalt: text(),
       otpHash: text({
         db: { nativeType: 'VarChar(256)' },
       }),
       otpExpiry: timestamp(),
+      sessionExpiry: timestamp(),
+      sessionIdentifier: text(),
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData }): Promise<AccountInput> => {

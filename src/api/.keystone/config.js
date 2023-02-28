@@ -40,6 +40,8 @@ var import_fields_document = require("@keystone-6/fields-document");
 var import_date_fns = require("date-fns");
 
 // constants.ts
+var import_dotenv = __toESM(require("dotenv"));
+import_dotenv.default.config();
 var ANSWERS = {
   YES: "Yes",
   NO: "No"
@@ -95,6 +97,23 @@ var ACCOUNT = {
       const future = new Date(now.setMilliseconds(milliseconds));
       return future;
     }
+  },
+  JWT: {
+    KEY: {
+      SIGNATURE: String(process.env.JWT_SIGNING_KEY),
+      ENCODING: "base64",
+      STRING_ENCODING: "ascii"
+    },
+    TOKEN: {
+      EXPIRY: "8h",
+      ALGORITHM: "RS256"
+    },
+    SESSION_EXPIRY: () => {
+      const now = new Date();
+      const hours = 8;
+      const future = new Date(now.getTime() + hours * 60 * 60 * 1e3);
+      return future;
+    }
   }
 };
 var EMAIL_TEMPLATE_IDS = {
@@ -105,9 +124,9 @@ var EMAIL_TEMPLATE_IDS = {
 };
 
 // integrations/notify/index.ts
-var import_dotenv = __toESM(require("dotenv"));
+var import_dotenv2 = __toESM(require("dotenv"));
 var import_notifications_node_client = require("notifications-node-client");
-import_dotenv.default.config();
+import_dotenv2.default.config();
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
 var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
 var notify = {
@@ -398,7 +417,9 @@ var lists = {
       otpHash: (0, import_fields.text)({
         db: { nativeType: "VarChar(256)" }
       }),
-      otpExpiry: (0, import_fields.timestamp)()
+      otpExpiry: (0, import_fields.timestamp)(),
+      sessionExpiry: (0, import_fields.timestamp)(),
+      sessionIdentifier: (0, import_fields.text)()
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData }) => {
@@ -607,7 +628,7 @@ var session = (0, import_session.statelessSessions)({
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
 var import_axios = __toESM(require("axios"));
-var import_dotenv2 = __toESM(require("dotenv"));
+var import_dotenv4 = __toESM(require("dotenv"));
 
 // custom-resolvers/create-account.ts
 var import_crypto = __toESM(require("crypto"));
@@ -711,14 +732,27 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
 };
 var verify_account_email_address_default = verifyAccountEmailAddress;
 
+// helpers/get-exporter-by-id.ts
+var getExporterById = async (context, exporterId) => {
+  try {
+    console.info("Getting exporter by ID");
+    const exporter = await context.db.Exporter.findOne({
+      where: {
+        id: exporterId
+      }
+    });
+    return exporter;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Getting exporter by ID ${err}`);
+  }
+};
+var get_exporter_by_id_default = getExporterById;
+
 // custom-resolvers/send-email-confirm-email-address.ts
 var sendEmailConfirmEmailAddress = async (root, variables, context) => {
   try {
-    const exporter = await context.db.Exporter.findOne({
-      where: {
-        id: variables.exporterId
-      }
-    });
+    const exporter = await get_exporter_by_id_default(context, variables.exporterId);
     if (!exporter) {
       console.info("Sending email verification for account creation - no exporter exists with the provided ID");
       return {
@@ -796,6 +830,32 @@ var generate = {
 };
 var generate_otp_default = generate;
 
+// helpers/generate-otp-and-update-account.ts
+var generateOTPAndUpdateAccount = async (context, accountId) => {
+  try {
+    console.info("Adding OTP to exporter account");
+    const otp = generate_otp_default.otp();
+    const { securityCode, salt, hash, expiry } = otp;
+    const accountUpdate = {
+      otpSalt: salt,
+      otpHash: hash,
+      otpExpiry: expiry
+    };
+    await context.db.Exporter.updateOne({
+      where: { id: accountId },
+      data: accountUpdate
+    });
+    return {
+      success: true,
+      securityCode
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Adding OTP to exporter account ${err}`);
+  }
+};
+var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
+
 // custom-resolvers/account-sign-in.ts
 var accountSignIn = async (root, variables, context) => {
   try {
@@ -807,17 +867,7 @@ var accountSignIn = async (root, variables, context) => {
       return { success: false };
     }
     if (is_valid_account_password_default(password2, exporter.salt, exporter.hash)) {
-      const otp = generate_otp_default.otp();
-      const { securityCode, salt, hash, expiry } = otp;
-      const accountUpdate = {
-        otpSalt: salt,
-        otpHash: hash,
-        otpExpiry: expiry
-      };
-      await context.db.Exporter.updateOne({
-        where: { id: exporter.id },
-        data: accountUpdate
-      });
+      const { securityCode } = await generate_otp_and_update_account_default(context, exporter.id);
       const emailResponse = await emails_default.securityCodeEmail(email, exporter.firstName, securityCode);
       if (emailResponse.success) {
         return {
@@ -836,6 +886,153 @@ var accountSignIn = async (root, variables, context) => {
   }
 };
 var account_sign_in_default = accountSignIn;
+
+// custom-resolvers/verify-account-sign-in-code.ts
+var import_date_fns3 = require("date-fns");
+
+// helpers/is-valid-otp.ts
+var import_dotenv3 = __toESM(require("dotenv"));
+var import_crypto4 = __toESM(require("crypto"));
+import_dotenv3.default.config();
+var { ENCRYPTION: ENCRYPTION4 } = ACCOUNT;
+var {
+  STRING_TYPE: STRING_TYPE4,
+  PBKDF2: { ITERATIONS: ITERATIONS4, DIGEST_ALGORITHM: DIGEST_ALGORITHM4 },
+  OTP: {
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH4 }
+  }
+} = ENCRYPTION4;
+var isValidOTP = (securityCode, otpSalt, otpHash) => {
+  try {
+    console.info("Validating OTP");
+    const hashVerify = import_crypto4.default.pbkdf2Sync(securityCode, otpSalt, ITERATIONS4, KEY_LENGTH4, DIGEST_ALGORITHM4).toString(STRING_TYPE4);
+    if (otpHash === hashVerify) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Error validating OTP ${err}`);
+  }
+};
+var is_valid_otp_default = isValidOTP;
+
+// helpers/create-jwt.ts
+var import_crypto5 = __toESM(require("crypto"));
+var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
+var {
+  ENCRYPTION: { RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3, STRING_TYPE: STRING_TYPE5 },
+  JWT: {
+    KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
+    TOKEN: { EXPIRY, ALGORITHM }
+  }
+} = ACCOUNT;
+var PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
+var createJWT = (accountId) => {
+  const sessionIdentifier = import_crypto5.default.randomBytes(RANDOM_BYTES_SIZE3).toString(STRING_TYPE5);
+  const expiresIn = EXPIRY;
+  const payload = {
+    sub: accountId,
+    iat: Date.now(),
+    sessionIdentifier
+  };
+  const signedToken = import_jsonwebtoken.default.sign(payload, PRIV_KEY, { expiresIn, algorithm: ALGORITHM });
+  return {
+    token: `Bearer ${signedToken}`,
+    expires: expiresIn,
+    sessionIdentifier
+  };
+};
+var create = {
+  JWT: createJWT
+};
+var create_jwt_default = create;
+
+// custom-resolvers/verify-account-sign-in-code.ts
+var {
+  JWT: { SESSION_EXPIRY }
+} = ACCOUNT;
+var verifyAccountSignInCode = async (root, variables, context) => {
+  try {
+    console.info("Verifying exporter account sign in code");
+    const { accountId, securityCode } = variables;
+    const exporter = await get_exporter_by_id_default(context, accountId);
+    if (!exporter) {
+      console.info("Unable to verify exporter account sign in code - no exporter exists with the provided ID");
+      return {
+        success: false
+      };
+    }
+    if (!exporter.otpSalt || !exporter.otpHash || !exporter.otpExpiry) {
+      console.info("Unable to verify exporter account sign in code - no OTP available for this account");
+      return {
+        success: false
+      };
+    }
+    const { otpSalt, otpHash, otpExpiry } = exporter;
+    const now = new Date();
+    const hasExpired = (0, import_date_fns3.isAfter)(now, otpExpiry);
+    if (hasExpired) {
+      console.info("Unable to verify exporter account sign in code - verification period has expired");
+      return {
+        success: false,
+        expired: true
+      };
+    }
+    const isValid = otpSalt && otpHash && is_valid_otp_default(securityCode, otpSalt, otpHash);
+    if (isValid) {
+      const jwt = create_jwt_default.JWT(accountId);
+      const { sessionIdentifier } = jwt;
+      const accountUpdate = {
+        sessionIdentifier,
+        sessionExpiry: SESSION_EXPIRY(),
+        otpSalt: "",
+        otpHash: "",
+        otpExpiry: null
+      };
+      await context.db.Exporter.updateOne({
+        where: { id: accountId },
+        data: accountUpdate
+      });
+      return {
+        success: true,
+        accountId: exporter.id,
+        lastName: exporter.lastName,
+        firstName: exporter.firstName,
+        ...jwt
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Verifying exporter account sign in code and generating JWT (verifyAccountSignInCode mutation) ${err}`);
+  }
+};
+var verify_account_sign_in_code_default = verifyAccountSignInCode;
+
+// custom-resolvers/add-and-get-OTP.ts
+var addAndGetOTP = async (root, variables, context) => {
+  try {
+    console.info("Adding OTP to exporter account");
+    const { email } = variables;
+    const exporter = await get_account_by_field_default(context, "email", email);
+    if (!exporter) {
+      console.info("Unable to generate and add OTP to exporter account - no account found");
+      return { success: false };
+    }
+    const { securityCode } = await generate_otp_and_update_account_default(context, exporter.id);
+    return {
+      success: true,
+      securityCode
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Adding OTP to exporter account (addAndGetOTP mutation) ${err}`);
+  }
+};
+var add_and_get_OTP_default = addAndGetOTP;
 
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -891,7 +1088,7 @@ var mapSicCodes = (company, sicCodes) => {
 };
 
 // custom-schema.ts
-import_dotenv2.default.config();
+import_dotenv4.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
@@ -993,7 +1190,21 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
 
       type SuccessResponse {
-        success: Boolean
+        success: Boolean!
+      }
+
+      type AccountSignInResponse {
+        accountId: String
+        firstName: String
+        lastName: String
+        token: String
+        sessionIdentifier: String
+        success: Boolean!
+      }
+
+      type AddAndGetOtpResponse {
+        success: Boolean!
+        securityCode: String!
       }
 
       type Mutation {
@@ -1004,7 +1215,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           email: String!
           password: String!
         ): Account
-        """ verify an an account's email address """
+        """ verify an account's email address """
         verifyAccountEmailAddress(
           token: String!
         ): EmailResponse
@@ -1017,7 +1228,19 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         accountSignIn(
           email: String!
           password: String!
-        ): SuccessResponse
+        ): AccountSignInResponse
+
+        """ verify an account's OTP security code """
+        verifyAccountSignInCode(
+          accountId: String!
+          securityCode: String!
+        ): AccountSignInResponse
+
+        """ add an OTP security code to an account """
+        addAndGetOTP(
+          email: String!
+        ): AddAndGetOtpResponse
+
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -1043,6 +1266,8 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       accountSignIn: account_sign_in_default,
       verifyAccountEmailAddress: verify_account_email_address_default,
       sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
+      verifyAccountSignInCode: verify_account_sign_in_code_default,
+      addAndGetOTP: add_and_get_OTP_default,
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);

@@ -1,7 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import getAccountByField from '../helpers/get-account-by-field';
 import isValidAccountPassword from '../helpers/is-valid-account-password';
-import generate from '../helpers/generate-otp';
+import generateOTPAndUpdateAccount from '../helpers/generate-otp-and-update-account';
 import sendEmail from '../emails';
 import { AccountSignInVariables, AccountSignInResponse } from '../types';
 
@@ -31,22 +31,8 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     }
 
     if (isValidAccountPassword(password, exporter.salt, exporter.hash)) {
-      // generate OTP.
-      const otp = generate.otp();
-
-      const { securityCode, salt, hash, expiry } = otp;
-
-      // update the account.
-      const accountUpdate = {
-        otpSalt: salt,
-        otpHash: hash,
-        otpExpiry: expiry,
-      };
-
-      await context.db.Exporter.updateOne({
-        where: { id: exporter.id },
-        data: accountUpdate,
-      });
+      // generate OTP and update the account
+      const { securityCode } = await generateOTPAndUpdateAccount(context, exporter.id);
 
       // send "security code" email.
       const emailResponse = await sendEmail.securityCodeEmail(email, exporter.firstName, securityCode);

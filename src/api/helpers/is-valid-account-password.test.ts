@@ -24,7 +24,7 @@ describe('api/helpers/is-valid-account-password', () => {
   const hash = crypto.pbkdf2Sync(mockPassword, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
 
   describe('when password is valid', () => {
-    it('should return false', () => {
+    it('should return true', () => {
       const result = isValidAccountPassword(mockPassword, salt, hash);
 
       expect(result).toEqual(true);
