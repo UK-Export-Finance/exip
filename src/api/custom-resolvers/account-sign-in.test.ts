@@ -116,6 +116,23 @@ describe('custom-resolvers/account-sign-in', () => {
     });
   });
 
+  describe('when exporter is not verified', () => {
+    test('it should return success=false', async () => {
+      await context.query.Exporter.updateOne({
+        where: { id: exporter.id },
+        data: {
+          isVerified: false,
+        },
+      });
+
+      result = await accountSignIn({}, variables, context);
+
+      const expected = { success: false };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when no exporter is found', () => {
     test('it should return success=false', async () => {
       // wipe the table so we have a clean slate.

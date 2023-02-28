@@ -170,10 +170,18 @@ describe('controllers/insurance/account/sign-in', () => {
           api.keystone.account.signIn = accountSignInSpy;
         });
 
-        it('should redirect to /invalid-credentials', async () => {
+        it('should render template with validation errors and submitted values', async () => {
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith('/invalid-credentials');
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS,
+              BACK_LINK: req.headers.referer,
+            }),
+            ...PAGE_VARIABLES,
+            submittedValues: req.body,
+            validationErrors: generateValidationErrors({}),
+          });
         });
       });
     });
