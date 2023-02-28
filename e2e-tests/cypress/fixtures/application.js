@@ -56,6 +56,7 @@ const {
       COMPANY_OR_ORGANISATION: {
         FIRST_NAME,
         LAST_NAME,
+        POSITION,
       },
     },
   },
@@ -129,6 +130,8 @@ const application = {
   BUYER: {
     [FIRST_NAME]: 'Bob',
     [LAST_NAME]: 'Smith',
+    [POSITION]: 'CEO',
+    [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT'),
   },
 };
 

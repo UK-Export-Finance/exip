@@ -9,6 +9,8 @@ const {
     WEBSITE,
     FIRST_NAME,
     LAST_NAME,
+    POSITION,
+    EMAIL,
   },
 } = FIELD_IDS;
 
@@ -51,6 +53,16 @@ const companyOrOrganisation = {
     label: () => cy.get(`[data-cy="${LAST_NAME}-label"]`),
     input: () => cy.get(`[data-cy="${LAST_NAME}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${LAST_NAME}-error-message"]`),
+  },
+  [POSITION]: {
+    label: () => cy.get(`[data-cy="${POSITION}-label"]`),
+    input: () => cy.get(`[data-cy="${POSITION}-input"]`),
+    errorMessage: () => cy.get(`[data-cy="${POSITION}-error-message"]`),
+  },
+  [EMAIL]: {
+    label: () => cy.get(`[data-cy="${EMAIL}-label"]`),
+    input: () => cy.get(`[data-cy="${EMAIL}-input"]`),
+    errorMessage: () => cy.get(`[data-cy="${EMAIL}-error-message"]`),
   },
 };
 

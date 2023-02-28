@@ -30,5 +30,11 @@ export const YOUR_BUYER_FIELDS = {
     [COMPANY_OR_ORGANISATION.LAST_NAME]: {
       LABEL: 'Last name',
     },
+    [COMPANY_OR_ORGANISATION.POSITION]: {
+      LABEL: 'Position',
+    },
+    [COMPANY_OR_ORGANISATION.EMAIL]: {
+      LABEL: 'Email address',
+    },
   },
 };

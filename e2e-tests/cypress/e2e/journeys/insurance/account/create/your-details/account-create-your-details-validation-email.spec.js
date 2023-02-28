@@ -4,6 +4,7 @@ import accountFormFields from '../../../../../partials/insurance/accountFormFiel
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INVALID_EMAILS } from '../../../../../../../constants';
 
 const {
   START,
@@ -57,7 +58,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
 
   describe('when email does not contain an @ symbol', () => {
     it('should render a validation error', () => {
-      const invalidEmail = 'mockemail.com';
+      const invalidEmail = INVALID_EMAILS.NO_AT_SYMBOL;
 
       submitAndAssertFieldErrors(invalidEmail);
     });
@@ -65,7 +66,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
 
   describe('when email does not contain at least one dot', () => {
     it('should render a validation error', () => {
-      const invalidEmail = 'mock@emailcom';
+      const invalidEmail = INVALID_EMAILS.NO_DOTS;
 
       submitAndAssertFieldErrors(invalidEmail);
     });
@@ -73,7 +74,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
 
   describe('when email contains a space', () => {
     it('should render a validation error', () => {
-      const invalidEmail = 'mock@email .com';
+      const invalidEmail = INVALID_EMAILS.WITH_SPACE;
 
       submitAndAssertFieldErrors(invalidEmail);
     });
@@ -81,7 +82,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
 
   describe('when email does not contain a domain', () => {
     it('should render a validation error', () => {
-      const invalidEmail = 'mock@email.';
+      const invalidEmail = INVALID_EMAILS.NO_DOMAIN;
 
       submitAndAssertFieldErrors(invalidEmail);
     });

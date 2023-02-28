@@ -215,6 +215,54 @@
             }
           }
         }) }}
+
+        {{ govukInput({
+          label: {
+            text:  FIELDS.POSITION.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+              id: FIELDS.POSITION.ID + '-label',
+              'data-cy': FIELDS.POSITION.ID + '-label'
+            }
+          },
+          classes: "govuk-!-width-one-half",
+          attributes: {
+            'data-cy': FIELDS.POSITION.ID + '-input'
+          },
+          id: FIELDS.POSITION.ID,
+          name: FIELDS.POSITION.ID,
+          value: submittedValues[FIELDS.POSITION.ID],
+          errorMessage: validationErrors.errorList[FIELDS.POSITION.ID] and {
+            text: validationErrors.errorList[FIELDS.POSITION.ID].text,
+            attributes: {
+              "data-cy": FIELDS.POSITION.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text:  FIELDS.EMAIL.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+              id: FIELDS.EMAIL.ID + '-label',
+              'data-cy': FIELDS.EMAIL.ID + '-label'
+            }
+          },
+          classes: "govuk-!-width-one-half",
+          attributes: {
+            'data-cy': FIELDS.EMAIL.ID + '-input'
+          },
+          id: FIELDS.EMAIL.ID,
+          name: FIELDS.EMAIL.ID,
+          value: submittedValues[FIELDS.EMAIL.ID],
+          errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
+            text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
+            attributes: {
+              "data-cy": FIELDS.EMAIL.ID + "-error-message"
+            }
+          }
+        }) }}
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
