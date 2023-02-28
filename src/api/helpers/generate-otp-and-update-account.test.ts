@@ -51,7 +51,6 @@ describe('helpers/generate-otp-and-update-account', () => {
   test('it should generate an OTP and save to the account', async () => {
     expect(account.otpSalt).toEqual(mockOTP.salt);
     expect(account.otpHash).toEqual(mockOTP.hash);
-    // @ts-ignore
     expect(new Date(account.otpExpiry)).toEqual(mockOTP.expiry);
   });
 

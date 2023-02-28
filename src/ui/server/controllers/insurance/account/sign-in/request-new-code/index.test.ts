@@ -85,24 +85,26 @@ describe('controllers/insurance/account/sign-in/request-new-code', () => {
       });
     });
 
-    it('should call api.keystone.account.verifyAccountSignInCode', async () => {
-      await post(req, res);
+    describe('when there is req.session.accountId', () => {
+      it('should call api.keystone.account.verifyAccountSignInCode', async () => {
+        await post(req, res);
 
-      expect(signInSendNewCodeSpy).toHaveBeenCalledTimes(1);
+        expect(signInSendNewCodeSpy).toHaveBeenCalledTimes(1);
 
-      expect(signInSendNewCodeSpy).toHaveBeenCalledWith(req.session.accountId);
-    });
+        expect(signInSendNewCodeSpy).toHaveBeenCalledWith(req.session.accountId);
+      });
 
-    it('should add successBanner to req.flash', async () => {
-      await post(req, res);
+      it('should add successBanner to req.flash', async () => {
+        await post(req, res);
 
-      expect(req.flash).toHaveBeenCalledWith('successBanner', 'newSecurityCodeSent');
-    });
+        expect(req.flash).toHaveBeenCalledWith('successBanner', 'newSecurityCodeSent');
+      });
 
-    it(`should redirect to ${ENTER_CODE}`, async () => {
-      await post(req, res);
+      it(`should redirect to ${ENTER_CODE}`, async () => {
+        await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(ENTER_CODE);
+        expect(res.redirect).toHaveBeenCalledWith(ENTER_CODE);
+      });
     });
 
     describe('api error handling', () => {
