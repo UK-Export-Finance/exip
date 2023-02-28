@@ -111,7 +111,8 @@ var ACCOUNT = {
     SESSION_EXPIRY: () => {
       const now = new Date();
       const hours = 8;
-      const future = new Date(now.getTime() + hours * 60 * 60 * 1e3);
+      const seconds = 60 * 60 * 1e3;
+      const future = new Date(now.getTime() + hours * seconds);
       return future;
     }
   }

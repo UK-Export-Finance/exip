@@ -5,6 +5,7 @@ import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import application from '../../../../../fixtures/application';
 
 const {
   COMPANY_OR_ORGANISATION: {
@@ -72,7 +73,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
     describe(`when ${FIRST_NAME_FIELD_ID} is correctly entered`, () => {
       it('should not display validation errors', () => {
-        cy.keyboardInput(companyOrOrganisationPage[FIRST_NAME_FIELD_ID].input(), 'test');
+        cy.keyboardInput(companyOrOrganisationPage[FIRST_NAME_FIELD_ID].input(), application.BUYER[FIRST_NAME_FIELD_ID]);
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 4);
       });
@@ -100,7 +101,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
     describe(`when ${LAST_NAME_FIELD_ID} is correctly entered`, () => {
       it('should not display validation errors', () => {
-        cy.keyboardInput(companyOrOrganisationPage[LAST_NAME_FIELD_ID].input(), 'test');
+        cy.keyboardInput(companyOrOrganisationPage[LAST_NAME_FIELD_ID].input(), application.BUYER[LAST_NAME_FIELD_ID]);
         submitButton().click();
         partials.errorSummaryListItems().should('have.length', 3);
       });

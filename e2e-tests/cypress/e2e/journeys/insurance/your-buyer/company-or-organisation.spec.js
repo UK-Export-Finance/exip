@@ -104,25 +104,30 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     field.input().should('exist');
   });
 
-  it(`renders ${FIRST_NAME} and ${LAST_NAME} label and input`, () => {
-    const firstNameField = companyOrOrganisationPage[FIRST_NAME];
-    const lastNameField = companyOrOrganisationPage[LAST_NAME];
+  it(`renders ${FIRST_NAME} heading, hint, label and input`, () => {
+    const fieldId = FIRST_NAME;
+    const field = companyOrOrganisationPage[fieldId];
 
-    firstNameField.heading().should('exist');
-    cy.checkText(firstNameField.heading(), FIELDS.COMPANY_OR_ORGANISATION[FIRST_NAME].HEADING);
+    field.heading().should('exist');
+    cy.checkText(field.heading(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HEADING);
 
-    firstNameField.hint().should('exist');
-    cy.checkText(firstNameField.hint(), FIELDS.COMPANY_OR_ORGANISATION[FIRST_NAME].HINT);
+    field.hint().should('exist');
+    cy.checkText(field.hint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
 
-    firstNameField.label().should('exist');
-    cy.checkText(firstNameField.label(), FIELDS.COMPANY_OR_ORGANISATION[FIRST_NAME].LABEL);
+    field.label().should('exist');
+    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
-    firstNameField.input().should('exist');
+    field.input().should('exist');
+  });
 
-    lastNameField.label().should('exist');
-    cy.checkText(lastNameField.label(), FIELDS.COMPANY_OR_ORGANISATION[LAST_NAME].LABEL);
+  it(`renders ${LAST_NAME} label and input`, () => {
+    const fieldId = LAST_NAME;
+    const field = companyOrOrganisationPage[fieldId];
 
-    lastNameField.input().should('exist');
+    field.label().should('exist');
+    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+
+    field.input().should('exist');
   });
 
   it('renders a `save and back` button', () => {

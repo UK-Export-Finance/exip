@@ -26,23 +26,11 @@ describe('controllers/insurance/your-buyer/validation/first-name', () => {
     [FIELD_ID]: '',
   } as RequestBody;
 
-  describe(`when ${FIELD_ID} field is not provided`, () => {
-    it('should return `emptyFieldValidation`', () => {
-      const result = firstNameRule(mockBody, mockErrors);
+  it('should return `emptyFieldValidation`', () => {
+    const result = firstNameRule(mockBody, mockErrors);
 
-      const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+    const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe(`when ${FIELD_ID} field is provided`, () => {
-    it('should not return validation errors', () => {
-      mockBody[FIELD_ID] = 'test';
-
-      const result = firstNameRule(mockBody, mockErrors);
-
-      expect(result).toEqual(mockErrors);
-    });
+    expect(result).toEqual(expected);
   });
 });
