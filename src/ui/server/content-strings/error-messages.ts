@@ -212,6 +212,12 @@ export const ERROR_MESSAGES = {
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.WEBSITE]: {
           INCORRECT_FORMAT: "Enter the buyer's website in the correct format, like www.example.com",
         },
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.FIRST_NAME]: {
+          IS_EMPTY: "Enter the first name of your contact at the buyer's company or organisation",
+        },
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.LAST_NAME]: {
+          IS_EMPTY: "Enter the last name of your contact at the buyer's company or organisation",
+        },
       },
     },
     ACCOUNT: {

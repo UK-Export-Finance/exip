@@ -5,6 +5,8 @@ const YOUR_BUYER = {
     COUNTRY: 'country',
     REGISTRATION_NUMBER: 'registrationNumber',
     WEBSITE: 'website',
+    FIRST_NAME: 'firstName',
+    LAST_NAME: 'lastName',
   },
 };
 

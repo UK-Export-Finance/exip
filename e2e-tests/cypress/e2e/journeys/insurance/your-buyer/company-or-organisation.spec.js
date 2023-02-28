@@ -16,6 +16,8 @@ const {
     COUNTRY,
     REGISTRATION_NUMBER,
     WEBSITE,
+    FIRST_NAME,
+    LAST_NAME,
   },
 } = FIELD_IDS;
 
@@ -100,6 +102,27 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
     field.input().should('exist');
+  });
+
+  it(`renders ${FIRST_NAME} and ${LAST_NAME} label and input`, () => {
+    const firstNameField = companyOrOrganisationPage[FIRST_NAME];
+    const lastNameField = companyOrOrganisationPage[LAST_NAME];
+
+    firstNameField.heading().should('exist');
+    cy.checkText(firstNameField.heading(), FIELDS.COMPANY_OR_ORGANISATION[FIRST_NAME].HEADING);
+
+    firstNameField.hint().should('exist');
+    cy.checkText(firstNameField.hint(), FIELDS.COMPANY_OR_ORGANISATION[FIRST_NAME].HINT);
+
+    firstNameField.label().should('exist');
+    cy.checkText(firstNameField.label(), FIELDS.COMPANY_OR_ORGANISATION[FIRST_NAME].LABEL);
+
+    firstNameField.input().should('exist');
+
+    lastNameField.label().should('exist');
+    cy.checkText(lastNameField.label(), FIELDS.COMPANY_OR_ORGANISATION[LAST_NAME].LABEL);
+
+    lastNameField.input().should('exist');
   });
 
   it('renders a `save and back` button', () => {

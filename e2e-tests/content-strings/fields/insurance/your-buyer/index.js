@@ -22,5 +22,13 @@ export const YOUR_BUYER_FIELDS = {
     [COMPANY_OR_ORGANISATION.WEBSITE]: {
       LABEL: 'Enter their  website (optional)',
     },
+    [COMPANY_OR_ORGANISATION.FIRST_NAME]: {
+      HEADING: "Enter details for your contact at the buyer's company or organisation",
+      HINT: 'We will not contact them without your permission',
+      LABEL: 'First name',
+    },
+    [COMPANY_OR_ORGANISATION.LAST_NAME]: {
+      LABEL: 'Last name',
+    },
   },
 };

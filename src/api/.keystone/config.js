@@ -820,7 +820,10 @@ var accountSignIn = async (root, variables, context) => {
       });
       const emailResponse = await emails_default.securityCodeEmail(email, exporter.firstName, securityCode);
       if (emailResponse.success) {
-        return emailResponse;
+        return {
+          ...emailResponse,
+          accountId: exporter.id
+        };
       }
       return {
         success: false
