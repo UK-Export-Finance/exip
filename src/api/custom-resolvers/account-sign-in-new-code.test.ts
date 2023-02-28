@@ -5,7 +5,7 @@ import accountSignInSendNewCode from './account-sign-in-new-code';
 import baseConfig from '../keystone';
 import generate from '../helpers/generate-otp';
 import sendEmail from '../emails';
-import { mockAccount } from '../test-mocks';
+import { mockAccount, mockOTP } from '../test-mocks';
 import { Account, AccountSignInSendNewCodeVariables, AccountSignInResponse } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -22,14 +22,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
   jest.mock('../emails');
   jest.mock('../helpers/generate-otp');
 
-  const mockOtp = {
-    securityCode: '123456',
-    salt: 'mockSalt',
-    hash: 'mockHash',
-    expiry: new Date(),
-  };
-
-  generate.otp = () => mockOtp;
+  generate.otp = () => mockOTP;
 
   const sendEmailResponse = { success: true, emailRecipient: mockAccount.email };
 
@@ -79,16 +72,16 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
 
   describe('when the provided password is valid', () => {
     test('it should generate an OTP and save to the account', () => {
-      expect(account.otpSalt).toEqual(mockOtp.salt);
-      expect(account.otpHash).toEqual(mockOtp.hash);
-      expect(new Date(account.otpExpiry)).toEqual(mockOtp.expiry);
+      expect(account.otpSalt).toEqual(mockOTP.salt);
+      expect(account.otpHash).toEqual(mockOTP.hash);
+      expect(new Date(account.otpExpiry)).toEqual(mockOTP.expiry);
     });
 
     test('it should call sendEmail.securityCodeEmail', () => {
       const { email, firstName } = account;
 
       expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
-      expect(securityCodeEmailSpy).toHaveBeenCalledWith(email, firstName, mockOtp.securityCode);
+      expect(securityCodeEmailSpy).toHaveBeenCalledWith(email, firstName, mockOTP.securityCode);
     });
 
     test('it should return the email response and accountId', () => {
