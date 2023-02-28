@@ -15,6 +15,7 @@ const {
     ADDRESS,
     COUNTRY,
     REGISTRATION_NUMBER,
+    WEBSITE,
   },
 } = FIELD_IDS;
 
@@ -83,6 +84,16 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
   it(`renders ${REGISTRATION_NUMBER} label and input`, () => {
     const fieldId = REGISTRATION_NUMBER;
+    const field = companyOrOrganisationPage[fieldId];
+
+    field.label().should('exist');
+    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+
+    field.input().should('exist');
+  });
+
+  it(`renders ${WEBSITE} label and input`, () => {
+    const fieldId = WEBSITE;
     const field = companyOrOrganisationPage[fieldId];
 
     field.label().should('exist');

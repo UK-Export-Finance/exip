@@ -205,6 +205,9 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: "Enter the buyer's address",
           ABOVE_MAXIMUM: 'Buyer address cannot be more than 300 characters',
         },
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.WEBSITE]: {
+          INCORRECT_FORMAT: "Enter the buyer's website in the correct format, like www.example.com",
+        },
       },
     },
     ACCOUNT: {
