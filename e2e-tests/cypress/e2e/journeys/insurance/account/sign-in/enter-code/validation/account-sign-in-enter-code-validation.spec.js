@@ -70,7 +70,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
     });
 
     describe('when submitting a valid security code', () => {
-      it(`should redirect to ${ROOT}${DASHBOARD}`, () => {
+      it(`should redirect to ${DASHBOARD}`, () => {
         /**
          * Create and get an OTP for the exporter's account directly from the API,
          * so that we can assert enter a valid security code and continue the journey.
@@ -87,7 +87,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
 
           submitButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}${DASHBOARD}`;
+          const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
           cy.url().should('eq', expectedUrl);
         });
