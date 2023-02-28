@@ -30,7 +30,7 @@ export const mockAccount = {
   lastName: 'last',
   email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT,
   ...generatePassword(String(process.env.MOCK_ACCOUNT_PASSWORD)),
-  isVerified: false,
+  isVerified: true,
   verificationHash: 'mockVerificationHash',
   verificationExpiry: ACCOUNT.EMAIL.VERIFICATION_EXPIRY(),
   createdAt: new Date().toISOString(),
