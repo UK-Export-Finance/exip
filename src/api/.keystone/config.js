@@ -117,12 +117,8 @@ var ACCOUNT = {
     SESSION_EXPIRY: () => {
       const now = /* @__PURE__ */ new Date();
       const hours = 8;
-<<<<<<< HEAD
-      const future = new Date(now.getTime() + hours * 60 * 60 * 1e3);
-=======
       const seconds = 60 * 60 * 1e3;
       const future = new Date(now.getTime() + hours * seconds);
->>>>>>> main-application
       return future;
     }
   }
@@ -905,7 +901,6 @@ var accountSignIn = async (root, variables, context) => {
 };
 var account_sign_in_default = accountSignIn;
 
-<<<<<<< HEAD
 // custom-resolvers/account-sign-in-new-code.ts
 var accountSignInSendNewCode = async (root, variables, context) => {
   try {
@@ -935,8 +930,6 @@ var accountSignInSendNewCode = async (root, variables, context) => {
 };
 var account_sign_in_new_code_default = accountSignInSendNewCode;
 
-=======
->>>>>>> main-application
 // custom-resolvers/verify-account-sign-in-code.ts
 var import_date_fns3 = require("date-fns");
 
@@ -1266,10 +1259,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           email: String!
           password: String!
         ): Account
-<<<<<<< HEAD
 
-=======
->>>>>>> main-application
         """ verify an account's email address """
         verifyAccountEmailAddress(
           token: String!
@@ -1286,14 +1276,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           password: String!
         ): AccountSignInResponse
 
-<<<<<<< HEAD
         """ generate and email a new OTP security code """
         accountSignInSendNewCode(
           accountId: String!
         ): AccountSignInResponse
 
-=======
->>>>>>> main-application
         """ verify an account's OTP security code """
         verifyAccountSignInCode(
           accountId: String!

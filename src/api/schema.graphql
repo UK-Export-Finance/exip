@@ -1155,18 +1155,12 @@ type Mutation {
   """ send confirm email address email """
   sendEmailConfirmEmailAddress(exporterId: String!): EmailResponse
 
-<<<<<<< HEAD
   """ validate credentials, generate and email a OTP security code """
   accountSignIn(email: String!, password: String!): AccountSignInResponse
 
   """ generate and email a new OTP security code """
   accountSignInSendNewCode(accountId: String!): AccountSignInResponse
 
-=======
-  """ send confirm email address email """
-  accountSignIn(email: String!, password: String!): AccountSignInResponse
-
->>>>>>> main-application
   """ verify an account's OTP security code """
   verifyAccountSignInCode(accountId: String!, securityCode: String!): AccountSignInResponse
 
