@@ -13,9 +13,9 @@ const queryStrings = {
         verificationHash
       }
     }`,
-  addAndGetOtp: () => gql`
-    mutation AddAndGetOtp($email: String!) {
-      addAndGetOtp(email: $email) {
+  addAndGetOTP: () => gql`
+    mutation AddAndGetOTP($email: String!) {
+      addAndGetOTP(email: $email) {
         success
         securityCode
       }
@@ -54,17 +54,17 @@ const getExporterByEmail = async (email) => {
 };
 
 /**
- * addAndGetOtp
+ * addAndGetOTP
  * Add a OTP to an exporter account and return the security code
  * @param {String} Exporter email address
  * @returns {Object} security code
  */
-const addAndGetOtp = async (email) => {
+const addAndGetOTP = async (email) => {
   try {
     const responseBody = await apollo.query({
-      query: queryStrings.addAndGetOtp(),
+      query: queryStrings.addAndGetOTP(),
       variables: { email },
-    }).then((response) => response.data.addAndGetOtp);
+    }).then((response) => response.data.addAndGetOTP);
 
     return responseBody.securityCode;
   } catch (err) {
@@ -76,7 +76,7 @@ const addAndGetOtp = async (email) => {
 
 const api = {
   getExporterByEmail,
-  addAndGetOtp,
+  addAndGetOTP,
 };
 
 export default api;

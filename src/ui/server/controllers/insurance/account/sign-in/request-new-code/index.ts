@@ -1,6 +1,7 @@
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
 const {
@@ -38,7 +39,7 @@ export const get = (req: Request, res: Response) => {
 
 /**
  * post
- * Get a new sign in code and redirect to the netx part of the flow
+ * Get a new sign in code and redirect to the next part of the flow
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow
@@ -49,8 +50,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(SIGN_IN_ROOT);
     }
 
-    // const response = await api.keystone.account.verifyAccountSignInCode(req.session.accountId, securityCode);
-    const response = { success: true };
+    const response = await api.keystone.account.signInSendNewCode(req.session.accountId);
 
     if (response.success) {
       return res.redirect(ENTER_CODE);

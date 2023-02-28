@@ -8,6 +8,7 @@ import api from '../../../../../../../support/api';
 const {
   START,
   ACCOUNT: { SIGN_IN: { ENTER_CODE } },
+  ROOT,
   DASHBOARD,
 } = ROUTES;
 
@@ -69,7 +70,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
     });
 
     describe('when submitting a valid security code', () => {
-      it(`should redirect to ${DASHBOARD}`, () => {
+      it(`should redirect to ${ROOT}${DASHBOARD}`, () => {
         /**
          * Create and get an OTP for the exporter's account directly from the API,
          * so that we can assert enter a valid security code and continue the journey.
@@ -81,12 +82,12 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
          */
         const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
 
-        api.addAndGetOtp(exporterEmail).then((validSecurityCode) => {
+        api.addAndGetOTP(exporterEmail).then((validSecurityCode) => {
           cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), validSecurityCode);
 
           submitButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+          const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}${DASHBOARD}`;
 
           cy.url().should('eq', expectedUrl);
         });

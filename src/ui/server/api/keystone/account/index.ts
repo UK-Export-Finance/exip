@@ -5,6 +5,7 @@ import getExporterQuery from '../../../graphql/queries/account/get';
 import verifyExporterEmailAddressMutation from '../../../graphql/mutations/account/verify-email-address';
 import sendEmailConfirmEmailAddressMutation from '../../../graphql/mutations/account/send-email-confirm-email-address';
 import accountSignInMutation from '../../../graphql/mutations/account/sign-in';
+import accountSignInSendNewCodeMutation from '../../../graphql/mutations/account/sign-in-send-new-code';
 import verifyAccountSignInCodeMutation from '../../../graphql/mutations/account/verify-sign-in-code';
 import verifyAccountSessionMutation from '../../../graphql/mutations/account/verify-session';
 
@@ -140,6 +141,33 @@ const account = {
     } catch (err) {
       console.error(err);
       throw new Error('Signing in exporter account');
+    }
+  },
+  signInSendNewCode: async (accountId: string) => {
+    try {
+      console.info('Sending new sign in code for exporter account');
+
+      const variables = { accountId };
+
+      const response = (await apollo('POST', accountSignInSendNewCodeMutation, variables)) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error sending new sign in code for exporter account ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error sending new sign in code for exporter account ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.accountSignInSendNewCode) {
+        return response.data.accountSignInSendNewCode;
+      }
+
+      console.error(response);
+      throw new Error('Sending new sign in code for exporter account');
+    } catch (err) {
+      console.error(err);
+      throw new Error('Sending new sign in code for exporter account');
     }
   },
   verifyAccountSignInCode: async (accountId: string, securityCode: string) => {

@@ -2,6 +2,7 @@ import { TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
 
@@ -64,6 +65,14 @@ describe('controllers/insurance/account/sign-in/request-new-code', () => {
   });
 
   describe('post', () => {
+    const signInSendNewCodeResponse = {
+      success: true,
+    };
+
+    let signInSendNewCodeSpy = jest.fn(() => Promise.resolve(signInSendNewCodeResponse));
+
+    api.keystone.account.signInSendNewCode = signInSendNewCodeSpy;
+
     describe('when there is no req.session.accountId', () => {
       beforeEach(() => {
         delete req.session.accountId;
@@ -76,10 +85,33 @@ describe('controllers/insurance/account/sign-in/request-new-code', () => {
       });
     });
 
+    it('should call api.keystone.account.verifyAccountSignInCode', async () => {
+      await post(req, res);
+
+      expect(signInSendNewCodeSpy).toHaveBeenCalledTimes(1);
+
+      expect(signInSendNewCodeSpy).toHaveBeenCalledWith(req.session.accountId);
+    });
+
     it(`should redirect to ${ENTER_CODE}`, async () => {
       await post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(ENTER_CODE);
+    });
+
+    describe('api error handling', () => {
+      describe('when there is an error', () => {
+        beforeEach(() => {
+          signInSendNewCodeSpy = jest.fn(() => Promise.reject());
+          api.keystone.account.signInSendNewCode = signInSendNewCodeSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
     });
   });
 });

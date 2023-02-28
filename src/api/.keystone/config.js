@@ -18,6 +18,10 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
@@ -65,7 +69,7 @@ var APPLICATION = {
 var ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
-      const now = new Date();
+      const now = /* @__PURE__ */ new Date();
       const day = now.getDate();
       const tomorrow = new Date(now.setDate(day + 1));
       return tomorrow;
@@ -89,15 +93,17 @@ var ACCOUNT = {
       }
     }
   },
+  // One time password
   OTP: {
     DIGITS: 6,
     VERIFICATION_EXPIRY: () => {
-      const now = new Date();
+      const now = /* @__PURE__ */ new Date();
       const milliseconds = 3e5;
       const future = new Date(now.setMilliseconds(milliseconds));
       return future;
     }
   },
+  // JSON web token
   JWT: {
     KEY: {
       SIGNATURE: String(process.env.JWT_SIGNING_KEY),
@@ -109,7 +115,7 @@ var ACCOUNT = {
       ALGORITHM: "RS256"
     },
     SESSION_EXPIRY: () => {
-      const now = new Date();
+      const now = /* @__PURE__ */ new Date();
       const hours = 8;
       const future = new Date(now.getTime() + hours * 60 * 60 * 1e3);
       return future;
@@ -282,7 +288,7 @@ var lists = {
                 id: exporterBrokerId
               }
             };
-            const now = new Date();
+            const now = /* @__PURE__ */ new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
             modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
@@ -410,6 +416,7 @@ var lists = {
       email: (0, import_fields.text)({ validation: { isRequired: true } }),
       salt: (0, import_fields.text)({ validation: { isRequired: true } }),
       hash: (0, import_fields.text)({ validation: { isRequired: true } }),
+      // isVerified flag will only be true if the exporter has verified their email address.
       isVerified: (0, import_fields.checkbox)({ defaultValue: false }),
       verificationHash: (0, import_fields.text)(),
       verificationExpiry: (0, import_fields.timestamp)(),
@@ -426,7 +433,7 @@ var lists = {
         const accountInputData = resolvedData;
         if (operation === "create") {
           console.info("Creating new exporter account");
-          const now = new Date();
+          const now = /* @__PURE__ */ new Date();
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
           try {
@@ -442,7 +449,7 @@ var lists = {
         }
         if (operation === "update") {
           console.info("Updating exporter account");
-          accountInputData.updatedAt = new Date();
+          accountInputData.updatedAt = /* @__PURE__ */ new Date();
         }
         return accountInputData;
       }
@@ -616,6 +623,8 @@ var { withAuth } = (0, import_auth.createAuth)({
   sessionData: "name",
   secretField: "password",
   initFirstItem: {
+    // If there are no items in the database, keystone will ask you to create
+    // a new user, filling in these fields.
     fields: ["name", "email", "password"]
   }
 });
@@ -700,7 +709,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     console.info("Verifying exporter email address");
     const exporter = await get_account_by_field_default(context, "verificationHash", variables.token);
     if (exporter) {
-      const now = new Date();
+      const now = /* @__PURE__ */ new Date();
       const canActivateExporter = (0, import_date_fns2.isBefore)(now, exporter.verificationExpiry);
       if (!canActivateExporter) {
         console.info("Unable to verify exporter email - verification period has expired");
@@ -887,6 +896,35 @@ var accountSignIn = async (root, variables, context) => {
 };
 var account_sign_in_default = accountSignIn;
 
+// custom-resolvers/account-sign-in-new-code.ts
+var accountSignInSendNewCode = async (root, variables, context) => {
+  try {
+    console.info("Generating and sending new sign in code for exporter account");
+    const { accountId } = variables;
+    const exporter = await get_exporter_by_id_default(context, accountId);
+    if (!exporter) {
+      console.info("Unable to validate exporter account - no account found");
+      return { success: false };
+    }
+    const { securityCode } = await generate_otp_and_update_account_default(context, exporter.id);
+    const { email, firstName } = exporter;
+    const emailResponse = await emails_default.securityCodeEmail(email, firstName, securityCode);
+    if (emailResponse.success) {
+      return {
+        ...emailResponse,
+        accountId: exporter.id
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Generating and sending new sign in code for exporter account (accountSignInSendNewCode mutation) ${err}`);
+  }
+};
+var account_sign_in_new_code_default = accountSignInSendNewCode;
+
 // custom-resolvers/verify-account-sign-in-code.ts
 var import_date_fns3 = require("date-fns");
 
@@ -970,7 +1008,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
       };
     }
     const { otpSalt, otpHash, otpExpiry } = exporter;
-    const now = new Date();
+    const now = /* @__PURE__ */ new Date();
     const hasExpired = (0, import_date_fns3.isAfter)(now, otpExpiry);
     if (hasExpired) {
       console.info("Unable to verify exporter account sign in code - verification period has expired");
@@ -1037,7 +1075,7 @@ var add_and_get_OTP_default = addAndGetOTP;
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
-    return new Date(`${new Date().getFullYear()}-${month}-${day}`);
+    return /* @__PURE__ */ new Date(`${(/* @__PURE__ */ new Date()).getFullYear()}-${month}-${day}`);
   }
   return null;
 };
@@ -1060,6 +1098,7 @@ var mapCompaniesHouseFields = (companiesHouseResponse) => {
     companyNumber: companiesHouseResponse.company_number,
     dateOfCreation: companiesHouseResponse.date_of_creation,
     sicCodes: companiesHouseResponse.sic_codes,
+    // creates timestamp for financialYearEndDate from day and month if exist
     financialYearEndDate: create_full_timestamp_from_day_month_default(
       companiesHouseResponse.accounts?.accounting_reference_date?.day,
       companiesHouseResponse.accounts?.accounting_reference_date?.month
@@ -1215,19 +1254,26 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           email: String!
           password: String!
         ): Account
+
         """ verify an account's email address """
         verifyAccountEmailAddress(
           token: String!
         ): EmailResponse
+
         """ send confirm email address email """
         sendEmailConfirmEmailAddress(
           exporterId: String!
         ): EmailResponse
 
-        """ send confirm email address email """
+        """ validate credentials, generate and email a OTP security code """
         accountSignIn(
           email: String!
           password: String!
+        ): AccountSignInResponse
+
+        """ generate and email a new OTP security code """
+        accountSignInSendNewCode(
+          accountId: String!
         ): AccountSignInResponse
 
         """ verify an account's OTP security code """
@@ -1264,6 +1310,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
     Mutation: {
       createAccount: create_account_default,
       accountSignIn: account_sign_in_default,
+      accountSignInSendNewCode: account_sign_in_new_code_default,
       verifyAccountEmailAddress: verify_account_email_address_default,
       sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
       verifyAccountSignInCode: verify_account_sign_in_code_default,
@@ -1303,6 +1350,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
     },
     Query: {
+      /**
+       * Call for companies house API
+       * @param variables - companies house number is received as a string within variables
+       * @returns either mapped response or success false flag with or without apiError
+       */
       getCompaniesHouseInformation: async (root, variables) => {
         try {
           const { companiesHouseNumber } = variables;

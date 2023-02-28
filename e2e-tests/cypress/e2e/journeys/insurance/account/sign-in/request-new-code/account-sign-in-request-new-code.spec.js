@@ -13,7 +13,7 @@ const {
   },
 } = ROUTES;
 
-context('Insurance - Account - Sign in - I want to enter the new security code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account', () => {
+context('Insurance - Account - Sign in - Request new code page- I want to enter the new security code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account', () => {
   before(() => {
     cy.navigateToUrl(START);
 
