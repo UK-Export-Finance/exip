@@ -21,6 +21,9 @@ const checkInputHint = () => {
 };
 
 const checkAutocompleteInput = {
+  hasWorkingClientSideJS: () => {
+    buyerCountryPage.searchInput().should('have.class', 'autocomplete__input');
+  },
   rendersInput: () => {
     buyerCountryPage.searchInput().should('exist');
   },

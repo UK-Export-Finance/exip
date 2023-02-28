@@ -1,16 +1,14 @@
 import { confirmEmailPage } from '../../../../../pages/insurance/account/create';
-import { PAGES } from '../../../../../../../content-strings';
+import partials from '../../../../../partials';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../support/api';
-
-const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL_RESENT;
 
 const {
   START,
   ACCOUNT: { CREATE: { CONFIRM_EMAIL, CONFIRM_EMAIL_RESENT } },
 } = ROUTES;
 
-context('Insurance - Account - Create - Resend confirm email page - As an Exporter I want to request a new link to confirm my email address, So that I can readily use my email address to set up an account that I can use for UKEF digital service such as EXIP digital service', () => {
+context('Insurance - Account - Create - Resend confirm email page - Go back to confirm email page via back button', () => {
   before(() => {
     cy.navigateToUrl(START);
 
@@ -25,10 +23,10 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
-  let exporter;
   let expectedUrl;
+  let exporter;
 
-  describe('core page elements and content', () => {
+  describe('when going back to the `confirm email` page via back link', () => {
     before(() => {
       /**
        * Get the exporter ID directly from the API,
@@ -42,22 +40,26 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
         const [firstExporter] = data.exporters;
         exporter = firstExporter;
 
-        expectedUrl = `${CONFIRM_EMAIL_RESENT}?id=${exporter.id}`;
+        expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL_RESENT}?id=${exporter.id}`;
 
-        cy.url().should('eq', `${Cypress.config('baseUrl')}${expectedUrl}`);
+        cy.url().should('eq', expectedUrl);
+
+        partials.backLink().click();
       });
     });
 
-    it('renders all `confirm email` page content', () => {
-      cy.assertConfirmEmailPageContent(exporter.id);
+    it('renders the page without error', () => {
+      expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}?id=${exporter.id}`;
+
+      cy.url().should('eq', expectedUrl);
     });
 
-    it('renders core page elements', () => {
-      cy.corePageChecks({
-        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: expectedUrl,
-        backLink: `${CONFIRM_EMAIL}?id=${exporter.id}`,
-        assertSubmitButton: false,
+    it('should have account ID in the URL params', () => {
+      cy.url().then((url) => {
+        const splitUrl = url.split('=');
+        const accountId = splitUrl[1];
+
+        expect(accountId).to.equal(exporter.id);
       });
     });
   });

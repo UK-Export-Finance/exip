@@ -38,6 +38,10 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
   });
 
   describe('searchable autocomplete input', () => {
+    it('has working client side JS', () => {
+      checkAutocompleteInput.hasWorkingClientSideJS();
+    });
+
     it('renders an input', () => {
       checkAutocompleteInput.rendersInput();
     });

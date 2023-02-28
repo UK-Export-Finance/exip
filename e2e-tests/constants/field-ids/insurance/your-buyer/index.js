@@ -3,5 +3,7 @@ export const YOUR_BUYER = {
     NAME: 'companyOrOrganisationName',
     ADDRESS: 'address',
     COUNTRY: 'country',
+    REGISTRATION_NUMBER: 'registrationNumber',
+    WEBSITE: 'website',
   },
 };

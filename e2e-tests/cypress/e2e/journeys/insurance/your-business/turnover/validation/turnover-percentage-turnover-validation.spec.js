@@ -76,6 +76,17 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
       });
     });
 
+    describe(`when ${FIELD_ID} has a comma`, () => {
+      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
+
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+        const value = '4,4';
+
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+      });
+    });
+
     describe(`when ${FIELD_ID} has special characters`, () => {
       const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
 
@@ -116,17 +127,6 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
       const field = turnover[FIELD_ID];
 
       cy.keyboardInput(field.input(), '5');
-      submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 1);
-    });
-  });
-
-  describe(`when ${FIELD_ID} is correctly entered with a comma`, () => {
-    it('should not display validation errors', () => {
-      cy.navigateToUrl(url);
-      const field = turnover[FIELD_ID];
-
-      cy.keyboardInput(field.input(), '5,0');
       submitButton().click();
       partials.errorSummaryListItems().should('have.length', 1);
     });
