@@ -13,7 +13,7 @@ const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
 } = FIELD_IDS.INSURANCE;
 
-const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE } = COMPANY_OR_ORGANISATION;
+const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME } = COMPANY_OR_ORGANISATION;
 
 describe('controllers/insurance/your-buyer', () => {
   let req: Request;
@@ -56,6 +56,14 @@ describe('controllers/insurance/your-buyer', () => {
           WEBSITE: {
             ID: WEBSITE,
             ...FIELDS.COMPANY_OR_ORGANISATION[WEBSITE],
+          },
+          FIRST_NAME: {
+            ID: FIRST_NAME,
+            ...FIELDS.COMPANY_OR_ORGANISATION[FIRST_NAME],
+          },
+          LAST_NAME: {
+            ID: LAST_NAME,
+            ...FIELDS.COMPANY_OR_ORGANISATION[LAST_NAME],
           },
         },
       };
@@ -132,6 +140,8 @@ describe('controllers/insurance/your-buyer', () => {
       [NAME]: 'Mock',
       [ADDRESS]: 'Mock free text',
       [COUNTRY]: mockCountries[0].isoCode,
+      [FIRST_NAME]: 'mock first name',
+      [LAST_NAME]: 'mock last name',
     };
 
     describe('when there are no validation errors', () => {
