@@ -39,7 +39,7 @@ export const get = async (req: Request, res: Response) => {
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
-        BACK_LINK: req.headers.referer,
+        BACK_LINK: `${req.headers.referer}?id=${id}`,
       }),
       exporterEmail,
       exporterId: id,

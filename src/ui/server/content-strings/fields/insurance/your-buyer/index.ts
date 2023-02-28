@@ -16,5 +16,11 @@ export const YOUR_BUYER_FIELDS = {
     [COMPANY_OR_ORGANISATION.COUNTRY]: {
       LABEL: 'Country',
     },
+    [COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
+      LABEL: 'Registration number (optional)',
+    },
+    [COMPANY_OR_ORGANISATION.WEBSITE]: {
+      LABEL: 'Enter their  website (optional)',
+    },
   },
 };

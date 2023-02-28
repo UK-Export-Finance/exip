@@ -145,6 +145,11 @@ interface AddAndGetOtpResponse {
   securityCode?: string;
 }
 
+interface AccountSignInResponse {
+  success: boolean;
+  accountId?: string;
+}
+
 export {
   Account,
   AccountCreationVariables,

@@ -13,7 +13,7 @@ const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
 } = FIELD_IDS.INSURANCE;
 
-const { NAME, ADDRESS, COUNTRY } = COMPANY_OR_ORGANISATION;
+const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE } = COMPANY_OR_ORGANISATION;
 
 describe('controllers/insurance/your-buyer', () => {
   let req: Request;
@@ -48,6 +48,14 @@ describe('controllers/insurance/your-buyer', () => {
           COUNTRY: {
             ID: COUNTRY,
             ...FIELDS.COMPANY_OR_ORGANISATION[COUNTRY],
+          },
+          REGISTRATION_NUMBER: {
+            ID: REGISTRATION_NUMBER,
+            ...FIELDS.COMPANY_OR_ORGANISATION[REGISTRATION_NUMBER],
+          },
+          WEBSITE: {
+            ID: WEBSITE,
+            ...FIELDS.COMPANY_OR_ORGANISATION[WEBSITE],
           },
         },
       };

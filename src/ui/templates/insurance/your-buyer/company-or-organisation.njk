@@ -109,6 +109,54 @@
           }
         }) }}
 
+        {{ govukInput({
+          label: {
+            text:  FIELDS.REGISTRATION_NUMBER.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+              id: FIELDS.REGISTRATION_NUMBER.ID + '-label',
+              'data-cy': FIELDS.REGISTRATION_NUMBER.ID + '-label'
+            }
+          },
+          classes: "govuk-!-width-three-quarters",
+          attributes: {
+            'data-cy': FIELDS.REGISTRATION_NUMBER.ID + '-input'
+          },
+          id: FIELDS.REGISTRATION_NUMBER.ID,
+          name: FIELDS.REGISTRATION_NUMBER.ID,
+          value: submittedValues[FIELDS.REGISTRATION_NUMBER.ID],
+          errorMessage: validationErrors.errorList[FIELDS.REGISTRATION_NUMBER.ID] and {
+            text: validationErrors.errorList[FIELDS.REGISTRATION_NUMBER.ID].text,
+            attributes: {
+              "data-cy": FIELDS.REGISTRATION_NUMBER.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text:  FIELDS.WEBSITE.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+              id: FIELDS.WEBSITE.ID + '-label',
+              'data-cy': FIELDS.WEBSITE.ID + '-label'
+            }
+          },
+          classes: "govuk-!-width-three-quarters",
+          attributes: {
+            'data-cy': FIELDS.WEBSITE.ID + '-input'
+          },
+          id: FIELDS.WEBSITE.ID,
+          name: FIELDS.WEBSITE.ID,
+          value: submittedValues[FIELDS.WEBSITE.ID],
+          errorMessage: validationErrors.errorList[FIELDS.WEBSITE.ID] and {
+            text: validationErrors.errorList[FIELDS.WEBSITE.ID].text,
+            attributes: {
+              "data-cy": FIELDS.WEBSITE.ID + "-error-message"
+            }
+          }
+        }) }}
+
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
