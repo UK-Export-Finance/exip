@@ -86,7 +86,9 @@ export const ACCOUNT = {
       const now = new Date();
 
       const hours = 8;
-      const future = new Date(now.getTime() + hours * 60 * 60 * 1000);
+      const seconds = 60 * 60 * 1000;
+
+      const future = new Date(now.getTime() + hours * seconds);
 
       return future;
     },

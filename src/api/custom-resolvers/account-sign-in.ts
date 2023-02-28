@@ -30,6 +30,12 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
       return { success: false };
     }
 
+    if (!exporter.isVerified) {
+      console.info('Unable to validate exporter account - account is not verified');
+
+      return { success: false };
+    }
+
     if (isValidAccountPassword(password, exporter.salt, exporter.hash)) {
       // generate OTP and update the account
       const { securityCode } = await generateOTPAndUpdateAccount(context, exporter.id);

@@ -110,6 +110,18 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
         expect(res.redirect).toHaveBeenCalledWith(SIGN_IN_ROOT);
       });
     });
+
+    describe('when there is no req.session.accountId', () => {
+      beforeEach(() => {
+        delete req.session.accountId;
+      });
+
+      it(`should redirect to ${SIGN_IN_ROOT}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(SIGN_IN_ROOT);
+      });
+    });
   });
 
   describe('post', () => {
