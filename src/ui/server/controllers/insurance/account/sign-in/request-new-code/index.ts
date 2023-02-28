@@ -45,7 +45,6 @@ export const get = (req: Request, res: Response) => {
  */
 export const post = async (req: Request, res: Response) => {
   try {
-    // TODO: move to user.accountId
     if (!req.session.accountId) {
       return res.redirect(SIGN_IN_ROOT);
     }
