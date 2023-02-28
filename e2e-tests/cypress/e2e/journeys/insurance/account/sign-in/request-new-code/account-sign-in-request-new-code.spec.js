@@ -91,9 +91,9 @@ context('Insurance - Account - Sign in - Request new code page- I want to enter 
     it('should render a success message', () => {
       enterCodePage.successBanner.container().should('exist');
 
-      const { ENTER_CODE } = PAGES.INSURANCE.ACCOUNT.SIGN_IN;
+      const { ENTER_CODE: ENTER_CODE_STRINGS } = PAGES.INSURANCE.ACCOUNT.SIGN_IN;
 
-      const expected = ENTER_CODE.SUCCESS_BANNER.NEW_CODE_SENT;
+      const expected = ENTER_CODE_STRINGS.SUCCESS_BANNER.NEW_CODE_SENT;
 
       cy.checkText(enterCodePage.successBanner.newCodeSent(), expected);
     });

@@ -7,7 +7,7 @@ import api from '../../../../../../support/api';
 const {
   START,
   ACCOUNT: {
-    SIGN_IN: { ENTER_CODE, REQUEST_NEW_CODE },
+    SIGN_IN: { ENTER_CODE },
   },
   ROOT,
   DASHBOARD,
