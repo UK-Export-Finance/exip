@@ -3,6 +3,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
+import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists';
 import saveData from './save-data';
 import { Request, Response } from '../../../../../../types';
 
@@ -74,7 +75,7 @@ export const get = (req: Request, res: Response) =>
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
 export const post = async (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body);
+  let validationErrors = generateValidationErrors(req.body);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
@@ -94,6 +95,22 @@ export const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    if (!saveResponse.success) {
+      validationErrors = generateAccountAlreadyExistsValidationErrors();
+
+      if (validationErrors) {
+        return res.render(TEMPLATE, {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...PAGE_VARIABLES,
+          submittedValues: req.body,
+          validationErrors,
+        });
+      }
     }
 
     // store the exporter account ID in local session, for consumption in the next part of the flow.

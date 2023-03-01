@@ -227,6 +227,7 @@ export const ERROR_MESSAGES = {
           },
           [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
             INCORRECT_FORMAT: 'Enter your email address in the correct format - for example name@example.com',
+            ACCOUNT_ALREADY_EXISTS: 'There is already an account with this email address. Please sign in or reset your password',
           },
           [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {
             INCORRECT_FORMAT: 'Enter a password in the correct format - for example, 14 characters long with an uppercase letter, lower case letter, number and special character',

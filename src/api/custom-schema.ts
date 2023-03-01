@@ -39,6 +39,14 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         password: String
       }
 
+      type CreateAccountReaponse {
+        success: Boolean
+        id: String
+        firstName: String
+        lastName: String
+        email: String
+      }
+
       # fields from registered_office_address object
       type CompaniesHouseCompanyAddress {
         addressLine1: String
@@ -144,7 +152,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           lastName: String!
           email: String!
           password: String!
-        ): Account
+        ): CreateAccountReaponse
 
         """ verify an account's email address """
         verifyAccountEmailAddress(
@@ -191,6 +199,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         getAccountByEmail(
           email: String!
         ): Account
+
         """ get companies house information """
         getCompaniesHouseInformation(
           companiesHouseNumber: String!
