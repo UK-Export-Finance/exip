@@ -4,7 +4,6 @@ import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import api from '../../../../../../support/api';
 import account from '../../../../../../fixtures/account';
 
 const {
@@ -46,18 +45,7 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
   });
 
   after(() => {
-    const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
-
-    // get the created exporter.
-    api.getExporterByEmail(exporterEmail).then((response) => {
-      const { data } = response.body;
-
-      const [firstExporter] = data.exporters;
-      const exporter = firstExporter;
-
-      // delete the created exporter. This prevents other tests from failing, where a verified account is expected.
-      api.deleteExportersById(exporter.id);
-    });
+    cy.deleteAccount();
   });
 
   describe('when valid credentials are submitted, but the account is not verifed', () => {

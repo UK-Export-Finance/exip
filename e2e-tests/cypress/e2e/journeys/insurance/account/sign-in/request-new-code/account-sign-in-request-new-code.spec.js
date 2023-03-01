@@ -36,6 +36,10 @@ context('Insurance - Account - Sign in - Request new code page- I want to enter 
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+  });
+
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,

@@ -50,6 +50,10 @@ context('Insurance - Account - Sign in - I want to enter the new security code s
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+  });
+
   describe('when submitting a valid security code', () => {
     it(`should redirect to ${DASHBOARD}`, () => {
       /**

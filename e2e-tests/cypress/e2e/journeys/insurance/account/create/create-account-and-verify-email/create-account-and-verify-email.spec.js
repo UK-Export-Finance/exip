@@ -26,6 +26,10 @@ context('Insurance - Account - Create - I want the system to generate account ve
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
+  after(() => {
+    cy.deleteAccount();
+  });
+
   describe(`when navigating to the ${VERIFY_EMAIL} URL with a valid token query parameter`, () => {
     it(`should validate the exporter, redirect to ${SIGN_IN.ROOT} and display a success banner`, () => {
       cy.verifyAccountEmail();

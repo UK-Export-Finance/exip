@@ -20,6 +20,10 @@ context('Insurance - Account - Create - Confirm email page - refreshing the page
     cy.reload();
   });
 
+  after(() => {
+    cy.deleteAccount();
+  });
+
   it('should NOT render `sent a link to` with the submitted email, because it is no longer in the session', () => {
     confirmEmailPage.weSentLinkTo().should('not.exist');
   });

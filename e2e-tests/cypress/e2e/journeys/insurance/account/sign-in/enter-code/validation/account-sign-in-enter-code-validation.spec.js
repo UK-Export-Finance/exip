@@ -38,6 +38,10 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+  });
+
   describe('when the account is verified', () => {
     before(() => {
       cy.verifyAccountEmail();
