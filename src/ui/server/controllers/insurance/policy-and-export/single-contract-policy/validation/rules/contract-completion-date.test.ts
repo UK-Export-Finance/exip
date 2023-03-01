@@ -157,15 +157,23 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
       });
     });
 
-    describe(`when the date is before the ${REQUESTED_START_DATE}`, () => {
-      const completionDate = sub(futureDate, { days: 1 });
+    describe(`when ${CONTRACT_COMPLETION_DATE} is before ${REQUESTED_START_DATE}`, () => {
+      const now = new Date();
+      const nextYear = new Date(now.setFullYear(now.getFullYear() + 1));
+
+      const day = nextYear.getDate();
+
+      let nextYear1week = new Date(nextYear);
+      nextYear1week = new Date(nextYear1week.setDate(day + 1));
 
       it('should return validation error', () => {
         const mockSubmittedData = {
-          ...requestedStartDateFields,
-          [`${CONTRACT_COMPLETION_DATE}-day`]: getDate(completionDate),
-          [`${CONTRACT_COMPLETION_DATE}-month`]: getMonth(completionDate),
-          [`${CONTRACT_COMPLETION_DATE}-year`]: getYear(completionDate),
+          [`${REQUESTED_START_DATE}-day`]: getDate(nextYear1week),
+          [`${REQUESTED_START_DATE}-month`]: getMonth(nextYear1week),
+          [`${REQUESTED_START_DATE}-year`]: getYear(nextYear1week),
+          [`${CONTRACT_COMPLETION_DATE}-day`]: getDate(nextYear),
+          [`${CONTRACT_COMPLETION_DATE}-month`]: getMonth(nextYear),
+          [`${CONTRACT_COMPLETION_DATE}-year`]: getYear(nextYear),
         };
 
         const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
