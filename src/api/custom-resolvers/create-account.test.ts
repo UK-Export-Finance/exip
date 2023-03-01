@@ -53,8 +53,6 @@ describe('custom-resolvers/create-account', () => {
   });
 
   it('should generate and return the created account with added salt and hashes', () => {
-    // expect(account).toEqual({ test: true });
-
     expect(account.firstName).toEqual(variables.firstName);
     expect(account.lastName).toEqual(variables.lastName);
     expect(account.email).toEqual(variables.email);
@@ -63,10 +61,10 @@ describe('custom-resolvers/create-account', () => {
     expect(account.verificationHash.length).toEqual(KEY_LENGTH * 2);
   });
 
-  it('should generate and return the created account with added salt and hashes', () => {
+  it('should generate and return verification expiry date', () => {
     const now = new Date();
 
-    const tomorrowDay = new Date(now.setDate(1)).getDay();
+    const tomorrowDay = new Date(now).getDay() + 1;
 
     const expiry = new Date(account.verificationExpiry);
 
