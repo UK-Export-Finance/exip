@@ -1,4 +1,4 @@
-import { add, getDate, getMonth, getYear, sub } from 'date-fns';
+import { add, getDate, getMonth, getYear } from 'date-fns';
 import contractCompletionDateRules from './contract-completion-date';
 import { FIELD_IDS, PRODUCT } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
