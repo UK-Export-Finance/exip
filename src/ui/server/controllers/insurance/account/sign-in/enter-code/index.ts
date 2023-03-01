@@ -44,10 +44,13 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGN_IN.ENTER_CODE;
  * @returns {Express.Response.render} Enter code page
  */
 export const get = (req: Request, res: Response) => {
-  // TODO: move to user.accountId
   if (!req.session.accountId) {
     return res.redirect(SIGN_IN_ROOT);
   }
+
+  const flash = req.flash('successBanner');
+
+  const renderSuccessBanner = flash.includes('newSecurityCodeSent') || false;
 
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
@@ -55,6 +58,7 @@ export const get = (req: Request, res: Response) => {
       BACK_LINK: req.headers.referer,
     }),
     ...PAGE_VARIABLES,
+    renderSuccessBanner,
   });
 };
 
@@ -67,7 +71,6 @@ export const get = (req: Request, res: Response) => {
  */
 export const post = async (req: Request, res: Response) => {
   try {
-    // TODO: move to user.accountId
     if (!req.session.accountId) {
       return res.redirect(SIGN_IN_ROOT);
     }

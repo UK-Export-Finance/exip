@@ -36,3 +36,10 @@ export const mockAccount = {
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 } as Account;
+
+export const mockOTP = {
+  securityCode: '123456',
+  salt: 'mockSalt',
+  hash: 'mockHash',
+  expiry: new Date(),
+};

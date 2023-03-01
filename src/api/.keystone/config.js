@@ -901,6 +901,35 @@ var accountSignIn = async (root, variables, context) => {
 };
 var account_sign_in_default = accountSignIn;
 
+// custom-resolvers/account-sign-in-new-code.ts
+var accountSignInSendNewCode = async (root, variables, context) => {
+  try {
+    console.info("Generating and sending new sign in code for exporter account");
+    const { accountId } = variables;
+    const exporter = await get_exporter_by_id_default(context, accountId);
+    if (!exporter) {
+      console.info("Unable to validate exporter account - no account found");
+      return { success: false };
+    }
+    const { securityCode } = await generate_otp_and_update_account_default(context, exporter.id);
+    const { email, firstName } = exporter;
+    const emailResponse = await emails_default.securityCodeEmail(email, firstName, securityCode);
+    if (emailResponse.success) {
+      return {
+        ...emailResponse,
+        accountId: exporter.id
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Generating and sending new sign in code for exporter account (accountSignInSendNewCode mutation) ${err}`);
+  }
+};
+var account_sign_in_new_code_default = accountSignInSendNewCode;
+
 // custom-resolvers/verify-account-sign-in-code.ts
 var import_date_fns3 = require("date-fns");
 
@@ -1230,19 +1259,26 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           email: String!
           password: String!
         ): Account
+
         """ verify an account's email address """
         verifyAccountEmailAddress(
           token: String!
         ): EmailResponse
+
         """ send confirm email address email """
         sendEmailConfirmEmailAddress(
           exporterId: String!
         ): EmailResponse
 
-        """ send confirm email address email """
+        """ validate credentials, generate and email a OTP security code """
         accountSignIn(
           email: String!
           password: String!
+        ): AccountSignInResponse
+
+        """ generate and email a new OTP security code """
+        accountSignInSendNewCode(
+          accountId: String!
         ): AccountSignInResponse
 
         """ verify an account's OTP security code """
@@ -1279,6 +1315,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
     Mutation: {
       createAccount: create_account_default,
       accountSignIn: account_sign_in_default,
+      accountSignInSendNewCode: account_sign_in_new_code_default,
       verifyAccountEmailAddress: verify_account_email_address_default,
       sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
       verifyAccountSignInCode: verify_account_sign_in_code_default,

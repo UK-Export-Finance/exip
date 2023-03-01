@@ -6,6 +6,7 @@ import { get as confirmEmailResentGet } from '../../../controllers/insurance/acc
 import { get as verifyEmailGet } from '../../../controllers/insurance/account/create/verify-email';
 import { get as signInGet, post as signInPost } from '../../../controllers/insurance/account/sign-in';
 import { get as enterCodeGet, post as enterCodePost } from '../../../controllers/insurance/account/sign-in/enter-code';
+import { get as requestNewCodeGet, post as requestNewCodePost } from '../../../controllers/insurance/account/sign-in/request-new-code';
 
 // @ts-ignore
 const insuranceAccountRouter = express.Router();
@@ -23,5 +24,8 @@ insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ROOT, signInPost);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ENTER_CODE, enterCodeGet);
 insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ENTER_CODE, enterCodePost);
+
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.REQUEST_NEW_CODE, requestNewCodeGet);
+insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.REQUEST_NEW_CODE, requestNewCodePost);
 
 export default insuranceAccountRouter;

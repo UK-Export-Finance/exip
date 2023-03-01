@@ -23,6 +23,10 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
+  after(() => {
+    cy.deleteAccount();
+  });
+
   let expectedUrl;
   let exporter;
 

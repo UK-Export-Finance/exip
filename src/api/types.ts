@@ -111,6 +111,10 @@ interface AccountSignInVariables {
   password: string;
 }
 
+interface AccountSignInSendNewCodeVariables {
+  accountId: string;
+}
+
 interface AccountSignInResponse {
   success: boolean;
   accountId?: string;
@@ -150,6 +154,7 @@ export {
   AccountCreationVariables,
   AccountInput,
   AccountSignInVariables,
+  AccountSignInSendNewCodeVariables,
   AccountSignInResponse,
   AddOtpToAccountVariables,
   AddAndGetOtpResponse,
