@@ -22,7 +22,7 @@ describe('Create an Application', () => {
     application = (await context.query.Application.createOne({
       data: {},
       query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id } policyAndExport { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id }',
+        'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id } policyAndExport { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id }',
     })) as Application;
   });
 
@@ -96,6 +96,11 @@ describe('Create an Application', () => {
     expect(typeof application.exporterBroker.id).toEqual('string');
   });
 
+  test('it should have a buyer id', () => {
+    expect(application.buyer).toBeDefined();
+    expect(typeof application.buyer.id).toEqual('string');
+  });
+
   test('it should have a default submission type', () => {
     expect(application.submissionType).toEqual(APPLICATION.SUBMISSION_TYPE.MIA);
   });
@@ -146,6 +151,17 @@ describe('Create an Application', () => {
     const exporterBroker = await context.query.ExporterBroker.findOne({
       where: {
         id: application.exporterBroker.id,
+      },
+      query: 'id application { id }',
+    });
+
+    expect(exporterBroker.application.id).toEqual(application.id);
+  });
+
+  test('it should add the application ID to the buyer entry', async () => {
+    const exporterBroker = await context.query.Buyer.findOne({
+      where: {
+        id: application.buyer.id,
       },
       query: 'id application { id }',
     });

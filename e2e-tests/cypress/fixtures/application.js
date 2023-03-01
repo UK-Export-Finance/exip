@@ -3,7 +3,7 @@ import {
   getMonth,
   getYear,
 } from 'date-fns';
-import { FIELD_IDS, COMPANIES_HOUSE_NUMBER } from '../../constants';
+import { FIELD_IDS, COMPANIES_HOUSE_NUMBER, WEBSITE_EXAMPLES } from '../../constants';
 import { GBP_CURRENCY_CODE } from './currencies';
 
 const {
@@ -54,9 +54,15 @@ const {
     },
     YOUR_BUYER: {
       COMPANY_OR_ORGANISATION: {
+        NAME: COMPANY_OR_ORGANISATION_NAME,
+        ADDRESS,
+        COUNTRY,
+        REGISTRATION_NUMBER,
+        WEBSITE,
         FIRST_NAME,
         LAST_NAME,
         POSITION,
+        EMAIL: BUYER_EMAIL,
       },
     },
   },
@@ -128,10 +134,15 @@ const application = {
     [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT'),
   },
   BUYER: {
+    [COMPANY_OR_ORGANISATION_NAME]: 'Test name',
+    [ADDRESS]: 'Test address',
+    [COUNTRY]: 'Algeria',
+    [REGISTRATION_NUMBER]: '12345',
+    [WEBSITE]: WEBSITE_EXAMPLES.VALID,
     [FIRST_NAME]: 'Bob',
     [LAST_NAME]: 'Smith',
     [POSITION]: 'CEO',
-    [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT'),
+    [BUYER_EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT'),
   },
 };
 
