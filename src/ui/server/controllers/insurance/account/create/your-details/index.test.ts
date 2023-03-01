@@ -4,6 +4,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
+import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists';
 import saveData from './save-data';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
@@ -28,6 +29,7 @@ describe('controllers/insurance/account/create/your-details', () => {
   jest.mock('./save-data');
 
   const mockSaveDataResponse = {
+    success: true,
     id: mockAccount.id,
     email: mockAccount.email,
   };
@@ -149,7 +151,7 @@ describe('controllers/insurance/account/create/your-details', () => {
           req.body = validBody;
         });
 
-        describe('when no application is returned', () => {
+        describe('when no account is returned', () => {
           beforeEach(() => {
             const saveDataSpy = jest.fn(() => Promise.resolve(false));
 
@@ -160,6 +162,28 @@ describe('controllers/insurance/account/create/your-details', () => {
             await post(req, res);
 
             expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when success=false is returned', () => {
+          beforeEach(() => {
+            const saveDataSpy = jest.fn(() => Promise.resolve({ success: false }));
+
+            saveData.account = saveDataSpy;
+          });
+
+          it('should render template with validation errors and submitted values', async () => {
+            await post(req, res);
+
+            expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+              ...insuranceCorePageVariables({
+                PAGE_CONTENT_STRINGS,
+                BACK_LINK: req.headers.referer,
+              }),
+              ...PAGE_VARIABLES,
+              submittedValues: req.body,
+              validationErrors: generateAccountAlreadyExistsValidationErrors(),
+            });
           });
         });
 
