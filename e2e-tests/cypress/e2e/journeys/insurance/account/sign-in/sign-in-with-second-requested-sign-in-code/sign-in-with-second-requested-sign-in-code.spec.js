@@ -1,19 +1,21 @@
 import { enterCodePage } from '../../../../../pages/insurance/account/sign-in';
+import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { submitButton } from '../../../../../pages/shared';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import account from '../../../../../../fixtures/account';
 import api from '../../../../../../support/api';
 
 const {
   START,
   ACCOUNT: {
-    SIGN_IN: { ENTER_CODE },
+    SIGN_IN: { ROOT: SIGN_IN_ROOT, ENTER_CODE, REQUEST_NEW_CODE },
   },
   DASHBOARD,
 } = ROUTES;
 
 const {
-  ACCOUNT: { SECURITY_CODE },
+  ACCOUNT: { EMAIL, PASSWORD, SECURITY_CODE },
 } = INSURANCE_FIELD_IDS;
 
 context('Insurance - Account - Sign in - I want to enter the new security code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account', () => {
@@ -25,14 +27,22 @@ context('Insurance - Account - Sign in - I want to enter the new security code s
 
     cy.verifyAccountEmail();
 
-    cy.completeAndSubmitSignInAccountForm();
+    cy.url().should('eq', `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`);
 
-    enterCodePage.requestNewCodeLink().click();
+    cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
+    cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
 
     submitButton().click();
 
-    const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
-    cy.url().should('eq', expected);
+    cy.url().should('eq', `${Cypress.config('baseUrl')}${ENTER_CODE}`);
+
+    enterCodePage.requestNewCodeLink().click();
+
+    cy.url().should('eq', `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`);
+
+    submitButton().click();
+
+    cy.url().should('eq', `${Cypress.config('baseUrl')}${ENTER_CODE}`);
   });
 
   beforeEach(() => {
