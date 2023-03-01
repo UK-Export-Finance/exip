@@ -52,7 +52,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
   const ERROR_ASSERTIONS = {
     field: companyOrOrganisationPage[FIELD_ID],
-    numberOfExpectedErrors: 7,
+    numberOfExpectedErrors: 8,
     errorIndex: 5,
   };
 
@@ -72,7 +72,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     it('should not display validation errors', () => {
       cy.keyboardInput(companyOrOrganisationPage[FIELD_ID].input(), application.BUYER[FIELD_ID]);
       submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 6);
+      partials.errorSummaryListItems().should('have.length', 7);
     });
   });
 });

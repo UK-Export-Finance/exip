@@ -1,4 +1,5 @@
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../constants/field-ids/insurance/your-buyer';
+import { yesRadioInput, noRadioInput } from '../../shared';
 
 const {
   COMPANY_OR_ORGANISATION: {
@@ -11,6 +12,7 @@ const {
     LAST_NAME,
     POSITION,
     EMAIL,
+    CAN_CONTACT_BUYER,
   },
 } = FIELD_IDS;
 
@@ -63,6 +65,13 @@ const companyOrOrganisation = {
     label: () => cy.get(`[data-cy="${EMAIL}-label"]`),
     input: () => cy.get(`[data-cy="${EMAIL}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${EMAIL}-error-message"]`),
+  },
+  [CAN_CONTACT_BUYER]: {
+    label: () => cy.get(`[data-cy="${CAN_CONTACT_BUYER}-label"]`),
+    hint: () => cy.get('[data-cy="yes-no-input-hint"]'),
+    yesRadioInput: () => yesRadioInput().first(),
+    noRadioInput: () => noRadioInput().first(),
+    errorMessage: () => cy.get(`[data-cy="${CAN_CONTACT_BUYER}-error-message"]`),
   },
 };
 

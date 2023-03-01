@@ -13,7 +13,7 @@ const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
 } = FIELD_IDS.INSURANCE;
 
-const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL } = COMPANY_OR_ORGANISATION;
+const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER } = COMPANY_OR_ORGANISATION;
 
 describe('controllers/insurance/your-buyer', () => {
   let req: Request;
@@ -72,6 +72,10 @@ describe('controllers/insurance/your-buyer', () => {
           EMAIL: {
             ID: EMAIL,
             ...FIELDS.COMPANY_OR_ORGANISATION[EMAIL],
+          },
+          CAN_CONTACT_BUYER: {
+            ID: CAN_CONTACT_BUYER,
+            ...FIELDS.COMPANY_OR_ORGANISATION[CAN_CONTACT_BUYER],
           },
         },
       };
@@ -152,6 +156,7 @@ describe('controllers/insurance/your-buyer', () => {
       [LAST_NAME]: 'mock last name',
       [POSITION]: 'mock position',
       [EMAIL]: 'test@test.com',
+      [CAN_CONTACT_BUYER]: 'Yes',
     };
 
     describe('when there are no validation errors', () => {

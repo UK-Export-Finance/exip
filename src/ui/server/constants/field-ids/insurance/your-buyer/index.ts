@@ -9,6 +9,7 @@ const YOUR_BUYER = {
     LAST_NAME: 'lastName',
     POSITION: 'position',
     EMAIL: 'email',
+    CAN_CONTACT_BUYER: 'canContactBuyer',
   },
 };
 
