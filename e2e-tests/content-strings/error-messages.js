@@ -214,6 +214,15 @@ export const ERROR_MESSAGES = {
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.LAST_NAME]: {
           IS_EMPTY: "Enter the last name of your contact at the buyer's company or organisation",
         },
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.POSITION]: {
+          IS_EMPTY: "Enter the position of your contact at the buyer's company or organisation",
+        },
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.EMAIL]: {
+          IS_EMPTY: "Enter an email address for your contact at the buyer's company or organisation in the correct format, like name@example.com",
+        },
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.CAN_CONTACT_BUYER]: {
+          IS_EMPTY: 'Select whether we can contact the buyer about your application',
+        },
       },
     },
     ACCOUNT: {

@@ -7,6 +7,9 @@ const YOUR_BUYER = {
     WEBSITE: 'website',
     FIRST_NAME: 'firstName',
     LAST_NAME: 'lastName',
+    POSITION: 'position',
+    EMAIL: 'email',
+    CAN_CONTACT_BUYER: 'canContactBuyer',
   },
 };
 

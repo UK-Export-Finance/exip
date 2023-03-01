@@ -2,13 +2,13 @@ import { submitButton } from '../../../../pages/shared';
 import { companyOrOrganisationPage } from '../../../../pages/insurance/your-buyer';
 import partials from '../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { ROUTES, WEBSITE_EXAMPLES } from '../../../../../../constants';
+import { ROUTES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 
 const {
   COMPANY_OR_ORGANISATION: {
-    WEBSITE: FIELD_ID,
+    CAN_CONTACT_BUYER: FIELD_ID,
   },
 } = FIELD_IDS;
 
@@ -26,7 +26,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.buyer;
 
-context('Insurance - Your Buyer - Company or organisation page - form validation - website', () => {
+context('Insurance - Your Buyer - Company or organisation page - form validation - can contact buyer', () => {
   let referenceNumber;
 
   before(() => {
@@ -49,42 +49,41 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
-  // for error assertion - common fields
   const ERROR_ASSERTIONS = {
     field: companyOrOrganisationPage[FIELD_ID],
-    numberOfExpectedErrors: 9,
-    errorIndex: 3,
+    numberOfExpectedErrors: 8,
+    errorIndex: 7,
   };
 
   describe(`${FIELD_ID} error`, () => {
-    describe(`when ${FIELD_ID} is the incorrect format`, () => {
-      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
+    describe(`when ${FIELD_ID} radio buttons are not selected`, () => {
+      const errorMessage = ERROR_MESSAGE.IS_EMPTY;
 
-      it(`should display validation errors if ${FIELD_ID} left empty`, () => {
+      it('should display validation errors', () => {
         const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-        const value = WEBSITE_EXAMPLES.INVALID;
 
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
-      });
-    });
-
-    describe(`when ${FIELD_ID} is above 191 characters`, () => {
-      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-
-      it(`should display validation errors if ${FIELD_ID} left empty`, () => {
-        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-        const value = WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH;
-
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertRadioErrors(field, errorIndex, numberOfExpectedErrors, errorMessage);
       });
     });
   });
 
-  describe(`when ${FIELD_ID} is correctly entered`, () => {
-    it('should not display validation errors', () => {
-      cy.keyboardInput(companyOrOrganisationPage[FIELD_ID].input(), WEBSITE_EXAMPLES.VALID);
-      submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 8);
+  describe(`when ${FIELD_ID} radios are selected`, () => {
+    const field = companyOrOrganisationPage[FIELD_ID];
+
+    describe('yes radio', () => {
+      it('should not display validation errors', () => {
+        field.yesRadioInput().click();
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 7);
+      });
+    });
+
+    describe('no radio', () => {
+      it('should not display validation errors', () => {
+        field.noRadioInput().click();
+        submitButton().click();
+        partials.errorSummaryListItems().should('have.length', 7);
+      });
     });
   });
 });

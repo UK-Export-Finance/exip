@@ -55,7 +55,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   describe(`${FIRST_NAME_FIELD_ID}`, () => {
     const ERROR_ASSERTIONS = {
       field: companyOrOrganisationPage[FIRST_NAME_FIELD_ID],
-      numberOfExpectedErrors: 5,
+      numberOfExpectedErrors: 8,
       errorIndex: 3,
     };
 
@@ -75,7 +75,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
       it('should not display validation errors', () => {
         cy.keyboardInput(companyOrOrganisationPage[FIRST_NAME_FIELD_ID].input(), application.BUYER[FIRST_NAME_FIELD_ID]);
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 4);
+        partials.errorSummaryListItems().should('have.length', 7);
       });
     });
   });
@@ -83,7 +83,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   describe(`${LAST_NAME_FIELD_ID}`, () => {
     const ERROR_ASSERTIONS = {
       field: companyOrOrganisationPage[LAST_NAME_FIELD_ID],
-      numberOfExpectedErrors: 4,
+      numberOfExpectedErrors: 7,
       errorIndex: 3,
     };
 
@@ -103,7 +103,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
       it('should not display validation errors', () => {
         cy.keyboardInput(companyOrOrganisationPage[LAST_NAME_FIELD_ID].input(), application.BUYER[LAST_NAME_FIELD_ID]);
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 3);
+        partials.errorSummaryListItems().should('have.length', 6);
       });
     });
   });
