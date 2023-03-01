@@ -27,6 +27,7 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
   before(() => {
     cy.navigateToUrl(START);
 
+    // create an account but do not verify the account
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
 
@@ -41,6 +42,10 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   describe('when valid credentials are submitted, but the account is not verifed', () => {

@@ -4,7 +4,7 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import baseConfig from '../keystone';
 import addAndGetOTP from './add-and-get-OTP';
 import generate from '../helpers/generate-otp';
-import { mockAccount } from '../test-mocks';
+import { mockAccount, mockOTP } from '../test-mocks';
 import { Account, AddAndGetOtpResponse } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -20,14 +20,7 @@ describe('helpers/add-and-get-OTP', () => {
 
   jest.mock('../helpers/generate-otp');
 
-  const mockOtp = {
-    securityCode: '123456',
-    salt: 'mockSalt',
-    hash: 'mockHash',
-    expiry: new Date(),
-  };
-
-  generate.otp = () => mockOtp;
+  generate.otp = () => mockOTP;
 
   const variables = {
     email: mockAccount.email,
@@ -58,16 +51,16 @@ describe('helpers/add-and-get-OTP', () => {
   });
 
   test('it should generate an OTP and save to the account', () => {
-    expect(account.otpSalt).toEqual(mockOtp.salt);
-    expect(account.otpHash).toEqual(mockOtp.hash);
+    expect(account.otpSalt).toEqual(mockOTP.salt);
+    expect(account.otpHash).toEqual(mockOTP.hash);
     // @ts-ignore
-    expect(new Date(account.otpExpiry)).toEqual(mockOtp.expiry);
+    expect(new Date(account.otpExpiry)).toEqual(mockOTP.expiry);
   });
 
   it('should return success=true with OTP security code', () => {
     const expected = {
       success: true,
-      securityCode: mockOtp.securityCode,
+      securityCode: mockOTP.securityCode,
     };
 
     expect(result).toEqual(expected);

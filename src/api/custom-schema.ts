@@ -7,6 +7,7 @@ import {
   verifyAccountEmailAddress,
   sendEmailConfirmEmailAddress,
   accountSignIn,
+  accountSignInSendNewCode,
   verifyAccountSignInCode,
   addAndGetOTP,
 } from './custom-resolvers';
@@ -144,19 +145,26 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           email: String!
           password: String!
         ): Account
+
         """ verify an account's email address """
         verifyAccountEmailAddress(
           token: String!
         ): EmailResponse
+
         """ send confirm email address email """
         sendEmailConfirmEmailAddress(
           exporterId: String!
         ): EmailResponse
 
-        """ send confirm email address email """
+        """ validate credentials, generate and email a OTP security code """
         accountSignIn(
           email: String!
           password: String!
+        ): AccountSignInResponse
+
+        """ generate and email a new OTP security code """
+        accountSignInSendNewCode(
+          accountId: String!
         ): AccountSignInResponse
 
         """ verify an account's OTP security code """
@@ -193,6 +201,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
       Mutation: {
         createAccount,
         accountSignIn,
+        accountSignInSendNewCode,
         verifyAccountEmailAddress,
         sendEmailConfirmEmailAddress,
         verifyAccountSignInCode,

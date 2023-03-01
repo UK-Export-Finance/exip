@@ -29,6 +29,10 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
   let exporter;
   let expectedUrl;
 
+  after(() => {
+    cy.deleteAccount();
+  });
+
   describe('page URL and content', () => {
     before(() => {
       /**

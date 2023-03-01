@@ -38,6 +38,10 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+  });
+
   describe('when the account is verified', () => {
     before(() => {
       cy.verifyAccountEmail();
@@ -81,7 +85,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
          */
         const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
 
-        api.addAndGetOtp(exporterEmail).then((validSecurityCode) => {
+        api.addAndGetOTP(exporterEmail).then((validSecurityCode) => {
           cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), validSecurityCode);
 
           submitButton().click();

@@ -13,9 +13,16 @@ const queryStrings = {
         verificationHash
       }
     }`,
-  addAndGetOtp: () => gql`
-    mutation AddAndGetOtp($email: String!) {
-      addAndGetOtp(email: $email) {
+  deleteExportersById: () => gql`
+    mutation DeleteExporters($where: [ExporterWhereUniqueInput!]!)  {
+      deleteExporters(where: $where) {
+        id
+      }
+    }
+  `,
+  addAndGetOTP: () => gql`
+    mutation AddAndGetOTP($email: String!) {
+      addAndGetOTP(email: $email) {
         success
         securityCode
       }
@@ -54,17 +61,38 @@ const getExporterByEmail = async (email) => {
 };
 
 /**
- * addAndGetOtp
+ * deleteExportersById
+ * Delte exporters by ID
+ * @param {String} Account ID
+ * @returns {String} Account ID
+ */
+const deleteExportersById = async (id) => {
+  try {
+    const responseBody = await apollo.query({
+      query: queryStrings.deleteExportersById(),
+      variables: { where: { id } },
+    }).then((response) => response.data.deleteExporters);
+
+    return responseBody.id;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Deleting exporters by ID', { err });
+  }
+};
+
+/**
+ * addAndGetOTP
  * Add a OTP to an exporter account and return the security code
  * @param {String} Exporter email address
  * @returns {Object} security code
  */
-const addAndGetOtp = async (email) => {
+const addAndGetOTP = async (email) => {
   try {
     const responseBody = await apollo.query({
-      query: queryStrings.addAndGetOtp(),
+      query: queryStrings.addAndGetOTP(),
       variables: { email },
-    }).then((response) => response.data.addAndGetOtp);
+    }).then((response) => response.data.addAndGetOTP);
 
     return responseBody.securityCode;
   } catch (err) {
@@ -76,7 +104,8 @@ const addAndGetOtp = async (email) => {
 
 const api = {
   getExporterByEmail,
-  addAndGetOtp,
+  deleteExportersById,
+  addAndGetOTP,
 };
 
 export default api;

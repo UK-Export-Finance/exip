@@ -31,6 +31,10 @@ context('Insurance - Account - Create - Confirm email page should render the sub
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+  });
+
   it('renders `sent a link to` with the submitted email', () => {
     const expectedEmail = account[EMAIL];
 
