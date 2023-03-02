@@ -30,6 +30,8 @@ model Application {
   submissionType                    String?            @default("Manual Inclusion Application")
   policyAndExport                   PolicyAndExport?   @relation("Application_policyAndExport", fields: [policyAndExportId], references: [id])
   policyAndExportId                 String?            @map("policyAndExport")
+  exporter                          Exporter?          @relation("Application_exporter", fields: [exporterId], references: [id])
+  exporterId                        String?            @map("exporter")
   exporterBusiness                  ExporterBusiness?  @relation("Application_exporterBusiness", fields: [exporterBusinessId], references: [id])
   exporterBusinessId                String?            @map("exporterBusiness")
   exporterCompany                   ExporterCompany?   @relation("Application_exporterCompany", fields: [exporterCompanyId], references: [id])
@@ -38,6 +40,7 @@ model Application {
   exporterBrokerId                  String?            @map("exporterBroker")
   from_ReferenceNumber_application  ReferenceNumber[]  @relation("ReferenceNumber_application")
   from_PolicyAndExport_application  PolicyAndExport[]  @relation("PolicyAndExport_application")
+  from_Exporter_applications        Exporter[]         @relation("Exporter_applications")
   from_ExporterBusiness_application ExporterBusiness[] @relation("ExporterBusiness_application")
   from_ExporterBroker_application   ExporterBroker[]   @relation("ExporterBroker_application")
   from_ExporterCompany_application  ExporterCompany[]  @relation("ExporterCompany_application")
@@ -46,6 +49,7 @@ model Application {
   @@index([eligibilityId])
   @@index([referenceNumber])
   @@index([policyAndExportId])
+  @@index([exporterId])
   @@index([exporterBusinessId])
   @@index([exporterCompanyId])
   @@index([exporterBrokerId])
@@ -72,22 +76,24 @@ model PolicyAndExport {
 }
 
 model Exporter {
-  id                 String    @id @default(cuid())
-  createdAt          DateTime?
-  updatedAt          DateTime?
-  firstName          String    @default("")
-  lastName           String    @default("")
-  email              String    @default("")
-  salt               String    @default("")
-  hash               String    @default("")
-  isVerified         Boolean   @default(false)
-  verificationHash   String    @default("")
-  verificationExpiry DateTime?
-  otpSalt            String    @default("")
-  otpHash            String    @default("") @mysql.VarChar(256)
-  otpExpiry          DateTime?
-  sessionExpiry      DateTime?
-  sessionIdentifier  String    @default("")
+  id                        String        @id @default(cuid())
+  createdAt                 DateTime?
+  updatedAt                 DateTime?
+  firstName                 String        @default("")
+  lastName                  String        @default("")
+  email                     String        @default("")
+  salt                      String        @default("")
+  hash                      String        @default("")
+  isVerified                Boolean       @default(false)
+  verificationHash          String        @default("")
+  verificationExpiry        DateTime?
+  otpSalt                   String        @default("")
+  otpHash                   String        @default("") @mysql.VarChar(256)
+  otpExpiry                 DateTime?
+  sessionExpiry             DateTime?
+  sessionIdentifier         String        @default("")
+  applications              Application[] @relation("Exporter_applications")
+  from_Application_exporter Application[] @relation("Application_exporter")
 }
 
 model ExporterBusiness {

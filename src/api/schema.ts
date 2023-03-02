@@ -32,6 +32,10 @@ export const lists = {
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA,
       }),
       policyAndExport: relationship({ ref: 'PolicyAndExport' }),
+      exporter: relationship({
+        ref: 'Exporter',
+        many: false,
+      }),
       exporterBusiness: relationship({ ref: 'ExporterBusiness' }),
       exporterCompany: relationship({ ref: 'ExporterCompany' }),
       exporterBroker: relationship({ ref: 'ExporterBroker' }),
@@ -39,6 +43,7 @@ export const lists = {
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
         if (operation === 'create') {
+          console.log('->>>>>>>>>>>>> create \n', resolvedData);
           try {
             console.info('Creating new application - adding default data to a new application');
 
@@ -277,6 +282,10 @@ export const lists = {
       otpExpiry: timestamp(),
       sessionExpiry: timestamp(),
       sessionIdentifier: text(),
+      applications: relationship({
+        ref: 'Application',
+        many: true,
+      })
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData }): Promise<AccountInput> => {

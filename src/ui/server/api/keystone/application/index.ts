@@ -9,11 +9,24 @@ import updateApplicationExporterCompanyMutation from '../../../graphql/mutations
 import updateExporterBusinessMutation from '../../../graphql/mutations/update-application/exporter-business';
 import updateExporterBrokerMutation from '../../../graphql/mutations/update-application/exporter-broker';
 
-const createEmptyApplication = async () => {
+// TODO rename - it's not empty now.
+const createEmptyApplication = async (accountId: string) => {
   try {
     console.info('Creating empty application');
 
-    const response = (await apollo('POST', createApplicationMutation, {})) as ApolloResponse;
+    let variables = {};
+
+    if (accountId) {
+      variables = {
+        data: {
+          exporter: {
+            connect: { id: accountId },
+          },
+        },
+      };
+    }
+
+    const response = (await apollo('POST', createApplicationMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
       console.error('GraphQL error creating empty application ', response.errors);
@@ -36,14 +49,14 @@ const createEmptyApplication = async () => {
 };
 
 const application = {
-  create: async (eligibilityAnswers: SubmittedDataInsuranceEligibility) => {
+  create: async (eligibilityAnswers: SubmittedDataInsuranceEligibility, accountId: string) => {
     try {
       console.info('Creating application with relationships');
 
       const buyerCountryIsoCode = eligibilityAnswers.buyerCountry?.isoCode;
 
       if (buyerCountryIsoCode) {
-        const newApplication = await createEmptyApplication();
+        const newApplication = await createEmptyApplication(accountId);
 
         const { id: eligibilityId } = newApplication.eligibility;
 

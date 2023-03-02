@@ -71,6 +71,7 @@ type Application {
   submissionDeadline: DateTime
   submissionType: String
   policyAndExport: PolicyAndExport
+  exporter: Exporter
   exporterBusiness: ExporterBusiness
   exporterCompany: ExporterCompany
   exporterBroker: ExporterBroker
@@ -94,6 +95,7 @@ input ApplicationWhereInput {
   submissionDeadline: DateTimeNullableFilter
   submissionType: StringNullableFilter
   policyAndExport: PolicyAndExportWhereInput
+  exporter: ExporterWhereInput
   exporterBusiness: ExporterBusinessWhereInput
   exporterCompany: ExporterCompanyWhereInput
   exporterBroker: ExporterBrokerWhereInput
@@ -166,6 +168,7 @@ input ApplicationUpdateInput {
   submissionDeadline: DateTime
   submissionType: String
   policyAndExport: PolicyAndExportRelateToOneForUpdateInput
+  exporter: ExporterRelateToOneForUpdateInput
   exporterBusiness: ExporterBusinessRelateToOneForUpdateInput
   exporterCompany: ExporterCompanyRelateToOneForUpdateInput
   exporterBroker: ExporterBrokerRelateToOneForUpdateInput
@@ -180,6 +183,12 @@ input EligibilityRelateToOneForUpdateInput {
 input PolicyAndExportRelateToOneForUpdateInput {
   create: PolicyAndExportCreateInput
   connect: PolicyAndExportWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ExporterRelateToOneForUpdateInput {
+  create: ExporterCreateInput
+  connect: ExporterWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -214,6 +223,7 @@ input ApplicationCreateInput {
   submissionDeadline: DateTime
   submissionType: String
   policyAndExport: PolicyAndExportRelateToOneForCreateInput
+  exporter: ExporterRelateToOneForCreateInput
   exporterBusiness: ExporterBusinessRelateToOneForCreateInput
   exporterCompany: ExporterCompanyRelateToOneForCreateInput
   exporterBroker: ExporterBrokerRelateToOneForCreateInput
@@ -227,6 +237,11 @@ input EligibilityRelateToOneForCreateInput {
 input PolicyAndExportRelateToOneForCreateInput {
   create: PolicyAndExportCreateInput
   connect: PolicyAndExportWhereUniqueInput
+}
+
+input ExporterRelateToOneForCreateInput {
+  create: ExporterCreateInput
+  connect: ExporterWhereUniqueInput
 }
 
 input ExporterBusinessRelateToOneForCreateInput {
@@ -378,6 +393,8 @@ type Exporter {
   otpExpiry: DateTime
   sessionExpiry: DateTime
   sessionIdentifier: String
+  applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ApplicationWhereUniqueInput): [Application!]
+  applicationsCount(where: ApplicationWhereInput! = {}): Int
 }
 
 input ExporterWhereUniqueInput {
@@ -404,11 +421,18 @@ input ExporterWhereInput {
   otpExpiry: DateTimeNullableFilter
   sessionExpiry: DateTimeNullableFilter
   sessionIdentifier: StringFilter
+  applications: ApplicationManyRelationFilter
 }
 
 input BooleanFilter {
   equals: Boolean
   not: BooleanFilter
+}
+
+input ApplicationManyRelationFilter {
+  every: ApplicationWhereInput
+  some: ApplicationWhereInput
+  none: ApplicationWhereInput
 }
 
 input ExporterOrderByInput {
@@ -446,6 +470,14 @@ input ExporterUpdateInput {
   otpExpiry: DateTime
   sessionExpiry: DateTime
   sessionIdentifier: String
+  applications: ApplicationRelateToManyForUpdateInput
+}
+
+input ApplicationRelateToManyForUpdateInput {
+  disconnect: [ApplicationWhereUniqueInput!]
+  set: [ApplicationWhereUniqueInput!]
+  create: [ApplicationCreateInput!]
+  connect: [ApplicationWhereUniqueInput!]
 }
 
 input ExporterUpdateArgs {
@@ -469,6 +501,12 @@ input ExporterCreateInput {
   otpExpiry: DateTime
   sessionExpiry: DateTime
   sessionIdentifier: String
+  applications: ApplicationRelateToManyForCreateInput
+}
+
+input ApplicationRelateToManyForCreateInput {
+  create: [ApplicationCreateInput!]
+  connect: [ApplicationWhereUniqueInput!]
 }
 
 type ExporterBusiness {

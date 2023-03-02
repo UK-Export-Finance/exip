@@ -226,6 +226,10 @@ var lists = {
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
       }),
       policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
+      exporter: (0, import_fields.relationship)({
+        ref: "Exporter",
+        many: false
+      }),
       exporterBusiness: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
       exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
       exporterBroker: (0, import_fields.relationship)({ ref: "ExporterBroker" })
@@ -233,6 +237,7 @@ var lists = {
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
         if (operation === "create") {
+          console.log("->>>>>>>>>>>>> create \n", resolvedData);
           try {
             console.info("Creating new application - adding default data to a new application");
             const modifiedData = resolvedData;
@@ -427,7 +432,11 @@ var lists = {
       }),
       otpExpiry: (0, import_fields.timestamp)(),
       sessionExpiry: (0, import_fields.timestamp)(),
-      sessionIdentifier: (0, import_fields.text)()
+      sessionIdentifier: (0, import_fields.text)(),
+      applications: (0, import_fields.relationship)({
+        ref: "Application",
+        many: true
+      })
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData }) => {
