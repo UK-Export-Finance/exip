@@ -3,6 +3,7 @@ export const ACCOUNT_TEMPLATES = {
     YOUR_DETAILS: 'insurance/account/create/your-details.njk',
     CONFIRM_EMAIL: 'insurance/account/create/confirm-email.njk',
     CONFIRM_EMAIL_RESENT: 'insurance/account/create/confirm-email-resent.njk',
+    VERIFY_EMAIL_LINK_EXPIRED: 'insurance/account/create/verify-email-link-expired.njk',
   },
   SIGN_IN: {
     ROOT: 'insurance/account/sign-in/sign-in.njk',

@@ -13,6 +13,14 @@ const queryStrings = {
         verificationHash
       }
     }`,
+  updateExporter: () => gql`
+    mutation UpdateExporter($where: ExporterWhereUniqueInput!, $data: ExporterUpdateInput!)  {
+      updateExporter(where: $where, data: $data) {
+        id
+        verificationExpiry
+      }
+    }
+  `,
   deleteExportersById: () => gql`
     mutation DeleteExporters($where: [ExporterWhereUniqueInput!]!)  {
       deleteExporters(where: $where) {
@@ -61,6 +69,30 @@ const getExporterByEmail = async (email) => {
 };
 
 /**
+ * updateExporter
+ * Update an exporter
+ * @param {String} Account ID
+ * @returns {String} Account ID
+ */
+const updateExporter = async (id, updateObj) => {
+  try {
+    const responseBody = await apollo.query({
+      query: queryStrings.updateExporter(),
+      variables: {
+        where: { id },
+        data: updateObj,
+      },
+    }).then((response) => response.data.updateExporter);
+
+    return responseBody;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Updating exporter', { err });
+  }
+};
+
+/**
  * deleteExportersById
  * Delte exporters by ID
  * @param {String} Account ID
@@ -104,6 +136,7 @@ const addAndGetOTP = async (email) => {
 
 const api = {
   getExporterByEmail,
+  updateExporter,
   deleteExportersById,
   addAndGetOTP,
 };

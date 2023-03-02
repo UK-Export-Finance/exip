@@ -21,7 +21,7 @@ const verifyAccountEmail = () => {
 
       const { verificationHash } = firstExporter;
 
-      // mimic "clicking email verification link"
+      // mimic clicking email verification link
       cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`);
 
       // User should be verified and therefore redirected to the "sign in" page.

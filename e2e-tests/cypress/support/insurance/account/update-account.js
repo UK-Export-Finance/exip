@@ -1,11 +1,10 @@
 import api from '../../api';
 
 /**
- * deleteAccount
- * Get the exporter and delete.
- * This prevents account tests from failing, where an account/email must be unique and verified.
+ * updateAccount
+ * Update an account
  */
-const deleteAccount = () => {
+const updateAccount = (updateObj) => {
   try {
     const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
 
@@ -16,13 +15,16 @@ const deleteAccount = () => {
       const [firstExporter] = data.exporters;
       const exporter = firstExporter;
 
-      api.deleteExportersById(exporter.id);
+      // trigger update
+      api.updateExporter(exporter.id, updateObj);
+
+      return exporter;
     });
   } catch (err) {
     console.error(err);
 
-    throw new Error('Deleting exporter account');
+    throw new Error('Updating exporter account');
   }
 };
 
-export default deleteAccount;
+export default updateAccount;
