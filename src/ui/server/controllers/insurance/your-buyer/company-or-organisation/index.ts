@@ -135,7 +135,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.buyer(body, application);
+    const saveResponse = await mapAndSave.yourBuyer(body, application);
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

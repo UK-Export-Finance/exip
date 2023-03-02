@@ -63,7 +63,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
-  describe('When no fields are provided', () => {
+  describe('when submitting an empty form', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       saveAndBackButton().click();
 
@@ -76,7 +76,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     });
   });
 
-  describe('save and back on a partially entered form', () => {
+  describe('when submitting a partially entered form', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
@@ -109,7 +109,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     });
   });
 
-  describe('save and back on a fully entered form', () => {
+  describe('when submitting a fully filled form', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 

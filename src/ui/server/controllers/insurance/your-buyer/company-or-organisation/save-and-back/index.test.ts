@@ -22,7 +22,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
 
     res.locals.application = mockApplication;
 
-    mapAndSave.buyer = updateMapAndSave;
+    mapAndSave.yourBuyer = updateMapAndSave;
   });
 
   afterAll(() => {
@@ -84,11 +84,25 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
       });
     });
 
-    describe('when mapAndSave.broker fails', () => {
+    describe('when mapAndSave.buyer returns false', () => {
+      beforeEach(() => {
+        res.locals = { csrfToken: '1234' };
+        updateMapAndSave = jest.fn(() => Promise.resolve(false));
+        mapAndSave.yourBuyer = updateMapAndSave;
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+        post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when mapAndSave.buyer fails', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
         updateMapAndSave = jest.fn(() => Promise.reject());
-        mapAndSave.buyer = updateMapAndSave;
+        mapAndSave.yourBuyer = updateMapAndSave;
       });
 
       it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {

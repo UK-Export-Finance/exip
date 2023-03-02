@@ -228,11 +228,11 @@ const application = {
         const response = (await apollo('POST', updateBuyerMutation, variables)) as ApolloResponse;
 
         if (response.errors) {
-          console.error('GraphQL error updating application buyer', response.errors);
+          console.error('GraphQL error updating application buyer ', response.errors);
         }
 
         if (response?.networkError?.result?.errors) {
-          console.error('GraphQL network error updating application buyer', response.networkError.result.errors);
+          console.error('GraphQL network error updating application buyer ', response.networkError.result.errors);
         }
 
         if (response?.data?.updateBuyer) {

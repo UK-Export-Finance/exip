@@ -159,14 +159,14 @@ describe('Create an Application', () => {
   });
 
   test('it should add the application ID to the buyer entry', async () => {
-    const exporterBroker = await context.query.Buyer.findOne({
+    const buyer = await context.query.Buyer.findOne({
       where: {
         id: application.buyer.id,
       },
       query: 'id application { id }',
     });
 
-    expect(exporterBroker.application.id).toEqual(application.id);
+    expect(buyer.application.id).toEqual(application.id);
   });
 
   test('it should add the exporter company ID to the exporter company address entry', async () => {

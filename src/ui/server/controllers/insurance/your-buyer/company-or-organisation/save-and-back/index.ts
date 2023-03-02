@@ -26,7 +26,7 @@ const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(body);
 
     // runs save and go back commmand
-    const saveResponse = await mapAndSave.buyer(body, application, validationErrors);
+    const saveResponse = await mapAndSave.yourBuyer(body, application, validationErrors);
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

@@ -25,14 +25,14 @@ describe('controllers/insurance/your-buyer/map-and-save', () => {
     describe('when the form has data', () => {
       describe('when the form has validation errors ', () => {
         it('should call save.buyer with application, populated submitted data and validationErrors.errorList', async () => {
-          await mapAndSave.buyer(mockFormBody, mockApplication, mockValidationErrors);
+          await mapAndSave.yourBuyer(mockFormBody, mockApplication, mockValidationErrors);
 
           expect(save.buyer).toHaveBeenCalledTimes(1);
           expect(save.buyer).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
         });
 
         it('should return true', async () => {
-          const result = await mapAndSave.buyer(mockFormBody, mockApplication, mockValidationErrors);
+          const result = await mapAndSave.yourBuyer(mockFormBody, mockApplication, mockValidationErrors);
 
           expect(result).toEqual(true);
         });
@@ -40,14 +40,14 @@ describe('controllers/insurance/your-buyer/map-and-save', () => {
 
       describe('when the form does NOT have validation errors ', () => {
         it('should call save.buyer with application and populated submitted data', async () => {
-          await mapAndSave.buyer(mockFormBody, mockApplication);
+          await mapAndSave.yourBuyer(mockFormBody, mockApplication);
 
           expect(save.buyer).toHaveBeenCalledTimes(1);
           expect(save.buyer).toHaveBeenCalledWith(mockApplication, mockFormBody);
         });
 
         it('should return true', async () => {
-          const result = await mapAndSave.buyer(mockFormBody, mockApplication, mockValidationErrors);
+          const result = await mapAndSave.yourBuyer(mockFormBody, mockApplication, mockValidationErrors);
 
           expect(result).toEqual(true);
         });
@@ -58,7 +58,7 @@ describe('controllers/insurance/your-buyer/map-and-save', () => {
       it('should return true', async () => {
         mockFormBody = { _csrf: '1234' };
 
-        const result = await mapAndSave.buyer(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.yourBuyer(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });

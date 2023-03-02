@@ -5,7 +5,7 @@ import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
 import { Application } from '../../types';
 import mockBroker from './mock-broker';
-import mockBuyerExample from './mock-buyer';
+import mockBuyer from './mock-buyer';
 
 dotenv.config();
 
@@ -78,9 +78,9 @@ export const mockExporterBroker = {
   ...mockBroker,
 };
 
-export const mockBuyer = {
+export const mockApplicationBuyer = {
   id: 'clcyyopna0158m8noaglyy9aa',
-  ...mockBuyerExample,
+  ...mockBuyer,
 };
 
 const mockApplication = {
@@ -106,7 +106,7 @@ const mockApplication = {
   exporterCompany: mockExporterCompany,
   exporterBusiness: mockExporterBusiness,
   exporterBroker: mockExporterBroker,
-  buyer: mockBuyer,
+  buyer: mockApplicationBuyer,
 };
 
 export const mockApplicationMultiplePolicy = {

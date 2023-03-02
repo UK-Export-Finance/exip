@@ -167,7 +167,7 @@ describe('controllers/insurance/your-buyer', () => {
     beforeEach(() => {
       getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
       api.keystone.countries.getAll = getCountriesSpy;
-      mapAndSave.buyer = jest.fn(() => Promise.resolve(true));
+      mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(true));
     });
 
     describe('when there are no validation errors', () => {
@@ -187,9 +187,9 @@ describe('controllers/insurance/your-buyer', () => {
 
         await post(req, res);
 
-        expect(mapAndSave.buyer).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.buyer).toHaveBeenCalledWith(req.body, mockApplication);
+        expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(req.body, mockApplication);
       });
     });
 

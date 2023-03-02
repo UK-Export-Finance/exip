@@ -16,7 +16,7 @@ describe('controllers/insurance/business/map-and-save - api errors', () => {
     });
 
     it('should return false', async () => {
-      const result = await mapAndSave.buyer(mockFormBody, mockApplication);
+      const result = await mapAndSave.yourBuyer(mockFormBody, mockApplication);
 
       expect(result).toEqual(false);
     });
@@ -28,7 +28,7 @@ describe('controllers/insurance/business/map-and-save - api errors', () => {
     });
 
     it('should return false', async () => {
-      const result = await mapAndSave.buyer(mockFormBody, mockApplication);
+      const result = await mapAndSave.yourBuyer(mockFormBody, mockApplication);
 
       expect(result).toEqual(false);
     });

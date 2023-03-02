@@ -10,7 +10,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../types
  * @param {Object} validationErrors
  * @returns {Boolean}
  */
-const buyer = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
+const yourBuyer = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
       let saveResponse;
@@ -36,5 +36,5 @@ const buyer = async (formBody: RequestBody, application: Application, validation
 };
 
 export default {
-  buyer,
+  yourBuyer,
 };

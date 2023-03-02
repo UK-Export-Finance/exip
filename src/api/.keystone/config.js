@@ -573,8 +573,7 @@ var lists = {
         options: [
           { label: ANSWERS.YES, value: ANSWERS.YES },
           { label: ANSWERS.NO, value: ANSWERS.NO }
-        ],
-        db: { isNullable: true }
+        ]
       })
     },
     access: import_access.allowAll
