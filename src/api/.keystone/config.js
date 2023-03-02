@@ -66,6 +66,12 @@ var APPLICATION = {
     }
   }
 };
+var FIELD_IDS = {
+  ACCOUNT: {
+    EMAIL: "email",
+    VERIFICATION_HASH: "verificationHash"
+  }
+};
 var ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
@@ -708,7 +714,7 @@ var get_account_by_field_default = getAccountByField;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying exporter email address");
-    const exporter = await get_account_by_field_default(context, "verificationHash", variables.token);
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.VERIFICATION_HASH, variables.token);
     if (exporter) {
       const now = /* @__PURE__ */ new Date();
       const canActivateExporter = (0, import_date_fns2.isBefore)(now, exporter.verificationExpiry);
@@ -871,7 +877,7 @@ var accountSignIn = async (root, variables, context) => {
   try {
     console.info("Signing in exporter account");
     const { email, password: password2 } = variables;
-    const exporter = await get_account_by_field_default(context, "email", email);
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.EMAIL, email);
     if (!exporter) {
       console.info("Unable to validate exporter account - no account found");
       return { success: false };
@@ -1060,7 +1066,7 @@ var addAndGetOTP = async (root, variables, context) => {
   try {
     console.info("Adding OTP to exporter account");
     const { email } = variables;
-    const exporter = await get_account_by_field_default(context, "email", email);
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.EMAIL, email);
     if (!exporter) {
       console.info("Unable to generate and add OTP to exporter account - no account found");
       return { success: false };

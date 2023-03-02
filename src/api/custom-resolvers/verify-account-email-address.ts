@@ -1,5 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { isBefore } from 'date-fns';
+import { FIELD_IDS } from '../constants';
 import getAccountByField from '../helpers/get-account-by-field';
 import { VerifyEmailAddressVariables } from '../types';
 
@@ -15,7 +16,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
     console.info('Verifying exporter email address');
 
     // get the account the token is associated with.
-    const exporter = await getAccountByField(context, 'verificationHash', variables.token);
+    const exporter = await getAccountByField(context, FIELD_IDS.ACCOUNT.VERIFICATION_HASH, variables.token);
 
     if (exporter) {
       // check that the verification period has not expired.
