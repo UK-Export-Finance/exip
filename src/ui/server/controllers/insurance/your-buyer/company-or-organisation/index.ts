@@ -120,7 +120,7 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
       }
 
-      const mappedCountries = mapCountries(countries);
+      const mappedCountries = mapCountries(countries, body[COUNTRY]);
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({

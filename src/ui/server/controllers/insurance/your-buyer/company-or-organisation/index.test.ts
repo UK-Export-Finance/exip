@@ -203,7 +203,7 @@ describe('controllers/insurance/your-buyer', () => {
       it('should render template with validation errors', async () => {
         await post(req, res);
 
-        const expectedCountries = mapCountries(mockCountries);
+        const expectedCountries = mapCountries(mockCountries, req.body[COUNTRY]);
         const validationErrors = yourBuyerDetailsValidation(req.body);
 
         const expectedVariables = {
