@@ -648,44 +648,6 @@ var import_dotenv4 = __toESM(require("dotenv"));
 
 // custom-resolvers/create-account.ts
 var import_crypto = __toESM(require("crypto"));
-var { EMAIL, ENCRYPTION } = ACCOUNT;
-var {
-  RANDOM_BYTES_SIZE,
-  STRING_TYPE,
-  PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
-  PASSWORD: {
-    PBKDF2: { KEY_LENGTH }
-  }
-} = ENCRYPTION;
-var createAccount = async (root, variables, context) => {
-  console.info("Creating new exporter account for ", variables.email);
-  try {
-    const { firstName, lastName, email, password: password2 } = variables;
-    const salt = import_crypto.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
-    const passwordHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
-    const verificationHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
-    const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
-    const account = {
-      firstName,
-      lastName,
-      email,
-      salt,
-      hash: passwordHash,
-      verificationHash,
-      verificationExpiry
-    };
-    const response = await context.db.Exporter.createOne({
-      data: account
-    });
-    return response;
-  } catch (err) {
-    throw new Error(`Creating new exporter account ${err}`);
-  }
-};
-var create_account_default = createAccount;
-
-// custom-resolvers/verify-account-email-address.ts
-var import_date_fns2 = require("date-fns");
 
 // helpers/get-account-by-field.ts
 var getAccountByField = async (context, field, value) => {
@@ -710,7 +672,53 @@ var getAccountByField = async (context, field, value) => {
 };
 var get_account_by_field_default = getAccountByField;
 
+// custom-resolvers/create-account.ts
+var { EMAIL, ENCRYPTION } = ACCOUNT;
+var {
+  RANDOM_BYTES_SIZE,
+  STRING_TYPE,
+  PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
+  PASSWORD: {
+    PBKDF2: { KEY_LENGTH }
+  }
+} = ENCRYPTION;
+var createAccount = async (root, variables, context) => {
+  console.info("Creating new exporter account for ", variables.email);
+  try {
+    const { firstName, lastName, email, password: password2 } = variables;
+    const exporter = await get_account_by_field_default(context, "email", email);
+    if (exporter) {
+      console.info(`Unable to create new exporter account for ${variables.email} - account already exists`);
+      return { success: false };
+    }
+    const salt = import_crypto.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
+    const passwordHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+    const verificationHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+    const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
+    const account = {
+      firstName,
+      lastName,
+      email,
+      salt,
+      hash: passwordHash,
+      verificationHash,
+      verificationExpiry
+    };
+    const response = await context.db.Exporter.createOne({
+      data: account
+    });
+    return {
+      ...response,
+      success: true
+    };
+  } catch (err) {
+    throw new Error(`Creating new exporter account ${err}`);
+  }
+};
+var create_account_default = createAccount;
+
 // custom-resolvers/verify-account-email-address.ts
+var import_date_fns2 = require("date-fns");
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying exporter email address");
@@ -1159,6 +1167,14 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         password: String
       }
 
+      type CreateAccountReaponse {
+        success: Boolean
+        id: String
+        firstName: String
+        lastName: String
+        email: String
+      }
+
       # fields from registered_office_address object
       type CompaniesHouseCompanyAddress {
         addressLine1: String
@@ -1264,7 +1280,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           lastName: String!
           email: String!
           password: String!
-        ): Account
+        ): CreateAccountReaponse
 
         """ verify an account's email address """
         verifyAccountEmailAddress(
@@ -1311,6 +1327,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         getAccountByEmail(
           email: String!
         ): Account
+
         """ get companies house information """
         getCompaniesHouseInformation(
           companiesHouseNumber: String!

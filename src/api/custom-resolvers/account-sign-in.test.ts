@@ -45,7 +45,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
   let result: AccountSignInResponse;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     // wipe the table so we have a clean slate.
     const exporters = await context.query.Exporter.findMany();
 

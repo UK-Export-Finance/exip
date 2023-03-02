@@ -9,6 +9,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 {% from "govuk/components/hint/macro.njk" import govukHint %}
+{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -214,6 +215,65 @@
               "data-cy": FIELDS.LAST_NAME.ID + "-error-message"
             }
           }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text:  FIELDS.POSITION.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+              id: FIELDS.POSITION.ID + '-label',
+              'data-cy': FIELDS.POSITION.ID + '-label'
+            }
+          },
+          classes: "govuk-!-width-one-half",
+          attributes: {
+            'data-cy': FIELDS.POSITION.ID + '-input'
+          },
+          id: FIELDS.POSITION.ID,
+          name: FIELDS.POSITION.ID,
+          value: submittedValues[FIELDS.POSITION.ID],
+          errorMessage: validationErrors.errorList[FIELDS.POSITION.ID] and {
+            text: validationErrors.errorList[FIELDS.POSITION.ID].text,
+            attributes: {
+              "data-cy": FIELDS.POSITION.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text:  FIELDS.EMAIL.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+              id: FIELDS.EMAIL.ID + '-label',
+              'data-cy': FIELDS.EMAIL.ID + '-label'
+            }
+          },
+          classes: "govuk-!-width-one-half",
+          attributes: {
+            'data-cy': FIELDS.EMAIL.ID + '-input'
+          },
+          id: FIELDS.EMAIL.ID,
+          name: FIELDS.EMAIL.ID,
+          value: submittedValues[FIELDS.EMAIL.ID],
+          errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
+            text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
+            attributes: {
+              "data-cy": FIELDS.EMAIL.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ yesNoRadioButtons.render({
+          fieldId: FIELDS.CAN_CONTACT_BUYER.ID,
+          heading: FIELDS.CAN_CONTACT_BUYER.LABEL,
+          hintText: FIELDS.CAN_CONTACT_BUYER.HINT,
+          submittedAnswer: submittedValues[FIELDS.CAN_CONTACT_BUYER.ID],
+          errorMessage: validationErrors.errorList[FIELDS.CAN_CONTACT_BUYER.ID],
+          headerClass: 'govuk-fieldset__legend--m',
+          dataCyHeading: FIELDS.CAN_CONTACT_BUYER.ID + '-label',
+          yesNoValueString: true
         }) }}
       </div>
 

@@ -12,6 +12,9 @@ const {
     COUNTRY,
     FIRST_NAME,
     LAST_NAME,
+    POSITION,
+    EMAIL,
+    CAN_CONTACT_BUYER,
   },
 } = FIELD_IDS;
 
@@ -55,7 +58,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
     partials.errorSummaryListItems().should('exist');
 
-    const TOTAL_REQUIRED_FIELDS = 5;
+    const TOTAL_REQUIRED_FIELDS = 8;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
     cy.checkText(
@@ -81,6 +84,21 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     cy.checkText(
       partials.errorSummaryListItems().eq(4),
       COMPANY_OR_ORG_ERROR_MESSAGES[LAST_NAME].IS_EMPTY,
+    );
+
+    cy.checkText(
+      partials.errorSummaryListItems().eq(5),
+      COMPANY_OR_ORG_ERROR_MESSAGES[POSITION].IS_EMPTY,
+    );
+
+    cy.checkText(
+      partials.errorSummaryListItems().eq(6),
+      COMPANY_OR_ORG_ERROR_MESSAGES[EMAIL].IS_EMPTY,
+    );
+
+    cy.checkText(
+      partials.errorSummaryListItems().eq(7),
+      COMPANY_OR_ORG_ERROR_MESSAGES[CAN_CONTACT_BUYER].IS_EMPTY,
     );
   });
 });

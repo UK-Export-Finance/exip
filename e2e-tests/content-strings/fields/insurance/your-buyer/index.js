@@ -30,5 +30,15 @@ export const YOUR_BUYER_FIELDS = {
     [COMPANY_OR_ORGANISATION.LAST_NAME]: {
       LABEL: 'Last name',
     },
+    [COMPANY_OR_ORGANISATION.POSITION]: {
+      LABEL: 'Position',
+    },
+    [COMPANY_OR_ORGANISATION.EMAIL]: {
+      LABEL: 'Email address',
+    },
+    [COMPANY_OR_ORGANISATION.CAN_CONTACT_BUYER]: {
+      LABEL: 'Can we contact the buyer about this application, if we need to?',
+      HINT: 'For example, if we need to contact them for their accounts.',
+    },
   },
 };
