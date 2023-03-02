@@ -78,7 +78,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
       });
 
       it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
+        cy.assertSummaryListRowValue(summaryList, fieldId, `£${newAnswer}`);
       });
     });
   });
