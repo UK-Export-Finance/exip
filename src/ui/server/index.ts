@@ -44,7 +44,9 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.use(limiter);
+if (process.env.NODE_ENV !== 'production') {
+  app.use(limiter);
+}
 
 const cookie = {
   path: '/',
