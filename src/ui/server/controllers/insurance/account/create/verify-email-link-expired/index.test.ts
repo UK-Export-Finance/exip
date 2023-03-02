@@ -12,7 +12,7 @@ const {
   },
 } = ROUTES;
 
-describe('controllers/insurance/account/create/confirm-email', () => {
+describe('controllers/insurance/account/create/verify-email-link-expired', () => {
   let req: Request;
   let res: Response;
 
