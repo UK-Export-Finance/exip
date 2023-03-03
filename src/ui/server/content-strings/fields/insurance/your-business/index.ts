@@ -103,7 +103,7 @@ export const FIELDS = {
       LABEL: 'Estimate this to the nearest pound. Do not use decimal points.',
       PREFIX: '£',
       SUMMARY: {
-        TITLE: 'Estimated annual turnover for this current financial year',
+        TITLE: 'Estimated turnover this current financial year',
       },
     },
     [PERCENTAGE_TURNOVER]: {

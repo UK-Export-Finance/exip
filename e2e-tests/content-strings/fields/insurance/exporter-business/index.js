@@ -120,7 +120,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
       LABEL: 'Estimate this to the nearest pound. Do not use decimal points.',
       PREFIX: '£',
       SUMMARY: {
-        TITLE: 'Estimated annual turnover for this current financial year',
+        TITLE: 'Estimated turnover this current financial year',
       },
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.PERCENTAGE_TURNOVER]: {
