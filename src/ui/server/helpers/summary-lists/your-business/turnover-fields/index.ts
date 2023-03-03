@@ -27,12 +27,15 @@ const {
  */
 const generateTurnoverFields = (answers: ApplicationExporterBusiness, referenceNumber: number) => {
   const fields = [
-    fieldGroupItem({
-      field: getFieldById(FIELDS.TURNOVER, ESTIMATED_ANNUAL_TURNOVER),
-      data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHANGE}#${ESTIMATED_ANNUAL_TURNOVER}-label`,
-      renderChangeLink: true,
-    }),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS.TURNOVER, ESTIMATED_ANNUAL_TURNOVER),
+        data: answers,
+        href: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHANGE}#${ESTIMATED_ANNUAL_TURNOVER}-label`,
+        renderChangeLink: true,
+      },
+      `£${answers[ESTIMATED_ANNUAL_TURNOVER]}`,
+    ),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.TURNOVER, PERCENTAGE_TURNOVER),
