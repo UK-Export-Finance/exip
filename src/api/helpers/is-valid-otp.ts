@@ -1,8 +1,5 @@
-import dotenv from 'dotenv';
 import crypto from 'crypto';
 import { ACCOUNT } from '../constants';
-
-dotenv.config();
 
 const { ENCRYPTION } = ACCOUNT;
 

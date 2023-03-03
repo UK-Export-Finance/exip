@@ -686,7 +686,7 @@ var session = (0, import_session.statelessSessions)({
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
 var import_axios = __toESM(require("axios"));
-var import_dotenv4 = __toESM(require("dotenv"));
+var import_dotenv3 = __toESM(require("dotenv"));
 
 // custom-resolvers/create-account.ts
 var import_crypto = __toESM(require("crypto"));
@@ -994,9 +994,7 @@ var account_sign_in_new_code_default = accountSignInSendNewCode;
 var import_date_fns3 = require("date-fns");
 
 // helpers/is-valid-otp.ts
-var import_dotenv3 = __toESM(require("dotenv"));
 var import_crypto4 = __toESM(require("crypto"));
-import_dotenv3.default.config();
 var { ENCRYPTION: ENCRYPTION4 } = ACCOUNT;
 var {
   STRING_TYPE: STRING_TYPE4,
@@ -1192,7 +1190,7 @@ var mapSicCodes = (company, sicCodes) => {
 };
 
 // custom-schema.ts
-import_dotenv4.default.config();
+import_dotenv3.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
