@@ -90,6 +90,8 @@ interface ApplicationBuyer {
   contactPosition?: string;
   contactEmail?: string;
   canContactBuyer?: boolean;
+  exporterIsConnectedWithBuyer?: boolean;
+  exporterHasTradedWithBuyer?: boolean;
 }
 
 interface Application extends ApplicationCore {

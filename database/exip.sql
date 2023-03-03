@@ -76,6 +76,8 @@ CREATE TABLE `Buyer` (
   `contactPosition` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `contactEmail` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `canContactBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `exporterIsConnectedWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `exporterHasTradedWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Buyer_application_idx` (`application`),
   CONSTRAINT `Buyer_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE

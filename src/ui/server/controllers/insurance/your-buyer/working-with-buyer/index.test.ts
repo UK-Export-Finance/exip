@@ -7,6 +7,7 @@ import workingWithBuyerValidation from './validation';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import mapAndSave from '../map-and-save';
 
 const {
   YOUR_BUYER: { WORKING_WITH_BUYER },
@@ -90,6 +91,10 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
   });
 
   describe('post', () => {
+    beforeEach(() => {
+      mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(true));
+    });
+
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = {
@@ -103,6 +108,14 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      it('should call mapAndSave.buyer once with buyer and application', async () => {
+        await post(req, res);
+
+        expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(req.body, mockApplication);
       });
     });
 
@@ -118,6 +131,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(mockApplication.referenceNumber),
+          application: mapApplicationToFormFields(mockApplication),
           submittedValues: req.body,
           validationErrors,
         };
@@ -129,6 +143,32 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
       describe('when application does not exist', () => {
         beforeEach(() => {
           res.locals = { csrfToken: '1234' };
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+          post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when saveResponse returns false', () => {
+        beforeEach(() => {
+          res.locals = { csrfToken: '1234' };
+          mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(false));
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+          post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when there is an error', () => {
+        beforeEach(() => {
+          res.locals = { csrfToken: '1234' };
+          mapAndSave.yourBuyer = jest.fn(() => Promise.reject());
         });
 
         it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {

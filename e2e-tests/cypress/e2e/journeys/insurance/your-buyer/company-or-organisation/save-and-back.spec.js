@@ -129,8 +129,8 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should retain the `your buyer` task status as `completed`', () => {
-      const expected = TASKS.STATUS.COMPLETED;
+    it('should retain the `your buyer` task status as `in progress`', () => {
+      const expected = TASKS.STATUS.IN_PROGRESS;
       cy.checkText(task.status(), expected);
     });
 

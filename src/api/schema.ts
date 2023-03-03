@@ -448,6 +448,18 @@ export const lists = {
           { label: ANSWERS.NO, value: ANSWERS.NO },
         ],
       }),
+      exporterIsConnectedWithBuyer: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+      }),
+      exporterHasTradedWithBuyer: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+      }),
     },
     access: allowAll,
   }),

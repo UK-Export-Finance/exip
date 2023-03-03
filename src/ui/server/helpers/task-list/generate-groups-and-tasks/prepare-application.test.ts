@@ -145,6 +145,7 @@ describe('server/helpers/task-list/prepare-application', () => {
         id: TASK_IDS.PREPARE_APPLICATION.BUYER,
         fields: Object.values({
           ...FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION,
+          ...FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER,
         }),
         dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
       };

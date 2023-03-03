@@ -4,7 +4,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
-// import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 
 const {
@@ -77,16 +77,17 @@ export const post = async (req: Request, res: Response) => {
         }),
         ...pageVariables(application.referenceNumber),
         submittedValues: body,
+        application: mapApplicationToFormFields(application),
         validationErrors,
       });
     }
 
-    // // if no errors, then runs save api call to db
-    // const saveResponse = await mapAndSave.yourBuyer(body, application);
+    // if no errors, then runs save api call to db
+    const saveResponse = await mapAndSave.yourBuyer(body, application);
 
-    // if (!saveResponse) {
-    //   return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-    // }
+    if (!saveResponse) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {

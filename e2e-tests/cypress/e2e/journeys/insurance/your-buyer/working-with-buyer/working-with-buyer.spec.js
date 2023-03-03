@@ -113,5 +113,14 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
         cy.url().should('eq', checkYourAnswersUrl);
       });
     });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToUrl(url);
+
+        workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().should('be.checked');
+        workingWithBuyerPage[TRADED_WITH_BUYER].yesRadioInput().should('be.checked');
+      });
+    });
   });
 });
