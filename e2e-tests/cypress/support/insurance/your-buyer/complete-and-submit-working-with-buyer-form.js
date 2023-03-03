@@ -1,5 +1,5 @@
 import { FIELD_IDS } from '../../../../constants';
-import { workingWithBuyer } from '../../../e2e/pages/insurance/your-buyer';
+import { workingWithBuyerPage } from '../../../e2e/pages/insurance/your-buyer';
 import { submitButton } from '../../../e2e/pages/shared';
 
 const {
@@ -10,8 +10,8 @@ const {
 } = FIELD_IDS.INSURANCE.YOUR_BUYER;
 
 export default () => {
-  workingWithBuyer[CONNECTED_WITH_BUYER].yesRadioInput().click();
-  workingWithBuyer[TRADED_WITH_BUYER].yesRadioInput().click();
+  workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
+  workingWithBuyerPage[TRADED_WITH_BUYER].yesRadioInput().click();
 
   submitButton().click();
 };
