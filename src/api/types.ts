@@ -24,6 +24,10 @@ interface ApplicationExporterBroker {
   id: string;
 }
 
+interface ApplicationBuyer {
+  id: string;
+}
+
 interface AccountInput {
   createdAt: Date;
   updatedAt: Date;
@@ -63,6 +67,7 @@ interface Application {
   exporterCompanyAddress: ApplicationExporterCompanyAddress;
   exporterBusiness: ApplicationExporterBusiness;
   exporterBroker: ApplicationExporterBroker;
+  buyer: ApplicationBuyer;
 }
 
 type BufferEncoding = 'hex' | 'base64' | 'ascii';

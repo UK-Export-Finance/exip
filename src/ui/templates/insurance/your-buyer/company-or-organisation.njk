@@ -54,7 +54,7 @@
           },
           id: FIELDS.NAME.ID,
           name: FIELDS.NAME.ID,
-          value: submittedValues[FIELDS.NAME.ID],
+          value: submittedValues[FIELDS.NAME.ID] or application.buyer[FIELDS.NAME.ID],
           errorMessage: validationErrors.errorList[FIELDS.NAME.ID] and {
             text: validationErrors.errorList[FIELDS.NAME.ID].text,
             attributes: {
@@ -72,7 +72,7 @@
           attributes: {
             'data-cy': FIELDS.ADDRESS.ID + '-input'
           },
-          value: submittedValues[FIELDS.ADDRESS.ID],
+          value: submittedValues[FIELDS.ADDRESS.ID] or application.buyer[FIELDS.ADDRESS.ID],
           errorMessage: validationErrors.errorList[FIELDS.ADDRESS.ID] and {
             text: validationErrors.errorList[FIELDS.ADDRESS.ID].text,
             attributes: {
@@ -101,6 +101,7 @@
           },
           classes: "govuk-!-width-one-half",
           items: countries,
+          value: submittedValues[FIELDS.COUNTRY.ID] or application.buyer[FIELDS.COUNTRY.ID],
           attributes: {
             "data-cy": FIELDS.COUNTRY.ID  + "-input"
           },
@@ -127,7 +128,7 @@
           },
           id: FIELDS.REGISTRATION_NUMBER.ID,
           name: FIELDS.REGISTRATION_NUMBER.ID,
-          value: submittedValues[FIELDS.REGISTRATION_NUMBER.ID],
+          value: submittedValues[FIELDS.REGISTRATION_NUMBER.ID] or application.buyer[FIELDS.REGISTRATION_NUMBER.ID],
           errorMessage: validationErrors.errorList[FIELDS.REGISTRATION_NUMBER.ID] and {
             text: validationErrors.errorList[FIELDS.REGISTRATION_NUMBER.ID].text,
             attributes: {
@@ -151,7 +152,7 @@
           },
           id: FIELDS.WEBSITE.ID,
           name: FIELDS.WEBSITE.ID,
-          value: submittedValues[FIELDS.WEBSITE.ID],
+          value: submittedValues[FIELDS.WEBSITE.ID] or application.buyer[FIELDS.WEBSITE.ID],
           errorMessage: validationErrors.errorList[FIELDS.WEBSITE.ID] and {
             text: validationErrors.errorList[FIELDS.WEBSITE.ID].text,
             attributes: {
@@ -184,7 +185,7 @@
           },
           id: FIELDS.FIRST_NAME.ID,
           name: FIELDS.FIRST_NAME.ID,
-          value: submittedValues[FIELDS.FIRST_NAME.ID],
+          value: submittedValues[FIELDS.FIRST_NAME.ID] or application.buyer[FIELDS.FIRST_NAME.ID],
           errorMessage: validationErrors.errorList[FIELDS.FIRST_NAME.ID] and {
             text: validationErrors.errorList[FIELDS.FIRST_NAME.ID].text,
             attributes: {
@@ -208,7 +209,7 @@
           },
           id: FIELDS.LAST_NAME.ID,
           name: FIELDS.LAST_NAME.ID,
-          value: submittedValues[FIELDS.LAST_NAME.ID],
+          value: submittedValues[FIELDS.LAST_NAME.ID] or application.buyer[FIELDS.LAST_NAME.ID],
           errorMessage: validationErrors.errorList[FIELDS.LAST_NAME.ID] and {
             text: validationErrors.errorList[FIELDS.LAST_NAME.ID].text,
             attributes: {
@@ -232,7 +233,7 @@
           },
           id: FIELDS.POSITION.ID,
           name: FIELDS.POSITION.ID,
-          value: submittedValues[FIELDS.POSITION.ID],
+          value: submittedValues[FIELDS.POSITION.ID] or application.buyer[FIELDS.POSITION.ID],
           errorMessage: validationErrors.errorList[FIELDS.POSITION.ID] and {
             text: validationErrors.errorList[FIELDS.POSITION.ID].text,
             attributes: {
@@ -256,7 +257,7 @@
           },
           id: FIELDS.EMAIL.ID,
           name: FIELDS.EMAIL.ID,
-          value: submittedValues[FIELDS.EMAIL.ID],
+          value: submittedValues[FIELDS.EMAIL.ID] or application.buyer[FIELDS.EMAIL.ID],
           errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
             text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
             attributes: {
@@ -269,7 +270,7 @@
           fieldId: FIELDS.CAN_CONTACT_BUYER.ID,
           heading: FIELDS.CAN_CONTACT_BUYER.LABEL,
           hintText: FIELDS.CAN_CONTACT_BUYER.HINT,
-          submittedAnswer: submittedValues[FIELDS.CAN_CONTACT_BUYER.ID],
+          submittedAnswer: submittedValues[FIELDS.CAN_CONTACT_BUYER.ID] or application.buyer[FIELDS.CAN_CONTACT_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.CAN_CONTACT_BUYER.ID],
           headerClass: 'govuk-fieldset__legend--m',
           dataCyHeading: FIELDS.CAN_CONTACT_BUYER.ID + '-label',
@@ -290,7 +291,8 @@
             text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
             classes: "govuk-button--secondary",
             attributes: {
-              'data-cy': 'save-and-back-button'
+              'data-cy': 'save-and-back-button',
+              'formaction': SAVE_AND_BACK_URL
             }
           }) }}
         </div>

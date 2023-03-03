@@ -9,6 +9,7 @@ datasource mysql {
 
 generator client {
   provider = "prisma-client-js"
+  output   = "node_modules/.prisma/client"
 }
 
 model ReferenceNumber {
@@ -36,11 +37,14 @@ model Application {
   exporterCompanyId                 String?            @map("exporterCompany")
   exporterBroker                    ExporterBroker?    @relation("Application_exporterBroker", fields: [exporterBrokerId], references: [id])
   exporterBrokerId                  String?            @map("exporterBroker")
+  buyer                             Buyer?             @relation("Application_buyer", fields: [buyerId], references: [id])
+  buyerId                           String?            @map("buyer")
   from_ReferenceNumber_application  ReferenceNumber[]  @relation("ReferenceNumber_application")
   from_PolicyAndExport_application  PolicyAndExport[]  @relation("PolicyAndExport_application")
   from_ExporterBusiness_application ExporterBusiness[] @relation("ExporterBusiness_application")
   from_ExporterBroker_application   ExporterBroker[]   @relation("ExporterBroker_application")
   from_ExporterCompany_application  ExporterCompany[]  @relation("ExporterCompany_application")
+  from_Buyer_application            Buyer[]            @relation("Buyer_application")
   from_Eligibility_application      Eligibility[]      @relation("Eligibility_application")
 
   @@index([eligibilityId])
@@ -49,6 +53,7 @@ model Application {
   @@index([exporterBusinessId])
   @@index([exporterCompanyId])
   @@index([exporterBrokerId])
+  @@index([buyerId])
 }
 
 model PolicyAndExport {
@@ -162,6 +167,25 @@ model ExporterCompanySicCode {
   sicCode           String           @default("")
 
   @@index([exporterCompanyId])
+}
+
+model Buyer {
+  id                        String        @id @default(cuid())
+  application               Application?  @relation("Buyer_application", fields: [applicationId], references: [id])
+  applicationId             String?       @map("application")
+  companyOrOrganisationName String        @default("")
+  address                   String        @default("") @mysql.VarChar(1000)
+  country                   String        @default("")
+  registrationNumber        String        @default("")
+  website                   String        @default("")
+  contactFirstName          String        @default("")
+  contactLastName           String        @default("")
+  contactPosition           String        @default("")
+  contactEmail              String        @default("")
+  canContactBuyer           String?
+  from_Application_buyer    Application[] @relation("Application_buyer")
+
+  @@index([applicationId])
 }
 
 model Country {

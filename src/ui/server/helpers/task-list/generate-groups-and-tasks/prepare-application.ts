@@ -100,17 +100,17 @@ const createPrepareApplicationTasks = (
     dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
   };
 
-  const tasks = [
-    POLICY_TYPE_AND_EXPORTS,
-    EXPORTER_BUSINESS,
-    {
-      href: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_ROUTES.COMPANY_OR_ORGANISATION}`,
-      title: PREPARE_APPLICATION.TASKS.BUYER,
-      id: TASK_IDS.PREPARE_APPLICATION.BUYER,
-      fields: ['temp'],
-      dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
-    },
-  ] as Array<TaskListDataTask>;
+  const YOUR_BUYER = {
+    href: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_ROUTES.COMPANY_OR_ORGANISATION}`,
+    title: PREPARE_APPLICATION.TASKS.BUYER,
+    id: TASK_IDS.PREPARE_APPLICATION.BUYER,
+    fields: Object.values({
+      ...FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION,
+    }),
+    dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
+  };
+
+  const tasks = [POLICY_TYPE_AND_EXPORTS, EXPORTER_BUSINESS, YOUR_BUYER] as Array<TaskListDataTask>;
 
   return tasks;
 };

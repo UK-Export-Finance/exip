@@ -85,6 +85,19 @@ const applicationQuery = gql`
           postcode
           email
         }
+        buyer {
+          id
+          companyOrOrganisationName
+          address
+          country
+          registrationNumber
+          website
+          contactFirstName
+          contactLastName
+          contactPosition
+          contactEmail
+          canContactBuyer
+        }
       }
     }
   }
