@@ -29,7 +29,9 @@ export const get = async (req: Request, res: Response) => {
         return res.redirect(SIGN_IN.ROOT);
       }
 
-      return res.redirect(CREATE.VERIFY_EMAIL_LINK_EXPIRED);
+      const { accountId } = response;
+
+      return res.redirect(`${CREATE.VERIFY_EMAIL_LINK_EXPIRED}?id=${accountId}`);
     }
 
     return res.redirect(CREATE.VERIFY_EMAIL_LINK_EXPIRED);

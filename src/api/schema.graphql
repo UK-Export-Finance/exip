@@ -1255,7 +1255,7 @@ type Mutation {
   createAccount(firstName: String!, lastName: String!, email: String!, password: String!): CreateAccountReaponse
 
   """ verify an account's email address """
-  verifyAccountEmailAddress(token: String!): EmailResponse
+  verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
 
   """ send confirm email address email """
   sendEmailConfirmEmailAddress(exporterId: String!): EmailResponse
@@ -1562,4 +1562,9 @@ type AccountSignInResponse {
 type AddAndGetOtpResponse {
   success: Boolean!
   securityCode: String!
+}
+
+type VerifyAccountEmailAddressResponse {
+  success: Boolean!
+  accountId: String!
 }

@@ -1,15 +1,17 @@
 import { TEMPLATE, PAGE_CONTENT_STRINGS, get } from '.';
 import { PAGES } from '../../../../../content-strings';
-import { TEMPLATES } from '../../../../../constants';
+import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
-import { INSURANCE_ROUTES as ROUTES } from '../../../../../constants/routes/insurance';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes } from '../../../../../test-mocks';
+import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
 
 const {
-  ACCOUNT: {
-    CREATE: { CONFIRM_EMAIL },
+  INSURANCE: {
+    ACCOUNT: {
+      CREATE: { CONFIRM_EMAIL },
+    },
   },
+  PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
 describe('controllers/insurance/account/create/verify-email-link-expired', () => {
@@ -18,6 +20,11 @@ describe('controllers/insurance/account/create/verify-email-link-expired', () =>
 
   beforeEach(() => {
     req = mockReq();
+
+    req.query = {
+      id: mockAccount.id,
+    };
+
     res = mockRes();
   });
 
@@ -34,14 +41,26 @@ describe('controllers/insurance/account/create/verify-email-link-expired', () =>
   });
 
   describe('get', () => {
-    it('should render template', async () => {
-      await get(req, res);
+    it('should render template', () => {
+      get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
-          BACK_LINK: CONFIRM_EMAIL,
+          BACK_LINK: `${CONFIRM_EMAIL}?id=${req.query.id}`,
         }),
+      });
+    });
+
+    describe('when req.query.id does NOT exist', () => {
+      beforeEach(() => {
+        req.query = {};
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

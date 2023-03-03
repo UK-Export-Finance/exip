@@ -45,7 +45,6 @@ Cypress.Commands.add('getExporterByEmail', require('./insurance/account/get-expo
 Cypress.Commands.add('verifyAccountEmail', require('./insurance/account/verify-account-email'));
 
 Cypress.Commands.add('deleteAccount', require('./insurance/account/delete-account'));
-Cypress.Commands.add('updateAccount', require('./insurance/account/update-account'));
 
 Cypress.Commands.add('completeAndSubmitPolicyTypeForm', require('./insurance/complete-and-submit-policy-type-form'));
 Cypress.Commands.add('completeAndSubmitSingleContractPolicyForm', require('./insurance/complete-and-submit-single-contract-policy-form'));

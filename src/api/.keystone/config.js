@@ -766,12 +766,15 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     console.info("Verifying exporter email address");
     const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.VERIFICATION_HASH, variables.token);
     if (exporter) {
+      const { id } = exporter;
       const now = /* @__PURE__ */ new Date();
       const canActivateExporter = (0, import_date_fns2.isBefore)(now, exporter.verificationExpiry);
       if (!canActivateExporter) {
         console.info("Unable to verify exporter email - verification period has expired");
         return {
-          expired: true
+          expired: true,
+          success: false,
+          accountId: id
         };
       }
       await context.db.Exporter.updateOne({
@@ -784,6 +787,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       });
       return {
         success: true,
+        accountId: id,
         emailRecipient: exporter.email
       };
     }
@@ -1315,6 +1319,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         securityCode: String!
       }
 
+      type VerifyAccountEmailAddressResponse {
+        success: Boolean!
+        accountId: String!
+      }
+
       type Mutation {
         """ create an account """
         createAccount(
@@ -1327,7 +1336,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         """ verify an account's email address """
         verifyAccountEmailAddress(
           token: String!
-        ): EmailResponse
+        ): VerifyAccountEmailAddressResponse
 
         """ send confirm email address email """
         sendEmailConfirmEmailAddress(

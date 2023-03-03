@@ -17,7 +17,7 @@ const queryStrings = {
     mutation UpdateExporter($where: ExporterWhereUniqueInput!, $data: ExporterUpdateInput!)  {
       updateExporter(where: $where, data: $data) {
         id
-        verificationExpiry
+        verificationHash
       }
     }
   `,

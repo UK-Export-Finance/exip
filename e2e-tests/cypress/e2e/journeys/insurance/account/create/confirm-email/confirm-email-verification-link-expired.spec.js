@@ -1,6 +1,7 @@
 import { PAGES } from '../../../../../../../content-strings';
 import { verifyEmailLinkExpiredPage } from '../../../../../pages/insurance/account/create';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import api from '../../../../../../support/api';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_EXPIRED;
 
@@ -34,7 +35,22 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
   });
 
   describe(`when a verification token has expired and exporter navigates to ${VERIFY_EMAIL} with the expired token`, () => {
-    before(() => {
+    let updatedExporter;
+
+    before(async () => {
+      /**
+       * Get the exporter so that we can use the ID
+       * to update the verification period.
+       */
+      const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
+
+      const exportersResponse = await api.getExporterByEmail(exporterEmail);
+
+      const { data } = exportersResponse.body;
+
+      const [firstExporter] = data.exporters;
+      exporter = firstExporter;
+
       /**
        * Update the exporter's verification expiry date via the API,
        * so that we can mimic missing the verification period.
@@ -46,19 +62,15 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
         verificationExpiry: lastMonth,
       };
 
-      cy.updateAccount(updateObj).then((response) => {
-        const [firstExporter] = response.body.data.exporters;
-
-        exporter = firstExporter;
-      });
+      updatedExporter = await api.updateExporter(exporter.id, updateObj);
     });
 
     it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED}`, () => {
-      const { verificationExpiry } = exporter;
+      const { verificationHash } = updatedExporter;
 
-      cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationExpiry}`);
+      cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`);
 
-      expectedUrl = `${Cypress.config('baseUrl')}${VERIFY_EMAIL_LINK_EXPIRED}`;
+      expectedUrl = `${Cypress.config('baseUrl')}${VERIFY_EMAIL_LINK_EXPIRED}?id=${exporter.id}`;
 
       cy.url().should('eq', expectedUrl);
     });
@@ -66,8 +78,8 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
     it('renders core page elements', () => {
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: `${VERIFY_EMAIL}?token=${exporter.verificationExpiry}`,
-        backLink: CONFIRM_EMAIL,
+        currentHref: `${VERIFY_EMAIL}?token=${exporter.verificationHash}`,
+        backLink: `${CONFIRM_EMAIL}?id=${exporter.id}`,
         assertSubmitButton: false,
       });
     });
