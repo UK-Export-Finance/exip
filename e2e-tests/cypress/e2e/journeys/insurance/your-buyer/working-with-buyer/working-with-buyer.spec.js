@@ -56,6 +56,9 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`,
       backLink: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`,
+      lightHouseThresholds: {
+        'best-practices': 93,
+      },
     });
   });
 
