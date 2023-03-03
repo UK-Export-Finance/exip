@@ -1,6 +1,6 @@
 import { saveAndBackButton, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
-import { workingWithBuyer } from '../../../../pages/insurance/your-buyer';
+import { workingWithBuyerPage } from '../../../../pages/insurance/your-buyer';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
@@ -57,7 +57,6 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`,
       backLink: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`,
       lightHouseThresholds: {
-        'best-practices': 92,
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.
         // this is out of our control
@@ -68,7 +67,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
 
   it(`renders an ${CONNECTED_WITH_BUYER} label, hint and radio buttons`, () => {
     const fieldId = CONNECTED_WITH_BUYER;
-    const field = workingWithBuyer[fieldId];
+    const field = workingWithBuyerPage[fieldId];
 
     field.label().should('exist');
     cy.checkText(field.label(), FIELDS.WORKING_WITH_BUYER[fieldId].LABEL);
@@ -82,7 +81,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
 
   it(`renders an ${TRADED_WITH_BUYER} label, radio buttons and details section`, () => {
     const fieldId = TRADED_WITH_BUYER;
-    const field = workingWithBuyer[fieldId];
+    const field = workingWithBuyerPage[fieldId];
 
     field.label().should('exist');
     cy.checkText(field.label(), FIELDS.WORKING_WITH_BUYER[fieldId].LABEL);

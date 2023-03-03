@@ -8,14 +8,7 @@ import partials from '../e2e/partials';
  * @param {Number} inlineError - the index of radios to find error
  * @param {String} errorMessage
  */
-export default (field, errorIndex, errorSummaryLength, errorMessage, inlineError) => {
-  let inlineErrorIndex = inlineError;
-
-  // if multiple radios on the page, need to know index to check inline error message
-  if (!inlineErrorIndex) {
-    inlineErrorIndex = 0;
-  }
-
+export default (field, errorIndex, errorSummaryLength, errorMessage, inlineErrorIndex = 0) => {
   submitButton().click();
 
   partials.errorSummaryListItems().should('have.length', errorSummaryLength);

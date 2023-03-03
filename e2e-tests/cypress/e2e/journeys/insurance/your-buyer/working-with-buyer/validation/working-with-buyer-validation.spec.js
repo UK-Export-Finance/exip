@@ -1,6 +1,6 @@
 import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
-import { workingWithBuyer } from '../../../../../pages/insurance/your-buyer';
+import { workingWithBuyerPage } from '../../../../../pages/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -59,7 +59,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
 
   describe(CONNECTED_WITH_BUYER, () => {
     const fieldId = CONNECTED_WITH_BUYER;
-    const field = workingWithBuyer[fieldId];
+    const field = workingWithBuyerPage[fieldId];
 
     describe(`when ${CONNECTED_WITH_BUYER} is not selected`, () => {
       it('should display validation errors', () => {
@@ -92,7 +92,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
 
   describe(TRADED_WITH_BUYER, () => {
     const fieldId = TRADED_WITH_BUYER;
-    const field = workingWithBuyer[fieldId];
+    const field = workingWithBuyerPage[fieldId];
 
     describe(`when ${TRADED_WITH_BUYER} is not selected`, () => {
       it('should display validation errors', () => {

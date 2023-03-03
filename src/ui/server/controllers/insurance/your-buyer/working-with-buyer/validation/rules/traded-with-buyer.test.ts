@@ -16,7 +16,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/your-buyer/working-with-buyer/validation/traded-with-buyer', () => {
+describe('controllers/insurance/your-buyer/working-with-buyer/validation/rules/traded-with-buyer', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
