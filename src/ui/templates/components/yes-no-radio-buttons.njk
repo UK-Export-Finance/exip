@@ -23,6 +23,12 @@
     {% set dataCyHeading = 'heading' %}
   {% endif %}
 
+  {% if params.dataCyHint %}
+    {% set dataCyHint = params.dataCyHint %}
+  {% else %}
+    {% set dataCyHint = 'yes-no-input-hint' %}
+  {% endif %}
+
   {% set yesValue = true %}
   {% set noValue = false %}
 
@@ -47,7 +53,7 @@
     hint: {
       text: hintText,
       attributes: {
-        'data-cy': 'yes-no-input-hint'
+        'data-cy': dataCyHint
       }
     },
     items: [
