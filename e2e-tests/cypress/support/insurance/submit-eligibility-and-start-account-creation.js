@@ -1,10 +1,9 @@
 import submitInsuranceEligibilityAnswersHappyPath from './eligibility/submit-answers-happy-path';
-import { tempCreateAccountButton, noRadioInput, submitButton } from '../../e2e/pages/shared';
+import { noRadioInput, submitButton } from '../../e2e/pages/shared';
+import { completeAccountToApplyOnlineForm } from '../../support/insurance/eligibility/forms';
 
 export default () => {
   submitInsuranceEligibilityAnswersHappyPath();
-
-  tempCreateAccountButton().click();
 
   // submit "I do not already have an account"
   noRadioInput().click();

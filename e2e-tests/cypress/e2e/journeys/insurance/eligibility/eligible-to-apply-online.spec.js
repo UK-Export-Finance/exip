@@ -3,6 +3,19 @@ import { insurance } from '../../../pages';
 import partials from '../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
+import {
+  completeStartForm,
+  completeCheckIfEligibleForm,
+  completeExporterLocationForm,
+  completeUkGoodsAndServicesForm,
+  completeInsuredAmountForm,
+  completeInsuredPeriodForm,
+  completeOtherPartiesForm,
+  completeLetterOfCreditForm,
+  completePreCreditPeriodForm,
+  completeCompaniesHouseNumberForm,
+} from '../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
@@ -12,15 +25,25 @@ const {
   ELIGIBILITY: {
     ELIGIBLE_TO_APPLY_ONLINE,
     COMPANIES_HOUSE_NUMBER,
+    ACCOUNT_TO_APPLY_ONLINE,
   },
-  ALL_SECTIONS,
 } = ROUTES.INSURANCE;
 
 context('Insurance - Eligibility - You are eligible to apply online page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction', () => {
   before(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
-    cy.submitInsuranceEligibilityAnswersHappyPath();
+    completeStartForm();
+    completeCheckIfEligibleForm();
+    completeAndSubmitBuyerCountryForm();
+    completeExporterLocationForm();
+    completeUkGoodsAndServicesForm();
+    completeInsuredAmountForm();
+    completeInsuredPeriodForm();
+    completeOtherPartiesForm();
+    completeLetterOfCreditForm();
+    completePreCreditPeriodForm();
+    completeCompaniesHouseNumberForm();
 
     const expected = `${Cypress.config('baseUrl')}${ELIGIBLE_TO_APPLY_ONLINE}`;
 
@@ -58,12 +81,12 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${INSURANCE_ROOT}/[referenceNumber]${ALL_SECTIONS}`, () => {
+    it(`should redirect to ${ACCOUNT_TO_APPLY_ONLINE}`, () => {
       submitButton().click();
 
       cy.getReferenceNumber().then((id) => {
         const referenceNumber = id;
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        const expectedUrl = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
 
         cy.url().should('eq', expectedUrl);
       });
