@@ -1,6 +1,10 @@
 const ROOT = '/your-buyer';
+const COMPANY_OR_ORGANISATION_ROOT = `${ROOT}/buyer-company-organisation`;
+const WORKING_WITH_BUYER_ROOT = `${ROOT}/working-with-buyer`;
 
 export const YOUR_BUYER = {
   ROOT,
-  COMPANY_OR_ORGANISATION: `${ROOT}/buyer-company-organisation`,
+  COMPANY_OR_ORGANISATION: COMPANY_OR_ORGANISATION_ROOT,
+  COMPANY_OR_ORGANISATION_SAVE_AND_BACK: `${COMPANY_OR_ORGANISATION_ROOT}/save-and-back`,
+  WORKING_WITH_BUYER: WORKING_WITH_BUYER_ROOT,
 };

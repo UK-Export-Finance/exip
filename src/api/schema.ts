@@ -39,6 +39,7 @@ export const lists = {
       exporterBusiness: relationship({ ref: 'ExporterBusiness' }),
       exporterCompany: relationship({ ref: 'ExporterCompany' }),
       exporterBroker: relationship({ ref: 'ExporterBroker' }),
+      buyer: relationship({ ref: 'Buyer' }),
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -122,6 +123,17 @@ export const lists = {
               },
             };
 
+            // generate and attach a new 'buyer' relationship
+            const { id: buyerId } = await context.db.Buyer.createOne({
+              data: {},
+            });
+
+            modifiedData.buyer = {
+              connect: {
+                id: buyerId,
+              },
+            };
+
             // add dates
             const now = new Date();
             modifiedData.createdAt = now;
@@ -148,7 +160,7 @@ export const lists = {
 
             const applicationId = item.id;
 
-            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -213,6 +225,18 @@ export const lists = {
             // add the application ID to the exporter broker entry.
             await context.db.ExporterBroker.updateOne({
               where: { id: exporterBrokerId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId,
+                  },
+                },
+              },
+            });
+
+            // add the application ID to the buyer entry.
+            await context.db.Buyer.updateOne({
+              where: { id: buyerId },
               data: {
                 application: {
                   connect: {
@@ -410,6 +434,29 @@ export const lists = {
     fields: {
       exporterCompany: relationship({ ref: 'ExporterCompany.sicCodes' }),
       sicCode: text(),
+    },
+    access: allowAll,
+  }),
+  Buyer: list({
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      companyOrOrganisationName: text(),
+      address: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      country: text(),
+      registrationNumber: text(),
+      website: text(),
+      contactFirstName: text(),
+      contactLastName: text(),
+      contactPosition: text(),
+      contactEmail: text(),
+      canContactBuyer: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+      }),
     },
     access: allowAll,
   }),

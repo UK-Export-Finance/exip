@@ -25,12 +25,15 @@ describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
   const { referenceNumber } = mockApplication;
 
   const expectedBase = [
-    fieldGroupItem({
-      field: getFieldById(FIELDS.TURNOVER, ESTIMATED_ANNUAL_TURNOVER),
-      data: mockAnswers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHANGE}#${ESTIMATED_ANNUAL_TURNOVER}-label`,
-      renderChangeLink: true,
-    }),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS.TURNOVER, ESTIMATED_ANNUAL_TURNOVER),
+        data: mockAnswers,
+        href: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHANGE}#${ESTIMATED_ANNUAL_TURNOVER}-label`,
+        renderChangeLink: true,
+      },
+      `£${mockAnswers[ESTIMATED_ANNUAL_TURNOVER]}`,
+    ),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.TURNOVER, PERCENTAGE_TURNOVER),

@@ -18,10 +18,6 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
@@ -69,7 +65,7 @@ var APPLICATION = {
 var ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
-      const now = /* @__PURE__ */ new Date();
+      const now = new Date();
       const day = now.getDate();
       const tomorrow = new Date(now.setDate(day + 1));
       return tomorrow;
@@ -93,17 +89,15 @@ var ACCOUNT = {
       }
     }
   },
-  // One time password
   OTP: {
     DIGITS: 6,
     VERIFICATION_EXPIRY: () => {
-      const now = /* @__PURE__ */ new Date();
+      const now = new Date();
       const milliseconds = 3e5;
       const future = new Date(now.setMilliseconds(milliseconds));
       return future;
     }
   },
-  // JSON web token
   JWT: {
     KEY: {
       SIGNATURE: String(process.env.JWT_SIGNING_KEY),
@@ -115,7 +109,7 @@ var ACCOUNT = {
       ALGORITHM: "RS256"
     },
     SESSION_EXPIRY: () => {
-      const now = /* @__PURE__ */ new Date();
+      const now = new Date();
       const hours = 8;
       const seconds = 60 * 60 * 1e3;
       const future = new Date(now.getTime() + hours * seconds);
@@ -232,7 +226,8 @@ var lists = {
       }),
       exporterBusiness: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
       exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
-      exporterBroker: (0, import_fields.relationship)({ ref: "ExporterBroker" })
+      exporterBroker: (0, import_fields.relationship)({ ref: "ExporterBroker" }),
+      buyer: (0, import_fields.relationship)({ ref: "Buyer" })
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -294,7 +289,15 @@ var lists = {
                 id: exporterBrokerId
               }
             };
-            const now = /* @__PURE__ */ new Date();
+            const { id: buyerId } = await context.db.Buyer.createOne({
+              data: {}
+            });
+            modifiedData.buyer = {
+              connect: {
+                id: buyerId
+              }
+            };
+            const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
             modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
@@ -312,7 +315,7 @@ var lists = {
           try {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
-            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -373,6 +376,16 @@ var lists = {
                 }
               }
             });
+            await context.db.Buyer.updateOne({
+              where: { id: buyerId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                }
+              }
+            });
           } catch (err) {
             console.error("Error adding an application ID to relationships ", { err });
             return err;
@@ -422,7 +435,6 @@ var lists = {
       email: (0, import_fields.text)({ validation: { isRequired: true } }),
       salt: (0, import_fields.text)({ validation: { isRequired: true } }),
       hash: (0, import_fields.text)({ validation: { isRequired: true } }),
-      // isVerified flag will only be true if the exporter has verified their email address.
       isVerified: (0, import_fields.checkbox)({ defaultValue: false }),
       verificationHash: (0, import_fields.text)(),
       verificationExpiry: (0, import_fields.timestamp)(),
@@ -443,7 +455,7 @@ var lists = {
         const accountInputData = resolvedData;
         if (operation === "create") {
           console.info("Creating new exporter account");
-          const now = /* @__PURE__ */ new Date();
+          const now = new Date();
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
           try {
@@ -459,7 +471,7 @@ var lists = {
         }
         if (operation === "update") {
           console.info("Updating exporter account");
-          accountInputData.updatedAt = /* @__PURE__ */ new Date();
+          accountInputData.updatedAt = new Date();
         }
         return accountInputData;
       }
@@ -552,6 +564,29 @@ var lists = {
     },
     access: import_access.allowAll
   }),
+  Buyer: (0, import_core.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      companyOrOrganisationName: (0, import_fields.text)(),
+      address: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      }),
+      country: (0, import_fields.text)(),
+      registrationNumber: (0, import_fields.text)(),
+      website: (0, import_fields.text)(),
+      contactFirstName: (0, import_fields.text)(),
+      contactLastName: (0, import_fields.text)(),
+      contactPosition: (0, import_fields.text)(),
+      contactEmail: (0, import_fields.text)(),
+      canContactBuyer: (0, import_fields.select)({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO }
+        ]
+      })
+    },
+    access: import_access.allowAll
+  }),
   Country: (0, import_core.list)({
     fields: {
       isoCode: (0, import_fields.text)({
@@ -633,8 +668,6 @@ var { withAuth } = (0, import_auth.createAuth)({
   sessionData: "name",
   secretField: "password",
   initFirstItem: {
-    // If there are no items in the database, keystone will ask you to create
-    // a new user, filling in these fields.
     fields: ["name", "email", "password"]
   }
 });
@@ -727,7 +760,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     console.info("Verifying exporter email address");
     const exporter = await get_account_by_field_default(context, "verificationHash", variables.token);
     if (exporter) {
-      const now = /* @__PURE__ */ new Date();
+      const now = new Date();
       const canActivateExporter = (0, import_date_fns2.isBefore)(now, exporter.verificationExpiry);
       if (!canActivateExporter) {
         console.info("Unable to verify exporter email - verification period has expired");
@@ -1030,7 +1063,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
       };
     }
     const { otpSalt, otpHash, otpExpiry } = exporter;
-    const now = /* @__PURE__ */ new Date();
+    const now = new Date();
     const hasExpired = (0, import_date_fns3.isAfter)(now, otpExpiry);
     if (hasExpired) {
       console.info("Unable to verify exporter account sign in code - verification period has expired");
@@ -1097,7 +1130,7 @@ var add_and_get_OTP_default = addAndGetOTP;
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
-    return /* @__PURE__ */ new Date(`${(/* @__PURE__ */ new Date()).getFullYear()}-${month}-${day}`);
+    return new Date(`${new Date().getFullYear()}-${month}-${day}`);
   }
   return null;
 };
@@ -1120,7 +1153,6 @@ var mapCompaniesHouseFields = (companiesHouseResponse) => {
     companyNumber: companiesHouseResponse.company_number,
     dateOfCreation: companiesHouseResponse.date_of_creation,
     sicCodes: companiesHouseResponse.sic_codes,
-    // creates timestamp for financialYearEndDate from day and month if exist
     financialYearEndDate: create_full_timestamp_from_day_month_default(
       companiesHouseResponse.accounts?.accounting_reference_date?.day,
       companiesHouseResponse.accounts?.accounting_reference_date?.month
@@ -1381,11 +1413,6 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
     },
     Query: {
-      /**
-       * Call for companies house API
-       * @param variables - companies house number is received as a string within variables
-       * @returns either mapped response or success false flag with or without apiError
-       */
       getCompaniesHouseInformation: async (root, variables) => {
         try {
           const { companiesHouseNumber } = variables;

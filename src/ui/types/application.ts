@@ -77,12 +77,28 @@ interface ApplicationExporterBroker {
   postcode?: string;
   email?: string;
 }
+
+interface ApplicationBuyer {
+  id: string;
+  companyOrOrganisationName?: string;
+  address?: string;
+  country?: string;
+  registrationNumber?: string;
+  website?: string;
+  contactFirstName?: string;
+  contactLastName?: string;
+  contactPosition?: string;
+  contactEmail?: string;
+  canContactBuyer?: boolean;
+}
+
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;
   exporterBusiness: ApplicationExporterBusiness;
   exporterBroker: ApplicationExporterBroker;
+  buyer: ApplicationBuyer;
 }
 
 interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, ApplicationPolicyAndExport, ApplicationExporterCompany {

@@ -223,7 +223,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = ESTIMATED_ANNUAL_TURNOVER;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.TURNOVER);
-    const expectedValue = application.EXPORTER_BUSINESS[fieldId];
+    const expectedValue = `£${application.EXPORTER_BUSINESS[fieldId]}`;
 
     assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
