@@ -5,12 +5,12 @@ import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../../tes
 import mapAndSave from '../../map-and-save';
 
 const {
-  COMPANY_OR_ORGANISATION: { NAME },
+  WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER },
 } = FIELD_IDS.INSURANCE.YOUR_BUYER;
 
 const { INSURANCE_ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
 
-describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back', () => {
+describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', () => {
   let req: Request;
   let res: Response;
 
@@ -30,8 +30,10 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
   });
 
   describe('post - save and back', () => {
-    const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
-    const validBody = companyOrOrganisationMock;
+    const validBody = {
+      [CONNECTED_WITH_BUYER]: mockBuyer[CONNECTED_WITH_BUYER],
+      [TRADED_WITH_BUYER]: mockBuyer[TRADED_WITH_BUYER],
+    };
 
     describe('when there are no validation errors', () => {
       it('should redirect to all sections page', async () => {
@@ -54,7 +56,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
     describe('when there are validation errors', () => {
       it('should redirect to all sections page', async () => {
         req.body = {
-          [NAME]: 'Test',
+          [TRADED_WITH_BUYER]: mockBuyer[TRADED_WITH_BUYER],
         };
 
         await post(req, res);
@@ -64,7 +66,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
 
       it('should call mapAndSave.buyer once', async () => {
         req.body = {
-          [NAME]: 'Test',
+          [TRADED_WITH_BUYER]: mockBuyer[TRADED_WITH_BUYER],
         };
 
         await post(req, res);

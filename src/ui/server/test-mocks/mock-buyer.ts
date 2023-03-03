@@ -13,6 +13,8 @@ const mockBuyer = {
   contactPosition: 'CEO',
   contactEmail: process.env.GOV_NOTIFY_EMAIL_RECIPIENT,
   canContactBuyer: true,
+  exporterIsConnectedWithBuyer: true,
+  exporterHasTradedWithBuyer: true,
 };
 
 export default mockBuyer;

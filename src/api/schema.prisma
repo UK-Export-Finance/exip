@@ -170,20 +170,22 @@ model ExporterCompanySicCode {
 }
 
 model Buyer {
-  id                        String        @id @default(cuid())
-  application               Application?  @relation("Buyer_application", fields: [applicationId], references: [id])
-  applicationId             String?       @map("application")
-  companyOrOrganisationName String        @default("")
-  address                   String        @default("") @mysql.VarChar(1000)
-  country                   String        @default("")
-  registrationNumber        String        @default("")
-  website                   String        @default("")
-  contactFirstName          String        @default("")
-  contactLastName           String        @default("")
-  contactPosition           String        @default("")
-  contactEmail              String        @default("")
-  canContactBuyer           String?
-  from_Application_buyer    Application[] @relation("Application_buyer")
+  id                           String        @id @default(cuid())
+  application                  Application?  @relation("Buyer_application", fields: [applicationId], references: [id])
+  applicationId                String?       @map("application")
+  companyOrOrganisationName    String        @default("")
+  address                      String        @default("") @mysql.VarChar(1000)
+  country                      String        @default("")
+  registrationNumber           String        @default("")
+  website                      String        @default("")
+  contactFirstName             String        @default("")
+  contactLastName              String        @default("")
+  contactPosition              String        @default("")
+  contactEmail                 String        @default("")
+  canContactBuyer              String?
+  exporterIsConnectedWithBuyer String?
+  exporterHasTradedWithBuyer   String?
+  from_Application_buyer       Application[] @relation("Application_buyer")
 
   @@index([applicationId])
 }

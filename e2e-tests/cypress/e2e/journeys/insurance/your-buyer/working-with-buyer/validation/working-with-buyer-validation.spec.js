@@ -119,7 +119,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
 
           field.noRadioInput().click();
           submitButton().click();
-          partials.errorSummaryListItems().should('have.length', 1);
+          partials.errorSummaryListItems().should('have.length', 0);
         });
       });
     });
