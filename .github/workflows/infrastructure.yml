@@ -10,7 +10,7 @@ run-name: EXIP Base infrastructure build on ${{ github.repository }}
 on:
   push:
     branches: [ infrastructure ]
-    paths: 
+    paths:
     - '.github/workflows/infrastructure.yml'
 
 env:
@@ -127,8 +127,8 @@ jobs:
           MULESOFT_API_MDM_EA_URL=${{ secrets.MULESOFT_API_MDM_EA_URL }} \
           MULESOFT_API_MDM_EA_KEY=${{ secrets.MULESOFT_API_MDM_EA_KEY }} \
           MULESOFT_API_MDM_EA_SECRET=${{ secrets.MULESOFT_API_MDM_EA_SECRET }} \
-          MULESOFT_API_MDM_EA_SECRET=${{ secrets.JWT_SIGNING_KEY }} \
-          MULESOFT_API_MDM_EA_SECRET=${{ secrets.JWT_VALIDATING_KEY }} 
+          JWT_SIGNING_KEY=${{ secrets.JWT_SIGNING_KEY }} \
+          JWT_VALIDATING_KEY=${{ secrets.JWT_VALIDATING_KEY }}
 
           az webapp log config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
           --docker-container-logging filesystem

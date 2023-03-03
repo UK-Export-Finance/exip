@@ -8,6 +8,7 @@ import updateApplicationPolicyAndExportMutation from '../../../graphql/mutations
 import updateApplicationExporterCompanyMutation from '../../../graphql/mutations/update-application/exporter-company';
 import updateExporterBusinessMutation from '../../../graphql/mutations/update-application/exporter-business';
 import updateExporterBrokerMutation from '../../../graphql/mutations/update-application/exporter-broker';
+import updateBuyerMutation from '../../../graphql/mutations/update-application/exporter-buyer';
 
 const createEmptyApplication = async () => {
   try {
@@ -213,6 +214,36 @@ const application = {
       } catch (err) {
         console.error(err);
         throw new Error('Updating application exporter company');
+      }
+    },
+    buyer: async (id: string, update: object) => {
+      try {
+        console.info('Updating application buyer');
+
+        const variables = {
+          where: { id },
+          data: update,
+        };
+
+        const response = (await apollo('POST', updateBuyerMutation, variables)) as ApolloResponse;
+
+        if (response.errors) {
+          console.error('GraphQL error updating application buyer ', response.errors);
+        }
+
+        if (response?.networkError?.result?.errors) {
+          console.error('GraphQL network error updating application buyer ', response.networkError.result.errors);
+        }
+
+        if (response?.data?.updateBuyer) {
+          return response.data.updateBuyer;
+        }
+
+        console.error(response);
+        throw new Error('Updating application buyer');
+      } catch (err) {
+        console.error(err);
+        throw new Error('Updating application buyer');
       }
     },
   },

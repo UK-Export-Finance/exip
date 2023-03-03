@@ -13,6 +13,7 @@ import mockSicCodes from './mock-sic-codes';
 import mockExporterNatureOfBusiness from './mock-exporter-business-nature-of-business';
 import mockExporterBusinessTurnover from './mock-exporter-business-turnover';
 import mockBroker from './mock-broker';
+import mockBuyer from './mock-buyer';
 
 const mockReq = () => {
   let req = {} as Request;
@@ -63,6 +64,7 @@ export {
   mockAnswers,
   mockApplication,
   mockBroker,
+  mockBuyer,
   mockCisCountries,
   mockCountries,
   mockCompany,
