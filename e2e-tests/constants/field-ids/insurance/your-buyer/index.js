@@ -11,4 +11,8 @@ export const YOUR_BUYER = {
     EMAIL: 'contactEmail',
     CAN_CONTACT_BUYER: 'canContactBuyer',
   },
+  WORKING_WITH_BUYER: {
+    CONNECTED_WITH_BUYER: 'isConnectedWithBuyer',
+    TRADED_WITH_BUYER: 'hasTradedWithBuyer',
+  },
 };
