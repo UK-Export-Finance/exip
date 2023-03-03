@@ -139,17 +139,17 @@ describe('server/helpers/task-list/prepare-application', () => {
         dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
       };
 
-      const expected = [
-        POLICY_TYPE_AND_EXPORTS,
-        EXPORTER_BUSINESS,
-        {
-          href: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_ROUTES.COMPANY_OR_ORGANISATION}`,
-          title: PREPARE_APPLICATION.TASKS.BUYER,
-          id: TASK_IDS.PREPARE_APPLICATION.BUYER,
-          fields: ['temp'],
-          dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
-        },
-      ];
+      const YOUR_BUYER = {
+        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${YOUR_BUYER_ROUTES.COMPANY_OR_ORGANISATION}`,
+        title: PREPARE_APPLICATION.TASKS.BUYER,
+        id: TASK_IDS.PREPARE_APPLICATION.BUYER,
+        fields: Object.values({
+          ...FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION,
+        }),
+        dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
+      };
+
+      const expected = [POLICY_TYPE_AND_EXPORTS, EXPORTER_BUSINESS, YOUR_BUYER];
 
       expect(result).toEqual(expected);
     });

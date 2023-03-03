@@ -18,6 +18,9 @@ const {
     },
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
   },
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION: { NAME, REGISTRATION_NUMBER, ADDRESS, FIRST_NAME, LAST_NAME, POSITION },
+  },
 } = FIELD_IDS.INSURANCE;
 
 describe('server/helpers/sanitise-data', () => {
@@ -53,6 +56,12 @@ describe('server/helpers/sanitise-data', () => {
         ADDRESS_LINE_2,
         POSTCODE,
         BROKER_NAME,
+        NAME,
+        REGISTRATION_NUMBER,
+        ADDRESS,
+        FIRST_NAME,
+        LAST_NAME,
+        POSITION,
       ];
 
       expect(STRING_NUMBER_FIELDS).toEqual(expected);
