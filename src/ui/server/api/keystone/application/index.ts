@@ -10,8 +10,7 @@ import updateExporterBusinessMutation from '../../../graphql/mutations/update-ap
 import updateExporterBrokerMutation from '../../../graphql/mutations/update-application/exporter-broker';
 import updateBuyerMutation from '../../../graphql/mutations/update-application/exporter-buyer';
 
-// TODO rename - it's not empty now.
-const createEmptyApplication = async (accountId: string) => {
+const createInitialApplication = async (accountId: string) => {
   try {
     console.info('Creating empty application');
 
@@ -57,7 +56,7 @@ const application = {
       const buyerCountryIsoCode = eligibilityAnswers.buyerCountry?.isoCode;
 
       if (buyerCountryIsoCode) {
-        const newApplication = await createEmptyApplication(accountId);
+        const newApplication = await createInitialApplication(accountId);
 
         const { id: eligibilityId } = newApplication.eligibility;
 
