@@ -57,6 +57,11 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   const field = singleContractPolicyPage[CONTRACT_COMPLETION_DATE];
 
   describe('when day is not provided', () => {

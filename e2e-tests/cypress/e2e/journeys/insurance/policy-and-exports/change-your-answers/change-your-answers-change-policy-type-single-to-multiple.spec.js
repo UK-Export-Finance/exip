@@ -60,6 +60,11 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   const fieldId = POLICY_TYPE;
 
   describe('when clicking the `change` link', () => {

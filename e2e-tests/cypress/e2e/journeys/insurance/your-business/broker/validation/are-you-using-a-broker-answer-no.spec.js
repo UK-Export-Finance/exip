@@ -45,6 +45,11 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe('when the no radio is selected', () => {
     it(`should  not display validation errors and redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       const field = broker[FIELD_ID];

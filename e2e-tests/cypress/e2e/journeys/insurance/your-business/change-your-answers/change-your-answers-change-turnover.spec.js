@@ -48,6 +48,11 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe(ESTIMATED_ANNUAL_TURNOVER, () => {
     const fieldId = ESTIMATED_ANNUAL_TURNOVER;
 

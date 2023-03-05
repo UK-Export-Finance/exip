@@ -42,6 +42,11 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   const ERROR_ASSERTIONS = {
     field: companyOrOrganisationPage[FIELD_ID],
     numberOfExpectedErrors: 8,

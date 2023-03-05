@@ -41,6 +41,11 @@ context('Insurance - Policy and exports - Check your answers - Summary list - mu
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   it(`should render a ${POLICY_TYPE} summary list row`, () => {
     checkSummaryList.multipleContractPolicy[POLICY_TYPE]();
   });

@@ -55,6 +55,11 @@ context('Insurance - Your business - Change your answers - Broker - As an export
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe(NAME, () => {
     const fieldId = NAME;
 

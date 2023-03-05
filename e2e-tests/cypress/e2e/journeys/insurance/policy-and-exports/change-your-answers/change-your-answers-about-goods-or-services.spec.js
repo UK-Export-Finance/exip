@@ -50,6 +50,11 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe(DESCRIPTION, () => {
     const fieldId = DESCRIPTION;
 

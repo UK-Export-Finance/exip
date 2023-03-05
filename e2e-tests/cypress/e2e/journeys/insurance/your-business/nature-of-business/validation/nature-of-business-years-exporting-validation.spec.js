@@ -36,6 +36,11 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe(`${YEARS_EXPORTING} error`, () => {
     describe(`when ${YEARS_EXPORTING} is left empty`, () => {
       const errorMessage = NATURE_OF_BUSINESS_ERRORS[YEARS_EXPORTING].IS_EMPTY;

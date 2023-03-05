@@ -45,6 +45,11 @@ context('Insurance - Policy and exports - About goods or services page - form va
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   it('should render validation errors for all required fields', () => {
     submitButton().click();
 

@@ -46,6 +46,11 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe(`${FIELD_ID} error`, () => {
     describe(`when ${FIELD_ID} is left empty`, () => {
       const errorMessage = ERROR_MESSAGE.IS_EMPTY;

@@ -48,6 +48,11 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe(`when only ${TRADING_ADDRESS} and ${TRADING_NAME} fields are completed`, () => {
     it('should not display validation errors and redirect to task list with status of "In progress"', () => {
       cy.navigateToUrl(url);

@@ -29,6 +29,11 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe('when submitting an empty form via `save and go back` button', () => {
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
       saveAndBackButton().click();

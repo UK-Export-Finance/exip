@@ -60,6 +60,11 @@ context('Insurance - Your business - Change your answers - Company details- As a
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe(COMPANY_NUMBER, () => {
     const fieldId = COMPANY_NUMBER;
 

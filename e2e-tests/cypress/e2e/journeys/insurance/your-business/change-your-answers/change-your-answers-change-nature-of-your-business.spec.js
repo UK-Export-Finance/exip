@@ -50,6 +50,11 @@ context('Insurance - Your business - Change your answers - Nature of your busine
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe(GOODS_OR_SERVICES, () => {
     const fieldId = GOODS_OR_SERVICES;
 

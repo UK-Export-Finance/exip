@@ -47,6 +47,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe('when policy currency code is not provided', () => {
     it('should render a validation error', () => {
       submitButton().click();

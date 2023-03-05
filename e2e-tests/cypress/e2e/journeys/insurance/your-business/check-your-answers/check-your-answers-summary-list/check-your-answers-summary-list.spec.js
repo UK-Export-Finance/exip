@@ -60,6 +60,11 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   it(`should render a ${COMPANY_NUMBER} summary list row`, () => {
     checkSummaryList[COMPANY_NUMBER]();
   });

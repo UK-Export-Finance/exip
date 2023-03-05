@@ -53,6 +53,11 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe('invalid postcodes', () => {
     describe('when the postcode field is left empty', () => {
       it('should display validation errors', () => {

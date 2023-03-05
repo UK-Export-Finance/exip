@@ -42,6 +42,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe(`when ${PHONE_NUMBER} is incorrectly entered`, () => {
     describe('invalid long landline phone number', () => {
       it('should display validation errors', () => {

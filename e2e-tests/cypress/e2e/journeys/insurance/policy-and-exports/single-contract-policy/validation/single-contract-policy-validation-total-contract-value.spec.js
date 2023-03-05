@@ -58,6 +58,11 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   const field = singleContractPolicyPage[TOTAL_CONTRACT_VALUE];
 
   describe('when total contract value is not provided', () => {

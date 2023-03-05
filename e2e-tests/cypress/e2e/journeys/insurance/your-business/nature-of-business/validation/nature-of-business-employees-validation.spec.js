@@ -37,6 +37,11 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe(`${EMPLOYEES_UK} validation`, () => {
     // for error assertion - common fields
     const ERROR_ASSERTIONS = {

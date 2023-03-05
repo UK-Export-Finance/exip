@@ -44,6 +44,11 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   const field = singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
 
   describe('when credit period with buyer is not provided', () => {

@@ -63,6 +63,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   const field = multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE];
 
   describe('when maximum buyer will owe is not provided', () => {

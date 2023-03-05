@@ -36,6 +36,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe(`${WEBSITE} error`, () => {
     describe('invalid website format', () => {
       it('should display validation errors', () => {

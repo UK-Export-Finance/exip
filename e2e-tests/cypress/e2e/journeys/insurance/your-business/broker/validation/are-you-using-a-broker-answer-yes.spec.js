@@ -51,6 +51,11 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe('when the yes radio is selected and no required fields are entered', () => {
     // for error assertion - common fields
     const expectedErrorsCount = 5;

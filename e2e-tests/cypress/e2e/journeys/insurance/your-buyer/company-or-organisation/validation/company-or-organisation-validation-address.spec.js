@@ -40,6 +40,11 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   const field = companyOrOrganisationPage[ADDRESS];
 
   describe('when address is above the maximum', () => {

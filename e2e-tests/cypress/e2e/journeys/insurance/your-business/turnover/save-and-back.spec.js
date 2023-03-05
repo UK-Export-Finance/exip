@@ -48,6 +48,11 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe('When no fields are provided', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       saveAndBackButton().click();

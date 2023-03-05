@@ -81,7 +81,7 @@ const corePageChecks = ({
   lightHouseThresholds,
 }) => {
   // run lighthouse audit
-  // lighthouseAudit(lightHouseThresholds);
+  lighthouseAudit(lightHouseThresholds);
 
   if (assertBackLink) {
     // check back link

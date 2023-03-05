@@ -48,6 +48,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   const field = multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
 
   describe('when credit period with buyer is not provided', () => {

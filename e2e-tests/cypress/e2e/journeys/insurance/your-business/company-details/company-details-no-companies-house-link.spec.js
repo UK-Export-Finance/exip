@@ -39,6 +39,11 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   it(`should redirect to ${APPLY_OFFLINE} page when pressing the no companies house number link`, () => {
     companyDetails.companiesHouseNoNumber().should('have.attr', 'href', `${ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`);
     companyDetails.companiesHouseNoNumber().click();

@@ -51,6 +51,11 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
     Cypress.Cookies.preserveOnce('connect.sid');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe('when the email field is left empty', () => {
     it('should display validation errors', () => {
       const field = broker[FIELD_ID];

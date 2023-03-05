@@ -28,6 +28,7 @@ context('Insurance - All sections - new application', () => {
 
   after(() => {
     cy.deleteAccount();
+    // TODO: delete application
   });
 
   it('renders core page elements', () => {

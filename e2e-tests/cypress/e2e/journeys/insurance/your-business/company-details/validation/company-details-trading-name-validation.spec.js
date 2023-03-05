@@ -30,6 +30,11 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe('trading name error', () => {
     it('should display validation errors if trading name question is not answered', () => {
       cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);

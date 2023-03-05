@@ -45,6 +45,11 @@ context('Insurance - Your business - Company details page - company house search
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe('when leaving companies house registration blank', () => {
     it('should display an error in the error summary', () => {
       companyDetails.companiesHouseSearchButton().click();

@@ -59,6 +59,11 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe('when submitting an empty form', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       saveAndBackButton().click();

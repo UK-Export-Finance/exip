@@ -48,6 +48,11 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
     field.value().should('exist');
     cy.checkText(field.value(), application.EXPORTER_COMPANY[fieldId]);

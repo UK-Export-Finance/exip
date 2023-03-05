@@ -57,6 +57,11 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe('single policy type answers', () => {
     describe(REQUESTED_START_DATE, () => {
       const fieldId = REQUESTED_START_DATE;

@@ -26,6 +26,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe('when day is not provided', () => {
     it('should render a validation error', () => {
       checkValidation.day.notProvided();

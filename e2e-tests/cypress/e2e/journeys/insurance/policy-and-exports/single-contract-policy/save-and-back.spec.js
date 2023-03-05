@@ -59,6 +59,11 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   describe('when submitting an empty form via `save and go back` button', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       saveAndBackButton().click();

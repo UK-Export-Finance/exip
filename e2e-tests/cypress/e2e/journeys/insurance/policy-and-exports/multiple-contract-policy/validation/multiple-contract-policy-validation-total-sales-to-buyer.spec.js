@@ -58,6 +58,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   const field = multipleContractPolicyPage[TOTAL_SALES_TO_BUYER];
 
   describe('when total sales to buyer is not provided', () => {

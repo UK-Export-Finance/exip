@@ -45,6 +45,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+    // TODO: delete application
+  });
+
   const field = multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER];
 
   describe('when total months of cover is not provided', () => {
