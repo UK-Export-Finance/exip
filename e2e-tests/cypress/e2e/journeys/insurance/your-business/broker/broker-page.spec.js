@@ -28,7 +28,6 @@ const {
 
 const {
   ROOT,
-  START,
   EXPORTER_BUSINESS: {
     BROKER,
     TURNOVER,
@@ -57,18 +56,14 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   let checkYourAnswersUrl;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      task.link().click();
 
-    task.link().click();
-
-    cy.completeAndSubmitCompanyDetails();
-    cy.completeAndSubmitNatureOfYourBusiness();
-    cy.completeAndSubmitTurnoverForm();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitNatureOfYourBusiness();
+      cy.completeAndSubmitTurnoverForm();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
       checkYourAnswersUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

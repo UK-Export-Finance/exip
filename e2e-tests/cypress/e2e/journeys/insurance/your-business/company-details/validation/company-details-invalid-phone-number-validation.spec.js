@@ -27,16 +27,8 @@ const completeAllFields = (phoneNumber) => {
 };
 
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - phone number validation - invalid phone number", () => {
-  let referenceNumber;
-
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
-
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
-
+    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
       cy.navigateToUrl(url);

@@ -32,12 +32,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
   let url;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
-
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
