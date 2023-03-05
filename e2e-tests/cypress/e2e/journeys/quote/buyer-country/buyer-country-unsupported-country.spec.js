@@ -1,5 +1,6 @@
-import { buyerCountryPage, cannotApplyPage, submitButton } from '../../../pages/shared';
-import partials from '../../../partials';
+import {
+  backLink, buyerCountryPage, cannotApplyPage, submitButton,
+} from '../../../pages/shared';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
@@ -25,9 +26,9 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   });
 
   it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
+    backLink().should('exist');
 
-    partials.backLink().should('have.attr', 'href', ROUTES.QUOTE.BUYER_COUNTRY);
+    backLink().should('have.attr', 'href', ROUTES.QUOTE.BUYER_COUNTRY);
   });
 
   it('renders a specific reason', () => {

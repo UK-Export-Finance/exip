@@ -1,7 +1,6 @@
 import {
-  cannotApplyPage, noRadio, noRadioInput, submitButton,
+  backLink, cannotApplyPage, noRadio, noRadioInput, submitButton,
 } from '../../../../pages/shared';
-import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
@@ -48,11 +47,11 @@ context('Insurance - Eligibility - Companies house number page - I want to check
   });
 
   it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
+    backLink().should('exist');
 
     const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
-    partials.backLink().should('have.attr', 'href', expectedUrl);
+    backLink().should('have.attr', 'href', expectedUrl);
   });
 
   it('renders a specific reason', () => {
@@ -62,7 +61,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
 
   describe('when going back to the page', () => {
     it('should NOT have the originally submitted answer selected', () => {
-      partials.backLink().click();
+      cy.clickBackLink();
 
       noRadioInput().should('not.be.checked');
     });

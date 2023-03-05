@@ -107,7 +107,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
 
       describe('when going back to the page', () => {
         it('should have the originally submitted answer selected', () => {
-          partials.backLink().click();
+          cy.clickBackLink();
 
           yesRadioInput().should('be.checked');
         });

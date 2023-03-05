@@ -1,6 +1,5 @@
 import { BUTTONS, LINKS, ORGANISATION } from '../../content-strings';
-import partials from '../e2e/partials';
-import { heading, submitButton } from '../e2e/pages/shared';
+import { backLink as backLinkSelector, heading, submitButton } from '../e2e/pages/shared';
 
 const lighthouseAudit = (lightHouseThresholds = {}) => {
   cy.lighthouse({
@@ -20,10 +19,10 @@ const lighthouseAudit = (lightHouseThresholds = {}) => {
  * @param {String} expectedHref - Expected "back" HREF/route
  */
 const checkBackLink = (currentHref, expectedHref) => {
-  partials.backLink().should('exist');
-  cy.checkText(partials.backLink(), LINKS.BACK);
+  backLinkSelector().should('exist');
+  cy.checkText(backLinkSelector(), LINKS.BACK);
 
-  partials.backLink().click();
+  cy.clickBackLink();
 
   let expectedUrl = `${Cypress.config('baseUrl')}${expectedHref}`;
 

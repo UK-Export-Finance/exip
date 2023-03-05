@@ -1,10 +1,9 @@
-import { submitButton } from '../../../pages/shared';
+import { backLink, submitButton } from '../../../pages/shared';
 import {
   policyTypePage,
   checkYourAnswersPage,
   tellUsAboutYourPolicyPage,
 } from '../../../pages/quote';
-import partials from '../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../constants';
 
 const {
@@ -52,10 +51,10 @@ context('Change your answers (policy type and length fields) - as an exporter, I
   });
 
   it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
+    backLink().should('exist');
 
     const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-    partials.backLink().should('have.attr', 'href', expected);
+    backLink().should('have.attr', 'href', expected);
   });
 
   it('has originally submitted `policy type` (single)', () => {
@@ -111,10 +110,10 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it('has previously submitted `policy type` (multi)', () => {
@@ -204,10 +203,10 @@ context('Change your answers (policy type and length fields) - as an exporter, I
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {

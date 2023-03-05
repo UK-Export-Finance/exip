@@ -1,6 +1,5 @@
-import { buyerCountryPage, submitButton } from '../../../pages/shared';
+import { backLink, buyerCountryPage, submitButton } from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage, yourQuotePage } from '../../../pages/quote';
-import partials from '../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 
 const {
@@ -40,10 +39,10 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -79,10 +78,10 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -118,10 +117,10 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {

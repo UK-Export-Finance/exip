@@ -155,7 +155,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
       });
 
       it('should retain the submitted value when going back to the page', () => {
-        partials.backLink().click();
+        cy.clickBackLink();
 
         descriptionField.input().should('have.value', submittedValue);
       });
