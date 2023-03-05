@@ -751,7 +751,6 @@ var createAccount = async (root, variables, context) => {
     const response = await context.db.Exporter.createOne({
       data: account
     });
-    console.log(">>>>>>>>>>>>>> ", response);
     return {
       ...response,
       success: true
