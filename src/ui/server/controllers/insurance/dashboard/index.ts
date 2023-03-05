@@ -7,10 +7,7 @@ import api from '../../../api';
 export const TEMPLATE = TEMPLATES.INSURANCE.DASHBOARD;
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    ALL_SECTIONS,
-  },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
   PROBLEM_WITH_SERVICE,
 } = ROUTES;
 

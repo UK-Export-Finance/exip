@@ -106,7 +106,7 @@ export const post = async (req: Request, res: Response) => {
       };
 
       // if there is eligibility in the session, create application.
-      if (req.session.submittedData.insuranceEligibility) {
+      if (req.session.submittedData && req.session.submittedData.insuranceEligibility) {
         const eligibilityAnswers = req.session.submittedData.insuranceEligibility;
 
         const application = await api.keystone.application.create(eligibilityAnswers, accountId);

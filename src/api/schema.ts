@@ -44,7 +44,6 @@ export const lists = {
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
         if (operation === 'create') {
-          console.log('->>>>>>>>>>>>> create \n', resolvedData);
           try {
             console.info('Creating new application - adding default data to a new application');
 
@@ -309,7 +308,7 @@ export const lists = {
       applications: relationship({
         ref: 'Application',
         many: true,
-      })
+      }),
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData }): Promise<AccountInput> => {

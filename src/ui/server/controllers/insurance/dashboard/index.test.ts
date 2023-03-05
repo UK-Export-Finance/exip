@@ -7,10 +7,7 @@ import api from '../../../api';
 import { mockReq, mockRes, mockApplications } from '../../../test-mocks';
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    ALL_SECTIONS,
-  },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
   PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
