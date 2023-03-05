@@ -29,19 +29,11 @@ const {
 } = ERROR_MESSAGES;
 
 context('Insurance - Policy and exports - Multiple contract policy page - form validation - total months of cover', () => {
-  let referenceNumber;
-
   before(() => {
-    cy.navigateToUrl(INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
-
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 
       cy.url().should('eq', expectedUrl);

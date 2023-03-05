@@ -7,7 +7,6 @@ const { taskList } = partials.insurancePartials;
 
 const {
   INSURANCE: {
-    START,
     ROOT: INSURANCE_ROOT,
     ALL_SECTIONS,
   },
@@ -16,19 +15,21 @@ const {
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 context('Insurance - Policy and exports - Complete the entire section as a multiple contract policy', () => {
+  let referenceNumber;
+
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+      cy.completeAndSubmitMultipleContractPolicyForm();
+      cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-    cy.completeAndSubmitMultipleContractPolicyForm();
-    cy.completeAndSubmitAboutGoodsOrServicesForm();
-
-    // go back to the all sections page
-    saveAndBackButton().click();
+      // go back to the all sections page
+      saveAndBackButton().click();
+    });
   });
 
   beforeEach(() => {
@@ -37,15 +38,13 @@ context('Insurance - Policy and exports - Complete the entire section as a multi
   });
 
   it(`should change the 'type of policy and exports' task status to 'completed' in the ${ALL_SECTIONS} page`, () => {
-    cy.getReferenceNumber().then((referenceNumber) => {
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', expectedUrl);
+    cy.url().should('eq', expectedUrl);
 
-      cy.checkText(
-        task.status(),
-        TASKS.STATUS.COMPLETED,
-      );
-    });
+    cy.checkText(
+      task.status(),
+      TASKS.STATUS.COMPLETED,
+    );
   });
 });

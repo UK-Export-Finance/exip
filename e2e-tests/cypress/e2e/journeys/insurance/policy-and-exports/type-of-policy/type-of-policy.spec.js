@@ -38,16 +38,13 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    task.link().click();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      task.link().click();
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
+
       cy.url().should('eq', expected);
     });
   });

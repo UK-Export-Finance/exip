@@ -28,7 +28,6 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POL
 const {
   INSURANCE: {
     ROOT: INSURANCE_ROOT,
-    START,
     ALL_SECTIONS,
     POLICY_AND_EXPORTS: {
       TYPE_OF_POLICY,
@@ -63,16 +62,13 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      task.link().click();
 
-    task.link().click();
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
       cy.url().should('eq', expectedUrl);

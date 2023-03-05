@@ -34,16 +34,12 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
-
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
       cy.url().should('eq', expected);

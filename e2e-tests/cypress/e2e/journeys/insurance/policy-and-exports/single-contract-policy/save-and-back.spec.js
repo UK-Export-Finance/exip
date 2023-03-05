@@ -42,16 +42,12 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
   const futureDate = add(date, { months: 3 });
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      task.link().click();
 
-    task.link().click();
-
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
       cy.url().should('eq', expected);

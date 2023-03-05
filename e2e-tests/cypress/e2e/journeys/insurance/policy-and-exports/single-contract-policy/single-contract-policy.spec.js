@@ -27,7 +27,6 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLIC
 const {
   INSURANCE: {
     ROOT: INSURANCE_ROOT,
-    START,
     ALL_SECTIONS,
     POLICY_AND_EXPORTS: {
       TYPE_OF_POLICY,
@@ -59,16 +58,13 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      task.link().click();
 
-    task.link().click();
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
       cy.url().should('eq', expectedUrl);

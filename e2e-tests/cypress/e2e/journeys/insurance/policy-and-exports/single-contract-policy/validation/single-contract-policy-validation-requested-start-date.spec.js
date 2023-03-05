@@ -9,19 +9,12 @@ const { checkValidation } = requestedCoverStartDate;
 const { INSURANCE } = ROUTES;
 
 context('Insurance - Policy and exports - Single contract policy page - form validation - requested start date', () => {
-  let referenceNumber;
-
   before(() => {
-    cy.navigateToUrl(INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
-
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
 
       cy.url().should('eq', expectedUrl);
