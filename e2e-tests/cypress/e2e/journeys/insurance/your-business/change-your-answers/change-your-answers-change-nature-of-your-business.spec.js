@@ -52,7 +52,6 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe(GOODS_OR_SERVICES, () => {

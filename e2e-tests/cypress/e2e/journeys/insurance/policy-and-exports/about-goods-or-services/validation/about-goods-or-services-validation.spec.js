@@ -47,7 +47,6 @@ context('Insurance - Policy and exports - About goods or services page - form va
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   it('should render validation errors for all required fields', () => {

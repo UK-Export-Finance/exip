@@ -61,7 +61,6 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('when submitting an empty form', () => {

@@ -51,7 +51,6 @@ context('Insurance - Your business - Nature of your business page - Save and bac
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('When no fields are provided', () => {

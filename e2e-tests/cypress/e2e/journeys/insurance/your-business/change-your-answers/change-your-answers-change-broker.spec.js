@@ -57,7 +57,6 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe(NAME, () => {

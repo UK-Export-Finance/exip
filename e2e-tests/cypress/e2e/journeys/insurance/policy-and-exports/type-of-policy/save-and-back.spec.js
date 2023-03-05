@@ -31,7 +31,6 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {

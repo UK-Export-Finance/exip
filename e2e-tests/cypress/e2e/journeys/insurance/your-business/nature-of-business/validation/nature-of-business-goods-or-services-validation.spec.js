@@ -41,7 +41,6 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe(`${GOODS_OR_SERVICES} error`, () => {

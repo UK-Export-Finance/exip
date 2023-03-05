@@ -78,7 +78,6 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   it('renders core page elements', () => {

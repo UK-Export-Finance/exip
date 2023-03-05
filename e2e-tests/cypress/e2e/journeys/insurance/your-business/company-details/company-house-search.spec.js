@@ -47,7 +47,6 @@ context('Insurance - Your business - Company details page - company house search
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('when leaving companies house registration blank', () => {

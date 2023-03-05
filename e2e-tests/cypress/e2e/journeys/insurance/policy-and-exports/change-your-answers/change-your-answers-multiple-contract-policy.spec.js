@@ -59,7 +59,6 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('single policy type answers', () => {

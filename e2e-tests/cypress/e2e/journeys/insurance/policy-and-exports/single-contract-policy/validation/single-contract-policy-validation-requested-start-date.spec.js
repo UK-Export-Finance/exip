@@ -28,7 +28,6 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('when day is not provided', () => {

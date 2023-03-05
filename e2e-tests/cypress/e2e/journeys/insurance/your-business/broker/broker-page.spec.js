@@ -79,7 +79,6 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   it('renders core page elements', () => {

@@ -53,7 +53,6 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('when the yes radio is selected and no required fields are entered', () => {

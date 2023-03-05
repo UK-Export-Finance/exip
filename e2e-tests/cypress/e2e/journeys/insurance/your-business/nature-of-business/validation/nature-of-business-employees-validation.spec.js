@@ -39,7 +39,6 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe(`${EMPLOYEES_UK} validation`, () => {

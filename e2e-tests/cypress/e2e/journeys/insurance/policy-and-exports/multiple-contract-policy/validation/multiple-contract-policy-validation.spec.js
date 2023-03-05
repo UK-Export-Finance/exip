@@ -53,7 +53,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   it('should render validation errors for all required fields', () => {

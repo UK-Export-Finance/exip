@@ -53,7 +53,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {

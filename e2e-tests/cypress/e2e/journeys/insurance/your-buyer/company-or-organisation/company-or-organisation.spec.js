@@ -57,7 +57,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   it('renders core page elements', () => {

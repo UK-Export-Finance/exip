@@ -62,7 +62,6 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   const fieldId = POLICY_TYPE;

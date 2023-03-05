@@ -50,7 +50,6 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe(`when only ${TRADING_ADDRESS} and ${TRADING_NAME} fields are completed`, () => {

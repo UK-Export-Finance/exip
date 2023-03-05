@@ -50,7 +50,6 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('When no fields are provided', () => {

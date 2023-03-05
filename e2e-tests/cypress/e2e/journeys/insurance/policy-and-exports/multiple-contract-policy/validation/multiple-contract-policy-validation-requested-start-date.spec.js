@@ -28,7 +28,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('when day is not provided', () => {

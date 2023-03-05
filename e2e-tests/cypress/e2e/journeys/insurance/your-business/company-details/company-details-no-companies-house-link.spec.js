@@ -41,7 +41,6 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   it(`should redirect to ${APPLY_OFFLINE} page when pressing the no companies house number link`, () => {

@@ -60,7 +60,6 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   it('renders core page elements', () => {

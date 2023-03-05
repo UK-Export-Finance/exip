@@ -48,7 +48,6 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   it('should render validation errors for all required fields', () => {

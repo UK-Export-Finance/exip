@@ -48,7 +48,6 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe(`${FIELD_ID} error`, () => {

@@ -52,7 +52,6 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe(DESCRIPTION, () => {

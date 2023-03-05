@@ -55,7 +55,6 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('invalid postcodes', () => {

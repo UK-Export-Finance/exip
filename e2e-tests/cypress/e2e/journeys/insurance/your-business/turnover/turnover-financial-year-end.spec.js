@@ -50,7 +50,6 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {

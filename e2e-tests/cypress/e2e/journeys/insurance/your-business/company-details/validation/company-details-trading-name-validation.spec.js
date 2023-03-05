@@ -32,7 +32,6 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('trading name error', () => {

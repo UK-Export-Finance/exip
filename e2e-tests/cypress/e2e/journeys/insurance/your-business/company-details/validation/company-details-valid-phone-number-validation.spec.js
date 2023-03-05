@@ -45,7 +45,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe(`when ${PHONE_NUMBER} is left empty`, () => {

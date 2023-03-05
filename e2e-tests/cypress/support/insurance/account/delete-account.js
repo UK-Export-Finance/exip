@@ -1,7 +1,7 @@
 import api from '../../api';
 
 /**
- * deleteaAccount
+ * deleteAccount
  * Get the exporter and delete.
  * This prevents account tests from failing, where an account/email must be unique and verified.
  */

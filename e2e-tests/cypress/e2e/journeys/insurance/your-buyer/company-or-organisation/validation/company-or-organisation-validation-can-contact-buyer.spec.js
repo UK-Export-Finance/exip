@@ -44,7 +44,6 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   const ERROR_ASSERTIONS = {

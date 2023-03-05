@@ -49,7 +49,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('when policy currency code is not provided', () => {

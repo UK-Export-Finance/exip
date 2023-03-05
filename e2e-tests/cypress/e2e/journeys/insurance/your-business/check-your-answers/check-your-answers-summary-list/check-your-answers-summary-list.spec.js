@@ -62,7 +62,6 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   it(`should render a ${COMPANY_NUMBER} summary list row`, () => {

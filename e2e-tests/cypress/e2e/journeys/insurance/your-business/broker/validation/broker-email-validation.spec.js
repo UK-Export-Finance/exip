@@ -53,7 +53,6 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
 
   after(() => {
     cy.deleteAccount();
-    // TODO: delete application
   });
 
   describe('when the email field is left empty', () => {
