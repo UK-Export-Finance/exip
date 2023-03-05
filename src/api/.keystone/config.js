@@ -587,6 +587,18 @@ var lists = {
           { label: ANSWERS.YES, value: ANSWERS.YES },
           { label: ANSWERS.NO, value: ANSWERS.NO }
         ]
+      }),
+      exporterIsConnectedWithBuyer: (0, import_fields.select)({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO }
+        ]
+      }),
+      exporterHasTradedWithBuyer: (0, import_fields.select)({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO }
+        ]
       })
     },
     access: import_access.allowAll

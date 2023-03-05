@@ -862,6 +862,8 @@ type Buyer {
   contactPosition: String
   contactEmail: String
   canContactBuyer: String
+  exporterIsConnectedWithBuyer: String
+  exporterHasTradedWithBuyer: String
 }
 
 input BuyerWhereUniqueInput {
@@ -884,6 +886,8 @@ input BuyerWhereInput {
   contactPosition: StringFilter
   contactEmail: StringFilter
   canContactBuyer: StringNullableFilter
+  exporterIsConnectedWithBuyer: StringNullableFilter
+  exporterHasTradedWithBuyer: StringNullableFilter
 }
 
 input BuyerOrderByInput {
@@ -898,6 +902,8 @@ input BuyerOrderByInput {
   contactPosition: OrderDirection
   contactEmail: OrderDirection
   canContactBuyer: OrderDirection
+  exporterIsConnectedWithBuyer: OrderDirection
+  exporterHasTradedWithBuyer: OrderDirection
 }
 
 input BuyerUpdateInput {
@@ -912,6 +918,8 @@ input BuyerUpdateInput {
   contactPosition: String
   contactEmail: String
   canContactBuyer: String
+  exporterIsConnectedWithBuyer: String
+  exporterHasTradedWithBuyer: String
 }
 
 input BuyerUpdateArgs {
@@ -931,6 +939,8 @@ input BuyerCreateInput {
   contactPosition: String
   contactEmail: String
   canContactBuyer: String
+  exporterIsConnectedWithBuyer: String
+  exporterHasTradedWithBuyer: String
 }
 
 type Country {

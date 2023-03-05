@@ -1,0 +1,90 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from 'govuk/components/label/macro.njk' import govukLabel %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% set tradedHTML %}
+  {{ govukHint({
+  text: FIELDS.TRADED_WITH_BUYER.DETAILS,
+  attributes: {
+  "data-cy": FIELDS.TRADED_WITH_BUYER.ID + "-details"
+  }
+}) }}
+{% endset %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <form method="POST" novalidate="novalidate">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ yesNoRadioButtons.render({
+          fieldId: FIELDS.CONNECTED_WITH_BUYER.ID,
+          heading: FIELDS.CONNECTED_WITH_BUYER.LABEL,
+          hintText: FIELDS.CONNECTED_WITH_BUYER.HINT,
+          submittedAnswer: submittedValues[FIELDS.CONNECTED_WITH_BUYER.ID] or application.buyer[FIELDS.CONNECTED_WITH_BUYER.ID],
+          errorMessage: validationErrors.errorList[FIELDS.CONNECTED_WITH_BUYER.ID],
+          headerClass: 'govuk-fieldset__legend--m',
+          dataCyHeading: FIELDS.CONNECTED_WITH_BUYER.ID + '-label',
+          dataCyHint: FIELDS.CONNECTED_WITH_BUYER.ID + '-hint',
+          yesNoValueString: true,
+          horizontalRadios: true
+        }) }}
+
+        {{ yesNoRadioButtons.render({
+          fieldId: FIELDS.TRADED_WITH_BUYER.ID,
+          heading: FIELDS.TRADED_WITH_BUYER.LABEL,
+          submittedAnswer: submittedValues[FIELDS.TRADED_WITH_BUYER.ID] or application.buyer[FIELDS.TRADED_WITH_BUYER.ID],
+          errorMessage: validationErrors.errorList[FIELDS.TRADED_WITH_BUYER.ID],
+          headerClass: 'govuk-fieldset__legend--m',
+          dataCyHeading: FIELDS.TRADED_WITH_BUYER.ID + '-label',
+          yesNoValueString: true,
+          conditionalYesHtml: tradedHTML,
+          horizontalRadios: true
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+            attributes: {
+              'data-cy': 'submit-button'
+            }
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              'formaction': SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
+    </div>
+  </form>
+{% endblock %}
