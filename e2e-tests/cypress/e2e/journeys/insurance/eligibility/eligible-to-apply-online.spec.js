@@ -21,7 +21,6 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
 const {
   START,
-  ROOT: INSURANCE_ROOT,
   ELIGIBILITY: {
     ELIGIBLE_TO_APPLY_ONLINE,
     COMPANIES_HOUSE_NUMBER,
@@ -84,8 +83,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     it(`should redirect to ${ACCOUNT_TO_APPLY_ONLINE}`, () => {
       submitButton().click();
 
-      cy.getReferenceNumber().then((id) => {
-        const referenceNumber = id;
+      cy.getReferenceNumber().then(() => {
         const expectedUrl = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
 
         cy.url().should('eq', expectedUrl);

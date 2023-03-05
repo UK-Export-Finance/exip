@@ -20,13 +20,12 @@
   {# temporary list of applications for QA/development #}
 
   {% if applications.length %}
-    <ul class="govuk-list govuk-list--bullet">
+    <ul class="govuk-list govuk-list--bullet" data-cy="list">
       {% for application in applications %}
         <li>
           <a
             class="govuk-link"
             href="{{ ROUTES.INSURANCE_ROOT }}/{{ application.referenceNumber }}{{ ROUTES.ALL_SECTIONS}}"
-            data-cy="list-item-{{ application.referenceNumber }}"
           >{{ application.referenceNumber }}
           </a>
         </li>
