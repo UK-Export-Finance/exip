@@ -80,7 +80,9 @@ CREATE TABLE `Buyer` (
   `exporterHasTradedWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Buyer_application_idx` (`application`),
+  KEY `Buyer_country_idx` (`country`),
   CONSTRAINT `Buyer_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `Buyer_country_fkey` FOREIGN KEY (`country`) REFERENCES `country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
