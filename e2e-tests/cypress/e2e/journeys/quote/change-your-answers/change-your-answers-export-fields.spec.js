@@ -1,4 +1,6 @@
-import { buyerCountryPage, yesRadioInput, submitButton } from '../../../pages/shared';
+import {
+  backLink, buyerCountryPage, yesRadioInput, submitButton,
+} from '../../../pages/shared';
 import { checkYourAnswersPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
@@ -39,10 +41,10 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it('has originally submitted answer selected', () => {
@@ -93,10 +95,10 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it('has originally submitted answer selected', () => {
@@ -126,10 +128,10 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it('has originally submitted answer', () => {

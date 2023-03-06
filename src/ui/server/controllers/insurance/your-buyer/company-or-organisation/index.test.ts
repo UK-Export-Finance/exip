@@ -21,7 +21,7 @@ const { WORKING_WITH_BUYER, COMPANY_OR_ORGANISATION_SAVE_AND_BACK } = YOUR_BUYER
 
 const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER } = COMPANY_OR_ORGANISATION;
 
-describe('controllers/insurance/your-buyer', () => {
+describe('controllers/insurance/your-buyer/company-or-organisation', () => {
   let req: Request;
   let res: Response;
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
@@ -172,7 +172,8 @@ describe('controllers/insurance/your-buyer', () => {
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
-        req.body = mockBuyer;
+        const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
+        req.body = companyOrOrganisationMock;
       });
 
       it('should redirect to the next page', async () => {
@@ -182,7 +183,7 @@ describe('controllers/insurance/your-buyer', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.buyer once with broker and application', async () => {
+      it('should call mapAndSave.buyer once with buyer and application', async () => {
         req.body = mockBuyer;
 
         await post(req, res);

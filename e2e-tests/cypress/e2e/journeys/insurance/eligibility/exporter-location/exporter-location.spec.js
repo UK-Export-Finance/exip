@@ -79,7 +79,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
 
       describe('when going back to the page', () => {
         it('should have the originally submitted answer selected', () => {
-          partials.backLink().click();
+          cy.clickBackLink();
 
           yesRadioInput().should('be.checked');
         });

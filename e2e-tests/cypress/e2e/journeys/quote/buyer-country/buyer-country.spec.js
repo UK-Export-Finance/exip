@@ -1,5 +1,4 @@
-import { buyerCountryPage, submitButton } from '../../../pages/shared';
-import partials from '../../../partials';
+import { backLink, buyerCountryPage, submitButton } from '../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import {
@@ -70,11 +69,11 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       });
 
       it('renders a back link with correct url', () => {
-        partials.backLink().should('exist');
+        backLink().should('exist');
 
         const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
 
-        partials.backLink().should('have.attr', 'href', expected);
+        backLink().should('have.attr', 'href', expected);
       });
 
       it('should focus on input when clicking summary error message', () => {

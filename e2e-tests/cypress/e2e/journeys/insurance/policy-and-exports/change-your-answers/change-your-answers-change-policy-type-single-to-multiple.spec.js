@@ -123,17 +123,17 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
         summaryList[TOTAL_MONTHS_OF_COVER].changeLink().click();
         cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, TOTAL_MONTHS_OF_COVER, 'label');
 
-        partials.backLink().click();
+        cy.clickBackLink();
 
         summaryList[TOTAL_SALES_TO_BUYER].changeLink().click();
         cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, TOTAL_SALES_TO_BUYER, 'label');
 
-        partials.backLink().click();
+        cy.clickBackLink();
 
         summaryList[MAXIMUM_BUYER_WILL_OWE].changeLink().click();
         cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, MAXIMUM_BUYER_WILL_OWE, 'label');
 
-        partials.backLink().click();
+        cy.clickBackLink();
       });
     });
   });

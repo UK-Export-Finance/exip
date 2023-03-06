@@ -1,6 +1,5 @@
 import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
-import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -31,7 +30,7 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
 
-    partials.backLink().click();
+    cy.clickBackLink();
 
     yourDetailsPage.signInButtonLink().click();
 

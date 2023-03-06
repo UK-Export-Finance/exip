@@ -30,7 +30,8 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
   });
 
   describe('post - save and back', () => {
-    const validBody = mockBuyer;
+    const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
+    const validBody = companyOrOrganisationMock;
 
     describe('when there are no validation errors', () => {
       it('should redirect to all sections page', async () => {

@@ -72,11 +72,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   describe('when resubmitting company number on company details page', () => {
     before(() => {
       // navigate back to company details page from nature of business
-      partials.backLink().click();
+      cy.clickBackLink();
       // resubmit form
       submitButton().click();
       // return to company details page after redirect to nature of business
-      partials.backLink().click();
+      cy.clickBackLink();
     });
 
     it('should remove old sic codes from company summary list', () => {

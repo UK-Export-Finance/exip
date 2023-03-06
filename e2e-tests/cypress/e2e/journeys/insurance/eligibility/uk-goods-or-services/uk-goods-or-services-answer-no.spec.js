@@ -1,7 +1,6 @@
 import {
-  cannotApplyPage, noRadio, noRadioInput, submitButton,
+  backLink, cannotApplyPage, noRadio, noRadioInput, submitButton,
 } from '../../../../pages/shared';
-import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm, completeExporterLocationForm } from '../../../../../support/insurance/eligibility/forms';
@@ -34,11 +33,11 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   });
 
   it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
+    backLink().should('exist');
 
     const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES}`;
 
-    partials.backLink().should('have.attr', 'href', expectedUrl);
+    backLink().should('have.attr', 'href', expectedUrl);
   });
 
   it('renders a specific reason', () => {
@@ -48,7 +47,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
 
   describe('when going back to the page', () => {
     it('should NOT have the originally submitted answer selected', () => {
-      partials.backLink().click();
+      cy.clickBackLink();
 
       noRadioInput().should('not.be.checked');
     });
