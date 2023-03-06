@@ -435,7 +435,7 @@ export const lists = {
       address: text({
         db: { nativeType: 'VarChar(1000)' },
       }),
-      country: text(),
+      country: relationship({ ref: 'Country' }),
       registrationNumber: text(),
       website: text(),
       contactFirstName: text(),

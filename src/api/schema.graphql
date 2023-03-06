@@ -854,7 +854,7 @@ type Buyer {
   application: Application
   companyOrOrganisationName: String
   address: String
-  country: String
+  country: Country
   registrationNumber: String
   website: String
   contactFirstName: String
@@ -878,7 +878,7 @@ input BuyerWhereInput {
   application: ApplicationWhereInput
   companyOrOrganisationName: StringFilter
   address: StringFilter
-  country: StringFilter
+  country: CountryWhereInput
   registrationNumber: StringFilter
   website: StringFilter
   contactFirstName: StringFilter
@@ -894,7 +894,6 @@ input BuyerOrderByInput {
   id: OrderDirection
   companyOrOrganisationName: OrderDirection
   address: OrderDirection
-  country: OrderDirection
   registrationNumber: OrderDirection
   website: OrderDirection
   contactFirstName: OrderDirection
@@ -910,7 +909,7 @@ input BuyerUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   companyOrOrganisationName: String
   address: String
-  country: String
+  country: CountryRelateToOneForUpdateInput
   registrationNumber: String
   website: String
   contactFirstName: String
@@ -920,6 +919,12 @@ input BuyerUpdateInput {
   canContactBuyer: String
   exporterIsConnectedWithBuyer: String
   exporterHasTradedWithBuyer: String
+}
+
+input CountryRelateToOneForUpdateInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
+  disconnect: Boolean
 }
 
 input BuyerUpdateArgs {
@@ -931,7 +936,7 @@ input BuyerCreateInput {
   application: ApplicationRelateToOneForCreateInput
   companyOrOrganisationName: String
   address: String
-  country: String
+  country: CountryRelateToOneForCreateInput
   registrationNumber: String
   website: String
   contactFirstName: String
@@ -941,6 +946,11 @@ input BuyerCreateInput {
   canContactBuyer: String
   exporterIsConnectedWithBuyer: String
   exporterHasTradedWithBuyer: String
+}
+
+input CountryRelateToOneForCreateInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
 }
 
 type Country {
@@ -1043,12 +1053,6 @@ input EligibilityUpdateInput {
   wantCoverOverMaxPeriod: Boolean
 }
 
-input CountryRelateToOneForUpdateInput {
-  create: CountryCreateInput
-  connect: CountryWhereUniqueInput
-  disconnect: Boolean
-}
-
 input EligibilityUpdateArgs {
   where: EligibilityWhereUniqueInput!
   data: EligibilityUpdateInput!
@@ -1065,11 +1069,6 @@ input EligibilityCreateInput {
   needPreCreditPeriodCover: Boolean
   wantCoverOverMaxAmount: Boolean
   wantCoverOverMaxPeriod: Boolean
-}
-
-input CountryRelateToOneForCreateInput {
-  create: CountryCreateInput
-  connect: CountryWhereUniqueInput
 }
 
 type Page {

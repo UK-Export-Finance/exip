@@ -8,6 +8,7 @@ import {
   ApplicationExporterSicCodes,
   ApplicationExporterBusiness,
   ApplicationExporterBroker,
+  ApplicationBuyer,
 } from './application';
 import { ApolloResponse } from './apollo';
 import { CisCountry } from './cis-country';
@@ -27,6 +28,7 @@ import {
   InsuranceEligibility,
   InsuranceEligibilityCore,
   SubmittedDataInsuranceEligibility,
+  SubmittedBuyer,
   SubmittedData,
 } from './submitted-data';
 import { SummaryListItem, SummaryListItemData, SummaryListItemDataInput, SummaryListItemDataInputField, SummaryListItemDataFieldSummary } from './summary-list';
@@ -59,6 +61,7 @@ export {
   ApplicationExporterSicCodes,
   ApplicationExporterBusiness,
   ApplicationExporterBroker,
+  ApplicationBuyer,
   ApolloResponse,
   CisCountry,
   CompanyDetails,
@@ -93,6 +96,7 @@ export {
   SingleInputPageVariables,
   SubmittedDataQuoteEligibility,
   SubmittedDataInsuranceEligibility,
+  SubmittedBuyer
   SubmittedData,
   SummaryListItemData,
   SummaryListItemDataFieldSummary,

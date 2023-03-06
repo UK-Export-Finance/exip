@@ -1,4 +1,4 @@
-import { ApolloResponse, SubmittedDataInsuranceEligibility } from '../../../../types';
+import { ApolloResponse, SubmittedBuyer, SubmittedDataInsuranceEligibility } from '../../../../types';
 import apollo from '../../../graphql/apollo';
 import eligibility from './eligibility';
 import countries from '../countries';
@@ -216,9 +216,21 @@ const application = {
         throw new Error('Updating application exporter company');
       }
     },
-    buyer: async (id: string, update: object) => {
+    buyer: async (id: string, update: SubmittedBuyer) => {
       try {
         console.info('Updating application buyer');
+
+        const buyerCountryCode = update.country;
+
+        if (buyerCountryCode) {
+          const buyerCountry = await countries.get(buyerCountryCode);
+
+          // @ts-ignore
+          // eslint-disable-next-line no-param-reassign
+          update.country = {
+            connect: { id: buyerCountry.id },
+          };
+        }
 
         const variables = {
           where: { id },

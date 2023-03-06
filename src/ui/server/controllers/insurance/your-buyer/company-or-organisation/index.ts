@@ -9,6 +9,7 @@ import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import mapAndSave from '../map-and-save';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import isChangeRoute from '../../../../helpers/is-change-route';
 
 const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
@@ -16,7 +17,7 @@ const {
 
 const { INSURANCE_ROOT, YOUR_BUYER: YOUR_BUYER_ROUTES } = ROUTES.INSURANCE;
 
-const { WORKING_WITH_BUYER, COMPANY_OR_ORGANISATION_SAVE_AND_BACK } = YOUR_BUYER_ROUTES;
+const { WORKING_WITH_BUYER, COMPANY_OR_ORGANISATION_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = YOUR_BUYER_ROUTES;
 
 const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER } = COMPANY_OR_ORGANISATION;
 
@@ -82,7 +83,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const mappedCountries = mapCountries(countries, application.buyer[COUNTRY]);
+    const mappedCountries = mapCountries(countries, application.buyer[COUNTRY].isoCode);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -139,6 +140,10 @@ export const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`);
