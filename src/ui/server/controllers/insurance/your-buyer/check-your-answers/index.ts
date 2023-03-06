@@ -5,7 +5,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { yourBuyerSummaryList } from '../../../../helpers/summary-lists/your-buyer';
 
-const { CHECK_YOUR_ANSWERS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
+const { CHECK_YOUR_ANSWERS } = PAGES.INSURANCE.YOUR_BUYER;
 const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.YOUR_BUYER;
 
 export const TEMPLATE = CHECK_YOUR_ANSWERS_TEMPLATE;

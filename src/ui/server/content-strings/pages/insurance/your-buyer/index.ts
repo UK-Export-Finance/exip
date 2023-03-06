@@ -12,7 +12,13 @@ const WORKING_WITH_BUYER = {
   PAGE_TITLE: 'Working with the buyer',
 };
 
+const CHECK_YOUR_ANSWERS = {
+  ...SHARED,
+  PAGE_TITLE: 'Check your answers for this section',
+};
+
 export default {
   COMPANY_OR_ORGANISATION,
   WORKING_WITH_BUYER,
+  CHECK_YOUR_ANSWERS,
 };

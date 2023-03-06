@@ -7,7 +7,7 @@ import { get as getWorkingWithBuyer, post as postWorkingWithBuyer } from '../../
 import { post as postWorkingWithBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/working-with-buyer/save-and-back';
 
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/your-buyer/check-your-answers';
-
+import { post as postCheckYourAnswersSaveAndBack } from '../../../controllers/insurance/your-buyer/check-your-answers/save-and-back';
 // @ts-ignore
 const yourBuyerRouter = express.Router();
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION}`, getCompanyOrOrganisation);
@@ -24,5 +24,6 @@ yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHANGE}`,
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`, postCheckYourAnswersSaveAndBack);
 
 export default yourBuyerRouter;

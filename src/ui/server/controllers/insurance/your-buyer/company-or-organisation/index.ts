@@ -83,7 +83,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const mappedCountries = mapCountries(countries, application.buyer[COUNTRY].isoCode);
+    const mappedCountries = mapCountries(countries, application.buyer[COUNTRY]?.isoCode);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

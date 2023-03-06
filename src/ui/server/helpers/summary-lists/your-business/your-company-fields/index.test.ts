@@ -5,7 +5,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
 import generateYourCompanyFields from '.';
-import { generateAddressHTML } from '../../company-house-summary-list';
+import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import sicCodeMapping from '../map-sic-codes';
 import mockApplication, { mockExporterCompany } from '../../../../test-mocks/mock-application';
 
@@ -51,7 +51,7 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
         data: mockAnswers,
         renderChangeLink: false,
       },
-      generateAddressHTML(mockAnswers[COMPANY_ADDRESS]),
+      generateMultipleFieldHtml(mockAnswers[COMPANY_ADDRESS]),
     ),
     fieldGroupItem(
       {

@@ -63,6 +63,11 @@ const {
         LAST_NAME,
         POSITION,
         EMAIL: BUYER_EMAIL,
+        CAN_CONTACT_BUYER,
+      },
+      WORKING_WITH_BUYER: {
+        CONNECTED_WITH_BUYER,
+        TRADED_WITH_BUYER,
       },
     },
   },
@@ -136,13 +141,16 @@ const application = {
   BUYER: {
     [COMPANY_OR_ORGANISATION_NAME]: 'Test name',
     [ADDRESS]: 'Test address',
-    [COUNTRY]: 'Algeria',
+    [COUNTRY]: 'Abu Dhabi',
     [REGISTRATION_NUMBER]: '12345',
     [WEBSITE]: WEBSITE_EXAMPLES.VALID,
     [FIRST_NAME]: 'Bob',
     [LAST_NAME]: 'Smith',
     [POSITION]: 'CEO',
     [BUYER_EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT'),
+    [CAN_CONTACT_BUYER]: 'Yes',
+    [CONNECTED_WITH_BUYER]: 'Yes',
+    [TRADED_WITH_BUYER]: 'Yes',
   },
 };
 

@@ -28,7 +28,7 @@ import {
   InsuranceEligibility,
   InsuranceEligibilityCore,
   SubmittedDataInsuranceEligibility,
-  SubmittedBuyer,
+  InsuranceSubmittedBuyer,
   SubmittedData,
 } from './submitted-data';
 import { SummaryListItem, SummaryListItemData, SummaryListItemDataInput, SummaryListItemDataInputField, SummaryListItemDataFieldSummary } from './summary-list';
@@ -96,7 +96,7 @@ export {
   SingleInputPageVariables,
   SubmittedDataQuoteEligibility,
   SubmittedDataInsuranceEligibility,
-  SubmittedBuyer
+  InsuranceSubmittedBuyer
   SubmittedData,
   SummaryListItemData,
   SummaryListItemDataFieldSummary,

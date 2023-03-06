@@ -25,10 +25,10 @@ const {
  * @param {ApplicationBuyer} answers
  * @returns {Object}
  */
-const generateAddressObject = (answers: ApplicationBuyer) => {
+export const generateAddressObject = (answers: ApplicationBuyer) => {
   return {
     address: answers[ADDRESS],
-    country: answers[COUNTRY].name,
+    country: answers[COUNTRY]?.name,
   };
 };
 
@@ -38,7 +38,7 @@ const generateAddressObject = (answers: ApplicationBuyer) => {
  * @param {ApplicationBuyer} answers
  * @returns {Object}
  */
-const generateContactDetailObject = (answers: ApplicationBuyer) => {
+export const generateContactDetailObject = (answers: ApplicationBuyer) => {
   const fullName = `${answers[FIRST_NAME]} ${answers[LAST_NAME]}`;
 
   return {
