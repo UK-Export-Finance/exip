@@ -155,7 +155,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
 
       describe('when going back to the page', () => {
         it('should have the originally submitted answer selected', () => {
-          partials.backLink().click();
+          cy.clickBackLink();
 
           noRadioInput().should('be.checked');
         });

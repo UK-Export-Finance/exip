@@ -1,7 +1,6 @@
 import {
-  cannotApplyPage, noRadio, noRadioInput, submitButton,
+  backLink, cannotApplyPage, noRadio, noRadioInput, submitButton,
 } from '../../../../pages/shared';
-import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
@@ -33,11 +32,11 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
   });
 
   it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
+    backLink().should('exist');
 
     const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION}`;
 
-    partials.backLink().should('have.attr', 'href', expectedUrl);
+    backLink().should('have.attr', 'href', expectedUrl);
   });
 
   it('renders a specific reason', () => {
@@ -47,7 +46,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
 
   describe('when going back to the page', () => {
     it('should NOT have the originally submitted answer selected', () => {
-      partials.backLink().click();
+      cy.clickBackLink();
 
       noRadioInput().should('not.be.checked');
     });

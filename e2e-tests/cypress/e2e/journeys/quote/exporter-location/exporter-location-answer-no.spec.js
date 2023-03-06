@@ -1,5 +1,6 @@
-import { cannotApplyPage, noRadio, submitButton } from '../../../pages/shared';
-import partials from '../../../partials';
+import {
+  backLink, cannotApplyPage, noRadio, submitButton,
+} from '../../../pages/shared';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
@@ -24,9 +25,9 @@ context('Exporter location page - as an exporter, I want to check if my company 
   });
 
   it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
+    backLink().should('exist');
 
-    partials.backLink().should('have.attr', 'href', ROUTES.QUOTE.EXPORTER_LOCATION);
+    backLink().should('have.attr', 'href', ROUTES.QUOTE.EXPORTER_LOCATION);
   });
 
   it('renders a specific reason', () => {

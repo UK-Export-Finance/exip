@@ -145,7 +145,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
       saveAndBackButton().click();
 
       // go back to the page
-      partials.backLink().click();
+      cy.clickBackLink();
 
       field.input().clear();
       saveAndBackButton().click();

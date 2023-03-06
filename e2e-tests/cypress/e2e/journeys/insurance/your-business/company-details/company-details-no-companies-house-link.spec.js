@@ -1,6 +1,5 @@
 import { companyDetails } from '../../../../pages/your-business';
 import { insurance } from '../../../../pages';
-import partials from '../../../../partials';
 import {
   cannotApplyPage,
 } from '../../../../pages/shared';
@@ -61,7 +60,7 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
   });
 
   it('should take you back to company-details page when pressing the back button', () => {
-    partials.backLink().click();
+    cy.clickBackLink();
 
     cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`);
   });

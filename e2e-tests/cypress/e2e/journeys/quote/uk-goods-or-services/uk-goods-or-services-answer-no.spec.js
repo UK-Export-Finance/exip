@@ -1,5 +1,6 @@
-import { cannotApplyPage, noRadio, submitButton } from '../../../pages/shared';
-import partials from '../../../partials';
+import {
+  backLink, cannotApplyPage, noRadio, submitButton,
+} from '../../../pages/shared';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
@@ -25,9 +26,9 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   });
 
   it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
+    backLink().should('exist');
 
-    partials.backLink().should('have.attr', 'href', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
+    backLink().should('have.attr', 'href', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
   });
 
   it('renders a specific reason', () => {

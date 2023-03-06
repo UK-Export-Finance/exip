@@ -1,7 +1,6 @@
 import {
-  cannotApplyPage, yesRadio, yesRadioInput, submitButton,
+  backLink, cannotApplyPage, yesRadio, yesRadioInput, submitButton,
 } from '../../../../pages/shared';
-import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
@@ -42,11 +41,11 @@ context('Insurance - Insured amount page - I want to check if I can use online s
   });
 
   it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
+    backLink().should('exist');
 
     const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED}`;
 
-    partials.backLink().should('have.attr', 'href', expectedUrl);
+    backLink().should('have.attr', 'href', expectedUrl);
   });
 
   it('renders a specific reason', () => {
@@ -56,7 +55,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
 
   describe('when going back to the page', () => {
     it('should NOT have the originally submitted answer selected', () => {
-      partials.backLink().click();
+      cy.clickBackLink();
 
       yesRadioInput().should('not.be.checked');
     });
