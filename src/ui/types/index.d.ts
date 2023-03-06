@@ -96,7 +96,7 @@ export {
   SingleInputPageVariables,
   SubmittedDataQuoteEligibility,
   SubmittedDataInsuranceEligibility,
-  InsuranceSubmittedBuyer
+  InsuranceSubmittedBuyer,
   SubmittedData,
   SummaryListItemData,
   SummaryListItemDataFieldSummary,
