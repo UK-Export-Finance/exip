@@ -12,6 +12,7 @@ const cypressConfig = defineConfig({
   e2e: {
     env: {
       GOV_NOTIFY_EMAIL_RECIPIENT: process.env.GOV_NOTIFY_EMAIL_RECIPIENT,
+      GOV_NOTIFY_EMAIL_RECIPIENT_2: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_2,
       MOCK_ACCOUNT_PASSWORD: process.env.MOCK_ACCOUNT_PASSWORD,
     },
     setupNodeEvents(on, config) {

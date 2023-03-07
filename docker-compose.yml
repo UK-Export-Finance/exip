@@ -66,5 +66,6 @@ services:
       MULESOFT_API_MDM_EA_SECRET:
       GOOGLE_ANALYTICS_ID:
       GOV_NOTIFY_EMAIL_RECIPIENT:
+      GOV_NOTIFY_EMAIL_RECIPIENT_2:
       MOCK_ACCOUNT_PASSWORD:
     entrypoint: npx nodemon src/index.ts -L

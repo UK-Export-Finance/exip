@@ -25,7 +25,7 @@ const {
 // TODO we probably eed new GHA
 // TODO
 
-const email = 'exporter1@ukexportfinance.gov.uk';
+const secondAccountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_2');
 
 context('Insurance - no access to application page', () => {
   let referenceNumber;
@@ -46,15 +46,15 @@ context('Insurance - no access to application page', () => {
         password,
       } = account;
 
-      return cy.createAccount(firstName, lastName, email, password).then((verifyAccountUrl) => {
+      return cy.createAccount(firstName, lastName, secondAccountEmail, password).then((verifyAccountUrl) => {
         // verify the account by navigating to the "verify account" page
         cy.navigateToUrl(verifyAccountUrl);
 
         // sign in to the account. Behind the scenes, an application is created at this point.
-        cy.completeAndSubmitSignInAccountForm(email, password);
+        cy.completeAndSubmitSignInAccountForm(secondAccountEmail, password);
 
         // get the OTP security code
-        return cy.accountAddAndGetOTP(email).then((securityCode) => {
+        return cy.accountAddAndGetOTP(secondAccountEmail).then((securityCode) => {
           cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), securityCode);
 
           // submit the OTP security code
@@ -83,7 +83,7 @@ context('Insurance - no access to application page', () => {
     cy.deleteAccount();
 
     // delete second account
-    cy.deleteAccount(email);
+    cy.deleteAccount(secondAccountEmail);
   });
 
   it(`should redirect to ${NO_ACCESS_TO_APPLICATION}`, () => {
