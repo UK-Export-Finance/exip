@@ -4,7 +4,7 @@ const {
   ACCOUNT: { CREATE: { VERIFY_EMAIL }, SIGN_IN },
 } = ROUTES;
 
-const exporterEmail = aCypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
 /**
  * verifyAccountEmail

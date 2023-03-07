@@ -42,7 +42,7 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
        * Get the exporter so that we can use the ID
        * to update the verification period.
        */
-      const exporterEmail = aCypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+      const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
       const exportersResponse = await api.getExporterByEmail(exporterEmail);
 
