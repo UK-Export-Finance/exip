@@ -6,6 +6,7 @@ const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
  * deleteAccount
  * Get the exporter and delete.
  * This prevents account tests from failing, where an account/email must be unique and verified.
+ * @param {String}: Email address
  */
 const deleteAccount = (email = exporterEmail) => {
   try {

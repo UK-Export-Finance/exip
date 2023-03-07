@@ -16,6 +16,10 @@ const {
 /**
  * createAccount
  * Create an exporter account directly from the API,
+ * @param {String}: First name
+ * @param {String}: Last name
+ * @param {String}: Email address
+ * @param {String}: Password
  * @returns {String} URL to verify the account verification URL
  */
 const createAccount = (nameFirst = firstName, nameLast = lastName, emailAddress = email, accountPassword = password) =>
