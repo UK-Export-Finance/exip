@@ -1,6 +1,7 @@
-import { yesRadio, yesRadioInput, submitButton } from '../../../pages/shared';
+import {
+  backLink, yesRadio, yesRadioInput, submitButton,
+} from '../../../pages/shared';
 import { getAQuoteByEmailPage } from '../../../pages/quote';
-import partials from '../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
@@ -26,9 +27,9 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   });
 
   it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
+    backLink().should('exist');
 
-    partials.backLink().should('have.attr', 'href', ROUTES.QUOTE.BUYER_BODY);
+    backLink().should('have.attr', 'href', ROUTES.QUOTE.BUYER_BODY);
   });
 
   it('renders a specific reason and description', () => {
@@ -41,7 +42,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
 
   describe('navigating back to the buyer body page', () => {
     it('auto checks the previously submitted answer', () => {
-      partials.backLink().click();
+      cy.clickBackLink();
 
       yesRadioInput().should('be.checked');
     });

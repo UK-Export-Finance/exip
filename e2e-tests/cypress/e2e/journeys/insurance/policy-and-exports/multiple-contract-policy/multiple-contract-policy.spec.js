@@ -236,7 +236,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
       });
 
       it('should retain the submitted value when going back to the page', () => {
-        partials.backLink().click();
+        cy.clickBackLink();
 
         creditPeriodField.input().should('have.value', submittedValue);
       });

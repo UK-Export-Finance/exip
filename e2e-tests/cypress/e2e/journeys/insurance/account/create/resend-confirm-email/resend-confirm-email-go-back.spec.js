@@ -1,5 +1,4 @@
 import { confirmEmailPage } from '../../../../../pages/insurance/account/create';
-import partials from '../../../../../partials';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../support/api';
 
@@ -48,7 +47,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
 
         cy.url().should('eq', expectedUrl);
 
-        partials.backLink().click();
+        cy.clickBackLink();
       });
     });
 

@@ -3,7 +3,6 @@ import {
   policyTypePage,
   tellUsAboutYourPolicyPage,
 } from '../../../pages/quote';
-import partials from '../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import {
@@ -38,7 +37,7 @@ context('Change your answers (policy type) - multiple times via back button - as
   });
 
   it(`clicking the back button redirects to ${ROUTES.QUOTE.POLICY_TYPE}`, () => {
-    partials.backLink().click();
+    cy.clickBackLink();
     cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
   });
 
@@ -59,7 +58,7 @@ context('Change your answers (policy type) - multiple times via back button - as
 
   context('change for a second time - policy type from multiple to single', () => {
     before(() => {
-      partials.backLink().click();
+      cy.clickBackLink();
       cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
 
       policyTypePage[POLICY_TYPE].single.input().click();
@@ -80,7 +79,7 @@ context('Change your answers (policy type) - multiple times via back button - as
 
   context('change for a third time - policy type from single to multi', () => {
     before(() => {
-      partials.backLink().click();
+      cy.clickBackLink();
       cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
 
       policyTypePage[POLICY_TYPE].multiple.input().click();

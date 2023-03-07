@@ -1,5 +1,6 @@
-import { buyerCountryPage, cannotApplyPage, submitButton } from '../../../../pages/shared';
-import partials from '../../../../partials';
+import {
+  backLink, buyerCountryPage, cannotApplyPage, submitButton,
+} from '../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
@@ -41,16 +42,16 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
   });
 
   it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
+    backLink().should('exist');
 
     const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
 
-    partials.backLink().should('have.attr', 'href', expected);
+    backLink().should('have.attr', 'href', expected);
   });
 
   describe('when going back to the page', () => {
     it('should NOT have the originally submitted answer selected', () => {
-      partials.backLink().click();
+      cy.clickBackLink();
 
       buyerCountryPage.results().should('have.length', 0);
     });

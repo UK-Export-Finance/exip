@@ -4,6 +4,7 @@ import exporterLocationPage from './exporterLocation';
 import needToStartAgainPage from './needToStartAgain';
 import ukGoodsOrServicesPage from './ukGoodsOrServices';
 
+const backLink = () => cy.get('[data-cy="back-link"]');
 const heading = () => cy.get('[data-cy="heading"]');
 const headingCaption = () => cy.get('[data-cy="heading-caption"]');
 const yesNoRadioHint = () => cy.get('[data-cy="yes-no-input-hint"]');
@@ -17,6 +18,7 @@ const saveAndBackButton = () => cy.get('[data-cy="save-and-back-button"]');
 const tempCreateAccountButton = () => cy.get('[data-cy="temp-create-an-account-button"]');
 
 export {
+  backLink,
   heading,
   headingCaption,
   yesNoRadioHint,

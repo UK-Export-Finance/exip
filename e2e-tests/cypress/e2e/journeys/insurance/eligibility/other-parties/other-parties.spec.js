@@ -130,7 +130,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
 
       describe('when going back to the page', () => {
         it('should have the originally submitted answer selected', () => {
-          partials.backLink().click();
+          cy.clickBackLink();
 
           noRadioInput().should('be.checked');
         });
