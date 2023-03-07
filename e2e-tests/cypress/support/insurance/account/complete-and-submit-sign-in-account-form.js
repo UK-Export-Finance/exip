@@ -24,5 +24,4 @@ const completeAndSubmitSignInAccountForm = (email = account[EMAIL], password = a
   submitButton().click();
 };
 
-
 export default completeAndSubmitSignInAccountForm;
