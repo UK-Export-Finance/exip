@@ -17,6 +17,7 @@ const {
       CREATE: { CONFIRM_EMAIL },
       SIGN_IN,
     },
+    DASHBOARD,
   },
 } = ROUTES;
 
@@ -58,14 +59,20 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS;
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Do you already have an account page
  */
-export const get = (req: Request, res: Response) =>
-  res.render(TEMPLATE, {
+export const get = (req: Request, res: Response) => {
+  if (req.session.user?.id) {
+    // user is already signed in
+    return res.redirect(DASHBOARD);
+  }
+
+  return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
     }),
     ...PAGE_VARIABLES,
   });
+};
 
 /**
  * post
