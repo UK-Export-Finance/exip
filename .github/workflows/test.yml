@@ -76,7 +76,7 @@ jobs:
           GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
           COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
           COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
-          GOV_NOTIFY_EMAIL_RECIPIENT: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
         run: |
           npm i --legacy-peer-deps
@@ -102,7 +102,7 @@ jobs:
           GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
           COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
           COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
-          GOV_NOTIFY_EMAIL_RECIPIENT: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
           JWT_VALIDATING_KEY: ${{ secrets.JWT_VALIDATING_KEY }}
@@ -159,7 +159,7 @@ jobs:
           MULESOFT_API_MDM_EA_SECRET: ${{ secrets.MULESOFT_API_MDM_EA_SECRET }}
           GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
           GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
-          GOV_NOTIFY_EMAIL_RECIPIENT: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
           COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
@@ -181,7 +181,7 @@ jobs:
         env: 
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GOV_NOTIFY_EMAIL_RECIPIENT: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
 
       - name: Notification
