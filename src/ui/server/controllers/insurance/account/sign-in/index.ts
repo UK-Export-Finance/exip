@@ -15,6 +15,7 @@ const {
     ACCOUNT: {
       SIGN_IN: { ENTER_CODE },
     },
+    DASHBOARD,
   },
 } = ROUTES;
 
@@ -48,6 +49,11 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGN_IN.ROOT;
  * @returns {Express.Response.render} Sign in page
  */
 export const get = (req: Request, res: Response) => {
+  if (req.session.user?.id) {
+    // user is already signed in
+    return res.redirect(DASHBOARD);
+  }
+
   const flash = req.flash('successBanner');
 
   const renderSuccessBanner = flash.includes('newAccountVerified') || false;
