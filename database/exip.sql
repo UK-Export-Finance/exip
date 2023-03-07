@@ -39,7 +39,7 @@ CREATE TABLE `Application` (
   `exporterCompany` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `exporterBusiness` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `exporterBroker` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-	`buyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `buyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Application_eligibility_idx` (`eligibility`),
   KEY `Application_referenceNumber_idx` (`referenceNumber`),
@@ -47,8 +47,8 @@ CREATE TABLE `Application` (
   KEY `Application_exporterCompany_idx` (`exporterCompany`),
   KEY `Application_exporterBusiness_idx` (`exporterBusiness`),
   KEY `Application_exporterBroker_idx` (`exporterBroker`),
-	KEY `Application_buyer_idx` (`buyer`),
-	CONSTRAINT `Application_buyer_fkey` FOREIGN KEY (`buyer`) REFERENCES `Buyer` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  KEY `Application_buyer_idx` (`buyer`),
+  CONSTRAINT `Application_buyer_fkey` FOREIGN KEY (`buyer`) REFERENCES `Buyer` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_eligibility_fkey` FOREIGN KEY (`eligibility`) REFERENCES `Eligibility` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_exporterBroker_fkey` FOREIGN KEY (`exporterBroker`) REFERENCES `ExporterBroker` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_exporterBusiness_fkey` FOREIGN KEY (`exporterBusiness`) REFERENCES `ExporterBusiness` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -76,13 +76,13 @@ CREATE TABLE `Buyer` (
   `contactPosition` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `contactEmail` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `canContactBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `exporterIsConnectedWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `exporterHasTradedWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `exporterIsConnectedWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Buyer_application_idx` (`application`),
   KEY `Buyer_country_idx` (`country`),
-  CONSTRAINT `Buyer_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-  CONSTRAINT `Buyer_country_fkey` FOREIGN KEY (`country`) REFERENCES `country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `Buyer_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Buyer_country_fkey` FOREIGN KEY (`country`) REFERENCES `Country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
