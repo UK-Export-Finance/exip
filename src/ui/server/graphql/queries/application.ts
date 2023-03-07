@@ -100,6 +100,8 @@ const applicationQuery = gql`
           contactPosition
           contactEmail
           canContactBuyer
+          exporterIsConnectedWithBuyer
+          exporterHasTradedWithBuyer
         }
       }
     }

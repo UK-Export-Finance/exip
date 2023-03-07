@@ -1,9 +1,8 @@
-import { submitButton } from '../../../pages/shared';
+import { backLink, submitButton } from '../../../pages/shared';
 import {
   tellUsAboutYourPolicyPage,
   checkYourAnswersPage,
 } from '../../../pages/quote';
-import partials from '../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 
 const { CREDIT_PERIOD } = FIELD_IDS;
@@ -36,10 +35,10 @@ context('Change your answers (policy fields) - as an exporter, I want to change 
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it('has originally submitted answer', () => {

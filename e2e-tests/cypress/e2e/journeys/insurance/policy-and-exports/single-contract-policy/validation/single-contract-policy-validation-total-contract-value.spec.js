@@ -185,7 +185,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   describe('when total contract value is valid and contains a comma', () => {
     it('should redirect to the next page as all fields are valid', () => {
       cy.completeAndSubmitSingleContractPolicyForm();
-      partials.backLink().click();
+      cy.clickBackLink();
 
       cy.keyboardInput(field.input(), '1,234');
       submitButton().click();

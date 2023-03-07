@@ -163,7 +163,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
       saveAndBackButton().click();
 
       // go back to the page
-      partials.backLink().click();
+      cy.clickBackLink();
 
       field.input().clear();
       saveAndBackButton().click();

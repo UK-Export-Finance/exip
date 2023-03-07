@@ -8,7 +8,6 @@ import ukGoodsOrServicesDescription from './ukGoodsAndServicesDescription';
 import yourBusinessSummaryList from './yourBusinessSummaryList';
 
 const partials = {
-  backLink: () => cy.get('[data-cy="back-link"]'),
   ukGoodsOrServicesCalculateDescription,
   cookieBanner,
   errorSummaryListItems: () => cy.get('.govuk-error-summary li'),

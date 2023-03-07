@@ -1,7 +1,7 @@
 import { FIELD_IDS } from '../../../../constants';
 
 const {
-  YOUR_BUYER: { COMPANY_OR_ORGANISATION },
+  YOUR_BUYER: { COMPANY_OR_ORGANISATION, WORKING_WITH_BUYER },
 } = FIELD_IDS.INSURANCE;
 
 export const YOUR_BUYER_FIELDS = {
@@ -39,6 +39,16 @@ export const YOUR_BUYER_FIELDS = {
     [COMPANY_OR_ORGANISATION.CAN_CONTACT_BUYER]: {
       LABEL: 'Can we contact the buyer about this application, if we need to?',
       HINT: 'For example, if we need to contact them for their accounts.',
+    },
+  },
+  WORKING_WITH_BUYER: {
+    [WORKING_WITH_BUYER.CONNECTED_WITH_BUYER]: {
+      LABEL: 'Are you connected with the buyer in any way?',
+      HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
+    },
+    [WORKING_WITH_BUYER.TRADED_WITH_BUYER]: {
+      LABEL: 'Have you traded with this buyer before?',
+      DETAILS: 'We will email you after you submit your application to request your trading history with the buyer.',
     },
   },
 };

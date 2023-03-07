@@ -112,7 +112,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
       saveAndBackButton().click();
 
       // go back to the page
-      partials.backLink().click();
+      cy.clickBackLink();
 
       field.input().clear();
       saveAndBackButton().click();
