@@ -142,6 +142,10 @@ jobs:
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
+      - name: Dependencies
+        working-directory: ./
+        run: npm ci
+
       - name: Docker    
         env:
           API_URL: ${{ secrets.QA_API_URL }}
@@ -163,6 +167,8 @@ jobs:
           COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
           COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+          JWT_VALIDATING_KEY: ${{ secrets.JWT_VALIDATING_KEY }}
         run: docker-compose up --build -d
 
       - name: 30s Sleep
