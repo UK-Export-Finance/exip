@@ -68,7 +68,7 @@ CREATE TABLE `Buyer` (
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `companyOrOrganisationName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `address` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `country` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `registrationNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `website` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `contactFirstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
