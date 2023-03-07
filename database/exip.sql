@@ -27,6 +27,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 # Dump of table Application
 # ------------------------------------------------------------
 
+DROP TABLE IF EXISTS `Application`;
+
 CREATE TABLE `Application` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `createdAt` datetime(3) DEFAULT NULL,
