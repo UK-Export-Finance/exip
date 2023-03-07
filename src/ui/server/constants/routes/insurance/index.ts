@@ -31,6 +31,7 @@ export const INSURANCE_ROUTES = {
   APPLY_OFFLINE: `${INSURANCE_ROOT}/apply-using-our-form`,
   SPEAK_TO_UKEF_EFM: `${INSURANCE_ROOT}/speak-to-UKEF-EFM`,
   PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
+  NO_ACCESS_TO_APPLICATION: `${INSURANCE_ROOT}/no-access-to-application`,
   ACCOUNT,
   DASHBOARD: `${INSURANCE_ROOT}/dashboard`,
   ALL_SECTIONS: '/all-sections',

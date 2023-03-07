@@ -5,7 +5,7 @@ import insuranceCorePageVariables from '../../../helpers/page-variables/core/ins
 import { Request, Response } from '../../../../types';
 import { mockReq, mockRes } from '../../../test-mocks';
 
-describe('controllers/insurance/page-not-found', () => {
+describe('controllers/insurance/no-access-to-application', () => {
   let req: Request;
   let res: Response;
 
@@ -16,7 +16,7 @@ describe('controllers/insurance/page-not-found', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.PAGE_NOT_FOUND);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.NO_ACCESS_TO_APPLICATION);
     });
   });
 
@@ -24,7 +24,7 @@ describe('controllers/insurance/page-not-found', () => {
     it('should render template', () => {
       get(req, res);
 
-      const expectedVariables = insuranceCorePageVariables({ PAGE_CONTENT_STRINGS: PAGES.PAGE_NOT_FOUND_PAGE });
+      const expectedVariables = insuranceCorePageVariables({ PAGE_CONTENT_STRINGS: PAGES.INSURANCE.NO_ACCESS_TO_APPLICATION_PAGE });
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });

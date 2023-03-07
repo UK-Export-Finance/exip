@@ -1,0 +1,107 @@
+import noAccessToApplicationPage from '../../pages/insurance/noAccessToApplication';
+import { enterCodePage } from '../../pages/insurance/account/sign-in';
+import { submitButton } from '../../pages/shared';
+import { PAGES } from '../../../../content-strings';
+import { FIELD_IDS } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import account from '../../../fixtures/account';
+
+const CONTENT_STRINGS = PAGES.INSURANCE.NO_ACCESS_TO_APPLICATION_PAGE;
+
+const {
+  ROOT,
+  DASHBOARD,
+  ALL_SECTIONS,
+  NO_ACCESS_TO_APPLICATION,
+} = INSURANCE_ROUTES;
+
+const {
+  INSURANCE: {
+    ACCOUNT: { SECURITY_CODE },
+  },
+} = FIELD_IDS;
+
+// TODO
+// TODO we probably eed new GHA
+// TODO
+
+const email = 'exporter1@ukexportfinance.gov.uk';
+
+context('Insurance - no access to application page', () => {
+  let referenceNumber;
+
+  before(() => {
+    // sign into an account, create an application.
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
+      const expected = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
+      cy.url().should('eq', expected);
+
+      // create and sign into a different account and try to access to the application
+      const {
+        firstName,
+        lastName,
+        password,
+      } = account;
+
+      return cy.createAccount(firstName, lastName, email, password).then((verifyAccountUrl) => {
+        // verify the account by navigating to the "verify account" page
+        cy.navigateToUrl(verifyAccountUrl);
+
+        // sign in to the account. Behind the scenes, an application is created at this point.
+        cy.completeAndSubmitSignInAccountForm(email, password);
+
+        // get the OTP security code
+        return cy.accountAddAndGetOTP(email).then((securityCode) => {
+          cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), securityCode);
+
+          // submit the OTP security code
+          submitButton().click();
+
+          // assert we are on the dashboard
+          const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+          cy.url().should('eq', expectedUrl);
+
+          // try to access the application created by the previous user
+          const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
+          cy.navigateToUrl(url);
+        });
+      });
+    });
+  });
+
+  beforeEach(() => {
+    Cypress.Cookies.preserveOnce('_csrf');
+    Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    // delete first account (uses default GOV_NOTIFY_EMAIL_RECIPIENT email)
+    cy.deleteAccount();
+
+    // delete second account
+    cy.deleteAccount(email);
+  });
+
+  it(`should redirect to ${NO_ACCESS_TO_APPLICATION}`, () => {
+    const expectedUrl = `${Cypress.config('baseUrl')}${NO_ACCESS_TO_APPLICATION}`;
+
+    cy.url().should('eq', expectedUrl);
+  });
+
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: NO_ACCESS_TO_APPLICATION,
+      assertSubmitButton: false,
+      assertBackLink: false,
+    });
+  });
+
+  it('renders `check URL` text', () => {
+    cy.checkText(noAccessToApplicationPage.checkUrl(), CONTENT_STRINGS.CHECK_URL);
+  });
+});

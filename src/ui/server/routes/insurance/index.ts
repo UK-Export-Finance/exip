@@ -6,6 +6,7 @@ import { get as speakToUkefEfmGet } from '../../controllers/insurance/speak-to-u
 import { get as dashboardGet } from '../../controllers/insurance/dashboard';
 import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
 import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-found';
+import { get as noAccessToApplicationGet } from '../../controllers/insurance/no-access-to-application';
 import insuranceEligibilityRoutes from './eligibility';
 import insurancePolicyAndExportsRouter from './policy-and-exports';
 import insuranceBusinessRouter from './business';
@@ -30,6 +31,8 @@ insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.ALL_SE
 insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.ALL_SECTIONS}`, allSectionsGet);
 
 insuranceRouter.get(INSURANCE_ROUTES.PAGE_NOT_FOUND, pageNotFoundGet);
+
+insuranceRouter.get(INSURANCE_ROUTES.NO_ACCESS_TO_APPLICATION, noAccessToApplicationGet);
 
 insuranceRouter.use('/', insuranceEligibilityRoutes);
 insuranceRouter.use('/', insuranceAccountRouter);

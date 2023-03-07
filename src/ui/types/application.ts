@@ -1,8 +1,13 @@
 import { InsuranceEligibilityCore } from './submitted-data';
 import { Country } from './country';
 
+interface ApplicationExporter {
+  id: string;
+}
+
 type ApplicationCore = {
   id: string;
+  exporter: ApplicationExporter;
   referenceNumber: number;
   createdAt: string;
   updatedAt: string;
@@ -94,6 +99,7 @@ interface ApplicationBuyer {
 
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
+  exporter: ApplicationExporter;
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;
   exporterBusiness: ApplicationExporterBusiness;
