@@ -6,8 +6,8 @@ import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
 
 const { taskList } = partials.insurancePartials;
 
-const multipleePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const multipleePolicyField = typeOfPolicyPage[multipleePolicyFieldId].multiple;
+const multiplePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
+const multiplePolicyField = typeOfPolicyPage[multiplePolicyFieldId].multiple;
 
 const { INSURANCE } = ROUTES;
 
@@ -34,7 +34,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-      multipleePolicyField.input().click();
+      multiplePolicyField.input().click();
       submitButton().click();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;

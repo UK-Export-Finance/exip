@@ -1,7 +1,8 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { isBefore } from 'date-fns';
+import { FIELD_IDS } from '../constants';
 import getAccountByField from '../helpers/get-account-by-field';
-import { VerifyEmailAddressVariables } from '../types';
+import { VerifyEmailAddressVariables, VerifyEmailAddressResponse } from '../types';
 
 /**
  * verifyAccountEmailAddress
@@ -10,14 +11,16 @@ import { VerifyEmailAddressVariables } from '../types';
  * @param {Object} KeystoneJS context API
  * @returns {Object} Object with success or expired flag.
  */
-const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddressVariables, context: Context) => {
+const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddressVariables, context: Context): Promise<VerifyEmailAddressResponse> => {
   try {
     console.info('Verifying exporter email address');
 
     // get the account the token is associated with.
-    const exporter = await getAccountByField(context, 'verificationHash', variables.token);
+    const exporter = await getAccountByField(context, FIELD_IDS.ACCOUNT.VERIFICATION_HASH, variables.token);
 
     if (exporter) {
+      const { id } = exporter;
+
       // check that the verification period has not expired.
       const now = new Date();
       const canActivateExporter = isBefore(now, exporter.verificationExpiry);
@@ -27,6 +30,8 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
 
         return {
           expired: true,
+          success: false,
+          accountId: id,
         };
       }
 
@@ -42,6 +47,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
 
       return {
         success: true,
+        accountId: id,
         emailRecipient: exporter.email,
       };
     }

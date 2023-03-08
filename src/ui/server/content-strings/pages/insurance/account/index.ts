@@ -34,6 +34,14 @@ const ACCOUNT = {
       PAGE_TITLE: 'New link sent - confirm your email address',
       WE_SENT_LINK_TO: "We've sent another link by email to",
     },
+    VERIFY_EMAIL_LINK_EXPIRED: {
+      PAGE_TITLE: 'Your link has expired',
+      BODY: "You'll need to enter your details and create an account again.",
+      CREATE_ACCOUNT: {
+        TEXT: 'Create account',
+        HREF: INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS,
+      },
+    },
   },
   SIGN_IN: {
     ROOT: {

@@ -7,7 +7,7 @@ import api from '../../api';
  */
 const deleteAccount = () => {
   try {
-    const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
+    const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
     // get the created exporter.
     api.getExporterByEmail(exporterEmail).then((response) => {
