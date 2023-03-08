@@ -21,10 +21,6 @@ const {
   },
 } = FIELD_IDS;
 
-// TODO
-// TODO we probably eed new GHA
-// TODO
-
 const secondAccountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_2');
 
 context('Insurance - no access to application page', () => {
