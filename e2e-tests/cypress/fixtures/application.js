@@ -5,6 +5,7 @@ import {
 } from 'date-fns';
 import { FIELD_IDS, COMPANIES_HOUSE_NUMBER, WEBSITE_EXAMPLES } from '../../constants';
 import { GBP_CURRENCY_CODE } from './currencies';
+import mockCountries from './countries';
 
 const {
   INSURANCE: {
@@ -141,7 +142,7 @@ const application = {
   BUYER: {
     [COMPANY_OR_ORGANISATION_NAME]: 'Test name',
     [ADDRESS]: 'Test address',
-    [COUNTRY]: 'Abu Dhabi',
+    [COUNTRY]: mockCountries[0].name,
     [REGISTRATION_NUMBER]: '12345',
     [WEBSITE]: WEBSITE_EXAMPLES.VALID,
     [FIRST_NAME]: 'Bob',

@@ -23,7 +23,7 @@ const {
  * Create all working with buyer fields and values for the Insurance - your buyer govukSummaryList
  * @param {ApplicationBuyer} answers buyer data
  * @param {Number} referenceNumber application reference number
- * @returns {Object} All exporter company fields and values in an object structure for GOVUK summary list structure
+ * @returns {Object} All working with buyer fields and values in an object structure for GOVUK summary list structure
  */
 const workingWithBuyerFields = (answers: ApplicationBuyer, referenceNumber: number) => {
   const fields = [

@@ -195,8 +195,8 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
 
       describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
-          req.body = companyOrOrganisationMock;
+          const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...mockCompanyOrOrganisation } = mockBuyer;
+          req.body = mockCompanyOrOrganisation;
 
           req.originalUrl = COMPANY_OR_ORGANISATION_CHANGE;
 

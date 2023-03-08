@@ -33,12 +33,12 @@ export const generateAddressObject = (answers: ApplicationBuyer) => {
 };
 
 /**
- * generateContactDetailObject
+ * generateContactDetailsObject
  * generates object with fullname, position and email to generate html string for address section
  * @param {ApplicationBuyer} answers
  * @returns {Object}
  */
-export const generateContactDetailObject = (answers: ApplicationBuyer) => {
+export const generateContactDetailsObject = (answers: ApplicationBuyer) => {
   const fullName = `${answers[FIRST_NAME]} ${answers[LAST_NAME]}`;
 
   return {

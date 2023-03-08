@@ -1,4 +1,4 @@
-import generateCompanyOrOrganisationFields, { generateAddressObject, generateContactDetailObject } from '.';
+import generateCompanyOrOrganisationFields, { generateAddressObject, generateContactDetailsObject } from '.';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { ROUTES } from '../../../../constants';
@@ -21,12 +21,59 @@ const {
 } = FIELD_IDS;
 
 describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields', () => {
+  describe('generateAddressObject', () => {
+    describe(`when ${ADDRESS} and ${COUNTRY} are provided`, () => {
+      it('should return a fully populated object', () => {
+        const response = generateAddressObject(mockApplicationBuyer);
+
+        const expected = {
+          address: mockApplicationBuyer[ADDRESS],
+          country: mockApplicationBuyer[COUNTRY].name,
+        };
+
+        expect(response).toEqual(expected);
+      });
+    });
+
+    describe(`when ${ADDRESS} is provided but ${COUNTRY} is null`, () => {
+      it('should return a populated object', () => {
+        mockApplicationBuyer[COUNTRY] = null;
+
+        const response = generateAddressObject(mockApplicationBuyer);
+
+        const expected = {
+          address: mockApplicationBuyer[ADDRESS],
+          country: undefined,
+        };
+
+        expect(response).toEqual(expected);
+      });
+    });
+  });
+
+  describe('generateContactDetailObject', () => {
+    describe(`when ${FIRST_NAME} and ${LAST_NAME} are provided`, () => {
+      it('should return a fully populated object', () => {
+        const response = generateContactDetailsObject(mockApplicationBuyer);
+
+        const fullName = `${mockApplicationBuyer[FIRST_NAME]} ${mockApplicationBuyer[LAST_NAME]}`;
+        const expected = {
+          name: fullName,
+          position: mockApplicationBuyer[POSITION],
+          email: mockApplicationBuyer[EMAIL],
+        };
+
+        expect(response).toEqual(expected);
+      });
+    });
+  });
+
   describe('generateCompanyOrOrganisationFields', () => {
     const mockAnswers = mockApplicationBuyer;
     const { referenceNumber } = mockApplication;
 
     const addressObject = generateAddressObject(mockAnswers);
-    const contactDetailsObject = generateContactDetailObject(mockAnswers);
+    const contactDetailsObject = generateContactDetailsObject(mockAnswers);
 
     const expectedBase = [
       fieldGroupItem({
@@ -77,53 +124,6 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
       const result = generateCompanyOrOrganisationFields(mockAnswers, referenceNumber);
 
       expect(result).toEqual(expectedBase);
-    });
-  });
-
-  describe('generateAddressObject', () => {
-    describe(`when ${ADDRESS} and ${COUNTRY} are provided`, () => {
-      it('should return a fully populated object', () => {
-        const response = generateAddressObject(mockApplicationBuyer);
-
-        const expected = {
-          address: mockApplicationBuyer[ADDRESS],
-          country: mockApplicationBuyer[COUNTRY].name,
-        };
-
-        expect(response).toEqual(expected);
-      });
-    });
-
-    describe(`when ${ADDRESS} is provided but ${COUNTRY} is null`, () => {
-      it('should return a populated object', () => {
-        mockApplicationBuyer[COUNTRY] = null;
-
-        const response = generateAddressObject(mockApplicationBuyer);
-
-        const expected = {
-          address: mockApplicationBuyer[ADDRESS],
-          country: undefined,
-        };
-
-        expect(response).toEqual(expected);
-      });
-    });
-  });
-
-  describe('generateContactDetailObject', () => {
-    describe(`when ${FIRST_NAME} and ${LAST_NAME} are provided`, () => {
-      it('should return a fully populated object', () => {
-        const response = generateContactDetailObject(mockApplicationBuyer);
-
-        const fullName = `${mockApplicationBuyer[FIRST_NAME]} ${mockApplicationBuyer[LAST_NAME]}`;
-        const expected = {
-          name: fullName,
-          position: mockApplicationBuyer[POSITION],
-          email: mockApplicationBuyer[EMAIL],
-        };
-
-        expect(response).toEqual(expected);
-      });
     });
   });
 });
