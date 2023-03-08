@@ -138,6 +138,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         lastName: String
         token: String
         sessionIdentifier: String
+        expires: DateTime
         success: Boolean!
       }
 
