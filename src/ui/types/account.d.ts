@@ -5,6 +5,7 @@ interface Account {
   email: string;
   password: string;
   isVerified?: boolean;
+  expires: string;
 }
 
 export { Account };

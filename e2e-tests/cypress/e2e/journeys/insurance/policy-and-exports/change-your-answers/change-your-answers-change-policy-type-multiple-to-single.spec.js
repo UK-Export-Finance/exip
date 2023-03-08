@@ -37,18 +37,14 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      task.link().click();
 
-    task.link().click();
-
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-    cy.completeAndSubmitMultipleContractPolicyForm();
-    cy.completeAndSubmitAboutGoodsOrServicesForm();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+      cy.completeAndSubmitMultipleContractPolicyForm();
+      cy.completeAndSubmitAboutGoodsOrServicesForm();
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.url().should('eq', expected);
@@ -58,6 +54,10 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   const fieldId = POLICY_TYPE;

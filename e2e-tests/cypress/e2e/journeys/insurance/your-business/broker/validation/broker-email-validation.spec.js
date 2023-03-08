@@ -13,7 +13,6 @@ const {
 
 const {
   ROOT,
-  START,
   EXPORTER_BUSINESS: {
     BROKER,
   },
@@ -33,21 +32,13 @@ const ERROR_ASSERTIONS = {
 };
 
 context('Insurance - Your business - Broker Page - Validation - Email', () => {
-  let referenceNumber;
-
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+      task.link().click();
 
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    task.link().click();
-
-    cy.completeAndSubmitCompanyDetails();
-    cy.completeAndSubmitNatureOfYourBusiness();
-    cy.completeAndSubmitTurnoverForm();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitNatureOfYourBusiness();
+      cy.completeAndSubmitTurnoverForm();
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
 
@@ -58,6 +49,10 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('connect.sid');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   describe('when the email field is left empty', () => {

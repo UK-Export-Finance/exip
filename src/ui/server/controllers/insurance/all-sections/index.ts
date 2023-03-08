@@ -9,6 +9,13 @@ import mapApplicationToFormFields from '../../../helpers/mappings/map-applicatio
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ALL_SECTIONS;
 
+/**
+ * get
+ * Render the All sections page
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} All sections page
+ */
 export const get = (req: Request, res: Response) => {
   const { application } = res.locals;
 

@@ -22,7 +22,7 @@ describe('Create an Application', () => {
     application = (await context.query.Application.createOne({
       data: {},
       query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id } policyAndExport { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id }',
+        'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id } policyAndExport { id } exporter { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id }',
     })) as Application;
   });
 

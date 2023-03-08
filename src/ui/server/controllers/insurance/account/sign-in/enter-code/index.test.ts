@@ -7,7 +7,7 @@ import generateValidationErrors from './validation';
 import securityCodeValidationErrors from './validation/rules/security-code';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockApplication, mockSession } from '../../../../../test-mocks';
 
 const {
   ACCOUNT: { SECURITY_CODE },
@@ -25,6 +25,8 @@ const {
 describe('controllers/insurance/account/sign-in/enter-code', () => {
   let req: Request;
   let res: Response;
+
+  const { referenceNumber } = mockApplication;
 
   beforeEach(() => {
     req = mockReq();
@@ -135,11 +137,18 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
 
     let verifyAccountSignInCodeSpy = jest.fn(() => Promise.resolve(verifyAccountSignInCodeResponse));
 
-    api.keystone.account.verifyAccountSignInCode = verifyAccountSignInCodeSpy;
+    const mockCreateApplicationResponse = { referenceNumber };
+
+    let createApplicationSpy = jest.fn(() => Promise.resolve(mockCreateApplicationResponse));
 
     const validBody = {
       [SECURITY_CODE]: '123456',
     };
+
+    beforeEach(() => {
+      api.keystone.account.verifyAccountSignInCode = verifyAccountSignInCodeSpy;
+      api.keystone.application.create = createApplicationSpy;
+    });
 
     describe('when there is no req.session.accountId', () => {
       beforeEach(() => {
@@ -202,6 +211,49 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
         expect(res.redirect).toHaveBeenCalledWith(DASHBOARD);
       });
 
+      describe('when there are eligibility answers in the session', () => {
+        beforeEach(() => {
+          req.session = {
+            ...req.session,
+            submittedData: {
+              ...req.session.submittedData,
+              insuranceEligibility: mockSession.submittedData.insuranceEligibility,
+            },
+          };
+        });
+
+        it('should call api.keystone.application.create', async () => {
+          await post(req, res);
+
+          expect(createApplicationSpy).toHaveBeenCalledTimes(1);
+
+          expect(createApplicationSpy).toHaveBeenCalledWith(req.session.submittedData.insuranceEligibility, verifyAccountSignInCodeResponse.accountId);
+        });
+
+        it(`should redirect to ${DASHBOARD}`, async () => {
+          await post(req, res);
+
+          const expected = `${DASHBOARD}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+
+        describe('when there is no application', () => {
+          beforeEach(() => {
+            // @ts-ignore
+            createApplicationSpy = jest.fn(() => Promise.resolve());
+
+            api.keystone.application.create = createApplicationSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
+        });
+      });
+
       describe('when the api.keystone.account.verifyAccountSignInCode does not return success=true', () => {
         beforeEach(() => {
           verifyAccountSignInCodeSpy = jest.fn(() =>
@@ -231,12 +283,27 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
     });
 
     describe('api error handling', () => {
-      describe('when there is an error', () => {
+      describe('when the verify account sign in code API call fails', () => {
         beforeEach(() => {
           req.body = validBody;
 
           verifyAccountSignInCodeSpy = jest.fn(() => Promise.reject());
           api.keystone.account.verifyAccountSignInCode = verifyAccountSignInCodeSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the create application API call fails', () => {
+        beforeEach(() => {
+          req.body = validBody;
+
+          createApplicationSpy = jest.fn(() => Promise.reject());
+          api.keystone.application.create = createApplicationSpy;
         });
 
         it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {

@@ -31,14 +31,10 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    task.link().click();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      task.link().click();
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
@@ -49,6 +45,10 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   it('renders core page elements', () => {

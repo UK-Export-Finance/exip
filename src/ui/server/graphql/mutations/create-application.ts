@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 const createApplicationMutation = gql`
-  mutation {
-    createApplication(data: {}) {
+  mutation ($data: ApplicationCreateInput!) {
+    createApplication(data: $data) {
       id
       referenceNumber
       eligibility {

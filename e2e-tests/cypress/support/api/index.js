@@ -2,6 +2,18 @@ import gql from 'graphql-tag';
 import apollo from './apollo';
 
 const queryStrings = {
+  createExporterAccount: () => gql`
+    mutation CreateAccount($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+      createAccount(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
+        success
+        id
+        firstName
+        lastName
+        email
+        verificationHash
+      }
+    }
+  `,
   getExporterByEmail: (email) => `
     {
       exporters(
@@ -39,6 +51,26 @@ const queryStrings = {
 };
 
 /**
+ * createExporterAccount
+ * Create an exporter account
+ * @param {String} First name
+ * @param {String} Last name
+ * @param {String} Email address
+ * @param {String} Password
+ * @returns {Object} Exporter account
+ */
+const createExporterAccount = (firstName, lastName, email, password) =>
+  apollo.query({
+    query: queryStrings.createExporterAccount(),
+    variables: {
+      firstName,
+      lastName,
+      email,
+      password,
+    },
+  }).then((response) => response.data.createAccount);
+
+/**
  * getExporterByEmail
  * Get's an exporter by email from the API
  * @param {String} Exporter email address
@@ -57,14 +89,14 @@ const getExporterByEmail = async (email) => {
     });
 
     if (!response.body || !response.body.data) {
-      throw new Error('Getting exporter by email', { response });
+      throw new Error('Getting exporter by email ', { response });
     }
 
     return response;
   } catch (err) {
     console.error(err);
 
-    throw new Error('Getting exporter by email', { err });
+    throw new Error('Getting exporter by email ', { err });
   }
 };
 
@@ -109,7 +141,7 @@ const deleteExportersById = async (id) => {
   } catch (err) {
     console.error(err);
 
-    throw new Error('Deleting exporters by ID', { err });
+    throw new Error('Deleting exporters by ID ', { err });
   }
 };
 
@@ -130,11 +162,12 @@ const addAndGetOTP = async (email) => {
   } catch (err) {
     console.error(err);
 
-    throw new Error('Adding and getting OTP', { err });
+    throw new Error('Adding and getting OTP ', { err });
   }
 };
 
 const api = {
+  createExporterAccount,
   getExporterByEmail,
   updateExporter,
   deleteExportersById,
