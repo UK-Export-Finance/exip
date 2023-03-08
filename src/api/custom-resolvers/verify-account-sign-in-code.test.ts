@@ -46,7 +46,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     // create an account
     exporter = (await context.query.Exporter.createOne({
       data: mockAccount,
-      query: 'id firstName lastName email salt hash verificationHash',
+      query: 'id firstName lastName email salt hash verificationHash sessionExpiry',
     })) as Account;
 
     // generate OTP and update the account
@@ -80,7 +80,6 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
 
   test('it should return JWT', async () => {
     expect(result.token).toEqual(mockJWT.token);
-    expect(result.expires).toEqual(mockJWT.expires);
     expect(result.sessionIdentifier).toEqual(mockJWT.sessionIdentifier);
   });
 
@@ -90,14 +89,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     expect(typeof updatedExporter.sessionExpiry).toEqual('object');
   });
 
-  it('should save a session expiry date to the account', () => {
-    const expiry = new Date(updatedExporter.sessionExpiry);
-
-    const expiryDay = expiry.getDay();
-    const expiryMonth = expiry.getMonth();
-    const expiryYear = expiry.getFullYear();
-    const expiryHours = expiry.getHours();
-
+  describe('session expiry date', () => {
     const now = new Date();
 
     const hours = 8;
@@ -108,10 +100,33 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     const expectedYear = expected.getFullYear();
     const expectedHours = expected.getHours();
 
-    expect(expiryDay).toEqual(expectedDay);
-    expect(expiryMonth).toEqual(expectedMonth);
-    expect(expiryYear).toEqual(expectedYear);
-    expect(expiryHours).toEqual(expectedHours);
+    it('should be returned', () => {
+      const expiry = new Date(String(result.expires));
+
+      const expiryDay = expiry.getDay();
+      const expiryMonth = expiry.getMonth();
+      const expiryYear = expiry.getFullYear();
+      const expiryHours = expiry.getHours();
+
+      expect(expiryDay).toEqual(expectedDay);
+      expect(expiryMonth).toEqual(expectedMonth);
+      expect(expiryYear).toEqual(expectedYear);
+      expect(expiryHours).toEqual(expectedHours);
+    });
+
+    it('should save a session expiry date to the account', () => {
+      const expiry = new Date(updatedExporter.sessionExpiry);
+
+      const expiryDay = expiry.getDay();
+      const expiryMonth = expiry.getMonth();
+      const expiryYear = expiry.getFullYear();
+      const expiryHours = expiry.getHours();
+
+      expect(expiryDay).toEqual(expectedDay);
+      expect(expiryMonth).toEqual(expectedMonth);
+      expect(expiryYear).toEqual(expectedYear);
+      expect(expiryHours).toEqual(expectedHours);
+    });
   });
 
   it("should nullify thhe account's OTP fields", () => {

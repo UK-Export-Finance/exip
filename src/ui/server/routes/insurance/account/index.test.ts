@@ -8,6 +8,7 @@ import { get as verifyEmailLinkExpiredGet } from '../../../controllers/insurance
 import { get as signInGet, post as signInPost } from '../../../controllers/insurance/account/sign-in';
 import { get as enterCodeGet, post as enterCodePost } from '../../../controllers/insurance/account/sign-in/enter-code';
 import { get as requestNewCodeGet, post as requestNewCodePost } from '../../../controllers/insurance/account/sign-in/request-new-code';
+import { get as signedOutGet } from '../../../controllers/insurance/account/signed-out';
 
 describe('routes/insurance/account', () => {
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('routes/insurance/account', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(8);
+    expect(get).toHaveBeenCalledTimes(9);
     expect(post).toHaveBeenCalledTimes(4);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS, yourDetailsGet);
@@ -39,5 +40,7 @@ describe('routes/insurance/account', () => {
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.REQUEST_NEW_CODE, requestNewCodeGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.REQUEST_NEW_CODE, requestNewCodePost);
+
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGNED_OUT, signedOutGet);
   });
 });

@@ -10,4 +10,5 @@ export const ACCOUNT_TEMPLATES = {
     ENTER_CODE: 'insurance/account/sign-in/enter-code.njk',
     REQUEST_NEW_CODE: 'insurance/account/sign-in/request-new-code.njk',
   },
+  SIGNED_OUT: 'insurance/account/signed-out.njk',
 };
