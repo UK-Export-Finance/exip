@@ -1,6 +1,6 @@
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
-import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
 
@@ -16,18 +16,22 @@ export const get = (req: Request, res: Response) => res.render(TEMPLATE, corePag
 
 export const post = async (req: Request, res: Response) => {
   try {
+    // if user is logged in, create application.
     const eligibilityAnswers = req.session.submittedData.insuranceEligibility;
 
-    const application = await api.keystone.application.create(eligibilityAnswers);
+    if (req.session.user && eligibilityAnswers) {
+      const application = await api.keystone.application.create(eligibilityAnswers, req.session.user.id);
 
-    if (!application) {
-      console.error('Error creating application');
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      if (!application) {
+        console.error('Error creating application');
+        return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      }
+
+      return res.redirect(INSURANCE_ROUTES.DASHBOARD);
     }
 
-    const { referenceNumber } = application;
-
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${INSURANCE_ROUTES.ALL_SECTIONS}`);
+    // otherwise, redirect to the next part of the flow - account creation/sign in
+    return res.redirect(INSURANCE_ROUTES.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE);
   } catch (err) {
     console.error('Error creating application ', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

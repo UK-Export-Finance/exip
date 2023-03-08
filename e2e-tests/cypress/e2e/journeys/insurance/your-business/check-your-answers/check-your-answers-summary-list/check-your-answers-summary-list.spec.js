@@ -1,5 +1,5 @@
 import partials from '../../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
+import { FIELD_IDS } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../support/insurance/check-your-business-summary-list';
 
 const {
@@ -45,21 +45,23 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 context('Insurance - Your business - Check your answers - Summary list - your business', () => {
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then(() => {
+      task.link().click();
 
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    task.link().click();
-
-    cy.completeAndSubmitCompanyDetails();
-    cy.completeAndSubmitNatureOfYourBusiness();
-    cy.completeAndSubmitTurnoverForm();
-    cy.completeAndSubmitBrokerForm();
+      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitNatureOfYourBusiness();
+      cy.completeAndSubmitTurnoverForm();
+      cy.completeAndSubmitBrokerForm();
+    });
   });
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   it(`should render a ${COMPANY_NUMBER} summary list row`, () => {

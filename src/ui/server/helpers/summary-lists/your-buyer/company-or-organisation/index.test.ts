@@ -51,7 +51,7 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
     });
   });
 
-  describe('generateContactDetailObject', () => {
+  describe('generateContactDetailsObject', () => {
     describe(`when ${FIRST_NAME} and ${LAST_NAME} are provided`, () => {
       it('should return a fully populated object', () => {
         const response = generateContactDetailsObject(mockApplicationBuyer);
@@ -70,6 +70,11 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
 
   describe('generateCompanyOrOrganisationFields', () => {
     const mockAnswers = mockApplicationBuyer;
+    mockAnswers.country = {
+      isoCode: 'GBR',
+      name: 'United Kingdom',
+    };
+
     const { referenceNumber } = mockApplication;
 
     const addressObject = generateAddressObject(mockAnswers);
@@ -121,6 +126,11 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
     ];
 
     it('should return fields and values from the submitted data/answers', () => {
+      mockAnswers.country = {
+        isoCode: 'GBR',
+        name: 'United Kingdom',
+      };
+
       const result = generateCompanyOrOrganisationFields(mockAnswers, referenceNumber);
 
       expect(result).toEqual(expectedBase);

@@ -1,6 +1,4 @@
-import {
-  submitButton, tempCreateAccountButton, noRadioInput,
-} from '../../../../pages/shared';
+import { submitButton, noRadioInput } from '../../../../pages/shared';
 import { ROUTES } from '../../../../../../constants';
 
 const {
@@ -13,8 +11,6 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
     cy.navigateToUrl(START);
 
     cy.submitInsuranceEligibilityAnswersHappyPath();
-
-    tempCreateAccountButton().click();
 
     const expected = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
 

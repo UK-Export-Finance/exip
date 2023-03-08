@@ -15,7 +15,6 @@ const noRadioInput = () => cy.get('[data-cy="no-input"]');
 const inlineErrorMessage = () => cy.get('[data-cy="inline-error-message"]');
 const submitButton = () => cy.get('[data-cy="submit-button"]');
 const saveAndBackButton = () => cy.get('[data-cy="save-and-back-button"]');
-const tempCreateAccountButton = () => cy.get('[data-cy="temp-create-an-account-button"]');
 
 export {
   backLink,
@@ -29,7 +28,6 @@ export {
   inlineErrorMessage,
   submitButton,
   saveAndBackButton,
-  tempCreateAccountButton,
   buyerCountryPage,
   cannotApplyPage,
   exporterLocationPage,

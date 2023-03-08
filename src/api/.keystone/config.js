@@ -62,6 +62,12 @@ var APPLICATION = {
     }
   }
 };
+var FIELD_IDS = {
+  ACCOUNT: {
+    EMAIL: "email",
+    VERIFICATION_HASH: "verificationHash"
+  }
+};
 var ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
@@ -220,6 +226,10 @@ var lists = {
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
       }),
       policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
+      exporter: (0, import_fields.relationship)({
+        ref: "Exporter",
+        many: false
+      }),
       exporterBusiness: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
       exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
       exporterBroker: (0, import_fields.relationship)({ ref: "ExporterBroker" }),
@@ -439,7 +449,11 @@ var lists = {
       }),
       otpExpiry: (0, import_fields.timestamp)(),
       sessionExpiry: (0, import_fields.timestamp)(),
-      sessionIdentifier: (0, import_fields.text)()
+      sessionIdentifier: (0, import_fields.text)(),
+      applications: (0, import_fields.relationship)({
+        ref: "Application",
+        many: true
+      })
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData }) => {
@@ -683,7 +697,7 @@ var session = (0, import_session.statelessSessions)({
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
 var import_axios = __toESM(require("axios"));
-var import_dotenv4 = __toESM(require("dotenv"));
+var import_dotenv3 = __toESM(require("dotenv"));
 
 // custom-resolvers/create-account.ts
 var import_crypto = __toESM(require("crypto"));
@@ -761,14 +775,17 @@ var import_date_fns2 = require("date-fns");
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying exporter email address");
-    const exporter = await get_account_by_field_default(context, "verificationHash", variables.token);
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.VERIFICATION_HASH, variables.token);
     if (exporter) {
+      const { id } = exporter;
       const now = new Date();
       const canActivateExporter = (0, import_date_fns2.isBefore)(now, exporter.verificationExpiry);
       if (!canActivateExporter) {
         console.info("Unable to verify exporter email - verification period has expired");
         return {
-          expired: true
+          expired: true,
+          success: false,
+          accountId: id
         };
       }
       await context.db.Exporter.updateOne({
@@ -781,6 +798,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       });
       return {
         success: true,
+        accountId: id,
         emailRecipient: exporter.email
       };
     }
@@ -924,7 +942,7 @@ var accountSignIn = async (root, variables, context) => {
   try {
     console.info("Signing in exporter account");
     const { email, password: password2 } = variables;
-    const exporter = await get_account_by_field_default(context, "email", email);
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.EMAIL, email);
     if (!exporter) {
       console.info("Unable to validate exporter account - no account found");
       return { success: false };
@@ -987,9 +1005,7 @@ var account_sign_in_new_code_default = accountSignInSendNewCode;
 var import_date_fns3 = require("date-fns");
 
 // helpers/is-valid-otp.ts
-var import_dotenv3 = __toESM(require("dotenv"));
 var import_crypto4 = __toESM(require("crypto"));
-import_dotenv3.default.config();
 var { ENCRYPTION: ENCRYPTION4 } = ACCOUNT;
 var {
   STRING_TYPE: STRING_TYPE4,
@@ -1113,7 +1129,7 @@ var addAndGetOTP = async (root, variables, context) => {
   try {
     console.info("Adding OTP to exporter account");
     const { email } = variables;
-    const exporter = await get_account_by_field_default(context, "email", email);
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.EMAIL, email);
     if (!exporter) {
       console.info("Unable to generate and add OTP to exporter account - no account found");
       return { success: false };
@@ -1184,7 +1200,7 @@ var mapSicCodes = (company, sicCodes) => {
 };
 
 // custom-schema.ts
-import_dotenv4.default.config();
+import_dotenv3.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
@@ -1205,12 +1221,13 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         password: String
       }
 
-      type CreateAccountReaponse {
+      type CreateAccountResponse {
         success: Boolean
         id: String
         firstName: String
         lastName: String
         email: String
+        verificationHash: String
       }
 
       # fields from registered_office_address object
@@ -1311,6 +1328,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         securityCode: String!
       }
 
+      type VerifyAccountEmailAddressResponse {
+        success: Boolean!
+        accountId: String!
+      }
+
       type Mutation {
         """ create an account """
         createAccount(
@@ -1318,12 +1340,12 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           lastName: String!
           email: String!
           password: String!
-        ): CreateAccountReaponse
+        ): CreateAccountResponse
 
         """ verify an account's email address """
         verifyAccountEmailAddress(
           token: String!
-        ): EmailResponse
+        ): VerifyAccountEmailAddressResponse
 
         """ send confirm email address email """
         sendEmailConfirmEmailAddress(

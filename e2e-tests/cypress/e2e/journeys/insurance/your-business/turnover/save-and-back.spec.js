@@ -14,7 +14,6 @@ const {
 
 const {
   ROOT,
-  START,
   ALL_SECTIONS,
   EXPORTER_BUSINESS: {
     TURNOVER,
@@ -30,17 +29,13 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
   let url;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      task.link().click();
 
-    task.link().click();
-
-    cy.completeAndSubmitCompanyDetails();
-    cy.completeAndSubmitNatureOfYourBusiness();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitNatureOfYourBusiness();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
 
@@ -51,6 +46,10 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   describe('When no fields are provided', () => {

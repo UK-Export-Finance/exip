@@ -1,19 +1,27 @@
 import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
-import { TEMPLATES } from '../../../constants';
+import { ROUTES, TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import { Request, Response } from '../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
+import api from '../../../api';
+import { mockReq, mockRes, mockApplications } from '../../../test-mocks';
+
+const {
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
+  PROBLEM_WITH_SERVICE,
+} = ROUTES;
 
 describe('controllers/insurance/dashboard', () => {
   let req: Request;
   let res: Response;
 
+  let getApplicationsSpy = jest.fn(() => Promise.resolve(mockApplications));
+
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
+    api.keystone.applications.getAll = getApplicationsSpy;
   });
 
   describe('TEMPLATE', () => {
@@ -23,17 +31,43 @@ describe('controllers/insurance/dashboard', () => {
   });
 
   describe('get', () => {
-    it('should render template', () => {
-      get(req, res);
+    it('should call api.keystone.applications.getAll', async () => {
+      await get(req, res);
+
+      expect(getApplicationsSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should render template', async () => {
+      await get(req, res);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DASHBOARD,
           BACK_LINK: req.headers.referer,
         }),
+        applications: mockApplications,
+        ROUTES: {
+          INSURANCE_ROOT,
+          ALL_SECTIONS,
+        },
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+    });
+
+    describe('api error handling', () => {
+      describe('when there is an error', () => {
+        beforeAll(() => {
+          getApplicationsSpy = jest.fn(() => Promise.reject());
+          api.keystone.applications.getAll = getApplicationsSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
     });
   });
 });

@@ -30,19 +30,12 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Company or organisation page - form validation - first and last name', () => {
-  let referenceNumber;
-
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
-
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    task.link().click();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+      task.link().click();
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
+
       cy.url().should('eq', expected);
     });
   });
@@ -50,6 +43,10 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   describe(`${FIRST_NAME_FIELD_ID}`, () => {

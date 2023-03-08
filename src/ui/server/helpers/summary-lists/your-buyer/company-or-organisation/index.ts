@@ -57,7 +57,7 @@ export const generateContactDetailsObject = (answers: ApplicationBuyer) => {
  */
 const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenceNumber: number) => {
   const addressObject = generateAddressObject(answers);
-  const contactDetailsObject = generateContactDetailObject(answers);
+  const contactDetailsObject = generateContactDetailsObject(answers);
 
   const fields = [
     fieldGroupItem({

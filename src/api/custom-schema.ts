@@ -39,12 +39,13 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         password: String
       }
 
-      type CreateAccountReaponse {
+      type CreateAccountResponse {
         success: Boolean
         id: String
         firstName: String
         lastName: String
         email: String
+        verificationHash: String
       }
 
       # fields from registered_office_address object
@@ -145,6 +146,11 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         securityCode: String!
       }
 
+      type VerifyAccountEmailAddressResponse {
+        success: Boolean!
+        accountId: String!
+      }
+
       type Mutation {
         """ create an account """
         createAccount(
@@ -152,12 +158,12 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           lastName: String!
           email: String!
           password: String!
-        ): CreateAccountReaponse
+        ): CreateAccountResponse
 
         """ verify an account's email address """
         verifyAccountEmailAddress(
           token: String!
-        ): EmailResponse
+        ): VerifyAccountEmailAddressResponse
 
         """ send confirm email address email """
         sendEmailConfirmEmailAddress(

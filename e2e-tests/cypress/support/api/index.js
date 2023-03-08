@@ -2,6 +2,18 @@ import gql from 'graphql-tag';
 import apollo from './apollo';
 
 const queryStrings = {
+  createExporterAccount: () => gql`
+    mutation CreateAccount($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+      createAccount(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
+        success
+        id
+        firstName
+        lastName
+        email
+        verificationHash
+      }
+    }
+  `,
   getExporterByEmail: (email) => `
     {
       exporters(
@@ -13,6 +25,14 @@ const queryStrings = {
         verificationHash
       }
     }`,
+  updateExporter: () => gql`
+    mutation UpdateExporter($where: ExporterWhereUniqueInput!, $data: ExporterUpdateInput!)  {
+      updateExporter(where: $where, data: $data) {
+        id
+        verificationHash
+      }
+    }
+  `,
   deleteExportersById: () => gql`
     mutation DeleteExporters($where: [ExporterWhereUniqueInput!]!)  {
       deleteExporters(where: $where) {
@@ -29,6 +49,26 @@ const queryStrings = {
     }
   `,
 };
+
+/**
+ * createExporterAccount
+ * Create an exporter account
+ * @param {String} First name
+ * @param {String} Last name
+ * @param {String} Email address
+ * @param {String} Password
+ * @returns {Object} Exporter account
+ */
+const createExporterAccount = (firstName, lastName, email, password) =>
+  apollo.query({
+    query: queryStrings.createExporterAccount(),
+    variables: {
+      firstName,
+      lastName,
+      email,
+      password,
+    },
+  }).then((response) => response.data.createAccount);
 
 /**
  * getExporterByEmail
@@ -49,14 +89,38 @@ const getExporterByEmail = async (email) => {
     });
 
     if (!response.body || !response.body.data) {
-      throw new Error('Getting exporter by email', { response });
+      throw new Error('Getting exporter by email ', { response });
     }
 
     return response;
   } catch (err) {
     console.error(err);
 
-    throw new Error('Getting exporter by email', { err });
+    throw new Error('Getting exporter by email ', { err });
+  }
+};
+
+/**
+ * updateExporter
+ * Update an exporter
+ * @param {String} Account ID
+ * @returns {String} Account ID
+ */
+const updateExporter = async (id, updateObj) => {
+  try {
+    const responseBody = await apollo.query({
+      query: queryStrings.updateExporter(),
+      variables: {
+        where: { id },
+        data: updateObj,
+      },
+    }).then((response) => response.data.updateExporter);
+
+    return responseBody;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Updating exporter', { err });
   }
 };
 
@@ -77,7 +141,7 @@ const deleteExportersById = async (id) => {
   } catch (err) {
     console.error(err);
 
-    throw new Error('Deleting exporters by ID', { err });
+    throw new Error('Deleting exporters by ID ', { err });
   }
 };
 
@@ -98,12 +162,14 @@ const addAndGetOTP = async (email) => {
   } catch (err) {
     console.error(err);
 
-    throw new Error('Adding and getting OTP', { err });
+    throw new Error('Adding and getting OTP ', { err });
   }
 };
 
 const api = {
+  createExporterAccount,
   getExporterByEmail,
+  updateExporter,
   deleteExportersById,
   addAndGetOTP,
 };

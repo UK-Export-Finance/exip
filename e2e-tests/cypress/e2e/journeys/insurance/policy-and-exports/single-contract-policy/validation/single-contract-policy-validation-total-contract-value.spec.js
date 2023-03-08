@@ -9,7 +9,6 @@ const { taskList } = partials.insurancePartials;
 const {
   INSURANCE: {
     ROOT: INSURANCE_ROOT,
-    START,
     POLICY_AND_EXPORTS: {
       SINGLE_CONTRACT_POLICY,
       ABOUT_GOODS_OR_SERVICES,
@@ -41,16 +40,13 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
       cy.url().should('eq', expectedUrl);
@@ -60,6 +56,10 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   const field = singleContractPolicyPage[TOTAL_CONTRACT_VALUE];

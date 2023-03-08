@@ -6,8 +6,8 @@ import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
 
 const { taskList } = partials.insurancePartials;
 
-const multipleePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const multipleePolicyField = typeOfPolicyPage[multipleePolicyFieldId].multiple;
+const multiplePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
+const multiplePolicyField = typeOfPolicyPage[multiplePolicyFieldId].multiple;
 
 const { INSURANCE } = ROUTES;
 
@@ -30,20 +30,13 @@ const {
 } = ERROR_MESSAGES;
 
 context('Insurance - Policy and exports - Multiple contract policy page - form validation - credit period with buyer', () => {
-  let referenceNumber;
-
   before(() => {
-    cy.navigateToUrl(INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      multiplePolicyField.input().click();
+      submitButton().click();
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
-
-    multipleePolicyField.input().click();
-    submitButton().click();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 
       cy.url().should('eq', expectedUrl);
@@ -53,6 +46,10 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   const field = multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];

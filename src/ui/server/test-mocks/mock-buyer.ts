@@ -14,7 +14,7 @@ const mockBuyer = {
   contactFirstName: 'Bob',
   contactLastName: 'Smith',
   contactPosition: 'CEO',
-  contactEmail: process.env.GOV_NOTIFY_EMAIL_RECIPIENT,
+  contactEmail: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
   canContactBuyer: true,
   exporterIsConnectedWithBuyer: true,
   exporterHasTradedWithBuyer: true,

@@ -137,7 +137,7 @@ const application = {
     [TOWN]: 'town',
     [COUNTY]: 'county',
     [POSTCODE]: 'SW1A 2HQ',
-    [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT'),
+    [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
   },
   BUYER: {
     [COMPANY_OR_ORGANISATION_NAME]: 'Test name',
@@ -148,7 +148,7 @@ const application = {
     [FIRST_NAME]: 'Bob',
     [LAST_NAME]: 'Smith',
     [POSITION]: 'CEO',
-    [BUYER_EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT'),
+    [BUYER_EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
     [CAN_CONTACT_BUYER]: 'Yes',
     [CONNECTED_WITH_BUYER]: 'Yes',
     [TRADED_WITH_BUYER]: 'Yes',

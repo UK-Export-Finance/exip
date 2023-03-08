@@ -1,5 +1,5 @@
 import {
-  submitButton, tempCreateAccountButton, inlineErrorMessage, yesRadioInput, yesRadio, yesNoRadioHint, noRadio,
+  submitButton, inlineErrorMessage, yesRadioInput, yesRadio, yesNoRadioHint, noRadio,
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import {
@@ -27,8 +27,6 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
     cy.navigateToUrl(START);
 
     cy.submitInsuranceEligibilityAnswersHappyPath();
-
-    tempCreateAccountButton().click();
 
     const expected = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
 
