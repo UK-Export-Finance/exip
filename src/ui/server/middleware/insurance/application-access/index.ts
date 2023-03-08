@@ -28,12 +28,12 @@ export const applicationAccessMiddleware = async (req: Request, res: Response, n
    * allow the user to view/access the application.
    * Otherwise, redirect to the "no access" page.
    */
-  if (req.session.accountId && res.locals.application) {
-    const { accountId } = req.session;
+  if (req.session.user && res.locals.application) {
+    const { id } = req.session.user;
 
     const { exporter } = res.locals.application;
 
-    if (exporter.id === accountId) {
+    if (exporter.id === id) {
       return next();
     }
 

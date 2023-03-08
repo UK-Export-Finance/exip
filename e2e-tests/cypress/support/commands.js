@@ -53,6 +53,8 @@ Cypress.Commands.add('accountAddAndGetOTP', require('./insurance/account/add-and
 
 Cypress.Commands.add('completeSignInAndGoToApplication', require('./insurance/account/complete-sign-in-and-go-to-application'));
 
+Cypress.Commands.add('signInAndGoToUrl', require('./insurance/account/sign-in-and-go-to-url'));
+
 Cypress.Commands.add('completeAndSubmitPolicyTypeForm', require('./insurance/complete-and-submit-policy-type-form'));
 Cypress.Commands.add('completeAndSubmitSingleContractPolicyForm', require('./insurance/complete-and-submit-single-contract-policy-form'));
 Cypress.Commands.add('completeAndSubmitMultipleContractPolicyForm', require('./insurance/complete-and-submit-multiple-contract-policy-form'));

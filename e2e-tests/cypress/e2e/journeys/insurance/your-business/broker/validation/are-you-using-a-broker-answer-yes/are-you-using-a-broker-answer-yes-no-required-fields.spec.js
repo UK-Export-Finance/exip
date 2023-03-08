@@ -1,8 +1,8 @@
-import { broker } from '../../../../../pages/your-business';
-import partials from '../../../../../partials';
-import { ROUTES } from '../../../../../../../constants';
-import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/exporter-business';
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import { broker } from '../../../../../../pages/your-business';
+import partials from '../../../../../../partials';
+import { ROUTES } from '../../../../../../../../constants';
+import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/exporter-business';
+import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 
 const {
   BROKER: {
@@ -16,10 +16,7 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    BROKER,
-    CHECK_YOUR_ANSWERS,
-  },
+  EXPORTER_BUSINESS: { BROKER },
 } = ROUTES.INSURANCE;
 
 const { taskList } = partials.insurancePartials;
@@ -29,8 +26,6 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 context('Insurance - Your business - Broker Page - As an Exporter I want to confirm that I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my export insurance', () => {
-  let checkYourAnswersUrl;
-
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       task.link().click();
@@ -40,7 +35,6 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       cy.completeAndSubmitTurnoverForm();
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
-      checkYourAnswersUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.url().should('eq', url);
     });
@@ -75,15 +69,6 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
       // EMAIL error check
       cy.submitAndAssertFieldErrors(broker[EMAIL], null, 3, expectedErrorsCount, BROKER_ERRORS[EMAIL].INCORRECT_FORMAT);
-    });
-  });
-
-  describe('when the yes radio is selected and all required fields are entered', () => {
-    it('should not display validation errors', () => {
-      cy.completeAndSubmitBrokerForm();
-
-      partials.errorSummaryListItems().should('have.length', 0);
-      cy.url().should('eq', checkYourAnswersUrl);
     });
   });
 });

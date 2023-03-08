@@ -59,11 +59,6 @@ context('Insurance - no access to application page', () => {
           // assert we are on the dashboard
           const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
           cy.url().should('eq', expectedUrl);
-
-          // try to access the application created by the previous user
-          const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-          cy.navigateToUrl(url);
         });
       });
     });
@@ -82,22 +77,30 @@ context('Insurance - no access to application page', () => {
     cy.deleteAccount(secondAccountEmail);
   });
 
-  it(`should redirect to ${NO_ACCESS_TO_APPLICATION}`, () => {
-    const expectedUrl = `${Cypress.config('baseUrl')}${NO_ACCESS_TO_APPLICATION}`;
+  describe('when trying to access an application created by the previous user', () => {
+    beforeEach(() => {
+      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-    cy.url().should('eq', expectedUrl);
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: NO_ACCESS_TO_APPLICATION,
-      assertSubmitButton: false,
-      assertBackLink: false,
+      cy.navigateToUrl(url);
     });
-  });
 
-  it('renders `check URL` text', () => {
-    cy.checkText(noAccessToApplicationPage.checkUrl(), CONTENT_STRINGS.CHECK_URL);
+    it(`should redirect to ${NO_ACCESS_TO_APPLICATION}`, () => {
+      const expectedUrl = `${Cypress.config('baseUrl')}${NO_ACCESS_TO_APPLICATION}`;
+
+      cy.url().should('eq', expectedUrl);
+    });
+
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: NO_ACCESS_TO_APPLICATION,
+        assertSubmitButton: false,
+        assertBackLink: false,
+      });
+    });
+
+    it('renders `check URL` text', () => {
+      cy.checkText(noAccessToApplicationPage.checkUrl(), CONTENT_STRINGS.CHECK_URL);
+    });
   });
 });

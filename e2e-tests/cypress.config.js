@@ -21,6 +21,7 @@ const cypressConfig = defineConfig({
     baseUrl: 'http://localhost:5000',
     apiUrl: 'http://localhost:5001/api/graphql',
     specPattern: 'cypress/e2e/**/*.spec.js',
+    experimentalSessionAndOrigin: true,
   },
 });
 
