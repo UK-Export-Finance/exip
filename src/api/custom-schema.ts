@@ -146,6 +146,11 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         securityCode: String!
       }
 
+      type VerifyAccountEmailAddressResponse {
+        success: Boolean!
+        accountId: String!
+      }
+
       type Mutation {
         """ create an account """
         createAccount(
@@ -158,7 +163,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         """ verify an account's email address """
         verifyAccountEmailAddress(
           token: String!
-        ): EmailResponse
+        ): VerifyAccountEmailAddressResponse
 
         """ send confirm email address email """
         sendEmailConfirmEmailAddress(

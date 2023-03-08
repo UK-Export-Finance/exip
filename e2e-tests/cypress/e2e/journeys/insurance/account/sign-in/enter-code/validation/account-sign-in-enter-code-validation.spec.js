@@ -73,7 +73,9 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
     });
 
     describe('when submitting a valid security code', () => {
-      it(`should redirect to ${DASHBOARD}`, () => {
+      let validSecurityCode;
+
+      before(async () => {
         /**
          * Create and get an OTP for the exporter's account directly from the API,
          * so that we can assert enter a valid security code and continue the journey.
@@ -83,17 +85,20 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
          * or have email inbox testing capabilities which can be risky/flaky.
          * This approach practically mimics "get my security code from my email inbox".
          */
-        const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
 
-        api.addAndGetOTP(exporterEmail).then((validSecurityCode) => {
-          cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), validSecurityCode);
+        const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-          submitButton().click();
+        validSecurityCode = await api.addAndGetOTP(exporterEmail);
+      });
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+      it(`should redirect to ${DASHBOARD}`, () => {
+        cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), validSecurityCode);
 
-          cy.url().should('eq', expectedUrl);
-        });
+        submitButton().click();
+
+        const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+
+        cy.url().should('eq', expectedUrl);
       });
     });
   });
