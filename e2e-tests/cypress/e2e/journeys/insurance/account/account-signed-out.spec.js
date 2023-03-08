@@ -13,7 +13,7 @@ const {
   },
 } = ROUTES;
 
-context('Insurance - Account - Signed out -  As an Exporter I want the system to securely manage my UKEF digital service sessions, So that my UKEF digital service account is securely managed and not compromised, () => {
+context('Insurance - Account - Signed out -  As an Exporter I want the system to securely manage my UKEF digital service sessions, So that my UKEF digital service account is securely managed and not compromised', () => {
   before(() => {
     cy.navigateToUrl(START);
 
