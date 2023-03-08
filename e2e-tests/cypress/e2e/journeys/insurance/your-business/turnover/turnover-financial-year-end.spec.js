@@ -66,24 +66,24 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      task.link().click();
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
 
       cy.navigateToUrl(url);
-
-      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   it(`should not display ${FINANCIAL_YEAR_END_DATE} section`, () => {
