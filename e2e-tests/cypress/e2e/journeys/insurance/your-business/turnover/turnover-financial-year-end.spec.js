@@ -12,7 +12,6 @@ const {
 
 const {
   ROOT,
-  START,
   EXPORTER_BUSINESS: {
     TURNOVER,
   },
