@@ -5,7 +5,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
 import { ApplicationExporterCompany, SummaryListItemData } from '../../../../../types';
-import { generateAddressHTML } from '../../company-house-summary-list';
+import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import mapSicCodes from '../map-sic-codes';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
@@ -54,7 +54,7 @@ const generateYourCompanyFields = (answers: ApplicationExporterCompany, referenc
         data: answers,
         renderChangeLink: false,
       },
-      generateAddressHTML(answers[COMPANY_ADDRESS]),
+      generateMultipleFieldHtml(answers[COMPANY_ADDRESS]),
     ),
     fieldGroupItem(
       {

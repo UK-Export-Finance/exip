@@ -17,7 +17,7 @@ const {
 
 const { INSURANCE_ROOT, YOUR_BUYER: YOUR_BUYER_ROUTES } = ROUTES.INSURANCE;
 
-const { WORKING_WITH_BUYER, COMPANY_OR_ORGANISATION_SAVE_AND_BACK } = YOUR_BUYER_ROUTES;
+const { WORKING_WITH_BUYER, COMPANY_OR_ORGANISATION_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, COMPANY_OR_ORGANISATION_CHANGE } = YOUR_BUYER_ROUTES;
 
 const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER } = COMPANY_OR_ORGANISATION;
 
@@ -191,6 +191,20 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
         expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
 
         expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(req.body, mockApplication);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...mockCompanyOrOrganisation } = mockBuyer;
+          req.body = mockCompanyOrOrganisation;
+
+          req.originalUrl = COMPANY_OR_ORGANISATION_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

@@ -139,12 +139,13 @@ describe('server/helpers/task-list/prepare-application', () => {
         dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
       };
 
+      const { REGISTRATION_NUMBER, WEBSITE: BUYER_WEBSITE, ...COMPANY_OR_ORGANISATION_FIELDS } = FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION;
       const YOUR_BUYER = {
         href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${YOUR_BUYER_ROUTES.COMPANY_OR_ORGANISATION}`,
         title: PREPARE_APPLICATION.TASKS.BUYER,
         id: TASK_IDS.PREPARE_APPLICATION.BUYER,
         fields: Object.values({
-          ...FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION,
+          ...COMPANY_OR_ORGANISATION_FIELDS,
           ...FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER,
         }),
         dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
