@@ -28,7 +28,7 @@ const generatePassword = (password: string) => {
 export const mockAccount = {
   firstName: 'first',
   lastName: 'last',
-  email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT,
+  email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
   ...generatePassword(String(process.env.MOCK_ACCOUNT_PASSWORD)),
   isVerified: true,
   verificationHash: 'mockVerificationHash',

@@ -2,7 +2,7 @@ import { get } from '.';
 import { ROUTES } from '../../../../../constants';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes } from '../../../../../test-mocks';
+import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
 
 const {
   INSURANCE: {
@@ -16,6 +16,12 @@ describe('controllers/insurance/account/create/verify-email', () => {
   let res: Response;
 
   let verifyEmailAddressSpy;
+
+  let mockVerifyEmailAddressResponse = {
+    success: true,
+    accountId: mockAccount.id,
+  };
+
   const mockToken = 'mockToken';
 
   beforeEach(() => {
@@ -25,10 +31,10 @@ describe('controllers/insurance/account/create/verify-email', () => {
 
   describe('get', () => {
     describe('when req.query.token exists', () => {
-      describe('when api.keystone.account.verifyEmailAddress returns success = true', () => {
+      describe('when api.keystone.account.verifyEmailAddress returns success=true', () => {
         beforeEach(() => {
           req.query.token = mockToken;
-          verifyEmailAddressSpy = jest.fn(() => Promise.resolve({ success: true }));
+          verifyEmailAddressSpy = jest.fn(() => Promise.resolve(mockVerifyEmailAddressResponse));
 
           api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
         });
@@ -46,18 +52,25 @@ describe('controllers/insurance/account/create/verify-email', () => {
         });
       });
 
-      describe('when api.keystone.account.verifyEmailAddress does NOT return success = true', () => {
+      describe('when api.keystone.account.verifyEmailAddress does NOT return success=true', () => {
         beforeEach(() => {
+          mockVerifyEmailAddressResponse = {
+            success: false,
+            accountId: mockAccount.id,
+          };
+
           req.query.token = mockToken;
-          verifyEmailAddressSpy = jest.fn(() => Promise.resolve({}));
+
+          verifyEmailAddressSpy = jest.fn(() => Promise.resolve(mockVerifyEmailAddressResponse));
 
           api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
         });
 
-        it(`should redirect to ${CREATE.VERIFY_EMAIL_LINK_EXPIRED}`, async () => {
+        it(`should redirect to ${CREATE.VERIFY_EMAIL_LINK_EXPIRED} with ID param`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(CREATE.VERIFY_EMAIL_LINK_EXPIRED);
+          const expected = `${CREATE.VERIFY_EMAIL_LINK_EXPIRED}?id=${mockVerifyEmailAddressResponse.accountId}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
     });

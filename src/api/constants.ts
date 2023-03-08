@@ -26,6 +26,13 @@ export const APPLICATION = {
   },
 };
 
+export const FIELD_IDS = {
+  ACCOUNT: {
+    EMAIL: 'email',
+    VERIFICATION_HASH: 'verificationHash',
+  },
+};
+
 export const ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {

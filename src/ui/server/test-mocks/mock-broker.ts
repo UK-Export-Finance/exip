@@ -10,7 +10,7 @@ const mockBroker = {
   town: 'Test',
   county: 'Test',
   postcode: 'SW1A 2HQ',
-  email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT,
+  email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
 };
 
 export default mockBroker;

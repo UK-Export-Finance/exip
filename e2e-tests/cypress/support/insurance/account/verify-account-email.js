@@ -4,7 +4,7 @@ const {
   ACCOUNT: { CREATE: { VERIFY_EMAIL }, SIGN_IN },
 } = ROUTES;
 
-const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
+const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
 /**
  * verifyAccountEmail
@@ -21,7 +21,7 @@ const verifyAccountEmail = () => {
 
       const { verificationHash } = firstExporter;
 
-      // mimic "clicking email verification link"
+      // mimic clicking email verification link
       cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`);
 
       // User should be verified and therefore redirected to the "sign in" page.
