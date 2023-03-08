@@ -26,6 +26,7 @@ const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.I
 const {
   COMPANY_HOUSE_SEARCH,
   COMPANY_DETAILS: COMPANY_DETAILS_ROUTE,
+  COMPANIES_HOUSE_DOWN,
   NO_COMPANIES_HOUSE_NUMBER,
   COMPANY_DETAILS_SAVE_AND_BACK,
   COMPANY_DETAILS_CHANGE,
@@ -282,13 +283,9 @@ describe('controllers/insurance/business/companies-details', () => {
         });
       });
 
-      it('should render template with validation errors if error with companies house api', async () => {
+      it('should redirect to companies house error page if error with companies house api', async () => {
         req.body = {
           companiesHouseNumber: '123456',
-        };
-
-        const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
         };
 
         const getCompaniesHouseResponse = jest.fn(() => Promise.resolve({ apiError: true }));
@@ -296,16 +293,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await postCompaniesHouseSearch(req, res);
 
-        const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].TECHNICAL_ISSUES;
-        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-            BACK_LINK: req.headers.referer,
-          }),
-          ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
-          validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-          submittedValues,
-        });
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_DOWN}`);
       });
     });
 
@@ -337,8 +325,8 @@ describe('controllers/insurance/business/companies-details', () => {
       });
     });
 
-    describe('when there are errors caught on the post request', () => {
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+    describe('when there are errors caught on the companies house api', () => {
+      it(`should redirect to ${COMPANIES_HOUSE_DOWN}`, async () => {
         req.body = {
           companiesHouseNumber: '123456',
         };
@@ -348,7 +336,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await postCompaniesHouseSearch(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_DOWN}`);
       });
     });
 
