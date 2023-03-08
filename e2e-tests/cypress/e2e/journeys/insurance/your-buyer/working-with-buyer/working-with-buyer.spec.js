@@ -28,16 +28,12 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
   let checkYourAnswersUrl;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      task.link().click();
 
-    task.link().click();
-
-    cy.completeAndSubmitCompanyOrOrganisationForm();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitCompanyOrOrganisationForm();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
       checkYourAnswersUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -49,6 +45,10 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   it('renders core page elements', () => {

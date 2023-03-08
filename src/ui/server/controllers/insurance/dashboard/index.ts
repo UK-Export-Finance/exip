@@ -11,6 +11,13 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
+/**
+ * get
+ * Render the Dashboard page
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} Dashboard page
+ */
 export const get = async (req: Request, res: Response) => {
   try {
     const applications = await api.keystone.applications.getAll();
