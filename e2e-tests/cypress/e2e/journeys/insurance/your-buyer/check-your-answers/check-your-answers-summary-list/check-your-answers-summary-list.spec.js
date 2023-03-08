@@ -1,5 +1,5 @@
 import partials from '../../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
+import { FIELD_IDS } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../support/insurance/check-your-buyer-summary-list';
 
 const {
@@ -27,19 +27,21 @@ const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your buyer - Check your answers - Summary list - your buyer', () => {
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then(() => {
+      task.link().click();
 
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    task.link().click();
-
-    cy.completeAndSubmitCompanyOrOrganisationForm();
-    cy.completeAndSubmitWorkingWithBuyerForm();
+      cy.completeAndSubmitCompanyOrOrganisationForm();
+      cy.completeAndSubmitWorkingWithBuyerForm();
+    });
   });
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   it(`should render a ${NAME} summary list row`, () => {

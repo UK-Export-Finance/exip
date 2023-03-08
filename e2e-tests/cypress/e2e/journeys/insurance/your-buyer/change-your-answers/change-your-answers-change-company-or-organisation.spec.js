@@ -29,7 +29,6 @@ const {
     COMPANY_OR_ORGANISATION_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
-  START,
 } = ROUTES.INSURANCE;
 
 const { taskList } = partials.insurancePartials;
@@ -42,23 +41,23 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      task.link().click();
 
-    task.link().click();
-
-    cy.completeAndSubmitCompanyOrOrganisationForm();
-    cy.completeAndSubmitWorkingWithBuyerForm();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitCompanyOrOrganisationForm();
+      cy.completeAndSubmitWorkingWithBuyerForm();
     });
   });
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   describe(NAME, () => {
