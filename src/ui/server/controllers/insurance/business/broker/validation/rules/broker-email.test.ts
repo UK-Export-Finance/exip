@@ -53,7 +53,7 @@ describe('controllers/insurance/business/broker/validation/rules/broker-email', 
     describe('if email is valid', () => {
       it('should return the provided errors object', () => {
         mockBody[USING_BROKER] = 'Yes';
-        mockBody[EMAIL] = process.env.GOV_NOTIFY_EMAIL_RECIPIENT;
+        mockBody[EMAIL] = process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1;
 
         const response = brokerEmail(mockBody, mockErrors);
 

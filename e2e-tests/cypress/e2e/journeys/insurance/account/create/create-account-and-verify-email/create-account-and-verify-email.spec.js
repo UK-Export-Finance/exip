@@ -30,7 +30,7 @@ context('Insurance - Account - Create - I want the system to generate account ve
     cy.deleteAccount();
   });
 
-  describe(`when navigating to the ${VERIFY_EMAIL} URL with a valid token query parameter`, () => {
+  describe(`when navigating to ${VERIFY_EMAIL} with a valid token query parameter`, () => {
     it(`should validate the exporter, redirect to ${SIGN_IN.ROOT} and display a success banner`, () => {
       cy.verifyAccountEmail();
 

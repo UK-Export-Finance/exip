@@ -100,6 +100,13 @@ interface VerifyEmailAddressVariables {
   token: string;
 }
 
+interface VerifyEmailAddressResponse {
+  success: boolean;
+  accountId?: string;
+  expired?: boolean;
+  emailRecipient?: string;
+}
+
 interface SendEmailConfirmEmailAddressVariables {
   exporterId: string;
 }
@@ -170,6 +177,7 @@ export {
   SicCodes,
   SendEmailConfirmEmailAddressVariables,
   VerifyEmailAddressVariables,
+  VerifyEmailAddressResponse,
   VerifyAccountSignInCodeVariables,
   VerifyAccountSignInCodeResponse,
   VerifyAccountSesssionVariables,

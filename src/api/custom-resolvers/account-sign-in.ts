@@ -1,4 +1,5 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
+import { FIELD_IDS } from '../constants';
 import getAccountByField from '../helpers/get-account-by-field';
 import isValidAccountPassword from '../helpers/is-valid-account-password';
 import generateOTPAndUpdateAccount from '../helpers/generate-otp-and-update-account';
@@ -22,7 +23,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     const { email, password } = variables;
 
     // Get the account the email is associated with.
-    const exporter = await getAccountByField(context, 'email', email);
+    const exporter = await getAccountByField(context, FIELD_IDS.ACCOUNT.EMAIL, email);
 
     if (!exporter) {
       console.info('Unable to validate exporter account - no account found');

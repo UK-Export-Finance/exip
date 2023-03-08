@@ -39,7 +39,7 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
        * Get the exporter ID directly from the API,
        * so that we can assert that `request a new link` has the correct ID.
        */
-      const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT');
+      const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
       api.getExporterByEmail(exporterEmail).then((response) => {
         const { data } = response.body;
