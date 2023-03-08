@@ -87,6 +87,9 @@ const ACCOUNT = {
       },
     },
   },
+  SIGNED_OUT: {
+    PAGE_TITLE: 'For your security, we signed you out',
+  },
 };
 
 export default ACCOUNT;

@@ -1112,7 +1112,8 @@ var verifyAccountSignInCode = async (root, variables, context) => {
         accountId: exporter.id,
         lastName: exporter.lastName,
         firstName: exporter.firstName,
-        ...jwt
+        ...jwt,
+        expires: accountUpdate.sessionExpiry
       };
     }
     return {
@@ -1321,6 +1322,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         lastName: String
         token: String
         sessionIdentifier: String
+        expires: DateTime
         success: Boolean!
       }
 

@@ -22,8 +22,11 @@ const RESET_PASSWORD = {
   ROOT: `${INSURANCE_ROOT}${RESET_PASSWORD_ROOT}`,
 };
 
+const SIGNED_OUT = `${INSURANCE_ROOT}/signed-out`;
+
 export const ACCOUNT = {
   CREATE,
   SIGN_IN,
   RESET_PASSWORD,
+  SIGNED_OUT,
 };
