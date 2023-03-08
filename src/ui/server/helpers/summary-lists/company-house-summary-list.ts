@@ -5,37 +5,13 @@ import generateSummaryListRows from './generate-summary-list-rows';
 import fieldGroupItem from './generate-field-group-item';
 import getFieldById from '../get-field-by-id';
 import { ApplicationExporterCompany, CompanyHouseResponse, SummaryListItemData } from '../../../types';
+import generateMultipleFieldHtml from '../generate-multiple-field-html';
 
 const {
   EXPORTER_BUSINESS: { COMPANY_HOUSE },
 } = FIELD_IDS.INSURANCE;
 
 const { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC } = COMPANY_HOUSE;
-
-/**
- * generateAddressHTML
- * Handle addresses with all fields present or where some are null as not present
- * maps through addrress object and contructs an html string containing line breaks
- * skips fields where the field is null or is typename
- * @param {Object} Address
- * @returns {String} Address as a string of HTML or default empty string
- */
-const generateAddressHTML = (address: object): string => {
-  let addressString = '';
-
-  Object.keys(address).forEach((field) => {
-    // if the address field exists and not the typename part
-    if (address[field] && field !== '__typename' && field !== 'id') {
-      addressString += `${address[field]}<br>`;
-    }
-  });
-
-  if (addressString.length) {
-    return addressString;
-  }
-
-  return DEFAULT.EMPTY;
-};
 
 /**
  * generateSicCodesValue
@@ -72,7 +48,7 @@ const generateFields = (companyDetails: CompanyHouseResponse | ApplicationExport
         field: getFieldById(FIELDS, COMPANY_ADDRESS),
         data: companyDetails,
       },
-      generateAddressHTML(companyDetails[COMPANY_ADDRESS]),
+      generateMultipleFieldHtml(companyDetails[COMPANY_ADDRESS]),
     ),
     fieldGroupItem(
       {
@@ -112,4 +88,4 @@ const companyHouseSummaryList = (companyDetails: CompanyHouseResponse | Applicat
   return summaryList;
 };
 
-export { generateAddressHTML, generateSicCodesValue, generateFields, companyHouseSummaryList };
+export { generateSicCodesValue, generateFields, companyHouseSummaryList };

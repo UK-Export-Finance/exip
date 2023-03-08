@@ -27,6 +27,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 # Dump of table Application
 # ------------------------------------------------------------
 
+DROP TABLE IF EXISTS `Application`;
+
 CREATE TABLE `Application` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `createdAt` datetime(3) DEFAULT NULL,
@@ -71,7 +73,7 @@ CREATE TABLE `Buyer` (
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `companyOrOrganisationName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `address` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `country` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `registrationNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `website` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `contactFirstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -79,11 +81,13 @@ CREATE TABLE `Buyer` (
   `contactPosition` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `contactEmail` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `canContactBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `exporterIsConnectedWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `exporterHasTradedWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `exporterIsConnectedWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Buyer_application_idx` (`application`),
-  CONSTRAINT `Buyer_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  KEY `Buyer_country_idx` (`country`),
+  CONSTRAINT `Buyer_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Buyer_country_fkey` FOREIGN KEY (`country`) REFERENCES `Country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

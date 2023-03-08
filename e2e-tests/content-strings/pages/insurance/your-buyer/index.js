@@ -11,3 +11,8 @@ export const WORKING_WITH_BUYER = {
   ...SHARED,
   PAGE_TITLE: 'Working with the buyer',
 };
+
+export const CHECK_YOUR_ANSWERS = {
+  ...SHARED,
+  PAGE_TITLE: 'Check your answers for this section',
+};
