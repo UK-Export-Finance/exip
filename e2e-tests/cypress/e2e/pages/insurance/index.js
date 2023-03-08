@@ -13,7 +13,6 @@ const insurancePages = {
   applyOfflinePage,
   speakToUkefEfmPage,
   noAccessToApplicationPage,
-  startPage,
   dashboardPage,
   allSectionsPage,
   eligibility,
