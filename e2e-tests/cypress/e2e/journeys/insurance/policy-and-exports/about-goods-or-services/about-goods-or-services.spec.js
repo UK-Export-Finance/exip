@@ -22,7 +22,6 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVIC
 const {
   INSURANCE: {
     ROOT: INSURANCE_ROOT,
-    START,
     ALL_SECTIONS,
     POLICY_AND_EXPORTS: {
       SINGLE_CONTRACT_POLICY,
@@ -46,18 +45,16 @@ context('Insurance - Policy and exports - About goods or services page - As an e
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      // go to the page we want to test.
+      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitSingleContractPolicyForm();
 
-    cy.completeAndSubmitSingleContractPolicyForm();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
       cy.url().should('eq', expectedUrl);
@@ -67,6 +64,10 @@ context('Insurance - Policy and exports - About goods or services page - As an e
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   it('renders core page elements', () => {

@@ -24,21 +24,16 @@ const {
 } = ERROR_MESSAGES;
 
 context('Insurance - Policy and exports - About goods or services page - form validation', () => {
-  let referenceNumber;
-
   before(() => {
-    cy.navigateToUrl(INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      const referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitSingleContractPolicyForm();
 
-    cy.completeAndSubmitSingleContractPolicyForm();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
 
       cy.url().should('eq', expectedUrl);
@@ -48,6 +43,10 @@ context('Insurance - Policy and exports - About goods or services page - form va
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   it('should render validation errors for all required fields', () => {

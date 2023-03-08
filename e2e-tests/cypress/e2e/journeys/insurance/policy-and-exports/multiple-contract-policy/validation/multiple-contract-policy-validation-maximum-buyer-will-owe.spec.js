@@ -14,7 +14,6 @@ const { taskList } = partials.insurancePartials;
 const {
   INSURANCE: {
     ROOT: INSURANCE_ROOT,
-    START,
     POLICY_AND_EXPORTS: {
       MULTIPLE_CONTRACT_POLICY,
       ABOUT_GOODS_OR_SERVICES,
@@ -46,16 +45,13 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
-    taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
       cy.url().should('eq', expectedUrl);
@@ -65,6 +61,10 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   const field = multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE];

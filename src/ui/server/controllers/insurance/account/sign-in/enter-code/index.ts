@@ -95,14 +95,29 @@ export const post = async (req: Request, res: Response) => {
 
     // valid sign in code - update the session and redirect to the dashboard
     if (response.success) {
+      const { accountId, firstName, lastName, token, expires } = response;
+
       req.session.user = {
-        id: response.accountId,
-        firstName: response.firstName,
-        lastName: response.lastName,
-        token: response.token,
-        expires: response.expires,
+        id: accountId,
+        firstName,
+        lastName,
+        token,
+        expires,
       };
 
+      // if there is eligibility in the session, create application.
+      if (req.session.submittedData && req.session.submittedData.insuranceEligibility) {
+        const eligibilityAnswers = req.session.submittedData.insuranceEligibility;
+
+        const application = await api.keystone.application.create(eligibilityAnswers, accountId);
+
+        if (!application) {
+          console.error('Error creating application');
+          return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+        }
+      }
+
+      // otherwise, redirect to the next part of the flow - dashboard
       return res.redirect(DASHBOARD);
     }
 

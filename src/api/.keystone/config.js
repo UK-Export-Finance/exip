@@ -232,6 +232,10 @@ var lists = {
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
       }),
       policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
+      exporter: (0, import_fields.relationship)({
+        ref: "Exporter",
+        many: false
+      }),
       exporterBusiness: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
       exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
       exporterBroker: (0, import_fields.relationship)({ ref: "ExporterBroker" }),
@@ -452,7 +456,11 @@ var lists = {
       }),
       otpExpiry: (0, import_fields.timestamp)(),
       sessionExpiry: (0, import_fields.timestamp)(),
-      sessionIdentifier: (0, import_fields.text)()
+      sessionIdentifier: (0, import_fields.text)(),
+      applications: (0, import_fields.relationship)({
+        ref: "Application",
+        many: true
+      })
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData }) => {
@@ -1223,12 +1231,13 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         password: String
       }
 
-      type CreateAccountReaponse {
+      type CreateAccountResponse {
         success: Boolean
         id: String
         firstName: String
         lastName: String
         email: String
+        verificationHash: String
       }
 
       # fields from registered_office_address object
@@ -1341,7 +1350,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           lastName: String!
           email: String!
           password: String!
-        ): CreateAccountReaponse
+        ): CreateAccountResponse
 
         """ verify an account's email address """
         verifyAccountEmailAddress(

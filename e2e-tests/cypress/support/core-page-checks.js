@@ -37,7 +37,14 @@ const checkBackLink = (currentHref, expectedHref) => {
   cy.url().should('eq', expectedUrl);
 
   // go back to the current page
-  cy.navigateToUrl(`${Cypress.config('baseUrl')}${currentHref}`);
+  // cy.navigateToUrl(`${Cypress.config('baseUrl')}${currentHref}`);
+
+  cy.visit(`${Cypress.config('baseUrl')}${currentHref}`, {
+    auth: {
+      username: Cypress.config('basicAuthKey'),
+      password: Cypress.config('basicAuthSecret'),
+    },
+  });
 };
 
 /**

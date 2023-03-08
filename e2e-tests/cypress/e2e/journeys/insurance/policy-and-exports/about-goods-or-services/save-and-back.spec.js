@@ -8,7 +8,6 @@ import application from '../../../../../fixtures/application';
 const {
   INSURANCE: {
     ROOT: INSURANCE_ROOT,
-    START,
     ALL_SECTIONS,
     POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES },
   },
@@ -32,18 +31,14 @@ context('Insurance - Policy and exports - About goods or services page - Save an
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      task.link().click();
 
-    task.link().click();
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-    cy.completeAndSubmitSingleContractPolicyForm();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitSingleContractPolicyForm();
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       cy.url().should('eq', expected);
@@ -53,6 +48,10 @@ context('Insurance - Policy and exports - About goods or services page - Save an
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {

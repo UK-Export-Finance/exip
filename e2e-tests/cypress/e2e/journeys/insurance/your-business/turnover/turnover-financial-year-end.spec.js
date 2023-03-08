@@ -12,7 +12,6 @@ const {
 
 const {
   ROOT,
-  START,
   EXPORTER_BUSINESS: {
     TURNOVER,
   },
@@ -29,17 +28,13 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      task.link().click();
 
-    task.link().click();
-
-    cy.completeAndSubmitCompanyDetails();
-    cy.completeAndSubmitNatureOfYourBusiness();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitNatureOfYourBusiness();
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
 
@@ -50,6 +45,10 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
@@ -66,24 +65,24 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      task.link().click();
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
 
       cy.navigateToUrl(url);
-
-      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   it(`should not display ${FINANCIAL_YEAR_END_DATE} section`, () => {

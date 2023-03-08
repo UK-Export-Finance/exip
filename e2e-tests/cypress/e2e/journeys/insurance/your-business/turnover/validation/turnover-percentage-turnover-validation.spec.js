@@ -26,21 +26,14 @@ const ERROR_ASSERTIONS = {
 };
 
 describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_ID}`, () => {
-  let referenceNumber;
   let url;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+      task.link().click();
 
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    task.link().click();
-
-    cy.completeAndSubmitCompanyDetails();
-    cy.completeAndSubmitNatureOfYourBusiness();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitNatureOfYourBusiness();
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER}`;
 
@@ -51,6 +44,10 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   describe(`${FIELD_ID} error`, () => {

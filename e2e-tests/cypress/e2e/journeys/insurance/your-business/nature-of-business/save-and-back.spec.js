@@ -16,7 +16,6 @@ const {
 
 const {
   ROOT,
-  START,
   ALL_SECTIONS,
   EXPORTER_BUSINESS: {
     NATURE_OF_BUSINESS,
@@ -32,16 +31,12 @@ context('Insurance - Your business - Nature of your business page - Save and bac
   let url;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      task.link().click();
 
-    task.link().click();
-
-    cy.completeAndSubmitCompanyDetails();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitCompanyDetails();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
 
@@ -52,6 +47,10 @@ context('Insurance - Your business - Nature of your business page - Save and bac
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   describe('When no fields are provided', () => {

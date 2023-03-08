@@ -1,5 +1,5 @@
 import partials from '../../../../../partials';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../support/insurance/check-policy-and-exports-summary-list';
 
 const {
@@ -27,20 +27,22 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 context('Insurance - Policy and exports - Check your answers - Summary list - multiple contract policy', () => {
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then(() => {
+      task.link().click();
 
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    task.link().click();
-
-    cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-    cy.completeAndSubmitMultipleContractPolicyForm();
-    cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+      cy.completeAndSubmitMultipleContractPolicyForm();
+      cy.completeAndSubmitAboutGoodsOrServicesForm();
+    });
   });
 
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   it(`should render a ${POLICY_TYPE} summary list row`, () => {

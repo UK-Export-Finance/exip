@@ -14,14 +14,10 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    task.link().click();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      task.link().click();
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
       cy.url().should('eq', expected);
@@ -31,6 +27,10 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {

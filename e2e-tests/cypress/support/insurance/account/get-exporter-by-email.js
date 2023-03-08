@@ -2,8 +2,8 @@ import api from '../../api';
 
 /**
  * getExporterByEmail
- * @param {String} Exporter account email
  * Get an exporter directly from the API,
+ * @param {String} Exporter account email
  * @returns {Object} Exporter account
  */
 const getExporterByEmail = (email) => {

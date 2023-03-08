@@ -1,3 +1,4 @@
+import { completeAndSubmitBuyerCountryForm } from '../../forms';
 import {
   completeStartForm,
   completeCheckIfEligibleForm,
@@ -9,8 +10,8 @@ import {
   completeLetterOfCreditForm,
   completePreCreditPeriodForm,
   completeCompaniesHouseNumberForm,
+  completeEligibleToApplyOnlineForm,
 } from './forms';
-import { completeAndSubmitBuyerCountryForm } from '../../forms';
 
 export default () => {
   completeStartForm();
@@ -24,4 +25,5 @@ export default () => {
   completeLetterOfCreditForm();
   completePreCreditPeriodForm();
   completeCompaniesHouseNumberForm();
+  completeEligibleToApplyOnlineForm();
 };

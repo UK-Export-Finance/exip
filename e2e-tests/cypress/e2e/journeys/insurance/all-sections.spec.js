@@ -12,14 +12,11 @@ context('Insurance - All sections - new application', () => {
   let referenceNumber;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
-
-    cy.submitInsuranceEligibilityAndStartApplication();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+
       cy.url().should('eq', expected);
     });
   });
@@ -29,12 +26,17 @@ context('Insurance - All sections - new application', () => {
     Cypress.Cookies.preserveOnce('exip-session');
   });
 
+  after(() => {
+    cy.deleteAccount();
+  });
+
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
       backLink: ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE,
       assertSubmitButton: false,
+      assertBackLink: false,
     });
   });
 

@@ -19,7 +19,6 @@ const {
 
 const {
   ROOT,
-  START,
   EXPORTER_BUSINESS: {
     TURNOVER,
     NATURE_OF_BUSINESS,
@@ -37,18 +36,15 @@ context('Insurance - Your business - Nature of your business page - As an Export
   let turnoverUrl;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
 
-    cy.submitInsuranceEligibilityAndStartApplication();
+      task.link().click();
 
-    task.link().click();
-
-    cy.completeAndSubmitCompanyDetails();
-
-    cy.getReferenceNumber().then((id) => {
-      referenceNumber = id;
+      cy.completeAndSubmitCompanyDetails();
 
       const natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+
       turnoverUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
 
       cy.url().should('eq', natureOfBusinessUrl);
@@ -58,6 +54,10 @@ context('Insurance - Your business - Nature of your business page - As an Export
   beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
+  });
+
+  after(() => {
+    cy.deleteAccount();
   });
 
   it('renders core page elements', () => {
