@@ -83,11 +83,16 @@ interface ApplicationExporterBroker {
   email?: string;
 }
 
+interface ApplicationBuyerCountry {
+  isoCode?: string;
+  name?: string;
+}
+
 interface ApplicationBuyer {
   id: string;
   companyOrOrganisationName?: string;
   address?: string;
-  country?: string;
+  country?: ApplicationBuyerCountry;
   registrationNumber?: string;
   website?: string;
   contactFirstName?: string;
@@ -121,4 +126,5 @@ export {
   ApplicationExporterSicCodes,
   ApplicationExporterBusiness,
   ApplicationExporterBroker,
+  ApplicationBuyer,
 };

@@ -1,6 +1,6 @@
 import applicationAccessMiddleware, { IRRELEVANT_ROUTES } from '.';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
-import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockAccount } from '../../../test-mocks';
 import { Next, Request, Response } from '../../../../types';
 
 const { INSURANCE_ROOT, PAGE_NOT_FOUND, ELIGIBILITY, ACCOUNT, DASHBOARD, NO_ACCESS_TO_APPLICATION, ALL_SECTIONS } = INSURANCE_ROUTES;
@@ -54,9 +54,13 @@ describe('middleware/insurance/application-access', () => {
       req.baseUrl = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`;
     });
 
-    describe("when req.session.accountId matches the application's exporter/account ID", () => {
+    describe("when req.session.user.id matches the application's exporter/account ID", () => {
       beforeEach(() => {
-        req.session.accountId = mockApplication.exporter.id;
+        req.session.user = {
+          ...mockAccount,
+          id: mockApplication.exporter.id,
+        };
+
         next = nextSpy;
       });
 
