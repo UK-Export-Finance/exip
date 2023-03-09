@@ -20,8 +20,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('redirects to `apply offline` exit page', () => {

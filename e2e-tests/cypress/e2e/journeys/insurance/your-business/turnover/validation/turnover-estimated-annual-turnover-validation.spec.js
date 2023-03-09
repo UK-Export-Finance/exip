@@ -42,8 +42,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

@@ -42,8 +42,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('renders core page elements', () => {

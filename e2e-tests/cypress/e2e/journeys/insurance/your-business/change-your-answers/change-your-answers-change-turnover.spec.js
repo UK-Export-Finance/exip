@@ -44,8 +44,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

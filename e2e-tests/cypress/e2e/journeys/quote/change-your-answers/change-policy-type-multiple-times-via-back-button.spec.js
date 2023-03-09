@@ -32,8 +32,7 @@ context('Change your answers (policy type) - multiple times via back button - as
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it(`clicking the back button redirects to ${ROUTES.QUOTE.POLICY_TYPE}`, () => {

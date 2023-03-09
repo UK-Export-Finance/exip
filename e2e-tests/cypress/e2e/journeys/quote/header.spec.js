@@ -8,8 +8,7 @@ context('Get a quote - header', () => {
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('renders a GOV home link', () => {

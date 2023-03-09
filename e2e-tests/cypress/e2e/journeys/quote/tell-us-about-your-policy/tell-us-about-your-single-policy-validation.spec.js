@@ -14,8 +14,7 @@ import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 context('Tell us about the policy you need page - form validation', () => {
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   describe('when submitting an empty form', () => {

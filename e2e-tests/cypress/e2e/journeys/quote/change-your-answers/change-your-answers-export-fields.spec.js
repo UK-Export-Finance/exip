@@ -26,8 +26,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   describe('change `Buyer based`', () => {

@@ -52,8 +52,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

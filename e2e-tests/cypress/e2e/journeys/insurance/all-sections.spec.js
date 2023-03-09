@@ -22,8 +22,7 @@ context('Insurance - All sections - new application', () => {
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

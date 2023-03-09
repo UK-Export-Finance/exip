@@ -56,8 +56,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

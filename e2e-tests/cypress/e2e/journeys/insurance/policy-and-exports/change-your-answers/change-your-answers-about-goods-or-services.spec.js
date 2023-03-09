@@ -46,8 +46,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

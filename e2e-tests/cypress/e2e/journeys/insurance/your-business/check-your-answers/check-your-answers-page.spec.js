@@ -54,8 +54,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

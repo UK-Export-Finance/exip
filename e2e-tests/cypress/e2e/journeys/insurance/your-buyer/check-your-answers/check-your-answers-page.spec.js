@@ -49,8 +49,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

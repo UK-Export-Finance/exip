@@ -26,8 +26,7 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

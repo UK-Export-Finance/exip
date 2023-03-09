@@ -39,8 +39,7 @@ context('Insurance - Account - Sign in - Validation', () => {
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('should render validation errors for all required fields', () => {

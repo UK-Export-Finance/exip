@@ -26,8 +26,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('renders core page elements', () => {

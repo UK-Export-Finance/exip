@@ -53,8 +53,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

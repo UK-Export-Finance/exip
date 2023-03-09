@@ -19,8 +19,7 @@ context('Your quote page - change answers (policy type and length from multiple 
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   describe('change `max amount owed`', () => {

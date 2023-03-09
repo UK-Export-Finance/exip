@@ -39,8 +39,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

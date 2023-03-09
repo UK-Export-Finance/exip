@@ -42,8 +42,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

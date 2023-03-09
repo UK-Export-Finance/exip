@@ -44,8 +44,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

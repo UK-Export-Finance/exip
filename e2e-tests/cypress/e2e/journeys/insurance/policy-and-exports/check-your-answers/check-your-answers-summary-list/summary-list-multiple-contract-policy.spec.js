@@ -37,8 +37,7 @@ context('Insurance - Policy and exports - Check your answers - Summary list - mu
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

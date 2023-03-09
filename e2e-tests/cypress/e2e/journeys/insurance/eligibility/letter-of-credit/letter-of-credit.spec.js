@@ -38,8 +38,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('renders core page elements', () => {

@@ -25,8 +25,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

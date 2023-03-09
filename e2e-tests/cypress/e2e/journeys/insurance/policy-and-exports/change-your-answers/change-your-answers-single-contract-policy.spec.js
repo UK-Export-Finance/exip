@@ -53,8 +53,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

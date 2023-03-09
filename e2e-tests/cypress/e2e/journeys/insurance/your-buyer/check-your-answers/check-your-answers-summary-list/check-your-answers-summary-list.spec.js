@@ -36,8 +36,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

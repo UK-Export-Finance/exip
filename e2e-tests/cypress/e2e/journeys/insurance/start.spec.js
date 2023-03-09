@@ -14,8 +14,7 @@ context('Insurance Eligibility - start page', () => {
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('renders core page elements', () => {

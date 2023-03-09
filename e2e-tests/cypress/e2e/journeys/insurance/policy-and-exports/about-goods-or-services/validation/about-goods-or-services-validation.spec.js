@@ -41,8 +41,7 @@ context('Insurance - Policy and exports - About goods or services page - form va
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

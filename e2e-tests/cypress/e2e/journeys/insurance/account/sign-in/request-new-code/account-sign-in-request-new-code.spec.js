@@ -32,8 +32,7 @@ context('Insurance - Account - Sign in - Request new code page- I want to enter 
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

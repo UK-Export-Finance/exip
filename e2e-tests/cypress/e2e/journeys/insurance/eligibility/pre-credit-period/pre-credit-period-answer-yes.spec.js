@@ -36,8 +36,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('redirects to exit page', () => {

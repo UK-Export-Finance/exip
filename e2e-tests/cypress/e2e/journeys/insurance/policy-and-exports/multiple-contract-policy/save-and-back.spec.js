@@ -47,8 +47,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

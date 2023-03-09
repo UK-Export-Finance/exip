@@ -18,8 +18,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('redirects to exit page', () => {

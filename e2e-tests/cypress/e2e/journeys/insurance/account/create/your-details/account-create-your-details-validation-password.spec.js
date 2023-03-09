@@ -51,8 +51,7 @@ context('Insurance - Account - Create - Your details page - form validation - pa
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   describe('when password does not have the minimum amount of characters', () => {

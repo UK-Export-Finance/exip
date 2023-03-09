@@ -52,8 +52,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
