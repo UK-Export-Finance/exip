@@ -89,7 +89,10 @@ const applicationQuery = gql`
           id
           companyOrOrganisationName
           address
-          country
+          country {
+            isoCode
+            name
+          }
           registrationNumber
           website
           contactFirstName

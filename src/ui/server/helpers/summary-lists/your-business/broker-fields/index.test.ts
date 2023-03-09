@@ -4,7 +4,7 @@ import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
-import { generateAddressHTML } from '../../company-house-summary-list';
+import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import mockApplication, { mockExporterBroker } from '../../../../test-mocks/mock-application';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
@@ -71,7 +71,7 @@ describe('server/helpers/summary-lists/your-business/broker-fields', () => {
             href: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CHANGE}#${ADDRESS_LINE_1}-label`,
             renderChangeLink: true,
           },
-          generateAddressHTML(mockAddress),
+          generateMultipleFieldHtml(mockAddress),
         ),
         fieldGroupItem({
           field: getFieldById(FIELDS.BROKER, EMAIL),
