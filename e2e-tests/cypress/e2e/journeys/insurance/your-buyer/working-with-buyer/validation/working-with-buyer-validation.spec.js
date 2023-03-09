@@ -46,8 +46,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -69,10 +68,15 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
     });
 
     describe(`when ${CONNECTED_WITH_BUYER} radios are selected`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
       describe('yes radio', () => {
         it('should not display validation errors', () => {
           field.yesRadioInput().click();
           submitButton().click();
+
           partials.errorSummaryListItems().should('have.length', 1);
         });
       });
@@ -81,6 +85,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
         it('should not display validation errors', () => {
           field.noRadioInput().click();
           submitButton().click();
+
           partials.errorSummaryListItems().should('have.length', 1);
         });
       });
@@ -93,8 +98,10 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
 
     describe(`when ${TRADED_WITH_BUYER} is not selected`, () => {
       it('should display validation errors', () => {
-        const numberOfExpectedErrors = 1;
-        const errorIndex = 0;
+        cy.navigateToUrl(url);
+
+        const numberOfExpectedErrors = 2;
+        const errorIndex = 1;
         const errorMessage = ERROR_MESSAGE_TRADED_WITH_BUYER.IS_EMPTY;
 
         cy.submitAndAssertRadioErrors(field, errorIndex, numberOfExpectedErrors, errorMessage, errorIndex);
@@ -104,8 +111,14 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
     describe(`when ${TRADED_WITH_BUYER} radios are selected`, () => {
       describe('yes radio', () => {
         it('should not display validation errors', () => {
+          cy.navigateToUrl(url);
+
+          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
+
           field.yesRadioInput().click();
+
           submitButton().click();
+
           partials.errorSummaryListItems().should('have.length', 0);
         });
       });
@@ -114,8 +127,12 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
         it('should not display validation errors', () => {
           cy.navigateToUrl(url);
 
+          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
+
           field.noRadioInput().click();
+
           submitButton().click();
+
           partials.errorSummaryListItems().should('have.length', 0);
         });
       });

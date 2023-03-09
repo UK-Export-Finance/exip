@@ -9,12 +9,20 @@ import { completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms'
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
 context('Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover - submit `not based inside the UK`', () => {
+  const url = ROUTES.QUOTE.EXPORTER_LOCATION;
+
   before(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
 
-    cy.url().should('include', ROUTES.QUOTE.EXPORTER_LOCATION);
+    cy.url().should('include', url);
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
 
     noRadio().click();
     submitButton().click();

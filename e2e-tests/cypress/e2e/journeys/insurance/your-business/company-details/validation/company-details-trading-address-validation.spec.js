@@ -15,9 +15,11 @@ const {
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - trading address validation", () => {
+  let url;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
-      const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
       cy.navigateToUrl(url);
 
@@ -26,31 +28,32 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
+
+    cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+    companyDetails.tradingNameYesRadioInput().click();
+
+    submitButton().click();
   });
 
   after(() => {
     cy.deleteAccount();
   });
 
-  describe('trading address error', () => {
-    it('should display validation errors if trading address question is not answered', () => {
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-      companyDetails.tradingNameYesRadioInput().click();
-      submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 1);
+  it('should display validation errors if trading address question is not answered', () => {
+    partials.errorSummaryListItems().should('have.length', 1);
 
-      cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
-    });
+    cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
+  });
 
-    it('should focus to the trading address section when clicking the error', () => {
-      partials.errorSummaryListItemLinks().first().click();
-      companyDetails.tradingAddressYesRadioInput().should('have.focus');
-    });
+  it('should focus to the trading address section when clicking the error', () => {
+    partials.errorSummaryListItemLinks().first().click();
+    companyDetails.tradingAddressYesRadioInput().should('have.focus');
+  });
 
-    it('should display the validation error for trading address in radio error summary', () => {
-      cy.checkText(inlineErrorMessage(), `Error: ${COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY}`);
-    });
+  it('should display the validation error for trading address in radio error summary', () => {
+    cy.checkText(inlineErrorMessage(), `Error: ${COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY}`);
   });
 });

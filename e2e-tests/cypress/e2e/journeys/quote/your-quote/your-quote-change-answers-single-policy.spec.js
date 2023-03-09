@@ -18,28 +18,29 @@ const {
 } = FIELD_IDS;
 
 context('Your quote page - change answers (single policy type to multiple policy type) - as an exporter, I want to get an Export insurance quote', () => {
-  before(() => {
+  const url = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
+
+  beforeEach(() => {
+    cy.saveSession();
+
     cy.login();
 
     cy.submitQuoteAnswersHappyPathSinglePolicy();
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
-  });
-
-  beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.url().should('include', url);
   });
 
   describe('change `contract value`', () => {
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
-      const row = yourQuotePage.panel.summaryList[CONTRACT_VALUE];
+    const row = yourQuotePage.panel.summaryList[CONTRACT_VALUE];
 
+    beforeEach(() => {
       row.changeLink().click();
+    });
 
-      const expectedUrl = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE;
-      cy.url().should('include', expectedUrl);
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
+      const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
+      cy.url().should('include', expected);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
@@ -62,9 +63,8 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders the new answer in the quote', () => {
+      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '1000');
       submitButton().click();
-
-      const row = yourQuotePage.panel.summaryList[CONTRACT_VALUE];
 
       const expected = '£1,000';
       cy.checkText(row.value(), expected);
@@ -72,11 +72,13 @@ context('Your quote page - change answers (single policy type to multiple policy
   });
 
   describe('change `percentage of cover`', () => {
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
-      const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
+    const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
 
+    beforeEach(() => {
       row.changeLink().click();
+    });
 
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
       const expectedUrl = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}`;
       cy.url().should('include', expectedUrl);
     });
@@ -101,9 +103,8 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders the new answer in the quote', () => {
+      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('85');
       submitButton().click();
-
-      const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
 
       const expected = '85%';
       cy.checkText(row.value(), expected);
@@ -111,11 +112,13 @@ context('Your quote page - change answers (single policy type to multiple policy
   });
 
   describe('change policy type to multi', () => {
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.POLICY_TYPE_CHANGE}`, () => {
-      const row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
+    const row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
 
+    beforeEach(() => {
       row.changeLink().click();
+    });
 
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.POLICY_TYPE_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;
       cy.url().should('include', expectedUrl);
     });
@@ -140,6 +143,9 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders the new answers in the quote', () => {
+      policyTypePage[POLICY_TYPE].multiple.input().click();
+      submitButton().click();
+
       // max amount owed and credit period fields are now required because it's a multiple policy
       cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '120000');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
@@ -159,11 +165,13 @@ context('Your quote page - change answers (single policy type to multiple policy
   });
 
   describe('change `buyer location`', () => {
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
-      const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
+    const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
 
+    beforeEach(() => {
       row.changeLink().click();
+    });
 
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.BUYER_COUNTRY_CHANGE;
       cy.url().should('include', expectedUrl);
     });
@@ -192,19 +200,19 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders the new answer in the quote', () => {
       submitButton().click();
 
-      const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
-
       const expected = 'Bahrain';
       cy.checkText(row.value(), expected);
     });
   });
 
   describe('change `buyer location`', () => {
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
-      const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
+    const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
 
+    beforeEach(() => {
       row.changeLink().click();
+    });
 
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.BUYER_COUNTRY_CHANGE;
       cy.url().should('include', expectedUrl);
     });

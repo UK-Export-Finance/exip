@@ -9,13 +9,14 @@ import { submitButton } from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 context('Tell us about the multiple policy you need - form validation', () => {
+  const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
+
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   describe('when submitting an empty form', () => {
@@ -30,6 +31,8 @@ context('Tell us about the multiple policy you need - form validation', () => {
     });
 
     beforeEach(() => {
+      cy.navigateToUrl(url);
+
       submitButton().click();
     });
 
@@ -105,6 +108,8 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
   describe('when `max amount owed` has a non-numeric value', () => {
     it('should render a validation error', () => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), 'a');
       submitButton().click();
 
@@ -122,6 +127,8 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
   describe('when `max amount owed` is not a whole number', () => {
     it('should render a validation error', () => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), '1234.56');
       submitButton().click();
 
@@ -139,6 +146,8 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
   describe('when `max amount owed` has a value less than the minimum', () => {
     it('should render a validation error', () => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), '0');
       submitButton().click();
 
@@ -156,6 +165,8 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
   describe('when `credit period` is not selected', () => {
     it('should render a validation error', () => {
+      cy.navigateToUrl(url);
+
       submitButton().click();
 
       cy.checkText(
@@ -172,6 +183,8 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
   describe('with any validation error', () => {
     it('should render submitted values', () => {
+      cy.navigateToUrl(url);
+
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(GBP_CURRENCY_CODE);
       cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), '10');
 

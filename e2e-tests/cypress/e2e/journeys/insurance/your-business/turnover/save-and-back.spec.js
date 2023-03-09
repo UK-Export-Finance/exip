@@ -44,18 +44,21 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
     cy.deleteAccount();
   });
 
-  describe('When no fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      saveAndBackButton().click();
+  describe('when no fields are provided', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
@@ -66,13 +69,15 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
   });
 
   describe('save and back on a partially entered form', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(turnover[ESTIMATED_ANNUAL_TURNOVER].input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
 
       saveAndBackButton().click();
+    });
 
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
@@ -93,18 +98,23 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
   });
 
-  describe('When all fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+  describe('when all fields are provided', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(turnover[ESTIMATED_ANNUAL_TURNOVER].input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
       cy.keyboardInput(turnover[PERCENTAGE_TURNOVER].input(), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
 
       saveAndBackButton().click();
+    });
 
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
       const expected = TASKS.STATUS.IN_PROGRESS;
+
       cy.checkTaskStatus(task, expected);
     });
 
