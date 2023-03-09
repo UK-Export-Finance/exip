@@ -47,7 +47,16 @@ const companiesHouseSearch = async (formBody: RequestBody) => {
 
   // if company exists and has a value
   if (company && isPopulatedArray(Object.keys(company))) {
-    // checks that success flag is not false and apiError flag is not set
+    // if apiError is set to true, return as redirects to error page
+    if (company?.apiError) {
+      return {
+        apiError: true,
+        companiesHouseNumber,
+        validationErrors: {},
+      };
+    }
+
+    // checks that success flag is not false
     const responseValidationErrors = companyHouseResponseValidation(company);
 
     if (responseValidationErrors) {

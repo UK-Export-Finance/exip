@@ -124,7 +124,7 @@ describe('controllers/insurance/business/companies-details/helpers/companies-hou
     expect(response).toEqual(expected);
   });
 
-  it('should return object with validationErrors, companiesHouseNumber if api response has apiError as true', async () => {
+  it('should return object with apiError set to true and companiesHouseNumber if api response has apiError as true', async () => {
     formBody = {
       [COMPANY_HOUSE.INPUT]: '123456',
     };
@@ -134,11 +134,10 @@ describe('controllers/insurance/business/companies-details/helpers/companies-hou
 
     const response = await companiesHouseSearch(formBody);
 
-    const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].TECHNICAL_ISSUES;
-
     const expected = {
-      validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
+      apiError: true,
       [COMPANY_HOUSE.INPUT]: formBody[COMPANY_HOUSE.INPUT],
+      validationErrors: {},
     };
 
     expect(response).toEqual(expected);
