@@ -1,7 +1,6 @@
 import notFound from './notFound';
-import apiError from './apiError';
 import { ValidationErrors } from '../../../../../../../../types';
 
-const rules = [notFound, apiError] as Array<() => ValidationErrors>;
+const rules = [notFound] as Array<() => ValidationErrors>;
 
 export default rules;

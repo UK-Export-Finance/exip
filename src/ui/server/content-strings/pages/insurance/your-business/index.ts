@@ -9,6 +9,17 @@ const EXPORTER_BUSINESS = {
     ...SHARED,
     ...COMPANY_DETAILS,
   },
+  COMPANIES_HOUSE_UNAVAILABLE: {
+    ...SHARED,
+    PAGE_TITLE: 'You cannot search for your Companies House registration number right now',
+    ERROR_REASON: 'This is due to technical issues with the Companies House search',
+    TRY_AGAIN_PREFIX: 'You can',
+    TRY_AGAIN: 'try again in a few minutes.',
+    CONTINUE_PREFIX: 'Or you can continue filling in',
+    CONTINUE_LINK: 'other sections of your application,',
+    CONTINUE_SUFFIX: 'until this problem is resolved',
+    INFORMATION: '(You may lose any information you entered on the previous page.)',
+  },
   NATURE_OF_YOUR_BUSINESS: {
     ...SHARED,
     PAGE_TITLE: 'Nature of your business',
