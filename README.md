@@ -170,7 +170,7 @@ Keystone will also automatically create a currencies table in the database with 
 
 ### Keystone hooks
 
-Keystone also has some functionality called hooks. Hooks allow you to perform "before and after" or side effects. For example, `resolveInput` allows you to modify or add some data before it is saved in the database, `afterOperation` allows you to trigger something after data is saved. 
+Keystone also has some functionality called hooks. Hooks allow you to perform "before and after" or side effects. For example, `resolveInput` allows you to modify or add some data before it is saved in the database, `afterOperation` allows you to trigger something after data is saved.
 
 You can learn more about hooks in the [official documentation](https://keystonejs.com/docs/guides/hooks)
 
