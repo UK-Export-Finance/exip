@@ -14,10 +14,10 @@ const { COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NATURE_OF_BUSINESS_ROOT } = EXPO
 export const TEMPLATE = COMPANIES_HOUSE_UNAVAILABLE_TEMPLATE;
 
 /**
- * gets the template for companies house down page
+ * gets the template for companies house unavailable page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders companies house down page
+ * @returns {Express.Response.render} renders companies house unavailable page
  */
 const get = (req: Request, res: Response) => {
   try {
@@ -38,7 +38,7 @@ const get = (req: Request, res: Response) => {
       NATURE_OF_BUSINESS: `${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
     });
   } catch (err) {
-    console.error('Error getting companies house down page', { err });
+    console.error('Error getting companies house unavailable page', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };

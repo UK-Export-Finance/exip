@@ -11,7 +11,7 @@ const insuranceStart = ROUTES.INSURANCE.START;
 
 const { NATURE_OF_BUSINESS, COMPANY_DETAILS, COMPANIES_HOUSE_UNAVAILABLE } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
 
-context("Insurance - Your business - Companies house down page - I want to enter my business's Companies House Registration Number (CRN) but companies house API is down", () => {
+context("Insurance - Your business - Companies house unavailable page - I want to enter my business's Companies House Registration Number (CRN) but companies house API is down", () => {
   let referenceNumber;
   let url;
   let natureOfBusinessUrl;
