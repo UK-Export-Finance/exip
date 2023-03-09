@@ -1604,6 +1604,7 @@ type AccountSignInResponse {
   lastName: String
   token: String
   sessionIdentifier: String
+  expires: DateTime
   success: Boolean!
 }
 

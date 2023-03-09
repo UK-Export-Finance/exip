@@ -7,6 +7,7 @@ const verifyAccountSignInCodeMutation = gql`
       firstName
       lastName
       token
+      expires
       accountId
     }
   }
