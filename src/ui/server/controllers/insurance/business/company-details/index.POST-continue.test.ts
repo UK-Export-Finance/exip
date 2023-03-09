@@ -24,7 +24,7 @@ const { VALID_PHONE_NUMBERS } = mockPhoneNumbers;
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT, CHECK_YOUR_ANSWERS, COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_ROOT, COMPANIES_HOUSE_DOWN },
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT, CHECK_YOUR_ANSWERS, COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_ROOT, COMPANIES_HOUSE_UNAVAILABLE },
 } = ROUTES.INSURANCE;
 
 jest.mock('../map-and-save');
@@ -165,7 +165,7 @@ describe('controllers/insurance/business/companies-details', () => {
       });
 
       describe('when getCompaniesHouseResponse returns an error', () => {
-        it(`should redirect to ${COMPANIES_HOUSE_DOWN}`, async () => {
+        it(`should redirect to ${COMPANIES_HOUSE_UNAVAILABLE}`, async () => {
           req.body = {
             [INPUT]: '8989898',
             [TRADING_NAME]: 'true',
@@ -177,7 +177,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_DOWN}`);
+          expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_UNAVAILABLE}`);
         });
       });
 

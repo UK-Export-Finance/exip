@@ -1,4 +1,4 @@
-const companiesHouseDownPage = {
+const companiesHouseUnavailablePage = {
   reason: () => cy.get('[data-cy="reason"]'),
   tryAgain: () => cy.get('[data-cy="try-again"]'),
   tryAgainLink: () => cy.get('[data-cy="try-again-link"]'),
@@ -7,4 +7,4 @@ const companiesHouseDownPage = {
   information: () => cy.get('[data-cy="information"]'),
 };
 
-export default companiesHouseDownPage;
+export default companiesHouseUnavailablePage;

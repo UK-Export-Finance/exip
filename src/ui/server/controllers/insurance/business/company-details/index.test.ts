@@ -26,7 +26,7 @@ const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.I
 const {
   COMPANY_HOUSE_SEARCH,
   COMPANY_DETAILS: COMPANY_DETAILS_ROUTE,
-  COMPANIES_HOUSE_DOWN,
+  COMPANIES_HOUSE_UNAVAILABLE,
   NO_COMPANIES_HOUSE_NUMBER,
   COMPANY_DETAILS_SAVE_AND_BACK,
   COMPANY_DETAILS_CHANGE,
@@ -293,7 +293,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await postCompaniesHouseSearch(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_DOWN}`);
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_UNAVAILABLE}`);
       });
     });
 
@@ -326,7 +326,7 @@ describe('controllers/insurance/business/companies-details', () => {
     });
 
     describe('when there are errors caught on the companies house api', () => {
-      it(`should redirect to ${COMPANIES_HOUSE_DOWN}`, async () => {
+      it(`should redirect to ${COMPANIES_HOUSE_UNAVAILABLE}`, async () => {
         req.body = {
           companiesHouseNumber: '123456',
         };
@@ -336,7 +336,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await postCompaniesHouseSearch(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_DOWN}`);
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_UNAVAILABLE}`);
       });
     });
 

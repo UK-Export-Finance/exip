@@ -30,7 +30,7 @@ const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.I
 const {
   COMPANY_HOUSE_SEARCH,
   COMPANY_DETAILS: COMPANY_DETAILS_ROUTE,
-  COMPANIES_HOUSE_DOWN,
+  COMPANIES_HOUSE_UNAVAILABLE,
   NO_COMPANIES_HOUSE_NUMBER,
   COMPANY_DETAILS_SAVE_AND_BACK,
   NATURE_OF_BUSINESS_ROOT,
@@ -148,7 +148,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     const { validationErrors, apiError, company } = response;
 
     if (apiError) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_DOWN}`);
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_UNAVAILABLE}`);
     }
 
     if (isPopulatedArray(Object.keys(validationErrors))) {
@@ -210,7 +210,7 @@ const post = async (req: Request, res: Response) => {
 
     // if error, then there is problem with api/service to redirect
     if (apiError) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_DOWN}`);
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_UNAVAILABLE}`);
     }
 
     let { validationErrors } = response;

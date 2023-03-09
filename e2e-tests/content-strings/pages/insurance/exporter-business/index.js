@@ -9,7 +9,7 @@ export const COMPANY_DETAILS = {
   NO_COMPANY_HOUSE_NUMER: 'I do not have a UK Companies House registration number',
 };
 
-export const COMPANIES_HOUSE_DOWN = {
+export const COMPANIES_HOUSE_UNAVAILABLE = {
   ...SHARED,
   PAGE_TITLE: 'You cannot search for your Companies House registration number right now',
   ERROR_REASON: 'This is due to technical issues with the Companies House search',

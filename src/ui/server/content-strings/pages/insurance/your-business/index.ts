@@ -9,7 +9,7 @@ const EXPORTER_BUSINESS = {
     ...SHARED,
     ...COMPANY_DETAILS,
   },
-  COMPANIES_HOUSE_DOWN: {
+  COMPANIES_HOUSE_UNAVAILABLE: {
     ...SHARED,
     PAGE_TITLE: 'You cannot search for your Companies House registration number right now',
     ERROR_REASON: 'This is due to technical issues with the Companies House search',
