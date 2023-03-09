@@ -34,20 +34,24 @@ const {
 } = ERROR_MESSAGES;
 
 context('Insurance - Policy and exports - Multiple contract policy page - form validation', () => {
+  let url;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {
@@ -95,6 +99,8 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   describe(`when ${POLICY_CURRENCY_CODE} is submitted but there are other validation errors`, () => {
     it(`should retain the submitted ${POLICY_CURRENCY_CODE}`, () => {
+      cy.navigateToUrl(url);
+
       const currencyCode = application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE];
 
       policyCurrencyCodeFormField.input().select(currencyCode);

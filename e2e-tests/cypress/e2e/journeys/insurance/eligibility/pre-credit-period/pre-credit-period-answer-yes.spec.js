@@ -18,6 +18,8 @@ import {
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 
 context('Insurance - Eligibility - Pre-credit period page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit - submit `need pre-credit period cover`', () => {
+  const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD}`;
+
   before(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
@@ -30,13 +32,15 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     completeInsuredPeriodForm();
     completeOtherPartiesForm();
     completeLetterOfCreditForm();
-
-    yesRadio().click();
-    submitButton().click();
   });
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
+
+    yesRadio().click();
+    submitButton().click();
   });
 
   it('redirects to exit page', () => {

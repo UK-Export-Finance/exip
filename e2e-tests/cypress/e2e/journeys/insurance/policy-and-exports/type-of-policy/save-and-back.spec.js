@@ -12,6 +12,7 @@ const multiplePolicyField = insurance.policyAndExport.typeOfPolicyPage[FIELD_ID]
 
 context('Insurance - Policy and exports - Type of policy page - Save and go back', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -19,8 +20,8 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
 
       task.link().click();
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
-      cy.url().should('eq', expected);
+      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
+      cy.url().should('eq', url);
     });
   });
 
@@ -33,9 +34,13 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
-      saveAndBackButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
@@ -43,19 +48,24 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
 
     it('should retain the `type of policy and exports` task status as `not started yet`', () => {
       const expected = TASKS.STATUS.NOT_STARTED_YET;
+
       cy.checkText(task.status(), expected);
     });
   });
 
   describe('when selecting an answer and submitting the form via `save and go back` button', () => {
-    before(() => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      saveAndBackButton().click();
+
       task.link().click();
+
+      multiplePolicyField.input().click();
+      saveAndBackButton().click();
     });
 
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
-      multiplePolicyField.input().click();
-      saveAndBackButton().click();
-
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
@@ -63,6 +73,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
 
     it('should update the status of task `type of policy and exports`to `in progress`', () => {
       const expected = TASKS.STATUS.IN_PROGRESS;
+
       cy.checkText(task.status(), expected);
     });
 

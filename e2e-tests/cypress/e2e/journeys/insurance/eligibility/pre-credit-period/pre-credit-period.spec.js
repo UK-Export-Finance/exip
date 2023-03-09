@@ -27,7 +27,7 @@ const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD;
 const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - Eligibility - Pre-credit period page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit', () => {
-  let url;
+  const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD}`;
 
   before(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
@@ -41,8 +41,6 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     completeInsuredPeriodForm();
     completeOtherPartiesForm();
     completeLetterOfCreditForm();
-
-    url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD}`;
 
     cy.url().should('eq', url);
   });

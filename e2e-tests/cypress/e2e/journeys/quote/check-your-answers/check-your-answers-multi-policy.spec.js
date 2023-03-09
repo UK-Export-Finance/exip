@@ -13,30 +13,32 @@ const CONTENT_STRINGS = PAGES.QUOTE.CHECK_YOUR_ANSWERS;
 
 const startRoute = ROUTES.QUOTE.START;
 
-context('Check your answers page (multiple policy) - as an exporter, I want to review the details before submitting the proposal', () => {
-  const {
-    BUYER_COUNTRY,
-    CREDIT_PERIOD,
-    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-    MAX_AMOUNT_OWED,
-    MULTIPLE_POLICY_LENGTH,
-    MULTIPLE_POLICY_TYPE,
-    PERCENTAGE_OF_COVER,
-    VALID_EXPORTER_LOCATION,
-  } = FIELD_IDS;
+const {
+  BUYER_COUNTRY,
+  CREDIT_PERIOD,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+  MAX_AMOUNT_OWED,
+  MULTIPLE_POLICY_LENGTH,
+  MULTIPLE_POLICY_TYPE,
+  PERCENTAGE_OF_COVER,
+  VALID_EXPORTER_LOCATION,
+} = FIELD_IDS;
 
-  const submissionData = {
-    [BUYER_COUNTRY]: 'Algeria',
-    [CREDIT_PERIOD]: '1',
-    [PERCENTAGE_OF_COVER]: '90',
-    [MULTIPLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
-  };
+const submissionData = {
+  [BUYER_COUNTRY]: 'Algeria',
+  [CREDIT_PERIOD]: '1',
+  [PERCENTAGE_OF_COVER]: '90',
+  [MULTIPLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+  [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
+};
+
+context('Check your answers page (multiple policy) - as an exporter, I want to review the details before submitting the proposal', () => {
+  const url = ROUTES.QUOTE.CHECK_YOUR_ANSWERS;
 
   before(() => {
     cy.login();
     cy.submitQuoteAnswersHappyPathMultiplePolicy();
-    cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+    cy.url().should('include', url);
   });
 
   beforeEach(() => {
@@ -44,6 +46,10 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
   });
 
   context('export summary list', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
     const list = checkYourAnswersPage.summaryLists.export;
 
     it('renders a heading', () => {
@@ -103,6 +109,10 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
   });
 
   context('policy summary list', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
     const list = checkYourAnswersPage.summaryLists.policy;
 
     it('renders a heading', () => {
@@ -187,6 +197,8 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
 
   context('form submission', () => {
     it(`should redirect to ${ROUTES.QUOTE.YOUR_QUOTE}`, () => {
+      cy.navigateToUrl(url);
+
       submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);

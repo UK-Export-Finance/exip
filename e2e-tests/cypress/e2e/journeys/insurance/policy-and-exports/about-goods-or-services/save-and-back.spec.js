@@ -29,6 +29,7 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 context('Insurance - Policy and exports - About goods or services page - Save and go back', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -40,8 +41,8 @@ context('Insurance - Policy and exports - About goods or services page - Save an
 
       cy.completeAndSubmitSingleContractPolicyForm();
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
-      cy.url().should('eq', expected);
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      cy.url().should('eq', url);
     });
   });
 
@@ -54,9 +55,13 @@ context('Insurance - Policy and exports - About goods or services page - Save an
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      saveAndBackButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
@@ -68,17 +73,15 @@ context('Insurance - Policy and exports - About goods or services page - Save an
   });
 
   describe('when submitting an answer and submitting the form via `save and go back` button', () => {
-    before(() => {
-      // go back to the page via the task list
-      task.link().click();
-      submitButton().click();
-      submitButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      // submit the form via 'save and go back' button
+      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].input(), application.POLICY_AND_EXPORTS[DESCRIPTION]);
+      saveAndBackButton().click();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].input(), application.POLICY_AND_EXPORTS[DESCRIPTION]);
-      saveAndBackButton().click();
-
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
@@ -88,24 +91,28 @@ context('Insurance - Policy and exports - About goods or services page - Save an
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
-    describe('when going back to the page', () => {
-      before(() => {
-        // go back to the page via the task list
-        task.link().click();
-        submitButton().click();
-        submitButton().click();
-      });
+    it('should have the originally submitted answer selected when going back to the page after submission', () => {
+      cy.navigateToUrl(url);
 
-      it('should have the originally submitted answer selected', () => {
-        aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.POLICY_AND_EXPORTS[DESCRIPTION]);
-      });
+      // submit the form via 'save and go back' button
+      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].input(), application.POLICY_AND_EXPORTS[DESCRIPTION]);
+      saveAndBackButton().click();
+
+      // go back to the page via the task list
+      task.link().click();
+      submitButton().click();
+      submitButton().click();
+
+      aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.POLICY_AND_EXPORTS[DESCRIPTION]);
     });
   });
 
   describe('when removing a previously submitted `buyer credit period` value', () => {
     const field = aboutGoodsOrServicesPage[DESCRIPTION];
 
-    before(() => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
       // submit a value
       cy.keyboardInput(field.input(), 'Test');
       saveAndBackButton().click();
@@ -127,16 +134,13 @@ context('Insurance - Policy and exports - About goods or services page - Save an
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
-    describe('when going back to the page', () => {
-      before(() => {
-        task.link().click();
-        submitButton().click();
-        submitButton().click();
-      });
+    it('should have no value in `buyer credit period` when going back to the page', () => {
+      // go back to the page via the task list
+      task.link().click();
+      submitButton().click();
+      submitButton().click();
 
-      it('should have no value in `buyer credit period`', () => {
-        field.input().should('have.value', '');
-      });
+      field.input().should('have.value', '');
     });
   });
 });

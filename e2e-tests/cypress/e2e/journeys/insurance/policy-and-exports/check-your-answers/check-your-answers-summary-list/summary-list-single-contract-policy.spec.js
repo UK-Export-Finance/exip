@@ -1,6 +1,11 @@
 import partials from '../../../../../partials';
-import { FIELD_IDS, FIELD_VALUES } from '../../../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../support/insurance/check-policy-and-exports-summary-list';
+
+const {
+  ROOT: INSURANCE_ROOT,
+  POLICY_AND_EXPORTS,
+} = ROUTES.INSURANCE;
 
 const {
   INSURANCE: {
@@ -22,18 +27,24 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 context('Insurance - Policy and exports - Check your answers - Summary list - single contract policy', () => {
+  let url;
+
   before(() => {
-    cy.completeSignInAndGoToApplication().then(() => {
+    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       task.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm();
       cy.completeAndSubmitAboutGoodsOrServicesForm();
+
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
     });
   });
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {

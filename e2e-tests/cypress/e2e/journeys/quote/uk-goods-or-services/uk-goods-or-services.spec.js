@@ -16,13 +16,15 @@ const CONTENT_STRINGS = {
 const startRoute = ROUTES.QUOTE.START;
 
 context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
+  const url = ROUTES.QUOTE.UK_GOODS_OR_SERVICES;
+
   before(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
-    cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
+    cy.url().should('include', url);
   });
 
   beforeEach(() => {
@@ -37,43 +39,53 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     });
   });
 
-  it('should render a header with href to quote start', () => {
-    partials.header.serviceName().should('have.attr', 'href', startRoute);
-  });
-
-  it('renders `yes` radio button', () => {
-    yesRadio().should('exist');
-
-    cy.checkText(yesRadio(), 'Yes');
-  });
-
-  it('renders `no` radio button', () => {
-    noRadio().should('exist');
-
-    cy.checkText(noRadio(), 'No');
-  });
-
-  describe('expandable details', () => {
-    it('renders summary text', () => {
-      checkDescriptionSummaryText();
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
     });
 
-    it('clicking summary text reveals details', () => {
-      checkDescriptionSummaryClickRevealsContent();
+    it('should render a header with href to quote start', () => {
+      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
-    it('renders expanded content', () => {
-      checkDescriptionContent();
+    it('renders `yes` radio button', () => {
+      yesRadio().should('exist');
+
+      cy.checkText(yesRadio(), 'Yes');
     });
 
-    it('renders `will calculate thoroughly` copy ', () => {
-      const expected = CONTENT_STRINGS.WILL_CALCULATE_THOROUGHLY;
-      cy.checkText(partials.ukGoodsOrServicesDescription.calculateThoroughly(), expected);
+    it('renders `no` radio button', () => {
+      noRadio().should('exist');
+
+      cy.checkText(noRadio(), 'No');
+    });
+
+    describe('expandable details', () => {
+      it('renders summary text', () => {
+        checkDescriptionSummaryText();
+      });
+
+      it('clicking summary text reveals details', () => {
+        checkDescriptionSummaryClickRevealsContent();
+      });
+
+      it('renders expanded content', () => {
+        checkDescriptionContent();
+      });
+
+      it('renders `will calculate thoroughly` copy ', () => {
+        const expected = CONTENT_STRINGS.WILL_CALCULATE_THOROUGHLY;
+        cy.checkText(partials.ukGoodsOrServicesDescription.calculateThoroughly(), expected);
+      });
     });
   });
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
       it('should render validation errors', () => {
         submitButton().click();
 
@@ -97,6 +109,8 @@ context('UK goods or services page - as an exporter, I want to check if my expor
 
     describe('when submitting the answer as `yes`', () => {
       it(`should redirect to ${ROUTES.QUOTE.POLICY_TYPE}`, () => {
+        cy.navigateToUrl(url);
+
         yesRadio().click();
         submitButton().click();
 

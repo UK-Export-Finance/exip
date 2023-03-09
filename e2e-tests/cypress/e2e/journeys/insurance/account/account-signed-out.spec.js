@@ -14,15 +14,16 @@ const {
 } = ROUTES;
 
 context('Insurance - Account - Signed out -  As an Exporter I want the system to securely manage my UKEF digital service sessions, So that my UKEF digital service account is securely managed and not compromised', () => {
+  const url = SIGNED_OUT;
+
   before(() => {
     cy.navigateToUrl(START);
 
-    cy.navigateToUrl(SIGNED_OUT);
+    cy.navigateToUrl(url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('renders core page elements', () => {
@@ -34,16 +35,20 @@ context('Insurance - Account - Signed out -  As an Exporter I want the system to
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', START);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-  it('renders a `sign in` button link', () => {
-    cy.checkLink(signedOutPage.signIn(), SIGN_IN_ROOT, BUTTONS.SIGN_IN);
-  });
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', START);
+    });
 
-  describe('when clicking `sign in`', () => {
-    it(`should redirect to ${SIGN_IN_ROOT}`, () => {
+    it('renders a `sign in` button link', () => {
+      cy.checkLink(signedOutPage.signIn(), SIGN_IN_ROOT, BUTTONS.SIGN_IN);
+    });
+
+    it(`should redirect to ${SIGN_IN_ROOT} when clicking 'sign in'`, () => {
       signedOutPage.signIn().click();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;

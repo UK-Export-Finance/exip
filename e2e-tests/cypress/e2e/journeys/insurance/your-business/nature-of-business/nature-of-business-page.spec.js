@@ -34,6 +34,7 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 context('Insurance - Your business - Nature of your business page - As an Exporter I want to enter the nature of my business So that UKEF can have clarity on the type of business that I do while processing my Export Insurance Application', () => {
   let referenceNumber;
   let turnoverUrl;
+  let natureOfBusinessUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -43,7 +44,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
       cy.completeAndSubmitCompanyDetails();
 
-      const natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
 
       turnoverUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
 
@@ -67,64 +68,72 @@ context('Insurance - Your business - Nature of your business page - As an Export
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStart);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(natureOfBusinessUrl);
+    });
 
-  it('renders a heading caption', () => {
-    cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-  });
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', insuranceStart);
+    });
 
-  it(`should display ${GOODS_OR_SERVICES} input box`, () => {
-    const fieldId = GOODS_OR_SERVICES;
-    const field = natureOfBusiness[fieldId];
+    it('renders a heading caption', () => {
+      cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
 
-    field.input().should('exist');
-    cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
+    it(`should display ${GOODS_OR_SERVICES} input box`, () => {
+      const fieldId = GOODS_OR_SERVICES;
+      const field = natureOfBusiness[fieldId];
 
-    field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
-  });
+      field.input().should('exist');
+      cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
 
-  it(`should display ${YEARS_EXPORTING} input box`, () => {
-    const fieldId = YEARS_EXPORTING;
-    const field = natureOfBusiness[fieldId];
+      field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
+    });
 
-    field.input().should('exist');
-    cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
+    it(`should display ${YEARS_EXPORTING} input box`, () => {
+      const fieldId = YEARS_EXPORTING;
+      const field = natureOfBusiness[fieldId];
 
-    field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
-    cy.checkText(field.suffix(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].SUFFIX);
-  });
+      field.input().should('exist');
+      cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
 
-  it('should display save and go back button', () => {
-    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
-  });
+      field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
+      cy.checkText(field.suffix(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].SUFFIX);
+    });
 
-  it(`should display ${EMPLOYEES_UK} input box`, () => {
-    const fieldId = EMPLOYEES_UK;
-    const field = natureOfBusiness[fieldId];
+    it('should display save and go back button', () => {
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
 
-    field.input().should('exist');
-    cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
-    cy.checkText(field.heading(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HEADING);
-  });
+    it(`should display ${EMPLOYEES_UK} input box`, () => {
+      const fieldId = EMPLOYEES_UK;
+      const field = natureOfBusiness[fieldId];
 
-  it(`should display ${EMPLOYEES_INTERNATIONAL} input box`, () => {
-    const fieldId = EMPLOYEES_INTERNATIONAL;
-    const field = natureOfBusiness[fieldId];
+      field.input().should('exist');
+      cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
+      cy.checkText(field.heading(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HEADING);
+    });
 
-    field.input().should('exist');
-    cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
-  });
+    it(`should display ${EMPLOYEES_INTERNATIONAL} input box`, () => {
+      const fieldId = EMPLOYEES_INTERNATIONAL;
+      const field = natureOfBusiness[fieldId];
 
-  it('should display the continue and save and go back button', () => {
-    cy.checkText(submitButton(), BUTTONS.CONTINUE);
+      field.input().should('exist');
+      cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
+    });
 
-    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('should display the continue and save and go back button', () => {
+      cy.checkText(submitButton(), BUTTONS.CONTINUE);
+
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
   });
 
   describe('form submission', () => {
     it(`should redirect to ${TURNOVER}`, () => {
+      cy.navigateToUrl(natureOfBusinessUrl);
+
       cy.completeAndSubmitNatureOfYourBusiness();
 
       cy.url().should('eq', turnoverUrl);
@@ -133,7 +142,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
   describe('when going back to the page', () => {
     it('should have the submitted values', () => {
-      cy.navigateToUrl(`${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`);
+      cy.navigateToUrl(natureOfBusinessUrl);
 
       natureOfBusiness[GOODS_OR_SERVICES].input().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       natureOfBusiness[YEARS_EXPORTING].input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
