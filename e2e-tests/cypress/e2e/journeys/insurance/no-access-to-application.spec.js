@@ -25,6 +25,7 @@ const secondAccountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_2');
 
 context('Insurance - no access to application page', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.saveSession();
@@ -33,9 +34,9 @@ context('Insurance - no access to application page', () => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      const expected = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.url().should('eq', url);
 
       // create and sign into a different account and try to access to the application
       const {
@@ -80,8 +81,6 @@ context('Insurance - no access to application page', () => {
 
   describe('when trying to access an application created by the previous user', () => {
     beforeEach(() => {
-      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
       cy.navigateToUrl(url);
     });
 
