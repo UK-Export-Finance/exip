@@ -10,14 +10,15 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ALL_SECTIONS;
 
 context('Insurance - All sections - new application', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.url().should('eq', url);
     });
   });
 
@@ -42,6 +43,8 @@ context('Insurance - All sections - new application', () => {
   describe('task list', () => {
     describe('`initial checks` group', () => {
       it('should render a group heading', () => {
+        cy.navigateToUrl(url);
+
         const expected = `1. ${TASKS.LIST.INITIAL_CHECKS.HEADING}`;
 
         cy.checkText(taskList.initialChecks.groupHeading(), expected);
@@ -49,6 +52,8 @@ context('Insurance - All sections - new application', () => {
 
       describe('tasks', () => {
         it('should render a `check eligibility` task with link and `completed` status', () => {
+          cy.navigateToUrl(url);
+
           const task = taskList.initialChecks.tasks.eligibility;
           const expectedLink = TASKS.LIST.INITIAL_CHECKS.TASKS.ELIGIBILITY;
 
@@ -65,12 +70,18 @@ context('Insurance - All sections - new application', () => {
 
     describe('`prepare application` group', () => {
       it('should render a group heading', () => {
+        cy.navigateToUrl(url);
+
         const expected = `2. ${TASKS.LIST.PREPARE_APPLICATION.HEADING}`;
 
         cy.checkText(taskList.prepareApplication.groupHeading(), expected);
       });
 
       describe('tasks', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+        });
+
         it('should render a `type of policy and exports` task with link and `not started` status', () => {
           const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
@@ -116,11 +127,17 @@ context('Insurance - All sections - new application', () => {
 
     describe('`submit application` group', () => {
       it('should render a group heading', () => {
+        cy.navigateToUrl(url);
+
         const expected = `3. ${TASKS.LIST.SUBMIT_APPLICATION.HEADING}`;
         cy.checkText(taskList.submitApplication.groupHeading(), expected);
       });
 
       describe('tasks', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+        });
+
         it('should render a `declarations` task with no link and `cannot start yet` status', () => {
           const task = taskList.submitApplication.tasks.declarations;
 
@@ -149,6 +166,10 @@ context('Insurance - All sections - new application', () => {
   });
 
   describe('submission deadline', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
     it('should render a heading', () => {
       insurance.allSectionsPage.submissionDeadlineHeading().should('exist');
       cy.checkText(insurance.allSectionsPage.submissionDeadlineHeading(), CONTENT_STRINGS.DEADLINE_TO_SUBMIT);
@@ -164,6 +185,10 @@ context('Insurance - All sections - new application', () => {
   });
 
   describe('reference number', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
     it('should render a heading', () => {
       insurance.allSectionsPage.yourReferenceNumberHeading().should('exist');
       cy.checkText(insurance.allSectionsPage.yourReferenceNumberHeading(), CONTENT_STRINGS.REFERENCE_NUMBER);

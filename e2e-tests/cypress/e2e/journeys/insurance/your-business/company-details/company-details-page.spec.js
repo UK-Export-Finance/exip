@@ -29,6 +29,7 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 context('Insurance - Your business - Company details page - As an Exporter I want to enter my business\'s CRN So that I can apply for UKEF Export Insurance policy', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -36,7 +37,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
 
       task.link().click();
 
-      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
       cy.url().should('eq', url);
     });
@@ -61,71 +62,77 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStart);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-  it('renders a heading caption', () => {
-    cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-  });
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', insuranceStart);
+    });
 
-  it('should display the companies house search box', () => {
-    companyDetails.companiesHouseSearch().should('exist');
+    it('renders a heading caption', () => {
+      cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
 
-    cy.checkText(companyDetails.companiesHouseSearchLabel(), FIELDS[INPUT].LABEL);
+    it('should display the companies house search box', () => {
+      companyDetails.companiesHouseSearch().should('exist');
 
-    companyDetails.companiesHouseSearchHint().contains(FIELDS[INPUT].HINT);
+      cy.checkText(companyDetails.companiesHouseSearchLabel(), FIELDS[INPUT].LABEL);
 
-    cy.checkText(companyDetails.companiesHouseSearchButton(), BUTTONS.SEARCH);
-  });
+      companyDetails.companiesHouseSearchHint().contains(FIELDS[INPUT].HINT);
 
-  it('should not display the companies house summary list', () => {
-    companyDetails.yourBusinessSummaryList().should('not.exist');
-  });
+      cy.checkText(companyDetails.companiesHouseSearchButton(), BUTTONS.SEARCH);
+    });
 
-  it('should display the no companies house link', () => {
-    cy.checkText(companyDetails.companiesHouseNoNumber(), CONTENT_STRINGS.NO_COMPANY_HOUSE_NUMER);
-  });
+    it('should not display the companies house summary list', () => {
+      companyDetails.yourBusinessSummaryList().should('not.exist');
+    });
 
-  it('should display the trading name radios', () => {
-    cy.checkText(companyDetails.tradingNameLabel(), FIELDS[TRADING_NAME].LABEL);
+    it('should display the no companies house link', () => {
+      cy.checkText(companyDetails.companiesHouseNoNumber(), CONTENT_STRINGS.NO_COMPANY_HOUSE_NUMER);
+    });
 
-    companyDetails.tradingNameYesRadioInput().should('exist');
+    it('should display the trading name radios', () => {
+      cy.checkText(companyDetails.tradingNameLabel(), FIELDS[TRADING_NAME].LABEL);
 
-    cy.checkAriaLabel(companyDetails.tradingNameYesRadioInput(), `${FIELDS[TRADING_NAME].LABEL} yes radio`);
+      companyDetails.tradingNameYesRadioInput().should('exist');
 
-    companyDetails.tradingNameNoRadioInput().should('exist');
+      cy.checkAriaLabel(companyDetails.tradingNameYesRadioInput(), `${FIELDS[TRADING_NAME].LABEL} yes radio`);
 
-    cy.checkAriaLabel(companyDetails.tradingNameNoRadioInput(), `${FIELDS[TRADING_NAME].LABEL} no radio`);
-  });
+      companyDetails.tradingNameNoRadioInput().should('exist');
 
-  it('should display the trading address radios', () => {
-    cy.checkText(companyDetails.tradingAddressLabel(), FIELDS[TRADING_ADDRESS].LABEL);
+      cy.checkAriaLabel(companyDetails.tradingNameNoRadioInput(), `${FIELDS[TRADING_NAME].LABEL} no radio`);
+    });
 
-    companyDetails.tradingAddressYesRadioInput().should('exist');
-    cy.checkAriaLabel(companyDetails.tradingAddressYesRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} yes radio`);
+    it('should display the trading address radios', () => {
+      cy.checkText(companyDetails.tradingAddressLabel(), FIELDS[TRADING_ADDRESS].LABEL);
 
-    companyDetails.tradingAddressNoRadioInput().should('exist');
-    cy.checkAriaLabel(companyDetails.tradingAddressNoRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} no radio`);
-  });
+      companyDetails.tradingAddressYesRadioInput().should('exist');
+      cy.checkAriaLabel(companyDetails.tradingAddressYesRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} yes radio`);
 
-  it('should display the company website text area', () => {
-    cy.checkText(companyDetails.companyWebsiteLabel(), FIELDS[WEBSITE].LABEL);
+      companyDetails.tradingAddressNoRadioInput().should('exist');
+      cy.checkAriaLabel(companyDetails.tradingAddressNoRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} no radio`);
+    });
 
-    companyDetails.companyWebsite().should('exist');
-    cy.checkAriaLabel(companyDetails.companyWebsite(), FIELDS[WEBSITE].LABEL);
-  });
+    it('should display the company website text area', () => {
+      cy.checkText(companyDetails.companyWebsiteLabel(), FIELDS[WEBSITE].LABEL);
 
-  it('should display the phone number text area', () => {
-    cy.checkText(companyDetails.phoneNumberLabel(), FIELDS[PHONE_NUMBER].LABEL);
+      companyDetails.companyWebsite().should('exist');
+      cy.checkAriaLabel(companyDetails.companyWebsite(), FIELDS[WEBSITE].LABEL);
+    });
 
-    cy.checkText(companyDetails.phoneNumberHint(), FIELDS[PHONE_NUMBER].HINT);
+    it('should display the phone number text area', () => {
+      cy.checkText(companyDetails.phoneNumberLabel(), FIELDS[PHONE_NUMBER].LABEL);
 
-    companyDetails.phoneNumber().should('exist');
-    cy.checkAriaLabel(companyDetails.phoneNumber(), FIELDS[PHONE_NUMBER].LABEL);
-  });
+      cy.checkText(companyDetails.phoneNumberHint(), FIELDS[PHONE_NUMBER].HINT);
 
-  it('should display save and go back button', () => {
-    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      companyDetails.phoneNumber().should('exist');
+      cy.checkAriaLabel(companyDetails.phoneNumber(), FIELDS[PHONE_NUMBER].LABEL);
+    });
+
+    it('should display save and go back button', () => {
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
   });
 });

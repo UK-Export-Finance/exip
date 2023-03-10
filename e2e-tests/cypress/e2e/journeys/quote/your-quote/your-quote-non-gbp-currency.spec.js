@@ -20,6 +20,8 @@ const {
 } = QUOTE;
 
 context('Get a quote/your quote page (non GBP currency) - as an exporter, I want to get an Export insurance quote', () => {
+  const url = ROUTES.QUOTE.YOUR_QUOTE;
+
   before(() => {
     cy.login();
 
@@ -33,15 +35,19 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
 
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
+    cy.url().should('include', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
+    cy.saveSession();
   });
 
   context('panel/quote', () => {
     context('summary list', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
       const { summaryList } = yourQuotePage.panel;
 
       it('renders `insured for` key and value with decimal points (no change link)', () => {

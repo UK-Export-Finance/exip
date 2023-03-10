@@ -4,17 +4,22 @@ import { cookiesPage } from '../../pages';
 import { FIELD_IDS, ROUTES } from '../../../../constants';
 
 context('Cookies consent - change via banner and cookies page', () => {
+  const cookiesPageUrl = ROUTES.COOKIES;
   beforeEach(() => {
+    cy.saveSession();
+
     cy.login();
   });
 
   context('User submits cookie consent in the banner as `accept` and navigates to the cookies page', () => {
     beforeEach(() => {
+      cy.navigateToUrl(cookiesPageUrl);
+
       partials.cookieBanner.question.acceptButton().click();
       partials.cookieBanner.hideButton().click();
 
       partials.footer.supportLinks.cookies().click();
-      cy.url().should('include', ROUTES.COOKIES);
+      cy.url().should('include', cookiesPageUrl);
 
       cy.checkAnalyticsScriptsAreRendered();
       cy.checkAnalyticsCookieIsTrue();
@@ -41,26 +46,31 @@ context('Cookies consent - change via banner and cookies page', () => {
     });
 
     it('should NOT render the cookie consent banner when going to another page', () => {
+      cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
+      submitButton().click();
+
       cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
 
-      partials.cookieBanner.heading().should('not.be.visible');
+      partials.cookieBanner.heading().should('not.exist');
       partials.cookieBanner.hideButton().should('not.exist');
-      partials.cookieBanner.cookiesLink().should('not.be.visible');
+      partials.cookieBanner.cookiesLink().should('not.exist');
 
-      partials.cookieBanner.question.copy1().should('not.be.visible');
-      partials.cookieBanner.question.copy2().should('not.be.visible');
-      partials.cookieBanner.question.acceptButton().should('not.be.visible');
-      partials.cookieBanner.question.rejectButton().should('not.be.visible');
+      partials.cookieBanner.question.copy1().should('not.exist');
+      partials.cookieBanner.question.copy2().should('not.exist');
+      partials.cookieBanner.question.acceptButton().should('not.exist');
+      partials.cookieBanner.question.rejectButton().should('not.exist');
     });
   });
 
   context('User submits cookie consent in the banner as `reject` and navigates to the cookies page', () => {
     beforeEach(() => {
+      cy.navigateToUrl(cookiesPageUrl);
+
       partials.cookieBanner.question.rejectButton().click();
       partials.cookieBanner.hideButton().click();
 
       partials.footer.supportLinks.cookies().click();
-      cy.url().should('include', ROUTES.COOKIES);
+      cy.url().should('include', cookiesPageUrl);
 
       cy.checkAnalyticsScriptsAreNotRendered();
       cy.checkAnalyticsCookieIsFalse();
@@ -89,14 +99,14 @@ context('Cookies consent - change via banner and cookies page', () => {
     it('should NOT render the cookie consent banner when going to another page', () => {
       cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
 
-      partials.cookieBanner.heading().should('not.be.visible');
+      partials.cookieBanner.heading().should('not.exist');
       partials.cookieBanner.hideButton().should('not.exist');
-      partials.cookieBanner.cookiesLink().should('not.be.visible');
+      partials.cookieBanner.cookiesLink().should('not.exist');
 
-      partials.cookieBanner.question.copy1().should('not.be.visible');
-      partials.cookieBanner.question.copy2().should('not.be.visible');
-      partials.cookieBanner.question.acceptButton().should('not.be.visible');
-      partials.cookieBanner.question.rejectButton().should('not.be.visible');
+      partials.cookieBanner.question.copy1().should('not.exist');
+      partials.cookieBanner.question.copy2().should('not.exist');
+      partials.cookieBanner.question.acceptButton().should('not.exist');
+      partials.cookieBanner.question.rejectButton().should('not.exist');
     });
   });
 });

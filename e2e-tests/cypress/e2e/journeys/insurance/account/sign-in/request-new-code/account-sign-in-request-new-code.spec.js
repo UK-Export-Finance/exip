@@ -14,6 +14,7 @@ const {
 } = ROUTES;
 
 context('Insurance - Account - Sign in - Request new code page- I want to enter the new security code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account', () => {
+  const url = `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`;
   before(() => {
     cy.navigateToUrl(START);
 
@@ -26,9 +27,7 @@ context('Insurance - Account - Sign in - Request new code page- I want to enter 
 
     enterCodePage.requestNewCodeLink().click();
 
-    const expected = `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`;
-
-    cy.url().should('eq', expected);
+    cy.url().should('eq', url);
   });
 
   beforeEach(() => {
@@ -48,45 +47,61 @@ context('Insurance - Account - Sign in - Request new code page- I want to enter 
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', START);
-  });
-
-  it('should render intro copy', () => {
-    cy.checkText(requestNewCodePage.intro(), CONTENT_STRINGS.INTRO);
-  });
-
-  describe('expandable details - do not have access to email', () => {
-    const { doNotHaveAccessToEmail } = requestNewCodePage;
-    const { DO_NOT_HAVE_EMAIL_ACCESS } = CONTENT_STRINGS;
-
-    it('renders summary text', () => {
-      cy.checkText(doNotHaveAccessToEmail.summary(), DO_NOT_HAVE_EMAIL_ACCESS.INTRO);
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
     });
 
-    it('clicking summary text reveals details', () => {
-      doNotHaveAccessToEmail.summary().click();
-
-      doNotHaveAccessToEmail.cannotAccess().should('be.visible');
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
-    it('renders expanded content', () => {
-      cy.checkText(doNotHaveAccessToEmail.cannotAccess(), DO_NOT_HAVE_EMAIL_ACCESS.CANNOT_ACCESS);
+    it('should render intro copy', () => {
+      cy.checkText(requestNewCodePage.intro(), CONTENT_STRINGS.INTRO);
+    });
 
-      cy.checkLink(
-        doNotHaveAccessToEmail.contactUsLink(),
-        DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.HREF,
-        DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.TEXT,
-      );
+    describe('expandable details - do not have access to email', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-      cy.checkText(doNotHaveAccessToEmail.outro(), DO_NOT_HAVE_EMAIL_ACCESS.OUTRO);
+      const { doNotHaveAccessToEmail } = requestNewCodePage;
+      const { DO_NOT_HAVE_EMAIL_ACCESS } = CONTENT_STRINGS;
+
+      it('renders summary text', () => {
+        cy.checkText(doNotHaveAccessToEmail.summary(), DO_NOT_HAVE_EMAIL_ACCESS.INTRO);
+      });
+
+      it('clicking summary text reveals details', () => {
+        doNotHaveAccessToEmail.summary().click();
+
+        doNotHaveAccessToEmail.cannotAccess().should('be.visible');
+      });
+
+      it('renders expanded content', () => {
+        doNotHaveAccessToEmail.summary().click();
+
+        cy.checkText(doNotHaveAccessToEmail.cannotAccess(), DO_NOT_HAVE_EMAIL_ACCESS.CANNOT_ACCESS);
+
+        cy.checkLink(
+          doNotHaveAccessToEmail.contactUsLink(),
+          DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.HREF,
+          DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.TEXT,
+        );
+
+        cy.checkText(doNotHaveAccessToEmail.outro(), DO_NOT_HAVE_EMAIL_ACCESS.OUTRO);
+      });
     });
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${ENTER_CODE}`, () => {
-      submitButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      submitButton().click();
+    });
+
+    it(`should redirect to ${ENTER_CODE}`, () => {
       const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
       cy.url().should('eq', expected);
     });

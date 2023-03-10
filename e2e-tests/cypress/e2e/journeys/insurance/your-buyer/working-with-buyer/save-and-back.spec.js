@@ -52,9 +52,13 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
   });
 
   describe('when submitting an empty form', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      saveAndBackButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
@@ -65,13 +69,15 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
   });
 
   describe('when submitting a partially entered form', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
 
       workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
 
       saveAndBackButton().click();
+    });
 
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
@@ -92,14 +98,16 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
   });
 
   describe('when submitting a fully filled form', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
 
       workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
       workingWithBuyerPage[TRADED_WITH_BUYER].noRadioInput().click();
 
       saveAndBackButton().click();
+    });
 
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 

@@ -69,6 +69,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     describe('form submission with a new answer', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         workingWithBuyerPage[fieldId].noRadioInput().click();
@@ -102,6 +103,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     describe('form submission with a new answer', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         workingWithBuyerPage[fieldId].noRadioInput().click();

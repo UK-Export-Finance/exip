@@ -40,7 +40,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
+    cy.saveSession();
   });
 
   it('should get a quote with a large contract value and render in the correct format', () => {
