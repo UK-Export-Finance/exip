@@ -43,6 +43,7 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 context('Insurance - Policy and exports - About goods or services page - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -55,9 +56,9 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
       cy.completeAndSubmitSingleContractPolicyForm();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.url().should('eq', url);
     });
   });
 
@@ -77,48 +78,56 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     });
   });
 
-  it('renders a heading caption', () => {
-    cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-  it('renders `description` label, hint, prefix and input', () => {
-    const fieldId = DESCRIPTION;
-    const field = aboutGoodsOrServicesPage[fieldId];
+    it('renders a heading caption', () => {
+      cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
+    it('renders `description` label, hint, prefix and input', () => {
+      const fieldId = DESCRIPTION;
+      const field = aboutGoodsOrServicesPage[fieldId];
 
-    cy.checkText(field.hint.intro(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.INTRO);
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
 
-    cy.checkText(field.hint.list.item1(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[0]);
+      cy.checkText(field.hint.intro(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.INTRO);
 
-    cy.checkText(field.hint.list.item2(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[1]);
+      cy.checkText(field.hint.list.item1(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[0]);
 
-    cy.checkText(field.hint.list.item3(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[2]);
+      cy.checkText(field.hint.list.item2(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[1]);
 
-    field.input().should('exist');
-  });
+      cy.checkText(field.hint.list.item3(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[2]);
 
-  it('renders `final destination` label and input with disabled first input', () => {
-    const fieldId = FINAL_DESTINATION;
-    const field = aboutGoodsOrServicesPage[fieldId];
+      field.input().should('exist');
+    });
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
+    it('renders `final destination` label and input with disabled first input', () => {
+      const fieldId = FINAL_DESTINATION;
+      const field = aboutGoodsOrServicesPage[fieldId];
 
-    field.input().should('exist');
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
 
-    field.inputFirstOption().should('be.disabled');
-  });
+      field.input().should('exist');
 
-  it('renders a `save and back` button', () => {
-    saveAndBackButton().should('exist');
+      field.inputFirstOption().should('be.disabled');
+    });
 
-    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('renders a `save and back` button', () => {
+      saveAndBackButton().should('exist');
+
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
   });
 
   describe('form submission', () => {
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      cy.navigateToUrl(url);
+
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -127,6 +136,10 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
     describe('after submitting the form', () => {
       it('should retain the `type of policy and exports` task status as `completed`', () => {
+        cy.navigateToUrl(url);
+
+        cy.completeAndSubmitAboutGoodsOrServicesForm();
+
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
         const expected = TASKS.STATUS.COMPLETED;
@@ -136,6 +149,10 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
     describe('when going back to the page', () => {
       it('should have the submitted values', () => {
+        cy.navigateToUrl(url);
+
+        cy.completeAndSubmitAboutGoodsOrServicesForm();
+
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
 
         aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.POLICY_AND_EXPORTS[DESCRIPTION]);
@@ -149,7 +166,13 @@ context('Insurance - Policy and exports - About goods or services page - As an e
       const descriptionField = aboutGoodsOrServicesPage[DESCRIPTION];
       const submittedValue = '1234';
 
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        cy.completeAndSubmitAboutGoodsOrServicesForm();
+
+        cy.clickBackLink();
+
         cy.keyboardInput(descriptionField.input(), submittedValue);
         submitButton().click();
       });

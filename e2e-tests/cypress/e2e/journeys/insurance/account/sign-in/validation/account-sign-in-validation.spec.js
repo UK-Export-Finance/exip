@@ -28,18 +28,22 @@ const assertAllFieldErrors = () => {
 };
 
 context('Insurance - Account - Sign in - Validation', () => {
+  let url;
+
   before(() => {
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountSignIn();
 
-    const expected = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
+    url = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
 
-    cy.url().should('eq', expected);
+    cy.url().should('eq', url);
   });
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   it('should render validation errors for all required fields', () => {
@@ -48,57 +52,47 @@ context('Insurance - Account - Sign in - Validation', () => {
     assertAllFieldErrors();
   });
 
-  describe('when email is provided, but password is not', () => {
-    it('should render a validation error for both fields', () => {
-      cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
+  it('should render a validation error for both fields when email is provided, but password is not', () => {
+    cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
 
-      submitButton().click();
+    submitButton().click();
 
-      assertAllFieldErrors();
-    });
+    assertAllFieldErrors();
   });
 
-  describe('when password is provided, but email is not', () => {
-    it('should render a validation error for both fields', () => {
-      accountFormFields[EMAIL].input().clear();
-      cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
+  it('should render a validation error for both fields when password is provided, but email is not', () => {
+    accountFormFields[EMAIL].input().clear();
+    cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
 
-      submitButton().click();
+    submitButton().click();
 
-      assertAllFieldErrors();
-    });
+    assertAllFieldErrors();
   });
 
-  describe('when email and password are provided, but email is incorrect', () => {
-    it('should render a validation error for both fields', () => {
-      cy.keyboardInput(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
-      cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
+  it('should render a validation error for both fields when email and password are provided, but email is incorrect', () => {
+    cy.keyboardInput(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
+    cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
 
-      submitButton().click();
+    submitButton().click();
 
-      assertAllFieldErrors();
-    });
+    assertAllFieldErrors();
   });
 
-  describe('when email and password are provided, but password is incorrect', () => {
-    it('should render a validation error for both fields', () => {
-      cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
-      cy.keyboardInput(accountFormFields[PASSWORD].input(), `incorrect-${account[PASSWORD]}`);
+  it('should render a validation error for both fields when email and password are provided, but password is incorrect', () => {
+    cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
+    cy.keyboardInput(accountFormFields[PASSWORD].input(), `incorrect-${account[PASSWORD]}`);
 
-      submitButton().click();
+    submitButton().click();
 
-      assertAllFieldErrors();
-    });
+    assertAllFieldErrors();
   });
 
-  describe('when email and password are provided and both are incorrect', () => {
-    it('should render a validation error for both fields', () => {
-      cy.keyboardInput(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
-      cy.keyboardInput(accountFormFields[PASSWORD].input(), `incorrect-${account[PASSWORD]}`);
+  it('should render a validation error for both fields when email and password are provided and both are incorrect', () => {
+    cy.keyboardInput(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
+    cy.keyboardInput(accountFormFields[PASSWORD].input(), `incorrect-${account[PASSWORD]}`);
 
-      submitButton().click();
+    submitButton().click();
 
-      assertAllFieldErrors();
-    });
+    assertAllFieldErrors();
   });
 });

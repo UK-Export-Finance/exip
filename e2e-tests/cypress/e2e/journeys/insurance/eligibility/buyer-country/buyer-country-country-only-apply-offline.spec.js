@@ -5,11 +5,19 @@ import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../s
 const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
 
 context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based - submit country that can only apply offline/via a physical form', () => {
+  const buyerCountryUrl = ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY;
+
   before(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
+
+    cy.navigateToUrl(buyerCountryUrl);
 
     cy.keyboardInput(buyerCountryPage.searchInput(), COUNTRY_NAME_APPLY_OFFLINE_ONLY);
 
@@ -17,10 +25,6 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     results.first().click();
 
     submitButton().click();
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
   });
 
   it('redirects to `apply offline` exit page', () => {
@@ -35,11 +39,9 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     backLink().should('have.attr', 'href', expected);
   });
 
-  describe('when going back to the page', () => {
-    it('should NOT have the originally submitted answer selected', () => {
-      cy.clickBackLink();
+  it('should NOT have the originally submitted answer selected when going back to the page', () => {
+    cy.clickBackLink();
 
-      buyerCountryPage.results().should('have.length', 0);
-    });
+    buyerCountryPage.results().should('have.length', 0);
   });
 });

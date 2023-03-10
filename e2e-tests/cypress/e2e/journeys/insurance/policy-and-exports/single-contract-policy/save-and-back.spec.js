@@ -38,6 +38,8 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 context('Insurance - Policy and exports - Single contract policy page - Save and go back', () => {
   let referenceNumber;
+  let url;
+
   const date = new Date();
   const futureDate = add(date, { months: 3 });
 
@@ -49,8 +51,9 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
-      cy.url().should('eq', expected);
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
+
+      cy.url().should('eq', url);
     });
   });
 
@@ -63,9 +66,13 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      saveAndBackButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
@@ -79,10 +86,8 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
   describe('when entering an invalid requested cover start date and submitting the form via `save and go back` button', () => {
     const field = singleContractPolicyPage[REQUESTED_START_DATE];
 
-    before(() => {
-      // go back to the page via the task list
-      task.link().click();
-      submitButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
       // enter an invalid date
       const yesterday = sub(date, { days: 1 });
@@ -90,11 +95,11 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
       cy.keyboardInput(field.dayInput(), getDate(yesterday));
       cy.keyboardInput(field.monthInput(), getMonth(yesterday));
       cy.keyboardInput(field.yearInput(), getYear(yesterday));
+
+      saveAndBackButton().click();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      saveAndBackButton().click();
-
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
@@ -104,24 +109,22 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
       cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
     });
 
-    describe('when going back to the page', () => {
-      before(() => {
-        task.link().click();
-        submitButton().click();
-      });
+    it('should not have saved the submitted values  going back to the page', () => {
+      task.link().click();
+      submitButton().click();
 
-      it('should not have saved the submitted values', () => {
-        field.dayInput().should('have.value', '');
-        field.monthInput().should('have.value', '');
-        field.yearInput().should('have.value', '');
-      });
+      field.dayInput().should('have.value', '');
+      field.monthInput().should('have.value', '');
+      field.yearInput().should('have.value', '');
     });
   });
 
   describe('when entering a valid requested cover start date and submitting the form via `save and go back` button', () => {
     const field = singleContractPolicyPage[REQUESTED_START_DATE];
 
-    before(() => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(field.dayInput(), '1');
       cy.keyboardInput(field.monthInput(), getMonth(futureDate));
       cy.keyboardInput(field.yearInput(), getYear(futureDate));
@@ -139,24 +142,22 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
       cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
     });
 
-    describe('when going back to the page', () => {
-      before(() => {
-        task.link().click();
-        submitButton().click();
-      });
+    it('should have the submitted values when going back to the page', () => {
+      task.link().click();
+      submitButton().click();
 
-      it('should have the submitted values', () => {
-        field.dayInput().should('have.value', '1');
-        field.monthInput().should('have.value', getMonth(futureDate));
-        field.yearInput().should('have.value', getYear(futureDate));
-      });
+      field.dayInput().should('have.value', '1');
+      field.monthInput().should('have.value', getMonth(futureDate));
+      field.yearInput().should('have.value', getYear(futureDate));
     });
   });
 
   describe('when removing a previously submitted `buyer credit period` value', () => {
     const field = singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
 
-    before(() => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
       // submit a value
       cy.keyboardInput(field.input(), 'Test');
       saveAndBackButton().click();
@@ -178,15 +179,11 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
       cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
     });
 
-    describe('when going back to the page', () => {
-      before(() => {
-        task.link().click();
-        submitButton().click();
-      });
+    it('should have no value in `buyer credit period` when going back to the page', () => {
+      task.link().click();
+      submitButton().click();
 
-      it('should have no value in `buyer credit period`', () => {
-        field.input().should('have.value', '');
-      });
+      field.input().should('have.value', '');
     });
   });
 });

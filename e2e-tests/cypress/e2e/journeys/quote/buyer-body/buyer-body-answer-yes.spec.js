@@ -7,18 +7,22 @@ import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country - submit `buyer is a government or public sector body`', () => {
+  const url = ROUTES.QUOTE.BUYER_BODY;
+
   before(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
-
-    yesRadio().click();
-    submitButton().click();
+    cy.url().should('include', url);
   });
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
+
+    yesRadio().click();
+    submitButton().click();
   });
 
   it('redirects to exit page', () => {
@@ -28,7 +32,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   it('renders a back link with correct url', () => {
     backLink().should('exist');
 
-    backLink().should('have.attr', 'href', ROUTES.QUOTE.BUYER_BODY);
+    backLink().should('have.attr', 'href', url);
   });
 
   it('renders a specific reason and description', () => {

@@ -14,30 +14,35 @@ import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
 context('Tell us about your single policy page - as an exporter, I want to provide my Export insurance policy details', () => {
-  describe('rendering', () => {
-    before(() => {
-      cy.login();
+  const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
-      completeAndSubmitBuyerCountryForm();
-      completeAndSubmitBuyerBodyForm();
-      completeAndSubmitExporterLocationForm();
-      completeAndSubmitUkContentForm();
-      completeAndSubmitPolicyTypeSingleForm();
+  before(() => {
+    cy.login();
 
-      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerBodyForm();
+    completeAndSubmitExporterLocationForm();
+    completeAndSubmitUkContentForm();
+    completeAndSubmitPolicyTypeSingleForm();
+
+    cy.url().should('include', url);
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
+  });
+
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE,
+      currentHref: url,
+      backLink: ROUTES.QUOTE.POLICY_TYPE,
     });
+  });
 
+  describe('page tests', () => {
     beforeEach(() => {
-      Cypress.Cookies.preserveOnce('_csrf');
-      Cypress.Cookies.preserveOnce('exip-session');
-    });
-
-    it('renders core page elements', () => {
-      cy.corePageChecks({
-        pageTitle: CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE,
-        currentHref: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
-        backLink: ROUTES.QUOTE.POLICY_TYPE,
-      });
+      cy.navigateToUrl(url);
     });
 
     it('renders `currency and amount` legend', () => {
@@ -116,6 +121,8 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
   describe('when form is valid', () => {
     it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, () => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), '100');
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(GBP_CURRENCY_CODE);
       tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');

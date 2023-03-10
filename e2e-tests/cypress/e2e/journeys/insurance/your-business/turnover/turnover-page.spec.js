@@ -34,6 +34,7 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 context('Insurance - Your business - Turnover page - As an Exporter I want to enter the I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
+  let url;
   let brokerUrl;
 
   before(() => {
@@ -45,7 +46,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
       brokerUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
 
       cy.url().should('eq', url);
@@ -68,56 +69,64 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStart);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-  it('renders a heading caption', () => {
-    cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-  });
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', insuranceStart);
+    });
 
-  it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
-    const fieldId = FINANCIAL_YEAR_END_DATE;
-    const field = turnover[fieldId];
+    it('renders a heading caption', () => {
+      cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
 
-    field.value().should('exist');
-    cy.checkText(field.value(), application.EXPORTER_COMPANY[fieldId]);
+    it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
+      const fieldId = FINANCIAL_YEAR_END_DATE;
+      const field = turnover[fieldId];
 
-    cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
+      field.value().should('exist');
+      cy.checkText(field.value(), application.EXPORTER_COMPANY[fieldId]);
 
-    field.hint().contains(FIELDS.TURNOVER[fieldId].HINT);
-  });
+      cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
 
-  it(`should display ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {
-    const fieldId = ESTIMATED_ANNUAL_TURNOVER;
-    const field = turnover[fieldId];
+      field.hint().contains(FIELDS.TURNOVER[fieldId].HINT);
+    });
 
-    field.input().should('exist');
+    it(`should display ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {
+      const fieldId = ESTIMATED_ANNUAL_TURNOVER;
+      const field = turnover[fieldId];
 
-    cy.checkText(field.heading(), FIELDS.TURNOVER[fieldId].HEADING);
+      field.input().should('exist');
 
-    cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
+      cy.checkText(field.heading(), FIELDS.TURNOVER[fieldId].HEADING);
 
-    cy.checkText(field.prefix(), FIELDS.TURNOVER[fieldId].PREFIX);
-  });
+      cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
 
-  it(`should display ${PERCENTAGE_TURNOVER} section`, () => {
-    const fieldId = PERCENTAGE_TURNOVER;
-    const field = turnover[fieldId];
+      cy.checkText(field.prefix(), FIELDS.TURNOVER[fieldId].PREFIX);
+    });
 
-    field.input().should('exist');
+    it(`should display ${PERCENTAGE_TURNOVER} section`, () => {
+      const fieldId = PERCENTAGE_TURNOVER;
+      const field = turnover[fieldId];
 
-    cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
+      field.input().should('exist');
 
-    cy.checkText(field.suffix(), FIELDS.TURNOVER[fieldId].SUFFIX);
-  });
+      cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
 
-  it('should display save and go back button', () => {
-    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.checkText(field.suffix(), FIELDS.TURNOVER[fieldId].SUFFIX);
+    });
+
+    it('should display save and go back button', () => {
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
   });
 
   describe('form submission', () => {
     it(`should redirect to ${BROKER}`, () => {
+      cy.navigateToUrl(url);
+
       cy.completeAndSubmitTurnoverForm();
 
       cy.url().should('eq', brokerUrl);
@@ -126,7 +135,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
   describe('when going back to the page', () => {
     it('should have the submitted values', () => {
-      cy.navigateToUrl(`${ROOT}/${referenceNumber}${TURNOVER}`);
+      cy.navigateToUrl(url);
 
       cy.checkText(turnover[FINANCIAL_YEAR_END_DATE].value(), application.EXPORTER_COMPANY[FINANCIAL_YEAR_END_DATE]);
       turnover[ESTIMATED_ANNUAL_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);

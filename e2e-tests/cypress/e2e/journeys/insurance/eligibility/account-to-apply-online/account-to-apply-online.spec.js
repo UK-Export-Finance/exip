@@ -23,14 +23,16 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
 
 context('Insurance - Eligibility - Account to apply online page - I want to confirm that I have an account for UKEF digital servicel so that I can get guidance on how to sign in to my digital account that I can use for UKEF Export Insurance Applications', () => {
+  let url;
+
   before(() => {
     cy.navigateToUrl(START);
 
     cy.submitInsuranceEligibilityAnswersHappyPath();
 
-    const expected = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
+    url = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
 
-    cy.url().should('eq', expected);
+    cy.url().should('eq', url);
   });
 
   beforeEach(() => {
@@ -45,27 +47,37 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', START);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-  it('renders yes and no radio buttons with a hint', () => {
-    yesRadio().should('exist');
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', START);
+    });
 
-    cy.checkText(yesRadio(), 'Yes');
+    it('renders yes and no radio buttons with a hint', () => {
+      yesRadio().should('exist');
 
-    noRadio().should('exist');
+      cy.checkText(yesRadio(), 'Yes');
 
-    cy.checkText(noRadio(), 'No');
+      noRadio().should('exist');
 
-    cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
+      cy.checkText(noRadio(), 'No');
+
+      cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
+    });
   });
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
-      it('should render validation errors', () => {
-        submitButton().click();
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
+        submitButton().click();
+      });
+
+      it('should render validation errors', () => {
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
@@ -77,8 +89,6 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
       });
 
       it('should focus on input when clicking summary error message', () => {
-        submitButton().click();
-
         partials.errorSummaryListItemLinks().eq(0).click();
         yesRadioInput().should('have.focus');
       });
@@ -86,6 +96,8 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
 
     describe('when submitting the answer as `yes`', () => {
       it(`should redirect to ${SIGN_IN.ROOT}`, () => {
+        cy.navigateToUrl(url);
+
         yesRadioInput().click();
         submitButton().click();
 

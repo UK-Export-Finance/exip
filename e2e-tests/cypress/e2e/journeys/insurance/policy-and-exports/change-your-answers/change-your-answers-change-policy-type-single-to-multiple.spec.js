@@ -84,6 +84,8 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
     beforeEach(() => {
       cy.navigateToUrl(url);
 
+      summaryList[fieldId].changeLink().click();
+
       typeOfPolicyPage[fieldId].multiple.input().click();
       submitButton().click();
     });
