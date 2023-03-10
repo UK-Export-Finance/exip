@@ -9,10 +9,12 @@ import { submitButton } from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 context('Tell us about the policy you need page - form validation', () => {
+  const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
+
   beforeEach(() => {
     cy.saveSession();
   });
@@ -29,6 +31,8 @@ context('Tell us about the policy you need page - form validation', () => {
     });
 
     beforeEach(() => {
+      cy.navigateToUrl(url);
+
       submitButton().click();
     });
 
@@ -89,7 +93,10 @@ context('Tell us about the policy you need page - form validation', () => {
 
   describe('when `contract value` has a non-numeric value', () => {
     it('should render a validation error', () => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), 'a');
+
       submitButton().click();
 
       cy.checkText(
@@ -106,7 +113,10 @@ context('Tell us about the policy you need page - form validation', () => {
 
   describe('when `contract value` is not a whole number', () => {
     it('should render a validation error', () => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), '1234.56');
+
       submitButton().click();
 
       cy.checkText(
@@ -123,7 +133,10 @@ context('Tell us about the policy you need page - form validation', () => {
 
   describe('when `contract value` has a value less than the minimum', () => {
     it('should render a validation error', () => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), '0');
+
       submitButton().click();
 
       cy.checkText(
@@ -140,7 +153,10 @@ context('Tell us about the policy you need page - form validation', () => {
 
   describe('with any validation error', () => {
     it('should render submitted values', () => {
+      cy.navigateToUrl(url);
+
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(GBP_CURRENCY_CODE);
+
       cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), '10');
 
       submitButton().click();

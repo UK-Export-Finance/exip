@@ -41,38 +41,60 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   describe('continue to next page', () => {
-    it('should not display any validation errors required fields entered correctly', () => {
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-      companyDetails.tradingNameYesRadioInput().click();
-      companyDetails.tradingAddressYesRadioInput().click();
-      submitButton().click();
+    describe('when required fields entered correctly', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+
+        companyDetails.tradingNameYesRadioInput().click();
+        companyDetails.tradingAddressYesRadioInput().click();
+
+        submitButton().click();
+      });
+
+      it(`should redirect to ${natureOfBusinessUrl}`, () => {
+        cy.url().should('eq', natureOfBusinessUrl);
+      });
     });
 
-    it(`should redirect to ${natureOfBusinessUrl}`, () => {
-      cy.url().should('eq', natureOfBusinessUrl);
-    });
+    describe('when required and optional fields are entered correctly', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-    it('should not display any validation errors if required and optional fields entered correctly', () => {
-      cy.navigateToUrl(url);
+        cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
 
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-      companyDetails.tradingNameYesRadioInput().click();
-      companyDetails.tradingAddressYesRadioInput().click();
-      cy.keyboardInput(companyDetails.phoneNumber(), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
-      cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
-      submitButton().click();
-    });
+        companyDetails.tradingNameYesRadioInput().click();
+        companyDetails.tradingAddressYesRadioInput().click();
 
-    it(`should redirect to ${natureOfBusinessUrl}`, () => {
-      cy.url().should('eq', natureOfBusinessUrl);
+        cy.keyboardInput(companyDetails.phoneNumber(), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+        cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
+
+        submitButton().click();
+      });
+
+      it(`should redirect to ${natureOfBusinessUrl}`, () => {
+        cy.url().should('eq', natureOfBusinessUrl);
+      });
     });
   });
 
   describe('when resubmitting company number on company details page', () => {
-    before(() => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
       // navigate back to company details page from nature of business
       cy.clickBackLink();
+
       // resubmit form
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+
+      companyDetails.tradingNameYesRadioInput().click();
+      companyDetails.tradingAddressYesRadioInput().click();
+
+      cy.keyboardInput(companyDetails.phoneNumber(), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+      cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
+
       submitButton().click();
       // return to company details page after redirect to nature of business
       cy.clickBackLink();

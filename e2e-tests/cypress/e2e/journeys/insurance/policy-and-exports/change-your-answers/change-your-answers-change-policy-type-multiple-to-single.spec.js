@@ -63,13 +63,11 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
   const fieldId = POLICY_TYPE;
 
   describe('when clicking the `change` link', () => {
-    before(() => {
+    it(`should redirect to ${TYPE_OF_POLICY_CHANGE}`, () => {
       cy.navigateToUrl(url);
 
       summaryList[fieldId].changeLink().click();
-    });
 
-    it(`should redirect to ${TYPE_OF_POLICY_CHANGE}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHANGE}#heading`;
 
       cy.url().should('eq', expected);
@@ -80,7 +78,10 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
     beforeEach(() => {
       cy.navigateToUrl(url);
 
+      summaryList[fieldId].changeLink().click();
+
       typeOfPolicyPage[fieldId].single.input().click();
+
       submitButton().click();
     });
 
