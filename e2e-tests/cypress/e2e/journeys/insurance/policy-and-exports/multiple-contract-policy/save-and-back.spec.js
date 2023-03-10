@@ -32,6 +32,7 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 context('Insurance - Policy and exports - Multiple contract policy page - Save and go back', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -41,8 +42,9 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
-      cy.url().should('eq', expected);
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
+
+      cy.url().should('eq', url);
     });
   });
 
@@ -55,9 +57,13 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      saveAndBackButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
@@ -72,17 +78,15 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
     const field = multipleContractPolicyPage[TOTAL_SALES_TO_BUYER];
     const invalidValue = 'Not a number';
 
-    before(() => {
-      // go back to the page via the task list
-      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
-      submitButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
       cy.keyboardInput(field.input(), invalidValue);
+
+      saveAndBackButton().click();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      saveAndBackButton().click();
-
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', expected);
@@ -93,8 +97,15 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
     });
 
     describe('when going back to the page', () => {
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        cy.keyboardInput(field.input(), invalidValue);
+
+        saveAndBackButton().click();
+
         taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
+
         submitButton().click();
       });
 
@@ -107,7 +118,9 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
   describe('when entering a valid total sales to buyer and submitting the form via `save and go back` button', () => {
     const field = multipleContractPolicyPage[TOTAL_SALES_TO_BUYER];
 
-    before(() => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(field.input(), application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
 
       saveAndBackButton().click();
@@ -124,7 +137,13 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
     });
 
     describe('when going back to the page', () => {
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        cy.keyboardInput(field.input(), application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
+
+        saveAndBackButton().click();
+
         taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
         submitButton().click();
       });
@@ -138,7 +157,9 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
   describe('when removing a previously submitted `buyer credit period` value', () => {
     const field = multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
 
-    before(() => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
       // submit a value
       cy.keyboardInput(field.input(), 'Test');
       saveAndBackButton().click();
@@ -161,7 +182,19 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
     });
 
     describe('when going back to the page', () => {
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        // submit a value
+        cy.keyboardInput(field.input(), 'Test');
+        saveAndBackButton().click();
+
+        // go back to the page
+        cy.clickBackLink();
+
+        field.input().clear();
+        saveAndBackButton().click();
+
         task.link().click();
         submitButton().click();
       });

@@ -43,107 +43,81 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {
     cy.deleteAccount();
   });
 
-  describe(`${FIELD_ID} error`, () => {
-    describe(`when ${FIELD_ID} is left empty`, () => {
-      const errorMessage = ERROR_MESSAGE.IS_EMPTY;
+  it(`should display validation errors when ${FIELD_ID} is left empty`, () => {
+    const errorMessage = ERROR_MESSAGE.IS_EMPTY;
 
-      it(`should display validation errors if ${FIELD_ID} left empty`, () => {
-        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-        const value = null;
+    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+    const value = null;
 
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
-      });
-    });
-
-    describe(`when ${FIELD_ID} is a decimal place number`, () => {
-      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-
-      it(`should display validation errors for ${FIELD_ID}`, () => {
-        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-        const value = '5.5';
-
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
-      });
-    });
-
-    describe(`when ${FIELD_ID} has special characters`, () => {
-      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-
-      it(`should display validation errors for ${FIELD_ID}`, () => {
-        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-        const value = '5O';
-
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
-      });
-    });
-
-    describe(`when ${FIELD_ID} is negative but has a decimal place`, () => {
-      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-
-      it(`should display validation errors for ${FIELD_ID}`, () => {
-        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-        const value = '-256.123';
-
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
-      });
-    });
+    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
-  describe(`when ${FIELD_ID} is correctly entered as a whole number`, () => {
-    it('should not display validation errors', () => {
-      cy.navigateToUrl(url);
+  it(`should display validation errors when ${FIELD_ID} is a decimal place number`, () => {
+    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
+    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+    const value = '5.5';
 
-      const fieldId = FIELD_ID;
-      const field = turnover[fieldId];
-
-      cy.keyboardInput(field.input(), '5');
-      submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 1);
-    });
+    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
-  describe(`when ${FIELD_ID} is correctly entered with a comma`, () => {
-    it('should not display validation errors', () => {
-      cy.navigateToUrl(url);
+  it(`should display validation errors when ${FIELD_ID} has special characters`, () => {
+    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
+    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+    const value = '5O';
 
-      const fieldId = FIELD_ID;
-      const field = turnover[fieldId];
-
-      cy.keyboardInput(field.input(), '5,00');
-      submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 1);
-    });
+    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
-  describe(`when ${FIELD_ID} is correctly entered as 0`, () => {
-    it('should not display validation errors', () => {
-      cy.navigateToUrl(url);
+  it(`should display validation errors when ${FIELD_ID} is negative but has a decimal place`, () => {
+    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
 
-      const fieldId = FIELD_ID;
-      const field = turnover[fieldId];
+    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+    const value = '-256.123';
 
-      cy.keyboardInput(field.input(), '0');
-      submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 1);
-    });
+    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
-  describe(`when ${FIELD_ID} is correctly entered as a negative number`, () => {
-    it('should not display validation errors', () => {
-      cy.navigateToUrl(url);
+  it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as a whole number`, () => {
+    const fieldId = FIELD_ID;
+    const field = turnover[fieldId];
 
-      const fieldId = FIELD_ID;
-      const field = turnover[fieldId];
+    cy.keyboardInput(field.input(), '5');
+    submitButton().click();
+    partials.errorSummaryListItems().should('have.length', 1);
+  });
 
-      cy.keyboardInput(field.input(), '-256');
-      submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 1);
-    });
+  it(`should NOT display validation errors when ${FIELD_ID} is correctly entered with a comma`, () => {
+    const fieldId = FIELD_ID;
+    const field = turnover[fieldId];
+
+    cy.keyboardInput(field.input(), '5,00');
+    submitButton().click();
+    partials.errorSummaryListItems().should('have.length', 1);
+  });
+
+  it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as 0`, () => {
+    const fieldId = FIELD_ID;
+    const field = turnover[fieldId];
+
+    cy.keyboardInput(field.input(), '0');
+    submitButton().click();
+    partials.errorSummaryListItems().should('have.length', 1);
+  });
+
+  it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as a negative number`, () => {
+    const fieldId = FIELD_ID;
+    const field = turnover[fieldId];
+
+    cy.keyboardInput(field.input(), '-256');
+    submitButton().click();
+    partials.errorSummaryListItems().should('have.length', 1);
   });
 });
