@@ -25,48 +25,47 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Company or organisation page - form validation - address', () => {
+  let url;
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       task.link().click();
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
 
-      cy.url().should('eq', expected);
+      cy.url().should('eq', url);
     });
   });
 
+  const field = companyOrOrganisationPage[ADDRESS];
+  const submittedValue = 'a'.repeat(301);
+
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
+
+    cy.keyboardInput(field.input(), submittedValue);
+
+    submitButton().click();
   });
 
   after(() => {
     cy.deleteAccount();
   });
 
-  const field = companyOrOrganisationPage[ADDRESS];
+  it('should render a validation error when address is above the maximum', () => {
+    cy.checkText(
+      partials.errorSummaryListItems().eq(1),
+      COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].ABOVE_MAXIMUM,
+    );
 
-  describe('when address is above the maximum', () => {
-    const submittedValue = 'a'.repeat(301);
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].ABOVE_MAXIMUM}`,
+    );
+  });
 
-    before(() => {
-      cy.keyboardInput(field.input(), submittedValue);
-      submitButton().click();
-    });
-
-    it('should render a validation error', () => {
-      cy.checkText(
-        partials.errorSummaryListItems().eq(1),
-        COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].ABOVE_MAXIMUM,
-      );
-
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].ABOVE_MAXIMUM}`,
-      );
-    });
-
-    it('should retain the submitted value', () => {
-      field.input().should('have.value', submittedValue);
-    });
+  it('should retain the submitted value', () => {
+    field.input().should('have.value', submittedValue);
   });
 });

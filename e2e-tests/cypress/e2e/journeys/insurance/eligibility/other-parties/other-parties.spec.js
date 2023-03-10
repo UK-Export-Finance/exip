@@ -20,6 +20,8 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED;
 const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - Other parties page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if there are other parties involved in the export', () => {
+  let url;
+
   before(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
@@ -31,9 +33,9 @@ context('Insurance - Other parties page - I want to check if I can use online se
     completeInsuredAmountForm();
     completeInsuredPeriodForm();
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED}`;
+    url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED}`;
 
-    cy.url().should('eq', expected);
+    cy.url().should('eq', url);
   });
 
   beforeEach(() => {
@@ -48,52 +50,66 @@ context('Insurance - Other parties page - I want to check if I can use online se
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-  });
-
-  it('renders `yes` radio button', () => {
-    yesRadio().should('exist');
-
-    cy.checkText(yesRadio(), 'Yes');
-  });
-
-  it('renders `no` radio button', () => {
-    noRadio().should('exist');
-
-    cy.checkText(noRadio(), 'No');
-  });
-
-  describe('expandable details', () => {
-    it('renders summary text', () => {
-      insurance.eligibility.otherPartiesPage.description.summary().should('exist');
-
-      cy.checkText(insurance.eligibility.otherPartiesPage.description.summary(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.INTRO);
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
     });
 
-    it('clicking summary text reveals details', () => {
-      insurance.eligibility.otherPartiesPage.description.summary().click();
-
-      insurance.eligibility.otherPartiesPage.description.list.intro().should('be.visible');
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
     });
 
-    it('renders expanded content', () => {
-      cy.checkText(insurance.eligibility.otherPartiesPage.description.list.intro(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST_INTRO);
+    it('renders `yes` radio button', () => {
+      yesRadio().should('exist');
 
-      cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item1(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[0].TEXT);
+      cy.checkText(yesRadio(), 'Yes');
+    });
 
-      cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item2(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[1].TEXT);
+    it('renders `no` radio button', () => {
+      noRadio().should('exist');
 
-      cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item3(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[2].TEXT);
+      cy.checkText(noRadio(), 'No');
+    });
 
-      cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item4(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[3].TEXT);
+    describe('expandable details', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-      cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item5(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[4].TEXT);
+      it('renders summary text', () => {
+        insurance.eligibility.otherPartiesPage.description.summary().should('exist');
+
+        cy.checkText(insurance.eligibility.otherPartiesPage.description.summary(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.INTRO);
+      });
+
+      it('clicking summary text reveals details', () => {
+        insurance.eligibility.otherPartiesPage.description.summary().click();
+
+        insurance.eligibility.otherPartiesPage.description.list.intro().should('be.visible');
+      });
+
+      it('renders expanded content', () => {
+        cy.checkText(insurance.eligibility.otherPartiesPage.description.list.intro(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST_INTRO);
+
+        cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item1(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[0].TEXT);
+
+        cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item2(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[1].TEXT);
+
+        cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item3(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[2].TEXT);
+
+        cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item4(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[3].TEXT);
+
+        cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item5(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[4].TEXT);
+      });
     });
   });
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
       it('should render validation errors', () => {
         submitButton().click();
 
@@ -117,6 +133,8 @@ context('Insurance - Other parties page - I want to check if I can use online se
 
     describe('when submitting the answer as `no`', () => {
       beforeEach(() => {
+        cy.navigateToUrl(url);
+
         noRadio().click();
         submitButton().click();
       });

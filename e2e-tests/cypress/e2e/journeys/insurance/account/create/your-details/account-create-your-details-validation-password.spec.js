@@ -40,57 +40,51 @@ const submitAndAssertFieldErrors = (fieldValue) => {
 };
 
 context('Insurance - Account - Create - Your details page - form validation - password', () => {
+  let url;
+
   before(() => {
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
 
-    const expected = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
+    url = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
 
-    cy.url().should('eq', expected);
+    cy.url().should('eq', url);
   });
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
-  describe('when password does not have the minimum amount of characters', () => {
-    it('should render a validation error', () => {
-      const invalidPassword = 'Mock1!';
+  it('should render a validation error when password does not have the minimum amount of characters', () => {
+    const invalidPassword = 'Mock1!';
 
-      submitAndAssertFieldErrors(invalidPassword);
-    });
+    submitAndAssertFieldErrors(invalidPassword);
   });
 
-  describe('when password does not contain an uppercase letter', () => {
-    it('should render a validation error', () => {
-      const invalidPassword = 'mockpassword1!';
+  it('should render a validation error when password does not contain an uppercase letter', () => {
+    const invalidPassword = 'mockpassword1!';
 
-      submitAndAssertFieldErrors(invalidPassword);
-    });
+    submitAndAssertFieldErrors(invalidPassword);
   });
 
-  describe('when password does not contain a lowercase letter', () => {
-    it('should render a validation error', () => {
-      const invalidPassword = 'MOCKPASSWORD1!';
+  it('should render a validation error when password does not contain a lowercase letter', () => {
+    const invalidPassword = 'MOCKPASSWORD1!';
 
-      submitAndAssertFieldErrors(invalidPassword);
-    });
+    submitAndAssertFieldErrors(invalidPassword);
   });
 
-  describe('when password does not contain a number', () => {
-    it('should render a validation error', () => {
-      const invalidPassword = 'Mockpassword!';
+  it('should render a validation error when password does not contain a number', () => {
+    const invalidPassword = 'Mockpassword!';
 
-      submitAndAssertFieldErrors(invalidPassword);
-    });
+    submitAndAssertFieldErrors(invalidPassword);
   });
 
-  describe('when password does not contain a special character', () => {
-    it('should render a validation error', () => {
-      const invalidPassword = 'Mockpassword1';
+  it('should render a validation error when password does not contain a special character', () => {
+    const invalidPassword = 'Mockpassword1';
 
-      submitAndAssertFieldErrors(invalidPassword);
-    });
+    submitAndAssertFieldErrors(invalidPassword);
   });
 });

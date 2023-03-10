@@ -9,77 +9,63 @@ const { checkValidation } = requestedCoverStartDate;
 const { INSURANCE } = ROUTES;
 
 context('Insurance - Policy and exports - Multiple contract policy page - form validation - requested start date', () => {
+  let url;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {
     cy.deleteAccount();
   });
 
-  describe('when day is not provided', () => {
-    it('should render a validation error', () => {
-      checkValidation.day.notProvided();
-    });
+  it('should render a validation error when day is not provided', () => {
+    checkValidation.day.notProvided();
   });
 
-  describe('when month is not provided', () => {
-    it('should render a validation error', () => {
-      checkValidation.month.notProvided();
-    });
+  it('should render a validation error when month is not provided', () => {
+    checkValidation.month.notProvided();
   });
 
-  describe('when year is not provided', () => {
-    it('should render a validation error', () => {
-      checkValidation.year.notProvided();
-    });
+  it('should render a validation error when year is not provided', () => {
+    checkValidation.year.notProvided();
   });
 
-  describe('when day is not a number', () => {
-    it('should render a validation error', () => {
-      checkValidation.day.notANumber();
-    });
+  it('should render a validation error when day is not a number', () => {
+    checkValidation.day.notANumber();
   });
 
-  describe('when month is not a number', () => {
-    it('should render a validation error', () => {
-      checkValidation.month.notANumber();
-    });
+  it('should render a validation error when month is not a number', () => {
+    checkValidation.month.notANumber();
   });
 
-  describe('when year is not a number', () => {
-    it('should render a validation error', () => {
-      checkValidation.year.notANumber();
-    });
+  it('should render a validation error when year is not a number', () => {
+    checkValidation.year.notANumber();
   });
 
-  describe('when the date is not in the future', () => {
-    it('should render a validation error', () => {
-      checkValidation.notInTheFuture();
-    });
+  it('should render a validation error when the date is not in the future', () => {
+    checkValidation.notInTheFuture();
   });
 
-  describe('when the date has an invalid format', () => {
-    it('should render a validation error', () => {
-      checkValidation.notInTheFuture();
-    });
+  it('should render a validation error when the date has an invalid format', () => {
+    checkValidation.notInTheFuture();
   });
 
-  describe('when the date is today', () => {
-    it('should NOT render a validation error', () => {
-      checkValidation.isToday();
-    });
+  it('should NOT render a validation error when the date is today', () => {
+    checkValidation.isToday();
   });
 });

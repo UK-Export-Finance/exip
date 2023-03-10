@@ -41,49 +41,45 @@ const submitAndAssertFieldErrors = (fieldValue) => {
 };
 
 context('Insurance - Account - Create - Your details page - form validation - email', () => {
+  let url;
+
   before(() => {
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
 
-    const expected = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
+    url = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
 
-    cy.url().should('eq', expected);
+    cy.url().should('eq', url);
   });
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
-  describe('when email does not contain an @ symbol', () => {
-    it('should render a validation error', () => {
-      const invalidEmail = INVALID_EMAILS.NO_AT_SYMBOL;
+  it('should render a validation error when email does not contain an @ symbol', () => {
+    const invalidEmail = INVALID_EMAILS.NO_AT_SYMBOL;
 
-      submitAndAssertFieldErrors(invalidEmail);
-    });
+    submitAndAssertFieldErrors(invalidEmail);
   });
 
-  describe('when email does not contain at least one dot', () => {
-    it('should render a validation error', () => {
-      const invalidEmail = INVALID_EMAILS.NO_DOTS;
+  it('should render a validation error when email does not contain at least one dot', () => {
+    const invalidEmail = INVALID_EMAILS.NO_DOTS;
 
-      submitAndAssertFieldErrors(invalidEmail);
-    });
+    submitAndAssertFieldErrors(invalidEmail);
   });
 
-  describe('when email contains a space', () => {
-    it('should render a validation error', () => {
-      const invalidEmail = INVALID_EMAILS.WITH_SPACE;
+  it('should render a validation error when email contains a space', () => {
+    const invalidEmail = INVALID_EMAILS.WITH_SPACE;
 
-      submitAndAssertFieldErrors(invalidEmail);
-    });
+    submitAndAssertFieldErrors(invalidEmail);
   });
 
-  describe('when email does not contain a domain', () => {
-    it('should render a validation error', () => {
-      const invalidEmail = INVALID_EMAILS.NO_DOMAIN;
+  it('should render a validation error when email does not contain a domain', () => {
+    const invalidEmail = INVALID_EMAILS.NO_DOMAIN;
 
-      submitAndAssertFieldErrors(invalidEmail);
-    });
+    submitAndAssertFieldErrors(invalidEmail);
   });
 });

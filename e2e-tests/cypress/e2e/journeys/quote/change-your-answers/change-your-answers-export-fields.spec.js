@@ -2,7 +2,6 @@ import {
   backLink, buyerCountryPage, yesRadioInput, submitButton,
 } from '../../../pages/shared';
 import { checkYourAnswersPage } from '../../../pages/quote';
-import partials from '../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 
 const {
@@ -16,13 +15,13 @@ const submissionData = {
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
 };
 
-const startRoute = ROUTES.QUOTE.START;
-
 context('Change your answers (export fields) - as an exporter, I want to change the details before submitting the proposal', () => {
+  const url = ROUTES.QUOTE.CHECK_YOUR_ANSWERS;
+
   before(() => {
     cy.login();
     cy.submitQuoteAnswersHappyPathSinglePolicy();
-    cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+    cy.url().should('include', url);
   });
 
   beforeEach(() => {
@@ -32,9 +31,13 @@ context('Change your answers (export fields) - as an exporter, I want to change 
   describe('change `Buyer based`', () => {
     let row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
-      row.changeLink().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      row.changeLink().click();
+    });
+
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.BUYER_COUNTRY_CHANGE;
       cy.url().should('include', expectedUrl);
     });
@@ -57,33 +60,41 @@ context('Change your answers (export fields) - as an exporter, I want to change 
       cy.url().should('include', expected);
     });
 
-    it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when resubmitting a new answer`, () => {
-      cy.keyboardInput(buyerCountryPage.searchInput(), 'Brazil');
-      const results = buyerCountryPage.results();
-      results.first().click();
-      submitButton().click();
+    describe('when submitting a new answer', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+        row.changeLink().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
-    });
+        cy.keyboardInput(buyerCountryPage.searchInput(), 'Brazil');
+        const results = buyerCountryPage.results();
+        results.first().click();
 
-    it('should render a header with href to quote start', () => {
-      partials.header.serviceName().should('have.attr', 'href', startRoute);
-    });
+        submitButton().click();
+      });
 
-    it('renders the new answer in `Check your answers` page', () => {
-      row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
+      it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, () => {
+        cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      });
 
-      const expected = 'Brazil';
-      cy.checkText(row.value(), expected);
+      it('renders the new answer in `Check your answers` page', () => {
+        row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
+
+        const expected = 'Brazil';
+        cy.checkText(row.value(), expected);
+      });
     });
   });
 
   describe('change `Company`', () => {
     const row = checkYourAnswersPage.summaryLists.export[VALID_EXPORTER_LOCATION];
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}`, () => {
-      row.changeLink().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      row.changeLink().click();
+    });
+
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE;
       cy.url().should('include', expectedUrl);
     });
@@ -114,9 +125,13 @@ context('Change your answers (export fields) - as an exporter, I want to change 
   describe('change `UK goods`', () => {
     const row = checkYourAnswersPage.summaryLists.export[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}`, () => {
-      row.changeLink().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      row.changeLink().click();
+    });
+
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE;
       cy.url().should('include', expectedUrl);
     });

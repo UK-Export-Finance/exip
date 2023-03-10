@@ -35,6 +35,7 @@ const { summaryList } = checkYourAnswersPage;
 
 context('Insurance - Policy and exports - Change your answers - Policy type - multiple to single', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -46,8 +47,8 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
       cy.completeAndSubmitMultipleContractPolicyForm();
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.url().should('eq', expected);
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      cy.url().should('eq', url);
     });
   });
 
@@ -63,6 +64,8 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
 
   describe('when clicking the `change` link', () => {
     before(() => {
+      cy.navigateToUrl(url);
+
       summaryList[fieldId].changeLink().click();
     });
 
@@ -74,7 +77,9 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
   });
 
   describe('form submission with a new answer', () => {
-    before(() => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
       typeOfPolicyPage[fieldId].single.input().click();
       submitButton().click();
     });
@@ -91,6 +96,10 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
     });
 
     describe('`Add` links', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
       it('should have empty summary list row values and links for the empty single policy specific fields', () => {
         cy.assertSummaryListRowValue(summaryList, CONTRACT_COMPLETION_DATE, DEFAULT.EMPTY);
 

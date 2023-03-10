@@ -16,6 +16,8 @@ import {
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 
 context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maxium amount of cover available online - submit `cover over max amount`', () => {
+  const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED}`;
+
   before(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
@@ -26,13 +28,15 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     completeUkGoodsAndServicesForm();
     completeInsuredAmountForm();
     completeInsuredPeriodForm();
-
-    yesRadio().click();
-    submitButton().click();
   });
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
+
+    yesRadio().click();
+    submitButton().click();
   });
 
   it('redirects to exit page', () => {

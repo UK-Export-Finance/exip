@@ -1,6 +1,13 @@
 import partials from '../../../../../partials';
-import { FIELD_IDS } from '../../../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../support/insurance/check-your-buyer-summary-list';
+
+const {
+  ROOT,
+  YOUR_BUYER: {
+    CHECK_YOUR_ANSWERS,
+  },
+} = ROUTES.INSURANCE;
 
 const {
   INSURANCE: {
@@ -26,17 +33,23 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your buyer - Check your answers - Summary list - your buyer', () => {
+  let url;
+
   before(() => {
-    cy.completeSignInAndGoToApplication().then(() => {
+    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       task.link().click();
 
       cy.completeAndSubmitCompanyOrOrganisationForm();
       cy.completeAndSubmitWorkingWithBuyerForm();
+
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {

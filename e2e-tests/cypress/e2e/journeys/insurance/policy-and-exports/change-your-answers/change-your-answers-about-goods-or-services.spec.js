@@ -29,6 +29,7 @@ const { summaryList } = checkYourAnswersPage;
 
 context('Insurance - Policy and exports - Change your answers - About goods or services- As an exporter, I want to change my answers to the type of policy and exports section', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -40,8 +41,8 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
       cy.completeAndSubmitSingleContractPolicyForm();
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.url().should('eq', expected);
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      cy.url().should('eq', url);
     });
   });
 
@@ -58,6 +59,8 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, ABOUT_GOODS_OR_SERVICES_CHANGE, fieldId);
@@ -67,7 +70,11 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
     describe('form submission with a new answer', () => {
       const newAnswer = `${application.POLICY_AND_EXPORTS[fieldId]} additional text`;
 
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         cy.keyboardInput(aboutGoodsOrServicesPage[fieldId].input(), newAnswer);
 
         submitButton().click();
@@ -90,6 +97,8 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, ABOUT_GOODS_OR_SERVICES_CHANGE, fieldId);
@@ -99,7 +108,11 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
     describe('form submission with a new answer', () => {
       const newAnswer = countries[0].isoCode;
 
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         aboutGoodsOrServicesPage[fieldId].input().select(newAnswer);
 
         submitButton().click();
