@@ -8,11 +8,13 @@ const {
 } = ROUTES;
 
 context('Insurance - Account - Create - Your details page - Already signed in', () => {
+  let url;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
-      const expected = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.url().should('eq', url);
     });
   });
 
@@ -25,13 +27,11 @@ context('Insurance - Account - Create - Your details page - Already signed in', 
     cy.deleteAccount();
   });
 
-  describe(`when visiting ${YOUR_DETAILS}`, () => {
-    it(`should redirect to ${DASHBOARD}`, () => {
-      cy.navigateToUrl(YOUR_DETAILS);
+  it(`should redirect to ${DASHBOARD} when visiting ${YOUR_DETAILS}`, () => {
+    cy.navigateToUrl(YOUR_DETAILS);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+    const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
-      cy.url().should('eq', expectedUrl);
-    });
+    cy.url().should('eq', expectedUrl);
   });
 });
