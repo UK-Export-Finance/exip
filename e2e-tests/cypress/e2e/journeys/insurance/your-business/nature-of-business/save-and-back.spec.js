@@ -45,40 +45,47 @@ context('Insurance - Your business - Nature of your business page - Save and bac
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
     cy.deleteAccount();
   });
 
-  describe('When no fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      saveAndBackButton().click();
+  describe('when no fields are provided', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
       const expected = TASKS.STATUS.IN_PROGRESS;
+
       cy.checkText(task.status(), expected);
     });
   });
 
   describe('save and back on a partially entered form', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(natureOfBusiness[GOODS_OR_SERVICES].input(), application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
 
       saveAndBackButton().click();
+    });
 
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
       const expected = TASKS.STATUS.IN_PROGRESS;
+
       cy.checkText(task.status(), expected);
     });
 
@@ -93,8 +100,8 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
   });
 
-  describe('When all fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+  describe('when all fields are provided', () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(natureOfBusiness[GOODS_OR_SERVICES].input(), application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
@@ -103,7 +110,9 @@ context('Insurance - Your business - Nature of your business page - Save and bac
       cy.keyboardInput(natureOfBusiness[EMPLOYEES_INTERNATIONAL].input(), application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
 
       saveAndBackButton().click();
+    });
 
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 

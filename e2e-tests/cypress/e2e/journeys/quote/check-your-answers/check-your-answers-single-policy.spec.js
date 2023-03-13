@@ -14,186 +14,203 @@ const CONTENT_STRINGS = PAGES.QUOTE.CHECK_YOUR_ANSWERS;
 
 const startRoute = ROUTES.QUOTE.START;
 
-context('Check your answers page (single policy) - as an exporter, I want to review the details before submitting the proposal', () => {
-  const {
-    BUYER_COUNTRY,
-    CONTRACT_VALUE,
-    CREDIT_PERIOD,
-    PERCENTAGE_OF_COVER,
-    SINGLE_POLICY_TYPE,
-    SINGLE_POLICY_LENGTH,
-    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-    VALID_EXPORTER_LOCATION,
-  } = FIELD_IDS;
+const {
+  BUYER_COUNTRY,
+  CONTRACT_VALUE,
+  CREDIT_PERIOD,
+  PERCENTAGE_OF_COVER,
+  SINGLE_POLICY_TYPE,
+  SINGLE_POLICY_LENGTH,
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+  VALID_EXPORTER_LOCATION,
+} = FIELD_IDS;
 
-  const submissionData = {
-    [BUYER_COUNTRY]: 'Algeria',
-    [CREDIT_PERIOD]: '1',
-    [PERCENTAGE_OF_COVER]: '90',
-    [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-    [SINGLE_POLICY_LENGTH]: '3',
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
-  };
+const submissionData = {
+  [BUYER_COUNTRY]: 'Algeria',
+  [CREDIT_PERIOD]: '1',
+  [PERCENTAGE_OF_COVER]: '90',
+  [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+  [SINGLE_POLICY_LENGTH]: '3',
+  [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
+};
+
+context('Check your answers page (single policy) - as an exporter, I want to review the details before submitting the proposal', () => {
+  const url = ROUTES.QUOTE.CHECK_YOUR_ANSWERS;
 
   before(() => {
     cy.login();
     cy.submitQuoteAnswersHappyPathSinglePolicy();
-    cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+    cy.url().should('include', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.QUOTE.CHECK_YOUR_ANSWERS,
+      currentHref: url,
       backLink: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
       submitButtonCopy: CONTENT_STRINGS.SUBMIT_BUTTON,
     });
   });
 
-  it('should render a header with href to quote start', () => {
-    partials.header.serviceName().should('have.attr', 'href', startRoute);
-  });
-
-  context('export summary list', () => {
-    const list = checkYourAnswersPage.summaryLists.export;
-
-    it('renders a heading', () => {
-      cy.checkText(list.heading(), CONTENT_STRINGS.GROUP_HEADING_EXPORT);
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
     });
 
-    it('renders `Buyer based` key, value and change link', () => {
-      const row = list[BUYER_COUNTRY];
-      const expectedKeyText = FIELDS[BUYER_COUNTRY].SUMMARY.TITLE;
-
-      cy.checkText(row.key(), expectedKeyText);
-
-      const expectedValue = submissionData[BUYER_COUNTRY];
-      cy.checkText(row.value(), expectedValue);
-
-      const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
-      cy.checkText(row.changeLink(), expectedChangeLink);
-
-      const expectedHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
+    it('should render a header with href to quote start', () => {
+      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
-    it('renders `Company` key, value and change link', () => {
-      const row = list[VALID_EXPORTER_LOCATION];
-      const expectedKeyText = FIELDS[VALID_EXPORTER_LOCATION].SUMMARY.TITLE;
+    context('export summary list', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-      cy.checkText(row.key(), expectedKeyText);
+      const list = checkYourAnswersPage.summaryLists.export;
 
-      cy.checkText(row.value(), SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION]);
+      it('renders a heading', () => {
+        cy.checkText(list.heading(), CONTENT_STRINGS.GROUP_HEADING_EXPORT);
+      });
 
-      const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-      cy.checkText(row.changeLink(), expected);
+      it('renders `Buyer based` key, value and change link', () => {
+        const row = list[BUYER_COUNTRY];
+        const expectedKeyText = FIELDS[BUYER_COUNTRY].SUMMARY.TITLE;
 
-      const expectedHref = `${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}#heading`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
+        cy.checkText(row.key(), expectedKeyText);
+
+        const expectedValue = submissionData[BUYER_COUNTRY];
+        cy.checkText(row.value(), expectedValue);
+
+        const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expectedChangeLink);
+
+        const expectedHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
+        row.changeLink().should('have.attr', 'href', expectedHref);
+      });
+
+      it('renders `Company` key, value and change link', () => {
+        const row = list[VALID_EXPORTER_LOCATION];
+        const expectedKeyText = FIELDS[VALID_EXPORTER_LOCATION].SUMMARY.TITLE;
+
+        cy.checkText(row.key(), expectedKeyText);
+
+        cy.checkText(row.value(), SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION]);
+
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expected);
+
+        const expectedHref = `${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}#heading`;
+        row.changeLink().should('have.attr', 'href', expectedHref);
+      });
+
+      it('renders `UK goods` key, value and change link', () => {
+        const row = list[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+        const expectedKeyText = FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].SUMMARY.TITLE;
+
+        cy.checkText(row.key(), expectedKeyText);
+
+        cy.checkText(row.value(), SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]);
+
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expected);
+
+        const expectedHref = `${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
+        row.changeLink().should('have.attr', 'href', expectedHref);
+      });
     });
 
-    it('renders `UK goods` key, value and change link', () => {
-      const row = list[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
-      const expectedKeyText = FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].SUMMARY.TITLE;
+    context('policy summary list', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-      cy.checkText(row.key(), expectedKeyText);
+      const list = checkYourAnswersPage.summaryLists.policy;
 
-      cy.checkText(row.value(), SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]);
+      it('renders a heading', () => {
+        cy.checkText(list.heading(), CONTENT_STRINGS.GROUP_HEADING_POLICY);
+      });
 
-      const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-      cy.checkText(row.changeLink(), expected);
+      it('renders `Policy type` key, value and change link', () => {
+        const row = list[SINGLE_POLICY_TYPE];
+        const expectedKeyText = FIELDS[SINGLE_POLICY_TYPE].SUMMARY.TITLE;
 
-      const expectedHref = `${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
-    });
-  });
+        cy.checkText(row.key(), expectedKeyText);
 
-  context('policy summary list', () => {
-    const list = checkYourAnswersPage.summaryLists.policy;
+        cy.checkText(row.value(), submissionData[SINGLE_POLICY_TYPE]);
 
-    it('renders a heading', () => {
-      cy.checkText(list.heading(), CONTENT_STRINGS.GROUP_HEADING_POLICY);
-    });
+        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expected);
 
-    it('renders `Policy type` key, value and change link', () => {
-      const row = list[SINGLE_POLICY_TYPE];
-      const expectedKeyText = FIELDS[SINGLE_POLICY_TYPE].SUMMARY.TITLE;
+        const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
+        row.changeLink().should('have.attr', 'href', expectedHref);
+      });
 
-      cy.checkText(row.key(), expectedKeyText);
+      it('renders `Policy length` key, value and change link', () => {
+        const row = list[SINGLE_POLICY_LENGTH];
+        const expectedKeyText = FIELDS[SINGLE_POLICY_LENGTH].SUMMARY.TITLE;
 
-      cy.checkText(row.value(), submissionData[SINGLE_POLICY_TYPE]);
+        cy.checkText(row.key(), expectedKeyText);
 
-      const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-      cy.checkText(row.changeLink(), expected);
+        const expectedValue = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
+        cy.checkText(row.value(), expectedValue);
 
-      const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
-    });
+        const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expectedChangeLink);
 
-    it('renders `Policy length` key, value and change link', () => {
-      const row = list[SINGLE_POLICY_LENGTH];
-      const expectedKeyText = FIELDS[SINGLE_POLICY_LENGTH].SUMMARY.TITLE;
+        const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
+        row.changeLink().should('have.attr', 'href', expectedHref);
+      });
 
-      cy.checkText(row.key(), expectedKeyText);
+      it('renders `Contract value` key, value with no decimal points and change link', () => {
+        const row = list[CONTRACT_VALUE];
+        const expectedKeyText = FIELDS[CONTRACT_VALUE].SUMMARY.TITLE;
 
-      const expectedValue = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
-      cy.checkText(row.value(), expectedValue);
+        cy.checkText(row.key(), expectedKeyText);
 
-      const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
-      cy.checkText(row.changeLink(), expectedChangeLink);
+        const expectedValue = '£150,000';
+        cy.checkText(row.value(), expectedValue);
 
-      const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
-    });
+        const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expectedChangeLink);
 
-    it('renders `Contract value` key, value with no decimal points and change link', () => {
-      const row = list[CONTRACT_VALUE];
-      const expectedKeyText = FIELDS[CONTRACT_VALUE].SUMMARY.TITLE;
+        const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
+        row.changeLink().should('have.attr', 'href', expectedHref);
+      });
 
-      cy.checkText(row.key(), expectedKeyText);
+      it('renders `Percentage of cover` key, value and change link', () => {
+        const row = list[PERCENTAGE_OF_COVER];
+        const expectedKeyText = FIELDS[PERCENTAGE_OF_COVER].SUMMARY.TITLE;
 
-      const expectedValue = '£150,000';
-      cy.checkText(row.value(), expectedValue);
+        cy.checkText(row.key(), expectedKeyText);
 
-      const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
-      cy.checkText(row.changeLink(), expectedChangeLink);
+        const expectedValue = `${submissionData[PERCENTAGE_OF_COVER]}%`;
+        cy.checkText(row.value(), expectedValue);
 
-      const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
-    });
+        const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+        cy.checkText(row.changeLink(), expectedChangeLink);
 
-    it('renders `Percentage of cover` key, value and change link', () => {
-      const row = list[PERCENTAGE_OF_COVER];
-      const expectedKeyText = FIELDS[PERCENTAGE_OF_COVER].SUMMARY.TITLE;
+        const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
+        row.changeLink().should('have.attr', 'href', expectedHref);
+      });
 
-      cy.checkText(row.key(), expectedKeyText);
+      it('does NOT render `Credit period` key, value or change link', () => {
+        const row = list[CREDIT_PERIOD];
 
-      const expectedValue = `${submissionData[PERCENTAGE_OF_COVER]}%`;
-      cy.checkText(row.value(), expectedValue);
-
-      const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
-      cy.checkText(row.changeLink(), expectedChangeLink);
-
-      const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
-      row.changeLink().should('have.attr', 'href', expectedHref);
-    });
-
-    it('does NOT render `Credit period` key, value or change link', () => {
-      const row = list[CREDIT_PERIOD];
-
-      row.key().should('not.exist');
-      row.value().should('not.exist');
-      row.changeLink().should('not.exist');
+        row.key().should('not.exist');
+        row.value().should('not.exist');
+        row.changeLink().should('not.exist');
+      });
     });
   });
 
   context('form submission', () => {
     it(`should redirect to ${ROUTES.QUOTE.YOUR_QUOTE}`, () => {
+      cy.navigateToUrl(url);
+
       submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);

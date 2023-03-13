@@ -1,6 +1,13 @@
 import partials from '../../../../../partials';
-import { FIELD_IDS } from '../../../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../support/insurance/check-your-business-summary-list';
+
+const {
+  ROOT,
+  EXPORTER_BUSINESS: {
+    CHECK_YOUR_ANSWERS,
+  },
+} = ROUTES.INSURANCE;
 
 const {
   INSURANCE: {
@@ -44,20 +51,25 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 context('Insurance - Your business - Check your answers - Summary list - your business', () => {
+  let url;
+
   before(() => {
-    cy.completeSignInAndGoToApplication().then(() => {
+    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm();
+
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {

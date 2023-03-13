@@ -39,22 +39,26 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
     cy.deleteAccount();
   });
 
-  describe(`when ${PHONE_NUMBER} is left empty`, () => {
-    it('should not display validation errors', () => {
+  context(`when ${PHONE_NUMBER} is left empty`, () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.tradingNameYesRadioInput().click();
       companyDetails.tradingAddressYesRadioInput().click();
       cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
       companyDetails.phoneNumber().clear();
       submitButton().click();
+    });
+
+    it('should not display validation errors', () => {
       partials.errorSummaryListItems().should('have.length', 0);
     });
 
@@ -63,12 +67,15 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
   });
 
-  describe(`when ${PHONE_NUMBER} is correctly entered`, () => {
+  context(`when ${PHONE_NUMBER} is correctly entered`, () => {
     describe('valid landline phone number', () => {
-      it('should not display validation errors', () => {
+      beforeEach(() => {
         cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+      });
+
+      it('should not display validation errors', () => {
         partials.errorSummaryListItems().should('have.length', 0);
       });
 
@@ -78,10 +85,13 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     describe('valid landline phone number with brackets', () => {
-      it('should not display validation errors', () => {
+      beforeEach(() => {
         cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.BRACKETS);
+      });
+
+      it('should not display validation errors', () => {
         partials.errorSummaryListItems().should('have.length', 0);
       });
 
@@ -91,10 +101,13 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     describe('valid landline phone number with dashes', () => {
-      it('should not display validation errors', () => {
+      beforeEach(() => {
         cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.DASHES);
+      });
+
+      it('should not display validation errors', () => {
         partials.errorSummaryListItems().should('have.length', 0);
       });
 
@@ -104,10 +117,13 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     describe('valid landline phone number with country code without 0s', () => {
-      it('should not display validation errors', () => {
+      beforeEach(() => {
         cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.FULL_NO_ZEROS);
+      });
+
+      it('should not display validation errors', () => {
         partials.errorSummaryListItems().should('have.length', 0);
       });
 
@@ -117,10 +133,13 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     describe('valid landline phone number with country code', () => {
-      it('should not display validation errors', () => {
+      beforeEach(() => {
         cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.LANDLINE.FULL);
+      });
+
+      it('should not display validation errors', () => {
         partials.errorSummaryListItems().should('have.length', 0);
       });
 
@@ -130,10 +149,13 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     describe('valid mobile phone number', () => {
-      it('should not display validation errors', () => {
+      beforeEach(() => {
         cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.MOBILE.NORMAL);
+      });
+
+      it('should not display validation errors', () => {
         partials.errorSummaryListItems().should('have.length', 0);
       });
 
@@ -143,10 +165,13 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     describe('valid mobile phone number with dashes', () => {
-      it('should not display validation errors', () => {
+      beforeEach(() => {
         cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.MOBILE.DASH);
+      });
+
+      it('should not display validation errors', () => {
         partials.errorSummaryListItems().should('have.length', 0);
       });
 
@@ -156,10 +181,13 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     describe('valid mobile phone number with full country code', () => {
-      it('should not display validation errors', () => {
+      beforeEach(() => {
         cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.MOBILE.FULL_CODE);
+      });
+
+      it('should not display validation errors', () => {
         partials.errorSummaryListItems().should('have.length', 0);
       });
 
@@ -169,10 +197,13 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     describe('valid mobile phone number with full country code with brackets', () => {
-      it('should not display validation errors', () => {
+      beforeEach(() => {
         cy.navigateToUrl(url);
 
         completeAllFields(VALID_PHONE_NUMBERS.MOBILE.FULL_CODE_BRACKET);
+      });
+
+      it('should not display validation errors', () => {
         partials.errorSummaryListItems().should('have.length', 0);
       });
 

@@ -36,6 +36,7 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 context('Insurance - Policy and exports - Type of policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -43,15 +44,14 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
       task.link().click();
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
 
-      cy.url().should('eq', expected);
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -66,50 +66,60 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-  it('renders a heading caption', () => {
-    cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-  });
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
+    });
 
-  it('renders an intro paragraph', () => {
-    cy.checkText(insurance.policyAndExport.typeOfPolicyPage.intro(), CONTENT_STRINGS.INTRO);
-  });
+    it('renders a heading caption', () => {
+      cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
 
-  it('renders `single` radio input with label and hint text list', () => {
-    singlePolicyField.input().should('exist');
-    cy.checkText(singlePolicyField.label(), FIELDS[FIELD_ID].OPTIONS.SINGLE.TEXT);
+    it('renders an intro paragraph', () => {
+      cy.checkText(insurance.policyAndExport.typeOfPolicyPage.intro(), CONTENT_STRINGS.INTRO);
+    });
 
-    cy.checkText(singlePolicyField.hintList.item1(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[0]);
+    it('renders `single` radio input with label and hint text list', () => {
+      singlePolicyField.input().should('exist');
+      cy.checkText(singlePolicyField.label(), FIELDS[FIELD_ID].OPTIONS.SINGLE.TEXT);
 
-    cy.checkText(singlePolicyField.hintList.item2(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[1]);
+      cy.checkText(singlePolicyField.hintList.item1(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[0]);
 
-    cy.checkText(singlePolicyField.hintList.item3(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[2]);
+      cy.checkText(singlePolicyField.hintList.item2(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[1]);
 
-    cy.checkText(singlePolicyField.hintList.item4(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[3]);
-  });
+      cy.checkText(singlePolicyField.hintList.item3(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[2]);
 
-  it('renders `multiple` radio input with label and hint text list', () => {
-    multiplePolicyField.input().should('exist');
-    cy.checkText(multiplePolicyField.label(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.TEXT);
+      cy.checkText(singlePolicyField.hintList.item4(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[3]);
+    });
 
-    cy.checkText(multiplePolicyField.hintList.item1(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[0]);
+    it('renders `multiple` radio input with label and hint text list', () => {
+      multiplePolicyField.input().should('exist');
+      cy.checkText(multiplePolicyField.label(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.TEXT);
 
-    cy.checkText(multiplePolicyField.hintList.item2(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[1]);
+      cy.checkText(multiplePolicyField.hintList.item1(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[0]);
 
-    cy.checkText(multiplePolicyField.hintList.item3(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[2]);
-  });
+      cy.checkText(multiplePolicyField.hintList.item2(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[1]);
 
-  it('renders a `save and back` button', () => {
-    saveAndBackButton().should('exist');
+      cy.checkText(multiplePolicyField.hintList.item3(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[2]);
+    });
 
-    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('renders a `save and back` button', () => {
+      saveAndBackButton().should('exist');
+
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
   });
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
       it('should render a validation error', () => {
         submitButton().click();
 
@@ -132,6 +142,10 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     });
 
     describe('when submitting the answer as `single`', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
       it(`should redirect to ${POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`, () => {
         singlePolicyField.input().click();
 
@@ -142,16 +156,18 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
         cy.url().should('eq', expected);
       });
 
-      describe('when going back to the page', () => {
-        it('should have the originally submitted answer selected', () => {
-          goToPageDirectly(referenceNumber);
+      it('should have the originally submitted answer selected when going back to the page', () => {
+        goToPageDirectly(referenceNumber);
 
-          singlePolicyField.input().should('be.checked');
-        });
+        singlePolicyField.input().should('be.checked');
       });
     });
 
     describe('when submitting the answer as `multiple`', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
       it(`should redirect to ${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, () => {
         cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
@@ -160,17 +176,17 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
         cy.url().should('eq', expected);
       });
 
-      describe('when going back to the page', () => {
-        it('should have the originally submitted answer selected', () => {
-          goToPageDirectly(referenceNumber);
+      it('should have the originally submitted answer selected when going back to the page', () => {
+        goToPageDirectly(referenceNumber);
 
-          multiplePolicyField.input().should('be.checked');
-        });
+        multiplePolicyField.input().should('be.checked');
       });
     });
 
     describe('after submitting an answer', () => {
       it('should update the status of task `type of policy and exports` to `in progress`', () => {
+        cy.navigateToUrl(url);
+
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
 
         const expected = TASKS.STATUS.IN_PROGRESS;

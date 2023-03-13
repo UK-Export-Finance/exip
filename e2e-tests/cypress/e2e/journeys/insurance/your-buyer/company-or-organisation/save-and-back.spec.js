@@ -55,8 +55,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -64,9 +63,13 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
   });
 
   describe('when submitting an empty form', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      saveAndBackButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
@@ -77,7 +80,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
   });
 
   describe('when submitting a partially entered form', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
 
       companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().click();
@@ -85,7 +88,9 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
       cy.keyboardInput(companyOrOrganisationPage[NAME].input(), BUYER[NAME]);
 
       saveAndBackButton().click();
+    });
 
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
@@ -110,7 +115,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
   });
 
   describe('when submitting a fully filled form', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(companyOrOrganisationPage[NAME].input(), BUYER[NAME]);
@@ -125,7 +130,9 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
       companyOrOrganisationPage[COUNTRY].input().select(countryToSelect);
 
       saveAndBackButton().click();
+    });
 
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 

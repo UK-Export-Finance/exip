@@ -4,9 +4,11 @@ import { ROUTES } from '../../../../../constants';
 const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
 
 context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based - submit country that can only get a quote offline/via email', () => {
-  before(() => {
-    cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
-    cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+  const url = ROUTES.QUOTE.BUYER_COUNTRY;
+
+  beforeEach(() => {
+    cy.navigateToUrl(url);
+    cy.url().should('include', url);
 
     cy.keyboardInput(buyerCountryPage.searchInput(), COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY);
 

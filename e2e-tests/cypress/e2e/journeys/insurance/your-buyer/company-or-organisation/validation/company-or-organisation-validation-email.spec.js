@@ -28,19 +28,22 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Company or organisation page - form validation - email', () => {
+  let url;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       task.link().click();
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
 
-      cy.url().should('eq', expected);
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {
@@ -55,60 +58,48 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
   const errorMessage = ERROR_MESSAGE.IS_EMPTY;
 
-  describe(`${FIELD_ID} error`, () => {
-    describe(`when ${FIELD_ID} is not entered`, () => {
-      it('should display validation errors', () => {
-        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+  it(`should display validation errors when ${FIELD_ID} is not entered`, () => {
+    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
-        cy.submitAndAssertFieldErrors(field, null, errorIndex, numberOfExpectedErrors, errorMessage);
-      });
-    });
+    cy.submitAndAssertFieldErrors(field, null, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
-  describe('when email does not contain an @ symbol', () => {
-    it('should display validation errors', () => {
-      const invalidEmail = INVALID_EMAILS.NO_AT_SYMBOL;
-      const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+  it('should display validation errors when email does not contain an @ symbol', () => {
+    const invalidEmail = INVALID_EMAILS.NO_AT_SYMBOL;
+    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
-      cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, numberOfExpectedErrors, errorMessage);
-    });
+    cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
-  describe('when email does not contain at least one dot', () => {
-    it('should display validation errors', () => {
-      const invalidEmail = INVALID_EMAILS.NO_DOTS;
+  it('should display validation errors when email does not contain at least one dot', () => {
+    const invalidEmail = INVALID_EMAILS.NO_DOTS;
 
-      const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
-      cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, numberOfExpectedErrors, errorMessage);
-    });
+    cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
-  describe('when email contains a space', () => {
-    it('should display validation errors', () => {
-      const invalidEmail = INVALID_EMAILS.WITH_SPACE;
+  it('should display validation errors when email contains a space', () => {
+    const invalidEmail = INVALID_EMAILS.WITH_SPACE;
 
-      const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
-      cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, numberOfExpectedErrors, errorMessage);
-    });
+    cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
-  describe('when email does not contain a domain', () => {
-    it('should display validation errors', () => {
-      const invalidEmail = INVALID_EMAILS.NO_DOMAIN;
+  it('should display validation errors when email does not contain a domain', () => {
+    const invalidEmail = INVALID_EMAILS.NO_DOMAIN;
 
-      const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
-      cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, numberOfExpectedErrors, errorMessage);
-    });
+    cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
-  describe(`when ${FIELD_ID} is correctly entered`, () => {
-    it('should not display validation errors', () => {
-      cy.keyboardInput(companyOrOrganisationPage[FIELD_ID].input(), application.BUYER[FIELD_ID]);
-      submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 7);
-    });
+  it(`should not display validation errors when ${FIELD_ID} is correctly entered`, () => {
+    cy.keyboardInput(companyOrOrganisationPage[FIELD_ID].input(), application.BUYER[FIELD_ID]);
+
+    submitButton().click();
+
+    partials.errorSummaryListItems().should('have.length', 7);
   });
 });

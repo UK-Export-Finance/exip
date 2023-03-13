@@ -64,6 +64,7 @@ interface Request {
   headers: RequestHeaders;
   method: string;
   originalUrl: string;
+  baseUrl: string;
   redirect: (str: string) => any;
   params: RequestParams;
   query: RequestQuery;

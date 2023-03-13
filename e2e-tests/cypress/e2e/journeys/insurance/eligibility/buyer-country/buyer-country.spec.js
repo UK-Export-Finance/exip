@@ -11,7 +11,7 @@ import {
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
-context('Insurance - Buyer location page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based', () => {
+context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based', () => {
   beforeEach(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 

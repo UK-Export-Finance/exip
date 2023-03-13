@@ -33,8 +33,7 @@ context('Insurance - Policy and exports - Complete the entire section as a multi
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

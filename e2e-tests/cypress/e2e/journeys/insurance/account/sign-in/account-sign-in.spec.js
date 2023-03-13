@@ -24,6 +24,8 @@ const {
 const FIELD_STRINGS = ACCOUNT_FIELDS;
 
 context('Insurance - Account - Sign in - I want to sign in into my UKEF digital service account after completing eligibility, So that I can complete my application for a UKEF Export Insurance Policy', () => {
+  let url;
+
   before(() => {
     cy.navigateToUrl(START);
 
@@ -36,14 +38,13 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
     // navigate to sign in page
     yourDetailsPage.signInButtonLink().click();
 
-    const expected = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
+    url = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
 
-    cy.url().should('eq', expected);
+    cy.url().should('eq', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -61,52 +62,60 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', START);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-  it('renders `email` label and input', () => {
-    const fieldId = EMAIL;
-    const field = accountFormFields[fieldId];
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', START);
+    });
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
+    it('renders `email` label and input', () => {
+      const fieldId = EMAIL;
+      const field = accountFormFields[fieldId];
 
-    field.input().should('exist');
-  });
-
-  describe('password', () => {
-    const fieldId = PASSWORD;
-    const field = accountFormFields[fieldId];
-
-    it('renders a label and input', () => {
       field.label().should('exist');
-      cy.checkText(field.label(), FIELD_STRINGS.SIGN_IN[fieldId].LABEL);
+      cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
 
       field.input().should('exist');
     });
 
-    it('should render a reveal button that shows/reveals the password input', () => {
-      cy.assertPasswordRevealButton();
+    describe('password', () => {
+      const fieldId = PASSWORD;
+      const field = accountFormFields[fieldId];
+
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it('renders a label and input', () => {
+        field.label().should('exist');
+        cy.checkText(field.label(), FIELD_STRINGS.SIGN_IN[fieldId].LABEL);
+
+        field.input().should('exist');
+      });
+
+      it('should render a reveal button that shows/reveals the password input', () => {
+        cy.assertPasswordRevealButton();
+      });
     });
-  });
 
-  it('renders a `reset password` link', () => {
-    cy.checkText(signInPage.resetPasswordLink(), CONTENT_STRINGS.RESET_PASSWORD.TEXT);
+    it('renders a `reset password` link', () => {
+      cy.checkText(signInPage.resetPasswordLink(), CONTENT_STRINGS.RESET_PASSWORD.TEXT);
 
-    signInPage.resetPasswordLink().should('have.attr', 'href', CONTENT_STRINGS.RESET_PASSWORD.HREF);
-  });
+      signInPage.resetPasswordLink().should('have.attr', 'href', CONTENT_STRINGS.RESET_PASSWORD.HREF);
+    });
 
-  it('renders a `need to create an account` copy and button link', () => {
-    cy.checkText(signInPage.needToCreateAccountHeading(), CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.HEADING);
+    it('renders a `need to create an account` copy and button link', () => {
+      cy.checkText(signInPage.needToCreateAccountHeading(), CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.HEADING);
 
-    cy.checkText(signInPage.createAccountLink(), CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.LINK.TEXT);
+      cy.checkText(signInPage.createAccountLink(), CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.LINK.TEXT);
 
-    signInPage.createAccountLink().should('have.attr', 'href', CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.LINK.HREF);
-  });
+      signInPage.createAccountLink().should('have.attr', 'href', CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.LINK.HREF);
+    });
 
-  describe('when clicking `need to create an account`', () => {
-    it(`should redirect to ${YOUR_DETAILS}`, () => {
+    it(`should redirect to ${YOUR_DETAILS} when clicking 'need to create an account'`, () => {
       signInPage.createAccountLink().click();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
@@ -122,6 +131,8 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
 
     describe('form submission with all valid required fields', () => {
       it(`should redirect to ${ENTER_CODE}`, () => {
+        cy.navigateToUrl(url);
+
         cy.completeAndSubmitSignInAccountForm();
 
         const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;

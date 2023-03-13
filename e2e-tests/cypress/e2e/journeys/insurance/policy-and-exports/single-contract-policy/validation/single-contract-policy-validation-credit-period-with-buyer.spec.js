@@ -27,21 +27,22 @@ const {
 } = ERROR_MESSAGES;
 
 context('Insurance - Policy and exports - Single contract policy page - form validation - credit period with buyer', () => {
+  let url;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -52,6 +53,8 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe('when credit period with buyer is not provided', () => {
     it('should render a validation error', () => {
+      cy.navigateToUrl(url);
+
       submitButton().click();
 
       cy.checkText(
@@ -69,7 +72,9 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   describe('when credit period with buyer is above the maximum', () => {
     const submittedValue = 'a'.repeat(1001);
 
-    before(() => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(field.input(), submittedValue);
       submitButton().click();
     });

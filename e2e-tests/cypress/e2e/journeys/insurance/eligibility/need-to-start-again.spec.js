@@ -13,8 +13,7 @@ context('Insurance Eligibility - Need to start again exit page', () => {
   beforeEach(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
 
     completeStartForm();
     completeCheckIfEligibleForm();

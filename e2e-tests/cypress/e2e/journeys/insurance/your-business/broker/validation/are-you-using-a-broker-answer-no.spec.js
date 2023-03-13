@@ -41,8 +41,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

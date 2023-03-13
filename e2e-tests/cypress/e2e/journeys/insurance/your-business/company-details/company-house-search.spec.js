@@ -30,9 +30,11 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 context('Insurance - Your business - Company details page - company house search - As an Exporter I want to enter my business\'s Companies House Registration Number (CRN)', () => {
+  let url;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
-      const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
       cy.navigateToUrl(url);
 
@@ -41,8 +43,7 @@ context('Insurance - Your business - Company details page - company house search
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -50,9 +51,13 @@ context('Insurance - Your business - Company details page - company house search
   });
 
   describe('when leaving companies house registration blank', () => {
-    it('should display an error in the error summary', () => {
-      companyDetails.companiesHouseSearchButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      companyDetails.companiesHouseSearchButton().click();
+    });
+
+    it('should display an error in the error summary', () => {
       cy.checkText(partials.errorSummaryListItems().first(), COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
     });
 
@@ -67,10 +72,15 @@ context('Insurance - Your business - Company details page - company house search
   });
 
   describe('when the companies house number is too short', () => {
-    it('should display an error in the error summary', () => {
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), '1234');
-      companyDetails.companiesHouseSearchButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), '1234');
+
+      companyDetails.companiesHouseSearchButton().click();
+    });
+
+    it('should display an error in the error summary', () => {
       cy.checkText(partials.errorSummaryListItems().first(), COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
     });
 
@@ -85,10 +95,15 @@ context('Insurance - Your business - Company details page - company house search
   });
 
   describe('when the companies house number has special characters', () => {
-    it('should display an error in the error summary', () => {
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), '123456!');
-      companyDetails.companiesHouseSearchButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), '123456!');
+
+      companyDetails.companiesHouseSearchButton().click();
+    });
+
+    it('should display an error in the error summary', () => {
       cy.checkText(partials.errorSummaryListItems().first(), COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
     });
 
@@ -103,10 +118,15 @@ context('Insurance - Your business - Company details page - company house search
   });
 
   describe('when the companies house number has a space', () => {
-    it('should display an error in the error summary', () => {
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), '123456 ');
-      companyDetails.companiesHouseSearchButton().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), '123456 ');
+
+      companyDetails.companiesHouseSearchButton().click();
+    });
+
+    it('should display an error in the error summary', () => {
       cy.checkText(partials.errorSummaryListItems().first(), COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_INPUT_FIELD_ID].INCORRECT_FORMAT);
     });
 
@@ -121,6 +141,10 @@ context('Insurance - Your business - Company details page - company house search
   });
 
   describe('when the companies house number is correctly entered', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
     it('should not display errors', () => {
       cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.companiesHouseSearchButton().click();
@@ -163,6 +187,8 @@ context('Insurance - Your business - Company details page - company house search
 
   describe('when the company does not have a sic code', () => {
     it(`should display your business summary list with a ${DEFAULT.EMPTY} for sic code when coming back to the company details page`, () => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER_NO_SIC_CODE);
       saveAndBackButton().click();
 

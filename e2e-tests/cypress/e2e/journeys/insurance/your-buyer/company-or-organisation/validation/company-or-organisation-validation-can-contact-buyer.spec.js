@@ -27,24 +27,29 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Company or organisation page - form validation - can contact buyer', () => {
+  let url;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       task.link().click();
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
 
-      cy.url().should('eq', expected);
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {
     cy.deleteAccount();
   });
+
+  const field = companyOrOrganisationPage[FIELD_ID];
 
   const ERROR_ASSERTIONS = {
     field: companyOrOrganisationPage[FIELD_ID],
@@ -52,35 +57,26 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     errorIndex: 7,
   };
 
-  describe(`${FIELD_ID} error`, () => {
-    describe(`when ${FIELD_ID} radio buttons are not selected`, () => {
-      const errorMessage = ERROR_MESSAGE.IS_EMPTY;
+  it(`should display validation errors when ${FIELD_ID} radio buttons are not selected`, () => {
+    const errorMessage = ERROR_MESSAGE.IS_EMPTY;
+    const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
-      it('should display validation errors', () => {
-        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-
-        cy.submitAndAssertRadioErrors(field, errorIndex, numberOfExpectedErrors, errorMessage);
-      });
-    });
+    cy.submitAndAssertRadioErrors(field, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
-  describe(`when ${FIELD_ID} radios are selected`, () => {
-    const field = companyOrOrganisationPage[FIELD_ID];
+  it('should NOT display validation errors when yes radio is selected', () => {
+    field.yesRadioInput().click();
 
-    describe('yes radio', () => {
-      it('should not display validation errors', () => {
-        field.yesRadioInput().click();
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 7);
-      });
-    });
+    submitButton().click();
 
-    describe('no radio', () => {
-      it('should not display validation errors', () => {
-        field.noRadioInput().click();
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 7);
-      });
-    });
+    partials.errorSummaryListItems().should('have.length', 7);
+  });
+
+  it('should NOT display validation errors when no radio is selected', () => {
+    field.noRadioInput().click();
+
+    submitButton().click();
+
+    partials.errorSummaryListItems().should('have.length', 7);
   });
 });

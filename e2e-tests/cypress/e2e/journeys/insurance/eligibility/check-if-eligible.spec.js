@@ -9,17 +9,18 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
 const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance Eligibility - check if eligible page', () => {
+  const url = ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
+
   before(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     completeStartForm();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE);
+    cy.url().should('include', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('renders core page elements', () => {
@@ -30,17 +31,23 @@ context('Insurance Eligibility - check if eligible page', () => {
     });
   });
 
-  it('renders a body text', () => {
-    cy.checkText(insurance.eligibility.checkIfEligiblePage.body(), CONTENT_STRINGS.BODY);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-  context('form submission', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`, () => {
-      submitButton().click();
+    it('renders a body text', () => {
+      cy.checkText(insurance.eligibility.checkIfEligiblePage.body(), CONTENT_STRINGS.BODY);
+    });
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
+    context('form submission', () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`, () => {
+        submitButton().click();
 
-      cy.url().should('eq', expected);
+        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
+
+        cy.url().should('eq', expected);
+      });
     });
   });
 });

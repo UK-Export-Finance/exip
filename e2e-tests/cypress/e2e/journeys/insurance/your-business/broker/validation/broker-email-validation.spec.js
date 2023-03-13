@@ -32,109 +32,110 @@ const ERROR_ASSERTIONS = {
 };
 
 context('Insurance - Your business - Broker Page - Validation - Email', () => {
+  let url;
+
   before(() => {
+    Cypress.session.clearAllSavedSessions();
+
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       task.link().click();
 
-      cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
-
-      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
-
-      cy.url().should('eq', url);
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    cy.session('mySession', () => {
+      cy.signInAndGoToUrl(url);
+    });
   });
 
   after(() => {
     cy.deleteAccount();
   });
 
-  describe('when the email field is left empty', () => {
-    it('should display validation errors', () => {
-      const field = broker[FIELD_ID];
+  it('should display validation errors when the email field is left empty', () => {
+    cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+    const field = broker[FIELD_ID];
 
-      const {
-        errorField, errorIndex, expectedErrorsCount, errorMessage,
-      } = ERROR_ASSERTIONS;
+    field.yesRadioInput().click();
 
-      // EMAIL error check
-      cy.submitAndAssertFieldErrors(errorField, null, errorIndex, expectedErrorsCount, errorMessage);
-    });
+    const {
+      errorField, errorIndex, expectedErrorsCount, errorMessage,
+    } = ERROR_ASSERTIONS;
+
+    // EMAIL error check
+    cy.submitAndAssertFieldErrors(errorField, null, errorIndex, expectedErrorsCount, errorMessage);
   });
 
-  describe('when email does not contain an @ symbol', () => {
-    it('should display validation errors', () => {
-      const field = broker[FIELD_ID];
+  it('should display validation errors when email does not contain an @ symbol', () => {
+    cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+    const field = broker[FIELD_ID];
 
-      const {
-        errorField, errorIndex, expectedErrorsCount, errorMessage,
-      } = ERROR_ASSERTIONS;
+    field.yesRadioInput().click();
 
-      const inputValue = 'testemail.com';
+    const {
+      errorField, errorIndex, expectedErrorsCount, errorMessage,
+    } = ERROR_ASSERTIONS;
 
-      // EMAIL error check
-      cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessage);
-    });
+    const inputValue = 'testemail.com';
+
+    // EMAIL error check
+    cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessage);
   });
 
-  describe('when email does not contain at least one dot', () => {
-    it('should display validation errors', () => {
-      const field = broker[FIELD_ID];
+  it('should display validation errors when email does not contain at least one dot', () => {
+    cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+    const field = broker[FIELD_ID];
 
-      const {
-        errorField, errorIndex, expectedErrorsCount, errorMessage,
-      } = ERROR_ASSERTIONS;
+    field.yesRadioInput().click();
 
-      const inputValue = 'test@emailcom';
+    const {
+      errorField, errorIndex, expectedErrorsCount, errorMessage,
+    } = ERROR_ASSERTIONS;
 
-      // EMAIL error check
-      cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessage);
-    });
+    const inputValue = 'test@emailcom';
+
+    // EMAIL error check
+    cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessage);
   });
 
-  describe('when email contains a space', () => {
-    it('should display validation errors', () => {
-      const field = broker[FIELD_ID];
+  // WORKS UP TO HERE
 
-      field.yesRadioInput().click();
+  it('should display validation errors when email contains a space', () => {
+    cy.navigateToUrl(url);
 
-      const {
-        errorField, errorIndex, expectedErrorsCount, errorMessage,
-      } = ERROR_ASSERTIONS;
+    const field = broker[FIELD_ID];
 
-      const inputValue = 'test@email. com';
+    field.yesRadioInput().click();
 
-      // EMAIL error check
-      cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessage);
-    });
+    const {
+      errorField, errorIndex, expectedErrorsCount, errorMessage,
+    } = ERROR_ASSERTIONS;
+
+    const inputValue = 'test@email. com';
+
+    // EMAIL error check
+    cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessage);
   });
 
-  describe('when email does not contain a domain', () => {
-    it('should display validation errors', () => {
-      const field = broker[FIELD_ID];
+  it('should display validation errors when email does not contain a domain', () => {
+    cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+    const field = broker[FIELD_ID];
 
-      const {
-        errorField, errorIndex, expectedErrorsCount, errorMessage,
-      } = ERROR_ASSERTIONS;
+    field.yesRadioInput().click();
 
-      const inputValue = 'test@email.';
+    const {
+      errorField, errorIndex, expectedErrorsCount, errorMessage,
+    } = ERROR_ASSERTIONS;
 
-      // EMAIL error check
-      cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessage);
-    });
+    const inputValue = 'test@email.';
+
+    // EMAIL error check
+    cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessage);
   });
 });

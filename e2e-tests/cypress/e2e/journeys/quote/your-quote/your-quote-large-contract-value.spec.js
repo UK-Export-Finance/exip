@@ -31,7 +31,7 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
+    cy.saveSession();
   });
 
   it('should get a quote with a large contract value and render in the correct format', () => {

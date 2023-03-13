@@ -22,6 +22,8 @@ const {
 const FIELD_STRINGS = ACCOUNT_FIELDS[SECURITY_CODE];
 
 context('Insurance - Account - Sign in - I want to sign in into my UKEF digital service account after completing eligibility, So that I can complete my application for a UKEF Export Insurance Policy', () => {
+  const url = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+
   before(() => {
     cy.navigateToUrl(START);
 
@@ -30,8 +32,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -44,9 +45,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
 
       cy.completeAndSubmitSignInAccountForm();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
-
-      cy.url().should('eq', expectedUrl);
+      cy.url().should('eq', url);
     });
 
     it('renders core page elements', () => {
@@ -57,33 +56,39 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
       });
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
-    });
+    describe('page tests', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-    it('renders `security code` label and input', () => {
-      const fieldId = SECURITY_CODE;
-      const field = accountFormFields[fieldId];
+      it('should render a header with href to insurance start', () => {
+        partials.header.serviceName().should('have.attr', 'href', START);
+      });
 
-      field.label().should('exist');
-      cy.checkText(field.label(), FIELD_STRINGS.LABEL);
+      it('renders `security code` label and input', () => {
+        const fieldId = SECURITY_CODE;
+        const field = accountFormFields[fieldId];
 
-      field.input().should('exist');
-    });
+        field.label().should('exist');
+        cy.checkText(field.label(), FIELD_STRINGS.LABEL);
 
-    it('renders a `request new code` link', () => {
-      cy.checkText(enterCodePage.requestNewCodeLink(), CONTENT_STRINGS.REQUEST_NEW_CODE.TEXT);
+        field.input().should('exist');
+      });
 
-      enterCodePage.requestNewCodeLink().should('have.attr', 'href', CONTENT_STRINGS.REQUEST_NEW_CODE.HREF);
-    });
+      it('renders a `request new code` link', () => {
+        cy.checkText(enterCodePage.requestNewCodeLink(), CONTENT_STRINGS.REQUEST_NEW_CODE.TEXT);
 
-    describe('when clicking `request new code`', () => {
-      it(`should rediect to ${REQUEST_NEW_CODE}`, () => {
-        enterCodePage.requestNewCodeLink().click();
+        enterCodePage.requestNewCodeLink().should('have.attr', 'href', CONTENT_STRINGS.REQUEST_NEW_CODE.HREF);
+      });
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`;
+      describe('when clicking `request new code`', () => {
+        it(`should rediect to ${REQUEST_NEW_CODE}`, () => {
+          enterCodePage.requestNewCodeLink().click();
 
-        cy.url().should('eq', expectedUrl);
+          const expectedUrl = `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`;
+
+          cy.url().should('eq', expectedUrl);
+        });
       });
     });
   });

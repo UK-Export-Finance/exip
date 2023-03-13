@@ -51,8 +51,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -67,124 +66,130 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     });
   });
 
-  it(`renders an ${NAME} label, and input`, () => {
-    const fieldId = NAME;
-    const field = companyOrOrganisationPage[fieldId];
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-    field.input().should('exist');
-  });
+    it(`renders an ${NAME} label, and input`, () => {
+      const fieldId = NAME;
+      const field = companyOrOrganisationPage[fieldId];
 
-  it(`renders an ${ADDRESS} label, and input`, () => {
-    const fieldId = ADDRESS;
-    const field = companyOrOrganisationPage[fieldId];
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+      field.input().should('exist');
+    });
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-    field.input().should('exist');
-  });
+    it(`renders an ${ADDRESS} label, and input`, () => {
+      const fieldId = ADDRESS;
+      const field = companyOrOrganisationPage[fieldId];
 
-  it(`renders ${COUNTRY} label and input`, () => {
-    const fieldId = COUNTRY;
-    const field = companyOrOrganisationPage[fieldId];
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+      field.input().should('exist');
+    });
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+    it(`renders ${COUNTRY} label and input`, () => {
+      const fieldId = COUNTRY;
+      const field = companyOrOrganisationPage[fieldId];
 
-    field.input().should('exist');
-  });
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
-  it(`renders ${REGISTRATION_NUMBER} label and input`, () => {
-    const fieldId = REGISTRATION_NUMBER;
-    const field = companyOrOrganisationPage[fieldId];
+      field.input().should('exist');
+    });
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+    it(`renders ${REGISTRATION_NUMBER} label and input`, () => {
+      const fieldId = REGISTRATION_NUMBER;
+      const field = companyOrOrganisationPage[fieldId];
 
-    field.input().should('exist');
-  });
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
-  it(`renders ${WEBSITE} label and input`, () => {
-    const fieldId = WEBSITE;
-    const field = companyOrOrganisationPage[fieldId];
+      field.input().should('exist');
+    });
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+    it(`renders ${WEBSITE} label and input`, () => {
+      const fieldId = WEBSITE;
+      const field = companyOrOrganisationPage[fieldId];
 
-    field.input().should('exist');
-  });
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
-  it(`renders ${FIRST_NAME} heading, hint, label and input`, () => {
-    const fieldId = FIRST_NAME;
-    const field = companyOrOrganisationPage[fieldId];
+      field.input().should('exist');
+    });
 
-    field.heading().should('exist');
-    cy.checkText(field.heading(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HEADING);
+    it(`renders ${FIRST_NAME} heading, hint, label and input`, () => {
+      const fieldId = FIRST_NAME;
+      const field = companyOrOrganisationPage[fieldId];
 
-    field.hint().should('exist');
-    cy.checkText(field.hint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
+      field.heading().should('exist');
+      cy.checkText(field.heading(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HEADING);
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+      field.hint().should('exist');
+      cy.checkText(field.hint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
 
-    field.input().should('exist');
-  });
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
-  it(`renders ${LAST_NAME} label and input`, () => {
-    const fieldId = LAST_NAME;
-    const field = companyOrOrganisationPage[fieldId];
+      field.input().should('exist');
+    });
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+    it(`renders ${LAST_NAME} label and input`, () => {
+      const fieldId = LAST_NAME;
+      const field = companyOrOrganisationPage[fieldId];
 
-    field.input().should('exist');
-  });
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
-  it(`renders ${POSITION} label and input`, () => {
-    const fieldId = POSITION;
-    const field = companyOrOrganisationPage[fieldId];
+      field.input().should('exist');
+    });
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+    it(`renders ${POSITION} label and input`, () => {
+      const fieldId = POSITION;
+      const field = companyOrOrganisationPage[fieldId];
 
-    field.input().should('exist');
-  });
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
-  it(`renders ${CAN_CONTACT_BUYER} label and input`, () => {
-    const fieldId = CAN_CONTACT_BUYER;
-    const field = companyOrOrganisationPage[fieldId];
+      field.input().should('exist');
+    });
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+    it(`renders ${CAN_CONTACT_BUYER} label and input`, () => {
+      const fieldId = CAN_CONTACT_BUYER;
+      const field = companyOrOrganisationPage[fieldId];
 
-    field.hint().should('exist');
-    cy.checkText(field.hint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
-    field.yesRadioInput().should('exist');
-    field.noRadioInput().should('exist');
-  });
+      field.hint().should('exist');
+      cy.checkText(field.hint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
 
-  it(`renders ${EMAIL} label and input`, () => {
-    const fieldId = EMAIL;
-    const field = companyOrOrganisationPage[fieldId];
+      field.yesRadioInput().should('exist');
+      field.noRadioInput().should('exist');
+    });
 
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+    it(`renders ${EMAIL} label and input`, () => {
+      const fieldId = EMAIL;
+      const field = companyOrOrganisationPage[fieldId];
 
-    field.input().should('exist');
-  });
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
-  it('renders a `submit` button', () => {
-    submitButton().should('exist');
+      field.input().should('exist');
+    });
 
-    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
-  });
+    it('renders a `submit` button', () => {
+      submitButton().should('exist');
 
-  it('renders a `save and back` button', () => {
-    saveAndBackButton().should('exist');
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
 
-    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('renders a `save and back` button', () => {
+      saveAndBackButton().should('exist');
+
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
   });
 
   describe('form submission', () => {
@@ -192,6 +197,8 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     describe('when submitting a fully filled form', () => {
       it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
+        cy.navigateToUrl(url);
+
         cy.completeAndSubmitCompanyOrOrganisationForm();
 
         cy.url().should('eq', workingWithBuyerUrl);

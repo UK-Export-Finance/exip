@@ -17,8 +17,7 @@ context('Get a Quote - Need to start again exit page', () => {
 
     cy.navigateToUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
 
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
 
     cy.url().should('include', ROUTES.QUOTE.NEED_TO_START_AGAIN);
   });

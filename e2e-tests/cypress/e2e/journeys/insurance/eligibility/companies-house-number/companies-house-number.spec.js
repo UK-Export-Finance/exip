@@ -22,6 +22,8 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER;
 const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I do not have UK Companies House Registration Number', () => {
+  let url;
+
   before(() => {
     cy.navigateToUrl(insuranceStartRoute);
 
@@ -36,14 +38,13 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     completeLetterOfCreditForm();
     completePreCreditPeriodForm();
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
+    url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
-    cy.url().should('eq', expected);
+    cy.url().should('eq', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('renders core page elements', () => {
@@ -54,24 +55,34 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-  it('renders `yes` radio button', () => {
-    yesRadio().should('exist');
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
+    });
 
-    cy.checkText(yesRadio(), 'Yes');
-  });
+    it('renders `yes` radio button', () => {
+      yesRadio().should('exist');
 
-  it('renders `no` radio button', () => {
-    noRadio().should('exist');
+      cy.checkText(yesRadio(), 'Yes');
+    });
 
-    cy.checkText(noRadio(), 'No');
+    it('renders `no` radio button', () => {
+      noRadio().should('exist');
+
+      cy.checkText(noRadio(), 'No');
+    });
   });
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
       it('should render validation errors', () => {
         submitButton().click();
 
@@ -94,7 +105,9 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     });
 
     describe('when submitting the answer as `yes`', () => {
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
         yesRadio().click();
         submitButton().click();
       });

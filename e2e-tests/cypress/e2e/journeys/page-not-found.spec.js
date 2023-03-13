@@ -5,8 +5,12 @@ import { PAGES, PRODUCT } from '../../../content-strings';
 const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
 
 context('404 Page not found', () => {
-  before(() => {
-    cy.navigateToUrl('/test');
+  const invalidUrl = '/test';
+
+  beforeEach(() => {
+    cy.saveSession();
+
+    cy.navigateToUrl(invalidUrl);
   });
 
   it('renders core page elements', () => {

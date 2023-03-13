@@ -3,19 +3,19 @@ import {
 } from '../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 const { REASON } = CONTENT_STRINGS;
 
 const COUNTRY_NAME_UNSUPPORTED = 'France';
 
-context('Insurance - Buyer location page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based - submit unsupported country', () => {
-  before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based - submit unsupported country', () => {
+  const url = ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY;
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+  beforeEach(() => {
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
 
     cy.keyboardInput(buyerCountryPage.searchInput(), COUNTRY_NAME_UNSUPPORTED);
 
@@ -23,11 +23,6 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
     results.first().click();
 
     submitButton().click();
-  });
-
-  beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
   });
 
   it('redirects to `cannot apply` exit page', () => {
@@ -49,11 +44,9 @@ context('Insurance - Buyer location page - as an exporter, I want to check if UK
     backLink().should('have.attr', 'href', expected);
   });
 
-  describe('when going back to the page', () => {
-    it('should NOT have the originally submitted answer selected', () => {
-      cy.clickBackLink();
+  it('should NOT have the originally submitted answer selected when going back to the page', () => {
+    cy.clickBackLink();
 
-      buyerCountryPage.results().should('have.length', 0);
-    });
+    buyerCountryPage.results().should('have.length', 0);
   });
 });

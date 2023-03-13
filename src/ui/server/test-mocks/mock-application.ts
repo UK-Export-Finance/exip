@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import { add, addMonths } from 'date-fns';
 import { APPLICATION } from '../constants';
+import mockAccount from './mock-account';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
 import { Application } from '../../types';
@@ -31,6 +32,10 @@ export const mockMultiplePolicyAndExport = {
   totalMonthsOfCover: 5,
   totalSalesToBuyer: 1500,
   maximumBuyerWillOwe: 1000,
+};
+
+export const mockExporter = {
+  id: mockAccount.id,
 };
 
 export const mockExporterCompany = {
@@ -102,6 +107,7 @@ const mockApplication = {
     wantCoverOverMaxAmount: false,
     wantCoverOverMaxPeriod: false,
   },
+  exporter: mockExporter,
   policyAndExport: mockSinglePolicyAndExport,
   exporterCompany: mockExporterCompany,
   exporterBusiness: mockExporterBusiness,

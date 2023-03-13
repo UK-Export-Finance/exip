@@ -33,8 +33,11 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
   });
 
   after(() => {
@@ -47,6 +50,10 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       expectedErrorsCount: 4,
       errorIndex: 2,
     };
+
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
     describe(`when ${EMPLOYEES_UK} is left empty`, () => {
       const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].IS_EMPTY;
@@ -136,6 +143,11 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       expectedErrorsCount: 4,
       errorIndex: 3,
     };
+
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
     describe(`when ${EMPLOYEES_INTERNATIONAL} is left empty`, () => {
       const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_INTERNATIONAL].IS_EMPTY;
 

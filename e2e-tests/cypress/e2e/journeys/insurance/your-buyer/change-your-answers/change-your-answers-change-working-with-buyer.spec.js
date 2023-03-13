@@ -15,6 +15,7 @@ const {
 } = FIELD_IDS;
 
 const {
+  ROOT,
   YOUR_BUYER: {
     WORKING_WITH_BUYER_CHANGE,
     CHECK_YOUR_ANSWERS,
@@ -28,6 +29,7 @@ const task = taskList.prepareApplication.tasks.buyer;
 const { summaryList } = checkYourAnswersPage;
 
 context('Insurance - Your buyer - Change your answers - Company or organisation - As an exporter, I want to change my answers to the company or organisation section', () => {
+  let url;
   let referenceNumber;
 
   before(() => {
@@ -38,12 +40,13 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
       cy.completeAndSubmitCompanyOrOrganisationForm();
       cy.completeAndSubmitWorkingWithBuyerForm();
+
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -55,6 +58,8 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${WORKING_WITH_BUYER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, WORKING_WITH_BUYER_CHANGE, CONNECTED_WITH_BUYER);
@@ -62,7 +67,11 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     });
 
     describe('form submission with a new answer', () => {
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         workingWithBuyerPage[fieldId].noRadioInput().click();
 
         submitButton().click();
@@ -83,6 +92,8 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${WORKING_WITH_BUYER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, WORKING_WITH_BUYER_CHANGE, TRADED_WITH_BUYER);
@@ -90,7 +101,11 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     });
 
     describe('form submission with a new answer', () => {
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         workingWithBuyerPage[fieldId].noRadioInput().click();
 
         submitButton().click();

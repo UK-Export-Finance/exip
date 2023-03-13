@@ -9,6 +9,8 @@ import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../s
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
 context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover - submit `not based inside the UK`', () => {
+  const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION}`;
+
   before(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
@@ -16,15 +18,16 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
     completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
-
-    noRadio().click();
-    submitButton().click();
+    cy.url().should('eq', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
+
+    noRadio().click();
+    submitButton().click();
   });
 
   it('redirects to exit page', () => {

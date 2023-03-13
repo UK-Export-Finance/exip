@@ -15,8 +15,7 @@ context('Cookies page', () => {
     partials.footer.supportLinks.cookies().click();
     cy.url().should('include', ROUTES.COOKIES);
 
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('renders core page elements', () => {

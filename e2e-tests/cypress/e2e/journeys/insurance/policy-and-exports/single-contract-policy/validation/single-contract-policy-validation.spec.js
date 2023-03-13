@@ -33,21 +33,22 @@ const {
 } = ERROR_MESSAGES;
 
 context('Insurance - Policy and exports - Single contract policy page - form validation', () => {
+  let url;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -90,6 +91,8 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe(`when ${POLICY_CURRENCY_CODE} is submitted but there are other validation errors`, () => {
     it(`should retain the submitted ${POLICY_CURRENCY_CODE}`, () => {
+      cy.navigateToUrl(url);
+
       const currencyCode = application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE];
 
       policyCurrencyCodeFormField.input().select(currencyCode);
