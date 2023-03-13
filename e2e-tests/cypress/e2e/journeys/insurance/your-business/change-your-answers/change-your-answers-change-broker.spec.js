@@ -22,6 +22,7 @@ const {
 } = FIELD_IDS;
 
 const {
+  ROOT,
   EXPORTER_BUSINESS: {
     BROKER_CHANGE,
     CHECK_YOUR_ANSWERS,
@@ -36,6 +37,7 @@ const { summaryList } = checkYourAnswers;
 
 context('Insurance - Your business - Change your answers - Broker - As an exporter, I want to change my answers to the broker section', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -47,12 +49,13 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm();
+
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -64,6 +67,8 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${BROKER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, NAME);
@@ -73,7 +78,11 @@ context('Insurance - Your business - Change your answers - Broker - As an export
     describe('form submission with a new answer', () => {
       const newAnswer = 'Test name 2';
 
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         cy.keyboardInput(broker[fieldId].input(), newAnswer);
 
         submitButton().click();
@@ -94,6 +103,8 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${BROKER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, fieldId);
@@ -107,7 +118,11 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       const country = 'Test London';
       const postcode = 'SW1A 2AA';
 
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         cy.keyboardInput(broker[fieldId].input(), addressLine1);
         cy.keyboardInput(broker[ADDRESS_LINE_2].input(), addressLine2);
         cy.keyboardInput(broker[TOWN].input(), town);
@@ -146,6 +161,8 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${BROKER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, NAME);
@@ -155,7 +172,11 @@ context('Insurance - Your business - Change your answers - Broker - As an export
     describe('form submission with a new answer', () => {
       const newAnswer = 'testing321@test.com';
 
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         cy.keyboardInput(broker[fieldId].input(), newAnswer);
 
         submitButton().click();
@@ -176,6 +197,8 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${BROKER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, USING_BROKER);
@@ -183,7 +206,11 @@ context('Insurance - Your business - Change your answers - Broker - As an export
     });
 
     describe('form submission with a new answer', () => {
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         broker[fieldId].noRadioInput().click();
 
         submitButton().click();

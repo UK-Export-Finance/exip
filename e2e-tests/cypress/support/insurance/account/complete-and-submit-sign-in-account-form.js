@@ -10,9 +10,18 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-export default () => {
-  cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
-  cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
+/**
+ * completeAndSubmitSignInAccountForm
+ * Complete and submit the "sign in" form
+ * @param {String} Email address
+ * @param {String} Password
+ * @returns {String} Valid OTP
+ */
+const completeAndSubmitSignInAccountForm = (email = account[EMAIL], password = account[PASSWORD]) => {
+  cy.keyboardInput(accountFormFields[EMAIL].input(), email);
+  cy.keyboardInput(accountFormFields[PASSWORD].input(), password);
 
   submitButton().click();
 };
+
+export default completeAndSubmitSignInAccountForm;

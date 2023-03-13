@@ -4,6 +4,7 @@ import { get as startGet, post as startPost } from '../../controllers/insurance/
 import { get as dashboardGet } from '../../controllers/insurance/dashboard';
 import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
 import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-found';
+import { get as noAccessToApplicationGet } from '../../controllers/insurance/no-access-to-application';
 
 describe('routes/insurance', () => {
   beforeEach(() => {
@@ -15,7 +16,7 @@ describe('routes/insurance', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(55);
+    expect(get).toHaveBeenCalledTimes(56);
     expect(post).toHaveBeenCalledTimes(56);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startGet);
@@ -26,5 +27,7 @@ describe('routes/insurance', () => {
     expect(get).toHaveBeenCalledWith(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.ALL_SECTIONS}`, allSectionsGet);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.PAGE_NOT_FOUND, pageNotFoundGet);
+
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.NO_ACCESS_TO_APPLICATION, noAccessToApplicationGet);
   });
 });

@@ -12,8 +12,7 @@ context('Insurance - page not found', () => {
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('renders core page elements', () => {
@@ -25,21 +24,27 @@ context('Insurance - page not found', () => {
     });
   });
 
-  it('renders `typed` and `pasted` text', () => {
-    cy.checkText(pageNotFoundPage.typedAddress(), CONTENT_STRINGS.TYPED_ADDRESS);
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(invalidUrl);
+    });
 
-    cy.checkText(pageNotFoundPage.pastedAddress(), CONTENT_STRINGS.PASTED_ADDRESS);
-  });
+    it('renders `typed` and `pasted` text', () => {
+      cy.checkText(pageNotFoundPage.typedAddress(), CONTENT_STRINGS.TYPED_ADDRESS);
 
-  it('renders contact text and link', () => {
-    cy.checkText(pageNotFoundPage.contact1(), CONTENT_STRINGS.CONTACT.TEXT);
+      cy.checkText(pageNotFoundPage.pastedAddress(), CONTENT_STRINGS.PASTED_ADDRESS);
+    });
 
-    cy.checkText(pageNotFoundPage.contact2(), CONTENT_STRINGS.CONTACT.LINK.TEXT);
+    it('renders contact text and link', () => {
+      cy.checkText(pageNotFoundPage.contact1(), CONTENT_STRINGS.CONTACT.TEXT);
 
-    cy.checkText(pageNotFoundPage.contact3(), CONTENT_STRINGS.CONTACT.OUTRO);
+      cy.checkText(pageNotFoundPage.contact2(), CONTENT_STRINGS.CONTACT.LINK.TEXT);
 
-    cy.checkText(pageNotFoundPage.contactLink(), CONTENT_STRINGS.CONTACT.LINK.TEXT);
+      cy.checkText(pageNotFoundPage.contact3(), CONTENT_STRINGS.CONTACT.OUTRO);
 
-    pageNotFoundPage.contactLink().should('have.attr', 'href', CONTENT_STRINGS.CONTACT.LINK.HREF);
+      cy.checkText(pageNotFoundPage.contactLink(), CONTENT_STRINGS.CONTACT.LINK.TEXT);
+
+      pageNotFoundPage.contactLink().should('have.attr', 'href', CONTENT_STRINGS.CONTACT.LINK.HREF);
+    });
   });
 });

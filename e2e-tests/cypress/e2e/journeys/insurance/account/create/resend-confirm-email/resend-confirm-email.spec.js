@@ -21,8 +21,7 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    cy.saveSession();
   });
 
   after(() => {
@@ -30,7 +29,7 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
   });
 
   let exporter;
-  let expectedUrl;
+  let url;
 
   describe('core page elements and content', () => {
     before(() => {
@@ -46,23 +45,25 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
         const [firstExporter] = data.exporters;
         exporter = firstExporter;
 
-        expectedUrl = `${CONFIRM_EMAIL_RESENT}?id=${exporter.id}`;
+        url = `${CONFIRM_EMAIL_RESENT}?id=${exporter.id}`;
 
-        cy.url().should('eq', `${Cypress.config('baseUrl')}${expectedUrl}`);
+        cy.url().should('eq', `${Cypress.config('baseUrl')}${url}`);
       });
-    });
-
-    it('renders all `confirm email` page content', () => {
-      cy.assertConfirmEmailPageContent(exporter.id);
     });
 
     it('renders core page elements', () => {
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: expectedUrl,
+        currentHref: url,
         backLink: `${CONFIRM_EMAIL}?id=${exporter.id}`,
         assertSubmitButton: false,
       });
+    });
+
+    it('renders all `confirm email` page content', () => {
+      cy.navigateToUrl(url);
+
+      cy.assertConfirmEmailPageContent(exporter.id);
     });
   });
 });

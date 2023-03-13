@@ -25,6 +25,7 @@ const {
 } = FIELD_IDS;
 
 const {
+  ROOT,
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION_CHANGE,
     CHECK_YOUR_ANSWERS,
@@ -39,6 +40,7 @@ const { summaryList } = checkYourAnswersPage;
 
 context('Insurance - Your buyer - Change your answers - Company or organisation - As an exporter, I want to change my answers to the company or organisation section', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -48,12 +50,13 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
       cy.completeAndSubmitCompanyOrOrganisationForm();
       cy.completeAndSubmitWorkingWithBuyerForm();
+
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -65,6 +68,8 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, NAME);
@@ -74,7 +79,11 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     describe('form submission with a new answer', () => {
       const newAnswer = 'Test name 2';
 
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswer);
 
         submitButton().click();
@@ -95,6 +104,8 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, ADDRESS);
@@ -104,7 +115,11 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     describe('form submission with a new answer', () => {
       const newAnswer = 'Address test 2';
 
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswer);
 
         submitButton().click();
@@ -136,6 +151,8 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, REGISTRATION_NUMBER);
@@ -145,7 +162,11 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     describe('form submission with a new answer', () => {
       const newAnswer = '99999';
 
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswer);
 
         submitButton().click();
@@ -166,6 +187,8 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, WEBSITE);
@@ -175,7 +198,11 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     describe('form submission with a new answer', () => {
       const newAnswer = WEBSITE_EXAMPLES.VALID_UKEF;
 
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswer);
 
         submitButton().click();
@@ -196,6 +223,8 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, FIRST_NAME);
@@ -207,7 +236,11 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       const newAnswerLastName = 'Jim';
       const newAnswerPosition = 'Worker';
 
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswerFirstName);
         cy.keyboardInput(companyOrOrganisationPage[LAST_NAME].input(), newAnswerLastName);
         cy.keyboardInput(companyOrOrganisationPage[POSITION].input(), newAnswerPosition);
@@ -243,6 +276,8 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, CAN_CONTACT_BUYER);
@@ -250,7 +285,11 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     });
 
     describe('form submission with a new answer', () => {
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         companyOrOrganisationPage[fieldId].noRadioInput().click();
 
         submitButton().click();

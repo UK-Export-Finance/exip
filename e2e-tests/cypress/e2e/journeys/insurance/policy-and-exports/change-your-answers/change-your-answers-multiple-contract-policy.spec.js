@@ -36,6 +36,7 @@ const { summaryList } = checkYourAnswersPage;
 
 context('Insurance - Policy and exports - Change your answers - Multiple contract policy - As an exporter, I want to change my answers to the type of policy and exports section', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -47,14 +48,13 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
       cy.completeAndSubmitMultipleContractPolicyForm();
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.url().should('eq', expected);
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -67,6 +67,8 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
       describe('when clicking the `change` link', () => {
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
+          cy.navigateToUrl(url);
+
           summaryList[fieldId].changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
@@ -79,7 +81,11 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
           year: application.POLICY_AND_EXPORTS[fieldId].year + 1,
         };
 
-        before(() => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          summaryList[fieldId].changeLink().click();
+
           cy.keyboardInput(multipleContractPolicyPage[fieldId].yearInput(), newAnswer.year);
 
           submitButton().click();
@@ -102,6 +108,8 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
       describe('when clicking the `change` link', () => {
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
+          cy.navigateToUrl(url);
+
           summaryList[fieldId].changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
@@ -111,7 +119,11 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
       describe('form submission with a new answer', () => {
         const newAnswer = String(Number(application.POLICY_AND_EXPORTS[fieldId]) + 1);
 
-        before(() => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          summaryList[fieldId].changeLink().click();
+
           multipleContractPolicyPage[fieldId].input().select(newAnswer);
 
           submitButton().click();
@@ -134,6 +146,8 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
       describe('when clicking the `change` link', () => {
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
+          cy.navigateToUrl(url);
+
           summaryList[fieldId].changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
@@ -143,7 +157,11 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
       describe('form submission with a new answer', () => {
         const newAnswer = application.POLICY_AND_EXPORTS[fieldId] - 500;
 
-        before(() => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          summaryList[fieldId].changeLink().click();
+
           cy.keyboardInput(multipleContractPolicyPage[fieldId].input(), newAnswer);
 
           submitButton().click();
@@ -166,6 +184,8 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
       describe('when clicking the `change` link', () => {
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
+          cy.navigateToUrl(url);
+
           summaryList[fieldId].changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
@@ -175,7 +195,11 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
       describe('form submission with a new answer', () => {
         const newAnswer = Number(application.POLICY_AND_EXPORTS[fieldId]) + 1000;
 
-        before(() => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          summaryList[fieldId].changeLink().click();
+
           cy.keyboardInput(multipleContractPolicyPage[fieldId].input(), newAnswer);
 
           submitButton().click();
@@ -198,6 +222,8 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
       describe('when clicking the `change` link', () => {
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
+          cy.navigateToUrl(url);
+
           summaryList[fieldId].changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
@@ -207,7 +233,11 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
       describe('form submission with a new answer', () => {
         const newAnswer = `${application.POLICY_AND_EXPORTS[fieldId]} additional text`;
 
-        before(() => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          summaryList[fieldId].changeLink().click();
+
           cy.keyboardInput(multipleContractPolicyPage[fieldId].input(), newAnswer);
 
           submitButton().click();
@@ -230,6 +260,8 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
       describe('when clicking the `change` link', () => {
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
+          cy.navigateToUrl(url);
+
           summaryList[fieldId].changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
@@ -239,7 +271,11 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
       describe('form submission with a new answer', () => {
         const newAnswer = currencies[3].isoCode;
 
-        before(() => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          summaryList[fieldId].changeLink().click();
+
           policyCurrencyCodeFormField.input().select(newAnswer);
 
           submitButton().click();

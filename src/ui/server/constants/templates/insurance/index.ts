@@ -16,4 +16,5 @@ export const INSURANCE_TEMPLATES = {
   EXPORTER_BUSINESS: BUSINESS_TEMPLATES,
   YOUR_BUYER: YOUR_BUYER_TEMPLATES,
   PAGE_NOT_FOUND: 'insurance/page-not-found.njk',
+  NO_ACCESS_TO_APPLICATION: 'insurance/do-not-have-application-access.njk',
 };

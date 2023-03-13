@@ -35,6 +35,7 @@ const { summaryList } = checkYourAnswersPage;
 
 context('Insurance - Policy and exports - Change your answers - Policy type - multiple to single', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -46,14 +47,13 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
       cy.completeAndSubmitMultipleContractPolicyForm();
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.url().should('eq', expected);
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -63,11 +63,11 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
   const fieldId = POLICY_TYPE;
 
   describe('when clicking the `change` link', () => {
-    before(() => {
-      summaryList[fieldId].changeLink().click();
-    });
-
     it(`should redirect to ${TYPE_OF_POLICY_CHANGE}`, () => {
+      cy.navigateToUrl(url);
+
+      summaryList[fieldId].changeLink().click();
+
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHANGE}#heading`;
 
       cy.url().should('eq', expected);
@@ -75,8 +75,13 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
   });
 
   describe('form submission with a new answer', () => {
-    before(() => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      summaryList[fieldId].changeLink().click();
+
       typeOfPolicyPage[fieldId].single.input().click();
+
       submitButton().click();
     });
 
@@ -92,6 +97,10 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
     });
 
     describe('`Add` links', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
       it('should have empty summary list row values and links for the empty single policy specific fields', () => {
         cy.assertSummaryListRowValue(summaryList, CONTRACT_COMPLETION_DATE, DEFAULT.EMPTY);
 

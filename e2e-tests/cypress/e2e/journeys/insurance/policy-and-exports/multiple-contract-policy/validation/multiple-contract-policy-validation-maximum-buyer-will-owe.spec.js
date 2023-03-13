@@ -43,6 +43,7 @@ const {
 
 context('Insurance - Policy and exports - Multiple contract policy page - form validation - maximum buyer will owe', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -52,15 +53,16 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {
@@ -69,119 +71,105 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
   const field = multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE];
 
-  describe('when maximum buyer will owe is not provided', () => {
-    it('should render a validation error', () => {
-      submitButton().click();
+  it('should render a validation error when maximum buyer will owe is not provided', () => {
+    submitButton().click();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(3),
-        CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
-      );
+    cy.checkText(
+      partials.errorSummaryListItems().eq(3),
+      CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
+    );
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
-      );
-    });
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
+    );
   });
 
-  describe('when maximum buyer will owe is not a number', () => {
-    it('should render a validation error', () => {
-      cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), 'ten!');
-      submitButton().click();
+  it('should render a validation error when maximum buyer will owe is not a number', () => {
+    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), 'ten!');
+    submitButton().click();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(3),
-        CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
-      );
+    cy.checkText(
+      partials.errorSummaryListItems().eq(3),
+      CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
+    );
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
-      );
-    });
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
+    );
   });
 
-  describe('when maximum buyer will owe contains a decimal', () => {
-    it('should render a validation error', () => {
-      cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1.2');
-      submitButton().click();
+  it('should render a validation error when maximum buyer will owe contains a decimal', () => {
+    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1.2');
+    submitButton().click();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(3),
-        CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
-      );
+    cy.checkText(
+      partials.errorSummaryListItems().eq(3),
+      CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
+    );
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
-      );
-    });
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
+    );
   });
 
-  describe('when maximum buyer will owe contains a comma and decimal', () => {
-    it('should render a validation error', () => {
-      cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234.56');
-      submitButton().click();
+  it('should render a validation error when maximum buyer will owe contains a comma and decimal', () => {
+    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234.56');
+    submitButton().click();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(3),
-        CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
-      );
+    cy.checkText(
+      partials.errorSummaryListItems().eq(3),
+      CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
+    );
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
-      );
-    });
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
+    );
   });
 
-  describe('when maximum buyer will owe is below the minimum', () => {
-    it('should render a validation error', () => {
-      cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '0');
-      submitButton().click();
+  it('should render a validation error when maximum buyer will owe is below the minimum', () => {
+    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '0');
+    submitButton().click();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(3),
-        CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM,
-      );
+    cy.checkText(
+      partials.errorSummaryListItems().eq(3),
+      CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM,
+    );
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM}`,
-      );
-    });
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM}`,
+    );
   });
 
-  describe('when maximum buyer will owe is above the maximum', () => {
-    it('should render a validation error', () => {
-      const MAXIMUM = APPLICATION.POLICY_AND_EXPORT.MAXIMUM_BUYER_CAN_OWE;
+  it('should render a validation error when maximum buyer will owe is above the maximum', () => {
+    const MAXIMUM = APPLICATION.POLICY_AND_EXPORT.MAXIMUM_BUYER_CAN_OWE;
 
-      cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), MAXIMUM + 1);
-      submitButton().click();
+    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), MAXIMUM + 1);
+    submitButton().click();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(3),
-        CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].ABOVE_MAXIMUM,
-      );
+    cy.checkText(
+      partials.errorSummaryListItems().eq(3),
+      CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].ABOVE_MAXIMUM,
+    );
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].ABOVE_MAXIMUM}`,
-      );
-    });
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].ABOVE_MAXIMUM}`,
+    );
   });
 
-  describe('when maximum buyer will owe is valid and contains a comma', () => {
-    it('should redirect to the next page as all fields are valid', () => {
-      cy.completeAndSubmitMultipleContractPolicyForm();
-      cy.clickBackLink();
+  it('should redirect to the next page when maximum buyer will owe is valid and contains a comma as all fields are valid', () => {
+    cy.completeAndSubmitMultipleContractPolicyForm();
+    cy.clickBackLink();
 
-      cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234');
-      submitButton().click();
+    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234');
+    submitButton().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
-      cy.url().should('eq', expectedUrl);
-    });
+    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+    cy.url().should('eq', expectedUrl);
   });
 });

@@ -5,8 +5,7 @@ context('Footer', () => {
   beforeEach(() => {
     cy.login();
 
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('renders a heading', () => {

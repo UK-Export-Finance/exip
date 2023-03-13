@@ -54,8 +54,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -71,25 +70,33 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-  it('renders a heading caption', () => {
-    cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-  });
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
+    });
 
-  it('renders a `save and back` button', () => {
-    submitButton().should('exist');
-    cy.checkText(submitButton(), BUTTONS.CONTINUE_NEXT_SECTION);
+    it('renders a heading caption', () => {
+      cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
 
-    saveAndBackButton().should('exist');
-    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('renders a `save and back` button', () => {
+      submitButton().should('exist');
+      cy.checkText(submitButton(), BUTTONS.CONTINUE_NEXT_SECTION);
+
+      saveAndBackButton().should('exist');
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
   });
 
   describe('form submission', () => {
     describe('continue', () => {
       it(`should redirect to ${COMPANY_OR_ORGANISATION}`, () => {
+        cy.navigateToUrl(url);
+
         submitButton().click();
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;

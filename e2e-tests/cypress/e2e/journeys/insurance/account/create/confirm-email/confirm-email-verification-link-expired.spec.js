@@ -11,7 +11,7 @@ const {
 } = ROUTES;
 
 context('Insurance - Account - Create - Confirm email page - expired token - As an Exporter I want to verify my email address, So that I can activate my email address and use it to create a digital service account with UKEF', () => {
-  let expectedUrl;
+  let url;
   let exporter;
 
   before(() => {
@@ -20,14 +20,13 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
 
-    expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
+    url = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
 
-    cy.url().should('eq', expectedUrl);
+    cy.url().should('eq', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -37,7 +36,7 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
   describe(`when a verification token has expired and exporter navigates to ${VERIFY_EMAIL} with the expired token`, () => {
     let updatedExporter;
 
-    before(async () => {
+    beforeEach(async () => {
       /**
        * Get the exporter so that we can use the ID
        * to update the verification period.
@@ -65,30 +64,26 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
       updatedExporter = await api.updateExporter(exporter.id, updateObj);
     });
 
-    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED}`, () => {
+    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED} and render core page elements and content`, () => {
       const { verificationHash } = updatedExporter;
 
       cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`);
 
-      expectedUrl = `${Cypress.config('baseUrl')}${VERIFY_EMAIL_LINK_EXPIRED}?id=${exporter.id}`;
+      const expectedUrl = `${Cypress.config('baseUrl')}${VERIFY_EMAIL_LINK_EXPIRED}?id=${exporter.id}`;
 
       cy.url().should('eq', expectedUrl);
-    });
 
-    it('renders core page elements', () => {
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${VERIFY_EMAIL}?token=${exporter.verificationHash}`,
         backLink: `${CONFIRM_EMAIL}?id=${exporter.id}`,
         assertSubmitButton: false,
       });
-    });
 
-    it('renders body content', () => {
+      // assert body content
       cy.checkText(verifyEmailLinkExpiredPage.body(), CONTENT_STRINGS.BODY);
-    });
 
-    it('renders a link to create an account', () => {
+      // assert link to create an account
       cy.checkLink(verifyEmailLinkExpiredPage.createAccount(), CONTENT_STRINGS.CREATE_ACCOUNT.HREF, CONTENT_STRINGS.CREATE_ACCOUNT.TEXT);
     });
   });

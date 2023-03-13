@@ -15,7 +15,9 @@ const {
 const { ACCOUNT: { EMAIL } } = INSURANCE_FIELD_IDS;
 
 context('Insurance - Account - Create - Confirm email page should render the submitted email', () => {
-  before(() => {
+  beforeEach(() => {
+    cy.saveSession();
+
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
@@ -26,12 +28,7 @@ context('Insurance - Account - Create - Confirm email page should render the sub
     cy.url().should('eq', expected);
   });
 
-  beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
-  });
-
-  after(() => {
+  afterEach(() => {
     cy.deleteAccount();
   });
 
@@ -43,13 +40,8 @@ context('Insurance - Account - Create - Confirm email page should render the sub
     cy.checkText(confirmEmailPage.weSentLinkTo(), expected);
   });
 
-  describe('when submitting the cookie consent form', () => {
-    before(() => {
-      partials.cookieBanner.question.acceptButton().click();
-    });
-
-    it('should NOT render `sent a link to` with the submitted email, because it is no longer in the session', () => {
-      confirmEmailPage.weSentLinkTo().should('not.exist');
-    });
+  it('should NOT render `sent a link to` with the submitted email when submitting the cookie consent form, because it is no longer in the session', () => {
+    partials.cookieBanner.question.acceptButton().click();
+    confirmEmailPage.weSentLinkTo().should('not.exist');
   });
 });

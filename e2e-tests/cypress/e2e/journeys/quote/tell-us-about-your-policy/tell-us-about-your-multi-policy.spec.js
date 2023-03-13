@@ -21,36 +21,41 @@ const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 const startRoute = ROUTES.QUOTE.START;
 
 context('Tell us about your multiple policy page - as an exporter, I want to provide my Export insurance policy details', () => {
-  describe('rendering', () => {
-    before(() => {
-      cy.login();
+  const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
-      completeAndSubmitBuyerCountryForm();
-      completeAndSubmitBuyerBodyForm();
-      completeAndSubmitExporterLocationForm();
-      completeAndSubmitUkContentForm();
-      completeAndSubmitPolicyTypeMultiForm();
+  before(() => {
+    cy.login();
 
-      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerBodyForm();
+    completeAndSubmitExporterLocationForm();
+    completeAndSubmitUkContentForm();
+    completeAndSubmitPolicyTypeMultiForm();
+
+    cy.url().should('include', url);
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
+  });
+
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE,
+      currentHref: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+      backLink: ROUTES.QUOTE.POLICY_TYPE,
+      lightHouseThresholds: {
+        // accessibility threshold is reduced here because
+        // the radio component from design system has an invalid aria attribute.
+        // this is out of our control
+        accessibility: 92,
+      },
     });
+  });
 
+  describe('page tests', () => {
     beforeEach(() => {
-      Cypress.Cookies.preserveOnce('_csrf');
-      Cypress.Cookies.preserveOnce('exip-session');
-    });
-
-    it('renders core page elements', () => {
-      cy.corePageChecks({
-        pageTitle: CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE,
-        currentHref: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
-        backLink: ROUTES.QUOTE.POLICY_TYPE,
-        lightHouseThresholds: {
-          // accessibility threshold is reduced here because
-          // the radio component from design system has an invalid aria attribute.
-          // this is out of our control
-          accessibility: 92,
-        },
-      });
+      cy.navigateToUrl(url);
     });
 
     it('should render a header with href to quote start', () => {
@@ -163,6 +168,8 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
 
   describe('when form is valid', () => {
     it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, () => {
+      cy.navigateToUrl(url);
+
       cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), '100');
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(GBP_CURRENCY_CODE);
       tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');

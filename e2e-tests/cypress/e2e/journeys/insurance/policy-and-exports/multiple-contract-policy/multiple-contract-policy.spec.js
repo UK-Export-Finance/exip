@@ -60,6 +60,7 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 context('Insurance - Policy and exports - Multiple contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -69,15 +70,14 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -92,107 +92,115 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
     });
   });
 
-  it('renders a heading caption', () => {
-    cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-  it('renders `requested start date` label, hint and inputs', () => {
-    const fieldId = REQUESTED_START_DATE;
-    const field = multipleContractPolicyPage[fieldId];
+    it('renders a heading caption', () => {
+      cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
 
-    field.label().should('exist');
-    cy.checkText(field.label(), CONTRACT_POLICY[fieldId].LABEL);
+    it('renders `requested start date` label, hint and inputs', () => {
+      const fieldId = REQUESTED_START_DATE;
+      const field = multipleContractPolicyPage[fieldId];
 
-    cy.checkText(field.hint(), CONTRACT_POLICY[fieldId].HINT);
+      field.label().should('exist');
+      cy.checkText(field.label(), CONTRACT_POLICY[fieldId].LABEL);
 
-    field.dayInput().should('exist');
-    field.monthInput().should('exist');
-    field.yearInput().should('exist');
-  });
+      cy.checkText(field.hint(), CONTRACT_POLICY[fieldId].HINT);
 
-  describe('total months of cover', () => {
-    const fieldId = TOTAL_MONTHS_OF_COVER;
-    const field = multipleContractPolicyPage[fieldId];
+      field.dayInput().should('exist');
+      field.monthInput().should('exist');
+      field.yearInput().should('exist');
+    });
 
-    it('renders `total months of insurance` label, hint and input', () => {
+    describe('total months of cover', () => {
+      const fieldId = TOTAL_MONTHS_OF_COVER;
+      const field = multipleContractPolicyPage[fieldId];
+
+      it('renders `total months of insurance` label, hint and input', () => {
+        field.label().should('exist');
+        cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
+
+        cy.checkText(field.hint(), CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
+
+        field.input().should('exist');
+      });
+
+      it('renders correct amount of month options', () => {
+        // Note: additional option is the default/empty option.
+        const expected = APPLICATION.POLICY_AND_EXPORT.TOTAL_MONTHS_OF_COVER + 1;
+        field.inputOption().should('have.length', expected);
+      });
+    });
+
+    it('renders `total sales to buyer` label, hint, prefix and input', () => {
+      const fieldId = TOTAL_SALES_TO_BUYER;
+      const field = multipleContractPolicyPage[fieldId];
+
       field.label().should('exist');
       cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
 
       cy.checkText(field.hint(), CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
 
+      cy.checkText(field.prefix(), '£');
+
       field.input().should('exist');
     });
 
-    it('renders correct amount of month options', () => {
-      // Note: additional option is the default/empty option.
-      const expected = APPLICATION.POLICY_AND_EXPORT.TOTAL_MONTHS_OF_COVER + 1;
-      field.inputOption().should('have.length', expected);
+    it('renders `maximum buyer will owe` label, hint, prefix, input', () => {
+      const fieldId = MAXIMUM_BUYER_WILL_OWE;
+      const field = multipleContractPolicyPage[fieldId];
+      const { HINT } = CONTRACT_POLICY.MULTIPLE[fieldId];
+
+      field.label().should('exist');
+      cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
+
+      cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
+
+      cy.checkText(field.hint.forExample(), HINT.FOR_EXAMPLE);
+
+      const expected = `${HINT.NEED_MORE_COVER} ${HINT.FILL_IN_FORM.TEXT}`;
+      cy.checkText(field.hint.needMoreCover(), expected);
+
+      cy.checkText(field.hint.fillInFormLink(), HINT.FILL_IN_FORM.TEXT);
+
+      field.hint.fillInFormLink().should('have.attr', 'href', LINKS.EXTERNAL.PROPOSAL_FORM);
+
+      cy.checkText(field.hint.noDecimals(), HINT.NO_DECIMALS);
+
+      field.input().should('exist');
     });
-  });
 
-  it('renders `total sales to buyer` label, hint, prefix and input', () => {
-    const fieldId = TOTAL_SALES_TO_BUYER;
-    const field = multipleContractPolicyPage[fieldId];
+    it('renders `buyer credit period` label, hint and input', () => {
+      const fieldId = CREDIT_PERIOD_WITH_BUYER;
+      const field = multipleContractPolicyPage[fieldId];
 
-    field.label().should('exist');
-    cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
+      field.label().should('exist');
+      cy.checkText(field.label(), CONTRACT_POLICY[fieldId].LABEL);
 
-    cy.checkText(field.hint(), CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
+      cy.checkText(field.hint(), CONTRACT_POLICY[fieldId].HINT);
 
-    cy.checkText(field.prefix(), '£');
+      field.input().should('exist');
+    });
 
-    field.input().should('exist');
-  });
-
-  it('renders `maximum buyer will owe` label, hint, prefix, input', () => {
-    const fieldId = MAXIMUM_BUYER_WILL_OWE;
-    const field = multipleContractPolicyPage[fieldId];
-    const { HINT } = CONTRACT_POLICY.MULTIPLE[fieldId];
-
-    field.label().should('exist');
-    cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
-
-    cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
-
-    cy.checkText(field.hint.forExample(), HINT.FOR_EXAMPLE);
-
-    const expected = `${HINT.NEED_MORE_COVER} ${HINT.FILL_IN_FORM.TEXT}`;
-    cy.checkText(field.hint.needMoreCover(), expected);
-
-    cy.checkText(field.hint.fillInFormLink(), HINT.FILL_IN_FORM.TEXT);
-
-    field.hint.fillInFormLink().should('have.attr', 'href', LINKS.EXTERNAL.PROPOSAL_FORM);
-
-    cy.checkText(field.hint.noDecimals(), HINT.NO_DECIMALS);
-
-    field.input().should('exist');
-  });
-
-  it('renders `buyer credit period` label, hint and input', () => {
-    const fieldId = CREDIT_PERIOD_WITH_BUYER;
-    const field = multipleContractPolicyPage[fieldId];
-
-    field.label().should('exist');
-    cy.checkText(field.label(), CONTRACT_POLICY[fieldId].LABEL);
-
-    cy.checkText(field.hint(), CONTRACT_POLICY[fieldId].HINT);
-
-    field.input().should('exist');
-  });
-
-  describe('currency', () => {
     it('renders `currency` label, hint and input with supported currencies ordered alphabetically', () => {
       checkPolicyCurrencyCodeInput();
     });
-  });
 
-  it('renders a `save and back` button', () => {
-    saveAndBackButton().should('exist');
+    it('renders a `save and back` button', () => {
+      saveAndBackButton().should('exist');
 
-    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
   });
 
   describe('form submission', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
     it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
       cy.completeAndSubmitMultipleContractPolicyForm();
 
@@ -200,18 +208,16 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
       cy.url().should('eq', expectedUrl);
     });
 
-    describe('after submitting the form', () => {
-      it('should retain the `type of policy and exports` task status as `in progress`', () => {
-        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should retain the `type of policy and exports` task status as `in progress` after submitting the form', () => {
+      cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-        const expected = TASKS.STATUS.IN_PROGRESS;
-        cy.checkText(task.status(), expected);
-      });
+      const expected = TASKS.STATUS.IN_PROGRESS;
+      cy.checkText(task.status(), expected);
     });
 
     describe('when going back to the page', () => {
       it('should have the submitted values', () => {
-        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`);
+        cy.navigateToUrl(url);
 
         multipleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
         multipleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
@@ -230,12 +236,13 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
       const creditPeriodField = multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
       const submittedValue = '1234';
 
-      before(() => {
-        cy.keyboardInput(creditPeriodField.input(), submittedValue);
-        submitButton().click();
-      });
-
       it('should retain the submitted value when going back to the page', () => {
+        cy.navigateToUrl(url);
+
+        cy.keyboardInput(creditPeriodField.input(), submittedValue);
+
+        submitButton().click();
+
         cy.clickBackLink();
 
         creditPeriodField.input().should('have.value', submittedValue);

@@ -26,7 +26,7 @@ describe('controllers/insurance/page-not-found', () => {
 
       const expectedVariables = insuranceCorePageVariables({ PAGE_CONTENT_STRINGS: PAGES.PAGE_NOT_FOUND_PAGE });
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.PAGE_NOT_FOUND, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
   });
 });

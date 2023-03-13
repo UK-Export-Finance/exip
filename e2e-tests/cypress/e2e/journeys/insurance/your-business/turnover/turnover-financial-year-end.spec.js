@@ -43,8 +43,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -77,8 +76,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

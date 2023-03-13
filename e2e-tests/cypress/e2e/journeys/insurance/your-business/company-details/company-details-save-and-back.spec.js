@@ -44,8 +44,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

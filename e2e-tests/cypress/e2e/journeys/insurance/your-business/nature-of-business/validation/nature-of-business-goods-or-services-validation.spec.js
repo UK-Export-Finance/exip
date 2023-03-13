@@ -35,72 +35,62 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {
     cy.deleteAccount();
   });
 
-  describe(`${GOODS_OR_SERVICES} error`, () => {
-    describe(`when ${GOODS_OR_SERVICES} is left empty`, () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY;
+  const fieldId = GOODS_OR_SERVICES;
+  const field = natureOfBusiness[fieldId];
 
-      it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
-        const fieldId = GOODS_OR_SERVICES;
-        const field = natureOfBusiness[fieldId];
-
-        field.input().clear();
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 4);
-        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
-      });
-
-      it(`should focus to the ${GOODS_OR_SERVICES} section when clicking the error`, () => {
-        const fieldId = GOODS_OR_SERVICES;
-        const field = natureOfBusiness[fieldId];
-
-        partials.errorSummaryListItemLinks().first().click();
-        field.input().should('have.focus');
-      });
-
-      it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
-        const fieldId = GOODS_OR_SERVICES;
-        const field = natureOfBusiness[fieldId];
-
-        cy.checkText(field.error(), `Error: ${errorMessage}`);
-      });
+  describe(`when ${GOODS_OR_SERVICES} is left empty`, () => {
+    beforeEach(() => {
+      field.input().clear();
+      submitButton().click();
     });
 
-    describe(`when ${GOODS_OR_SERVICES} has over ${MAXIMUM} characters`, () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].ABOVE_MAXIMUM;
+    const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY;
 
-      it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
-        const fieldId = GOODS_OR_SERVICES;
-        const field = natureOfBusiness[fieldId];
+    it('should display validation errors', () => {
+      partials.errorSummaryListItems().should('have.length', 4);
+      cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+    });
 
-        cy.keyboardInput(field.input(), 'a'.repeat(MAXIMUM + 1));
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 4);
-        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
-      });
+    it(`should focus to the ${GOODS_OR_SERVICES} section when clicking the error`, () => {
+      partials.errorSummaryListItemLinks().first().click();
+      field.input().should('have.focus');
+    });
 
-      it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
-        const fieldId = GOODS_OR_SERVICES;
-        const field = natureOfBusiness[fieldId];
+    it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
+      cy.checkText(field.error(), `Error: ${errorMessage}`);
+    });
+  });
 
-        cy.checkText(field.error(), `Error: ${errorMessage}`);
-      });
+  describe(`when ${GOODS_OR_SERVICES} has over ${MAXIMUM} characters`, () => {
+    beforeEach(() => {
+      cy.keyboardInput(field.input(), 'a'.repeat(MAXIMUM + 1));
+      submitButton().click();
+    });
+
+    const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].ABOVE_MAXIMUM;
+
+    it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
+      partials.errorSummaryListItems().should('have.length', 4);
+      cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+    });
+
+    it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
+      cy.checkText(field.error(), `Error: ${errorMessage}`);
     });
   });
 
   describe(`when ${GOODS_OR_SERVICES} is correctly entered`, () => {
     it('should not display validation errors', () => {
       cy.navigateToUrl(url);
-
-      const fieldId = GOODS_OR_SERVICES;
-      const field = natureOfBusiness[fieldId];
 
       cy.keyboardInput(field.input(), 'test');
       submitButton().click();

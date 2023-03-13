@@ -34,6 +34,7 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 context('Insurance - Your business - Broker page - Save and back', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -46,35 +47,35 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       cy.completeAndSubmitTurnoverForm();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
+      allSectionsUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
     cy.deleteAccount();
   });
 
-  describe('When no fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+  describe('when no fields are provided', () => {
+    it(`should redirect to ${ALL_SECTIONS} retain the "your business" task status as "in progress"`, () => {
+      cy.navigateToUrl(url);
+
       saveAndBackButton().click();
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-    });
+      cy.url().should('eq', allSectionsUrl);
 
-    it('should retain the `your business` task status as `in progress`', () => {
       const expected = TASKS.STATUS.IN_PROGRESS;
       cy.checkText(task.status(), expected);
     });
   });
 
   describe('save and back on a partially entered form', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it(`should redirect to ${ALL_SECTIONS} retain the "your business" task status as "in progress"`, () => {
       cy.navigateToUrl(url);
 
       broker[USING_BROKER].yesRadioInput().click();
@@ -83,16 +84,17 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
       saveAndBackButton().click();
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-    });
+      cy.url().should('eq', allSectionsUrl);
 
-    it('should retain the `your business` task status as `in progress`', () => {
       const expected = TASKS.STATUS.IN_PROGRESS;
       cy.checkText(task.status(), expected);
     });
 
     it(`should retain the ${NAME} input on the page and the other fields should be empty`, () => {
+      cy.navigateToUrl(allSectionsUrl);
+
       task.link().click();
+
       // submit company details form
       submitButton().click();
       // submit nature of business form
@@ -111,10 +113,13 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     });
   });
 
-  describe('When all fields are provided', () => {
+  describe('when all fields are provided', () => {
     describe(`when selecting yes for ${USING_BROKER}`, () => {
-      it(`should redirect to ${ALL_SECTIONS}`, () => {
+      it(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "completed"`, () => {
+        cy.navigateToUrl(url);
+
         broker[USING_BROKER].yesRadioInput().click();
+
         cy.keyboardInput(broker[NAME].input(), application.EXPORTER_BROKER[NAME]);
         cy.keyboardInput(broker[ADDRESS_LINE_1].input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
         cy.keyboardInput(broker[ADDRESS_LINE_2].input(), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
@@ -125,16 +130,17 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
         saveAndBackButton().click();
 
-        cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-      });
+        cy.url().should('eq', allSectionsUrl);
 
-      it('should change the `your business` task status as `completed`', () => {
         const expected = TASKS.STATUS.COMPLETED;
         cy.checkTaskStatus(task, expected);
       });
 
       it('should retain all the fields on the page', () => {
+        cy.navigateToUrl(allSectionsUrl);
+
         task.link().click();
+
         // submit company details form
         submitButton().click();
         // submit nature of business form
@@ -154,21 +160,24 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     });
 
     describe(`when selecting no for ${USING_BROKER}`, () => {
-      it(`should redirect to ${ALL_SECTIONS}`, () => {
+      it(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "Completed"`, () => {
+        cy.navigateToUrl(url);
+
         broker[USING_BROKER].noRadioInput().click();
 
         saveAndBackButton().click();
 
-        cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-      });
+        cy.url().should('eq', allSectionsUrl);
 
-      it('should change the `your business` task status as `Completed`', () => {
         const expected = TASKS.STATUS.COMPLETED;
         cy.checkTaskStatus(task, expected);
       });
 
       it('should retain all the relevant fields on the page', () => {
+        cy.navigateToUrl(allSectionsUrl);
+
         task.link().click();
+
         // submit company details form
         submitButton().click();
         // submit nature of business form

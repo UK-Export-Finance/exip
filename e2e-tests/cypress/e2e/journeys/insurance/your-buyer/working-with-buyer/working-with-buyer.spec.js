@@ -43,8 +43,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -65,61 +64,67 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
     });
   });
 
-  it(`renders an ${CONNECTED_WITH_BUYER} label, hint and radio buttons`, () => {
-    const fieldId = CONNECTED_WITH_BUYER;
-    const field = workingWithBuyerPage[fieldId];
-
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.WORKING_WITH_BUYER[fieldId].LABEL);
-
-    field.hint().should('exist');
-    cy.checkText(field.hint(), FIELDS.WORKING_WITH_BUYER[fieldId].HINT);
-
-    field.yesRadioInput().should('exist');
-    field.noRadioInput().should('exist');
-  });
-
-  it(`renders an ${TRADED_WITH_BUYER} label, radio buttons and details section`, () => {
-    const fieldId = TRADED_WITH_BUYER;
-    const field = workingWithBuyerPage[fieldId];
-
-    field.label().should('exist');
-    cy.checkText(field.label(), FIELDS.WORKING_WITH_BUYER[fieldId].LABEL);
-
-    field.yesRadioInput().should('exist');
-    field.noRadioInput().should('exist');
-
-    field.details().should('exist');
-    cy.checkText(field.details(), FIELDS.WORKING_WITH_BUYER[fieldId].DETAILS);
-  });
-
-  it('renders a `submit` button', () => {
-    submitButton().should('exist');
-
-    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
-  });
-
-  it('renders a `save and back` button', () => {
-    saveAndBackButton().should('exist');
-
-    cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
-  });
-
-  describe('form submission', () => {
-    describe('when submitting a fully filled form', () => {
-      it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
-        cy.completeAndSubmitWorkingWithBuyerForm();
-
-        cy.url().should('eq', checkYourAnswersUrl);
-      });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
     });
 
-    describe('when going back to the page', () => {
-      it('should have the submitted values', () => {
-        cy.navigateToUrl(url);
+    it(`renders an ${CONNECTED_WITH_BUYER} label, hint and radio buttons`, () => {
+      const fieldId = CONNECTED_WITH_BUYER;
+      const field = workingWithBuyerPage[fieldId];
 
-        workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().should('be.checked');
-        workingWithBuyerPage[TRADED_WITH_BUYER].yesRadioInput().should('be.checked');
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.WORKING_WITH_BUYER[fieldId].LABEL);
+
+      field.hint().should('exist');
+      cy.checkText(field.hint(), FIELDS.WORKING_WITH_BUYER[fieldId].HINT);
+
+      field.yesRadioInput().should('exist');
+      field.noRadioInput().should('exist');
+    });
+
+    it(`renders an ${TRADED_WITH_BUYER} label, radio buttons and details section`, () => {
+      const fieldId = TRADED_WITH_BUYER;
+      const field = workingWithBuyerPage[fieldId];
+
+      field.label().should('exist');
+      cy.checkText(field.label(), FIELDS.WORKING_WITH_BUYER[fieldId].LABEL);
+
+      field.yesRadioInput().should('exist');
+      field.noRadioInput().should('exist');
+
+      field.details().should('exist');
+      cy.checkText(field.details(), FIELDS.WORKING_WITH_BUYER[fieldId].DETAILS);
+    });
+
+    it('renders a `submit` button', () => {
+      submitButton().should('exist');
+
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
+
+    it('renders a `save and back` button', () => {
+      saveAndBackButton().should('exist');
+
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
+
+    describe('form submission', () => {
+      describe('when submitting a fully filled form', () => {
+        it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
+          cy.completeAndSubmitWorkingWithBuyerForm();
+
+          cy.url().should('eq', checkYourAnswersUrl);
+        });
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted values', () => {
+          cy.navigateToUrl(url);
+
+          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().should('be.checked');
+          workingWithBuyerPage[TRADED_WITH_BUYER].yesRadioInput().should('be.checked');
+        });
       });
     });
   });

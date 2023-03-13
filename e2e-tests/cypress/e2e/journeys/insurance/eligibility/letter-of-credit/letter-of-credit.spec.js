@@ -20,6 +20,8 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT;
 const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - Eligibility - Letter of credit page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit', () => {
+  let url;
+
   before(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
@@ -32,14 +34,13 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
     completeInsuredPeriodForm();
     completeOtherPartiesForm();
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
+    url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
 
-    cy.url().should('eq', expected);
+    cy.url().should('eq', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('renders core page elements', () => {
@@ -50,27 +51,37 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-  it('renders `yes` radio button', () => {
-    yesRadio().should('exist');
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
+    });
 
-    cy.checkText(yesRadio(), 'Yes');
-  });
+    it('renders `yes` radio button', () => {
+      yesRadio().should('exist');
 
-  it('renders `no` radio button', () => {
-    noRadio().should('exist');
+      cy.checkText(yesRadio(), 'Yes');
+    });
 
-    cy.checkText(noRadio(), 'No');
+    it('renders `no` radio button', () => {
+      noRadio().should('exist');
+
+      cy.checkText(noRadio(), 'No');
+    });
   });
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
-      it('should render validation errors', () => {
-        submitButton().click();
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
+        submitButton().click();
+      });
+
+      it('should render validation errors', () => {
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
@@ -82,15 +93,15 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
       });
 
       it('should focus on input when clicking summary error message', () => {
-        submitButton().click();
-
         partials.errorSummaryListItemLinks().eq(0).click();
         yesRadioInput().should('have.focus');
       });
     });
 
     describe('when submitting the answer as `no`', () => {
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
         noRadio().click();
         submitButton().click();
       });

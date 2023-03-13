@@ -15,6 +15,7 @@ const {
 } = FIELD_IDS;
 
 const {
+  ROOT,
   EXPORTER_BUSINESS: {
     TURNOVER_CHANGE,
     CHECK_YOUR_ANSWERS,
@@ -29,6 +30,7 @@ const { summaryList } = checkYourAnswers;
 
 context('Insurance - Your business - Change your answers - Turnover - As an exporter, I want to change my answers to the turnover section', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -40,12 +42,13 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm();
+
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -57,6 +60,8 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${TURNOVER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, TURNOVER_CHANGE, ESTIMATED_ANNUAL_TURNOVER);
@@ -66,7 +71,11 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
     describe('form submission with a new answer', () => {
       const newAnswer = '455445';
 
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         cy.keyboardInput(turnover[fieldId].input(), newAnswer);
 
         submitButton().click();
@@ -87,6 +96,8 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${TURNOVER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
         summaryList[fieldId].changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, TURNOVER_CHANGE, fieldId);
@@ -96,7 +107,11 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
     describe('form submission with a new answer', () => {
       const newAnswer = '85';
 
-      before(() => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList[fieldId].changeLink().click();
+
         cy.keyboardInput(turnover[fieldId].input(), newAnswer);
 
         submitButton().click();

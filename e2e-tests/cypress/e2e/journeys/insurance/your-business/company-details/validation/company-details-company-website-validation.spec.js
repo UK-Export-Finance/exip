@@ -32,8 +32,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -42,12 +41,18 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe(`${WEBSITE} error`, () => {
     describe('invalid website format', () => {
-      it('should display validation errors', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
         cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
         companyDetails.tradingNameYesRadioInput().click();
         companyDetails.tradingAddressYesRadioInput().click();
         cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.INVALID);
+
         submitButton().click();
+      });
+
+      it('should display validation errors', () => {
         partials.errorSummaryListItems().should('have.length', 1);
 
         cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
@@ -64,12 +69,18 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     describe('website above 191 characters', () => {
-      it('should display validation errors', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
         cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
         companyDetails.tradingNameYesRadioInput().click();
         companyDetails.tradingAddressYesRadioInput().click();
         cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH);
+
         submitButton().click();
+      });
+
+      it('should display validation errors', () => {
         partials.errorSummaryListItems().should('have.length', 1);
 
         cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
@@ -82,13 +93,18 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   describe(`when ${WEBSITE} is left empty`, () => {
-    it('should not display validation errors', () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
+
       cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.tradingNameYesRadioInput().click();
       companyDetails.tradingAddressYesRadioInput().click();
       companyDetails.companyWebsite().clear();
       submitButton().click();
+    });
+
+    it('should not display validation errors', () => {
+      partials.errorSummaryListItems().should('have.length', 0);
     });
 
     it(`should redirect to ${natureOfBusinessUrl}`, () => {
@@ -97,13 +113,19 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   describe(`when ${WEBSITE} is correctly entered`, () => {
-    it('should not display validation errors', () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
+
       cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
       companyDetails.tradingNameYesRadioInput().click();
       companyDetails.tradingAddressYesRadioInput().click();
       cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
+
       submitButton().click();
+    });
+
+    it('should not display validation errors', () => {
+      partials.errorSummaryListItems().should('have.length', 0);
     });
 
     it(`should redirect to ${natureOfBusinessUrl}`, () => {

@@ -88,6 +88,11 @@ const START = {
   BODY_4: 'If you need it more urgently, you can tell us before you submit your application.',
 };
 
+const NO_ACCESS_TO_APPLICATION_PAGE = {
+  PAGE_TITLE: "You don't have access to this application",
+  CHECK_URL: "Please check the URL you've entered.",
+};
+
 export default {
   ACCOUNT,
   DASHBOARD,
@@ -99,4 +104,5 @@ export default {
   SPEAK_TO_UKEF_EFM,
   START,
   YOUR_BUYER,
+  NO_ACCESS_TO_APPLICATION_PAGE,
 };

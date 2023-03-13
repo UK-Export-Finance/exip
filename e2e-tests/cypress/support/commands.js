@@ -7,8 +7,11 @@
 // ***********************************************
 
 import 'cypress-audit/commands';
+import 'cypress-v10-preserve-cookie';
 
 import analytics from './analytics';
+
+Cypress.Commands.add('saveSession', require('./save-session'));
 
 Cypress.Commands.add('login', require('./login'));
 Cypress.Commands.add('checkPhaseBanner', require('./check-phase-banner'));
@@ -52,6 +55,8 @@ Cypress.Commands.add('createAccount', require('./insurance/account/create-accoun
 Cypress.Commands.add('accountAddAndGetOTP', require('./insurance/account/add-and-get-OTP'));
 
 Cypress.Commands.add('completeSignInAndGoToApplication', require('./insurance/account/complete-sign-in-and-go-to-application'));
+
+Cypress.Commands.add('signInAndGoToUrl', require('./insurance/account/sign-in-and-go-to-url'));
 
 Cypress.Commands.add('completeAndSubmitPolicyTypeForm', require('./insurance/complete-and-submit-policy-type-form'));
 Cypress.Commands.add('completeAndSubmitSingleContractPolicyForm', require('./insurance/complete-and-submit-single-contract-policy-form'));

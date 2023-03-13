@@ -34,7 +34,12 @@ const ERROR_ASSERTIONS = {
 };
 
 context('Insurance - Your business - Broker Page - Validation - Postcode', () => {
+  let url;
+  const field = broker[FIELD_ID];
+
   before(() => {
+    Cypress.session.clearAllSavedSessions();
+
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       task.link().click();
 
@@ -42,206 +47,183 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
 
-      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
 
       cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    cy.session('mySession', () => {
+      cy.signInAndGoToUrl(url);
+    });
   });
 
   after(() => {
     cy.deleteAccount();
   });
 
-  describe('invalid postcodes', () => {
-    describe('when the postcode field is left empty', () => {
-      it('should display validation errors', () => {
-        const field = broker[FIELD_ID];
+  context('invalid postcodes', () => {
+    it('should display validation errors when the postcode field is left empty', () => {
+      cy.navigateToUrl(url);
 
-        field.yesRadioInput().click();
+      field.yesRadioInput().click();
 
-        const {
-          errorField, errorIndex, expectedErrorsCount, errorMessageEmpty,
-        } = ERROR_ASSERTIONS;
+      const {
+        errorField, errorIndex, expectedErrorsCount, errorMessageEmpty,
+      } = ERROR_ASSERTIONS;
 
-        cy.submitAndAssertFieldErrors(errorField, null, errorIndex, expectedErrorsCount, errorMessageEmpty);
-      });
+      cy.submitAndAssertFieldErrors(errorField, null, errorIndex, expectedErrorsCount, errorMessageEmpty);
     });
 
-    describe('when the postcode has 1 letter in the first part', () => {
-      it('should display validation errors', () => {
-        const field = broker[FIELD_ID];
+    it('should display validation errors when the postcode has 1 letter in the first part', () => {
+      cy.navigateToUrl(url);
 
-        field.yesRadioInput().click();
+      field.yesRadioInput().click();
 
-        const {
-          errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
-        } = ERROR_ASSERTIONS;
+      const {
+        errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
+      } = ERROR_ASSERTIONS;
 
-        const inputValue = INVALID_POSTCODES.ONE_LETTER_FIRST_PART;
+      const inputValue = INVALID_POSTCODES.ONE_LETTER_FIRST_PART;
 
-        cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
-      });
+      cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
     });
 
-    describe('when the postcode has no letters in the first part', () => {
-      it('should display validation errors', () => {
-        const field = broker[FIELD_ID];
+    it('should display validation errors when the postcode has no letters in the first part', () => {
+      cy.navigateToUrl(url);
 
-        field.yesRadioInput().click();
+      field.yesRadioInput().click();
 
-        const {
-          errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
-        } = ERROR_ASSERTIONS;
+      const {
+        errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
+      } = ERROR_ASSERTIONS;
 
-        const inputValue = INVALID_POSTCODES.NO_LETTERS_FIRST_PART;
+      const inputValue = INVALID_POSTCODES.NO_LETTERS_FIRST_PART;
 
-        cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
-      });
+      cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
     });
 
-    describe('when the postcode has 2 digits in the second part', () => {
-      it('should display validation errors', () => {
-        const field = broker[FIELD_ID];
+    it('should display validation errors when the postcode has 2 digits in the second part', () => {
+      cy.navigateToUrl(url);
 
-        field.yesRadioInput().click();
+      field.yesRadioInput().click();
 
-        const {
-          errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
-        } = ERROR_ASSERTIONS;
+      const {
+        errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
+      } = ERROR_ASSERTIONS;
 
-        const inputValue = INVALID_POSTCODES.TWO_DIGITS_SECOND_PART;
+      const inputValue = INVALID_POSTCODES.TWO_DIGITS_SECOND_PART;
 
-        cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
-      });
+      cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
     });
 
-    describe('when the postcode has 3 digits in the second part', () => {
-      it('should display validation errors', () => {
-        const field = broker[FIELD_ID];
+    it('should display validation errors when the postcode has 3 digits in the second part', () => {
+      cy.navigateToUrl(url);
 
-        field.yesRadioInput().click();
+      field.yesRadioInput().click();
 
-        const {
-          errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
-        } = ERROR_ASSERTIONS;
+      const {
+        errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
+      } = ERROR_ASSERTIONS;
 
-        const inputValue = INVALID_POSTCODES.THREE_DIGITS_SECOND_PART;
+      const inputValue = INVALID_POSTCODES.THREE_DIGITS_SECOND_PART;
 
-        cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
-      });
+      cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
     });
 
-    describe('when the postcode has all letters in the second part', () => {
-      it('should display validation errors', () => {
-        const field = broker[FIELD_ID];
+    it('should display validation errors when the postcode has all letters in the second part', () => {
+      cy.navigateToUrl(url);
 
-        field.yesRadioInput().click();
+      field.yesRadioInput().click();
 
-        const {
-          errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
-        } = ERROR_ASSERTIONS;
+      const {
+        errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
+      } = ERROR_ASSERTIONS;
 
-        const inputValue = INVALID_POSTCODES.ALL_LETTERS_SECOND_PART;
+      const inputValue = INVALID_POSTCODES.ALL_LETTERS_SECOND_PART;
 
-        cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
-      });
+      cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
     });
 
-    describe('when the postcode has more than 7 characters', () => {
-      it('should display validation errors', () => {
-        const field = broker[FIELD_ID];
+    it('should display validation errors when the postcode has more than 7 characters', () => {
+      cy.navigateToUrl(url);
 
-        field.yesRadioInput().click();
+      field.yesRadioInput().click();
 
-        const {
-          errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
-        } = ERROR_ASSERTIONS;
+      const {
+        errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
+      } = ERROR_ASSERTIONS;
 
-        const inputValue = INVALID_POSTCODES.TOO_MANY_CHARACTERS;
+      const inputValue = INVALID_POSTCODES.TOO_MANY_CHARACTERS;
 
-        cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
-      });
+      cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
     });
 
-    describe('when the postcode has more than 7 characters without spaces', () => {
-      it('should display validation errors', () => {
-        const field = broker[FIELD_ID];
+    it('should display validation errors when the postcode has more than 7 characters without spaces', () => {
+      cy.navigateToUrl(url);
 
-        field.yesRadioInput().click();
+      field.yesRadioInput().click();
 
-        const {
-          errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
-        } = ERROR_ASSERTIONS;
+      const {
+        errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
+      } = ERROR_ASSERTIONS;
 
-        const inputValue = INVALID_POSTCODES.TOO_MANY_CHARACTERS_WITHOUT_SPACE;
+      const inputValue = INVALID_POSTCODES.TOO_MANY_CHARACTERS_WITHOUT_SPACE;
 
-        cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
-      });
+      cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
     });
 
-    describe('when the postcode has less than 5 characters', () => {
-      it('should display validation errors', () => {
-        const field = broker[FIELD_ID];
+    it('should display validation errors when the postcode has less than 5 characters', () => {
+      cy.navigateToUrl(url);
 
-        field.yesRadioInput().click();
+      field.yesRadioInput().click();
 
-        const {
-          errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
-        } = ERROR_ASSERTIONS;
+      const {
+        errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
+      } = ERROR_ASSERTIONS;
 
-        const inputValue = INVALID_POSTCODES.TOO_FEW_CHARACTERS;
+      const inputValue = INVALID_POSTCODES.TOO_FEW_CHARACTERS;
 
-        cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
-      });
+      cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
     });
 
-    describe('when the postcode has less than 5 characters without spaces', () => {
-      it('should display validation errors', () => {
-        const field = broker[FIELD_ID];
+    it('should display validation errors when the postcode has less than 5 characters without spaces', () => {
+      cy.navigateToUrl(url);
 
-        field.yesRadioInput().click();
+      field.yesRadioInput().click();
 
-        const {
-          errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
-        } = ERROR_ASSERTIONS;
+      const {
+        errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
+      } = ERROR_ASSERTIONS;
 
-        const inputValue = INVALID_POSTCODES.TOO_FEW_CHARACTERS_WITHOUT_SPACE;
+      const inputValue = INVALID_POSTCODES.TOO_FEW_CHARACTERS_WITHOUT_SPACE;
 
-        cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
-      });
+      cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessageFormat);
     });
   });
 
-  describe('valid postcodes', () => {
-    describe('when the postcode has a space', () => {
-      it('should not display validation errors', () => {
-        const field = broker[FIELD_ID];
+  context('valid postcodes', () => {
+    it('should not display validation errors when the postcode has a space', () => {
+      cy.navigateToUrl(url);
 
-        field.yesRadioInput().click();
+      field.yesRadioInput().click();
 
-        cy.keyboardInput(broker[POSTCODE].input(), VALID_POSTCODES.WITH_SPACE);
-        submitButton().click();
+      cy.keyboardInput(broker[POSTCODE].input(), VALID_POSTCODES.WITH_SPACE);
+      submitButton().click();
 
-        partials.errorSummaryListItems().should('have.length', 4);
-      });
+      partials.errorSummaryListItems().should('have.length', 4);
     });
 
-    describe('when the postcode does not have a space', () => {
-      it('should not display validation errors', () => {
-        const field = broker[FIELD_ID];
+    it('should not display validation errors when the postcode does not have a space', () => {
+      cy.navigateToUrl(url);
 
-        field.yesRadioInput().click();
+      field.yesRadioInput().click();
 
-        cy.keyboardInput(broker[POSTCODE].input(), VALID_POSTCODES.WITHOUT_SPACE);
-        submitButton().click();
+      cy.keyboardInput(broker[POSTCODE].input(), VALID_POSTCODES.WITHOUT_SPACE);
+      submitButton().click();
 
-        partials.errorSummaryListItems().should('have.length', 4);
-      });
+      partials.errorSummaryListItems().should('have.length', 4);
     });
   });
 });

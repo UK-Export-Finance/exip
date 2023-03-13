@@ -27,19 +27,22 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Company or organisation page - form validation - website', () => {
+  let url;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       task.link().click();
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
 
-      cy.url().should('eq', expected);
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {
@@ -53,34 +56,30 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     errorIndex: 3,
   };
 
-  describe(`${FIELD_ID} error`, () => {
-    describe(`when ${FIELD_ID} is the incorrect format`, () => {
-      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
+  it(`should display validation errors if when ${FIELD_ID} is the incorrect format`, () => {
+    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+    const value = WEBSITE_EXAMPLES.INVALID;
 
-      it(`should display validation errors if ${FIELD_ID} left empty`, () => {
-        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-        const value = WEBSITE_EXAMPLES.INVALID;
+    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
 
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
-      });
-    });
+    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+  });
 
-    describe(`when ${FIELD_ID} is above 191 characters`, () => {
-      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
+  it(`should display validation errors when ${FIELD_ID} is above 191 characters`, () => {
+    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+    const value = WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH;
 
-      it(`should display validation errors if ${FIELD_ID} left empty`, () => {
-        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-        const value = WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH;
+    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
 
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
-      });
-    });
+    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
   describe(`when ${FIELD_ID} is correctly entered`, () => {
     it('should not display validation errors', () => {
       cy.keyboardInput(companyOrOrganisationPage[FIELD_ID].input(), WEBSITE_EXAMPLES.VALID);
+
       submitButton().click();
+
       partials.errorSummaryListItems().should('have.length', 8);
     });
   });

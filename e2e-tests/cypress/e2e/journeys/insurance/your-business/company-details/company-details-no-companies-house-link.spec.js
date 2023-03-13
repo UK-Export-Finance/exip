@@ -20,12 +20,13 @@ const {
 
 context('Insurance - Your business - Company details page - As an Exporter it should take me to the apply offline page if I do not have a companies house number', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
 
       cy.navigateToUrl(url);
 
@@ -34,8 +35,12 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
+
+    companyDetails.companiesHouseNoNumber().should('have.attr', 'href', `${ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`);
+    companyDetails.companiesHouseNoNumber().click();
   });
 
   after(() => {
@@ -43,9 +48,6 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
   });
 
   it(`should redirect to ${APPLY_OFFLINE} page when pressing the no companies house number link`, () => {
-    companyDetails.companiesHouseNoNumber().should('have.attr', 'href', `${ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`);
-    companyDetails.companiesHouseNoNumber().click();
-
     cy.url().should('eq', `${Cypress.config('baseUrl')}${APPLY_OFFLINE}`);
   });
 

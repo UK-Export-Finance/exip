@@ -18,8 +18,7 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it(`should redirect to ${CREATE.YOUR_DETAILS}`, () => {

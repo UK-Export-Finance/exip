@@ -30,19 +30,20 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Company or organisation page - form validation - first and last name', () => {
+  let url;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       task.link().click();
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
 
-      cy.url().should('eq', expected);
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {
@@ -50,58 +51,59 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   });
 
   describe(`${FIRST_NAME_FIELD_ID}`, () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
     const ERROR_ASSERTIONS = {
       field: companyOrOrganisationPage[FIRST_NAME_FIELD_ID],
       numberOfExpectedErrors: 8,
       errorIndex: 3,
     };
 
-    describe(`${FIRST_NAME_FIELD_ID} error`, () => {
-      describe(`when ${FIRST_NAME_FIELD_ID} is not entered`, () => {
-        const errorMessage = ERROR_MESSAGE_FIRST_NAME.IS_EMPTY;
+    it(`should display validation errors when ${FIRST_NAME_FIELD_ID} is not entered`, () => {
+      const errorMessage = ERROR_MESSAGE_FIRST_NAME.IS_EMPTY;
 
-        it('should display validation errors', () => {
-          const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+      const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
-          cy.submitAndAssertFieldErrors(field, null, errorIndex, numberOfExpectedErrors, errorMessage);
-        });
-      });
+      cy.submitAndAssertFieldErrors(field, null, errorIndex, numberOfExpectedErrors, errorMessage);
     });
 
-    describe(`when ${FIRST_NAME_FIELD_ID} is correctly entered`, () => {
-      it('should not display validation errors', () => {
-        cy.keyboardInput(companyOrOrganisationPage[FIRST_NAME_FIELD_ID].input(), application.BUYER[FIRST_NAME_FIELD_ID]);
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 7);
-      });
+    it(`should NOT display validation errors when ${FIRST_NAME_FIELD_ID} is correctly entered`, () => {
+      cy.keyboardInput(companyOrOrganisationPage[FIRST_NAME_FIELD_ID].input(), application.BUYER[FIRST_NAME_FIELD_ID]);
+
+      submitButton().click();
+
+      partials.errorSummaryListItems().should('have.length', 7);
     });
   });
 
   describe(`${LAST_NAME_FIELD_ID}`, () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      cy.keyboardInput(companyOrOrganisationPage[FIRST_NAME_FIELD_ID].input(), application.BUYER[FIRST_NAME_FIELD_ID]);
+    });
+
     const ERROR_ASSERTIONS = {
       field: companyOrOrganisationPage[LAST_NAME_FIELD_ID],
       numberOfExpectedErrors: 7,
       errorIndex: 3,
     };
 
-    describe(`${LAST_NAME_FIELD_ID} error`, () => {
-      describe(`when ${LAST_NAME_FIELD_ID} is not entered`, () => {
-        const errorMessage = ERROR_MESSAGE_LAST_NAME.IS_EMPTY;
+    it(`should display validation errors when ${LAST_NAME_FIELD_ID} is not entered`, () => {
+      const errorMessage = ERROR_MESSAGE_LAST_NAME.IS_EMPTY;
+      const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
-        it('should display validation errors', () => {
-          const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-
-          cy.submitAndAssertFieldErrors(companyOrOrganisationPage[LAST_NAME_FIELD_ID], null, errorIndex, numberOfExpectedErrors, errorMessage);
-        });
-      });
+      cy.submitAndAssertFieldErrors(companyOrOrganisationPage[LAST_NAME_FIELD_ID], null, errorIndex, numberOfExpectedErrors, errorMessage);
     });
 
-    describe(`when ${LAST_NAME_FIELD_ID} is correctly entered`, () => {
-      it('should not display validation errors', () => {
-        cy.keyboardInput(companyOrOrganisationPage[LAST_NAME_FIELD_ID].input(), application.BUYER[LAST_NAME_FIELD_ID]);
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 6);
-      });
+    it(`should NOT display validation errors when ${LAST_NAME_FIELD_ID} is correctly entered`, () => {
+      cy.keyboardInput(companyOrOrganisationPage[LAST_NAME_FIELD_ID].input(), application.BUYER[LAST_NAME_FIELD_ID]);
+
+      submitButton().click();
+
+      partials.errorSummaryListItems().should('have.length', 6);
     });
   });
 });

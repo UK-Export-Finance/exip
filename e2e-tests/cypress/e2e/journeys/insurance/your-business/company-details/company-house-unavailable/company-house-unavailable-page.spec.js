@@ -22,15 +22,17 @@ context("Insurance - Your business - Companies house unavailable page - I want t
       referenceNumber = refNumber;
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${COMPANIES_HOUSE_UNAVAILABLE}`;
+
       natureOfBusinessUrl = `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+
       companyDetailsUrl = `${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
-      cy.navigateToUrl(url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {
@@ -47,19 +49,25 @@ context("Insurance - Your business - Companies house unavailable page - I want t
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStart);
-  });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
-  it('should display the correct text on the page', () => {
-    cy.checkText(companiesHouseUnavailablePage.reason(), CONTENT_STRINGS.ERROR_REASON);
-    cy.checkText(companiesHouseUnavailablePage.tryAgain(), `${CONTENT_STRINGS.TRY_AGAIN_PREFIX} ${CONTENT_STRINGS.TRY_AGAIN}`);
-    cy.checkText(companiesHouseUnavailablePage.continue(), `${CONTENT_STRINGS.CONTINUE_PREFIX} ${CONTENT_STRINGS.CONTINUE_LINK} ${CONTENT_STRINGS.CONTINUE_SUFFIX}`);
-    cy.checkText(companiesHouseUnavailablePage.information(), CONTENT_STRINGS.INFORMATION);
-  });
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', insuranceStart);
+    });
 
-  it('should have the correct hrefs for the links on the page', () => {
-    cy.checkLink(companiesHouseUnavailablePage.tryAgainLink(), companyDetailsUrl, CONTENT_STRINGS.TRY_AGAIN);
-    cy.checkLink(companiesHouseUnavailablePage.continueLink(), natureOfBusinessUrl, CONTENT_STRINGS.CONTINUE_LINK);
+    it('should display the correct text on the page', () => {
+      cy.checkText(companiesHouseUnavailablePage.reason(), CONTENT_STRINGS.ERROR_REASON);
+      cy.checkText(companiesHouseUnavailablePage.tryAgain(), `${CONTENT_STRINGS.TRY_AGAIN_PREFIX} ${CONTENT_STRINGS.TRY_AGAIN}`);
+      cy.checkText(companiesHouseUnavailablePage.continue(), `${CONTENT_STRINGS.CONTINUE_PREFIX} ${CONTENT_STRINGS.CONTINUE_LINK} ${CONTENT_STRINGS.CONTINUE_SUFFIX}`);
+      cy.checkText(companiesHouseUnavailablePage.information(), CONTENT_STRINGS.INFORMATION);
+    });
+
+    it('should have the correct hrefs for the links on the page', () => {
+      cy.checkLink(companiesHouseUnavailablePage.tryAgainLink(), companyDetailsUrl, CONTENT_STRINGS.TRY_AGAIN);
+      cy.checkLink(companiesHouseUnavailablePage.continueLink(), natureOfBusinessUrl, CONTENT_STRINGS.CONTINUE_LINK);
+    });
   });
 });

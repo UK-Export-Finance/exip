@@ -27,64 +27,61 @@ const {
 } = ERROR_MESSAGES;
 
 context('Insurance - Account - Create - Your details page - empty form validation', () => {
+  let url;
+
   before(() => {
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
 
-    const expected = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
+    url = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
 
-    cy.url().should('eq', expected);
+    cy.url().should('eq', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   const TOTAL_REQUIRED_FIELDS = 4;
 
-  describe('first name', () => {
-    it('should render a validation error', () => {
-      const field = yourDetailsPage[FIRST_NAME];
-      const value = null;
-      const fieldIndex = 0;
-      const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME].IS_EMPTY;
+  it('should render first name validation error', () => {
+    const field = yourDetailsPage[FIRST_NAME];
+    const value = null;
+    const fieldIndex = 0;
+    const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME].IS_EMPTY;
 
-      cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
-    });
+    cy.navigateToUrl(url);
+
+    cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
   });
 
-  describe('last name', () => {
-    it('should render a validation error', () => {
-      const field = yourDetailsPage[LAST_NAME];
-      const value = null;
-      const fieldIndex = 1;
-      const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY;
+  it('should render last name a validation error', () => {
+    const field = yourDetailsPage[LAST_NAME];
+    const value = null;
+    const fieldIndex = 1;
+    const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY;
 
-      cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
-    });
+    cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
   });
 
-  describe('email', () => {
-    it('should render a validation error', () => {
-      const field = accountFormFields[EMAIL];
-      const value = null;
-      const fieldIndex = 2;
-      const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT;
+  it('should render email validation error', () => {
+    const field = accountFormFields[EMAIL];
+    const value = null;
+    const fieldIndex = 2;
+    const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT;
 
-      cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
-    });
+    cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
   });
 
-  describe('password', () => {
-    it('should render a validation error', () => {
-      const field = accountFormFields[PASSWORD];
-      const value = null;
-      const fieldIndex = 3;
-      const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT;
+  it('should render password validation error', () => {
+    const field = accountFormFields[PASSWORD];
+    const value = null;
+    const fieldIndex = 3;
+    const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT;
 
-      cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
-    });
+    cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
   });
 });

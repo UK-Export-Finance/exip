@@ -39,8 +39,7 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   after(() => {

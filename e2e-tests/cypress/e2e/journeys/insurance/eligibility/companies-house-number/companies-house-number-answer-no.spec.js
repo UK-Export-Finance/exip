@@ -19,6 +19,8 @@ import {
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 
 context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I do not have UK Companies House Registration Number - submit `no companies house number`', () => {
+  const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
+
   before(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
@@ -32,14 +34,15 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     completeOtherPartiesForm();
     completeLetterOfCreditForm();
     completePreCreditPeriodForm();
-
-    noRadio().click();
-    submitButton().click();
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
+
+    noRadio().click();
+    submitButton().click();
   });
 
   it('redirects to exit page', () => {
@@ -61,6 +64,8 @@ context('Insurance - Eligibility - Companies house number page - I want to check
 
   describe('when going back to the page', () => {
     it('should NOT have the originally submitted answer selected', () => {
+      cy.navigateToUrl(url);
+
       cy.clickBackLink();
 
       noRadioInput().should('not.be.checked');

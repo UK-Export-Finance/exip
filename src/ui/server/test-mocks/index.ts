@@ -28,7 +28,8 @@ const mockReq = () => {
       referer: '/mock',
     },
     method: 'GET',
-    originalUrl: 'mock',
+    originalUrl: 'mock?mockQueryParam',
+    baseUrl: 'mock',
     params: {
       referenceNumber: mockApplication.referenceNumber.toString(),
     },

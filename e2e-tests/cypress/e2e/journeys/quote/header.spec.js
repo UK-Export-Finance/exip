@@ -3,13 +3,12 @@ import { PRODUCT } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
 context('Get a quote - header', () => {
-  before(() => {
-    cy.navigateToUrl(ROUTES.ROOT);
-  });
+  const url = ROUTES.ROOT;
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   it('renders a GOV home link', () => {

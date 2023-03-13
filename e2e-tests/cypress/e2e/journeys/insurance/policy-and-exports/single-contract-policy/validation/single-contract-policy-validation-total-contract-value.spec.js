@@ -38,6 +38,7 @@ const {
 
 context('Insurance - Policy and exports - Single contract policy page - form validation - total contract value', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -47,15 +48,16 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {
@@ -64,134 +66,118 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   const field = singleContractPolicyPage[TOTAL_CONTRACT_VALUE];
 
-  describe('when total contract value is not provided', () => {
-    it('should render a validation error', () => {
-      submitButton().click();
+  it('should render a validation error when total contract value is not provided', () => {
+    submitButton().click();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
-      );
+    cy.checkText(
+      partials.errorSummaryListItems().eq(2),
+      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
+    );
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
-      );
-    });
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
+    );
   });
 
-  describe('when total contract value is not a number', () => {
-    it('should render a validation error', () => {
-      cy.keyboardInput(field.input(), 'Fifty');
-      submitButton().click();
+  it('should render a validation error when total contract value is not a number', () => {
+    cy.keyboardInput(field.input(), 'Fifty');
+    submitButton().click();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
-      );
+    cy.checkText(
+      partials.errorSummaryListItems().eq(2),
+      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
+    );
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
-      );
-    });
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
+    );
   });
 
-  describe('when total contract value is not a whole number', () => {
-    it('should render a validation error', () => {
-      cy.keyboardInput(field.input().clear(), '123.456');
-      submitButton().click();
+  it('should render a validation error when total contract value is not a whole number', () => {
+    cy.keyboardInput(field.input().clear(), '123.456');
+    submitButton().click();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
-      );
+    cy.checkText(
+      partials.errorSummaryListItems().eq(2),
+      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
+    );
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
-      );
-    });
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
+    );
   });
 
-  describe('when total sales to buyer contains a decimal', () => {
-    it('should render a validation error', () => {
-      cy.keyboardInput(field.input().clear(), '1.2');
-      submitButton().click();
+  it('should render a validation error when total sales to buyer contains a decimal', () => {
+    cy.keyboardInput(field.input().clear(), '1.2');
+    submitButton().click();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
-      );
+    cy.checkText(
+      partials.errorSummaryListItems().eq(2),
+      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
+    );
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
-      );
-    });
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
+    );
   });
 
-  describe('when total sales to buyer contains a comma and decimal', () => {
-    it('should render a validation error', () => {
-      cy.keyboardInput(field.input(), '1,234.56');
-      submitButton().click();
+  it('should render a validation error when total sales to buyer contains a comma and decimal', () => {
+    cy.keyboardInput(field.input(), '1,234.56');
+    submitButton().click();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
-      );
+    cy.checkText(
+      partials.errorSummaryListItems().eq(2),
+      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
+    );
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
-      );
-    });
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
+    );
   });
 
-  describe('when total contract value is below the minimum', () => {
-    it('should render a validation error', () => {
-      cy.keyboardInput(field.input(), '0');
-      submitButton().click();
+  it('should render a validation error when total contract value is below the minimum', () => {
+    cy.keyboardInput(field.input(), '0');
+    submitButton().click();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM,
-      );
+    cy.checkText(
+      partials.errorSummaryListItems().eq(2),
+      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM,
+    );
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM}`,
-      );
-    });
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM}`,
+    );
   });
 
-  describe('when total contract value is above the maximum', () => {
-    it('should render a validation error', () => {
-      cy.keyboardInput(field.input(), '500000');
-      submitButton().click();
+  it('should render a validation error when total contract value is above the maximum', () => {
+    cy.keyboardInput(field.input(), '500000');
+    submitButton().click();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM,
-      );
+    cy.checkText(
+      partials.errorSummaryListItems().eq(2),
+      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM,
+    );
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM}`,
-      );
-    });
+    cy.checkText(
+      field.errorMessage(),
+      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM}`,
+    );
   });
 
-  describe('when total contract value is valid and contains a comma', () => {
-    it('should redirect to the next page as all fields are valid', () => {
-      cy.completeAndSubmitSingleContractPolicyForm();
-      cy.clickBackLink();
+  it('should redirect to the next page when total contract value is valid and contains a comma as all fields are valid', () => {
+    cy.completeAndSubmitSingleContractPolicyForm();
+    cy.clickBackLink();
 
-      cy.keyboardInput(field.input(), '1,234');
-      submitButton().click();
+    cy.keyboardInput(field.input(), '1,234');
+    submitButton().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
-      cy.url().should('eq', expectedUrl);
-    });
+    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+    cy.url().should('eq', expectedUrl);
   });
 });

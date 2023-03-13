@@ -25,6 +25,7 @@ import { ROUTES } from './constants';
 import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from './content-strings';
 import { requiredQuoteEligibilityDataProvided } from './middleware/required-data-provided/quote';
 import { requiredInsuranceEligibilityDataProvided } from './middleware/required-data-provided/insurance/eligibility';
+import applicationAccess from './middleware/insurance/application-access';
 import getApplication from './middleware/insurance/get-application';
 import userSession from './middleware/insurance/user-session';
 
@@ -116,6 +117,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use('/quote', requiredQuoteEligibilityDataProvided);
 app.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
 app.use('/insurance/:referenceNumber/*', getApplication);
+app.use('/insurance/:referenceNumber/*', applicationAccess);
 app.use('/', userSession);
 
 app.use('/', rootRoute);

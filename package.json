@@ -37,6 +37,7 @@
     "apollo-link-http": "^1.5.17",
     "cypress": "^11.2.0",
     "cypress-audit": "^1.1.0",
+    "cypress-v10-preserve-cookie": "^1.2.1",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
     "graphql-tag": "^2.12.6",

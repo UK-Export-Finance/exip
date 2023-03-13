@@ -28,19 +28,22 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Company or organisation page - form validation - position', () => {
+  let url;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       task.link().click();
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
 
-      cy.url().should('eq', expected);
+      cy.url().should('eq', url);
     });
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {
@@ -53,23 +56,21 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     errorIndex: 5,
   };
 
-  describe(`${FIELD_ID} error`, () => {
-    describe(`when ${FIELD_ID} is not entered`, () => {
-      const errorMessage = ERROR_MESSAGE.IS_EMPTY;
+  it(`should display validation errors when ${FIELD_ID} is not entered`, () => {
+    submitButton().click();
 
-      it('should display validation errors', () => {
-        const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+    const errorMessage = ERROR_MESSAGE.IS_EMPTY;
 
-        cy.submitAndAssertFieldErrors(field, null, errorIndex, numberOfExpectedErrors, errorMessage);
-      });
-    });
+    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+
+    cy.submitAndAssertFieldErrors(field, null, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
-  describe(`when ${FIELD_ID} is correctly entered`, () => {
-    it('should not display validation errors', () => {
-      cy.keyboardInput(companyOrOrganisationPage[FIELD_ID].input(), application.BUYER[FIELD_ID]);
-      submitButton().click();
-      partials.errorSummaryListItems().should('have.length', 7);
-    });
+  it(`should NOT display validation errors when ${FIELD_ID} is correctly entered`, () => {
+    cy.keyboardInput(companyOrOrganisationPage[FIELD_ID].input(), application.BUYER[FIELD_ID]);
+
+    submitButton().click();
+
+    partials.errorSummaryListItems().should('have.length', 7);
   });
 });
