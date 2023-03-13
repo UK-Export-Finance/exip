@@ -12,6 +12,7 @@ import insurancePolicyAndExportsRouter from './policy-and-exports';
 import insuranceBusinessRouter from './business';
 import insuranceYourBuyerRouter from './your-buyer';
 import insuranceAccountRouter from './account';
+import insuranceCheckYourAnswersRouter from './check-your-answers';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
@@ -39,5 +40,6 @@ insuranceRouter.use('/', insuranceAccountRouter);
 insuranceRouter.use(INSURANCE_ROOT, insurancePolicyAndExportsRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceBusinessRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceYourBuyerRouter);
+insuranceRouter.use(INSURANCE_ROOT, insuranceCheckYourAnswersRouter);
 
 export default insuranceRouter;

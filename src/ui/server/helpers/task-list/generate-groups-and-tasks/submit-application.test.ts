@@ -1,11 +1,17 @@
 import createSubmitApplicationTasks from './submit-application';
 import { getTaskById } from '../task-helpers';
 import generateGroupsAndTasks from '.';
-import { TASK_IDS } from '../../../constants';
+import { TASK_IDS, ROUTES } from '../../../constants';
 import { TASKS } from '../../../content-strings';
 import { mockApplication } from '../../../test-mocks';
 
 const { SUBMIT_APPLICATION } = TASKS.LIST;
+
+const { INSURANCE } = ROUTES;
+const {
+  INSURANCE_ROOT,
+  CHECK_YOUR_ANSWERS: { ELIGIBILITY },
+} = INSURANCE;
 
 describe('server/helpers/task-list/submit-application', () => {
   it('should return EXIP `submit application` tasks', () => {
@@ -16,7 +22,7 @@ describe('server/helpers/task-list/submit-application', () => {
 
     const previousGroups = [initialChecksGroup, prepareApplicationGroup];
 
-    const result = createSubmitApplicationTasks(previousGroups);
+    const result = createSubmitApplicationTasks(previousGroups, mockApplication.referenceNumber);
 
     const DECLARATIONS = {
       href: '#',
@@ -32,11 +38,11 @@ describe('server/helpers/task-list/submit-application', () => {
     };
 
     const CHECK_ANSWERS_AND_SUBMIT = {
-      href: '#',
+      href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ELIGIBILITY}`,
       title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT,
       id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS_AND_SUBMIT,
       fields: [],
-      dependencies: [...DECLARATIONS.fields, ...DECLARATIONS.dependencies],
+      dependencies: [],
     };
 
     const expected = [DECLARATIONS, CHECK_ANSWERS_AND_SUBMIT];

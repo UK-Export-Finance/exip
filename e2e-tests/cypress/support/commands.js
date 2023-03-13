@@ -70,6 +70,8 @@ Cypress.Commands.add('completeAndSubmitNatureOfYourBusiness', require('./insuran
 Cypress.Commands.add('completeAndSubmitTurnoverForm', require('./insurance/complete-and-submit-turnover-form'));
 Cypress.Commands.add('completeAndSubmitBrokerForm', require('./insurance/complete-and-submit-broker-form'));
 
+Cypress.Commands.add('completePrepareApplicationSinglePolicyType', require('./insurance/complete-and-submit-prepare-your-application-section-single'));
+
 Cypress.Commands.add('completeAndSubmitCompanyOrOrganisationForm', require('./insurance/your-buyer/complete-and-submit-company-or-organisation-form'));
 Cypress.Commands.add('completeAndSubmitWorkingWithBuyerForm', require('./insurance/your-buyer/complete-and-submit-working-with-buyer-form'));
 

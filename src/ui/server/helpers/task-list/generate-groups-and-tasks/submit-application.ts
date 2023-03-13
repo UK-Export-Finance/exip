@@ -1,16 +1,22 @@
 import { TaskListDataTask, TaskListData } from '../../../../types';
-import { GROUP_IDS, TASK_IDS } from '../../../constants';
+import { GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
 import { TASKS } from '../../../content-strings';
 import { getGroupById, getTaskById } from '../task-helpers';
 
 const { SUBMIT_APPLICATION } = TASKS.LIST;
+
+const { INSURANCE } = ROUTES;
+const {
+  INSURANCE_ROOT,
+  CHECK_YOUR_ANSWERS: { ELIGIBILITY },
+} = INSURANCE;
 
 /**
  * createSubmitApplicationTasks
  * @param {Array} otherGroups Task list groups
  * @returns {Array} Tasks
  */
-const createSubmitApplicationTasks = (otherGroups: TaskListData): Array<TaskListDataTask> => {
+const createSubmitApplicationTasks = (otherGroups: TaskListData, referenceNumber: number): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
   const prepareApplicationGroup = getGroupById(otherGroups, GROUP_IDS.PREPARE_APPLICATION);
 
@@ -28,11 +34,12 @@ const createSubmitApplicationTasks = (otherGroups: TaskListData): Array<TaskList
   };
 
   const CHECK_ANSWERS_AND_SUBMIT = {
-    href: '#',
+    href: `${INSURANCE_ROOT}/${referenceNumber}${ELIGIBILITY}`,
     title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT,
     id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS_AND_SUBMIT,
     fields: [],
-    dependencies: [...DECLARATIONS.fields, ...DECLARATIONS.dependencies],
+    // dependencies: [...DECLARATIONS.fields, ...DECLARATIONS.dependencies],
+    dependencies: [],
   };
 
   const tasks = [DECLARATIONS, CHECK_ANSWERS_AND_SUBMIT] as Array<TaskListDataTask>;
