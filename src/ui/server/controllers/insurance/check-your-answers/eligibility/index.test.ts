@@ -46,7 +46,7 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
           BACK_LINK: req.headers.referer,
         }),
         START_NEW_APPLICATION: START,
-        notificationBanner: true,
+        renderNotificationBanner: true,
         eligibility: true,
         SUMMARY_LIST: summaryList,
       };
