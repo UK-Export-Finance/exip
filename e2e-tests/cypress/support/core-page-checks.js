@@ -36,7 +36,7 @@ const checkBackLink = (currentHref, expectedHref) => {
 
   cy.url().should('eq', expectedUrl);
 
-  // go back to the current page
+  // go back to current page
   cy.visit(`${Cypress.config('baseUrl')}${currentHref}`, {
     auth: {
       username: Cypress.config('basicAuthKey'),
