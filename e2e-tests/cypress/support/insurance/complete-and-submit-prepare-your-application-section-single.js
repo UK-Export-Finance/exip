@@ -6,6 +6,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
+// runs through the full prepare your application journey for single policy type
 export default () => {
   task.link().click();
 

@@ -1,5 +1,5 @@
-import eligibilityCheckYourAnswers from './eligibility';
+import checkYourAnswersEligibility from './eligibility';
 
 export {
-  eligibilityCheckYourAnswers,
+  checkYourAnswersEligibility,
 };

@@ -6,6 +6,7 @@ import {
 import { FIELD_IDS, COMPANIES_HOUSE_NUMBER, WEBSITE_EXAMPLES } from '../../constants';
 import { GBP_CURRENCY_CODE } from './currencies';
 import mockCountries from './countries';
+import { FIELDS_ELIGIBILITY } from '../../content-strings/fields/insurance/eligibility';
 
 const {
   INSURANCE: {
@@ -96,7 +97,7 @@ const application = {
   ELIGIBILITY: {
     [BUYER_COUNTRY]: mockCountries[1].name,
     [VALID_EXPORTER_LOCATION]: 'Yes',
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'At least 20%',
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES].ANSWER,
     [WANT_COVER_OVER_MAX_AMOUNT]: 'No',
     [WANT_COVER_OVER_MAX_PERIOD]: 'No',
     [OTHER_PARTIES_INVOLVED]: 'No',

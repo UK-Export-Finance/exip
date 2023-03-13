@@ -1,7 +1,7 @@
 import { get, post } from '../../../test-mocks/mock-router';
 import { ROUTES } from '../../../constants';
 
-import { get as getEligibilityCheckYourAnswers, post as postEligibilityCheckYourAnswers } from '../../../controllers/insurance/check-your-answers/eligibility';
+import { get as getcheckYourAnswersEligibility, post as postcheckYourAnswersEligibility } from '../../../controllers/insurance/check-your-answers/eligibility';
 
 describe('routes/insurance/check-your-answers', () => {
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe('routes/insurance/check-your-answers', () => {
     expect(get).toHaveBeenCalledTimes(1);
     expect(post).toHaveBeenCalledTimes(1);
 
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY}`, getEligibilityCheckYourAnswers);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY}`, postEligibilityCheckYourAnswers);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY}`, getcheckYourAnswersEligibility);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY}`, postcheckYourAnswersEligibility);
   });
 });

@@ -1,4 +1,4 @@
-import { eligibilityCheckYourAnswers } from '../../../pages/insurance/check-your-answers';
+import { checkYourAnswersEligibility } from '../../../pages/insurance/check-your-answers';
 import {
   headingCaption,
   submitButton,
@@ -36,7 +36,7 @@ context('Insurance - Check your answers - Eligibility - I want to confirm my sel
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitPrepareYourApplicationSectionSinglePolicyType();
+      cy.completePrepareApplicationSinglePolicyType();
 
       task.link().click();
 
@@ -77,8 +77,8 @@ context('Insurance - Check your answers - Eligibility - I want to confirm my sel
     });
 
     it(`renders a change answers banner with a valid href to ${START}`, () => {
-      cy.checkText(eligibilityCheckYourAnswers.banner(), `${CONTENT_STRINGS.CHANGE_ELIGIBILITY} ${CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK}`);
-      cy.checkLink(eligibilityCheckYourAnswers.bannerLink(), START, CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK);
+      cy.checkText(checkYourAnswersEligibility.banner(), `${CONTENT_STRINGS.CHANGE_ELIGIBILITY} ${CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.text}`);
+      cy.checkLink(checkYourAnswersEligibility.bannerLink(), CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.href, CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.text);
     });
 
     it('renders a `save and back` button', () => {
@@ -86,7 +86,7 @@ context('Insurance - Check your answers - Eligibility - I want to confirm my sel
       cy.checkText(submitButton(), BUTTONS.CONFIRM_AND_CONTINUE);
 
       saveAndBackButton().should('exist');
-      cy.checkText(saveAndBackButton(), BUTTONS.CHANGE_ANSWERS_NEW_APPLICATION);
+      cy.checkText(saveAndBackButton(), BUTTONS.CHANGE_ANSWERS_START_NEW_APPLICATION);
     });
 
     describe('form submission', () => {

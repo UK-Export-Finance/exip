@@ -23,7 +23,7 @@
     <p class="govuk-notification-banner__heading" data-cy="change-eligibility-banner">{{ CONTENT_STRINGS.CHANGE_ELIGIBILITY }} <a class="govuk-notification-banner__link" href="{{ START_NEW_APPLICATION }}" data-cy="change-eligibility-link">{{ CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK }}</a></p>
   {% endset %}
 
-  {% if notificationBanner %}
+  {% if renderNotificationBanner %}
     {{ govukNotificationBanner({
       html: html
     }) }}

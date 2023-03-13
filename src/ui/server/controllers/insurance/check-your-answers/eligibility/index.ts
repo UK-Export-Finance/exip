@@ -37,7 +37,7 @@ export const get = (req: Request, res: Response) => {
       BACK_LINK: req.headers.referer,
     }),
     START_NEW_APPLICATION: START,
-    notificationBanner: true,
+    renderNotificationBanner: true,
     eligibility: true,
     SUMMARY_LIST: summaryList,
   });
@@ -51,6 +51,12 @@ export const get = (req: Request, res: Response) => {
  * @returns {Express.Response.redirect} Next part of the flow
  */
 export const post = (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
+
   const { referenceNumber } = req.params;
 
   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`);

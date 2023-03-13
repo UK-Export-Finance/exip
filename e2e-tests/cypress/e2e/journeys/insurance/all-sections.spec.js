@@ -154,11 +154,12 @@ context('Insurance - All sections - new application', () => {
           const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
 
           const expectedText = TASKS.LIST.SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT;
-          cy.checkText(task.text(), expectedText);
+          cy.checkText(task.link(), expectedText);
 
-          task.link().should('not.exist');
+          const expectedUrl = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY}`;
+          task.link().should('have.attr', 'href', expectedUrl);
 
-          const expectedStatus = TASKS.STATUS.CANNOT_START;
+          const expectedStatus = TASKS.STATUS.NOT_STARTED_YET;
           cy.checkText(task.status(), expectedStatus);
         });
       });

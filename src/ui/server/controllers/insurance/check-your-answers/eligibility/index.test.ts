@@ -75,5 +75,17 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        res.locals = { csrfToken: '1234' };
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
   });
 });
