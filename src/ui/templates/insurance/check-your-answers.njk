@@ -54,14 +54,7 @@
 
       {% if eligibility %}
 
-        {{ govukButton({
-          text: CONTENT_STRINGS.CHANGE_ANSWERS,
-          classes: "govuk-button--secondary",
-          attributes: {
-            formaction: START_NEW_APPLICATION,
-            'data-cy': 'save-and-back-button'
-          }
-        }) }}
+      <a class="govuk-button govuk-button--secondary" href="{{ START_NEW_APPLICATION }}" data-cy="save-and-back-button">{{ CONTENT_STRINGS.CHANGE_ANSWERS }}</a>
 
       {% else %}
 
