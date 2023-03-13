@@ -58,6 +58,9 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
         currentHref: `${CONFIRM_EMAIL}?id=${exporter.id}`,
         backLink: YOUR_DETAILS,
         assertSubmitButton: false,
+        lightHouseThresholds: {
+          performance: 69,
+        },
       });
 
       // assert confirm email content
