@@ -9,6 +9,17 @@ import mockCountries from './countries';
 
 const {
   INSURANCE: {
+    ELIGIBILITY: {
+      WANT_COVER_OVER_MAX_AMOUNT,
+      WANT_COVER_OVER_MAX_PERIOD,
+      OTHER_PARTIES_INVOLVED,
+      LETTER_OF_CREDIT,
+      PRE_CREDIT_PERIOD,
+      COMPANIES_HOUSE_NUMBER: ELIGIBILITY_COMPANIES_HOUSE_NUMBER,
+      BUYER_COUNTRY,
+      HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+      VALID_EXPORTER_LOCATION,
+    },
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
@@ -82,6 +93,17 @@ export const startDate = add(date, { months: 3 });
 export const endDate = add(startDate, { months: 6 });
 
 const application = {
+  ELIGIBILITY: {
+    [BUYER_COUNTRY]: mockCountries[1].name,
+    [VALID_EXPORTER_LOCATION]: 'Yes',
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'At least 20%',
+    [WANT_COVER_OVER_MAX_AMOUNT]: 'No',
+    [WANT_COVER_OVER_MAX_PERIOD]: 'No',
+    [OTHER_PARTIES_INVOLVED]: 'No',
+    [LETTER_OF_CREDIT]: 'No',
+    [PRE_CREDIT_PERIOD]: 'No',
+    [ELIGIBILITY_COMPANIES_HOUSE_NUMBER]: 'Yes',
+  },
   POLICY_AND_EXPORTS: {
     [REQUESTED_START_DATE]: {
       day: '1',

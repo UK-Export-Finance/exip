@@ -29,7 +29,7 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
     const submitApplication = {
       title: SUBMIT_APPLICATION.HEADING,
       id: GROUP_IDS.SUBMIT_APPLICATION,
-      tasks: submitApplicationTasks([initialChecks, prepareApplication]),
+      tasks: submitApplicationTasks([initialChecks, prepareApplication], referenceNumber),
     };
 
     const expected = [initialChecks, prepareApplication, submitApplication];

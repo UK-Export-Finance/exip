@@ -3,6 +3,7 @@ import * as ELIGIBILITY_PAGES from './eligibility';
 import * as ACCOUNT_PAGES from './account';
 import * as EXPORTER_BUSINESS from './exporter-business';
 import * as YOUR_BUYER from './your-buyer';
+import * as CHECK_YOUR_ANSWERS from './check-your-answers';
 import { LINKS } from '../../links';
 import { PRODUCT } from '../../../constants';
 import formatCurrency from '../../../cypress/e2e/helpers/format-currency';
@@ -102,6 +103,7 @@ const INSURANCE = {
   START,
   YOUR_BUYER,
   NO_ACCESS_TO_APPLICATION_PAGE,
+  CHECK_YOUR_ANSWERS,
 };
 
 export default INSURANCE;

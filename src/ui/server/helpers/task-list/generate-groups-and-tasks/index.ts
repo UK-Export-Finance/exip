@@ -36,7 +36,7 @@ const generateGroupsAndTasks = (referenceNumber: number, policyType?: string, is
     {
       title: SUBMIT_APPLICATION.HEADING,
       id: GROUP_IDS.SUBMIT_APPLICATION,
-      tasks: submitApplicationTasks(groups),
+      tasks: submitApplicationTasks(groups, referenceNumber),
     },
   ] as TaskListData;
 

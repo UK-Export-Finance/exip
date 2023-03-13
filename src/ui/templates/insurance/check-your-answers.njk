@@ -1,0 +1,83 @@
+{% extends 'index.njk' %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% set html %}
+    <p class="govuk-notification-banner__heading" data-cy="change-eligibility-banner">{{ CONTENT_STRINGS.CHANGE_ELIGIBILITY }} <a class="govuk-notification-banner__link" href="{{ START_NEW_APPLICATION }}" data-cy="change-eligibility-link">{{ CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK }}</a></p>
+  {% endset %}
+
+  {% if notificationBanner %}
+    {{ govukNotificationBanner({
+      html: html
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full-from-desktop">
+      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+      <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+    </div>
+  </div>
+
+  {{ govukSummaryList({
+    rows: SUMMARY_LIST
+  }) }}
+
+  <form method="POST" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: CONTENT_STRINGS.BUTTONS.CONFIRM_AND_CONTINUE,
+        attributes: {
+          'data-cy': 'submit-button'
+        }
+      }) }}
+
+      {% if eligibility %}
+
+        {{ govukButton({
+          text: CONTENT_STRINGS.CHANGE_ANSWERS,
+          classes: "govuk-button--secondary",
+          attributes: {
+            formaction: START_NEW_APPLICATION,
+            'data-cy': 'save-and-back-button'
+          }
+        }) }}
+
+      {% else %}
+
+      {{ govukButton({
+        text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+        classes: "govuk-button--secondary",
+        attributes: {
+          formaction: SAVE_AND_BACK_URL,
+          'data-cy': 'save-and-back-button'
+        }
+      }) }}
+
+      {% endif %}
+    </div>
+
+  </form>
+
+
+{% endblock %}
