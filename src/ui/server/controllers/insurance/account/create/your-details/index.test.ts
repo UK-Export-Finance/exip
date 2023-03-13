@@ -19,6 +19,7 @@ const {
       CREATE: { CONFIRM_EMAIL },
       SIGN_IN,
     },
+    DASHBOARD,
   },
 } = ROUTES;
 
@@ -91,6 +92,19 @@ describe('controllers/insurance/account/create/your-details', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
+      });
+    });
+
+    describe('when the user is already signed in', () => {
+      it(`should redirect to ${DASHBOARD}`, () => {
+        req.session = {
+          ...req.session,
+          user: mockAccount,
+        };
+
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(DASHBOARD);
       });
     });
   });
