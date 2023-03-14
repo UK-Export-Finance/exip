@@ -1,0 +1,23 @@
+{% import './great-grand-child.njk' as greatGrandChildListItem %}
+
+{% macro render(params) %}
+
+  {% set child = params.child %}
+  {% set class = params.class %}
+  {% set loopIndex = params.loopIndex %}
+  {% set thirdLevelListClass = params.thirdLevelListClass %}
+
+  {% if child.type === 'list-item' %}
+
+    {% for greatGrandChild in child.children %}
+
+      {{ greatGrandChildListItem.render({
+        child: greatGrandChild,
+        class: class,
+        loopIndex: loopIndex,
+        thirdLevelListClass: thirdLevelListClass
+      }) }}
+
+    {% endfor %}  
+  {% endif %}
+{% endmacro %}

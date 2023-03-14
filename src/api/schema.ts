@@ -497,6 +497,18 @@ export const lists = {
     },
     access: allowAll,
   }),
+  DeclarationConfidentiality: list({
+    fields: {
+      version: text({
+        label: 'Version',
+        validation: { isRequired: true },
+      }),
+      content: document({
+        formatting: true,
+      }),
+    },
+    access: allowAll,
+  }),
   Page: list({
     fields: {
       heading: text({

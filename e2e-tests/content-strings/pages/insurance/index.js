@@ -3,6 +3,7 @@ import * as ELIGIBILITY_PAGES from './eligibility';
 import * as ACCOUNT_PAGES from './account';
 import * as EXPORTER_BUSINESS from './exporter-business';
 import * as YOUR_BUYER from './your-buyer';
+import * as DECLARATIONS from './declarations';
 import * as CHECK_YOUR_ANSWERS from './check-your-answers';
 import { LINKS } from '../../links';
 import { PRODUCT } from '../../../constants';
@@ -102,8 +103,9 @@ const INSURANCE = {
   SPEAK_TO_UKEF_EFM,
   START,
   YOUR_BUYER,
-  NO_ACCESS_TO_APPLICATION_PAGE,
+  DECLARATIONS,
   CHECK_YOUR_ANSWERS,
+  NO_ACCESS_TO_APPLICATION_PAGE,
 };
 
 export default INSURANCE;

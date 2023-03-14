@@ -34,7 +34,7 @@ export const get = async (req: Request, res: Response) => {
       },
     });
   } catch (err) {
-    console.error("Error getting applications and rendering 'dashboard' page", { err });
+    console.error("Error getting applications and rendering 'dashboard' page ", { err });
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

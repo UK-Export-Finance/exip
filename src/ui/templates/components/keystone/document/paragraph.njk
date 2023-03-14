@@ -8,7 +8,7 @@
       {% endif %}
 
       {% if child.text %}
-        {{ child.text }}
+        <span data-cy="paragraph-{{ loop.index }}">{{ child.text }}</span>
       {% endif %}
 
     {% endfor %}
