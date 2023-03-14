@@ -11,7 +11,7 @@ import {
   ERROR_MESSAGES,
 } from '../../../../../../content-strings';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
-import { FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
+import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import api from '../../../../../support/api';
 import mapKeystoneDocument from '../../../../../support/map-keystone-document';
@@ -36,28 +36,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      // go to the page we want to test.
-      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
-
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-      cy.completeAndSubmitSingleContractPolicyForm();
-
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
-
-      submitButton().click();
-
-      cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
-
-      cy.completeAndSubmitBrokerForm();
-
-      submitButton().click();
-      cy.completeAndSubmitCompanyOrOrganisationForm();
-      cy.completeAndSubmitWorkingWithBuyerForm();
-
-      submitButton().click();
+      cy.completePrepareApplicationSinglePolicyType();
 
       // go to the page we want to test.
       taskList.submitApplication.tasks.declarations.link().click();

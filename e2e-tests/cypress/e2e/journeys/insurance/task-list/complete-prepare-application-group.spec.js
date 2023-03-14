@@ -1,7 +1,6 @@
-import { submitButton } from '../../../pages/shared';
 import partials from '../../../partials';
 import { TASKS } from '../../../../../content-strings';
-import { ROUTES, FIELD_VALUES } from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
 
 const { taskList } = partials.insurancePartials;
 
@@ -26,27 +25,7 @@ context('Insurance - Task list - complete `prepare application` group', () => {
     beforeEach(() => {
       cy.saveSession();
 
-      taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
-
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-      cy.completeAndSubmitSingleContractPolicyForm();
-
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
-
-      submitButton().click();
-
-      cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
-
-      cy.completeAndSubmitBrokerForm();
-
-      submitButton().click();
-      cy.completeAndSubmitCompanyOrOrganisationForm();
-      cy.completeAndSubmitWorkingWithBuyerForm();
-
-      submitButton().click();
+      cy.completePrepareApplicationSinglePolicyType();
     });
 
     it('should render a `declarations` task with a link and `not started` status', () => {
