@@ -17,6 +17,7 @@ const {
     ACCOUNT: {
       SIGN_IN: { ENTER_CODE },
     },
+    DASHBOARD,
   },
 } = ROUTES;
 
@@ -107,6 +108,19 @@ describe('controllers/insurance/account/sign-in', () => {
           ...PAGE_VARIABLES,
           renderSuccessBanner: true,
         });
+      });
+    });
+
+    describe('when the user is already signed in', () => {
+      it(`should redirect to ${DASHBOARD}`, () => {
+        req.session = {
+          ...req.session,
+          user: mockAccount,
+        };
+
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(DASHBOARD);
       });
     });
   });

@@ -2,14 +2,14 @@ import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { Next, Request, Response } from '../../../../types';
 import getApplication from '../../../helpers/get-application';
 
-const { ALL_SECTIONS, POLICY_AND_EXPORTS, EXPORTER_BUSINESS, YOUR_BUYER, DECLARATIONS, PAGE_NOT_FOUND } = INSURANCE_ROUTES;
+const { ALL_SECTIONS, POLICY_AND_EXPORTS, EXPORTER_BUSINESS, YOUR_BUYER, PAGE_NOT_FOUND, DECLARATIONS, CHECK_YOUR_ANSWERS } = INSURANCE_ROUTES;
 
 /**
  * RELEVANT_ROUTES
  * Routes that need to GET and consume an application.
  * @returns {Array} Routes
  */
-export const RELEVANT_ROUTES = [ALL_SECTIONS, POLICY_AND_EXPORTS.ROOT, EXPORTER_BUSINESS.ROOT, YOUR_BUYER.ROOT, DECLARATIONS.ROOT];
+export const RELEVANT_ROUTES = [ALL_SECTIONS, POLICY_AND_EXPORTS.ROOT, EXPORTER_BUSINESS.ROOT, YOUR_BUYER.ROOT, DECLARATIONS.ROOT, CHECK_YOUR_ANSWERS.ROOT];
 
 /**
  * getApplicationMiddleware

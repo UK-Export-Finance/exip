@@ -11,6 +11,7 @@ const { SUBMIT_APPLICATION } = TASKS.LIST;
 const {
   INSURANCE_ROOT,
   DECLARATIONS: { CONFIDENTIALITY },
+  CHECK_YOUR_ANSWERS: { ELIGIBILITY },
 } = INSURANCE_ROUTES;
 
 describe('server/helpers/task-list/submit-application', () => {
@@ -35,11 +36,11 @@ describe('server/helpers/task-list/submit-application', () => {
     };
 
     const CHECK_ANSWERS_AND_SUBMIT = {
-      href: '#',
+      href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ELIGIBILITY}`,
       title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT,
       id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS_AND_SUBMIT,
       fields: [],
-      dependencies: [...DECLARATIONS.fields, ...DECLARATIONS.dependencies],
+      dependencies: [],
     };
 
     const expected = [DECLARATIONS, CHECK_ANSWERS_AND_SUBMIT];

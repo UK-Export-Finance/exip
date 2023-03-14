@@ -9,6 +9,7 @@ const { SUBMIT_APPLICATION } = TASKS.LIST;
 const {
   INSURANCE_ROOT,
   DECLARATIONS: { CONFIDENTIALITY },
+  CHECK_YOUR_ANSWERS: { ELIGIBILITY },
 } = INSURANCE_ROUTES;
 
 /**
@@ -29,11 +30,12 @@ const createSubmitApplicationTasks = (referenceNumber: number, otherGroups: Task
   };
 
   const CHECK_ANSWERS_AND_SUBMIT = {
-    href: '#',
+    href: `${INSURANCE_ROOT}/${referenceNumber}${ELIGIBILITY}`,
     title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT,
     id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS_AND_SUBMIT,
     fields: [],
-    dependencies: [...DECLARATIONS.fields, ...DECLARATIONS.dependencies],
+    // dependencies: [...DECLARATIONS.fields, ...DECLARATIONS.dependencies],
+    dependencies: [],
   };
 
   const tasks = [DECLARATIONS, CHECK_ANSWERS_AND_SUBMIT] as Array<TaskListDataTask>;

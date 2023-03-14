@@ -7,6 +7,7 @@ import allSectionsPage from './allSections';
 import * as eligibility from './eligibility';
 import * as account from './account';
 import * as policyAndExport from './policy-and-export';
+import * as checkYourAnswers from './check-your-answers';
 
 const insurancePages = {
   startPage,
@@ -18,6 +19,7 @@ const insurancePages = {
   eligibility,
   account,
   policyAndExport,
+  checkYourAnswers,
 };
 
 export default insurancePages;

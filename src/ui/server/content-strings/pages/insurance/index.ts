@@ -6,6 +6,7 @@ import POLICY_AND_EXPORTS from './policy-and-exports';
 import EXPORTER_BUSINESS from './your-business';
 import YOUR_BUYER from './your-buyer';
 import DECLARATIONS from './declarations';
+import CHECK_YOUR_ANSWERS from './check-your-answers';
 import formatCurrency from '../../../helpers/format-currency';
 
 const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
@@ -107,4 +108,5 @@ export default {
   YOUR_BUYER,
   NO_ACCESS_TO_APPLICATION_PAGE,
   DECLARATIONS,
+  CHECK_YOUR_ANSWERS,
 };
