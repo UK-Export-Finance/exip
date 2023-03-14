@@ -1,3 +1,4 @@
+import getTrueProperties from '../get-true-properties';
 import { Application, ApplicationFlat } from '../../../types';
 
 /**
@@ -7,9 +8,9 @@ import { Application, ApplicationFlat } from '../../../types';
  * @returns {Object} Application as a single level object
  */
 const flattenApplicationData = (application: Application): ApplicationFlat => {
-  const { eligibility, policyAndExport, exporterCompany, exporterBroker, exporterBusiness, buyer, ...app } = application;
+  const { eligibility, policyAndExport, exporterCompany, exporterBroker, exporterBusiness, buyer, declaration, ...app } = application;
 
-  return {
+  const flattened = {
     ...eligibility,
     buyerCountry: application.eligibility.buyerCountry.isoCode,
     ...policyAndExport,
@@ -17,8 +18,11 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
     ...exporterBusiness,
     ...exporterBroker,
     ...buyer,
+    ...getTrueProperties(declaration),
     ...app,
   };
+
+  return flattened;
 };
 
 export default flattenApplicationData;

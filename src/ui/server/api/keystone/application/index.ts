@@ -275,6 +275,7 @@ const application = {
         throw new Error('Updating application buyer');
       }
     },
+    declarations: declarations.update,
   },
   eligibility,
   declarations,

@@ -106,6 +106,10 @@ const applicationQuery = gql`
           exporterIsConnectedWithBuyer
           exporterHasTradedWithBuyer
         }
+        declaration {
+          id
+          agreeToConfidentiality
+        }
       }
     }
   }

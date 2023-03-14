@@ -28,7 +28,7 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
 
-context('Insurance - Declarations - Confidentiality page - As an Exporter, I want to make confidentiality declaration for my export insurance application, So that UKEF can be assured of my agreement with regards to confidentiality while processing my export insurance application.', () => {
+context('Insurance - Declarations - Confidentiality page - As an Exporter, I want to make confidentiality declaration for my export insurance application, So that UKEF can be assured of my agreement with regards to confidentiality while processing my export insurance application', () => {
   let referenceNumber;
   let url;
 
@@ -163,17 +163,36 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
       });
     });
 
-    it(`should redirect to ${ANTI_BRIBERY}`, () => {
-      cy.navigateToUrl(url);
+    describe('when submitting a fully completed form', () => {
+      it(`should redirect to ${ANTI_BRIBERY}`, () => {
+        cy.navigateToUrl(url);
 
-      const field = confidentialityPage[FIELD_ID];
+        const field = confidentialityPage[FIELD_ID];
 
-      field.input().click();
+        field.input().click();
 
-      submitButton().click();
+        submitButton().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY}`;
-      cy.url().should('eq', expectedUrl);
+        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY}`;
+
+        cy.url().should('eq', expectedUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          const field = confidentialityPage[FIELD_ID];
+
+          field.input().click();
+
+          submitButton().click();
+
+          cy.navigateToUrl(url);
+
+          field.input().should('be.checked');
+        });
+      });
     });
   });
 });

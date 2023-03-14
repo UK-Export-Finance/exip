@@ -5,6 +5,7 @@ import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import save from './save-data';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
 
@@ -12,8 +13,7 @@ const { INSURANCE, PROBLEM_WITH_SERVICE } = ROUTES;
 
 const {
   INSURANCE_ROOT,
-  ALL_SECTIONS,
-  DECLARATIONS: { ANTI_BRIBERY },
+  DECLARATIONS: { CONFIDENTIALITY_SAVE_AND_BACK, ANTI_BRIBERY },
 } = INSURANCE;
 
 /**
@@ -27,7 +27,7 @@ export const pageVariables = (referenceNumber: number) => ({
     ID: FIELD_ID,
     ...FIELDS[FIELD_ID],
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY_SAVE_AND_BACK}`,
 });
 
 export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.CONFIDENTIALITY;
@@ -59,6 +59,7 @@ export const get = async (req: Request, res: Response) => {
       }),
       ...pageVariables(refNumber),
       content: confidentialityContent.content.document,
+      application,
     });
   } catch (err) {
     console.error("Error getting declarations - confidentiality and rendering 'confidentiality' page ", { err });
@@ -106,5 +107,18 @@ export const post = async (req: Request, res: Response) => {
     }
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY}`);
+  try {
+    // save the application
+    const saveResponse = await save.declaration(application, req.body);
+
+    if (!saveResponse) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY}`);
+  } catch (err) {
+    console.error('Error updating application - declarations - confidentiality ', { err });
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
 };

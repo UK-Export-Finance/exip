@@ -88,6 +88,11 @@ export const mockApplicationBuyer = {
   ...mockBuyer,
 };
 
+export const mockApplicationDeclaration = {
+  id: 'clf3te7vx1432cfoqp9rbop73',
+  agreeToConfidentiality: true,
+};
+
 const mockApplication = {
   id: 'clacdgc630000kdoqn7wcgrz1',
   referenceNumber: 10001,
@@ -113,6 +118,7 @@ const mockApplication = {
   exporterBusiness: mockExporterBusiness,
   exporterBroker: mockExporterBroker,
   buyer: mockApplicationBuyer,
+  declaration: mockApplicationDeclaration,
 };
 
 export const mockApplicationMultiplePolicy = {

@@ -40,6 +40,7 @@ export const lists = {
       exporterCompany: relationship({ ref: 'ExporterCompany' }),
       exporterBroker: relationship({ ref: 'ExporterBroker' }),
       buyer: relationship({ ref: 'Buyer' }),
+      declaration: relationship({ ref: 'Declaration' }),
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -133,6 +134,17 @@ export const lists = {
               },
             };
 
+            // generate and attach a new 'declaration' relationship
+            const { id: declarationId } = await context.db.Declaration.createOne({
+              data: {},
+            });
+
+            modifiedData.declaration = {
+              connect: {
+                id: declarationId,
+              },
+            };
+
             // add dates
             const now = new Date();
             modifiedData.createdAt = now;
@@ -159,7 +171,7 @@ export const lists = {
 
             const applicationId = item.id;
 
-            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId, declarationId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -236,6 +248,18 @@ export const lists = {
             // add the application ID to the buyer entry.
             await context.db.Buyer.updateOne({
               where: { id: buyerId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId,
+                  },
+                },
+              },
+            });
+
+            // add the application ID to the declaration entry.
+            await context.db.Declaration.updateOne({
+              where: { id: declarationId },
               data: {
                 application: {
                   connect: {
@@ -494,6 +518,14 @@ export const lists = {
       needPreCreditPeriodCover: checkbox(),
       wantCoverOverMaxAmount: checkbox(),
       wantCoverOverMaxPeriod: checkbox(),
+    },
+    access: allowAll,
+  }),
+  Declaration: list({
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      confidentiality: relationship({ ref: 'DeclarationConfidentiality' }),
+      agreeToConfidentiality: checkbox({ defaultValue: false }),
     },
     access: allowAll,
   }),
