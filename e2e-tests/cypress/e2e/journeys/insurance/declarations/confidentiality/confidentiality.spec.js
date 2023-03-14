@@ -60,6 +60,9 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`,
       backLink: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+      lightHouseThresholds: {
+        accessibility: 98,
+      },
     });
   });
 
