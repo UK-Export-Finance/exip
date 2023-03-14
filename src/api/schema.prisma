@@ -225,6 +225,12 @@ model Eligibility {
   @@index([buyerCountryId])
 }
 
+model DeclarationConfidentiality {
+  id      String @id @default(cuid())
+  version String @default("")
+  content Json   @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+}
+
 model Page {
   id        String @id @default(cuid())
   heading   String @default("")

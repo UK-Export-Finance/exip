@@ -3,12 +3,16 @@
 {% macro render(params) %}
 
   {% if params.type === 'ordered' %}
-    <ol class="govuk-list govuk-list--number">
+    <ol class="govuk-list counter-list">
 
       {% for child in params.content %}
+
         {{ listItem.render({
-          content: child
+          content: child,
+          loopIndex: loop.index,
+          class: params.listItemClass
         }) }}
+        
       {% endfor %}
 
     </ol>
@@ -18,9 +22,13 @@
     <ul class="govuk-list govuk-list--bullet">
 
       {% for child in params.content %}
+
         {{ listItem.render({
-          content: child
+          content: child,
+          loopIndex: loop.index,
+          class: params.listItemClass
         }) }}
+
       {% endfor %}
 
     </ul>

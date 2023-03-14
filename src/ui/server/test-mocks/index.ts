@@ -15,6 +15,7 @@ import mockExporterNatureOfBusiness from './mock-exporter-business-nature-of-bus
 import mockExporterBusinessTurnover from './mock-exporter-business-turnover';
 import mockBroker from './mock-broker';
 import mockBuyer from './mock-buyer';
+import mockDeclarations from './mock-declarations';
 
 const mockReq = () => {
   let req = {} as Request;
@@ -72,6 +73,7 @@ export {
   mockCountries,
   mockCompany,
   mockCurrencies,
+  mockDeclarations,
   mockExporterNatureOfBusiness,
   mockExporterBusinessTurnover,
   mockNext,

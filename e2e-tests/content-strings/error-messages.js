@@ -263,5 +263,10 @@ export const ERROR_MESSAGES = {
         INCORRECT: 'Enter your 6-digit security code - for example, 356515. You cannot enter letters or special characters.',
       },
     },
+    DECLARATIONS: {
+      [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY]: {
+        IS_EMPTY: 'Confirm that you have read and accept the confidentiality declaration',
+      },
+    },
   },
 };

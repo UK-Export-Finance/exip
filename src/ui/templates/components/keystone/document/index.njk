@@ -19,14 +19,16 @@
     {% if element.type === 'unordered-list' %}
       {{ list.render({
         type: 'unordered',
-        content: element.children
+        content: element.children,
+        listItemClass: params.listItemClass
       }) }}
     {% endif %}
 
     {% if element.type === 'ordered-list' %}
       {{ list.render({
         type: 'ordered',
-        content: element.children
+        content: element.children,
+        listItemClass: params.listItemClass
       }) }}
     {% endif %}
 

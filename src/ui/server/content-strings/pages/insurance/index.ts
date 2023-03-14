@@ -5,6 +5,7 @@ import ACCOUNT from './account';
 import POLICY_AND_EXPORTS from './policy-and-exports';
 import EXPORTER_BUSINESS from './your-business';
 import YOUR_BUYER from './your-buyer';
+import DECLARATIONS from './declarations';
 import formatCurrency from '../../../helpers/format-currency';
 
 const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
@@ -94,6 +95,7 @@ const NO_ACCESS_TO_APPLICATION_PAGE = {
 };
 
 export default {
+  START,
   ACCOUNT,
   DASHBOARD,
   ALL_SECTIONS,
@@ -102,7 +104,7 @@ export default {
   ELIGIBILITY,
   POLICY_AND_EXPORTS,
   SPEAK_TO_UKEF_EFM,
-  START,
   YOUR_BUYER,
   NO_ACCESS_TO_APPLICATION_PAGE,
+  DECLARATIONS,
 };

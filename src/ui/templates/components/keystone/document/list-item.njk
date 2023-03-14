@@ -1,24 +1,15 @@
+{% import './list-item/child.njk' as childListItem %}
+
 {% macro render(params) %}
 
-  <li>
-    {% for child in params.content.children %}
-    
-      {% for grandChild in child.children %}
+  {% for child in params.content.children %}
 
-        {% if grandChild.type === 'link' %}
-          <a class="govuk-link" href={{ grandChild.href }}>
-            {% for child in grandChild.children %}
-              {{ child.text }}
-            {% endfor %}
-          </a>
+    {{ childListItem.render({
+      child: child,
+      class: params.class,
+      loopIndex: params.loopIndex
+    }) }}
 
-          {% else %}
-          {{ grandChild.text }}
-        {% endif %}
-
-      {% endfor %}
-
-    {% endfor %}
-  </li>
+  {% endfor %}
 
 {% endmacro %}

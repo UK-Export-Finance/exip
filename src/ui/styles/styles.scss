@@ -42,3 +42,57 @@ $govuk-new-link-styles: true;
   display: -webkit-flex;
   display: flex;
 }
+
+.counter-list {
+  counter-reset: count;
+
+  > li {
+    list-style: none;
+    counter-increment: count;
+  }
+
+  > li::before {
+    content: "(" counter(count) ") ";
+    font-weight: bold;
+  }
+}
+
+.lower-alpha-counter-list {
+  padding-left: 3em;
+  counter-reset: count;
+
+
+  > li {
+    list-style: none;
+    counter-increment: count;
+  }
+
+  > li::before {
+    content: "(" counter(count, lower-alpha) ") ";
+  }
+}
+
+.lower-roman-counter-list {
+  padding-left: 3em;
+  counter-reset: count;
+
+  > li {
+    list-style: none;
+    counter-increment: count;
+  }
+
+  > li::before {
+    content: "(" counter(count, lower-roman) ") ";
+  }
+}
+
+.temp-item-class {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  width: 100%;
+
+  > span {
+    margin-left: 2em;
+  }
+}

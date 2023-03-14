@@ -18,7 +18,7 @@ const queryStrings = {
     {
       exporters(
         orderBy: { updatedAt: desc }
-        where: { email: { equals: "${email}" } },
+        where: { email: { equals: "${email}" } }
         take: 1
       ) {
         id
@@ -48,6 +48,19 @@ const queryStrings = {
       }
     }
   `,
+  declarations: {
+    getLatestConfidentiality: () => gql`
+      query DeclarationConfidentialities {
+        declarationConfidentialities(orderBy: { version: desc }, take: 1) {
+          id
+          version
+          content {
+            document
+          }
+        }
+      }
+    `,
+  },
 };
 
 /**
@@ -166,12 +179,34 @@ const addAndGetOTP = async (email) => {
   }
 };
 
+const declarations = {
+  /**
+   * getLatestConfidentiality
+   * Get the latest confidentiality declaration content
+   * @returns {Object} Confidentiality declaration
+   */
+  getLatestConfidentiality: async () => {
+    try {
+      const responseBody = await apollo.query({
+        query: queryStrings.declarations.getLatestConfidentiality(),
+      }).then((response) => response.data.declarationConfidentialities[0]);
+
+      return responseBody;
+    } catch (err) {
+      console.error(err);
+
+      throw new Error('Getting latest declaration - confidentiality ', { err });
+    }
+  },
+};
+
 const api = {
   createExporterAccount,
   getExporterByEmail,
   updateExporter,
   deleteExportersById,
   addAndGetOTP,
+  declarations,
 };
 
 export default api;

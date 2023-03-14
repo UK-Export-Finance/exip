@@ -637,6 +637,18 @@ var lists = {
     },
     access: import_access.allowAll
   }),
+  DeclarationConfidentiality: (0, import_core.list)({
+    fields: {
+      version: (0, import_fields.text)({
+        label: "Version",
+        validation: { isRequired: true }
+      }),
+      content: (0, import_fields_document.document)({
+        formatting: true
+      })
+    },
+    access: import_access.allowAll
+  }),
   Page: (0, import_core.list)({
     fields: {
       heading: (0, import_fields.text)({

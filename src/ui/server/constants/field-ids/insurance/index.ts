@@ -3,6 +3,7 @@ import ACCOUNT from './account';
 import POLICY_AND_EXPORTS from './policy-and-exports';
 import EXPORTER_BUSINESS from './exporter-business';
 import YOUR_BUYER from './your-buyer';
+import DECLARATIONS from './declarations';
 
 const INSURANCE_FIELD_IDS = {
   ELIGIBILITY: {
@@ -20,6 +21,7 @@ const INSURANCE_FIELD_IDS = {
   POLICY_AND_EXPORTS,
   EXPORTER_BUSINESS,
   YOUR_BUYER,
+  DECLARATIONS,
 };
 
 export default INSURANCE_FIELD_IDS;
