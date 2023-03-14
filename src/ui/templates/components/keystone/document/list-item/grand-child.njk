@@ -5,6 +5,7 @@
   {% set child = params.child %}
   {% set class = params.class %}
   {% set loopIndex = params.loopIndex %}
+  {% set thirdLevelListClass = params.thirdLevelListClass %}
 
   {% if child.type === 'list-item' %}
 
@@ -13,7 +14,8 @@
       {{ greatGrandChildListItem.render({
         child: greatGrandChild,
         class: class,
-        loopIndex: loopIndex
+        loopIndex: loopIndex,
+        thirdLevelListClass: thirdLevelListClass
       }) }}
 
     {% endfor %}  

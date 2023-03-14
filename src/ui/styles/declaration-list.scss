@@ -1,0 +1,53 @@
+.counter-list {
+  counter-reset: count;
+
+  >li {
+    list-style: none;
+    counter-increment: count;
+  }
+
+  >li::before {
+    content: "(" counter(count) ") ";
+    font-weight: bold;
+  }
+}
+
+.counter-list-item {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  width: 100%;
+
+  >span {
+    margin-left: 2em;
+  }
+}
+
+.lower-alpha-counter-list {
+  padding-left: 3em;
+  counter-reset: count;
+
+
+  >li {
+    list-style: none;
+    counter-increment: count;
+  }
+
+  >li::before {
+    content: "(" counter(count, lower-alpha) ") ";
+  }
+}
+
+.lower-roman-counter-list {
+  padding-left: 3em;
+  counter-reset: count;
+
+  >li {
+    list-style: none;
+    counter-increment: count;
+  }
+
+  >li::before {
+    content: "(" counter(count, lower-roman) ") ";
+  }
+}

@@ -20,7 +20,10 @@
       {{ list.render({
         type: 'unordered',
         content: element.children,
-        listItemClass: params.listItemClass
+        listItemClass: params.listItemClass,
+        firstLevelListClass: params.firstLevelListClass,
+        secondLevelListClass: params.secondLevelListClass,
+        thirdLevelListClass: params.thirdLevelListClass
       }) }}
     {% endif %}
 
@@ -28,7 +31,10 @@
       {{ list.render({
         type: 'ordered',
         content: element.children,
-        listItemClass: params.listItemClass
+        listItemClass: params.listItemClass,
+        firstLevelListClass: params.firstLevelListClass,
+        secondLevelListClass: params.secondLevelListClass,
+        thirdLevelListClass: params.thirdLevelListClass
       }) }}
     {% endif %}
 

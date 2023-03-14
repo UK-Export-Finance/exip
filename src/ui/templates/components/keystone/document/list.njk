@@ -1,16 +1,18 @@
-{% import './list-item.njk' as listItem %}
+{% import './list-item/index.njk' as listItem %}
 
 {% macro render(params) %}
 
   {% if params.type === 'ordered' %}
-    <ol class="govuk-list counter-list">
+    <ol class="govuk-list {{ params.firstLevelListClass }}">
 
       {% for child in params.content %}
 
         {{ listItem.render({
           content: child,
           loopIndex: loop.index,
-          class: params.listItemClass
+          class: params.listItemClass,
+          secondLevelListClass: params.secondLevelListClass,
+          thirdLevelListClass: params.thirdLevelListClass
         }) }}
         
       {% endfor %}
@@ -26,7 +28,9 @@
         {{ listItem.render({
           content: child,
           loopIndex: loop.index,
-          class: params.listItemClass
+          class: params.listItemClass,
+          secondLevelListClass: params.secondLevelListClass,
+          thirdLevelListClass: params.thirdLevelListClass
         }) }}
 
       {% endfor %}

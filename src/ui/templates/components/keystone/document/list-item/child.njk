@@ -5,17 +5,20 @@
   {% set child = params.child %}
   {% set class = params.class %}
   {% set loopIndex = params.loopIndex %}
+  {% set secondLevelListClass = params.secondLevelListClass %}
+  {% set thirdLevelListClass = params.thirdLevelListClass %}
 
   {% if child.type === 'ordered-list' %}
 
-    <ol type="a" class="lower-alpha-counter-list">
+    <ol class="{{ secondLevelListClass }}">
 
       {% for grandChild in child.children %}
 
         {{ grandChildListItem.render({
           child: grandChild,
           class: class,
-          loopIndex: loop.index
+          loopIndex: loop.index,
+          thirdLevelListClass:  thirdLevelListClass
         }) }}
 
       {% endfor %}

@@ -1,4 +1,4 @@
-{% import './list-item/child.njk' as childListItem %}
+{% import './child.njk' as childListItem %}
 
 {% macro render(params) %}
 
@@ -7,7 +7,9 @@
     {{ childListItem.render({
       child: child,
       class: params.class,
-      loopIndex: params.loopIndex
+      loopIndex: params.loopIndex,
+      secondLevelListClass: params.secondLevelListClass,
+      thirdLevelListClass: params.thirdLevelListClass
     }) }}
 
   {% endfor %}

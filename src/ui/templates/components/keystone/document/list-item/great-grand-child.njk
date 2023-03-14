@@ -5,10 +5,11 @@
   {% set child = params.child %}
   {% set class = params.class %}
   {% set loopIndex = params.loopIndex %}
+  {% set thirdLevelListClass = params.thirdLevelListClass %}
 
   {% if child.type === 'ordered-list' %}
 
-    <ol type="i" class="lower-roman-counter-list">
+    <ol class="{{ thirdLevelListClass }}">
 
       {% for greatGreatGrandChild in child.children %}
 
