@@ -47,12 +47,14 @@ CREATE TABLE `Application` (
   KEY `Application_eligibility_idx` (`eligibility`),
   KEY `Application_referenceNumber_idx` (`referenceNumber`),
   KEY `Application_policyAndExport_idx` (`policyAndExport`),
+	KEY `Application_exporter_idx` (`exporter`),
   KEY `Application_exporterCompany_idx` (`exporterCompany`),
   KEY `Application_exporterBusiness_idx` (`exporterBusiness`),
   KEY `Application_exporterBroker_idx` (`exporterBroker`),
 	KEY `Application_buyer_idx` (`buyer`),
-	KEY `Application_exporter_idx` (`exporter`),
+	KEY `Application_declaration_idx` (`declaration`),
 	CONSTRAINT `Application_buyer_fkey` FOREIGN KEY (`buyer`) REFERENCES `Buyer` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+	CONSTRAINT `Application_declaration_fkey` FOREIGN KEY (`declaration`) REFERENCES `Declaration` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_eligibility_fkey` FOREIGN KEY (`eligibility`) REFERENCES `Eligibility` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT `Application_exporter_fkey` FOREIGN KEY (`exporter`) REFERENCES `Exporter` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_exporterBroker_fkey` FOREIGN KEY (`exporterBroker`) REFERENCES `ExporterBroker` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -341,6 +343,26 @@ VALUES
 /*!40000 ALTER TABLE `Country` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+# Dump of table Declaration
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `Declaration`;
+
+CREATE TABLE `Declaration` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `confidentiality` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agreeToConfidentiality` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `Declaration_application_idx` (`application`),
+  KEY `Declaration_confidentiality_idx` (`confidentiality`),
+  CONSTRAINT `Declaration_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Declaration_confidentiality_fkey` FOREIGN KEY (`confidentiality`) REFERENCES `DeclarationConfidentiality` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*!40000 ALTER TABLE `Declaration` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table DeclarationConfidentiality
