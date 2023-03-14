@@ -76,6 +76,7 @@ type Application {
   exporterCompany: ExporterCompany
   exporterBroker: ExporterBroker
   buyer: Buyer
+  declaration: Declaration
 }
 
 scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
@@ -101,6 +102,7 @@ input ApplicationWhereInput {
   exporterCompany: ExporterCompanyWhereInput
   exporterBroker: ExporterBrokerWhereInput
   buyer: BuyerWhereInput
+  declaration: DeclarationWhereInput
 }
 
 input DateTimeNullableFilter {
@@ -175,6 +177,7 @@ input ApplicationUpdateInput {
   exporterCompany: ExporterCompanyRelateToOneForUpdateInput
   exporterBroker: ExporterBrokerRelateToOneForUpdateInput
   buyer: BuyerRelateToOneForUpdateInput
+  declaration: DeclarationRelateToOneForUpdateInput
 }
 
 input EligibilityRelateToOneForUpdateInput {
@@ -219,6 +222,12 @@ input BuyerRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input DeclarationRelateToOneForUpdateInput {
+  create: DeclarationCreateInput
+  connect: DeclarationWhereUniqueInput
+  disconnect: Boolean
+}
+
 input ApplicationUpdateArgs {
   where: ApplicationWhereUniqueInput!
   data: ApplicationUpdateInput!
@@ -237,6 +246,7 @@ input ApplicationCreateInput {
   exporterCompany: ExporterCompanyRelateToOneForCreateInput
   exporterBroker: ExporterBrokerRelateToOneForCreateInput
   buyer: BuyerRelateToOneForCreateInput
+  declaration: DeclarationRelateToOneForCreateInput
 }
 
 input EligibilityRelateToOneForCreateInput {
@@ -272,6 +282,11 @@ input ExporterBrokerRelateToOneForCreateInput {
 input BuyerRelateToOneForCreateInput {
   create: BuyerCreateInput
   connect: BuyerWhereUniqueInput
+}
+
+input DeclarationRelateToOneForCreateInput {
+  create: DeclarationCreateInput
+  connect: DeclarationWhereUniqueInput
 }
 
 type PolicyAndExport {
@@ -1109,6 +1124,60 @@ input EligibilityCreateInput {
   wantCoverOverMaxPeriod: Boolean
 }
 
+type Declaration {
+  id: ID!
+  application: Application
+  confidentiality: DeclarationConfidentiality
+  agreeToConfidentiality: Boolean
+}
+
+input DeclarationWhereUniqueInput {
+  id: ID
+}
+
+input DeclarationWhereInput {
+  AND: [DeclarationWhereInput!]
+  OR: [DeclarationWhereInput!]
+  NOT: [DeclarationWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  confidentiality: DeclarationConfidentialityWhereInput
+  agreeToConfidentiality: BooleanFilter
+}
+
+input DeclarationOrderByInput {
+  id: OrderDirection
+  agreeToConfidentiality: OrderDirection
+}
+
+input DeclarationUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  confidentiality: DeclarationConfidentialityRelateToOneForUpdateInput
+  agreeToConfidentiality: Boolean
+}
+
+input DeclarationConfidentialityRelateToOneForUpdateInput {
+  create: DeclarationConfidentialityCreateInput
+  connect: DeclarationConfidentialityWhereUniqueInput
+  disconnect: Boolean
+}
+
+input DeclarationUpdateArgs {
+  where: DeclarationWhereUniqueInput!
+  data: DeclarationUpdateInput!
+}
+
+input DeclarationCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  confidentiality: DeclarationConfidentialityRelateToOneForCreateInput
+  agreeToConfidentiality: Boolean
+}
+
+input DeclarationConfidentialityRelateToOneForCreateInput {
+  create: DeclarationConfidentialityCreateInput
+  connect: DeclarationConfidentialityWhereUniqueInput
+}
+
 type DeclarationConfidentiality {
   id: ID!
   version: String
@@ -1324,6 +1393,12 @@ type Mutation {
   updateEligibilities(data: [EligibilityUpdateArgs!]!): [Eligibility]
   deleteEligibility(where: EligibilityWhereUniqueInput!): Eligibility
   deleteEligibilities(where: [EligibilityWhereUniqueInput!]!): [Eligibility]
+  createDeclaration(data: DeclarationCreateInput!): Declaration
+  createDeclarations(data: [DeclarationCreateInput!]!): [Declaration]
+  updateDeclaration(where: DeclarationWhereUniqueInput!, data: DeclarationUpdateInput!): Declaration
+  updateDeclarations(data: [DeclarationUpdateArgs!]!): [Declaration]
+  deleteDeclaration(where: DeclarationWhereUniqueInput!): Declaration
+  deleteDeclarations(where: [DeclarationWhereUniqueInput!]!): [Declaration]
   createDeclarationConfidentiality(data: DeclarationConfidentialityCreateInput!): DeclarationConfidentiality
   createDeclarationConfidentialities(data: [DeclarationConfidentialityCreateInput!]!): [DeclarationConfidentiality]
   updateDeclarationConfidentiality(where: DeclarationConfidentialityWhereUniqueInput!, data: DeclarationConfidentialityUpdateInput!): DeclarationConfidentiality
@@ -1425,6 +1500,9 @@ type Query {
   eligibilities(where: EligibilityWhereInput! = {}, orderBy: [EligibilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EligibilityWhereUniqueInput): [Eligibility!]
   eligibility(where: EligibilityWhereUniqueInput!): Eligibility
   eligibilitiesCount(where: EligibilityWhereInput! = {}): Int
+  declarations(where: DeclarationWhereInput! = {}, orderBy: [DeclarationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationWhereUniqueInput): [Declaration!]
+  declaration(where: DeclarationWhereUniqueInput!): Declaration
+  declarationsCount(where: DeclarationWhereInput! = {}): Int
   declarationConfidentialities(where: DeclarationConfidentialityWhereInput! = {}, orderBy: [DeclarationConfidentialityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationConfidentialityWhereUniqueInput): [DeclarationConfidentiality!]
   declarationConfidentiality(where: DeclarationConfidentialityWhereUniqueInput!): DeclarationConfidentiality
   declarationConfidentialitiesCount(where: DeclarationConfidentialityWhereInput! = {}): Int

@@ -1,5 +1,5 @@
 import { TaskListDataTask, TaskListData } from '../../../../types';
-import { GROUP_IDS, TASK_IDS } from '../../../constants';
+import { FIELD_IDS, GROUP_IDS, TASK_IDS } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { TASKS } from '../../../content-strings';
 import { getGroupById, getAllTasksFieldsInAGroup } from '../task-helpers';
@@ -11,6 +11,10 @@ const {
   DECLARATIONS: { CONFIDENTIALITY },
   CHECK_YOUR_ANSWERS: { ELIGIBILITY },
 } = INSURANCE_ROUTES;
+
+const {
+  DECLARATIONS: { AGREE_CONFIDENTIALITY },
+} = FIELD_IDS.INSURANCE;
 
 /**
  * createSubmitApplicationTasks
@@ -25,7 +29,7 @@ const createSubmitApplicationTasks = (referenceNumber: number, otherGroups: Task
     href: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`,
     title: SUBMIT_APPLICATION.TASKS.DECLARATIONS,
     id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS,
-    fields: ['temp'],
+    fields: [AGREE_CONFIDENTIALITY, 'temp'],
     dependencies: [...getAllTasksFieldsInAGroup(initialChecksGroup), ...getAllTasksFieldsInAGroup(prepareApplicationGroup)],
   };
 

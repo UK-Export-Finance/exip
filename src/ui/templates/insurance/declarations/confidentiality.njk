@@ -71,7 +71,8 @@
           value: FIELD.OPTION.VALUE,
           attributes: {
             'data-cy': FIELD.ID + '-input'
-          }
+          },
+          checked: application.declaration[FIELD.ID]
         }
       ],
       errorMessage: validationErrors.errorList[FIELD.ID] and {

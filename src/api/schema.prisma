@@ -40,6 +40,8 @@ model Application {
   exporterBrokerId                  String?            @map("exporterBroker")
   buyer                             Buyer?             @relation("Application_buyer", fields: [buyerId], references: [id])
   buyerId                           String?            @map("buyer")
+  declaration                       Declaration?       @relation("Application_declaration", fields: [declarationId], references: [id])
+  declarationId                     String?            @map("declaration")
   from_ReferenceNumber_application  ReferenceNumber[]  @relation("ReferenceNumber_application")
   from_PolicyAndExport_application  PolicyAndExport[]  @relation("PolicyAndExport_application")
   from_Exporter_applications        Exporter[]         @relation("Exporter_applications")
@@ -48,6 +50,7 @@ model Application {
   from_ExporterCompany_application  ExporterCompany[]  @relation("ExporterCompany_application")
   from_Buyer_application            Buyer[]            @relation("Buyer_application")
   from_Eligibility_application      Eligibility[]      @relation("Eligibility_application")
+  from_Declaration_application      Declaration[]      @relation("Declaration_application")
 
   @@index([eligibilityId])
   @@index([referenceNumber])
@@ -57,6 +60,7 @@ model Application {
   @@index([exporterCompanyId])
   @@index([exporterBrokerId])
   @@index([buyerId])
+  @@index([declarationId])
 }
 
 model PolicyAndExport {
@@ -225,10 +229,24 @@ model Eligibility {
   @@index([buyerCountryId])
 }
 
+model Declaration {
+  id                           String                      @id @default(cuid())
+  application                  Application?                @relation("Declaration_application", fields: [applicationId], references: [id])
+  applicationId                String?                     @map("application")
+  confidentiality              DeclarationConfidentiality? @relation("Declaration_confidentiality", fields: [confidentialityId], references: [id])
+  confidentialityId            String?                     @map("confidentiality")
+  agreeToConfidentiality       Boolean                     @default(false)
+  from_Application_declaration Application[]               @relation("Application_declaration")
+
+  @@index([applicationId])
+  @@index([confidentialityId])
+}
+
 model DeclarationConfidentiality {
-  id      String @id @default(cuid())
-  version String @default("")
-  content Json   @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  id                               String        @id @default(cuid())
+  version                          String        @default("")
+  content                          Json          @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  from_Declaration_confidentiality Declaration[] @relation("Declaration_confidentiality")
 }
 
 model Page {
