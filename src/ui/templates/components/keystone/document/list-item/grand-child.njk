@@ -6,8 +6,6 @@
   {% set class = params.class %}
   {% set loopIndex = params.loopIndex %}
 
-  {# {% set grandChildLoopIndex = loop.index %} #}
-
   {% if child.type === 'list-item' %}
 
     {% for greatGrandChild in child.children %}

@@ -34,7 +34,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.CONFIDENTIALITY;
 
 /**
  * get
- * Render the Declarations - confidentiality
+ * Render the Declarations - confidentiality page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Dashboard page
