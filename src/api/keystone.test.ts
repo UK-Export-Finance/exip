@@ -22,7 +22,7 @@ describe('Create an Application', () => {
     application = (await context.query.Application.createOne({
       data: {},
       query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id } policyAndExport { id } exporter { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } declaration { id }',
+        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status eligibility { id } policyAndExport { id } exporter { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } declaration { id }',
     })) as Application;
   });
 
@@ -71,6 +71,14 @@ describe('Create an Application', () => {
     expect(submissionDeadlineYear).toEqual(expectedYear);
   });
 
+  test('it should have a default submission type', () => {
+    expect(application.submissionType).toEqual(APPLICATION.SUBMISSION_TYPE.MIA);
+  });
+
+  test(`it should have a status of ${APPLICATION.STATUS.DRAFT}`, () => {
+    expect(application.status).toEqual(APPLICATION.STATUS.DRAFT);
+  });
+
   test('it should have a reference number', () => {
     expect(application.referenceNumber).toBeDefined();
     expect(typeof application.referenceNumber).toEqual('number');
@@ -104,10 +112,6 @@ describe('Create an Application', () => {
   test('it should have a declaration id', () => {
     expect(application.declaration).toBeDefined();
     expect(typeof application.declaration.id).toEqual('string');
-  });
-
-  test('it should have a default submission type', () => {
-    expect(application.submissionType).toEqual(APPLICATION.SUBMISSION_TYPE.MIA);
   });
 
   test('it should have generated an eligibility entry and add the ID to the application', async () => {
