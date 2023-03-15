@@ -112,6 +112,7 @@ const mockApplication = {
     wantCoverOverMaxAmount: false,
     wantCoverOverMaxPeriod: false,
   },
+  status: 'Draft',
   exporter: mockExporter,
   policyAndExport: mockSinglePolicyAndExport,
   exporterCompany: mockExporterCompany,

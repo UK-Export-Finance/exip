@@ -35,7 +35,7 @@ describe('controllers/insurance/declarations/confidentiality/save-and-back', () 
   });
 
   describe('when the form has data', () => {
-    it('should call mapAndSave.policyAndExport with application and req.body', async () => {
+    it('should call save.declaration with application and req.body', async () => {
       await post(req, res);
 
       expect(save.declaration).toHaveBeenCalledTimes(1);

@@ -43,6 +43,7 @@ CREATE TABLE `Application` (
   `exporterBroker` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`exporterCompany` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`buyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+	`status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	`declaration` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Application_eligibility_idx` (`eligibility`),

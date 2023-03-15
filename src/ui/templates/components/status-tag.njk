@@ -3,7 +3,6 @@
 {% macro render(params) %}
 
   {% set status = params.status %}
-  {% set href = params.href %}
   {% set dataCy = params.dataCy %}
  
   {% set classes %}
@@ -13,7 +12,7 @@
     {% set classes = "govuk-tag--grey" %}
   {% endif %}
 
-  {% if status === "In progress" %}
+  {% if status === "Draft" or status === "In progress" %}
     {% set classes = "govuk-tag--blue" %}
   {% endif %}
 

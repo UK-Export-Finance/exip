@@ -1,8 +1,9 @@
-import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
-import { Request, Response } from '../../../../types';
+import { PAGES } from '../../../content-strings';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import api from '../../../api';
+import mapApplications from '../../../helpers/mappings/map-applications';
+import { Request, Response } from '../../../../types';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.DASHBOARD;
 
@@ -27,7 +28,7 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DASHBOARD,
         BACK_LINK: req.headers.referer,
       }),
-      applications,
+      applications: mapApplications(applications),
       ROUTES: {
         INSURANCE_ROOT,
         ALL_SECTIONS,

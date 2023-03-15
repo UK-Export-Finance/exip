@@ -1,5 +1,6 @@
-import { GBP_CURRENCY_CODE, PRODUCT } from '../../../constants';
+import { GBP_CURRENCY_CODE, PRODUCT, ROUTES } from '../../../constants';
 import { LINKS } from '../../links';
+import { BUTTONS } from '../../buttons';
 import ELIGIBILITY from './eligibility';
 import ACCOUNT from './account';
 import POLICY_AND_EXPORTS from './policy-and-exports';
@@ -13,6 +14,19 @@ const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, GBP_CUR
 
 const DASHBOARD = {
   PAGE_TITLE: 'Dashboard',
+  TABLE_HEADERS: {
+    STATUS: 'Status',
+    LAST_UPDATED: 'Last updated',
+    REFERENCE_NUMBER: 'Reference number',
+    BUYER_LOCATION: 'Buyer location',
+    BUYER_NAME: 'Buyer name',
+    INSURED_FOR: 'Insured for',
+  },
+  NO_APPLICATIONS: 'You have no applications currently.',
+  START_NEW_APPLICATION: {
+    TEXT: BUTTONS.START_NEW_APPLICATION,
+    HREF: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+  },
 };
 
 const ALL_SECTIONS = {
