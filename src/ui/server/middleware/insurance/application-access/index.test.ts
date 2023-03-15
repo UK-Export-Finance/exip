@@ -84,6 +84,24 @@ describe('middleware/insurance/application-access', () => {
       });
     });
 
+    describe('when res.locals.application does not have an exporter ID', () => {
+      beforeEach(() => {
+        res.locals.application = {
+          ...mockApplication,
+          // @ts-ignore
+          exporter: {},
+        };
+
+        next = nextSpy;
+      });
+
+      it(`should redirect to ${NO_ACCESS_TO_APPLICATION}`, async () => {
+        await applicationAccessMiddleware(req, res, next);
+
+        expect(res.redirect).toHaveBeenCalledWith(NO_ACCESS_TO_APPLICATION);
+      });
+    });
+
     describe('when there is no req.session.accountID or res.locals.application', () => {
       beforeEach(() => {
         delete req.session.accountId;
