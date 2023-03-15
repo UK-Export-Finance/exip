@@ -1,5 +1,5 @@
 import dashboardPage from '../../../pages/insurance/dashboard';
-import { DEFAULT, PAGES } from '../../../../../content-strings';
+import { DEFAULT, PAGES, BUTTONS } from '../../../../../content-strings';
 import { APPLICATION, ROUTES } from '../../../../../constants';
 import { formatDate } from '../../../helpers/date';
 
@@ -9,6 +9,7 @@ const {
   ROOT,
   DASHBOARD,
   ALL_SECTIONS,
+  ELIGIBILITY,
 } = ROUTES.INSURANCE;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DASHBOARD;
@@ -115,15 +116,34 @@ context('Insurance - Dashboard - new application', () => {
         cy.checkText(cell, expected);
       });
 
-      it(`should render ${TABLE_HEADERS.REFERENCE_NUMBER} link to the application`, () => {
-        const element = table.body.row(referenceNumber).referenceNumber();
+      describe(`${TABLE_HEADERS.REFERENCE_NUMBER}`, () => {
+        let expectedUrl;
 
-        const expected = {
-          href: `${ROOT}/${referenceNumber}${ALL_SECTIONS}`,
-          text: referenceNumber,
-        };
+        beforeEach(() => {
+          cy.navigateToUrl(url);
 
-        cy.checkLink(element, expected.href, expected.text);
+          expectedUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        });
+
+        it('should render a link to the application', () => {
+          const element = table.body.row(referenceNumber).referenceNumber();
+
+          const expected = {
+            href: expectedUrl,
+            text: referenceNumber,
+          };
+
+          cy.checkLink(element, expected.href, expected.text);
+        });
+
+        it('should redirect to the application', () => {
+          const element = table.body.row(referenceNumber).referenceNumber();
+
+          element.click();
+
+          const expected = `${Cypress.config('baseUrl')}${expectedUrl}`;
+          cy.url().should('eq', expected);
+        });
       });
 
       it(`should render empty ${TABLE_HEADERS.BUYER_LOCATION} cell`, () => {
@@ -142,6 +162,35 @@ context('Insurance - Dashboard - new application', () => {
         const cell = table.body.row(referenceNumber).insuredFor();
 
         cy.checkText(cell, DEFAULT.EMPTY);
+      });
+    });
+
+    describe('start new application button', () => {
+      const expectedUrl = ELIGIBILITY.BUYER_COUNTRY;
+
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it('should render', () => {
+        const element = dashboardPage.startNewApplication();
+
+        const expected = {
+          href: expectedUrl,
+          text: BUTTONS.START_NEW_APPLICATION,
+        };
+
+        cy.checkLink(element, expected.href, expected.text);
+      });
+
+      it(`should redirect to ${ROOT}${ELIGIBILITY.BUYER_COUNTRY}`, () => {
+        const element = dashboardPage.startNewApplication();
+
+        element.click();
+
+        const expected = `${Cypress.config('baseUrl')}${expectedUrl}`;
+
+        cy.url().should('eq', expected);
       });
     });
   });

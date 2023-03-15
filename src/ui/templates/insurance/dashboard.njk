@@ -27,6 +27,8 @@
       allSectionsRoute: ROUTES.ALL_SECTIONS
     }) }}
 
+    <a class="govuk-button govuk-button--secondary" href="{{ CONTENT_STRINGS.START_NEW_APPLICATION.HREF }}" data-cy="start-new-application">{{ CONTENT_STRINGS.START_NEW_APPLICATION.TEXT }}</a>
+
     {% else %}
 
     <p class="govuk-body" data-cy="no-applications">{{ CONTENT_STRINGS.NO_APPLICATIONS }}</p>
