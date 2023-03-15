@@ -4,11 +4,6 @@ import formatDate from '../../date/format-date';
 import mapInsuredFor from './map-insured-for';
 import { mockApplication, mockApplications } from '../../../test-mocks';
 
-// const mockApplications = [
-//   { ...mockApplication, id: '1' },
-//   { ...mockApplication, id: '2' },
-// ];
-
 describe('server/helpers/mappings/map-applications', () => {
   describe('mapApplication', () => {
     it('should return a mapped application', () => {
