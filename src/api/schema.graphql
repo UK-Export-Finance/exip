@@ -70,6 +70,7 @@ type Application {
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
+  status: String
   policyAndExport: PolicyAndExport
   exporter: Exporter
   exporterBusiness: ExporterBusiness
@@ -96,6 +97,7 @@ input ApplicationWhereInput {
   referenceNumber: IntNullableFilter
   submissionDeadline: DateTimeNullableFilter
   submissionType: StringNullableFilter
+  status: StringFilter
   policyAndExport: PolicyAndExportWhereInput
   exporter: ExporterWhereInput
   exporterBusiness: ExporterBusinessWhereInput
@@ -155,6 +157,34 @@ input NestedStringNullableFilter {
   not: NestedStringNullableFilter
 }
 
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input NestedStringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
 input ApplicationOrderByInput {
   id: OrderDirection
   createdAt: OrderDirection
@@ -162,6 +192,7 @@ input ApplicationOrderByInput {
   referenceNumber: OrderDirection
   submissionDeadline: OrderDirection
   submissionType: OrderDirection
+  status: OrderDirection
 }
 
 input ApplicationUpdateInput {
@@ -171,6 +202,7 @@ input ApplicationUpdateInput {
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
+  status: String
   policyAndExport: PolicyAndExportRelateToOneForUpdateInput
   exporter: ExporterRelateToOneForUpdateInput
   exporterBusiness: ExporterBusinessRelateToOneForUpdateInput
@@ -240,6 +272,7 @@ input ApplicationCreateInput {
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
+  status: String
   policyAndExport: PolicyAndExportRelateToOneForCreateInput
   exporter: ExporterRelateToOneForCreateInput
   exporterBusiness: ExporterBusinessRelateToOneForCreateInput
@@ -326,34 +359,6 @@ input PolicyAndExportWhereInput {
   maximumBuyerWillOwe: IntNullableFilter
   goodsOrServicesDescription: StringFilter
   finalDestinationCountryCode: StringFilter
-}
-
-input StringFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: NestedStringFilter
-}
-
-input NestedStringFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: NestedStringFilter
 }
 
 input PolicyAndExportOrderByInput {

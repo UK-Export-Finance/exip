@@ -54,6 +54,8 @@ Cypress.Commands.add('createAccount', require('./insurance/account/create-accoun
 
 Cypress.Commands.add('accountAddAndGetOTP', require('./insurance/account/add-and-get-OTP'));
 
+Cypress.Commands.add('completeSignInAndGoToDashboard', require('./insurance/account/complete-sign-in-and-go-to-dashboard'));
+
 Cypress.Commands.add('completeSignInAndGoToApplication', require('./insurance/account/complete-sign-in-and-go-to-application'));
 
 Cypress.Commands.add('signInAndGoToUrl', require('./insurance/account/sign-in-and-go-to-url'));

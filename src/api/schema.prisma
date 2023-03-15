@@ -28,6 +28,7 @@ model Application {
   referenceNumber                   Int?
   submissionDeadline                DateTime?
   submissionType                    String?            @default("Manual Inclusion Application")
+  status                            String             @default("")
   policyAndExport                   PolicyAndExport?   @relation("Application_policyAndExport", fields: [policyAndExportId], references: [id])
   policyAndExportId                 String?            @map("policyAndExport")
   exporter                          Exporter?          @relation("Application_exporter", fields: [exporterId], references: [id])

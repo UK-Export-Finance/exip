@@ -64,6 +64,9 @@ var APPLICATION = {
       MINIMUM: 1,
       MAXIMUM: 499999
     }
+  },
+  STATUS: {
+    DRAFT: "Draft"
   }
 };
 var FIELD_IDS = {
@@ -231,6 +234,9 @@ var lists = {
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
       }),
+      status: (0, import_fields.text)({
+        validation: { isRequired: true }
+      }),
       policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
       exporter: (0, import_fields.relationship)({
         ref: "Exporter",
@@ -322,6 +328,7 @@ var lists = {
             modifiedData.updatedAt = now;
             modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
             modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
+            modifiedData.status = APPLICATION.STATUS.DRAFT;
             return modifiedData;
           } catch (err) {
             console.error("Error adding default data to a new application. ", { err });

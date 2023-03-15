@@ -65,6 +65,7 @@ interface Application {
   updatedAt: string;
   submissionDeadline: string;
   submissionType: string;
+  status: string;
   eligibility: ApplicationEligibility;
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;

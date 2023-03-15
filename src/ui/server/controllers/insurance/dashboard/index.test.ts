@@ -4,6 +4,7 @@ import { ROUTES, TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import { Request, Response } from '../../../../types';
 import api from '../../../api';
+import mapApplications from '../../../helpers/mappings/map-applications';
 import { mockReq, mockRes, mockApplications } from '../../../test-mocks';
 
 const {
@@ -45,7 +46,7 @@ describe('controllers/insurance/dashboard', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DASHBOARD,
           BACK_LINK: req.headers.referer,
         }),
-        applications: mockApplications,
+        applications: mapApplications(mockApplications),
         ROUTES: {
           INSURANCE_ROOT,
           ALL_SECTIONS,

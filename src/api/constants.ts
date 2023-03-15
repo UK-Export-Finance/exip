@@ -24,6 +24,9 @@ export const APPLICATION = {
       MAXIMUM: 499999,
     },
   },
+  STATUS: {
+    DRAFT: 'Draft',
+  },
 };
 
 export const FIELD_IDS = {

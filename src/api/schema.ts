@@ -31,6 +31,9 @@ export const lists = {
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA,
       }),
+      status: text({
+        validation: { isRequired: true },
+      }),
       policyAndExport: relationship({ ref: 'PolicyAndExport' }),
       exporter: relationship({
         ref: 'Exporter',
@@ -153,6 +156,9 @@ export const lists = {
 
             // add default submission type
             modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
+
+            // add default status
+            modifiedData.status = APPLICATION.STATUS.DRAFT;
 
             return modifiedData;
           } catch (err) {
