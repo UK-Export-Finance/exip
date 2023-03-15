@@ -3,6 +3,12 @@ import formatDate from '../../date/format-date';
 import mapInsuredFor from './map-insured-for';
 import { Application } from '../../../../types';
 
+/**
+ * mapApplication
+ * Map an application for display in the dashboard
+ * @param {Object} Application
+ * @returns {Object} Mapped application
+ */
 export const mapApplication = (application: Application) => {
   const { status, updatedAt, referenceNumber, buyer } = application;
 
