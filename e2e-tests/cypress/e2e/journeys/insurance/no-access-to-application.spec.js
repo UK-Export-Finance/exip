@@ -28,7 +28,7 @@ context('Insurance - no access to application page', () => {
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe('when trying to access an application created by another user', () => {

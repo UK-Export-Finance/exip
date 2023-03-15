@@ -14,10 +14,13 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 context('Insurance - Your business - Broker Page - As an Exporter I want to confirm that I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my export insurance', () => {
+  let referenceNumber;
   let checkYourAnswersUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
@@ -37,7 +40,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe('when the yes radio is selected and all required fields are entered', () => {

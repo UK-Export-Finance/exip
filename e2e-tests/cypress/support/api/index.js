@@ -48,6 +48,23 @@ const queryStrings = {
       }
     }
   `,
+  getApplicationByReferenceNumber: (referenceNumber) => `
+    {
+      applications(
+        orderBy: { updatedAt: desc }
+        where: { referenceNumber: { equals: ${referenceNumber} } }
+        take: 1
+      ) {
+        id
+      }
+    }`,
+  deleteApplicationsById: () => gql`
+    mutation DeleteApplications($where: [ApplicationWhereUniqueInput!]!)  {
+      deleteApplications(where: $where) {
+        id
+      }
+    }
+  `,
   declarations: {
     getLatestConfidentiality: () => gql`
       query DeclarationConfidentialities {
@@ -139,7 +156,7 @@ const updateExporter = async (id, updateObj) => {
 
 /**
  * deleteExportersById
- * Delte exporters by ID
+ * Delete exporters by ID
  * @param {String} Account ID
  * @returns {String} Account ID
  */
@@ -179,6 +196,57 @@ const addAndGetOTP = async (email) => {
   }
 };
 
+/**
+ * getApplicationByReferenceNumber
+ * Get's an application by reference number from the API
+ * @param {Number} Application reference number
+ * @returns {Object} Application
+ */
+const getApplicationByReferenceNumber = async (referenceNumber) => {
+  try {
+    const baseUrl = Cypress.config('apiUrl');
+    const url = `${baseUrl}?query=${queryStrings.getApplicationByReferenceNumber(referenceNumber)}`;
+
+    const response = await cy.request({
+      headers: {
+        'content-type': 'application/json',
+      },
+      url,
+    });
+
+    if (!response.body || !response.body.data) {
+      throw new Error('Getting application by reference number ', { response });
+    }
+
+    return response;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Getting application by reference number ', { err });
+  }
+};
+
+/**
+ * deleteApplicationsById
+ * Delete applications by ID
+ * @param {String} Application ID
+ * @returns {Object}
+ */
+const deleteApplicationsById = async (id) => {
+  try {
+    const responseBody = await apollo.query({
+      query: queryStrings.deleteApplicationsById(),
+      variables: { where: { id } },
+    }).then((response) => response.data.deleteApplications);
+
+    return responseBody.id;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Deleting applications by ID ', { err });
+  }
+};
+
 const declarations = {
   /**
    * getLatestConfidentiality
@@ -206,6 +274,8 @@ const api = {
   updateExporter,
   deleteExportersById,
   addAndGetOTP,
+  getApplicationByReferenceNumber,
+  deleteApplicationsById,
   declarations,
 };
 

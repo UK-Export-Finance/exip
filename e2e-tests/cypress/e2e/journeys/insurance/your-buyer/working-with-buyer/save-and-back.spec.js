@@ -48,7 +48,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe('when submitting an empty form', () => {

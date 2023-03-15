@@ -1,5 +1,6 @@
 import { submitButton } from '../../../../../../pages/shared';
 import { enterCodePage } from '../../../../../../pages/insurance/account/sign-in';
+import dashboardPage from '../../../../../../pages/insurance/dashboard';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../../constants/routes/insurance';
@@ -50,7 +51,11 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
   });
 
   after(() => {
-    cy.deleteAccount();
+    dashboardPage.table.body.lastRow.referenceNumber().click();
+
+    cy.getReferenceNumber.then((referenceNumber) => {
+      cy.deleteAccountAndApplication(referenceNumber);
+    });
   });
 
   it('should render a validation error when submitting an empty form', () => {

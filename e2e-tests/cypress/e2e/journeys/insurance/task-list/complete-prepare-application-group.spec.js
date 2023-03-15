@@ -9,8 +9,12 @@ const { ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
 const { STATUS: { NOT_STARTED_YET } } = TASKS;
 
 context('Insurance - Task list - complete `prepare application` group', () => {
+  let referenceNumber;
+
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', url);
@@ -18,7 +22,7 @@ context('Insurance - Task list - complete `prepare application` group', () => {
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe('after completing all tasks in the `prepare application` group', () => {

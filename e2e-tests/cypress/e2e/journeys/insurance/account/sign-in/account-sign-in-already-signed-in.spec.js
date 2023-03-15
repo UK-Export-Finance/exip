@@ -10,10 +10,13 @@ const {
 } = ROUTES;
 
 context('Insurance - Account - Sign in - Already signed in', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', url);
@@ -25,7 +28,7 @@ context('Insurance - Account - Sign in - Already signed in', () => {
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it(`should redirect to ${DASHBOARD} when visiting ${SIGN_IN_ROOT}`, () => {

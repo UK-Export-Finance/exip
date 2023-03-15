@@ -1,4 +1,5 @@
 import { enterCodePage } from '../../../../pages/insurance/account/sign-in';
+import dashboardPage from '../../../../pages/insurance/dashboard';
 import accountFormFields from '../../../../partials/insurance/accountFormFields';
 import { submitButton } from '../../../../pages/shared';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
@@ -50,7 +51,11 @@ context('Insurance - Account - Sign in - I want to enter the new security code s
   });
 
   after(() => {
-    cy.deleteAccount();
+    dashboardPage.table.body.lastRow.referenceNumber().click();
+
+    cy.getReferenceNumber.then((referenceNumber) => {
+      cy.deleteAccountAndApplication(referenceNumber);
+    });
   });
 
   describe('when submitting a valid security code', () => {

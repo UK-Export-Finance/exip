@@ -64,7 +64,7 @@ context('Insurance - Your business - Change your answers - Company details- As a
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe(COMPANY_NUMBER, () => {
