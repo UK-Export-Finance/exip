@@ -12,7 +12,7 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
 
   const flattened = {
     ...eligibility,
-    buyerCountry: application.eligibility.buyerCountry.isoCode,
+    buyerCountry: application.eligibility?.buyerCountry?.isoCode,
     ...policyAndExport,
     ...exporterCompany,
     ...exporterBusiness,
