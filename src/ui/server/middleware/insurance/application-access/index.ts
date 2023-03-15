@@ -29,11 +29,11 @@ export const applicationAccessMiddleware = async (req: Request, res: Response, n
    * Otherwise, redirect to the "no access" page.
    */
   if (req.session.user && res.locals.application) {
-    const { id } = req.session.user;
+    const { id: userId } = req.session.user;
 
     const { exporter } = res.locals.application;
 
-    if (exporter.id === id) {
+    if (exporter && exporter.id === userId) {
       return next();
     }
 
