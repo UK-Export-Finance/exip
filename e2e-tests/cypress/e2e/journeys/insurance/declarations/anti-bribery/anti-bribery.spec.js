@@ -7,7 +7,7 @@ import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 import api from '../../../../../support/api';
-import mapKeystoneDocument from '../../../../../support/map-keystone-document';
+import flattenKeystoneDocument from '../../../../../support/flatten-keystone-document';
 
 const { taskList } = partials.insurancePartials;
 
@@ -87,7 +87,7 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
 
       before(() => {
         api.declarations.getLatestAntiBribery().then((data) => {
-          content = mapKeystoneDocument(data.content.document);
+          content = flattenKeystoneDocument(data.content.document);
         });
       });
 

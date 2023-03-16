@@ -14,7 +14,7 @@ import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import api from '../../../../../support/api';
-import mapKeystoneDocument from '../../../../../support/map-keystone-document';
+import flattenKeystoneDocument from '../../../../../support/flatten-keystone-document';
 
 const { taskList } = partials.insurancePartials;
 
@@ -91,7 +91,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
 
       before(() => {
         api.declarations.getLatestConfidentiality().then((data) => {
-          content = mapKeystoneDocument(data.content.document);
+          content = flattenKeystoneDocument(data.content.document);
         });
       });
 
