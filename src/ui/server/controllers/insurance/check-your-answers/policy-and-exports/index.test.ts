@@ -13,7 +13,7 @@ const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
     INSURANCE_ROOT,
-    CHECK_YOUR_ANSWERS: { YOUR_BUSINESS },
+    CHECK_YOUR_ANSWERS: { YOUR_BUSINESS, TYPE_OF_POLICY_SAVE_AND_BACK },
   },
 } = ROUTES;
 
@@ -58,6 +58,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
           BACK_LINK: req.headers.referer,
         }),
         SUMMARY_LIST: summaryList,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TYPE_OF_POLICY_SAVE_AND_BACK}`,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

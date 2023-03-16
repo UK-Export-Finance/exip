@@ -12,7 +12,7 @@ const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
     INSURANCE_ROOT,
-    CHECK_YOUR_ANSWERS: { YOUR_BUSINESS },
+    CHECK_YOUR_ANSWERS: { YOUR_BUSINESS, TYPE_OF_POLICY_SAVE_AND_BACK },
   },
 } = ROUTES;
 
@@ -49,6 +49,7 @@ export const get = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       SUMMARY_LIST: summaryList,
+      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_SAVE_AND_BACK}`,
     });
   } catch (err) {
     console.error('Error getting check your answers - policy and exports', { err });

@@ -5,6 +5,7 @@ import {
   get as getcheckYourAnswersPolicyAndExports,
   post as postcheckYourAnswersPolicyAndExports,
 } from '../../../controllers/insurance/check-your-answers/policy-and-exports';
+import { post as postcheckYourAnswersPolicyAndExportsSaveAndBack } from '../../../controllers/insurance/check-your-answers/policy-and-exports/save-and-back';
 
 // @ts-ignore
 const insuranceCheckYourAnswersRouter = express.Router();
@@ -14,5 +15,6 @@ insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.ELIG
 
 insuranceCheckYourAnswersRouter.get(`/:referenceNumber${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, getcheckYourAnswersPolicyAndExports);
 insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, postcheckYourAnswersPolicyAndExports);
+insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY_SAVE_AND_BACK}`, postcheckYourAnswersPolicyAndExportsSaveAndBack);
 
 export default insuranceCheckYourAnswersRouter;

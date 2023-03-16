@@ -62,6 +62,7 @@ context('Insurance - Check your answers - Policy and exports - I want to confirm
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
       backLink: `${INSURANCE_ROOT}/${referenceNumber}${ELIGIBILITY}`,
+      submitButtonCopy: BUTTONS.CONFIRM_AND_CONTINUE,
     });
   });
 
@@ -83,7 +84,7 @@ context('Insurance - Check your answers - Policy and exports - I want to confirm
       cy.checkText(submitButton(), BUTTONS.CONFIRM_AND_CONTINUE);
 
       saveAndBackButton().should('exist');
-      cy.checkText(saveAndBackButton(), BUTTONS.CHANGE_ANSWERS_START_NEW_APPLICATION);
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
 
     describe('form submission', () => {
@@ -102,7 +103,7 @@ context('Insurance - Check your answers - Policy and exports - I want to confirm
 
           saveAndBackButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${ALL_SECTIONS}`;
+          const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
           cy.url().should('eq', expectedUrl);
         });
       });
