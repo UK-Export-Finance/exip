@@ -2,16 +2,17 @@ import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { eligibilitySummaryList } from '../../../../helpers/summary-lists/eligibility';
+import { policyAndExportSummaryList } from '../../../../helpers/summary-lists/policy-and-export';
+import isPopulatedArray from '../../../../helpers/is-populated-array';
+import api from '../../../../api';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
-    START,
     INSURANCE_ROOT,
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
+    CHECK_YOUR_ANSWERS: { YOUR_BUSINESS },
   },
 } = ROUTES;
 
@@ -22,7 +23,7 @@ const {
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} check your answers eligibility page
  */
-export const get = (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
 
@@ -30,20 +31,27 @@ export const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const summaryList = eligibilitySummaryList(application.eligibility);
+    const { referenceNumber } = application;
+
+    const countries = await api.keystone.countries.getAll();
+    const currencies = await api.external.getCurrencies();
+
+    if (!isPopulatedArray(countries) || !isPopulatedArray(currencies)) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+    const checkAndChange = true;
+
+    const summaryList = policyAndExportSummaryList(application.policyAndExport, referenceNumber, countries, currencies, checkAndChange);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY,
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.POLICY_AND_EXPORTS,
         BACK_LINK: req.headers.referer,
       }),
-      START_NEW_APPLICATION: START,
-      renderNotificationBanner: true,
-      eligibility: true,
       SUMMARY_LIST: summaryList,
     });
   } catch (err) {
-    console.error('Error getting check your answers - eligibility', { err });
+    console.error('Error getting check your answers - type of policy', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };
@@ -65,9 +73,9 @@ export const post = (req: Request, res: Response) => {
 
     const { referenceNumber } = req.params;
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`);
   } catch (err) {
-    console.error('Error posting check your answers - eligibility', { err });
+    console.error('Error posting check your answers - type of policy', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };

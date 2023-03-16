@@ -16,3 +16,8 @@ export const ELIGIBILITY = {
   },
   CHANGE_ANSWERS: 'Change answers and start new application',
 };
+
+export const POLICY_AND_EXPORTS = {
+  ...SHARED,
+  PAGE_TITLE: 'Type of policy and exports',
+};

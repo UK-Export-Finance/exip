@@ -16,25 +16,32 @@ const {
  * generateFields
  * Create all fields for the insurance - Type of policy govukSummaryList
  * @param {Object} All submitted policy and export data
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} All policy and export values in an object structure for GOVUK summary list structure
  */
-const generateFields = (answers: ApplicationPolicyAndExport, referenceNumber: number, countries: Array<Country>, currencies: Array<Currency>) => {
+const generateFields = (
+  answers: ApplicationPolicyAndExport,
+  referenceNumber: number,
+  countries: Array<Country>,
+  currencies: Array<Currency>,
+  checkAndChange: boolean,
+) => {
   let fields = [] as Array<SummaryListItemData>;
 
-  fields = generatePolicyAndDateFields(answers, referenceNumber);
+  fields = generatePolicyAndDateFields(answers, referenceNumber, checkAndChange);
 
   if (isSinglePolicyType(answers[POLICY_TYPE])) {
-    fields = [...fields, ...generateSingleContractPolicyFields(answers, referenceNumber)];
+    fields = [...fields, ...generateSingleContractPolicyFields(answers, referenceNumber, checkAndChange)];
   }
 
   if (isMultiPolicyType(answers[POLICY_TYPE])) {
-    fields = [...fields, ...generateMultipleContractPolicyFields(answers, referenceNumber)];
+    fields = [...fields, ...generateMultipleContractPolicyFields(answers, referenceNumber, checkAndChange)];
   }
 
   fields = [
     ...fields,
-    ...generateCreditPeriodAndCurrencyFields(answers, referenceNumber, currencies),
-    ...generateAboutGoodsOrServicesFields(answers, referenceNumber, countries),
+    ...generateCreditPeriodAndCurrencyFields(answers, referenceNumber, currencies, checkAndChange),
+    ...generateAboutGoodsOrServicesFields(answers, referenceNumber, countries, checkAndChange),
   ];
 
   return fields;
@@ -44,10 +51,17 @@ const generateFields = (answers: ApplicationPolicyAndExport, referenceNumber: nu
  * policyAndExportSummaryList
  * Create multiple groups with govukSummaryList data structure
  * @param {Object} All answers/submitted data in a simple object.text structure
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section.  Default as false
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
-const policyAndExportSummaryList = (answers: ApplicationPolicyAndExport, referenceNumber: number, countries: Array<Country>, currencies: Array<Currency>) => {
-  const fields = generateFields(answers, referenceNumber, countries, currencies);
+const policyAndExportSummaryList = (
+  answers: ApplicationPolicyAndExport,
+  referenceNumber: number,
+  countries: Array<Country>,
+  currencies: Array<Currency>,
+  checkAndChange = false,
+) => {
+  const fields = generateFields(answers, referenceNumber, countries, currencies, checkAndChange);
 
   const summaryList = generateSummaryListRows(fields);
 

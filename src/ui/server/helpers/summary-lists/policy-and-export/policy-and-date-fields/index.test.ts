@@ -27,9 +27,10 @@ describe('server/helpers/summary-lists/policy-and-export/policy-and-date-fields'
   const { referenceNumber } = mockApplication;
 
   const mockAnswers = mockApplication.policyAndExport;
+  const checkAndChange = false;
 
   it('should return fields and values from the submitted data/answers', () => {
-    const result = generatePolicyAndDateFields(mockAnswers, referenceNumber);
+    const result = generatePolicyAndDateFields(mockAnswers, referenceNumber, checkAndChange);
 
     const expected = [
       fieldGroupItem({
@@ -41,7 +42,7 @@ describe('server/helpers/summary-lists/policy-and-export/policy-and-date-fields'
       fieldGroupItem(
         {
           field: getFieldById(FIELDS.CONTRACT_POLICY, REQUESTED_START_DATE),
-          ...changeLink(mockAnswers[POLICY_TYPE], referenceNumber, REQUESTED_START_DATE),
+          ...changeLink(mockAnswers[POLICY_TYPE], referenceNumber, REQUESTED_START_DATE, checkAndChange),
         },
         formatDate(mockAnswers[REQUESTED_START_DATE]),
       ),
