@@ -167,11 +167,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
       it(`should redirect to ${ANTI_BRIBERY}`, () => {
         cy.navigateToUrl(url);
 
-        const field = confidentialityPage[FIELD_ID];
-
-        field.input().click();
-
-        submitButton().click();
+        cy.completeAndSubmitDeclarationConfidentiality();
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY}`;
 
@@ -182,13 +178,11 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
         it('should have the submitted value', () => {
           cy.navigateToUrl(url);
 
-          const field = confidentialityPage[FIELD_ID];
-
-          field.input().click();
-
-          submitButton().click();
+          cy.completeAndSubmitDeclarationConfidentiality();
 
           cy.navigateToUrl(url);
+
+          const field = confidentialityPage[FIELD_ID];
 
           field.input().should('be.checked');
         });

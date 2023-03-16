@@ -34,10 +34,10 @@ export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.CONFIDENTIALITY;
 
 /**
  * get
- * Render the Declarations - confidentiality page
+ * Render the Declarations - Confidentiality page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Dashboard page
+ * @returns {Express.Response.render} Declarations - Confidentiality page
  */
 export const get = async (req: Request, res: Response) => {
   const { application } = res.locals;
@@ -70,7 +70,7 @@ export const get = async (req: Request, res: Response) => {
 
 /**
  * post
- * Check Declarations - confidentiality validation errors and if successful, redirect to the next part of the flow.
+ * Check Declarations - Confidentiality validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -115,7 +115,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY.ROOT}`);
   } catch (err) {
     console.error('Error updating application - declarations - confidentiality ', { err });
 

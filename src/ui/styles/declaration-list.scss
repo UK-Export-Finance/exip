@@ -1,13 +1,18 @@
 .counter-list {
   counter-reset: count;
 
-  >li {
+  > li {
     list-style: none;
     counter-increment: count;
   }
 
-  >li::before {
+  > li::before {
     content: "(" counter(count) ") ";
+  }
+}
+
+.counter-list--bold {
+  >li::before {
     font-weight: bold;
   }
 }
@@ -17,7 +22,7 @@
   flex-direction: row;
   width: 100%;
 
-  >span {
+  > span {
     margin-left: 2em;
   }
 }
@@ -27,7 +32,7 @@
   counter-reset: count;
 
 
-  >li {
+  > li {
     list-style: none;
     counter-increment: count;
   }
@@ -41,7 +46,7 @@
   padding-left: 3em;
   counter-reset: count;
 
-  >li {
+  > li {
     list-style: none;
     counter-increment: count;
   }

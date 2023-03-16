@@ -236,11 +236,15 @@ model Declaration {
   applicationId                String?                     @map("application")
   confidentiality              DeclarationConfidentiality? @relation("Declaration_confidentiality", fields: [confidentialityId], references: [id])
   confidentialityId            String?                     @map("confidentiality")
+  antiBribery                  DeclarationAntiBribery?     @relation("Declaration_antiBribery", fields: [antiBriberyId], references: [id])
+  antiBriberyId                String?                     @map("antiBribery")
   agreeToConfidentiality       Boolean                     @default(false)
+  agreeToAntiBribery           Boolean                     @default(false)
   from_Application_declaration Application[]               @relation("Application_declaration")
 
   @@index([applicationId])
   @@index([confidentialityId])
+  @@index([antiBriberyId])
 }
 
 model DeclarationConfidentiality {
@@ -248,6 +252,13 @@ model DeclarationConfidentiality {
   version                          String        @default("")
   content                          Json          @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   from_Declaration_confidentiality Declaration[] @relation("Declaration_confidentiality")
+}
+
+model DeclarationAntiBribery {
+  id                           String        @id @default(cuid())
+  version                      String        @default("")
+  content                      Json          @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  from_Declaration_antiBribery Declaration[] @relation("Declaration_antiBribery")
 }
 
 model Page {
