@@ -48,20 +48,10 @@ const queryStrings = {
       }
     }
   `,
-  getApplicationByReferenceNumber: (referenceNumber) => `
-    {
-      applications(
-        orderBy: { updatedAt: desc }
-        where: { referenceNumber: { equals: ${referenceNumber} } }
-        take: 1
-      ) {
-        id
-      }
-    }`,
-  deleteApplicationsById: () => gql`
-    mutation DeleteApplications($where: [ApplicationWhereUniqueInput!]!)  {
-      deleteApplications(where: $where) {
-        id
+  deleteApplicationByReferenceNumber: () => gql`
+    mutation DeleteApplicationByReferenceNumber($referenceNumber: Int!)  {
+      deleteApplicationByReferenceNumber(referenceNumber: $referenceNumber) {
+        success
       }
     }
   `,
@@ -227,19 +217,19 @@ const getApplicationByReferenceNumber = async (referenceNumber) => {
 };
 
 /**
- * deleteApplicationsById
- * Delete applications by ID
- * @param {String} Application ID
+ * deleteApplicationByReferenceNumber
+ * Delete applications by Application reference number
+ * @param {Number} Application reference number
  * @returns {Object}
  */
-const deleteApplicationsById = async (id) => {
+const deleteApplicationByReferenceNumber = async (referenceNumber) => {
   try {
     const responseBody = await apollo.query({
-      query: queryStrings.deleteApplicationsById(),
-      variables: { where: { id } },
-    }).then((response) => response.data.deleteApplications);
+      query: queryStrings.deleteApplicationByReferenceNumber(),
+      variables: { referenceNumber },
+    }).then((response) => response.data);
 
-    return responseBody.id;
+    return responseBody;
   } catch (err) {
     console.error(err);
 
@@ -275,7 +265,7 @@ const api = {
   deleteExportersById,
   addAndGetOTP,
   getApplicationByReferenceNumber,
-  deleteApplicationsById,
+  deleteApplicationByReferenceNumber,
   declarations,
 };
 
