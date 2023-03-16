@@ -101,7 +101,10 @@ export const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
-        content: confidentialityContent.content.document,
+        documentContent: confidentialityContent.content.document,
+        documentConfig: keystoneDocumentRendererConfig({
+          firstLevelListClass: 'counter-list counter-list--bold',
+        }),
         validationErrors,
       });
     } catch (err) {

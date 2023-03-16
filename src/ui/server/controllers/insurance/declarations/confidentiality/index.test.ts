@@ -164,7 +164,10 @@ describe('controllers/insurance/declarations/confidentiality', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(mockApplication.referenceNumber),
-          content: mockDeclarations.confidentiality.content.document,
+          documentContent: mockDeclarations.confidentiality.content.document,
+          documentConfig: keystoneDocumentRendererConfig({
+            firstLevelListClass: 'counter-list counter-list--bold',
+          }),
           validationErrors: generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
         };
 
@@ -185,8 +188,8 @@ describe('controllers/insurance/declarations/confidentiality', () => {
     });
 
     describe('api error handling', () => {
-      describe('get countries call', () => {
-        describe('when the get countries API call fails', () => {
+      describe('get latest confidentiality call', () => {
+        describe('when the get latest confidentiality API call fails', () => {
           beforeEach(() => {
             getLatestConfidentialitySpy = jest.fn(() => Promise.reject());
             api.keystone.application.declarations.getLatestConfidentiality = getLatestConfidentialitySpy;
