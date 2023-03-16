@@ -1749,5 +1749,5 @@ type AddAndGetOtpResponse {
 
 type VerifyAccountEmailAddressResponse {
   success: Boolean!
-  accountId: String!
+  accountId: String
 }

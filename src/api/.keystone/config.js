@@ -1388,7 +1388,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 
       type VerifyAccountEmailAddressResponse {
         success: Boolean!
-        accountId: String!
+        accountId: String
       }
 
       type Mutation {

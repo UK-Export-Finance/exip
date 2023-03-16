@@ -149,7 +149,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
 
       type VerifyAccountEmailAddressResponse {
         success: Boolean!
-        accountId: String!
+        accountId: String
       }
 
       type Mutation {
