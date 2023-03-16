@@ -4,7 +4,8 @@ const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 
 /**
  * generateChangeLink
- * generates change link based on if coming from check your answers section or check your answers page in prepare application section
+ * generates a change link depending on if coming from a section's check your answers page (/change)
+ * or application level check your answers (/check-and-change)
  * @param {String} route route for page if coming from check your answers in prepare application
  * @param {String} routeCheckAndChange route for if coming from check your answers section
  * @param {String} anchorTag

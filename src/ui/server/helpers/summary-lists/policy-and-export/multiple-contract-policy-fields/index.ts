@@ -24,7 +24,7 @@ const {
  * generateMultipleContractPolicyFields
  * Create all fields and values for the Insurance - Type of policy - single contract policy govukSummaryList
  * @param {Object} All submitted policy and export data
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange true if coming application level check your answers (/check-and-change)
  * @returns {Object} All Multiple contract policy fields and values in an object structure for GOVUK summary list structure
  */
 const generateMultipleContractPolicyFields = (answers: ApplicationPolicyAndExport, referenceNumber: number, checkAndChange: boolean) => {

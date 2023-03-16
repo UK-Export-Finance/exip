@@ -43,19 +43,19 @@ const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
 
 const { summaryList } = checkYourAnswersPolicyAndExports;
 
+const getFieldVariables = (fieldId, referenceNumber) => ({
+  route: MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+  checkYourAnswersRoute: TYPE_OF_POLICY,
+  newValueInput: '',
+  fieldId,
+  referenceNumber,
+  summaryList,
+  changeLink: summaryList.field(fieldId).changeLink,
+});
+
 context('Insurance - Change your answers - Policy and exports - multiple contract policy - Summary List', () => {
   let url;
   let referenceNumber;
-
-  const getFieldVariables = (fieldId) => ({
-    route: MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
-    checkYourAnswersRoute: TYPE_OF_POLICY,
-    newValueInput: '',
-    fieldId,
-    referenceNumber,
-    summaryList,
-    changeLink: summaryList.field(fieldId).changeLink,
-  });
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -84,7 +84,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
   describe('multiple policy type answers', () => {
     describe(REQUESTED_START_DATE, () => {
       const fieldId = REQUESTED_START_DATE;
-      let fieldVariables = getFieldVariables(fieldId);
+      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
       const newAnswer = {
         ...application.POLICY_AND_EXPORTS[fieldId],
@@ -98,7 +98,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
           cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId);
+          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
@@ -128,7 +128,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
     describe(TOTAL_MONTHS_OF_COVER, () => {
       const fieldId = TOTAL_MONTHS_OF_COVER;
-      let fieldVariables = getFieldVariables(fieldId);
+      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
       describe('when clicking the `change` link', () => {
         beforeEach(() => {
@@ -137,7 +137,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
           cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId);
+          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
@@ -167,7 +167,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
     describe(TOTAL_SALES_TO_BUYER, () => {
       const fieldId = TOTAL_SALES_TO_BUYER;
 
-      let fieldVariables = getFieldVariables(fieldId);
+      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
       describe('when clicking the `change` link', () => {
         beforeEach(() => {
@@ -176,7 +176,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
           cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId);
+          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
@@ -206,7 +206,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
     describe(MAXIMUM_BUYER_WILL_OWE, () => {
       const fieldId = MAXIMUM_BUYER_WILL_OWE;
 
-      let fieldVariables = getFieldVariables(fieldId);
+      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
       describe('when clicking the `change` link', () => {
         beforeEach(() => {
@@ -215,7 +215,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
           cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId);
+          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
@@ -245,7 +245,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
     describe(CREDIT_PERIOD_WITH_BUYER, () => {
       const fieldId = CREDIT_PERIOD_WITH_BUYER;
 
-      let fieldVariables = getFieldVariables(fieldId);
+      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
       describe('when clicking the `change` link', () => {
         beforeEach(() => {
@@ -254,7 +254,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
           cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId);
+          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
@@ -283,7 +283,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
     describe(POLICY_CURRENCY_CODE, () => {
       const fieldId = POLICY_CURRENCY_CODE;
-      let fieldVariables = getFieldVariables(fieldId);
+      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
       describe('when clicking the `change` link', () => {
         beforeEach(() => {
@@ -292,7 +292,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
           cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId);
+          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           fieldVariables.newValueInput = currencies[3].isoCode;
           checkChangeLinkUrl(fieldVariables, referenceNumber);

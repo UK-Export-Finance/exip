@@ -4,7 +4,7 @@ import { checkChangeLinkUrl, checkChangeAnswerRendered } from './check-summary-l
 /**
  * changes input for select inputs
  * @param {Object} fieldVariables
- * @param {Input} input cypress input selector
+ * @param {Function} input cypress input selector
  */
 const changeAnswerSelect = (fieldVariables, input) => {
   const { newValueInput } = fieldVariables;

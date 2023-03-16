@@ -18,10 +18,10 @@ const {
 
 /**
  * get
- * Render the check your answers eligibility page
+ * Render the check your answers policy and exports page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} check your answers eligibility page
+ * @returns {Express.Response.render} check your answers policy and exports page
  */
 export const get = async (req: Request, res: Response) => {
   try {
@@ -51,7 +51,7 @@ export const get = async (req: Request, res: Response) => {
       SUMMARY_LIST: summaryList,
     });
   } catch (err) {
-    console.error('Error getting check your answers - type of policy', { err });
+    console.error('Error getting check your answers - policy and exports', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };
@@ -75,7 +75,7 @@ export const post = (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`);
   } catch (err) {
-    console.error('Error posting check your answers - type of policy', { err });
+    console.error('Error posting check your answers - policy and exports', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };

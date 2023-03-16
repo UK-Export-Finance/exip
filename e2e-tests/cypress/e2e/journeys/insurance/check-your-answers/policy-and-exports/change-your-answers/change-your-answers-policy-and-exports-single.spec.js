@@ -43,19 +43,19 @@ const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
 
 const { summaryList } = checkYourAnswersPolicyAndExports;
 
+const getFieldVariables = (fieldId, referenceNumber) => ({
+  route: SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+  checkYourAnswersRoute: TYPE_OF_POLICY,
+  newValueInput: '',
+  fieldId,
+  referenceNumber,
+  summaryList,
+  changeLink: summaryList.field(fieldId).changeLink,
+});
+
 context('Insurance - Change your answers - Policy and exports - Single contract policy - Summary List', () => {
   let url;
   let referenceNumber;
-
-  const getFieldVariables = (fieldId) => ({
-    route: SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
-    checkYourAnswersRoute: TYPE_OF_POLICY,
-    newValueInput: '',
-    fieldId,
-    referenceNumber,
-    summaryList,
-    changeLink: summaryList.field(fieldId).changeLink,
-  });
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -84,7 +84,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
   describe('single policy type answers', () => {
     describe(REQUESTED_START_DATE, () => {
       const fieldId = REQUESTED_START_DATE;
-      let fieldVariables = getFieldVariables(fieldId);
+      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
       const newAnswer = {
         ...application.POLICY_AND_EXPORTS[fieldId],
@@ -98,7 +98,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
           cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId);
+          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
@@ -131,7 +131,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
     describe(CONTRACT_COMPLETION_DATE, () => {
       const fieldId = CONTRACT_COMPLETION_DATE;
-      let fieldVariables = getFieldVariables(fieldId);
+      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
       const newAnswer = {
         ...application.POLICY_AND_EXPORTS[fieldId],
@@ -145,7 +145,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
           cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId);
+          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
@@ -176,7 +176,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
     describe(TOTAL_CONTRACT_VALUE, () => {
       const fieldId = TOTAL_CONTRACT_VALUE;
 
-      let fieldVariables = getFieldVariables(fieldId);
+      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
       describe('when clicking the `change` link', () => {
         beforeEach(() => {
@@ -185,7 +185,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
           cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId);
+          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
@@ -215,7 +215,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
     describe(CREDIT_PERIOD_WITH_BUYER, () => {
       const fieldId = CREDIT_PERIOD_WITH_BUYER;
 
-      let fieldVariables = getFieldVariables(fieldId);
+      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
       describe('when clicking the `change` link', () => {
         beforeEach(() => {
@@ -224,7 +224,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
           cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId);
+          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
@@ -253,7 +253,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
     describe(POLICY_CURRENCY_CODE, () => {
       const fieldId = POLICY_CURRENCY_CODE;
-      let fieldVariables = getFieldVariables(fieldId);
+      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
       describe('when clicking the `change` link', () => {
         beforeEach(() => {
@@ -262,7 +262,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
           cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId);
+          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           fieldVariables.newValueInput = currencies[3].isoCode;
           checkChangeLinkUrl(fieldVariables, referenceNumber);

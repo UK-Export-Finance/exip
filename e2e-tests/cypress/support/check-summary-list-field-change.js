@@ -1,7 +1,7 @@
 import { submitButton } from '../e2e/pages/shared';
 
 /**
- * presses change link and checks that page goes to correct route
+ * clicks change link and checks that page goes to correct route
  * @param {Object} fieldVariables
  * @param {String} referenceNumber
  */
@@ -15,9 +15,9 @@ const checkChangeLinkUrl = (fieldVariables, referenceNumber) => {
 
 /**
  * takes an input value, types it into the input box and submits form
- * @param {*} fieldVariables
- * @param {Input} input cypress input selector for field
- * @param {*} shouldSubmit flag for if submit button should be pressed, default to true
+ * @param {Object} fieldVariables
+ * @param {Function} input cypress input selector for field
+ * @param {Boolean} shouldSubmit flag for if submit button should be pressed, default to true
  */
 const changeAnswerField = (fieldVariables, input, shouldSubmit = true) => {
   const { newValueInput } = fieldVariables;
