@@ -15,7 +15,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  DECLARATIONS: { AGREE_CONFIDENTIALITY },
+  DECLARATIONS: { AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY },
 } = FIELD_IDS.INSURANCE;
 
 describe('server/helpers/task-list/submit-application', () => {
@@ -35,7 +35,7 @@ describe('server/helpers/task-list/submit-application', () => {
       href: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`,
       title: SUBMIT_APPLICATION.TASKS.DECLARATIONS,
       id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS,
-      fields: [AGREE_CONFIDENTIALITY, 'temp'],
+      fields: [AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY, 'temp'],
       dependencies: [...getAllTasksFieldsInAGroup(initialChecksGroup), ...getAllTasksFieldsInAGroup(prepareApplicationGroup)],
     };
 
