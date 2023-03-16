@@ -215,14 +215,14 @@ const getApplicationByReferenceNumber = async (referenceNumber) => {
     });
 
     if (!response.body || !response.body.data) {
-      throw new Error('Getting application by reference number ', { response });
+      throw new Error(`Getting application by reference number ${referenceNumber}`, { response });
     }
 
     return response;
   } catch (err) {
     console.error(err);
 
-    throw new Error('Getting application by reference number ', { err });
+    throw new Error(`Getting application by reference number ${referenceNumber}`, { err });
   }
 };
 
