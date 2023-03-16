@@ -317,7 +317,7 @@ var lists = {
                 id: declarationId
               }
             };
-            const now = /* @__PURE__ */ new Date();
+            const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
             modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);

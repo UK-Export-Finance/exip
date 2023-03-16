@@ -80,6 +80,7 @@ Cypress.Commands.add('completeAndSubmitWorkingWithBuyerForm', require('./insuran
 
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));
+Cypress.Commands.add('assertSummaryListRowValueNew', require('./assert-summary-list-row-value-new'));
 Cypress.Commands.add('submitAndAssertRadioErrors', require('./submit-and-assert-radio-errors'));
 Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-field-errors'));
 
