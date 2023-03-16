@@ -2,11 +2,12 @@ import { pageVariables, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
-import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { Request, Response } from '../../../../../types';
 import api from '../../../../api';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from './save-data';
+import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockDeclarations } from '../../../../test-mocks';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
@@ -57,7 +58,7 @@ describe('controllers/insurance/declarations/confidentiality', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.DECLARATIONS.CONFIDENTIALITY);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.DECLARATIONS.DECLARATION);
     });
   });
 
@@ -77,7 +78,10 @@ describe('controllers/insurance/declarations/confidentiality', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(mockApplication.referenceNumber),
-        content: mockDeclarations.confidentiality.content.document,
+        documentContent: mockDeclarations.confidentiality.content.document,
+        documentConfig: keystoneDocumentRendererConfig({
+          firstLevelListClass: 'counter-list counter-list--bold',
+        }),
         application: res.locals.application,
       };
 

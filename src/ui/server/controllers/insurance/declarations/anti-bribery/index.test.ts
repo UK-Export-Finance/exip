@@ -2,9 +2,10 @@ import { pageVariables, TEMPLATE, get } from '.';
 import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
-import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { Request, Response } from '../../../../../types';
 import api from '../../../../api';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
+import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockDeclarations } from '../../../../test-mocks';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_ANTI_BRIBERY;
@@ -51,7 +52,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.DECLARATIONS.ANTI_BRIBERY);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.DECLARATIONS.DECLARATION);
     });
   });
 
@@ -71,7 +72,8 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(mockApplication.referenceNumber),
-        content: mockDeclarations.antiBribery.content.document,
+        documentContent: mockDeclarations.antiBribery.content.document,
+        documentConfig: keystoneDocumentRendererConfig(),
         application: res.locals.application,
       };
 

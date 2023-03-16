@@ -1,11 +1,12 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
-import { Request, Response } from '../../../../../types';
-import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from './save-data';
+import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
 
@@ -30,7 +31,7 @@ export const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY_SAVE_AND_BACK}`,
 });
 
-export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.CONFIDENTIALITY;
+export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.DECLARATION;
 
 /**
  * get
@@ -58,7 +59,10 @@ export const get = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(refNumber),
-      content: confidentialityContent.content.document,
+      documentContent: confidentialityContent.content.document,
+      documentConfig: keystoneDocumentRendererConfig({
+        firstLevelListClass: 'counter-list counter-list--bold',
+      }),
       application,
     });
   } catch (err) {
