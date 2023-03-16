@@ -91,6 +91,7 @@ export const mockApplicationBuyer = {
 export const mockApplicationDeclaration = {
   id: 'clf3te7vx1432cfoqp9rbop73',
   agreeToConfidentiality: true,
+  agreeToAntiBribery: true,
 };
 
 const mockApplication = {

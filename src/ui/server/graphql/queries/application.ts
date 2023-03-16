@@ -109,6 +109,7 @@ const applicationQuery = gql`
         declaration {
           id
           agreeToConfidentiality
+          agreeToAntiBribery
         }
       }
     }
