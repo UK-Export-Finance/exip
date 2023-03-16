@@ -1,0 +1,95 @@
+import { saveAndBackButton } from '../../../../pages/shared';
+import { confidentialityPage } from '../../../../pages/insurance/declarations';
+import partials from '../../../../partials';
+import { TASKS } from '../../../../../../content-strings';
+import { FIELD_IDS } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+
+const { STATUS: { IN_PROGRESS, NOT_STARTED_YET } } = TASKS;
+
+const { taskList } = partials.insurancePartials;
+
+const {
+  ROOT: INSURANCE_ROOT,
+  ALL_SECTIONS,
+  DECLARATIONS: { CONFIDENTIALITY },
+} = INSURANCE_ROUTES;
+
+const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
+
+const task = taskList.submitApplication.tasks.declarations;
+
+context('Insurance - Declarations - Confidentiality page - Save and go back', () => {
+  let referenceNumber;
+  let url;
+
+  before(() => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
+      cy.completePrepareApplicationSinglePolicyType();
+
+      // go to the page we want to test.
+      task.link().click();
+
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`;
+
+      cy.url().should('eq', url);
+    });
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
+  });
+
+  after(() => {
+    cy.deleteAccount();
+  });
+
+  describe('when submitting an empty form via `save and go back` button', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
+      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
+      cy.url().should('eq', expected);
+    });
+
+    it('should retain the status of task `declarations` as `not started yet`', () => {
+      cy.checkTaskStatus(task, NOT_STARTED_YET);
+    });
+  });
+
+  describe('when submitting an answer via `save and go back` button', () => {
+    let field;
+
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      field = confidentialityPage[FIELD_ID];
+
+      field.input().click();
+
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
+      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
+      cy.url().should('eq', expected);
+    });
+
+    it('should update the status of task `declarations` to `in progress`', () => {
+      cy.checkTaskStatus(task, IN_PROGRESS);
+    });
+
+    it('should have the originally submitted answer selected when going back to the page after submission', () => {
+      task.link().click();
+      field.input().should('be.checked');
+    });
+  });
+});

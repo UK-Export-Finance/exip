@@ -60,6 +60,9 @@ var APPLICATION = {
       MINIMUM: 1,
       MAXIMUM: 499999
     }
+  },
+  STATUS: {
+    DRAFT: "Draft"
   }
 };
 var FIELD_IDS = {
@@ -225,6 +228,9 @@ var lists = {
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
       }),
+      status: (0, import_fields.text)({
+        validation: { isRequired: true }
+      }),
       policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
       exporter: (0, import_fields.relationship)({
         ref: "Exporter",
@@ -233,7 +239,8 @@ var lists = {
       exporterBusiness: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
       exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
       exporterBroker: (0, import_fields.relationship)({ ref: "ExporterBroker" }),
-      buyer: (0, import_fields.relationship)({ ref: "Buyer" })
+      buyer: (0, import_fields.relationship)({ ref: "Buyer" }),
+      declaration: (0, import_fields.relationship)({ ref: "Declaration" })
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -302,11 +309,20 @@ var lists = {
                 id: buyerId
               }
             };
-            const now = new Date();
+            const { id: declarationId } = await context.db.Declaration.createOne({
+              data: {}
+            });
+            modifiedData.declaration = {
+              connect: {
+                id: declarationId
+              }
+            };
+            const now = /* @__PURE__ */ new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
             modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
             modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
+            modifiedData.status = APPLICATION.STATUS.DRAFT;
             return modifiedData;
           } catch (err) {
             console.error("Error adding default data to a new application. ", { err });
@@ -320,7 +336,7 @@ var lists = {
           try {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
-            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId } = item;
+            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -383,6 +399,16 @@ var lists = {
             });
             await context.db.Buyer.updateOne({
               where: { id: buyerId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                }
+              }
+            });
+            await context.db.Declaration.updateOne({
+              where: { id: declarationId },
               data: {
                 application: {
                   connect: {
@@ -627,6 +653,26 @@ var lists = {
       needPreCreditPeriodCover: (0, import_fields.checkbox)(),
       wantCoverOverMaxAmount: (0, import_fields.checkbox)(),
       wantCoverOverMaxPeriod: (0, import_fields.checkbox)()
+    },
+    access: import_access.allowAll
+  }),
+  Declaration: (0, import_core.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      confidentiality: (0, import_fields.relationship)({ ref: "DeclarationConfidentiality" }),
+      agreeToConfidentiality: (0, import_fields.checkbox)({ defaultValue: false })
+    },
+    access: import_access.allowAll
+  }),
+  DeclarationConfidentiality: (0, import_core.list)({
+    fields: {
+      version: (0, import_fields.text)({
+        label: "Version",
+        validation: { isRequired: true }
+      }),
+      content: (0, import_fields_document.document)({
+        formatting: true
+      })
     },
     access: import_access.allowAll
   }),

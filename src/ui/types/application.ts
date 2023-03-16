@@ -13,6 +13,7 @@ type ApplicationCore = {
   updatedAt: string;
   submissionDeadline: string;
   submissionType: string;
+  status: string;
 };
 
 interface ApplicationEligibility extends InsuranceEligibilityCore {
@@ -104,6 +105,11 @@ interface ApplicationBuyer {
   exporterHasTradedWithBuyer?: boolean;
 }
 
+interface ApplicationDeclaration {
+  id: string;
+  agreeToConfidentiality?: boolean;
+}
+
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   exporter: ApplicationExporter;
@@ -112,6 +118,7 @@ interface Application extends ApplicationCore {
   exporterBusiness: ApplicationExporterBusiness;
   exporterBroker: ApplicationExporterBroker;
   buyer: ApplicationBuyer;
+  declaration: ApplicationDeclaration;
 }
 
 interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, ApplicationPolicyAndExport, ApplicationExporterCompany {
@@ -127,4 +134,5 @@ export {
   ApplicationExporterBusiness,
   ApplicationExporterBroker,
   ApplicationBuyer,
+  ApplicationDeclaration,
 };

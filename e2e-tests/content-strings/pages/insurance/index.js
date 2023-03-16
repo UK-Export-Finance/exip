@@ -3,12 +3,31 @@ import * as ELIGIBILITY_PAGES from './eligibility';
 import * as ACCOUNT_PAGES from './account';
 import * as EXPORTER_BUSINESS from './exporter-business';
 import * as YOUR_BUYER from './your-buyer';
+import * as DECLARATIONS from './declarations';
 import * as CHECK_YOUR_ANSWERS from './check-your-answers';
 import { LINKS } from '../../links';
-import { PRODUCT } from '../../../constants';
+import { BUTTONS } from '../../buttons';
+import { PRODUCT, ROUTES } from '../../../constants';
 import formatCurrency from '../../../cypress/e2e/helpers/format-currency';
 
 export const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP);
+
+const DASHBOARD = {
+  PAGE_TITLE: 'Dashboard',
+  TABLE_HEADERS: {
+    STATUS: 'Status',
+    LAST_UPDATED: 'Last updated',
+    REFERENCE_NUMBER: 'Reference number',
+    BUYER_LOCATION: 'Buyer location',
+    BUYER_NAME: 'Buyer name',
+    INSURED_FOR: 'Insured for',
+  },
+  NO_APPLICATIONS: 'You have no applications currently.',
+  START_NEW_APPLICATION: {
+    TEXT: BUTTONS.START_NEW_APPLICATION,
+    HREF: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+  },
+};
 
 const ALL_SECTIONS = {
   PAGE_TITLE: 'Apply for UKEF export insurance',
@@ -93,6 +112,7 @@ const NO_ACCESS_TO_APPLICATION_PAGE = {
 };
 
 const INSURANCE = {
+  DASHBOARD,
   ALL_SECTIONS,
   APPLY_OFFLINE,
   EXPORTER_BUSINESS,
@@ -102,8 +122,9 @@ const INSURANCE = {
   SPEAK_TO_UKEF_EFM,
   START,
   YOUR_BUYER,
-  NO_ACCESS_TO_APPLICATION_PAGE,
+  DECLARATIONS,
   CHECK_YOUR_ANSWERS,
+  NO_ACCESS_TO_APPLICATION_PAGE,
 };
 
 export default INSURANCE;

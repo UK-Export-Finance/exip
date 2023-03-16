@@ -22,7 +22,7 @@ describe('Create an Application', () => {
     application = (await context.query.Application.createOne({
       data: {},
       query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType eligibility { id } policyAndExport { id } exporter { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id }',
+        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status eligibility { id } policyAndExport { id } exporter { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } declaration { id }',
     })) as Application;
   });
 
@@ -71,6 +71,14 @@ describe('Create an Application', () => {
     expect(submissionDeadlineYear).toEqual(expectedYear);
   });
 
+  test('it should have a default submission type', () => {
+    expect(application.submissionType).toEqual(APPLICATION.SUBMISSION_TYPE.MIA);
+  });
+
+  test(`it should have a status of ${APPLICATION.STATUS.DRAFT}`, () => {
+    expect(application.status).toEqual(APPLICATION.STATUS.DRAFT);
+  });
+
   test('it should have a reference number', () => {
     expect(application.referenceNumber).toBeDefined();
     expect(typeof application.referenceNumber).toEqual('number');
@@ -101,8 +109,9 @@ describe('Create an Application', () => {
     expect(typeof application.buyer.id).toEqual('string');
   });
 
-  test('it should have a default submission type', () => {
-    expect(application.submissionType).toEqual(APPLICATION.SUBMISSION_TYPE.MIA);
+  test('it should have a declaration id', () => {
+    expect(application.declaration).toBeDefined();
+    expect(typeof application.declaration.id).toEqual('string');
   });
 
   test('it should have generated an eligibility entry and add the ID to the application', async () => {
@@ -123,6 +132,17 @@ describe('Create an Application', () => {
     });
 
     expect(referenceNumber.application.id).toEqual(application.id);
+  });
+
+  test('it should add the application ID to the policy and export entry', async () => {
+    const exporterBusiness = await context.query.ExporterBusiness.findOne({
+      where: {
+        id: application.exporterBusiness.id,
+      },
+      query: 'id application { id }',
+    });
+
+    expect(exporterBusiness.application.id).toEqual(application.id);
   });
 
   test('it should add the application ID to the policy and export entry', async () => {
@@ -158,17 +178,6 @@ describe('Create an Application', () => {
     expect(exporterBroker.application.id).toEqual(application.id);
   });
 
-  test('it should add the application ID to the buyer entry', async () => {
-    const buyer = await context.query.Buyer.findOne({
-      where: {
-        id: application.buyer.id,
-      },
-      query: 'id application { id }',
-    });
-
-    expect(buyer.application.id).toEqual(application.id);
-  });
-
   test('it should add the exporter company ID to the exporter company address entry', async () => {
     const exporterCompany = await context.query.ExporterCompany.findOne({
       where: {
@@ -187,15 +196,26 @@ describe('Create an Application', () => {
     expect(exporterCompanyAddress.exporterCompany.id).toEqual(application.exporterCompany.id);
   });
 
-  test('it should add the application ID to the policy and export entry', async () => {
-    const exporterBusiness = await context.query.ExporterBusiness.findOne({
+  test('it should add the application ID to the buyer entry', async () => {
+    const buyer = await context.query.Buyer.findOne({
       where: {
-        id: application.exporterBusiness.id,
+        id: application.buyer.id,
       },
       query: 'id application { id }',
     });
 
-    expect(exporterBusiness.application.id).toEqual(application.id);
+    expect(buyer.application.id).toEqual(application.id);
+  });
+
+  test('it should add the application ID to the declaration entry', async () => {
+    const declaration = await context.query.Declaration.findOne({
+      where: {
+        id: application.declaration.id,
+      },
+      query: 'id application { id }',
+    });
+
+    expect(declaration.application.id).toEqual(application.id);
   });
 });
 

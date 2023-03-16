@@ -1,5 +1,6 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% import '../components/dashboard-table.njk' as dashboardTable %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -17,20 +18,23 @@
 
   <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
-  {# temporary list of applications for QA/development #}
-
   {% if applications.length %}
-    <ul class="govuk-list govuk-list--bullet" data-cy="list">
-      {% for application in applications %}
-        <li>
-          <a
-            class="govuk-link"
-            href="{{ ROUTES.INSURANCE_ROOT }}/{{ application.referenceNumber }}{{ ROUTES.ALL_SECTIONS}}"
-          >{{ application.referenceNumber }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
+
+    {{ dashboardTable.render({
+      tableHeaders: CONTENT_STRINGS.TABLE_HEADERS,
+      applications: applications,
+      insuranceRoute: ROUTES.INSURANCE_ROOT,
+      allSectionsRoute: ROUTES.ALL_SECTIONS
+    }) }}
+
+    <a class="govuk-button govuk-button--secondary" href="{{ CONTENT_STRINGS.START_NEW_APPLICATION.HREF }}" data-cy="start-new-application">{{ CONTENT_STRINGS.START_NEW_APPLICATION.TEXT }}</a>
+
+    {% else %}
+
+    <p class="govuk-body" data-cy="no-applications">{{ CONTENT_STRINGS.NO_APPLICATIONS }}</p>
+
+    <a class="govuk-button" href="{{ CONTENT_STRINGS.START_NEW_APPLICATION.HREF }}" data-cy="start-new-application">{{ CONTENT_STRINGS.START_NEW_APPLICATION.TEXT }}</a>
+
   {% endif %}
 
 {% endblock %}

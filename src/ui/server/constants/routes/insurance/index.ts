@@ -1,8 +1,9 @@
 import { PRODUCT } from '../../product';
+import { ACCOUNT } from './account';
 import { POLICY_AND_EXPORTS } from './policy-and-export';
 import { EXPORTER_BUSINESS } from './exporter-business';
 import { YOUR_BUYER } from './your-buyer';
-import { ACCOUNT } from './account';
+import { DECLARATIONS } from './declarations';
 import { CHECK_YOUR_ANSWERS } from './check-your-answers';
 
 export const INSURANCE_ROOT = '/insurance';
@@ -36,8 +37,9 @@ export const INSURANCE_ROUTES = {
   ACCOUNT,
   DASHBOARD: `${INSURANCE_ROOT}/dashboard`,
   ALL_SECTIONS: '/all-sections',
-  EXPORTER_BUSINESS,
   POLICY_AND_EXPORTS,
+  EXPORTER_BUSINESS,
   YOUR_BUYER,
+  DECLARATIONS,
   CHECK_YOUR_ANSWERS,
 };

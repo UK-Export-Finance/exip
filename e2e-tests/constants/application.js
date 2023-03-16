@@ -15,4 +15,7 @@ export const APPLICATION = {
     TOTAL_MONTHS_OF_COVER: 12,
     MAXIMUM_BUYER_CAN_OWE: 499999,
   },
+  STATUS: {
+    DRAFT: 'Draft',
+  },
 };

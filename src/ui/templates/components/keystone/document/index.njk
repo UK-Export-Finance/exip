@@ -19,14 +19,22 @@
     {% if element.type === 'unordered-list' %}
       {{ list.render({
         type: 'unordered',
-        content: element.children
+        content: element.children,
+        listItemClass: params.listItemClass,
+        firstLevelListClass: params.firstLevelListClass,
+        secondLevelListClass: params.secondLevelListClass,
+        thirdLevelListClass: params.thirdLevelListClass
       }) }}
     {% endif %}
 
     {% if element.type === 'ordered-list' %}
       {{ list.render({
         type: 'ordered',
-        content: element.children
+        content: element.children,
+        listItemClass: params.listItemClass,
+        firstLevelListClass: params.firstLevelListClass,
+        secondLevelListClass: params.secondLevelListClass,
+        thirdLevelListClass: params.thirdLevelListClass
       }) }}
     {% endif %}
 

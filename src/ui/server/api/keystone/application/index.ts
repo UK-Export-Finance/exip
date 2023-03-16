@@ -1,7 +1,8 @@
 import { ApolloResponse, InsuranceSubmittedBuyer, SubmittedDataInsuranceEligibility } from '../../../../types';
 import apollo from '../../../graphql/apollo';
-import eligibility from './eligibility';
 import countries from '../countries';
+import eligibility from './eligibility';
+import declarations from './declarations';
 import createApplicationMutation from '../../../graphql/mutations/create-application';
 import getApplicationQuery from '../../../graphql/queries/application';
 import updateApplicationPolicyAndExportMutation from '../../../graphql/mutations/update-application/policy-and-export';
@@ -274,8 +275,10 @@ const application = {
         throw new Error('Updating application buyer');
       }
     },
+    declarations: declarations.update,
   },
   eligibility,
+  declarations,
 };
 
 export default application;

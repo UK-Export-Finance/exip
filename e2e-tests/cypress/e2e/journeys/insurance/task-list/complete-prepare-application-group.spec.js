@@ -1,0 +1,37 @@
+import partials from '../../../partials';
+import { TASKS } from '../../../../../content-strings';
+import { ROUTES } from '../../../../../constants';
+
+const { taskList } = partials.insurancePartials;
+
+const { ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
+
+const { STATUS: { NOT_STARTED_YET } } = TASKS;
+
+context('Insurance - Task list - complete `prepare application` group', () => {
+  before(() => {
+    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
+      cy.url().should('eq', url);
+    });
+  });
+
+  after(() => {
+    cy.deleteAccount();
+  });
+
+  describe('after completing all tasks in the `prepare application` group', () => {
+    beforeEach(() => {
+      cy.saveSession();
+
+      cy.completePrepareApplicationSinglePolicyType();
+    });
+
+    it('should render a `declarations` task with a link and `not started` status', () => {
+      const task = taskList.submitApplication.tasks.declarations;
+
+      cy.checkTaskStatus(task, NOT_STARTED_YET);
+    });
+  });
+});

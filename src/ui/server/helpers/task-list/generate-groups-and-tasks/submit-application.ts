@@ -1,36 +1,36 @@
 import { TaskListDataTask, TaskListData } from '../../../../types';
-import { GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
+import { FIELD_IDS, GROUP_IDS, TASK_IDS } from '../../../constants';
+import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { TASKS } from '../../../content-strings';
-import { getGroupById, getTaskById } from '../task-helpers';
+import { getGroupById, getAllTasksFieldsInAGroup } from '../task-helpers';
 
 const { SUBMIT_APPLICATION } = TASKS.LIST;
 
-const { INSURANCE } = ROUTES;
 const {
   INSURANCE_ROOT,
+  DECLARATIONS: { CONFIDENTIALITY },
   CHECK_YOUR_ANSWERS: { ELIGIBILITY },
-} = INSURANCE;
+} = INSURANCE_ROUTES;
+
+const {
+  DECLARATIONS: { AGREE_CONFIDENTIALITY },
+} = FIELD_IDS.INSURANCE;
 
 /**
  * createSubmitApplicationTasks
  * @param {Array} otherGroups Task list groups
  * @returns {Array} Tasks
  */
-const createSubmitApplicationTasks = (otherGroups: TaskListData, referenceNumber: number): Array<TaskListDataTask> => {
+const createSubmitApplicationTasks = (referenceNumber: number, otherGroups: TaskListData): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
   const prepareApplicationGroup = getGroupById(otherGroups, GROUP_IDS.PREPARE_APPLICATION);
 
   const DECLARATIONS = {
-    href: '#',
+    href: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`,
     title: SUBMIT_APPLICATION.TASKS.DECLARATIONS,
     id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS,
-    fields: ['temp'],
-    dependencies: [
-      ...getTaskById(initialChecksGroup.tasks, TASK_IDS.INITIAL_CHECKS.ELIGIBILITY).fields,
-      ...getTaskById(prepareApplicationGroup.tasks, TASK_IDS.PREPARE_APPLICATION.POLICY_TYPE_AND_EXPORTS).fields,
-      ...getTaskById(prepareApplicationGroup.tasks, TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS).fields,
-      ...getTaskById(prepareApplicationGroup.tasks, TASK_IDS.PREPARE_APPLICATION.BUYER).fields,
-    ],
+    fields: [AGREE_CONFIDENTIALITY, 'temp'],
+    dependencies: [...getAllTasksFieldsInAGroup(initialChecksGroup), ...getAllTasksFieldsInAGroup(prepareApplicationGroup)],
   };
 
   const CHECK_ANSWERS_AND_SUBMIT = {
