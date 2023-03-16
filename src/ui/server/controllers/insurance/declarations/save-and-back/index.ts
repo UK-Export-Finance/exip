@@ -1,6 +1,6 @@
-import { ROUTES } from '../../../../../constants';
-import { Request, Response } from '../../../../../../types';
-import hasFormData from '../../../../../helpers/has-form-data';
+import { ROUTES } from '../../../../constants';
+import { Request, Response } from '../../../../../types';
+import hasFormData from '../../../../helpers/has-form-data';
 import save from '../save-data';
 
 const {
@@ -34,7 +34,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (err) {
-    console.error('Error updating application - declarations - confidentiality (save and back) ', { err });
+    console.error('Error updating application - declarations (save and back) ', { err });
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }

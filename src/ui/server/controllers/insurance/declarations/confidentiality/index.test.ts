@@ -6,7 +6,7 @@ import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
-import save from './save-data';
+import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockDeclarations } from '../../../../test-mocks';
 
@@ -20,7 +20,7 @@ const {
 } = INSURANCE;
 
 describe('controllers/insurance/declarations/confidentiality', () => {
-  jest.mock('./save-data');
+  jest.mock('../save-data');
 
   let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
 
