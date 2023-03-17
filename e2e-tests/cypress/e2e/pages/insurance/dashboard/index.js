@@ -11,6 +11,7 @@ const dashboardPage = {
       insuredFor: () => cy.get('[data-cy="header-insuredFor"]'),
     },
     body: {
+      rows: () => cy.get('table tbody tr'),
       row: (referenceNumber) => ({
         status: () => cy.get(`[data-cy="ref-${referenceNumber}-status"]`),
         lastUpdated: () => cy.get(`[data-cy="ref-${referenceNumber}-lastUpdated"]`),

@@ -26,7 +26,7 @@ context('Insurance - Dashboard - new application', () => {
 
       url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
-      // TODO: when the authenticated header has been built, update this to click on the dashboard link.
+      // TODO: EMS-1268 - when the authenticated header has been built, update this to click on the dashboard link.
       cy.navigateToUrl(url);
 
       cy.url().should('eq', url);
