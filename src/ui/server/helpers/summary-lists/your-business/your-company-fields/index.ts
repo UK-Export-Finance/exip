@@ -33,6 +33,7 @@ const {
  * Create all your company fields and values for the Insurance - Company details govukSummaryList
  * @param {ApplicationExporterCompany} answers exporter company data
  * @param {Number} referenceNumber application reference number
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} All exporter company fields and values in an object structure for GOVUK summary list structure
  */
 const generateYourCompanyFields = (answers: ApplicationExporterCompany, referenceNumber: number, checkAndChange: boolean) => {

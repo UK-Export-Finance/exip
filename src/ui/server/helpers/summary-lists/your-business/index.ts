@@ -38,6 +38,7 @@ const generateFields = (
  * @param {ApplicationExporterCompany} answersExporterCompany Application exporterCompany object
  * @param {ApplicationExporterBusiness} answersExporterBusiness Application exporterBusiness object
  * @param {Number} referenceNumber
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section.  Default as false
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const yourBusinessSummaryList = (
