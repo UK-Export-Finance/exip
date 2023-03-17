@@ -18,14 +18,15 @@ const generateFields = (
   answersExporterBusiness: ApplicationExporterBusiness,
   answersExporterBroker: ApplicationExporterBroker,
   referenceNumber: number,
+  checkAndChange: boolean,
 ) => {
   let fields = [] as Array<SummaryListItemData>;
 
   fields = [
-    ...generateYourCompanyFields(answersExporterCompany, referenceNumber),
-    ...generateNatureOfYourBusinessFields(answersExporterBusiness, referenceNumber),
-    ...generateTurnoverFields(answersExporterBusiness, referenceNumber),
-    ...generateBrokerFields(answersExporterBroker, referenceNumber),
+    ...generateYourCompanyFields(answersExporterCompany, referenceNumber, checkAndChange),
+    ...generateNatureOfYourBusinessFields(answersExporterBusiness, referenceNumber, checkAndChange),
+    ...generateTurnoverFields(answersExporterBusiness, referenceNumber, checkAndChange),
+    ...generateBrokerFields(answersExporterBroker, referenceNumber, checkAndChange),
   ];
 
   return fields;
@@ -44,8 +45,9 @@ const yourBusinessSummaryList = (
   answersExporterBusiness: ApplicationExporterBusiness,
   answersExporterBroker: ApplicationExporterBroker,
   referenceNumber: number,
+  checkAndChange = false,
 ) => {
-  const fields = generateFields(answersExporterCompany, answersExporterBusiness, answersExporterBroker, referenceNumber);
+  const fields = generateFields(answersExporterCompany, answersExporterBusiness, answersExporterBroker, referenceNumber, checkAndChange);
 
   const summaryList = generateSummaryListRows(fields);
 

@@ -15,7 +15,13 @@ const POLICY_AND_EXPORTS = {
   PAGE_TITLE: 'Type of policy and exports',
 };
 
+const YOUR_BUSINESS = {
+  ...SHARED,
+  PAGE_TITLE: 'About your business',
+};
+
 export default {
   ELIGIBILITY,
   POLICY_AND_EXPORTS,
+  YOUR_BUSINESS,
 };

@@ -30,6 +30,7 @@ const {
   NO_COMPANIES_HOUSE_NUMBER,
   COMPANY_DETAILS_SAVE_AND_BACK,
   COMPANY_DETAILS_CHANGE,
+  COMPANY_DETAILS_CHECK_AND_CHANGE,
 } = EXPORTER_BUSINESS_ROUTES;
 
 const { EXPORTER_BUSINESS: EXPORTER_BUSINESS_ERROR } = ERROR_MESSAGES.INSURANCE;
@@ -77,6 +78,26 @@ describe('controllers/insurance/business/companies-details', () => {
     describe("when the url's last substring is `change`", () => {
       it('should have correct properties', () => {
         const originalUrl = COMPANY_DETAILS_CHANGE;
+
+        const result = pageVariables(mockApplication.referenceNumber, originalUrl);
+
+        const expected = {
+          POST_ROUTES: {
+            COMPANIES_HOUSE: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_HOUSE_SEARCH}`,
+            COMPANY_DETAILS: originalUrl,
+            NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
+            SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
+          },
+          FIELDS: EXPORTER_BUSINESS,
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe("when the url's last substring is `check-and-change`", () => {
+      it('should have correct properties', () => {
+        const originalUrl = COMPANY_DETAILS_CHECK_AND_CHANGE;
 
         const result = pageVariables(mockApplication.referenceNumber, originalUrl);
 

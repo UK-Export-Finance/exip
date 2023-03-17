@@ -21,3 +21,8 @@ export const POLICY_AND_EXPORTS = {
   ...SHARED,
   PAGE_TITLE: 'Type of policy and exports',
 };
+
+export const YOUR_BUSINESS = {
+  ...SHARED,
+  PAGE_TITLE: 'About your business',
+};
