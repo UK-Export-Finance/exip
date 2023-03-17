@@ -13,8 +13,6 @@ import {
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import api from '../../../../../support/api';
-import mapKeystoneDocument from '../../../../../support/map-keystone-document';
 
 const { taskList } = partials.insurancePartials;
 
@@ -80,7 +78,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
     });
 
     describe('latest confidentiality content', () => {
-      let content;
+      const listContent = CONTENT_STRINGS.LIST;
 
       const {
         intro,
@@ -89,32 +87,32 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
         level3,
       } = confidentialityPage.listItems;
 
-      before(() => {
-        api.declarations.getLatestConfidentiality().then((data) => {
-          content = mapKeystoneDocument(data.content.document);
-        });
-      });
-
       it('renders an intro paragraph', () => {
-        cy.checkText(intro(), content[0].text);
+        cy.checkText(intro(), CONTENT_STRINGS.INTRO);
       });
 
       it('renders level 1 list items', () => {
-        cy.checkText(level1.item1(), content[1].text);
-        cy.checkText(level1.item2(), content[8].text);
-        cy.checkText(level1.item3(), content[9].text);
+        const level1Content = listContent;
+
+        cy.checkText(level1.item1(), level1Content[0].text);
+        cy.checkText(level1.item2(), level1Content[1].text);
+        cy.checkText(level1.item3(), level1Content[2].text);
       });
 
       it('renders level 2 list items', () => {
-        cy.checkText(level2.item1(), content[2].text);
-        cy.checkText(level2.item2(), content[3].text);
-        cy.checkText(level2.item3(), content[4].text);
-        cy.checkText(level2.item4(), content[5].text);
+        const level2Content = listContent[0].children;
+
+        cy.checkText(level2.item1(), level2Content[0].text);
+        cy.checkText(level2.item2(), level2Content[1].text);
+        cy.checkText(level2.item3(), level2Content[2].text);
+        cy.checkText(level2.item4(), level2Content[3].text);
       });
 
       it('renders level 3 list items', () => {
-        cy.checkText(level3.item1(), content[6].text);
-        cy.checkText(level3.item2(), content[7].text);
+        const level3Content = listContent[0].children[3].children;
+
+        cy.checkText(level3.item1(), level3Content[0].text);
+        cy.checkText(level3.item2(), level3Content[1].text);
       });
     });
 

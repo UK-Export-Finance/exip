@@ -1,11 +1,9 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
-import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import api from '../../../../api';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
-import save from './save-data';
+import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
 
@@ -32,6 +30,8 @@ export const pageVariables = (referenceNumber: number) => ({
 
 export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.CONFIDENTIALITY;
 
+const CONFIDENTIALITY_CONTENT = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.LIST;
+
 /**
  * get
  * Render the Declarations - confidentiality page
@@ -49,23 +49,15 @@ export const get = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
-  try {
-    const confidentialityContent = await api.keystone.application.declarations.getLatestConfidentiality();
-
-    return res.render(TEMPLATE, {
-      ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
-        BACK_LINK: req.headers.referer,
-      }),
-      ...pageVariables(refNumber),
-      content: confidentialityContent.content.document,
-      application,
-    });
-  } catch (err) {
-    console.error("Error getting declarations - confidentiality and rendering 'confidentiality' page ", { err });
-
-    return res.redirect(PROBLEM_WITH_SERVICE);
-  }
+  return res.render(TEMPLATE, {
+    ...insuranceCorePageVariables({
+      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
+      BACK_LINK: req.headers.referer,
+    }),
+    ...pageVariables(refNumber),
+    CONFIDENTIALITY_CONTENT,
+    application,
+  });
 };
 
 /**
@@ -88,37 +80,16 @@ export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
-    try {
-      const confidentialityContent = await api.keystone.application.declarations.getLatestConfidentiality();
-
-      return res.render(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(refNumber),
-        content: confidentialityContent.content.document,
-        validationErrors,
-      });
-    } catch (err) {
-      console.error("Error getting declarations - confidentiality and rendering 'confidentiality' page ", { err });
-
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(refNumber),
+      CONFIDENTIALITY_CONTENT,
+      validationErrors,
+    });
   }
 
-  try {
-    // save the application
-    const saveResponse = await save.declaration(application, req.body);
-
-    if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-    }
-
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY}`);
-  } catch (err) {
-    console.error('Error updating application - declarations - confidentiality ', { err });
-
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-  }
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY}`);
 };

@@ -1,23 +1,29 @@
 .counter-list {
   counter-reset: count;
 
-  >li {
+  > li {
+    position: relative;
     list-style: none;
     counter-increment: count;
   }
 
-  >li::before {
+  > li::before {
+    position: absolute;
+    top: 0;
+    left: -2em;
     content: "(" counter(count) ") ";
+  }
+}
+
+.counter-list--bold {
+  > li::before {
     font-weight: bold;
   }
 }
 
 .counter-list-item {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-
-  >span {
+  > span {
+    display: block;
     margin-left: 2em;
   }
 }
@@ -26,14 +32,17 @@
   padding-left: 3em;
   counter-reset: count;
 
-
-  >li {
+  > li {
+    position: relative;
     list-style: none;
     counter-increment: count;
   }
 
-  >li::before {
+  > li::before {
     content: "(" counter(count, lower-alpha) ") ";
+    position: absolute;
+    top: 0;
+    left: -1em;
   }
 }
 
@@ -41,12 +50,16 @@
   padding-left: 3em;
   counter-reset: count;
 
-  >li {
+  > li {
+    position: relative;
     list-style: none;
     counter-increment: count;
   }
 
-  >li::before {
+  > li::before {
     content: "(" counter(count, lower-roman) ") ";
+    position: absolute;
+    top: 0;
+    left: -1em;
   }
 }
