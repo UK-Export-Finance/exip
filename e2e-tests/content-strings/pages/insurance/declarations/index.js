@@ -23,9 +23,15 @@ const ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT = {
   PAGE_TITLE: 'Will you use your anti-bribery code of conduct to win or carry out the exports you want to insure?',
 };
 
+const CONFIRMATION_AND_ACKNOWLEDGEMENTS = {
+  ...SHARED,
+  PAGE_TITLE: 'Confirmation and acknowledgements',
+};
+
 export default {
   CONFIDENTIALITY,
   ANTI_BRIBERY,
   ANTI_BRIBERY_CODE_OF_CONDUCT,
   ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS,
 };

@@ -81,6 +81,8 @@ Cypress.Commands.add('completeAndSubmitDeclarationConfidentiality', require('./i
 Cypress.Commands.add('completeAndSubmitDeclarationAntiBribery', require('./insurance/declarations/complete-and-submit-anti-bribery-form'));
 Cypress.Commands.add('completeAndSubmitDeclarationAntiBriberyCodeOfConduct', require('./insurance/declarations/complete-and-submit-anti-bribery-code-of-conduct-form'));
 
+Cypress.Commands.add('completeAndSubmitDeclarationConfirmationAndAcknowledgements', require('./insurance/declarations/complete-and-submit-confirmation-and-acknowledgements-form'));
+
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));
 Cypress.Commands.add('submitAndAssertRadioErrors', require('./submit-and-assert-radio-errors'));

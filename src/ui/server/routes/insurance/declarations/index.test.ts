@@ -7,6 +7,10 @@ import {
   get as exportingWithCodeOfConductGet,
   post as exportingWithCodeOfConductPost,
 } from '../../../controllers/insurance/declarations/anti-bribery/exporting-with-code-of-conduct';
+import {
+  get as confirmationAndAcknowledgementsGet,
+  post as confirmationAndAcknowledgementsPost,
+} from '../../../controllers/insurance/declarations/confirmation-and-acknowledgements';
 import { post as saveAndBackPost } from '../../../controllers/insurance/declarations/save-and-back';
 
 describe('routes/insurance/declarations', () => {
@@ -19,8 +23,8 @@ describe('routes/insurance/declarations', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(4);
-    expect(post).toHaveBeenCalledTimes(7);
+    expect(get).toHaveBeenCalledTimes(5);
+    expect(post).toHaveBeenCalledTimes(9);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIDENTIALITY}`, confidentialityGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIDENTIALITY}`, confidentialityPost);
@@ -47,5 +51,13 @@ describe('routes/insurance/declarations', () => {
       `/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.ANTI_BRIBERY.EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK}`,
       saveAndBackPost,
     );
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, confirmationAndAcknowledgementsGet);
+
+    expect(post).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS}`,
+      confirmationAndAcknowledgementsPost,
+    );
+
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK}`, saveAndBackPost);
   });
 });

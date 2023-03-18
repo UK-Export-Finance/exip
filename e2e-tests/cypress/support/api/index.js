@@ -71,6 +71,17 @@ const queryStrings = {
         }
       }
     `,
+    getLatestConfirmationAndAcknowledgements: () => gql`
+      query DeclarationConfirmationAndAcknowledgements {
+        declarationConfirmationAndAcknowledgements(orderBy: { version: desc }, take: 1) {
+          id
+          version
+          content {
+            document
+          }
+        }
+      }
+    `,
   },
 };
 
@@ -224,7 +235,25 @@ const declarations = {
     } catch (err) {
       console.error(err);
 
-      throw new Error('Getting latest declaration - confidentiality ', { err });
+      throw new Error('Getting latest declaration - anti-bribery ', { err });
+    }
+  },
+  /**
+   * getLatestConfirmationAndAcknowledgements
+   * Get the latest Confirmation and acknowledgements declaration content
+   * @returns {Object} Confirmation and acknowledgements declaration
+   */
+  getLatestConfirmationAndAcknowledgements: async () => {
+    try {
+      const responseBody = await apollo.query({
+        query: queryStrings.declarations.getLatestConfirmationAndAcknowledgements(),
+      }).then((response) => response.data.declarationConfirmationAndAcknowledgements[0]);
+
+      return responseBody;
+    } catch (err) {
+      console.error(err);
+
+      throw new Error('Getting latest declaration - confirmation and acknowledgements ', { err });
     }
   },
 };

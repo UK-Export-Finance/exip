@@ -1134,10 +1134,12 @@ type Declaration {
   application: Application
   confidentiality: DeclarationConfidentiality
   antiBribery: DeclarationAntiBribery
+  ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgement
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
+  agreeToConfirmationAndAcknowledgements: Boolean
 }
 
 input DeclarationWhereUniqueInput {
@@ -1152,10 +1154,12 @@ input DeclarationWhereInput {
   application: ApplicationWhereInput
   confidentiality: DeclarationConfidentialityWhereInput
   antiBribery: DeclarationAntiBriberyWhereInput
+  ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementWhereInput
   agreeToConfidentiality: BooleanFilter
   agreeToAntiBribery: BooleanFilter
   hasAntiBriberyCodeOfConduct: BooleanFilter
   willExportWithAntiBriberyCodeOfConduct: BooleanFilter
+  agreeToConfirmationAndAcknowledgements: BooleanFilter
 }
 
 input DeclarationOrderByInput {
@@ -1164,16 +1168,19 @@ input DeclarationOrderByInput {
   agreeToAntiBribery: OrderDirection
   hasAntiBriberyCodeOfConduct: OrderDirection
   willExportWithAntiBriberyCodeOfConduct: OrderDirection
+  agreeToConfirmationAndAcknowledgements: OrderDirection
 }
 
 input DeclarationUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   confidentiality: DeclarationConfidentialityRelateToOneForUpdateInput
   antiBribery: DeclarationAntiBriberyRelateToOneForUpdateInput
+  ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementRelateToOneForUpdateInput
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
+  agreeToConfirmationAndAcknowledgements: Boolean
 }
 
 input DeclarationConfidentialityRelateToOneForUpdateInput {
@@ -1188,6 +1195,12 @@ input DeclarationAntiBriberyRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input DeclarationConfirmationAndAcknowledgementRelateToOneForUpdateInput {
+  create: DeclarationConfirmationAndAcknowledgementCreateInput
+  connect: DeclarationConfirmationAndAcknowledgementWhereUniqueInput
+  disconnect: Boolean
+}
+
 input DeclarationUpdateArgs {
   where: DeclarationWhereUniqueInput!
   data: DeclarationUpdateInput!
@@ -1197,10 +1210,12 @@ input DeclarationCreateInput {
   application: ApplicationRelateToOneForCreateInput
   confidentiality: DeclarationConfidentialityRelateToOneForCreateInput
   antiBribery: DeclarationAntiBriberyRelateToOneForCreateInput
+  ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementRelateToOneForCreateInput
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
+  agreeToConfirmationAndAcknowledgements: Boolean
 }
 
 input DeclarationConfidentialityRelateToOneForCreateInput {
@@ -1211,6 +1226,11 @@ input DeclarationConfidentialityRelateToOneForCreateInput {
 input DeclarationAntiBriberyRelateToOneForCreateInput {
   create: DeclarationAntiBriberyCreateInput
   connect: DeclarationAntiBriberyWhereUniqueInput
+}
+
+input DeclarationConfirmationAndAcknowledgementRelateToOneForCreateInput {
+  create: DeclarationConfirmationAndAcknowledgementCreateInput
+  connect: DeclarationConfirmationAndAcknowledgementWhereUniqueInput
 }
 
 type DeclarationConfidentiality {
@@ -1293,6 +1313,48 @@ input DeclarationAntiBriberyUpdateArgs {
 }
 
 input DeclarationAntiBriberyCreateInput {
+  version: String
+  content: JSON
+}
+
+type DeclarationConfirmationAndAcknowledgement {
+  id: ID!
+  version: String
+  content: DeclarationConfirmationAndAcknowledgement_content_Document
+}
+
+type DeclarationConfirmationAndAcknowledgement_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input DeclarationConfirmationAndAcknowledgementWhereUniqueInput {
+  id: ID
+}
+
+input DeclarationConfirmationAndAcknowledgementWhereInput {
+  AND: [DeclarationConfirmationAndAcknowledgementWhereInput!]
+  OR: [DeclarationConfirmationAndAcknowledgementWhereInput!]
+  NOT: [DeclarationConfirmationAndAcknowledgementWhereInput!]
+  id: IDFilter
+  version: StringFilter
+}
+
+input DeclarationConfirmationAndAcknowledgementOrderByInput {
+  id: OrderDirection
+  version: OrderDirection
+}
+
+input DeclarationConfirmationAndAcknowledgementUpdateInput {
+  version: String
+  content: JSON
+}
+
+input DeclarationConfirmationAndAcknowledgementUpdateArgs {
+  where: DeclarationConfirmationAndAcknowledgementWhereUniqueInput!
+  data: DeclarationConfirmationAndAcknowledgementUpdateInput!
+}
+
+input DeclarationConfirmationAndAcknowledgementCreateInput {
   version: String
   content: JSON
 }
@@ -1488,6 +1550,12 @@ type Mutation {
   updateDeclarationAntiBriberies(data: [DeclarationAntiBriberyUpdateArgs!]!): [DeclarationAntiBribery]
   deleteDeclarationAntiBribery(where: DeclarationAntiBriberyWhereUniqueInput!): DeclarationAntiBribery
   deleteDeclarationAntiBriberies(where: [DeclarationAntiBriberyWhereUniqueInput!]!): [DeclarationAntiBribery]
+  createDeclarationConfirmationAndAcknowledgement(data: DeclarationConfirmationAndAcknowledgementCreateInput!): DeclarationConfirmationAndAcknowledgement
+  createDeclarationConfirmationAndAcknowledgements(data: [DeclarationConfirmationAndAcknowledgementCreateInput!]!): [DeclarationConfirmationAndAcknowledgement]
+  updateDeclarationConfirmationAndAcknowledgement(where: DeclarationConfirmationAndAcknowledgementWhereUniqueInput!, data: DeclarationConfirmationAndAcknowledgementUpdateInput!): DeclarationConfirmationAndAcknowledgement
+  updateDeclarationConfirmationAndAcknowledgements(data: [DeclarationConfirmationAndAcknowledgementUpdateArgs!]!): [DeclarationConfirmationAndAcknowledgement]
+  deleteDeclarationConfirmationAndAcknowledgement(where: DeclarationConfirmationAndAcknowledgementWhereUniqueInput!): DeclarationConfirmationAndAcknowledgement
+  deleteDeclarationConfirmationAndAcknowledgements(where: [DeclarationConfirmationAndAcknowledgementWhereUniqueInput!]!): [DeclarationConfirmationAndAcknowledgement]
   createPage(data: PageCreateInput!): Page
   createPages(data: [PageCreateInput!]!): [Page]
   updatePage(where: PageWhereUniqueInput!, data: PageUpdateInput!): Page
@@ -1592,6 +1660,9 @@ type Query {
   declarationAntiBriberies(where: DeclarationAntiBriberyWhereInput! = {}, orderBy: [DeclarationAntiBriberyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationAntiBriberyWhereUniqueInput): [DeclarationAntiBribery!]
   declarationAntiBribery(where: DeclarationAntiBriberyWhereUniqueInput!): DeclarationAntiBribery
   declarationAntiBriberiesCount(where: DeclarationAntiBriberyWhereInput! = {}): Int
+  declarationConfirmationAndAcknowledgements(where: DeclarationConfirmationAndAcknowledgementWhereInput! = {}, orderBy: [DeclarationConfirmationAndAcknowledgementOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationConfirmationAndAcknowledgementWhereUniqueInput): [DeclarationConfirmationAndAcknowledgement!]
+  declarationConfirmationAndAcknowledgement(where: DeclarationConfirmationAndAcknowledgementWhereUniqueInput!): DeclarationConfirmationAndAcknowledgement
+  declarationConfirmationAndAcknowledgementsCount(where: DeclarationConfirmationAndAcknowledgementWhereInput! = {}): Int
   pages(where: PageWhereInput! = {}, orderBy: [PageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PageWhereUniqueInput): [Page!]
   page(where: PageWhereUniqueInput!): Page
   pagesCount(where: PageWhereInput! = {}): Int

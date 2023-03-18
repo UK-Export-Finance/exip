@@ -2,6 +2,7 @@ import { ApolloResponse } from '../../../../types';
 import apollo from '../../../graphql/apollo';
 import getDeclarationConfidentialityQuery from '../../../graphql/queries/declarations/confidentiality';
 import getDeclarationAntiBriberyQuery from '../../../graphql/queries/declarations/anti-bribery';
+import getDeclarationConfirmationAndAcknowledgementQuery from '../../../graphql/queries/declarations/confirmation-and-acknowledgement';
 import updateApplicationDeclarationMutation from '../../../graphql/mutations/update-application/declaration';
 import isPopulatedArray from '../../../helpers/is-populated-array';
 
@@ -54,6 +55,31 @@ const declarations = {
     } catch (err) {
       console.error(err);
       throw new Error('Getting latest declaration - anti-bribery');
+    }
+  },
+  getLatestConfirmationAndAcknowledgement: async () => {
+    try {
+      console.info('Getting latest declaration - confirmation and acknowledgement');
+
+      const response = (await apollo('POST', getDeclarationConfirmationAndAcknowledgementQuery, {})) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error getting latest declaration - confirmation and acknowledgement ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error getting latest declaration - confirmation and acknowledgement ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.declarationConfirmationAndAcknowledgements && isPopulatedArray(response.data.declarationConfirmationAndAcknowledgements)) {
+        return response.data.declarationConfirmationAndAcknowledgements[0];
+      }
+
+      console.error(response);
+      throw new Error('Getting latest declaration - confirmation and acknowledgement');
+    } catch (err) {
+      console.error(err);
+      throw new Error('Getting latest declaration - confirmation and acknowledgement');
     }
   },
   update: async (id: string, update: object) => {
