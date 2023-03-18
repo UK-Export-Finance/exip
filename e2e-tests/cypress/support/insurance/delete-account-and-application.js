@@ -11,7 +11,9 @@ const deleteAccountAndApplication = (referenceNumber) => {
     deleteAccount();
 
     // delete the application
-    deleteApplication(referenceNumber);
+    const response = deleteApplication(referenceNumber);
+
+    return response;
   } catch (err) {
     console.error(err);
 
