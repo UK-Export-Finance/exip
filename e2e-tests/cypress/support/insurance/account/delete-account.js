@@ -17,7 +17,7 @@ const deleteAccount = (email = exporterEmail) => {
       const [firstExporter] = data.exporters;
       const exporter = firstExporter;
 
-      api.deleteExportersById(exporter.id).then((id) => id);
+      return api.deleteExportersById(exporter.id).then((id) => id);
     });
   } catch (err) {
     console.error(err);
