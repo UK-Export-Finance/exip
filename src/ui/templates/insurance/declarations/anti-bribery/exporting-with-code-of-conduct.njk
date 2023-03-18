@@ -32,32 +32,13 @@
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-    {% set hintHtml %}
-      <p>
-        <span data-cy="{{ FIELD.ID }}-hint-intro">{{ FIELD.HINT.INTRO }}</span>
-        <a class="govuk-link" href="{{ FIELD.HINT.LINK.HREF }}" data-cy="{{ FIELD.ID }}-hint-link">{{ FIELD.HINT.LINK.TEXT }}</a>.
-      </p>
-    {% endset %}
-
-    {% set conditionalYesHtml %}
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds-from-desktop">
-
-          <p class="govuk-hint">{{ FIELD.ANSWER_YES_REVEAL.TEXT }}</p>
-
-        </div>
-      </div>
-    {% endset %}
-
     {{ yesNoRadioButtons.render({
       fieldId: FIELD.ID,
       heading: CONTENT_STRINGS.PAGE_TITLE,
       submittedAnswer: application.declaration[FIELD.ID],
       errorMessage: validationErrors.errorList[FIELD.ID],
       headerClass: 'govuk-heading-xl',
-      hintHtml: hintHtml,
-      horizontalRadios: true,
-      conditionalYesHtml: conditionalYesHtml
+      horizontalRadios: true
     }) }}
 
     <div class="govuk-button-group">

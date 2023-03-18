@@ -3,6 +3,10 @@ import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { get as confidentialityGet, post as confidentialityPost } from '../../../controllers/insurance/declarations/confidentiality';
 import { get as antiBriberyGet, post as antiBriberyPost } from '../../../controllers/insurance/declarations/anti-bribery';
 import { get as codeOfConductGet, post as codeOfConductPost } from '../../../controllers/insurance/declarations/anti-bribery/code-of-conduct';
+import {
+  get as exportingWithCodeOfConductGet,
+  post as exportingWithCodeOfConductPost,
+} from '../../../controllers/insurance/declarations/anti-bribery/exporting-with-code-of-conduct';
 import { post as saveAndBackPost } from '../../../controllers/insurance/declarations/save-and-back';
 
 // @ts-ignore
@@ -18,5 +22,17 @@ insuranceDeclarationsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIO
 
 insuranceDeclarationsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.ANTI_BRIBERY.CODE_OF_CONDUCT}`, codeOfConductGet);
 insuranceDeclarationsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.ANTI_BRIBERY.CODE_OF_CONDUCT}`, codeOfConductPost);
+
+insuranceDeclarationsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.ANTI_BRIBERY.EXPORTING_WITH_CODE_OF_CONDUCT}`, exportingWithCodeOfConductGet);
+
+insuranceDeclarationsRouter.post(
+  `/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.ANTI_BRIBERY.EXPORTING_WITH_CODE_OF_CONDUCT}`,
+  exportingWithCodeOfConductPost,
+);
+
+insuranceDeclarationsRouter.post(
+  `/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.ANTI_BRIBERY.EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK}`,
+  saveAndBackPost,
+);
 
 export default insuranceDeclarationsRouter;

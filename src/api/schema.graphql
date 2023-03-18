@@ -1136,6 +1136,8 @@ type Declaration {
   antiBribery: DeclarationAntiBribery
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
+  hasAntiBriberyCodeOfConduct: Boolean
+  willExportWithAntiBriberyCodeOfConduct: Boolean
 }
 
 input DeclarationWhereUniqueInput {
@@ -1152,12 +1154,16 @@ input DeclarationWhereInput {
   antiBribery: DeclarationAntiBriberyWhereInput
   agreeToConfidentiality: BooleanFilter
   agreeToAntiBribery: BooleanFilter
+  hasAntiBriberyCodeOfConduct: BooleanFilter
+  willExportWithAntiBriberyCodeOfConduct: BooleanFilter
 }
 
 input DeclarationOrderByInput {
   id: OrderDirection
   agreeToConfidentiality: OrderDirection
   agreeToAntiBribery: OrderDirection
+  hasAntiBriberyCodeOfConduct: OrderDirection
+  willExportWithAntiBriberyCodeOfConduct: OrderDirection
 }
 
 input DeclarationUpdateInput {
@@ -1166,6 +1172,8 @@ input DeclarationUpdateInput {
   antiBribery: DeclarationAntiBriberyRelateToOneForUpdateInput
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
+  hasAntiBriberyCodeOfConduct: Boolean
+  willExportWithAntiBriberyCodeOfConduct: Boolean
 }
 
 input DeclarationConfidentialityRelateToOneForUpdateInput {
@@ -1191,6 +1199,8 @@ input DeclarationCreateInput {
   antiBribery: DeclarationAntiBriberyRelateToOneForCreateInput
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
+  hasAntiBriberyCodeOfConduct: Boolean
+  willExportWithAntiBriberyCodeOfConduct: Boolean
 }
 
 input DeclarationConfidentialityRelateToOneForCreateInput {

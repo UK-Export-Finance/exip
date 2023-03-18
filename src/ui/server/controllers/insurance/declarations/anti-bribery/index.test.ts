@@ -24,9 +24,9 @@ const {
 describe('controllers/insurance/declarations/anti-bribery', () => {
   jest.mock('../save-data');
 
-  let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
+  let saveDeclarationSpy = jest.fn(() => Promise.resolve({}));
 
-  save.declaration = mockSaveDeclaration;
+  save.declaration = saveDeclarationSpy;
 
   let req: Request;
   let res: Response;
@@ -204,8 +204,8 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
       describe('save data call', () => {
         describe('when the save data API call does not return anything', () => {
           beforeEach(() => {
-            mockSaveDeclaration = jest.fn(() => Promise.resolve(false));
-            save.declaration = mockSaveDeclaration;
+            saveDeclarationSpy = jest.fn(() => Promise.resolve(false));
+            save.declaration = saveDeclarationSpy;
 
             req.body = validBody;
           });
@@ -219,8 +219,8 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
 
         describe('when the save data API call fails', () => {
           beforeEach(() => {
-            mockSaveDeclaration = jest.fn(() => Promise.reject());
-            save.declaration = mockSaveDeclaration;
+            saveDeclarationSpy = jest.fn(() => Promise.reject());
+            save.declaration = saveDeclarationSpy;
 
             req.body = validBody;
           });

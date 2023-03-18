@@ -7,36 +7,33 @@ import {
   noRadio,
   inlineErrorMessage,
 } from '../../../../../pages/shared';
-import { codeOfConductPage } from '../../../../../pages/insurance/declarations';
 import partials from '../../../../../partials';
 import {
   BUTTONS,
   PAGES,
-  LINKS,
   ERROR_MESSAGES,
 } from '../../../../../../../content-strings';
-import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_CONDUCT;
+const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT;
 
 const {
   ROOT: INSURANCE_ROOT,
   DECLARATIONS: {
     ANTI_BRIBERY: {
-      ROOT: ANTI_BRIBERY_ROOT,
       CODE_OF_CONDUCT,
       EXPORTING_WITH_CODE_OF_CONDUCT,
     },
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
   },
 } = INSURANCE_ROUTES;
 
-const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.HAS_ANTI_BRIBERY_CODE_OF_CONDUCT;
+const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.WILL_EXPORT_WITH_CODE_OF_CONDUCT;
 
-context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an Exporter, I want to confirm if I will use my company's anti - bribery code of conduct for my export insurance application, So that UKEF can refer to it as applicable when processing my export insurance application", () => {
+context("Insurance - Declarations - Anti-bribery - Exporting with code of conduct page - As an Exporter, I want to confirm if I will use my company's anti - bribery code of conduct for my export insurance application, So that UKEF can refer to it as applicable when processing my export insurance application", () => {
   let referenceNumber;
   let url;
 
@@ -51,8 +48,9 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
 
       cy.completeAndSubmitDeclarationConfidentiality();
       cy.completeAndSubmitDeclarationAntiBribery();
+      cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
 
       cy.url().should('eq', url);
     });
@@ -69,8 +67,8 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`,
+      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`,
     });
   });
 
@@ -81,12 +79,6 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-    });
-
-    it('renders a hint', () => {
-      cy.checkText(codeOfConductPage.hint.intro(), FIELDS[FIELD_ID].HINT.INTRO);
-
-      cy.checkLink(codeOfConductPage.hint.link(), LINKS.EXTERNAL.BRIBERY_ACT_2010_GUIDANCE, FIELDS[FIELD_ID].HINT.LINK.TEXT);
     });
 
     it('renders `yes` radio button', () => {
@@ -136,15 +128,29 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
     });
 
     describe('when submitting a fully completed form', () => {
-      it(`should redirect to ${EXPORTING_WITH_CODE_OF_CONDUCT}`, () => {
+      it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
+        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
         cy.url().should('eq', expectedUrl);
       });
+
+      // describe('when going back to the page', () => {
+      //   it('should have the submitted value', () => {
+      //     cy.navigateToUrl(url);
+
+      //     cy.completeAndSubmitDeclarationAntiBribery();
+
+      //     cy.navigateToUrl(url);
+
+      //     const field = antiBriberyPage[FIELD_ID];
+
+      //     field.input().should('be.checked');
+      //   });
+      // });
     });
   });
 });

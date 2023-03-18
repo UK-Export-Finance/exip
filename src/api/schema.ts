@@ -534,6 +534,8 @@ export const lists = {
       antiBribery: relationship({ ref: 'DeclarationAntiBribery' }),
       agreeToConfidentiality: checkbox({ defaultValue: false }),
       agreeToAntiBribery: checkbox({ defaultValue: false }),
+      hasAntiBriberyCodeOfConduct: checkbox({ defaultValue: false }),
+      willExportWithAntiBriberyCodeOfConduct: checkbox({ defaultValue: false }),
     },
     access: allowAll,
   }),

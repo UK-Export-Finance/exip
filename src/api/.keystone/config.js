@@ -669,7 +669,9 @@ var lists = {
       confidentiality: (0, import_fields.relationship)({ ref: "DeclarationConfidentiality" }),
       antiBribery: (0, import_fields.relationship)({ ref: "DeclarationAntiBribery" }),
       agreeToConfidentiality: (0, import_fields.checkbox)({ defaultValue: false }),
-      agreeToAntiBribery: (0, import_fields.checkbox)({ defaultValue: false })
+      agreeToAntiBribery: (0, import_fields.checkbox)({ defaultValue: false }),
+      hasAntiBriberyCodeOfConduct: (0, import_fields.checkbox)({ defaultValue: false }),
+      willExportWithAntiBriberyCodeOfConduct: (0, import_fields.checkbox)({ defaultValue: false })
     },
     access: import_access.allowAll
   }),
