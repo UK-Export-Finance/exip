@@ -360,13 +360,17 @@ CREATE TABLE `Declaration` (
   `agreeToAntiBribery` tinyint(1) NOT NULL DEFAULT '0',
   `willExportWithAntiBriberyCodeOfConduct` tinyint(1) NOT NULL DEFAULT '0',
   `hasAntiBriberyCodeOfConduct` tinyint(1) NOT NULL DEFAULT '0',
+  `ConfirmationAndAcknowledgements` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agreeToConfirmationAndAcknowledgements` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `Declaration_application_idx` (`application`),
   KEY `Declaration_confidentiality_idx` (`confidentiality`),
   KEY `Declaration_antiBribery_idx` (`antiBribery`),
+  KEY `Declaration_ConfirmationAndAcknowledgements_idx` (`ConfirmationAndAcknowledgements`),
   CONSTRAINT `Declaration_antiBribery_fkey` FOREIGN KEY (`antiBribery`) REFERENCES `DeclarationAntiBribery` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Declaration_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Declaration_confidentiality_fkey` FOREIGN KEY (`confidentiality`) REFERENCES `DeclarationConfidentiality` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `Declaration_confidentiality_fkey` FOREIGN KEY (`confidentiality`) REFERENCES `DeclarationConfidentiality` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Declaration_ConfirmationAndAcknowledgements_fkey` FOREIGN KEY (`ConfirmationAndAcknowledgements`) REFERENCES `DeclarationConfirmationAndAcknowledgement` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `Declaration` ENABLE KEYS */;
@@ -418,6 +422,21 @@ VALUES
 
 /*!40000 ALTER TABLE `DeclarationConfidentiality` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+
+# Dump of table DeclarationConfirmationAndAcknowledgement
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `DeclarationConfirmationAndAcknowledgement`;
+
+CREATE TABLE `DeclarationConfirmationAndAcknowledgement` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `version` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `content` json NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 
 
