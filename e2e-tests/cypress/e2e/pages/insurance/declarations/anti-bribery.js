@@ -24,6 +24,22 @@ const antiBriberyPage = {
     input: () => cy.get(`[data-cy="${AGREE_ANTI_BRIBERY}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${AGREE_ANTI_BRIBERY}-error-message"]`),
   },
+  expandable: {
+    summary: () => cy.get('[data-cy="definition-of-terms"] summary'),
+    table: {
+      headers: {
+        term: () => cy.get('[data-cy="header-term"]'),
+        definition: () => cy.get('[data-cy="header-definition"]'),
+      },
+      body: {
+        row: (row) => ({
+          term: () => cy.get(`[data-cy="row-${row}-cell-term"]`),
+          definition: () => cy.get(`[data-cy="row-${row}-cell-definition"]`),
+          definitionListItem: (listItem) => cy.get(`[data-cy="row-${row}-cell-definition-list-item-${listItem}"]`),
+        }),
+      },
+    },
+  },
 };
 
 export default antiBriberyPage;
