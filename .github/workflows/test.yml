@@ -130,11 +130,11 @@ jobs:
     needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
-    # strategy:
-    #   fail-fast: false
-      # matrix:
-      #   machines: [ 1, 2, 3, 4 ]
+    runs-on: [ self-hosted, linux ]
+    strategy:
+      fail-fast: false
+      matrix:
+        machines: [ 1, 2, 3, 4 ]
 
     steps:
       - uses: actions/checkout@v3
