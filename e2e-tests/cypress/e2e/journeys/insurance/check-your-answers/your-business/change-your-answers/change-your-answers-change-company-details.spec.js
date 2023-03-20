@@ -1,7 +1,7 @@
 import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import {
-  ROUTES, FIELD_IDS, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
+  VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANY_EXAMPLE,
 } from '../../../../../../../constants';
 import { checkYourAnswersYourBusiness } from '../../../../../pages/insurance/check-your-answers';
 import { companyDetails } from '../../../../../pages/your-business';
@@ -10,6 +10,8 @@ import {
   changeAnswerField,
   checkChangeAnswerRendered,
 } from '../../../../../../support/check-summary-list-field-change';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
@@ -19,28 +21,25 @@ const {
   EXPORTER_BUSINESS: {
     COMPANY_DETAILS_CHECK_AND_CHANGE,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: {
-      COMPANY_HOUSE: {
-        INPUT,
-        COMPANY_NAME,
-        COMPANY_NUMBER,
-        COMPANY_INCORPORATED,
-        COMPANY_SIC,
-        FINANCIAL_YEAR_END_DATE,
-      },
-      YOUR_COMPANY: {
-        TRADING_ADDRESS,
-        TRADING_NAME,
-        WEBSITE,
-        PHONE_NUMBER,
-      },
-    },
+
+  COMPANY_HOUSE: {
+    INPUT,
+    COMPANY_NAME,
+    COMPANY_NUMBER,
+    COMPANY_INCORPORATED,
+    COMPANY_SIC,
+    FINANCIAL_YEAR_END_DATE,
   },
-} = FIELD_IDS;
+  YOUR_COMPANY: {
+    TRADING_ADDRESS,
+    TRADING_NAME,
+    WEBSITE,
+    PHONE_NUMBER,
+  },
+} = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -129,10 +128,10 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         fieldVariables.newValue = fieldVariables.newValueInput;
         checkChangeAnswerRendered(fieldVariables);
 
-        cy.checkText(summaryList.field(COMPANY_NAME).value(), 'AUDI LTD');
-        cy.checkText(summaryList.field(COMPANY_INCORPORATED).value(), '25 October 2022');
-        cy.checkText(summaryList.field(COMPANY_SIC).value(), '99999');
-        cy.checkText(summaryList.field(FINANCIAL_YEAR_END_DATE).value(), '31 October');
+        cy.checkText(summaryList.field(COMPANY_NAME).value(), COMPANY_EXAMPLE.COMPANY_NAME);
+        cy.checkText(summaryList.field(COMPANY_INCORPORATED).value(), COMPANY_EXAMPLE.COMPANY_INCORPORATED);
+        cy.checkText(summaryList.field(COMPANY_SIC).value(), COMPANY_EXAMPLE.COMPANY_SIC);
+        cy.checkText(summaryList.field(FINANCIAL_YEAR_END_DATE).value(), COMPANY_EXAMPLE.FINANCIAL_YEAR_END_DATE);
       });
     });
   });

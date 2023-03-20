@@ -1,20 +1,19 @@
 import partials from '../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { natureOfBusiness, checkYourAnswers } from '../../../../pages/your-business';
 import { submitButton } from '../../../../pages/shared';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: {
-      NATURE_OF_YOUR_BUSINESS: {
-        GOODS_OR_SERVICES,
-        YEARS_EXPORTING,
-        EMPLOYEES_INTERNATIONAL,
-        EMPLOYEES_UK,
-      },
-    },
+
+  NATURE_OF_YOUR_BUSINESS: {
+    GOODS_OR_SERVICES,
+    YEARS_EXPORTING,
+    EMPLOYEES_INTERNATIONAL,
+    EMPLOYEES_UK,
   },
-} = FIELD_IDS;
+
+} = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
 const {
   ROOT,
@@ -22,7 +21,7 @@ const {
     NATURE_OF_BUSINESS_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
 

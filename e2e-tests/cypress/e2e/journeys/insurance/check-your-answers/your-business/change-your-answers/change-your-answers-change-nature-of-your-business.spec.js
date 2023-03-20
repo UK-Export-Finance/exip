@@ -1,6 +1,7 @@
 import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
-import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { checkYourAnswersYourBusiness } from '../../../../../pages/insurance/check-your-answers';
 import { natureOfBusiness } from '../../../../../pages/your-business';
 import {
@@ -17,20 +18,16 @@ const {
   EXPORTER_BUSINESS: {
     NATURE_OF_BUSINESS_CHECK_AND_CHANGE,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: {
-      NATURE_OF_YOUR_BUSINESS: {
-        GOODS_OR_SERVICES,
-        YEARS_EXPORTING,
-        EMPLOYEES_INTERNATIONAL,
-        EMPLOYEES_UK,
-      },
-    },
+  NATURE_OF_YOUR_BUSINESS: {
+    GOODS_OR_SERVICES,
+    YEARS_EXPORTING,
+    EMPLOYEES_INTERNATIONAL,
+    EMPLOYEES_UK,
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
 const { taskList } = partials.insurancePartials;
 

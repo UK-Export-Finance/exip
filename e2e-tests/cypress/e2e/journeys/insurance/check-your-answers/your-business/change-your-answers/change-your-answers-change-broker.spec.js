@@ -1,6 +1,5 @@
 import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
-import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 import { checkYourAnswersYourBusiness } from '../../../../../pages/insurance/check-your-answers';
 import { broker } from '../../../../../pages/your-business';
 import {
@@ -9,6 +8,8 @@ import {
   checkChangeAnswerRendered,
 } from '../../../../../../support/check-summary-list-field-change';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/exporter-business';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
@@ -18,24 +19,20 @@ const {
   EXPORTER_BUSINESS: {
     BROKER_CHECK_AND_CHANGE,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: {
-      BROKER: {
-        USING_BROKER,
-        NAME,
-        ADDRESS_LINE_1,
-        ADDRESS_LINE_2,
-        TOWN,
-        COUNTY,
-        POSTCODE,
-        EMAIL,
-      },
-    },
+  BROKER: {
+    USING_BROKER,
+    NAME,
+    ADDRESS_LINE_1,
+    ADDRESS_LINE_2,
+    TOWN,
+    COUNTY,
+    POSTCODE,
+    EMAIL,
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
 const { taskList } = partials.insurancePartials;
 
