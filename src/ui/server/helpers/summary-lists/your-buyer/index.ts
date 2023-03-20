@@ -10,10 +10,13 @@ import { SummaryListItemData, ApplicationBuyer } from '../../../../types';
  * @param {Number} referenceNumber
  * @returns {Object} All your business values in an object structure for GOVUK summary list structure
  */
-const generateFields = (answersBuyer: ApplicationBuyer, referenceNumber: number) => {
+const generateFields = (answersBuyer: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean) => {
   let fields = [] as Array<SummaryListItemData>;
 
-  fields = [...generateCompanyOrOrganisationFields(answersBuyer, referenceNumber), ...workingWithBuyerFields(answersBuyer, referenceNumber)];
+  fields = [
+    ...generateCompanyOrOrganisationFields(answersBuyer, referenceNumber, checkAndChange),
+    ...workingWithBuyerFields(answersBuyer, referenceNumber, checkAndChange),
+  ];
 
   return fields;
 };
@@ -25,8 +28,8 @@ const generateFields = (answersBuyer: ApplicationBuyer, referenceNumber: number)
  * @param {Number} referenceNumber
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
-const yourBuyerSummaryList = (answersBuyer: ApplicationBuyer, referenceNumber: number) => {
-  const fields = generateFields(answersBuyer, referenceNumber);
+const yourBuyerSummaryList = (answersBuyer: ApplicationBuyer, referenceNumber: number, checkAndChange = false) => {
+  const fields = generateFields(answersBuyer, referenceNumber, checkAndChange);
 
   const summaryList = generateSummaryListRows(fields);
 

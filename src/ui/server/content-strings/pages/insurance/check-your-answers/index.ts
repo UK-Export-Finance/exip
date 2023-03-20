@@ -20,8 +20,14 @@ const YOUR_BUSINESS = {
   PAGE_TITLE: 'About your business',
 };
 
+const YOUR_BUYER = {
+  ...SHARED,
+  PAGE_TITLE: 'Your buyer',
+};
+
 export default {
   ELIGIBILITY,
   POLICY_AND_EXPORTS,
   YOUR_BUSINESS,
+  YOUR_BUYER,
 };

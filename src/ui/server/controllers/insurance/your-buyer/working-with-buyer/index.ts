@@ -6,12 +6,17 @@ import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import mapAndSave from '../map-and-save';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 
 const {
   YOUR_BUYER: { WORKING_WITH_BUYER },
 } = FIELD_IDS.INSURANCE;
 
-const { INSURANCE_ROOT, YOUR_BUYER: YOUR_BUYER_ROUTES } = ROUTES.INSURANCE;
+const {
+  INSURANCE_ROOT,
+  YOUR_BUYER: YOUR_BUYER_ROUTES,
+  CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
+} = ROUTES.INSURANCE;
 
 const { WORKING_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = YOUR_BUYER_ROUTES;
 
@@ -87,6 +92,10 @@ export const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);

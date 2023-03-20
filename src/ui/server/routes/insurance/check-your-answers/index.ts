@@ -12,6 +12,9 @@ import {
 } from '../../../controllers/insurance/check-your-answers/your-business';
 import { post as postCheckYourAnswersYourBusinessSaveAndBack } from '../../../controllers/insurance/check-your-answers/your-business/save-and-back';
 
+import { get as getCheckYourAnswersYourBuyer, post as postCheckYourAnswersYourBuyer } from '../../../controllers/insurance/check-your-answers/your-buyer';
+import { post as postCheckYourAnswersYourBuyerSaveAndBack } from '../../../controllers/insurance/check-your-answers/your-buyer/save-and-back';
+
 // @ts-ignore
 const insuranceCheckYourAnswersRouter = express.Router();
 
@@ -25,5 +28,9 @@ insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.TYPE
 insuranceCheckYourAnswersRouter.get(`/:referenceNumber${CHECK_YOUR_ANSWERS.YOUR_BUSINESS}`, getCheckYourAnswersYourBusiness);
 insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.YOUR_BUSINESS}`, postCheckYourAnswersYourBusiness);
 insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.YOUR_BUSINESS_SAVE_AND_BACK}`, postCheckYourAnswersYourBusinessSaveAndBack);
+
+insuranceCheckYourAnswersRouter.get(`/:referenceNumber${CHECK_YOUR_ANSWERS.YOUR_BUYER}`, getCheckYourAnswersYourBuyer);
+insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.YOUR_BUYER}`, postCheckYourAnswersYourBuyer);
+insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.YOUR_BUYER_SAVE_AND_BACK}`, postCheckYourAnswersYourBuyerSaveAndBack);
 
 export default insuranceCheckYourAnswersRouter;
