@@ -40,11 +40,13 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 const { summaryList } = checkYourAnswers;
 
-context('Insurance - Your business - Change your answers - Company details- As an exporter, I want to change my answers to the company details section', () => {
+context('Insurance - Your business - Change your answers - Company details - As an exporter, I want to change my answers to the company details section', () => {
   let referenceNumber;
   let url;
 
   before(() => {
+    cy.clearCookies();
+
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 

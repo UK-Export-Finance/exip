@@ -9,16 +9,21 @@ import { FIELD_IDS, ROUTES } from '../../../constants';
 const CONTENT_STRINGS = PAGES.COOKIES_PAGE;
 
 context('Cookies page', () => {
+  const url = ROUTES.COOKIES;
+
   beforeEach(() => {
     cy.login();
 
     partials.footer.supportLinks.cookies().click();
-    cy.url().should('include', ROUTES.COOKIES);
+
+    cy.url().should('include', url);
 
     cy.saveSession();
   });
 
   it('renders core page elements', () => {
+    cy.clearCookies();
+
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.COOKIES,
@@ -151,12 +156,14 @@ context('Cookies page', () => {
     describe('form submission', () => {
       describe('when submitting an empty form', () => {
         beforeEach(() => {
-          cy.saveSession();
+          cy.clearCookies();
+
+          cy.navigateToUrl(url);
+
+          submitButton().click();
         });
 
         it('should render validation errors', () => {
-          submitButton().click();
-
           partials.errorSummaryListItems().should('exist');
           partials.errorSummaryListItems().should('have.length', 1);
 

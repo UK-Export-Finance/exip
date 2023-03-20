@@ -22,7 +22,7 @@ const cypressConfig = defineConfig({
     apiUrl: 'http://localhost:5001/api/graphql',
     specPattern: 'cypress/e2e/**/*.spec.js',
     experimentalSessionAndOrigin: true,
-    testIsolation: false,
+    testIsolation: 'off',
     env: {
       GOV_NOTIFY_EMAIL_RECIPIENT_1: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
       GOV_NOTIFY_EMAIL_RECIPIENT_2: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_2,
