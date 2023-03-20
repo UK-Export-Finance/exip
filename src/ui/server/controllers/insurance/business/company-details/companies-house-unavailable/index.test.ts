@@ -9,9 +9,9 @@ const { COMPANIES_HOUSE_UNAVAILABLE } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const { COMPANIES_HOUSE_UNAVAILABLE: COMPANIES_HOUSE_UNAVAILABLE_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
-const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, ALL_SECTIONS, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
 
-const { COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NATURE_OF_BUSINESS_ROOT } = EXPORTER_BUSINESS_ROUTES;
+const { COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = EXPORTER_BUSINESS_ROUTES;
 
 describe('controllers/insurance/business/companies-details/companies-house-unavailable', () => {
   let req: Request;
@@ -44,7 +44,7 @@ describe('controllers/insurance/business/companies-details/companies-house-unava
           BACK_LINK: req.headers.referer,
         }),
         COMPANY_DETAILS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROUTE}`,
-        NATURE_OF_BUSINESS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
+        NATURE_OF_BUSINESS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
       });
     });
   });
