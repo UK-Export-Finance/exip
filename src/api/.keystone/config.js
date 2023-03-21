@@ -665,8 +665,34 @@ var lists = {
   }),
   Declaration: (0, import_core.list)({
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
-      agreeToConfidentiality: (0, import_fields.checkbox)({ defaultValue: false })
+      confidentiality: (0, import_fields.relationship)({ ref: "DeclarationConfidentiality" }),
+      antiBribery: (0, import_fields.relationship)({ ref: "DeclarationAntiBribery" }),
+      agreeToConfidentiality: (0, import_fields.checkbox)({ defaultValue: false }),
+      agreeToAntiBribery: (0, import_fields.checkbox)({ defaultValue: false })
+    },
+    access: import_access.allowAll
+  }),
+  DeclarationConfidentiality: (0, import_core.list)({
+    fields: {
+      version: (0, import_fields.text)({
+        label: "Version",
+        validation: { isRequired: true }
+      }),
+      content: (0, import_fields_document.document)({
+        formatting: true
+      })
+    },
+    access: import_access.allowAll
+  }),
+  DeclarationAntiBribery: (0, import_core.list)({
+    fields: {
+      version: (0, import_fields.text)({
+        label: "Version",
+        validation: { isRequired: true }
+      }),
+      content: (0, import_fields_document.document)({
+        formatting: true
+      })
     },
     access: import_access.allowAll
   }),

@@ -21,7 +21,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY;
 const {
   ROOT: INSURANCE_ROOT,
   ALL_SECTIONS,
-  DECLARATIONS: { CONFIDENTIALITY, ANTI_BRIBERY },
+  DECLARATIONS: { CONFIDENTIALITY, ANTI_BRIBERY: { ROOT: ANTI_BRIBERY_ROOT } },
 } = INSURANCE_ROUTES;
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
@@ -162,16 +162,12 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
     });
 
     describe('when submitting a fully completed form', () => {
-      it(`should redirect to ${ANTI_BRIBERY}`, () => {
+      it(`should redirect to ${ANTI_BRIBERY_ROOT}`, () => {
         cy.navigateToUrl(url);
 
-        const field = confidentialityPage[FIELD_ID];
+        cy.completeAndSubmitDeclarationConfidentiality();
 
-        field.input().click();
-
-        submitButton().click();
-
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY}`;
+        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
         cy.url().should('eq', expectedUrl);
       });
@@ -180,13 +176,11 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
         it('should have the submitted value', () => {
           cy.navigateToUrl(url);
 
-          const field = confidentialityPage[FIELD_ID];
-
-          field.input().click();
-
-          submitButton().click();
+          cy.completeAndSubmitDeclarationConfidentiality();
 
           cy.navigateToUrl(url);
+
+          const field = confidentialityPage[FIELD_ID];
 
           field.input().should('be.checked');
         });

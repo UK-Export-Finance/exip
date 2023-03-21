@@ -1131,8 +1131,10 @@ input EligibilityCreateInput {
 
 type Declaration {
   id: ID!
-  application: Application
+  confidentiality: DeclarationConfidentiality
+  antiBribery: DeclarationAntiBribery
   agreeToConfidentiality: Boolean
+  agreeToAntiBribery: Boolean
 }
 
 input DeclarationWhereUniqueInput {
@@ -1144,18 +1146,35 @@ input DeclarationWhereInput {
   OR: [DeclarationWhereInput!]
   NOT: [DeclarationWhereInput!]
   id: IDFilter
-  application: ApplicationWhereInput
+  confidentiality: DeclarationConfidentialityWhereInput
+  antiBribery: DeclarationAntiBriberyWhereInput
   agreeToConfidentiality: BooleanFilter
+  agreeToAntiBribery: BooleanFilter
 }
 
 input DeclarationOrderByInput {
   id: OrderDirection
   agreeToConfidentiality: OrderDirection
+  agreeToAntiBribery: OrderDirection
 }
 
 input DeclarationUpdateInput {
-  application: ApplicationRelateToOneForUpdateInput
+  confidentiality: DeclarationConfidentialityRelateToOneForUpdateInput
+  antiBribery: DeclarationAntiBriberyRelateToOneForUpdateInput
   agreeToConfidentiality: Boolean
+  agreeToAntiBribery: Boolean
+}
+
+input DeclarationConfidentialityRelateToOneForUpdateInput {
+  create: DeclarationConfidentialityCreateInput
+  connect: DeclarationConfidentialityWhereUniqueInput
+  disconnect: Boolean
+}
+
+input DeclarationAntiBriberyRelateToOneForUpdateInput {
+  create: DeclarationAntiBriberyCreateInput
+  connect: DeclarationAntiBriberyWhereUniqueInput
+  disconnect: Boolean
 }
 
 input DeclarationUpdateArgs {
@@ -1164,8 +1183,104 @@ input DeclarationUpdateArgs {
 }
 
 input DeclarationCreateInput {
-  application: ApplicationRelateToOneForCreateInput
+  confidentiality: DeclarationConfidentialityRelateToOneForCreateInput
+  antiBribery: DeclarationAntiBriberyRelateToOneForCreateInput
   agreeToConfidentiality: Boolean
+  agreeToAntiBribery: Boolean
+}
+
+input DeclarationConfidentialityRelateToOneForCreateInput {
+  create: DeclarationConfidentialityCreateInput
+  connect: DeclarationConfidentialityWhereUniqueInput
+}
+
+input DeclarationAntiBriberyRelateToOneForCreateInput {
+  create: DeclarationAntiBriberyCreateInput
+  connect: DeclarationAntiBriberyWhereUniqueInput
+}
+
+type DeclarationConfidentiality {
+  id: ID!
+  version: String
+  content: DeclarationConfidentiality_content_Document
+}
+
+type DeclarationConfidentiality_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input DeclarationConfidentialityWhereUniqueInput {
+  id: ID
+}
+
+input DeclarationConfidentialityWhereInput {
+  AND: [DeclarationConfidentialityWhereInput!]
+  OR: [DeclarationConfidentialityWhereInput!]
+  NOT: [DeclarationConfidentialityWhereInput!]
+  id: IDFilter
+  version: StringFilter
+}
+
+input DeclarationConfidentialityOrderByInput {
+  id: OrderDirection
+  version: OrderDirection
+}
+
+input DeclarationConfidentialityUpdateInput {
+  version: String
+  content: JSON
+}
+
+input DeclarationConfidentialityUpdateArgs {
+  where: DeclarationConfidentialityWhereUniqueInput!
+  data: DeclarationConfidentialityUpdateInput!
+}
+
+input DeclarationConfidentialityCreateInput {
+  version: String
+  content: JSON
+}
+
+type DeclarationAntiBribery {
+  id: ID!
+  version: String
+  content: DeclarationAntiBribery_content_Document
+}
+
+type DeclarationAntiBribery_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input DeclarationAntiBriberyWhereUniqueInput {
+  id: ID
+}
+
+input DeclarationAntiBriberyWhereInput {
+  AND: [DeclarationAntiBriberyWhereInput!]
+  OR: [DeclarationAntiBriberyWhereInput!]
+  NOT: [DeclarationAntiBriberyWhereInput!]
+  id: IDFilter
+  version: StringFilter
+}
+
+input DeclarationAntiBriberyOrderByInput {
+  id: OrderDirection
+  version: OrderDirection
+}
+
+input DeclarationAntiBriberyUpdateInput {
+  version: String
+  content: JSON
+}
+
+input DeclarationAntiBriberyUpdateArgs {
+  where: DeclarationAntiBriberyWhereUniqueInput!
+  data: DeclarationAntiBriberyUpdateInput!
+}
+
+input DeclarationAntiBriberyCreateInput {
+  version: String
+  content: JSON
 }
 
 type Page {
@@ -1347,6 +1462,18 @@ type Mutation {
   updateDeclarations(data: [DeclarationUpdateArgs!]!): [Declaration]
   deleteDeclaration(where: DeclarationWhereUniqueInput!): Declaration
   deleteDeclarations(where: [DeclarationWhereUniqueInput!]!): [Declaration]
+  createDeclarationConfidentiality(data: DeclarationConfidentialityCreateInput!): DeclarationConfidentiality
+  createDeclarationConfidentialities(data: [DeclarationConfidentialityCreateInput!]!): [DeclarationConfidentiality]
+  updateDeclarationConfidentiality(where: DeclarationConfidentialityWhereUniqueInput!, data: DeclarationConfidentialityUpdateInput!): DeclarationConfidentiality
+  updateDeclarationConfidentialities(data: [DeclarationConfidentialityUpdateArgs!]!): [DeclarationConfidentiality]
+  deleteDeclarationConfidentiality(where: DeclarationConfidentialityWhereUniqueInput!): DeclarationConfidentiality
+  deleteDeclarationConfidentialities(where: [DeclarationConfidentialityWhereUniqueInput!]!): [DeclarationConfidentiality]
+  createDeclarationAntiBribery(data: DeclarationAntiBriberyCreateInput!): DeclarationAntiBribery
+  createDeclarationAntiBriberies(data: [DeclarationAntiBriberyCreateInput!]!): [DeclarationAntiBribery]
+  updateDeclarationAntiBribery(where: DeclarationAntiBriberyWhereUniqueInput!, data: DeclarationAntiBriberyUpdateInput!): DeclarationAntiBribery
+  updateDeclarationAntiBriberies(data: [DeclarationAntiBriberyUpdateArgs!]!): [DeclarationAntiBribery]
+  deleteDeclarationAntiBribery(where: DeclarationAntiBriberyWhereUniqueInput!): DeclarationAntiBribery
+  deleteDeclarationAntiBriberies(where: [DeclarationAntiBriberyWhereUniqueInput!]!): [DeclarationAntiBribery]
   createPage(data: PageCreateInput!): Page
   createPages(data: [PageCreateInput!]!): [Page]
   updatePage(where: PageWhereUniqueInput!, data: PageUpdateInput!): Page
@@ -1448,6 +1575,12 @@ type Query {
   declarations(where: DeclarationWhereInput! = {}, orderBy: [DeclarationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationWhereUniqueInput): [Declaration!]
   declaration(where: DeclarationWhereUniqueInput!): Declaration
   declarationsCount(where: DeclarationWhereInput! = {}): Int
+  declarationConfidentialities(where: DeclarationConfidentialityWhereInput! = {}, orderBy: [DeclarationConfidentialityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationConfidentialityWhereUniqueInput): [DeclarationConfidentiality!]
+  declarationConfidentiality(where: DeclarationConfidentialityWhereUniqueInput!): DeclarationConfidentiality
+  declarationConfidentialitiesCount(where: DeclarationConfidentialityWhereInput! = {}): Int
+  declarationAntiBriberies(where: DeclarationAntiBriberyWhereInput! = {}, orderBy: [DeclarationAntiBriberyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationAntiBriberyWhereUniqueInput): [DeclarationAntiBribery!]
+  declarationAntiBribery(where: DeclarationAntiBriberyWhereUniqueInput!): DeclarationAntiBribery
+  declarationAntiBriberiesCount(where: DeclarationAntiBriberyWhereInput! = {}): Int
   pages(where: PageWhereInput! = {}, orderBy: [PageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PageWhereUniqueInput): [Page!]
   page(where: PageWhereUniqueInput!): Page
   pagesCount(where: PageWhereInput! = {}): Int

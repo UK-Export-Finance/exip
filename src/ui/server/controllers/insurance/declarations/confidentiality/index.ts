@@ -3,6 +3,7 @@ import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import save from './save-data';
 import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
@@ -11,7 +12,10 @@ const { INSURANCE, PROBLEM_WITH_SERVICE } = ROUTES;
 
 const {
   INSURANCE_ROOT,
-  DECLARATIONS: { CONFIDENTIALITY_SAVE_AND_BACK, ANTI_BRIBERY },
+  DECLARATIONS: {
+    CONFIDENTIALITY_SAVE_AND_BACK,
+    ANTI_BRIBERY: { ROOT: ANTI_BRIBERY_ROOT },
+  },
 } = INSURANCE;
 
 /**
@@ -34,10 +38,10 @@ const CONFIDENTIALITY_CONTENT = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.LIS
 
 /**
  * get
- * Render the Declarations - confidentiality page
+ * Render the Declarations - Confidentiality page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Dashboard page
+ * @returns {Express.Response.render} Declarations - Confidentiality page
  */
 export const get = async (req: Request, res: Response) => {
   const { application } = res.locals;
@@ -62,7 +66,7 @@ export const get = async (req: Request, res: Response) => {
 
 /**
  * post
- * Check Declarations - confidentiality validation errors and if successful, redirect to the next part of the flow.
+ * Check Declarations - Confidentiality validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -91,5 +95,18 @@ export const post = async (req: Request, res: Response) => {
     });
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY}`);
+  try {
+    // save the application
+    const saveResponse = await save.declaration(application, req.body);
+
+    if (!saveResponse) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`);
+  } catch (err) {
+    console.error('Error updating application - declarations - confidentiality ', { err });
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
 };

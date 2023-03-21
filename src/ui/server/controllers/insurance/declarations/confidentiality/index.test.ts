@@ -4,6 +4,7 @@ import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import save from './save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -13,12 +14,21 @@ const { INSURANCE, PROBLEM_WITH_SERVICE } = ROUTES;
 
 const {
   INSURANCE_ROOT,
-  DECLARATIONS: { CONFIDENTIALITY_SAVE_AND_BACK, ANTI_BRIBERY },
+  DECLARATIONS: {
+    CONFIDENTIALITY_SAVE_AND_BACK,
+    ANTI_BRIBERY: { ROOT: ANTI_BRIBERY_ROOT },
+  },
 } = INSURANCE;
 
 const CONFIDENTIALITY_CONTENT = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.LIST;
 
 describe('controllers/insurance/declarations/confidentiality', () => {
+  jest.mock('./save-data');
+
+  let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
+
+  save.declaration = mockSaveDeclaration;
+
   let req: Request;
   let res: Response;
 
@@ -91,12 +101,19 @@ describe('controllers/insurance/declarations/confidentiality', () => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${ANTI_BRIBERY}`, async () => {
+      it(`should redirect to ${ANTI_BRIBERY_ROOT}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ANTI_BRIBERY}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      it('should call save.declaration with application and req.body', async () => {
+        await post(req, res);
+
+        expect(save.declaration).toHaveBeenCalledTimes(1);
+        expect(save.declaration).toHaveBeenCalledWith(mockApplication, validBody);
       });
     });
 
@@ -127,6 +144,40 @@ describe('controllers/insurance/declarations/confidentiality', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('save data call', () => {
+        describe('when the save data API call does not return anything', () => {
+          beforeEach(() => {
+            mockSaveDeclaration = jest.fn(() => Promise.resolve(false));
+            save.declaration = mockSaveDeclaration;
+
+            req.body = validBody;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when the save data API call fails', () => {
+          beforeEach(() => {
+            mockSaveDeclaration = jest.fn(() => Promise.reject());
+            save.declaration = mockSaveDeclaration;
+
+            req.body = validBody;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

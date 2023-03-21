@@ -355,13 +355,67 @@ CREATE TABLE `Declaration` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agreeToConfidentiality` tinyint(1) NOT NULL DEFAULT '0',
+	`antiBribery` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agreeToAntiBribery` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `Declaration_application_idx` (`application`),
+  KEY `Declaration_confidentiality_idx` (`confidentiality`),
+  KEY `Declaration_antiBribery_idx` (`antiBribery`),
+  CONSTRAINT `Declaration_antiBribery_fkey` FOREIGN KEY (`antiBribery`) REFERENCES `DeclarationAntiBribery` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Declaration_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `Declaration` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+# Dump of table DeclarationAntiBribery
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `DeclarationAntiBribery`;
+
+CREATE TABLE `DeclarationAntiBribery` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `version` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `content` json NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `DeclarationAntiBribery` WRITE;
+/*!40000 ALTER TABLE `DeclarationAntiBribery` DISABLE KEYS */;
+
+INSERT INTO `DeclarationAntiBribery` (`id`, `version`, `content`)
+VALUES
+	('clfb5krcn0850b6oqpvcut5z8','1','[{\"type\": \"paragraph\", \"children\": [{\"text\": \"By submitting this application (also known as a ‘proposal’), you declare that except for any matters you have told us about in writing:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"neither you nor any of your current Senior Officers appear on a debarment list published by the World Bank Group, the African Development Bank, the Asian Development Bank, the European Bank for Reconstruction and Development or the Inter-American Development Bank (or any successor organisations of the foregoing), of contractors or individuals who are ineligible to tender for, or participate in, any project they fund;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you have no reason to believe, after having made reasonable enquiries, that any Involved Group Company, Consortium Party or Agent, or any of their current Senior Officers, appear on any such list;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"during the last 5 years neither you nor any of your current Senior Officers or any Group Company have:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"been found guilty by any court or competent authority of a Relevant Offence or any offence relating to bribery or corruption under the law of any jurisdiction outside the UK;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"been subject to any administrative sanction (for example, a deferred prosecution agreement or civil forfeiture order) or other similar administrative measure anywhere in the world for contravening any laws which prohibit bribery, including bribery of foreign public officials; or\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"admitted to having engaged in any offence or activity as referred to in paragraph (3)(a) above or has admitted to engaging in any other activity which is prohibited under applicable laws relating to bribery or corrupt activity;\"}]}]}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"neither you nor any of your current Senior Officers or any Group Company are currently under charge in any court or before any competent authority, or to the best of your knowledge, subject to a formal investigation by public prosecutors on the grounds that you or they have committed an offence of the type listed in paragraph 3(a) above;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"neither you nor any Group Company has: engaged in, any Potential Corrupt Activity or Corrupt Activity in relation to the export contract(s) or any related agreement (which includes any unilateral undertaking as well as any consent or authorisation needed to obtain or perform the export contract(s) but not any subcontract);\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"neither you nor any Involved Group Company has any knowledge of any person engaging in any Potential Corrupt Activity or Corrupt Activity in relation to the export contract(s) or any related agreement;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you have no reason to believe and you do not believe, after having made reasonable enquiries, that:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"any Consortium Party or Agent, any of their current Senior Officers has at any time during the last five years engaged in or been subject to any of the events referred to in paragraph (3) above;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"any Consortium Party or Agent or any of their current Senior Officers has at any time during the last five years been subject to any of the events referred to in paragraph (4) above; or\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"any Consortium Party or Agent has engaged in any Potential Corrupt Activity or Corrupt Activity in relation to the export contract(s) or any related agreement;\"}]}]}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you have made reasonable enquiries regarding (i) any Consortium Party or Agent and its conduct in relation to the export contract and any related agreement; and (ii) whether any Group Companies, at the date of this Proposal, have had, or are intended to have any material part in the negotiation or supply of the export contract:\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"the export contract(s) referred to in this Proposal , and all arrangements connected with its/their financing or procurement, have not been, and will not be, used for the purposes of money laundering (as defined in Part 7 of the Proceeds of Crime Act 2002) or in any other manner that would constitute a Relevant Offence.\"}]}]}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"\"}]}]');
+
+/*!40000 ALTER TABLE `DeclarationAntiBribery` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+# Dump of table DeclarationConfidentiality
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `DeclarationConfidentiality`;
+
+CREATE TABLE `DeclarationConfidentiality` (
+  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` json NOT NULL,
+  `version` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `DeclarationConfidentiality` WRITE;
+/*!40000 ALTER TABLE `DeclarationConfidentiality` DISABLE KEYS */;
+
+INSERT INTO `DeclarationConfidentiality` (`id`, `content`, `version`)
+VALUES
+	('clf3te7vx1432cfoqp9rbop73','[{\"type\": \"paragraph\", \"children\": [{\"text\": \"By submitting this application (also known as a ‘proposal’) you agree that:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"(unless otherwise agreed) this Proposal, its attachments and all discussions and correspondence relating to it are confidential and will not be disclosed to any third party except:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by you, on a confidential basis to your bank, broker, lawyers, other professional advisers, or auditors, in each case for the purpose for which each of them has been engaged by you;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by us in accordance with applicable law (including the provisions of the Export and Investment Guarantees Act 1991) or our obligations to Parliament as a Government Department;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by us if we decide that we are required to disclose it in accordance under the Freedom of Information Act2000 or the Environmental Information Regulations 2004; or\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by us:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"to our lawyers and other professional advisers, auditors, other Government Departments and reinsurers (including other export credit agencies) on a confidential basis in connection with our consideration of this application or the issue or reinsurance of any policy; and\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"to third party service providers (such as IT contractors) in order to enable them to provide services to us and on the basis that the information must be held securely and in confidence;\"}]}]}]}]}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"(unless otherwise agreed) information we hold about you (but not including details of any contract that we enter into with you or for your benefit or information about any of your export contracts, other than the export market involved) may be shared on a confidential basis between any Government Departments and/or other public sector bodies that are involved in supporting trade and investment to assist them in discharging their functions; and\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"if we ask you to agree to our disclosing information to anyone not mentioned in paragraph (1)(b) to (d) above, you will not unreasonably delay or withhold your agreement to this.\"}]}]}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"\"}]}]','1');
+
+/*!40000 ALTER TABLE `DeclarationConfidentiality` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 
 # Dump of table Eligibility
 # ------------------------------------------------------------

@@ -1,6 +1,5 @@
 const SHARED = {
   HEADING_CAPTION: 'Declarations',
-  CONFIRM_READ_AND_AGREE: "Confirm you've read and agree with the ",
 };
 
 const CONFIDENTIALITY = {
