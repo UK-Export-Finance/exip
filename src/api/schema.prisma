@@ -51,6 +51,7 @@ model Application {
   from_ExporterCompany_application  ExporterCompany[]  @relation("ExporterCompany_application")
   from_Buyer_application            Buyer[]            @relation("Buyer_application")
   from_Eligibility_application      Eligibility[]      @relation("Eligibility_application")
+  from_Declaration_application      Declaration[]      @relation("Declaration_application")
 
   @@index([eligibilityId])
   @@index([referenceNumber])
@@ -230,24 +231,17 @@ model Eligibility {
 }
 
 model Declaration {
-  id                           String                      @id @default(cuid())
-  confidentiality              DeclarationConfidentiality? @relation("Declaration_confidentiality", fields: [confidentialityId], references: [id])
-  confidentialityId            String?                     @map("confidentiality")
-  antiBribery                  DeclarationAntiBribery?     @relation("Declaration_antiBribery", fields: [antiBriberyId], references: [id])
-  antiBriberyId                String?                     @map("antiBribery")
-  agreeToConfidentiality       Boolean                     @default(false)
-  agreeToAntiBribery           Boolean                     @default(false)
-  from_Application_declaration Application[]               @relation("Application_declaration")
+  id                           String                  @id @default(cuid())
+  application                  Application?            @relation("Declaration_application", fields: [applicationId], references: [id])
+  applicationId                String?                 @map("application")
+  antiBribery                  DeclarationAntiBribery? @relation("Declaration_antiBribery", fields: [antiBriberyId], references: [id])
+  antiBriberyId                String?                 @map("antiBribery")
+  agreeToConfidentiality       Boolean                 @default(false)
+  agreeToAntiBribery           Boolean                 @default(false)
+  from_Application_declaration Application[]           @relation("Application_declaration")
 
-  @@index([confidentialityId])
+  @@index([applicationId])
   @@index([antiBriberyId])
-}
-
-model DeclarationConfidentiality {
-  id                               String        @id @default(cuid())
-  version                          String        @default("")
-  content                          Json          @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  from_Declaration_confidentiality Declaration[] @relation("Declaration_confidentiality")
 }
 
 model DeclarationAntiBribery {
