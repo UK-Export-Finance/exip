@@ -37,6 +37,7 @@ Cypress.Commands.add('checkCookiesConsentBannerDoesNotExist', analytics.checkCoo
 Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);
 
 Cypress.Commands.add('submitInsuranceEligibilityAnswersHappyPath', require('./insurance/eligibility/submit-answers-happy-path'));
+Cypress.Commands.add('submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath', require('./insurance/eligibility/submit-answers-from-buyer-country-happy-path'));
 
 Cypress.Commands.add('submitInsuranceEligibilityAndStartApplication', require('./insurance/submit-eligibility-and-start-an-application'));
 
@@ -57,6 +58,7 @@ Cypress.Commands.add('createAccount', require('./insurance/account/create-accoun
 
 Cypress.Commands.add('accountAddAndGetOTP', require('./insurance/account/add-and-get-OTP'));
 
+Cypress.Commands.add('completeInsuranceEligibilitySignInAndGoToDashboard', require('./insurance/account/complete-insurance-eligibility-sign-in-and-go-to-dashboard'));
 Cypress.Commands.add('completeSignInAndGoToDashboard', require('./insurance/account/complete-sign-in-and-go-to-dashboard'));
 
 Cypress.Commands.add('completeSignInAndGoToApplication', require('./insurance/account/complete-sign-in-and-go-to-application'));
