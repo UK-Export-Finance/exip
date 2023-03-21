@@ -14,12 +14,12 @@ const mapChild = (child) => {
 };
 
 /**
- * mapKeystoneDocument
+ * flattenKeystoneDocument
  * Map keystone document data into a flattened array
  * This is dynamic and can handle unlimited nested data
  * @param {Array} Keystone RTE document data
  * @returns {Array} Flattened array
  */
-const mapKeystoneDocument = (content) => content.map((child) => mapChild(child)).flat();
+const flattenKeystoneDocument = (content) => content.map((child) => mapChild(child)).flat();
 
-export default mapKeystoneDocument;
+export default flattenKeystoneDocument;

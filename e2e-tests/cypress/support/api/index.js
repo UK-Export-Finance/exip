@@ -77,6 +77,17 @@ const queryStrings = {
         }
       }
     `,
+    getLatestAntiBribery: () => gql`
+      query DeclarationAntiBriberies {
+        declarationAntiBriberies(orderBy: { version: desc }, take: 1) {
+          id
+          version
+          content {
+            document
+          }
+        }
+      }
+    `,
   },
 };
 
@@ -250,7 +261,7 @@ const deleteApplicationByReferenceNumber = async (referenceNumber) => {
 const declarations = {
   /**
    * getLatestConfidentiality
-   * Get the latest confidentiality declaration content
+   * Get the latest Confidentiality declaration content
    * @returns {Object} Confidentiality declaration
    */
   getLatestConfidentiality: async () => {
@@ -258,6 +269,24 @@ const declarations = {
       const responseBody = await apollo.query({
         query: queryStrings.declarations.getLatestConfidentiality(),
       }).then((response) => response.data.declarationConfidentialities[0]);
+
+      return responseBody;
+    } catch (err) {
+      console.error(err);
+
+      throw new Error('Getting latest declaration - confidentiality ', { err });
+    }
+  },
+  /**
+   * getLatestAntiBribery
+   * Get the latest Anti-bribery declaration content
+   * @returns {Object} Anti-bribery declaration
+   */
+  getLatestAntiBribery: async () => {
+    try {
+      const responseBody = await apollo.query({
+        query: queryStrings.declarations.getLatestAntiBribery(),
+      }).then((response) => response.data.declarationAntiBriberies[0]);
 
       return responseBody;
     } catch (err) {
