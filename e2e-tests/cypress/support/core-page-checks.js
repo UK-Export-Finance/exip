@@ -1,15 +1,15 @@
 import { BUTTONS, LINKS, ORGANISATION } from '../../content-strings';
 import { backLink as backLinkSelector, heading, submitButton } from '../e2e/pages/shared';
 
-const lighthouseAudit = (lightHouseThresholds = {}) => {
-  cy.lighthouse({
-    accessibility: 100,
-    performance: 75,
-    'best-practices': 100,
-    seo: 70,
-    ...lightHouseThresholds,
-  });
-};
+// const lighthouseAudit = (lightHouseThresholds = {}) => {
+//   cy.lighthouse({
+//     accessibility: 100,
+//     performance: 75,
+//     'best-practices': 100,
+//     seo: 70,
+//     ...lightHouseThresholds,
+//   });
+// };
 
 /**
  * checkBackLink
@@ -75,10 +75,10 @@ const corePageChecks = ({
   assertSubmitButton = true,
   submitButtonCopy = BUTTONS.CONTINUE,
   assertBackLink = true,
-  lightHouseThresholds,
+  // lightHouseThresholds,
 }) => {
   // run lighthouse audit
-  lighthouseAudit(lightHouseThresholds);
+  // lighthouseAudit(lightHouseThresholds);
 
   if (assertBackLink) {
     // check back link

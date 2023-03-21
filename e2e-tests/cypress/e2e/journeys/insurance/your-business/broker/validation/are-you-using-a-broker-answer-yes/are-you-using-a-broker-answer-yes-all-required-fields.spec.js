@@ -17,6 +17,11 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   let checkYourAnswersUrl;
 
   before(() => {
+    cy.clearCookies();
+    Cypress.session.clearAllSavedSessions();
+
+    // cy.saveSession();
+
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
       task.link().click();
 
@@ -32,20 +37,18 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    cy.saveSession();
   });
 
   after(() => {
     cy.deleteAccount();
   });
 
-  describe('when the yes radio is selected and all required fields are entered', () => {
-    it('should not display validation errors', () => {
-      cy.completeAndSubmitBrokerForm();
+  it('should not display validation errors when the yes radio is selected and all required fields are entered', () => {
+    cy.completeAndSubmitBrokerForm();
 
-      partials.errorSummaryListItems().should('have.length', 0);
-      cy.url().should('eq', checkYourAnswersUrl);
-    });
+    partials.errorSummaryListItems().should('have.length', 0);
+
+    cy.url().should('eq', checkYourAnswersUrl);
   });
 });
