@@ -22,7 +22,7 @@ const applications = {
       }
 
       console.error(response);
-      throw new Error('Getting applications');
+      throw new Error('Getting all applications');
     } catch (err) {
       console.error(err);
       throw new Error('Getting all applications');

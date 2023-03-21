@@ -20,6 +20,9 @@ const dashboardPage = {
         buyerName: () => cy.get(`[data-cy="ref-${referenceNumber}-buyerName"]`),
         insuredFor: () => cy.get(`[data-cy="ref-${referenceNumber}-insuredFor"]`),
       }),
+      firstRow: {
+        referenceNumber: () => cy.get('table tbody tr').first().find('td a'),
+      },
       lastRow: {
         referenceNumber: () => cy.get('table tbody tr').last().find('td a'),
       },

@@ -20,6 +20,8 @@ context('Insurance - Dashboard - new application', () => {
       cy.navigateToUrl(url);
 
       cy.url().should('eq', url);
+
+      table.body.rows().should('have.length', 1);
     });
   });
 
@@ -46,8 +48,8 @@ context('Insurance - Dashboard - new application', () => {
 
       cy.url().should('eq', expectedUrl);
 
-      // go into the application, to get the reference number for deletion
-      table.body.lastRow.referenceNumber().click();
+      // go into the most recently created application to get the reference number for deletion
+      table.body.firstRow.referenceNumber().click();
 
       cy.getReferenceNumber().then((refNumber) => {
         referenceNumbers = [...referenceNumbers, refNumber];
@@ -57,9 +59,27 @@ context('Insurance - Dashboard - new application', () => {
       });
     });
 
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
     it('should render the newly created application and the previously created application', () => {
-      // check that the dashboard is now populated
       table.body.rows().should('have.length', 2);
+    });
+  
+    it('should order the applications in descending order', () => {
+      let firstReferenceNumber;
+      let lastReferenceNumber;
+
+      table.body.firstRow.referenceNumber().invoke('text').then((text) => {
+        firstReferenceNumber = Number(text);
+      });
+
+      table.body.lastRow.referenceNumber().invoke('text').then((text) => {
+        lastReferenceNumber = Number(text);
+
+        expect(firstReferenceNumber).to.be.greaterThan(lastReferenceNumber);
+      });
     });
   });
 });
