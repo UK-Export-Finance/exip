@@ -530,20 +530,7 @@ export const lists = {
   Declaration: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      confidentiality: relationship({ ref: 'DeclarationConfidentiality' }),
       agreeToConfidentiality: checkbox({ defaultValue: false }),
-    },
-    access: allowAll,
-  }),
-  DeclarationConfidentiality: list({
-    fields: {
-      version: text({
-        label: 'Version',
-        validation: { isRequired: true },
-      }),
-      content: document({
-        formatting: true,
-      }),
     },
     access: allowAll,
   }),

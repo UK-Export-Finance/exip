@@ -354,42 +354,14 @@ DROP TABLE IF EXISTS `Declaration`;
 CREATE TABLE `Declaration` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `confidentiality` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agreeToConfidentiality` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `Declaration_application_idx` (`application`),
-  KEY `Declaration_confidentiality_idx` (`confidentiality`),
   CONSTRAINT `Declaration_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Declaration_confidentiality_fkey` FOREIGN KEY (`confidentiality`) REFERENCES `DeclarationConfidentiality` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `Declaration` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
-# Dump of table DeclarationConfidentiality
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `DeclarationConfidentiality`;
-
-CREATE TABLE `DeclarationConfidentiality` (
-  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` json NOT NULL,
-  `version` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-LOCK TABLES `DeclarationConfidentiality` WRITE;
-/*!40000 ALTER TABLE `DeclarationConfidentiality` DISABLE KEYS */;
-
-INSERT INTO `DeclarationConfidentiality` (`id`, `content`, `version`)
-VALUES
-	('clf3te7vx1432cfoqp9rbop73','[{\"type\": \"paragraph\", \"children\": [{\"text\": \"By submitting this application (also known as a ‘proposal’) you agree that:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"(unless otherwise agreed) this Proposal, its attachments and all discussions and correspondence relating to it are confidential and will not be disclosed to any third party except:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by you, on a confidential basis to your bank, broker, lawyers, other professional advisers, or auditors, in each case for the purpose for which each of them has been engaged by you;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by us in accordance with applicable law (including the provisions of the Export and Investment Guarantees Act 1991) or our obligations to Parliament as a Government Department;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by us if we decide that we are required to disclose it in accordance under the Freedom of Information Act2000 or the Environmental Information Regulations 2004; or\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by us:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"to our lawyers and other professional advisers, auditors, other Government Departments and reinsurers (including other export credit agencies) on a confidential basis in connection with our consideration of this application or the issue or reinsurance of any policy; and\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"to third party service providers (such as IT contractors) in order to enable them to provide services to us and on the basis that the information must be held securely and in confidence;\"}]}]}]}]}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"(unless otherwise agreed) information we hold about you (but not including details of any contract that we enter into with you or for your benefit or information about any of your export contracts, other than the export market involved) may be shared on a confidential basis between any Government Departments and/or other public sector bodies that are involved in supporting trade and investment to assist them in discharging their functions; and\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"if we ask you to agree to our disclosing information to anyone not mentioned in paragraph (1)(b) to (d) above, you will not unreasonably delay or withhold your agreement to this.\"}]}]}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"\"}]}]','1');
-
-/*!40000 ALTER TABLE `DeclarationConfidentiality` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 
 # Dump of table Eligibility
 # ------------------------------------------------------------
