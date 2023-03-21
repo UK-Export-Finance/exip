@@ -44,7 +44,7 @@ CREATE TABLE `Application` (
 	`exporterCompany` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`buyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-	`declaration` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+	`declaration` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Application_eligibility_idx` (`eligibility`),
   KEY `Application_referenceNumber_idx` (`referenceNumber`),
@@ -352,10 +352,10 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `Declaration`;
 
 CREATE TABLE `Declaration` (
-  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `application` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agreeToConfidentiality` tinyint(1) NOT NULL DEFAULT '0',
-  `antiBribery` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `antiBribery` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agreeToAntiBribery` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `Declaration_application_idx` (`application`),
