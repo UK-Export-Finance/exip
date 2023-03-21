@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 
-const { ACCOUNT: { CREATE: VERIFY_EMAIL, VERIFY_EMAIL_LINK_EXPIRED } } = ROUTES;
+const { ACCOUNT: { CREATE: { VERIFY_EMAIL, VERIFY_EMAIL_LINK_EXPIRED } } } = ROUTES;
 
 context('Insurance - Account - Create - Confirm email page - invalid token - As an Exporter I want to verify my email address, So that I can activate my email address and use it to create a digital service account with UKEF', () => {
   describe(`When an account does not exist, verification token is invalid and exporter navigates to ${VERIFY_EMAIL} with the invalid token`, () => {
