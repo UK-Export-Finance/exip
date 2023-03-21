@@ -2,27 +2,28 @@
   counter-reset: count;
 
   > li {
+    position: relative;
     list-style: none;
     counter-increment: count;
   }
 
   > li::before {
+    position: absolute;
+    top: 0;
+    left: -2em;
     content: "(" counter(count) ") ";
   }
 }
 
 .counter-list--bold {
-  >li::before {
+  > li::before {
     font-weight: bold;
   }
 }
 
 .counter-list-item {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-
   > span {
+    display: block;
     margin-left: 2em;
   }
 }
@@ -31,14 +32,17 @@
   padding-left: 3em;
   counter-reset: count;
 
-
   > li {
+    position: relative;
     list-style: none;
     counter-increment: count;
   }
 
-  >li::before {
+  > li::before {
     content: "(" counter(count, lower-alpha) ") ";
+    position: absolute;
+    top: 0;
+    left: -1em;
   }
 }
 
@@ -47,11 +51,15 @@
   counter-reset: count;
 
   > li {
+    position: relative;
     list-style: none;
     counter-increment: count;
   }
 
-  >li::before {
+  > li::before {
     content: "(" counter(count, lower-roman) ") ";
+    position: absolute;
+    top: 0;
+    left: -1em;
   }
 }
