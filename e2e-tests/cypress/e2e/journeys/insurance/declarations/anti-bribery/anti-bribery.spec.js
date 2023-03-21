@@ -1,7 +1,11 @@
-import { headingCaption, saveAndBackButton } from '../../../../pages/shared';
+import {
+  headingCaption,
+  submitButton,
+  saveAndBackButton,
+} from '../../../../pages/shared';
 import { antiBriberyPage } from '../../../../pages/insurance/declarations';
 import partials from '../../../../partials';
-import { BUTTONS, PAGES } from '../../../../../../content-strings';
+import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -19,6 +23,7 @@ const {
     CONFIDENTIALITY,
     ANTI_BRIBERY: {
       ROOT: ANTI_BRIBERY_ROOT,
+      CODE_OF_CONDUCT,
     },
   },
 } = INSURANCE_ROUTES;
@@ -131,6 +136,64 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
       saveAndBackButton().should('exist');
 
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
+  });
+
+  describe('form submission', () => {
+    describe('when submitting an empty form', () => {
+      let field;
+
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        field = antiBriberyPage[FIELD_ID];
+      });
+
+      it('should render a validation error', () => {
+        submitButton().click();
+
+        partials.errorSummaryListItems().should('exist');
+        partials.errorSummaryListItems().should('have.length', 1);
+
+        const expectedMessage = ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY;
+
+        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
+
+        cy.checkText(field.errorMessage(), `Error: ${expectedMessage}`);
+      });
+
+      it('should focus on input when clicking summary error message', () => {
+        submitButton().click();
+
+        partials.errorSummaryListItemLinks().eq(0).click();
+        field.input().should('have.focus');
+      });
+    });
+
+    describe('when submitting a fully completed form', () => {
+      it(`should redirect to ${CODE_OF_CONDUCT}`, () => {
+        cy.navigateToUrl(url);
+
+        cy.completeAndSubmitDeclarationAntiBribery();
+
+        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
+
+        cy.url().should('eq', expectedUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          cy.completeAndSubmitDeclarationAntiBribery();
+
+          cy.navigateToUrl(url);
+
+          const field = antiBriberyPage[FIELD_ID];
+
+          field.input().should('be.checked');
+        });
+      });
     });
   });
 });

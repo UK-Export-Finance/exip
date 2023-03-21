@@ -82,6 +82,7 @@ Cypress.Commands.add('completeAndSubmitCompanyOrOrganisationForm', require('./in
 Cypress.Commands.add('completeAndSubmitWorkingWithBuyerForm', require('./insurance/your-buyer/complete-and-submit-working-with-buyer-form'));
 
 Cypress.Commands.add('completeAndSubmitDeclarationConfidentiality', require('./insurance/declarations/complete-and-submit-confidentiality-form'));
+Cypress.Commands.add('completeAndSubmitDeclarationAntiBribery', require('./insurance/declarations/complete-and-submit-anti-bribery-form'));
 
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));

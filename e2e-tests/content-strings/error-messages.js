@@ -267,6 +267,9 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY]: {
         IS_EMPTY: 'Confirm that you have read and accept the confidentiality declaration',
       },
+      [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_ANTI_BRIBERY]: {
+        IS_EMPTY: 'Confirm that you have read and accept the anti-bribery and corruption declaration',
+      },
     },
   },
 };

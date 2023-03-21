@@ -1,6 +1,6 @@
-import api from '../../../../../api';
-import { sanitiseData } from '../../../../../helpers/sanitise-data';
-import { Application, RequestBody } from '../../../../../../types';
+import api from '../../../../api';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import { Application, RequestBody } from '../../../../../types';
 
 /**
  * declarations
