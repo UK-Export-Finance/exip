@@ -4,14 +4,20 @@ import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 context('Cookies consent - accept', () => {
+  const url = ROUTES.QUOTE.BUYER_COUNTRY;
+
   beforeEach(() => {
     cy.login();
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+    cy.url().should('include', url);
   });
 
   describe('when clicking `accept cookies` button', () => {
     beforeEach(() => {
+      cy.clearCookies();
+
+      cy.navigateToUrl(url);
+
       partials.cookieBanner.question.acceptButton().click();
     });
 
@@ -56,6 +62,10 @@ context('Cookies consent - accept', () => {
 
   describe('when clicking `hide this message` button', () => {
     beforeEach(() => {
+      cy.clearCookies();
+
+      cy.navigateToUrl(url);
+
       partials.cookieBanner.question.acceptButton().click();
       partials.cookieBanner.hideButton().click();
     });
@@ -76,6 +86,10 @@ context('Cookies consent - accept', () => {
 
   describe('after accepting cookies and navigating to another page', () => {
     beforeEach(() => {
+      cy.clearCookies();
+
+      cy.navigateToUrl(url);
+
       partials.cookieBanner.question.acceptButton().click();
       partials.cookieBanner.hideButton().click();
       completeAndSubmitBuyerCountryForm();

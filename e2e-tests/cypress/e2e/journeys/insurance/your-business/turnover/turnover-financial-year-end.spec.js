@@ -26,8 +26,12 @@ const field = turnover[fieldId];
 
 context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, () => {
   let referenceNumber;
+  let url;
 
-  before(() => {
+  beforeEach(() => {
+    cy.clearCookies();
+    Cypress.session.clearAllSavedSessions();
+
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
@@ -36,18 +40,14 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
 
       cy.url().should('eq', url);
     });
   });
 
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
@@ -64,6 +64,9 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
   let referenceNumber;
 
   before(() => {
+    cy.clearCookies();
+    Cypress.session.clearAllSavedSessions();
+
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
@@ -80,7 +83,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it(`should not display ${FINANCIAL_YEAR_END_DATE} section`, () => {
