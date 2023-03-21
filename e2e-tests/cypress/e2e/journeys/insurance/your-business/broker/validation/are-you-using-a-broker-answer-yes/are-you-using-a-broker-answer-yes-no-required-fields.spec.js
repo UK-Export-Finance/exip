@@ -26,12 +26,16 @@ const task = taskList.prepareApplication.tasks.exporterBusiness;
 const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 context('Insurance - Your business - Broker Page - As an Exporter I want to confirm that I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my export insurance', () => {
+  let referenceNumber;
+
   before(() => {
     cy.clearCookies();
 
     Cypress.session.clearAllSavedSessions();
 
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
@@ -49,7 +53,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('should display validation errors when the yes radio is selected and no required fields are entered', () => {

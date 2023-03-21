@@ -26,10 +26,13 @@ const ERROR_ASSERTIONS = {
 };
 
 describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_ID}`, () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
@@ -48,7 +51,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it(`should display validation errors when ${FIELD_ID} left empty`, () => {

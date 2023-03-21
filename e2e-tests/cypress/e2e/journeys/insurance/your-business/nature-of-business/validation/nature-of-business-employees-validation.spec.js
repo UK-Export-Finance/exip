@@ -18,10 +18,13 @@ const {
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - number of employees input validation', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
@@ -41,7 +44,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe(`${EMPLOYEES_UK} validation`, () => {

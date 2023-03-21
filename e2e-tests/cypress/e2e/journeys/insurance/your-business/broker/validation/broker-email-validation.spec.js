@@ -32,13 +32,16 @@ const ERROR_ASSERTIONS = {
 };
 
 context('Insurance - Your business - Broker Page - Validation - Email', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
     cy.clearCookies();
     Cypress.session.clearAllSavedSessions();
 
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       task.link().click();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
@@ -52,7 +55,7 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('should display validation errors when the email field is left empty', () => {

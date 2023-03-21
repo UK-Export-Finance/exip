@@ -10,7 +10,7 @@ const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
  */
 const deleteAccount = (email = exporterEmail) => {
   try {
-    // get the created exporter.
+    // get the exporter.
     api.getExporterByEmail(email).then((response) => {
       const { data } = response.body;
 

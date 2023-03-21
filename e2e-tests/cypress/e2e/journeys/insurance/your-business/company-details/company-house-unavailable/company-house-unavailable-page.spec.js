@@ -36,7 +36,7 @@ context("Insurance - Your business - Companies house unavailable page - I want t
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

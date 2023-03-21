@@ -10,6 +10,7 @@ import {
   accountSignInSendNewCode,
   verifyAccountSignInCode,
   addAndGetOTP,
+  deleteApplicationByReferenceNumber,
 } from './custom-resolvers';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
@@ -199,6 +200,11 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           companyAddressId: ID!
           data: ExporterCompanyAndCompanyAddressInput!
         ): ExporterCompanyAndCompanyAddress
+
+        """ delete an application by reference number """
+        deleteApplicationByReferenceNumber(
+          referenceNumber: Int!
+        ): SuccessResponse
       }
 
       type Query {
@@ -222,6 +228,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         sendEmailConfirmEmailAddress,
         verifyAccountSignInCode,
         addAndGetOTP,
+        deleteApplicationByReferenceNumber,
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);
