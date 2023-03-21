@@ -38,7 +38,7 @@ context('Insurance - Dashboard - new application', () => {
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

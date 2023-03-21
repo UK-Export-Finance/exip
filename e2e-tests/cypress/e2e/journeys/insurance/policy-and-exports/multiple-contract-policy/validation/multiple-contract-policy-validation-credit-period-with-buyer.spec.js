@@ -30,10 +30,13 @@ const {
 } = ERROR_MESSAGES;
 
 context('Insurance - Policy and exports - Multiple contract policy page - form validation - credit period with buyer', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
       multiplePolicyField.input().click();
@@ -50,7 +53,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   const field = multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];

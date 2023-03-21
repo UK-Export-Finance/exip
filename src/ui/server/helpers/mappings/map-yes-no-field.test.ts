@@ -22,7 +22,7 @@ describe('server/helpers/mappings/mapYesNoField', () => {
   });
 
   describe('when value is "undefined"', () => {
-    it('should return "No"', () => {
+    it('should return "undefined"', () => {
       const response = mapYesNoField();
 
       expect(response).toEqual(undefined);
