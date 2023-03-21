@@ -1,11 +1,12 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
-import { Request, Response } from '../../../../../types';
-import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import api from '../../../../api';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from './save-data';
+import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
 
@@ -30,14 +31,14 @@ export const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY_SAVE_AND_BACK}`,
 });
 
-export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.CONFIDENTIALITY;
+export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.DECLARATION;
 
 /**
  * get
- * Render the Declarations - confidentiality page
+ * Render the Declarations - Confidentiality page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Dashboard page
+ * @returns {Express.Response.render} Declarations - Confidentiality page
  */
 export const get = async (req: Request, res: Response) => {
   const { application } = res.locals;
@@ -58,7 +59,10 @@ export const get = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(refNumber),
-      content: confidentialityContent.content.document,
+      documentContent: confidentialityContent.content.document,
+      documentConfig: keystoneDocumentRendererConfig({
+        firstLevelListClass: 'counter-list counter-list--bold',
+      }),
       application,
     });
   } catch (err) {
@@ -70,7 +74,7 @@ export const get = async (req: Request, res: Response) => {
 
 /**
  * post
- * Check Declarations - confidentiality validation errors and if successful, redirect to the next part of the flow.
+ * Check Declarations - Confidentiality validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -97,7 +101,10 @@ export const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
-        content: confidentialityContent.content.document,
+        documentContent: confidentialityContent.content.document,
+        documentConfig: keystoneDocumentRendererConfig({
+          firstLevelListClass: 'counter-list counter-list--bold',
+        }),
         validationErrors,
       });
     } catch (err) {
@@ -115,7 +122,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY.ROOT}`);
   } catch (err) {
     console.error('Error updating application - declarations - confidentiality ', { err });
 

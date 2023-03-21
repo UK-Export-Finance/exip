@@ -1,14 +1,18 @@
 const SHARED = {
   HEADING_CAPTION: 'Declarations',
-  CONFIRM_READ_AND_AGREE: "Confirm you've read and agree with the ",
 };
 
 const CONFIDENTIALITY = {
   ...SHARED,
   PAGE_TITLE: 'Confidentiality',
-  CONFIRM_HEADING: `${SHARED.CONFIRM_READ_AND_AGREE} confidentiality declaration`,
+};
+
+const ANTI_BRIBERY = {
+  ...SHARED,
+  PAGE_TITLE: 'Anti-bribery and corruption',
 };
 
 export default {
   CONFIDENTIALITY,
+  ANTI_BRIBERY,
 };
