@@ -13,12 +13,10 @@ const CONTENT_STRINGS = PAGES.INSURANCE.DASHBOARD;
 
 context('Insurance - Dashboard - no applications', () => {
   let referenceNumber;
-  let url;
+  const url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
   before(() => {
     cy.completeSignInAndGoToDashboard().then(() => {
-      url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
-
       cy.url().should('eq', url);
     });
   });
