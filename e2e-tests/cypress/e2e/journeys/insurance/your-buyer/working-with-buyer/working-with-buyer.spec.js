@@ -47,7 +47,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

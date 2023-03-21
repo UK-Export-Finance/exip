@@ -28,7 +28,7 @@ const getKeystonePage = async (pageId) => {
 };
 ```
 
-You can then call this in a GET endpoint and pass the data to the nunjucks page:
+You can then call this in a GET endpoint and pass the data to a nunjucks page:
 
 ```js
 const get = async (req, res) => {

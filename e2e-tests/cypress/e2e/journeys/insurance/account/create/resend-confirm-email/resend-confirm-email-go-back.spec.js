@@ -8,6 +8,8 @@ const {
 } = ROUTES;
 
 context('Insurance - Account - Create - Resend confirm email page - Go back to confirm email page via back button', () => {
+  const confirmEmailUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
+
   after(() => {
     cy.deleteAccount();
   });
@@ -22,6 +24,8 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
 
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
+
+    cy.url().should('eq', confirmEmailUrl);
   });
 
   beforeEach(() => {
@@ -36,6 +40,8 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
 
       const [firstExporter] = data.exporters;
       exporter = firstExporter;
+
+      cy.url().should('eq', confirmEmailUrl);
 
       confirmEmailPage.havingProblems.requestNew.link().click();
 

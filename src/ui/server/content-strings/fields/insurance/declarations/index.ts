@@ -4,9 +4,9 @@ const { DECLARATIONS } = FIELD_IDS.INSURANCE;
 
 const { AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY } = DECLARATIONS;
 
-const CONFIRM_READ_AND_AGREE = "Confirm you've read and agree with the ";
+const CONFIRM_READ_AND_AGREE = "Confirm you've read and agree with the";
 
-const HAVE_READ_AND_AREED = "I've read and agree with the ";
+const HAVE_READ_AND_AREED = "I've read and agree with the";
 
 export const DECLARATIONS_FIELDS = {
   [AGREE_CONFIDENTIALITY]: {

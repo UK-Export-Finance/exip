@@ -7,6 +7,7 @@ import getFieldById from '../../../get-field-by-id';
 import formatCurrency from '../../../format-currency';
 import mapMonthString from '../../../data-content-mappings/map-month-string';
 import mockApplication, { mockMultiplePolicyAndExport } from '../../../../test-mocks/mock-application';
+import generateChangeLink from '../../../generate-change-link';
 
 const {
   CONTRACT_POLICY: {
@@ -16,35 +17,53 @@ const {
 
 const {
   INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: { MULTIPLE_CONTRACT_POLICY_CHANGE },
+    POLICY_AND_EXPORTS: { MULTIPLE_CONTRACT_POLICY_CHANGE, MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE },
   },
 } = ROUTES;
 
 describe('server/helpers/summary-lists/policy-and-export/multiple-contract-policy-fields', () => {
   const mockAnswers = mockMultiplePolicyAndExport;
   const { referenceNumber } = mockApplication;
+  const checkAndChange = false;
 
   const expectedBase = {
     [TOTAL_MONTHS_OF_COVER]: {
       field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, TOTAL_MONTHS_OF_COVER),
       renderChangeLink: true,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${TOTAL_MONTHS_OF_COVER}-label`,
+      href: generateChangeLink(
+        MULTIPLE_CONTRACT_POLICY_CHANGE,
+        MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+        `#${TOTAL_MONTHS_OF_COVER}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
     },
     [TOTAL_SALES_TO_BUYER]: {
       field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, TOTAL_SALES_TO_BUYER),
       renderChangeLink: true,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${TOTAL_SALES_TO_BUYER}-label`,
+      href: generateChangeLink(
+        MULTIPLE_CONTRACT_POLICY_CHANGE,
+        MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+        `#${TOTAL_SALES_TO_BUYER}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
     },
     [MAXIMUM_BUYER_WILL_OWE]: {
       field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, MAXIMUM_BUYER_WILL_OWE),
       renderChangeLink: true,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${MAXIMUM_BUYER_WILL_OWE}-label`,
+      href: generateChangeLink(
+        MULTIPLE_CONTRACT_POLICY_CHANGE,
+        MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+        `#${MAXIMUM_BUYER_WILL_OWE}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
     },
   };
 
   it('should return fields and values from the submitted data/answers', () => {
-    const result = generateMultipleContractPolicyFields(mockAnswers, referenceNumber);
+    const result = generateMultipleContractPolicyFields(mockAnswers, referenceNumber, checkAndChange);
 
     const expected = [
       fieldGroupItem(expectedBase[TOTAL_MONTHS_OF_COVER], mapMonthString(mockAnswers[TOTAL_MONTHS_OF_COVER])),
@@ -57,7 +76,7 @@ describe('server/helpers/summary-lists/policy-and-export/multiple-contract-polic
 
   describe('when there are no submitted data/answers', () => {
     it('should return fields without values', () => {
-      const result = generateMultipleContractPolicyFields({ id: mockApplication.id }, referenceNumber);
+      const result = generateMultipleContractPolicyFields({ id: mockApplication.id }, referenceNumber, checkAndChange);
 
       const expected = [
         fieldGroupItem(expectedBase[TOTAL_MONTHS_OF_COVER]),

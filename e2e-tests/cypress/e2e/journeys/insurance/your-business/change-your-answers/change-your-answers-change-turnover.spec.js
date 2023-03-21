@@ -52,7 +52,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe(ESTIMATED_ANNUAL_TURNOVER, () => {
