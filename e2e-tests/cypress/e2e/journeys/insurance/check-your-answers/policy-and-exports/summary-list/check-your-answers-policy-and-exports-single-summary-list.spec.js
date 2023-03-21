@@ -56,7 +56,7 @@ context('Insurance - Check your answers - Policy and exports - Single contract p
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it(`should render a ${POLICY_TYPE} summary list row`, () => {

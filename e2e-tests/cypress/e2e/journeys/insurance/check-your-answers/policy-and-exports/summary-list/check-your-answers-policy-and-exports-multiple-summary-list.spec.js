@@ -60,7 +60,7 @@ context('Insurance - Check your answers - Policy and exports - Multiple contract
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it(`should render a ${POLICY_TYPE} summary list row`, () => {
