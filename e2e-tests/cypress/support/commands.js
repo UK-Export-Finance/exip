@@ -76,6 +76,7 @@ Cypress.Commands.add('completeAndSubmitTurnoverForm', require('./insurance/compl
 Cypress.Commands.add('completeAndSubmitBrokerForm', require('./insurance/complete-and-submit-broker-form'));
 
 Cypress.Commands.add('completePrepareApplicationSinglePolicyType', require('./insurance/complete-and-submit-prepare-your-application-section-single'));
+Cypress.Commands.add('completePrepareApplicationMultiplePolicyType', require('./insurance/complete-and-submit-prepare-your-application-section-multiple'));
 
 Cypress.Commands.add('completeAndSubmitCompanyOrOrganisationForm', require('./insurance/your-buyer/complete-and-submit-company-or-organisation-form'));
 Cypress.Commands.add('completeAndSubmitWorkingWithBuyerForm', require('./insurance/your-buyer/complete-and-submit-working-with-buyer-form'));
@@ -84,6 +85,7 @@ Cypress.Commands.add('completeAndSubmitDeclarationConfidentiality', require('./i
 
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));
+Cypress.Commands.add('assertSummaryListRowValueNew', require('./assert-summary-list-row-value-new'));
 Cypress.Commands.add('submitAndAssertRadioErrors', require('./submit-and-assert-radio-errors'));
 Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-field-errors'));
 

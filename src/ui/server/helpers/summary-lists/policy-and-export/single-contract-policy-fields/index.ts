@@ -6,6 +6,7 @@ import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
 import formatCurrency from '../../../format-currency';
 import { ApplicationPolicyAndExport, SummaryListItemData } from '../../../../../types';
+import generateChangeLink from '../../../generate-change-link';
 
 const {
   CONTRACT_POLICY: {
@@ -15,8 +16,7 @@ const {
 
 const {
   INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: { SINGLE_CONTRACT_POLICY_CHANGE },
+    POLICY_AND_EXPORTS: { SINGLE_CONTRACT_POLICY_CHANGE, SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE },
   },
 } = ROUTES;
 
@@ -24,15 +24,22 @@ const {
  * generateSingleContractPolicyFields
  * Create all fields and values for the Insurance - Type of policy - single contract policy govukSummaryList
  * @param {Object} All submitted policy and export data
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} All Multiple contract policy fields and values in an object structure for GOVUK summary list structure
  */
-const generateSingleContractPolicyFields = (answers: ApplicationPolicyAndExport, referenceNumber: number) => {
+const generateSingleContractPolicyFields = (answers: ApplicationPolicyAndExport, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.CONTRACT_POLICY.SINGLE, CONTRACT_COMPLETION_DATE),
         renderChangeLink: true,
-        href: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHANGE}#${CONTRACT_COMPLETION_DATE}-label`,
+        href: generateChangeLink(
+          SINGLE_CONTRACT_POLICY_CHANGE,
+          SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+          `#${CONTRACT_COMPLETION_DATE}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
       },
       answers[CONTRACT_COMPLETION_DATE] && formatDate(answers[CONTRACT_COMPLETION_DATE]),
     ),
@@ -40,7 +47,13 @@ const generateSingleContractPolicyFields = (answers: ApplicationPolicyAndExport,
       {
         field: getFieldById(FIELDS.CONTRACT_POLICY.SINGLE, TOTAL_CONTRACT_VALUE),
         renderChangeLink: true,
-        href: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHANGE}#${TOTAL_CONTRACT_VALUE}-label`,
+        href: generateChangeLink(
+          SINGLE_CONTRACT_POLICY_CHANGE,
+          SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+          `#${TOTAL_CONTRACT_VALUE}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
       },
       answers[TOTAL_CONTRACT_VALUE] && formatCurrency(answers[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE),
     ),
