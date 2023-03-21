@@ -7,15 +7,7 @@ import api from '../api';
  */
 const deleteApplication = (referenceNumber) => {
   try {
-    // get the application
-    api.getApplicationByReferenceNumber(Number(referenceNumber)).then((response) => {
-      const { data } = response.body;
-
-      const [firstApplication] = data.applications;
-      const application = firstApplication;
-
-      api.deleteApplicationsById(application.id).then((id) => id);
-    });
+    return api.deleteApplicationByReferenceNumber(Number(referenceNumber)).then((response) => response);
   } catch (err) {
     console.error(err);
 

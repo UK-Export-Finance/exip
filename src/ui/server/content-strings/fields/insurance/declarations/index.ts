@@ -6,9 +6,9 @@ const { AGREE_CONFIDENTIALITY } = DECLARATIONS;
 
 export const DECLARATIONS_FIELDS = {
   [AGREE_CONFIDENTIALITY]: {
-    LABEL: "I've read and agree with the confidentiality declaration.",
+    LABEL: "Confirm you've read and agree with the confidentiality declaration",
     OPTION: {
-      TEXT: 'I have read and accept the confidentiality declaration.',
+      TEXT: "I've read and agree with the confidentiality declaration.",
       VALUE: true,
     },
   },

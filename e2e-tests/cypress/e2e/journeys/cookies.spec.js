@@ -9,16 +9,21 @@ import { FIELD_IDS, ROUTES } from '../../../constants';
 const CONTENT_STRINGS = PAGES.COOKIES_PAGE;
 
 context('Cookies page', () => {
+  const url = ROUTES.COOKIES;
+
   beforeEach(() => {
     cy.login();
 
     partials.footer.supportLinks.cookies().click();
-    cy.url().should('include', ROUTES.COOKIES);
+
+    cy.url().should('include', url);
 
     cy.saveSession();
   });
 
   it('renders core page elements', () => {
+    cy.clearCookies();
+
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.COOKIES,
@@ -34,6 +39,10 @@ context('Cookies page', () => {
   });
 
   describe('essential cookies', () => {
+    beforeEach(() => {
+      cy.saveSession();
+    });
+
     it('renders a heading', () => {
       cy.checkText(cookiesPage.essentialCookies.heading(), CONTENT_STRINGS.ESSENTIAL_COOKIES.HEADING);
     });
@@ -42,8 +51,12 @@ context('Cookies page', () => {
       cy.checkText(cookiesPage.essentialCookies.intro(), CONTENT_STRINGS.ESSENTIAL_COOKIES.INTRO);
     });
 
-    context('table', () => {
-      context('headings', () => {
+    describe('table', () => {
+      describe('headings', () => {
+        beforeEach(() => {
+          cy.saveSession();
+        });
+
         it('renders name heading', () => {
           cy.checkText(cookiesPage.essentialCookies.table.head.cell1(), CONTENT_STRINGS.TABLE_HEADINGS.NAME);
         });
@@ -57,7 +70,11 @@ context('Cookies page', () => {
         });
       });
 
-      context('row 1', () => {
+      describe('row 1', () => {
+        beforeEach(() => {
+          cy.saveSession();
+        });
+
         it('renders name column', () => {
           cy.checkText(cookiesPage.essentialCookies.table.body.row1.cell1(), CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].NAME);
         });
@@ -71,7 +88,11 @@ context('Cookies page', () => {
         });
       });
 
-      context('row 2', () => {
+      describe('row 2', () => {
+        beforeEach(() => {
+          cy.saveSession();
+        });
+
         it('renders name column', () => {
           cy.checkText(cookiesPage.essentialCookies.table.body.row2.cell1(), CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].NAME);
         });
@@ -88,6 +109,10 @@ context('Cookies page', () => {
   });
 
   describe('optional cookies', () => {
+    beforeEach(() => {
+      cy.saveSession();
+    });
+
     it('renders a heading', () => {
       cy.checkText(cookiesPage.optionalCookies.heading(), CONTENT_STRINGS.OPTIONAL_COOKIES.HEADING);
     });
@@ -130,9 +155,15 @@ context('Cookies page', () => {
 
     describe('form submission', () => {
       describe('when submitting an empty form', () => {
-        it('should render validation errors', () => {
-          submitButton().click();
+        beforeEach(() => {
+          cy.clearCookies();
 
+          cy.navigateToUrl(url);
+
+          submitButton().click();
+        });
+
+        it('should render validation errors', () => {
           partials.errorSummaryListItems().should('exist');
           partials.errorSummaryListItems().should('have.length', 1);
 
@@ -153,6 +184,8 @@ context('Cookies page', () => {
 
       describe('when submitting the answer as `accept`', () => {
         beforeEach(() => {
+          cy.saveSession();
+
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
           submitButton().click();
         });
@@ -188,6 +221,8 @@ context('Cookies page', () => {
 
       describe('when submitting the answer as `reject`', () => {
         beforeEach(() => {
+          cy.saveSession();
+
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
           submitButton().click();
         });
@@ -223,6 +258,8 @@ context('Cookies page', () => {
 
       describe('when a user navigates to the cookies page directly via URL and optional cookies are submitted as `accept`', () => {
         beforeEach(() => {
+          cy.saveSession();
+
           cy.navigateToUrl(ROUTES.COOKIES);
 
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
@@ -240,6 +277,8 @@ context('Cookies page', () => {
 
       describe('when a user navigates to the cookies page directly via URL and optional cookies are submitted as `reject`', () => {
         beforeEach(() => {
+          cy.saveSession();
+
           cy.navigateToUrl(ROUTES.COOKIES);
 
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();

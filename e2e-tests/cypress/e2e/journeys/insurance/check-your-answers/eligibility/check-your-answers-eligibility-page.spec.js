@@ -1,16 +1,16 @@
-import { checkYourAnswersEligibility } from '../../../pages/insurance/check-your-answers';
+import { checkYourAnswersEligibility } from '../../../../pages/insurance/check-your-answers';
 import {
   headingCaption,
   submitButton,
   saveAndBackButton,
-} from '../../../pages/shared';
-import partials from '../../../partials';
+} from '../../../../pages/shared';
+import partials from '../../../../partials';
 import {
   BUTTONS,
   PAGES,
-} from '../../../../../content-strings';
-import { ROUTES } from '../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../constants/routes/insurance';
+} from '../../../../../../content-strings';
+import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
