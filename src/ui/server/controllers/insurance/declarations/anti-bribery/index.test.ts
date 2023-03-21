@@ -104,7 +104,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
       describe('when there is an error', () => {
         beforeAll(() => {
           getLatestAntiBriberySpy = jest.fn(() => Promise.reject());
-          api.keystone.application.declarations.getLatestConfidentiality = getLatestAntiBriberySpy;
+          api.keystone.application.declarations.getLatestAntiBribery = getLatestAntiBriberySpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
