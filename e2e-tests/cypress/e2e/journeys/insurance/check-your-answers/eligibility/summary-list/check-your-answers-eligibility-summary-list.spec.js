@@ -50,7 +50,7 @@ context('Insurance - Check your answers - Eligibility - Summary List', () => {
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it(`should render a ${BUYER_COUNTRY} summary list row`, () => {

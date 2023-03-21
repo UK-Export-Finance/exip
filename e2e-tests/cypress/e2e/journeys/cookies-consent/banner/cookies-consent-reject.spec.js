@@ -4,19 +4,25 @@ import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 context('Cookies consent - reject', () => {
+  const url = ROUTES.QUOTE.BUYER_COUNTRY;
+
   beforeEach(() => {
     cy.login();
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+    cy.url().should('include', url);
   });
 
   describe('when clicking `reject cookies` button', () => {
     beforeEach(() => {
+      cy.clearCookies();
+
+      cy.navigateToUrl(url);
+
       partials.cookieBanner.question.rejectButton().click();
     });
 
     it('should remain on the same page', () => {
-      cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+      cy.url().should('include', url);
     });
 
     it('should not render the question banner', () => {
@@ -55,6 +61,10 @@ context('Cookies consent - reject', () => {
 
   describe('when clicking `hide this message` button', () => {
     beforeEach(() => {
+      cy.clearCookies();
+
+      cy.navigateToUrl(url);
+
       partials.cookieBanner.question.rejectButton().click();
       partials.cookieBanner.hideButton().click();
     });
@@ -75,6 +85,10 @@ context('Cookies consent - reject', () => {
 
   describe('after rejecting cookies and navigating to another page', () => {
     beforeEach(() => {
+      cy.clearCookies();
+
+      cy.navigateToUrl(url);
+
       partials.cookieBanner.question.rejectButton().click();
       partials.cookieBanner.hideButton().click();
       completeAndSubmitBuyerCountryForm();

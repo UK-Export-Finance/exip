@@ -55,7 +55,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

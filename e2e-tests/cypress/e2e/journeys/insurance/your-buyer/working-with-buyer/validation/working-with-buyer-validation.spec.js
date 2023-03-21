@@ -31,10 +31,13 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Working with buyer page - form validation', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       task.link().click();
 
       cy.completeAndSubmitCompanyOrOrganisationForm();
@@ -50,7 +53,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe(CONNECTED_WITH_BUYER, () => {

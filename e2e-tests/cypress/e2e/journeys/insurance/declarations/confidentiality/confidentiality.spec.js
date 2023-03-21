@@ -52,7 +52,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

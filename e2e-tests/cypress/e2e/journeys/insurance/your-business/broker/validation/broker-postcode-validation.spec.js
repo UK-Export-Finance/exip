@@ -34,13 +34,17 @@ const ERROR_ASSERTIONS = {
 };
 
 context('Insurance - Your business - Broker Page - Validation - Postcode', () => {
+  let referenceNumber;
   let url;
+
   const field = broker[FIELD_ID];
 
   before(() => {
     Cypress.session.clearAllSavedSessions();
 
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
@@ -60,7 +64,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   context('invalid postcodes', () => {

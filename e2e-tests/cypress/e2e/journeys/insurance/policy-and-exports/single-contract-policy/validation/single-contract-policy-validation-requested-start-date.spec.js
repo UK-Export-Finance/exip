@@ -9,10 +9,13 @@ const { checkValidation } = requestedCoverStartDate;
 const { INSURANCE } = ROUTES;
 
 context('Insurance - Policy and exports - Single contract policy page - form validation - requested start date', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
@@ -30,7 +33,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('should render a validation error when day is not provided', () => {

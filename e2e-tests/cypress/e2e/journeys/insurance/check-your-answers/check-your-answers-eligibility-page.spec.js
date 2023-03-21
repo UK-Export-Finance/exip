@@ -51,7 +51,7 @@ context('Insurance - Check your answers - Eligibility - I want to confirm my sel
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {
