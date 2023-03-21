@@ -360,6 +360,9 @@ CREATE TABLE `Declaration` (
   CONSTRAINT `Declaration_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+/*!40000 ALTER TABLE `Declaration` ENABLE KEYS */;
+UNLOCK TABLES;
+
 # Dump of table Eligibility
 # ------------------------------------------------------------
 
