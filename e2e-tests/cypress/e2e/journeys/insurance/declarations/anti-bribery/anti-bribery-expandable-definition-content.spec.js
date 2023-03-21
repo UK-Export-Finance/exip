@@ -69,14 +69,16 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
   });
 
   describe('table', () => {
+    const { BODY, HEADERS } = TABLE;
+
     let row;
     let content;
 
     it('renders table headers', () => {
       expandable.summary().click();
 
-      cy.checkText(expandable.table.headers.term(), TABLE.HEADERS.TERM);
-      cy.checkText(expandable.table.headers.definition(), TABLE.HEADERS.DEFINITION);
+      cy.checkText(expandable.table.headers.term(), HEADERS.TERM);
+      cy.checkText(expandable.table.headers.definition(), HEADERS.DEFINITION);
     });
 
     describe('body row 1', () => {
@@ -85,7 +87,8 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
         row = expandable.table.body.row(1);
 
-        content = TABLE.BODY[0];
+        const { 0: contentRow } = BODY;
+        content = contentRow;
       });
 
       it('renders `term` column', () => {
@@ -103,7 +106,8 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
         row = expandable.table.body.row(2);
 
-        content = TABLE.BODY[1];
+        const { 1: contentRow } = BODY;
+        content = contentRow;
       });
 
       it('renders `term` column', () => {
@@ -122,7 +126,8 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
         row = expandable.table.body.row(3);
 
-        content = TABLE.BODY[2];
+        const { 2: contentRow } = BODY;
+        content = contentRow;
       });
 
       it('renders `term` column', () => {
@@ -143,7 +148,8 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
         row = expandable.table.body.row(4);
 
-        content = TABLE.BODY[3];
+        const { 3: contentRow } = BODY;
+        content = contentRow;
       });
 
       it('renders `term` column', () => {
@@ -161,7 +167,8 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
         row = expandable.table.body.row(5);
 
-        content = TABLE.BODY[4];
+        const { 4: contentRow } = BODY;
+        content = contentRow;
       });
 
       it('renders `term` column', () => {
@@ -180,7 +187,8 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
         row = expandable.table.body.row(6);
 
-        content = TABLE.BODY[5];
+        const { 5: contentRow } = BODY;
+        content = contentRow;
       });
 
       it('renders `term` column', () => {
@@ -198,7 +206,8 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
         row = expandable.table.body.row(7);
 
-        content = TABLE.BODY[6];
+        const { 6: contentRow } = BODY;
+        content = contentRow;
       });
 
       it('renders `term` column', () => {
@@ -217,7 +226,8 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
         row = expandable.table.body.row(8);
 
-        content = TABLE.BODY[7];
+        const { 7: contentRow } = BODY;
+        content = contentRow;
       });
 
       it('renders `term` column', () => {
@@ -235,7 +245,8 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
         row = expandable.table.body.row(9);
 
-        content = TABLE.BODY[8];
+        const { 8: contentRow } = BODY;
+        content = contentRow;
       });
 
       it('renders `term` column', () => {
@@ -253,7 +264,8 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
         row = expandable.table.body.row(10);
 
-        content = TABLE.BODY[9];
+        const { 9: contentRow } = BODY;
+        content = contentRow;
       });
 
       it('renders `term` column', () => {
