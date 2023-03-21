@@ -53,9 +53,11 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
   after(() => {
     dashboardPage.table.body.lastRow.referenceNumber().click();
 
-    cy.getReferenceNumber.then((referenceNumber) => {
+    cy.getReferenceNumber().then((referenceNumber) => {
       cy.deleteAccountAndApplication(referenceNumber);
     });
+
+    cy.deleteAccount();
   });
 
   it('should render a validation error when submitting an empty form', () => {
