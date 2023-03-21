@@ -51,7 +51,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe(DESCRIPTION, () => {

@@ -77,7 +77,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

@@ -48,10 +48,28 @@ const queryStrings = {
       }
     }
   `,
+  deleteApplicationByReferenceNumber: () => gql`
+    mutation DeleteApplicationByReferenceNumber($referenceNumber: Int!)  {
+      deleteApplicationByReferenceNumber(referenceNumber: $referenceNumber) {
+        success
+      }
+    }
+  `,
   declarations: {
     getLatestConfidentiality: () => gql`
       query DeclarationConfidentialities {
         declarationConfidentialities(orderBy: { version: desc }, take: 1) {
+          id
+          version
+          content {
+            document
+          }
+        }
+      }
+    `,
+    getLatestAntiBribery: () => gql`
+      query DeclarationAntiBriberies {
+        declarationAntiBriberies(orderBy: { version: desc }, take: 1) {
           id
           version
           content {
@@ -139,7 +157,7 @@ const updateExporter = async (id, updateObj) => {
 
 /**
  * deleteExportersById
- * Delte exporters by ID
+ * Delete exporters by ID
  * @param {String} Account ID
  * @returns {String} Account ID
  */
@@ -179,10 +197,61 @@ const addAndGetOTP = async (email) => {
   }
 };
 
+/**
+ * getApplicationByReferenceNumber
+ * Get's an application by reference number from the API
+ * @param {Number} Application reference number
+ * @returns {Object} Application
+ */
+const getApplicationByReferenceNumber = async (referenceNumber) => {
+  try {
+    const baseUrl = Cypress.config('apiUrl');
+    const url = `${baseUrl}?query=${queryStrings.getApplicationByReferenceNumber(referenceNumber)}`;
+
+    const response = await cy.request({
+      headers: {
+        'content-type': 'application/json',
+      },
+      url,
+    });
+
+    if (!response.body || !response.body.data) {
+      throw new Error(`Getting application by reference number ${referenceNumber}`, { response });
+    }
+
+    return response;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error(`Getting application by reference number ${referenceNumber}`, { err });
+  }
+};
+
+/**
+ * deleteApplicationByReferenceNumber
+ * Delete applications by Application reference number
+ * @param {Number} Application reference number
+ * @returns {Object}
+ */
+const deleteApplicationByReferenceNumber = async (referenceNumber) => {
+  try {
+    const responseBody = await apollo.query({
+      query: queryStrings.deleteApplicationByReferenceNumber(),
+      variables: { referenceNumber },
+    }).then((response) => response.data);
+
+    return responseBody;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Deleting applications by ID ', { err });
+  }
+};
+
 const declarations = {
   /**
    * getLatestConfidentiality
-   * Get the latest confidentiality declaration content
+   * Get the latest Confidentiality declaration content
    * @returns {Object} Confidentiality declaration
    */
   getLatestConfidentiality: async () => {
@@ -190,6 +259,24 @@ const declarations = {
       const responseBody = await apollo.query({
         query: queryStrings.declarations.getLatestConfidentiality(),
       }).then((response) => response.data.declarationConfidentialities[0]);
+
+      return responseBody;
+    } catch (err) {
+      console.error(err);
+
+      throw new Error('Getting latest declaration - confidentiality ', { err });
+    }
+  },
+  /**
+   * getLatestAntiBribery
+   * Get the latest Anti-bribery declaration content
+   * @returns {Object} Anti-bribery declaration
+   */
+  getLatestAntiBribery: async () => {
+    try {
+      const responseBody = await apollo.query({
+        query: queryStrings.declarations.getLatestAntiBribery(),
+      }).then((response) => response.data.declarationAntiBriberies[0]);
 
       return responseBody;
     } catch (err) {
@@ -206,6 +293,8 @@ const api = {
   updateExporter,
   deleteExportersById,
   addAndGetOTP,
+  getApplicationByReferenceNumber,
+  deleteApplicationByReferenceNumber,
   declarations,
 };
 

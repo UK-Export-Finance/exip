@@ -30,10 +30,13 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Company or organisation page - form validation - first and last name', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       task.link().click();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
@@ -47,7 +50,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe(`${FIRST_NAME_FIELD_ID}`, () => {

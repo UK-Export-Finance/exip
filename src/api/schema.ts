@@ -531,11 +531,25 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       confidentiality: relationship({ ref: 'DeclarationConfidentiality' }),
+      antiBribery: relationship({ ref: 'DeclarationAntiBribery' }),
       agreeToConfidentiality: checkbox({ defaultValue: false }),
+      agreeToAntiBribery: checkbox({ defaultValue: false }),
     },
     access: allowAll,
   }),
   DeclarationConfidentiality: list({
+    fields: {
+      version: text({
+        label: 'Version',
+        validation: { isRequired: true },
+      }),
+      content: document({
+        formatting: true,
+      }),
+    },
+    access: allowAll,
+  }),
+  DeclarationAntiBribery: list({
     fields: {
       version: text({
         label: 'Version',

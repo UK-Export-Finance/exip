@@ -6,7 +6,7 @@ import { checkChangeLinkUrl, checkChangeAnswerRendered } from './check-summary-l
  * @param {Object} fieldVariables
  * @param {Function} input cypress input selector
  */
-const changeAnswerSelect = (fieldVariables, input) => {
+const changeAnswerSelectField = (fieldVariables, input) => {
   const { newValueInput } = fieldVariables;
 
   input.select(newValueInput);
@@ -16,6 +16,6 @@ const changeAnswerSelect = (fieldVariables, input) => {
 
 export {
   checkChangeLinkUrl,
-  changeAnswerSelect,
+  changeAnswerSelectField,
   checkChangeAnswerRendered,
 };

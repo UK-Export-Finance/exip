@@ -9,7 +9,7 @@ import {
   changeAnswerField,
   checkChangeAnswerRendered,
 } from '../../../../../../support/check-summary-list-field-change';
-import { changeAnswerSelect } from '../../../../../../support/check-summary-list-select-change';
+import { changeAnswerSelectField } from '../../../../../../support/check-summary-list-select-change';
 import formatCurrency from '../../../../../helpers/format-currency';
 import currencies from '../../../../../../fixtures/currencies';
 import { createTimestampFromNumbers, formatDate } from '../../../../../helpers/date';
@@ -276,7 +276,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = currencies[3].isoCode;
-          changeAnswerSelect(fieldVariables, policyCurrencyCodeFormField.input());
+          changeAnswerSelectField(fieldVariables, policyCurrencyCodeFormField.input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {

@@ -3,7 +3,7 @@
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
-{% import '../../components/keystone/document/index.njk' as keystoneDocument %}
+{% import '../components/keystone/document/index.njk' as keystoneDocument %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -26,24 +26,18 @@
     }) }}
   {% endif %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters-from-desktop">
-      <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-padding-right-0 govuk-!-padding-left-0">
-        <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
-        <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
-      </div>
-    </div>
-  </div>
+  <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+  <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters-from-desktop">
 
       {{ keystoneDocument.render({
-        document: content,
-        listItemClass: 'counter-list-item',
-        firstLevelListClass: 'counter-list',
-        secondLevelListClass: 'lower-alpha-counter-list',
-        thirdLevelListClass: 'lower-roman-counter-list'
+        document: documentContent,
+        listItemClass: documentConfig.listItemClass,
+        firstLevelListClass: documentConfig.firstLevelListClass,
+        secondLevelListClass: documentConfig.secondLevelListClass,
+        thirdLevelListClass: documentConfig.thirdLevelListClass
       }) }}
 
     </div>

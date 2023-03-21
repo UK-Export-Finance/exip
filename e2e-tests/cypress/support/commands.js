@@ -49,6 +49,9 @@ Cypress.Commands.add('getExporterByEmail', require('./insurance/account/get-expo
 Cypress.Commands.add('verifyAccountEmail', require('./insurance/account/verify-account-email'));
 
 Cypress.Commands.add('deleteAccount', require('./insurance/account/delete-account'));
+Cypress.Commands.add('deleteApplication', require('./insurance/delete-application'));
+
+Cypress.Commands.add('deleteAccountAndApplication', require('./insurance/delete-account-and-application'));
 
 Cypress.Commands.add('createAccount', require('./insurance/account/create-account'));
 
@@ -77,6 +80,8 @@ Cypress.Commands.add('completePrepareApplicationMultiplePolicyType', require('./
 
 Cypress.Commands.add('completeAndSubmitCompanyOrOrganisationForm', require('./insurance/your-buyer/complete-and-submit-company-or-organisation-form'));
 Cypress.Commands.add('completeAndSubmitWorkingWithBuyerForm', require('./insurance/your-buyer/complete-and-submit-working-with-buyer-form'));
+
+Cypress.Commands.add('completeAndSubmitDeclarationConfidentiality', require('./insurance/declarations/complete-and-submit-confidentiality-form'));
 
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));

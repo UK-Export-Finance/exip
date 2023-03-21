@@ -65,7 +65,7 @@ context('Insurance - Change your answers - Policy and exports - Change single to
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   const fieldId = POLICY_TYPE;

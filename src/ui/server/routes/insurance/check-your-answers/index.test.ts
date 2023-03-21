@@ -23,8 +23,8 @@ describe('routes/insurance/check-your-answers', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(3);
-    expect(post).toHaveBeenCalledTimes(5);
+    expect(get).toHaveBeenCalledTimes(4);
+    expect(post).toHaveBeenCalledTimes(7);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY}`, getcheckYourAnswersEligibility);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY}`, postcheckYourAnswersEligibility);

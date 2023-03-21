@@ -53,7 +53,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe(GOODS_OR_SERVICES, () => {
