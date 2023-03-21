@@ -1,8 +1,8 @@
 import { post } from '.';
-import { ROUTES } from '../../../../../constants';
-import { Request, Response } from '../../../../../../types';
+import { ROUTES } from '../../../../constants';
+import { Request, Response } from '../../../../../types';
 import save from '../save-data';
-import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
+import { mockApplication, mockReq, mockRes } from '../../../../test-mocks';
 
 const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
