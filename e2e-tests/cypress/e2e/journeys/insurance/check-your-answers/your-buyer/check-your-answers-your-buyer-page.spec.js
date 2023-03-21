@@ -8,8 +8,7 @@ import {
   BUTTONS,
   PAGES,
 } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
@@ -19,7 +18,7 @@ const {
     YOUR_BUSINESS,
     YOUR_BUYER,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER;
 
@@ -27,7 +26,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
 
-context('Insurance - Check your answers - Your buyer - I want to confirm my selection for the your buyer section of my export insurance application', () => {
+context('Insurance - Check your answers - Your buyer page- I want to confirm my selection for the your buyer section of my export insurance application', () => {
   let referenceNumber;
   let url;
 
@@ -63,8 +62,8 @@ context('Insurance - Check your answers - Your buyer - I want to confirm my sele
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
+      currentHref: `${ROOT}/${referenceNumber}${YOUR_BUYER}`,
+      backLink: `${ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
       submitButtonCopy: BUTTONS.CONFIRM_AND_CONTINUE,
     });
   });
@@ -95,7 +94,7 @@ context('Insurance - Check your answers - Your buyer - I want to confirm my sele
         it(`should redirect to ${ALL_SECTIONS}`, () => {
           submitButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+          const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
           cy.url().should('eq', expectedUrl);
         });
       });
@@ -106,7 +105,7 @@ context('Insurance - Check your answers - Your buyer - I want to confirm my sele
 
           saveAndBackButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+          const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
           cy.url().should('eq', expectedUrl);
         });
       });

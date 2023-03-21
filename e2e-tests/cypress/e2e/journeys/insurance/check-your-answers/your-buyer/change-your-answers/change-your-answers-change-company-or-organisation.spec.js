@@ -1,6 +1,8 @@
 import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
-import { ROUTES, FIELD_IDS, WEBSITE_EXAMPLES } from '../../../../../../../constants';
+import { WEBSITE_EXAMPLES } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { checkYourAnswersYourBuyer } from '../../../../../pages/insurance/check-your-answers';
 import { companyOrOrganisationPage } from '../../../../../pages/insurance/your-buyer';
 import {
@@ -19,26 +21,22 @@ const {
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: {
-      COMPANY_OR_ORGANISATION: {
-        NAME,
-        ADDRESS,
-        COUNTRY,
-        REGISTRATION_NUMBER,
-        WEBSITE,
-        FIRST_NAME,
-        LAST_NAME,
-        POSITION,
-        EMAIL,
-        CAN_CONTACT_BUYER,
-      },
-    },
+  COMPANY_OR_ORGANISATION: {
+    NAME,
+    ADDRESS,
+    COUNTRY,
+    REGISTRATION_NUMBER,
+    WEBSITE,
+    FIRST_NAME,
+    LAST_NAME,
+    POSITION,
+    EMAIL,
+    CAN_CONTACT_BUYER,
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { taskList } = partials.insurancePartials;
 
@@ -56,7 +54,7 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
   changeLink: summaryList.field(fieldId).changeLink,
 });
 
-context('Insurance - Check your answers - Company or organisation - Your buyer - Summary list', () => {
+context('Insurance - Check your answers - Company or organisation - Your buyer page- Summary list', () => {
   let referenceNumber;
   let url;
 

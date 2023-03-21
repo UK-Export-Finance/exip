@@ -1,39 +1,36 @@
 import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
-import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../support/insurance/check-your-buyer-summary-list';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 
 const {
   ROOT,
   CHECK_YOUR_ANSWERS: {
     YOUR_BUYER,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: {
-      COMPANY_OR_ORGANISATION: {
-        NAME,
-        ADDRESS,
-        REGISTRATION_NUMBER,
-        WEBSITE,
-        FIRST_NAME,
-        CAN_CONTACT_BUYER,
-      },
-      WORKING_WITH_BUYER: {
-        CONNECTED_WITH_BUYER,
-        TRADED_WITH_BUYER,
-      },
-    },
+  COMPANY_OR_ORGANISATION: {
+    NAME,
+    ADDRESS,
+    REGISTRATION_NUMBER,
+    WEBSITE,
+    FIRST_NAME,
+    CAN_CONTACT_BUYER,
   },
-} = FIELD_IDS;
+  WORKING_WITH_BUYER: {
+    CONNECTED_WITH_BUYER,
+    TRADED_WITH_BUYER,
+  },
+} = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
 
-context('Insurance - Check your answers - Your buyer - Summary list', () => {
+context('Insurance - Check your answers - Your buyer page- Summary list', () => {
   let referenceNumber;
   let url;
 

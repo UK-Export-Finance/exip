@@ -1,6 +1,7 @@
 import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
-import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { checkYourAnswersYourBuyer } from '../../../../../pages/insurance/check-your-answers';
 import { workingWithBuyerPage } from '../../../../../pages/insurance/your-buyer';
 import {
@@ -16,18 +17,14 @@ const {
   YOUR_BUYER: {
     WORKING_WITH_BUYER_CHECK_AND_CHANGE,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: {
-      WORKING_WITH_BUYER: {
-        CONNECTED_WITH_BUYER,
-        TRADED_WITH_BUYER,
-      },
-    },
+  WORKING_WITH_BUYER: {
+    CONNECTED_WITH_BUYER,
+    TRADED_WITH_BUYER,
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { taskList } = partials.insurancePartials;
 
@@ -45,7 +42,7 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
   changeLink: summaryList.field(fieldId).changeLink,
 });
 
-context('Insurance - Check your answers - Working with buyer - Your buyer - Summary list', () => {
+context('Insurance - Check your answers - Working with buyer - Your buyer page- Summary list', () => {
   let referenceNumber;
   let url;
 
