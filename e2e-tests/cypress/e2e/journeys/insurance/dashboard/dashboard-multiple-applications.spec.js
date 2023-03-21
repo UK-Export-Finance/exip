@@ -66,7 +66,7 @@ context('Insurance - Dashboard - new application', () => {
     it('should render the newly created application and the previously created application', () => {
       table.body.rows().should('have.length', 2);
     });
-  
+
     it('should order the applications in descending order', () => {
       let firstReferenceNumber;
       let lastReferenceNumber;
