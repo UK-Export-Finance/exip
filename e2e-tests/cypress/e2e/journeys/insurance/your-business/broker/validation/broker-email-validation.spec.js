@@ -35,6 +35,7 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   let url;
 
   before(() => {
+    cy.clearCookies();
     Cypress.session.clearAllSavedSessions();
 
     cy.completeSignInAndGoToApplication().then((referenceNumber) => {
@@ -45,9 +46,9 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   beforeEach(() => {
-    cy.session('mySession', () => {
-      cy.signInAndGoToUrl(url);
-    });
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {
@@ -55,8 +56,6 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when the email field is left empty', () => {
-    cy.navigateToUrl(url);
-
     const field = broker[FIELD_ID];
 
     field.yesRadioInput().click();
@@ -70,8 +69,6 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when email does not contain an @ symbol', () => {
-    cy.navigateToUrl(url);
-
     const field = broker[FIELD_ID];
 
     field.yesRadioInput().click();
@@ -87,8 +84,6 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when email does not contain at least one dot', () => {
-    cy.navigateToUrl(url);
-
     const field = broker[FIELD_ID];
 
     field.yesRadioInput().click();
@@ -103,11 +98,7 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
     cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessage);
   });
 
-  // WORKS UP TO HERE
-
   it('should display validation errors when email contains a space', () => {
-    cy.navigateToUrl(url);
-
     const field = broker[FIELD_ID];
 
     field.yesRadioInput().click();
@@ -123,8 +114,6 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when email does not contain a domain', () => {
-    cy.navigateToUrl(url);
-
     const field = broker[FIELD_ID];
 
     field.yesRadioInput().click();

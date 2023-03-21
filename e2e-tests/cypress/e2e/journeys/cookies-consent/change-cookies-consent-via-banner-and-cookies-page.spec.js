@@ -5,10 +5,14 @@ import { FIELD_IDS, ROUTES } from '../../../../constants';
 
 context('Cookies consent - change via banner and cookies page', () => {
   const cookiesPageUrl = ROUTES.COOKIES;
+
   beforeEach(() => {
-    cy.saveSession();
+    cy.clearCookies();
+    Cypress.session.clearAllSavedSessions();
 
     cy.login();
+
+    cy.saveSession();
   });
 
   context('User submits cookie consent in the banner as `accept` and navigates to the cookies page', () => {
