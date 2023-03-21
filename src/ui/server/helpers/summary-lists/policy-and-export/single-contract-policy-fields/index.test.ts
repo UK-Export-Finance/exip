@@ -24,6 +24,7 @@ const {
 describe('server/helpers/summary-lists/policy-and-export/single-contract-policy-fields', () => {
   const mockAnswers = mockSinglePolicyAndExport;
   const { referenceNumber } = mockApplication;
+  const checkAndChange = false;
 
   const expectedBase = {
     [CONTRACT_COMPLETION_DATE]: {
@@ -39,7 +40,7 @@ describe('server/helpers/summary-lists/policy-and-export/single-contract-policy-
   };
 
   it('should return fields and values from the submitted data/answes', () => {
-    const result = generateSingleContractPolicyFields(mockAnswers, referenceNumber);
+    const result = generateSingleContractPolicyFields(mockAnswers, referenceNumber, checkAndChange);
 
     const expected = [
       fieldGroupItem(expectedBase[CONTRACT_COMPLETION_DATE], formatDate(mockAnswers[CONTRACT_COMPLETION_DATE])),
@@ -51,7 +52,7 @@ describe('server/helpers/summary-lists/policy-and-export/single-contract-policy-
 
   describe('when there are no submitted data/answers', () => {
     it('should return fields without values', () => {
-      const result = generateSingleContractPolicyFields({ id: mockApplication.id }, referenceNumber);
+      const result = generateSingleContractPolicyFields({ id: mockApplication.id }, referenceNumber, checkAndChange);
 
       const expected = [fieldGroupItem(expectedBase[CONTRACT_COMPLETION_DATE]), fieldGroupItem(expectedBase[TOTAL_CONTRACT_VALUE])];
 

@@ -4,6 +4,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import getCountryByIsoCode from '../../../get-country-by-iso-code';
 import { ApplicationPolicyAndExport, Country, SummaryListItemData } from '../../../../../types';
+import generateChangeLink from '../../../generate-change-link';
 
 const {
   INSURANCE: {
@@ -15,8 +16,7 @@ const {
 
 const {
   INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES_CHANGE },
+    POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES_CHANGE, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE },
   },
 } = ROUTES;
 
@@ -24,20 +24,38 @@ const {
  * generateAboutGoodsOrServicesFields
  * Create all policy and date fields and values for the Insurance - Type of policy govukSummaryList
  * @param {Object} All submitted policy and export data
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} All policy and date fields and values in an object structure for GOVUK summary list structure
  */
-const generateAboutGoodsOrServicesFields = (answers: ApplicationPolicyAndExport, referenceNumber: number, countries: Array<Country>) => {
+const generateAboutGoodsOrServicesFields = (
+  answers: ApplicationPolicyAndExport,
+  referenceNumber: number,
+  countries: Array<Country>,
+  checkAndChange: boolean,
+) => {
   const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS.ABOUT_GOODS_OR_SERVICES, DESCRIPTION),
       data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES_CHANGE}#${DESCRIPTION}-label`,
+      href: generateChangeLink(
+        ABOUT_GOODS_OR_SERVICES_CHANGE,
+        ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
+        `#${DESCRIPTION}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
       renderChangeLink: true,
     }),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.ABOUT_GOODS_OR_SERVICES, FINAL_DESTINATION),
-        href: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES_CHANGE}#${FINAL_DESTINATION}-label`,
+        href: generateChangeLink(
+          ABOUT_GOODS_OR_SERVICES_CHANGE,
+          ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
+          `#${FINAL_DESTINATION}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
         renderChangeLink: true,
       },
       answers[FINAL_DESTINATION] && getCountryByIsoCode(countries, answers[FINAL_DESTINATION]).name,

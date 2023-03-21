@@ -1,10 +1,15 @@
 import { ROUTES } from '../../../../constants';
 import { isSinglePolicyType, isMultiPolicyType } from '../../../policy-type';
+import generateChangeLink from '../../../generate-change-link';
 
 const {
   INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: { SINGLE_CONTRACT_POLICY_CHANGE, MULTIPLE_CONTRACT_POLICY_CHANGE },
+    POLICY_AND_EXPORTS: {
+      SINGLE_CONTRACT_POLICY_CHANGE,
+      SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+      MULTIPLE_CONTRACT_POLICY_CHANGE,
+      MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+    },
   },
 } = ROUTES;
 
@@ -16,20 +21,24 @@ const {
  * @param {String} Field ID
  * @returns {Object} Link object
  */
-const changeLink = (policyType: string, referenceNumber: number, fieldId: string) => {
-  const rootUrl = `${INSURANCE_ROOT}/${referenceNumber}`;
-
+const changeLink = (policyType: string, referenceNumber: number, fieldId: string, checkAndChange: boolean) => {
   if (isSinglePolicyType(policyType)) {
     return {
       renderChangeLink: true,
-      href: `${rootUrl}${SINGLE_CONTRACT_POLICY_CHANGE}#${fieldId}-label`,
+      href: generateChangeLink(SINGLE_CONTRACT_POLICY_CHANGE, SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE, `#${fieldId}-label`, referenceNumber, checkAndChange),
     };
   }
 
   if (isMultiPolicyType(policyType)) {
     return {
       renderChangeLink: true,
-      href: `${rootUrl}${MULTIPLE_CONTRACT_POLICY_CHANGE}#${fieldId}-label`,
+      href: generateChangeLink(
+        MULTIPLE_CONTRACT_POLICY_CHANGE,
+        MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+        `#${fieldId}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
     };
   }
 
