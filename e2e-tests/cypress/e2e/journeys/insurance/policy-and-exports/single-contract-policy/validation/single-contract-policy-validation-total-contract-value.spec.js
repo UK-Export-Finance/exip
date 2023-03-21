@@ -61,7 +61,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   const field = singleContractPolicyPage[TOTAL_CONTRACT_VALUE];

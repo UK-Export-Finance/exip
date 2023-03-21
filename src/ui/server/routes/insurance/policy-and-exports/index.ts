@@ -22,6 +22,8 @@ insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY_SAVE_AND_BACK}`, typeOfPolicySaveAndBackPost);
 insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY_CHANGE}`, typeOfPolicyGet);
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY_CHANGE}`, typeOfPolicyPost);
+insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY_CHECK_AND_CHANGE}`, typeOfPolicyGet);
+insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY_CHECK_AND_CHANGE}`, typeOfPolicyPost);
 
 insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`, singleContractPolicyGet);
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`, singleContractPolicyPost);
@@ -31,6 +33,11 @@ insurancePolicyAndExportsRouter.post(
 );
 insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY_CHANGE}`, singleContractPolicyGet);
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY_CHANGE}`, singleContractPolicyPost);
+insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, singleContractPolicyGet);
+insurancePolicyAndExportsRouter.post(
+  `/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`,
+  singleContractPolicyPost,
+);
 
 insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, multipleContractPolicyGet);
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, multipleContractPolicyPost);
@@ -40,6 +47,14 @@ insurancePolicyAndExportsRouter.post(
 );
 insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY_CHANGE}`, multipleContractPolicyGet);
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY_CHANGE}`, multipleContractPolicyPost);
+insurancePolicyAndExportsRouter.get(
+  `/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`,
+  multipleContractPolicyGet,
+);
+insurancePolicyAndExportsRouter.post(
+  `/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`,
+  multipleContractPolicyPost,
+);
 
 insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`, aboutGoodsOrServicesGet);
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`, aboutGoodsOrServicesPost);
@@ -49,6 +64,14 @@ insurancePolicyAndExportsRouter.post(
 );
 insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES_CHANGE}`, aboutGoodsOrServicesGet);
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES_CHANGE}`, aboutGoodsOrServicesPost);
+insurancePolicyAndExportsRouter.get(
+  `/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE}`,
+  aboutGoodsOrServicesGet,
+);
+insurancePolicyAndExportsRouter.post(
+  `/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE}`,
+  aboutGoodsOrServicesPost,
+);
 
 insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

@@ -27,10 +27,13 @@ const {
 } = ERROR_MESSAGES;
 
 context('Insurance - Policy and exports - Single contract policy page - form validation - credit period with buyer', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
@@ -46,7 +49,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   const field = singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];

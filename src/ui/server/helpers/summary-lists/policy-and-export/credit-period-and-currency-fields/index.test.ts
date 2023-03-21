@@ -15,20 +15,21 @@ const {
 describe('server/helpers/summary-lists/policy-and-export/credit-period-and-currency-fields', () => {
   const mockAnswers = mockApplication.policyAndExport;
   const { referenceNumber } = mockApplication;
+  const checkAndChange = false;
 
   it('should return fields and values from the submitted data/answers', () => {
-    const result = generateCreditPeriodAndCurrencyFields(mockAnswers, referenceNumber, mockCurrencies);
+    const result = generateCreditPeriodAndCurrencyFields(mockAnswers, referenceNumber, mockCurrencies, checkAndChange);
 
     const expected = [
       fieldGroupItem({
         field: getFieldById(FIELDS.CONTRACT_POLICY, CREDIT_PERIOD_WITH_BUYER),
         data: mockAnswers,
-        ...changeLink(mockAnswers[POLICY_TYPE], referenceNumber, CREDIT_PERIOD_WITH_BUYER),
+        ...changeLink(mockAnswers[POLICY_TYPE], referenceNumber, CREDIT_PERIOD_WITH_BUYER, checkAndChange),
       }),
       fieldGroupItem(
         {
           field: getFieldById(FIELDS.CONTRACT_POLICY, POLICY_CURRENCY_CODE),
-          ...changeLink(mockAnswers[POLICY_TYPE], referenceNumber, POLICY_CURRENCY_CODE),
+          ...changeLink(mockAnswers[POLICY_TYPE], referenceNumber, POLICY_CURRENCY_CODE, checkAndChange),
         },
         `${mockAnswers[POLICY_CURRENCY_CODE]} ${getCurrencyByCode(mockCurrencies, mockAnswers[POLICY_CURRENCY_CODE]).name}`,
       ),
