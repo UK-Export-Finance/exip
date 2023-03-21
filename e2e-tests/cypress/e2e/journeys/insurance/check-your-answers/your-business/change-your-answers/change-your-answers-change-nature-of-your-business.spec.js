@@ -75,7 +75,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe(GOODS_OR_SERVICES, () => {

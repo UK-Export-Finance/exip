@@ -80,7 +80,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe(NAME, () => {
