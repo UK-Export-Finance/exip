@@ -51,10 +51,13 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 context('Insurance - Your business - Check your answers - Summary list - your business', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
@@ -73,7 +76,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it(`should render a ${COMPANY_NUMBER} summary list row`, () => {

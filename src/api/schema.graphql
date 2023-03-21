@@ -1449,6 +1449,9 @@ type Mutation {
 
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
+
+  """ delete an application by reference number """
+  deleteApplicationByReferenceNumber(referenceNumber: Int!): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
@@ -1742,5 +1745,5 @@ type AddAndGetOtpResponse {
 
 type VerifyAccountEmailAddressResponse {
   success: Boolean!
-  accountId: String!
+  accountId: String
 }
