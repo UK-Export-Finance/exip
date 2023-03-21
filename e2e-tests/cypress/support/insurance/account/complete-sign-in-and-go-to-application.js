@@ -1,4 +1,4 @@
-import completeSignInAndGoToDashboard from './complete-sign-in-and-go-to-dashboard';
+import completeInsuranceEligibilitySignInAndGoToDashboard from './complete-insurance-eligibility-sign-in-and-go-to-dashboard';
 import insurancePages from '../../../e2e/pages/insurance';
 
 /**
@@ -10,7 +10,7 @@ import insurancePages from '../../../e2e/pages/insurance';
  */
 const completeSignInAndGoToApplication = () => {
   // complete sign in and go to dashboad
-  completeSignInAndGoToDashboard();
+  completeInsuranceEligibilitySignInAndGoToDashboard();
 
   // go to the newly created application
   insurancePages.dashboardPage.table.body.lastRow.referenceNumber().click();

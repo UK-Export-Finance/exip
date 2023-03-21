@@ -16,7 +16,7 @@ const queryStrings = {
   `,
   getExporterByEmail: (email) => `
     {
-      exporters(
+      exporters (
         orderBy: { updatedAt: desc }
         where: { email: { equals: "${email}" } }
         take: 1
@@ -48,6 +48,16 @@ const queryStrings = {
       }
     }
   `,
+  getApplicationByReferenceNumber: (referenceNumber) => `
+    {
+      applications (
+      orderBy: { updatedAt: desc }
+      where: { referenceNumber: { equals: ${referenceNumber} } }
+      take: 1
+    ) {
+      id
+    }
+  }`,
   deleteApplicationByReferenceNumber: () => gql`
     mutation DeleteApplicationByReferenceNumber($referenceNumber: Int!)  {
       deleteApplicationByReferenceNumber(referenceNumber: $referenceNumber) {
