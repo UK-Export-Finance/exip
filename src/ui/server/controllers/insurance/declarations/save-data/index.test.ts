@@ -1,8 +1,8 @@
 import save from '.';
-import api from '../../../../../api';
-import { sanitiseData } from '../../../../../helpers/sanitise-data';
-import { FIELD_IDS } from '../../../../../constants';
-import { mockApplication } from '../../../../../test-mocks';
+import api from '../../../../api';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import { FIELD_IDS } from '../../../../constants';
+import { mockApplication } from '../../../../test-mocks';
 
 const {
   DECLARATIONS: { AGREE_CONFIDENTIALITY },

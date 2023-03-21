@@ -108,6 +108,7 @@ interface ApplicationBuyer {
 interface ApplicationDeclaration {
   id: string;
   agreeToConfidentiality?: boolean;
+  agreeToAntiBribery?: boolean;
 }
 
 interface Application extends ApplicationCore {

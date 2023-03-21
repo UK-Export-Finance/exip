@@ -4,7 +4,7 @@ import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
-import save from './save-data';
+import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -23,7 +23,7 @@ const {
 const CONFIDENTIALITY_CONTENT = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.LIST;
 
 describe('controllers/insurance/declarations/confidentiality', () => {
-  jest.mock('./save-data');
+  jest.mock('../save-data');
 
   let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
 
