@@ -2,9 +2,7 @@ import gql from 'graphql-tag';
 
 const applicationsQuery = gql`
   query {
-    applications(
-      orderBy: { updatedAt: desc }
-    ) {
+    applications(orderBy: { updatedAt: desc }) {
       status
       updatedAt
       referenceNumber
