@@ -231,17 +231,23 @@ model Eligibility {
 }
 
 model Declaration {
-  id                           String                  @id @default(cuid())
-  application                  Application?            @relation("Declaration_application", fields: [applicationId], references: [id])
-  applicationId                String?                 @map("application")
-  antiBribery                  DeclarationAntiBribery? @relation("Declaration_antiBribery", fields: [antiBriberyId], references: [id])
-  antiBriberyId                String?                 @map("antiBribery")
-  agreeToConfidentiality       Boolean                 @default(false)
-  agreeToAntiBribery           Boolean                 @default(false)
-  from_Application_declaration Application[]           @relation("Application_declaration")
+  id                                     String                                     @id @default(cuid())
+  application                            Application?                               @relation("Declaration_application", fields: [applicationId], references: [id])
+  applicationId                          String?                                    @map("application")
+  antiBribery                            DeclarationAntiBribery?                    @relation("Declaration_antiBribery", fields: [antiBriberyId], references: [id])
+  antiBriberyId                          String?                                    @map("antiBribery")
+  ConfirmationAndAcknowledgements        DeclarationConfirmationAndAcknowledgement? @relation("Declaration_ConfirmationAndAcknowledgements", fields: [ConfirmationAndAcknowledgementsId], references: [id])
+  ConfirmationAndAcknowledgementsId      String?                                    @map("ConfirmationAndAcknowledgements")
+  agreeToConfidentiality                 Boolean                                    @default(false)
+  agreeToAntiBribery                     Boolean                                    @default(false)
+  hasAntiBriberyCodeOfConduct            String?
+  willExportWithAntiBriberyCodeOfConduct String?
+  agreeToConfirmationAndAcknowledgements Boolean                                    @default(false)
+  from_Application_declaration           Application[]                              @relation("Application_declaration")
 
   @@index([applicationId])
   @@index([antiBriberyId])
+  @@index([ConfirmationAndAcknowledgementsId])
 }
 
 model DeclarationAntiBribery {
@@ -249,6 +255,13 @@ model DeclarationAntiBribery {
   version                      String        @default("")
   content                      Json          @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   from_Declaration_antiBribery Declaration[] @relation("Declaration_antiBribery")
+}
+
+model DeclarationConfirmationAndAcknowledgement {
+  id                                               String        @id @default(cuid())
+  version                                          String        @default("")
+  content                                          Json          @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  from_Declaration_ConfirmationAndAcknowledgements Declaration[] @relation("Declaration_ConfirmationAndAcknowledgements")
 }
 
 model Page {

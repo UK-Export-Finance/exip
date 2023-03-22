@@ -110,6 +110,9 @@ const applicationQuery = gql`
           id
           agreeToConfidentiality
           agreeToAntiBribery
+          hasAntiBriberyCodeOfConduct
+          willExportWithAntiBriberyCodeOfConduct
+          agreeToConfirmationAndAcknowledgements
         }
       }
     }

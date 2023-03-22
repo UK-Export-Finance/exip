@@ -47,6 +47,30 @@ const mockDeclarations = {
       ],
     },
   },
+  confirmationAndAcknowledgement: {
+    id: 'clfdt2h8k0087cdoq8mc361ug',
+    version: '1.2',
+    content: {
+      document: [
+        {
+          type: 'paragraph',
+          children: [
+            {
+              text: 'By submitting this application you...',
+            },
+            {
+              type: 'list-item-content',
+              children: [
+                {
+                  text: 'you confirm that the information...',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
 };
 
 export default mockDeclarations;

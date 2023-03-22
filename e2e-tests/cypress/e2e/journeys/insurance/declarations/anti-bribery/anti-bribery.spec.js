@@ -56,7 +56,7 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {
