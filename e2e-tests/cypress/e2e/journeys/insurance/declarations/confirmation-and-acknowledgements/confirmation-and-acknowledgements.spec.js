@@ -20,7 +20,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDG
 const {
   ROOT: INSURANCE_ROOT,
   DECLARATIONS: {
-    EXPORTING_WITH_CODE_OF_CONDUCT,
+    ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT },
     CONFIRMATION_AND_ACKNOWLEDGEMENTS,
     HOW_DATA_WILL_BE_USED,
   },
@@ -44,11 +44,9 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - As 
       cy.completeAndSubmitDeclarationConfidentiality();
       cy.completeAndSubmitDeclarationAntiBribery();
       cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
+      cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
-
-      // TEMP until previous page is built
-      cy.navigateToUrl(`${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`);
 
       cy.url().should('eq', url);
     });
@@ -59,14 +57,14 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - As 
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`,
-      // backLink: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`,
       assertBackLink: false,
     });
   });
@@ -175,17 +173,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - As 
         it('should have the submitted value', () => {
           cy.navigateToUrl(url);
 
-          // go to the page
-          submitButton().click();
-          submitButton().click();
-          submitButton().click();
-
-          url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
-
-          // TEMP until previous page is built
-          cy.navigateToUrl(`${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`);
-
-          field = confirmationAndAcknowledgementsPage[FIELD_ID];
+          const field = confirmationAndAcknowledgementsPage[FIELD_ID];
 
           field.input().should('be.checked');
         });

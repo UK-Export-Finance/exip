@@ -668,7 +668,6 @@ var lists = {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       antiBribery: (0, import_fields.relationship)({ ref: "DeclarationAntiBribery" }),
       ConfirmationAndAcknowledgements: (0, import_fields.relationship)({ ref: "DeclarationConfirmationAndAcknowledgement" }),
-      agreeToConfirmationAndAcknowledgements: (0, import_fields.checkbox)(),
       agreeToConfidentiality: (0, import_fields.checkbox)(),
       agreeToAntiBribery: (0, import_fields.checkbox)(),
       hasAntiBriberyCodeOfConduct: (0, import_fields.select)({
@@ -684,7 +683,8 @@ var lists = {
           { label: ANSWERS.NO, value: ANSWERS.NO }
         ],
         db: { isNullable: true }
-      })
+      }),
+      agreeToConfirmationAndAcknowledgements: (0, import_fields.checkbox)()
     },
     access: import_access.allowAll
   }),

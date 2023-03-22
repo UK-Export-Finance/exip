@@ -35,11 +35,9 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
       cy.completeAndSubmitDeclarationConfidentiality();
       cy.completeAndSubmitDeclarationAntiBribery();
       cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
+      cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
-
-      // TEMP until previous page is built
-      cy.navigateToUrl(`${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`);
 
       cy.url().should('eq', url);
     });
@@ -97,15 +95,19 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       task.link().click();
 
-      // go to the page
+      // go through the 1st declaration - confidentiality
       submitButton().click();
+
+      // go through the 2nd declaration - anti-bribery
       submitButton().click();
+
+      // go through the 3rd declaration - anti-bribery - code of conduct
+      submitButton().click();
+
+      // go through the 4th declaration - anti-bribery - exporting with code of conduct
       submitButton().click();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
-
-      // TEMP until previous page is built
-      cy.navigateToUrl(`${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`);
 
       field.input().should('be.checked');
     });
