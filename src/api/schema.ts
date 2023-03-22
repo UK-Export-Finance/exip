@@ -531,6 +531,7 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       antiBribery: relationship({ ref: 'DeclarationAntiBribery' }),
+      ConfirmationAndAcknowledgements: relationship({ ref: 'DeclarationConfirmationAndAcknowledgement' }),
       agreeToConfidentiality: checkbox(),
       agreeToAntiBribery: checkbox(),
       hasAntiBriberyCodeOfConduct: select({
@@ -547,10 +548,23 @@ export const lists = {
         ],
         db: { isNullable: true },
       }),
+      agreeToConfirmationAndAcknowledgements: checkbox(),
     },
     access: allowAll,
   }),
   DeclarationAntiBribery: list({
+    fields: {
+      version: text({
+        label: 'Version',
+        validation: { isRequired: true },
+      }),
+      content: document({
+        formatting: true,
+      }),
+    },
+    access: allowAll,
+  }),
+  DeclarationConfirmationAndAcknowledgement: list({
     fields: {
       version: text({
         label: 'Version',

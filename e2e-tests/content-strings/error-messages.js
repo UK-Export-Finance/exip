@@ -276,6 +276,9 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.DECLARATIONS.WILL_EXPORT_WITH_CODE_OF_CONDUCT]: {
         IS_EMPTY: 'Select whether you will use your anti-bribery code of conduct to win or carry out the exports',
       },
+      [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
+        IS_EMPTY: 'Confirm that you have read and accept the confirmation and acknowledgements',
+      },
     },
   },
 };

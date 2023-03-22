@@ -36,7 +36,7 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.HAS_ANTI_BRIBERY_CODE_OF_CONDUCT;
 
-context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an Exporter, I want to confirm if I will use my company’s anti - bribery code of conduct for my export insurance application, So that UKEF can refer to it as applicable when processing my export insurance application.', () => {
+context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an Exporter, I want to confirm if I will use my company's anti - bribery code of conduct for my export insurance application, So that UKEF can refer to it as applicable when processing my export insurance application", () => {
   let referenceNumber;
   let url;
 

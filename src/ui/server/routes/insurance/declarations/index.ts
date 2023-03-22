@@ -7,6 +7,10 @@ import {
   get as exportingWithCodeOfConductGet,
   post as exportingWithCodeOfConductPost,
 } from '../../../controllers/insurance/declarations/anti-bribery/exporting-with-code-of-conduct';
+import {
+  get as confirmationAndAcknowledgementsGet,
+  post as confirmationAndAcknowledgementsPost,
+} from '../../../controllers/insurance/declarations/confirmation-and-acknowledgements';
 import { post as saveAndBackPost } from '../../../controllers/insurance/declarations/save-and-back';
 
 // @ts-ignore
@@ -35,5 +39,21 @@ insuranceDeclarationsRouter.post(
   `/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.ANTI_BRIBERY.EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK}`,
   saveAndBackPost,
 );
+
+insuranceDeclarationsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.ANTI_BRIBERY.EXPORTING_WITH_CODE_OF_CONDUCT}`, exportingWithCodeOfConductGet);
+
+insuranceDeclarationsRouter.post(
+  `/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.ANTI_BRIBERY.EXPORTING_WITH_CODE_OF_CONDUCT}`,
+  exportingWithCodeOfConductPost,
+);
+
+insuranceDeclarationsRouter.post(
+  `/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.ANTI_BRIBERY.EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK}`,
+  saveAndBackPost,
+);
+
+insuranceDeclarationsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, confirmationAndAcknowledgementsGet);
+insuranceDeclarationsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, confirmationAndAcknowledgementsPost);
+insuranceDeclarationsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK}`, saveAndBackPost);
 
 export default insuranceDeclarationsRouter;
