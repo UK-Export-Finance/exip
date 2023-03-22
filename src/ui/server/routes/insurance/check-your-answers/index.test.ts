@@ -13,6 +13,9 @@ import {
 } from '../../../controllers/insurance/check-your-answers/your-business';
 import { post as postCheckYourAnswersYourBusinessSaveAndBack } from '../../../controllers/insurance/check-your-answers/your-business/save-and-back';
 
+import { get as getCheckYourAnswersYourBuyer, post as postCheckYourAnswersYourBuyer } from '../../../controllers/insurance/check-your-answers/your-buyer';
+import { post as postCheckYourAnswersYourBuyerSaveAndBack } from '../../../controllers/insurance/check-your-answers/your-buyer/save-and-back';
+
 describe('routes/insurance/check-your-answers', () => {
   beforeEach(() => {
     require('.'); // eslint-disable-line global-require
@@ -41,6 +44,13 @@ describe('routes/insurance/check-your-answers', () => {
     expect(post).toHaveBeenCalledWith(
       `/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUSINESS_SAVE_AND_BACK}`,
       postCheckYourAnswersYourBusinessSaveAndBack,
+    );
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER}`, getCheckYourAnswersYourBuyer);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER}`, postCheckYourAnswersYourBuyer);
+    expect(post).toHaveBeenCalledWith(
+      `/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER_SAVE_AND_BACK}`,
+      postCheckYourAnswersYourBuyerSaveAndBack,
     );
   });
 });

@@ -26,3 +26,8 @@ export const YOUR_BUSINESS = {
   ...SHARED,
   PAGE_TITLE: 'About your business',
 };
+
+export const YOUR_BUYER = {
+  ...SHARED,
+  PAGE_TITLE: 'Your buyer',
+};
