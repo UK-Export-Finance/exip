@@ -7,7 +7,6 @@ import {
   noRadio,
   inlineErrorMessage,
 } from '../../../../../pages/shared';
-import { exportingWithCodeOfConductPage } from '../../../../../pages/insurance/declarations';
 import partials from '../../../../../partials';
 import {
   BUTTONS,
@@ -103,12 +102,8 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
-      let field;
-
       beforeEach(() => {
         cy.navigateToUrl(url);
-
-        field = exportingWithCodeOfConductPage[FIELD_ID];
       });
 
       it('should render a validation error', () => {
@@ -146,8 +141,6 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
       describe('when going back to the page', () => {
         it('should have the submitted value', () => {
           cy.navigateToUrl(url);
-
-          const field = exportingWithCodeOfConductPage[FIELD_ID];
 
           yesRadioInput().should('be.checked');
         });
