@@ -97,7 +97,7 @@ export const post = async (req: Request, res: Response) => {
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY,
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
