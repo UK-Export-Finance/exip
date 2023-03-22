@@ -56,7 +56,7 @@ context('Insurance - Check your answers - Your buyer page- I want to confirm my 
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

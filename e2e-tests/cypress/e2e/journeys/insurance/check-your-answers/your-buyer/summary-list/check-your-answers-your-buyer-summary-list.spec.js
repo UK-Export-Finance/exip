@@ -62,7 +62,7 @@ context('Insurance - Check your answers - Your buyer page- Summary list', () => 
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it(`should render a ${NAME} summary list row`, () => {
