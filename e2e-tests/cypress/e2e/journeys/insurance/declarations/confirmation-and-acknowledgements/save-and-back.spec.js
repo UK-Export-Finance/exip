@@ -48,7 +48,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {
