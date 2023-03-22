@@ -33,10 +33,13 @@ const {
 } = ERROR_MESSAGES;
 
 context('Insurance - Policy and exports - Single contract policy page - form validation', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
@@ -52,7 +55,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('should render validation errors for all required fields', () => {

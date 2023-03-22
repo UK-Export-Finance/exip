@@ -31,10 +31,13 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 context('Insurance - Policy and exports - Check your answers - Summary list - multiple contract policy', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       task.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
@@ -52,7 +55,7 @@ context('Insurance - Policy and exports - Check your answers - Summary list - mu
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it(`should render a ${POLICY_TYPE} summary list row`, () => {

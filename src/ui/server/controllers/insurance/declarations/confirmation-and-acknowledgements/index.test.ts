@@ -103,7 +103,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
         beforeAll(() => {
           getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.reject());
 
-          api.keystone.application.declarations.getLatestConfidentiality = getLatestConfirmationAndAcknowledgementSpy;
+          api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

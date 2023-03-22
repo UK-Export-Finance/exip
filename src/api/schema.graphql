@@ -1132,7 +1132,6 @@ input EligibilityCreateInput {
 type Declaration {
   id: ID!
   application: Application
-  confidentiality: DeclarationConfidentiality
   antiBribery: DeclarationAntiBribery
   ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgement
   agreeToConfidentiality: Boolean
@@ -1152,7 +1151,6 @@ input DeclarationWhereInput {
   NOT: [DeclarationWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
-  confidentiality: DeclarationConfidentialityWhereInput
   antiBribery: DeclarationAntiBriberyWhereInput
   ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementWhereInput
   agreeToConfidentiality: BooleanFilter
@@ -1173,7 +1171,6 @@ input DeclarationOrderByInput {
 
 input DeclarationUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
-  confidentiality: DeclarationConfidentialityRelateToOneForUpdateInput
   antiBribery: DeclarationAntiBriberyRelateToOneForUpdateInput
   ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementRelateToOneForUpdateInput
   agreeToConfidentiality: Boolean
@@ -1181,12 +1178,6 @@ input DeclarationUpdateInput {
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
   agreeToConfirmationAndAcknowledgements: Boolean
-}
-
-input DeclarationConfidentialityRelateToOneForUpdateInput {
-  create: DeclarationConfidentialityCreateInput
-  connect: DeclarationConfidentialityWhereUniqueInput
-  disconnect: Boolean
 }
 
 input DeclarationAntiBriberyRelateToOneForUpdateInput {
@@ -1208,7 +1199,6 @@ input DeclarationUpdateArgs {
 
 input DeclarationCreateInput {
   application: ApplicationRelateToOneForCreateInput
-  confidentiality: DeclarationConfidentialityRelateToOneForCreateInput
   antiBribery: DeclarationAntiBriberyRelateToOneForCreateInput
   ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementRelateToOneForCreateInput
   agreeToConfidentiality: Boolean
@@ -1216,11 +1206,6 @@ input DeclarationCreateInput {
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
   agreeToConfirmationAndAcknowledgements: Boolean
-}
-
-input DeclarationConfidentialityRelateToOneForCreateInput {
-  create: DeclarationConfidentialityCreateInput
-  connect: DeclarationConfidentialityWhereUniqueInput
 }
 
 input DeclarationAntiBriberyRelateToOneForCreateInput {
@@ -1231,48 +1216,6 @@ input DeclarationAntiBriberyRelateToOneForCreateInput {
 input DeclarationConfirmationAndAcknowledgementRelateToOneForCreateInput {
   create: DeclarationConfirmationAndAcknowledgementCreateInput
   connect: DeclarationConfirmationAndAcknowledgementWhereUniqueInput
-}
-
-type DeclarationConfidentiality {
-  id: ID!
-  version: String
-  content: DeclarationConfidentiality_content_Document
-}
-
-type DeclarationConfidentiality_content_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
-}
-
-input DeclarationConfidentialityWhereUniqueInput {
-  id: ID
-}
-
-input DeclarationConfidentialityWhereInput {
-  AND: [DeclarationConfidentialityWhereInput!]
-  OR: [DeclarationConfidentialityWhereInput!]
-  NOT: [DeclarationConfidentialityWhereInput!]
-  id: IDFilter
-  version: StringFilter
-}
-
-input DeclarationConfidentialityOrderByInput {
-  id: OrderDirection
-  version: OrderDirection
-}
-
-input DeclarationConfidentialityUpdateInput {
-  version: String
-  content: JSON
-}
-
-input DeclarationConfidentialityUpdateArgs {
-  where: DeclarationConfidentialityWhereUniqueInput!
-  data: DeclarationConfidentialityUpdateInput!
-}
-
-input DeclarationConfidentialityCreateInput {
-  version: String
-  content: JSON
 }
 
 type DeclarationAntiBribery {
@@ -1538,12 +1481,6 @@ type Mutation {
   updateDeclarations(data: [DeclarationUpdateArgs!]!): [Declaration]
   deleteDeclaration(where: DeclarationWhereUniqueInput!): Declaration
   deleteDeclarations(where: [DeclarationWhereUniqueInput!]!): [Declaration]
-  createDeclarationConfidentiality(data: DeclarationConfidentialityCreateInput!): DeclarationConfidentiality
-  createDeclarationConfidentialities(data: [DeclarationConfidentialityCreateInput!]!): [DeclarationConfidentiality]
-  updateDeclarationConfidentiality(where: DeclarationConfidentialityWhereUniqueInput!, data: DeclarationConfidentialityUpdateInput!): DeclarationConfidentiality
-  updateDeclarationConfidentialities(data: [DeclarationConfidentialityUpdateArgs!]!): [DeclarationConfidentiality]
-  deleteDeclarationConfidentiality(where: DeclarationConfidentialityWhereUniqueInput!): DeclarationConfidentiality
-  deleteDeclarationConfidentialities(where: [DeclarationConfidentialityWhereUniqueInput!]!): [DeclarationConfidentiality]
   createDeclarationAntiBribery(data: DeclarationAntiBriberyCreateInput!): DeclarationAntiBribery
   createDeclarationAntiBriberies(data: [DeclarationAntiBriberyCreateInput!]!): [DeclarationAntiBribery]
   updateDeclarationAntiBribery(where: DeclarationAntiBriberyWhereUniqueInput!, data: DeclarationAntiBriberyUpdateInput!): DeclarationAntiBribery
@@ -1595,6 +1532,9 @@ type Mutation {
 
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
+
+  """ delete an application by reference number """
+  deleteApplicationByReferenceNumber(referenceNumber: Int!): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
@@ -1654,9 +1594,6 @@ type Query {
   declarations(where: DeclarationWhereInput! = {}, orderBy: [DeclarationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationWhereUniqueInput): [Declaration!]
   declaration(where: DeclarationWhereUniqueInput!): Declaration
   declarationsCount(where: DeclarationWhereInput! = {}): Int
-  declarationConfidentialities(where: DeclarationConfidentialityWhereInput! = {}, orderBy: [DeclarationConfidentialityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationConfidentialityWhereUniqueInput): [DeclarationConfidentiality!]
-  declarationConfidentiality(where: DeclarationConfidentialityWhereUniqueInput!): DeclarationConfidentiality
-  declarationConfidentialitiesCount(where: DeclarationConfidentialityWhereInput! = {}): Int
   declarationAntiBriberies(where: DeclarationAntiBriberyWhereInput! = {}, orderBy: [DeclarationAntiBriberyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationAntiBriberyWhereUniqueInput): [DeclarationAntiBribery!]
   declarationAntiBribery(where: DeclarationAntiBriberyWhereUniqueInput!): DeclarationAntiBribery
   declarationAntiBriberiesCount(where: DeclarationAntiBriberyWhereInput! = {}): Int
@@ -1901,5 +1838,5 @@ type AddAndGetOtpResponse {
 
 type VerifyAccountEmailAddressResponse {
   success: Boolean!
-  accountId: String!
+  accountId: String
 }

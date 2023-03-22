@@ -58,7 +58,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

@@ -17,9 +17,13 @@ const { USING_BROKER, HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, TOW
 const { BROKER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
-const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
+const {
+  INSURANCE_ROOT,
+  EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
+} = ROUTES.INSURANCE;
 
-const { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
+const { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, BROKER_CHECK_AND_CHANGE } = EXPORTER_BUSINESS_ROUTES;
 
 describe('controllers/insurance/business/broker', () => {
   let req: Request;
@@ -172,6 +176,20 @@ describe('controllers/insurance/business/broker', () => {
         expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
 
         expect(mapAndSave.broker).toHaveBeenCalledWith(req.body, mockApplication);
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.body = mockBroker;
+
+          req.originalUrl = BROKER_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

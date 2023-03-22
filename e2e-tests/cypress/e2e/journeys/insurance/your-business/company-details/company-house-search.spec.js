@@ -30,10 +30,13 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.exporterBusiness;
 
 context('Insurance - Your business - Company details page - company house search - As an Exporter I want to enter my business\'s Companies House Registration Number (CRN)', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
       cy.navigateToUrl(url);
@@ -47,7 +50,7 @@ context('Insurance - Your business - Company details page - company house search
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe('when leaving companies house registration blank', () => {
