@@ -10,7 +10,9 @@ export const DECLARATIONS = {
     ROOT: ANTI_BRIBERY_ROOT,
     ROOT_SAVE_AND_BACK: `${ANTI_BRIBERY_ROOT}/save-and-go-back`,
     CODE_OF_CONDUCT: `${ANTI_BRIBERY_ROOT}/code-of-conduct`,
-    CODE_OF_CONDUCT_SAVE_AND_BACK: `${ANTI_BRIBERY_ROOT}/exporting/code-of-conduct/save-and-back`,
+    CODE_OF_CONDUCT_SAVE_AND_BACK: `${ANTI_BRIBERY_ROOT}/code-of-conduct/save-and-back`,
     EXPORTING_WITH_CODE_OF_CONDUCT: `${ANTI_BRIBERY_ROOT}/exporting/code-of-conduct`,
+    EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK: `${ANTI_BRIBERY_ROOT}/exporting/code-of-conduct/save-and-back`,
   },
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS: `${ROOT}/confirmation-and-acknowledgements`,
 };

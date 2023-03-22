@@ -531,8 +531,22 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       antiBribery: relationship({ ref: 'DeclarationAntiBribery' }),
-      agreeToConfidentiality: checkbox({ defaultValue: false }),
-      agreeToAntiBribery: checkbox({ defaultValue: false }),
+      agreeToConfidentiality: checkbox(),
+      agreeToAntiBribery: checkbox(),
+      hasAntiBriberyCodeOfConduct: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+        db: { isNullable: true },
+      }),
+      willExportWithAntiBriberyCodeOfConduct: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+        db: { isNullable: true },
+      }),
     },
     access: allowAll,
   }),

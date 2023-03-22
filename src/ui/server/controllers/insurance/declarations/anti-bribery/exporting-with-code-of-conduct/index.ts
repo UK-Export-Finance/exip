@@ -6,18 +6,19 @@ import generateValidationErrors from '../../../../../shared-validation/yes-no-ra
 import save from '../../save-data';
 import { Request, Response } from '../../../../../../types';
 
-const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.HAS_ANTI_BRIBERY_CODE_OF_CONDUCT;
+const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.WILL_EXPORT_WITH_CODE_OF_CONDUCT;
 
 const { INSURANCE, PROBLEM_WITH_SERVICE } = ROUTES;
 
 const {
   INSURANCE_ROOT,
   DECLARATIONS: {
-    ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT, CODE_OF_CONDUCT_SAVE_AND_BACK },
+    ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK },
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
   },
 } = INSURANCE;
 
-const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_CONDUCT;
+const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT;
 
 /**
  * pageVariables
@@ -30,17 +31,17 @@ export const pageVariables = (referenceNumber: number) => ({
     ID: FIELD_ID,
     ...DECLARATIONS_FIELDS[FIELD_ID],
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT_SAVE_AND_BACK}`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK}`,
 });
 
-export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.CODE_OF_CONDUCT;
+export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.EXPORTING_WITH_CODE_OF_CONDUCT;
 
 /**
  * get
- * Render the Declarations - Anti-bribery - Code of conduct page
+ * Render the Declarations - Anti-bribery - Exporting with code of conduct page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Declarations - Anti-bribery - Code of conduct page
+ * @returns {Express.Response.render} Declarations - Anti-bribery - Exporting with code of conduct page
  */
 export const get = (req: Request, res: Response) => {
   const { application } = res.locals;
@@ -61,7 +62,7 @@ export const get = (req: Request, res: Response) => {
 
 /**
  * post
- * Check Declarations - Anti-bribery - Code of conduct validation errors and if successful, redirect to the next part of the flow.
+ * Check Declarations - Anti-bribery - Exporting with code of conduct validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -94,7 +95,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`);
   } catch (err) {
     console.error('Error updating application - declarations - anti-bribery - exporting with code of conduct ', { err });
 
