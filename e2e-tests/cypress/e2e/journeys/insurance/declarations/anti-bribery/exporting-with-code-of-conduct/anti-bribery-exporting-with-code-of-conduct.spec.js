@@ -7,6 +7,7 @@ import {
   noRadio,
   inlineErrorMessage,
 } from '../../../../../pages/shared';
+import { exportingWithCodeOfConductPage } from '../../../../../pages/insurance/declarations';
 import partials from '../../../../../partials';
 import {
   BUTTONS,
@@ -61,7 +62,7 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {
@@ -102,8 +103,12 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
+      let field;
+
       beforeEach(() => {
         cy.navigateToUrl(url);
+
+        field = exportingWithCodeOfConductPage[FIELD_ID];
       });
 
       it('should render a validation error', () => {
@@ -138,19 +143,15 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
         cy.url().should('eq', expectedUrl);
       });
 
-      // describe('when going back to the page', () => {
-      //   it('should have the submitted value', () => {
-      //     cy.navigateToUrl(url);
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
 
-      //     cy.completeAndSubmitDeclarationAntiBribery();
+          const field = exportingWithCodeOfConductPage[FIELD_ID];
 
-      //     cy.navigateToUrl(url);
-
-      //     const field = antiBriberyPage[FIELD_ID];
-
-      //     field.input().should('be.checked');
-      //   });
-      // });
+          yesRadioInput().should('be.checked');
+        });
+      });
     });
   });
 });

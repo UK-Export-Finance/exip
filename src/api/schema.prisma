@@ -238,8 +238,8 @@ model Declaration {
   antiBriberyId                          String?                 @map("antiBribery")
   agreeToConfidentiality                 Boolean                 @default(false)
   agreeToAntiBribery                     Boolean                 @default(false)
-  hasAntiBriberyCodeOfConduct            Boolean                 @default(false)
-  willExportWithAntiBriberyCodeOfConduct Boolean                 @default(false)
+  hasAntiBriberyCodeOfConduct            String?
+  willExportWithAntiBriberyCodeOfConduct String?
   from_Application_declaration           Application[]           @relation("Application_declaration")
 
   @@index([applicationId])

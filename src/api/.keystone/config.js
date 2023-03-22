@@ -667,10 +667,22 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       antiBribery: (0, import_fields.relationship)({ ref: "DeclarationAntiBribery" }),
-      agreeToConfidentiality: (0, import_fields.checkbox)({ defaultValue: false }),
-      agreeToAntiBribery: (0, import_fields.checkbox)({ defaultValue: false }),
-      hasAntiBriberyCodeOfConduct: (0, import_fields.checkbox)({ defaultValue: false }),
-      willExportWithAntiBriberyCodeOfConduct: (0, import_fields.checkbox)({ defaultValue: false })
+      agreeToConfidentiality: (0, import_fields.checkbox)(),
+      agreeToAntiBribery: (0, import_fields.checkbox)(),
+      hasAntiBriberyCodeOfConduct: (0, import_fields.select)({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO }
+        ],
+        db: { isNullable: true }
+      }),
+      willExportWithAntiBriberyCodeOfConduct: (0, import_fields.select)({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO }
+        ],
+        db: { isNullable: true }
+      })
     },
     access: import_access.allowAll
   }),
