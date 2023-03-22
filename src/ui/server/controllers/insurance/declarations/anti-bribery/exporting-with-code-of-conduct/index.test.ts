@@ -8,20 +8,21 @@ import save from '../../save-data';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 
-const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.HAS_ANTI_BRIBERY_CODE_OF_CONDUCT;
+const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.WILL_EXPORT_WITH_CODE_OF_CONDUCT;
 
 const { INSURANCE, PROBLEM_WITH_SERVICE } = ROUTES;
 
 const {
   INSURANCE_ROOT,
   DECLARATIONS: {
-    ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT, CODE_OF_CONDUCT_SAVE_AND_BACK },
+    ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK },
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
   },
 } = INSURANCE;
 
-const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_CONDUCT;
+const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT;
 
-describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () => {
+describe('controllers/insurance/declarations/anti-bribery/exporting-with-acode-of-conduct', () => {
   jest.mock('../../save-data');
 
   let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
@@ -47,7 +48,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
           ID: FIELD_ID,
           ...DECLARATIONS_FIELDS[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CODE_OF_CONDUCT_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -56,7 +57,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.CODE_OF_CONDUCT);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.EXPORTING_WITH_CODE_OF_CONDUCT);
     });
   });
 
@@ -103,10 +104,10 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
         expect(save.declaration).toHaveBeenCalledWith(mockApplication, validBody);
       });
 
-      it(`should redirect to ${EXPORTING_WITH_CODE_OF_CONDUCT}`, async () => {
+      it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
