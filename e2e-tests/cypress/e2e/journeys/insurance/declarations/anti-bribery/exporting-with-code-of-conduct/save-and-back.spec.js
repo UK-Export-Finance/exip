@@ -49,7 +49,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {
