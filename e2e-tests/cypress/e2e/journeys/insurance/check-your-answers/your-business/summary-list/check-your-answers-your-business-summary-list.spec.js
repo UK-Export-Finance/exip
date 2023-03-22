@@ -1,6 +1,7 @@
 import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
-import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../support/insurance/check-your-business-summary-list';
 
 const {
@@ -8,44 +9,40 @@ const {
   CHECK_YOUR_ANSWERS: {
     YOUR_BUSINESS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: {
-      COMPANY_HOUSE: {
-        COMPANY_NAME,
-        COMPANY_NUMBER,
-        COMPANY_ADDRESS,
-        COMPANY_INCORPORATED,
-        COMPANY_SIC,
-        FINANCIAL_YEAR_END_DATE,
-      },
-      YOUR_COMPANY: {
-        TRADING_ADDRESS,
-        TRADING_NAME,
-        WEBSITE,
-        PHONE_NUMBER,
-      },
-      NATURE_OF_YOUR_BUSINESS: {
-        GOODS_OR_SERVICES,
-        YEARS_EXPORTING,
-        EMPLOYEES_INTERNATIONAL,
-        EMPLOYEES_UK,
-      },
-      TURNOVER: {
-        ESTIMATED_ANNUAL_TURNOVER,
-        PERCENTAGE_TURNOVER,
-      },
-      BROKER: {
-        USING_BROKER,
-        NAME,
-        ADDRESS_LINE_1,
-        EMAIL,
-      },
-    },
+  COMPANY_HOUSE: {
+    COMPANY_NAME,
+    COMPANY_NUMBER,
+    COMPANY_ADDRESS,
+    COMPANY_INCORPORATED,
+    COMPANY_SIC,
+    FINANCIAL_YEAR_END_DATE,
   },
-} = FIELD_IDS;
+  YOUR_COMPANY: {
+    TRADING_ADDRESS,
+    TRADING_NAME,
+    WEBSITE,
+    PHONE_NUMBER,
+  },
+  NATURE_OF_YOUR_BUSINESS: {
+    GOODS_OR_SERVICES,
+    YEARS_EXPORTING,
+    EMPLOYEES_INTERNATIONAL,
+    EMPLOYEES_UK,
+  },
+  TURNOVER: {
+    ESTIMATED_ANNUAL_TURNOVER,
+    PERCENTAGE_TURNOVER,
+  },
+  BROKER: {
+    USING_BROKER,
+    NAME,
+    ADDRESS_LINE_1,
+    EMAIL,
+  },
+} = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -81,7 +78,7 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it(`should render a ${COMPANY_NUMBER} summary list row`, () => {

@@ -11,6 +11,7 @@ const dashboardPage = {
       insuredFor: () => cy.get('[data-cy="header-insuredFor"]'),
     },
     body: {
+      rows: () => cy.get('table tbody tr'),
       row: (referenceNumber) => ({
         status: () => cy.get(`[data-cy="ref-${referenceNumber}-status"]`),
         lastUpdated: () => cy.get(`[data-cy="ref-${referenceNumber}-lastUpdated"]`),
@@ -19,6 +20,9 @@ const dashboardPage = {
         buyerName: () => cy.get(`[data-cy="ref-${referenceNumber}-buyerName"]`),
         insuredFor: () => cy.get(`[data-cy="ref-${referenceNumber}-insuredFor"]`),
       }),
+      firstRow: {
+        referenceNumber: () => cy.get('table tbody tr').first().find('td a'),
+      },
       lastRow: {
         referenceNumber: () => cy.get('table tbody tr').last().find('td a'),
       },

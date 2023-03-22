@@ -3,7 +3,6 @@
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
-{% import '../../components/keystone/document/index.njk' as keystoneDocument %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -26,25 +25,59 @@
     }) }}
   {% endif %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters-from-desktop">
-      <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-padding-right-0 govuk-!-padding-left-0">
-        <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
-        <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
-      </div>
-    </div>
-  </div>
+  <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+  <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters-from-desktop">
 
-      {{ keystoneDocument.render({
-        document: content,
-        listItemClass: 'counter-list-item',
-        firstLevelListClass: 'counter-list',
-        secondLevelListClass: 'lower-alpha-counter-list',
-        thirdLevelListClass: 'lower-roman-counter-list'
-      }) }}
+      <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+
+      <ol class="counter-list counter-list--bold">
+
+        {% for level1Item in CONFIDENTIALITY_CONTENT %}
+
+          <li class="govuk-!-margin-bottom-7 counter-list-item">
+            <span class="govuk-!-margin-bottom-7" data-cy="list-level-1-item-{{ loop.index }}">{{ level1Item.text }}</span>
+
+            {% if level1Item.children %}
+
+              <ol class="lower-alpha-counter-list">
+
+                {% for level2Item in level1Item.children %}
+
+                <li class="govuk-!-margin-bottom-7 counter-list-item">
+                  <span class="govuk-!-margin-bottom-7" data-cy="list-level-2-item-{{ loop.index }}">{{ level2Item.text }}</span>
+
+                  {% if level2Item.children %}
+
+                    <ol class="lower-roman-counter-list">
+
+                      {% for level3Item in level2Item.children %}
+
+                      <li class="govuk-!-margin-bottom-7 counter-list-item">
+                        <span data-cy="list-level-3-item-{{ loop.index }}">{{ level3Item.text }}</span>
+                      </li>
+
+                      {% endfor %}
+
+                    </ol>
+
+                  {% endif %}
+
+                </li>
+
+                {% endfor %}
+
+              </ol>
+
+            {% endif %}
+
+          </li>
+
+        {% endfor %}
+
+      </ol>
 
     </div>
   </div>

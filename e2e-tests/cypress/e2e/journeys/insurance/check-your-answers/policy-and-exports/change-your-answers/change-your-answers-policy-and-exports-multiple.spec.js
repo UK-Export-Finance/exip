@@ -9,7 +9,7 @@ import {
   changeAnswerField,
   checkChangeAnswerRendered,
 } from '../../../../../../support/check-summary-list-field-change';
-import { changeAnswerSelect } from '../../../../../../support/check-summary-list-select-change';
+import { changeAnswerSelectField } from '../../../../../../support/check-summary-list-select-change';
 import formatCurrency from '../../../../../helpers/format-currency';
 import currencies from '../../../../../../fixtures/currencies';
 import { createTimestampFromNumbers, formatDate } from '../../../../../helpers/date';
@@ -150,7 +150,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = String(Number(application.POLICY_AND_EXPORTS[fieldId]) + 1);
-          changeAnswerSelect(fieldVariables, multipleContractPolicyPage[fieldId].input());
+          changeAnswerSelectField(fieldVariables, multipleContractPolicyPage[fieldId].input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -306,7 +306,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = currencies[3].isoCode;
-          changeAnswerSelect(fieldVariables, policyCurrencyCodeFormField.input());
+          changeAnswerSelectField(fieldVariables, policyCurrencyCodeFormField.input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {

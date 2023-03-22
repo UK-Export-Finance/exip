@@ -1,6 +1,7 @@
 import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
-import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { checkYourAnswersYourBusiness } from '../../../../../pages/insurance/check-your-answers';
 import { turnover } from '../../../../../pages/your-business';
 import {
@@ -17,18 +18,14 @@ const {
   EXPORTER_BUSINESS: {
     TURNOVER_CHECK_AND_CHANGE,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: {
-      TURNOVER: {
-        ESTIMATED_ANNUAL_TURNOVER,
-        PERCENTAGE_TURNOVER,
-      },
-    },
+  TURNOVER: {
+    ESTIMATED_ANNUAL_TURNOVER,
+    PERCENTAGE_TURNOVER,
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -76,7 +73,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe(ESTIMATED_ANNUAL_TURNOVER, () => {

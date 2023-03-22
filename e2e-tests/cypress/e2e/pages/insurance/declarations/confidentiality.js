@@ -8,7 +8,7 @@ const {
 
 const confidentialityPage = {
   listItems: {
-    intro: () => cy.get("[data-cy='paragraph-1']"),
+    intro: () => cy.get("[data-cy='intro']"),
     level1: {
       item1: () => cy.get("[data-cy='list-level-1-item-1']"),
       item2: () => cy.get("[data-cy='list-level-1-item-2']"),

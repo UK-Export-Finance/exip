@@ -54,7 +54,7 @@ context('Insurance - Check your answers - Policy and exports - I want to confirm
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

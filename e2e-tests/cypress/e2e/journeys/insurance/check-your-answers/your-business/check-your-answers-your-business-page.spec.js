@@ -8,8 +8,7 @@ import {
   BUTTONS,
   PAGES,
 } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
@@ -20,7 +19,7 @@ const {
     YOUR_BUSINESS,
     YOUR_BUYER,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUSINESS;
 
@@ -56,14 +55,14 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
+      currentHref: `${ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
+      backLink: `${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
       submitButtonCopy: BUTTONS.CONFIRM_AND_CONTINUE,
     });
   });
@@ -94,7 +93,7 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
         it(`should redirect to ${YOUR_BUYER}`, () => {
           submitButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
+          const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
           cy.url().should('eq', expectedUrl);
         });
       });
@@ -105,7 +104,7 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
 
           saveAndBackButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+          const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
           cy.url().should('eq', expectedUrl);
         });
       });

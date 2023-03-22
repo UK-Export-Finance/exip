@@ -1,8 +1,8 @@
 const getReferenceNumber = () => cy.url().then((url) => {
   const splitUrl = url.split('/');
-  const applicationId = splitUrl[4];
+  const referenceNumber = splitUrl[4];
 
-  return applicationId;
+  return referenceNumber;
 });
 
 export default getReferenceNumber;

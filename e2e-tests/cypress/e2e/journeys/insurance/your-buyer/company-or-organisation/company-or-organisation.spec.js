@@ -55,7 +55,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {
