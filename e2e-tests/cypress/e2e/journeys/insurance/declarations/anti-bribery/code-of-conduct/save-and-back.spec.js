@@ -15,13 +15,13 @@ const {
   ROOT: INSURANCE_ROOT,
   ALL_SECTIONS,
   DECLARATIONS: {
-    ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT },
+    ANTI_BRIBERY: { CODE_OF_CONDUCT },
   },
 } = INSURANCE_ROUTES;
 
 const task = taskList.submitApplication.tasks.declarations;
 
-context('Insurance - Declarations - Exporting with code of conduct page - Save and go back', () => {
+context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save and go back', () => {
   let referenceNumber;
   let url;
 
@@ -36,9 +36,8 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
 
       cy.completeAndSubmitDeclarationConfidentiality();
       cy.completeAndSubmitDeclarationAntiBribery();
-      cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
       cy.url().should('eq', url);
     });
@@ -96,9 +95,6 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
       submitButton().click();
 
       // go through the 2nd declaration - anti-bribery
-      submitButton().click();
-
-      // go through the 3rd declaration - anti-bribery - code of conduct
       submitButton().click();
 
       yesRadioInput().should('be.checked');

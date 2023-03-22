@@ -1134,11 +1134,11 @@ type Declaration {
   application: Application
   antiBribery: DeclarationAntiBribery
   ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgement
+  agreeToConfirmationAndAcknowledgements: Boolean
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
-  hasAntiBriberyCodeOfConduct: Boolean
-  willExportWithAntiBriberyCodeOfConduct: Boolean
-  agreeToConfirmationAndAcknowledgements: Boolean
+  hasAntiBriberyCodeOfConduct: String
+  willExportWithAntiBriberyCodeOfConduct: String
 }
 
 input DeclarationWhereUniqueInput {
@@ -1153,31 +1153,31 @@ input DeclarationWhereInput {
   application: ApplicationWhereInput
   antiBribery: DeclarationAntiBriberyWhereInput
   ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementWhereInput
+  agreeToConfirmationAndAcknowledgements: BooleanFilter
   agreeToConfidentiality: BooleanFilter
   agreeToAntiBribery: BooleanFilter
-  hasAntiBriberyCodeOfConduct: BooleanFilter
-  willExportWithAntiBriberyCodeOfConduct: BooleanFilter
-  agreeToConfirmationAndAcknowledgements: BooleanFilter
+  hasAntiBriberyCodeOfConduct: StringNullableFilter
+  willExportWithAntiBriberyCodeOfConduct: StringNullableFilter
 }
 
 input DeclarationOrderByInput {
   id: OrderDirection
+  agreeToConfirmationAndAcknowledgements: OrderDirection
   agreeToConfidentiality: OrderDirection
   agreeToAntiBribery: OrderDirection
   hasAntiBriberyCodeOfConduct: OrderDirection
   willExportWithAntiBriberyCodeOfConduct: OrderDirection
-  agreeToConfirmationAndAcknowledgements: OrderDirection
 }
 
 input DeclarationUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   antiBribery: DeclarationAntiBriberyRelateToOneForUpdateInput
   ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementRelateToOneForUpdateInput
+  agreeToConfirmationAndAcknowledgements: Boolean
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
-  hasAntiBriberyCodeOfConduct: Boolean
-  willExportWithAntiBriberyCodeOfConduct: Boolean
-  agreeToConfirmationAndAcknowledgements: Boolean
+  hasAntiBriberyCodeOfConduct: String
+  willExportWithAntiBriberyCodeOfConduct: String
 }
 
 input DeclarationAntiBriberyRelateToOneForUpdateInput {
@@ -1201,11 +1201,11 @@ input DeclarationCreateInput {
   application: ApplicationRelateToOneForCreateInput
   antiBribery: DeclarationAntiBriberyRelateToOneForCreateInput
   ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementRelateToOneForCreateInput
+  agreeToConfirmationAndAcknowledgements: Boolean
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
-  hasAntiBriberyCodeOfConduct: Boolean
-  willExportWithAntiBriberyCodeOfConduct: Boolean
-  agreeToConfirmationAndAcknowledgements: Boolean
+  hasAntiBriberyCodeOfConduct: String
+  willExportWithAntiBriberyCodeOfConduct: String
 }
 
 input DeclarationAntiBriberyRelateToOneForCreateInput {

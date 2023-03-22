@@ -4,6 +4,7 @@ import { DECLARATIONS_FIELDS } from '../../../../../content-strings/fields/insur
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
+import save from '../../save-data';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 
@@ -21,6 +22,12 @@ const {
 const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_CONDUCT;
 
 describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () => {
+  jest.mock('../../save-data');
+
+  let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
+
+  save.declaration = mockSaveDeclaration;
+
   let req: Request;
   let res: Response;
 
@@ -89,6 +96,13 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
         req.body = validBody;
       });
 
+      it('should call save.declaration with application and req.body', async () => {
+        await post(req, res);
+
+        expect(save.declaration).toHaveBeenCalledTimes(1);
+        expect(save.declaration).toHaveBeenCalledWith(mockApplication, validBody);
+      });
+
       it(`should redirect to ${EXPORTING_WITH_CODE_OF_CONDUCT}`, async () => {
         await post(req, res);
 
@@ -121,6 +135,40 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('save data call', () => {
+        describe('when the save data API call does not return anything', () => {
+          beforeEach(() => {
+            mockSaveDeclaration = jest.fn(() => Promise.resolve(false));
+            save.declaration = mockSaveDeclaration;
+
+            req.body = validBody;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when the save data API call fails', () => {
+          beforeEach(() => {
+            mockSaveDeclaration = jest.fn(() => Promise.reject());
+            save.declaration = mockSaveDeclaration;
+
+            req.body = validBody;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

@@ -238,11 +238,11 @@ model Declaration {
   antiBriberyId                          String?                                    @map("antiBribery")
   ConfirmationAndAcknowledgements        DeclarationConfirmationAndAcknowledgement? @relation("Declaration_ConfirmationAndAcknowledgements", fields: [ConfirmationAndAcknowledgementsId], references: [id])
   ConfirmationAndAcknowledgementsId      String?                                    @map("ConfirmationAndAcknowledgements")
+  agreeToConfirmationAndAcknowledgements Boolean                                    @default(false)
   agreeToConfidentiality                 Boolean                                    @default(false)
   agreeToAntiBribery                     Boolean                                    @default(false)
-  hasAntiBriberyCodeOfConduct            Boolean                                    @default(false)
-  willExportWithAntiBriberyCodeOfConduct Boolean                                    @default(false)
-  agreeToConfirmationAndAcknowledgements Boolean                                    @default(false)
+  hasAntiBriberyCodeOfConduct            String?
+  willExportWithAntiBriberyCodeOfConduct String?
   from_Application_declaration           Application[]                              @relation("Application_declaration")
 
   @@index([applicationId])

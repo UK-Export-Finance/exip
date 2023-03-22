@@ -61,7 +61,7 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {
@@ -138,19 +138,13 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
         cy.url().should('eq', expectedUrl);
       });
 
-      // describe('when going back to the page', () => {
-      //   it('should have the submitted value', () => {
-      //     cy.navigateToUrl(url);
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
 
-      //     cy.completeAndSubmitDeclarationAntiBribery();
-
-      //     cy.navigateToUrl(url);
-
-      //     const field = antiBriberyPage[FIELD_ID];
-
-      //     field.input().should('be.checked');
-      //   });
-      // });
+          yesRadioInput().should('be.checked');
+        });
+      });
     });
   });
 });

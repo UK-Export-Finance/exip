@@ -30,8 +30,6 @@ context('Insurance - Dashboard - new application', () => {
   });
 
   after(() => {
-    cy.deleteAccount();
-
     referenceNumbers.forEach((refNumber) => {
       cy.deleteApplication(refNumber);
     });
@@ -61,6 +59,10 @@ context('Insurance - Dashboard - new application', () => {
 
     beforeEach(() => {
       cy.navigateToUrl(url);
+    });
+
+    after(() => {
+      cy.deleteAccount();
     });
 
     it('should render the newly created application and the previously created application', () => {

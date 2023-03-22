@@ -185,6 +185,8 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - As 
           // TEMP until previous page is built
           cy.navigateToUrl(`${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`);
 
+          field = confirmationAndAcknowledgementsPage[FIELD_ID];
+
           field.input().should('be.checked');
         });
       });
