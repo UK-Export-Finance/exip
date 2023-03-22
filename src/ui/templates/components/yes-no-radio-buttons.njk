@@ -5,6 +5,7 @@
   {% set fieldId = params.fieldId %}
   {% set heading = params.heading %}
   {% set hintText = params.hintText %}
+  {% set hintHtml = params.hintHtml %}
   {% set submittedAnswer = params.submittedAnswer %}
   {% set errorMessage = params.errorMessage %}
   {% set yesNoValueString = params.yesNoValueString %}
@@ -52,6 +53,7 @@
     },
     hint: {
       text: hintText,
+      html: hintHtml,
       attributes: {
         'data-cy': dataCyHint
       }

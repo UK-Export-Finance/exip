@@ -13,7 +13,7 @@ import formatCurrency from '../../../cypress/e2e/helpers/format-currency';
 export const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP);
 
 const DASHBOARD = {
-  PAGE_TITLE: 'Dashboard',
+  PAGE_TITLE: 'Your applications',
   TABLE_HEADERS: {
     STATUS: 'Status',
     LAST_UPDATED: 'Last updated',
