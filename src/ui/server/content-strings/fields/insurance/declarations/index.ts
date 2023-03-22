@@ -3,24 +3,26 @@ import { LINKS } from '../../../links';
 
 const { DECLARATIONS } = FIELD_IDS.INSURANCE;
 
-const { AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY, HAS_ANTI_BRIBERY_CODE_OF_CONDUCT, AGREE_CONFIRMATION_ACKNOWLEDGEMENTS } = DECLARATIONS;
+const { AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY } = DECLARATIONS;
 
-const CONFIRM_READ_AND_AGREE = "Confirm you've read and agree with the ";
+const { HAS_ANTI_BRIBERY_CODE_OF_CONDUCT, AGREE_CONFIRMATION_ACKNOWLEDGEMENTS, AGREE_HOW_YOUR_DATA_WILL_BE_USED } = DECLARATIONS;
 
-const HAVE_READ_AND_AREED = "I've read and agree with the ";
+const CONFIRM_READ_AND_AGREE = "Confirm you've read and agree with";
+
+const HAVE_READ_AND_AREED = "I've read and agree with";
 
 export const DECLARATIONS_FIELDS = {
   [AGREE_CONFIDENTIALITY]: {
-    LABEL: `${CONFIRM_READ_AND_AGREE} confidentiality declaration`,
+    LABEL: `${CONFIRM_READ_AND_AGREE} the confidentiality declaration`,
     OPTION: {
-      TEXT: `${HAVE_READ_AND_AREED} confidentiality declaration`,
+      TEXT: `${HAVE_READ_AND_AREED} the confidentiality declaration`,
       VALUE: true,
     },
   },
   [AGREE_ANTI_BRIBERY]: {
-    LABEL: `${CONFIRM_READ_AND_AGREE} anti-bribery and corruption declaration`,
+    LABEL: `${CONFIRM_READ_AND_AGREE} the anti-bribery and corruption declaration`,
     OPTION: {
-      TEXT: `${HAVE_READ_AND_AREED} anti-bribery and corruption declaration`,
+      TEXT: `${HAVE_READ_AND_AREED} the anti-bribery and corruption declaration`,
       VALUE: true,
     },
   },
@@ -37,9 +39,16 @@ export const DECLARATIONS_FIELDS = {
     },
   },
   [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
-    LABEL: `${CONFIRM_READ_AND_AGREE} confirmation and acknowledgements`,
+    LABEL: `${CONFIRM_READ_AND_AGREE} the confirmation and acknowledgements`,
     OPTION: {
-      TEXT: `${HAVE_READ_AND_AREED} confirmation and acknowledgements`,
+      TEXT: `${HAVE_READ_AND_AREED} the confirmation and acknowledgements`,
+      VALUE: true,
+    },
+  },
+  [AGREE_HOW_YOUR_DATA_WILL_BE_USED]: {
+    LABEL: `${CONFIRM_READ_AND_AGREE} how your data will be used`,
+    OPTION: {
+      TEXT: `${HAVE_READ_AND_AREED} how my data will be used`,
       VALUE: true,
     },
   },

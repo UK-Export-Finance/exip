@@ -11,6 +11,7 @@ import {
   get as confirmationAndAcknowledgementsGet,
   post as confirmationAndAcknowledgementsPost,
 } from '../../../controllers/insurance/declarations/confirmation-and-acknowledgements';
+import { get as howYourDataWillBeUsedGet, post as howYourDataWillBeUsedPost } from '../../../controllers/insurance/declarations/how-your-data-will-be-used';
 import { post as saveAndBackPost } from '../../../controllers/insurance/declarations/save-and-back';
 
 // @ts-ignore
@@ -41,6 +42,10 @@ insuranceDeclarationsRouter.post(
 
 insuranceDeclarationsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, confirmationAndAcknowledgementsGet);
 insuranceDeclarationsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, confirmationAndAcknowledgementsPost);
+
+insuranceDeclarationsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED}`, howYourDataWillBeUsedGet);
+insuranceDeclarationsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED}`, howYourDataWillBeUsedPost);
+
 insuranceDeclarationsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK}`, saveAndBackPost);
 
 export default insuranceDeclarationsRouter;

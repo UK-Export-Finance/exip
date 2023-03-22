@@ -279,6 +279,9 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
         IS_EMPTY: 'Confirm that you have read and accept the confirmation and acknowledgements',
       },
+      [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED]: {
+        IS_EMPTY: 'Confirm that you have read and accept how your data will be used',
+      },
     },
   },
 };

@@ -16,5 +16,5 @@ export const DECLARATIONS = {
   },
   CONFIRMATION_AND_ACKNOWLEDGEMENTS: `${ROOT}/confirmation-and-acknowledgements`,
   CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK: `${ROOT}/confirmation-and-acknowledgements/save-and-back`,
-  HOW_DATA_WILL_BE_USED: `${ROOT}/data`,
+  HOW_YOUR_DATA_WILL_BE_USED: `${ROOT}/data`,
 };

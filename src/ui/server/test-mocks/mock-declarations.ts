@@ -71,6 +71,22 @@ const mockDeclarations = {
       ],
     },
   },
+  howDataWillBeUsed: {
+    id: 'clfh2o74i0086saoqgo9dhqgq',
+    version: '1.3',
+    content: {
+      document: [
+        {
+          type: 'paragraph',
+          children: [
+            {
+              text: 'We will process contact details...',
+            },
+          ],
+        },
+      ],
+    },
+  },
 };
 
 export default mockDeclarations;

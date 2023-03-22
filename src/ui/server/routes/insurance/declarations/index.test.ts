@@ -11,6 +11,7 @@ import {
   get as confirmationAndAcknowledgementsGet,
   post as confirmationAndAcknowledgementsPost,
 } from '../../../controllers/insurance/declarations/confirmation-and-acknowledgements';
+import { get as howYourDataWillBeUsedGet, post as howYourDataWillBeUsedPost } from '../../../controllers/insurance/declarations/how-your-data-will-be-used';
 import { post as saveAndBackPost } from '../../../controllers/insurance/declarations/save-and-back';
 
 describe('routes/insurance/declarations', () => {
@@ -23,8 +24,8 @@ describe('routes/insurance/declarations', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(5);
-    expect(post).toHaveBeenCalledTimes(9);
+    expect(get).toHaveBeenCalledTimes(6);
+    expect(post).toHaveBeenCalledTimes(10);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIDENTIALITY}`, confidentialityGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIDENTIALITY}`, confidentialityPost);
@@ -57,6 +58,9 @@ describe('routes/insurance/declarations', () => {
       `/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS}`,
       confirmationAndAcknowledgementsPost,
     );
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED}`, howYourDataWillBeUsedGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED}`, howYourDataWillBeUsedPost);
 
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK}`, saveAndBackPost);
   });

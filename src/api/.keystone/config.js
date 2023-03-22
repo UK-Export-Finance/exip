@@ -673,7 +673,8 @@ var lists = {
       agreeToAntiBribery: (0, import_fields.checkbox)({ defaultValue: false }),
       hasAntiBriberyCodeOfConduct: (0, import_fields.checkbox)({ defaultValue: false }),
       willExportWithAntiBriberyCodeOfConduct: (0, import_fields.checkbox)({}),
-      agreeToConfirmationAndAcknowledgements: (0, import_fields.checkbox)({ defaultValue: false })
+      agreeToConfirmationAndAcknowledgements: (0, import_fields.checkbox)({ defaultValue: false }),
+      agreeHowDataWillBeUsed: (0, import_fields.checkbox)()
     },
     access: import_access.allowAll
   }),
@@ -709,6 +710,19 @@ var lists = {
       }),
       content: (0, import_fields_document.document)({
         formatting: true
+      })
+    },
+    access: import_access.allowAll
+  }),
+  DeclarationHowDataWillBeUsed: (0, import_core.list)({
+    fields: {
+      version: (0, import_fields.text)({
+        label: "Version",
+        validation: { isRequired: true }
+      }),
+      content: (0, import_fields_document.document)({
+        formatting: true,
+        links: true
       })
     },
     access: import_access.allowAll
