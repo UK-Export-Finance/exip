@@ -8,13 +8,13 @@ import generateYourCompanyFields from '.';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import sicCodeMapping from '../map-sic-codes';
 import mockApplication, { mockExporterCompany } from '../../../../test-mocks/mock-application';
+import generateChangeLink from '../../../generate-change-link';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    INSURANCE_ROOT,
-    EXPORTER_BUSINESS: { COMPANY_DETAILS_CHANGE },
+    EXPORTER_BUSINESS: { COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE },
   },
 } = ROUTES;
 
@@ -32,12 +32,13 @@ const {
 describe('server/helpers/summary-lists/your-business/your-company-fields', () => {
   const mockAnswers = mockExporterCompany;
   const { referenceNumber } = mockApplication;
+  const checkAndChange = false;
 
   const expectedBase = [
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, COMPANY_NUMBER),
       data: mockAnswers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${INPUT}-label`,
+      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${INPUT}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
     fieldGroupItem({
@@ -80,31 +81,31 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_NAME),
       data: mockAnswers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${TRADING_NAME}-label`,
+      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_NAME}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_ADDRESS),
       data: mockAnswers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${TRADING_ADDRESS}-label`,
+      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_ADDRESS}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, WEBSITE),
       data: mockAnswers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${WEBSITE}-label`,
+      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${WEBSITE}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, PHONE_NUMBER),
       data: mockAnswers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_CHANGE}#${PHONE_NUMBER}-label`,
+      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${PHONE_NUMBER}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
   ];
 
   it('should return fields and values from the submitted data/answers', () => {
-    const result = generateYourCompanyFields(mockAnswers, referenceNumber);
+    const result = generateYourCompanyFields(mockAnswers, referenceNumber, checkAndChange);
 
     expect(result).toEqual(expectedBase);
   });

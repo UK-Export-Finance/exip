@@ -24,7 +24,15 @@ const { VALID_PHONE_NUMBERS } = mockPhoneNumbers;
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT, CHECK_YOUR_ANSWERS, COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_ROOT, COMPANIES_HOUSE_UNAVAILABLE },
+  EXPORTER_BUSINESS: {
+    NATURE_OF_BUSINESS_ROOT,
+    CHECK_YOUR_ANSWERS,
+    COMPANY_DETAILS_CHANGE,
+    COMPANY_DETAILS_ROOT,
+    COMPANIES_HOUSE_UNAVAILABLE,
+    COMPANY_DETAILS_CHECK_AND_CHANGE,
+  },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
 } = ROUTES.INSURANCE;
 
 jest.mock('../map-and-save');
@@ -79,13 +87,15 @@ describe('controllers/insurance/business/companies-details', () => {
     });
 
     describe('when there are no validation errors', () => {
+      const body = {
+        [INPUT]: '8989898',
+        [TRADING_NAME]: 'true',
+        [TRADING_ADDRESS]: 'false',
+        [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
+      };
+
       it('should redirect to next page', async () => {
-        req.body = {
-          [INPUT]: '8989898',
-          [TRADING_NAME]: 'true',
-          [TRADING_ADDRESS]: 'false',
-          [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
-        };
+        req.body = body;
 
         req.originalUrl = `insurance/${mockApplication.referenceNumber}/${COMPANY_DETAILS_ROOT}`;
 
@@ -96,12 +106,7 @@ describe('controllers/insurance/business/companies-details', () => {
       });
 
       it('should call mapAndSave.companyDetails once with updateBody and application', async () => {
-        req.body = {
-          [INPUT]: '8989898',
-          [TRADING_NAME]: 'true',
-          [TRADING_ADDRESS]: 'false',
-          [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
-        };
+        req.body = body;
 
         await post(req, res);
 
@@ -116,18 +121,27 @@ describe('controllers/insurance/business/companies-details', () => {
 
       describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.body = {
-            [INPUT]: '8989898',
-            [TRADING_NAME]: 'true',
-            [TRADING_ADDRESS]: 'false',
-            [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
-          };
+          req.body = body;
 
           req.originalUrl = COMPANY_DETAILS_CHANGE;
 
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.body = body;
+
+          req.originalUrl = COMPANY_DETAILS_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });

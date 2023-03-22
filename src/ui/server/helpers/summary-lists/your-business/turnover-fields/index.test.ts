@@ -6,13 +6,13 @@ import getFieldById from '../../../get-field-by-id';
 import generateTurnoverFields from '.';
 import mapPercentage from '../../../map-percentage';
 import mockApplication, { mockExporterBusiness } from '../../../../test-mocks/mock-application';
+import generateChangeLink from '../../../generate-change-link';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    INSURANCE_ROOT,
-    EXPORTER_BUSINESS: { TURNOVER_CHANGE },
+    EXPORTER_BUSINESS: { TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE },
   },
 } = ROUTES;
 
@@ -23,13 +23,14 @@ const {
 describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
   const mockAnswers = mockExporterBusiness;
   const { referenceNumber } = mockApplication;
+  const checkAndChange = false;
 
   const expectedBase = [
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.TURNOVER, ESTIMATED_ANNUAL_TURNOVER),
         data: mockAnswers,
-        href: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHANGE}#${ESTIMATED_ANNUAL_TURNOVER}-label`,
+        href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${ESTIMATED_ANNUAL_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
       `£${mockAnswers[ESTIMATED_ANNUAL_TURNOVER]}`,
@@ -38,7 +39,7 @@ describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
       {
         field: getFieldById(FIELDS.TURNOVER, PERCENTAGE_TURNOVER),
         data: mockAnswers,
-        href: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHANGE}#${PERCENTAGE_TURNOVER}-label`,
+        href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${PERCENTAGE_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
       mapPercentage(mockAnswers[PERCENTAGE_TURNOVER]),
@@ -46,7 +47,7 @@ describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
   ];
 
   it('should return fields and values from the submitted data/answers', () => {
-    const result = generateTurnoverFields(mockAnswers, referenceNumber);
+    const result = generateTurnoverFields(mockAnswers, referenceNumber, checkAndChange);
 
     expect(result).toEqual(expectedBase);
   });

@@ -5,13 +5,13 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import { ApplicationExporterBusiness, SummaryListItemData } from '../../../../../types';
+import generateChangeLink from '../../../generate-change-link';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    INSURANCE_ROOT,
-    EXPORTER_BUSINESS: { BROKER_CHANGE },
+    EXPORTER_BUSINESS: { BROKER_CHANGE, BROKER_CHECK_AND_CHANGE },
   },
 } = ROUTES;
 
@@ -24,9 +24,10 @@ const {
  * if yes selected for broker, populates and returns optional fields in an array
  * @param {ApplicationExporterBusiness} answers
  * @param {Number} referenceNumber
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
  */
-const optionalBrokerFields = (answers: ApplicationExporterBusiness, referenceNumber: number) => {
+const optionalBrokerFields = (answers: ApplicationExporterBusiness, referenceNumber: number, checkAndChange: boolean) => {
   let fields = [] as Array<SummaryListItemData>;
 
   // if yes selected then will populate optional fields, else will return empty array
@@ -44,14 +45,14 @@ const optionalBrokerFields = (answers: ApplicationExporterBusiness, referenceNum
       fieldGroupItem({
         field: getFieldById(FIELDS.BROKER, NAME),
         data: answers,
-        href: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CHANGE}#${NAME}-label`,
+        href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       }),
       fieldGroupItem(
         {
           field: getFieldById(FIELDS.BROKER, ADDRESS_LINE_1),
           data: answers,
-          href: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CHANGE}#${ADDRESS_LINE_1}-label`,
+          href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${ADDRESS_LINE_1}-label`, referenceNumber, checkAndChange),
           renderChangeLink: true,
         },
         generateMultipleFieldHtml(address),
@@ -59,7 +60,7 @@ const optionalBrokerFields = (answers: ApplicationExporterBusiness, referenceNum
       fieldGroupItem({
         field: getFieldById(FIELDS.BROKER, EMAIL),
         data: answers,
-        href: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CHANGE}#${EMAIL}-label`,
+        href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${EMAIL}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       }),
     ];
@@ -74,15 +75,15 @@ const optionalBrokerFields = (answers: ApplicationExporterBusiness, referenceNum
  * @param {ApplicationExporterBusiness} answers exporter broker
  * @returns {Object} All broker fields and values in an object structure for GOVUK summary list structure
  */
-const generateBrokerFields = (answers: ApplicationExporterBusiness, referenceNumber: number) => {
+const generateBrokerFields = (answers: ApplicationExporterBusiness, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS.BROKER, USING_BROKER),
       data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CHANGE}#${USING_BROKER}-label`,
+      href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${USING_BROKER}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
-    ...optionalBrokerFields(answers, referenceNumber),
+    ...optionalBrokerFields(answers, referenceNumber, checkAndChange),
   ] as Array<SummaryListItemData>;
 
   return fields;
