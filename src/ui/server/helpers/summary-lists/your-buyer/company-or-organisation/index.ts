@@ -5,13 +5,13 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import { ApplicationBuyer, SummaryListItemData } from '../../../../../types';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
+import generateChangeLink from '../../../generate-change-link';
 
 const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    INSURANCE_ROOT,
-    YOUR_BUYER: { COMPANY_OR_ORGANISATION_CHANGE },
+    YOUR_BUYER: { COMPANY_OR_ORGANISATION_CHANGE, COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE },
   },
 } = ROUTES;
 
@@ -55,7 +55,7 @@ export const generateContactDetailsObject = (answers: ApplicationBuyer) => {
  * @param {Number} referenceNumber application reference number
  * @returns {Object} All exporter company fields and values in an object structure for GOVUK summary list structure
  */
-const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenceNumber: number) => {
+const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean) => {
   const addressObject = generateAddressObject(answers);
   const contactDetailsObject = generateContactDetailsObject(answers);
 
@@ -63,14 +63,20 @@ const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenc
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, NAME),
       data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION_CHANGE}#${NAME}-label`,
+      href: generateChangeLink(COMPANY_OR_ORGANISATION_CHANGE, COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, ADDRESS),
         data: answers,
-        href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION_CHANGE}#${ADDRESS}-label`,
+        href: generateChangeLink(
+          COMPANY_OR_ORGANISATION_CHANGE,
+          COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
+          `#${ADDRESS}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
         renderChangeLink: true,
       },
       generateMultipleFieldHtml(addressObject),
@@ -78,20 +84,32 @@ const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenc
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, REGISTRATION_NUMBER),
       data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION_CHANGE}#${REGISTRATION_NUMBER}-label`,
+      href: generateChangeLink(
+        COMPANY_OR_ORGANISATION_CHANGE,
+        COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
+        `#${REGISTRATION_NUMBER}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
       renderChangeLink: true,
     }),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, WEBSITE),
       data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION_CHANGE}#${WEBSITE}-label`,
+      href: generateChangeLink(COMPANY_OR_ORGANISATION_CHANGE, COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE, `#${WEBSITE}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, FIRST_NAME),
         data: answers,
-        href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION_CHANGE}#${FIRST_NAME}-label`,
+        href: generateChangeLink(
+          COMPANY_OR_ORGANISATION_CHANGE,
+          COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
+          `#${FIRST_NAME}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
         renderChangeLink: true,
       },
       generateMultipleFieldHtml(contactDetailsObject),
@@ -99,7 +117,13 @@ const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenc
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, CAN_CONTACT_BUYER),
       data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION_CHANGE}#${CAN_CONTACT_BUYER}-label`,
+      href: generateChangeLink(
+        COMPANY_OR_ORGANISATION_CHANGE,
+        COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
+        `#${CAN_CONTACT_BUYER}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
       renderChangeLink: true,
     }),
   ] as Array<SummaryListItemData>;

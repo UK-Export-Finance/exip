@@ -15,12 +15,16 @@ yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION}`, p
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION_SAVE_AND_BACK}`, postCompanyOrOrganisationSaveAndBack);
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION_CHANGE}`, getCompanyOrOrganisation);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION_CHANGE}`, postCompanyOrOrganisation);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE}`, getCompanyOrOrganisation);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE}`, postCompanyOrOrganisation);
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER}`, getWorkingWithBuyer);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER}`, postWorkingWithBuyer);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_SAVE_AND_BACK}`, postWorkingWithBuyerSaveAndBack);
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHANGE}`, getWorkingWithBuyer);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHANGE}`, postWorkingWithBuyer);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHECK_AND_CHANGE}`, getWorkingWithBuyer);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHECK_AND_CHANGE}`, postWorkingWithBuyer);
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

@@ -4,13 +4,13 @@ import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import { ApplicationBuyer, SummaryListItemData } from '../../../../../types';
+import generateChangeLink from '../../../generate-change-link';
 
 const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    INSURANCE_ROOT,
-    YOUR_BUYER: { WORKING_WITH_BUYER_CHANGE },
+    YOUR_BUYER: { WORKING_WITH_BUYER_CHANGE, WORKING_WITH_BUYER_CHECK_AND_CHANGE },
   },
 } = ROUTES;
 
@@ -25,18 +25,24 @@ const {
  * @param {Number} referenceNumber application reference number
  * @returns {Object} All working with buyer fields and values in an object structure for GOVUK summary list structure
  */
-const workingWithBuyerFields = (answers: ApplicationBuyer, referenceNumber: number) => {
+const workingWithBuyerFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS.WORKING_WITH_BUYER, CONNECTED_WITH_BUYER),
       data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER_CHANGE}#${CONNECTED_WITH_BUYER}-label`,
+      href: generateChangeLink(
+        WORKING_WITH_BUYER_CHANGE,
+        WORKING_WITH_BUYER_CHECK_AND_CHANGE,
+        `#${CONNECTED_WITH_BUYER}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
       renderChangeLink: true,
     }),
     fieldGroupItem({
       field: getFieldById(FIELDS.WORKING_WITH_BUYER, TRADED_WITH_BUYER),
       data: answers,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER_CHANGE}#${TRADED_WITH_BUYER}-label`,
+      href: generateChangeLink(WORKING_WITH_BUYER_CHANGE, WORKING_WITH_BUYER_CHECK_AND_CHANGE, `#${TRADED_WITH_BUYER}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
   ] as Array<SummaryListItemData>;

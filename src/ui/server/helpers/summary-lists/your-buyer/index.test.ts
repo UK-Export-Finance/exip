@@ -6,14 +6,15 @@ import mockApplication, { mockApplicationBuyer } from '../../../test-mocks/mock-
 
 describe('server/helpers/summary-lists/your-buyer', () => {
   const { referenceNumber } = mockApplication;
+  const checkAndChange = false;
 
   describe('generateFields', () => {
     it('should return fields and values from the submitted data/answers', () => {
-      const result = generateFields(mockApplicationBuyer, referenceNumber);
+      const result = generateFields(mockApplicationBuyer, referenceNumber, checkAndChange);
 
       const expected = [
-        ...generateCompanyOrOrganisationFields(mockApplicationBuyer, referenceNumber),
-        ...workingWithBuyerFields(mockApplicationBuyer, referenceNumber),
+        ...generateCompanyOrOrganisationFields(mockApplicationBuyer, referenceNumber, checkAndChange),
+        ...workingWithBuyerFields(mockApplicationBuyer, referenceNumber, checkAndChange),
       ];
 
       expect(result).toEqual(expected);
@@ -24,7 +25,7 @@ describe('server/helpers/summary-lists/your-buyer', () => {
     it('should return an array of summary list rows', () => {
       const result = yourBuyerSummaryList(mockApplicationBuyer, referenceNumber);
 
-      const fields = generateFields(mockApplicationBuyer, referenceNumber);
+      const fields = generateFields(mockApplicationBuyer, referenceNumber, checkAndChange);
 
       const expected = generateSummaryListRows(fields);
 

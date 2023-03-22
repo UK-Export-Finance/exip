@@ -13,9 +13,13 @@ const {
   YOUR_BUYER: { WORKING_WITH_BUYER },
 } = FIELD_IDS.INSURANCE;
 
-const { INSURANCE_ROOT, YOUR_BUYER: YOUR_BUYER_ROUTES } = ROUTES.INSURANCE;
+const {
+  INSURANCE_ROOT,
+  YOUR_BUYER: YOUR_BUYER_ROUTES,
+  CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
+} = ROUTES.INSURANCE;
 
-const { WORKING_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = YOUR_BUYER_ROUTES;
+const { WORKING_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, WORKING_WITH_BUYER_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
 
 const { TRADED_WITH_BUYER, CONNECTED_WITH_BUYER } = WORKING_WITH_BUYER;
 
@@ -116,6 +120,23 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
         expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
 
         expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(req.body, mockApplication);
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.body = {
+            [CONNECTED_WITH_BUYER]: 'Yes',
+            [TRADED_WITH_BUYER]: 'Yes',
+          };
+
+          req.originalUrl = WORKING_WITH_BUYER_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 
