@@ -29,13 +29,22 @@ const {
 const { PHONE_NUMBER, WEBSITE, YOUR_BUSINESS, ...YOUR_COMPANY_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY;
 const { FINANCIAL_YEAR_END_DATE, ...TURNOVER_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER;
 
-const requiredFields = (isUsingBroker?: string): Array<string> =>
-  Object.values({
+const requiredFields = (isUsingBroker?: string): Array<string> => {
+  let fields = {
     ...YOUR_COMPANY_FIELDS,
     ...COMPANIES_HOUSE_FIELDS,
     ...FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS,
     ...TURNOVER_FIELDS,
-    ...getBrokerTasks(isUsingBroker),
-  });
+  };
+
+  if (isUsingBroker) {
+    fields = {
+      ...fields,
+      ...getBrokerTasks(isUsingBroker),
+    };
+  }
+
+  return Object.values(fields);
+};
 
 export default requiredFields;

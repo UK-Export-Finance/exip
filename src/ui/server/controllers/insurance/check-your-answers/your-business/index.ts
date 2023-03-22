@@ -45,7 +45,7 @@ export const get = async (req: Request, res: Response) => {
 
     const exporterFields = requiredFields(exporterBroker.isUsingBroker);
 
-    // const status = sectionStatus(exporterFields, application);
+    const status = sectionStatus(exporterFields, application);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -54,6 +54,7 @@ export const get = async (req: Request, res: Response) => {
       }),
       SUMMARY_LIST: summaryList,
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS_SAVE_AND_BACK}`,
+      status,
     });
   } catch (err) {
     console.error('Error getting check your answers - policy and exports', { err });

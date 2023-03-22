@@ -6,6 +6,8 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import { policyAndExportSummaryList } from '../../../../helpers/summary-lists/policy-and-export';
 import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies } from '../../../../test-mocks';
 import api from '../../../../api';
+import requiredFields from '../../../../helpers/section-fields/policy-and-exports';
+import sectionStatus from '../../../../helpers/section-status';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -52,6 +54,10 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
         checkAndChange,
       );
 
+      const fields = requiredFields(mockApplication.policyAndExport.policyType);
+
+      const status = sectionStatus(fields, mockApplication);
+
       const expectedVariables = {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.POLICY_AND_EXPORTS,
@@ -59,6 +65,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
         }),
         SUMMARY_LIST: summaryList,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TYPE_OF_POLICY_SAVE_AND_BACK}`,
+        status,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

@@ -1,11 +1,9 @@
 import { TaskListDataTask } from '../../../../types';
 import { TASKS } from '../../../content-strings';
-import { FIELD_IDS, TASK_IDS } from '../../../constants';
+import { TASK_IDS } from '../../../constants';
 import requiredFields from '../../section-fields/eligibility';
 
 const { INITIAL_CHECKS } = TASKS.LIST;
-
-const { ACCOUNT_TO_APPLY_ONLINE } = FIELD_IDS.INSURANCE.ELIGIBILITY;
 
 /**
  * createInitialChecksTasks

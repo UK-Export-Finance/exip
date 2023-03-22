@@ -1,9 +1,10 @@
-import { FIELD_IDS, GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../../constants';
 import { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
 import { mockApplication } from '../../../test-mocks';
+import requiredFields, { getContractPolicyTasks } from '.';
 
-describe('server/helpers/check-completed-sections/policy-and-exports', () => {
-  const { referenceNumber, policyAndExport } = mockApplication;
+describe('server/helpers/section-fields/policy-and-exports', () => {
+  const { policyAndExport } = mockApplication;
   const { policyType } = policyAndExport;
 
   describe('getContractPolicyTasks', () => {
@@ -37,4 +38,19 @@ describe('server/helpers/check-completed-sections/policy-and-exports', () => {
       });
     });
   });
-})
+
+  describe('requiredFields', () => {
+    it('should return array of required fields for section', () => {
+      const response = requiredFields(policyType);
+
+      const expected = Object.values({
+        ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
+        ...SHARED_CONTRACT_POLICY,
+        ...getContractPolicyTasks(policyType),
+        ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
+      });
+
+      expect(response).toEqual(expected);
+    });
+  });
+});

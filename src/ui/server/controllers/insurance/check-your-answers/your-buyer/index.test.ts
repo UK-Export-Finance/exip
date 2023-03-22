@@ -5,6 +5,8 @@ import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { yourBuyerSummaryList } from '../../../../helpers/summary-lists/your-buyer';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import requiredFields from '../../../../helpers/section-fields/your-buyer';
+import sectionStatus from '../../../../helpers/section-status';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -41,6 +43,10 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
       const checkAndChange = true;
       const summaryList = yourBuyerSummaryList(mockApplication.buyer, mockApplication.referenceNumber, checkAndChange);
 
+      const fields = requiredFields();
+
+      const status = sectionStatus(fields, mockApplication);
+
       const expectedVariables = {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER,
@@ -48,6 +54,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
         }),
         SUMMARY_LIST: summaryList,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${YOUR_BUYER_SAVE_AND_BACK}`,
+        status,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
