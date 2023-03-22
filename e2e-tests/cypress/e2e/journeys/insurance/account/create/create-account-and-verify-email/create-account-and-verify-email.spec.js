@@ -11,6 +11,9 @@ const {
 
 context('Insurance - Account - Create - I want the system to generate account verification link for my email address, So that I can confirm that my email address exist and can be used to create my UKEF digital service account.', () => {
   before(() => {
+    cy.clearCookies();
+    Cypress.session.clearAllSavedSessions();
+
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
@@ -22,8 +25,7 @@ context('Insurance - Account - Create - I want the system to generate account ve
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('connect.sid');
+    cy.saveSession();
   });
 
   after(() => {

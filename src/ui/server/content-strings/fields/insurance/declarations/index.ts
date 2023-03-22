@@ -52,4 +52,11 @@ export const DECLARATIONS_FIELDS = {
       VALUE: true,
     },
   },
+  [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
+    LABEL: `${CONFIRM_READ_AND_AGREE} confirmation and acknowledgements`,
+    OPTION: {
+      TEXT: `${HAVE_READ_AND_AREED} confirmation and acknowledgements`,
+      VALUE: true,
+    },
+  },
 };

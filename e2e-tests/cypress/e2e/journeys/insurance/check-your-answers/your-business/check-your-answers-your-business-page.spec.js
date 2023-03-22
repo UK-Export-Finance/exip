@@ -1,34 +1,33 @@
-import { checkYourAnswersEligibility } from '../../../pages/insurance/check-your-answers';
 import {
   headingCaption,
   submitButton,
   saveAndBackButton,
-} from '../../../pages/shared';
-import partials from '../../../partials';
+} from '../../../../pages/shared';
+import partials from '../../../../partials';
 import {
   BUTTONS,
   PAGES,
-} from '../../../../../content-strings';
-import { ROUTES } from '../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../constants/routes/insurance';
+} from '../../../../../../content-strings';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
   START,
   ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: {
-    ELIGIBILITY,
     TYPE_OF_POLICY,
+    YOUR_BUSINESS,
+    YOUR_BUYER,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY;
+const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUSINESS;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
 
-context('Insurance - Check your answers - Eligibility - I want to confirm my selection for the eligibility section of my export insurance application ', () => {
+context('Insurance - Check your answers - Your business - I want to confirm my selection for the your business section of my export insurance application', () => {
   let referenceNumber;
   let url;
 
@@ -40,7 +39,12 @@ context('Insurance - Check your answers - Eligibility - I want to confirm my sel
 
       task.link().click();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ELIGIBILITY}`;
+      // to get past eligibility check your answers page
+      submitButton().click();
+      // to get past policy and exports check your answers page
+      submitButton().click();
+
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
       cy.url().should('eq', url);
     });
@@ -51,14 +55,14 @@ context('Insurance - Check your answers - Eligibility - I want to confirm my sel
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${ELIGIBILITY}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+      currentHref: `${ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
+      backLink: `${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
       submitButtonCopy: BUTTONS.CONFIRM_AND_CONTINUE,
     });
   });
@@ -76,36 +80,31 @@ context('Insurance - Check your answers - Eligibility - I want to confirm my sel
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it(`renders a change answers banner with a valid href to ${START}`, () => {
-      cy.checkText(checkYourAnswersEligibility.banner(), `${CONTENT_STRINGS.CHANGE_ELIGIBILITY} ${CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.text}`);
-      cy.checkLink(checkYourAnswersEligibility.bannerLink(), CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.href, CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.text);
-    });
-
     it('renders a `save and back` button', () => {
       submitButton().should('exist');
       cy.checkText(submitButton(), BUTTONS.CONFIRM_AND_CONTINUE);
 
       saveAndBackButton().should('exist');
-      cy.checkText(saveAndBackButton(), BUTTONS.CHANGE_ANSWERS_START_NEW_APPLICATION);
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
 
     describe('form submission', () => {
       describe('continue', () => {
-        it(`should redirect to ${TYPE_OF_POLICY}`, () => {
+        it(`should redirect to ${YOUR_BUYER}`, () => {
           submitButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+          const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
           cy.url().should('eq', expectedUrl);
         });
       });
 
       describe('save and back', () => {
-        it(`should redirect to ${START}`, () => {
+        it(`should redirect to ${ALL_SECTIONS}`, () => {
           cy.navigateToUrl(url);
 
           saveAndBackButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${START}`;
+          const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
           cy.url().should('eq', expectedUrl);
         });
       });

@@ -49,7 +49,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {
@@ -92,9 +92,13 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       task.link().click();
 
-      // go to the page
+      // go through the 1st declaration - confidentiality
       submitButton().click();
+
+      // go through the 2nd declaration - anti-bribery
       submitButton().click();
+
+      // go through the 3rd declaration - anti-bribery - code of conduct
       submitButton().click();
 
       yesRadioInput().should('be.checked');

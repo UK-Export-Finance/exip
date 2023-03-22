@@ -23,24 +23,29 @@ const {
  * @returns {Express.Response.render} check your answers eligibility page
  */
 export const get = (req: Request, res: Response) => {
-  const { application } = res.locals;
+  try {
+    const { application } = res.locals;
 
-  if (!application) {
-    return res.redirect(PROBLEM_WITH_SERVICE);
+    if (!application) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    const summaryList = eligibilitySummaryList(application.eligibility);
+
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY,
+        BACK_LINK: req.headers.referer,
+      }),
+      START_NEW_APPLICATION: START,
+      renderNotificationBanner: true,
+      eligibility: true,
+      SUMMARY_LIST: summaryList,
+    });
+  } catch (err) {
+    console.error('Error getting check your answers - eligibility', { err });
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
-
-  const summaryList = eligibilitySummaryList(application.eligibility);
-
-  return res.render(TEMPLATE, {
-    ...insuranceCorePageVariables({
-      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY,
-      BACK_LINK: req.headers.referer,
-    }),
-    START_NEW_APPLICATION: START,
-    renderNotificationBanner: true,
-    eligibility: true,
-    SUMMARY_LIST: summaryList,
-  });
 };
 
 /**
@@ -51,13 +56,18 @@ export const get = (req: Request, res: Response) => {
  * @returns {Express.Response.redirect} Next part of the flow
  */
 export const post = (req: Request, res: Response) => {
-  const { application } = res.locals;
+  try {
+    const { application } = res.locals;
 
-  if (!application) {
-    return res.redirect(PROBLEM_WITH_SERVICE);
+    if (!application) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    const { referenceNumber } = req.params;
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`);
+  } catch (err) {
+    console.error('Error posting check your answers - eligibility', { err });
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
-
-  const { referenceNumber } = req.params;
-
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`);
 };

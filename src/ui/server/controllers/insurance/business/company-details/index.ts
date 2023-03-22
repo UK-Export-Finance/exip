@@ -9,6 +9,7 @@ import isPopulatedArray from '../../../../helpers/is-populated-array';
 import mapAndSave from '../map-and-save';
 import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 
@@ -25,7 +26,11 @@ const { COMPANY_DETAILS: COMPANY_DETAILS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORT
 
 export const TEMPLATE = COMPANY_DETAILS_TEMPLATE;
 
-const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
+const {
+  INSURANCE_ROOT,
+  EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
+} = ROUTES.INSURANCE;
 
 const {
   COMPANY_HOUSE_SEARCH,
@@ -41,7 +46,7 @@ const pageVariables = (referenceNumber: number, originalUrl: string) => {
   let companyDetailsPostRoute = `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROUTE}`;
 
   // if change route, then should use change url to go back to check your answers
-  if (isChangeRoute(originalUrl)) {
+  if (isChangeRoute(originalUrl) || isCheckAndChangeRoute(originalUrl)) {
     companyDetailsPostRoute = originalUrl;
   }
 
@@ -255,6 +260,10 @@ const post = async (req: Request, res: Response) => {
 
     if (isChangeRoute(req.originalUrl)) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);

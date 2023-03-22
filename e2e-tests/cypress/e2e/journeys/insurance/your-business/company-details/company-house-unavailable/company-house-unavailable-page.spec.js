@@ -3,18 +3,18 @@ import partials from '../../../../../partials';
 import { PAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
 
-const { ROOT } = ROUTES.INSURANCE;
+const { ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_UNAVAILABLE;
 
 const insuranceStart = ROUTES.INSURANCE.START;
 
-const { NATURE_OF_BUSINESS, COMPANY_DETAILS, COMPANIES_HOUSE_UNAVAILABLE } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
+const { COMPANY_DETAILS, COMPANIES_HOUSE_UNAVAILABLE } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
 
 context("Insurance - Your business - Companies house unavailable page - I want to enter my business's Companies House Registration Number (CRN) but companies house API is down", () => {
   let referenceNumber;
   let url;
-  let natureOfBusinessUrl;
+  let allSectionsUrl;
   let companyDetailsUrl;
 
   before(() => {
@@ -23,7 +23,7 @@ context("Insurance - Your business - Companies house unavailable page - I want t
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${COMPANIES_HOUSE_UNAVAILABLE}`;
 
-      natureOfBusinessUrl = `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       companyDetailsUrl = `${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
     });
@@ -36,7 +36,7 @@ context("Insurance - Your business - Companies house unavailable page - I want t
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {
@@ -67,7 +67,7 @@ context("Insurance - Your business - Companies house unavailable page - I want t
 
     it('should have the correct hrefs for the links on the page', () => {
       cy.checkLink(companiesHouseUnavailablePage.tryAgainLink(), companyDetailsUrl, CONTENT_STRINGS.TRY_AGAIN);
-      cy.checkLink(companiesHouseUnavailablePage.continueLink(), natureOfBusinessUrl, CONTENT_STRINGS.CONTINUE_LINK);
+      cy.checkLink(companiesHouseUnavailablePage.continueLink(), allSectionsUrl, CONTENT_STRINGS.CONTINUE_LINK);
     });
   });
 });

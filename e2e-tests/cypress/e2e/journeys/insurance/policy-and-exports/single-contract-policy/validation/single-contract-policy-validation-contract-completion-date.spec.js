@@ -40,10 +40,13 @@ const {
 } = ERROR_MESSAGES;
 
 context('Insurance - Policy and exports - Single contract policy page - form validation - contract completion date', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
@@ -61,7 +64,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   const field = singleContractPolicyPage[CONTRACT_COMPLETION_DATE];

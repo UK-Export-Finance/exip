@@ -1,25 +1,22 @@
 import partials from '../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { broker, checkYourAnswers } from '../../../../pages/your-business';
 import { submitButton } from '../../../../pages/shared';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: {
-      BROKER: {
-        USING_BROKER,
-        NAME,
-        ADDRESS_LINE_1,
-        ADDRESS_LINE_2,
-        TOWN,
-        COUNTY,
-        POSTCODE,
-        EMAIL,
-      },
-    },
+  BROKER: {
+    USING_BROKER,
+    NAME,
+    ADDRESS_LINE_1,
+    ADDRESS_LINE_2,
+    TOWN,
+    COUNTY,
+    POSTCODE,
+    EMAIL,
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
 const {
   ROOT,
@@ -27,7 +24,7 @@ const {
     BROKER_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
 
@@ -59,7 +56,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe(NAME, () => {

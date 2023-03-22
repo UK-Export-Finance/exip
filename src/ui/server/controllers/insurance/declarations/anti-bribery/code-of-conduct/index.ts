@@ -3,6 +3,7 @@ import { DECLARATIONS_FIELDS } from '../../../../../content-strings/fields/insur
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
+import save from '../../save-data';
 import { Request, Response } from '../../../../../../types';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.HAS_ANTI_BRIBERY_CODE_OF_CONDUCT;
@@ -65,7 +66,7 @@ export const get = (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -85,5 +86,18 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`);
+  try {
+    // save the application
+    const saveResponse = await save.declaration(application, req.body);
+
+    if (!saveResponse) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`);
+  } catch (err) {
+    console.error('Error updating application - declarations - anti-bribery - exporting with code of conduct ', { err });
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
 };

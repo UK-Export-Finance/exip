@@ -5,7 +5,12 @@ import {
 } from '../../../../pages/shared';
 import { howYourDataWillBeUsedPage } from '../../../../pages/insurance/declarations';
 import partials from '../../../../partials';
-import { BUTTONS, PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
+import {
+  BUTTONS,
+  PAGES,
+  ERROR_MESSAGES,
+  LINKS,
+} from '../../../../../../content-strings';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';

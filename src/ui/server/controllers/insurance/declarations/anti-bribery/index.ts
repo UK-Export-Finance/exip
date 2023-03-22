@@ -33,7 +33,7 @@ export const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_SAVE_AND_BACK}`,
 });
 
-export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.DECLARATION;
+export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.ROOT;
 
 /**
  * get
@@ -97,7 +97,7 @@ export const post = async (req: Request, res: Response) => {
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY,
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),

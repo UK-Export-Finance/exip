@@ -24,9 +24,9 @@ const {
 describe('controllers/insurance/declarations/anti-bribery', () => {
   jest.mock('../save-data');
 
-  let saveDeclarationSpy = jest.fn(() => Promise.resolve({}));
+  let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
 
-  save.declaration = saveDeclarationSpy;
+  save.declaration = mockSaveDeclaration;
 
   let req: Request;
   let res: Response;
@@ -60,7 +60,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.DECLARATIONS.DECLARATION);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.ROOT);
     });
   });
 
@@ -104,7 +104,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
       describe('when there is an error', () => {
         beforeAll(() => {
           getLatestAntiBriberySpy = jest.fn(() => Promise.reject());
-          api.keystone.application.declarations.getLatestConfidentiality = getLatestAntiBriberySpy;
+          api.keystone.application.declarations.getLatestAntiBribery = getLatestAntiBriberySpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -160,7 +160,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY,
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(mockApplication.referenceNumber),
@@ -204,8 +204,8 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
       describe('save data call', () => {
         describe('when the save data API call does not return anything', () => {
           beforeEach(() => {
-            saveDeclarationSpy = jest.fn(() => Promise.resolve(false));
-            save.declaration = saveDeclarationSpy;
+            mockSaveDeclaration = jest.fn(() => Promise.resolve(false));
+            save.declaration = mockSaveDeclaration;
 
             req.body = validBody;
           });
@@ -219,8 +219,8 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
 
         describe('when the save data API call fails', () => {
           beforeEach(() => {
-            saveDeclarationSpy = jest.fn(() => Promise.reject());
-            save.declaration = saveDeclarationSpy;
+            mockSaveDeclaration = jest.fn(() => Promise.reject());
+            save.declaration = mockSaveDeclaration;
 
             req.body = validBody;
           });

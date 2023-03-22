@@ -5,6 +5,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import getCountryByIsoCode from '../../../get-country-by-iso-code';
 import { mockApplication, mockCountries } from '../../../../test-mocks';
+import generateChangeLink from '../../../generate-change-link';
 
 const {
   INSURANCE: {
@@ -17,22 +18,29 @@ const {
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES_CHANGE },
+    POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES_CHANGE, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE },
   },
 } = ROUTES;
 
 describe('server/helpers/summary-lists/policy-and-export/about-goods-or-services-fields', () => {
   const mockAnswers = mockApplication.policyAndExport;
   const { referenceNumber } = mockApplication;
+  const checkAndChange = false;
 
   it('should return fields and values from the submitted data/answers', () => {
-    const result = generateAboutGoodsOrServicesFields(mockAnswers, referenceNumber, mockCountries);
+    const result = generateAboutGoodsOrServicesFields(mockAnswers, referenceNumber, mockCountries, checkAndChange);
 
     const expected = [
       fieldGroupItem({
         field: getFieldById(FIELDS.ABOUT_GOODS_OR_SERVICES, DESCRIPTION),
         data: mockAnswers,
-        href: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES_CHANGE}#${DESCRIPTION}-label`,
+        href: generateChangeLink(
+          ABOUT_GOODS_OR_SERVICES_CHANGE,
+          ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
+          `#${DESCRIPTION}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
         renderChangeLink: true,
       }),
       fieldGroupItem(

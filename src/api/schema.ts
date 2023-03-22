@@ -530,27 +530,26 @@ export const lists = {
   Declaration: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      confidentiality: relationship({ ref: 'DeclarationConfidentiality' }),
       antiBribery: relationship({ ref: 'DeclarationAntiBribery' }),
       ConfirmationAndAcknowledgements: relationship({ ref: 'DeclarationConfirmationAndAcknowledgement' }),
-      agreeToConfidentiality: checkbox({ defaultValue: false }),
-      agreeToAntiBribery: checkbox({ defaultValue: false }),
-      hasAntiBriberyCodeOfConduct: checkbox({ defaultValue: false }),
-      willExportWithAntiBriberyCodeOfConduct: checkbox(),
-      agreeToConfirmationAndAcknowledgements: checkbox({ defaultValue: false }),
+      agreeToConfidentiality: checkbox(),
+      agreeToAntiBribery: checkbox(),
+      hasAntiBriberyCodeOfConduct: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+        db: { isNullable: true },
+      }),
+      willExportWithAntiBriberyCodeOfConduct: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+        db: { isNullable: true },
+      }),
+      agreeToConfirmationAndAcknowledgements: checkbox(),
       agreeHowDataWillBeUsed: checkbox(),
-    },
-    access: allowAll,
-  }),
-  DeclarationConfidentiality: list({
-    fields: {
-      version: text({
-        label: 'Version',
-        validation: { isRequired: true },
-      }),
-      content: document({
-        formatting: true,
-      }),
     },
     access: allowAll,
   }),

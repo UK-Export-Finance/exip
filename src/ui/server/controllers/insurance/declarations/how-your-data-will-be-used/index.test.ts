@@ -100,7 +100,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
         beforeAll(() => {
           getLatesHowDataWillBeUsedSpy = jest.fn(() => Promise.reject());
 
-          api.keystone.application.declarations.getLatestConfidentiality = getLatesHowDataWillBeUsedSpy;
+          api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatesHowDataWillBeUsedSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

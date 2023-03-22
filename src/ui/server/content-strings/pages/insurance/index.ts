@@ -13,7 +13,7 @@ import formatCurrency from '../../../helpers/format-currency';
 const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
 
 const DASHBOARD = {
-  PAGE_TITLE: 'Dashboard',
+  PAGE_TITLE: 'Your applications',
   TABLE_HEADERS: {
     STATUS: 'Status',
     LAST_UPDATED: 'Last updated',

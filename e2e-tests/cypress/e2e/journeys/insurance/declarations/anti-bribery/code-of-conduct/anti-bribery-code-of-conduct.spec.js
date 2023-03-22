@@ -63,7 +63,7 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {
@@ -144,6 +144,14 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
 
         cy.url().should('eq', expectedUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          yesRadioInput().should('be.checked');
+        });
       });
     });
   });
