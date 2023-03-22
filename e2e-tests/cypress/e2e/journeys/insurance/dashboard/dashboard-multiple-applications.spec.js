@@ -62,7 +62,7 @@ context('Insurance - Dashboard - new application', () => {
     });
 
     after(() => {
-      cy.deleteAccount()
+      cy.deleteAccount();
     });
 
     it('should render the newly created application and the previously created application', () => {
