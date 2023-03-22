@@ -3,6 +3,8 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { yourBuyerSummaryList } from '../../../../helpers/summary-lists/your-buyer';
+import requiredFields from '../../../../helpers/section-fields/your-buyer';
+import sectionStatus from '../../../../helpers/section-status';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -36,6 +38,10 @@ export const get = async (req: Request, res: Response) => {
 
     const summaryList = yourBuyerSummaryList(application.buyer, referenceNumber, checkAndChange);
 
+    const fields = requiredFields();
+
+    const status = sectionStatus(fields, application);
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER,
@@ -43,6 +49,7 @@ export const get = async (req: Request, res: Response) => {
       }),
       SUMMARY_LIST: summaryList,
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_SAVE_AND_BACK}`,
+      status,
     });
   } catch (err) {
     console.error('Error getting check your answers - policy and exports', { err });

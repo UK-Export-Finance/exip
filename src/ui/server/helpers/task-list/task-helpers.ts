@@ -1,7 +1,9 @@
 import { DEFAULT, TASKS } from '../../content-strings';
 import isPopulatedArray from '../is-populated-array';
 import { ApplicationFlat, TaskListData, TaskListDataGroup, TaskListDataTask } from '../../../types';
-import isFieldFalseOrZero from '../is-field-false-or-zero';
+import sectionIsComplete from '../section-status/is-complete';
+import sectionIsInProgress from '../section-status/in-progress';
+import { hasSubmittedField } from '../get-submitted-fields';
 
 /**
  * getTaskById
@@ -32,79 +34,6 @@ export const getAllTasksFieldsInAGroup = (group: TaskListDataGroup): Array<strin
   }
 
   return [];
-};
-
-/**
- * hasSubmittedField
- * @param {Object} submittedData Submitted application data
- * @param {String} field ID of the field to get
- * @returns {Boolean} True if the field is in submittedData.
- */
-// Note: this assumes that any data in submitted fields is a valid answer. E.g, false boolean is a valid answer.
-export const hasSubmittedField = (submittedData: ApplicationFlat, fieldId: string) => {
-  // if array, check it is not empty array
-  if (submittedData && fieldId && isPopulatedArray(submittedData[fieldId])) {
-    return true;
-  }
-
-  if (submittedData && fieldId && (submittedData[fieldId] || isFieldFalseOrZero(submittedData[fieldId])) && !Array.isArray(submittedData[fieldId])) {
-    return true;
-  }
-
-  return false;
-};
-
-/**
- * getSubmittedFields
- * @param {Array} fields Array of field ids
- * @param {Object} submittedData Submitted application data
- * @returns {Array} array of submitted field ids.
- */
-export const getSubmittedFields = (fields: Array<string>, submittedData: ApplicationFlat): Array<string> => {
-  const submittedFields = [] as Array<string>;
-
-  if (fields) {
-    fields.forEach((fieldId) => {
-      if (hasSubmittedField(submittedData, fieldId)) {
-        submittedFields.push(fieldId);
-      }
-    });
-  }
-
-  return submittedFields;
-};
-
-/**
- * taskIsInProgress
- * @param {Array} taskFields Array of field ids associated with the tak
- * @param {Object} submittedData Submitted application data
- * @returns {Boolean}
- */
-export const taskIsInProgress = (taskFields: Array<string>, submittedData: ApplicationFlat) => {
-  const submittedFields = getSubmittedFields(taskFields, submittedData);
-
-  if (isPopulatedArray(submittedFields) && submittedFields.length < taskFields.length) {
-    return true;
-  }
-
-  return false;
-};
-
-/**
- * taskIsComplete
- * @param {Array} taskFields Array of field ids associated with the tak
- * @param {Object} submittedData Submitted application data
- * @returns {Boolean}
- */
-export const taskIsComplete = (taskFields: Array<string>, submittedData: ApplicationFlat): boolean => {
-  const submittedFields = getSubmittedFields(taskFields, submittedData);
-  if (submittedFields && submittedFields.length && taskFields && taskFields.length) {
-    if (submittedFields.length === taskFields.length) {
-      return true;
-    }
-  }
-
-  return false;
 };
 
 /**
@@ -147,8 +76,8 @@ export const taskStatus = (task: TaskListDataTask, submittedData: ApplicationFla
   const { dependencies, fields } = task;
 
   const dependenciesMet = areTaskDependenciesMet(dependencies, submittedData);
-  const isInProgress = taskIsInProgress(fields, submittedData);
-  const isComplete = taskIsComplete(fields, submittedData);
+  const isInProgress = sectionIsInProgress(fields, submittedData);
+  const isComplete = sectionIsComplete(fields, submittedData);
 
   if (!dependenciesMet) {
     return TASKS.STATUS.CANNOT_START;

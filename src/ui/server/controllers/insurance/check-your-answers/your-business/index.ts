@@ -3,6 +3,8 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
+import requiredFields from '../../../../helpers/section-fields/exporter-business';
+import sectionStatus from '../../../../helpers/section-status';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -29,7 +31,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = application;
+    const { referenceNumber, exporterBroker } = application;
 
     const checkAndChange = true;
 
@@ -40,6 +42,10 @@ export const get = async (req: Request, res: Response) => {
       referenceNumber,
       checkAndChange,
     );
+
+    const exporterFields = requiredFields(exporterBroker.isUsingBroker);
+
+    // const status = sectionStatus(exporterFields, application);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
