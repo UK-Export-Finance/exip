@@ -270,6 +270,9 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_ANTI_BRIBERY]: {
         IS_EMPTY: 'Confirm that you have read and accept the anti-bribery and corruption declaration',
       },
+      [FIELD_IDS.INSURANCE.DECLARATIONS.HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]: {
+        IS_EMPTY: 'Select whether you have a code of conduct and written procedure in place',
+      },
     },
   },
 };
