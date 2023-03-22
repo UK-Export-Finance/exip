@@ -24,9 +24,11 @@ const {
 } = ERROR_MESSAGES;
 
 context('Insurance - Policy and exports - About goods or services page - form validation', () => {
+  let referenceNumber;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
-      const referenceNumber = refNumber;
+      referenceNumber = refNumber;
 
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
@@ -45,7 +47,7 @@ context('Insurance - Policy and exports - About goods or services page - form va
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('should render validation errors for all required fields', () => {

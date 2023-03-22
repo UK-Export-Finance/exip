@@ -15,9 +15,20 @@ const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_U
 const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
-const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
+const {
+  INSURANCE_ROOT,
+  EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
+} = ROUTES.INSURANCE;
 
-const { NATURE_OF_BUSINESS_ROOT, TURNOVER_ROOT, NATURE_OF_BUSINESS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, NATURE_OF_BUSINESS_CHANGE } = EXPORTER_BUSINESS_ROUTES;
+const {
+  NATURE_OF_BUSINESS_ROOT,
+  TURNOVER_ROOT,
+  NATURE_OF_BUSINESS_SAVE_AND_BACK,
+  CHECK_YOUR_ANSWERS,
+  NATURE_OF_BUSINESS_CHANGE,
+  NATURE_OF_BUSINESS_CHECK_AND_CHANGE,
+} = EXPORTER_BUSINESS_ROUTES;
 
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_FIELDS } = FIELDS;
 
@@ -175,6 +186,20 @@ describe('controllers/insurance/business/nature-of-business', () => {
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.body = body;
+
+          req.originalUrl = NATURE_OF_BUSINESS_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });

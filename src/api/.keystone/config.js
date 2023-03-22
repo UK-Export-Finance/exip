@@ -666,24 +666,11 @@ var lists = {
   Declaration: (0, import_core.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      confidentiality: (0, import_fields.relationship)({ ref: "DeclarationConfidentiality" }),
       antiBribery: (0, import_fields.relationship)({ ref: "DeclarationAntiBribery" }),
       agreeToConfidentiality: (0, import_fields.checkbox)({ defaultValue: false }),
       agreeToAntiBribery: (0, import_fields.checkbox)({ defaultValue: false }),
       hasAntiBriberyCodeOfConduct: (0, import_fields.checkbox)({ defaultValue: false }),
       willExportWithAntiBriberyCodeOfConduct: (0, import_fields.checkbox)({ defaultValue: false })
-    },
-    access: import_access.allowAll
-  }),
-  DeclarationConfidentiality: (0, import_core.list)({
-    fields: {
-      version: (0, import_fields.text)({
-        label: "Version",
-        validation: { isRequired: true }
-      }),
-      content: (0, import_fields_document.document)({
-        formatting: true
-      })
     },
     access: import_access.allowAll
   }),
@@ -1218,6 +1205,37 @@ var addAndGetOTP = async (root, variables, context) => {
 };
 var add_and_get_OTP_default = addAndGetOTP;
 
+// custom-resolvers/delete-application-by-refrence-number.ts
+var deleteApplicationByReferenceNumber = async (root, variables, context) => {
+  try {
+    console.info("Deleting application by reference number");
+    const { referenceNumber } = variables;
+    const application = await context.db.Application.findMany({
+      where: {
+        referenceNumber: { equals: referenceNumber }
+      }
+    });
+    const { id } = application[0];
+    const deleteResponse = await context.db.Application.deleteOne({
+      where: {
+        id
+      }
+    });
+    if (deleteResponse.id) {
+      return {
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${err}`);
+  }
+};
+var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
+
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
@@ -1404,7 +1422,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 
       type VerifyAccountEmailAddressResponse {
         success: Boolean!
-        accountId: String!
+        accountId: String
       }
 
       type Mutation {
@@ -1454,6 +1472,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           companyAddressId: ID!
           data: ExporterCompanyAndCompanyAddressInput!
         ): ExporterCompanyAndCompanyAddress
+
+        """ delete an application by reference number """
+        deleteApplicationByReferenceNumber(
+          referenceNumber: Int!
+        ): SuccessResponse
       }
 
       type Query {
@@ -1477,6 +1500,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
       verifyAccountSignInCode: verify_account_sign_in_code_default,
       addAndGetOTP: add_and_get_OTP_default,
+      deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);

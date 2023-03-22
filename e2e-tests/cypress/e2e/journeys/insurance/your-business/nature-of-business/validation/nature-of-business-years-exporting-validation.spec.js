@@ -20,10 +20,13 @@ const fieldId = YEARS_EXPORTING;
 const field = natureOfBusiness[fieldId];
 
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - years exporting input validation', () => {
+  let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+    cy.completeSignInAndGoToApplication().then((refNumber) => {
+      referenceNumber = refNumber;
+
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
@@ -39,7 +42,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe(`${YEARS_EXPORTING} error`, () => {

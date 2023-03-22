@@ -10,6 +10,18 @@ const ELIGIBILITY = {
   CHANGE_ANSWERS: 'Change answers and start new application',
 };
 
+const POLICY_AND_EXPORTS = {
+  ...SHARED,
+  PAGE_TITLE: 'Type of policy and exports',
+};
+
+const YOUR_BUSINESS = {
+  ...SHARED,
+  PAGE_TITLE: 'About your business',
+};
+
 export default {
   ELIGIBILITY,
+  POLICY_AND_EXPORTS,
+  YOUR_BUSINESS,
 };

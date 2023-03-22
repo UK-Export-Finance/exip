@@ -62,7 +62,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {

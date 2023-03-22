@@ -1,9 +1,7 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
-import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
@@ -14,7 +12,10 @@ const { INSURANCE, PROBLEM_WITH_SERVICE } = ROUTES;
 
 const {
   INSURANCE_ROOT,
-  DECLARATIONS: { CONFIDENTIALITY_SAVE_AND_BACK, ANTI_BRIBERY },
+  DECLARATIONS: {
+    CONFIDENTIALITY_SAVE_AND_BACK,
+    ANTI_BRIBERY: { ROOT: ANTI_BRIBERY_ROOT },
+  },
 } = INSURANCE;
 
 /**
@@ -31,7 +32,9 @@ export const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY_SAVE_AND_BACK}`,
 });
 
-export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.DECLARATION;
+export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.CONFIDENTIALITY;
+
+const CONFIDENTIALITY_CONTENT = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.LIST;
 
 /**
  * get
@@ -50,26 +53,15 @@ export const get = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
-  try {
-    const confidentialityContent = await api.keystone.application.declarations.getLatestConfidentiality();
-
-    return res.render(TEMPLATE, {
-      ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
-        BACK_LINK: req.headers.referer,
-      }),
-      ...pageVariables(refNumber),
-      documentContent: confidentialityContent.content.document,
-      documentConfig: keystoneDocumentRendererConfig({
-        firstLevelListClass: 'counter-list counter-list--bold',
-      }),
-      application,
-    });
-  } catch (err) {
-    console.error("Error getting declarations - confidentiality and rendering 'confidentiality' page ", { err });
-
-    return res.redirect(PROBLEM_WITH_SERVICE);
-  }
+  return res.render(TEMPLATE, {
+    ...insuranceCorePageVariables({
+      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
+      BACK_LINK: req.headers.referer,
+    }),
+    ...pageVariables(refNumber),
+    CONFIDENTIALITY_CONTENT,
+    application,
+  });
 };
 
 /**
@@ -92,26 +84,15 @@ export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
-    try {
-      const confidentialityContent = await api.keystone.application.declarations.getLatestConfidentiality();
-
-      return res.render(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(refNumber),
-        documentContent: confidentialityContent.content.document,
-        documentConfig: keystoneDocumentRendererConfig({
-          firstLevelListClass: 'counter-list counter-list--bold',
-        }),
-        validationErrors,
-      });
-    } catch (err) {
-      console.error("Error getting declarations - confidentiality and rendering 'confidentiality' page ", { err });
-
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(refNumber),
+      CONFIDENTIALITY_CONTENT,
+      validationErrors,
+    });
   }
 
   try {
@@ -122,7 +103,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY.ROOT}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`);
   } catch (err) {
     console.error('Error updating application - declarations - confidentiality ', { err });
 

@@ -58,7 +58,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
   });
 
   after(() => {
-    cy.deleteAccount();
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   describe('single policy type answers', () => {
