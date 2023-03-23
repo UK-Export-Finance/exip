@@ -35,6 +35,6 @@ export default () => {
   companyOrOrganisationPage[COUNTRY].input().select(countryToSelect);
 
   // when running all the E2E tests, we seem to be temporarily blocked from companies house as it is called alot of times.
-  cy.wait(1000); // eslint-disable-line cypress/no-unnecessary-waiting
+  cy.wait(8000); // eslint-disable-line cypress/no-unnecessary-waiting
   submitButton().click();
 };
