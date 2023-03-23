@@ -8,7 +8,7 @@ import { Request, Response } from '../../../../types';
 export const TEMPLATE = TEMPLATES.INSURANCE.DASHBOARD;
 
 const {
-  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, ACCOUNT },
   PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
@@ -20,8 +20,12 @@ const {
  * @returns {Express.Response.render} Dashboard page
  */
 export const get = async (req: Request, res: Response) => {
+  if (!req.session.user?.id) {
+    return res.redirect(ACCOUNT.SIGN_IN.ROOT);
+  }
+
   try {
-    const applications = await api.keystone.applications.getAll();
+    const applications = await api.keystone.applications.getAll(req.session.user.id);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

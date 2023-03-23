@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 const applicationsQuery = gql`
-  query {
-    applications(orderBy: { updatedAt: desc }) {
+  query ($accountId: ID!) {
+    applications(where: { exporter: { id: { equals: $accountId } } }, orderBy: { updatedAt: desc }) {
       status
       updatedAt
       referenceNumber
