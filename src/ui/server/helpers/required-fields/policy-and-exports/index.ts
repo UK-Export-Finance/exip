@@ -19,6 +19,10 @@ export const getContractPolicyTasks = (policyType?: string): object => {
   return FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
 };
 
+/**
+ * Required fields for the insurance - policy and exports section 
+ * @param {Array} Required field IDs
+ */
 const requiredFields = (policyType?: string) =>
   Object.values({
     ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
