@@ -1,17 +1,17 @@
-import { ApplicationFlat } from '../../../../types';
 import { getSubmittedFields } from '../../get-submitted-fields';
 import isPopulatedArray from '../../is-populated-array';
+import { ApplicationFlat } from '../../../../types';
 
 /**
- * taskIsInProgress
- * @param {Array} taskFields Array of field ids associated with the tak
+ * sectionIsInProgress
+ * @param {Array} fields Array of field ids associated with the task
  * @param {Object} submittedData Submitted application data
  * @returns {Boolean}
  */
-const sectionIsInProgress = (taskFields: Array<string>, submittedData: ApplicationFlat) => {
-  const submittedFields = getSubmittedFields(taskFields, submittedData);
+const sectionIsInProgress = (fields: Array<string>, submittedData: ApplicationFlat) => {
+  const submittedFields = getSubmittedFields(fields, submittedData);
 
-  if (isPopulatedArray(submittedFields) && submittedFields.length < taskFields.length) {
+  if (isPopulatedArray(submittedFields) && submittedFields.length < fields.length) {
     return true;
   }
 
