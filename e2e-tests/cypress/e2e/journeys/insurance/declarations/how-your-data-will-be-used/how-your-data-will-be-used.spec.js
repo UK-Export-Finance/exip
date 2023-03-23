@@ -2,16 +2,10 @@ import {
   headingCaption,
   singleInputField,
   submitButton,
-  saveAndBackButton,
 } from '../../../../pages/shared';
 import { howYourDataWillBeUsedPage } from '../../../../pages/insurance/declarations';
 import partials from '../../../../partials';
-import {
-  BUTTONS,
-  PAGES,
-  ERROR_MESSAGES,
-  LINKS,
-} from '../../../../../../content-strings';
+import { PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -121,10 +115,8 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
       field.input().should('exist');
     });
 
-    it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('renders a submit button and `save and back` button', () => {
+      cy.assertSubmitAndSaveButtons();
     });
   });
 
