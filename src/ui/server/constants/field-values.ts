@@ -16,4 +16,6 @@ export const FIELD_VALUES = {
     MULTIPLE: 12,
   },
   TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY_AND_EXPORT.TOTAL_MONTHS_OF_COVER).keys()),
+  YES: 'Yes',
+  NO: 'No',
 };

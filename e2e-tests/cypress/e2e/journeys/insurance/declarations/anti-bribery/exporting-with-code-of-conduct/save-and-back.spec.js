@@ -2,9 +2,11 @@ import {
   saveAndBackButton,
   submitButton,
   yesRadioInput,
+  noRadioInput,
 } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import { TASKS } from '../../../../../../../content-strings';
+import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const { STATUS: { IN_PROGRESS } } = TASKS;
@@ -20,6 +22,19 @@ const {
 } = INSURANCE_ROUTES;
 
 const task = taskList.submitApplication.tasks.declarations;
+
+const navigateBackToPage = () => {
+  task.link().click();
+
+  // go through the 1st declaration - confidentiality
+  submitButton().click();
+
+  // go through the 2nd declaration - anti-bribery
+  submitButton().click();
+
+  // go through the 3rd declaration - anti-bribery - code of conduct
+  submitButton().click();
+};
 
 context('Insurance - Declarations - Exporting with code of conduct page - Save and go back', () => {
   let referenceNumber;
@@ -70,7 +85,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     });
   });
 
-  describe('when submitting an answer via `save and go back` button', () => {
+  describe(`when submitting an answer of ${FIELD_VALUES.YES} via 'save and go back' button`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
@@ -80,9 +95,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.url().should('eq', expected);
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the status of task `declarations` as `in progress`', () => {
@@ -90,18 +103,33 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
-      task.link().click();
-
-      // go through the 1st declaration - confidentiality
-      submitButton().click();
-
-      // go through the 2nd declaration - anti-bribery
-      submitButton().click();
-
-      // go through the 3rd declaration - anti-bribery - code of conduct
-      submitButton().click();
+      navigateBackToPage();
 
       yesRadioInput().should('be.checked');
+    });
+  });
+
+  describe(`when submitting an answer of ${FIELD_VALUES.NO} via 'save and go back' button`, () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      noRadioInput().click();
+
+      saveAndBackButton().click();
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
+      cy.assertAllSectionsUrl(referenceNumber);
+    });
+
+    it('should retain the status of task `declarations` as `in progress`', () => {
+      cy.checkTaskStatus(task, IN_PROGRESS);
+    });
+
+    it('should have the originally submitted answer selected when going back to the page after submission', () => {
+      navigateBackToPage();
+
+      noRadioInput().should('be.checked');
     });
   });
 });
