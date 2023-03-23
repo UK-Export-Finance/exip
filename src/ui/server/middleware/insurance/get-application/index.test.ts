@@ -14,6 +14,7 @@ const {
   YOUR_BUYER,
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
+  APPLICATION_SUBMITTED,
 } = ROUTES.INSURANCE;
 
 describe('middleware/insurance/get-application', () => {
@@ -33,7 +34,15 @@ describe('middleware/insurance/get-application', () => {
 
   describe('RELEVANT_ROUTES', () => {
     it('should return an array of routes', () => {
-      const expected = [ALL_SECTIONS, POLICY_AND_EXPORTS.ROOT, EXPORTER_BUSINESS.ROOT, YOUR_BUYER.ROOT, DECLARATIONS.ROOT, CHECK_YOUR_ANSWERS.ROOT];
+      const expected = [
+        ALL_SECTIONS,
+        POLICY_AND_EXPORTS.ROOT,
+        EXPORTER_BUSINESS.ROOT,
+        YOUR_BUYER.ROOT,
+        DECLARATIONS.ROOT,
+        CHECK_YOUR_ANSWERS.ROOT,
+        APPLICATION_SUBMITTED,
+      ];
 
       expect(RELEVANT_ROUTES).toEqual(expected);
     });

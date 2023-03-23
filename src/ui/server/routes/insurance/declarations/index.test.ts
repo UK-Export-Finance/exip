@@ -25,7 +25,7 @@ describe('routes/insurance/declarations', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(6);
-    expect(post).toHaveBeenCalledTimes(11);
+    expect(post).toHaveBeenCalledTimes(12);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIDENTIALITY}`, confidentialityGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIDENTIALITY}`, confidentialityPost);
@@ -60,9 +60,10 @@ describe('routes/insurance/declarations', () => {
       confirmationAndAcknowledgementsPost,
     );
 
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK}`, saveAndBackPost);
+
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED}`, howYourDataWillBeUsedGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED}`, howYourDataWillBeUsedPost);
-
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK}`, saveAndBackPost);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED_SAVE_AND_BACK}`, saveAndBackPost);
   });
 });

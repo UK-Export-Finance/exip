@@ -14,7 +14,11 @@ const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_US
 
 const { INSURANCE, PROBLEM_WITH_SERVICE } = ROUTES;
 
-const { INSURANCE_ROOT, APPLICATION_SUBMITTED } = INSURANCE;
+const {
+  INSURANCE_ROOT,
+  APPLICATION_SUBMITTED,
+  DECLARATIONS: { HOW_YOUR_DATA_WILL_BE_USED_SAVE_AND_BACK },
+} = INSURANCE;
 
 describe('controllers/insurance/declarations/how-your-data-will-be-used', () => {
   jest.mock('../save-data');
@@ -46,7 +50,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
           ID: FIELD_ID,
           ...FIELDS[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}temp`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
