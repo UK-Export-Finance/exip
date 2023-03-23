@@ -32,7 +32,7 @@ export const getBrokerTasks = (isUsingBroker?: string): Array<string> => {
 };
 
 /**
- * Required fields for the insurance - exporter business section 
+ * Required fields for the insurance - exporter business section
  * @param {Array} Required field IDs
  */
 const requiredFields = (isUsingBroker?: string): Array<string> => {

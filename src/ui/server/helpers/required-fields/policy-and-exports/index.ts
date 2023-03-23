@@ -20,7 +20,7 @@ export const getContractPolicyTasks = (policyType?: string): object => {
 };
 
 /**
- * Required fields for the insurance - policy and exports section 
+ * Required fields for the insurance - policy and exports section
  * @param {Array} Required field IDs
  */
 const requiredFields = (policyType?: string) =>
