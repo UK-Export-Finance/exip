@@ -1,5 +1,6 @@
 import {
   headingCaption,
+  singleInputField,
   submitButton,
   saveAndBackButton,
 } from '../../../../pages/shared';
@@ -81,7 +82,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      field = howYourDataWillBeUsedPage[FIELD_ID];
+      field = singleInputField(FIELD_ID);
     });
 
     it('renders a heading caption', () => {
@@ -174,9 +175,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
           // TEMP until previous page is built
           cy.navigateToUrl(`${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`);
 
-          const field = howYourDataWillBeUsedPage[FIELD_ID];
-
-          field.input().should('be.checked');
+          singleInputField(FIELD_ID).input().should('be.checked');
         });
       });
     });
