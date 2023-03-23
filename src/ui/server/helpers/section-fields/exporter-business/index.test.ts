@@ -15,7 +15,7 @@ const {
 const { PHONE_NUMBER, WEBSITE, YOUR_BUSINESS, ...YOUR_COMPANY_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY;
 const { FINANCIAL_YEAR_END_DATE, ...TURNOVER_FIELDS } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER;
 
-describe('server/helpers/section-fields/exporter-business', () => {
+describe('server/helpers/required-fields/exporter-business', () => {
   describe('getBrokerTasks', () => {
     const { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER;
 
@@ -51,8 +51,8 @@ describe('server/helpers/section-fields/exporter-business', () => {
   });
 
   describe('requiredFields', () => {
-    it('should return array of required fields for section', () => {
-      const response = requiredFields(mockApplication.exporterBroker.isUsingBroker);
+    it('should return array of required fields', () => {
+      const result = requiredFields(mockApplication.exporterBroker.isUsingBroker);
 
       const expected = Object.values({
         ...YOUR_COMPANY_FIELDS,
@@ -62,7 +62,7 @@ describe('server/helpers/section-fields/exporter-business', () => {
         ...getBrokerTasks(mockApplication.exporterBroker.isUsingBroker),
       });
 
-      expect(response).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 });

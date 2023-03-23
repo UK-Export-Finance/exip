@@ -3,7 +3,7 @@ import { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/p
 import { mockApplication } from '../../../test-mocks';
 import requiredFields, { getContractPolicyTasks } from '.';
 
-describe('server/helpers/section-fields/policy-and-exports', () => {
+describe('server/helpers/required-fields/policy-and-exports', () => {
   const { policyAndExport } = mockApplication;
   const { policyType } = policyAndExport;
 
@@ -40,8 +40,8 @@ describe('server/helpers/section-fields/policy-and-exports', () => {
   });
 
   describe('requiredFields', () => {
-    it('should return array of required fields for section', () => {
-      const response = requiredFields(policyType);
+    it('should return array of required fields', () => {
+      const result = requiredFields(policyType);
 
       const expected = Object.values({
         ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
@@ -50,7 +50,7 @@ describe('server/helpers/section-fields/policy-and-exports', () => {
         ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
       });
 
-      expect(response).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 });
