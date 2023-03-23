@@ -109,6 +109,10 @@ interface ApplicationDeclaration {
   id: string;
   agreeToConfidentiality?: boolean;
   agreeToAntiBribery?: boolean;
+  hasAntiBriberyCodeOfConduct?: boolean;
+  willExportWithAntiBriberyCodeOfConduct?: boolean;
+  agreeToConfirmationAndAcknowledgements?: boolean;
+  agreeHowDataWillBeUsed?: boolean;
 }
 
 interface Application extends ApplicationCore {

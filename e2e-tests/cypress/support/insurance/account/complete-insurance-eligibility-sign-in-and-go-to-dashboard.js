@@ -25,22 +25,22 @@ const {
  * 7) Complete and submit the "enter security code" form
  * 8) Check we are on the dashbooard
  */
-const completeInsuranceEligibilitySignInAndGoToDashboard = () => {
+const completeInsuranceEligibilitySignInAndGoToDashboard = (emailAddress) => {
   // complete insurance eligibility forms/flow
   cy.navigateToUrl(START);
 
   cy.submitInsuranceEligibilityAnswersHappyPath();
 
   // create an exporter account
-  return cy.createAccount().then((verifyAccountUrl) => {
+  return cy.createAccount({ emailAddress }).then((verifyAccountUrl) => {
     // verify the account by navigating to the "verify account" page
     cy.navigateToUrl(verifyAccountUrl);
 
     // sign in to the account. Behind the scenes, an application is created at this point.
-    cy.completeAndSubmitSignInAccountForm();
+    cy.completeAndSubmitSignInAccountForm(emailAddress);
 
     // get the OTP security code
-    cy.accountAddAndGetOTP().then((securityCode) => {
+    cy.accountAddAndGetOTP(emailAddress).then((securityCode) => {
       cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), securityCode);
 
       // submit the OTP security code

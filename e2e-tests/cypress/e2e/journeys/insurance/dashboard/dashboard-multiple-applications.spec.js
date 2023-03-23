@@ -7,12 +7,12 @@ const { table } = dashboardPage;
 const { DASHBOARD } = ROUTES.INSURANCE;
 
 context('Insurance - Dashboard - new application', () => {
-  let referenceNumbers;
+  let referenceNumber;
   let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
-      referenceNumbers = [refNumber];
+      referenceNumber = refNumber;
 
       url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
@@ -30,12 +30,12 @@ context('Insurance - Dashboard - new application', () => {
   });
 
   after(() => {
-    referenceNumbers.forEach((refNumber) => {
-      cy.deleteApplication(refNumber);
-    });
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when starting and completing insurance eligibility via the `start new` button ', () => {
+    let secondReferenceNumber;
+
     before(() => {
       dashboardPage.startNewApplication().click();
 
@@ -50,7 +50,7 @@ context('Insurance - Dashboard - new application', () => {
       table.body.firstRow.referenceNumber().click();
 
       cy.getReferenceNumber().then((refNumber) => {
-        referenceNumbers = [...referenceNumbers, refNumber];
+        secondReferenceNumber = refNumber;
 
         // go back to the dashboard
         backLink().click();
@@ -62,7 +62,7 @@ context('Insurance - Dashboard - new application', () => {
     });
 
     after(() => {
-      cy.deleteAccount();
+      cy.deleteAccountAndApplication(secondReferenceNumber);
     });
 
     it('should render the newly created application and the previously created application', () => {

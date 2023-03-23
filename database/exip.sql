@@ -362,6 +362,7 @@ CREATE TABLE `Declaration` (
   `agreeToConfirmationAndAcknowledgements` tinyint(1) NOT NULL DEFAULT '0',
   `willExportWithAntiBriberyCodeOfConduct` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `hasAntiBriberyCodeOfConduct` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+	`agreeHowDataWillBeUsed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `Declaration_application_idx` (`application`),
   KEY `Declaration_confidentiality_idx` (`confidentiality`),
@@ -447,6 +448,29 @@ VALUES
 /*!40000 ALTER TABLE `DeclarationConfirmationAndAcknowledgement` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+
+# Dump of table DeclarationHowDataWillBeUsed
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `DeclarationHowDataWillBeUsed`;
+
+CREATE TABLE `DeclarationHowDataWillBeUsed` (
+  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `version` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `content` json NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `DeclarationHowDataWillBeUsed` WRITE;
+/*!40000 ALTER TABLE `DeclarationHowDataWillBeUsed` DISABLE KEYS */;
+
+INSERT INTO `DeclarationHowDataWillBeUsed` (`id`, `version`, `content`)
+VALUES
+	('clfh2o74i0086saoqgo9dhqgq','1','[{\"type\": \"paragraph\", \"children\": [{\"text\": \"We will process contact details and other personal information you give us in this Proposal in accordance with applicable data protection law.\"}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"We may record personal data provided to us in this Proposal in our customer relationship database. Please contact information.access@ukexportfinance.gov.uk if you would like to access, rectify or erase your personal data or to withdraw your consent.\"}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"If after contacting us you are still unhappy with the way we handle your personal data, you have a right to lodge a complaint with the Information Commissioner’s Office (\"}, {\"href\": \"https://ico.org.uk/make-a-complaint\", \"type\": \"link\", \"children\": [{\"text\": \"Make a complaint | ICO)\"}]}, {\"text\": \"\"}]}]');
+
+/*!40000 ALTER TABLE `DeclarationHowDataWillBeUsed` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 

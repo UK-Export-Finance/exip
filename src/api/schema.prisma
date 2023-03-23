@@ -243,6 +243,7 @@ model Declaration {
   hasAntiBriberyCodeOfConduct            String?
   willExportWithAntiBriberyCodeOfConduct String?
   agreeToConfirmationAndAcknowledgements Boolean                                    @default(false)
+  agreeHowDataWillBeUsed                 Boolean                                    @default(false)
   from_Application_declaration           Application[]                              @relation("Application_declaration")
 
   @@index([applicationId])
@@ -262,6 +263,12 @@ model DeclarationConfirmationAndAcknowledgement {
   version                                          String        @default("")
   content                                          Json          @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   from_Declaration_ConfirmationAndAcknowledgements Declaration[] @relation("Declaration_ConfirmationAndAcknowledgements")
+}
+
+model DeclarationHowDataWillBeUsed {
+  id      String @id @default(cuid())
+  version String @default("")
+  content Json   @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 }
 
 model Page {

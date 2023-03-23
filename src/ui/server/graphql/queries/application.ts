@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const applicationQuery = gql`
-  query ($referenceNumber: ID) {
+  query ($referenceNumber: ID!) {
     referenceNumber(where: { id: $referenceNumber }) {
       id
       application {
@@ -113,6 +113,7 @@ const applicationQuery = gql`
           hasAntiBriberyCodeOfConduct
           willExportWithAntiBriberyCodeOfConduct
           agreeToConfirmationAndAcknowledgements
+          agreeHowDataWillBeUsed
         }
       }
     }

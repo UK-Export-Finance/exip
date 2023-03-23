@@ -5,10 +5,14 @@ import insuranceCorePageVariables from '../../../helpers/page-variables/core/ins
 import { Request, Response } from '../../../../types';
 import api from '../../../api';
 import mapApplications from '../../../helpers/mappings/map-applications';
-import { mockReq, mockRes, mockApplications } from '../../../test-mocks';
+import { mockReq, mockRes, mockApplications, mockAccount, mockSession } from '../../../test-mocks';
 
 const {
-  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
+  INSURANCE: {
+    INSURANCE_ROOT,
+    ALL_SECTIONS,
+    ACCOUNT: { SIGN_IN },
+  },
   PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
@@ -20,6 +24,8 @@ describe('controllers/insurance/dashboard', () => {
 
   beforeEach(() => {
     req = mockReq();
+    req.session.user = mockAccount;
+
     res = mockRes();
 
     api.keystone.applications.getAll = getApplicationsSpy;
@@ -32,10 +38,11 @@ describe('controllers/insurance/dashboard', () => {
   });
 
   describe('get', () => {
-    it('should call api.keystone.applications.getAll', async () => {
+    it('should call api.keystone.applications.getAll with the user session ID', async () => {
       await get(req, res);
 
       expect(getApplicationsSpy).toHaveBeenCalledTimes(1);
+      expect(getApplicationsSpy).toHaveBeenCalledWith(req.session.user?.id);
     });
 
     it('should render template', async () => {
@@ -54,6 +61,16 @@ describe('controllers/insurance/dashboard', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+    });
+
+    describe('when there is no req.session.user.id', () => {
+      it(`should redirect to ${SIGN_IN.ROOT}`, async () => {
+        req.session = mockSession;
+
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(SIGN_IN.ROOT);
+      });
     });
 
     describe('api error handling', () => {

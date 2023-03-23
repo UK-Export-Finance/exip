@@ -1,7 +1,7 @@
 import { pageVariables, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../../content-strings';
 import { DECLARATIONS_FIELDS } from '../../../../../content-strings/fields/insurance/declarations';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import save from '../../save-data';
@@ -16,6 +16,7 @@ const {
   INSURANCE_ROOT,
   DECLARATIONS: {
     ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT, CODE_OF_CONDUCT_SAVE_AND_BACK },
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
   },
 } = INSURANCE;
 
@@ -103,12 +104,32 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
         expect(save.declaration).toHaveBeenCalledWith(mockApplication, validBody);
       });
 
-      it(`should redirect to ${EXPORTING_WITH_CODE_OF_CONDUCT}`, async () => {
-        await post(req, res);
+      describe(`when the answer is ${FIELD_VALUES.YES}`, () => {
+        it(`should redirect to ${EXPORTING_WITH_CODE_OF_CONDUCT}`, async () => {
+          req.body = {
+            [FIELD_ID]: FIELD_VALUES.YES,
+          };
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
+          await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(expected);
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when the answer is ${FIELD_VALUES.NO}`, () => {
+        it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, async () => {
+          req.body = {
+            [FIELD_ID]: FIELD_VALUES.NO,
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 
