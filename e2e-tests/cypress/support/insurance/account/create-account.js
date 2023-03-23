@@ -22,7 +22,12 @@ const {
  * @param {String}: Password
  * @returns {String} URL to verify the account verification URL
  */
-const createAccount = (nameFirst = firstName, nameLast = lastName, emailAddress = email, accountPassword = password) =>
+const createAccount = ({
+  nameFirst = firstName,
+  nameLast = lastName,
+  emailAddress = email,
+  accountPassword = password,
+}) =>
   api.createExporterAccount(nameFirst, nameLast, emailAddress, accountPassword).then((createdExporter) => createdExporter)
     .then((exporter) => {
       const { verificationHash } = exporter;
