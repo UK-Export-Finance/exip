@@ -3,9 +3,14 @@ import {
   submitButton,
   saveAndBackButton,
 } from '../../../../pages/shared';
-import { confirmationAndAcknowledgementsPage } from '../../../../pages/insurance/declarations';
+import { howYourDataWillBeUsedPage } from '../../../../pages/insurance/declarations';
 import partials from '../../../../partials';
-import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import {
+  BUTTONS,
+  PAGES,
+  ERROR_MESSAGES,
+  LINKS,
+} from '../../../../../../content-strings';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -15,20 +20,20 @@ import flattenKeystoneDocument from '../../../../../support/flatten-keystone-doc
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS;
+const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED;
 
 const {
   ROOT: INSURANCE_ROOT,
   DECLARATIONS: {
-    HOW_YOUR_DATA_WILL_BE_USED,
-    ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT },
     CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+    HOW_YOUR_DATA_WILL_BE_USED,
   },
+  APPLICATION_SUBMITTED,
 } = INSURANCE_ROUTES;
 
-const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS;
+const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED;
 
-context("Insurance - Declarations - Confirmation and acknowledgements page - As an Exporter, I want the system to provide the details of my application's confirmation and acknowledgement, So that, I can readily confirm my export insurance application", () => {
+context('Insurance - Declarations - How your data will be used page - As an Exporter, I want to have details of how my export insurance application data will be used, So that I can determine if I am okay with the use of my application in that format', () => {
   let referenceNumber;
   let url;
 
@@ -45,8 +50,9 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
       cy.completeAndSubmitDeclarationAntiBribery();
       cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
       cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct();
+      cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
 
       cy.url().should('eq', url);
     });
@@ -64,7 +70,7 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`,
       assertBackLink: false,
     });
   });
@@ -75,7 +81,7 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      field = confirmationAndAcknowledgementsPage[FIELD_ID];
+      field = howYourDataWillBeUsedPage[FIELD_ID];
     });
 
     it('renders a heading caption', () => {
@@ -86,30 +92,24 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
       let content;
 
       const {
-        intro,
-        level1,
-        level2,
-      } = confirmationAndAcknowledgementsPage.listItems;
+        paragraph,
+        link,
+      } = howYourDataWillBeUsedPage;
 
       before(() => {
-        api.declarations.getLatestConfirmationAndAcknowledgements().then((data) => {
+        api.declarations.getLatestHowDataWillBeUsed().then((data) => {
           content = flattenKeystoneDocument(data.content.document);
         });
       });
 
-      it('renders an intro paragraph', () => {
-        cy.checkText(intro(), content[0].text);
+      it('renders paragraphs', () => {
+        cy.checkText(paragraph(1), content[0].text);
+        cy.checkText(paragraph(2), content[1].text);
+        cy.checkText(paragraph(3), content[2].text);
       });
 
-      it('renders level 1 list items', () => {
-        cy.checkText(level1.item(1), content[1].text);
-        cy.checkText(level1.item(2), content[2].text);
-      });
-
-      it('renders level 2 list items', () => {
-        cy.checkText(level2.item(1), content[3].text);
-        cy.checkText(level2.item(2), content[4].text);
-        cy.checkText(level2.item(3), content[5].text);
+      it('renders a link', () => {
+        cy.checkLink(link(3, 1), LINKS.EXTERNAL.ICO_MAKE_A_COMPLAINT, content[3].text);
       });
     });
 
@@ -134,7 +134,7 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        field = confirmationAndAcknowledgementsPage[FIELD_ID];
+        field = howYourDataWillBeUsedPage[FIELD_ID];
       });
 
       it('should render a validation error', () => {
@@ -159,21 +159,22 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
     });
 
     describe('when submitting a fully completed form', () => {
-      it(`should redirect to ${HOW_YOUR_DATA_WILL_BE_USED}`, () => {
+      it(`should redirect to ${APPLICATION_SUBMITTED}`, () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
+        cy.completeAndSubmitDeclarationHowYourDataWillBeUsed();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
+        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
         cy.url().should('eq', expectedUrl);
       });
 
       describe('when going back to the page', () => {
         it('should have the submitted value', () => {
-          cy.navigateToUrl(url);
+          // TEMP until previous page is built
+          cy.navigateToUrl(`${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`);
 
-          const field = confirmationAndAcknowledgementsPage[FIELD_ID];
+          const field = howYourDataWillBeUsedPage[FIELD_ID];
 
           field.input().should('be.checked');
         });

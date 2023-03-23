@@ -12,7 +12,8 @@
 
     {% if element.type === 'paragraph' %}
       {{ paragraph.render({
-        content: element.children
+        content: element.children,
+        index: loop.index
       }) }}
     {% endif %}
 

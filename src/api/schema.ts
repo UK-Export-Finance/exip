@@ -549,6 +549,7 @@ export const lists = {
         db: { isNullable: true },
       }),
       agreeToConfirmationAndAcknowledgements: checkbox(),
+      agreeHowDataWillBeUsed: checkbox(),
     },
     access: allowAll,
   }),
@@ -572,6 +573,19 @@ export const lists = {
       }),
       content: document({
         formatting: true,
+      }),
+    },
+    access: allowAll,
+  }),
+  DeclarationHowDataWillBeUsed: list({
+    fields: {
+      version: text({
+        label: 'Version',
+        validation: { isRequired: true },
+      }),
+      content: document({
+        formatting: true,
+        links: true,
       }),
     },
     access: allowAll,

@@ -1139,6 +1139,7 @@ type Declaration {
   hasAntiBriberyCodeOfConduct: String
   willExportWithAntiBriberyCodeOfConduct: String
   agreeToConfirmationAndAcknowledgements: Boolean
+  agreeHowDataWillBeUsed: Boolean
 }
 
 input DeclarationWhereUniqueInput {
@@ -1158,6 +1159,7 @@ input DeclarationWhereInput {
   hasAntiBriberyCodeOfConduct: StringNullableFilter
   willExportWithAntiBriberyCodeOfConduct: StringNullableFilter
   agreeToConfirmationAndAcknowledgements: BooleanFilter
+  agreeHowDataWillBeUsed: BooleanFilter
 }
 
 input DeclarationOrderByInput {
@@ -1167,6 +1169,7 @@ input DeclarationOrderByInput {
   hasAntiBriberyCodeOfConduct: OrderDirection
   willExportWithAntiBriberyCodeOfConduct: OrderDirection
   agreeToConfirmationAndAcknowledgements: OrderDirection
+  agreeHowDataWillBeUsed: OrderDirection
 }
 
 input DeclarationUpdateInput {
@@ -1178,6 +1181,7 @@ input DeclarationUpdateInput {
   hasAntiBriberyCodeOfConduct: String
   willExportWithAntiBriberyCodeOfConduct: String
   agreeToConfirmationAndAcknowledgements: Boolean
+  agreeHowDataWillBeUsed: Boolean
 }
 
 input DeclarationAntiBriberyRelateToOneForUpdateInput {
@@ -1206,6 +1210,7 @@ input DeclarationCreateInput {
   hasAntiBriberyCodeOfConduct: String
   willExportWithAntiBriberyCodeOfConduct: String
   agreeToConfirmationAndAcknowledgements: Boolean
+  agreeHowDataWillBeUsed: Boolean
 }
 
 input DeclarationAntiBriberyRelateToOneForCreateInput {
@@ -1298,6 +1303,48 @@ input DeclarationConfirmationAndAcknowledgementUpdateArgs {
 }
 
 input DeclarationConfirmationAndAcknowledgementCreateInput {
+  version: String
+  content: JSON
+}
+
+type DeclarationHowDataWillBeUsed {
+  id: ID!
+  version: String
+  content: DeclarationHowDataWillBeUsed_content_Document
+}
+
+type DeclarationHowDataWillBeUsed_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input DeclarationHowDataWillBeUsedWhereUniqueInput {
+  id: ID
+}
+
+input DeclarationHowDataWillBeUsedWhereInput {
+  AND: [DeclarationHowDataWillBeUsedWhereInput!]
+  OR: [DeclarationHowDataWillBeUsedWhereInput!]
+  NOT: [DeclarationHowDataWillBeUsedWhereInput!]
+  id: IDFilter
+  version: StringFilter
+}
+
+input DeclarationHowDataWillBeUsedOrderByInput {
+  id: OrderDirection
+  version: OrderDirection
+}
+
+input DeclarationHowDataWillBeUsedUpdateInput {
+  version: String
+  content: JSON
+}
+
+input DeclarationHowDataWillBeUsedUpdateArgs {
+  where: DeclarationHowDataWillBeUsedWhereUniqueInput!
+  data: DeclarationHowDataWillBeUsedUpdateInput!
+}
+
+input DeclarationHowDataWillBeUsedCreateInput {
   version: String
   content: JSON
 }
@@ -1493,6 +1540,12 @@ type Mutation {
   updateDeclarationConfirmationAndAcknowledgements(data: [DeclarationConfirmationAndAcknowledgementUpdateArgs!]!): [DeclarationConfirmationAndAcknowledgement]
   deleteDeclarationConfirmationAndAcknowledgement(where: DeclarationConfirmationAndAcknowledgementWhereUniqueInput!): DeclarationConfirmationAndAcknowledgement
   deleteDeclarationConfirmationAndAcknowledgements(where: [DeclarationConfirmationAndAcknowledgementWhereUniqueInput!]!): [DeclarationConfirmationAndAcknowledgement]
+  createDeclarationHowDataWillBeUsed(data: DeclarationHowDataWillBeUsedCreateInput!): DeclarationHowDataWillBeUsed
+  createDeclarationHowDataWillBeUseds(data: [DeclarationHowDataWillBeUsedCreateInput!]!): [DeclarationHowDataWillBeUsed]
+  updateDeclarationHowDataWillBeUsed(where: DeclarationHowDataWillBeUsedWhereUniqueInput!, data: DeclarationHowDataWillBeUsedUpdateInput!): DeclarationHowDataWillBeUsed
+  updateDeclarationHowDataWillBeUseds(data: [DeclarationHowDataWillBeUsedUpdateArgs!]!): [DeclarationHowDataWillBeUsed]
+  deleteDeclarationHowDataWillBeUsed(where: DeclarationHowDataWillBeUsedWhereUniqueInput!): DeclarationHowDataWillBeUsed
+  deleteDeclarationHowDataWillBeUseds(where: [DeclarationHowDataWillBeUsedWhereUniqueInput!]!): [DeclarationHowDataWillBeUsed]
   createPage(data: PageCreateInput!): Page
   createPages(data: [PageCreateInput!]!): [Page]
   updatePage(where: PageWhereUniqueInput!, data: PageUpdateInput!): Page
@@ -1600,6 +1653,9 @@ type Query {
   declarationConfirmationAndAcknowledgements(where: DeclarationConfirmationAndAcknowledgementWhereInput! = {}, orderBy: [DeclarationConfirmationAndAcknowledgementOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationConfirmationAndAcknowledgementWhereUniqueInput): [DeclarationConfirmationAndAcknowledgement!]
   declarationConfirmationAndAcknowledgement(where: DeclarationConfirmationAndAcknowledgementWhereUniqueInput!): DeclarationConfirmationAndAcknowledgement
   declarationConfirmationAndAcknowledgementsCount(where: DeclarationConfirmationAndAcknowledgementWhereInput! = {}): Int
+  declarationHowDataWillBeUseds(where: DeclarationHowDataWillBeUsedWhereInput! = {}, orderBy: [DeclarationHowDataWillBeUsedOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationHowDataWillBeUsedWhereUniqueInput): [DeclarationHowDataWillBeUsed!]
+  declarationHowDataWillBeUsed(where: DeclarationHowDataWillBeUsedWhereUniqueInput!): DeclarationHowDataWillBeUsed
+  declarationHowDataWillBeUsedsCount(where: DeclarationHowDataWillBeUsedWhereInput! = {}): Int
   pages(where: PageWhereInput! = {}, orderBy: [PageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PageWhereUniqueInput): [Page!]
   page(where: PageWhereUniqueInput!): Page
   pagesCount(where: PageWhereInput! = {}): Int

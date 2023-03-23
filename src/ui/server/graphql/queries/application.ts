@@ -113,6 +113,7 @@ const applicationQuery = gql`
           hasAntiBriberyCodeOfConduct
           willExportWithAntiBriberyCodeOfConduct
           agreeToConfirmationAndAcknowledgements
+          agreeHowDataWillBeUsed
         }
       }
     }
