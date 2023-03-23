@@ -1133,7 +1133,8 @@ type Declaration {
   id: ID!
   application: Application
   antiBribery: DeclarationAntiBribery
-  ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgement
+  confirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgement
+  howDataWillBeUsed: DeclarationHowDataWillBeUsed
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
   hasAntiBriberyCodeOfConduct: String
@@ -1153,7 +1154,8 @@ input DeclarationWhereInput {
   id: IDFilter
   application: ApplicationWhereInput
   antiBribery: DeclarationAntiBriberyWhereInput
-  ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementWhereInput
+  confirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementWhereInput
+  howDataWillBeUsed: DeclarationHowDataWillBeUsedWhereInput
   agreeToConfidentiality: BooleanFilter
   agreeToAntiBribery: BooleanFilter
   hasAntiBriberyCodeOfConduct: StringNullableFilter
@@ -1175,7 +1177,8 @@ input DeclarationOrderByInput {
 input DeclarationUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   antiBribery: DeclarationAntiBriberyRelateToOneForUpdateInput
-  ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementRelateToOneForUpdateInput
+  confirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementRelateToOneForUpdateInput
+  howDataWillBeUsed: DeclarationHowDataWillBeUsedRelateToOneForUpdateInput
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
   hasAntiBriberyCodeOfConduct: String
@@ -1196,6 +1199,12 @@ input DeclarationConfirmationAndAcknowledgementRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input DeclarationHowDataWillBeUsedRelateToOneForUpdateInput {
+  create: DeclarationHowDataWillBeUsedCreateInput
+  connect: DeclarationHowDataWillBeUsedWhereUniqueInput
+  disconnect: Boolean
+}
+
 input DeclarationUpdateArgs {
   where: DeclarationWhereUniqueInput!
   data: DeclarationUpdateInput!
@@ -1204,7 +1213,8 @@ input DeclarationUpdateArgs {
 input DeclarationCreateInput {
   application: ApplicationRelateToOneForCreateInput
   antiBribery: DeclarationAntiBriberyRelateToOneForCreateInput
-  ConfirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementRelateToOneForCreateInput
+  confirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementRelateToOneForCreateInput
+  howDataWillBeUsed: DeclarationHowDataWillBeUsedRelateToOneForCreateInput
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
   hasAntiBriberyCodeOfConduct: String
@@ -1221,6 +1231,11 @@ input DeclarationAntiBriberyRelateToOneForCreateInput {
 input DeclarationConfirmationAndAcknowledgementRelateToOneForCreateInput {
   create: DeclarationConfirmationAndAcknowledgementCreateInput
   connect: DeclarationConfirmationAndAcknowledgementWhereUniqueInput
+}
+
+input DeclarationHowDataWillBeUsedRelateToOneForCreateInput {
+  create: DeclarationHowDataWillBeUsedCreateInput
+  connect: DeclarationHowDataWillBeUsedWhereUniqueInput
 }
 
 type DeclarationAntiBribery {
