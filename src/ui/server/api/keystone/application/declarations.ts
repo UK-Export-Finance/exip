@@ -2,6 +2,8 @@ import { ApolloResponse } from '../../../../types';
 import apollo from '../../../graphql/apollo';
 import isPopulatedArray from '../../../helpers/is-populated-array';
 import getDeclarationAntiBriberyQuery from '../../../graphql/queries/declarations/anti-bribery';
+import getDeclarationConfirmationAndAcknowledgementQuery from '../../../graphql/queries/declarations/confirmation-and-acknowledgement';
+import getDeclarationHowDataWillBeUsedQuery from '../../../graphql/queries/declarations/how-data-will-be-used';
 import updateApplicationDeclarationMutation from '../../../graphql/mutations/update-application/declaration';
 
 const declarations = {
@@ -28,6 +30,56 @@ const declarations = {
     } catch (err) {
       console.error(err);
       throw new Error('Getting latest declaration - anti-bribery');
+    }
+  },
+  getLatestConfirmationAndAcknowledgement: async () => {
+    try {
+      console.info('Getting latest declaration - confirmation and acknowledgement');
+
+      const response = (await apollo('POST', getDeclarationConfirmationAndAcknowledgementQuery, {})) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error getting latest declaration - confirmation and acknowledgement ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error getting latest declaration - confirmation and acknowledgement ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.declarationConfirmationAndAcknowledgements && isPopulatedArray(response.data.declarationConfirmationAndAcknowledgements)) {
+        return response.data.declarationConfirmationAndAcknowledgements[0];
+      }
+
+      console.error(response);
+      throw new Error('Getting latest declaration - confirmation and acknowledgement');
+    } catch (err) {
+      console.error(err);
+      throw new Error('Getting latest declaration - confirmation and acknowledgement');
+    }
+  },
+  getLatestHowDataWillBeUsed: async () => {
+    try {
+      console.info('Getting latest declaration - how data will be used');
+
+      const response = (await apollo('POST', getDeclarationHowDataWillBeUsedQuery, {})) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error getting latest declaration - how data will be used ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error getting latest declaration - how data will be used ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.declarationHowDataWillBeUseds && isPopulatedArray(response.data.declarationHowDataWillBeUseds)) {
+        return response.data.declarationHowDataWillBeUseds[0];
+      }
+
+      console.error(response);
+      throw new Error('Getting latest declaration - how data will be used');
+    } catch (err) {
+      console.error(err);
+      throw new Error('Getting latest declaration - how data will be used');
     }
   },
   update: async (id: string, update: object) => {

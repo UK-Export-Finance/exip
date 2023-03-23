@@ -275,6 +275,18 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_ANTI_BRIBERY]: {
         IS_EMPTY: 'Confirm that you have read and accept the anti-bribery and corruption declaration',
       },
+      [FIELD_IDS.INSURANCE.DECLARATIONS.HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]: {
+        IS_EMPTY: 'Select whether you have a code of conduct and written procedure in place',
+      },
+      [FIELD_IDS.INSURANCE.DECLARATIONS.WILL_EXPORT_WITH_CODE_OF_CONDUCT]: {
+        IS_EMPTY: 'Select whether you will use your anti-bribery code of conduct to win or carry out the exports',
+      },
+      [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
+        IS_EMPTY: 'Confirm that you have read and accept the confirmation and acknowledgements',
+      },
+      [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED]: {
+        IS_EMPTY: 'Confirm that you have read and accept how your data will be used',
+      },
     },
   },
 } as ErrorMessage;

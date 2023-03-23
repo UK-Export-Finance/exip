@@ -21,7 +21,7 @@ const {
  * 5) Complete and submit the "enter security code" form
  * 6) Check we are on the dashbooard
  */
-const completeSignInAndGoToDashboard = () => cy.createAccount().then((verifyAccountUrl) => {
+const completeSignInAndGoToDashboard = () => cy.createAccount({}).then((verifyAccountUrl) => {
   // verify the account by navigating to the "verify account" page
   cy.navigateToUrl(verifyAccountUrl);
 

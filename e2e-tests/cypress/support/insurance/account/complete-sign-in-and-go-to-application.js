@@ -8,9 +8,9 @@ import insurancePages from '../../../e2e/pages/insurance';
  * 3) Get and return the application reference number from the URL for consumption in the tests
  * @return {String} Application reference number
  */
-const completeSignInAndGoToApplication = () => {
+const completeSignInAndGoToApplication = (email) => {
   // complete sign in and go to dashboad
-  completeInsuranceEligibilitySignInAndGoToDashboard();
+  completeInsuranceEligibilitySignInAndGoToDashboard(email);
 
   // go to the newly created application
   insurancePages.dashboardPage.table.body.lastRow.referenceNumber().click();

@@ -531,8 +531,25 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       antiBribery: relationship({ ref: 'DeclarationAntiBribery' }),
-      agreeToConfidentiality: checkbox({ defaultValue: false }),
-      agreeToAntiBribery: checkbox({ defaultValue: false }),
+      ConfirmationAndAcknowledgements: relationship({ ref: 'DeclarationConfirmationAndAcknowledgement' }),
+      agreeToConfidentiality: checkbox(),
+      agreeToAntiBribery: checkbox(),
+      hasAntiBriberyCodeOfConduct: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+        db: { isNullable: true },
+      }),
+      willExportWithAntiBriberyCodeOfConduct: select({
+        options: [
+          { label: ANSWERS.YES, value: ANSWERS.YES },
+          { label: ANSWERS.NO, value: ANSWERS.NO },
+        ],
+        db: { isNullable: true },
+      }),
+      agreeToConfirmationAndAcknowledgements: checkbox(),
+      agreeHowDataWillBeUsed: checkbox(),
     },
     access: allowAll,
   }),
@@ -544,6 +561,31 @@ export const lists = {
       }),
       content: document({
         formatting: true,
+      }),
+    },
+    access: allowAll,
+  }),
+  DeclarationConfirmationAndAcknowledgement: list({
+    fields: {
+      version: text({
+        label: 'Version',
+        validation: { isRequired: true },
+      }),
+      content: document({
+        formatting: true,
+      }),
+    },
+    access: allowAll,
+  }),
+  DeclarationHowDataWillBeUsed: list({
+    fields: {
+      version: text({
+        label: 'Version',
+        validation: { isRequired: true },
+      }),
+      content: document({
+        formatting: true,
+        links: true,
       }),
     },
     access: allowAll,

@@ -356,15 +356,22 @@ CREATE TABLE `Declaration` (
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `confidentiality` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agreeToConfidentiality` tinyint(1) NOT NULL DEFAULT '0',
-	`antiBribery` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `antiBribery` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agreeToAntiBribery` tinyint(1) NOT NULL DEFAULT '0',
+  `ConfirmationAndAcknowledgements` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agreeToConfirmationAndAcknowledgements` tinyint(1) NOT NULL DEFAULT '0',
+  `willExportWithAntiBriberyCodeOfConduct` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hasAntiBriberyCodeOfConduct` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+	`agreeHowDataWillBeUsed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `Declaration_application_idx` (`application`),
   KEY `Declaration_confidentiality_idx` (`confidentiality`),
   KEY `Declaration_antiBribery_idx` (`antiBribery`),
+  KEY `Declaration_ConfirmationAndAcknowledgements_idx` (`ConfirmationAndAcknowledgements`),
   CONSTRAINT `Declaration_antiBribery_fkey` FOREIGN KEY (`antiBribery`) REFERENCES `DeclarationAntiBribery` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Declaration_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Declaration_confidentiality_fkey` FOREIGN KEY (`confidentiality`) REFERENCES `DeclarationConfidentiality` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `Declaration_confidentiality_fkey` FOREIGN KEY (`confidentiality`) REFERENCES `DeclarationConfidentiality` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Declaration_ConfirmationAndAcknowledgements_fkey` FOREIGN KEY (`ConfirmationAndAcknowledgements`) REFERENCES `DeclarationConfirmationAndAcknowledgement` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `Declaration` ENABLE KEYS */;
@@ -415,6 +422,54 @@ VALUES
 	('clf3te7vx1432cfoqp9rbop73','[{\"type\": \"paragraph\", \"children\": [{\"text\": \"By submitting this application (also known as a ‘proposal’) you agree that:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"(unless otherwise agreed) this Proposal, its attachments and all discussions and correspondence relating to it are confidential and will not be disclosed to any third party except:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by you, on a confidential basis to your bank, broker, lawyers, other professional advisers, or auditors, in each case for the purpose for which each of them has been engaged by you;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by us in accordance with applicable law (including the provisions of the Export and Investment Guarantees Act 1991) or our obligations to Parliament as a Government Department;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by us if we decide that we are required to disclose it in accordance under the Freedom of Information Act2000 or the Environmental Information Regulations 2004; or\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by us:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"to our lawyers and other professional advisers, auditors, other Government Departments and reinsurers (including other export credit agencies) on a confidential basis in connection with our consideration of this application or the issue or reinsurance of any policy; and\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"to third party service providers (such as IT contractors) in order to enable them to provide services to us and on the basis that the information must be held securely and in confidence;\"}]}]}]}]}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"(unless otherwise agreed) information we hold about you (but not including details of any contract that we enter into with you or for your benefit or information about any of your export contracts, other than the export market involved) may be shared on a confidential basis between any Government Departments and/or other public sector bodies that are involved in supporting trade and investment to assist them in discharging their functions; and\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"if we ask you to agree to our disclosing information to anyone not mentioned in paragraph (1)(b) to (d) above, you will not unreasonably delay or withhold your agreement to this.\"}]}]}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"\"}]}]','1');
 
 /*!40000 ALTER TABLE `DeclarationConfidentiality` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+# Dump of table DeclarationConfirmationAndAcknowledgement
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `DeclarationConfirmationAndAcknowledgement`;
+
+CREATE TABLE `DeclarationConfirmationAndAcknowledgement` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `version` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `content` json NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `DeclarationConfirmationAndAcknowledgement` WRITE;
+/*!40000 ALTER TABLE `DeclarationConfirmationAndAcknowledgement` DISABLE KEYS */;
+
+INSERT INTO `DeclarationConfirmationAndAcknowledgement` (`id`, `version`, `content`)
+VALUES
+	('clfdt2h8k0087cdoq8mc361ug','1','[{\"type\": \"paragraph\", \"children\": [{\"text\": \"By submitting this application (also known as a ‘proposal’):\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you confirm that the information contained in this Proposal (application) and any related discussions or correspondenceconstitutes a fair presentation of the risk to include all material facts and circumstances; and\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you acknowledge that:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you should contact us or your broker (if applicable) if you are in any doubt as to what constitutes a material fact;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"we will rely on the information, statements and declarations in this Proposal when deciding whether, and on what terms, to issue any policy; and\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you must continue to disclose material facts to us and any changes to material facts after the date of signature of this Proposal (application) until the date cover commences under any policy unless this would, or might reasonably be considered to, constitute the offence of “tipping off” under s.333A of the Proceeds of Crime Act 2002.\"}]}]}]}]}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"\"}]}]');
+
+/*!40000 ALTER TABLE `DeclarationConfirmationAndAcknowledgement` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+# Dump of table DeclarationHowDataWillBeUsed
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `DeclarationHowDataWillBeUsed`;
+
+CREATE TABLE `DeclarationHowDataWillBeUsed` (
+  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `version` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `content` json NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `DeclarationHowDataWillBeUsed` WRITE;
+/*!40000 ALTER TABLE `DeclarationHowDataWillBeUsed` DISABLE KEYS */;
+
+INSERT INTO `DeclarationHowDataWillBeUsed` (`id`, `version`, `content`)
+VALUES
+	('clfh2o74i0086saoqgo9dhqgq','1','[{\"type\": \"paragraph\", \"children\": [{\"text\": \"We will process contact details and other personal information you give us in this Proposal in accordance with applicable data protection law.\"}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"We may record personal data provided to us in this Proposal in our customer relationship database. Please contact information.access@ukexportfinance.gov.uk if you would like to access, rectify or erase your personal data or to withdraw your consent.\"}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"If after contacting us you are still unhappy with the way we handle your personal data, you have a right to lodge a complaint with the Information Commissioner’s Office (\"}, {\"href\": \"https://ico.org.uk/make-a-complaint\", \"type\": \"link\", \"children\": [{\"text\": \"Make a complaint | ICO)\"}]}, {\"text\": \"\"}]}]');
+
+/*!40000 ALTER TABLE `DeclarationHowDataWillBeUsed` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

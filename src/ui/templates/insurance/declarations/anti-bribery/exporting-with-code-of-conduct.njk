@@ -1,0 +1,65 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% import '../../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+
+  <form method="POST" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {{ yesNoRadioButtons.render({
+      fieldId: FIELD.ID,
+      heading: CONTENT_STRINGS.PAGE_TITLE,
+      submittedAnswer: application.declaration[FIELD.ID],
+      errorMessage: validationErrors.errorList[FIELD.ID],
+      headerClass: 'govuk-heading-xl',
+      horizontalRadios: true,
+      yesNoValueString: true
+    }) }}
+
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+        attributes: {
+          'data-cy': 'submit-button'
+        }
+      }) }}
+
+      {{ govukButton({
+        text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+        classes: "govuk-button--secondary",
+        attributes: {
+          formaction: SAVE_AND_BACK_URL,
+          'data-cy': 'save-and-back-button'
+        }
+      }) }}
+    </div>
+
+  </form>
+
+{% endblock %}
