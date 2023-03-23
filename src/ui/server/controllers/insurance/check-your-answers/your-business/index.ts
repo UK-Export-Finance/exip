@@ -3,7 +3,7 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
-import requiredFields from '../../../../helpers/section-fields/exporter-business';
+import requiredFields from '../../../../helpers/required-fields/exporter-business';
 import sectionStatus from '../../../../helpers/section-status';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;

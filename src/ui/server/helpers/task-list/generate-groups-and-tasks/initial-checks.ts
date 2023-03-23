@@ -1,7 +1,7 @@
 import { TaskListDataTask } from '../../../../types';
 import { TASKS } from '../../../content-strings';
 import { TASK_IDS } from '../../../constants';
-import requiredFields from '../../section-fields/eligibility';
+import requiredFields from '../../required-fields/eligibility';
 
 const { INITIAL_CHECKS } = TASKS.LIST;
 

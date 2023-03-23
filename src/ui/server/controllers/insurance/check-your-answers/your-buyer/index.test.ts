@@ -5,7 +5,7 @@ import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { yourBuyerSummaryList } from '../../../../helpers/summary-lists/your-buyer';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
-import requiredFields from '../../../../helpers/section-fields/your-buyer';
+import requiredFields from '../../../../helpers/required-fields/your-buyer';
 import sectionStatus from '../../../../helpers/section-status';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;

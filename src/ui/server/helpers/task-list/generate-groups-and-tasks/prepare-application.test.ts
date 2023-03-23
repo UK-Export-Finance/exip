@@ -4,9 +4,9 @@ import createInitialChecksTasks from './initial-checks';
 import { GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
 import { TASKS } from '../../../content-strings';
 import { getAllTasksFieldsInAGroup } from '../task-helpers';
-import policyAndExportsRequiredFields from '../../section-fields/policy-and-exports';
-import exporterBusinessRequiredFields from '../../section-fields/exporter-business';
-import yourBuyerRequiredFields from '../../section-fields/your-buyer';
+import policyAndExportsRequiredFields from '../../required-fields/policy-and-exports';
+import exporterBusinessRequiredFields from '../../required-fields/exporter-business';
+import yourBuyerRequiredFields from '../../required-fields/your-buyer';
 import { mockApplication } from '../../../test-mocks';
 
 const { INSURANCE } = ROUTES;
