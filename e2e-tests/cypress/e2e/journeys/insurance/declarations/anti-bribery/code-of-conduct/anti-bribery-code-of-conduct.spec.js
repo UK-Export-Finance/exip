@@ -101,10 +101,8 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
       cy.checkText(noRadio(), 'No');
     });
 
-    it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('renders a submit button and `save and back` button', () => {
+      cy.assertSubmitAndSaveButtons();
     });
   });
 

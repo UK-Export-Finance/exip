@@ -120,10 +120,8 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - As 
       field.input().should('exist');
     });
 
-    it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('renders a submit button and `save and back` button', () => {
+      cy.assertSubmitAndSaveButtons();
     });
   });
 
