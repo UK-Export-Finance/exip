@@ -34,5 +34,7 @@ export default () => {
   companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().click();
   companyOrOrganisationPage[COUNTRY].input().select(countryToSelect);
 
+  // when running all the E2E tests, we seem to be temporarily blocked from companies house as it is called alot of times.
+  cy.wait(1000);
   submitButton().click();
 };
