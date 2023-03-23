@@ -12,4 +12,4 @@ const assertSubmitAndSaveButtons = () => {
   cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
 };
 
-export default assertChangeAnswersPageUrl;
+export default assertSubmitAndSaveButtons;

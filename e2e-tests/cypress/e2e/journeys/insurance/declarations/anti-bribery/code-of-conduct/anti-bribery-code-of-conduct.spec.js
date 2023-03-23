@@ -1,7 +1,6 @@
 import {
   headingCaption,
   submitButton,
-  saveAndBackButton,
   yesRadio,
   yesRadioInput,
   noRadio,
@@ -10,7 +9,6 @@ import {
 import { codeOfConductPage } from '../../../../../pages/insurance/declarations';
 import partials from '../../../../../partials';
 import {
-  BUTTONS,
   PAGES,
   LINKS,
   ERROR_MESSAGES,

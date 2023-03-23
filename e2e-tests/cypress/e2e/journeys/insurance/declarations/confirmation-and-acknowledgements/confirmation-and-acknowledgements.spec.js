@@ -1,11 +1,11 @@
 import {
   headingCaption,
+  singleInputField,
   submitButton,
-  saveAndBackButton,
 } from '../../../../pages/shared';
 import { confirmationAndAcknowledgementsPage } from '../../../../pages/insurance/declarations';
 import partials from '../../../../partials';
-import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -75,7 +75,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - As 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      field = confirmationAndAcknowledgementsPage[FIELD_ID];
+      field = singleInputField(FIELD_ID);
     });
 
     it('renders a heading caption', () => {
@@ -132,7 +132,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - As 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        field = confirmationAndAcknowledgementsPage[FIELD_ID];
+        field = singleInputField(FIELD_ID);
       });
 
       it('should render a validation error', () => {
@@ -171,9 +171,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - As 
         it('should have the submitted value', () => {
           cy.navigateToUrl(url);
 
-          const field = confirmationAndAcknowledgementsPage[FIELD_ID];
-
-          field.input().should('be.checked');
+          singleInputField(FIELD_ID).input().should('be.checked');
         });
       });
     });
