@@ -127,7 +127,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        field = howYourDataWillBeUsedPage[FIELD_ID];
+        field = singleInputField(FIELD_ID);
       });
 
       it('should render a validation error', () => {
