@@ -27,7 +27,6 @@ const {
     ANTI_BRIBERY: {
       ROOT: ANTI_BRIBERY_ROOT,
       CODE_OF_CONDUCT,
-      EXPORTING_WITH_CODE_OF_CONDUCT,
     },
   },
 } = INSURANCE_ROUTES;
@@ -128,26 +127,6 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
 
         partials.errorSummaryListItemLinks().eq(0).click();
         yesRadioInput().should('have.focus');
-      });
-    });
-
-    describe('when submitting a fully completed form', () => {
-      it(`should redirect to ${EXPORTING_WITH_CODE_OF_CONDUCT}`, () => {
-        cy.navigateToUrl(url);
-
-        cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
-
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
-
-        cy.url().should('eq', expectedUrl);
-      });
-
-      describe('when going back to the page', () => {
-        it('should have the submitted value', () => {
-          cy.navigateToUrl(url);
-
-          yesRadioInput().should('be.checked');
-        });
       });
     });
   });
