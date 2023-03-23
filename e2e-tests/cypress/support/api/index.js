@@ -99,6 +99,17 @@ const queryStrings = {
         }
       }
     `,
+    getLatestHowDataWillBeUsed: () => gql`
+      query DeclarationHowDataWillBeUsed {
+        declarationHowDataWillBeUseds(orderBy: { version: desc }, take: 1) {
+          id
+          version
+          content {
+            document
+          }
+        }
+      }
+    `,
   },
 };
 
@@ -322,6 +333,24 @@ const declarations = {
       console.error(err);
 
       throw new Error('Getting latest declaration - confirmation and acknowledgements ', { err });
+    }
+  },
+  /**
+   * getLatestHowDataWillBeUsed
+   * Get the latest How data will be used declaration content
+   * @returns {Object} Confirmation and acknowledgements declaration
+   */
+  getLatestHowDataWillBeUsed: async () => {
+    try {
+      const responseBody = await apollo.query({
+        query: queryStrings.declarations.getLatestHowDataWillBeUsed(),
+      }).then((response) => response.data.declarationHowDataWillBeUseds[0]);
+
+      return responseBody;
+    } catch (err) {
+      console.error(err);
+
+      throw new Error('Getting latest declaration - how data will be usd ', { err });
     }
   },
 };

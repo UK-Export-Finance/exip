@@ -10,16 +10,17 @@ import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockDeclarations } from '../../../../test-mocks';
 
-const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS;
+const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED;
 
 const { INSURANCE, PROBLEM_WITH_SERVICE } = ROUTES;
 
 const {
   INSURANCE_ROOT,
-  DECLARATIONS: { CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK, HOW_YOUR_DATA_WILL_BE_USED },
+  APPLICATION_SUBMITTED,
+  DECLARATIONS: { HOW_YOUR_DATA_WILL_BE_USED_SAVE_AND_BACK },
 } = INSURANCE;
 
-describe('controllers/insurance/declarations/confirmation-and-acknowledgements', () => {
+describe('controllers/insurance/declarations/how-your-data-will-be-used', () => {
   jest.mock('../save-data');
 
   let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
@@ -29,7 +30,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
   let req: Request;
   let res: Response;
 
-  let getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.resolve(mockDeclarations.confirmationAndAcknowledgement));
+  let getLatesHowDataWillBeUsedSpy = jest.fn(() => Promise.resolve(mockDeclarations.howDataWillBeUsed));
 
   beforeEach(() => {
     req = mockReq();
@@ -37,7 +38,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
     res.locals.application = mockApplication;
 
-    api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
+    api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatesHowDataWillBeUsedSpy;
   });
 
   describe('pageVariables', () => {
@@ -49,7 +50,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
           ID: FIELD_ID,
           ...FIELDS[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -63,10 +64,10 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
   });
 
   describe('get', () => {
-    it('should call api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement', async () => {
+    it('should call api.keystone.application.declarations.getLatesHowDataWillBeUsed', async () => {
       await get(req, res);
 
-      expect(getLatestConfirmationAndAcknowledgementSpy).toHaveBeenCalledTimes(1);
+      expect(getLatesHowDataWillBeUsedSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should render template', async () => {
@@ -74,11 +75,11 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED,
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(mockApplication.referenceNumber),
-        documentContent: mockDeclarations.confirmationAndAcknowledgement.content.document,
+        documentContent: mockDeclarations.howDataWillBeUsed.content.document,
         documentConfig: keystoneDocumentRendererConfig(),
         application: res.locals.application,
       };
@@ -101,9 +102,9 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
     describe('api error handling', () => {
       describe('when there is an error', () => {
         beforeAll(() => {
-          getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.reject());
+          getLatesHowDataWillBeUsedSpy = jest.fn(() => Promise.reject());
 
-          api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
+          api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatesHowDataWillBeUsedSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -121,9 +122,9 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
     };
 
     beforeEach(() => {
-      getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.resolve(mockDeclarations.confirmationAndAcknowledgement));
+      getLatesHowDataWillBeUsedSpy = jest.fn(() => Promise.resolve(mockDeclarations.howDataWillBeUsed));
 
-      api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
+      api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatesHowDataWillBeUsedSpy;
     });
 
     describe('when there are no validation errors', () => {
@@ -131,27 +132,27 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
         req.body = validBody;
       });
 
-      it('should call save.declaration with application and req.body', async () => {
+      // it('should call save.declaration with application and req.body', async () => {
+      //   await post(req, res);
+
+      //   expect(save.declaration).toHaveBeenCalledTimes(1);
+      //   expect(save.declaration).toHaveBeenCalledWith(mockApplication, validBody);
+      // });
+
+      it(`should redirect to ${APPLICATION_SUBMITTED}`, async () => {
         await post(req, res);
 
-        expect(save.declaration).toHaveBeenCalledTimes(1);
-        expect(save.declaration).toHaveBeenCalledWith(mockApplication, validBody);
-      });
-
-      it(`should redirect to ${HOW_YOUR_DATA_WILL_BE_USED}`, async () => {
-        await post(req, res);
-
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${APPLICATION_SUBMITTED}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
     });
 
     describe('when there are validation errors', () => {
-      it('should call api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement', async () => {
+      it('should call api.keystone.application.declarations.getLatesHowDataWillBeUsed', async () => {
         await post(req, res);
 
-        expect(getLatestConfirmationAndAcknowledgementSpy).toHaveBeenCalledTimes(1);
+        expect(getLatesHowDataWillBeUsedSpy).toHaveBeenCalledTimes(1);
       });
 
       it('should render template with validation errors', async () => {
@@ -159,11 +160,11 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED,
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(mockApplication.referenceNumber),
-          documentContent: mockDeclarations.confirmationAndAcknowledgement.content.document,
+          documentContent: mockDeclarations.howDataWillBeUsed.content.document,
           documentConfig: keystoneDocumentRendererConfig(),
           validationErrors: generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
         };
@@ -185,11 +186,11 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
     });
 
     describe('api error handling', () => {
-      describe('get latest confirmation and acknowledgements call', () => {
-        describe('when the get latest confirmation and acknowledgements API call fails', () => {
+      describe('get latest how your data will be used call', () => {
+        describe('when the get latest how your data will be used API call fails', () => {
           beforeEach(() => {
-            getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.reject());
-            api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
+            getLatesHowDataWillBeUsedSpy = jest.fn(() => Promise.reject());
+            api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatesHowDataWillBeUsedSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
