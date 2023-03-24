@@ -1,6 +1,6 @@
 import partials from '../../../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
-import { submitButton } from '../../../../../pages/shared';
+import { submitButton, status } from '../../../../../pages/shared';
 import { checkYourAnswersPolicyAndExports } from '../../../../../pages/insurance/check-your-answers';
 import application from '../../../../../../fixtures/application';
 import { multipleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
@@ -119,9 +119,11 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
         });
 
-        it('should render the new answer', () => {
+        it('should render the new answer and retain a `completed` status tag', () => {
           fieldVariables.newValue = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
           checkChangeAnswerRendered(fieldVariables);
+
+          cy.checkTaskStatusCompleted(status());
         });
       });
     });
@@ -157,9 +159,11 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
         });
 
-        it('should render the new answer', () => {
+        it('should render the new answer and retain a `completed` status tag', () => {
           fieldVariables.newValue = `${fieldVariables.newValueInput} months`;
           checkChangeAnswerRendered(fieldVariables);
+
+          cy.checkTaskStatusCompleted(status());
         });
       });
     });
@@ -196,9 +200,11 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
         });
 
-        it('should render the new answer', () => {
+        it('should render the new answer and retain a `completed` status tag', () => {
           fieldVariables.newValue = formatCurrency(fieldVariables.newValueInput);
           checkChangeAnswerRendered(fieldVariables);
+
+          cy.checkTaskStatusCompleted(status());
         });
       });
     });
@@ -235,9 +241,11 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
         });
 
-        it('should render the new answer', () => {
+        it('should render the new answer and retain a `completed` status tag', () => {
           fieldVariables.newValue = formatCurrency(fieldVariables.newValueInput);
           checkChangeAnswerRendered(fieldVariables);
+
+          cy.checkTaskStatusCompleted(status());
         });
       });
     });
@@ -274,9 +282,11 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
         });
 
-        it('should render the new answer', () => {
+        it('should render the new answer and retain a `completed` status tag', () => {
           fieldVariables.newValue = fieldVariables.newValueInput;
           checkChangeAnswerRendered(fieldVariables);
+
+          cy.checkTaskStatusCompleted(status());
         });
       });
     });
@@ -313,11 +323,13 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
         });
 
-        it('should render the new answer', () => {
+        it('should render the new answer and retain a `completed` status tag', () => {
           const { isoCode, name } = currencies[3];
 
           fieldVariables.newValue = `${isoCode} ${name}`;
           checkChangeAnswerRendered(fieldVariables);
+
+          cy.checkTaskStatusCompleted(status());
         });
       });
     });

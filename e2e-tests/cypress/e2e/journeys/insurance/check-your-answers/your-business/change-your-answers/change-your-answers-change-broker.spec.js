@@ -1,4 +1,4 @@
-import { submitButton } from '../../../../../pages/shared';
+import { submitButton, status } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import { checkYourAnswersYourBusiness } from '../../../../../pages/insurance/check-your-answers';
 import { broker } from '../../../../../pages/your-business';
@@ -115,9 +115,11 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
         checkChangeAnswerRendered(fieldVariables);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
@@ -160,7 +162,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         const expectedKey = FIELDS.BROKER[fieldId].SUMMARY.TITLE;
 
         const row = summaryList.field(fieldId);
@@ -176,6 +178,8 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         row.value().contains(town);
         row.value().contains(country);
         row.value().contains(postcode);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
@@ -212,9 +216,11 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
         checkChangeAnswerRendered(fieldVariables);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
@@ -247,7 +253,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
       });
 
-      it('should render the new answer and not render the optional broker sections', () => {
+      it('should render the new answer, not render the optional broker sections and retain a `completed` status tag', () => {
         cy.checkText(summaryList.field(fieldId).value(), 'No');
 
         summaryList.field(NAME).key().should('not.exist');
@@ -261,6 +267,8 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         summaryList.field(EMAIL).key().should('not.exist');
         summaryList.field(EMAIL).value().should('not.exist');
         summaryList.field(EMAIL).changeLink().should('not.exist');
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });

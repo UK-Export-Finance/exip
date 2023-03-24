@@ -1,4 +1,4 @@
-import { submitButton } from '../../../../../pages/shared';
+import { submitButton, status } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -109,9 +109,11 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUYER, fieldId);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = 'No';
         checkChangeAnswerRendered(fieldVariables);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
@@ -148,9 +150,11 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUYER, fieldId);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = 'No';
         checkChangeAnswerRendered(fieldVariables);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });

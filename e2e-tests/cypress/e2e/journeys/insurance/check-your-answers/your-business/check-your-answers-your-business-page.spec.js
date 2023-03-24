@@ -1,5 +1,6 @@
 import {
   headingCaption,
+  status,
   submitButton,
   saveAndBackButton,
 } from '../../../../pages/shared';
@@ -78,6 +79,10 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
+
+    it('renders a `completed` status tag', () => {
+      cy.checkTaskStatusCompleted(status());
     });
 
     it('renders a `save and back` button', () => {

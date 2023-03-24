@@ -1,6 +1,7 @@
 import { checkYourAnswersEligibility } from '../../../../pages/insurance/check-your-answers';
 import {
   headingCaption,
+  status,
   submitButton,
   saveAndBackButton,
 } from '../../../../pages/shared';
@@ -74,6 +75,10 @@ context('Insurance - Check your answers - Eligibility - I want to confirm my sel
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
+
+    it('renders a `completed` status tag', () => {
+      cy.checkTaskStatusCompleted(status());
     });
 
     it(`renders a change answers banner with a valid href to ${START}`, () => {
