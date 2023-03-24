@@ -1,6 +1,4 @@
-import { submitButton } from '../../e2e/pages/shared';
 import partials from '../../e2e/partials';
-import { FIELD_VALUES } from '../../../constants';
 
 const { taskList } = partials.insurancePartials;
 
