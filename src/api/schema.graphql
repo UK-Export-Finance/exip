@@ -77,6 +77,7 @@ type Application {
   exporterCompany: ExporterCompany
   exporterBroker: ExporterBroker
   buyer: Buyer
+  sectionReview: SectionReview
   declaration: Declaration
 }
 
@@ -104,6 +105,7 @@ input ApplicationWhereInput {
   exporterCompany: ExporterCompanyWhereInput
   exporterBroker: ExporterBrokerWhereInput
   buyer: BuyerWhereInput
+  sectionReview: SectionReviewWhereInput
   declaration: DeclarationWhereInput
 }
 
@@ -209,6 +211,7 @@ input ApplicationUpdateInput {
   exporterCompany: ExporterCompanyRelateToOneForUpdateInput
   exporterBroker: ExporterBrokerRelateToOneForUpdateInput
   buyer: BuyerRelateToOneForUpdateInput
+  sectionReview: SectionReviewRelateToOneForUpdateInput
   declaration: DeclarationRelateToOneForUpdateInput
 }
 
@@ -254,6 +257,12 @@ input BuyerRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input SectionReviewRelateToOneForUpdateInput {
+  create: SectionReviewCreateInput
+  connect: SectionReviewWhereUniqueInput
+  disconnect: Boolean
+}
+
 input DeclarationRelateToOneForUpdateInput {
   create: DeclarationCreateInput
   connect: DeclarationWhereUniqueInput
@@ -279,6 +288,7 @@ input ApplicationCreateInput {
   exporterCompany: ExporterCompanyRelateToOneForCreateInput
   exporterBroker: ExporterBrokerRelateToOneForCreateInput
   buyer: BuyerRelateToOneForCreateInput
+  sectionReview: SectionReviewRelateToOneForCreateInput
   declaration: DeclarationRelateToOneForCreateInput
 }
 
@@ -315,6 +325,11 @@ input ExporterBrokerRelateToOneForCreateInput {
 input BuyerRelateToOneForCreateInput {
   create: BuyerCreateInput
   connect: BuyerWhereUniqueInput
+}
+
+input SectionReviewRelateToOneForCreateInput {
+  create: SectionReviewCreateInput
+  connect: SectionReviewWhereUniqueInput
 }
 
 input DeclarationRelateToOneForCreateInput {
@@ -1129,6 +1144,60 @@ input EligibilityCreateInput {
   wantCoverOverMaxPeriod: Boolean
 }
 
+type SectionReview {
+  id: ID!
+  application: Application
+  eligibility: Boolean
+  policyAndExport: Boolean
+  exporterBusiness: Boolean
+  buyer: Boolean
+}
+
+input SectionReviewWhereUniqueInput {
+  id: ID
+}
+
+input SectionReviewWhereInput {
+  AND: [SectionReviewWhereInput!]
+  OR: [SectionReviewWhereInput!]
+  NOT: [SectionReviewWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  eligibility: BooleanFilter
+  policyAndExport: BooleanFilter
+  exporterBusiness: BooleanFilter
+  buyer: BooleanFilter
+}
+
+input SectionReviewOrderByInput {
+  id: OrderDirection
+  eligibility: OrderDirection
+  policyAndExport: OrderDirection
+  exporterBusiness: OrderDirection
+  buyer: OrderDirection
+}
+
+input SectionReviewUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  eligibility: Boolean
+  policyAndExport: Boolean
+  exporterBusiness: Boolean
+  buyer: Boolean
+}
+
+input SectionReviewUpdateArgs {
+  where: SectionReviewWhereUniqueInput!
+  data: SectionReviewUpdateInput!
+}
+
+input SectionReviewCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  eligibility: Boolean
+  policyAndExport: Boolean
+  exporterBusiness: Boolean
+  buyer: Boolean
+}
+
 type Declaration {
   id: ID!
   application: Application
@@ -1537,6 +1606,12 @@ type Mutation {
   updateEligibilities(data: [EligibilityUpdateArgs!]!): [Eligibility]
   deleteEligibility(where: EligibilityWhereUniqueInput!): Eligibility
   deleteEligibilities(where: [EligibilityWhereUniqueInput!]!): [Eligibility]
+  createSectionReview(data: SectionReviewCreateInput!): SectionReview
+  createSectionReviews(data: [SectionReviewCreateInput!]!): [SectionReview]
+  updateSectionReview(where: SectionReviewWhereUniqueInput!, data: SectionReviewUpdateInput!): SectionReview
+  updateSectionReviews(data: [SectionReviewUpdateArgs!]!): [SectionReview]
+  deleteSectionReview(where: SectionReviewWhereUniqueInput!): SectionReview
+  deleteSectionReviews(where: [SectionReviewWhereUniqueInput!]!): [SectionReview]
   createDeclaration(data: DeclarationCreateInput!): Declaration
   createDeclarations(data: [DeclarationCreateInput!]!): [Declaration]
   updateDeclaration(where: DeclarationWhereUniqueInput!, data: DeclarationUpdateInput!): Declaration
@@ -1659,6 +1734,9 @@ type Query {
   eligibilities(where: EligibilityWhereInput! = {}, orderBy: [EligibilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EligibilityWhereUniqueInput): [Eligibility!]
   eligibility(where: EligibilityWhereUniqueInput!): Eligibility
   eligibilitiesCount(where: EligibilityWhereInput! = {}): Int
+  sectionReviews(where: SectionReviewWhereInput! = {}, orderBy: [SectionReviewOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SectionReviewWhereUniqueInput): [SectionReview!]
+  sectionReview(where: SectionReviewWhereUniqueInput!): SectionReview
+  sectionReviewsCount(where: SectionReviewWhereInput! = {}): Int
   declarations(where: DeclarationWhereInput! = {}, orderBy: [DeclarationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationWhereUniqueInput): [Declaration!]
   declaration(where: DeclarationWhereUniqueInput!): Declaration
   declarationsCount(where: DeclarationWhereInput! = {}): Int

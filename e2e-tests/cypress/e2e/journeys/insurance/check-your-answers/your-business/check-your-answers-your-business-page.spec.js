@@ -5,14 +5,11 @@ import {
   saveAndBackButton,
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
-import {
-  BUTTONS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { BUTTONS, PAGES, TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
-  ROOT,
+  ROOT: INSURANCE_ROOT,
   START,
   ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: {
@@ -31,6 +28,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 context('Insurance - Check your answers - Your business - I want to confirm my selection for the your business section of my export insurance application', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -45,7 +43,9 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
       // to get past policy and exports check your answers page
       submitButton().click();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+
+      allSectionsUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', url);
     });
@@ -62,8 +62,8 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
-      backLink: `${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
+      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
       submitButtonCopy: BUTTONS.CONFIRM_AND_CONTINUE,
     });
   });
@@ -98,8 +98,18 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
         it(`should redirect to ${YOUR_BUYER}`, () => {
           submitButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
+          const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
           cy.url().should('eq', expectedUrl);
+        });
+
+        describe('when going back to the all sections page', () => {
+          beforeEach(() => {
+            cy.navigateToUrl(allSectionsUrl);
+          });
+
+          it('should retain the status of task `check your answers` as `in progress`', () => {
+            cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+          });
         });
       });
 
@@ -109,8 +119,7 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
 
           saveAndBackButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-          cy.url().should('eq', expectedUrl);
+          cy.url().should('eq', allSectionsUrl);
         });
       });
     });

@@ -22,7 +22,7 @@ describe('Create an Application', () => {
     application = (await context.query.Application.createOne({
       data: {},
       query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status eligibility { id } policyAndExport { id } exporter { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } declaration { id }',
+        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status eligibility { id } policyAndExport { id } exporter { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } sectionReview { id } declaration { id }',
     })) as Application;
   });
 
@@ -107,6 +107,11 @@ describe('Create an Application', () => {
   test('it should have a buyer id', () => {
     expect(application.buyer).toBeDefined();
     expect(typeof application.buyer.id).toEqual('string');
+  });
+
+  test('it should have a sectionReview id', () => {
+    expect(application.sectionReview).toBeDefined();
+    expect(typeof application.sectionReview.id).toEqual('string');
   });
 
   test('it should have a declaration id', () => {
@@ -205,6 +210,17 @@ describe('Create an Application', () => {
     });
 
     expect(buyer.application.id).toEqual(application.id);
+  });
+
+  test('it should add the application ID to the sectionReview entry', async () => {
+    const sectionReview = await context.query.SectionReview.findOne({
+      where: {
+        id: application.sectionReview.id,
+      },
+      query: 'id application { id }',
+    });
+
+    expect(sectionReview.application.id).toEqual(application.id);
   });
 
   test('it should add the application ID to the declaration entry', async () => {

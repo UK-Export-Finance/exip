@@ -5,15 +5,11 @@ import {
   saveAndBackButton,
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
-import {
-  BUTTONS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { BUTTONS, PAGES, TASKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 
 const {
-  ROOT,
+  ROOT: INSURANCE_ROOT,
   START,
   ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: {
@@ -32,6 +28,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 context('Insurance - Check your answers - Policy and exports - I want to confirm my selection for the policy and exports section of my export insurance application ', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -44,7 +41,9 @@ context('Insurance - Check your answers - Policy and exports - I want to confirm
       // to get past eligibility check your answers page
       submitButton().click();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+
+      allSectionsUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.url().should('eq', url);
     });
@@ -99,6 +98,16 @@ context('Insurance - Check your answers - Policy and exports - I want to confirm
 
           const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
           cy.url().should('eq', expectedUrl);
+        });
+
+        describe('when going back to the all sections page', () => {
+          beforeEach(() => {
+            cy.navigateToUrl(allSectionsUrl);
+          });
+
+          it('should update the status of task `check your answers` to `in progress`', () => {
+            cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+          });
         });
       });
 

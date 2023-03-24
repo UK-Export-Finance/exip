@@ -4,6 +4,7 @@ import POLICY_AND_EXPORTS from './policy-and-exports';
 import EXPORTER_BUSINESS from './exporter-business';
 import YOUR_BUYER from './your-buyer';
 import DECLARATIONS from './declarations';
+import CHECK_YOUR_ANSWERS from './check-your-answers';
 
 const INSURANCE_FIELD_IDS = {
   ELIGIBILITY: {
@@ -22,6 +23,7 @@ const INSURANCE_FIELD_IDS = {
   EXPORTER_BUSINESS,
   YOUR_BUYER,
   DECLARATIONS,
+  CHECK_YOUR_ANSWERS,
 };
 
 export default INSURANCE_FIELD_IDS;

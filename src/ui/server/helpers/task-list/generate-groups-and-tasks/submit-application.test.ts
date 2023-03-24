@@ -16,6 +16,8 @@ const {
 
 const {
   DECLARATIONS: { AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY },
+  CHECK_YOUR_ANSWERS,
+  CHECK_YOUR_ANSWERS: { POLICY_AND_EXPORT, EXPORTER_BUSINESS, BUYER },
 } = FIELD_IDS.INSURANCE;
 
 describe('server/helpers/task-list/submit-application', () => {
@@ -40,7 +42,7 @@ describe('server/helpers/task-list/submit-application', () => {
       href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ELIGIBILITY}`,
       title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS,
       id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS,
-      fields: [],
+      fields: [CHECK_YOUR_ANSWERS.ELIGIBILITY, POLICY_AND_EXPORT, EXPORTER_BUSINESS, BUYER],
       dependencies: expectedDependencies,
     };
 

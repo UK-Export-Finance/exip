@@ -41,6 +41,8 @@ model Application {
   exporterBrokerId                  String?            @map("exporterBroker")
   buyer                             Buyer?             @relation("Application_buyer", fields: [buyerId], references: [id])
   buyerId                           String?            @map("buyer")
+  sectionReview                     SectionReview?     @relation("Application_sectionReview", fields: [sectionReviewId], references: [id])
+  sectionReviewId                   String?            @map("sectionReview")
   declaration                       Declaration?       @relation("Application_declaration", fields: [declarationId], references: [id])
   declarationId                     String?            @map("declaration")
   from_ReferenceNumber_application  ReferenceNumber[]  @relation("ReferenceNumber_application")
@@ -51,6 +53,7 @@ model Application {
   from_ExporterCompany_application  ExporterCompany[]  @relation("ExporterCompany_application")
   from_Buyer_application            Buyer[]            @relation("Buyer_application")
   from_Eligibility_application      Eligibility[]      @relation("Eligibility_application")
+  from_SectionReview_application    SectionReview[]    @relation("SectionReview_application")
   from_Declaration_application      Declaration[]      @relation("Declaration_application")
 
   @@index([eligibilityId])
@@ -61,6 +64,7 @@ model Application {
   @@index([exporterCompanyId])
   @@index([exporterBrokerId])
   @@index([buyerId])
+  @@index([sectionReviewId])
   @@index([declarationId])
 }
 
@@ -228,6 +232,19 @@ model Eligibility {
 
   @@index([applicationId])
   @@index([buyerCountryId])
+}
+
+model SectionReview {
+  id                             String        @id @default(cuid())
+  application                    Application?  @relation("SectionReview_application", fields: [applicationId], references: [id])
+  applicationId                  String?       @map("application")
+  eligibility                    Boolean       @default(false)
+  policyAndExport                Boolean       @default(false)
+  exporterBusiness               Boolean       @default(false)
+  buyer                          Boolean       @default(false)
+  from_Application_sectionReview Application[] @relation("Application_sectionReview")
+
+  @@index([applicationId])
 }
 
 model Declaration {

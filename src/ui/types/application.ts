@@ -105,6 +105,14 @@ interface ApplicationBuyer {
   exporterHasTradedWithBuyer?: boolean;
 }
 
+interface ApplicationSectionReview {
+  id: string;
+  eligibility?: boolean;
+  policyAndExport?: boolean;
+  exporterBusiness?: boolean;
+  buyer?: boolean;
+}
+
 interface ApplicationDeclaration {
   id: string;
   agreeToConfidentiality?: boolean;
@@ -123,6 +131,7 @@ interface Application extends ApplicationCore {
   exporterBusiness: ApplicationExporterBusiness;
   exporterBroker: ApplicationExporterBroker;
   buyer: ApplicationBuyer;
+  sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
 }
 
@@ -139,5 +148,6 @@ export {
   ApplicationExporterBusiness,
   ApplicationExporterBroker,
   ApplicationBuyer,
+  ApplicationSectionReview,
   ApplicationDeclaration,
 };
