@@ -352,26 +352,26 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `Declaration`;
 
 CREATE TABLE `Declaration` (
-  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `confidentiality` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `application` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agreeToConfidentiality` tinyint(1) NOT NULL DEFAULT '0',
-  `antiBribery` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `antiBribery` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agreeToAntiBribery` tinyint(1) NOT NULL DEFAULT '0',
-  `ConfirmationAndAcknowledgements` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agreeToConfirmationAndAcknowledgements` tinyint(1) NOT NULL DEFAULT '0',
-  `willExportWithAntiBriberyCodeOfConduct` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hasAntiBriberyCodeOfConduct` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-	`agreeHowDataWillBeUsed` tinyint(1) NOT NULL DEFAULT '0',
+  `willExportWithAntiBriberyCodeOfConduct` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hasAntiBriberyCodeOfConduct` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agreeHowDataWillBeUsed` tinyint(1) NOT NULL DEFAULT '0',
+  `confirmationAndAcknowledgements` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `howDataWillBeUsed` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Declaration_application_idx` (`application`),
-  KEY `Declaration_confidentiality_idx` (`confidentiality`),
   KEY `Declaration_antiBribery_idx` (`antiBribery`),
-  KEY `Declaration_ConfirmationAndAcknowledgements_idx` (`ConfirmationAndAcknowledgements`),
+  KEY `Declaration_confirmationAndAcknowledgements_idx` (`confirmationAndAcknowledgements`),
+  KEY `Declaration_howDataWillBeUsed_idx` (`howDataWillBeUsed`),
   CONSTRAINT `Declaration_antiBribery_fkey` FOREIGN KEY (`antiBribery`) REFERENCES `DeclarationAntiBribery` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Declaration_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Declaration_confidentiality_fkey` FOREIGN KEY (`confidentiality`) REFERENCES `DeclarationConfidentiality` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Declaration_ConfirmationAndAcknowledgements_fkey` FOREIGN KEY (`ConfirmationAndAcknowledgements`) REFERENCES `DeclarationConfirmationAndAcknowledgement` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `Declaration_confirmationAndAcknowledgements_fkey` FOREIGN KEY (`confirmationAndAcknowledgements`) REFERENCES `DeclarationConfirmationAndAcknowledgement` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Declaration_howDataWillBeUsed_fkey` FOREIGN KEY (`howDataWillBeUsed`) REFERENCES `DeclarationHowDataWillBeUsed` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `Declaration` ENABLE KEYS */;

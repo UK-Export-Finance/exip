@@ -1,5 +1,4 @@
-import { saveAndBackButton, submitButton } from '../../../../pages/shared';
-import { confirmationAndAcknowledgementsPage } from '../../../../pages/insurance/declarations';
+import { singleInputField, saveAndBackButton, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
@@ -70,14 +69,10 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
   });
 
   describe('when submitting an answer via `save and go back` button', () => {
-    let field;
-
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      field = confirmationAndAcknowledgementsPage[FIELD_ID];
-
-      field.input().click();
+      singleInputField(FIELD_ID).input().click();
 
       saveAndBackButton().click();
     });
@@ -109,7 +104,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
-      field.input().should('be.checked');
+      singleInputField(FIELD_ID).input().should('be.checked');
     });
   });
 });

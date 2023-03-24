@@ -1,11 +1,3 @@
-import { FIELD_IDS } from '../../../../../constants';
-
-const {
-  INSURANCE: {
-    DECLARATIONS: { AGREE_ANTI_BRIBERY },
-  },
-} = FIELD_IDS;
-
 const antiBriberyPage = {
   listItems: {
     intro: () => cy.get("[data-cy='paragraph-1']"),
@@ -18,11 +10,6 @@ const antiBriberyPage = {
     secondLevel2: {
       item: (itemNumber) => cy.get('.lower-alpha-counter-list').last().children(`[data-cy='list-level-2-item-${itemNumber}']`),
     },
-  },
-  [AGREE_ANTI_BRIBERY]: {
-    label: () => cy.get(`[data-cy="${AGREE_ANTI_BRIBERY}-label"]`),
-    input: () => cy.get(`[data-cy="${AGREE_ANTI_BRIBERY}-input"]`),
-    errorMessage: () => cy.get(`[data-cy="${AGREE_ANTI_BRIBERY}-error-message"]`),
   },
   expandable: {
     summary: () => cy.get('[data-cy="definition-of-terms"] summary'),

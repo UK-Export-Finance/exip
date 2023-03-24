@@ -531,7 +531,8 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       antiBribery: relationship({ ref: 'DeclarationAntiBribery' }),
-      ConfirmationAndAcknowledgements: relationship({ ref: 'DeclarationConfirmationAndAcknowledgement' }),
+      confirmationAndAcknowledgements: relationship({ ref: 'DeclarationConfirmationAndAcknowledgement' }),
+      howDataWillBeUsed: relationship({ ref: 'DeclarationHowDataWillBeUsed' }),
       agreeToConfidentiality: checkbox(),
       agreeToAntiBribery: checkbox(),
       hasAntiBriberyCodeOfConduct: select({

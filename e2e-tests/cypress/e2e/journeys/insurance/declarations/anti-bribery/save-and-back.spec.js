@@ -1,5 +1,4 @@
-import { saveAndBackButton, submitButton } from '../../../../pages/shared';
-import { antiBriberyPage } from '../../../../pages/insurance/declarations';
+import { singleInputField, saveAndBackButton, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
@@ -69,14 +68,10 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
   });
 
   describe('when submitting an answer via `save and go back` button', () => {
-    let field;
-
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      field = antiBriberyPage[FIELD_ID];
-
-      field.input().click();
+      singleInputField(FIELD_ID).input().click();
 
       saveAndBackButton().click();
     });
@@ -97,7 +92,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
       // go to the page
       submitButton().click();
 
-      field.input().should('be.checked');
+      singleInputField(FIELD_ID).input().should('be.checked');
     });
   });
 });

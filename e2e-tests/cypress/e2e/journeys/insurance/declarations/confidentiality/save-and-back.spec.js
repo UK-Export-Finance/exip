@@ -1,5 +1,4 @@
-import { saveAndBackButton } from '../../../../pages/shared';
-import { confidentialityPage } from '../../../../pages/insurance/declarations';
+import { singleInputField, saveAndBackButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
@@ -65,14 +64,10 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
   });
 
   describe('when submitting an answer via `save and go back` button', () => {
-    let field;
-
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      field = confidentialityPage[FIELD_ID];
-
-      field.input().click();
+      singleInputField(FIELD_ID).input().click();
 
       saveAndBackButton().click();
     });
@@ -89,7 +84,7 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       task.link().click();
-      field.input().should('be.checked');
+      singleInputField(FIELD_ID).input().should('be.checked');
     });
   });
 });

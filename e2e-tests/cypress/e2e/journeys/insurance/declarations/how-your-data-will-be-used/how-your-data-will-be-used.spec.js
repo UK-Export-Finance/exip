@@ -1,16 +1,11 @@
 import {
   headingCaption,
+  singleInputField,
   submitButton,
-  saveAndBackButton,
 } from '../../../../pages/shared';
 import { howYourDataWillBeUsedPage } from '../../../../pages/insurance/declarations';
 import partials from '../../../../partials';
-import {
-  BUTTONS,
-  PAGES,
-  ERROR_MESSAGES,
-  LINKS,
-} from '../../../../../../content-strings';
+import { PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -81,7 +76,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      field = howYourDataWillBeUsedPage[FIELD_ID];
+      field = singleInputField(FIELD_ID);
     });
 
     it('renders a heading caption', () => {
@@ -120,10 +115,8 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
       field.input().should('exist');
     });
 
-    it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('renders a submit button and `save and back` button', () => {
+      cy.assertSubmitAndSaveButtons();
     });
   });
 
@@ -134,7 +127,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        field = howYourDataWillBeUsedPage[FIELD_ID];
+        field = singleInputField(FIELD_ID);
       });
 
       it('should render a validation error', () => {
@@ -174,9 +167,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
           // TEMP until previous page is built
           cy.navigateToUrl(`${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`);
 
-          const field = howYourDataWillBeUsedPage[FIELD_ID];
-
-          field.input().should('be.checked');
+          singleInputField(FIELD_ID).input().should('be.checked');
         });
       });
     });

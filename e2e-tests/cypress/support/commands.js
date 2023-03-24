@@ -101,6 +101,8 @@ Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-
 Cypress.Commands.add('assertPasswordRevealButton', require('./insurance/account/assert-password-reveal-button'));
 Cypress.Commands.add('assertConfirmEmailPageContent', require('./insurance/account/assert-confirm-email-page-content'));
 
+Cypress.Commands.add('assertSubmitAndSaveButtons', require('./insurance/assert-submit-and-save-buttons'));
+
 Cypress.Commands.add('checkText', require('./check-text'));
 Cypress.Commands.add('checkValue', require('./check-value'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));

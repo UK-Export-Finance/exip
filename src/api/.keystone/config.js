@@ -667,7 +667,8 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       antiBribery: (0, import_fields.relationship)({ ref: "DeclarationAntiBribery" }),
-      ConfirmationAndAcknowledgements: (0, import_fields.relationship)({ ref: "DeclarationConfirmationAndAcknowledgement" }),
+      confirmationAndAcknowledgements: (0, import_fields.relationship)({ ref: "DeclarationConfirmationAndAcknowledgement" }),
+      howDataWillBeUsed: (0, import_fields.relationship)({ ref: "DeclarationHowDataWillBeUsed" }),
       agreeToConfidentiality: (0, import_fields.checkbox)(),
       agreeToAntiBribery: (0, import_fields.checkbox)(),
       hasAntiBriberyCodeOfConduct: (0, import_fields.select)({

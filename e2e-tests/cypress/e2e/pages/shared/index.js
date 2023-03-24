@@ -15,6 +15,11 @@ const noRadioInput = () => cy.get('[data-cy="no-input"]');
 const inlineErrorMessage = () => cy.get('[data-cy="inline-error-message"]');
 const submitButton = () => cy.get('[data-cy="submit-button"]');
 const saveAndBackButton = () => cy.get('[data-cy="save-and-back-button"]');
+const singleInputField = (fieldId) => ({
+  label: () => cy.get(`[data-cy="${fieldId}-label"]`),
+  input: () => cy.get(`[data-cy="${fieldId}-input"]`),
+  errorMessage: () => cy.get(`[data-cy="${fieldId}-error-message"]`),
+});
 
 export {
   backLink,
@@ -28,6 +33,7 @@ export {
   inlineErrorMessage,
   submitButton,
   saveAndBackButton,
+  singleInputField,
   buyerCountryPage,
   cannotApplyPage,
   exporterLocationPage,
