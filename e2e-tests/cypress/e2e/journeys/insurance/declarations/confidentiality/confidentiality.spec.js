@@ -1,15 +1,11 @@
 import {
   headingCaption,
+  singleInputField,
   submitButton,
-  saveAndBackButton,
 } from '../../../../pages/shared';
 import { confidentialityPage } from '../../../../pages/insurance/declarations';
 import partials from '../../../../partials';
-import {
-  BUTTONS,
-  PAGES,
-  ERROR_MESSAGES,
-} from '../../../../../../content-strings';
+import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -70,7 +66,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      field = confidentialityPage[FIELD_ID];
+      field = singleInputField(FIELD_ID);
     });
 
     it('renders a heading caption', () => {
@@ -123,10 +119,8 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
       field.input().should('exist');
     });
 
-    it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('renders a submit button and `save and back` button', () => {
+      cy.assertSubmitAndSaveButtons();
     });
   });
 
@@ -137,7 +131,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        field = confidentialityPage[FIELD_ID];
+        field = singleInputField(FIELD_ID);
       });
 
       it('should render a validation error', () => {
@@ -180,9 +174,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
 
           cy.navigateToUrl(url);
 
-          const field = confidentialityPage[FIELD_ID];
-
-          field.input().should('be.checked');
+          singleInputField(FIELD_ID).input().should('be.checked');
         });
       });
     });

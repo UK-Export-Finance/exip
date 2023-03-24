@@ -1,5 +1,4 @@
-import { saveAndBackButton, submitButton } from '../../../../pages/shared';
-import { howYourDataWillBeUsedPage } from '../../../../pages/insurance/declarations';
+import { singleInputField, saveAndBackButton, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
@@ -71,14 +70,10 @@ context('Insurance - Declarations - How your data will be used page - Save and g
   });
 
   describe('when submitting an answer via `save and go back` button', () => {
-    let field;
-
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      field = howYourDataWillBeUsedPage[FIELD_ID];
-
-      field.input().click();
+      singleInputField(FIELD_ID).input().click();
 
       saveAndBackButton().click();
     });
@@ -113,7 +108,7 @@ context('Insurance - Declarations - How your data will be used page - Save and g
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
 
-      field.input().should('be.checked');
+      singleInputField(FIELD_ID).input().should('be.checked');
     });
   });
 });

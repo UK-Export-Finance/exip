@@ -90,6 +90,8 @@ Cypress.Commands.add('completeAndSubmitDeclarationAntiBriberyExportingWithCodeOf
 Cypress.Commands.add('completeAndSubmitDeclarationConfirmationAndAcknowledgements', require('./insurance/declarations/complete-and-submit-confirmation-and-acknowledgements-form'));
 Cypress.Commands.add('completeAndSubmitDeclarationHowYourDataWillBeUsed', require('./insurance/declarations/complete-and-submit-how-your-data-will-be-used-form'));
 
+Cypress.Commands.add('assertAllSectionsUrl', require('./insurance/assert-all-sections-url'));
+
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));
 Cypress.Commands.add('assertSummaryListRowValueNew', require('./assert-summary-list-row-value-new'));
@@ -98,6 +100,8 @@ Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-
 
 Cypress.Commands.add('assertPasswordRevealButton', require('./insurance/account/assert-password-reveal-button'));
 Cypress.Commands.add('assertConfirmEmailPageContent', require('./insurance/account/assert-confirm-email-page-content'));
+
+Cypress.Commands.add('assertSubmitAndSaveButtons', require('./insurance/assert-submit-and-save-buttons'));
 
 Cypress.Commands.add('checkText', require('./check-text'));
 Cypress.Commands.add('checkValue', require('./check-value'));

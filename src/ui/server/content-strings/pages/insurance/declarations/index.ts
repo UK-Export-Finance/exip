@@ -54,7 +54,7 @@ const ANTI_BRIBERY = {
       BODY: [
         {
           TERM: 'Consortium Party or Agent',
-          DEFINITION: ['Is a consortium party or Agent named in section 8 of this Application.'],
+          DEFINITION: ['Is a consortium party or Agent named in this Application.'],
         },
         {
           TERM: 'Controlled',

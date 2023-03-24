@@ -1,7 +1,6 @@
 import {
   headingCaption,
   submitButton,
-  saveAndBackButton,
   yesRadio,
   yesRadioInput,
   noRadio,
@@ -10,7 +9,6 @@ import {
 import { codeOfConductPage } from '../../../../../pages/insurance/declarations';
 import partials from '../../../../../partials';
 import {
-  BUTTONS,
   PAGES,
   LINKS,
   ERROR_MESSAGES,
@@ -29,7 +27,6 @@ const {
     ANTI_BRIBERY: {
       ROOT: ANTI_BRIBERY_ROOT,
       CODE_OF_CONDUCT,
-      EXPORTING_WITH_CODE_OF_CONDUCT,
     },
   },
 } = INSURANCE_ROUTES;
@@ -101,10 +98,8 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
       cy.checkText(noRadio(), 'No');
     });
 
-    it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('renders a submit button and `save and back` button', () => {
+      cy.assertSubmitAndSaveButtons();
     });
   });
 
@@ -132,26 +127,6 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
 
         partials.errorSummaryListItemLinks().eq(0).click();
         yesRadioInput().should('have.focus');
-      });
-    });
-
-    describe('when submitting a fully completed form', () => {
-      it(`should redirect to ${EXPORTING_WITH_CODE_OF_CONDUCT}`, () => {
-        cy.navigateToUrl(url);
-
-        cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
-
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
-
-        cy.url().should('eq', expectedUrl);
-      });
-
-      describe('when going back to the page', () => {
-        it('should have the submitted value', () => {
-          cy.navigateToUrl(url);
-
-          yesRadioInput().should('be.checked');
-        });
       });
     });
   });

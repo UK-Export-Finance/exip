@@ -1,11 +1,3 @@
-import { FIELD_IDS } from '../../../../../constants';
-
-const {
-  INSURANCE: {
-    DECLARATIONS: { AGREE_CONFIDENTIALITY },
-  },
-} = FIELD_IDS;
-
 const confidentialityPage = {
   listItems: {
     intro: () => cy.get("[data-cy='intro']"),
@@ -24,11 +16,6 @@ const confidentialityPage = {
       item1: () => cy.get("[data-cy='list-level-3-item-1']"),
       item2: () => cy.get("[data-cy='list-level-3-item-2']"),
     },
-  },
-  [AGREE_CONFIDENTIALITY]: {
-    label: () => cy.get(`[data-cy="${AGREE_CONFIDENTIALITY}-label"]`),
-    input: () => cy.get(`[data-cy="${AGREE_CONFIDENTIALITY}-input"]`),
-    errorMessage: () => cy.get(`[data-cy="${AGREE_CONFIDENTIALITY}-error-message"]`),
   },
 };
 

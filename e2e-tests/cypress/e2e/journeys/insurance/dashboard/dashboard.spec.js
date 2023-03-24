@@ -16,7 +16,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.DASHBOARD;
 
 const { TABLE_HEADERS } = CONTENT_STRINGS;
 
-context('Insurance - Dashboard - new application', () => {
+context('Insurance - Dashboard - new application - As an Exporter, I want to access my UKEF export insurance application from my dashboard, So that I can easily complete my application', () => {
   let referenceNumber;
   let url;
 

@@ -1,6 +1,6 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../../content-strings';
 import { DECLARATIONS_FIELDS } from '../../../../../content-strings/fields/insurance/declarations';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import save from '../../save-data';
@@ -14,6 +14,7 @@ const {
   INSURANCE_ROOT,
   DECLARATIONS: {
     ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT, CODE_OF_CONDUCT_SAVE_AND_BACK },
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
   },
 } = INSURANCE;
 
@@ -94,7 +95,15 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`);
+    const answer = req.body[FIELD_ID];
+
+    if (answer === FIELD_VALUES.YES) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`);
+    }
+
+    if (answer === FIELD_VALUES.NO) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`);
+    }
   } catch (err) {
     console.error('Error updating application - declarations - anti-bribery - exporting with code of conduct ', { err });
 
