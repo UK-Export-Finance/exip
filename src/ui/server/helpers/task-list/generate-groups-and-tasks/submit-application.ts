@@ -25,24 +25,28 @@ const createSubmitApplicationTasks = (referenceNumber: number, otherGroups: Task
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
   const prepareApplicationGroup = getGroupById(otherGroups, GROUP_IDS.PREPARE_APPLICATION);
 
-  const DECLARATIONS = {
-    href: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`,
-    title: SUBMIT_APPLICATION.TASKS.DECLARATIONS,
-    id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS,
-    fields: [AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY, 'temp'],
-    dependencies: [...getAllTasksFieldsInAGroup(initialChecksGroup), ...getAllTasksFieldsInAGroup(prepareApplicationGroup)],
-  };
+  const initialChecksFields = getAllTasksFieldsInAGroup(initialChecksGroup);
+  const prepareApplicationFields = getAllTasksFieldsInAGroup(prepareApplicationGroup);
 
-  const CHECK_ANSWERS_AND_SUBMIT = {
+  const dependencies = [...initialChecksFields, ...prepareApplicationFields];
+
+  const CHECK_ANSWERS = {
     href: `${INSURANCE_ROOT}/${referenceNumber}${ELIGIBILITY}`,
-    title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT,
-    id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS_AND_SUBMIT,
+    title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS,
+    id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS,
     fields: [],
-    // dependencies: [...DECLARATIONS.fields, ...DECLARATIONS.dependencies],
-    dependencies: [],
+    dependencies,
   };
 
-  const tasks = [DECLARATIONS, CHECK_ANSWERS_AND_SUBMIT] as Array<TaskListDataTask>;
+  const DECLARATIONS_AND_SUBMIT = {
+    href: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`,
+    title: SUBMIT_APPLICATION.TASKS.DECLARATIONS_AND_SUBMIT,
+    id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS_AND_SUBMIT,
+    fields: [AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY, 'temp'],
+    dependencies,
+  };
+
+  const tasks = [CHECK_ANSWERS, DECLARATIONS_AND_SUBMIT] as Array<TaskListDataTask>;
 
   return tasks;
 };

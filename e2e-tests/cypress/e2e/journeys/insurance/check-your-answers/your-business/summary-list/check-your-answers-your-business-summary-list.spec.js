@@ -46,7 +46,7 @@ const {
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
+const task = taskList.submitApplication.tasks.checkAnswers;
 
 context('Insurance - Check your answers - Your business - Summary list', () => {
   let referenceNumber;

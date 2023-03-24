@@ -39,7 +39,7 @@ const {
 
 const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
-const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
+const task = taskList.submitApplication.tasks.checkAnswers;
 
 const { summaryList } = checkYourAnswersPolicyAndExports;
 

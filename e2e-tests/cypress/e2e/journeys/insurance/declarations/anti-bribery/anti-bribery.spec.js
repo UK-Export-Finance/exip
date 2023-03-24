@@ -41,7 +41,7 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
       cy.completePrepareApplicationSinglePolicyType();
 
       // go to the page we want to test.
-      taskList.submitApplication.tasks.declarations.link().click();
+      taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
 
       cy.completeAndSubmitDeclarationConfidentiality();
 

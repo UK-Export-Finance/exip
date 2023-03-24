@@ -16,7 +16,7 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED;
 
-const task = taskList.submitApplication.tasks.declarations;
+const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
 context('Insurance - Declarations - How your data will be used page - Save and go back', () => {
   let referenceNumber;
@@ -29,7 +29,7 @@ context('Insurance - Declarations - How your data will be used page - Save and g
       cy.completePrepareApplicationSinglePolicyType();
 
       // go to the page we want to test.
-      taskList.submitApplication.tasks.declarations.link().click();
+      taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
 
       cy.completeAndSubmitDeclarationConfidentiality();
       cy.completeAndSubmitDeclarationAntiBribery();

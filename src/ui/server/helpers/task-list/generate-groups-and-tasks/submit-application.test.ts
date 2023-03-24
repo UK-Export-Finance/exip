@@ -31,23 +31,28 @@ describe('server/helpers/task-list/submit-application', () => {
 
     const result = createSubmitApplicationTasks(referenceNumber, previousGroups);
 
-    const DECLARATIONS = {
-      href: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`,
-      title: SUBMIT_APPLICATION.TASKS.DECLARATIONS,
-      id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS,
-      fields: [AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY, 'temp'],
-      dependencies: [...getAllTasksFieldsInAGroup(initialChecksGroup), ...getAllTasksFieldsInAGroup(prepareApplicationGroup)],
-    };
+    const initialChecksFields = getAllTasksFieldsInAGroup(initialChecksGroup);
+    const prepareApplicationFields = getAllTasksFieldsInAGroup(prepareApplicationGroup);
 
-    const CHECK_ANSWERS_AND_SUBMIT = {
+    const expectedDependencies = [...initialChecksFields, ...prepareApplicationFields];
+
+    const CHECK_ANSWERS = {
       href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ELIGIBILITY}`,
-      title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT,
-      id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS_AND_SUBMIT,
+      title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS,
+      id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS,
       fields: [],
-      dependencies: [],
+      dependencies: expectedDependencies,
     };
 
-    const expected = [DECLARATIONS, CHECK_ANSWERS_AND_SUBMIT];
+    const DECLARATIONS_AND_SUBMIT = {
+      href: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`,
+      title: SUBMIT_APPLICATION.TASKS.DECLARATIONS_AND_SUBMIT,
+      id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS_AND_SUBMIT,
+      fields: [AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY, 'temp'],
+      dependencies: expectedDependencies,
+    };
+
+    const expected = [CHECK_ANSWERS, DECLARATIONS_AND_SUBMIT];
 
     expect(result).toEqual(expected);
   });

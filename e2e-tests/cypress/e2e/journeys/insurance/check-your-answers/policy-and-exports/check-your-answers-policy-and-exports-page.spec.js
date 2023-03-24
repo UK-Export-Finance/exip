@@ -27,7 +27,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.POLICY_AND_EXPORTS;
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
+const task = taskList.submitApplication.tasks.checkAnswers;
 
 context('Insurance - Check your answers - Policy and exports - I want to confirm my selection for the policy and exports section of my export insurance application ', () => {
   let referenceNumber;
