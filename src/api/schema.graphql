@@ -70,6 +70,7 @@ type Application {
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
+  submissionDate: DateTime
   status: String
   policyAndExport: PolicyAndExport
   exporter: Exporter
@@ -97,6 +98,7 @@ input ApplicationWhereInput {
   referenceNumber: IntNullableFilter
   submissionDeadline: DateTimeNullableFilter
   submissionType: StringNullableFilter
+  submissionDate: DateTimeNullableFilter
   status: StringFilter
   policyAndExport: PolicyAndExportWhereInput
   exporter: ExporterWhereInput
@@ -192,6 +194,7 @@ input ApplicationOrderByInput {
   referenceNumber: OrderDirection
   submissionDeadline: OrderDirection
   submissionType: OrderDirection
+  submissionDate: OrderDirection
   status: OrderDirection
 }
 
@@ -202,6 +205,7 @@ input ApplicationUpdateInput {
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
+  submissionDate: DateTime
   status: String
   policyAndExport: PolicyAndExportRelateToOneForUpdateInput
   exporter: ExporterRelateToOneForUpdateInput
@@ -272,6 +276,7 @@ input ApplicationCreateInput {
   referenceNumber: Int
   submissionDeadline: DateTime
   submissionType: String
+  submissionDate: DateTime
   status: String
   policyAndExport: PolicyAndExportRelateToOneForCreateInput
   exporter: ExporterRelateToOneForCreateInput
@@ -1603,6 +1608,9 @@ type Mutation {
 
   """ delete an application by reference number """
   deleteApplicationByReferenceNumber(referenceNumber: Int!): SuccessResponse
+
+  """ submit an application """
+  submitApplication(applicationId: String!): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure

@@ -8,6 +8,8 @@ import * as eligibility from './eligibility';
 import * as account from './account';
 import * as policyAndExport from './policy-and-export';
 import * as checkYourAnswers from './check-your-answers';
+import * as declarations from './declarations';
+import applicationSubmittedPage from './applicationSubmitted';
 
 const insurancePages = {
   startPage,
@@ -20,6 +22,8 @@ const insurancePages = {
   account,
   policyAndExport,
   checkYourAnswers,
+  declarations,
+  applicationSubmittedPage,
 };
 
 export default insurancePages;

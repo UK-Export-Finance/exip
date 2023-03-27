@@ -1,3 +1,6 @@
+import { LINKS } from '../../links';
+import { BUTTONS } from '../../buttons';
+import { PRODUCT, ROUTES } from '../../../constants';
 import POLICY_AND_EXPORTS from './policy-and-exports';
 import * as ELIGIBILITY_PAGES from './eligibility';
 import * as ACCOUNT_PAGES from './account';
@@ -5,9 +8,7 @@ import * as EXPORTER_BUSINESS from './exporter-business';
 import * as YOUR_BUYER from './your-buyer';
 import * as DECLARATIONS from './declarations';
 import * as CHECK_YOUR_ANSWERS from './check-your-answers';
-import { LINKS } from '../../links';
-import { BUTTONS } from '../../buttons';
-import { PRODUCT, ROUTES } from '../../../constants';
+import * as APPLICATION_SUBMITTED from './application-submitted';
 import formatCurrency from '../../../cypress/e2e/helpers/format-currency';
 
 export const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP);
@@ -112,19 +113,20 @@ const NO_ACCESS_TO_APPLICATION_PAGE = {
 };
 
 const INSURANCE = {
+  START,
+  ACCOUNT: ACCOUNT_PAGES,
   DASHBOARD,
   ALL_SECTIONS,
   APPLY_OFFLINE,
   EXPORTER_BUSINESS,
   ELIGIBILITY: ELIGIBILITY_PAGES,
-  ACCOUNT: ACCOUNT_PAGES,
+  NO_ACCESS_TO_APPLICATION_PAGE,
   POLICY_AND_EXPORTS,
   SPEAK_TO_UKEF_EFM,
-  START,
   YOUR_BUYER,
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
-  NO_ACCESS_TO_APPLICATION_PAGE,
+  APPLICATION_SUBMITTED,
 };
 
 export default INSURANCE;

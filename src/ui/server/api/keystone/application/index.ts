@@ -10,6 +10,7 @@ import updateApplicationExporterCompanyMutation from '../../../graphql/mutations
 import updateExporterBusinessMutation from '../../../graphql/mutations/update-application/exporter-business';
 import updateExporterBrokerMutation from '../../../graphql/mutations/update-application/exporter-broker';
 import updateBuyerMutation from '../../../graphql/mutations/update-application/exporter-buyer';
+import submitApplicationMutation from '../../../graphql/mutations/submit-application';
 
 const createInitialApplication = async (accountId: string) => {
   try {
@@ -276,6 +277,33 @@ const application = {
       }
     },
     declarations: declarations.update,
+  },
+  submit: async (applicationId: string) => {
+    try {
+      console.info(`Submitting application ${applicationId}`);
+
+      const variables = { applicationId };
+
+      const response = (await apollo('POST', submitApplicationMutation, variables)) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error submitting application ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error submitting application ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.submitApplication) {
+        return response.data.submitApplication;
+      }
+
+      console.error(response);
+      throw new Error(`Submitting application ${applicationId}`);
+    } catch (err) {
+      console.error(err);
+      throw new Error(`Submitting application ${applicationId}`);
+    }
   },
   eligibility,
   declarations,

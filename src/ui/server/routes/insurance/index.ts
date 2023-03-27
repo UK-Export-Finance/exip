@@ -14,6 +14,7 @@ import insuranceYourBuyerRouter from './your-buyer';
 import insuranceDeclarationsRouter from './declarations';
 import insuranceAccountRouter from './account';
 import insuranceCheckYourAnswersRouter from './check-your-answers';
+import { get as applicationSubmittedGet } from '../../controllers/insurance/application-submitted';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
@@ -43,5 +44,7 @@ insuranceRouter.use(INSURANCE_ROOT, insuranceBusinessRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceYourBuyerRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceDeclarationsRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceCheckYourAnswersRouter);
+
+insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.APPLICATION_SUBMITTED}`, applicationSubmittedGet);
 
 export default insuranceRouter;

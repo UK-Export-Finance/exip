@@ -16,6 +16,10 @@
     {% set classes = "govuk-tag--blue" %}
   {% endif %}
 
+  {% if status === "Submitted to UKEF" %}
+    {% set classes = "govuk-tag--purple" %}
+  {% endif %}
+
   {{ govukTag({
     text: status,
     classes: classes,

@@ -65,6 +65,7 @@ interface Application {
   updatedAt: string;
   submissionDeadline: string;
   submissionType: string;
+  submissionDate: string;
   status: string;
   eligibility: ApplicationEligibility;
   policyAndExport: ApplicationPolicyAndExport;
@@ -167,6 +168,14 @@ interface AddAndGetOtpResponse {
   securityCode?: string;
 }
 
+interface SubmitApplicationVariables {
+  applicationId: string;
+}
+
+interface SubmitApplicationResponse {
+  success: boolean;
+}
+
 export {
   Account,
   AccountCreationVariables,
@@ -182,6 +191,8 @@ export {
   EmailResponse,
   SicCodes,
   SendEmailConfirmEmailAddressVariables,
+  SubmitApplicationVariables,
+  SubmitApplicationResponse,
   VerifyEmailAddressVariables,
   VerifyEmailAddressResponse,
   VerifyAccountSignInCodeVariables,
