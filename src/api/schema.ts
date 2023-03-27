@@ -35,6 +35,7 @@ export const lists = {
       status: text({
         validation: { isRequired: true },
       }),
+      previousStatus: text(),
       policyAndExport: relationship({ ref: 'PolicyAndExport' }),
       exporter: relationship({
         ref: 'Exporter',

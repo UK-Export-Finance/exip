@@ -67,6 +67,7 @@ interface Application {
   submissionType: string;
   submissionDate: string;
   status: string;
+  previousStatus: string;
   eligibility: ApplicationEligibility;
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;

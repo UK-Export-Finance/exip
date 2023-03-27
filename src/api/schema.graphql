@@ -72,6 +72,7 @@ type Application {
   submissionType: String
   submissionDate: DateTime
   status: String
+  previousStatus: String
   policyAndExport: PolicyAndExport
   exporter: Exporter
   exporterBusiness: ExporterBusiness
@@ -100,6 +101,7 @@ input ApplicationWhereInput {
   submissionType: StringNullableFilter
   submissionDate: DateTimeNullableFilter
   status: StringFilter
+  previousStatus: StringFilter
   policyAndExport: PolicyAndExportWhereInput
   exporter: ExporterWhereInput
   exporterBusiness: ExporterBusinessWhereInput
@@ -196,6 +198,7 @@ input ApplicationOrderByInput {
   submissionType: OrderDirection
   submissionDate: OrderDirection
   status: OrderDirection
+  previousStatus: OrderDirection
 }
 
 input ApplicationUpdateInput {
@@ -207,6 +210,7 @@ input ApplicationUpdateInput {
   submissionType: String
   submissionDate: DateTime
   status: String
+  previousStatus: String
   policyAndExport: PolicyAndExportRelateToOneForUpdateInput
   exporter: ExporterRelateToOneForUpdateInput
   exporterBusiness: ExporterBusinessRelateToOneForUpdateInput
@@ -278,6 +282,7 @@ input ApplicationCreateInput {
   submissionType: String
   submissionDate: DateTime
   status: String
+  previousStatus: String
   policyAndExport: PolicyAndExportRelateToOneForCreateInput
   exporter: ExporterRelateToOneForCreateInput
   exporterBusiness: ExporterBusinessRelateToOneForCreateInput

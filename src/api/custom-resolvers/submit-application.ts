@@ -19,21 +19,23 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
     });
 
     if (application) {
-      // const canSubmit = application.status === APPLICATION.STATUS.DRAFT;
-      const canSubmit = true;
+      const canSubmit = application.status === APPLICATION.STATUS.DRAFT;
 
       if (canSubmit) {
         // TODO: check that the application has all required fields/data.
 
-        // change the status to submitted and add submission date
+        // change the status and add submission date
         const now = new Date();
+
+        const update = {
+          status: APPLICATION.STATUS.SUBMITTED,
+          previousStatus: APPLICATION.STATUS.DRAFT,
+          submissionDate: now,
+        };
 
         await context.db.Application.updateOne({
           where: { id: application.id },
-          data: {
-            status: APPLICATION.STATUS.SUBMITTED,
-            submissionDate: now,
-          },
+          data: update,
         });
 
         return {

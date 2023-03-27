@@ -239,6 +239,7 @@ var lists = {
       status: (0, import_fields.text)({
         validation: { isRequired: true }
       }),
+      previousStatus: (0, import_fields.text)(),
       policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
       exporter: (0, import_fields.relationship)({
         ref: "Exporter",
@@ -1294,6 +1295,7 @@ var submitApplication = async (root, variables, context) => {
           where: { id: application.id },
           data: {
             status: APPLICATION.STATUS.SUBMITTED,
+            previousStatus: APPLICATION.STATUS.DRAFT,
             submissionDate: now
           }
         });

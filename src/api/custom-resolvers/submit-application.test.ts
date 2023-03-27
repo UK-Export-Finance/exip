@@ -39,7 +39,7 @@ describe('custom-resolvers/submit-application', () => {
       where: {
         id: application.id,
       },
-      query: 'id status submissionDate',
+      query: 'id status previousStatus submissionDate',
     })) as Application;
   });
 
@@ -49,6 +49,10 @@ describe('custom-resolvers/submit-application', () => {
 
   it(`should change the application status to ${APPLICATION.STATUS.SUBMITTED}`, () => {
     expect(submittedApplication.status).toEqual(APPLICATION.STATUS.SUBMITTED);
+  });
+
+  it(`should add a previous status of ${APPLICATION.STATUS.DRAFT}`, () => {
+    expect(submittedApplication.previousStatus).toEqual(APPLICATION.STATUS.DRAFT);
   });
 
   it('should add a submissionDate', () => {
