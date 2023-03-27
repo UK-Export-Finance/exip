@@ -8,17 +8,13 @@
 {% block content %}
 
   {% set titleHtml %}
-    <span class="govuk-heading-xl govuk-!-display-inline-block ukef-white-text" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</span>
+    <span class="govuk-!-display-inline-block ukef-white-text ukef-application-submitted" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</span>
   {% endset %}
 
   {% set panelHtml %}
-    <p class="govuk-body govuk-!-font-size-24 ukef-white-text">
-      <span data-cy="your-reference">{{ CONTENT_STRINGS.YOUR_REFERENCE }}</span>
+      <p class="govuk-body govuk-!-font-size-24 ukef-white-text" data-cy="your-reference">{{ CONTENT_STRINGS.YOUR_REFERENCE }}</p>
 
-      <br />
-
-      <span class="govuk-!-font-weight-bold govuk-!-font-size-36" data-cy="reference-number">{{ application.referenceNumber }}</span>
-    </p>
+      <p class="govuk-body govuk-!-font-weight-bold govuk-!-font-size-36 ukef-white-text" data-cy="reference-number">{{ application.referenceNumber }}</p>
   {% endset %}
 
   <div class="govuk-grid-row">
