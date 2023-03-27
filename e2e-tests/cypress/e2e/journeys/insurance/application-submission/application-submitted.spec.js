@@ -117,20 +117,45 @@ context('Insurance - TODO - submission', () => {
     });
 
     describe('actions', () => {
-      it('renders a `start a new application` link', () => {
-        cy.checkLink(
-          actions.startNewApplication(),
-          BUYER_COUNTRY,
-          CONTENT_STRINGS.ACTIONS.START_NEW_APPLICATION.TEXT,
-        );
+      let selector;
+
+      describe('start a new application', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          selector = actions.startNewApplication;
+        });
+
+        it('renders a link', () => {
+          cy.checkLink(
+            selector(),
+            BUYER_COUNTRY,
+            CONTENT_STRINGS.ACTIONS.START_NEW_APPLICATION.TEXT,
+          );
+        });
+
+        it(`it redirect to ${BUYER_COUNTRY}`, () => {
+          selector().click();
+
+          const expectedUrl = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;
+          cy.url().should('eq', expectedUrl);
+        });
       });
 
-      it('renders a `feedback` link', () => {
-        cy.checkLink(
-          actions.giveFeedback(),
-          '#',
-          CONTENT_STRINGS.ACTIONS.GIVE_FEEDBACK.TEXT,
-        );
+      describe('feedback', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          selector = actions.giveFeedback;
+        });
+
+        it('renders a link', () => {
+          cy.checkLink(
+            selector(),
+            '#',
+            CONTENT_STRINGS.ACTIONS.GIVE_FEEDBACK.TEXT,
+          );
+        });
       });
     });
 
