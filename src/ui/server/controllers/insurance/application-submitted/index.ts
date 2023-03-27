@@ -1,11 +1,13 @@
-import { ROUTES, TEMPLATES } from '../../../constants';
+import { ROUTES, TEMPLATES, APPLICATION } from '../../../constants';
 import { PAGES } from '../../../content-strings';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import { Request, Response } from '../../../../types';
 
-export const TEMPLATE = TEMPLATES.INSURANCE.APPLICATION_SUBMITTED;
+const {
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
+} = ROUTES;
 
-// TODO: additional checks i.e application is actually submitted
+export const TEMPLATE = TEMPLATES.INSURANCE.APPLICATION_SUBMITTED;
 
 /**
  * get
@@ -19,6 +21,12 @@ export const get = (req: Request, res: Response) => {
 
   if (!application) {
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = req.params;
+
+  if (application.status !== APPLICATION.STATUS.SUBMITTED) {
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   }
 
   return res.render(TEMPLATE, {

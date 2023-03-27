@@ -1288,16 +1288,17 @@ var submitApplication = async (root, variables, context) => {
       where: { id: variables.applicationId }
     });
     if (application) {
-      const canSubmit = true;
+      const canSubmit = application.status === APPLICATION.STATUS.DRAFT;
       if (canSubmit) {
         const now = /* @__PURE__ */ new Date();
+        const update = {
+          status: APPLICATION.STATUS.SUBMITTED,
+          previousStatus: APPLICATION.STATUS.DRAFT,
+          submissionDate: now
+        };
         await context.db.Application.updateOne({
           where: { id: application.id },
-          data: {
-            status: APPLICATION.STATUS.SUBMITTED,
-            previousStatus: APPLICATION.STATUS.DRAFT,
-            submissionDate: now
-          }
+          data: update
         });
         return {
           success: true

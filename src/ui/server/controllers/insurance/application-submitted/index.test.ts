@@ -1,9 +1,13 @@
 import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../constants';
+import { ROUTES, TEMPLATES, APPLICATION } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import { Request, Response } from '../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
+
+const {
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
+} = ROUTES;
 
 describe('controllers/insurance/application-submitted', () => {
   let req: Request;
@@ -46,6 +50,26 @@ describe('controllers/insurance/application-submitted', () => {
         get(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe(`when the application does not have a status of ${APPLICATION.STATUS.SUBMITTED}`, () => {
+      beforeEach(() => {
+        res.locals = {
+          csrfToken: '1234',
+          application: {
+            ...mockApplication,
+            status: APPLICATION.STATUS.DRAFT,
+          },
+        };
+      });
+
+      it(`should redirect to ${ALL_SECTIONS}`, () => {
+        get(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
       });
     });
   });
