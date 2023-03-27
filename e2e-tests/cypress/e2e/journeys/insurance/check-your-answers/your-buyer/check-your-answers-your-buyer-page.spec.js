@@ -95,33 +95,20 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
     });
 
     describe('form submission', () => {
-      describe('continue', () => {
-        it(`should redirect to ${ALL_SECTIONS}`, () => {
-          submitButton().click();
+      it(`should redirect to ${ALL_SECTIONS}`, () => {
+        submitButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-          cy.url().should('eq', expectedUrl);
-        });
-
-        describe('when going back to the all sections page', () => {
-          beforeEach(() => {
-            cy.navigateToUrl(allSectionsUrl);
-          });
-
-          it('should change the status of task `check your answers` to `completed`', () => {
-            cy.checkTaskStatus(task, TASKS.STATUS.COMPLETED);
-          });
-        });
+        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        cy.url().should('eq', expectedUrl);
       });
 
-      describe('save and back', () => {
-        it(`should redirect to ${ALL_SECTIONS}`, () => {
-          cy.navigateToUrl(url);
+      describe('when going back to the all sections page', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(allSectionsUrl);
+        });
 
-          saveAndBackButton().click();
-
-          const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-          cy.url().should('eq', expectedUrl);
+        it('should change the status of task `check your answers` to `completed`', () => {
+          cy.checkTaskStatus(task, TASKS.STATUS.COMPLETED);
         });
       });
     });

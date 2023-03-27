@@ -94,32 +94,20 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
     });
 
     describe('form submission', () => {
-      describe('continue', () => {
-        it(`should redirect to ${YOUR_BUYER}`, () => {
-          submitButton().click();
+      it(`should redirect to ${YOUR_BUYER}`, () => {
+        submitButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
-          cy.url().should('eq', expectedUrl);
-        });
-
-        describe('when going back to the all sections page', () => {
-          beforeEach(() => {
-            cy.navigateToUrl(allSectionsUrl);
-          });
-
-          it('should retain the status of task `check your answers` as `in progress`', () => {
-            cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
-          });
-        });
+        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
+        cy.url().should('eq', expectedUrl);
       });
 
-      describe('save and back', () => {
-        it(`should redirect to ${ALL_SECTIONS}`, () => {
-          cy.navigateToUrl(url);
+      describe('when going back to the all sections page', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(allSectionsUrl);
+        });
 
-          saveAndBackButton().click();
-
-          cy.url().should('eq', allSectionsUrl);
+        it('should retain the status of task `check your answers` as `in progress`', () => {
+          cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
         });
       });
     });

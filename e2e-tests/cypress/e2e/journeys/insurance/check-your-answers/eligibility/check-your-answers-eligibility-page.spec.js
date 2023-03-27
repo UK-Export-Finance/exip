@@ -25,7 +25,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-context('Insurance - Check your answers - Eligibility - I want to confirm my selection for the eligibility section of my export insurance application ', () => {
+context('Insurance - Check your answers - Eligibility page - I want to confirm my selection for the eligibility section of my export insurance application ', () => {
   let referenceNumber;
   let url;
   let allSectionsUrl;
@@ -94,27 +94,25 @@ context('Insurance - Check your answers - Eligibility - I want to confirm my sel
     });
 
     describe('form submission', () => {
-      describe('continue', () => {
-        it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-          submitButton().click();
+      it(`should redirect to ${TYPE_OF_POLICY}`, () => {
+        submitButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
-          cy.url().should('eq', expectedUrl);
+        cy.url().should('eq', expectedUrl);
+      });
+
+      describe('when going back to the all sections page', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(allSectionsUrl);
         });
 
-        describe('when going back to the all sections page', () => {
-          beforeEach(() => {
-            cy.navigateToUrl(allSectionsUrl);
-          });
-
-          it('should update the status of task `check your answers` to `in progress`', () => {
-            cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
-          });
+        it('should update the status of task `check your answers` to `in progress`', () => {
+          cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
         });
       });
 
-      describe('save and back', () => {
+      describe('start new application button link', () => {
         it(`should redirect to ${START}`, () => {
           cy.navigateToUrl(url);
 

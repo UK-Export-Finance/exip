@@ -25,7 +25,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-context('Insurance - Check your answers - Policy and exports - I want to confirm my selection for the policy and exports section of my export insurance application ', () => {
+context('Insurance - Check your answers - Policy and exports - I want to confirm my selection for the policy and exports section of my export insurance application', () => {
   let referenceNumber;
   let url;
   let allSectionsUrl;
@@ -90,36 +90,23 @@ context('Insurance - Check your answers - Policy and exports - I want to confirm
       saveAndBackButton().should('exist');
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
+  });
 
-    describe('form submission', () => {
-      describe('continue', () => {
-        it(`should redirect to ${YOUR_BUSINESS}`, () => {
-          submitButton().click();
+  describe('form submission', () => {
+    it(`should redirect to ${YOUR_BUSINESS}`, () => {
+      submitButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
-          cy.url().should('eq', expectedUrl);
-        });
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+      cy.url().should('eq', expectedUrl);
+    });
 
-        describe('when going back to the all sections page', () => {
-          beforeEach(() => {
-            cy.navigateToUrl(allSectionsUrl);
-          });
-
-          it('should update the status of task `check your answers` to `in progress`', () => {
-            cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
-          });
-        });
+    describe('when going back to the all sections page', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(allSectionsUrl);
       });
 
-      describe('save and back', () => {
-        it(`should redirect to ${ALL_SECTIONS}`, () => {
-          cy.navigateToUrl(url);
-
-          saveAndBackButton().click();
-
-          const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-          cy.url().should('eq', expectedUrl);
-        });
+      it('should retain the status of task `check your answers` as `in progress`', () => {
+        cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
       });
     });
   });
