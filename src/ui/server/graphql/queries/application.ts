@@ -11,6 +11,7 @@ const applicationQuery = gql`
         submissionDeadline
         submissionType
         submissionDate
+        status
         eligibility {
           id
           buyerCountry {
