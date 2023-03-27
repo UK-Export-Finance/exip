@@ -44,7 +44,7 @@ CREATE TABLE `Application` (
 	`exporterCompany` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`buyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-	`previousStatus` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+	`previousStatus` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`declaration` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Application_eligibility_idx` (`eligibility`),
