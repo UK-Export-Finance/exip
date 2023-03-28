@@ -1,6 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import sendEmail from '.';
-import getExporterById from '../helpers/get-exporter-by-id';
+import sendEmail from '../index';
+import getExporterById from '../../helpers/get-exporter-by-id';
+import { SubmitApplicationResponse } from '../../types';
 
 /**
  * sendEmailApplicationSubmitted
@@ -9,7 +10,12 @@ import getExporterById from '../helpers/get-exporter-by-id';
  * @param {Object} KeystoneJS context API
  * @returns {Object} Object with success flag and emailRecipient
  */
-const sendEmailApplicationSubmitted = async (context: Context, accountId: string, buyerId: string, referenceNumber: number) => {
+const sendEmailApplicationSubmitted = async (
+  context: Context,
+  accountId: string,
+  buyerId: string,
+  referenceNumber: number,
+): Promise<SubmitApplicationResponse> => {
   try {
     // get the exporter
     const exporter = await getExporterById(context, accountId);

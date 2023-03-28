@@ -1,11 +1,11 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
-import sendEmailApplicationSubmitted from './send-email-application-submitted';
-import baseConfig from '../keystone';
+import sendEmailApplicationSubmitted from '.';
+import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import sendEmail from './index';
-import { mockAccount, mockSendEmailResponse } from '../test-mocks';
-import { Account, Application, ApplicationBuyer } from '../types';
+import sendEmail from '../index';
+import { mockAccount, mockSendEmailResponse } from '../../test-mocks';
+import { Account, Application, ApplicationBuyer } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
