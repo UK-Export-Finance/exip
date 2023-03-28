@@ -108,6 +108,13 @@ const applicationQuery = gql`
           exporterIsConnectedWithBuyer
           exporterHasTradedWithBuyer
         }
+        sectionReview {
+          id
+          eligibility
+          policyAndExport
+          exporterBusiness
+          buyer
+        }
         declaration {
           id
           agreeToConfidentiality

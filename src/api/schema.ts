@@ -45,6 +45,7 @@ export const lists = {
       exporterCompany: relationship({ ref: 'ExporterCompany' }),
       exporterBroker: relationship({ ref: 'ExporterBroker' }),
       buyer: relationship({ ref: 'Buyer' }),
+      sectionReview: relationship({ ref: 'SectionReview' }),
       declaration: relationship({ ref: 'Declaration' }),
     },
     hooks: {
@@ -139,6 +140,17 @@ export const lists = {
               },
             };
 
+            // generate and attach a new 'sectionReview' relationship
+            const { id: sectionReviewId } = await context.db.SectionReview.createOne({
+              data: {},
+            });
+
+            modifiedData.sectionReview = {
+              connect: {
+                id: sectionReviewId,
+              },
+            };
+
             // generate and attach a new 'declaration' relationship
             const { id: declarationId } = await context.db.Declaration.createOne({
               data: {},
@@ -179,7 +191,17 @@ export const lists = {
 
             const applicationId = item.id;
 
-            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId, declarationId } = item;
+            const {
+              referenceNumber,
+              eligibilityId,
+              policyAndExportId,
+              exporterCompanyId,
+              exporterBusinessId,
+              exporterBrokerId,
+              buyerId,
+              sectionReviewId,
+              declarationId,
+            } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -256,6 +278,18 @@ export const lists = {
             // add the application ID to the buyer entry.
             await context.db.Buyer.updateOne({
               where: { id: buyerId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId,
+                  },
+                },
+              },
+            });
+
+            // add the application ID to the declaration entry.
+            await context.db.SectionReview.updateOne({
+              where: { id: sectionReviewId },
               data: {
                 application: {
                   connect: {
@@ -526,6 +560,16 @@ export const lists = {
       needPreCreditPeriodCover: checkbox(),
       wantCoverOverMaxAmount: checkbox(),
       wantCoverOverMaxPeriod: checkbox(),
+    },
+    access: allowAll,
+  }),
+  SectionReview: list({
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      eligibility: checkbox(),
+      policyAndExport: checkbox(),
+      exporterBusiness: checkbox(),
+      buyer: checkbox(),
     },
     access: allowAll,
   }),

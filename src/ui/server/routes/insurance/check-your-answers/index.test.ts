@@ -6,15 +6,12 @@ import {
   get as getcheckYourAnswersPolicyAndExports,
   post as postcheckYourAnswersPolicyAndExports,
 } from '../../../controllers/insurance/check-your-answers/policy-and-exports';
-import { post as postcheckYourAnswersPolicyAndExportsSaveAndBack } from '../../../controllers/insurance/check-your-answers/policy-and-exports/save-and-back';
 import {
   get as getCheckYourAnswersYourBusiness,
   post as postCheckYourAnswersYourBusiness,
 } from '../../../controllers/insurance/check-your-answers/your-business';
-import { post as postCheckYourAnswersYourBusinessSaveAndBack } from '../../../controllers/insurance/check-your-answers/your-business/save-and-back';
-
 import { get as getCheckYourAnswersYourBuyer, post as postCheckYourAnswersYourBuyer } from '../../../controllers/insurance/check-your-answers/your-buyer';
-import { post as postCheckYourAnswersYourBuyerSaveAndBack } from '../../../controllers/insurance/check-your-answers/your-buyer/save-and-back';
+import { post as saveAndBack } from '../../../controllers/insurance/check-your-answers/save-and-back';
 
 describe('routes/insurance/check-your-answers', () => {
   beforeEach(() => {
@@ -34,23 +31,14 @@ describe('routes/insurance/check-your-answers', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, getcheckYourAnswersPolicyAndExports);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, postcheckYourAnswersPolicyAndExports);
-    expect(post).toHaveBeenCalledWith(
-      `/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.TYPE_OF_POLICY_SAVE_AND_BACK}`,
-      postcheckYourAnswersPolicyAndExportsSaveAndBack,
-    );
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.TYPE_OF_POLICY_SAVE_AND_BACK}`, saveAndBack);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUSINESS}`, getCheckYourAnswersYourBusiness);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUSINESS}`, postCheckYourAnswersYourBusiness);
-    expect(post).toHaveBeenCalledWith(
-      `/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUSINESS_SAVE_AND_BACK}`,
-      postCheckYourAnswersYourBusinessSaveAndBack,
-    );
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUSINESS_SAVE_AND_BACK}`, saveAndBack);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER}`, getCheckYourAnswersYourBuyer);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER}`, postCheckYourAnswersYourBuyer);
-    expect(post).toHaveBeenCalledWith(
-      `/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER_SAVE_AND_BACK}`,
-      postCheckYourAnswersYourBuyerSaveAndBack,
-    );
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER_SAVE_AND_BACK}`, saveAndBack);
   });
 });

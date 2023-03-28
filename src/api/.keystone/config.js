@@ -269,6 +269,7 @@ var lists = {
       exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
       exporterBroker: (0, import_fields.relationship)({ ref: "ExporterBroker" }),
       buyer: (0, import_fields.relationship)({ ref: "Buyer" }),
+      sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
       declaration: (0, import_fields.relationship)({ ref: "Declaration" })
     },
     hooks: {
@@ -338,6 +339,14 @@ var lists = {
                 id: buyerId
               }
             };
+            const { id: sectionReviewId } = await context.db.SectionReview.createOne({
+              data: {}
+            });
+            modifiedData.sectionReview = {
+              connect: {
+                id: sectionReviewId
+              }
+            };
             const { id: declarationId } = await context.db.Declaration.createOne({
               data: {}
             });
@@ -365,7 +374,17 @@ var lists = {
           try {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
-            const { referenceNumber, eligibilityId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId, declarationId } = item;
+            const {
+              referenceNumber,
+              eligibilityId,
+              policyAndExportId,
+              exporterCompanyId,
+              exporterBusinessId,
+              exporterBrokerId,
+              buyerId,
+              sectionReviewId,
+              declarationId
+            } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -428,6 +447,16 @@ var lists = {
             });
             await context.db.Buyer.updateOne({
               where: { id: buyerId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                }
+              }
+            });
+            await context.db.SectionReview.updateOne({
+              where: { id: sectionReviewId },
               data: {
                 application: {
                   connect: {
@@ -683,6 +712,16 @@ var lists = {
       needPreCreditPeriodCover: (0, import_fields.checkbox)(),
       wantCoverOverMaxAmount: (0, import_fields.checkbox)(),
       wantCoverOverMaxPeriod: (0, import_fields.checkbox)()
+    },
+    access: import_access.allowAll
+  }),
+  SectionReview: (0, import_core.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      eligibility: (0, import_fields.checkbox)(),
+      policyAndExport: (0, import_fields.checkbox)(),
+      exporterBusiness: (0, import_fields.checkbox)(),
+      buyer: (0, import_fields.checkbox)()
     },
     access: import_access.allowAll
   }),

@@ -3,30 +3,30 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Application, RequestBody } from '../../../../../types';
 
 /**
- * declarations
- * Update an application's declaration
- * This is used for any save functionality in the Declarations section of an application
+ * sectionReview
+ * Update an application's section review
+ * This is used for any save functionality in the Check your answers section of an application
  * @param {Object} Application
  * @param {Express.Request.body} Form data
  * @returns {Object} Saved data
  */
-const declaration = async (application: Application, formBody: RequestBody) => {
+const sectionReview = async (application: Application, formBody: RequestBody) => {
   // sanitise the form data.
   const sanitisedData = sanitiseData(formBody);
 
   // send the form data to the API for database update.
-  const declarationId = application.declaration?.id;
+  const sectionReviewId = application.sectionReview?.id;
 
   try {
-    const saveResponse = await api.keystone.application.update.declarations(declarationId, sanitisedData);
+    const saveResponse = await api.keystone.application.update.sectionReview(sectionReviewId, sanitisedData);
 
     return saveResponse;
   } catch (err) {
     console.error(err);
-    throw new Error("Updating application's declarations");
+    throw new Error("Updating application's section review");
   }
 };
 
 export default {
-  declaration,
+  sectionReview,
 };

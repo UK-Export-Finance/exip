@@ -1,13 +1,19 @@
-import { get, post, TEMPLATE } from '.';
+import { pageVariables, get, post, TEMPLATE } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
-import { Request, Response } from '../../../../../types';
+import FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import requiredFields from '../../../../helpers/required-fields/exporter-business';
 import sectionStatus from '../../../../helpers/section-status';
+import save from '../save-data';
+import { Request, Response } from '../../../../../types';
+
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
+
+const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.EXPORTER_BUSINESS;
 
 const {
   PROBLEM_WITH_SERVICE,
@@ -18,6 +24,12 @@ const {
 } = ROUTES;
 
 describe('controllers/insurance/check-your-answers/your-business', () => {
+  jest.mock('../save-data');
+
+  let mockSaveSectionReview = jest.fn(() => Promise.resolve({}));
+
+  save.sectionReview = mockSaveSectionReview;
+
   let req: Request;
   let res: Response;
 
@@ -27,6 +39,22 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
 
     res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
+  });
+
+  describe('pageVariables', () => {
+    it('should have correct properties', () => {
+      const result = pageVariables(mockApplication.referenceNumber);
+
+      const expected = {
+        FIELD: {
+          ID: FIELD_ID,
+          ...FIELDS[FIELD_ID],
+        },
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${YOUR_BUSINESS_SAVE_AND_BACK}`,
+      };
+
+      expect(result).toEqual(expected);
+    });
   });
 
   describe('TEMPLATE', () => {
@@ -56,9 +84,9 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUSINESS,
           BACK_LINK: req.headers.referer,
         }),
-        SUMMARY_LIST: summaryList,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${YOUR_BUSINESS_SAVE_AND_BACK}`,
         status,
+        SUMMARY_LIST: summaryList,
+        ...pageVariables(mockApplication.referenceNumber),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -78,8 +106,23 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${YOUR_BUYER}`, () => {
-      post(req, res);
+    const mockBody = {
+      [FIELD_ID]: 'true',
+    };
+
+    beforeEach(() => {
+      req.body = mockBody;
+    });
+
+    it('should call save.sectionReview with application and req.body', async () => {
+      await post(req, res);
+
+      expect(save.sectionReview).toHaveBeenCalledTimes(1);
+      expect(save.sectionReview).toHaveBeenCalledWith(mockApplication, mockBody);
+    });
+
+    it(`should redirect to ${YOUR_BUYER}`, async () => {
+      await post(req, res);
 
       const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${YOUR_BUYER}`;
 
@@ -95,6 +138,38 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('when the save data API call does not return anything', () => {
+        beforeEach(() => {
+          mockSaveSectionReview = jest.fn(() => Promise.resolve(false));
+          save.sectionReview = mockSaveSectionReview;
+
+          req.body = mockBody;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the save data API call fails', () => {
+        beforeEach(() => {
+          mockSaveSectionReview = jest.fn(() => Promise.reject());
+          save.sectionReview = mockSaveSectionReview;
+
+          req.body = mockBody;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });

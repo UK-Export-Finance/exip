@@ -53,6 +53,7 @@ interface Application {
   exporterBusiness: ApplicationRelationship;
   exporterBroker: ApplicationRelationship;
   buyer: ApplicationBuyer;
+  sectionReview: ApplicationRelationship;
   declaration: ApplicationRelationship;
 }
 
