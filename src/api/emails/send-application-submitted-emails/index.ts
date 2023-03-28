@@ -4,13 +4,13 @@ import getExporterById from '../../helpers/get-exporter-by-id';
 import { SubmitApplicationResponse } from '../../types';
 
 /**
- * sendEmailApplicationSubmitted
+ * sendApplicationSubmittedEmails
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SendEmailConfirmEmailAddress mutation
  * @param {Object} KeystoneJS context API
  * @returns {Object} Object with success flag and emailRecipient
  */
-const sendEmailApplicationSubmitted = async (
+const sendApplicationSubmittedEmails = async (
   context: Context,
   accountId: string,
   buyerId: string,
@@ -60,4 +60,4 @@ const sendEmailApplicationSubmitted = async (
   }
 };
 
-export default sendEmailApplicationSubmitted;
+export default sendApplicationSubmittedEmails;

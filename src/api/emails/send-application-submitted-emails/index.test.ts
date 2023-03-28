@@ -1,6 +1,6 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
-import sendEmailApplicationSubmitted from '.';
+import sendApplicationSubmittedEmails from '.';
 import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from '../index';
@@ -22,7 +22,7 @@ describe('emails/send-email-application-submitted', () => {
 
   jest.mock('./index');
 
-  let sendEmailApplicationSubmittedSpy = jest.fn();
+  let applicationSubmittedEmailSpy = jest.fn();
 
   afterAll(() => {
     jest.resetAllMocks();
@@ -53,24 +53,24 @@ describe('emails/send-email-application-submitted', () => {
 
     jest.resetAllMocks();
 
-    sendEmailApplicationSubmittedSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+    applicationSubmittedEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-    sendEmail.applicationSubmittedEmail = sendEmailApplicationSubmittedSpy;
+    sendEmail.applicationSubmittedEmail = applicationSubmittedEmailSpy;
   });
 
   test('it should call sendEmail.applicationSubmittedEmail', async () => {
-    await sendEmailApplicationSubmitted(context, exporter.id, buyer.id, application.referenceNumber);
+    await sendApplicationSubmittedEmails(context, exporter.id, buyer.id, application.referenceNumber);
 
     const { email, firstName } = exporter;
     const { referenceNumber } = application;
     const { companyOrOrganisationName } = buyer;
 
-    expect(sendEmailApplicationSubmittedSpy).toHaveBeenCalledTimes(1);
-    expect(sendEmailApplicationSubmittedSpy).toHaveBeenCalledWith(email, firstName, referenceNumber, companyOrOrganisationName);
+    expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
+    expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(email, firstName, referenceNumber, companyOrOrganisationName);
   });
 
   it('should return the email response', async () => {
-    const result = await sendEmailApplicationSubmitted(context, exporter.id, buyer.id, application.referenceNumber);
+    const result = await sendApplicationSubmittedEmails(context, exporter.id, buyer.id, application.referenceNumber);
 
     const expected = {
       success: true,
@@ -89,7 +89,7 @@ describe('emails/send-email-application-submitted', () => {
         where: exporters,
       });
 
-      const result = await sendEmailApplicationSubmitted(context, exporter.id, buyer.id, application.referenceNumber);
+      const result = await sendApplicationSubmittedEmails(context, exporter.id, buyer.id, application.referenceNumber);
 
       const expected = { success: false };
 
@@ -106,7 +106,7 @@ describe('emails/send-email-application-submitted', () => {
         where: buyers,
       });
 
-      const result = await sendEmailApplicationSubmitted(context, exporter.id, buyer.id, application.referenceNumber);
+      const result = await sendApplicationSubmittedEmails(context, exporter.id, buyer.id, application.referenceNumber);
 
       const expected = { success: false };
 
@@ -121,7 +121,7 @@ describe('emails/send-email-application-submitted', () => {
 
     test('should throw an error', async () => {
       try {
-        await sendEmailApplicationSubmitted(context, exporter.id, buyer.id, application.referenceNumber);
+        await sendApplicationSubmittedEmails(context, exporter.id, buyer.id, application.referenceNumber);
       } catch (err) {
         const expected = new Error(`Sending email to exporter - application submitted ${mockSendEmailResponse}`);
 

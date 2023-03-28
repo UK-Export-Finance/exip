@@ -1,6 +1,6 @@
 import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import { APPLICATION } from '../constants';
-import sendEmailApplicationSubmitted from '../emails/send-email-application-submitted';
+import sendApplicationSubmittedEmails from '../emails/send-application-submitted-emails';
 import { SubmitApplicationVariables, SubmitApplicationResponse } from '../types';
 
 /**
@@ -41,7 +41,7 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
 
         const { referenceNumber, exporterId, buyerId } = application;
 
-        await sendEmailApplicationSubmitted(context, exporterId, buyerId, referenceNumber);
+        await sendApplicationSubmittedEmails(context, exporterId, buyerId, referenceNumber);
 
         return {
           success: true,

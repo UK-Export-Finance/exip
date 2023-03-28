@@ -65,14 +65,14 @@ describe('custom-resolvers/submit-application', () => {
 
   jest.mock('../emails');
 
-  let sendEmailApplicationSubmittedSpy = jest.fn();
+  let sendApplicationSubmittedEmailSpy = jest.fn();
 
   beforeEach(async () => {
     jest.resetAllMocks();
 
-    sendEmailApplicationSubmittedSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+    sendApplicationSubmittedEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-    sendEmail.applicationSubmittedEmail = sendEmailApplicationSubmittedSpy;
+    sendEmail.applicationSubmittedEmail = sendApplicationSubmittedEmailSpy;
 
     const data = await createRequiredData();
 
@@ -126,8 +126,8 @@ describe('custom-resolvers/submit-application', () => {
     const { referenceNumber } = application;
     const { companyOrOrganisationName } = buyer;
 
-    expect(sendEmailApplicationSubmittedSpy).toHaveBeenCalledTimes(1);
-    expect(sendEmailApplicationSubmittedSpy).toHaveBeenCalledWith(email, firstName, referenceNumber, companyOrOrganisationName);
+    expect(sendApplicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
+    expect(sendApplicationSubmittedEmailSpy).toHaveBeenCalledWith(email, firstName, referenceNumber, companyOrOrganisationName);
   });
 
   describe('when an application is not found', () => {
