@@ -4,7 +4,7 @@ import sendEmailConfirmEmailAddress from './send-email-confirm-email-address';
 import baseConfig from '../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from '../emails';
-import { mockAccount } from '../test-mocks';
+import { mockAccount, mockSendEmailResponse } from '../test-mocks';
 import { Account, SendExporterEmailVariables } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -20,8 +20,6 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
   let variables: SendExporterEmailVariables;
 
   jest.mock('../emails');
-
-  const sendEmailResponse = { success: true, emailRecipient: mockAccount.email };
 
   let sendEmailConfirmEmailAddressSpy = jest.fn();
 
@@ -41,7 +39,7 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
 
     jest.resetAllMocks();
 
-    sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(sendEmailResponse));
+    sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
     sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
   });
@@ -81,14 +79,14 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.confirmEmailAddress = jest.fn(() => Promise.reject(sendEmailResponse));
+      sendEmail.confirmEmailAddress = jest.fn(() => Promise.reject(mockSendEmailResponse));
     });
 
     test('should throw an error', async () => {
       try {
         await sendEmailConfirmEmailAddress({}, variables, context);
       } catch (err) {
-        const expected = new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${sendEmailResponse}`);
+        const expected = new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${mockSendEmailResponse}`);
 
         expect(err).toEqual(expected);
       }

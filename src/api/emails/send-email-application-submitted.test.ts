@@ -4,7 +4,7 @@ import sendEmailApplicationSubmitted from './send-email-application-submitted';
 import baseConfig from '../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from './index';
-import { mockAccount } from '../test-mocks';
+import { mockAccount, mockSendEmailResponse } from '../test-mocks';
 import { Account, Application, ApplicationBuyer } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -21,8 +21,6 @@ describe('emails/send-email-application-submitted', () => {
   let buyer: ApplicationBuyer;
 
   jest.mock('./index');
-
-  const sendEmailResponse = { success: true, emailRecipient: mockAccount.email };
 
   let sendEmailApplicationSubmittedSpy = jest.fn();
 
@@ -55,7 +53,7 @@ describe('emails/send-email-application-submitted', () => {
 
     jest.resetAllMocks();
 
-    sendEmailApplicationSubmittedSpy = jest.fn(() => Promise.resolve(sendEmailResponse));
+    sendEmailApplicationSubmittedSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
     sendEmail.applicationSubmittedEmail = sendEmailApplicationSubmittedSpy;
   });
@@ -118,14 +116,14 @@ describe('emails/send-email-application-submitted', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.applicationSubmittedEmail = jest.fn(() => Promise.reject(sendEmailResponse));
+      sendEmail.applicationSubmittedEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
     });
 
     test('should throw an error', async () => {
       try {
         await sendEmailApplicationSubmitted(context, exporter.id, buyer.id, application.referenceNumber);
       } catch (err) {
-        const expected = new Error(`Sending email to exporter - application submitted ${sendEmailResponse}`);
+        const expected = new Error(`Sending email to exporter - application submitted ${mockSendEmailResponse}`);
 
         expect(err).toEqual(expected);
       }

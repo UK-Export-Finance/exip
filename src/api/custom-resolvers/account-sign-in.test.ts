@@ -5,7 +5,7 @@ import accountSignIn from './account-sign-in';
 import baseConfig from '../keystone';
 import generate from '../helpers/generate-otp';
 import sendEmail from '../emails';
-import { mockAccount, mockOTP } from '../test-mocks';
+import { mockAccount, mockOTP, mockSendEmailResponse } from '../test-mocks';
 import { Account, AccountSignInResponse } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -23,8 +23,6 @@ describe('custom-resolvers/account-sign-in', () => {
   jest.mock('../helpers/generate-otp');
 
   generate.otp = () => mockOTP;
-
-  const sendEmailResponse = { success: true, emailRecipient: mockAccount.email };
 
   let securityCodeEmailSpy = jest.fn();
 
@@ -61,7 +59,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
     jest.resetAllMocks();
 
-    securityCodeEmailSpy = jest.fn(() => Promise.resolve(sendEmailResponse));
+    securityCodeEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
     sendEmail.securityCodeEmail = securityCodeEmailSpy;
 
@@ -89,7 +87,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
     test('it should return the email response and accountId', () => {
       const expected = {
-        ...sendEmailResponse,
+        ...mockSendEmailResponse,
         accountId: account.id,
       };
 
@@ -145,7 +143,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.securityCodeEmail = jest.fn(() => Promise.reject(sendEmailResponse));
+      sendEmail.securityCodeEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
     });
 
     test('should throw an error', async () => {
@@ -154,7 +152,7 @@ describe('custom-resolvers/account-sign-in', () => {
       } catch (err) {
         expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
 
-        const expected = new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${sendEmailResponse}`);
+        const expected = new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${mockSendEmailResponse}`);
         expect(err).toEqual(expected);
       }
     });

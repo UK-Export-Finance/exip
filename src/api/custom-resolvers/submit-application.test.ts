@@ -5,7 +5,7 @@ import baseConfig from '../keystone';
 import submitApplication from './submit-application';
 import { APPLICATION } from '../constants';
 import sendEmail from '../emails';
-import { mockAccount } from '../test-mocks';
+import { mockAccount, mockSendEmailResponse } from '../test-mocks';
 import { Account, Application, ApplicationBuyer, SubmitApplicationVariables, SubmitApplicationResponse } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -65,14 +65,12 @@ describe('custom-resolvers/submit-application', () => {
 
   jest.mock('../emails');
 
-  const sendEmailResponse = { success: true, emailRecipient: mockAccount.email };
-
   let sendEmailApplicationSubmittedSpy = jest.fn();
 
   beforeEach(async () => {
     jest.resetAllMocks();
 
-    sendEmailApplicationSubmittedSpy = jest.fn(() => Promise.resolve(sendEmailResponse));
+    sendEmailApplicationSubmittedSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
     sendEmail.applicationSubmittedEmail = sendEmailApplicationSubmittedSpy;
 

@@ -2,16 +2,14 @@ import dotenv from 'dotenv';
 import sendEmail, { callNotify } from '.';
 import notify from '../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../constants';
-import { mockAccount } from '../test-mocks';
+import { mockAccount, mockSendEmailResponse } from '../test-mocks';
 
 dotenv.config();
 
 describe('emails', () => {
   jest.mock('../integrations/notify');
 
-  const sendEmailResponse = { success: true, emailRecipient: mockAccount.email };
-
-  const sendEmailSpy = jest.fn(() => Promise.resolve(sendEmailResponse));
+  const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
   const { email, firstName, verificationHash } = mockAccount;
 
@@ -33,7 +31,7 @@ describe('emails', () => {
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
       expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, firstName, mockVariables);
 
-      const expected = sendEmailResponse;
+      const expected = mockSendEmailResponse;
 
       expect(result).toEqual(expected);
     });
@@ -48,7 +46,7 @@ describe('emails', () => {
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
       expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, firstName, { confirmToken: verificationHash });
 
-      const expected = sendEmailResponse;
+      const expected = mockSendEmailResponse;
 
       expect(result).toEqual(expected);
     });
@@ -84,7 +82,7 @@ describe('emails', () => {
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
       expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, firstName, { securityCode: mockSecurityCode });
 
-      const expected = sendEmailResponse;
+      const expected = mockSendEmailResponse;
 
       expect(result).toEqual(expected);
     });
