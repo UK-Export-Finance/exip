@@ -54,6 +54,8 @@
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
+    <input type="hidden" name="{{ FIELD.ID }}" value="{{ FIELD.VALUE }}">
+
     <div class="govuk-button-group">
       {{ govukButton({
         text: CONTENT_STRINGS.BUTTONS.CONFIRM_AND_CONTINUE,
