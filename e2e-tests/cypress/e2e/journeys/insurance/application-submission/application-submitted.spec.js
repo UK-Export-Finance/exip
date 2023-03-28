@@ -1,9 +1,6 @@
 import applicationSubmittedPage from '../../../pages/insurance/applicationSubmitted';
-import partials from '../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLICATION_SUBMITTED;
 
@@ -14,25 +11,13 @@ const {
   APPLICATION_SUBMITTED,
 } = INSURANCE_ROUTES;
 
-context('Insurance - application submitted page - As an Exporter, I want to submit my completed export insurance application, So that UKEF can process and make a decision on my application', () => {
+context('Insurance - application submitted page', () => {
   let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((refNumber) => {
+    cy.completeSignInAndSubmitAnApplication().then((refNumber) => {
       referenceNumber = refNumber;
-
-      cy.completePrepareApplicationSinglePolicyType();
-
-      // go to the page we want to test.
-      taskList.submitApplication.tasks.declarations.link().click();
-
-      cy.completeAndSubmitDeclarationConfidentiality();
-      cy.completeAndSubmitDeclarationAntiBribery();
-      cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
-      cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct();
-      cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
-      cy.completeAndSubmitDeclarationHowYourDataWillBeUsed();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
@@ -134,7 +119,7 @@ context('Insurance - application submitted page - As an Exporter, I want to subm
           );
         });
 
-        it(`it redirect to ${BUYER_COUNTRY}`, () => {
+        it(`should redirect to ${BUYER_COUNTRY}`, () => {
           selector().click();
 
           const expectedUrl = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;

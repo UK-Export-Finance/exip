@@ -90,6 +90,8 @@ Cypress.Commands.add('completeAndSubmitDeclarationAntiBriberyExportingWithCodeOf
 Cypress.Commands.add('completeAndSubmitDeclarationConfirmationAndAcknowledgements', require('./insurance/declarations/complete-and-submit-confirmation-and-acknowledgements-form'));
 Cypress.Commands.add('completeAndSubmitDeclarationHowYourDataWillBeUsed', require('./insurance/declarations/complete-and-submit-how-your-data-will-be-used-form'));
 
+Cypress.Commands.add('completeSignInAndSubmitAnApplication', require('./insurance/complete-sign-in-and-submit-an-application'));
+
 Cypress.Commands.add('assertAllSectionsUrl', require('./insurance/assert-all-sections-url'));
 
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('./insurance/assert-change-answers-page-url'));
