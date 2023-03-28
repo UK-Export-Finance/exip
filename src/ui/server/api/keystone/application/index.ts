@@ -10,6 +10,7 @@ import updateApplicationExporterCompanyMutation from '../../../graphql/mutations
 import updateExporterBusinessMutation from '../../../graphql/mutations/update-application/exporter-business';
 import updateExporterBrokerMutation from '../../../graphql/mutations/update-application/exporter-broker';
 import updateBuyerMutation from '../../../graphql/mutations/update-application/exporter-buyer';
+import updateApplicationSectionReviewMutation from '../../../graphql/mutations/update-application/section-review';
 
 const createInitialApplication = async (accountId: string) => {
   try {
@@ -276,6 +277,36 @@ const application = {
       }
     },
     declarations: declarations.update,
+    sectionReview: async (id: string, update: object) => {
+      try {
+        console.info('Updating application section review');
+
+        const variables = {
+          where: { id },
+          data: update,
+        };
+
+        const response = (await apollo('POST', updateApplicationSectionReviewMutation, variables)) as ApolloResponse;
+
+        if (response.errors) {
+          console.error('GraphQL error updating application section review ', response.errors);
+        }
+
+        if (response?.networkError?.result?.errors) {
+          console.error('GraphQL network error updating application section review ', response.networkError.result.errors);
+        }
+
+        if (response?.data?.updateSectionReview) {
+          return response.data.updateSectionReview;
+        }
+
+        console.error(response);
+        throw new Error('Updating application section review');
+      } catch (err) {
+        console.error(err);
+        throw new Error('Updating application section review');
+      }
+    },
   },
   eligibility,
   declarations,
