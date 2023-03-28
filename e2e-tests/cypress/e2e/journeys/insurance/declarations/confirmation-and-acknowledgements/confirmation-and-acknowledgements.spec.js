@@ -39,7 +39,7 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
       cy.completePrepareApplicationSinglePolicyType();
 
       // go to the page we want to test.
-      taskList.submitApplication.tasks.declarations.link().click();
+      taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
 
       cy.completeAndSubmitDeclarationConfidentiality();
       cy.completeAndSubmitDeclarationAntiBribery();

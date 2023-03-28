@@ -23,8 +23,8 @@ export const TASKS = {
     SUBMIT_APPLICATION: {
       HEADING: 'Submit your application',
       TASKS: {
-        DECLARATIONS: 'Declarations',
-        CHECK_ANSWERS_AND_SUBMIT: 'Check your answers and submit',
+        CHECK_ANSWERS: 'Check your answers',
+        DECLARATIONS_AND_SUBMIT: 'Declarations and submit',
       },
     },
   },

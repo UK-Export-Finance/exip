@@ -33,7 +33,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
       cy.completePrepareApplicationSinglePolicyType();
 
       // go to the page we want to test.
-      taskList.submitApplication.tasks.declarations.link().click();
+      taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`;
 

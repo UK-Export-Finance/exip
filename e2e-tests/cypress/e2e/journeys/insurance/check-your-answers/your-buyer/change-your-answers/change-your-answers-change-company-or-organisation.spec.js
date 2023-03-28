@@ -1,4 +1,4 @@
-import { submitButton } from '../../../../../pages/shared';
+import { submitButton, status } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import { WEBSITE_EXAMPLES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -40,7 +40,7 @@ const {
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
+const task = taskList.submitApplication.tasks.checkAnswers;
 
 const { summaryList } = checkYourAnswersYourBuyer;
 
@@ -120,9 +120,11 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUYER, fieldId);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
         checkChangeAnswerRendered(fieldVariables);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
@@ -158,7 +160,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUYER, fieldId);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         const expectedKey = FIELDS.COMPANY_OR_ORGANISATION[fieldId].SUMMARY.TITLE;
 
         const row = summaryList.field(fieldId);
@@ -171,6 +173,8 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         // as html, cannot use checkText so checking contains following fields
         row.value().contains(fieldVariables.newValueInput);
         row.value().contains(application.BUYER[COUNTRY]);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
@@ -206,9 +210,11 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUYER, fieldId);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
         checkChangeAnswerRendered(fieldVariables);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
@@ -244,9 +250,11 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUYER, fieldId);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
         checkChangeAnswerRendered(fieldVariables);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
@@ -289,7 +297,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUYER, fieldId);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         const expectedKey = FIELDS.COMPANY_OR_ORGANISATION[fieldId].SUMMARY.TITLE;
 
         const row = summaryList.field(fieldId);
@@ -304,6 +312,8 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         row.value().contains(newAnswerLastName);
         row.value().contains(newAnswerPosition);
         row.value().contains(application.BUYER[EMAIL]);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
@@ -340,9 +350,11 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUYER, fieldId);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = 'No';
         checkChangeAnswerRendered(fieldVariables);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });

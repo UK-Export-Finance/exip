@@ -3,6 +3,8 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { eligibilitySummaryList } from '../../../../helpers/summary-lists/eligibility';
+import requiredFields from '../../../../helpers/required-fields/eligibility';
+import sectionStatus from '../../../../helpers/section-status';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -32,6 +34,10 @@ export const get = (req: Request, res: Response) => {
 
     const summaryList = eligibilitySummaryList(application.eligibility);
 
+    const fields = requiredFields();
+
+    const status = sectionStatus(fields, application);
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY,
@@ -41,6 +47,7 @@ export const get = (req: Request, res: Response) => {
       renderNotificationBanner: true,
       eligibility: true,
       SUMMARY_LIST: summaryList,
+      status,
     });
   } catch (err) {
     console.error('Error getting check your answers - eligibility', { err });

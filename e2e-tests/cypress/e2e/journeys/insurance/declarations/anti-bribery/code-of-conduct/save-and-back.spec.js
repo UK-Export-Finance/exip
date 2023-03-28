@@ -21,7 +21,7 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const task = taskList.submitApplication.tasks.declarations;
+const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
 const navigateBackToPage = () => {
   task.link().click();

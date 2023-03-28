@@ -16,7 +16,7 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS;
 
-const task = taskList.submitApplication.tasks.declarations;
+const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
 context('Insurance - Declarations - Confirmation and acknowledgements page - Save and go back', () => {
   let referenceNumber;
@@ -29,7 +29,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
       cy.completePrepareApplicationSinglePolicyType();
 
       // go to the page we want to test.
-      taskList.submitApplication.tasks.declarations.link().click();
+      taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
 
       cy.completeAndSubmitDeclarationConfidentiality();
       cy.completeAndSubmitDeclarationAntiBribery();

@@ -27,7 +27,7 @@ const {
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
+const task = taskList.submitApplication.tasks.checkAnswers;
 
 context('Insurance - Check your answers - Policy and exports - Single contract policy - Summary List', () => {
   let url;
