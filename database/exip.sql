@@ -64,7 +64,7 @@ CREATE TABLE `Application` (
   CONSTRAINT `Application_exporterBroker_fkey` FOREIGN KEY (`exporterBroker`) REFERENCES `ExporterBroker` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_exporterBusiness_fkey` FOREIGN KEY (`exporterBusiness`) REFERENCES `ExporterBusiness` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_exporterCompany_fkey` FOREIGN KEY (`exporterCompany`) REFERENCES `ExporterCompany` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Application_policyAndExport_fkey` FOREIGN KEY (`policyAndExport`) REFERENCES `PolicyAndExport` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `Application_policyAndExport_fkey` FOREIGN KEY (`policyAndExport`) REFERENCES `PolicyAndExport` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT `Application_sectionReview_fkey` FOREIGN KEY (`sectionReview`) REFERENCES `SectionReview` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
