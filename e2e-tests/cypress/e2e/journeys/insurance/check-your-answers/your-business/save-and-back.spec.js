@@ -1,25 +1,13 @@
-import {
-  headingCaption,
-  status,
-  submitButton,
-  saveAndBackButton,
-} from '../../../../pages/shared';
+import { submitButton, saveAndBackButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
-import { BUTTONS, PAGES, TASKS } from '../../../../../../content-strings';
+import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
-  START,
   ALL_SECTIONS,
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-    YOUR_BUSINESS,
-    YOUR_BUYER,
-  },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS },
 } = INSURANCE_ROUTES;
-
-const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUSINESS;
 
 const { taskList } = partials.insurancePartials;
 
