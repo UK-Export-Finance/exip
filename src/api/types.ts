@@ -44,7 +44,7 @@ interface Application {
   submissionType: string;
   submissionDate: string;
   status: string;
-  previousStatus: string;
+  previousStatus?: string;
   eligibility: ApplicationRelationship;
   exporter: ApplicationRelationship;
   policyAndExport: ApplicationRelationship;
