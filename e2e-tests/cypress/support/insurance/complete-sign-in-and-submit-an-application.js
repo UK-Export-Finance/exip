@@ -1,7 +1,4 @@
 import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-to-application';
-import partials from '../../e2e/partials';
-
-const { taskList } = partials.insurancePartials;
 
 /**
  * completeSignInAndSubmitAnApplication
@@ -16,16 +13,9 @@ const completeSignInAndSubmitAnApplication = () => {
 
   cy.completePrepareApplicationSinglePolicyType();
 
-  // go to the page we want to test.
-  taskList.submitApplication.tasks.declarations.link().click();
-
-  cy.completeAndSubmitDeclarationConfidentiality();
-  cy.completeAndSubmitDeclarationAntiBribery();
-  cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
-  cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct();
-  cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
-  cy.completeAndSubmitDeclarationHowYourDataWillBeUsed();
+  cy.completeAndSubmitDeclarations();
 
   return cy.getReferenceNumber().then((referenceNumber) => referenceNumber);
 };
+
 export default completeSignInAndSubmitAnApplication;

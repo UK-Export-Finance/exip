@@ -4,6 +4,7 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% import '../components/status-tag.njk' as statusTag %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -33,6 +34,15 @@
     <div class="govuk-grid-column-full-from-desktop">
       <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
       <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full-from-desktop govuk-!-margin-bottom-5">
+      {{ statusTag.render({
+        status: status,
+        dataCy: "status"
+      }) }}
     </div>
   </div>
 

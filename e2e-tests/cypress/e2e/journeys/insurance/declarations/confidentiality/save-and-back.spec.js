@@ -16,7 +16,7 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
 
-const task = taskList.submitApplication.tasks.declarations;
+const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
 context('Insurance - Declarations - Confidentiality page - Save and go back', () => {
   let referenceNumber;

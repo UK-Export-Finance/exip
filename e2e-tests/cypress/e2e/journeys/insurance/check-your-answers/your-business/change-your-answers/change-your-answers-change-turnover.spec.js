@@ -29,7 +29,7 @@ const {
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
+const task = taskList.submitApplication.tasks.checkAnswers;
 
 const { summaryList } = checkYourAnswersYourBusiness;
 

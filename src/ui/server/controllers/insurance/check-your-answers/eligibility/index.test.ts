@@ -5,6 +5,8 @@ import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { eligibilitySummaryList } from '../../../../helpers/summary-lists/eligibility';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import requiredFields from '../../../../helpers/required-fields/eligibility';
+import sectionStatus from '../../../../helpers/section-status';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -40,6 +42,10 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
       await get(req, res);
       const summaryList = eligibilitySummaryList(mockApplication.eligibility);
 
+      const fields = requiredFields();
+
+      const status = sectionStatus(fields, mockApplication);
+
       const expectedVariables = {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY,
@@ -49,6 +55,7 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
         renderNotificationBanner: true,
         eligibility: true,
         SUMMARY_LIST: summaryList,
+        status,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

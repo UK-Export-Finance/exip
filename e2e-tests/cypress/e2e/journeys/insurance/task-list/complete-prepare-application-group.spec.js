@@ -33,7 +33,7 @@ context('Insurance - Task list - complete `prepare application` group', () => {
     });
 
     it('should render a `declarations` task with a link and `not started` status', () => {
-      const task = taskList.submitApplication.tasks.declarations;
+      const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
       cy.checkTaskStatus(task, NOT_STARTED_YET);
     });

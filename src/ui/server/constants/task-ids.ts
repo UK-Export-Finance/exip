@@ -14,7 +14,7 @@ export const TASK_IDS = {
     BUYER: 'buyer',
   },
   SUBMIT_APPLICATION: {
-    DECLARATIONS: 'declarations',
-    CHECK_ANSWERS_AND_SUBMIT: 'checkAnswersAndSubmit',
+    CHECK_ANSWERS: 'checkAnswers',
+    DECLARATIONS_AND_SUBMIT: 'declarationsAndSubmit',
   },
 };

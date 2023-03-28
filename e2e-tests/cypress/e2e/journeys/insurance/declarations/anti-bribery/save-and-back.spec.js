@@ -18,7 +18,7 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_ANTI_BRIBERY;
 
-const task = taskList.submitApplication.tasks.declarations;
+const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
 context('Insurance - Declarations - Anti-bribery page - Save and go back', () => {
   let referenceNumber;

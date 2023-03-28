@@ -77,8 +77,8 @@ Cypress.Commands.add('completeAndSubmitNatureOfYourBusiness', require('./insuran
 Cypress.Commands.add('completeAndSubmitTurnoverForm', require('./insurance/complete-and-submit-turnover-form'));
 Cypress.Commands.add('completeAndSubmitBrokerForm', require('./insurance/complete-and-submit-broker-form'));
 
-Cypress.Commands.add('completePrepareApplicationSinglePolicyType', require('./insurance/complete-and-submit-prepare-your-application-section-single'));
-Cypress.Commands.add('completePrepareApplicationMultiplePolicyType', require('./insurance/complete-and-submit-prepare-your-application-section-multiple'));
+Cypress.Commands.add('completePrepareApplicationSinglePolicyType', require('./insurance/complete-prepare-your-application-section-single'));
+Cypress.Commands.add('completePrepareApplicationMultiplePolicyType', require('./insurance/complete-prepare-your-application-section-multiple'));
 
 Cypress.Commands.add('completeAndSubmitCompanyOrOrganisationForm', require('./insurance/your-buyer/complete-and-submit-company-or-organisation-form'));
 Cypress.Commands.add('completeAndSubmitWorkingWithBuyerForm', require('./insurance/your-buyer/complete-and-submit-working-with-buyer-form'));
@@ -90,6 +90,7 @@ Cypress.Commands.add('completeAndSubmitDeclarationAntiBriberyExportingWithCodeOf
 Cypress.Commands.add('completeAndSubmitDeclarationConfirmationAndAcknowledgements', require('./insurance/declarations/complete-and-submit-confirmation-and-acknowledgements-form'));
 Cypress.Commands.add('completeAndSubmitDeclarationHowYourDataWillBeUsed', require('./insurance/declarations/complete-and-submit-how-your-data-will-be-used-form'));
 
+Cypress.Commands.add('completeAndSubmitDeclarations', require('./insurance/complete-declarations'));
 Cypress.Commands.add('completeSignInAndSubmitAnApplication', require('./insurance/complete-sign-in-and-submit-an-application'));
 
 Cypress.Commands.add('assertAllSectionsUrl', require('./insurance/assert-all-sections-url'));
@@ -109,6 +110,7 @@ Cypress.Commands.add('checkText', require('./check-text'));
 Cypress.Commands.add('checkValue', require('./check-value'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
 Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));
+Cypress.Commands.add('checkTaskStatusCompleted', require('./check-completed-task-status'));
 Cypress.Commands.add('checkLink', require('./check-link'));
 Cypress.Commands.add('getReferenceNumber', require('./get-reference-number'));
 Cypress.Commands.add('keyboardInput', require('./keyboard-input'));

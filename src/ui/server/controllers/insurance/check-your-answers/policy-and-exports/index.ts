@@ -5,6 +5,8 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import { policyAndExportSummaryList } from '../../../../helpers/summary-lists/policy-and-export';
 import isPopulatedArray from '../../../../helpers/is-populated-array';
 import api from '../../../../api';
+import requiredFields from '../../../../helpers/required-fields/policy-and-exports';
+import sectionStatus from '../../../../helpers/section-status';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -31,7 +33,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = application;
+    const { referenceNumber, policyAndExport } = application;
 
     const countries = await api.keystone.countries.getAll();
     const currencies = await api.external.getCurrencies();
@@ -43,6 +45,10 @@ export const get = async (req: Request, res: Response) => {
 
     const summaryList = policyAndExportSummaryList(application.policyAndExport, referenceNumber, countries, currencies, checkAndChange);
 
+    const fields = requiredFields(policyAndExport.policyType);
+
+    const status = sectionStatus(fields, application);
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.POLICY_AND_EXPORTS,
@@ -50,6 +56,7 @@ export const get = async (req: Request, res: Response) => {
       }),
       SUMMARY_LIST: summaryList,
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_SAVE_AND_BACK}`,
+      status,
     });
   } catch (err) {
     console.error('Error getting check your answers - policy and exports', { err });

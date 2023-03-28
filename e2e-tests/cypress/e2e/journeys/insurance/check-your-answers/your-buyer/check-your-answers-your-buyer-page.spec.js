@@ -1,13 +1,11 @@
 import {
   headingCaption,
+  status,
   submitButton,
   saveAndBackButton,
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
-import {
-  BUTTONS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -24,7 +22,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER;
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
+const task = taskList.submitApplication.tasks.checkAnswers;
 
 context('Insurance - Check your answers - Your buyer page- I want to confirm my selection for the your buyer section of my export insurance application', () => {
   let referenceNumber;
@@ -79,6 +77,10 @@ context('Insurance - Check your answers - Your buyer page- I want to confirm my 
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
+
+    it('renders a `completed` status tag', () => {
+      cy.checkTaskStatusCompleted(status());
     });
 
     it('renders a `save and back` button', () => {

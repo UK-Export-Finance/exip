@@ -36,15 +36,15 @@ const taskList = {
   submitApplication: {
     groupHeading: () => cy.get(`[data-cy="task-list-group-heading-${SUBMIT_APPLICATION.HEADING}"]`),
     tasks: {
-      declarations: {
-        text: () => cy.get(`[data-cy="task-list-group-${SUBMIT_APPLICATION.HEADING}-task-${SUBMIT_APPLICATION.TASKS.DECLARATIONS}"]`),
-        link: () => cy.get(`[data-cy="task-list-group-${SUBMIT_APPLICATION.HEADING}-task-${SUBMIT_APPLICATION.TASKS.DECLARATIONS}-link"]`),
-        status: () => cy.get(`[data-cy="task-list-group-${SUBMIT_APPLICATION.HEADING}-task-${SUBMIT_APPLICATION.TASKS.DECLARATIONS}-status"]`),
+      checkAnswers: {
+        text: () => cy.get(`[data-cy="task-list-group-${SUBMIT_APPLICATION.HEADING}-task-${SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS}"]`),
+        link: () => cy.get(`[data-cy="task-list-group-${SUBMIT_APPLICATION.HEADING}-task-${SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS}-link"]`),
+        status: () => cy.get(`[data-cy="task-list-group-${SUBMIT_APPLICATION.HEADING}-task-${SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS}-status"]`),
       },
-      checkAnswersAndSubmit: {
-        text: () => cy.get(`[data-cy="task-list-group-${SUBMIT_APPLICATION.HEADING}-task-${SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT}"]`),
-        link: () => cy.get(`[data-cy="task-list-group-${SUBMIT_APPLICATION.HEADING}-task-${SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT}-link"]`),
-        status: () => cy.get(`[data-cy="task-list-group-${SUBMIT_APPLICATION.HEADING}-task-${SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS_AND_SUBMIT}-status"]`),
+      declarationsAndSubmit: {
+        text: () => cy.get(`[data-cy="task-list-group-${SUBMIT_APPLICATION.HEADING}-task-${SUBMIT_APPLICATION.TASKS.DECLARATIONS_AND_SUBMIT}"]`),
+        link: () => cy.get(`[data-cy="task-list-group-${SUBMIT_APPLICATION.HEADING}-task-${SUBMIT_APPLICATION.TASKS.DECLARATIONS_AND_SUBMIT}-link"]`),
+        status: () => cy.get(`[data-cy="task-list-group-${SUBMIT_APPLICATION.HEADING}-task-${SUBMIT_APPLICATION.TASKS.DECLARATIONS_AND_SUBMIT}-status"]`),
       },
     },
   },

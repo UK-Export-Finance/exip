@@ -1,4 +1,4 @@
-import { submitButton } from '../../../../../pages/shared';
+import { submitButton, status } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import {
   VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANY_EXAMPLE,
@@ -42,7 +42,7 @@ const {
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.submitApplication.tasks.checkAnswersAndSubmit;
+const task = taskList.submitApplication.tasks.checkAnswers;
 
 const { summaryList } = checkYourAnswersYourBusiness;
 
@@ -123,7 +123,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
         checkChangeAnswerRendered(fieldVariables);
 
@@ -134,6 +134,8 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         // cy.checkText(summaryList.field(COMPANY_SIC).value(), COMPANY_EXAMPLE.COMPANY_SIC);
 
         cy.checkText(summaryList.field(FINANCIAL_YEAR_END_DATE).value(), COMPANY_EXAMPLE.FINANCIAL_YEAR_END_DATE);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
@@ -171,8 +173,10 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         cy.checkText(summaryList.field(fieldId).value(), 'No');
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
@@ -210,8 +214,10 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         cy.checkText(summaryList.field(fieldId).value(), 'No');
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
@@ -248,9 +254,11 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
         checkChangeAnswerRendered(fieldVariables);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
@@ -287,9 +295,11 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
       });
 
-      it('should render the new answer', () => {
+      it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
         checkChangeAnswerRendered(fieldVariables);
+
+        cy.checkTaskStatusCompleted(status());
       });
     });
   });
