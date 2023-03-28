@@ -94,6 +94,8 @@ context('Insurance - Check your answers - Policy and exports - I want to confirm
 
   describe('form submission', () => {
     it(`should redirect to ${YOUR_BUSINESS}`, () => {
+      cy.navigateToUrl(url);
+
       submitButton().click();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;

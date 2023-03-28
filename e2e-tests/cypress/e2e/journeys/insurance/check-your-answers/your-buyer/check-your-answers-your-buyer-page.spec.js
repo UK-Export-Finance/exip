@@ -96,6 +96,8 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
 
     describe('form submission', () => {
       it(`should redirect to ${ALL_SECTIONS}`, () => {
+        cy.navigateToUrl(url);
+
         submitButton().click();
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
