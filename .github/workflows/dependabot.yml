@@ -14,7 +14,7 @@ updates:
     schedule:
       interval: 'daily'
     labels:
-     - 'chore'
+      - 'chore'
 
   # `API` package-*.json files
   - package-ecosystem: 'npm'
@@ -22,7 +22,7 @@ updates:
     schedule:
       interval: 'daily'
     labels:
-    - 'chore'
+      - 'chore'
 
   # `UI` package-*.json files
   - package-ecosystem: 'npm'
@@ -30,7 +30,7 @@ updates:
     schedule:
       interval: 'daily'
     labels:
-    - 'chore'
+      - 'chore'
 
   # `generate-exip-pricing-grid` package-*.json files
   - package-ecosystem: 'npm'
@@ -38,7 +38,7 @@ updates:
     schedule:
       interval: 'daily'
     labels:
-    - 'chore'
+      - 'chore'
 
   # `API` Dockerfile
   - package-ecosystem: 'docker'
@@ -46,7 +46,7 @@ updates:
     schedule:
       interval: 'daily'
     labels:
-    - 'chore'
+      - 'chore'
 
   # `UI` Dockerfile
   - package-ecosystem: 'docker'
@@ -54,7 +54,7 @@ updates:
     schedule:
       interval: 'daily'
     labels:
-    - 'chore'
+      - 'chore'
 
   # Git Hub Actions
   #  Set the directory to `/` for
@@ -64,4 +64,4 @@ updates:
     schedule:
       interval: 'daily'
     labels:
-    - 'chore'
+      - 'chore'
