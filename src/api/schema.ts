@@ -27,11 +27,11 @@ export const lists = {
         isIndexed: true,
       }),
       submissionDeadline: timestamp(),
+      submissionDate: timestamp(),
       submissionType: select({
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA,
       }),
-      submissionDate: timestamp(),
       status: text({
         validation: { isRequired: true },
       }),

@@ -27,8 +27,8 @@ model Application {
   eligibilityId                     String?            @map("eligibility")
   referenceNumber                   Int?
   submissionDeadline                DateTime?
-  submissionType                    String?            @default("Manual Inclusion Application")
   submissionDate                    DateTime?
+  submissionType                    String?            @default("Manual Inclusion Application")
   status                            String             @default("")
   previousStatus                    String             @default("")
   policyAndExport                   PolicyAndExport?   @relation("Application_policyAndExport", fields: [policyAndExportId], references: [id])

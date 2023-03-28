@@ -69,8 +69,8 @@ type Application {
   eligibility: Eligibility
   referenceNumber: Int
   submissionDeadline: DateTime
-  submissionType: String
   submissionDate: DateTime
+  submissionType: String
   status: String
   previousStatus: String
   policyAndExport: PolicyAndExport
@@ -98,8 +98,8 @@ input ApplicationWhereInput {
   eligibility: EligibilityWhereInput
   referenceNumber: IntNullableFilter
   submissionDeadline: DateTimeNullableFilter
-  submissionType: StringNullableFilter
   submissionDate: DateTimeNullableFilter
+  submissionType: StringNullableFilter
   status: StringFilter
   previousStatus: StringFilter
   policyAndExport: PolicyAndExportWhereInput
@@ -195,8 +195,8 @@ input ApplicationOrderByInput {
   updatedAt: OrderDirection
   referenceNumber: OrderDirection
   submissionDeadline: OrderDirection
-  submissionType: OrderDirection
   submissionDate: OrderDirection
+  submissionType: OrderDirection
   status: OrderDirection
   previousStatus: OrderDirection
 }
@@ -207,8 +207,8 @@ input ApplicationUpdateInput {
   eligibility: EligibilityRelateToOneForUpdateInput
   referenceNumber: Int
   submissionDeadline: DateTime
-  submissionType: String
   submissionDate: DateTime
+  submissionType: String
   status: String
   previousStatus: String
   policyAndExport: PolicyAndExportRelateToOneForUpdateInput
@@ -279,8 +279,8 @@ input ApplicationCreateInput {
   eligibility: EligibilityRelateToOneForCreateInput
   referenceNumber: Int
   submissionDeadline: DateTime
-  submissionType: String
   submissionDate: DateTime
+  submissionType: String
   status: String
   previousStatus: String
   policyAndExport: PolicyAndExportRelateToOneForCreateInput

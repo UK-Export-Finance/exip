@@ -36,6 +36,7 @@ CREATE TABLE `Application` (
   `eligibility` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `referenceNumber` int DEFAULT NULL,
   `submissionDeadline` datetime(3) DEFAULT NULL,
+	`submissionDate` datetime(3) DEFAULT NULL,
   `submissionType` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'Manual Inclusion Application',
   `policyAndExport` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`exporter` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

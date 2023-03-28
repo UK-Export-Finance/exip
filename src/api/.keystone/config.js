@@ -231,11 +231,11 @@ var lists = {
         isIndexed: true
       }),
       submissionDeadline: (0, import_fields.timestamp)(),
+      submissionDate: (0, import_fields.timestamp)(),
       submissionType: (0, import_fields.select)({
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
       }),
-      submissionDate: (0, import_fields.timestamp)(),
       status: (0, import_fields.text)({
         validation: { isRequired: true }
       }),
