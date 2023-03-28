@@ -1,40 +1,12 @@
 import { ExporterUpdateInput } from '.keystone/types'; // eslint-disable-line
 
-interface ApplicationEligibility {
-  id: string;
-}
-
-interface ApplicationPolicyAndExport {
-  id: string;
-}
-
-interface ApplicationExporterCompany {
-  id: string;
-}
-
-interface ApplicationExporterCompanyAddress {
-  id: string;
-}
-
-interface ApplicationExporterBusiness {
-  id: string;
-}
-
-interface ApplicationExporterBroker {
+interface ApplicationRelationship {
   id: string;
 }
 
 interface ApplicationBuyer {
   id: string;
   companyOrOrganisationName?: string;
-}
-
-interface ApplicationDeclaration {
-  id: string;
-}
-
-interface ApplicationExporter {
-  id: string;
 }
 
 interface AccountInput {
@@ -73,15 +45,15 @@ interface Application {
   submissionDate: string;
   status: string;
   previousStatus: string;
-  eligibility: ApplicationEligibility;
-  exporter: ApplicationExporter;
-  policyAndExport: ApplicationPolicyAndExport;
-  exporterCompany: ApplicationExporterCompany;
-  exporterCompanyAddress: ApplicationExporterCompanyAddress;
-  exporterBusiness: ApplicationExporterBusiness;
-  exporterBroker: ApplicationExporterBroker;
+  eligibility: ApplicationRelationship;
+  exporter: ApplicationRelationship;
+  policyAndExport: ApplicationRelationship;
+  exporterCompany: ApplicationRelationship;
+  exporterCompanyAddress: ApplicationRelationship;
+  exporterBusiness: ApplicationRelationship;
+  exporterBroker: ApplicationRelationship;
   buyer: ApplicationBuyer;
-  declaration: ApplicationDeclaration;
+  declaration: ApplicationRelationship;
 }
 
 type BufferEncoding = 'hex' | 'base64' | 'ascii';
