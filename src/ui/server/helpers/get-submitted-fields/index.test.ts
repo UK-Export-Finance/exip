@@ -36,15 +36,8 @@ describe('server/helpers/get-submitted-fields', () => {
       });
     });
 
-    describe('when submitted data or fieldId is not provided', () => {
+    describe('when the submitted field is an unpopulated array', () => {
       it('should return false', () => {
-        // @ts-ignore
-        const result = hasSubmittedField();
-
-        expect(result).toEqual(false);
-      });
-
-      it('should return false when array is empty', () => {
         const mockApplicationNoSic = {
           ...mockApplication,
         };

@@ -10,12 +10,17 @@ import isFieldFalseOrZero from '../is-field-false-or-zero';
  */
 // Note: this assumes that any data in submitted fields is a valid answer. E.g, false boolean is a valid answer.
 export const hasSubmittedField = (submittedData: ApplicationFlat, fieldId: string) => {
+  const fieldValue = submittedData[fieldId];
+
   // if array, check it is not empty array
-  if (submittedData && fieldId && isPopulatedArray(submittedData[fieldId])) {
+  if (isPopulatedArray(fieldValue)) {
     return true;
   }
 
-  if (submittedData && fieldId && (submittedData[fieldId] || isFieldFalseOrZero(submittedData[fieldId])) && !Array.isArray(submittedData[fieldId])) {
+  const hasFieldValue = fieldValue || isFieldFalseOrZero(fieldValue);
+  const isArray = Array.isArray(fieldValue);
+
+  if (hasFieldValue && !isArray) {
     return true;
   }
 
