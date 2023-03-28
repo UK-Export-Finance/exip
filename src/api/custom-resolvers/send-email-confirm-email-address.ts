@@ -1,7 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import sendEmail from '../emails';
 import getExporterById from '../helpers/get-exporter-by-id';
-import { SendEmailConfirmEmailAddressVariables } from '../types';
+import { SendExporterEmailVariables } from '../types';
 
 /**
  * sendEmailConfirmEmailAddress
@@ -10,7 +10,7 @@ import { SendEmailConfirmEmailAddressVariables } from '../types';
  * @param {Object} KeystoneJS context API
  * @returns {Object} Object with success flag and emailRecipient
  */
-const sendEmailConfirmEmailAddress = async (root: any, variables: SendEmailConfirmEmailAddressVariables, context: Context) => {
+const sendEmailConfirmEmailAddress = async (root: any, variables: SendExporterEmailVariables, context: Context) => {
   try {
     // get the exporter
     const exporter = await getExporterById(context, variables.exporterId);

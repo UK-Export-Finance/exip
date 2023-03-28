@@ -137,6 +137,13 @@ var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
     CONFIRM_EMAIL: "24022e94-171c-4044-b0ee-d22418116575",
     SECURITY_CODE: "b92650d1-9187-4510-ace2-5eec7ca7e626"
+  },
+  APPLICATION: {
+    SUBMISSION: {
+      EXPORTER: {
+        CONFIRMATION: "2e9084e2-d871-4be7-85d0-0ccc1961b148"
+      }
+    }
   }
 };
 
@@ -205,9 +212,22 @@ var securityCodeEmail = async (emailAddress, firstName, securityCode) => {
     throw new Error(`Sending security code email for account sign in ${err}`);
   }
 };
+var applicationSubmittedEmail = async (emailAddress, firstName, referenceNumber, buyerName) => {
+  try {
+    console.info("Sending application submitted email");
+    const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+    const variables = { firstName, referenceNumber, buyerName };
+    const response = await callNotify(templateId, emailAddress, firstName, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending application submitted email ${err}`);
+  }
+};
 var sendEmail = {
   confirmEmailAddress,
-  securityCodeEmail
+  securityCodeEmail,
+  applicationSubmittedEmail
 };
 var emails_default = sendEmail;
 
@@ -1280,6 +1300,39 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
+// emails/send-email-application-submitted.ts
+var sendEmailApplicationSubmitted = async (context, accountId, buyerId, referenceNumber) => {
+  try {
+    const exporter = await get_exporter_by_id_default(context, accountId);
+    if (!exporter) {
+      console.info("Sending email to exporter - application submitted - no exporter exists with the provided ID");
+      return {
+        success: false
+      };
+    }
+    const buyer = await context.db.Buyer.findOne({
+      where: { id: buyerId }
+    });
+    if (!buyer) {
+      console.info("Sending email to exporter - application submitted - no buyer exists with the provided ID");
+      return {
+        success: false
+      };
+    }
+    const buyerName = buyer.companyOrOrganisationName;
+    const { email, firstName } = exporter;
+    const emailResponse = await emails_default.applicationSubmittedEmail(email, firstName, referenceNumber, buyerName);
+    if (emailResponse.success) {
+      return emailResponse;
+    }
+    throw new Error(`Sending email to exporter - application submitted ${emailResponse}`);
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending email to exporter - application submitted ${err}`);
+  }
+};
+var send_email_application_submitted_default = sendEmailApplicationSubmitted;
+
 // custom-resolvers/submit-application.ts
 var submitApplication = async (root, variables, context) => {
   try {
@@ -1300,6 +1353,8 @@ var submitApplication = async (root, variables, context) => {
           where: { id: application.id },
           data: update
         });
+        const { referenceNumber, exporterId, buyerId } = application;
+        await send_email_application_submitted_default(context, exporterId, buyerId, referenceNumber);
         return {
           success: true
         };
@@ -1673,7 +1728,7 @@ var keystone_default = withAuth(
     db: {
       provider: "mysql",
       url: String(process.env.DATABASE_URL),
-      enableLogging: true
+      enableLogging: false
     },
     ui: {
       isAccessAllowed: (context) => !!context.session?.data

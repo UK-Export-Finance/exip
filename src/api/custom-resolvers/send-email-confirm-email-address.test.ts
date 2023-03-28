@@ -5,7 +5,7 @@ import baseConfig from '../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from '../emails';
 import { mockAccount } from '../test-mocks';
-import { Account, SendEmailConfirmEmailAddressVariables } from '../types';
+import { Account, SendExporterEmailVariables } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -17,7 +17,7 @@ const context = getContext(config, PrismaModule) as Context;
 
 describe('custom-resolvers/send-email-confirm-email-address', () => {
   let exporter: Account;
-  let variables: SendEmailConfirmEmailAddressVariables;
+  let variables: SendExporterEmailVariables;
 
   jest.mock('../emails');
 

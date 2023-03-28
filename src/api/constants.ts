@@ -111,4 +111,11 @@ export const EMAIL_TEMPLATE_IDS = {
     CONFIRM_EMAIL: '24022e94-171c-4044-b0ee-d22418116575',
     SECURITY_CODE: 'b92650d1-9187-4510-ace2-5eec7ca7e626',
   },
+  APPLICATION: {
+    SUBMISSION: {
+      EXPORTER: {
+        CONFIRMATION: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
+      },
+    },
+  },
 };

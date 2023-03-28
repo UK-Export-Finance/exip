@@ -26,9 +26,14 @@ interface ApplicationExporterBroker {
 
 interface ApplicationBuyer {
   id: string;
+  companyOrOrganisationName?: string;
 }
 
 interface ApplicationDeclaration {
+  id: string;
+}
+
+interface ApplicationExporter {
   id: string;
 }
 
@@ -69,6 +74,7 @@ interface Application {
   status: string;
   previousStatus: string;
   eligibility: ApplicationEligibility;
+  exporter: ApplicationExporter;
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;
   exporterCompanyAddress: ApplicationExporterCompanyAddress;
@@ -115,8 +121,9 @@ interface VerifyEmailAddressResponse {
   emailRecipient?: string;
 }
 
-interface SendEmailConfirmEmailAddressVariables {
+interface SendExporterEmailVariables {
   exporterId: string;
+  referenceNumber?: string;
 }
 
 interface AccountCreationVariables {
@@ -187,13 +194,14 @@ export {
   AddOtpToAccountVariables,
   AddAndGetOtpResponse,
   Application,
+  ApplicationBuyer,
   BufferEncoding,
   CompanyResponse,
   EmailResponse,
   SicCodes,
-  SendEmailConfirmEmailAddressVariables,
   SubmitApplicationVariables,
   SubmitApplicationResponse,
+  SendExporterEmailVariables,
   VerifyEmailAddressVariables,
   VerifyEmailAddressResponse,
   VerifyAccountSignInCodeVariables,
