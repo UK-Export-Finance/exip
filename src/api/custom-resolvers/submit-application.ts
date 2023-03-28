@@ -58,6 +58,7 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
     };
   } catch (err) {
     console.error(err);
+
     throw new Error(`Submitting application ${err}`);
   }
 };

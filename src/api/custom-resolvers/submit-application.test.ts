@@ -6,7 +6,7 @@ import submitApplication from './submit-application';
 import { APPLICATION } from '../constants';
 import sendEmail from '../emails';
 import { mockAccount } from '../test-mocks';
-import { Account, Application, ApplicationBuyer, SubmitApplicationResponse } from '../types';
+import { Account, Application, ApplicationBuyer, SubmitApplicationVariables, SubmitApplicationResponse } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -16,12 +16,51 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
+const createRequiredData = async () => {
+  // create a new exporter
+  const exporter = (await context.query.Exporter.createOne({
+    data: mockAccount,
+    query: 'id firstName email',
+  })) as Account;
+
+  const mockBuyer = {
+    companyOrOrganisationName: 'Mock buyer',
+  };
+
+  // create a new application
+  const application = (await context.query.Application.createOne({
+    query: 'id referenceNumber exporter { id } buyer { id }',
+    data: {
+      exporter: {
+        connect: {
+          id: exporter.id,
+        },
+      },
+    },
+  })) as Application;
+
+  // update the buyer so there is a name.
+  const buyer = (await context.query.Buyer.updateOne({
+    where: {
+      id: application.buyer.id,
+    },
+    data: mockBuyer,
+    query: 'id companyOrOrganisationName',
+  })) as ApplicationBuyer;
+
+  return {
+    exporter,
+    application,
+    buyer,
+  };
+};
+
 describe('custom-resolvers/submit-application', () => {
   let exporter: Account;
   let buyer: ApplicationBuyer;
   let application: Application;
   let submittedApplication: Application;
-  let variables;
+  let variables: SubmitApplicationVariables;
   let result: SubmitApplicationResponse;
 
   jest.mock('../emails');
@@ -37,36 +76,11 @@ describe('custom-resolvers/submit-application', () => {
 
     sendEmail.applicationSubmittedEmail = sendEmailApplicationSubmittedSpy;
 
-    // create a new exporter
-    exporter = (await context.query.Exporter.createOne({
-      data: mockAccount,
-      query: 'id firstName email',
-    })) as Account;
+    const data = await createRequiredData();
 
-    const mockBuyer = {
-      companyOrOrganisationName: 'Mock buyer',
-    };
-
-    // create a new application
-    application = (await context.query.Application.createOne({
-      query: 'id referenceNumber exporter { id } buyer { id }',
-      data: {
-        exporter: {
-          connect: {
-            id: exporter.id,
-          },
-        },
-      },
-    })) as Application;
-
-    // update the buyer so there is a name.
-    buyer = (await context.query.Buyer.updateOne({
-      where: {
-        id: application.buyer.id,
-      },
-      data: mockBuyer,
-      query: 'id companyOrOrganisationName',
-    })) as ApplicationBuyer;
+    exporter = data.exporter;
+    application = data.application;
+    buyer = data.buyer;
 
     variables = {
       applicationId: application.id,
@@ -164,8 +178,9 @@ describe('custom-resolvers/submit-application', () => {
       try {
         await submitApplication({}, variables, context);
       } catch (err) {
-        const expected = new Error(`Submitting application Input error: Only a cuid can be passed to id filters`);
-        expect(err).toEqual(expected);
+        const expectedError = new Error(`Submitting application Input error: Only a cuid can be passed to id filters`);
+
+        expect(err).toEqual(expectedError);
       }
     });
   });
