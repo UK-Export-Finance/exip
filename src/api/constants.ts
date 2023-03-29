@@ -121,6 +121,9 @@ export const EMAIL_TEMPLATE_IDS = {
           ANTI_BRIBERY_AND_TRADING_HISTORY: '49753c34-24b5-4cad-a7c5-1ab32d711dfe',
         },
       },
+      UNDERWRITING_TEAM: {
+        NOTIFICATION: '676e4655-1e82-4094-9e3e-387ea91f44df',
+      },
     },
   },
 };

@@ -79,28 +79,72 @@ const securityCodeEmail = async (emailAddress: string, firstName: string, securi
   }
 };
 
-/**
- * applicationSubmittedEmail
- * Send "application submitted" email to an exporter
- * @param {Object} ApplicationSubmissionEmailVariables
- * @returns {Object} callNotify response
- */
-const applicationSubmittedEmail = async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
-  try {
-    console.info('Sending application submitted email');
+// /**
+//  * applicationSubmitted
+//  * Send "application submitted" email to an exporter
+//  * @param {Object} ApplicationSubmissionEmailVariables
+//  * @returns {Object} callNotify response
+//  */
+// const applicationSubmitted = async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
+//   try {
+//     console.info('Sending application submitted email');
 
-    const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+//     const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
 
-    const { emailAddress, firstName } = variables;
+//     const { emailAddress, firstName } = variables;
 
-    const response = await callNotify(templateId, emailAddress, firstName, variables);
+//     const response = await callNotify(templateId, emailAddress, firstName, variables);
 
-    return response;
-  } catch (err) {
-    console.error(err);
+//     return response;
+//   } catch (err) {
+//     console.error(err);
 
-    throw new Error(`Sending application submitted email ${err}`);
-  }
+//     throw new Error(`Sending application submitted email ${err}`);
+//   }
+// };
+
+// /**
+//  * applicationSubmitted
+//  * Send "application submitted" email to the underwriting team
+//  * @param {Object} ApplicationSubmissionEmailVariables
+//  * @returns {Object} callNotify response
+//  */
+
+const applicationSubmitted = {
+  exporter: async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
+    try {
+      console.info('Sending application submitted email to exporter');
+
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+
+      const { emailAddress, firstName } = variables;
+
+      const response = await callNotify(templateId, emailAddress, firstName, variables);
+
+      return response;
+    } catch (err) {
+      console.error(err);
+
+      throw new Error(`Sending application submitted email to exporter ${err}`);
+    }
+  },
+  underwritingTeam: async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
+    try {
+      console.info('Sending application submitted email to underwriting team');
+
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.UNDERWRITING_TEAM.NOTIFICATION;
+
+      const { emailAddress, firstName } = variables;
+
+      const response = await callNotify(templateId, emailAddress, firstName, variables);
+
+      return response;
+    } catch (err) {
+      console.error(err);
+
+      throw new Error(`Sending application submitted email to underwriting team ${err}`);
+    }
+  },
 };
 
 /**
@@ -129,7 +173,7 @@ const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, te
 const sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
-  applicationSubmittedEmail,
+  applicationSubmitted,
   documentsEmail,
 };
 
