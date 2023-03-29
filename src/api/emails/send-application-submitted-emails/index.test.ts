@@ -4,6 +4,7 @@ import sendApplicationSubmittedEmails from '.';
 import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from '../index';
+import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import { mockAccount, mockBuyer, mockApplicationDeclaration, mockSendEmailResponse } from '../../test-mocks';
 import { Account, Application, ApplicationBuyer, ApplicationDeclaration, ApplicationSubmissionEmailVariables } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -87,35 +88,86 @@ describe('emails/send-email-application-submitted', () => {
       expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
     });
 
-    test('it should call sendEmail.documentsEmail with a template flag of true', async () => {
+    test('it should call sendEmail.documentsEmail with correct template ID ', async () => {
       await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
 
       expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
-      const templateFlag = true;
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
 
-      expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateFlag);
+      expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
     });
 
-    describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct', () => {
+    describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and buyer has exporterIsConnectedWithBuyer', () => {
       beforeEach(async () => {
         declaration = (await context.query.Declaration.updateOne({
           where: { id: application.declaration.id },
           data: {
             hasAntiBriberyCodeOfConduct: 'No',
           },
-          query: 'id',
         })) as ApplicationDeclaration;
       });
 
-      test('it should call sendEmail.documentsEmail with a template flag of false', async () => {
+      test('it should call sendEmail.documentsEmail with correct template ID', async () => {
         await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
-        const templateFlag = false;
+        const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
 
-        expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateFlag);
+        expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
+      });
+    });
+
+    describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and does NOT have exporterIsConnectedWithBuyer', () => {
+      beforeEach(async () => {
+        declaration = (await context.query.Declaration.updateOne({
+          where: { id: application.declaration.id },
+          data: {
+            hasAntiBriberyCodeOfConduct: 'No',
+          },
+        })) as ApplicationDeclaration;
+
+        buyer = (await context.query.Buyer.updateOne({
+          where: { id: application.buyer.id },
+          data: {
+            exporterIsConnectedWithBuyer: 'No',
+          },
+        })) as ApplicationDeclaration;
+      });
+
+      test('it should NOT call sendEmail.documentsEmail', async () => {
+        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+
+        expect(documentsEmailSpy).toHaveBeenCalledTimes(0);
+      });
+    });
+
+    describe('when the declaration has an answer of `Yes` for hasAntiBriberyCodeOfConduct and does NOT have exporterIsConnectedWithBuyer', () => {
+      beforeEach(async () => {
+        declaration = (await context.query.Declaration.updateOne({
+          where: { id: application.declaration.id },
+          data: {
+            hasAntiBriberyCodeOfConduct: 'Yes',
+          },
+        })) as ApplicationDeclaration;
+
+        buyer = (await context.query.Buyer.updateOne({
+          where: { id: application.buyer.id },
+          data: {
+            exporterIsConnectedWithBuyer: 'No',
+          },
+        })) as ApplicationDeclaration;
+      });
+
+      test('it should NOT call sendEmail.documentsEmail', async () => {
+        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+
+        expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
+
+        const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
+
+        expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
       });
     });
   });

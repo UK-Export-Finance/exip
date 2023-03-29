@@ -110,15 +110,9 @@ const applicationSubmittedEmail = async (variables: ApplicationSubmissionEmailVa
  * @param {Boolean} Flag for sending anto-bribery/trading history template
  * @returns {Object} callNotify response
  */
-const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, useAntiBriberyAndTradingHistoryTemplate?: boolean): Promise<EmailResponse> => {
+const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, templateId: string): Promise<EmailResponse> => {
   try {
     console.info('Sending documents email');
-
-    let templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
-
-    if (useAntiBriberyAndTradingHistoryTemplate) {
-      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
-    }
 
     const { emailAddress, firstName } = variables;
 

@@ -117,6 +117,7 @@ export const EMAIL_TEMPLATE_IDS = {
         CONFIRMATION: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
         SEND_DOCUMENTS: {
           TRADING_HISTORY: '1ae4d77e-58d6-460e-99c0-b62bf08d8c52',
+          ANTI_BRIBERY: '002e43e3-ca78-4b9c-932f-6833014bb1e4',
           ANTI_BRIBERY_AND_TRADING_HISTORY: '49753c34-24b5-4cad-a7c5-1ab32d711dfe',
         },
       },

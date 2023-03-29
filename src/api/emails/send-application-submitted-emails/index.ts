@@ -1,6 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import sendEmail from '../index';
 import getExporterById from '../../helpers/get-exporter-by-id';
+import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import { SubmitApplicationResponse, ApplicationSubmissionEmailVariables } from '../../types';
 
 /**
@@ -74,23 +75,41 @@ const send = async (
       throw new Error('Sending application submitted emails to exporter');
     }
 
-    // send "documents" email
+    // send "documents" email depending on submitted answers
     let documentsResponse;
-    let useAntiBriberyAndTradingHistoryTemplate = false;
 
-    if (buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === 'Yes') {
-      if (declaration.hasAntiBriberyCodeOfConduct === 'Yes') {
-        useAntiBriberyAndTradingHistoryTemplate = true;
-      }
+    let templateId = '';
 
-      documentsResponse = await sendEmail.documentsEmail(sendEmailVars, useAntiBriberyAndTradingHistoryTemplate);
+    const hasAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === 'Yes';
+
+    if (hasAntiBriberyCodeOfConduct) {
+      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
+    }
+
+    const isConectedWithBuyer = buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === 'Yes';
+
+    if (isConectedWithBuyer) {
+      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
+    }
+
+    if (hasAntiBriberyCodeOfConduct && isConectedWithBuyer) {
+      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
+    }
+
+    if (templateId) {
+      documentsResponse = await sendEmail.documentsEmail(sendEmailVars, templateId);
 
       if (documentsResponse.success) {
         return documentsResponse;
       }
+
+      throw new Error(`Sending application submitted emails to exporter ${documentsResponse}`);
     }
 
-    throw new Error(`Sending application submitted emails to exporter ${documentsResponse}`);
+    // no need to send "documents" email
+    return {
+      success: true,
+    };
   } catch (err) {
     console.error(err);
 
