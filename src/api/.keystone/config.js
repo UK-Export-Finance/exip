@@ -1360,7 +1360,7 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
 // emails/send-application-submitted-emails/index.ts
-var sendApplicationSubmittedEmails = async (context, referenceNumber, accountId, buyerId, declarationId) => {
+var send = async (context, referenceNumber, accountId, buyerId, declarationId) => {
   try {
     const exporter = await get_exporter_by_id_default(context, accountId);
     if (!exporter) {
@@ -1415,6 +1415,9 @@ var sendApplicationSubmittedEmails = async (context, referenceNumber, accountId,
     throw new Error(`Sending application submitted emails to exporter ${err}`);
   }
 };
+var sendApplicationSubmittedEmails = {
+  send
+};
 var send_application_submitted_emails_default = sendApplicationSubmittedEmails;
 
 // custom-resolvers/submit-application.ts
@@ -1438,7 +1441,7 @@ var submitApplication = async (root, variables, context) => {
           data: update
         });
         const { referenceNumber, exporterId, buyerId, declarationId } = application;
-        await send_application_submitted_emails_default(context, referenceNumber, exporterId, buyerId, declarationId);
+        await send_application_submitted_emails_default.send(context, referenceNumber, exporterId, buyerId, declarationId);
         return {
           success: true
         };
