@@ -4,7 +4,7 @@ import getExporterById from '../../helpers/get-exporter-by-id';
 import { SubmitApplicationResponse, ApplicationSubmissionEmailVariables } from '../../types';
 
 /**
- * sendApplicationSubmittedEmails
+ * applicationSubmittedEmails.send
  * Send "application submitted" emails
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SendEmailConfirmEmailAddress mutation
@@ -98,8 +98,8 @@ const send = async (
   }
 };
 
-const sendApplicationSubmittedEmails = {
+const applicationSubmittedEmails = {
   send,
 };
 
-export default sendApplicationSubmittedEmails;
+export default applicationSubmittedEmails;
