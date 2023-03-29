@@ -3,18 +3,10 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import baseConfig from '../keystone';
 import submitApplication from './submit-application';
+import applicationSubmittedEmails from '../emails/send-application-submitted-emails';
 import { APPLICATION } from '../constants';
-import sendEmail from '../emails';
 import { mockAccount, mockBuyer, mockApplicationDeclaration, mockSendEmailResponse } from '../test-mocks';
-import {
-  Account,
-  Application,
-  ApplicationBuyer,
-  ApplicationDeclaration,
-  SubmitApplicationVariables,
-  SubmitApplicationResponse,
-  ApplicationSubmissionEmailVariables,
-} from '../types';
+import { Account, Application, ApplicationBuyer, ApplicationDeclaration, SubmitApplicationVariables, SubmitApplicationResponse } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -79,29 +71,29 @@ const createRequiredData = async () => {
 describe('custom-resolvers/submit-application', () => {
   let exporter: Account;
   let buyer: ApplicationBuyer;
+  let declaration: ApplicationDeclaration;
   let application: Application;
   let submittedApplication: Application;
   let variables: SubmitApplicationVariables;
   let result: SubmitApplicationResponse;
 
-  jest.mock('../emails');
+  // jest.mock('../emails');
+  jest.mock('../emails/send-application-submitted-emails');
 
-  let sendApplicationSubmittedEmailSpy = jest.fn();
-  let sendDocumentsEmailSpy = jest.fn();
+  let applicationSubmittedEmailsSpy = jest.fn();
 
   beforeEach(async () => {
     jest.resetAllMocks();
 
-    sendApplicationSubmittedEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-    sendDocumentsEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+    applicationSubmittedEmailsSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-    sendEmail.applicationSubmittedEmail = sendApplicationSubmittedEmailSpy;
-    sendEmail.documentsEmail = sendDocumentsEmailSpy;
+    applicationSubmittedEmails.send = applicationSubmittedEmailsSpy;
 
     const data = await createRequiredData();
 
     exporter = data.exporter;
     buyer = data.buyer;
+    declaration = data.declaration;
     application = data.application;
 
     variables = {
@@ -144,90 +136,12 @@ describe('custom-resolvers/submit-application', () => {
   });
 
   describe('emails', () => {
-    let expectedSendEmailVars: ApplicationSubmissionEmailVariables;
-
-    beforeEach(() => {
-      const { email, firstName } = exporter;
-      const { referenceNumber } = application;
-      const { companyOrOrganisationName } = buyer;
-
-      expectedSendEmailVars = {
-        emailAddress: email,
-        firstName,
-        referenceNumber,
-        buyerName: companyOrOrganisationName,
-      } as ApplicationSubmissionEmailVariables;
-    });
-
-    test('it should call sendEmail.applicationSubmittedEmail', async () => {
+    test('it should call applicationSubmittedEmails.send with a template flag of true', async () => {
       result = await submitApplication({}, variables, context);
 
-      expect(sendApplicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendApplicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
-    });
+      expect(applicationSubmittedEmailsSpy).toHaveBeenCalledTimes(1);
 
-    test('it should call sendEmail.documentsEmail with a template flag of true', async () => {
-      result = await submitApplication({}, variables, context);
-
-      expect(sendDocumentsEmailSpy).toHaveBeenCalledTimes(1);
-
-      const templateFlag = true;
-
-      expect(sendDocumentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateFlag);
-    });
-
-    describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct', () => {
-      let newApplication: Application;
-
-      beforeEach(async () => {
-        jest.resetAllMocks();
-
-        sendApplicationSubmittedEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-        sendDocumentsEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-
-        sendEmail.applicationSubmittedEmail = sendApplicationSubmittedEmailSpy;
-        sendEmail.documentsEmail = sendDocumentsEmailSpy;
-
-        // create a new application
-        newApplication = (await context.query.Application.createOne({
-          query: 'id referenceNumber exporter { id } buyer { id } declaration { id }',
-          data: {
-            exporter: {
-              connect: {
-                id: exporter.id,
-              },
-            },
-          },
-        })) as Application;
-
-        // update the buyer so there is a name
-        await updateBuyer(newApplication.buyer.id);
-
-        // update the declaration so there is an answer of "no"
-        (await context.query.Declaration.updateOne({
-          where: {
-            id: newApplication.declaration.id,
-          },
-          data: {
-            hasAntiBriberyCodeOfConduct: 'No',
-          },
-          query: 'id hasAntiBriberyCodeOfConduct',
-        })) as ApplicationDeclaration;
-
-        variables.applicationId = newApplication.id;
-      });
-
-      test('it should call sendEmail.documentsEmail with a template flag of false', async () => {
-        result = await submitApplication({}, variables, context);
-
-        expect(sendDocumentsEmailSpy).toHaveBeenCalledTimes(1);
-
-        expectedSendEmailVars.referenceNumber = newApplication.referenceNumber;
-
-        const templateFlag = false;
-
-        expect(sendDocumentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateFlag);
-      });
+      expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
     });
   });
 

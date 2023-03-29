@@ -81,14 +81,14 @@ describe('emails/send-email-application-submitted', () => {
     });
 
     test('it should call sendEmail.applicationSubmittedEmail', async () => {
-      await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+      await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
 
       expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
       expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
     });
 
     test('it should call sendEmail.documentsEmail with a template flag of true', async () => {
-      await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+      await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
 
       expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -109,7 +109,7 @@ describe('emails/send-email-application-submitted', () => {
       });
 
       test('it should call sendEmail.documentsEmail with a template flag of false', async () => {
-        await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -121,7 +121,7 @@ describe('emails/send-email-application-submitted', () => {
   });
 
   it('should return the email response', async () => {
-    const result = await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+    const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
 
     const expected = {
       success: true,
@@ -140,7 +140,7 @@ describe('emails/send-email-application-submitted', () => {
         where: exporters,
       });
 
-      const result = await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+      const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
 
       const expected = { success: false };
 
@@ -157,7 +157,7 @@ describe('emails/send-email-application-submitted', () => {
         where: buyers,
       });
 
-      const result = await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+      const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
 
       const expected = { success: false };
 
@@ -172,7 +172,7 @@ describe('emails/send-email-application-submitted', () => {
 
     test('should throw an error', async () => {
       try {
-        await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
       } catch (err) {
         const expected = new Error(`Sending application submitted emails to exporter ${mockSendEmailResponse}`);
 

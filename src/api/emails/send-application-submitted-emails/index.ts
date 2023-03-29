@@ -10,7 +10,7 @@ import { SubmitApplicationResponse, ApplicationSubmissionEmailVariables } from '
  * @param {Object} KeystoneJS context API
  * @returns {Object} Object with success flag and emailRecipient
  */
-const sendApplicationSubmittedEmails = async (
+const send = async (
   context: Context,
   referenceNumber: number,
   accountId: string,
@@ -95,6 +95,10 @@ const sendApplicationSubmittedEmails = async (
 
     throw new Error(`Sending application submitted emails to exporter ${err}`);
   }
+};
+
+const sendApplicationSubmittedEmails = {
+  send,
 };
 
 export default sendApplicationSubmittedEmails;
