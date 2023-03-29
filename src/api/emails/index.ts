@@ -81,10 +81,8 @@ const securityCodeEmail = async (emailAddress: string, firstName: string, securi
 
 /**
  * applicationSubmittedEmail
- * @param {String} Email address
- * @param {String} First name
- * @param {Number} Application reference number
- * @param {String} Buyer name
+ * Send "application submitted" email to an exporter
+ * @param {Object} ApplicationSubmissionEmailVariables
  * @returns {Object} callNotify response
  */
 const applicationSubmittedEmail = async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
@@ -107,10 +105,9 @@ const applicationSubmittedEmail = async (variables: ApplicationSubmissionEmailVa
 
 /**
  * documentsEmail
- * @param {String} Email address
- * @param {String} First name
- * @param {Number} Application reference number
- * @param {String} Buyer name
+ * Send "we need some documents from you" email to an exporter
+ * @param {Object} ApplicationSubmissionEmailVariables
+ * @param {Boolean} Flag for sending anto-bribery/trading history template
  * @returns {Object} callNotify response
  */
 const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, useAntiBriberyAndTradingHistoryTemplate?: boolean): Promise<EmailResponse> => {

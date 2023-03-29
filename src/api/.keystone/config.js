@@ -1399,13 +1399,12 @@ var sendApplicationSubmittedEmails = async (context, referenceNumber, accountId,
       throw new Error("Sending application submitted emails to exporter");
     }
     let documentsResponse;
+    let useAntiBriberyAndTradingHistoryTemplate = false;
     if (buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === "Yes") {
       if (declaration.hasAntiBriberyCodeOfConduct === "Yes") {
-        const useAntiBriberyAndTradingHistoryTemplate = true;
-        documentsResponse = await emails_default.documentsEmail(sendEmailVars, useAntiBriberyAndTradingHistoryTemplate);
-      } else {
-        documentsResponse = await emails_default.documentsEmail(sendEmailVars);
+        useAntiBriberyAndTradingHistoryTemplate = true;
       }
+      documentsResponse = await emails_default.documentsEmail(sendEmailVars, useAntiBriberyAndTradingHistoryTemplate);
       if (documentsResponse.success) {
         return documentsResponse;
       }

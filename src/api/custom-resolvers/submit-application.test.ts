@@ -166,14 +166,14 @@ describe('custom-resolvers/submit-application', () => {
       expect(sendApplicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
     });
 
-    test('it should call sendEmail.documentsEmail', async () => {
+    test('it should call sendEmail.documentsEmail with a template flag of true', async () => {
       result = await submitApplication({}, variables, context);
 
       expect(sendDocumentsEmailSpy).toHaveBeenCalledTimes(1);
 
-      const useAntiBriberyAndTradingHistoryTemplate = true;
+      const templateFlag = true;
 
-      expect(sendDocumentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, useAntiBriberyAndTradingHistoryTemplate);
+      expect(sendDocumentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateFlag);
     });
 
     describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct', () => {
@@ -217,13 +217,16 @@ describe('custom-resolvers/submit-application', () => {
         variables.applicationId = newApplication.id;
       });
 
-      test('it should call sendEmail.documentsEmail without a template flag', async () => {
+      test('it should call sendEmail.documentsEmail with a template flag of false', async () => {
         result = await submitApplication({}, variables, context);
 
         expect(sendDocumentsEmailSpy).toHaveBeenCalledTimes(1);
 
         expectedSendEmailVars.referenceNumber = newApplication.referenceNumber;
-        expect(sendDocumentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
+
+        const templateFlag = false;
+
+        expect(sendDocumentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateFlag);
       });
     });
   });

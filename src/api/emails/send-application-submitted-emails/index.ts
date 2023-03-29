@@ -75,15 +75,14 @@ const sendApplicationSubmittedEmails = async (
 
     // send "documents" email
     let documentsResponse;
+    let useAntiBriberyAndTradingHistoryTemplate = false;
 
     if (buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === 'Yes') {
       if (declaration.hasAntiBriberyCodeOfConduct === 'Yes') {
-        const useAntiBriberyAndTradingHistoryTemplate = true;
-
-        documentsResponse = await sendEmail.documentsEmail(sendEmailVars, useAntiBriberyAndTradingHistoryTemplate);
-      } else {
-        documentsResponse = await sendEmail.documentsEmail(sendEmailVars);
+        useAntiBriberyAndTradingHistoryTemplate = true;
       }
+
+      documentsResponse = await sendEmail.documentsEmail(sendEmailVars, useAntiBriberyAndTradingHistoryTemplate);
 
       if (documentsResponse.success) {
         return documentsResponse;
