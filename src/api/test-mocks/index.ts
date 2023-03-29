@@ -44,6 +44,10 @@ export const mockOTP = {
   expiry: new Date(),
 };
 
+export const mockApplication = {
+  referenceNumber: 1234,
+};
+
 export const mockApplicationDeclaration = {
   agreeToConfidentiality: true,
   agreeToAntiBribery: true,
