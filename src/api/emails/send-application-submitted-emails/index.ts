@@ -5,6 +5,7 @@ import { SubmitApplicationResponse, ApplicationSubmissionEmailVariables } from '
 
 /**
  * sendApplicationSubmittedEmails
+ * Send "application submitted" emails
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SendEmailConfirmEmailAddress mutation
  * @param {Object} KeystoneJS context API
