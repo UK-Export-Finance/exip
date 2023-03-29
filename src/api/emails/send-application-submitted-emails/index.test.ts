@@ -4,8 +4,8 @@ import sendApplicationSubmittedEmails from '.';
 import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from '../index';
-import { mockAccount, mockSendEmailResponse } from '../../test-mocks';
-import { Account, Application, ApplicationBuyer } from '../../types';
+import { mockAccount, mockBuyer, mockApplicationDeclaration, mockSendEmailResponse } from '../../test-mocks';
+import { Account, Application, ApplicationBuyer, ApplicationDeclaration, ApplicationSubmissionEmailVariables } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -19,10 +19,12 @@ describe('emails/send-email-application-submitted', () => {
   let exporter: Account;
   let application: Application;
   let buyer: ApplicationBuyer;
+  let declaration: ApplicationDeclaration;
 
   jest.mock('./index');
 
   let applicationSubmittedEmailSpy = jest.fn();
+  let documentsEmailSpy = jest.fn();
 
   afterAll(() => {
     jest.resetAllMocks();
@@ -38,12 +40,8 @@ describe('emails/send-email-application-submitted', () => {
     // create a new application
     application = (await context.query.Application.createOne({
       data: {},
-      query: 'id referenceNumber buyer { id }',
+      query: 'id referenceNumber buyer { id } declaration { id }',
     })) as Application;
-
-    const mockBuyer = {
-      companyOrOrganisationName: 'Mock buyer',
-    };
 
     buyer = (await context.query.Buyer.updateOne({
       where: { id: application.buyer.id },
@@ -51,26 +49,77 @@ describe('emails/send-email-application-submitted', () => {
       query: 'id companyOrOrganisationName',
     })) as ApplicationBuyer;
 
+    declaration = (await context.query.Declaration.updateOne({
+      where: { id: application.declaration.id },
+      data: mockApplicationDeclaration,
+      query: 'id',
+    })) as ApplicationDeclaration;
+
     jest.resetAllMocks();
 
     applicationSubmittedEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+    documentsEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
     sendEmail.applicationSubmittedEmail = applicationSubmittedEmailSpy;
+    sendEmail.documentsEmail = documentsEmailSpy;
   });
 
-  test('it should call sendEmail.applicationSubmittedEmail', async () => {
-    await sendApplicationSubmittedEmails(context, exporter.id, buyer.id, application.referenceNumber);
+  describe('emails', () => {
+    let expectedSendEmailVars: ApplicationSubmissionEmailVariables;
 
-    const { email, firstName } = exporter;
-    const { referenceNumber } = application;
-    const { companyOrOrganisationName } = buyer;
+    beforeEach(() => {
+      const { email, firstName } = exporter;
+      const { referenceNumber } = application;
+      const { companyOrOrganisationName } = buyer;
 
-    expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
-    expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(email, firstName, referenceNumber, companyOrOrganisationName);
+      expectedSendEmailVars = {
+        emailAddress: email,
+        firstName,
+        referenceNumber,
+        buyerName: companyOrOrganisationName,
+      } as ApplicationSubmissionEmailVariables;
+    });
+
+    test('it should call sendEmail.applicationSubmittedEmail', async () => {
+      await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+
+      expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
+      expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
+    });
+
+    test('it should call sendEmail.documentsEmail', async () => {
+      await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+
+      expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
+
+      const useAntiBriberyAndTradingHistoryTemplate = true;
+
+      expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, useAntiBriberyAndTradingHistoryTemplate);
+    });
+
+    describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct', () => {
+      beforeEach(async () => {
+        declaration = (await context.query.Declaration.updateOne({
+          where: { id: application.declaration.id },
+          data: {
+            hasAntiBriberyCodeOfConduct: 'No',
+          },
+          query: 'id',
+        })) as ApplicationDeclaration;
+      });
+
+      test('it should call sendEmail.documentsEmail without a template flag', async () => {
+        await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+
+        expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
+
+        expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
+      });
+    });
   });
 
   it('should return the email response', async () => {
-    const result = await sendApplicationSubmittedEmails(context, exporter.id, buyer.id, application.referenceNumber);
+    const result = await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
 
     const expected = {
       success: true,
@@ -89,7 +138,7 @@ describe('emails/send-email-application-submitted', () => {
         where: exporters,
       });
 
-      const result = await sendApplicationSubmittedEmails(context, exporter.id, buyer.id, application.referenceNumber);
+      const result = await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
 
       const expected = { success: false };
 
@@ -106,7 +155,7 @@ describe('emails/send-email-application-submitted', () => {
         where: buyers,
       });
 
-      const result = await sendApplicationSubmittedEmails(context, exporter.id, buyer.id, application.referenceNumber);
+      const result = await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
 
       const expected = { success: false };
 
@@ -121,9 +170,9 @@ describe('emails/send-email-application-submitted', () => {
 
     test('should throw an error', async () => {
       try {
-        await sendApplicationSubmittedEmails(context, exporter.id, buyer.id, application.referenceNumber);
+        await sendApplicationSubmittedEmails(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
       } catch (err) {
-        const expected = new Error(`Sending email to exporter - application submitted ${mockSendEmailResponse}`);
+        const expected = new Error(`Sending application submitted emails to exporter ${mockSendEmailResponse}`);
 
         expect(err).toEqual(expected);
       }

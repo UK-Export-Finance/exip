@@ -1,6 +1,6 @@
 import { EMAIL_TEMPLATE_IDS } from '../constants';
 import notify from '../integrations/notify';
-import { EmailResponse } from '../types';
+import { EmailResponse, ApplicationSubmissionEmailVariables } from '../types';
 
 /**
  * callNotify
@@ -81,15 +81,16 @@ const securityCodeEmail = async (emailAddress: string, firstName: string, securi
  * @param {String} Email address
  * @param {String} First name
  * @param {Number} Application reference number
+ * @param {String} Buyer name
  * @returns {Object} callNotify response
  */
-const applicationSubmittedEmail = async (emailAddress: string, firstName: string, referenceNumber: number, buyerName: string): Promise<EmailResponse> => {
+const applicationSubmittedEmail = async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
   try {
     console.info('Sending application submitted email');
 
     const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
 
-    const variables = { firstName, referenceNumber, buyerName };
+    const { emailAddress, firstName } = variables;
 
     const response = await callNotify(templateId, emailAddress, firstName, variables);
 
@@ -101,10 +102,41 @@ const applicationSubmittedEmail = async (emailAddress: string, firstName: string
   }
 };
 
+/**
+ * documentsEmail
+ * @param {String} Email address
+ * @param {String} First name
+ * @param {Number} Application reference number
+ * @param {String} Buyer name
+ * @returns {Object} callNotify response
+ */
+const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, useAntiBriberyAndTradingHistoryTemplate?: boolean): Promise<EmailResponse> => {
+  try {
+    console.info('Sending documents email');
+
+    let templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
+
+    if (useAntiBriberyAndTradingHistoryTemplate) {
+      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
+    }
+
+    const { emailAddress, firstName } = variables;
+
+    const response = await callNotify(templateId, emailAddress, firstName, variables);
+
+    return response;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error(`Sending documents email ${err}`);
+  }
+};
+
 const sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
   applicationSubmittedEmail,
+  documentsEmail,
 };
 
 export default sendEmail;

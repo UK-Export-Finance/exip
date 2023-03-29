@@ -141,7 +141,11 @@ var EMAIL_TEMPLATE_IDS = {
   APPLICATION: {
     SUBMISSION: {
       EXPORTER: {
-        CONFIRMATION: "2e9084e2-d871-4be7-85d0-0ccc1961b148"
+        CONFIRMATION: "2e9084e2-d871-4be7-85d0-0ccc1961b148",
+        SEND_DOCUMENTS: {
+          TRADING_HISTORY: "1ae4d77e-58d6-460e-99c0-b62bf08d8c52",
+          ANTI_BRIBERY_AND_TRADING_HISTORY: "49753c34-24b5-4cad-a7c5-1ab32d711dfe"
+        }
       }
     }
   }
@@ -212,11 +216,11 @@ var securityCodeEmail = async (emailAddress, firstName, securityCode) => {
     throw new Error(`Sending security code email for account sign in ${err}`);
   }
 };
-var applicationSubmittedEmail = async (emailAddress, firstName, referenceNumber, buyerName) => {
+var applicationSubmittedEmail = async (variables) => {
   try {
     console.info("Sending application submitted email");
     const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
-    const variables = { firstName, referenceNumber, buyerName };
+    const { emailAddress, firstName } = variables;
     const response = await callNotify(templateId, emailAddress, firstName, variables);
     return response;
   } catch (err) {
@@ -224,10 +228,26 @@ var applicationSubmittedEmail = async (emailAddress, firstName, referenceNumber,
     throw new Error(`Sending application submitted email ${err}`);
   }
 };
+var documentsEmail = async (variables, useAntiBriberyAndTradingHistoryTemplate) => {
+  try {
+    console.info("Sending documents email");
+    let templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
+    if (useAntiBriberyAndTradingHistoryTemplate) {
+      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
+    }
+    const { emailAddress, firstName } = variables;
+    const response = await callNotify(templateId, emailAddress, firstName, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending documents email ${err}`);
+  }
+};
 var sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
-  applicationSubmittedEmail
+  applicationSubmittedEmail,
+  documentsEmail
 };
 var emails_default = sendEmail;
 
@@ -1339,12 +1359,12 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
-// emails/send-email-application-submitted.ts
-var sendEmailApplicationSubmitted = async (context, accountId, buyerId, referenceNumber) => {
+// emails/send-application-submitted-emails/index.ts
+var sendApplicationSubmittedEmails = async (context, referenceNumber, accountId, buyerId, declarationId) => {
   try {
     const exporter = await get_exporter_by_id_default(context, accountId);
     if (!exporter) {
-      console.info("Sending email to exporter - application submitted - no exporter exists with the provided ID");
+      console.error("Sending application submitted emails to exporter - no exporter exists with the provided ID");
       return {
         success: false
       };
@@ -1353,24 +1373,51 @@ var sendEmailApplicationSubmitted = async (context, accountId, buyerId, referenc
       where: { id: buyerId }
     });
     if (!buyer) {
-      console.info("Sending email to exporter - application submitted - no buyer exists with the provided ID");
+      console.error("Sending application submitted emails to exporter - no buyer exists with the provided ID");
+      return {
+        success: false
+      };
+    }
+    const declaration = await context.db.Declaration.findOne({
+      where: { id: declarationId }
+    });
+    if (!declaration) {
+      console.error("Sending application submitted emails to exporter - no declarations exist with the provided ID");
       return {
         success: false
       };
     }
     const buyerName = buyer.companyOrOrganisationName;
     const { email, firstName } = exporter;
-    const emailResponse = await emails_default.applicationSubmittedEmail(email, firstName, referenceNumber, buyerName);
-    if (emailResponse.success) {
-      return emailResponse;
+    const sendEmailVars = {
+      emailAddress: email,
+      firstName,
+      referenceNumber,
+      buyerName
+    };
+    const submittedResponse = await emails_default.applicationSubmittedEmail(sendEmailVars);
+    if (!submittedResponse.success) {
+      throw new Error("Sending application submitted emails to exporter");
     }
-    throw new Error(`Sending email to exporter - application submitted ${emailResponse}`);
+    let documentsResponse;
+    if (buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === "Yes") {
+      if (declaration.hasAntiBriberyCodeOfConduct === "Yes") {
+        const useAntiBriberyAndTradingHistoryTemplate = true;
+        documentsResponse = await emails_default.documentsEmail(sendEmailVars, useAntiBriberyAndTradingHistoryTemplate);
+      } else {
+        documentsResponse = await emails_default.documentsEmail(sendEmailVars);
+      }
+      if (documentsResponse.success) {
+        return documentsResponse;
+      }
+    }
+    throw new Error(`Sending application submitted emails to exporter ${documentsResponse}`);
   } catch (err) {
     console.error(err);
-    throw new Error(`Sending email to exporter - application submitted ${err}`);
+    throw new Error(`Sending application submitted emails to exporter ${err}`);
   }
 };
-var send_email_application_submitted_default = sendEmailApplicationSubmitted;
+var send_application_submitted_emails_default = sendApplicationSubmittedEmails;
 
 // custom-resolvers/submit-application.ts
 var submitApplication = async (root, variables, context) => {
@@ -1392,8 +1439,8 @@ var submitApplication = async (root, variables, context) => {
           where: { id: application.id },
           data: update
         });
-        const { referenceNumber, exporterId, buyerId } = application;
-        await send_email_application_submitted_default(context, exporterId, buyerId, referenceNumber);
+        const { referenceNumber, exporterId, buyerId, declarationId } = application;
+        await send_application_submitted_emails_default(context, referenceNumber, exporterId, buyerId, declarationId);
         return {
           success: true
         };

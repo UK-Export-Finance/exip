@@ -44,4 +44,18 @@ export const mockOTP = {
   expiry: new Date(),
 };
 
+export const mockApplicationDeclaration = {
+  agreeToConfidentiality: true,
+  agreeToAntiBribery: true,
+  hasAntiBriberyCodeOfConduct: 'Yes',
+  willExportWithAntiBriberyCodeOfConduct: 'Yes',
+  agreeToConfirmationAndAcknowledgements: true,
+  agreeHowDataWillBeUsed: true,
+};
+
+export const mockBuyer = {
+  companyOrOrganisationName: 'Mock buyer',
+  exporterIsConnectedWithBuyer: 'Yes',
+};
+
 export const mockSendEmailResponse = { success: true, emailRecipient: mockAccount.email };

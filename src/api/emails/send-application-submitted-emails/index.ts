@@ -1,7 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import sendEmail from '../index';
 import getExporterById from '../../helpers/get-exporter-by-id';
-import { SubmitApplicationResponse } from '../../types';
+import { SubmitApplicationResponse, ApplicationSubmissionEmailVariables } from '../../types';
 
 /**
  * sendApplicationSubmittedEmails
@@ -12,51 +12,89 @@ import { SubmitApplicationResponse } from '../../types';
  */
 const sendApplicationSubmittedEmails = async (
   context: Context,
+  referenceNumber: number,
   accountId: string,
   buyerId: string,
-  referenceNumber: number,
+  declarationId: string,
 ): Promise<SubmitApplicationResponse> => {
   try {
-    // get the exporter
+    // get the application's exporter
     const exporter = await getExporterById(context, accountId);
 
     // ensure that we have found an acount with the requsted ID.
     if (!exporter) {
-      console.info('Sending email to exporter - application submitted - no exporter exists with the provided ID');
+      console.error('Sending application submitted emails to exporter - no exporter exists with the provided ID');
 
       return {
         success: false,
       };
     }
 
-    // get the buyer
+    // get the application's buyer
     const buyer = await context.db.Buyer.findOne({
       where: { id: buyerId },
     });
 
     if (!buyer) {
-      console.info('Sending email to exporter - application submitted - no buyer exists with the provided ID');
+      console.error('Sending application submitted emails to exporter - no buyer exists with the provided ID');
 
       return {
         success: false,
       };
     }
 
-    const buyerName = buyer.companyOrOrganisationName;
+    // get the application's declarations
+    const declaration = await context.db.Declaration.findOne({
+      where: { id: declarationId },
+    });
 
-    // send "application submitted" email.
-    const { email, firstName } = exporter;
+    if (!declaration) {
+      console.error('Sending application submitted emails to exporter - no declarations exist with the provided ID');
 
-    const emailResponse = await sendEmail.applicationSubmittedEmail(email, firstName, referenceNumber, buyerName);
-
-    if (emailResponse.success) {
-      return emailResponse;
+      return {
+        success: false,
+      };
     }
 
-    throw new Error(`Sending email to exporter - application submitted ${emailResponse}`);
+    // generate email variables
+    const { email, firstName } = exporter;
+
+    const sendEmailVars = {
+      emailAddress: email,
+      firstName,
+      referenceNumber,
+      buyerName: buyer.companyOrOrganisationName,
+    } as ApplicationSubmissionEmailVariables;
+
+    // send "application submitted" email
+    const submittedResponse = await sendEmail.applicationSubmittedEmail(sendEmailVars);
+
+    if (!submittedResponse.success) {
+      throw new Error('Sending application submitted emails to exporter');
+    }
+
+    // send "documents" email
+    let documentsResponse;
+
+    if (buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === 'Yes') {
+      if (declaration.hasAntiBriberyCodeOfConduct === 'Yes') {
+        const useAntiBriberyAndTradingHistoryTemplate = true;
+
+        documentsResponse = await sendEmail.documentsEmail(sendEmailVars, useAntiBriberyAndTradingHistoryTemplate);
+      } else {
+        documentsResponse = await sendEmail.documentsEmail(sendEmailVars);
+      }
+
+      if (documentsResponse.success) {
+        return documentsResponse;
+      }
+    }
+
+    throw new Error(`Sending application submitted emails to exporter ${documentsResponse}`);
   } catch (err) {
     console.error(err);
-    throw new Error(`Sending email to exporter - application submitted ${err}`);
+
+    throw new Error(`Sending application submitted emails to exporter ${err}`);
   }
 };
 

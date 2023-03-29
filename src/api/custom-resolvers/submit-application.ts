@@ -39,9 +39,9 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
           data: update,
         });
 
-        const { referenceNumber, exporterId, buyerId } = application;
+        const { referenceNumber, exporterId, buyerId, declarationId } = application;
 
-        await sendApplicationSubmittedEmails(context, exporterId, buyerId, referenceNumber);
+        await sendApplicationSubmittedEmails(context, referenceNumber, exporterId, buyerId, declarationId);
 
         return {
           success: true,
