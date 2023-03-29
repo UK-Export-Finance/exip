@@ -43,3 +43,5 @@ export const mockOTP = {
   hash: 'mockHash',
   expiry: new Date(),
 };
+
+export const mockSendEmailResponse = { success: true, emailRecipient: mockAccount.email };

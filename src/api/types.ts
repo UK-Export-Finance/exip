@@ -4,6 +4,11 @@ interface ApplicationRelationship {
   id: string;
 }
 
+interface ApplicationBuyer {
+  id: string;
+  companyOrOrganisationName?: string;
+}
+
 interface AccountInput {
   createdAt: Date;
   updatedAt: Date;
@@ -41,12 +46,13 @@ interface Application {
   status: string;
   previousStatus?: string;
   eligibility: ApplicationRelationship;
+  exporter: ApplicationRelationship;
   policyAndExport: ApplicationRelationship;
   exporterCompany: ApplicationRelationship;
   exporterCompanyAddress: ApplicationRelationship;
   exporterBusiness: ApplicationRelationship;
   exporterBroker: ApplicationRelationship;
-  buyer: ApplicationRelationship;
+  buyer: ApplicationBuyer;
   sectionReview: ApplicationRelationship;
   declaration: ApplicationRelationship;
 }
@@ -88,8 +94,9 @@ interface VerifyEmailAddressResponse {
   emailRecipient?: string;
 }
 
-interface SendEmailConfirmEmailAddressVariables {
+interface SendExporterEmailVariables {
   exporterId: string;
+  referenceNumber?: string;
 }
 
 interface AccountCreationVariables {
@@ -160,13 +167,14 @@ export {
   AddOtpToAccountVariables,
   AddAndGetOtpResponse,
   Application,
+  ApplicationBuyer,
   BufferEncoding,
   CompanyResponse,
   EmailResponse,
   SicCodes,
-  SendEmailConfirmEmailAddressVariables,
   SubmitApplicationVariables,
   SubmitApplicationResponse,
+  SendExporterEmailVariables,
   VerifyEmailAddressVariables,
   VerifyEmailAddressResponse,
   VerifyAccountSignInCodeVariables,

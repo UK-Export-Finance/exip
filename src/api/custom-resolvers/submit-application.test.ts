@@ -4,7 +4,9 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import baseConfig from '../keystone';
 import submitApplication from './submit-application';
 import { APPLICATION } from '../constants';
-import { Application, SubmitApplicationResponse } from '../types';
+import sendEmail from '../emails';
+import { mockAccount, mockSendEmailResponse } from '../test-mocks';
+import { Account, Application, ApplicationBuyer, SubmitApplicationVariables, SubmitApplicationResponse } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -14,19 +16,69 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
+const createRequiredData = async () => {
+  // create a new exporter
+  const exporter = (await context.query.Exporter.createOne({
+    data: mockAccount,
+    query: 'id firstName email',
+  })) as Account;
+
+  const mockBuyer = {
+    companyOrOrganisationName: 'Mock buyer',
+  };
+
+  // create a new application
+  const application = (await context.query.Application.createOne({
+    query: 'id referenceNumber exporter { id } buyer { id }',
+    data: {
+      exporter: {
+        connect: {
+          id: exporter.id,
+        },
+      },
+    },
+  })) as Application;
+
+  // update the buyer so there is a name.
+  const buyer = (await context.query.Buyer.updateOne({
+    where: {
+      id: application.buyer.id,
+    },
+    data: mockBuyer,
+    query: 'id companyOrOrganisationName',
+  })) as ApplicationBuyer;
+
+  return {
+    exporter,
+    application,
+    buyer,
+  };
+};
+
 describe('custom-resolvers/submit-application', () => {
+  let exporter: Account;
+  let buyer: ApplicationBuyer;
   let application: Application;
   let submittedApplication: Application;
-  let variables;
-
+  let variables: SubmitApplicationVariables;
   let result: SubmitApplicationResponse;
 
+  jest.mock('../emails');
+
+  let sendEmailApplicationSubmittedSpy = jest.fn();
+
   beforeEach(async () => {
-    // create a new application
-    application = (await context.query.Application.createOne({
-      query: 'id',
-      data: {},
-    })) as Application;
+    jest.resetAllMocks();
+
+    sendEmailApplicationSubmittedSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+
+    sendEmail.applicationSubmittedEmail = sendEmailApplicationSubmittedSpy;
+
+    const data = await createRequiredData();
+
+    exporter = data.exporter;
+    application = data.application;
+    buyer = data.buyer;
 
     variables = {
       applicationId: application.id,
@@ -65,6 +117,17 @@ describe('custom-resolvers/submit-application', () => {
     const expectedDay = now.getDay();
 
     expect(submissionDateDay).toEqual(expectedDay);
+  });
+
+  test('it should call sendEmail.applicationSubmittedEmail', async () => {
+    result = await submitApplication({}, variables, context);
+
+    const { email, firstName } = exporter;
+    const { referenceNumber } = application;
+    const { companyOrOrganisationName } = buyer;
+
+    expect(sendEmailApplicationSubmittedSpy).toHaveBeenCalledTimes(1);
+    expect(sendEmailApplicationSubmittedSpy).toHaveBeenCalledWith(email, firstName, referenceNumber, companyOrOrganisationName);
   });
 
   describe('when an application is not found', () => {

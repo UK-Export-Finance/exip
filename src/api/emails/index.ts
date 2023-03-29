@@ -4,6 +4,7 @@ import { EmailResponse } from '../types';
 
 /**
  * callNotify
+ * Call Notify API
  * @param {String} Notify template ID
  * @param {String} Email address
  * @param {String} First name
@@ -28,6 +29,7 @@ export const callNotify = async (templateId: string, emailAddress: string, first
 
 /**
  * confirmEmailAddress
+ * Send "confirm your email address" email to an exporter
  * @param {String} Email address
  * @param {String} First name
  * @param {String} Verification hash
@@ -53,6 +55,7 @@ const confirmEmailAddress = async (emailAddress: string, firstName: string, veri
 
 /**
  * securityCodeEmail
+ * Send the security code email to an exporter
  * @param {String} Email address
  * @param {String} First name
  * @param {String} Security code
@@ -76,9 +79,36 @@ const securityCodeEmail = async (emailAddress: string, firstName: string, securi
   }
 };
 
+/**
+ * applicationSubmittedEmail
+ * Send the application submitted email to an exporter
+ * @param {String} Email address
+ * @param {String} First name
+ * @param {Number} Application reference number
+ * @returns {Object} callNotify response
+ */
+const applicationSubmittedEmail = async (emailAddress: string, firstName: string, referenceNumber: number, buyerName: string): Promise<EmailResponse> => {
+  try {
+    console.info('Sending application submitted email');
+
+    const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+
+    const variables = { firstName, referenceNumber, buyerName };
+
+    const response = await callNotify(templateId, emailAddress, firstName, variables);
+
+    return response;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error(`Sending application submitted email ${err}`);
+  }
+};
+
 const sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
+  applicationSubmittedEmail,
 };
 
 export default sendEmail;
