@@ -4,6 +4,7 @@ import { EmailResponse, ApplicationSubmissionEmailVariables } from '../types';
 
 /**
  * callNotify
+ * Call Notify API
  * @param {String} Notify template ID
  * @param {String} Email address
  * @param {String} First name
@@ -28,6 +29,7 @@ export const callNotify = async (templateId: string, emailAddress: string, first
 
 /**
  * confirmEmailAddress
+ * Send "confirm your email address" email to an exporter
  * @param {String} Email address
  * @param {String} First name
  * @param {String} Verification hash
@@ -53,6 +55,7 @@ const confirmEmailAddress = async (emailAddress: string, firstName: string, veri
 
 /**
  * securityCodeEmail
+ * Send the security code email to an exporter
  * @param {String} Email address
  * @param {String} First name
  * @param {String} Security code

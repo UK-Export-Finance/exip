@@ -1387,13 +1387,12 @@ var sendApplicationSubmittedEmails = async (context, referenceNumber, accountId,
         success: false
       };
     }
-    const buyerName = buyer.companyOrOrganisationName;
     const { email, firstName } = exporter;
     const sendEmailVars = {
       emailAddress: email,
       firstName,
       referenceNumber,
-      buyerName
+      buyerName: buyer.companyOrOrganisationName
     };
     const submittedResponse = await emails_default.applicationSubmittedEmail(sendEmailVars);
     if (!submittedResponse.success) {
@@ -1445,9 +1444,9 @@ var submitApplication = async (root, variables, context) => {
           success: true
         };
       }
-      console.info("Unable to submit application - application already submitted");
+      console.error("Unable to submit application - application already submitted");
     }
-    console.info("Unable to submit application - no application found");
+    console.error("Unable to submit application - no application found");
     return {
       success: false
     };
