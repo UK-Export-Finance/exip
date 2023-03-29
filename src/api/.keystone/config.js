@@ -1398,9 +1398,9 @@ var submitApplication = async (root, variables, context) => {
           success: true
         };
       }
-      console.info("Unable to submit application - application already submitted");
+      console.error("Unable to submit application - application already submitted");
     }
-    console.info("Unable to submit application - no application found");
+    console.error("Unable to submit application - no application found");
     return {
       success: false
     };

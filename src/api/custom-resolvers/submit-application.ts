@@ -5,6 +5,7 @@ import { SubmitApplicationVariables, SubmitApplicationResponse } from '../types'
 
 /**
  * submitApplication
+ * Submit an application - changes application status and sends emails to the exporter and UKEF underwriting team
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SubmitApplication mutation
  * @param {Object} KeystoneJS context API
@@ -48,17 +49,16 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
         };
       }
 
-      console.info('Unable to submit application - application already submitted');
+      console.error('Unable to submit application - application already submitted');
     }
 
-    console.info('Unable to submit application - no application found');
+    console.error('Unable to submit application - no application found');
 
     return {
       success: false,
     };
   } catch (err) {
     console.error(err);
-
     throw new Error(`Submitting application ${err}`);
   }
 };
