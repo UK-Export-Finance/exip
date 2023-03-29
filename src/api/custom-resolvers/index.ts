@@ -6,6 +6,7 @@ import accountSignInSendNewCode from './account-sign-in-new-code';
 import verifyAccountSignInCode from './verify-account-sign-in-code';
 import addAndGetOTP from './add-and-get-OTP';
 import deleteApplicationByReferenceNumber from './delete-application-by-refrence-number';
+import submitApplication from './submit-application';
 
 export {
   createAccount,
@@ -16,4 +17,5 @@ export {
   verifyAccountSignInCode,
   addAndGetOTP,
   deleteApplicationByReferenceNumber,
+  submitApplication,
 };

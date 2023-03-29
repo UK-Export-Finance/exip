@@ -66,7 +66,8 @@ var APPLICATION = {
     }
   },
   STATUS: {
-    DRAFT: "Draft"
+    DRAFT: "Draft",
+    SUBMITTED: "Submitted to UKEF"
   }
 };
 var FIELD_IDS = {
@@ -230,6 +231,7 @@ var lists = {
         isIndexed: true
       }),
       submissionDeadline: (0, import_fields.timestamp)(),
+      submissionDate: (0, import_fields.timestamp)(),
       submissionType: (0, import_fields.select)({
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
@@ -237,6 +239,7 @@ var lists = {
       status: (0, import_fields.text)({
         validation: { isRequired: true }
       }),
+      previousStatus: (0, import_fields.text)(),
       policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
       exporter: (0, import_fields.relationship)({
         ref: "Exporter",
@@ -1316,6 +1319,43 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
+// custom-resolvers/submit-application.ts
+var submitApplication = async (root, variables, context) => {
+  try {
+    console.info("Submitting application");
+    const application = await context.db.Application.findOne({
+      where: { id: variables.applicationId }
+    });
+    if (application) {
+      const canSubmit = application.status === APPLICATION.STATUS.DRAFT;
+      if (canSubmit) {
+        const now = /* @__PURE__ */ new Date();
+        const update = {
+          status: APPLICATION.STATUS.SUBMITTED,
+          previousStatus: APPLICATION.STATUS.DRAFT,
+          submissionDate: now
+        };
+        await context.db.Application.updateOne({
+          where: { id: application.id },
+          data: update
+        });
+        return {
+          success: true
+        };
+      }
+      console.info("Unable to submit application - application already submitted");
+    }
+    console.info("Unable to submit application - no application found");
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Submitting application ${err}`);
+  }
+};
+var submit_application_default = submitApplication;
+
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
@@ -1557,6 +1597,11 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         deleteApplicationByReferenceNumber(
           referenceNumber: Int!
         ): SuccessResponse
+
+        """ submit an application """
+        submitApplication(
+          applicationId: String!
+        ): SuccessResponse
       }
 
       type Query {
@@ -1581,6 +1626,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       verifyAccountSignInCode: verify_account_sign_in_code_default,
       addAndGetOTP: add_and_get_OTP_default,
       deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
+      submitApplication: submit_application_default,
       updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
         try {
           console.info("Updating application exporter company and exporter company address for ", variables.companyId);

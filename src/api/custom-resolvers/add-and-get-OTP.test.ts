@@ -15,7 +15,7 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
-describe('helpers/add-and-get-OTP', () => {
+describe('custom-resolvers/add-and-get-OTP', () => {
   let account: Account;
 
   jest.mock('../helpers/generate-otp');

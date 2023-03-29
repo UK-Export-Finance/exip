@@ -3,6 +3,10 @@ export const APPLICATION = {
     MIA: 'Manual Inclusion Application',
   },
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
+  STATUS: {
+    DRAFT: 'Draft',
+    SUBMITTED: 'Submitted to UKEF',
+  },
   POLICY_TYPE: {
     SINGLE: 'Single contract policy',
     MULTIPLE: 'Multiple contract policy',

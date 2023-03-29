@@ -27,6 +27,7 @@ export const lists = {
         isIndexed: true,
       }),
       submissionDeadline: timestamp(),
+      submissionDate: timestamp(),
       submissionType: select({
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA,
@@ -34,6 +35,7 @@ export const lists = {
       status: text({
         validation: { isRequired: true },
       }),
+      previousStatus: text(),
       policyAndExport: relationship({ ref: 'PolicyAndExport' }),
       exporter: relationship({
         ref: 'Exporter',

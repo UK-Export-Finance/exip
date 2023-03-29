@@ -26,6 +26,7 @@ export const APPLICATION = {
   },
   STATUS: {
     DRAFT: 'Draft',
+    SUBMITTED: 'Submitted to UKEF',
   },
 };
 

@@ -24,6 +24,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
   jest.mock('../save-data');
 
   let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
+  let submitApplicationSpy = jest.fn(() => Promise.resolve({ success: true }));
 
   save.declaration = mockSaveDeclaration;
 
@@ -125,6 +126,8 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
       getLatesHowDataWillBeUsedSpy = jest.fn(() => Promise.resolve(mockDeclarations.howDataWillBeUsed));
 
       api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatesHowDataWillBeUsedSpy;
+
+      api.keystone.application.submit = submitApplicationSpy;
     });
 
     describe('when there are no validation errors', () => {
@@ -132,12 +135,19 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
         req.body = validBody;
       });
 
-      // it('should call save.declaration with application and req.body', async () => {
-      //   await post(req, res);
+      it('should call save.declaration with application and req.body', async () => {
+        await post(req, res);
 
-      //   expect(save.declaration).toHaveBeenCalledTimes(1);
-      //   expect(save.declaration).toHaveBeenCalledWith(mockApplication, validBody);
-      // });
+        expect(save.declaration).toHaveBeenCalledTimes(1);
+        expect(save.declaration).toHaveBeenCalledWith(mockApplication, validBody);
+      });
+
+      it('should call api.keystone.application.submit with the application ID', async () => {
+        await post(req, res);
+
+        expect(api.keystone.application.submit).toHaveBeenCalledTimes(1);
+        expect(api.keystone.application.submit).toHaveBeenCalledWith(mockApplication.id);
+      });
 
       it(`should redirect to ${APPLICATION_SUBMITTED}`, async () => {
         await post(req, res);
@@ -221,6 +231,38 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
           beforeEach(() => {
             mockSaveDeclaration = jest.fn(() => Promise.reject());
             save.declaration = mockSaveDeclaration;
+
+            req.body = validBody;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+      });
+
+      describe('submit application call', () => {
+        describe('when the submit application API call returns false', () => {
+          beforeEach(() => {
+            submitApplicationSpy = jest.fn(() => Promise.resolve({ success: false }));
+            api.keystone.application.submit = submitApplicationSpy;
+
+            req.body = validBody;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when the submit application API call fails', () => {
+          beforeEach(() => {
+            submitApplicationSpy = jest.fn(() => Promise.reject());
+            api.keystone.application.submit = submitApplicationSpy;
 
             req.body = validBody;
           });

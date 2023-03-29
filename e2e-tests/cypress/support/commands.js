@@ -91,6 +91,7 @@ Cypress.Commands.add('completeAndSubmitDeclarationConfirmationAndAcknowledgement
 Cypress.Commands.add('completeAndSubmitDeclarationHowYourDataWillBeUsed', require('./insurance/declarations/complete-and-submit-how-your-data-will-be-used-form'));
 
 Cypress.Commands.add('completeAndSubmitDeclarations', require('./insurance/complete-declarations'));
+Cypress.Commands.add('completeSignInAndSubmitAnApplication', require('./insurance/complete-sign-in-and-submit-an-application'));
 
 Cypress.Commands.add('assertAllSectionsUrl', require('./insurance/assert-all-sections-url'));
 

@@ -5,6 +5,7 @@ export const BUTTONS = {
   SUBMIT: 'Submit',
   START_APPLICATION: 'Start an application',
   START_NEW_APPLICATION: 'Start new application',
+  START_A_NEW_APPLICATION: 'Start a new application',
   START_NOW: 'Start now',
   SAVE_CHANGES: 'Save changes',
   SAVE_AND_BACK: 'Save and back to all sections',

@@ -42,5 +42,5 @@ export const INSURANCE_ROUTES = {
   YOUR_BUYER,
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
-  APPLICATION_SUBMITTED: `${INSURANCE_ROOT}/application-submitted`,
+  APPLICATION_SUBMITTED: '/application-submitted',
 };

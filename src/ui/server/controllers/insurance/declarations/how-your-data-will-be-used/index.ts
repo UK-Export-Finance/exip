@@ -118,7 +118,12 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`);
+    // submit the application
+    const submissionResponse = await api.keystone.application.submit(application.id);
+
+    if (submissionResponse.success) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`);
+    }
   } catch (err) {
     console.error('Error updating application - declarations - confidentiality ', { err });
 

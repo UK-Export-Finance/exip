@@ -69,8 +69,10 @@ type Application {
   eligibility: Eligibility
   referenceNumber: Int
   submissionDeadline: DateTime
+  submissionDate: DateTime
   submissionType: String
   status: String
+  previousStatus: String
   policyAndExport: PolicyAndExport
   exporter: Exporter
   exporterBusiness: ExporterBusiness
@@ -97,8 +99,10 @@ input ApplicationWhereInput {
   eligibility: EligibilityWhereInput
   referenceNumber: IntNullableFilter
   submissionDeadline: DateTimeNullableFilter
+  submissionDate: DateTimeNullableFilter
   submissionType: StringNullableFilter
   status: StringFilter
+  previousStatus: StringFilter
   policyAndExport: PolicyAndExportWhereInput
   exporter: ExporterWhereInput
   exporterBusiness: ExporterBusinessWhereInput
@@ -193,8 +197,10 @@ input ApplicationOrderByInput {
   updatedAt: OrderDirection
   referenceNumber: OrderDirection
   submissionDeadline: OrderDirection
+  submissionDate: OrderDirection
   submissionType: OrderDirection
   status: OrderDirection
+  previousStatus: OrderDirection
 }
 
 input ApplicationUpdateInput {
@@ -203,8 +209,10 @@ input ApplicationUpdateInput {
   eligibility: EligibilityRelateToOneForUpdateInput
   referenceNumber: Int
   submissionDeadline: DateTime
+  submissionDate: DateTime
   submissionType: String
   status: String
+  previousStatus: String
   policyAndExport: PolicyAndExportRelateToOneForUpdateInput
   exporter: ExporterRelateToOneForUpdateInput
   exporterBusiness: ExporterBusinessRelateToOneForUpdateInput
@@ -280,8 +288,10 @@ input ApplicationCreateInput {
   eligibility: EligibilityRelateToOneForCreateInput
   referenceNumber: Int
   submissionDeadline: DateTime
+  submissionDate: DateTime
   submissionType: String
   status: String
+  previousStatus: String
   policyAndExport: PolicyAndExportRelateToOneForCreateInput
   exporter: ExporterRelateToOneForCreateInput
   exporterBusiness: ExporterBusinessRelateToOneForCreateInput
@@ -1678,6 +1688,9 @@ type Mutation {
 
   """ delete an application by reference number """
   deleteApplicationByReferenceNumber(referenceNumber: Int!): SuccessResponse
+
+  """ submit an application """
+  submitApplication(applicationId: String!): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure

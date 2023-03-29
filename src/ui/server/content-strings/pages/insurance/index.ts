@@ -8,6 +8,7 @@ import EXPORTER_BUSINESS from './your-business';
 import YOUR_BUYER from './your-buyer';
 import DECLARATIONS from './declarations';
 import CHECK_YOUR_ANSWERS from './check-your-answers';
+import APPLICATION_SUBMITTED from './application-submitted';
 import formatCurrency from '../../../helpers/format-currency';
 
 const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
@@ -117,10 +118,11 @@ export default {
   APPLY_OFFLINE,
   EXPORTER_BUSINESS,
   ELIGIBILITY,
+  NO_ACCESS_TO_APPLICATION_PAGE,
   POLICY_AND_EXPORTS,
   SPEAK_TO_UKEF_EFM,
   YOUR_BUYER,
-  NO_ACCESS_TO_APPLICATION_PAGE,
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
+  APPLICATION_SUBMITTED,
 };
