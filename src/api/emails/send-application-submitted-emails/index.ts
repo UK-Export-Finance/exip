@@ -1,7 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import sendEmail from '../index';
 import getExporterById from '../../helpers/get-exporter-by-id';
-import { EMAIL_TEMPLATE_IDS } from '../../constants';
+import { ANSWERS, EMAIL_TEMPLATE_IDS } from '../../constants';
 import { SubmitApplicationResponse, ApplicationSubmissionEmailVariables } from '../../types';
 
 /**
@@ -80,13 +80,13 @@ const send = async (
 
     let templateId = '';
 
-    const hasAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === 'Yes';
+    const hasAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.YES;
 
     if (hasAntiBriberyCodeOfConduct) {
       templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
     }
 
-    const isConectedWithBuyer = buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === 'Yes';
+    const isConectedWithBuyer = buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === ANSWERS.YES;
 
     if (isConectedWithBuyer) {
       templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;

@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import crypto from 'crypto';
-import { ACCOUNT } from '../constants';
+import { ACCOUNT, ANSWERS } from '../constants';
 import { Account } from '../types';
 
 dotenv.config();
@@ -51,15 +51,15 @@ export const mockApplication = {
 export const mockApplicationDeclaration = {
   agreeToConfidentiality: true,
   agreeToAntiBribery: true,
-  hasAntiBriberyCodeOfConduct: 'Yes',
-  willExportWithAntiBriberyCodeOfConduct: 'Yes',
+  hasAntiBriberyCodeOfConduct: ANSWERS.YES,
+  willExportWithAntiBriberyCodeOfConduct: ANSWERS.YES,
   agreeToConfirmationAndAcknowledgements: true,
   agreeHowDataWillBeUsed: true,
 };
 
 export const mockBuyer = {
   companyOrOrganisationName: 'Mock buyer',
-  exporterIsConnectedWithBuyer: 'Yes',
+  exporterIsConnectedWithBuyer: ANSWERS.YES,
 };
 
 export const mockSendEmailResponse = { success: true, emailRecipient: mockAccount.email };

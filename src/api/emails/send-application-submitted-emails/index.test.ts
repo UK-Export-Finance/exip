@@ -4,7 +4,7 @@ import sendApplicationSubmittedEmails from '.';
 import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from '../index';
-import { EMAIL_TEMPLATE_IDS } from '../../constants';
+import { ANSWERS, EMAIL_TEMPLATE_IDS } from '../../constants';
 import { mockAccount, mockBuyer, mockApplicationDeclaration, mockSendEmailResponse } from '../../test-mocks';
 import { Account, Application, ApplicationBuyer, ApplicationDeclaration, ApplicationSubmissionEmailVariables } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -103,7 +103,7 @@ describe('emails/send-email-application-submitted', () => {
         declaration = (await context.query.Declaration.updateOne({
           where: { id: application.declaration.id },
           data: {
-            hasAntiBriberyCodeOfConduct: 'No',
+            hasAntiBriberyCodeOfConduct: ANSWERS.NO,
           },
         })) as ApplicationDeclaration;
       });
@@ -124,14 +124,14 @@ describe('emails/send-email-application-submitted', () => {
         declaration = (await context.query.Declaration.updateOne({
           where: { id: application.declaration.id },
           data: {
-            hasAntiBriberyCodeOfConduct: 'No',
+            hasAntiBriberyCodeOfConduct: ANSWERS.NO,
           },
         })) as ApplicationDeclaration;
 
         buyer = (await context.query.Buyer.updateOne({
           where: { id: application.buyer.id },
           data: {
-            exporterIsConnectedWithBuyer: 'No',
+            exporterIsConnectedWithBuyer: ANSWERS.NO,
           },
         })) as ApplicationDeclaration;
       });
@@ -148,14 +148,14 @@ describe('emails/send-email-application-submitted', () => {
         declaration = (await context.query.Declaration.updateOne({
           where: { id: application.declaration.id },
           data: {
-            hasAntiBriberyCodeOfConduct: 'Yes',
+            hasAntiBriberyCodeOfConduct: ANSWERS.YES,
           },
         })) as ApplicationDeclaration;
 
         buyer = (await context.query.Buyer.updateOne({
           where: { id: application.buyer.id },
           data: {
-            exporterIsConnectedWithBuyer: 'No',
+            exporterIsConnectedWithBuyer: ANSWERS.NO,
           },
         })) as ApplicationDeclaration;
       });
