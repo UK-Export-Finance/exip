@@ -57,7 +57,7 @@ describe('emails', () => {
       const result = await sendEmail.confirmEmailAddress(email, firstName, verificationHash);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, firstName, { confirmToken: verificationHash });
+      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, { confirmToken: verificationHash }, firstName);
 
       const expected = mockSendEmailResponse;
 
@@ -91,7 +91,7 @@ describe('emails', () => {
       const result = await sendEmail.securityCodeEmail(email, firstName, mockSecurityCode);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, firstName, { securityCode: mockSecurityCode });
+      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, { securityCode: mockSecurityCode }, firstName);
 
       const expected = mockSendEmailResponse;
 
@@ -125,7 +125,7 @@ describe('emails', () => {
         const result = await sendEmail.applicationSubmitted.exporter(variables);
 
         expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-        expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, firstName, variables);
+        expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, variables, firstName);
 
         const expected = mockSendEmailResponse;
 
@@ -158,7 +158,10 @@ describe('emails', () => {
         const result = await sendEmail.applicationSubmitted.underwritingTeam(variables);
 
         expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-        expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, firstName, variables);
+
+        const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL;
+
+        expect(sendEmailSpy).toHaveBeenCalledWith(templateId, emailAddress, variables);
 
         const expected = mockSendEmailResponse;
 
@@ -192,7 +195,7 @@ describe('emails', () => {
       const result = await sendEmail.documentsEmail(variables, templateId);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, firstName, variables);
+      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, variables, firstName);
 
       const expected = mockSendEmailResponse;
 
