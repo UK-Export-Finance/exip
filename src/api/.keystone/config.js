@@ -144,8 +144,12 @@ var EMAIL_TEMPLATE_IDS = {
         CONFIRMATION: "2e9084e2-d871-4be7-85d0-0ccc1961b148",
         SEND_DOCUMENTS: {
           TRADING_HISTORY: "1ae4d77e-58d6-460e-99c0-b62bf08d8c52",
+          ANTI_BRIBERY: "002e43e3-ca78-4b9c-932f-6833014bb1e4",
           ANTI_BRIBERY_AND_TRADING_HISTORY: "49753c34-24b5-4cad-a7c5-1ab32d711dfe"
         }
+      },
+      UNDERWRITING_TEAM: {
+        NOTIFICATION: "676e4655-1e82-4094-9e3e-387ea91f44df"
       }
     }
   }
@@ -158,7 +162,7 @@ import_dotenv2.default.config();
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
 var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
 var notify = {
-  sendEmail: async (templateId, sendToEmailAddress, firstName, variables) => {
+  sendEmail: async (templateId, sendToEmailAddress, variables, firstName) => {
     try {
       console.info("Calling Notify API. templateId: ", templateId);
       await notifyClient.sendEmail(templateId, sendToEmailAddress, {
@@ -180,9 +184,16 @@ var notify = {
 var notify_default = notify;
 
 // emails/index.ts
-var callNotify = async (templateId, emailAddress, firstName, variables) => {
+var import_dotenv3 = __toESM(require("dotenv"));
+import_dotenv3.default.config();
+var callNotify = async (templateId, emailAddress, variables, firstName) => {
   try {
-    const emailResponse = await notify_default.sendEmail(templateId, emailAddress, firstName, variables);
+    let emailResponse;
+    if (firstName) {
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, firstName);
+    } else {
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables);
+    }
     if (emailResponse.success) {
       return emailResponse;
     }
@@ -197,7 +208,7 @@ var confirmEmailAddress = async (emailAddress, firstName, verificationHash) => {
     console.info("Sending email verification for account creation");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
     const variables = { confirmToken: verificationHash };
-    const response = await callNotify(templateId, emailAddress, firstName, variables);
+    const response = await callNotify(templateId, emailAddress, variables, firstName);
     return response;
   } catch (err) {
     console.error(err);
@@ -209,34 +220,56 @@ var securityCodeEmail = async (emailAddress, firstName, securityCode) => {
     console.info("Sending security code email for account sign in");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
     const variables = { securityCode };
-    const response = await callNotify(templateId, emailAddress, firstName, variables);
+    const response = await callNotify(templateId, emailAddress, variables, firstName);
     return response;
   } catch (err) {
     console.error(err);
     throw new Error(`Sending security code email for account sign in ${err}`);
   }
 };
-var applicationSubmittedEmail = async (variables) => {
-  try {
-    console.info("Sending application submitted email");
-    const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
-    const { emailAddress, firstName } = variables;
-    const response = await callNotify(templateId, emailAddress, firstName, variables);
-    return response;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Sending application submitted email ${err}`);
+var applicationSubmitted = {
+  /**
+   * applicationSubmitted.exporter
+   * Send "application submitted" email to an exporter
+   * @param {Object} ApplicationSubmissionEmailVariables
+   * @returns {Object} callNotify response
+   */
+  exporter: async (variables) => {
+    try {
+      console.info("Sending application submitted email to exporter");
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+      const { emailAddress, firstName } = variables;
+      const response = await callNotify(templateId, emailAddress, variables, firstName);
+      return response;
+    } catch (err) {
+      console.error(err);
+      throw new Error(`Sending application submitted email to exporter ${err}`);
+    }
+  },
+  /**
+   * applicationSubmitted.underwritingTeam
+   * Send "application submitted" email to the underwriting team
+   * @param {Object} ApplicationSubmissionEmailVariables
+   * @returns {Object} callNotify response
+   */
+  underwritingTeam: async (variables) => {
+    try {
+      console.info("Sending application submitted email to underwriting team");
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.UNDERWRITING_TEAM.NOTIFICATION;
+      const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL;
+      const response = await callNotify(templateId, emailAddress, variables);
+      return response;
+    } catch (err) {
+      console.error(err);
+      throw new Error(`Sending application submitted email to underwriting team ${err}`);
+    }
   }
 };
-var documentsEmail = async (variables, useAntiBriberyAndTradingHistoryTemplate) => {
+var documentsEmail = async (variables, templateId) => {
   try {
     console.info("Sending documents email");
-    let templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
-    if (useAntiBriberyAndTradingHistoryTemplate) {
-      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
-    }
     const { emailAddress, firstName } = variables;
-    const response = await callNotify(templateId, emailAddress, firstName, variables);
+    const response = await callNotify(templateId, emailAddress, variables, firstName);
     return response;
   } catch (err) {
     console.error(err);
@@ -246,7 +279,7 @@ var documentsEmail = async (variables, useAntiBriberyAndTradingHistoryTemplate) 
 var sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
-  applicationSubmittedEmail,
+  applicationSubmitted,
   documentsEmail
 };
 var emails_default = sendEmail;
@@ -878,7 +911,7 @@ var session = (0, import_session.statelessSessions)({
 // custom-schema.ts
 var import_schema = require("@graphql-tools/schema");
 var import_axios = __toESM(require("axios"));
-var import_dotenv3 = __toESM(require("dotenv"));
+var import_dotenv4 = __toESM(require("dotenv"));
 
 // custom-resolvers/create-account.ts
 var import_crypto = __toESM(require("crypto"));
@@ -1360,11 +1393,11 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
 // emails/send-application-submitted-emails/index.ts
-var send = async (context, referenceNumber, accountId, buyerId, declarationId) => {
+var send = async (context, referenceNumber, accountId, buyerId, declarationId, exporterCompanyId) => {
   try {
     const exporter = await get_exporter_by_id_default(context, accountId);
     if (!exporter) {
-      console.error("Sending application submitted emails to exporter - no exporter exists with the provided ID");
+      console.error("Sending application submitted emails - no exporter exists with the provided ID");
       return {
         success: false
       };
@@ -1373,7 +1406,7 @@ var send = async (context, referenceNumber, accountId, buyerId, declarationId) =
       where: { id: buyerId }
     });
     if (!buyer) {
-      console.error("Sending application submitted emails to exporter - no buyer exists with the provided ID");
+      console.error("Sending application submitted emails - no buyer exists with the provided ID");
       return {
         success: false
       };
@@ -1382,7 +1415,16 @@ var send = async (context, referenceNumber, accountId, buyerId, declarationId) =
       where: { id: declarationId }
     });
     if (!declaration) {
-      console.error("Sending application submitted emails to exporter - no declarations exist with the provided ID");
+      console.error("Sending application submitted emails - no declarations exist with the provided ID");
+      return {
+        success: false
+      };
+    }
+    const exporterCompany = await context.db.ExporterCompany.findOne({
+      where: { id: exporterCompanyId }
+    });
+    if (!exporterCompany) {
+      console.error("Sending application submitted emails - no exporter company exists with the provided ID");
       return {
         success: false
       };
@@ -1392,33 +1434,49 @@ var send = async (context, referenceNumber, accountId, buyerId, declarationId) =
       emailAddress: email,
       firstName,
       referenceNumber,
-      buyerName: buyer.companyOrOrganisationName
+      buyerName: buyer.companyOrOrganisationName,
+      exporterCompanyName: exporterCompany.companyName
     };
-    const submittedResponse = await emails_default.applicationSubmittedEmail(sendEmailVars);
-    if (!submittedResponse.success) {
-      throw new Error("Sending application submitted emails to exporter");
+    const exporterSubmittedResponse = await emails_default.applicationSubmitted.exporter(sendEmailVars);
+    if (!exporterSubmittedResponse.success) {
+      throw new Error("Sending application submitted email to exporter");
+    }
+    const underwritingTeamSubmittedResponse = await emails_default.applicationSubmitted.underwritingTeam(sendEmailVars);
+    if (!underwritingTeamSubmittedResponse.success) {
+      throw new Error("Sending application submitted email to underwriting team");
     }
     let documentsResponse;
-    let useAntiBriberyAndTradingHistoryTemplate = false;
-    if (buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === "Yes") {
-      if (declaration.hasAntiBriberyCodeOfConduct === "Yes") {
-        useAntiBriberyAndTradingHistoryTemplate = true;
-      }
-      documentsResponse = await emails_default.documentsEmail(sendEmailVars, useAntiBriberyAndTradingHistoryTemplate);
+    let templateId = "";
+    const hasAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.YES;
+    if (hasAntiBriberyCodeOfConduct) {
+      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
+    }
+    const isConectedWithBuyer = buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === ANSWERS.YES;
+    if (isConectedWithBuyer) {
+      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
+    }
+    if (hasAntiBriberyCodeOfConduct && isConectedWithBuyer) {
+      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
+    }
+    if (templateId) {
+      documentsResponse = await emails_default.documentsEmail(sendEmailVars, templateId);
       if (documentsResponse.success) {
         return documentsResponse;
       }
+      throw new Error(`Sending application submitted emails ${documentsResponse}`);
     }
-    throw new Error(`Sending application submitted emails to exporter ${documentsResponse}`);
+    return {
+      success: true
+    };
   } catch (err) {
     console.error(err);
-    throw new Error(`Sending application submitted emails to exporter ${err}`);
+    throw new Error(`Sending application submitted emails ${err}`);
   }
 };
-var sendApplicationSubmittedEmails = {
+var applicationSubmittedEmails = {
   send
 };
-var send_application_submitted_emails_default = sendApplicationSubmittedEmails;
+var send_application_submitted_emails_default = applicationSubmittedEmails;
 
 // custom-resolvers/submit-application.ts
 var submitApplication = async (root, variables, context) => {
@@ -1440,8 +1498,8 @@ var submitApplication = async (root, variables, context) => {
           where: { id: application.id },
           data: update
         });
-        const { referenceNumber, exporterId, buyerId, declarationId } = application;
-        await send_application_submitted_emails_default.send(context, referenceNumber, exporterId, buyerId, declarationId);
+        const { referenceNumber, exporterId, buyerId, declarationId, exporterCompanyId } = application;
+        await send_application_submitted_emails_default.send(context, referenceNumber, exporterId, buyerId, declarationId, exporterCompanyId);
         return {
           success: true
         };
@@ -1514,7 +1572,7 @@ var mapSicCodes = (company, sicCodes) => {
 };
 
 // custom-schema.ts
-import_dotenv3.default.config();
+import_dotenv4.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
@@ -1815,7 +1873,7 @@ var keystone_default = withAuth(
     db: {
       provider: "mysql",
       url: String(process.env.DATABASE_URL),
-      enableLogging: false
+      enableLogging: true
     },
     ui: {
       isAccessAllowed: (context) => !!context.session?.data
