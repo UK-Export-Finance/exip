@@ -98,8 +98,12 @@ export const mockSectionReview = {
 
 export const mockApplicationDeclaration = {
   id: 'clf3te7vx1432cfoqp9rbop73',
-  agreeToConfidentiality: true,
+  agreeToConfidentiality: 'Yes',
   agreeToAntiBribery: true,
+  hasAntiBriberyCodeOfConduct: 'Yes',
+  willExportWithAntiBriberyCodeOfConduct: 'Yes',
+  agreeToConfirmationAndAcknowledgements: true,
+  agreeHowDataWillBeUsed: true,
 };
 
 const mockApplication = {

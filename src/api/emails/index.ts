@@ -1,6 +1,6 @@
 import { EMAIL_TEMPLATE_IDS } from '../constants';
 import notify from '../integrations/notify';
-import { EmailResponse } from '../types';
+import { EmailResponse, ApplicationSubmissionEmailVariables } from '../types';
 
 /**
  * callNotify
@@ -81,19 +81,17 @@ const securityCodeEmail = async (emailAddress: string, firstName: string, securi
 
 /**
  * applicationSubmittedEmail
- * Send the application submitted email to an exporter
- * @param {String} Email address
- * @param {String} First name
- * @param {Number} Application reference number
+ * Send "application submitted" email to an exporter
+ * @param {Object} ApplicationSubmissionEmailVariables
  * @returns {Object} callNotify response
  */
-const applicationSubmittedEmail = async (emailAddress: string, firstName: string, referenceNumber: number, buyerName: string): Promise<EmailResponse> => {
+const applicationSubmittedEmail = async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
   try {
     console.info('Sending application submitted email');
 
     const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
 
-    const variables = { firstName, referenceNumber, buyerName };
+    const { emailAddress, firstName } = variables;
 
     const response = await callNotify(templateId, emailAddress, firstName, variables);
 
@@ -105,10 +103,34 @@ const applicationSubmittedEmail = async (emailAddress: string, firstName: string
   }
 };
 
+/**
+ * documentsEmail
+ * Send "we need some documents from you" email to an exporter
+ * @param {Object} ApplicationSubmissionEmailVariables
+ * @param {Boolean} Flag for sending anto-bribery/trading history template
+ * @returns {Object} callNotify response
+ */
+const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, templateId: string): Promise<EmailResponse> => {
+  try {
+    console.info('Sending documents email');
+
+    const { emailAddress, firstName } = variables;
+
+    const response = await callNotify(templateId, emailAddress, firstName, variables);
+
+    return response;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error(`Sending documents email ${err}`);
+  }
+};
+
 const sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
   applicationSubmittedEmail,
+  documentsEmail,
 };
 
 export default sendEmail;

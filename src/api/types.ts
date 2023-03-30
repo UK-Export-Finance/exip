@@ -7,6 +7,17 @@ interface ApplicationRelationship {
 interface ApplicationBuyer {
   id: string;
   companyOrOrganisationName?: string;
+  exporterIsConnectedWithBuyer?: string;
+}
+
+interface ApplicationDeclaration {
+  id: string;
+  agreeToConfidentiality?: boolean;
+  agreeToAntiBribery?: boolean;
+  hasAntiBriberyCodeOfConduct?: boolean;
+  willExportWithAntiBriberyCodeOfConduct?: boolean;
+  agreeToConfirmationAndAcknowledgements?: boolean;
+  agreeHowDataWillBeUsed?: boolean;
 }
 
 interface AccountInput {
@@ -55,6 +66,13 @@ interface Application {
   buyer: ApplicationBuyer;
   sectionReview: ApplicationRelationship;
   declaration: ApplicationRelationship;
+}
+
+interface ApplicationSubmissionEmailVariables {
+  emailAddress: string;
+  firstName: string;
+  referenceNumber: number;
+  buyerName: string;
 }
 
 type BufferEncoding = 'hex' | 'base64' | 'ascii';
@@ -168,6 +186,8 @@ export {
   AddAndGetOtpResponse,
   Application,
   ApplicationBuyer,
+  ApplicationDeclaration,
+  ApplicationSubmissionEmailVariables,
   BufferEncoding,
   CompanyResponse,
   EmailResponse,
