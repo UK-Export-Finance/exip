@@ -18,6 +18,7 @@ const send = async (
   accountId: string,
   buyerId: string,
   declarationId: string,
+  exporterCompanyId: string,
 ): Promise<SubmitApplicationResponse> => {
   try {
     // get the application's exporter
@@ -25,7 +26,7 @@ const send = async (
 
     // ensure that we have found an acount with the requsted ID.
     if (!exporter) {
-      console.error('Sending application submitted emails to exporter - no exporter exists with the provided ID');
+      console.error('Sending application submitted emails - no exporter exists with the provided ID');
 
       return {
         success: false,
@@ -38,7 +39,7 @@ const send = async (
     });
 
     if (!buyer) {
-      console.error('Sending application submitted emails to exporter - no buyer exists with the provided ID');
+      console.error('Sending application submitted emails - no buyer exists with the provided ID');
 
       return {
         success: false,
@@ -51,7 +52,20 @@ const send = async (
     });
 
     if (!declaration) {
-      console.error('Sending application submitted emails to exporter - no declarations exist with the provided ID');
+      console.error('Sending application submitted emails - no declarations exist with the provided ID');
+
+      return {
+        success: false,
+      };
+    }
+
+    // get the exporter's company
+    const exporterCompany = await context.db.ExporterCompany.findOne({
+      where: { id: exporterCompanyId },
+    });
+
+    if (!exporterCompany) {
+      console.error('Sending application submitted emails - no exporter company exists with the provided ID');
 
       return {
         success: false,
@@ -66,16 +80,24 @@ const send = async (
       firstName,
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
+      exporterCompanyName: exporterCompany.companyName,
     } as ApplicationSubmissionEmailVariables;
 
-    // send "application submitted" email
-    const submittedResponse = await sendEmail.applicationSubmittedEmail(sendEmailVars);
+    // send "application submitted" email to the exporter
+    const exporterSubmittedResponse = await sendEmail.applicationSubmitted.exporter(sendEmailVars);
 
-    if (!submittedResponse.success) {
-      throw new Error('Sending application submitted emails to exporter');
+    if (!exporterSubmittedResponse.success) {
+      throw new Error('Sending application submitted email to exporter');
     }
 
-    // send "documents" email depending on submitted answers
+    // send "application submitted" email to the underwriting team
+    const underwritingTeamSubmittedResponse = await sendEmail.applicationSubmitted.underwritingTeam(sendEmailVars);
+
+    if (!underwritingTeamSubmittedResponse.success) {
+      throw new Error('Sending application submitted email to underwriting team');
+    }
+
+    // send "documents" email to the exporter depending on submitted answers
     let documentsResponse;
 
     let templateId = '';
@@ -103,7 +125,7 @@ const send = async (
         return documentsResponse;
       }
 
-      throw new Error(`Sending application submitted emails to exporter ${documentsResponse}`);
+      throw new Error(`Sending application submitted emails ${documentsResponse}`);
     }
 
     // no need to send "documents" email
@@ -113,7 +135,7 @@ const send = async (
   } catch (err) {
     console.error(err);
 
-    throw new Error(`Sending application submitted emails to exporter ${err}`);
+    throw new Error(`Sending application submitted emails ${err}`);
   }
 };
 

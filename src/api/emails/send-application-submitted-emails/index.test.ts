@@ -5,8 +5,8 @@ import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from '../index';
 import { ANSWERS, EMAIL_TEMPLATE_IDS } from '../../constants';
-import { mockAccount, mockBuyer, mockApplicationDeclaration, mockSendEmailResponse } from '../../test-mocks';
-import { Account, Application, ApplicationBuyer, ApplicationDeclaration, ApplicationSubmissionEmailVariables } from '../../types';
+import { mockAccount, mockBuyer, mockApplicationDeclaration, mockExporterCompany, mockSendEmailResponse } from '../../test-mocks';
+import { Account, Application, ApplicationBuyer, ApplicationDeclaration, ApplicationSubmissionEmailVariables, ApplicationExporterCompany } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -19,6 +19,7 @@ const context = getContext(config, PrismaModule) as Context;
 describe('emails/send-email-application-submitted', () => {
   let exporter: Account;
   let application: Application;
+  let exporterCompany: ApplicationExporterCompany;
   let buyer: ApplicationBuyer;
   let declaration: ApplicationDeclaration;
 
@@ -41,15 +42,24 @@ describe('emails/send-email-application-submitted', () => {
     // create a new application
     application = (await context.query.Application.createOne({
       data: {},
-      query: 'id referenceNumber buyer { id } declaration { id }',
+      query: 'id referenceNumber exporterCompany { id } buyer { id } declaration { id }',
     })) as Application;
 
+    // create a new exporter company
+    exporterCompany = (await context.query.ExporterCompany.updateOne({
+      where: { id: application.exporterCompany.id },
+      data: mockExporterCompany,
+      query: 'id companyName',
+    })) as ApplicationExporterCompany;
+
+    // create a new buyer
     buyer = (await context.query.Buyer.updateOne({
       where: { id: application.buyer.id },
       data: mockBuyer,
       query: 'id companyOrOrganisationName',
     })) as ApplicationBuyer;
 
+    // create a new declaration
     declaration = (await context.query.Declaration.updateOne({
       where: { id: application.declaration.id },
       data: mockApplicationDeclaration,
@@ -61,7 +71,7 @@ describe('emails/send-email-application-submitted', () => {
     applicationSubmittedEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
     documentsEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-    sendEmail.applicationSubmittedEmail = applicationSubmittedEmailSpy;
+    sendEmail.applicationSubmitted.exporter = applicationSubmittedEmailSpy;
     sendEmail.documentsEmail = documentsEmailSpy;
   });
 
@@ -71,6 +81,7 @@ describe('emails/send-email-application-submitted', () => {
     beforeEach(() => {
       const { email, firstName } = exporter;
       const { referenceNumber } = application;
+      const { companyName } = exporterCompany;
       const { companyOrOrganisationName } = buyer;
 
       expectedSendEmailVars = {
@@ -78,18 +89,19 @@ describe('emails/send-email-application-submitted', () => {
         firstName,
         referenceNumber,
         buyerName: companyOrOrganisationName,
+        exporterCompanyName: companyName,
       } as ApplicationSubmissionEmailVariables;
     });
 
-    test('it should call sendEmail.applicationSubmittedEmail', async () => {
-      await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+    test('it should call sendEmail.applicationSubmitted.exporter', async () => {
+      await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
 
       expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
       expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
     });
 
     test('it should call sendEmail.documentsEmail with correct template ID ', async () => {
-      await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+      await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
 
       expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -109,7 +121,7 @@ describe('emails/send-email-application-submitted', () => {
       });
 
       test('it should call sendEmail.documentsEmail with correct template ID', async () => {
-        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -137,7 +149,7 @@ describe('emails/send-email-application-submitted', () => {
       });
 
       test('it should NOT call sendEmail.documentsEmail', async () => {
-        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(0);
       });
@@ -161,7 +173,7 @@ describe('emails/send-email-application-submitted', () => {
       });
 
       test('it should NOT call sendEmail.documentsEmail', async () => {
-        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -173,7 +185,7 @@ describe('emails/send-email-application-submitted', () => {
   });
 
   it('should return the email response', async () => {
-    const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+    const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
 
     const expected = {
       success: true,
@@ -192,7 +204,7 @@ describe('emails/send-email-application-submitted', () => {
         where: exporters,
       });
 
-      const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+      const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
 
       const expected = { success: false };
 
@@ -209,7 +221,7 @@ describe('emails/send-email-application-submitted', () => {
         where: buyers,
       });
 
-      const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+      const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
 
       const expected = { success: false };
 
@@ -219,14 +231,14 @@ describe('emails/send-email-application-submitted', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.applicationSubmittedEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.applicationSubmitted.exporter = jest.fn(() => Promise.reject(mockSendEmailResponse));
     });
 
     test('should throw an error', async () => {
       try {
-        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
+        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
       } catch (err) {
-        const expected = new Error(`Sending application submitted emails to exporter ${mockSendEmailResponse}`);
+        const expected = new Error(`Sending application submitted emails ${mockSendEmailResponse}`);
 
         expect(err).toEqual(expected);
       }

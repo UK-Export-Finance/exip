@@ -48,6 +48,15 @@ export const mockApplication = {
   referenceNumber: 1234,
 };
 
+export const mockExporterCompany = {
+  companyName: 'Mock company name',
+};
+
+export const mockBuyer = {
+  companyOrOrganisationName: 'Mock buyer',
+  exporterIsConnectedWithBuyer: ANSWERS.YES,
+};
+
 export const mockApplicationDeclaration = {
   agreeToConfidentiality: true,
   agreeToAntiBribery: true,
@@ -55,11 +64,6 @@ export const mockApplicationDeclaration = {
   willExportWithAntiBriberyCodeOfConduct: ANSWERS.YES,
   agreeToConfirmationAndAcknowledgements: true,
   agreeHowDataWillBeUsed: true,
-};
-
-export const mockBuyer = {
-  companyOrOrganisationName: 'Mock buyer',
-  exporterIsConnectedWithBuyer: ANSWERS.YES,
 };
 
 export const mockSendEmailResponse = { success: true, emailRecipient: mockAccount.email };

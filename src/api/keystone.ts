@@ -12,7 +12,7 @@ export default withAuth(
     db: {
       provider: 'mysql',
       url: String(process.env.DATABASE_URL),
-      enableLogging: false,
+      enableLogging: true,
     },
     ui: {
       isAccessAllowed: (context) => !!context.session?.data,

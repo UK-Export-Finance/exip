@@ -4,6 +4,11 @@ interface ApplicationRelationship {
   id: string;
 }
 
+interface ApplicationExporterCompany {
+  id: string;
+  companyName?: string;
+}
+
 interface ApplicationBuyer {
   id: string;
   companyOrOrganisationName?: string;
@@ -59,7 +64,7 @@ interface Application {
   eligibility: ApplicationRelationship;
   exporter: ApplicationRelationship;
   policyAndExport: ApplicationRelationship;
-  exporterCompany: ApplicationRelationship;
+  exporterCompany: ApplicationExporterCompany;
   exporterCompanyAddress: ApplicationRelationship;
   exporterBusiness: ApplicationRelationship;
   exporterBroker: ApplicationRelationship;
@@ -187,6 +192,7 @@ export {
   Application,
   ApplicationBuyer,
   ApplicationDeclaration,
+  ApplicationExporterCompany,
   ApplicationSubmissionEmailVariables,
   BufferEncoding,
   CompanyResponse,

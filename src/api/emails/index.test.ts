@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import sendEmail, { callNotify } from '.';
 import notify from '../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../constants';
-import { mockAccount, mockApplication, mockBuyer, mockSendEmailResponse } from '../test-mocks';
+import { mockAccount, mockApplication, mockExporterCompany, mockBuyer, mockSendEmailResponse } from '../test-mocks';
 
 dotenv.config();
 
@@ -13,6 +13,7 @@ describe('emails', () => {
 
   const { email, firstName, verificationHash } = mockAccount;
   const { referenceNumber } = mockApplication;
+  const { companyName } = mockExporterCompany;
   const { companyOrOrganisationName } = mockBuyer;
 
   const variables = {
@@ -20,7 +21,10 @@ describe('emails', () => {
     firstName,
     referenceNumber,
     buyerName: companyOrOrganisationName,
+    exporterCompanyName: companyName,
   };
+
+  const mockErrorMessage = 'Mock error';
 
   beforeAll(async () => {
     notify.sendEmail = sendEmailSpy;
@@ -53,7 +57,7 @@ describe('emails', () => {
       const result = await sendEmail.confirmEmailAddress(email, firstName, verificationHash);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, firstName, { confirmToken: verificationHash });
+      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, { confirmToken: verificationHash }, firstName);
 
       const expected = mockSendEmailResponse;
 
@@ -61,8 +65,6 @@ describe('emails', () => {
     });
 
     describe('error handling', () => {
-      const mockErrorMessage = 'Mock error';
-
       beforeAll(async () => {
         notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
       });
@@ -89,7 +91,7 @@ describe('emails', () => {
       const result = await sendEmail.securityCodeEmail(email, firstName, mockSecurityCode);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, firstName, { securityCode: mockSecurityCode });
+      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, { securityCode: mockSecurityCode }, firstName);
 
       const expected = mockSendEmailResponse;
 
@@ -97,8 +99,6 @@ describe('emails', () => {
     });
 
     describe('error handling', () => {
-      const mockErrorMessage = 'Mock error';
-
       beforeAll(async () => {
         notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
       });
@@ -116,36 +116,72 @@ describe('emails', () => {
   });
 
   describe('applicationSubmittedEmail', () => {
-    const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+    describe('exporter', () => {
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
 
-    test('it should call notify.sendEmail and return the response', async () => {
-      notify.sendEmail = sendEmailSpy;
+      test('it should call notify.sendEmail and return the response', async () => {
+        notify.sendEmail = sendEmailSpy;
 
-      const result = await sendEmail.applicationSubmittedEmail(variables);
+        const result = await sendEmail.applicationSubmitted.exporter(variables);
 
-      expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, firstName, variables);
+        expect(sendEmailSpy).toHaveBeenCalledTimes(1);
+        expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, variables, firstName);
 
-      const expected = mockSendEmailResponse;
+        const expected = mockSendEmailResponse;
 
-      expect(result).toEqual(expected);
-    });
-
-    describe('error handling', () => {
-      const mockErrorMessage = 'Mock error';
-
-      beforeAll(async () => {
-        notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
+        expect(result).toEqual(expected);
       });
 
-      test('should throw an error', async () => {
-        try {
-          await sendEmail.applicationSubmittedEmail(variables);
-        } catch (err) {
-          const expected = new Error(`Sending application submitted email Error: Sending email ${mockErrorMessage}`);
+      describe('error handling', () => {
+        beforeAll(async () => {
+          notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
+        });
 
-          expect(err).toEqual(expected);
-        }
+        test('should throw an error', async () => {
+          try {
+            await sendEmail.applicationSubmitted.exporter(variables);
+          } catch (err) {
+            const expected = new Error(`Sending application submitted email to exporter Error: Sending email ${mockErrorMessage}`);
+
+            expect(err).toEqual(expected);
+          }
+        });
+      });
+    });
+
+    describe('underwritingTeam', () => {
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.UNDERWRITING_TEAM.NOTIFICATION;
+
+      test('it should call notify.sendEmail and return the response', async () => {
+        notify.sendEmail = sendEmailSpy;
+
+        const result = await sendEmail.applicationSubmitted.underwritingTeam(variables);
+
+        expect(sendEmailSpy).toHaveBeenCalledTimes(1);
+
+        const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL;
+
+        expect(sendEmailSpy).toHaveBeenCalledWith(templateId, emailAddress, variables);
+
+        const expected = mockSendEmailResponse;
+
+        expect(result).toEqual(expected);
+      });
+
+      describe('error handling', () => {
+        beforeAll(async () => {
+          notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
+        });
+
+        test('should throw an error', async () => {
+          try {
+            await sendEmail.applicationSubmitted.underwritingTeam(variables);
+          } catch (err) {
+            const expected = new Error(`Sending application submitted email to underwriting team Error: Sending email ${mockErrorMessage}`);
+
+            expect(err).toEqual(expected);
+          }
+        });
       });
     });
   });
@@ -159,7 +195,7 @@ describe('emails', () => {
       const result = await sendEmail.documentsEmail(variables, templateId);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, firstName, variables);
+      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, variables, firstName);
 
       const expected = mockSendEmailResponse;
 
@@ -167,8 +203,6 @@ describe('emails', () => {
     });
 
     describe('error handling', () => {
-      const mockErrorMessage = 'Mock error';
-
       beforeAll(async () => {
         notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
       });

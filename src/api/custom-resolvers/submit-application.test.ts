@@ -5,8 +5,16 @@ import baseConfig from '../keystone';
 import submitApplication from './submit-application';
 import applicationSubmittedEmails from '../emails/send-application-submitted-emails';
 import { APPLICATION } from '../constants';
-import { mockAccount, mockBuyer, mockApplicationDeclaration, mockSendEmailResponse } from '../test-mocks';
-import { Account, Application, ApplicationBuyer, ApplicationDeclaration, SubmitApplicationVariables, SubmitApplicationResponse } from '../types';
+import { mockAccount, mockBuyer, mockExporterCompany, mockApplicationDeclaration, mockSendEmailResponse } from '../test-mocks';
+import {
+  Account,
+  Application,
+  ApplicationBuyer,
+  ApplicationDeclaration,
+  SubmitApplicationVariables,
+  SubmitApplicationResponse,
+  ApplicationExporterCompany,
+} from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -38,7 +46,7 @@ const createRequiredData = async () => {
 
   // create a new application
   const application = (await context.query.Application.createOne({
-    query: 'id referenceNumber exporter { id } buyer { id } declaration { id }',
+    query: 'id referenceNumber exporter { id } exporterCompany { id } buyer { id } declaration { id }',
     data: {
       exporter: {
         connect: {
@@ -51,6 +59,15 @@ const createRequiredData = async () => {
   // update the buyer so there is a name
   const buyer = await updateBuyer(application.buyer.id);
 
+  // update the exporter company so we have a company name
+  const exporterCompany = (await context.query.ExporterCompany.updateOne({
+    where: {
+      id: application.exporterCompany.id,
+    },
+    data: mockExporterCompany,
+    query: 'id',
+  })) as ApplicationDeclaration;
+
   // update the declaration so we have full data set.
   const declaration = (await context.query.Declaration.updateOne({
     where: {
@@ -62,6 +79,7 @@ const createRequiredData = async () => {
 
   return {
     exporter,
+    exporterCompany,
     application,
     buyer,
     declaration,
@@ -70,6 +88,7 @@ const createRequiredData = async () => {
 
 describe('custom-resolvers/submit-application', () => {
   let exporter: Account;
+  let exporterCompany: ApplicationExporterCompany;
   let buyer: ApplicationBuyer;
   let declaration: ApplicationDeclaration;
   let application: Application;
@@ -77,7 +96,6 @@ describe('custom-resolvers/submit-application', () => {
   let variables: SubmitApplicationVariables;
   let result: SubmitApplicationResponse;
 
-  // jest.mock('../emails');
   jest.mock('../emails/send-application-submitted-emails');
 
   let applicationSubmittedEmailsSpy = jest.fn();
@@ -92,6 +110,7 @@ describe('custom-resolvers/submit-application', () => {
     const data = await createRequiredData();
 
     exporter = data.exporter;
+    exporterCompany = data.exporterCompany;
     buyer = data.buyer;
     declaration = data.declaration;
     application = data.application;
@@ -135,14 +154,12 @@ describe('custom-resolvers/submit-application', () => {
     expect(submissionDateDay).toEqual(expectedDay);
   });
 
-  describe('emails', () => {
-    test('it should call applicationSubmittedEmails.send with a template flag of true', async () => {
-      result = await submitApplication({}, variables, context);
+  test('it should call applicationSubmittedEmails.send', async () => {
+    result = await submitApplication({}, variables, context);
 
-      expect(applicationSubmittedEmailsSpy).toHaveBeenCalledTimes(1);
+    expect(applicationSubmittedEmailsSpy).toHaveBeenCalledTimes(1);
 
-      expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(context, application.referenceNumber, exporter.id, buyer.id, declaration.id);
-    });
+    expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
   });
 
   describe('when an application is not found', () => {
