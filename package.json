@@ -29,6 +29,7 @@
   "dependencies": {
     "cypress": "^10.9.0",
     "cypress-audit": "^1.1.0",
+    "cypress-v10-preserve-cookie": "^1.2.1",
     "dotenv": "^16.0.1"
   },
   "devDependencies": {

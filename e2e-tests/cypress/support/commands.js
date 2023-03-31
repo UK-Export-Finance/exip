@@ -7,6 +7,7 @@
 // ***********************************************
 
 import 'cypress-audit/commands';
+import 'cypress-v10-preserve-cookie';
 
 import analytics from '../support/analytics';
 
@@ -24,3 +25,5 @@ Cypress.Commands.add('checkCookiesConsentBannerIsNotVisible', analytics.checkCoo
 Cypress.Commands.add('checkCookiesConsentBannerIsVisible', analytics.checkCookiesConsentBannerIsVisible);
 Cypress.Commands.add('checkCookiesConsentBannerDoesNotExist', analytics.checkCookiesConsentBannerDoesNotExist);
 Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);
+
+Cypress.Commands.add('saveSession', require('./save-session'));

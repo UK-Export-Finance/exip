@@ -11,11 +11,8 @@ context('Cookies page', () => {
 
     partials.footer.supportLinks.cookies().click();
     cy.url().should('include', ROUTES.COOKIES);
-  });
 
-  beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   it('passes the audits', () => {
@@ -29,8 +26,7 @@ context('Cookies page', () => {
 
   describe('page tests', () => {
     beforeEach(() => {
-      Cypress.Cookies.preserveOnce('_csrf');
-      Cypress.Cookies.preserveOnce('exip-session');
+      cy.saveSession();
     });
 
     it('renders an analytics cookies consent banner that can be accepted', () => {
@@ -84,8 +80,7 @@ context('Cookies page', () => {
       context('table', () => {
         context('headings', () => {
           beforeEach(() => {
-            Cypress.Cookies.preserveOnce('_csrf');
-            Cypress.Cookies.preserveOnce('exip-session');          
+            cy.saveSession();
           });
 
           it('renders name heading', () => {
@@ -109,8 +104,7 @@ context('Cookies page', () => {
 
         context('row 1', () => {
           beforeEach(() => {
-            Cypress.Cookies.preserveOnce('_csrf');
-            Cypress.Cookies.preserveOnce('exip-session');
+            cy.saveSession();
           });
 
           it('renders name column', () => {
@@ -134,8 +128,7 @@ context('Cookies page', () => {
 
         context('row 2', () => {
           beforeEach(() => {
-            Cypress.Cookies.preserveOnce('_csrf');
-            Cypress.Cookies.preserveOnce('exip-session');
+            cy.saveSession();
           });
 
           it('renders name column', () => {
@@ -161,8 +154,7 @@ context('Cookies page', () => {
 
     describe('optional cookies', () => {
       beforeEach(() => {
-        Cypress.Cookies.preserveOnce('_csrf');
-        Cypress.Cookies.preserveOnce('exip-session');
+        cy.saveSession();
       });
 
       it('renders a heading', () => {
@@ -230,8 +222,7 @@ context('Cookies page', () => {
     describe('form submission', () => {
       describe('when submitting an empty form', () => {
         beforeEach(() => {
-          Cypress.Cookies.preserveOnce('_csrf');
-          Cypress.Cookies.preserveOnce('exip-session');
+          cy.saveSession();
         });
 
         it('should render validation errors', () => {
@@ -261,8 +252,7 @@ context('Cookies page', () => {
 
       describe('when submitting the answer as `accept`', () => {
         beforeEach(() => {
-          Cypress.Cookies.preserveOnce('_csrf');
-          Cypress.Cookies.preserveOnce('exip-session');
+          cy.saveSession();
 
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
           cookiesPage.optionalCookies.submitButton().click();
@@ -305,8 +295,7 @@ context('Cookies page', () => {
 
       describe('when submitting the answer as `reject`', () => {
         beforeEach(() => {
-          Cypress.Cookies.preserveOnce('_csrf');
-          Cypress.Cookies.preserveOnce('exip-session');
+          cy.saveSession();
           
           cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
           cookiesPage.optionalCookies.submitButton().click();
@@ -349,8 +338,7 @@ context('Cookies page', () => {
 
       describe('when a user navigates to the cookies page directly via URL and optional cookies are submitted as `accept`', () => {
         beforeEach(() => {
-          Cypress.Cookies.preserveOnce('_csrf');
-          Cypress.Cookies.preserveOnce('exip-session');
+          cy.saveSession();
 
           cy.visit(ROUTES.COOKIES, {
             auth: {
@@ -378,8 +366,7 @@ context('Cookies page', () => {
 
       describe('when a user navigates to the cookies page directly via URL and optional cookies are submitted as `reject`', () => {
         beforeEach(() => {
-          Cypress.Cookies.preserveOnce('_csrf');
-          Cypress.Cookies.preserveOnce('exip-session');
+          cy.saveSession();
 
           cy.visit(ROUTES.COOKIES, {
             auth: {
