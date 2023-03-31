@@ -11,7 +11,9 @@ context('Cookies page', () => {
 
     partials.footer.supportLinks.cookies().click();
     cy.url().should('include', ROUTES.COOKIES);
+  });
 
+  beforeEach(() => {
     Cypress.Cookies.preserveOnce('_csrf');
     Cypress.Cookies.preserveOnce('exip-session');
   });
@@ -25,196 +27,203 @@ context('Cookies page', () => {
     });
   });
 
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
-
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
-
-    partials.backLink().should('have.attr', 'href', expected);
-  });
-
-  it('renders a heading', () => {
-    cookiesPage.heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
-    });
-  });
-
-  it('renders a intro/description', () => {
-    cookiesPage.body1().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.BODY_1);
-    });
-
-    cookiesPage.body2().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.BODY_2);
-    });
-  });
-
-  describe('essential cookies', () => {
-    it('renders a heading', () => {
-      cookiesPage.essentialCookies.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.HEADING);
-      });
-    });
-
-    it('renders an intro', () => {
-      cookiesPage.essentialCookies.intro().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.INTRO);
-      });
-    });
-
-    context('table', () => {
-      context('headings', () => {
-        beforeEach(() => {
-          Cypress.Cookies.preserveOnce('_csrf');
-          Cypress.Cookies.preserveOnce('exip-session');          
-        });
-
-        it('renders name heading', () => {
-          cookiesPage.essentialCookies.table.head.cell1().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.TABLE_HEADINGS.NAME);
-          });
-        });
-
-        it('renders purpose heading', () => {
-          cookiesPage.essentialCookies.table.head.cell2().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.TABLE_HEADINGS.PURPOSE);
-          });
-        });
-
-        it('renders an expires heading', () => {
-          cookiesPage.essentialCookies.table.head.cell3().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.TABLE_HEADINGS.EXPIRES);
-          });
-        });
-      });
-
-      context('row 1', () => {
-        beforeEach(() => {
-          Cypress.Cookies.preserveOnce('_csrf');
-          Cypress.Cookies.preserveOnce('exip-session');
-        });
-
-        it('renders name column', () => {
-          cookiesPage.essentialCookies.table.body.row1.cell1().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].NAME);
-          });
-        });
-
-        it('renders purpose column', () => {
-          cookiesPage.essentialCookies.table.body.row1.cell2().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].PURPOSE);
-          });
-        });
-
-        it('renders expires column', () => {
-          cookiesPage.essentialCookies.table.body.row1.cell3().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].EXPIRES);
-          });
-        });
-      });
-
-      context('row 2', () => {
-        beforeEach(() => {
-          Cypress.Cookies.preserveOnce('_csrf');
-          Cypress.Cookies.preserveOnce('exip-session');
-        });
-
-        it('renders name column', () => {
-          cookiesPage.essentialCookies.table.body.row2.cell1().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].NAME);
-          });
-        });
-
-        it('renders purpose column', () => {
-          cookiesPage.essentialCookies.table.body.row2.cell2().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].PURPOSE);
-          });
-        });
-
-        it('renders expires column', () => {
-          cookiesPage.essentialCookies.table.body.row2.cell3().invoke('text').then((text) => {
-            expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].EXPIRES);
-          });
-        });
-      });
-    });
-  });
-
-  describe('optional cookies', () => {
+  describe('page tests', () => {
     beforeEach(() => {
       Cypress.Cookies.preserveOnce('_csrf');
       Cypress.Cookies.preserveOnce('exip-session');
     });
 
+    it('renders an analytics cookies consent banner that can be accepted', () => {
+      cy.checkAnalyticsCookiesConsentAndAccept();
+    });
+
+    it('renders an analytics cookies consent banner that can be rejected', () => {
+      cy.rejectAnalyticsCookies();
+    });
+
+    it('renders a back link with correct url', () => {
+      partials.backLink().should('exist');
+      partials.backLink().invoke('text').then((text) => {
+        expect(text.trim()).equal(LINKS.BACK);
+      });
+
+      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
+
+      partials.backLink().should('have.attr', 'href', expected);
+    });
+
     it('renders a heading', () => {
-      cookiesPage.optionalCookies.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.HEADING);
+      cookiesPage.heading().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
       });
     });
 
-    it('renders body text', () => {
-      cookiesPage.optionalCookies.body1().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_1);
+    it('renders a intro/description', () => {
+      cookiesPage.body1().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.BODY_1);
       });
 
-      cookiesPage.optionalCookies.body2().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_2);
-      });
-
-      cookiesPage.optionalCookies.body3().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_3);
+      cookiesPage.body2().invoke('text').then((text) => {
+        expect(text.trim()).equal(CONTENT_STRINGS.BODY_2);
       });
     });
 
-    it('renders a text list of analytics information', () => {
-      cookiesPage.optionalCookies.analyticsInfoList.item1().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.ANALYTICS_INFO_LIST[0].text);
+    describe('essential cookies', () => {
+      it('renders a heading', () => {
+        cookiesPage.essentialCookies.heading().invoke('text').then((text) => {
+          expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.HEADING);
+        });
       });
 
-      cookiesPage.optionalCookies.analyticsInfoList.item2().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.ANALYTICS_INFO_LIST[1].text);
+      it('renders an intro', () => {
+        cookiesPage.essentialCookies.intro().invoke('text').then((text) => {
+          expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.INTRO);
+        });
       });
 
-      cookiesPage.optionalCookies.analyticsInfoList.item3().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.ANALYTICS_INFO_LIST[2].text);
+      context('table', () => {
+        context('headings', () => {
+          beforeEach(() => {
+            Cypress.Cookies.preserveOnce('_csrf');
+            Cypress.Cookies.preserveOnce('exip-session');          
+          });
+
+          it('renders name heading', () => {
+            cookiesPage.essentialCookies.table.head.cell1().invoke('text').then((text) => {
+              expect(text.trim()).equal(CONTENT_STRINGS.TABLE_HEADINGS.NAME);
+            });
+          });
+
+          it('renders purpose heading', () => {
+            cookiesPage.essentialCookies.table.head.cell2().invoke('text').then((text) => {
+              expect(text.trim()).equal(CONTENT_STRINGS.TABLE_HEADINGS.PURPOSE);
+            });
+          });
+
+          it('renders an expires heading', () => {
+            cookiesPage.essentialCookies.table.head.cell3().invoke('text').then((text) => {
+              expect(text.trim()).equal(CONTENT_STRINGS.TABLE_HEADINGS.EXPIRES);
+            });
+          });
+        });
+
+        context('row 1', () => {
+          beforeEach(() => {
+            Cypress.Cookies.preserveOnce('_csrf');
+            Cypress.Cookies.preserveOnce('exip-session');
+          });
+
+          it('renders name column', () => {
+            cookiesPage.essentialCookies.table.body.row1.cell1().invoke('text').then((text) => {
+              expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].NAME);
+            });
+          });
+
+          it('renders purpose column', () => {
+            cookiesPage.essentialCookies.table.body.row1.cell2().invoke('text').then((text) => {
+              expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].PURPOSE);
+            });
+          });
+
+          it('renders expires column', () => {
+            cookiesPage.essentialCookies.table.body.row1.cell3().invoke('text').then((text) => {
+              expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[0].EXPIRES);
+            });
+          });
+        });
+
+        context('row 2', () => {
+          beforeEach(() => {
+            Cypress.Cookies.preserveOnce('_csrf');
+            Cypress.Cookies.preserveOnce('exip-session');
+          });
+
+          it('renders name column', () => {
+            cookiesPage.essentialCookies.table.body.row2.cell1().invoke('text').then((text) => {
+              expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].NAME);
+            });
+          });
+
+          it('renders purpose column', () => {
+            cookiesPage.essentialCookies.table.body.row2.cell2().invoke('text').then((text) => {
+              expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].PURPOSE);
+            });
+          });
+
+          it('renders expires column', () => {
+            cookiesPage.essentialCookies.table.body.row2.cell3().invoke('text').then((text) => {
+              expect(text.trim()).equal(CONTENT_STRINGS.ESSENTIAL_COOKIES.ITEMS[1].EXPIRES);
+            });
+          });
+        });
       });
     });
 
-    it('renders accept and reject radio buttons', () => {
-      const acceptRadio = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput();
-      acceptRadio.should('exist');
-
-      const acceptRadioLabel = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptLabel();
-      acceptRadioLabel.invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[FIELD_IDS.OPTIONAL_COOKIES].OPTIONS.ACCEPT.TEXT);
+    describe('optional cookies', () => {
+      beforeEach(() => {
+        Cypress.Cookies.preserveOnce('_csrf');
+        Cypress.Cookies.preserveOnce('exip-session');
       });
 
-      const rejectRadio = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput();
-      rejectRadio.should('exist');
-
-      const rejectRadioLabel = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectLabel();
-      rejectRadioLabel.invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[FIELD_IDS.OPTIONAL_COOKIES].OPTIONS.REJECT.TEXT);
+      it('renders a heading', () => {
+        cookiesPage.optionalCookies.heading().invoke('text').then((text) => {
+          expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.HEADING);
+        });
       });
-    });
 
-    it('renders a submit button', () => {
-      const button = cookiesPage.optionalCookies.submitButton();
-      button.should('exist');
+      it('renders body text', () => {
+        cookiesPage.optionalCookies.body1().invoke('text').then((text) => {
+          expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_1);
+        });
 
-      button.invoke('text').then((text) => {
-        expect(text.trim()).equal(BUTTONS.SAVE_CHANGES);
+        cookiesPage.optionalCookies.body2().invoke('text').then((text) => {
+          expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_2);
+        });
+
+        cookiesPage.optionalCookies.body3().invoke('text').then((text) => {
+          expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.BODY_3);
+        });
+      });
+
+      it('renders a text list of analytics information', () => {
+        cookiesPage.optionalCookies.analyticsInfoList.item1().invoke('text').then((text) => {
+          expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.ANALYTICS_INFO_LIST[0].text);
+        });
+
+        cookiesPage.optionalCookies.analyticsInfoList.item2().invoke('text').then((text) => {
+          expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.ANALYTICS_INFO_LIST[1].text);
+        });
+
+        cookiesPage.optionalCookies.analyticsInfoList.item3().invoke('text').then((text) => {
+          expect(text.trim()).equal(CONTENT_STRINGS.OPTIONAL_COOKIES.ANALYTICS_INFO_LIST[2].text);
+        });
+      });
+
+      it('renders accept and reject radio buttons', () => {
+        const acceptRadio = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput();
+        acceptRadio.should('exist');
+
+        const acceptRadioLabel = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptLabel();
+        acceptRadioLabel.invoke('text').then((text) => {
+          expect(text.trim()).equal(FIELDS[FIELD_IDS.OPTIONAL_COOKIES].OPTIONS.ACCEPT.TEXT);
+        });
+
+        const rejectRadio = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput();
+        rejectRadio.should('exist');
+
+        const rejectRadioLabel = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectLabel();
+        rejectRadioLabel.invoke('text').then((text) => {
+          expect(text.trim()).equal(FIELDS[FIELD_IDS.OPTIONAL_COOKIES].OPTIONS.REJECT.TEXT);
+        });
+      });
+
+      it('renders a submit button', () => {
+        const button = cookiesPage.optionalCookies.submitButton();
+        button.should('exist');
+
+        button.invoke('text').then((text) => {
+          expect(text.trim()).equal(BUTTONS.SAVE_CHANGES);
+        });
       });
     });
 
