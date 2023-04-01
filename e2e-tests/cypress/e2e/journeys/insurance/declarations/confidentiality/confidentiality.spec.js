@@ -74,7 +74,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
     });
 
     describe('latest confidentiality content', () => {
-      const listContent = CONTENT_STRINGS.LIST;
+      const listContent = CONTENT_STRINGS.VERSIONS[0].LIST;
 
       const {
         intro,

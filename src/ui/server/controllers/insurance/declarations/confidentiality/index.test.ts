@@ -20,7 +20,7 @@ const {
   },
 } = INSURANCE;
 
-const CONFIDENTIALITY_CONTENT = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.LIST;
+const CONFIDENTIALITY_CONTENT = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.VERSIONS[0].LIST;
 
 describe('controllers/insurance/declarations/confidentiality', () => {
   jest.mock('../save-data');
