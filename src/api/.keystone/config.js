@@ -322,8 +322,15 @@ var EMAIL_TEMPLATE_IDS = {
   }
 };
 
-// emails/index.ts
+// file-system/index.ts
 var import_fs = require("fs");
+var readFile = (filePath) => import_fs.promises.readFile(filePath);
+var unlink = (filePath) => import_fs.promises.unlink(filePath);
+var fileSystem = {
+  readFile,
+  unlink
+};
+var file_system_default = fileSystem;
 
 // integrations/notify/index.ts
 var import_dotenv2 = __toESM(require("dotenv"));
@@ -332,14 +339,10 @@ import_dotenv2.default.config();
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
 var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
 var notify = {
-  sendEmail: async (templateId, sendToEmailAddress, variables, firstName, file, fileIsCsv) => {
+  sendEmail: async (templateId, sendToEmailAddress, variables, file, fileIsCsv) => {
     try {
       console.info("Calling Notify API. templateId: ", templateId);
       const personalisation = variables;
-      if (firstName) {
-        personalisation.firstName = firstName;
-      }
-      ;
       if (file) {
         personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true, isCsv: fileIsCsv });
         await notifyClient.sendEmail(templateId, sendToEmailAddress, {
@@ -366,13 +369,13 @@ var notify_default = notify;
 // emails/index.ts
 var import_dotenv3 = __toESM(require("dotenv"));
 import_dotenv3.default.config();
-var callNotify = async (templateId, emailAddress, variables, firstName, file, fileIsCsv) => {
+var callNotify = async (templateId, emailAddress, variables, file, fileIsCsv) => {
   try {
     let emailResponse;
-    if (file) {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, firstName, file, fileIsCsv);
+    if (file && fileIsCsv) {
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file, fileIsCsv);
     } else {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, firstName);
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables);
     }
     if (emailResponse.success) {
       return emailResponse;
@@ -387,8 +390,8 @@ var confirmEmailAddress = async (emailAddress, firstName, verificationHash) => {
   try {
     console.info("Sending email verification for account creation");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
-    const variables = { confirmToken: verificationHash };
-    const response = await callNotify(templateId, emailAddress, variables, firstName);
+    const variables = { firstName, confirmToken: verificationHash };
+    const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
     console.error(err);
@@ -399,8 +402,8 @@ var securityCodeEmail = async (emailAddress, firstName, securityCode) => {
   try {
     console.info("Sending security code email for account sign in");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
-    const variables = { securityCode };
-    const response = await callNotify(templateId, emailAddress, variables, firstName);
+    const variables = { firstName, securityCode };
+    const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
     console.error(err);
@@ -418,8 +421,8 @@ var applicationSubmitted = {
     try {
       console.info("Sending application submitted email to exporter");
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
-      const { emailAddress, firstName } = variables;
-      const response = await callNotify(templateId, emailAddress, variables, firstName);
+      const { emailAddress } = variables;
+      const response = await callNotify(templateId, emailAddress, variables);
       return response;
     } catch (err) {
       console.error(err);
@@ -428,7 +431,9 @@ var applicationSubmitted = {
   },
   /**
    * applicationSubmitted.underwritingTeam
-   * Send "application submitted" email to the underwriting team
+   * Read CSV file, generate a file buffer
+   * Send "application submitted" email to the underwriting team with a link to CSV
+   * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
    * @param {Object} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
@@ -437,20 +442,11 @@ var applicationSubmitted = {
       console.info("Sending application submitted email to underwriting team");
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.UNDERWRITING_TEAM.NOTIFICATION;
       const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL;
-      let response;
-      const file = await import_fs.promises.readFile(csvPath);
+      const file = await file_system_default.readFile(csvPath);
       const fileIsCsv = true;
       const fileBuffer = Buffer.from(file);
-      response = await callNotify(
-        templateId,
-        emailAddress,
-        variables,
-        "",
-        // firstName
-        fileBuffer,
-        fileIsCsv
-      );
-      await import_fs.promises.unlink(csvPath);
+      const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
+      await file_system_default.unlink(csvPath);
       return response;
     } catch (err) {
       console.error(err);
@@ -461,8 +457,8 @@ var applicationSubmitted = {
 var documentsEmail = async (variables, templateId) => {
   try {
     console.info("Sending documents email");
-    const { emailAddress, firstName } = variables;
-    const response = await callNotify(templateId, emailAddress, variables, firstName);
+    const { emailAddress } = variables;
+    const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
     console.error(err);
@@ -1827,7 +1823,7 @@ var {
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, COUNTY, POSTCODE, TOWN, EMAIL: EMAIL2 }
+  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, EMAIL: EMAIL2 }
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
   COMPANY_DETAILS: {
@@ -1931,15 +1927,6 @@ var FIELDS = {
       SUMMARY: {
         TITLE: "Broker's address"
       }
-    },
-    [TOWN]: {
-      LABEL: "Town or city"
-    },
-    [COUNTY]: {
-      LABEL: "County (optional)"
-    },
-    [POSTCODE]: {
-      LABEL: "Postcode"
     },
     [EMAIL2]: {
       SUMMARY: {
@@ -2141,20 +2128,26 @@ var mapPolicyAndExport = (application) => {
 };
 var map_policy_and_export_default = mapPolicyAndExport;
 
-// generate-csv/map-application-to-csv/map-exporter-company/index.ts
+// generate-csv/map-application-to-csv/helpers/csv-new-line/index.ts
+var NEW_LINE = "\r\n";
+var csv_new_line_default = NEW_LINE;
+
+// generate-csv/map-application-to-csv/map-exporter/index.ts
 var CONTENT_STRINGS2 = {
   ...FIELDS.COMPANY_DETAILS,
   ...FIELDS.NATURE_OF_YOUR_BUSINESS,
-  ...FIELDS.TURNOVER
+  ...FIELDS.TURNOVER,
+  ...FIELDS.BROKER
 };
 var {
   COMPANY_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
   YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE2, PHONE_NUMBER: PHONE_NUMBER2 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL2 },
-  TURNOVER
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
+  BROKER: { USING_BROKER: USING_BROKER2, NAME: BROKER_NAME, ADDRESS_LINE_1: ADDRESS_LINE_12, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL3 }
 } = exporter_business_default;
-var mapExporterCompany = (application) => {
-  const { exporterCompany, exporterBusiness } = application;
+var mapExporter = (application) => {
+  const { exporterCompany, exporterBusiness, exporterBroker } = application;
   const mapped = [
     // exporter company fields
     csv_row_default(CONTENT_STRINGS2[COMPANY_NUMBER2].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER2]),
@@ -2172,17 +2165,20 @@ var mapExporterCompany = (application) => {
     csv_row_default(CONTENT_STRINGS2[YEARS_EXPORTING2].SUMMARY?.TITLE, exporterBusiness[YEARS_EXPORTING2]),
     csv_row_default(CONTENT_STRINGS2[EMPLOYEES_UK2].SUMMARY?.TITLE, exporterBusiness[EMPLOYEES_UK2]),
     csv_row_default(CONTENT_STRINGS2[EMPLOYEES_INTERNATIONAL2].SUMMARY?.TITLE, exporterBusiness[EMPLOYEES_INTERNATIONAL2]),
-    csv_row_default(CONTENT_STRINGS2[TURNOVER.ESTIMATED_ANNUAL_TURNOVER].SUMMARY?.TITLE, exporterBusiness[TURNOVER.ESTIMATED_ANNUAL_TURNOVER]),
-    csv_row_default(CONTENT_STRINGS2[TURNOVER.PERCENTAGE_TURNOVER].SUMMARY?.TITLE, exporterBusiness[TURNOVER.PERCENTAGE_TURNOVER])
-    // TODO: broker
+    csv_row_default(CONTENT_STRINGS2[ESTIMATED_ANNUAL_TURNOVER2].SUMMARY?.TITLE, exporterBusiness[ESTIMATED_ANNUAL_TURNOVER2]),
+    csv_row_default(CONTENT_STRINGS2[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, exporterBusiness[PERCENTAGE_TURNOVER2]),
+    // broker fields
+    csv_row_default(CONTENT_STRINGS2[USING_BROKER2].SUMMARY?.TITLE, exporterBroker[USING_BROKER2]),
+    csv_row_default(CONTENT_STRINGS2[BROKER_NAME].SUMMARY?.TITLE, exporterBroker[BROKER_NAME]),
+    csv_row_default(
+      CONTENT_STRINGS2[ADDRESS_LINE_12].SUMMARY?.TITLE,
+      `${exporterBroker[ADDRESS_LINE_12]} ${csv_new_line_default} ${exporterBroker[TOWN]} ${csv_new_line_default} ${exporterBroker[COUNTY]} ${csv_new_line_default} ${exporterBroker[POSTCODE]}`
+    ),
+    csv_row_default(CONTENT_STRINGS2[EMAIL3].SUMMARY?.TITLE, exporterBroker[EMAIL3])
   ];
   return mapped;
 };
-var map_exporter_company_default = mapExporterCompany;
-
-// generate-csv/map-application-to-csv/helpers/csv-new-line/index.ts
-var NEW_LINE = "\r\n";
-var csv_new_line_default = NEW_LINE;
+var map_exporter_default = mapExporter;
 
 // generate-csv/map-application-to-csv/map-buyer/index.ts
 var CONTENT_STRINGS3 = {
@@ -2190,7 +2186,7 @@ var CONTENT_STRINGS3 = {
   ...YOUR_BUYER_FIELDS.WORKING_WITH_BUYER
 };
 var {
-  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, REGISTRATION_NUMBER, WEBSITE: WEBSITE3, FIRST_NAME, LAST_NAME, POSITION, EMAIL: EMAIL3, CAN_CONTACT_BUYER },
+  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, REGISTRATION_NUMBER, WEBSITE: WEBSITE3, FIRST_NAME, LAST_NAME, POSITION, EMAIL: EMAIL4, CAN_CONTACT_BUYER },
   WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER }
 } = your_buyer_default;
 var mapBuyer = (application) => {
@@ -2202,7 +2198,7 @@ var mapBuyer = (application) => {
     csv_row_default(String(CONTENT_STRINGS3[WEBSITE3].SUMMARY?.TITLE), buyer[WEBSITE3]),
     csv_row_default(
       String(CONTENT_STRINGS3[FIRST_NAME].SUMMARY?.TITLE),
-      `${buyer[FIRST_NAME]} ${buyer[LAST_NAME]} ${csv_new_line_default} ${buyer[POSITION]} ${csv_new_line_default} ${buyer[EMAIL3]}`
+      `${buyer[FIRST_NAME]} ${buyer[LAST_NAME]} ${csv_new_line_default} ${buyer[POSITION]} ${csv_new_line_default} ${buyer[EMAIL4]}`
     ),
     csv_row_default(String(CONTENT_STRINGS3[CAN_CONTACT_BUYER].SUMMARY?.TITLE), buyer[CAN_CONTACT_BUYER]),
     csv_row_default(String(CONTENT_STRINGS3[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), buyer[CONNECTED_WITH_BUYER]),
@@ -2222,7 +2218,7 @@ var mapApplicationToCsv = (application) => {
     csv_row_seperator_default,
     ...map_policy_and_export_default(application),
     csv_row_seperator_default,
-    ...map_exporter_company_default(application),
+    ...map_exporter_default(application),
     csv_row_seperator_default,
     ...map_buyer_default(application)
   ];
@@ -2231,7 +2227,7 @@ var mapApplicationToCsv = (application) => {
 var map_application_to_csv_default = mapApplicationToCsv;
 
 // generate-csv/index.ts
-var generateCsv = (application) => {
+var csv = (application) => {
   const { referenceNumber } = application;
   const filePath = `./csv/${referenceNumber}.csv`;
   const csvData = map_application_to_csv_default(application);
@@ -2242,7 +2238,10 @@ var generateCsv = (application) => {
   });
   return filePath;
 };
-var generate_csv_default = generateCsv;
+var generate2 = {
+  csv
+};
+var generate_csv_default = generate2;
 
 // custom-resolvers/submit-application.ts
 var submitApplication = async (root, variables, context) => {
@@ -2252,7 +2251,7 @@ var submitApplication = async (root, variables, context) => {
       where: { id: variables.applicationId }
     });
     if (application) {
-      const canSubmit = true;
+      const canSubmit = application.status === APPLICATION.STATUS.DRAFT;
       if (canSubmit) {
         const now = /* @__PURE__ */ new Date();
         const update = {
@@ -2272,6 +2271,7 @@ var submitApplication = async (root, variables, context) => {
           buyerId,
           exporterCompanyId,
           exporterBusinessId,
+          exporterBrokerId,
           declarationId
         } = application;
         const eligibility = await context.db.Eligibility.findOne({
@@ -2280,27 +2280,35 @@ var submitApplication = async (root, variables, context) => {
         const buyerCountry = await context.db.Country.findOne({
           where: { id: eligibility?.buyerCountryId }
         });
+        const policyAndExport = await context.db.PolicyAndExport.findOne({
+          where: { id: policyAndExportId }
+        });
+        const exporterCompany = await context.db.ExporterCompany.findOne({
+          where: { id: exporterCompanyId }
+        });
+        const exporterBusiness = await context.db.ExporterBusiness.findOne({
+          where: { id: exporterBusinessId }
+        });
+        const exporterBroker = await context.db.ExporterBroker.findOne({
+          where: { id: exporterBrokerId }
+        });
+        const buyer = await context.db.Buyer.findOne({
+          where: { id: application.buyerId }
+        });
         const getPopulatedApplication = async () => ({
           ...application,
           eligibility: {
             ...eligibility,
             buyerCountry
           },
-          policyAndExport: await context.db.PolicyAndExport.findOne({
-            where: { id: policyAndExportId }
-          }),
-          exporterCompany: await context.db.ExporterCompany.findOne({
-            where: { id: exporterCompanyId }
-          }),
-          exporterBusiness: await context.db.ExporterBusiness.findOne({
-            where: { id: exporterBusinessId }
-          }),
-          buyer: await context.db.Buyer.findOne({
-            where: { id: application.buyerId }
-          })
+          policyAndExport,
+          exporterCompany,
+          exporterBusiness,
+          exporterBroker,
+          buyer
         });
         const populatedApplication = await getPopulatedApplication();
-        const csvPath = generate_csv_default(populatedApplication);
+        const csvPath = generate_csv_default.csv(populatedApplication);
         await send_application_submitted_emails_default.send(context, referenceNumber, exporterId, buyerId, declarationId, exporterCompanyId, csvPath);
         return {
           success: true

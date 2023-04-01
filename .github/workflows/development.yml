@@ -110,6 +110,7 @@ jobs:
           SESSION_SECRET=${{ secrets.SESSION_SECRET }}
           GITHUB_SHA=${{ github.sha }}
           GOV_NOTIFY_API_KEY=${{ secrets.GOV_NOTIFY_API_KEY }}
+          UNDERWRITING_TEAM_EMAIL=${{ secrets.UNDERWRITING_TEAM_EMAIL }}
         add_git_labels: true
 
     - name: ACR - `dev` artifact
