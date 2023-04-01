@@ -36,7 +36,7 @@ const generateCreditPeriodAndCurrencyFields = (
         data: answers,
         ...changeLink(answers[POLICY_TYPE], referenceNumber, POLICY_CURRENCY_CODE, checkAndChange),
       },
-      answers[POLICY_CURRENCY_CODE] && `${answers[POLICY_CURRENCY_CODE]} ${getCurrencyByCode(currencies, answers[POLICY_CURRENCY_CODE]).name}`,
+      answers[POLICY_CURRENCY_CODE] && getCurrencyByCode(currencies, answers[POLICY_CURRENCY_CODE]).name,
     ),
   ] as Array<SummaryListItemData>;
 
