@@ -5,7 +5,9 @@ import {
 } from '../../../../pages/shared';
 import { howYourDataWillBeUsedPage } from '../../../../pages/insurance/declarations';
 import partials from '../../../../partials';
-import { PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
+import {
+  BUTTONS, PAGES, ERROR_MESSAGES, LINKS,
+} from '../../../../../../content-strings';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -116,7 +118,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
     });
 
     it('renders a submit button and `save and back` button', () => {
-      cy.assertSubmitAndSaveButtons();
+      cy.assertSubmitAndSaveButtons(BUTTONS.SUBMIT_APPLICATION);
     });
   });
 
