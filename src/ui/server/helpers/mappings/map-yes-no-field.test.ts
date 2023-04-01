@@ -1,4 +1,5 @@
 import mapYesNoField from './map-yes-no-field';
+import { DEFAULT } from '../../../../content-strings';
 
 describe('server/helpers/mappings/mapYesNoField', () => {
   describe('when value is true', () => {
@@ -22,10 +23,10 @@ describe('server/helpers/mappings/mapYesNoField', () => {
   });
 
   describe('when value is "undefined"', () => {
-    it('should return "undefined"', () => {
+    it(`should return ${DEFAULT.EMPTY}`, () => {
       const response = mapYesNoField();
 
-      expect(response).toEqual(undefined);
+      expect(response).toEqual(DEFAULT.EMPTY);
     });
   });
 });

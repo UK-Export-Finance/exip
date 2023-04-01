@@ -1,4 +1,5 @@
 import { EMAIL_TEMPLATE_IDS } from '../constants';
+import fileSystem from '../file-system';
 import notify from '../integrations/notify';
 import { EmailResponse, ApplicationSubmissionEmailVariables } from '../types';
 import dotenv from 'dotenv';
@@ -14,12 +15,12 @@ dotenv.config();
  * @param {Object} Email variables
  * @returns {Object} Object with success flag and emailRecipient
  */
-export const callNotify = async (templateId: string, emailAddress: string, variables: object, firstName?: string): Promise<EmailResponse> => {
+export const callNotify = async (templateId: string, emailAddress: string, variables: object, file?: Buffer, fileIsCsv?: boolean): Promise<EmailResponse> => {
   try {
     let emailResponse;
 
-    if (firstName) {
-      emailResponse = await notify.sendEmail(templateId, emailAddress, variables, firstName);
+    if (file && fileIsCsv) {
+      emailResponse = await notify.sendEmail(templateId, emailAddress, variables, file, fileIsCsv);
     } else {
       emailResponse = await notify.sendEmail(templateId, emailAddress, variables);
     }
@@ -50,9 +51,9 @@ const confirmEmailAddress = async (emailAddress: string, firstName: string, veri
 
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
 
-    const variables = { confirmToken: verificationHash };
+    const variables = { firstName, confirmToken: verificationHash };
 
-    const response = await callNotify(templateId, emailAddress, variables, firstName);
+    const response = await callNotify(templateId, emailAddress, variables);
 
     return response;
   } catch (err) {
@@ -76,9 +77,9 @@ const securityCodeEmail = async (emailAddress: string, firstName: string, securi
 
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
 
-    const variables = { securityCode };
+    const variables = { firstName, securityCode };
 
-    const response = await callNotify(templateId, emailAddress, variables, firstName);
+    const response = await callNotify(templateId, emailAddress, variables);
 
     return response;
   } catch (err) {
@@ -101,9 +102,9 @@ const applicationSubmitted = {
 
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
 
-      const { emailAddress, firstName } = variables;
+      const { emailAddress } = variables;
 
-      const response = await callNotify(templateId, emailAddress, variables, firstName);
+      const response = await callNotify(templateId, emailAddress, variables);
 
       return response;
     } catch (err) {
@@ -114,11 +115,13 @@ const applicationSubmitted = {
   },
   /**
    * applicationSubmitted.underwritingTeam
-   * Send "application submitted" email to the underwriting team
+   * Read CSV file, generate a file buffer
+   * Send "application submitted" email to the underwriting team with a link to CSV
+   * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
    * @param {Object} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
-  underwritingTeam: async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
+  underwritingTeam: async (variables: ApplicationSubmissionEmailVariables, csvPath: string): Promise<EmailResponse> => {
     try {
       console.info('Sending application submitted email to underwriting team');
 
@@ -126,7 +129,19 @@ const applicationSubmitted = {
 
       const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL as string;
 
-      const response = await callNotify(templateId, emailAddress, variables);
+      // NOTE: no need to handle an error from fs.readFile here,
+      // if it errors, it will go into the catch handler below.
+      const file = await fileSystem.readFile(csvPath);
+
+      const fileIsCsv = true;
+
+      const fileBuffer = Buffer.from(file);
+
+      const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
+
+      // NOTE: no need to handle an error from fs.unlink here,
+      // if it errors, it will go into the catch handler below.
+      await fileSystem.unlink(csvPath);
 
       return response;
     } catch (err) {
@@ -148,9 +163,9 @@ const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, te
   try {
     console.info('Sending documents email');
 
-    const { emailAddress, firstName } = variables;
+    const { emailAddress } = variables;
 
-    const response = await callNotify(templateId, emailAddress, variables, firstName);
+    const response = await callNotify(templateId, emailAddress, variables);
 
     return response;
   } catch (err) {

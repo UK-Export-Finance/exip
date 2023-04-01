@@ -3,8 +3,10 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import baseConfig from '../keystone';
 import submitApplication from './submit-application';
+import generate from '../generate-csv';
 import applicationSubmittedEmails from '../emails/send-application-submitted-emails';
 import { APPLICATION } from '../constants';
+import { mockApplicationEligibility, mockSinglePolicyAndExport } from '../test-mocks/mock-application';
 import { mockAccount, mockBuyer, mockExporterCompany, mockApplicationDeclaration, mockSendEmailResponse } from '../test-mocks';
 import {
   Account,
@@ -38,6 +40,18 @@ const updateBuyer = async (buyerId: string): Promise<ApplicationBuyer> => {
 };
 
 const createRequiredData = async () => {
+  // TODO move this function into it's own file.
+
+  const countries = await context.query.Country.findMany({
+    query: 'id isoCode',
+  });
+
+  const eligibilityCountry = countries.find((country) => country.isoCode === mockApplicationEligibility.buyerCountry.isoCode);
+
+  if (!eligibilityCountry) {
+    throw new Error('No country found from mock country ISO code');
+  }
+
   // create a new exporter
   const exporter = (await context.query.Exporter.createOne({
     data: mockAccount,
@@ -46,7 +60,7 @@ const createRequiredData = async () => {
 
   // create a new application
   const application = (await context.query.Application.createOne({
-    query: 'id referenceNumber exporter { id } exporterCompany { id } buyer { id } declaration { id }',
+    query: 'id referenceNumber eligibility { id } policyAndExport { id } exporter { id } exporterCompany { id } buyer { id } declaration { id }',
     data: {
       exporter: {
         connect: {
@@ -55,6 +69,31 @@ const createRequiredData = async () => {
       },
     },
   })) as Application;
+
+  // update the eligibility so we have a full data set.
+  (await context.query.Eligibility.updateOne({
+    where: {
+      id: application.eligibility.id,
+    },
+    data: {
+      ...mockApplicationEligibility,
+      buyerCountry: {
+        connect: {
+          id: eligibilityCountry.id,
+        },
+      },
+    },
+    query: 'id',
+  })) as ApplicationDeclaration;
+
+  // update the policy and export so we have a full data set.
+  (await context.query.PolicyAndExport.updateOne({
+    where: {
+      id: application.policyAndExport.id,
+    },
+    data: mockSinglePolicyAndExport,
+    query: 'id',
+  })) as ApplicationDeclaration;
 
   // update the buyer so there is a name
   const buyer = await updateBuyer(application.buyer.id);
@@ -68,7 +107,7 @@ const createRequiredData = async () => {
     query: 'id',
   })) as ApplicationDeclaration;
 
-  // update the declaration so we have full data set.
+  // update the declaration so we have a full data set.
   const declaration = (await context.query.Declaration.updateOne({
     where: {
       id: application.declaration.id,
@@ -96,15 +135,22 @@ describe('custom-resolvers/submit-application', () => {
   let variables: SubmitApplicationVariables;
   let result: SubmitApplicationResponse;
 
+  jest.mock('../generate-csv');
   jest.mock('../emails/send-application-submitted-emails');
 
+  let generateCsvSpy = jest.fn();
   let applicationSubmittedEmailsSpy = jest.fn();
+
+  const mockGenerateCsvResponse = '/mock-path-to-csv';
 
   beforeEach(async () => {
     jest.resetAllMocks();
 
+    generateCsvSpy = jest.fn(() => mockGenerateCsvResponse);
+
     applicationSubmittedEmailsSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
+    generate.csv = generateCsvSpy;
     applicationSubmittedEmails.send = applicationSubmittedEmailsSpy;
 
     const data = await createRequiredData();
@@ -159,7 +205,15 @@ describe('custom-resolvers/submit-application', () => {
 
     expect(applicationSubmittedEmailsSpy).toHaveBeenCalledTimes(1);
 
-    expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+    expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(
+      context,
+      application.referenceNumber,
+      exporter.id,
+      buyer.id,
+      declaration.id,
+      exporterCompany.id,
+      mockGenerateCsvResponse,
+    );
   });
 
   describe('when an application is not found', () => {

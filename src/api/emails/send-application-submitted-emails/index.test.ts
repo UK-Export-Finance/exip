@@ -22,10 +22,12 @@ describe('emails/send-email-application-submitted', () => {
   let exporterCompany: ApplicationExporterCompany;
   let buyer: ApplicationBuyer;
   let declaration: ApplicationDeclaration;
+  const mockCsvPath = '/path-to-csv';
 
   jest.mock('./index');
 
   let applicationSubmittedEmailSpy = jest.fn();
+  let underwritingTeamEmailSpy = jest.fn();
   let documentsEmailSpy = jest.fn();
 
   afterAll(() => {
@@ -69,9 +71,12 @@ describe('emails/send-email-application-submitted', () => {
     jest.resetAllMocks();
 
     applicationSubmittedEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+    underwritingTeamEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
     documentsEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
     sendEmail.applicationSubmitted.exporter = applicationSubmittedEmailSpy;
+    sendEmail.applicationSubmitted.underwritingTeam = underwritingTeamEmailSpy;
+
     sendEmail.documentsEmail = documentsEmailSpy;
   });
 
@@ -94,14 +99,14 @@ describe('emails/send-email-application-submitted', () => {
     });
 
     test('it should call sendEmail.applicationSubmitted.exporter', async () => {
-      await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+      await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id, mockCsvPath);
 
       expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
       expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
     });
 
     test('it should call sendEmail.documentsEmail with correct template ID ', async () => {
-      await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+      await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id, mockCsvPath);
 
       expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -121,7 +126,7 @@ describe('emails/send-email-application-submitted', () => {
       });
 
       test('it should call sendEmail.documentsEmail with correct template ID', async () => {
-        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id, mockCsvPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -149,7 +154,7 @@ describe('emails/send-email-application-submitted', () => {
       });
 
       test('it should NOT call sendEmail.documentsEmail', async () => {
-        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id, mockCsvPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(0);
       });
@@ -173,7 +178,7 @@ describe('emails/send-email-application-submitted', () => {
       });
 
       test('it should NOT call sendEmail.documentsEmail', async () => {
-        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id, mockCsvPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -185,7 +190,15 @@ describe('emails/send-email-application-submitted', () => {
   });
 
   it('should return the email response', async () => {
-    const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+    const result = await sendApplicationSubmittedEmails.send(
+      context,
+      application.referenceNumber,
+      exporter.id,
+      buyer.id,
+      declaration.id,
+      exporterCompany.id,
+      mockCsvPath,
+    );
 
     const expected = {
       success: true,
@@ -204,7 +217,15 @@ describe('emails/send-email-application-submitted', () => {
         where: exporters,
       });
 
-      const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+      const result = await sendApplicationSubmittedEmails.send(
+        context,
+        application.referenceNumber,
+        exporter.id,
+        buyer.id,
+        declaration.id,
+        exporterCompany.id,
+        mockCsvPath,
+      );
 
       const expected = { success: false };
 
@@ -221,7 +242,15 @@ describe('emails/send-email-application-submitted', () => {
         where: buyers,
       });
 
-      const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+      const result = await sendApplicationSubmittedEmails.send(
+        context,
+        application.referenceNumber,
+        exporter.id,
+        buyer.id,
+        declaration.id,
+        exporterCompany.id,
+        mockCsvPath,
+      );
 
       const expected = { success: false };
 
@@ -236,7 +265,7 @@ describe('emails/send-email-application-submitted', () => {
 
     test('should throw an error', async () => {
       try {
-        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id, mockCsvPath);
       } catch (err) {
         const expected = new Error(`Sending application submitted emails ${mockSendEmailResponse}`);
 

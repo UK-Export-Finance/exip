@@ -4,15 +4,39 @@ interface ApplicationRelationship {
   id: string;
 }
 
+interface Country extends ApplicationRelationship {
+  name: string;
+  isoCode: string;
+}
+
+interface ApplicationEligibility extends ApplicationRelationship {
+  buyerCountry: Country;
+  hasCompaniesHouseNumber: boolean;
+  otherPartiesInvolved: boolean;
+  paidByLetterOfCredit: boolean;
+  needPreCreditPeriodCover: boolean;
+  wantCoverOverMaxAmount: boolean;
+  wantCoverOverMaxPeriod: boolean;
+}
+
 interface ApplicationExporterCompany {
   id: string;
   companyName?: string;
 }
 
-interface ApplicationBuyer {
-  id: string;
+interface ApplicationBuyer extends ApplicationRelationship {
   companyOrOrganisationName?: string;
-  exporterIsConnectedWithBuyer?: string;
+  address?: string;
+  country?: Country;
+  registrationNumber?: string;
+  website?: string;
+  contactFirstName?: string;
+  contactLastName?: string;
+  contactPosition?: string;
+  contactEmail?: string;
+  canContactBuyer?: boolean;
+  exporterIsConnectedWithBuyer?: boolean;
+  exporterHasTradedWithBuyer?: boolean;
 }
 
 interface ApplicationDeclaration {
@@ -58,10 +82,10 @@ interface Application {
   updatedAt: string;
   submissionDeadline: string;
   submissionType: string;
-  submissionDate: string;
+  submissionDate: Date;
   status: string;
   previousStatus?: string;
-  eligibility: ApplicationRelationship;
+  eligibility: ApplicationEligibility;
   exporter: ApplicationRelationship;
   policyAndExport: ApplicationRelationship;
   exporterCompany: ApplicationExporterCompany;
@@ -87,6 +111,27 @@ interface CompanyResponse {
   applicationId: string;
 }
 
+interface CompaniesHouseAddress {
+  careOf: string | null;
+  premises: string | null;
+  addressLine1: string | null;
+  addressLine2: string | null;
+  locality: string | null;
+  region: string | null;
+  postalCode: string | null;
+  country: string | null;
+}
+
+interface CompanyHouseResponse {
+  companyName: string;
+  registeredOfficeAddress: CompaniesHouseAddress;
+  companyNumber: string;
+  dateOfCreation: string;
+  sicCodes: Array<string>;
+  success: boolean;
+  apiError: boolean;
+}
+
 interface EmailResponse {
   success: boolean;
   emailRecipient: string;
@@ -98,6 +143,15 @@ interface ConnectId {
 
 interface ConnectObj {
   connect: ConnectId;
+}
+
+interface Currency {
+  name: string;
+  isoCode: string;
+}
+
+interface NotifyPeronsalisation {
+  linkToFile?: string;
 }
 
 interface SicCodes {
@@ -192,11 +246,16 @@ export {
   Application,
   ApplicationBuyer,
   ApplicationDeclaration,
+  ApplicationEligibility,
   ApplicationExporterCompany,
   ApplicationSubmissionEmailVariables,
   BufferEncoding,
+  CompanyHouseResponse,
   CompanyResponse,
+  Country,
+  Currency,
   EmailResponse,
+  NotifyPeronsalisation,
   SicCodes,
   SubmitApplicationVariables,
   SubmitApplicationResponse,

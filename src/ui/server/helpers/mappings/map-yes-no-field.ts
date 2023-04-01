@@ -1,3 +1,5 @@
+import { DEFAULT } from '../../content-strings';
+
 /**
  * mapYesNoField
  * maps true or false fields to Yes/No
@@ -13,7 +15,7 @@ const mapYesNoField = (answer?: boolean) => {
     return 'Yes';
   }
 
-  return answer;
+  return DEFAULT.EMPTY;
 };
 
 export default mapYesNoField;

@@ -19,6 +19,7 @@ const send = async (
   buyerId: string,
   declarationId: string,
   exporterCompanyId: string,
+  csvPath: string,
 ): Promise<SubmitApplicationResponse> => {
   try {
     // get the application's exporter
@@ -91,7 +92,8 @@ const send = async (
     }
 
     // send "application submitted" email to the underwriting team
-    const underwritingTeamSubmittedResponse = await sendEmail.applicationSubmitted.underwritingTeam(sendEmailVars);
+
+    const underwritingTeamSubmittedResponse = await sendEmail.applicationSubmitted.underwritingTeam(sendEmailVars, csvPath);
 
     if (!underwritingTeamSubmittedResponse.success) {
       throw new Error('Sending application submitted email to underwriting team');
