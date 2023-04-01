@@ -1,5 +1,5 @@
 import mapYesNoField from './map-yes-no-field';
-import { DEFAULT } from '../../../../content-strings';
+import { DEFAULT } from '../../content-strings';
 
 describe('server/helpers/mappings/mapYesNoField', () => {
   describe('when value is true', () => {
