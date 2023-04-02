@@ -13,5 +13,5 @@ export default () => {
   cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
   cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct();
   cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
-  cy.completeAndSubmitDeclarationHowYourDataWillBeUsed();
+  // cy.completeAndSubmitDeclarationHowYourDataWillBeUsed();
 };

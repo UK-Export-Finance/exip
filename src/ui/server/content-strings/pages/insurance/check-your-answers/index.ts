@@ -10,6 +10,11 @@ const ELIGIBILITY = {
   CHANGE_ANSWERS: 'Change answers and start new application',
 };
 
+const START_NEW_APPLICATION = {
+  PAGE_TITLE: "You'll need to start a new application",
+  INSET: 'You can continue to make changes to your existing application until',
+};
+
 const POLICY_AND_EXPORTS = {
   ...SHARED,
   PAGE_TITLE: 'Type of policy and exports',
@@ -27,6 +32,7 @@ const YOUR_BUYER = {
 
 export default {
   ELIGIBILITY,
+  START_NEW_APPLICATION,
   POLICY_AND_EXPORTS,
   YOUR_BUSINESS,
   YOUR_BUYER,

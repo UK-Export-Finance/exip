@@ -91,7 +91,8 @@ const {
  */
 const date = new Date();
 export const startDate = add(date, { months: 3 });
-export const endDate = add(startDate, { months: 6 });
+// export const endDate = add(startDate, { months: 6 });
+export const endDate = add(startDate, { months: 3, days: 2 });
 
 const application = {
   ELIGIBILITY: {

@@ -15,6 +15,7 @@ const {
   ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: {
     ELIGIBILITY,
+    START_NEW_APPLICATION,
     TYPE_OF_POLICY,
   },
 } = ROUTES.INSURANCE;
@@ -80,9 +81,9 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
       cy.checkTaskStatusCompleted(status());
     });
 
-    it(`renders a change answers banner with a valid href to ${START}`, () => {
+    it(`renders a change answers banner with a valid href to ${START_NEW_APPLICATION}`, () => {
       cy.checkText(checkYourAnswersEligibility.banner(), `${CONTENT_STRINGS.CHANGE_ELIGIBILITY} ${CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.text}`);
-      cy.checkLink(checkYourAnswersEligibility.bannerLink(), CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.href, CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.text);
+      cy.checkLink(checkYourAnswersEligibility.bannerLink(), START_NEW_APPLICATION, CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.text);
     });
 
     it('renders a `save and back` button', () => {
@@ -113,12 +114,12 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
       });
 
       describe('start new application button link', () => {
-        it(`should redirect to ${START}`, () => {
+        it(`should redirect to ${START_NEW_APPLICATION}`, () => {
           cy.navigateToUrl(url);
 
           saveAndBackButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${START}`;
+          const expectedUrl = `${Cypress.config('baseUrl')}${START_NEW_APPLICATION}`;
           cy.url().should('eq', expectedUrl);
         });
       });

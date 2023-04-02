@@ -1,7 +1,5 @@
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
-import FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { eligibilitySummaryList } from '../../../../helpers/summary-lists/eligibility';
 import requiredFields from '../../../../helpers/required-fields/eligibility';
@@ -11,28 +9,22 @@ import { Request, Response } from '../../../../../types';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
-const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.ELIGIBILITY;
-
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
-    START,
     INSURANCE_ROOT,
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
+    CHECK_YOUR_ANSWERS: { START_NEW_APPLICATION, TYPE_OF_POLICY },
   },
 } = ROUTES;
 
 /**
  * pageVariables
- * Page fields and variables/flags
+ * Page variables/flags
+ * @param {Number} Application reference number
  * @returns {Object} Page variables
  */
-export const pageVariables = () => ({
-  FIELD: {
-    ID: FIELD_ID,
-    ...FIELDS[FIELD_ID],
-  },
-  START_NEW_APPLICATION: START,
+export const pageVariables = (referenceNumber: number) => ({
+  START_NEW_APPLICATION: `${INSURANCE_ROOT}/${referenceNumber}${START_NEW_APPLICATION}`,
   renderNotificationBanner: true,
   eligibility: true,
 });
@@ -65,7 +57,7 @@ export const get = (req: Request, res: Response) => {
       }),
       status,
       SUMMARY_LIST: summaryList,
-      ...pageVariables(),
+      ...pageVariables(application.referenceNumber),
     });
   } catch (err) {
     console.error('Error getting check your answers - eligibility', { err });
