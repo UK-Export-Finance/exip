@@ -4,9 +4,12 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { eligibilitySummaryList } from '../../../../helpers/summary-lists/eligibility';
+import requiredFields from '../../../../helpers/required-fields/policy-and-exports';
+import sectionStatus from '../../../../helpers/section-status';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -47,7 +50,7 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
           ID: FIELD_ID,
           ...FIELDS[FIELD_ID],
         },
-        START_NEW_APPLICATION,
+        START_NEW_APPLICATION: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${START_NEW_APPLICATION}`,
         renderNotificationBanner: true,
         eligibility: true,
       };
@@ -66,11 +69,19 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
     it('should render template', async () => {
       await get(req, res);
 
+      const summaryList = eligibilitySummaryList(mockApplication.eligibility);
+
+      const fields = requiredFields(mockApplication.policyAndExport.policyType);
+
+      const status = sectionStatus(fields, mockApplication);
+
       const expectedVariables = {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.START_NEW_APPLICATION,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY,
           BACK_LINK: req.headers.referer,
         }),
+        status,
+        SUMMARY_LIST: summaryList,
         ...pageVariables(mockApplication.referenceNumber),
       };
 

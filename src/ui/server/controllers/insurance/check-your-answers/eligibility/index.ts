@@ -1,5 +1,7 @@
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
+import FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { eligibilitySummaryList } from '../../../../helpers/summary-lists/eligibility';
 import requiredFields from '../../../../helpers/required-fields/eligibility';
@@ -8,6 +10,8 @@ import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
+
+const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.ELIGIBILITY;
 
 const {
   PROBLEM_WITH_SERVICE,
@@ -19,11 +23,15 @@ const {
 
 /**
  * pageVariables
- * Page variables/flags
+ * Page fields and "start new application" URL
  * @param {Number} Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
+  FIELD: {
+    ID: FIELD_ID,
+    ...FIELDS[FIELD_ID],
+  },
   START_NEW_APPLICATION: `${INSURANCE_ROOT}/${referenceNumber}${START_NEW_APPLICATION}`,
   renderNotificationBanner: true,
   eligibility: true,
