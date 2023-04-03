@@ -1,18 +1,28 @@
 import { EMAIL_TEMPLATE_IDS } from '../constants';
 import notify from '../integrations/notify';
-import { EmailResponse } from '../types';
+import { EmailResponse, ApplicationSubmissionEmailVariables } from '../types';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 /**
  * callNotify
+ * Call Notify API
  * @param {String} Notify template ID
  * @param {String} Email address
  * @param {String} First name
  * @param {Object} Email variables
  * @returns {Object} Object with success flag and emailRecipient
  */
-export const callNotify = async (templateId: string, emailAddress: string, firstName: string, variables: object): Promise<EmailResponse> => {
+export const callNotify = async (templateId: string, emailAddress: string, variables: object, firstName?: string): Promise<EmailResponse> => {
   try {
-    const emailResponse = await notify.sendEmail(templateId, emailAddress, firstName, variables);
+    let emailResponse;
+
+    if (firstName) {
+      emailResponse = await notify.sendEmail(templateId, emailAddress, variables, firstName);
+    } else {
+      emailResponse = await notify.sendEmail(templateId, emailAddress, variables);
+    }
 
     if (emailResponse.success) {
       return emailResponse;
@@ -28,6 +38,7 @@ export const callNotify = async (templateId: string, emailAddress: string, first
 
 /**
  * confirmEmailAddress
+ * Send "confirm your email address" email to an exporter
  * @param {String} Email address
  * @param {String} First name
  * @param {String} Verification hash
@@ -41,7 +52,7 @@ const confirmEmailAddress = async (emailAddress: string, firstName: string, veri
 
     const variables = { confirmToken: verificationHash };
 
-    const response = await callNotify(templateId, emailAddress, firstName, variables);
+    const response = await callNotify(templateId, emailAddress, variables, firstName);
 
     return response;
   } catch (err) {
@@ -53,6 +64,7 @@ const confirmEmailAddress = async (emailAddress: string, firstName: string, veri
 
 /**
  * securityCodeEmail
+ * Send the security code email to an exporter
  * @param {String} Email address
  * @param {String} First name
  * @param {String} Security code
@@ -66,7 +78,7 @@ const securityCodeEmail = async (emailAddress: string, firstName: string, securi
 
     const variables = { securityCode };
 
-    const response = await callNotify(templateId, emailAddress, firstName, variables);
+    const response = await callNotify(templateId, emailAddress, variables, firstName);
 
     return response;
   } catch (err) {
@@ -76,9 +88,83 @@ const securityCodeEmail = async (emailAddress: string, firstName: string, securi
   }
 };
 
+const applicationSubmitted = {
+  /**
+   * applicationSubmitted.exporter
+   * Send "application submitted" email to an exporter
+   * @param {Object} ApplicationSubmissionEmailVariables
+   * @returns {Object} callNotify response
+   */
+  exporter: async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
+    try {
+      console.info('Sending application submitted email to exporter');
+
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+
+      const { emailAddress, firstName } = variables;
+
+      const response = await callNotify(templateId, emailAddress, variables, firstName);
+
+      return response;
+    } catch (err) {
+      console.error(err);
+
+      throw new Error(`Sending application submitted email to exporter ${err}`);
+    }
+  },
+  /**
+   * applicationSubmitted.underwritingTeam
+   * Send "application submitted" email to the underwriting team
+   * @param {Object} ApplicationSubmissionEmailVariables
+   * @returns {Object} callNotify response
+   */
+  underwritingTeam: async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
+    try {
+      console.info('Sending application submitted email to underwriting team');
+
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.UNDERWRITING_TEAM.NOTIFICATION;
+
+      const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL as string;
+
+      const response = await callNotify(templateId, emailAddress, variables);
+
+      return response;
+    } catch (err) {
+      console.error(err);
+
+      throw new Error(`Sending application submitted email to underwriting team ${err}`);
+    }
+  },
+};
+
+/**
+ * documentsEmail
+ * Send "we need some documents from you" email to an exporter
+ * @param {Object} ApplicationSubmissionEmailVariables
+ * @param {Boolean} Flag for sending anto-bribery/trading history template
+ * @returns {Object} callNotify response
+ */
+const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, templateId: string): Promise<EmailResponse> => {
+  try {
+    console.info('Sending documents email');
+
+    const { emailAddress, firstName } = variables;
+
+    const response = await callNotify(templateId, emailAddress, variables, firstName);
+
+    return response;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error(`Sending documents email ${err}`);
+  }
+};
+
 const sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
+  applicationSubmitted,
+  documentsEmail,
 };
 
 export default sendEmail;

@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import crypto from 'crypto';
-import { ACCOUNT } from '../constants';
+import { ACCOUNT, ANSWERS } from '../constants';
 import { Account } from '../types';
 
 dotenv.config();
@@ -43,3 +43,27 @@ export const mockOTP = {
   hash: 'mockHash',
   expiry: new Date(),
 };
+
+export const mockApplication = {
+  referenceNumber: 1234,
+};
+
+export const mockExporterCompany = {
+  companyName: 'Mock company name',
+};
+
+export const mockBuyer = {
+  companyOrOrganisationName: 'Mock buyer',
+  exporterIsConnectedWithBuyer: ANSWERS.YES,
+};
+
+export const mockApplicationDeclaration = {
+  agreeToConfidentiality: true,
+  agreeToAntiBribery: true,
+  hasAntiBriberyCodeOfConduct: ANSWERS.YES,
+  willExportWithAntiBriberyCodeOfConduct: ANSWERS.YES,
+  agreeToConfirmationAndAcknowledgements: true,
+  agreeHowDataWillBeUsed: true,
+};
+
+export const mockSendEmailResponse = { success: true, emailRecipient: mockAccount.email };

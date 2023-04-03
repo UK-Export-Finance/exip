@@ -4,6 +4,27 @@ interface ApplicationRelationship {
   id: string;
 }
 
+interface ApplicationExporterCompany {
+  id: string;
+  companyName?: string;
+}
+
+interface ApplicationBuyer {
+  id: string;
+  companyOrOrganisationName?: string;
+  exporterIsConnectedWithBuyer?: string;
+}
+
+interface ApplicationDeclaration {
+  id: string;
+  agreeToConfidentiality?: boolean;
+  agreeToAntiBribery?: boolean;
+  hasAntiBriberyCodeOfConduct?: boolean;
+  willExportWithAntiBriberyCodeOfConduct?: boolean;
+  agreeToConfirmationAndAcknowledgements?: boolean;
+  agreeHowDataWillBeUsed?: boolean;
+}
+
 interface AccountInput {
   createdAt: Date;
   updatedAt: Date;
@@ -41,14 +62,22 @@ interface Application {
   status: string;
   previousStatus?: string;
   eligibility: ApplicationRelationship;
+  exporter: ApplicationRelationship;
   policyAndExport: ApplicationRelationship;
-  exporterCompany: ApplicationRelationship;
+  exporterCompany: ApplicationExporterCompany;
   exporterCompanyAddress: ApplicationRelationship;
   exporterBusiness: ApplicationRelationship;
   exporterBroker: ApplicationRelationship;
-  buyer: ApplicationRelationship;
+  buyer: ApplicationBuyer;
   sectionReview: ApplicationRelationship;
   declaration: ApplicationRelationship;
+}
+
+interface ApplicationSubmissionEmailVariables {
+  emailAddress: string;
+  firstName: string;
+  referenceNumber: number;
+  buyerName: string;
 }
 
 type BufferEncoding = 'hex' | 'base64' | 'ascii';
@@ -88,8 +117,9 @@ interface VerifyEmailAddressResponse {
   emailRecipient?: string;
 }
 
-interface SendEmailConfirmEmailAddressVariables {
+interface SendExporterEmailVariables {
   exporterId: string;
+  referenceNumber?: string;
 }
 
 interface AccountCreationVariables {
@@ -160,13 +190,17 @@ export {
   AddOtpToAccountVariables,
   AddAndGetOtpResponse,
   Application,
+  ApplicationBuyer,
+  ApplicationDeclaration,
+  ApplicationExporterCompany,
+  ApplicationSubmissionEmailVariables,
   BufferEncoding,
   CompanyResponse,
   EmailResponse,
   SicCodes,
-  SendEmailConfirmEmailAddressVariables,
   SubmitApplicationVariables,
   SubmitApplicationResponse,
+  SendExporterEmailVariables,
   VerifyEmailAddressVariables,
   VerifyEmailAddressResponse,
   VerifyAccountSignInCodeVariables,

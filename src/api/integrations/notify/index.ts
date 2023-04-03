@@ -8,7 +8,7 @@ const notifyKey = process.env.GOV_NOTIFY_API_KEY;
 const notifyClient = new NotifyClient(notifyKey);
 
 const notify = {
-  sendEmail: async (templateId: string, sendToEmailAddress: string, firstName: string, variables: object) => {
+  sendEmail: async (templateId: string, sendToEmailAddress: string, variables: object, firstName?: string) => {
     try {
       console.info('Calling Notify API. templateId: ', templateId);
 

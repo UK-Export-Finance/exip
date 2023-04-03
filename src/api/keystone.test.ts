@@ -5,7 +5,7 @@ import baseConfig from './keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { APPLICATION } from './constants';
 import sendEmail from './emails';
-import { mockAccount } from './test-mocks';
+import { mockAccount, mockSendEmailResponse } from './test-mocks';
 import { Application, Account } from './types';
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -241,9 +241,7 @@ describe('Create an Exporter', () => {
   describe('create', () => {
     jest.mock('./emails');
 
-    const sendEmailResponse = { success: true, emailRecipient: mockAccount.email };
-
-    const sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(sendEmailResponse));
+    const sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
     beforeAll(async () => {
       sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;

@@ -116,10 +116,10 @@ interface ApplicationSectionReview {
 
 interface ApplicationDeclaration {
   id: string;
-  agreeToConfidentiality?: boolean;
+  agreeToConfidentiality?: string;
   agreeToAntiBribery?: boolean;
-  hasAntiBriberyCodeOfConduct?: boolean;
-  willExportWithAntiBriberyCodeOfConduct?: boolean;
+  hasAntiBriberyCodeOfConduct?: string;
+  willExportWithAntiBriberyCodeOfConduct?: string;
   agreeToConfirmationAndAcknowledgements?: boolean;
   agreeHowDataWillBeUsed?: boolean;
 }

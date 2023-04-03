@@ -1,5 +1,6 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import { APPLICATION } from '../constants';
+import applicationSubmittedEmails from '../emails/send-application-submitted-emails';
 import { SubmitApplicationVariables, SubmitApplicationResponse } from '../types';
 
 /**
@@ -15,9 +16,9 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
     console.info('Submitting application');
 
     // get the application
-    const application = await context.db.Application.findOne({
+    const application = (await context.db.Application.findOne({
       where: { id: variables.applicationId },
-    });
+    })) as Application;
 
     if (application) {
       const canSubmit = application.status === APPLICATION.STATUS.DRAFT;
@@ -38,6 +39,10 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
           where: { id: application.id },
           data: update,
         });
+
+        const { referenceNumber, exporterId, buyerId, declarationId, exporterCompanyId } = application;
+
+        await applicationSubmittedEmails.send(context, referenceNumber, exporterId, buyerId, declarationId, exporterCompanyId);
 
         return {
           success: true,
