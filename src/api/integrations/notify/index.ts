@@ -15,6 +15,8 @@ const notify = {
       await notifyClient.sendEmail(templateId, sendToEmailAddress, {
         personalisation: {
           firstName,
+          // TODO: EMS-1273 to remove below
+          linkToFile: '',
           ...variables,
         },
         reference: null,
