@@ -42,7 +42,7 @@ jobs:
     needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
-    runs-on: [ self-hosted ]
+    runs-on: ubuntu-latest
     steps:
       - name: Timezone
         uses: szenius/set-timezone@v1.2
@@ -81,7 +81,7 @@ jobs:
           GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
         run: |
-          npm i --legacy-peer-deps
+          npm ci --legacy-peer-deps
           npm run test
 
       - name: API
@@ -112,7 +112,7 @@ jobs:
           JWT_VALIDATING_KEY: ${{ secrets.JWT_VALIDATING_KEY }}
         run: |
           docker-compose up --build -d
-          npm i --legacy-peer-deps --prefix ./src/api
+          npm ci --legacy-peer-deps --prefix ./src/api
           npm run test --prefix ./src/api
 
 
@@ -138,7 +138,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Docker    
         env:
