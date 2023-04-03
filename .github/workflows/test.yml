@@ -42,7 +42,7 @@ jobs:
     needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
-    runs-on: [ self-hosted ]
+    runs-on: ubuntu-latest
     steps:
       - name: Timezone
         uses: szenius/set-timezone@v1.2
@@ -60,8 +60,8 @@ jobs:
       - name: UI
         working-directory: ./src/ui
         env:
-          API_URL: ${{ secrets.API_URL }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          API_URL: ${{ secrets.API_URL_LOCAL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL_LOCAL }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
@@ -122,7 +122,7 @@ jobs:
     needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
-    runs-on: [ self-hosted ]
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: true
       matrix:
