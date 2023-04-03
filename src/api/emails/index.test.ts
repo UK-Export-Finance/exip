@@ -12,7 +12,6 @@ describe('emails', () => {
   jest.mock('../file-system');
 
   const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-  // const writeFileSpy = jest.fn(() => Promise.resolve(true));
 
   const mockCsvFile = JSON.stringify({ mock: true });
 

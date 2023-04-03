@@ -6,6 +6,12 @@ import mapExporter from './map-exporter';
 import mapBuyer from './map-buyer';
 import { Application } from '../../types';
 
+/**
+ * mapApplicationToCsv
+ * Map application fields into an array of objects for CSV generation
+ * @param {Object} Application
+ * @returns {Array} Array of objects for CSV generation
+ */
 const mapApplicationToCsv = (application: Application) => {
   const mapped = [
     ROW_SEPERATOR,

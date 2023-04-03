@@ -14,6 +14,12 @@ const {
   WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER },
 } = FIELD_IDS;
 
+/**
+ * mapBuyer
+ * Map an application's buyer fields into an array of objects for CSV generation
+ * @param {Object} Application
+ * @returns {Array} Array of objects for CSV generation
+ */
 const mapBuyer = (application: Application) => {
   const { buyer } = application;
 

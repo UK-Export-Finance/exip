@@ -129,8 +129,8 @@ const applicationSubmitted = {
 
       const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL as string;
 
-      // NOTE: no need to handle an error from fs.readFile here,
-      // if it errors, it will go into the catch handler below.
+      // NOTE: no need to handle any file system errors here.
+      // if something errors, it will fall into the catch handler below.
       const file = await fileSystem.readFile(csvPath);
 
       const fileIsCsv = true;

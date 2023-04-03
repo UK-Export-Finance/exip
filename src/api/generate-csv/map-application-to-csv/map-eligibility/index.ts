@@ -16,6 +16,12 @@ const {
   COMPANIES_HOUSE_NUMBER,
 } = FIELD_IDS.ELIGIBILITY;
 
+/**
+ * mapEligibility
+ * Map an application's eligibility fields into an array of objects for CSV generation
+ * @param {Object} Application
+ * @returns {Array} Array of objects for CSV generation
+ */
 const mapEligibility = (application: Application) => {
   const { eligibility } = application;
 

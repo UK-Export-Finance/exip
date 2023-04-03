@@ -20,6 +20,12 @@ const {
   BROKER: { USING_BROKER, NAME: BROKER_NAME, ADDRESS_LINE_1, TOWN, COUNTY, POSTCODE, EMAIL },
 } = FIELD_IDS;
 
+/**
+ * mapExporter
+ * Map an application's exporter fields into an array of objects for CSV generation
+ * @param {Object} Application
+ * @returns {Array} Array of objects for CSV generation
+ */
 const mapExporter = (application: Application) => {
   const { exporterCompany, exporterBusiness, exporterBroker } = application;
 

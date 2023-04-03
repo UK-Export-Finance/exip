@@ -3,6 +3,12 @@ import { stringify } from 'csv-stringify';
 import mapApplicationToCsv from './map-application-to-csv';
 import { Application } from '../types';
 
+/**
+ * csv
+ * Generate a CSV file
+ * @param {Object} Application
+ * @returns {String} File path
+ */
 const csv = (application: Application) => {
   const { referenceNumber } = application;
 
@@ -10,9 +16,7 @@ const csv = (application: Application) => {
 
   const csvData = mapApplicationToCsv(application);
 
-  // maybe don't need header: true?
   stringify(csvData, { header: true }, (err, output) => {
-    // fs.writeFile(__dirname + '/spike-POC.csv', output, (result) => {
     fs.writeFile(filePath, output, (result) => {
       return result;
     });

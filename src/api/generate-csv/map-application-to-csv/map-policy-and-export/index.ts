@@ -21,6 +21,12 @@ const {
   },
 } = FIELD_IDS.POLICY_AND_EXPORTS;
 
+/**
+ * mapPolicyAndExport
+ * Map an application's policy and export fields into an array of objects for CSV generation
+ * @param {Object} Application
+ * @returns {Array} Array of objects for CSV generation
+ */
 const mapPolicyAndExport = (application: Application) => {
   let mapped = [];
 
