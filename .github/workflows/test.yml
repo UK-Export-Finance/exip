@@ -87,8 +87,8 @@ jobs:
       - name: API
         working-directory: ./
         env:
-          API_URL: ${{ secrets.API_URL }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          API_URL: ${{ secrets.API_URL_LOCAL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL_LOCAL }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
