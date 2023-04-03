@@ -19,6 +19,12 @@ interface ApplicationEligibility extends ApplicationRelationship {
   wantCoverOverMaxPeriod: boolean;
 }
 
+interface ApplicationExporter extends ApplicationRelationship {
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
 interface ApplicationExporterCompany {
   id: string;
   companyName?: string;
@@ -35,15 +41,14 @@ interface ApplicationBuyer extends ApplicationRelationship {
   contactPosition?: string;
   contactEmail?: string;
   canContactBuyer?: boolean;
-  exporterIsConnectedWithBuyer?: boolean;
-  exporterHasTradedWithBuyer?: boolean;
+  exporterIsConnectedWithBuyer?: string;
+  exporterHasTradedWithBuyer?: string;
 }
 
-interface ApplicationDeclaration {
-  id: string;
+interface ApplicationDeclaration extends ApplicationRelationship {
   agreeToConfidentiality?: boolean;
   agreeToAntiBribery?: boolean;
-  hasAntiBriberyCodeOfConduct?: boolean;
+  hasAntiBriberyCodeOfConduct?: string;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
   agreeToConfirmationAndAcknowledgements?: boolean;
   agreeHowDataWillBeUsed?: boolean;
@@ -86,7 +91,7 @@ interface Application {
   status: string;
   previousStatus?: string;
   eligibility: ApplicationEligibility;
-  exporter: ApplicationRelationship;
+  exporter: ApplicationExporter;
   policyAndExport: ApplicationRelationship;
   exporterCompany: ApplicationExporterCompany;
   exporterCompanyAddress: ApplicationRelationship;
@@ -94,7 +99,7 @@ interface Application {
   exporterBroker: ApplicationRelationship;
   buyer: ApplicationBuyer;
   sectionReview: ApplicationRelationship;
-  declaration: ApplicationRelationship;
+  declaration: ApplicationDeclaration;
 }
 
 interface ApplicationSubmissionEmailVariables {

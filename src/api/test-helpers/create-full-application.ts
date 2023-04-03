@@ -15,7 +15,7 @@ export const updateBuyer = async (context: Context, buyerId: string): Promise<Ap
       id: buyerId,
     },
     data: mockBuyer,
-    query: 'id',
+    query: 'id exporterIsConnectedWithBuyer',
   })) as ApplicationBuyer;
 
   return buyer;
@@ -100,14 +100,13 @@ export const createFullApplication = async (context: Context) => {
       id: application.declaration.id,
     },
     data: mockApplicationDeclaration,
-    query: 'id',
+    query: 'id hasAntiBriberyCodeOfConduct',
   })) as ApplicationDeclaration;
 
   return {
     ...application,
     exporter,
     exporterCompany,
-    application,
     buyer,
     declaration,
   };

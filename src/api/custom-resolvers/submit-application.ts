@@ -40,21 +40,19 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
           submissionDate: now,
         };
 
-        await context.db.Application.updateOne({
+        const updatedApplication = await context.db.Application.updateOne({
           where: { id: application.id },
           data: update,
         });
 
-        const { referenceNumber, exporterId, buyerId, exporterCompanyId, declarationId } = application;
-
         // get a fully populated application for CSV generation
-        const populatedApplication = await getPopulatedApplication(context, application);
+        const populatedApplication = await getPopulatedApplication(context, updatedApplication);
 
         // generate a CSV for UKEF underwriting team email
         const csvPath = generate.csv(populatedApplication);
 
         // send all "application submitted" emails
-        await applicationSubmittedEmails.send(context, referenceNumber, exporterId, buyerId, declarationId, exporterCompanyId, csvPath);
+        await applicationSubmittedEmails.send(context, populatedApplication, csvPath);
 
         return {
           success: true,

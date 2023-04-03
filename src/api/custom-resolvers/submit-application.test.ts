@@ -6,17 +6,10 @@ import submitApplication from './submit-application';
 import generate from '../generate-csv';
 import applicationSubmittedEmails from '../emails/send-application-submitted-emails';
 import { APPLICATION } from '../constants';
+import getPopulatedApplication from '../helpers/get-populated-application';
 import { createFullApplication } from '../test-helpers';
 import { mockSendEmailResponse } from '../test-mocks';
-import {
-  Account,
-  Application,
-  ApplicationBuyer,
-  ApplicationDeclaration,
-  SubmitApplicationVariables,
-  SubmitApplicationResponse,
-  ApplicationExporterCompany,
-} from '../types';
+import { Application, SubmitApplicationVariables, SubmitApplicationResponse } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -27,11 +20,6 @@ dotenv.config();
 const context = getContext(config, PrismaModule) as Context;
 
 describe('custom-resolvers/submit-application', () => {
-  let exporter: Account;
-  let exporterCompany: ApplicationExporterCompany;
-  let buyer: ApplicationBuyer;
-  let declaration: ApplicationDeclaration;
-  let application: Application;
   let submittedApplication: Application;
   let variables: SubmitApplicationVariables;
   let result: SubmitApplicationResponse;
@@ -54,13 +42,7 @@ describe('custom-resolvers/submit-application', () => {
     generate.csv = generateCsvSpy;
     applicationSubmittedEmails.send = applicationSubmittedEmailsSpy;
 
-    const data = await createFullApplication(context);
-
-    exporter = data.exporter;
-    exporterCompany = data.exporterCompany;
-    buyer = data.buyer;
-    declaration = data.declaration;
-    application = data.application;
+    const application = await createFullApplication(context);
 
     variables = {
       applicationId: application.id,
@@ -106,15 +88,13 @@ describe('custom-resolvers/submit-application', () => {
 
     expect(applicationSubmittedEmailsSpy).toHaveBeenCalledTimes(1);
 
-    expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(
-      context,
-      application.referenceNumber,
-      exporter.id,
-      buyer.id,
-      declaration.id,
-      exporterCompany.id,
-      mockGenerateCsvResponse,
-    );
+    const fullSubmittedApplication = await context.db.Application.findOne({
+      where: { id: submittedApplication.id },
+    });
+
+    const populatedApplication = await getPopulatedApplication(context, fullSubmittedApplication);
+
+    expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(context, populatedApplication, mockGenerateCsvResponse);
   });
 
   describe('when an application is not found', () => {
