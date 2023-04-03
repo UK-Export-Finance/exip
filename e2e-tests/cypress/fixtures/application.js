@@ -90,8 +90,15 @@ const {
  * Application data we use and assert in E2E tests.
  */
 const date = new Date();
-export const startDate = add(date, { months: 3 });
-export const endDate = add(startDate, { months: 6 });
+
+/**
+ * Add months to the above date.
+ * If out of bound (< 12), then date will
+ * move on the following year.
+ * Note: JS months range (0 - 11)
+ */
+export const startDate = new Date(date.setMonth((date.getMonth() + 3))); // Add 3 months
+export const endDate = new Date(date.setMonth((date.getMonth() + 6))); // Add 6 months
 
 const application = {
   ELIGIBILITY: {
