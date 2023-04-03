@@ -6,8 +6,8 @@ import submitApplication from './submit-application';
 import generate from '../generate-csv';
 import applicationSubmittedEmails from '../emails/send-application-submitted-emails';
 import { APPLICATION } from '../constants';
-import { mockApplicationEligibility, mockSinglePolicyAndExport } from '../test-mocks/mock-application';
-import { mockAccount, mockBuyer, mockExporterCompany, mockApplicationDeclaration, mockSendEmailResponse } from '../test-mocks';
+import { createFullApplication } from '../test-helpers';
+import { mockSendEmailResponse } from '../test-mocks';
 import {
   Account,
   Application,
@@ -25,105 +25,6 @@ const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
 dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
-
-const updateBuyer = async (buyerId: string): Promise<ApplicationBuyer> => {
-  // update the buyer so there is a name
-  const buyer = (await context.query.Buyer.updateOne({
-    where: {
-      id: buyerId,
-    },
-    data: mockBuyer,
-    query: 'id companyOrOrganisationName',
-  })) as ApplicationBuyer;
-
-  return buyer;
-};
-
-const createRequiredData = async () => {
-  // TODO move this function into it's own file.
-
-  const countries = await context.query.Country.findMany({
-    query: 'id isoCode',
-  });
-
-  const eligibilityCountry = countries.find((country) => country.isoCode === mockApplicationEligibility.buyerCountry.isoCode);
-
-  if (!eligibilityCountry) {
-    throw new Error('No country found from mock country ISO code');
-  }
-
-  // create a new exporter
-  const exporter = (await context.query.Exporter.createOne({
-    data: mockAccount,
-    query: 'id firstName email',
-  })) as Account;
-
-  // create a new application
-  const application = (await context.query.Application.createOne({
-    query: 'id referenceNumber eligibility { id } policyAndExport { id } exporter { id } exporterCompany { id } buyer { id } declaration { id }',
-    data: {
-      exporter: {
-        connect: {
-          id: exporter.id,
-        },
-      },
-    },
-  })) as Application;
-
-  // update the eligibility so we have a full data set.
-  (await context.query.Eligibility.updateOne({
-    where: {
-      id: application.eligibility.id,
-    },
-    data: {
-      ...mockApplicationEligibility,
-      buyerCountry: {
-        connect: {
-          id: eligibilityCountry.id,
-        },
-      },
-    },
-    query: 'id',
-  })) as ApplicationDeclaration;
-
-  // update the policy and export so we have a full data set.
-  (await context.query.PolicyAndExport.updateOne({
-    where: {
-      id: application.policyAndExport.id,
-    },
-    data: mockSinglePolicyAndExport,
-    query: 'id',
-  })) as ApplicationDeclaration;
-
-  // update the buyer so there is a name
-  const buyer = await updateBuyer(application.buyer.id);
-
-  // update the exporter company so we have a company name
-  const exporterCompany = (await context.query.ExporterCompany.updateOne({
-    where: {
-      id: application.exporterCompany.id,
-    },
-    data: mockExporterCompany,
-    query: 'id',
-  })) as ApplicationDeclaration;
-
-  // update the declaration so we have a full data set.
-  const declaration = (await context.query.Declaration.updateOne({
-    where: {
-      id: application.declaration.id,
-    },
-    data: mockApplicationDeclaration,
-    query: 'id',
-  })) as ApplicationDeclaration;
-
-  return {
-    exporter,
-    exporterCompany,
-    application,
-    buyer,
-    declaration,
-  };
-};
 
 describe('custom-resolvers/submit-application', () => {
   let exporter: Account;
@@ -153,7 +54,7 @@ describe('custom-resolvers/submit-application', () => {
     generate.csv = generateCsvSpy;
     applicationSubmittedEmails.send = applicationSubmittedEmailsSpy;
 
-    const data = await createRequiredData();
+    const data = await createFullApplication(context);
 
     exporter = data.exporter;
     exporterCompany = data.exporterCompany;

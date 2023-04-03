@@ -1,5 +1,6 @@
 import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import { APPLICATION } from '../constants';
+import getPopulatedApplication from '../helpers/get-populated-application';
 import applicationSubmittedEmails from '../emails/send-application-submitted-emails';
 import generate from '../generate-csv';
 import { SubmitApplicationVariables, SubmitApplicationResponse } from '../types';
@@ -44,61 +45,10 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
           data: update,
         });
 
+        const { referenceNumber, exporterId, buyerId, exporterCompanyId, declarationId } = application;
+
         // get a fully populated application for CSV generation
-        const {
-          eligibilityId,
-          referenceNumber,
-          exporterId,
-          policyAndExportId,
-          buyerId,
-          exporterCompanyId,
-          exporterBusinessId,
-          exporterBrokerId,
-          declarationId,
-        } = application;
-
-        const eligibility = await context.db.Eligibility.findOne({
-          where: { id: eligibilityId },
-        });
-
-        const buyerCountry = await context.db.Country.findOne({
-          where: { id: eligibility?.buyerCountryId },
-        });
-
-        const policyAndExport = await context.db.PolicyAndExport.findOne({
-          where: { id: policyAndExportId },
-        });
-
-        const exporterCompany = await context.db.ExporterCompany.findOne({
-          where: { id: exporterCompanyId },
-        });
-
-        const exporterBusiness = await context.db.ExporterBusiness.findOne({
-          where: { id: exporterBusinessId },
-        });
-
-        const exporterBroker = await context.db.ExporterBroker.findOne({
-          where: { id: exporterBrokerId },
-        });
-
-        const buyer = await context.db.Buyer.findOne({
-          where: { id: application.buyerId },
-        });
-
-        const getPopulatedApplication = async () => ({
-          ...application,
-          eligibility: {
-            ...eligibility,
-            buyerCountry,
-          },
-          policyAndExport,
-          exporterCompany,
-          exporterBusiness,
-          exporterBroker,
-          buyer,
-        });
-
-        const populatedApplication = await getPopulatedApplication();
+        const populatedApplication = await getPopulatedApplication(context, application);
 
         // generate a CSV for UKEF underwriting team email
         const csvPath = generate.csv(populatedApplication);
