@@ -90,6 +90,8 @@ describe('emails/send-email-application-submitted', () => {
         referenceNumber,
         buyerName: companyOrOrganisationName,
         exporterCompanyName: companyName,
+        // TODO: EMS-1273 to remove below
+        linkToFile: '',
       } as ApplicationSubmissionEmailVariables;
     });
 
