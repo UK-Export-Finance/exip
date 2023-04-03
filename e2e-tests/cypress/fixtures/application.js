@@ -1,7 +1,3 @@
-import {
-  getMonth,
-  getYear,
-} from 'date-fns';
 import { FIELD_IDS, COMPANIES_HOUSE_NUMBER, WEBSITE_EXAMPLES } from '../../constants';
 import { GBP_CURRENCY_CODE } from './currencies';
 import mockCountries from './countries';
@@ -114,13 +110,13 @@ const application = {
   POLICY_AND_EXPORTS: {
     [REQUESTED_START_DATE]: {
       day: '1',
-      month: getMonth(startDate),
-      year: getYear(startDate),
+      month: (startDate.getMonth() + 1),
+      year: startDate.getFullYear(),
     },
     [CONTRACT_COMPLETION_DATE]: {
       day: '1',
-      month: getMonth(endDate),
-      year: getYear(endDate),
+      month: (endDate.getMonth() + 1),
+      year: endDate.getFullYear(),
     },
     [TOTAL_CONTRACT_VALUE]: '10000',
     [CREDIT_PERIOD_WITH_BUYER]: 'mock free text',
