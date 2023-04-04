@@ -29,6 +29,8 @@ import applicationAccess from './middleware/insurance/application-access';
 import getApplication from './middleware/insurance/get-application';
 import userSession from './middleware/insurance/user-session';
 
+console.log('mock console log for test PR');
+
 // @ts-ignore
 const app = express();
 const PORT = process.env.PORT || 5000;
