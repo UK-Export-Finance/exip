@@ -1,6 +1,6 @@
 import partials from '../../../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
-import { submitButton } from '../../../../../pages/shared';
+import { submitButton, status } from '../../../../../pages/shared';
 import { checkYourAnswersPolicyAndExports } from '../../../../../pages/insurance/check-your-answers';
 import application from '../../../../../../fixtures/application';
 import { singleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
