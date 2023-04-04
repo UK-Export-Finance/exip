@@ -22,8 +22,6 @@ const send = async (application: Application, csvPath: string): Promise<SubmitAp
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       exporterCompanyName: exporterCompany.companyName,
-      // TODO: EMS-1273 to remove below
-      linkToFile: '',
     } as ApplicationSubmissionEmailVariables;
 
     // send "application submitted" email to the exporter

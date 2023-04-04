@@ -1676,9 +1676,7 @@ var send = async (application, csvPath) => {
       firstName,
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
-      exporterCompanyName: exporterCompany.companyName,
-      // TODO: EMS-1273 to remove below
-      linkToFile: ""
+      exporterCompanyName: exporterCompany.companyName
     };
     const exporterSubmittedResponse = await emails_default.applicationSubmitted.exporter(sendEmailVars);
     if (!exporterSubmittedResponse.success) {
