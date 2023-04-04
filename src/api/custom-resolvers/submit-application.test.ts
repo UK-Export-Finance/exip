@@ -35,12 +35,13 @@ describe('custom-resolvers/submit-application', () => {
   beforeEach(async () => {
     jest.resetAllMocks();
 
-    generateCsvSpy = jest.fn(() => mockGenerateCsvResponse);
-
     applicationSubmittedEmailsSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-    generate.csv = generateCsvSpy;
     applicationSubmittedEmails.send = applicationSubmittedEmailsSpy;
+
+    generateCsvSpy = jest.fn(() => Promise.resolve(mockGenerateCsvResponse));
+
+    generate.csv = generateCsvSpy;
 
     const application = await createFullApplication(context);
 
@@ -83,18 +84,29 @@ describe('custom-resolvers/submit-application', () => {
     expect(submissionDateDay).toEqual(expectedDay);
   });
 
-  test('it should call applicationSubmittedEmails.send', async () => {
-    result = await submitApplication({}, variables, context);
+  describe('CSV generation and emails', () => {
+    let populatedApplication: Application;
+    let fullSubmittedApplication;
 
-    expect(applicationSubmittedEmailsSpy).toHaveBeenCalledTimes(1);
+    beforeEach(async () => {
+      fullSubmittedApplication = await context.db.Application.findOne({
+        where: { id: submittedApplication.id },
+      });
 
-    const fullSubmittedApplication = await context.db.Application.findOne({
-      where: { id: submittedApplication.id },
+      populatedApplication = await getPopulatedApplication(context, fullSubmittedApplication);
     });
 
-    const populatedApplication = await getPopulatedApplication(context, fullSubmittedApplication);
+    test('it should call generate.csv', async () => {
+      expect(generateCsvSpy).toHaveBeenCalledTimes(1);
 
-    expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(context, populatedApplication, mockGenerateCsvResponse);
+      expect(generateCsvSpy).toHaveBeenCalledWith(populatedApplication);
+    });
+
+    test('it should call applicationSubmittedEmails.send', async () => {
+      expect(applicationSubmittedEmailsSpy).toHaveBeenCalledTimes(1);
+
+      expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(populatedApplication, mockGenerateCsvResponse);
+    });
   });
 
   describe('when an application is not found', () => {
