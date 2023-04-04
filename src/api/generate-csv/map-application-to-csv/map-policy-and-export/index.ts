@@ -67,8 +67,6 @@ const mapPolicyAndExport = (application: Application) => {
     mapped = [...mapped, ...mapSinglePolicyFields(application)];
   }
 
-  // TODO: mapMonthString
-
   if (isMultiPolicyType(policyType)) {
     mapped = [...mapped, ...mapMultiplePolicyFields(application)];
   }
