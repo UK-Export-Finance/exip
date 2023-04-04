@@ -81,6 +81,8 @@ const send = async (
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       exporterCompanyName: exporterCompany.companyName,
+      // TODO: EMS-1273 to remove below
+      linkToFile: '',
     } as ApplicationSubmissionEmailVariables;
 
     // send "application submitted" email to the exporter
