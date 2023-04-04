@@ -139,8 +139,7 @@ const applicationSubmitted = {
 
       const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
 
-      // NOTE: no need to handle an error from fs.unlink here,
-      // if it errors, it will go into the catch handler below.
+      // delete the CSV as it has been send to notify
       await fileSystem.unlink(csvPath);
 
       return response;
