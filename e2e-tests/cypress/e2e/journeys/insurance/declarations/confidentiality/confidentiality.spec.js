@@ -14,6 +14,8 @@ const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY;
 
+const LATEST_VERSION = CONTENT_STRINGS.VERSIONS[0];
+
 const {
   ROOT: INSURANCE_ROOT,
   ALL_SECTIONS,
@@ -74,7 +76,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
     });
 
     describe('latest confidentiality content', () => {
-      const listContent = CONTENT_STRINGS.LIST;
+      const listContent = LATEST_VERSION.LIST;
 
       const {
         intro,
@@ -84,7 +86,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
       } = confidentialityPage.listItems;
 
       it('renders an intro paragraph', () => {
-        cy.checkText(intro(), CONTENT_STRINGS.INTRO);
+        cy.checkText(intro(), LATEST_VERSION.INTRO);
       });
 
       it('renders level 1 list items', () => {

@@ -1,4 +1,4 @@
-import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
+import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
 import api from '../../../../api';
@@ -29,6 +29,7 @@ export const pageVariables = (referenceNumber: number) => ({
     ID: FIELD_ID,
     ...FIELDS[FIELD_ID],
   },
+  SUBMIT_BUTTON_COPY: BUTTONS.SUBMIT_APPLICATION,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED_SAVE_AND_BACK}`,
 });
 

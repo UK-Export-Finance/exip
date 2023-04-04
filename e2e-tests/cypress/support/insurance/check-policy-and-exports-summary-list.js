@@ -76,7 +76,7 @@ const checkPolicyAndExportsSummaryList = ({
 
     const currency = currencies.find((c) => c.isoCode === application.POLICY_AND_EXPORTS[fieldId]);
 
-    const expectedValue = `${currency.isoCode} ${currency.name}`;
+    const expectedValue = currency.name;
 
     const expectedChangeLinkText = FIELDS.CONTRACT_POLICY[fieldId].SUMMARY.TITLE;
 
