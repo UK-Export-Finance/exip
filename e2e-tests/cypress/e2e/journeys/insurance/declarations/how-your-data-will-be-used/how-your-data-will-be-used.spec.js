@@ -69,6 +69,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`,
       backLink: `${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`,
       assertBackLink: false,
+      submitButtonCopy: BUTTONS.SUBMIT_APPLICATION
     });
   });
 
