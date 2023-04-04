@@ -1,6 +1,6 @@
 import formatTimeOfDay from '.';
 
-describe('server/helpers/date/format-date', () => {
+describe('api/generate-csv/map-application-to-csv/helpers/format-time-of-day', () => {
   const mockTimestamp = new Date();
 
   it('should return a formatted timme', () => {
