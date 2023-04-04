@@ -1,4 +1,4 @@
-import { saveAndBackButton, submitButton } from '../../../../pages/shared';
+import { headingCaption, saveAndBackButton, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { workingWithBuyerPage } from '../../../../pages/insurance/your-buyer';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
@@ -16,7 +16,10 @@ const {
   },
 } = FIELD_IDS;
 
-const { COMPANY_OR_ORGANISATION, WORKING_WITH_BUYER, CHECK_YOUR_ANSWERS } = ROUTES.INSURANCE.YOUR_BUYER;
+const {
+  START,
+  YOUR_BUYER: { COMPANY_OR_ORGANISATION, WORKING_WITH_BUYER, CHECK_YOUR_ANSWERS },
+} = ROUTES.INSURANCE;
 
 const { taskList } = partials.insurancePartials;
 
@@ -67,6 +70,14 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
+    });
+
+    it('should render a header with href to insurance start', () => {
+      partials.header.serviceName().should('have.attr', 'href', START);
+    });
+
+    it('renders a heading caption', () => {
+      cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
     it(`renders an ${CONNECTED_WITH_BUYER} label, hint and radio buttons`, () => {
