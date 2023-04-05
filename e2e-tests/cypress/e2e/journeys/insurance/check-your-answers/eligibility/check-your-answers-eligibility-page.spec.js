@@ -30,6 +30,7 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
   let referenceNumber;
   let url;
   let allSectionsUrl;
+  let startNewApplicationUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -42,6 +43,8 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ELIGIBILITY}`;
 
       allSectionsUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
+      startNewApplicationUrl = `${INSURANCE_ROOT}/${referenceNumber}${START_NEW_APPLICATION}`;
 
       cy.url().should('eq', url);
     });
@@ -83,7 +86,8 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
 
     it(`renders a change answers banner with a valid href to ${START_NEW_APPLICATION}`, () => {
       cy.checkText(checkYourAnswersEligibility.banner(), `${CONTENT_STRINGS.CHANGE_ELIGIBILITY} ${CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.text}`);
-      cy.checkLink(checkYourAnswersEligibility.bannerLink(), START_NEW_APPLICATION, CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.text);
+
+      cy.checkLink(checkYourAnswersEligibility.bannerLink(), startNewApplicationUrl, CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.text);
     });
 
     it('renders a `save and back` button', () => {
@@ -119,8 +123,9 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
 
           saveAndBackButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${START_NEW_APPLICATION}`;
-          cy.url().should('eq', expectedUrl);
+          const expected = `${Cypress.config('baseUrl')}${startNewApplicationUrl}`;
+
+          cy.url().should('eq', expected);
         });
       });
     });
