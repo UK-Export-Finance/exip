@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import { Algorithm } from 'jsonwebtoken';
 import { BufferEncoding } from '../types';
 
-import INSURNACE_FIELD_IDS from './field-ids/insurance';
+import INSURANCE_FIELD_IDS from './field-ids/insurance';
 
 dotenv.config();
 
@@ -39,7 +39,7 @@ export const FIELD_IDS = {
     EMAIL: 'email',
     VERIFICATION_HASH: 'verificationHash',
   },
-  ...INSURNACE_FIELD_IDS,
+  ...INSURANCE_FIELD_IDS,
 };
 
 export const ACCOUNT = {
