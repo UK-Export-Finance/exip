@@ -2,6 +2,7 @@ import { pageVariables, get, TEMPLATE } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import formatDate from '../../../../helpers/date/format-date';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
@@ -51,6 +52,7 @@ describe('controllers/insurance/check-your-answers/start-new-application', () =>
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.START_NEW_APPLICATION,
           BACK_LINK: req.headers.referer,
         }),
+        userName: getUserNameFromSession(req.session.user),
         ...pageVariables(mockApplication.referenceNumber),
         formattedSubmissionDeadline: formatDate(new Date(mockApplication.submissionDeadline)),
       };
