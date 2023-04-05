@@ -62,8 +62,8 @@ USER node
 
 # Container healthcheck
 HEALTHCHECK \
---interval=30s \
---timeout=10s \
+--interval=60s \
+--timeout=30s \
 CMD wget \
 --no-verbose \
 --tries=3 \
