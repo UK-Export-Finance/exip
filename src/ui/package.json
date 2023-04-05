@@ -10,7 +10,6 @@
   "scripts": {
     "lint": "eslint ./server",
     "lint:fix": "eslint ./server --fix",
-    "prebuild": "rm -rf ./public",
     "build": "webpack --mode production --config webpack.prod.config.js",
     "start": "ts-node server/index.ts",
     "dev": "npx nodemon server/index.ts",
