@@ -3,7 +3,6 @@
 .gitignore
 .prettierrc.json
 .prettierignore
-.eslintrc.json
 .eslintignore
 jest.config.js
 README.md

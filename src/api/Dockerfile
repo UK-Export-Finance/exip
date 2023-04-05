@@ -2,8 +2,7 @@
 # 1. BUILD
 ###################
 
-# NPM 8.19.1 Alpine linux image
-FROM node:18.15-alpine3.16 AS build
+FROM node:19.8-alpine3.16 AS build
 
 # Build variables
 ARG GITHUB_SHA
@@ -25,7 +24,22 @@ RUN npm ci --legacy-peer-deps
 RUN npm cache clean --force
 
 # Copy API
-COPY --chown=node:node . .
+COPY --chown=node:node ./.keystone ./.keystone
+COPY --chown=node:node ./custom-resolvers ./custom-resolvers
+COPY --chown=node:node ./emails ./emails
+COPY --chown=node:node ./helpers ./helpers
+COPY --chown=node:node ./integrations ./integrations
+COPY --chown=node:node ./test-mocks ./test-mocks
+COPY --chown=node:node ./auth.ts .
+COPY --chown=node:node ./constants.ts .
+COPY --chown=node:node ./custom-schema.ts .
+COPY --chown=node:node ./keystone.ts .
+COPY --chown=node:node ./schema.ts .
+COPY --chown=node:node ./types.ts .
+COPY --chown=node:node ./schema.graphql .
+COPY --chown=node:node ./schema.prisma .
+COPY --chown=node:node ./package.json .
+COPY --chown=node:node ./package-lock.json .
 
 # Build with all dependencies
 RUN npm run build
@@ -63,8 +77,8 @@ USER node
 
 # Container healthcheck
 HEALTHCHECK \
---interval=10s \
---timeout=7s \
+--interval=30s \
+--timeout=10s \
 CMD wget \
 --no-verbose \
 --tries=3 \

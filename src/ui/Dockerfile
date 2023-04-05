@@ -2,8 +2,7 @@
 # 1. BUILD
 ###################
 
-# NPM 8.19.1 Alpine linux image
-FROM node:18.15-alpine3.16 AS build
+FROM node:19.8-alpine3.16 AS build
 
 # Build variables
 ARG GITHUB_SHA
@@ -14,7 +13,18 @@ ENV PORT=$PORT
 WORKDIR /app
 
 # Copy UI
-COPY --chown=node:node . .
+COPY --chown=node:node ./scripts ./scripts
+COPY --chown=node:node ./server ./server
+COPY --chown=node:node ./styles ./styles
+COPY --chown=node:node ./templates ./templates
+COPY --chown=node:node ./types ./types
+COPY --chown=node:node ./.eslintrc.js .
+COPY --chown=node:node ./package.json .
+COPY --chown=node:node ./package-lock.json .
+COPY --chown=node:node ./tsconfig.json .
+COPY --chown=node:node ./webpack.common.config.js .
+COPY --chown=node:node ./webpack.prod.config.js .
+
 RUN npm ci --legacy-peer-deps --ignore-scripts
 RUN npm cache clean --force
 
@@ -52,8 +62,8 @@ USER node
 
 # Container healthcheck
 HEALTHCHECK \
---interval=10s \
---timeout=7s \
+--interval=30s \
+--timeout=10s \
 CMD wget \
 --no-verbose \
 --tries=3 \

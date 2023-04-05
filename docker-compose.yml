@@ -69,7 +69,7 @@ services:
       - "${UI_PORT}:${UI_PORT}"
     volumes:
       - ./src/ui/server:/app/server:ro
-      - ./src/ui/public:/app/public:ro
+      - ./src/ui/public:/app/public:rw
       - ./src/ui/templates:/app/templates:ro
     environment:
       PORT: ${UI_PORT}
