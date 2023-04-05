@@ -36,6 +36,8 @@ Cypress.Commands.add('checkCookiesConsentBannerDoesNotExist', analytics.checkCoo
 
 Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);
 
+Cypress.Commands.add('checkAuthenticatedHeader', require('./check-authenticated-header'));
+
 Cypress.Commands.add('submitInsuranceEligibilityAnswersHappyPath', require('./insurance/eligibility/submit-answers-happy-path'));
 Cypress.Commands.add('submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath', require('./insurance/eligibility/submit-answers-from-buyer-country-happy-path'));
 

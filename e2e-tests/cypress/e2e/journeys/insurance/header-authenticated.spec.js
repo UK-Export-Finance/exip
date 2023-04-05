@@ -76,7 +76,7 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
     it(`should redirect to ${DASHBOARD} when clicking the link`, () => {
       selector().click();
 
-      cy.url().should('eq', dashboardUrl;
+      cy.url().should('eq', dashboardUrl);
     });
   });
 
@@ -91,7 +91,7 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
       cy.checkLink(selector(), SIGN_IN_ROOT, HEADER.SIGN_OUT.TEXT);
     });
 
-    it(`should redirect to ${DASHBORAD} when clicking the link as the user is already logged in`, () => {
+    it(`should redirect to ${DASHBOARD} when clicking the link as the user is already logged in`, () => {
       selector().click();
 
       cy.url().should('eq', dashboardUrl);
