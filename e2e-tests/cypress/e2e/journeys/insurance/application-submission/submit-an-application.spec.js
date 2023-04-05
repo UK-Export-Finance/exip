@@ -1,4 +1,5 @@
 import dashboardPage from '../../../pages/insurance/dashboard';
+import header from '../../../partials/header';
 import { APPLICATION } from '../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
@@ -44,8 +45,7 @@ context('Insurance - application submitted page - As an Exporter, I want to subm
     beforeEach(() => {
       url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
-      // TODO: EMS-1268 - when the authenticated header has been built, update this to click on the dashboard link.
-      cy.navigateToUrl(url);
+      header.navigation.applications().click();
     });
 
     it(`should render the application's status as ${submittedStatus}`, () => {

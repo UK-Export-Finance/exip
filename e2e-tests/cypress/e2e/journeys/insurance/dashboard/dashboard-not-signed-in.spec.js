@@ -1,16 +1,13 @@
+import header from '../../../partials/header';
 import { ROUTES } from '../../../../../constants';
 
 const {
-  DASHBOARD,
   ACCOUNT: { SIGN_IN },
 } = ROUTES.INSURANCE;
 
 context('Insurance - Dashboard - not signed in', () => {
   before(() => {
-    const url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
-
-    // TODO: EMS-1268 - when the authenticated header has been built, update this to click on the dashboard link.
-    cy.navigateToUrl(url);
+    header.navigation.applications().click();
   });
 
   beforeEach(() => {

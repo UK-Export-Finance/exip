@@ -41,8 +41,7 @@ context('Insurance - Dashboard - populated application', () => {
 
       url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
-      // TODO: EMS-1268 - when the authenticated header has been built, update this to click on the dashboard link.
-      cy.navigateToUrl(url);
+      partials.header.navigation.applications().click();
 
       cy.url().should('eq', url);
     });
@@ -75,8 +74,7 @@ context('Insurance - Dashboard - populated application', () => {
     });
 
     it(`should render a value in the ${TABLE_HEADERS.BUYER_LOCATION} cell`, () => {
-      // TODO: EMS-1268 - when the authenticated header has been built, update this to click on the dashboard link.
-      cy.navigateToUrl(url);
+      partials.header.navigation.applications().click();
 
       const cell = table.body.row(referenceNumber).buyerLocation();
 
@@ -85,8 +83,7 @@ context('Insurance - Dashboard - populated application', () => {
     });
 
     it(`should render a value in the ${TABLE_HEADERS.COMPANY_OR_ORGANISATION_NAME} cell`, () => {
-      // TODO: EMS-1268 - when the authenticated header has been built, update this to click on the dashboard link.
-      cy.navigateToUrl(url);
+      partials.header.navigation.applications().click();
 
       const cell = table.body.row(referenceNumber).buyerName();
 
@@ -117,8 +114,7 @@ context('Insurance - Dashboard - populated application', () => {
     });
 
     it(`should render a formatted value of ${TOTAL_CONTRACT_VALUE} in the ${TABLE_HEADERS.INSURED_FOR} cell`, () => {
-      // TODO: EMS-1268 - when the authenticated header has been built, update this to click on the dashboard link.
-      cy.navigateToUrl(url);
+      partials.header.navigation.applications().click();
 
       const cell = table.body.row(referenceNumber).insuredFor();
 
@@ -150,8 +146,7 @@ context('Insurance - Dashboard - populated application', () => {
     });
 
     it(`should render a formatted value of ${MAXIMUM_BUYER_WILL_OWE} in the ${TABLE_HEADERS.INSURED_FOR} cell`, () => {
-      // TODO: EMS-1268 - when the authenticated header has been built, update this to click on the dashboard link.
-      cy.navigateToUrl(url);
+      partials.header.navigation.applications().click();
 
       const cell = table.body.row(referenceNumber).insuredFor();
 

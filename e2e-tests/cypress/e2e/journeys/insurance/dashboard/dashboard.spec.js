@@ -1,4 +1,5 @@
 import dashboardPage from '../../../pages/insurance/dashboard';
+import header from '../../../partials/header';
 import { DEFAULT, PAGES, BUTTONS } from '../../../../../content-strings';
 import { APPLICATION, ROUTES } from '../../../../../constants';
 import { formatDate } from '../../../helpers/date';
@@ -26,8 +27,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
 
       url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
-      // TODO: EMS-1268 - when the authenticated header has been built, update this to click on the dashboard link.
-      cy.navigateToUrl(url);
+      header.navigation.applications().click();
 
       cy.url().should('eq', url);
     });
@@ -38,7 +38,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
   });
 
   after(() => {
-    // cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {
