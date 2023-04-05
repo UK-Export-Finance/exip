@@ -21,9 +21,9 @@ COPY --chown=node:node ./types ./types
 COPY --chown=node:node ./package.json .
 COPY --chown=node:node ./package-lock.json .
 COPY --chown=node:node ./tsconfig.json .
-COPY ./.eslintrc.js .
-COPY ./webpack.common.config.js .
-COPY ./webpack.prod.config.js .
+COPY --chown=node:node ./.eslintrc.js .
+COPY --chown=node:node ./webpack.common.config.js .
+COPY --chown=node:node ./webpack.prod.config.js .
 
 RUN npm ci --legacy-peer-deps --ignore-scripts
 RUN npm cache clean --force
