@@ -22,6 +22,8 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
   let referenceNumber;
   let allSectionsUrl;
 
+  const dashboardUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
@@ -74,9 +76,7 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
     it(`should redirect to ${DASHBOARD} when clicking the link`, () => {
       selector().click();
 
-      const expected = `${Cypress.config('baseUrl')}${DASHBOARD}`;
-
-      cy.url().should('eq', expected);
+      cy.url().should('eq', dashboardUrl;
     });
   });
 
@@ -89,6 +89,12 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
 
     it('should render', () => {
       cy.checkLink(selector(), SIGN_IN_ROOT, HEADER.SIGN_OUT.TEXT);
+    });
+
+    it(`should redirect to ${DASHBORAD} when clicking the link as the user is already logged in`, () => {
+      selector().click();
+
+      cy.url().should('eq', dashboardUrl);
     });
   });
 });
