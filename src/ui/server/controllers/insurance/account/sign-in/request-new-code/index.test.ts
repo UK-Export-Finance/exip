@@ -2,6 +2,7 @@ import { TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
@@ -47,7 +48,7 @@ describe('controllers/insurance/account/sign-in/request-new-code', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
       });
     });
 

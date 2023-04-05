@@ -2,8 +2,9 @@ import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
-import { mockReq, mockRes } from '../../../test-mocks';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
+import { mockReq, mockRes } from '../../../test-mocks';
 
 describe('controllers/quote/cannot-apply', () => {
   let req: Request;
@@ -38,7 +39,7 @@ describe('controllers/quote/cannot-apply', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY, BACK_LINK: mockPreviousRoute }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         EXIT_REASON: mockExitReason,
       });
     });

@@ -1,6 +1,7 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../types';
 
@@ -42,7 +43,7 @@ export const post = (req: Request, res: Response) => {
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
       }),
-      user: req.session.user,
+      userName: getUserNameFromSession(req.session.user),
       validationErrors,
     });
   }

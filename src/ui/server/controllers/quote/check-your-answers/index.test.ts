@@ -4,8 +4,9 @@ import { FIELD_IDS, FIELD_VALUES, GBP_CURRENCY_CODE, ROUTES, TEMPLATES } from '.
 import { mapAnswersToContent } from '../../../helpers/data-content-mappings/map-answers-to-content';
 import { answersSummaryList } from '../../../helpers/summary-lists/answers-summary-list';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
-import { mockAnswers, mockReq, mockRes } from '../../../test-mocks';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
+import { mockAnswers, mockReq, mockRes } from '../../../test-mocks';
 
 const { BUYER_COUNTRY, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, POLICY_TYPE, HAS_MINIMUM_UK_GOODS_OR_SERVICES, VALID_EXPORTER_LOCATION } = FIELD_IDS;
 
@@ -57,7 +58,7 @@ describe('controllers/quote/check-your-answers', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS, {
         ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.CHECK_YOUR_ANSWERS, BACK_LINK: req.headers.referer }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         SUMMARY_LIST: expectedSummaryList,
       });
     });

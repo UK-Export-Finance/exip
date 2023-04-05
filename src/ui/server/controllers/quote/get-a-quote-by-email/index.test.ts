@@ -2,8 +2,9 @@ import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
-import { mockReq, mockRes } from '../../../test-mocks';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
+import { mockReq, mockRes } from '../../../test-mocks';
 
 describe('controllers/quote/get-a-quote-by-email', () => {
   let req: Request;
@@ -38,7 +39,7 @@ describe('controllers/quote/get-a-quote-by-email', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.GET_A_QUOTE_BY_EMAIL, {
         ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL, BACK_LINK: mockPreviousRoute }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         EXIT_REASON: mockExitReason,
       });
     });

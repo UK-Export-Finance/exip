@@ -1,10 +1,11 @@
 import { get, post } from '.';
 import { PAGES } from '../../../../content-strings';
-import { Request, Response, ApplicationBuyer } from '../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { yourBuyerSummaryList } from '../../../../helpers/summary-lists/your-buyer';
+import { Request, Response, ApplicationBuyer } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../test-mocks';
 
 const { CHECK_YOUR_ANSWERS } = PAGES.INSURANCE.YOUR_BUYER;
@@ -50,7 +51,7 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
           PAGE_CONTENT_STRINGS: CHECK_YOUR_ANSWERS,
           BACK_LINK: req.headers.referer,
         }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`,
         SUMMARY_LIST: summaryList,

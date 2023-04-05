@@ -2,12 +2,12 @@ import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
-
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { generateQuote } from '../../../generate-quote';
 import mapQuoteToContent from '../../../helpers/data-content-mappings/map-quote-to-content';
 import { quoteSummaryList } from '../../../helpers/summary-lists/quote-summary-list';
-import { mockReq, mockRes, mockSession } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
+import { mockReq, mockRes, mockSession } from '../../../test-mocks';
 
 describe('controllers/quote/your-quote', () => {
   let req: Request;
@@ -40,7 +40,7 @@ describe('controllers/quote/your-quote', () => {
       const expectedSummaryList = quoteSummaryList(quoteContent);
 
       const expectedVariables = {
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.YOUR_QUOTE, BACK_LINK: req.headers.referer }),
         SUMMARY_LIST: expectedSummaryList,
       };

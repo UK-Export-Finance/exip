@@ -1,14 +1,15 @@
 import { PAGES } from '../../../../content-strings';
 import { pageVariables, get, post, TEMPLATE } from '.';
-import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/exporter-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../test-mocks';
 import generateValidationErrors from './validation';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import mapAndSave from '../map-and-save';
+import { Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../test-mocks';
 
 const { BROKER: BROKER_FIELDS } = FIELDS;
 
@@ -111,7 +112,7 @@ describe('controllers/insurance/business/broker', () => {
             PAGE_CONTENT_STRINGS: BROKER,
             BACK_LINK: req.headers.referer,
           }),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
           ...pageVariables(mockApplication.referenceNumber),
         });
@@ -151,7 +152,7 @@ describe('controllers/insurance/business/broker', () => {
             PAGE_CONTENT_STRINGS: BROKER,
             BACK_LINK: req.headers.referer,
           }),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),

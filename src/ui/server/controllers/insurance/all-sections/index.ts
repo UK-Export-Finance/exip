@@ -1,11 +1,12 @@
 import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
-import { Request, Response } from '../../../../types';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateGroupsAndTasks from '../../../helpers/task-list/generate-groups-and-tasks';
 import generateTaskList from '../../../helpers/task-list';
 import flattenApplicationData from '../../../helpers/flatten-application-data';
 import mapApplicationToFormFields from '../../../helpers/mappings/map-application-to-form-fields';
+import { Request, Response } from '../../../../types';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ALL_SECTIONS;
 
@@ -38,7 +39,7 @@ export const get = (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ALL_SECTIONS,
       BACK_LINK: req.headers.referer,
     }),
-    user: req.session.user,
+    userName: getUserNameFromSession(req.session.user),
     application: mapApplicationToFormFields(application),
     taskListData,
   });

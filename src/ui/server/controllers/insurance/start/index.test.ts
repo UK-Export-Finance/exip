@@ -1,9 +1,10 @@
 import { TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../content-strings';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
-import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
+import { mockReq, mockRes } from '../../../test-mocks';
 
 describe('controllers/insurance/start', () => {
   let req: Request;
@@ -51,7 +52,7 @@ describe('controllers/insurance/start', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.START,
           BACK_LINK: req.headers.referer,
         }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

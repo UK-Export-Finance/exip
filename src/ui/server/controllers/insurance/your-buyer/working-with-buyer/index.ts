@@ -2,11 +2,12 @@ import { PAGES } from '../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import { Request, Response } from '../../../../../types';
 import mapAndSave from '../map-and-save';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Request, Response } from '../../../../../types';
 
 const {
   YOUR_BUYER: { WORKING_WITH_BUYER },
@@ -51,7 +52,7 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER,
         BACK_LINK: req.headers.referer,
       }),
-      user: req.session.user,
+      userName: getUserNameFromSession(req.session.user),
       ...pageVariables(application.referenceNumber),
       application: mapApplicationToFormFields(application),
     });
@@ -81,7 +82,7 @@ export const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER,
           BACK_LINK: req.headers.referer,
         }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         ...pageVariables(application.referenceNumber),
         submittedValues: body,
         application: mapApplicationToFormFields(application),

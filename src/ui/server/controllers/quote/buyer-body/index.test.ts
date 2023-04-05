@@ -2,6 +2,7 @@ import { PAGE_VARIABLES, TEMPLATE, mapAnswer, mapSubmittedAnswer, get, post } fr
 import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { mockReq, mockRes } from '../../../test-mocks';
@@ -91,7 +92,7 @@ describe('controllers/quote/buyer-body', () => {
 
       const expectedVariables = {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         submittedValues: {
           ...req.session.submittedData.quoteEligibility,
           [PAGE_VARIABLES.FIELD_ID]: mapSubmittedAnswer(req.session.submittedData.quoteEligibility[PAGE_VARIABLES.FIELD_ID]),
@@ -109,7 +110,7 @@ describe('controllers/quote/buyer-body', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),
         });
       });

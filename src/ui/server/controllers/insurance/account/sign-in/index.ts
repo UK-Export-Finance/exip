@@ -2,6 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
@@ -64,7 +65,7 @@ export const get = (req: Request, res: Response) => {
       BACK_LINK: req.headers.referer,
     }),
     ...PAGE_VARIABLES,
-    user: req.session.user,
+    userName: getUserNameFromSession(req.session.user),
     renderSuccessBanner,
   });
 };
@@ -86,7 +87,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...PAGE_VARIABLES,
-      user: req.session.user,
+      userName: getUserNameFromSession(req.session.user),
       submittedValues: req.body,
       validationErrors,
     });
@@ -114,7 +115,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...PAGE_VARIABLES,
-      user: req.session.user,
+      userName: getUserNameFromSession(req.session.user),
       submittedValues: req.body,
       validationErrors,
     });

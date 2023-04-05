@@ -2,10 +2,11 @@ import { pageVariables, get, post, TEMPLATE } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import { Request, Response } from '../../../../../types';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { policyAndExportSummaryList } from '../../../../helpers/summary-lists/policy-and-export';
+import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
@@ -83,7 +84,7 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         application: res.locals.application,
         SUMMARY_LIST: policyAndExportSummaryList(mockApplication.policyAndExport, mockApplication.referenceNumber, mockCountries, mockCurrencies),
       };

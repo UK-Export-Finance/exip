@@ -2,6 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import api from '../../../../api';
 
 import { Request, Response } from '../../../../../types';
@@ -13,7 +14,7 @@ export const PAGE_VARIABLES = {
 export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
 export const get = (req: Request, res: Response) =>
-  res.render(TEMPLATE, { ...corePageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }), user: req.session.user });
+  res.render(TEMPLATE, { ...corePageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }), userName: getUserNameFromSession(req.session.user) });
 
 export const post = async (req: Request, res: Response) => {
   try {

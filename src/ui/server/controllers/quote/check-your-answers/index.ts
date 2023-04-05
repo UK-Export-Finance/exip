@@ -3,6 +3,7 @@ import { ROUTES, TEMPLATES } from '../../../constants';
 import { mapAnswersToContent } from '../../../helpers/data-content-mappings/map-answers-to-content';
 import { answersSummaryList } from '../../../helpers/summary-lists/answers-summary-list';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 
 export const TEMPLATE = TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS;
@@ -14,7 +15,7 @@ export const get = async (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.CHECK_YOUR_ANSWERS, BACK_LINK: req.headers.referer }),
-    user: req.session.user,
+    userName: getUserNameFromSession(req.session.user),
     SUMMARY_LIST: summaryList,
   });
 };

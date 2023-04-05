@@ -2,6 +2,7 @@ import { Request, Response } from '../../../../../types';
 import { pageVariables, post } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { PAGES } from '../../../../content-strings';
 import companiesHouseValidation from './validation/companies-house';
 import companyDetailsValidation from './validation/company-details';
@@ -79,6 +80,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
+          userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROOT),
           validationErrors,
           submittedValues,

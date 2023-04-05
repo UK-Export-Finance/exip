@@ -2,6 +2,7 @@ import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import api from '../../../../api';
 import { mapCisCountries } from '../../../../helpers/mappings/map-cis-countries';
@@ -70,7 +71,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       const expectedVariables = {
         ...singleInputPageVariables(PAGE_VARIABLES),
         BACK_LINK: req.headers.referer,
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         countries: mapCisCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData.insuranceEligibility,
       };
@@ -125,7 +126,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         const expectedVariables = {
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: req.headers.referer,
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           countries: expectedCountries,
           submittedValues: req.session.submittedData.insuranceEligibility,
         };
@@ -172,7 +173,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables(PAGE_VARIABLES),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           BACK_LINK: req.headers.referer,
           countries: mapCisCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),

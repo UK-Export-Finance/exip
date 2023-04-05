@@ -1,6 +1,6 @@
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 
-{% if user %}
+{% if userName %}
 
   {{ govukHeader({
     homepageUrl: "https://www.gov.uk",
@@ -8,7 +8,7 @@
     serviceUrl: START_ROUTE,
     navigation: [
       {
-        text:  user.firstName + " " + user.lastName,
+        text:  userName,
         href: CONTENT_STRINGS.HEADER.ACCOUNT.HREF,
         attributes: {
           "data-cy": "header-navigation-link-manage-account"

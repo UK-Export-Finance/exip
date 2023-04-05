@@ -2,6 +2,7 @@ import { get, TEMPLATE } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
@@ -38,7 +39,7 @@ describe('controllers/insurance/eligibility/cannot-apply', () => {
           PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY,
           BACK_LINK: req.headers.referer,
         }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         EXIT_REASON: mockExitReason,
       };
 

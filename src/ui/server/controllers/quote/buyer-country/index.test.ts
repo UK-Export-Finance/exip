@@ -2,14 +2,15 @@ import { PAGE_VARIABLES, TEMPLATE, getBackLink, get, post } from '.';
 import { LINKS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
 import api from '../../../api';
 import { mapCisCountries } from '../../../helpers/mappings/map-cis-countries';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
-import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
+import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../test-mocks';
 
 describe('controllers/quote/buyer-country', () => {
   let req: Request;
@@ -114,7 +115,7 @@ describe('controllers/quote/buyer-country', () => {
 
       const expectedVariables = {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         countries: mapCisCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData.quoteEligibility,
         isChangeRoute: isChangeRoute(req.originalUrl),
@@ -169,7 +170,7 @@ describe('controllers/quote/buyer-country', () => {
 
         const expectedVariables = {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           countries: expectedCountries,
           submittedValues: req.session.submittedData.quoteEligibility,
           isChangeRoute: isChangeRoute(req.originalUrl),
@@ -220,7 +221,7 @@ describe('controllers/quote/buyer-country', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           countries: mapCisCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),
           isChangeRoute: isChangeRoute(req.originalUrl),

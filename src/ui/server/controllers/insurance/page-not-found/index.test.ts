@@ -2,6 +2,7 @@ import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 import { mockReq, mockRes } from '../../../test-mocks';
 
@@ -26,7 +27,7 @@ describe('controllers/insurance/page-not-found', () => {
 
       const expectedVariables = {
         ...insuranceCorePageVariables({ PAGE_CONTENT_STRINGS: PAGES.PAGE_NOT_FOUND_PAGE }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

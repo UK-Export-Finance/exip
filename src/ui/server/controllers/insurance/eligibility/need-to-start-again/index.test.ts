@@ -2,6 +2,7 @@ import { get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
@@ -26,7 +27,7 @@ describe('controllers/insurance/eligibility/need-to-start-again', () => {
 
       const expectedVariables = {
         ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.NEED_TO_START_AGAIN_PAGE, BACK_LINK: req.headers.referer }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.NEED_TO_START_AGAIN, expectedVariables);

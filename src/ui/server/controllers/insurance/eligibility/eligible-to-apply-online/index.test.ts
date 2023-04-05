@@ -2,6 +2,7 @@ import { TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import api from '../../../../api';
 import { mockAccount, mockApplication, mockSession, mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
@@ -39,7 +40,7 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE,
           BACK_LINK: req.headers.referer,
         }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

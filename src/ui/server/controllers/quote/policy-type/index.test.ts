@@ -2,6 +2,7 @@ import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { mockReq, mockRes, mockAnswers } from '../../../test-mocks';
@@ -63,7 +64,7 @@ describe('controllers/quote/policy-type', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
         submittedValues: req.session.submittedData.quoteEligibility,
       });
@@ -77,7 +78,7 @@ describe('controllers/quote/policy-type', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           ...PAGE_VARIABLES,
           validationErrors: generateValidationErrors(req.body),
           submittedValues: req.body,
@@ -91,7 +92,7 @@ describe('controllers/quote/policy-type', () => {
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
             ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
-            user: req.session.user,
+            userName: getUserNameFromSession(req.session.user),
             ...PAGE_VARIABLES,
             validationErrors: generateValidationErrors(req.body),
             submittedValues: req.body,

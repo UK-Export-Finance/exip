@@ -1435,7 +1435,9 @@ var send = async (context, referenceNumber, accountId, buyerId, declarationId, e
       firstName,
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
-      exporterCompanyName: exporterCompany.companyName
+      exporterCompanyName: exporterCompany.companyName,
+      // TODO: EMS-1273 to remove below
+      linkToFile: ""
     };
     const exporterSubmittedResponse = await emails_default.applicationSubmitted.exporter(sendEmailVars);
     if (!exporterSubmittedResponse.success) {
@@ -1865,6 +1867,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 });
 
 // keystone.ts
+var enableLogging = process.env.NODE_ENV === "development";
 var keystone_default = withAuth(
   (0, import_core2.config)({
     server: {
@@ -1873,7 +1876,7 @@ var keystone_default = withAuth(
     db: {
       provider: "mysql",
       url: String(process.env.DATABASE_URL),
-      enableLogging: true
+      enableLogging
     },
     ui: {
       isAccessAllowed: (context) => !!context.session?.data

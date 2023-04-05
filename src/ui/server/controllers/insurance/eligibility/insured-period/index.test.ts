@@ -2,6 +2,7 @@ import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
@@ -39,7 +40,7 @@ describe('controllers/insurance/eligibility/insured-period', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         submittedValues: req.session.submittedData.insuranceEligibility,
       });
     });
@@ -52,7 +53,7 @@ describe('controllers/insurance/eligibility/insured-period', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });
       });

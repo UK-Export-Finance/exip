@@ -2,8 +2,9 @@ import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/insurance';
-import { mockReq, mockRes } from '../../../test-mocks';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
+import { mockReq, mockRes } from '../../../test-mocks';
 
 describe('controllers/insurance/speak-to-ukef-efm', () => {
   let req: Request;
@@ -38,7 +39,7 @@ describe('controllers/insurance/speak-to-ukef-efm', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.SPEAK_TO_UKEF_EFM,
           BACK_LINK: req.headers.referer,
         }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         EXIT_REASON: mockExitReason,
       };
 

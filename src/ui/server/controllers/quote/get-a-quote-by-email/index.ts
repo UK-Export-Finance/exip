@@ -1,6 +1,7 @@
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 
 export const TEMPLATE = TEMPLATES.QUOTE.GET_A_QUOTE_BY_EMAIL;
@@ -12,7 +13,7 @@ export const get = (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL, BACK_LINK: previousRoute }),
-    user: req.session.user,
+    userName: getUserNameFromSession(req.session.user),
     EXIT_REASON,
     EXIT_DESCRIPTION,
   });

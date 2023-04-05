@@ -3,6 +3,7 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { policyAndExportSummaryList } from '../../../../helpers/summary-lists/policy-and-export';
 import isPopulatedArray from '../../../../helpers/is-populated-array';
 import api from '../../../../api';
@@ -74,7 +75,7 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.POLICY_AND_EXPORTS,
         BACK_LINK: req.headers.referer,
       }),
-      user: req.session.user,
+      userName: getUserNameFromSession(req.session.user),
       status,
       SUMMARY_LIST: summaryList,
       ...pageVariables(referenceNumber),

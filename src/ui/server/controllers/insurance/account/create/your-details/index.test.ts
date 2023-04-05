@@ -3,6 +3,7 @@ import { PAGES } from '../../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists';
 import saveData from './save-data';
@@ -92,7 +93,7 @@ describe('controllers/insurance/account/create/your-details', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
       });
     });
 
@@ -128,7 +129,7 @@ describe('controllers/insurance/account/create/your-details', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           submittedValues: req.body,
           validationErrors: generateValidationErrors(req.body),
         });
@@ -197,7 +198,7 @@ describe('controllers/insurance/account/create/your-details', () => {
                 BACK_LINK: req.headers.referer,
               }),
               ...PAGE_VARIABLES,
-              user: req.session.user,
+              userName: getUserNameFromSession(req.session.user),
               submittedValues: req.body,
               validationErrors: generateAccountAlreadyExistsValidationErrors(),
             });

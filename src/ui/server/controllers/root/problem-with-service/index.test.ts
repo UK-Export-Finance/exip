@@ -2,6 +2,7 @@ import get from '.';
 import { PAGES, PRODUCT } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
@@ -19,7 +20,7 @@ describe('controllers/problem-with-service', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.PROBLEM_WITH_SERVICE, {
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         ...corePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.PROBLEM_WITH_SERVICE_PAGE,
           BACK_LINK: req.headers.referer,

@@ -1,13 +1,14 @@
 import { PAGES } from '../../../../content-strings';
 import { pageVariables, get, TEMPLATE, post } from '.';
-import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import mapAndSave from '../map-and-save';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import { Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
@@ -103,7 +104,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
             PAGE_CONTENT_STRINGS: NATURE_OF_YOUR_BUSINESS,
             BACK_LINK: req.headers.referer,
           }),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
           ...pageVariables(mockApplication.referenceNumber),
         });
@@ -143,7 +144,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
             PAGE_CONTENT_STRINGS: NATURE_OF_YOUR_BUSINESS,
             BACK_LINK: req.headers.referer,
           }),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),

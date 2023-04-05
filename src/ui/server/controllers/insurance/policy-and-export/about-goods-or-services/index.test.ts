@@ -2,12 +2,13 @@ import { pageVariables, TEMPLATE, get, post } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import api from '../../../../api';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import mapAndSave from '../map-and-save';
+import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
 
 const {
@@ -102,7 +103,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         application: mockApplicationWithoutCountryCode,
         countries: mapCountries(mockCountries),
       };
@@ -132,7 +133,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           application: mockApplicationWithCountry,
           countries: mapCountries(mockCountries, countryIsoCode),
         };
@@ -243,7 +244,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           application: mockApplicationWithoutCountryCode,
           submittedValues: req.body,
           countries: mapCountries(mockCountries),
@@ -271,7 +272,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
               BACK_LINK: req.headers.referer,
             }),
             ...pageVariables(refNumber),
-            user: req.session.user,
+            userName: getUserNameFromSession(req.session.user),
             application: mockApplicationWithoutCountryCode,
             submittedValues: req.body,
             countries: mapCountries(mockCountries, countryIsoCode),

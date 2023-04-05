@@ -3,14 +3,15 @@ import { pageVariables, TEMPLATE, totalMonthsOfCoverOptions, get, post } from '.
 import { FIELD_IDS, GBP_CURRENCY_CODE, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapTotalMonthsOfCover from '../../../../helpers/mappings/map-total-months-of-insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save';
+import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockCurrencies } from '../../../../test-mocks';
 import { mockApplicationMultiplePolicy as mockApplication } from '../../../../test-mocks/mock-application';
 
@@ -139,7 +140,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
         currencies: expectedCurrencies,
         monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
@@ -172,7 +173,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithCurrency),
           currencies: expectedCurrencies,
           monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
@@ -206,7 +207,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithMonths),
           currencies: mapCurrencies(mockCurrencies),
           monthOptions: expectedMonthOptions,
@@ -340,7 +341,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
           submittedValues: req.body,
           currencies: expectedCurrencies,
@@ -371,7 +372,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
               BACK_LINK: req.headers.referer,
             }),
             ...pageVariables(refNumber),
-            user: req.session.user,
+            userName: getUserNameFromSession(req.session.user),
             application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
             submittedValues: req.body,
             currencies: expectedCurrencies,
@@ -403,7 +404,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
               BACK_LINK: req.headers.referer,
             }),
             ...pageVariables(refNumber),
-            user: req.session.user,
+            userName: getUserNameFromSession(req.session.user),
             application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
             submittedValues: req.body,
             currencies: mapCurrencies(mockCurrencies),

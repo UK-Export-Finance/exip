@@ -5,12 +5,13 @@ import api from '../../../../api';
 import isPopulatedArray from '../../../../helpers/is-populated-array';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import { Request, Response } from '../../../../../types';
 import mapAndSave from '../map-and-save';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Request, Response } from '../../../../../types';
 
 const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
@@ -95,7 +96,7 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION,
         BACK_LINK: req.headers.referer,
       }),
-      user: req.session.user,
+      userName: getUserNameFromSession(req.session.user),
       ...pageVariables(application.referenceNumber),
       application: mapApplicationToFormFields(application),
       countries: mappedCountries,
@@ -134,7 +135,7 @@ export const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION,
           BACK_LINK: req.headers.referer,
         }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         ...pageVariables(application.referenceNumber),
         submittedValues: body,
         countries: mappedCountries,

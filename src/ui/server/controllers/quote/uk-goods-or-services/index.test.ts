@@ -2,10 +2,11 @@ import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { ERROR_MESSAGES, PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
-import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
+import { mockReq, mockRes } from '../../../test-mocks';
 
 describe('controllers/quote/uk-goods-or-services', () => {
   let req: Request;
@@ -42,7 +43,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES, {
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         ...singleInputPageVariables(PAGE_VARIABLES),
         BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData.quoteEligibility,
@@ -56,7 +57,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
         post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES, {
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),

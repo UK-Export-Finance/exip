@@ -3,6 +3,7 @@ import { PAGES } from '../../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import securityCodeValidationErrors from './validation/rules/security-code';
 import api from '../../../../../api';
@@ -72,7 +73,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         renderSuccessBanner: false,
       });
     });
@@ -97,7 +98,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           renderSuccessBanner: true,
         });
       });
@@ -174,7 +175,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           submittedValues: req.body,
           validationErrors: generateValidationErrors(req.body),
         });
@@ -278,7 +279,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
               BACK_LINK: req.headers.referer,
             }),
             ...PAGE_VARIABLES,
-            user: req.session.user,
+            userName: getUserNameFromSession(req.session.user),
             submittedValues: req.body,
             validationErrors: securityCodeValidationErrors({}, {}),
           });

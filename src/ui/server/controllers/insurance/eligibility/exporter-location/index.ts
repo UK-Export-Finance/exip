@@ -1,6 +1,7 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
@@ -17,7 +18,7 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION;
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
-    user: req.session.user,
+    userName: getUserNameFromSession(req.session.user),
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
 
@@ -27,7 +28,7 @@ export const post = (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
-      user: req.session.user,
+      userName: getUserNameFromSession(req.session.user),
       validationErrors,
     });
   }

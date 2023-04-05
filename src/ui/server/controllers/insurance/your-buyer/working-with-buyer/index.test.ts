@@ -3,11 +3,12 @@ import { PAGES } from '../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import workingWithBuyerValidation from './validation';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
-import { Request, Response } from '../../../../../types';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save';
+import { Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   YOUR_BUYER: { WORKING_WITH_BUYER },
@@ -74,7 +75,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER,
           BACK_LINK: req.headers.referer,
         }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         ...pageVariables(mockApplication.referenceNumber),
       };
@@ -153,7 +154,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(mockApplication.referenceNumber),
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: req.body,
           validationErrors,

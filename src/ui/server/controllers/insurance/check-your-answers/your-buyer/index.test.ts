@@ -4,12 +4,13 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { yourBuyerSummaryList } from '../../../../helpers/summary-lists/your-buyer';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import requiredFields from '../../../../helpers/required-fields/your-buyer';
 import sectionStatus from '../../../../helpers/section-status';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -79,7 +80,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER,
           BACK_LINK: req.headers.referer,
         }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         status,
         SUMMARY_LIST: summaryList,
         ...pageVariables(mockApplication.referenceNumber),

@@ -1,9 +1,10 @@
 import { get, TEMPLATE } from '.';
-import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
-import { Request, Response } from '../../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../../constants';
 import { PAGES } from '../../../../../content-strings';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
+import { Request, Response } from '../../../../../../types';
+import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 
 const { COMPANIES_HOUSE_UNAVAILABLE } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -43,7 +44,7 @@ describe('controllers/insurance/business/companies-details/companies-house-unava
           PAGE_CONTENT_STRINGS: COMPANIES_HOUSE_UNAVAILABLE,
           BACK_LINK: req.headers.referer,
         }),
-        user: req.session.user,
+        userName: getUserNameFromSession(req.session.user),
         COMPANY_DETAILS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROUTE}`,
         ALL_SECTIONS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
       });
