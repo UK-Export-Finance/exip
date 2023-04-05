@@ -16,23 +16,23 @@ const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.ELIGIBILITY;
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
-    START,
     INSURANCE_ROOT,
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
+    CHECK_YOUR_ANSWERS: { START_NEW_APPLICATION, TYPE_OF_POLICY },
   },
 } = ROUTES;
 
 /**
  * pageVariables
- * Page fields and variables/flags
+ * Page fields and "start new application" URL
+ * @param {Number} Application reference number
  * @returns {Object} Page variables
  */
-export const pageVariables = () => ({
+export const pageVariables = (referenceNumber: number) => ({
   FIELD: {
     ID: FIELD_ID,
     ...FIELDS[FIELD_ID],
   },
-  START_NEW_APPLICATION: START,
+  START_NEW_APPLICATION: `${INSURANCE_ROOT}/${referenceNumber}${START_NEW_APPLICATION}`,
   renderNotificationBanner: true,
   eligibility: true,
 });
@@ -65,7 +65,7 @@ export const get = (req: Request, res: Response) => {
       }),
       status,
       SUMMARY_LIST: summaryList,
-      ...pageVariables(),
+      ...pageVariables(application.referenceNumber),
     });
   } catch (err) {
     console.error('Error getting check your answers - eligibility', { err });

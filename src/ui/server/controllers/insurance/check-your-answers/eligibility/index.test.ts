@@ -5,11 +5,11 @@ import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { eligibilitySummaryList } from '../../../../helpers/summary-lists/eligibility';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
-import requiredFields from '../../../../helpers/required-fields/eligibility';
+import requiredFields from '../../../../helpers/required-fields/policy-and-exports';
 import sectionStatus from '../../../../helpers/section-status';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -18,9 +18,8 @@ const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.ELIGIBILITY;
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
-    START,
     INSURANCE_ROOT,
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
+    CHECK_YOUR_ANSWERS: { START_NEW_APPLICATION, TYPE_OF_POLICY },
   },
 } = ROUTES;
 
@@ -44,14 +43,14 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables();
+      const result = pageVariables(mockApplication.referenceNumber);
 
       const expected = {
         FIELD: {
           ID: FIELD_ID,
           ...FIELDS[FIELD_ID],
         },
-        START_NEW_APPLICATION: START,
+        START_NEW_APPLICATION: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${START_NEW_APPLICATION}`,
         renderNotificationBanner: true,
         eligibility: true,
       };
@@ -69,9 +68,10 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
   describe('get', () => {
     it('should render template', async () => {
       await get(req, res);
+
       const summaryList = eligibilitySummaryList(mockApplication.eligibility);
 
-      const fields = requiredFields();
+      const fields = requiredFields(mockApplication.policyAndExport.policyType);
 
       const status = sectionStatus(fields, mockApplication);
 
@@ -82,7 +82,7 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
         }),
         status,
         SUMMARY_LIST: summaryList,
-        ...pageVariables(),
+        ...pageVariables(mockApplication.referenceNumber),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
