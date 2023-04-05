@@ -1,4 +1,5 @@
 import FIELD_IDS from '../../../constants/field-ids/insurance/exporter-business';
+import { CSV_SECTION_TITLES } from '../../../content-strings';
 import { FIELDS } from '../../../content-strings/fields/insurance/your-business';
 import { ANSWERS } from '../../../constants';
 import csvRow from '../helpers/csv-row';
@@ -57,6 +58,8 @@ const mapExporter = (application: Application) => {
   const { exporterCompany, exporterBusiness } = application;
 
   const mapped = [
+    csvRow(CSV_SECTION_TITLES.EXPORTER_BUSINESS, ''),
+
     // exporter company fields
     csvRow(CONTENT_STRINGS[COMPANY_NUMBER].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER]),
     csvRow(CONTENT_STRINGS[COMPANY_NAME].SUMMARY?.TITLE, exporterCompany[COMPANY_NAME]),
