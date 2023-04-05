@@ -38,6 +38,7 @@ describe('controllers/quote/cannot-apply', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY, BACK_LINK: mockPreviousRoute }),
+        user: req.session.user,
         EXIT_REASON: mockExitReason,
       });
     });

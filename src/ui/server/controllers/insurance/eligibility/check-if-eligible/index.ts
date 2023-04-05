@@ -11,6 +11,7 @@ export const get = (req: Request, res: Response) =>
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
       BACK_LINK: req.headers.referer,
     }),
+    user: req.session.user,
   });
 
 export const post = (req: Request, res: Response) => {

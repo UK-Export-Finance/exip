@@ -29,5 +29,6 @@ export const get = (req: Request, res: Response) => {
       BACK_LINK: req.headers.referer,
     }),
     SIGN_IN_LINK: SIGN_IN.ROOT,
+    user: req.session.user,
   });
 };

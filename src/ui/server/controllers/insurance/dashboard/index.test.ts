@@ -53,6 +53,7 @@ describe('controllers/insurance/dashboard', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DASHBOARD,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         applications: mapApplications(mockApplications),
         ROUTES: {
           INSURANCE_ROOT,

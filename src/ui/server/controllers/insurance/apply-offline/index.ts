@@ -20,6 +20,7 @@ export const get = (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.APPLY_OFFLINE,
       BACK_LINK: req.headers.referer,
     }),
+    user: req.session.user,
     EXIT_REASON,
     DOWNLOAD_FORM_LINK,
   });

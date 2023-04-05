@@ -10,4 +10,5 @@ export const get = (req: Request, res: Response) =>
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.NO_ACCESS_TO_APPLICATION_PAGE,
     }),
+    user: req.session.user,
   });

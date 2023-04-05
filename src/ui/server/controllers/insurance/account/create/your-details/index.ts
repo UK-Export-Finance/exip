@@ -71,6 +71,7 @@ export const get = (req: Request, res: Response) => {
       BACK_LINK: req.headers.referer,
     }),
     ...PAGE_VARIABLES,
+    user: req.session.user,
   });
 };
 
@@ -91,6 +92,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...PAGE_VARIABLES,
+      user: req.session.user,
       submittedValues: req.body,
       validationErrors,
     });
@@ -114,6 +116,7 @@ export const post = async (req: Request, res: Response) => {
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,
+          user: req.session.user,
           submittedValues: req.body,
           validationErrors,
         });

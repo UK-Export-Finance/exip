@@ -41,6 +41,7 @@ describe('controllers/insurance/all-sections', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ALL_SECTIONS,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         application: mapApplicationToFormFields(mockApplication),
         taskListData: expectedTaskListData,
       };

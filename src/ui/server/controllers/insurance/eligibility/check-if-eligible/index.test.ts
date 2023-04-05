@@ -29,6 +29,7 @@ describe('controllers/insurance/eligibility/check-if-eligible', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

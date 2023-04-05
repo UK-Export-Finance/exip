@@ -102,6 +102,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
+        user: req.session.user,
         application: mockApplicationWithoutCountryCode,
         countries: mapCountries(mockCountries),
       };
@@ -131,6 +132,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
+          user: req.session.user,
           application: mockApplicationWithCountry,
           countries: mapCountries(mockCountries, countryIsoCode),
         };
@@ -241,6 +243,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
+          user: req.session.user,
           application: mockApplicationWithoutCountryCode,
           submittedValues: req.body,
           countries: mapCountries(mockCountries),
@@ -268,6 +271,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
               BACK_LINK: req.headers.referer,
             }),
             ...pageVariables(refNumber),
+            user: req.session.user,
             application: mockApplicationWithoutCountryCode,
             submittedValues: req.body,
             countries: mapCountries(mockCountries, countryIsoCode),

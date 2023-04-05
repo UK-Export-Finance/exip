@@ -12,7 +12,8 @@ export const PAGE_VARIABLES = {
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
-export const get = (req: Request, res: Response) => res.render(TEMPLATE, corePageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }));
+export const get = (req: Request, res: Response) =>
+  res.render(TEMPLATE, { ...corePageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }), user: req.session.user });
 
 export const post = async (req: Request, res: Response) => {
   try {

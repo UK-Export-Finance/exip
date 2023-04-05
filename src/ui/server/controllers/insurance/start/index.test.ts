@@ -51,6 +51,7 @@ describe('controllers/insurance/start', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.START,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

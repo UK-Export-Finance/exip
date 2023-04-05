@@ -111,6 +111,7 @@ describe('controllers/insurance/business/broker', () => {
             PAGE_CONTENT_STRINGS: BROKER,
             BACK_LINK: req.headers.referer,
           }),
+          user: req.session.user,
           application: mapApplicationToFormFields(mockApplication),
           ...pageVariables(mockApplication.referenceNumber),
         });
@@ -150,6 +151,7 @@ describe('controllers/insurance/business/broker', () => {
             PAGE_CONTENT_STRINGS: BROKER,
             BACK_LINK: req.headers.referer,
           }),
+          user: req.session.user,
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),

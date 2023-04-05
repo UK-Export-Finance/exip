@@ -38,6 +38,7 @@ export const TEMPLATE = TEMPLATES.QUOTE.POLICY_TYPE;
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
+    user: req.session.user,
     ...PAGE_VARIABLES,
     submittedValues: req.session.submittedData.quoteEligibility,
   });
@@ -48,6 +49,7 @@ export const post = (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
+      user: req.session.user,
       ...PAGE_VARIABLES,
       validationErrors,
       submittedValues: req.body,

@@ -41,6 +41,7 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS,
         BACK_LINK: `${req.headers.referer}?id=${id}`,
       }),
+      user: req.session.user,
       exporterEmail,
       exporterId: id,
     });

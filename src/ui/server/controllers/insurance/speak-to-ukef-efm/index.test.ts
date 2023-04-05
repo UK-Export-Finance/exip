@@ -38,6 +38,7 @@ describe('controllers/insurance/speak-to-ukef-efm', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.SPEAK_TO_UKEF_EFM,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         EXIT_REASON: mockExitReason,
       };
 

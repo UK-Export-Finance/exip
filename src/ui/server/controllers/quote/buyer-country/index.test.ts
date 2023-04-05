@@ -114,6 +114,7 @@ describe('controllers/quote/buyer-country', () => {
 
       const expectedVariables = {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
+        user: req.session.user,
         countries: mapCisCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData.quoteEligibility,
         isChangeRoute: isChangeRoute(req.originalUrl),
@@ -168,6 +169,7 @@ describe('controllers/quote/buyer-country', () => {
 
         const expectedVariables = {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
+          user: req.session.user,
           countries: expectedCountries,
           submittedValues: req.session.submittedData.quoteEligibility,
           isChangeRoute: isChangeRoute(req.originalUrl),
@@ -218,6 +220,7 @@ describe('controllers/quote/buyer-country', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
+          user: req.session.user,
           countries: mapCisCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),
           isChangeRoute: isChangeRoute(req.originalUrl),

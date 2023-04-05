@@ -72,6 +72,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
+        user: req.session.user,
         renderSuccessBanner: false,
       });
     });
@@ -96,6 +97,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,
+          user: req.session.user,
           renderSuccessBanner: true,
         });
       });
@@ -172,6 +174,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,
+          user: req.session.user,
           submittedValues: req.body,
           validationErrors: generateValidationErrors(req.body),
         });
@@ -275,6 +278,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
               BACK_LINK: req.headers.referer,
             }),
             ...PAGE_VARIABLES,
+            user: req.session.user,
             submittedValues: req.body,
             validationErrors: securityCodeValidationErrors({}, {}),
           });

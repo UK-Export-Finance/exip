@@ -14,6 +14,7 @@ export const get = async (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.CHECK_YOUR_ANSWERS, BACK_LINK: req.headers.referer }),
+    user: req.session.user,
     SUMMARY_LIST: summaryList,
   });
 };

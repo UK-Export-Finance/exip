@@ -129,6 +129,7 @@ const get = async (req: Request, res: Response) => {
     const PAGE_VARIABLES = generatePageVariables(submittedData.quoteEligibility[POLICY_TYPE]);
 
     return res.render(TEMPLATE, {
+      user: req.session.user,
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
       isSinglePolicyType: isSinglePolicyType(submittedData.quoteEligibility[POLICY_TYPE]),
@@ -197,6 +198,7 @@ const post = async (req: Request, res: Response) => {
       const PAGE_VARIABLES = generatePageVariables(submittedData.quoteEligibility[POLICY_TYPE]);
 
       return res.render(TEMPLATE, {
+        user: req.session.user,
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
         isSinglePolicyType: isSinglePolicyType(submittedData.quoteEligibility[POLICY_TYPE]),

@@ -18,14 +18,14 @@ describe('controllers/problem-with-service', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(
-        TEMPLATES.PROBLEM_WITH_SERVICE,
-        corePageVariables({
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.PROBLEM_WITH_SERVICE, {
+        user: req.session.user,
+        ...corePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.PROBLEM_WITH_SERVICE_PAGE,
           BACK_LINK: req.headers.referer,
           PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
         }),
-      );
+      });
     });
   });
 });

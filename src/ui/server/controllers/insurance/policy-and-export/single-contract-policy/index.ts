@@ -104,6 +104,7 @@ export const get = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(refNumber),
+      user: req.session.user,
       application: mapApplicationToFormFields(application),
       currencies: mappedCurrencies,
     });
@@ -155,6 +156,7 @@ export const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
+        user: req.session.user,
         application: mapApplicationToFormFields(application),
         submittedValues: req.body,
         currencies: mappedCurrencies,

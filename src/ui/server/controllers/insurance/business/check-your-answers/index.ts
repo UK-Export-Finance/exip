@@ -39,6 +39,7 @@ const get = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: CHECK_YOUR_ANSWERS,
         BACK_LINK: req.headers.referer,
       }),
+      user: req.session.user,
       application: mapApplicationToFormFields(application),
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`,
       SUMMARY_LIST: summaryList,

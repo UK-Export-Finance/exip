@@ -74,6 +74,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         application: mapApplicationToFormFields(mockApplication),
         ...pageVariables(mockApplication.referenceNumber),
       };
@@ -152,6 +153,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(mockApplication.referenceNumber),
+          user: req.session.user,
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: req.body,
           validationErrors,

@@ -83,6 +83,7 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
+        user: req.session.user,
         application: res.locals.application,
         SUMMARY_LIST: policyAndExportSummaryList(mockApplication.policyAndExport, mockApplication.referenceNumber, mockCountries, mockCurrencies),
       };

@@ -222,6 +222,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       const expectedCurrencies = mapCurrencies(mockCurrencies);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+        user: req.session.user,
         ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
         BACK_LINK: req.headers.referer,
         isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -246,6 +247,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         const expectedCurrencies = mapCurrencies(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+          user: req.session.user,
           ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
           isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -273,6 +275,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData.quoteEligibility[PERCENTAGE_OF_COVER]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+          user: req.session.user,
           ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
           isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -302,6 +305,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         const mappedCreditPeriodWithSelected = mapCreditPeriod(creditPeriodOptions, String(req.session.submittedData.quoteEligibility[CREDIT_PERIOD]));
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+          user: req.session.user,
           ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
           isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -370,6 +374,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         await post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+          user: req.session.user,
           ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
           isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -398,6 +403,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           await post(req, res);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+            user: req.session.user,
             ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             BACK_LINK: req.headers.referer,
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -425,6 +431,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.body[PERCENTAGE_OF_COVER]);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+            user: req.session.user,
             ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             BACK_LINK: req.headers.referer,
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -452,6 +459,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           const mappedCreditPeriodWithSelected = mapCreditPeriod(creditPeriodOptions, String(req.session.submittedData.quoteEligibility[CREDIT_PERIOD]));
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+            user: req.session.user,
             ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             BACK_LINK: req.headers.referer,
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),

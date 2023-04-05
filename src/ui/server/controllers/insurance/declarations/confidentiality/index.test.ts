@@ -71,6 +71,7 @@ describe('controllers/insurance/declarations/confidentiality', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(mockApplication.referenceNumber),
+        user: req.session.user,
         CONFIDENTIALITY_CONTENT,
         application: res.locals.application,
       };
@@ -127,6 +128,7 @@ describe('controllers/insurance/declarations/confidentiality', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(mockApplication.referenceNumber),
+          user: req.session.user,
           CONFIDENTIALITY_CONTENT,
           validationErrors: generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
         };

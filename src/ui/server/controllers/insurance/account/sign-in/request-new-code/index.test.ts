@@ -42,13 +42,13 @@ describe('controllers/insurance/account/sign-in/request-new-code', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(
-        TEMPLATE,
-        insuranceCorePageVariables({
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+        ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-      );
+        user: req.session.user,
+      });
     });
 
     describe('when there is no req.session.accountId', () => {

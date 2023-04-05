@@ -38,7 +38,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    // cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

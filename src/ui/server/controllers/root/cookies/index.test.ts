@@ -44,6 +44,7 @@ describe('controllers/root/cookies', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+        user: req.session.user,
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
         FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
         submittedValue: req.cookies.optionalCookies,
@@ -65,6 +66,7 @@ describe('controllers/root/cookies', () => {
         post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          user: req.session.user,
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
           FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
           validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),
@@ -82,6 +84,7 @@ describe('controllers/root/cookies', () => {
         post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          user: req.session.user,
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
           FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
           submittedValue: req.cookies.optionalCookies,
@@ -109,6 +112,7 @@ describe('controllers/root/cookies', () => {
           await post(req, res);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+            user: req.session.user,
             ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: mockPreviousUrl, START_ROUTE: startRoute }),
             FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
             submittedValue: req.cookies.optionalCookies,
@@ -139,6 +143,7 @@ describe('controllers/root/cookies', () => {
           post(req, res);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+            user: req.session.user,
             ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: ROUTES.COOKIES, START_ROUTE: startRoute }),
             FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
             submittedValue: req.cookies.optionalCookies,

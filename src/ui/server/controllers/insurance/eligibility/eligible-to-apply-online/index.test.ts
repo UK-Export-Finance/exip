@@ -39,6 +39,7 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

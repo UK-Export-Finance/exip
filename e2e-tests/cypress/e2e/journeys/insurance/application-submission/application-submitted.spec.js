@@ -30,7 +30,7 @@ context('Insurance - application submitted page', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    // cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

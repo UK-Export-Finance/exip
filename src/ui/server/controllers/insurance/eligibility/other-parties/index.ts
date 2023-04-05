@@ -17,6 +17,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED;
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+    user: req.session.user,
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
 
@@ -29,6 +30,7 @@ export const post = (req: Request, res: Response) => {
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
       }),
+      user: req.session.user,
       validationErrors,
     });
   }

@@ -57,6 +57,7 @@ describe('controllers/quote/check-your-answers', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS, {
         ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.CHECK_YOUR_ANSWERS, BACK_LINK: req.headers.referer }),
+        user: req.session.user,
         SUMMARY_LIST: expectedSummaryList,
       });
     });

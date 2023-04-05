@@ -38,6 +38,7 @@ describe('controllers/quote/get-a-quote-by-email', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.GET_A_QUOTE_BY_EMAIL, {
         ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL, BACK_LINK: mockPreviousRoute }),
+        user: req.session.user,
         EXIT_REASON: mockExitReason,
       });
     });

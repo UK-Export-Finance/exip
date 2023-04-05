@@ -34,6 +34,7 @@ const get = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: COMPANIES_HOUSE_UNAVAILABLE,
         BACK_LINK: req.headers.referer,
       }),
+      user: req.session.user,
       COMPANY_DETAILS: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROUTE}`,
       ALL_SECTIONS: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
     });

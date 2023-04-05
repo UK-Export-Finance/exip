@@ -92,6 +92,7 @@ describe('controllers/insurance/account/create/your-details', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
+        user: req.session.user,
       });
     });
 
@@ -127,6 +128,7 @@ describe('controllers/insurance/account/create/your-details', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,
+          user: req.session.user,
           submittedValues: req.body,
           validationErrors: generateValidationErrors(req.body),
         });
@@ -195,6 +197,7 @@ describe('controllers/insurance/account/create/your-details', () => {
                 BACK_LINK: req.headers.referer,
               }),
               ...PAGE_VARIABLES,
+              user: req.session.user,
               submittedValues: req.body,
               validationErrors: generateAccountAlreadyExistsValidationErrors(),
             });

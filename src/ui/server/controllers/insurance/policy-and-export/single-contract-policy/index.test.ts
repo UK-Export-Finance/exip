@@ -124,6 +124,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
+        user: req.session.user,
         application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
         currencies: expectedCurrencies,
       };
@@ -155,6 +156,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
+          user: req.session.user,
           application: mapApplicationToFormFields(mockApplicationWithCurrencyCode),
           currencies: expectedCurrencies,
         };
@@ -288,6 +290,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
+          user: req.session.user,
           application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
           submittedValues: req.body,
           currencies: expectedCurrencies,
@@ -317,6 +320,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
               BACK_LINK: req.headers.referer,
             }),
             ...pageVariables(refNumber),
+            user: req.session.user,
             application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
             submittedValues: req.body,
             currencies: expectedCurrencies,

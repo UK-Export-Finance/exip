@@ -35,6 +35,7 @@ describe('controllers/insurance/application-submitted', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.APPLICATION_SUBMITTED,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         application: res.locals.application,
       };
 

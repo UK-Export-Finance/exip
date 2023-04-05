@@ -11,6 +11,7 @@ export const get = (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY, BACK_LINK: previousRoute }),
+    user: req.session.user,
     EXIT_REASON,
   });
 };

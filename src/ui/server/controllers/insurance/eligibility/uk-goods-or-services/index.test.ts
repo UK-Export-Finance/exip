@@ -43,6 +43,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+        user: req.session.user,
         submittedValues: req.session.submittedData.insuranceEligibility,
       });
     });
@@ -55,6 +56,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+          user: req.session.user,
           validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });
       });

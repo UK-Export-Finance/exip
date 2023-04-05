@@ -38,6 +38,7 @@ describe('controllers/insurance/eligibility/cannot-apply', () => {
           PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         EXIT_REASON: mockExitReason,
       };
 

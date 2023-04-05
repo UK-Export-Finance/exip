@@ -21,6 +21,7 @@ export const TEMPLATE = TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES;
 
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
+    user: req.session.user,
     ...singleInputPageVariables(PAGE_VARIABLES),
     BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData.quoteEligibility,
@@ -31,6 +32,7 @@ export const post = (req: Request, res: Response) => {
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
+      user: req.session.user,
       ...singleInputPageVariables(PAGE_VARIABLES),
       BACK_LINK: req.headers.referer,
       validationErrors,

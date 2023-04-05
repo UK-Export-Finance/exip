@@ -50,6 +50,7 @@ describe('controllers/insurance/account/signed-out', () => {
           BACK_LINK: req.headers.referer,
         }),
         SIGN_IN_LINK: SIGN_IN.ROOT,
+        user: req.session.user,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

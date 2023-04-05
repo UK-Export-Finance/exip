@@ -86,6 +86,7 @@ describe('controllers/insurance/business/turnover', () => {
             PAGE_CONTENT_STRINGS: TURNOVER,
             BACK_LINK: req.headers.referer,
           }),
+          user: req.session.user,
           application: mapApplicationToFormFields(mockApplication),
           ...pageVariables(mockApplication.referenceNumber),
         });
@@ -126,6 +127,7 @@ describe('controllers/insurance/business/turnover', () => {
             PAGE_CONTENT_STRINGS: TURNOVER,
             BACK_LINK: req.headers.referer,
           }),
+          user: req.session.user,
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),

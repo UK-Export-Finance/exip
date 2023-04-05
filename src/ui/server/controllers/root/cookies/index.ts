@@ -21,6 +21,7 @@ export const get = (req: Request, res: Response) => {
   req.flash('previousUrl', req.headers.referer);
 
   return res.render(TEMPLATE, {
+    user: req.session.user,
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
     submittedValue: req.cookies.optionalCookies,
@@ -34,6 +35,7 @@ export const post = (req: Request, res: Response) => {
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
+      user: req.session.user,
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
       FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
       BACK_LINK: req.headers.referer,
@@ -50,6 +52,7 @@ export const post = (req: Request, res: Response) => {
   }
 
   return res.render(TEMPLATE, {
+    user: req.session.user,
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: backLink, START_ROUTE: startRoute }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
     submittedValue: req.cookies.optionalCookies,

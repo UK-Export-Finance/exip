@@ -70,6 +70,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
+        user: req.session.user,
         application: res.locals.application,
       };
 
@@ -164,6 +165,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
+          user: req.session.user,
           validationErrors: generateValidationErrors(req.body),
         };
 

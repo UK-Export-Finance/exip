@@ -21,6 +21,7 @@ export const get = (req: Request, res: Response) =>
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
     }),
+    user: req.session.user,
     submittedValues: req.session.submittedData.quoteEligibility,
   });
 
@@ -33,6 +34,7 @@ export const post = (req: Request, res: Response) => {
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
       }),
+      user: req.session.user,
       validationErrors,
     });
   }

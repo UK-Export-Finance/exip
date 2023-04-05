@@ -68,6 +68,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-acode-o
       const expectedVariables = {
         ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
         ...pageVariables(mockApplication.referenceNumber),
+        user: req.session.user,
         application: res.locals.application,
       };
 
@@ -120,6 +121,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-acode-o
         const expectedVariables = {
           ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
           ...pageVariables(mockApplication.referenceNumber),
+          user: req.session.user,
           validationErrors: generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
         };
 

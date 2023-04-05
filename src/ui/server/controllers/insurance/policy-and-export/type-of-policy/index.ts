@@ -52,6 +52,7 @@ export const get = (req: Request, res: Response) => {
       BACK_LINK: req.headers.referer,
     }),
     ...pageVariables(refNumber),
+    user: req.session.user,
     application,
   });
 };
@@ -83,6 +84,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(refNumber),
+      user: req.session.user,
       validationErrors,
     });
   }

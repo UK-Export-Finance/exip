@@ -74,6 +74,7 @@ const get = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: NATURE_OF_YOUR_BUSINESS,
         BACK_LINK: req.headers.referer,
       }),
+      user: req.session.user,
       application: mapApplicationToFormFields(application),
       ...pageVariables(application.referenceNumber),
     });
@@ -120,6 +121,7 @@ const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: NATURE_OF_YOUR_BUSINESS,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         ...pageVariables(application.referenceNumber),
         validationErrors,
         application: mapApplicationToFormFields(application),

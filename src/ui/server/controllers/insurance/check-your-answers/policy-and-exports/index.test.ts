@@ -90,6 +90,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.POLICY_AND_EXPORTS,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         SUMMARY_LIST: summaryList,
         ...pageVariables(mockApplication.referenceNumber),
         status,

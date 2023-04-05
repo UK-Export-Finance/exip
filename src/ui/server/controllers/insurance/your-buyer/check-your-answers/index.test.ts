@@ -50,6 +50,7 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
           PAGE_CONTENT_STRINGS: CHECK_YOUR_ANSWERS,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         application: mapApplicationToFormFields(mockApplication),
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`,
         SUMMARY_LIST: summaryList,

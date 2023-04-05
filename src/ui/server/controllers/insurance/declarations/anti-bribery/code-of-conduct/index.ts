@@ -56,6 +56,7 @@ export const get = (req: Request, res: Response) => {
   return res.render(TEMPLATE, {
     ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
     ...pageVariables(refNumber),
+    user: req.session.user,
     application: res.locals.application,
   });
 };
@@ -83,6 +84,7 @@ export const post = async (req: Request, res: Response) => {
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
       ...pageVariables(refNumber),
+      user: req.session.user,
       validationErrors,
     });
   }

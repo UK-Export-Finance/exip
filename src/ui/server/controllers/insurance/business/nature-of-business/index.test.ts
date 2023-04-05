@@ -103,6 +103,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
             PAGE_CONTENT_STRINGS: NATURE_OF_YOUR_BUSINESS,
             BACK_LINK: req.headers.referer,
           }),
+          user: req.session.user,
           application: mapApplicationToFormFields(mockApplication),
           ...pageVariables(mockApplication.referenceNumber),
         });
@@ -142,6 +143,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
             PAGE_CONTENT_STRINGS: NATURE_OF_YOUR_BUSINESS,
             BACK_LINK: req.headers.referer,
           }),
+          user: req.session.user,
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),

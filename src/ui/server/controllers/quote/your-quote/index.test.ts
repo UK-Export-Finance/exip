@@ -40,6 +40,7 @@ describe('controllers/quote/your-quote', () => {
       const expectedSummaryList = quoteSummaryList(quoteContent);
 
       const expectedVariables = {
+        user: req.session.user,
         ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.YOUR_QUOTE, BACK_LINK: req.headers.referer }),
         SUMMARY_LIST: expectedSummaryList,
       };

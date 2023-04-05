@@ -43,6 +43,7 @@ describe('controllers/insurance/business/companies-details/companies-house-unava
           PAGE_CONTENT_STRINGS: COMPANIES_HOUSE_UNAVAILABLE,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         COMPANY_DETAILS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROUTE}`,
         ALL_SECTIONS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
       });

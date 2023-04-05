@@ -40,6 +40,7 @@ describe('controllers/insurance/apply-offline', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.APPLY_OFFLINE,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         EXIT_REASON: mockExitReason,
         DOWNLOAD_FORM_LINK: LINKS.EXTERNAL.NBI_FORM,
       };
@@ -64,6 +65,7 @@ describe('controllers/insurance/apply-offline', () => {
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.APPLY_OFFLINE,
             BACK_LINK: req.headers.referer,
           }),
+          user: req.session.user,
           EXIT_REASON: NO_COMPANIES_HOUSE_NUMBER,
           DOWNLOAD_FORM_LINK: LINKS.EXTERNAL.PROPOSAL_FORM,
         };

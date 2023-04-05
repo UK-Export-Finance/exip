@@ -55,6 +55,7 @@ export const get = (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+    user: req.session.user,
     submittedValues: {
       ...req.session.submittedData.quoteEligibility,
       [FIELD_ID]: mappedAnswer,
@@ -68,6 +69,7 @@ export const post = (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+      user: req.session.user,
       validationErrors,
     });
   }

@@ -18,6 +18,7 @@ export const get = (req: Request, res: Response) => {
   const quoteContent = mapQuoteToContent(quote);
 
   return res.render(TEMPLATE, {
+    user: req.session.user,
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.YOUR_QUOTE, BACK_LINK: req.headers.referer }),
     SUMMARY_LIST: quoteSummaryList(quoteContent),
   });

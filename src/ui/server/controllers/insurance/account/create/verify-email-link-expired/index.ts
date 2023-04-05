@@ -34,6 +34,7 @@ export const get = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS,
         BACK_LINK: `${CONFIRM_EMAIL}?id=${req.query.id}`,
       }),
+      user: req.session.user,
     });
   } catch (err) {
     console.error("Error rendering 'verify email link expired' page", { err });

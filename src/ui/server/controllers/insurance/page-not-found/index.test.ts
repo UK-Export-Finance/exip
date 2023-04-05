@@ -24,7 +24,10 @@ describe('controllers/insurance/page-not-found', () => {
     it('should render template', () => {
       get(req, res);
 
-      const expectedVariables = insuranceCorePageVariables({ PAGE_CONTENT_STRINGS: PAGES.PAGE_NOT_FOUND_PAGE });
+      const expectedVariables = {
+        ...insuranceCorePageVariables({ PAGE_CONTENT_STRINGS: PAGES.PAGE_NOT_FOUND_PAGE }),
+        user: req.session.user,
+      };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });

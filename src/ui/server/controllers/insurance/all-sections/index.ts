@@ -38,6 +38,7 @@ export const get = (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ALL_SECTIONS,
       BACK_LINK: req.headers.referer,
     }),
+    user: req.session.user,
     application: mapApplicationToFormFields(application),
     taskListData,
   });

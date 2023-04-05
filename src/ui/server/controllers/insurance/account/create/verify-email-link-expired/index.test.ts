@@ -49,6 +49,7 @@ describe('controllers/insurance/account/create/verify-email-link-expired', () =>
           PAGE_CONTENT_STRINGS,
           BACK_LINK: `${CONFIRM_EMAIL}?id=${req.query.id}`,
         }),
+        user: req.session.user,
       });
     });
 

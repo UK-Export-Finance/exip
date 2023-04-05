@@ -28,13 +28,13 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(SIGN_IN_ROOT);
   }
 
-  return res.render(
-    TEMPLATE,
-    insuranceCorePageVariables({
+  return res.render(TEMPLATE, {
+    ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
     }),
-  );
+    user: req.session.user,
+  });
 };
 
 /**

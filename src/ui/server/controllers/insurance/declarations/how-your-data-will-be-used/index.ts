@@ -60,6 +60,7 @@ export const get = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(refNumber),
+      user: req.session.user,
       documentContent: declarationContent.content.document,
       documentConfig: keystoneDocumentRendererConfig(),
       application,
@@ -99,6 +100,7 @@ export const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
+        user: req.session.user,
         documentContent: declarationContent.content.document,
         documentConfig: keystoneDocumentRendererConfig(),
         validationErrors,
@@ -125,7 +127,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`);
     }
   } catch (err) {
-    console.error('Error updating application - declarations - confidentiality ', { err });
+    console.error('Error updating application - declarations - how data will be used ', { err });
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }

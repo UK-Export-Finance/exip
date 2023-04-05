@@ -53,6 +53,7 @@ export const get = async (req: Request, res: Response) => {
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
       }),
+      user: req.session.user,
       countries: mappedCountries,
       submittedValues: req.session.submittedData.insuranceEligibility,
     });
@@ -81,6 +82,7 @@ export const post = async (req: Request, res: Response) => {
           ...PAGE_VARIABLES,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         countries: mappedCountries,
         validationErrors,
       });

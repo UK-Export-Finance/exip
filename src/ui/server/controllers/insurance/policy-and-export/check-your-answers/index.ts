@@ -56,6 +56,7 @@ export const get = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(refNumber),
+      user: req.session.user,
       application,
       SUMMARY_LIST: summaryList,
     });

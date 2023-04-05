@@ -24,7 +24,10 @@ describe('controllers/insurance/no-access-to-application', () => {
     it('should render template', () => {
       get(req, res);
 
-      const expectedVariables = insuranceCorePageVariables({ PAGE_CONTENT_STRINGS: PAGES.INSURANCE.NO_ACCESS_TO_APPLICATION_PAGE });
+      const expectedVariables = {
+        ...insuranceCorePageVariables({ PAGE_CONTENT_STRINGS: PAGES.INSURANCE.NO_ACCESS_TO_APPLICATION_PAGE }),
+        user: req.session.user,
+      };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });

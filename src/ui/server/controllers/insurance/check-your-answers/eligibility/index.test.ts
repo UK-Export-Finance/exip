@@ -80,6 +80,7 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         status,
         SUMMARY_LIST: summaryList,
         ...pageVariables(),

@@ -51,6 +51,7 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER,
         BACK_LINK: req.headers.referer,
       }),
+      user: req.session.user,
       ...pageVariables(application.referenceNumber),
       application: mapApplicationToFormFields(application),
     });
@@ -80,6 +81,7 @@ export const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         ...pageVariables(application.referenceNumber),
         submittedValues: body,
         application: mapApplicationToFormFields(application),

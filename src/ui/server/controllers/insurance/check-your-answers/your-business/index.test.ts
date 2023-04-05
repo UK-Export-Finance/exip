@@ -84,6 +84,7 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUSINESS,
           BACK_LINK: req.headers.referer,
         }),
+        user: req.session.user,
         status,
         SUMMARY_LIST: summaryList,
         ...pageVariables(mockApplication.referenceNumber),
