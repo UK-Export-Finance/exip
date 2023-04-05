@@ -13,6 +13,8 @@ export const generateErrorMessage = (section: string, applicationId: number) =>
  * @returns {Object} Populated application
  */
 const getPopulatedApplication = async (context: Context, application: KeystoneApplication): Promise<Application> => {
+  console.info('Getting populated application');
+
   const { eligibilityId, exporterId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId, declarationId } = application;
 
   const eligibility = await context.db.Eligibility.findOne({

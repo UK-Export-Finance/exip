@@ -5,9 +5,8 @@ import { SubmitApplicationResponse, ApplicationSubmissionEmailVariables, Applica
 /**
  * applicationSubmittedEmails.send
  * Send "application submitted" emails
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the SendEmailConfirmEmailAddress mutation
- * @param {Object} KeystoneJS context API
+ * @param {Object} Application
+ * @param {String} Path to CSV file for underwriting team email
  * @returns {Object} Object with success flag and emailRecipient
  */
 const send = async (application: Application, csvPath: string): Promise<SubmitApplicationResponse> => {

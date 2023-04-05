@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import formatDate from '.';
 
-describe('server/helpers/date/format-date', () => {
+describe('api/generate-csv/map-application-to-csv/helpers/format-date', () => {
   const mockTimestamp = new Date();
 
   it('should return a formatted date', () => {

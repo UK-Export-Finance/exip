@@ -9,20 +9,18 @@ import { Application } from '../types';
  * @param {Object} Application
  * @returns {String} File path
  */
-const csv = (application: Application) => {
+const csv = (application: Application): Promise<string> => {
   const { referenceNumber } = application;
 
-  const filePath = `./csv/${referenceNumber}.csv`;
+  return new Promise((resolve) => {
+    const filePath = `${referenceNumber}.csv`;
 
-  const csvData = mapApplicationToCsv(application);
+    const csvData = mapApplicationToCsv(application);
 
-  stringify(csvData, { header: true }, (err, output) => {
-    fs.writeFile(filePath, output, (result) => {
-      return result;
+    stringify(csvData, { header: true }, (err, output) => {
+      fs.writeFile(filePath, output, () => resolve(String(filePath)));
     });
   });
-
-  return filePath;
 };
 
 const generate = {

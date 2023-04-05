@@ -339,6 +339,16 @@ import_dotenv2.default.config();
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
 var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
 var notify = {
+  /**
+   * sendEmail
+   * Send an email via Notify API
+   * @param {String} Template ID
+   * @param {String} Email address
+   * @param {Object} Custom variables for the email template
+   * @param {Buffer} File buffer
+   * @param {Boolean} Flag for if the file is CSV
+   * @returns {Array} Array of objects for CSV generation
+   */
   sendEmail: async (templateId, sendToEmailAddress, variables, file, fileIsCsv) => {
     try {
       console.info("Calling Notify API. templateId: ", templateId);
@@ -1581,43 +1591,85 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
+// helpers/get-populated-application.ts
+var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
+var getPopulatedApplication = async (context, application) => {
+  console.info("Getting populated application");
+  const { eligibilityId, exporterId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId, declarationId } = application;
+  const eligibility = await context.db.Eligibility.findOne({
+    where: { id: eligibilityId }
+  });
+  if (!eligibility) {
+    throw new Error(generateErrorMessage("eligibility", application.id));
+  }
+  const exporter = await get_exporter_by_id_default(context, exporterId);
+  if (!exporter) {
+    throw new Error(generateErrorMessage("exporter", application.id));
+  }
+  const buyerCountry = await context.db.Country.findOne({
+    where: { id: eligibility?.buyerCountryId }
+  });
+  if (!buyerCountry) {
+    throw new Error(generateErrorMessage("buyerCountry", application.id));
+  }
+  const policyAndExport = await context.db.PolicyAndExport.findOne({
+    where: { id: policyAndExportId }
+  });
+  if (!policyAndExport) {
+    throw new Error(generateErrorMessage("policyAndExport", application.id));
+  }
+  const exporterCompany = await context.db.ExporterCompany.findOne({
+    where: { id: exporterCompanyId }
+  });
+  if (!exporterCompany) {
+    throw new Error(generateErrorMessage("exporterCompany", application.id));
+  }
+  const exporterBusiness = await context.db.ExporterBusiness.findOne({
+    where: { id: exporterBusinessId }
+  });
+  if (!exporterBusiness) {
+    throw new Error(generateErrorMessage("exporterBusiness", application.id));
+  }
+  const exporterBroker = await context.db.ExporterBroker.findOne({
+    where: { id: exporterBrokerId }
+  });
+  if (!exporterBroker) {
+    throw new Error(generateErrorMessage("exporterBroker", application.id));
+  }
+  const buyer = await context.db.Buyer.findOne({
+    where: { id: buyerId }
+  });
+  if (!buyer) {
+    throw new Error(generateErrorMessage("buyer", application.id));
+  }
+  const declaration = await context.db.Declaration.findOne({
+    where: { id: declarationId }
+  });
+  if (!declaration) {
+    throw new Error(generateErrorMessage("declaration", application.id));
+  }
+  const populatedApplication = {
+    ...application,
+    eligibility: {
+      ...eligibility,
+      buyerCountry
+    },
+    policyAndExport,
+    exporter,
+    exporterCompany,
+    exporterBusiness,
+    exporterBroker,
+    buyer,
+    declaration
+  };
+  return populatedApplication;
+};
+var get_populated_application_default = getPopulatedApplication;
+
 // emails/send-application-submitted-emails/index.ts
-var send = async (context, referenceNumber, accountId, buyerId, declarationId, exporterCompanyId, csvPath) => {
+var send = async (application, csvPath) => {
   try {
-    const exporter = await get_exporter_by_id_default(context, accountId);
-    if (!exporter) {
-      console.error("Sending application submitted emails - no exporter exists with the provided ID");
-      return {
-        success: false
-      };
-    }
-    const buyer = await context.db.Buyer.findOne({
-      where: { id: buyerId }
-    });
-    if (!buyer) {
-      console.error("Sending application submitted emails - no buyer exists with the provided ID");
-      return {
-        success: false
-      };
-    }
-    const declaration = await context.db.Declaration.findOne({
-      where: { id: declarationId }
-    });
-    if (!declaration) {
-      console.error("Sending application submitted emails - no declarations exist with the provided ID");
-      return {
-        success: false
-      };
-    }
-    const exporterCompany = await context.db.ExporterCompany.findOne({
-      where: { id: exporterCompanyId }
-    });
-    if (!exporterCompany) {
-      console.error("Sending application submitted emails - no exporter company exists with the provided ID");
-      return {
-        success: false
-      };
-    }
+    const { referenceNumber, exporter, exporterCompany, buyer, declaration } = application;
     const { email, firstName } = exporter;
     const sendEmailVars = {
       emailAddress: email,
@@ -1649,10 +1701,9 @@ var send = async (context, referenceNumber, accountId, buyerId, declarationId, e
     }
     if (templateId) {
       documentsResponse = await emails_default.documentsEmail(sendEmailVars, templateId);
-      if (documentsResponse.success) {
-        return documentsResponse;
+      if (!documentsResponse.success) {
+        throw new Error(`Sending application submitted emails ${documentsResponse}`);
       }
-      throw new Error(`Sending application submitted emails ${documentsResponse}`);
     }
     return {
       success: true
@@ -1671,11 +1722,20 @@ var send_application_submitted_emails_default = applicationSubmittedEmails;
 var import_fs2 = __toESM(require("fs"));
 var import_csv_stringify = require("csv-stringify");
 
-// generate-csv/map-application-to-csv/helpers/csv-row-seperator/index.ts
-var ROW_SEPERATOR = {
-  Field: "-",
-  Answer: "-"
+// generate-csv/map-application-to-csv/helpers/csv-row/index.ts
+var csvRow = (fieldName, answer) => ({
+  Field: fieldName,
+  Answer: answer
+});
+var csv_row_default = csvRow;
+
+// content-strings/default.ts
+var DEFAULT = {
+  EMPTY: "-"
 };
+
+// generate-csv/map-application-to-csv/helpers/csv-row-seperator/index.ts
+var ROW_SEPERATOR = csv_row_default(DEFAULT.EMPTY, DEFAULT.EMPTY);
 var csv_row_seperator_default = ROW_SEPERATOR;
 
 // content-strings/fields/insurance/eligibility/index.ts
@@ -2016,13 +2076,6 @@ var TIME_SUBMITTED = {
   }
 };
 
-// generate-csv/map-application-to-csv/helpers/csv-row/index.ts
-var csvRow = (fieldName, answer) => ({
-  Field: fieldName,
-  Answer: answer
-});
-var csv_row_default = csvRow;
-
 // generate-csv/map-application-to-csv/helpers/format-date/index.ts
 var import_date_fns4 = require("date-fns");
 var formatDate = (timestamp2, dateFormat = "d MMMM yyyy") => (0, import_date_fns4.format)(new Date(timestamp2), dateFormat);
@@ -2045,11 +2098,6 @@ var mapReferenceNumberAndDates = (application) => {
   return mapped;
 };
 var map_reference_number_and_dates_default = mapReferenceNumberAndDates;
-
-// content-strings/default.ts
-var DEFAULT = {
-  EMPTY: "-"
-};
 
 // generate-csv/map-application-to-csv/helpers/map-yes-no-field/index.ts
 var mapYesNoField = (answer) => {
@@ -2229,14 +2277,13 @@ var map_application_to_csv_default = mapApplicationToCsv;
 // generate-csv/index.ts
 var csv = (application) => {
   const { referenceNumber } = application;
-  const filePath = `./csv/${referenceNumber}.csv`;
-  const csvData = map_application_to_csv_default(application);
-  (0, import_csv_stringify.stringify)(csvData, { header: true }, (err, output) => {
-    import_fs2.default.writeFile(filePath, output, (result) => {
-      return result;
+  return new Promise((resolve) => {
+    const filePath = `${referenceNumber}.csv`;
+    const csvData = map_application_to_csv_default(application);
+    (0, import_csv_stringify.stringify)(csvData, { header: true }, (err, output) => {
+      import_fs2.default.writeFile(filePath, output, () => resolve(String(filePath)));
     });
   });
-  return filePath;
 };
 var generate2 = {
   csv
@@ -2259,57 +2306,13 @@ var submitApplication = async (root, variables, context) => {
           previousStatus: APPLICATION.STATUS.DRAFT,
           submissionDate: now
         };
-        await context.db.Application.updateOne({
+        const updatedApplication = await context.db.Application.updateOne({
           where: { id: application.id },
           data: update
         });
-        const {
-          eligibilityId,
-          referenceNumber,
-          exporterId,
-          policyAndExportId,
-          buyerId,
-          exporterCompanyId,
-          exporterBusinessId,
-          exporterBrokerId,
-          declarationId
-        } = application;
-        const eligibility = await context.db.Eligibility.findOne({
-          where: { id: eligibilityId }
-        });
-        const buyerCountry = await context.db.Country.findOne({
-          where: { id: eligibility?.buyerCountryId }
-        });
-        const policyAndExport = await context.db.PolicyAndExport.findOne({
-          where: { id: policyAndExportId }
-        });
-        const exporterCompany = await context.db.ExporterCompany.findOne({
-          where: { id: exporterCompanyId }
-        });
-        const exporterBusiness = await context.db.ExporterBusiness.findOne({
-          where: { id: exporterBusinessId }
-        });
-        const exporterBroker = await context.db.ExporterBroker.findOne({
-          where: { id: exporterBrokerId }
-        });
-        const buyer = await context.db.Buyer.findOne({
-          where: { id: application.buyerId }
-        });
-        const getPopulatedApplication = async () => ({
-          ...application,
-          eligibility: {
-            ...eligibility,
-            buyerCountry
-          },
-          policyAndExport,
-          exporterCompany,
-          exporterBusiness,
-          exporterBroker,
-          buyer
-        });
-        const populatedApplication = await getPopulatedApplication();
-        const csvPath = generate_csv_default.csv(populatedApplication);
-        await send_application_submitted_emails_default.send(context, referenceNumber, exporterId, buyerId, declarationId, exporterCompanyId, csvPath);
+        const populatedApplication = await get_populated_application_default(context, updatedApplication);
+        const csvPath = await generate_csv_default.csv(populatedApplication);
+        await send_application_submitted_emails_default.send(populatedApplication, csvPath);
         return {
           success: true
         };
@@ -2675,6 +2678,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 });
 
 // keystone.ts
+var enableLogging = process.env.NODE_ENV === "development";
 var keystone_default = withAuth(
   (0, import_core2.config)({
     server: {
@@ -2683,7 +2687,7 @@ var keystone_default = withAuth(
     db: {
       provider: "mysql",
       url: String(process.env.DATABASE_URL),
-      enableLogging: true
+      enableLogging
     },
     ui: {
       isAccessAllowed: (context) => !!context.session?.data

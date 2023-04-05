@@ -49,10 +49,10 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
         const populatedApplication = await getPopulatedApplication(context, updatedApplication);
 
         // generate a CSV for UKEF underwriting team email
-        const csvPath = generate.csv(populatedApplication);
+        const csvPath = await generate.csv(populatedApplication);
 
         // send all "application submitted" emails
-        await applicationSubmittedEmails.send(context, populatedApplication, csvPath);
+        await applicationSubmittedEmails.send(populatedApplication, csvPath);
 
         return {
           success: true,
