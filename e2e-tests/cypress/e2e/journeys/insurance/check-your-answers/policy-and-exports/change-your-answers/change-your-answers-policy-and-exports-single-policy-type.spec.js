@@ -1,6 +1,6 @@
 import partials from '../../../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
-import { submitButton } from '../../../../../pages/shared';
+import { submitButton, status } from '../../../../../pages/shared';
 import { checkYourAnswersPolicyAndExports } from '../../../../../pages/insurance/check-your-answers';
 import application from '../../../../../../fixtures/application';
 import { singleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
@@ -283,11 +283,13 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
           cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
         });
 
-        it('should render the new answer', () => {
-          const { isoCode, name } = currencies[3];
+        it('should render the new answer and retain a `completed` status tag', () => {
+          const { name } = currencies[3];
 
-          fieldVariables.newValue = `${isoCode} ${name}`;
+          fieldVariables.newValue = name;
           checkChangeAnswerRendered(fieldVariables);
+
+          cy.checkTaskStatusCompleted(status());
         });
       });
     });

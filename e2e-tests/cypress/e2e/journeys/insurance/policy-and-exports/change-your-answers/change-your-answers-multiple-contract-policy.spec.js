@@ -286,9 +286,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         });
 
         it('should render the new answer', () => {
-          const { isoCode, name } = currencies[3];
-
-          const expected = `${isoCode} ${name}`;
+          const { name: expected } = currencies[3];
 
           cy.assertSummaryListRowValue(summaryList, fieldId, expected);
         });
