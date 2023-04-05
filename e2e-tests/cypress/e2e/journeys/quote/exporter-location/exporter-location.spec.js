@@ -29,6 +29,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: url,
       backLink: ROUTES.QUOTE.BUYER_BODY,
+      assertAuthenticatedHeader: false,
     });
   });
 

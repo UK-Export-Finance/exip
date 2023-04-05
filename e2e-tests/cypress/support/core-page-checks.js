@@ -1,5 +1,25 @@
-import { BUTTONS, LINKS, ORGANISATION } from '../../content-strings';
+import {
+  BUTTONS,
+  LINKS,
+  ORGANISATION,
+  HEADER,
+} from '../../content-strings';
+import { ROUTES } from '../../constants';
+import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { backLink as backLinkSelector, heading, submitButton } from '../e2e/pages/shared';
+import header from '../e2e/partials/header';
+import mockAccount from '../fixtures/account';
+
+const {
+  INSURANCE: {
+    DASHBOARD,
+    ACCOUNT: { MANAGE_ACCOUNT, SIGN_IN: { ROOT: SIGN_IN_ROOT } },
+  },
+} = ROUTES;
+
+const {
+  ACCOUNT: { FIRST_NAME, LAST_NAME },
+} = INSURANCE_FIELD_IDS;
 
 // const lighthouseAudit = (lightHouseThresholds = {}) => {
 //   cy.lighthouse({
@@ -45,6 +65,14 @@ const checkBackLink = (currentHref, expectedHref) => {
   });
 };
 
+const checkAuthenticatedHeader = () => {
+  const expectedAccountName = `${mockAccount[FIRST_NAME]} ${mockAccount[LAST_NAME]}`;
+
+  cy.checkLink(header.navigation.manageAccount(), MANAGE_ACCOUNT, expectedAccountName);
+  cy.checkLink(header.navigation.applications(), DASHBOARD, HEADER.APPLICATIONS.TEXT);
+  cy.checkLink(header.navigation.signOut(), SIGN_IN_ROOT, HEADER.SIGN_OUT.TEXT);
+};
+
 /**
  * checkPageTitleAndHeading
  * Check the page title and heading
@@ -75,6 +103,7 @@ const corePageChecks = ({
   assertSubmitButton = true,
   submitButtonCopy = BUTTONS.CONTINUE,
   assertBackLink = true,
+  assertAuthenticatedHeader = true,
   // lightHouseThresholds,
 }) => {
   // run lighthouse audit
@@ -88,6 +117,11 @@ const corePageChecks = ({
   // check analytics cookie banner
   cy.checkAnalyticsCookiesConsentAndAccept();
   cy.rejectAnalyticsCookies();
+
+  if (assertAuthenticatedHeader) {
+    // check authenticated header
+    checkAuthenticatedHeader();
+  }
 
   // check phase banner
   cy.checkPhaseBanner();

@@ -26,6 +26,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
       backLink: ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
+      assertAuthenticatedHeader: false,
       lightHouseThresholds: {
         performance: 70,
       },

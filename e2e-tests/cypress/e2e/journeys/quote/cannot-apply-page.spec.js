@@ -31,6 +31,7 @@ context('Cannot apply exit page', () => {
       currentHref: ROUTES.QUOTE.CANNOT_APPLY,
       backLink: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
       assertSubmitButton: false,
+      assertAuthenticatedHeader: false,
       lightHouseThresholds: {
         seo: 60,
       },
