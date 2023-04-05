@@ -7,3 +7,6 @@
 .eslintignore
 README.md
 Dockerfile
+node_modules
+logs
+generated_reports

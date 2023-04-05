@@ -10,7 +10,7 @@ services:
     ports:
       - "${DATABASE_PORT}:${DATABASE_PORT}"
     volumes:
-      - ./database/exip.sql:/docker-entrypoint-nitdb.d/database.sql:rw
+      - ./database/exip.sql:/docker-entrypoint-initdb.d/database.sql:rw
     environment:
       MYSQL_DATABASE:
       MYSQL_ROOT_PASSWORD:

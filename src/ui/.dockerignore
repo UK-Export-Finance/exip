@@ -8,3 +8,7 @@
 jest.config.js
 README.md
 Dockerfile
+node_modules
+public
+logs
+generated_reports
