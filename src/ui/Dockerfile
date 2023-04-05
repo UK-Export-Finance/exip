@@ -15,7 +15,7 @@ WORKDIR /app
 
 # Copy UI
 COPY --chown=node:node . .
-RUN npm ci --legacy-peer-deps
+RUN npm ci --legacy-peer-deps --ignore-scripts
 RUN npm cache clean --force
 
 # Build with all dependencies
@@ -24,7 +24,7 @@ RUN npm run build
 # Lean NPM - Only install `dependencies`
 # `devDependencies` will still be resolved inside `package-lock.json`,
 # however they will not be installed inside `node_modules` directory.
-RUN npm ci --legacy-peer-deps --omit=dev
+RUN npm ci --legacy-peer-deps --omit=dev --ignore-scripts
 
 ###################
 # 2. PRODUCTION
