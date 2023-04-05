@@ -45,6 +45,8 @@ context('Insurance - application submitted page - As an Exporter, I want to subm
     beforeEach(() => {
       url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
+      cy.navigateToUrl(url);
+
       header.navigation.applications().click();
     });
 

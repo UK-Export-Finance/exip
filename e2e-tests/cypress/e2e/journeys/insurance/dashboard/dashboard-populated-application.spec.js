@@ -73,18 +73,20 @@ context('Insurance - Dashboard - populated application', () => {
       cy.completeAndSubmitCompanyOrOrganisationForm();
     });
 
-    it(`should render a value in the ${TABLE_HEADERS.BUYER_LOCATION} cell`, () => {
-      partials.header.navigation.applications().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      partials.header.navigation.applications().click();
+    });
+
+    it(`should render a value in the ${TABLE_HEADERS.BUYER_LOCATION} cell`, () => {
       const cell = table.body.row(referenceNumber).buyerLocation();
 
       const expected = application.BUYER[COUNTRY];
       cy.checkText(cell, expected);
     });
 
-    it(`should render a value in the ${TABLE_HEADERS.COMPANY_OR_ORGANISATION_NAME} cell`, () => {
-      partials.header.navigation.applications().click();
-
+    it(`should render a value in the ${TABLE_HEADERS.BUYER_NAME} cell`, () => {
       const cell = table.body.row(referenceNumber).buyerName();
 
       const expected = application.BUYER[NAME];

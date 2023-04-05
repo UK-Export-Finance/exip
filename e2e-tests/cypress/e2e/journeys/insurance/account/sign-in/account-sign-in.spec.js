@@ -56,6 +56,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: SIGN_IN_ROOT,
       backLink: YOUR_DETAILS,
+      assertAuthenticatedHeader: false,
       lightHouseThresholds: {
         performance: 70,
       },

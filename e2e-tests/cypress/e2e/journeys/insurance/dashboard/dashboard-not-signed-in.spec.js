@@ -1,17 +1,17 @@
-import header from '../../../partials/header';
 import { ROUTES } from '../../../../../constants';
 
 const {
   ACCOUNT: { SIGN_IN },
+  DASHBOARD,
 } = ROUTES.INSURANCE;
 
 context('Insurance - Dashboard - not signed in', () => {
-  before(() => {
-    header.navigation.applications().click();
-  });
-
   beforeEach(() => {
     cy.saveSession();
+
+    const url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+
+    cy.navigateToUrl(url);
   });
 
   it(`should redirect to ${SIGN_IN.ROOT}`, () => {

@@ -32,6 +32,7 @@ context('Insurance - apply offline exit page', () => {
       currentHref: ROUTES.INSURANCE.APPLY_OFFLINE,
       backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
       assertSubmitButton: false,
+      assertAuthenticatedHeader: false,
     });
   });
 
