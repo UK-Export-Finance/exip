@@ -33,6 +33,6 @@
     "allowJs": true,
     "importHelpers": true
   },
-  "include": ["**/*.ts"],
-  "exclude": ["./node_modules/*", "node_modules"]
+  "include": ["**/*.ts", ".eslintrc.js"],
+  "exclude": ["node_modules", "logs"]
 }

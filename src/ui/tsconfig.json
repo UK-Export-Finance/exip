@@ -33,6 +33,6 @@
     "allowJs": true,
     "importHelpers": true
   },
-  "include": ["**/*.ts"],
-  "exclude": ["./node_modules/*", "node_modules"]
+  "include": ["**/*.ts", "./server", "./jest.config.js", "./.eslintrc.js"],
+  "exclude": ["node_modules", "generated_reports"]
 }
