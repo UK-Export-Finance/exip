@@ -1,6 +1,7 @@
 import express from 'express';
 import { CHECK_YOUR_ANSWERS } from '../../../constants/routes/insurance/check-your-answers';
 import { get as getCheckYourAnswersEligibility, post as postCheckYourAnswersEligibility } from '../../../controllers/insurance/check-your-answers/eligibility';
+import { get as getStartNewApplication } from '../../../controllers/insurance/check-your-answers/start-new-application';
 import {
   get as getCheckYourAnswersPolicyAndExports,
   post as postCheckYourAnswersPolicyAndExports,
@@ -17,6 +18,8 @@ const insuranceCheckYourAnswersRouter = express.Router();
 
 insuranceCheckYourAnswersRouter.get(`/:referenceNumber${CHECK_YOUR_ANSWERS.ELIGIBILITY}`, getCheckYourAnswersEligibility);
 insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.ELIGIBILITY}`, postCheckYourAnswersEligibility);
+
+insuranceCheckYourAnswersRouter.get(`/:referenceNumber${CHECK_YOUR_ANSWERS.START_NEW_APPLICATION}`, getStartNewApplication);
 
 insuranceCheckYourAnswersRouter.get(`/:referenceNumber${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, getCheckYourAnswersPolicyAndExports);
 insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, postCheckYourAnswersPolicyAndExports);

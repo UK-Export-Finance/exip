@@ -15,6 +15,7 @@ const {
   ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: {
     ELIGIBILITY,
+    START_NEW_APPLICATION,
     TYPE_OF_POLICY,
   },
 } = ROUTES.INSURANCE;
@@ -29,6 +30,7 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
   let referenceNumber;
   let url;
   let allSectionsUrl;
+  let startNewApplicationUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -41,6 +43,8 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ELIGIBILITY}`;
 
       allSectionsUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
+      startNewApplicationUrl = `${INSURANCE_ROOT}/${referenceNumber}${START_NEW_APPLICATION}`;
 
       cy.url().should('eq', url);
     });
@@ -80,9 +84,10 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
       cy.checkTaskStatusCompleted(status());
     });
 
-    it(`renders a change answers banner with a valid href to ${START}`, () => {
+    it(`renders a change answers banner with a valid href to ${START_NEW_APPLICATION}`, () => {
       cy.checkText(checkYourAnswersEligibility.banner(), `${CONTENT_STRINGS.CHANGE_ELIGIBILITY} ${CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.text}`);
-      cy.checkLink(checkYourAnswersEligibility.bannerLink(), CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.href, CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.text);
+
+      cy.checkLink(checkYourAnswersEligibility.bannerLink(), startNewApplicationUrl, CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK.text);
     });
 
     it('renders a `save and back` button', () => {
@@ -113,13 +118,14 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
       });
 
       describe('start new application button link', () => {
-        it(`should redirect to ${START}`, () => {
+        it(`should redirect to ${START_NEW_APPLICATION}`, () => {
           cy.navigateToUrl(url);
 
           saveAndBackButton().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${START}`;
-          cy.url().should('eq', expectedUrl);
+          const expected = `${Cypress.config('baseUrl')}${startNewApplicationUrl}`;
+
+          cy.url().should('eq', expected);
         });
       });
     });
