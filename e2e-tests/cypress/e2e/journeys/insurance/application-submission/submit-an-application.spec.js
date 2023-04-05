@@ -29,7 +29,7 @@ context('Insurance - application submitted page - As an Exporter, I want to subm
   });
 
   after(() => {
-    // cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteAccountAndApplication(referenceNumber);
   });
 
   it(`should redirect to ${APPLICATION_SUBMITTED}`, () => {
