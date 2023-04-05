@@ -39,13 +39,15 @@ export const get = (req: Request, res: Response) => {
 
     const { referenceNumber } = application;
 
+    const formattedSubmissionDeadline = formatDate(new Date(application.submissionDeadline));
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.START_NEW_APPLICATION,
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(referenceNumber),
-      formattedSubmissionDeadline: formatDate(new Date(application.submissionDeadline)),
+      formattedSubmissionDeadline,
     });
   } catch (err) {
     console.error('Error getting check your answers - start new applcation', { err });
