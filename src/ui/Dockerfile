@@ -33,7 +33,9 @@ RUN npm ci --legacy-peer-deps --ignore-scripts
 RUN npm cache clean --force
 
 # Build with all dependencies
+RUN pwd
 RUN npm run build
+RUN ls -alh public/
 
 # Lean NPM - Only install `dependencies`
 # `devDependencies` will still be resolved inside `package-lock.json`,
