@@ -32,6 +32,7 @@ COPY --chown=node:node ./integrations ./integrations
 COPY --chown=node:node ./test-mocks ./test-mocks
 COPY --chown=node:node ./auth.ts .
 COPY --chown=node:node ./constants ./constants
+COPY --chown=node:node ./content-strings ./content-strings
 COPY --chown=node:node ./custom-schema.ts .
 COPY --chown=node:node ./file-system ./file-system
 COPY --chown=node:node ./generate-csv ./generate-csv
