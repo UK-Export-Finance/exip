@@ -34,7 +34,6 @@ RUN npm cache clean --force
 
 # Build with all dependencies
 RUN npm run build
-RUN ls -alh public
 
 # Lean NPM - Only install `dependencies`
 # `devDependencies` will still be resolved inside `package-lock.json`,
@@ -61,18 +60,17 @@ COPY --chown=node:node --from=build /app/templates ./templates
 COPY --chown=node:node --from=build /app/types ./types
 
 # Non-root user
-# USER node
-RUN ls -alh public
+USER node
 
 # Container healthcheck
-# HEALTHCHECK \
-# --interval=60s \
-# --timeout=30s \
-# CMD wget \
-# --no-verbose \
-# --tries=3 \
-# --spider http://localhost:${PORT} \
-# || exit 1
+HEALTHCHECK \
+--interval=60s \
+--timeout=30s \
+CMD wget \
+--no-verbose \
+--tries=3 \
+--spider http://localhost:${PORT} \
+|| exit 1
 
 # Execute Script
 CMD ["npm", "run", "start"]
