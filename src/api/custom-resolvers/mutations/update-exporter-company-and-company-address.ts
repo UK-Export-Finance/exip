@@ -1,6 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import { mapSicCodes } from '../helpers/mapSicCodes';
-import { UpdateExporterCompanyAndCompanyAddressVariables, ApplicationRelationship, SicCodes } from '../types';
+import { mapSicCodes } from '../../helpers/mapSicCodes';
+import { UpdateExporterCompanyAndCompanyAddressVariables, ApplicationRelationship, SicCodes } from '../../types';
 
 /**
  * updateExporterCompanyAndCompanyAddress

@@ -1,15 +1,4 @@
-import createAccount from './create-account';
-import verifyAccountEmailAddress from './verify-account-email-address';
-import sendEmailConfirmEmailAddress from './send-email-confirm-email-address';
-import accountSignIn from './account-sign-in';
-import accountSignInSendNewCode from './account-sign-in-new-code';
-import verifyAccountSignInCode from './verify-account-sign-in-code';
-import addAndGetOTP from './add-and-get-OTP';
-import deleteApplicationByReferenceNumber from './delete-application-by-refrence-number';
-import updateExporterCompanyAndCompanyAddress from './update-exporter-company-and-company-address';
-import submitApplication from './submit-application';
-
-export {
+import {
   createAccount,
   verifyAccountEmailAddress,
   sendEmailConfirmEmailAddress,
@@ -20,4 +9,26 @@ export {
   deleteApplicationByReferenceNumber,
   updateExporterCompanyAndCompanyAddress,
   submitApplication,
+} from './mutations';
+import { getCompaniesHouseInformation } from './queries';
+
+const customResolvers = {
+  Mutation: {
+    createAccount,
+    accountSignIn,
+    accountSignInSendNewCode,
+    verifyAccountEmailAddress,
+    sendEmailConfirmEmailAddress,
+    verifyAccountSignInCode,
+    addAndGetOTP,
+    deleteApplicationByReferenceNumber,
+    updateExporterCompanyAndCompanyAddress,
+    submitApplication,
+  },
+  Query: {
+    getCompaniesHouseInformation,
+  },
 };
+// } as IResolvers;
+
+export default customResolvers;

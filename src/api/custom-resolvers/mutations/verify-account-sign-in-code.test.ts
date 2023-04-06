@@ -2,15 +2,15 @@ import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import { subMinutes } from 'date-fns';
 import verifyAccountSignInCode from './verify-account-sign-in-code';
-import create from '../helpers/create-jwt';
-import { ACCOUNT } from '../constants';
-import getExporterById from '../helpers/get-exporter-by-id';
-import generate from '../helpers/generate-otp';
-import generateOTPAndUpdateAccount from '../helpers/generate-otp-and-update-account';
-import baseConfig from '../keystone';
+import create from '../../helpers/create-jwt';
+import { ACCOUNT } from '../../constants';
+import getExporterById from '../../helpers/get-exporter-by-id';
+import generate from '../../helpers/generate-otp';
+import generateOTPAndUpdateAccount from '../../helpers/generate-otp-and-update-account';
+import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import { mockAccount } from '../test-mocks';
-import { Account, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../types';
+import { mockAccount } from '../../test-mocks';
+import { Account, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -32,7 +32,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   let variables: VerifyAccountSignInCodeVariables;
   let result: VerifyAccountSignInCodeResponse;
 
-  jest.mock('../helpers/create-jwt');
+  jest.mock('../../helpers/create-jwt');
 
   const mockJWT = {
     token: `Bearer 123-MOCK`,

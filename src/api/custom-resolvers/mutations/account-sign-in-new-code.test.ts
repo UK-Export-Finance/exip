@@ -1,12 +1,12 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import accountSignIn from './account-sign-in';
-import baseConfig from '../keystone';
-import generate from '../helpers/generate-otp';
-import sendEmail from '../emails';
-import { mockAccount, mockOTP, mockSendEmailResponse } from '../test-mocks';
-import { Account, AccountSignInResponse } from '../types';
+import accountSignInSendNewCode from './account-sign-in-new-code';
+import baseConfig from '../../keystone';
+import generate from '../../helpers/generate-otp';
+import sendEmail from '../../emails';
+import { mockAccount, mockOTP, mockSendEmailResponse } from '../../test-mocks';
+import { Account, AccountSignInSendNewCodeVariables, AccountSignInResponse } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -16,24 +16,15 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
-describe('custom-resolvers/account-sign-in', () => {
+describe('custom-resolvers/account-sign-in-new-code', () => {
   let exporter: Account;
 
-  jest.mock('../emails');
-  jest.mock('../helpers/generate-otp');
+  jest.mock('../../emails');
+  jest.mock('../../helpers/generate-otp');
 
   generate.otp = () => mockOTP;
 
   let securityCodeEmailSpy = jest.fn();
-
-  const mockPassword = String(process.env.MOCK_ACCOUNT_PASSWORD);
-
-  const variables = {
-    firstName: 'a',
-    lastName: 'b',
-    email: mockAccount.email,
-    password: mockPassword,
-  };
 
   afterAll(() => {
     jest.resetAllMocks();
@@ -43,7 +34,9 @@ describe('custom-resolvers/account-sign-in', () => {
 
   let result: AccountSignInResponse;
 
-  beforeAll(async () => {
+  let variables: AccountSignInSendNewCodeVariables;
+
+  beforeEach(async () => {
     // wipe the table so we have a clean slate.
     const exporters = await context.query.Exporter.findMany();
 
@@ -63,7 +56,11 @@ describe('custom-resolvers/account-sign-in', () => {
 
     sendEmail.securityCodeEmail = securityCodeEmailSpy;
 
-    result = await accountSignIn({}, variables, context);
+    variables = {
+      accountId: exporter.id,
+    };
+
+    result = await accountSignInSendNewCode({}, variables, context);
 
     account = (await context.query.Exporter.findOne({
       where: { id: exporter.id },
@@ -95,35 +92,6 @@ describe('custom-resolvers/account-sign-in', () => {
     });
   });
 
-  describe('when the provided password is invalid', () => {
-    test('it should return success=false', async () => {
-      variables.password = `${mockPassword}-incorrect`;
-
-      result = await accountSignIn({}, variables, context);
-
-      const expected = { success: false };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when exporter is not verified', () => {
-    test('it should return success=false', async () => {
-      await context.query.Exporter.updateOne({
-        where: { id: exporter.id },
-        data: {
-          isVerified: false,
-        },
-      });
-
-      result = await accountSignIn({}, variables, context);
-
-      const expected = { success: false };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
   describe('when no exporter is found', () => {
     test('it should return success=false', async () => {
       // wipe the table so we have a clean slate.
@@ -133,7 +101,7 @@ describe('custom-resolvers/account-sign-in', () => {
         where: exporters,
       });
 
-      result = await accountSignIn({}, variables, context);
+      result = await accountSignInSendNewCode({}, variables, context);
 
       const expected = { success: false };
 
@@ -148,11 +116,11 @@ describe('custom-resolvers/account-sign-in', () => {
 
     test('should throw an error', async () => {
       try {
-        await accountSignIn({}, variables, context);
+        await accountSignInSendNewCode({}, variables, context);
       } catch (err) {
         expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
 
-        const expected = new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${mockSendEmailResponse}`);
+        const expected = new Error(`Generating and sending new sign in code for exporter account (accountSignInSendNewCode mutation) ${mockSendEmailResponse}`);
         expect(err).toEqual(expected);
       }
     });

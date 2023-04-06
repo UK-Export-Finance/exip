@@ -1,7 +1,7 @@
 import { Context, Application } from '.keystone/types'; // eslint-disable-line
-import { APPLICATION } from '../constants';
-import applicationSubmittedEmails from '../emails/send-application-submitted-emails';
-import { SubmitApplicationVariables, SubmitApplicationResponse } from '../types';
+import { APPLICATION } from '../../constants';
+import applicationSubmittedEmails from '../../emails/send-application-submitted-emails';
+import { SubmitApplicationVariables, SubmitApplicationResponse } from '../../types';
 
 /**
  * submitApplication

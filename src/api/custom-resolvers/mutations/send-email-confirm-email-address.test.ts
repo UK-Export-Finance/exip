@@ -1,11 +1,11 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import sendEmailConfirmEmailAddress from './send-email-confirm-email-address';
-import baseConfig from '../keystone';
+import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import sendEmail from '../emails';
-import { mockAccount, mockSendEmailResponse } from '../test-mocks';
-import { Account, SendExporterEmailVariables } from '../types';
+import sendEmail from '../../emails';
+import { mockAccount, mockSendEmailResponse } from '../../test-mocks';
+import { Account, SendExporterEmailVariables } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -19,7 +19,7 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
   let exporter: Account;
   let variables: SendExporterEmailVariables;
 
-  jest.mock('../emails');
+  jest.mock('../../emails');
 
   let sendEmailConfirmEmailAddressSpy = jest.fn();
 

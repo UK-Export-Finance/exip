@@ -1,11 +1,11 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../keystone';
+import baseConfig from '../../keystone';
 import createAccount from './create-account';
-import { ACCOUNT } from '../constants';
-import { mockAccount } from '../test-mocks';
-import { Account } from '../types';
+import { ACCOUNT } from '../../constants';
+import { mockAccount } from '../../test-mocks';
+import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);

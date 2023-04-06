@@ -1,12 +1,5 @@
 import { Application, Context } from '.keystone/types'; // eslint-disable-line
-
-interface DeleteApplicationByReferenceNumberVariables {
-  referenceNumber: number;
-}
-
-interface DeleteApplicationByReferenceNumberResponse {
-  success: boolean;
-}
+import { DeleteApplicationByReferenceNumberVariables, DeleteApplicationByReferenceNumberResponse } from '../../types';
 
 const deleteApplicationByReferenceNumber = async (
   root: any,

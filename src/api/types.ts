@@ -98,6 +98,14 @@ interface CompanyResponse {
   applicationId: string;
 }
 
+interface DeleteApplicationByReferenceNumberVariables {
+  referenceNumber: number;
+}
+
+interface DeleteApplicationByReferenceNumberResponse {
+  success: boolean;
+}
+
 interface EmailResponse {
   success: boolean;
   emailRecipient: string;
@@ -225,6 +233,8 @@ export {
   ApplicationSubmissionEmailVariables,
   BufferEncoding,
   CompanyResponse,
+  DeleteApplicationByReferenceNumberVariables,
+  DeleteApplicationByReferenceNumberResponse,
   EmailResponse,
   GetCompaniesHouseInformationVariables,
   SicCodes,

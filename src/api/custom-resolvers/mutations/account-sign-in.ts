@@ -1,10 +1,10 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import { FIELD_IDS } from '../constants';
-import getAccountByField from '../helpers/get-account-by-field';
-import isValidAccountPassword from '../helpers/is-valid-account-password';
-import generateOTPAndUpdateAccount from '../helpers/generate-otp-and-update-account';
-import sendEmail from '../emails';
-import { AccountSignInVariables, AccountSignInResponse } from '../types';
+import { FIELD_IDS } from '../../constants';
+import getAccountByField from '../../helpers/get-account-by-field';
+import isValidAccountPassword from '../../helpers/is-valid-account-password';
+import generateOTPAndUpdateAccount from '../../helpers/generate-otp-and-update-account';
+import sendEmail from '../../emails';
+import { AccountSignInVariables, AccountSignInResponse } from '../../types';
 
 /**
  * accountSignIn

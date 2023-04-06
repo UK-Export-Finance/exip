@@ -1,11 +1,11 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../keystone';
+import baseConfig from '../../keystone';
 import submitApplication from './submit-application';
-import applicationSubmittedEmails from '../emails/send-application-submitted-emails';
-import { APPLICATION } from '../constants';
-import { mockAccount, mockBuyer, mockExporterCompany, mockApplicationDeclaration, mockSendEmailResponse } from '../test-mocks';
+import applicationSubmittedEmails from '../../emails/send-application-submitted-emails';
+import { APPLICATION } from '../../constants';
+import { mockAccount, mockBuyer, mockExporterCompany, mockApplicationDeclaration, mockSendEmailResponse } from '../../test-mocks';
 import {
   Account,
   Application,
@@ -14,7 +14,7 @@ import {
   SubmitApplicationVariables,
   SubmitApplicationResponse,
   ApplicationExporterCompany,
-} from '../types';
+} from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -96,7 +96,7 @@ describe('custom-resolvers/submit-application', () => {
   let variables: SubmitApplicationVariables;
   let result: SubmitApplicationResponse;
 
-  jest.mock('../emails/send-application-submitted-emails');
+  jest.mock('../../emails/send-application-submitted-emails');
 
   let applicationSubmittedEmailsSpy = jest.fn();
 

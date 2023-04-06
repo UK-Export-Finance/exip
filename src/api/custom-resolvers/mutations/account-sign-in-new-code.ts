@@ -1,8 +1,8 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import getExporterById from '../helpers/get-exporter-by-id';
-import generateOTPAndUpdateAccount from '../helpers/generate-otp-and-update-account';
-import sendEmail from '../emails';
-import { AccountSignInSendNewCodeVariables, AccountSignInResponse } from '../types';
+import getExporterById from '../../helpers/get-exporter-by-id';
+import generateOTPAndUpdateAccount from '../../helpers/generate-otp-and-update-account';
+import sendEmail from '../../emails';
+import { AccountSignInSendNewCodeVariables, AccountSignInResponse } from '../../types';
 
 /**
  * accountSignInSendNewCode
