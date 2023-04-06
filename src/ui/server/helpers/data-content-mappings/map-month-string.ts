@@ -4,12 +4,6 @@
  * @param {Number} Credit period
  * @returns {String} Credit period with month/s string
  */
-const mapMonthString = (answer: number) => {
-  if (answer === 1) {
-    return `${answer} month`;
-  }
-
-  return `${answer} months`;
-};
+const mapMonthString = (answer: number) => (answer === 1 ? `${answer} month` : `${answer} months`);
 
 export default mapMonthString;

@@ -6,13 +6,7 @@ import { FIELD_VALUES } from '../../../../constants';
  * @param {String} Policy type
  * @returns {Boolean}
  */
-const isSinglePolicyType = (policyType: string) => {
-  if (policyType === FIELD_VALUES.POLICY_TYPE.SINGLE) {
-    return true;
-  }
-
-  return false;
-};
+const isSinglePolicyType = (policyType: string) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
 
 /**
  * isMultiPolicyType
@@ -20,12 +14,6 @@ const isSinglePolicyType = (policyType: string) => {
  * @param {String} Policy type
  * @returns {Boolean}
  */
-const isMultiPolicyType = (policyType: string) => {
-  if (policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE) {
-    return true;
-  }
-
-  return false;
-};
+const isMultiPolicyType = (policyType: string) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 export { isSinglePolicyType, isMultiPolicyType };
