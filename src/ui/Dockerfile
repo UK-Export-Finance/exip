@@ -55,25 +55,24 @@ COPY --chown=node:node --from=build /app/package.json .
 COPY --chown=node:node --from=build /app/package-lock.json .
 COPY --chown=node:node --from=build /app/tsconfig.json .
 COPY --chown=node:node --from=build /app/node_modules ./node_modules
-RUN ls -alh
-COPY --from=build /app/public ./public
-RUN ls -alh public
+COPY --chown=node:node --from=build /app/public ./public
 COPY --chown=node:node --from=build /app/server ./server
 COPY --chown=node:node --from=build /app/templates ./templates
 COPY --chown=node:node --from=build /app/types ./types
 
 # Non-root user
-USER node
+# USER node
+RUN ls -alh public
 
 # Container healthcheck
-HEALTHCHECK \
---interval=60s \
---timeout=30s \
-CMD wget \
---no-verbose \
---tries=3 \
---spider http://localhost:${PORT} \
-|| exit 1
+# HEALTHCHECK \
+# --interval=60s \
+# --timeout=30s \
+# CMD wget \
+# --no-verbose \
+# --tries=3 \
+# --spider http://localhost:${PORT} \
+# || exit 1
 
 # Execute Script
 CMD ["npm", "run", "start"]
