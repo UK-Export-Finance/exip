@@ -1,22 +1,76 @@
-# Node Alpine Docker Image
-FROM node:18.9-alpine3.16
+###################
+# 1. BUILD
+###################
 
-# Variables
+FROM node:19.8.1-alpine3.16 AS build
+
+# Build variables
 ARG GITHUB_SHA
+ARG PORT
+ARG NODE_ENV
 ENV GITHUB_SHA=$GITHUB_SHA
+ENV PORT=$PORT
+ENV NODE_ENV=$NODE_ENV
 
-# Install packages
-RUN apk add bash openrc openssh curl
-RUN rm -rf /var/cache/apk/*
-
-# Node setup
 WORKDIR /app
 
-COPY package.json .
-RUN npm i --omit=dev --legacy-peer-deps
+# Copy UI
+COPY --chown=node:node ./scripts ./scripts
+COPY --chown=node:node ./server ./server
+COPY --chown=node:node ./styles ./styles
+COPY --chown=node:node ./templates ./templates
+COPY --chown=node:node ./types ./types
+COPY --chown=node:node ./package.json .
+COPY --chown=node:node ./package-lock.json .
+COPY --chown=node:node ./tsconfig.json .
+COPY --chown=node:node ./.prettierrc.json .
+COPY ./jest.config.js .
+COPY ./.eslintrc.js .
+COPY ./webpack.common.config.js .
+COPY ./webpack.prod.config.js .
+
+RUN npm ci --legacy-peer-deps --ignore-scripts
 RUN npm cache clean --force
 
-COPY . .
+# Build with all dependencies
+RUN npm run build
+
+# Lean NPM - Only install `dependencies`
+# `devDependencies` will still be resolved inside `package-lock.json`,
+# however they will not be installed inside `node_modules` directory.
+RUN npm ci --legacy-peer-deps --omit=dev --ignore-scripts
+
+###################
+# 2. PRODUCTION
+###################
+
+# NPM 9.5.1 Alpine linux image
+FROM node:19.8.1-alpine3.16 AS production
+
+WORKDIR /app
+
+# Copy from `build` to `prod`
+COPY --chown=node:node --from=build /app/package.json .
+COPY --chown=node:node --from=build /app/package-lock.json .
+COPY --chown=node:node --from=build /app/tsconfig.json .
+COPY --chown=node:node --from=build /app/node_modules ./node_modules
+COPY --chown=node:node --from=build /app/public ./public
+COPY --chown=node:node --from=build /app/server ./server
+COPY --chown=node:node --from=build /app/templates ./templates
+COPY --chown=node:node --from=build /app/types ./types
+
+# Non-root user
+USER node
+
+# Container healthcheck
+HEALTHCHECK \
+--interval=60s \
+--timeout=30s \
+CMD wget \
+--no-verbose \
+--tries=3 \
+--spider http://localhost:${PORT} \
+|| exit 1
 
 # Execute Script
-CMD ["npx", "nodemon", "server/index.ts"]
+CMD ["npm", "run", "start"]
