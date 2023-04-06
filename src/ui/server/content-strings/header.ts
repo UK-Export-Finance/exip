@@ -3,7 +3,7 @@ import { ROUTES } from '../constants/routes';
 const {
   INSURANCE: {
     DASHBOARD,
-    ACCOUNT: { MANAGE_ACCOUNT, SIGN_IN },
+    ACCOUNT: { MANAGE_ACCOUNT, SIGN_OUT },
   },
 } = ROUTES;
 
@@ -17,6 +17,6 @@ export const HEADER = {
   },
   SIGN_OUT: {
     TEXT: 'Sign out',
-    HREF: SIGN_IN.ROOT,
+    HREF: SIGN_OUT,
   },
 };

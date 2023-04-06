@@ -1415,6 +1415,10 @@ var send = async (context, referenceNumber, accountId, buyerId, declarationId, e
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       exporterCompanyName: exporterCompany.companyName,
+<<<<<<< Updated upstream
+=======
+      // TODO: EMS-1273 to remove below
+>>>>>>> Stashed changes
       linkToFile: ""
     };
     const exporterSubmittedResponse = await emails_default.applicationSubmitted.exporter(sendEmailVars);

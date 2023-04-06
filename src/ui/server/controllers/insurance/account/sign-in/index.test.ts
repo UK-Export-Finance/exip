@@ -85,6 +85,7 @@ describe('controllers/insurance/account/sign-in', () => {
         ...PAGE_VARIABLES,
         userName: getUserNameFromSession(req.session.user),
         renderSuccessBanner: false,
+        renderImportantBanner: false,
       });
     });
 
@@ -93,6 +94,7 @@ describe('controllers/insurance/account/sign-in', () => {
         req.flash = (property: string) => {
           const obj = {
             successBanner: 'newAccountVerified',
+            importantBanner: '',
           };
 
           return obj[property];
@@ -110,6 +112,35 @@ describe('controllers/insurance/account/sign-in', () => {
           ...PAGE_VARIABLES,
           userName: getUserNameFromSession(req.session.user),
           renderSuccessBanner: true,
+          renderImportantBanner: false,
+        });
+      });
+    });
+
+    describe("when req.flash('successBanner') includes 'newAccountVerified')", () => {
+      beforeEach(() => {
+        req.flash = (property: string) => {
+          const obj = {
+            successBanner: '',
+            importantBanner: 'successfulSignOut',
+          };
+
+          return obj[property];
+        };
+      });
+
+      it('should render template with renderSuccessBanner', () => {
+        get(req, res);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...PAGE_VARIABLES,
+          user: req.session.user,
+          renderSuccessBanner: false,
+          renderImportantBanner: true,
         });
       });
     });

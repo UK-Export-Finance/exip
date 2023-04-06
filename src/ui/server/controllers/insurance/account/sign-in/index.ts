@@ -55,9 +55,11 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(DASHBOARD);
   }
 
-  const flash = req.flash('successBanner');
+  const successFlash = req.flash('successBanner');
+  const renderSuccessBanner = successFlash.includes('newAccountVerified') || false;
 
-  const renderSuccessBanner = flash.includes('newAccountVerified') || false;
+  const importantFlash = req.flash('importantBanner');
+  const renderImportantBanner = importantFlash.includes('successfulSignOut') || false;
 
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
@@ -67,6 +69,7 @@ export const get = (req: Request, res: Response) => {
     ...PAGE_VARIABLES,
     userName: getUserNameFromSession(req.session.user),
     renderSuccessBanner,
+    renderImportantBanner,
   });
 };
 
