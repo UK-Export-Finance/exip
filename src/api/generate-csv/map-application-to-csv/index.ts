@@ -13,29 +13,35 @@ import { Application } from '../../types';
  * @returns {Array} Array of objects for CSV generation
  */
 const mapApplicationToCsv = (application: Application) => {
-  const mapped = [
-    ROW_SEPERATOR,
+  try {
+    const mapped = [
+      ROW_SEPERATOR,
 
-    ...mapReferenceNumberAndDates(application),
+      ...mapReferenceNumberAndDates(application),
 
-    ROW_SEPERATOR,
+      ROW_SEPERATOR,
 
-    ...mapEligibility(application),
+      ...mapEligibility(application),
 
-    ROW_SEPERATOR,
+      ROW_SEPERATOR,
 
-    ...mapPolicyAndExport(application),
+      ...mapPolicyAndExport(application),
 
-    ROW_SEPERATOR,
+      ROW_SEPERATOR,
 
-    ...mapExporter(application),
+      ...mapExporter(application),
 
-    ROW_SEPERATOR,
+      ROW_SEPERATOR,
 
-    ...mapBuyer(application),
-  ];
+      ...mapBuyer(application),
+    ];
 
-  return mapped;
+    return mapped;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error(`Mapping application to CSV ${err}`);
+  }
 };
 
 export default mapApplicationToCsv;
