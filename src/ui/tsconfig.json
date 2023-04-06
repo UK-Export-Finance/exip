@@ -34,5 +34,5 @@
     "importHelpers": true
   },
   "include": ["**/*.ts", "./server", "./jest.config.js", "./.eslintrc.js"],
-  "exclude": ["node_modules", "generated_reports", "logs"]
+  "exclude": ["node_modules", "generated_reports"]
 }
