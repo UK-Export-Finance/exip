@@ -15,17 +15,7 @@ ENV NODE_ENV=$NODE_ENV
 WORKDIR /app
 
 # Copy UI
-COPY ./scripts ./scripts
-COPY ./server ./server
-COPY ./styles ./styles
-COPY ./templates ./templates
-COPY ./types ./types
-COPY ./package.json .
-COPY ./package-lock.json .
-COPY ./tsconfig.json .
-COPY ./.eslintrc.js .
-COPY ./webpack.common.config.js .
-COPY ./webpack.prod.config.js .
+COPY --chown=node:node . .
 
 RUN npm ci --legacy-peer-deps --ignore-scripts
 RUN npm cache clean --force
