@@ -25,6 +25,7 @@ context('Contact us page', () => {
       currentHref: ROUTES.CONTACT_US,
       backLink: `${ROUTES.CONTACT_US}#`,
       assertSubmitButton: false,
+      assertAuthenticatedHeader: false,
     });
   });
 

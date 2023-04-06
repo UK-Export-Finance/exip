@@ -6,7 +6,6 @@ export const FIELD_IDS = {
   ...SHARED,
   ...SHARED_ELIGIBILITY_FIELD_IDS,
   OPTIONAL_COOKIES: 'optionalCookies',
-  CONTACT_US: 'contactUs',
   VALID_BUYER_BODY: 'validBuyerBody',
   COUNTRY: 'country',
   AMOUNT_CURRENCY: 'amountAndCurrency',
