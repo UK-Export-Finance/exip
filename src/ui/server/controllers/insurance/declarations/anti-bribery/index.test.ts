@@ -4,6 +4,7 @@ import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
@@ -80,6 +81,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(mockApplication.referenceNumber),
+        userName: getUserNameFromSession(req.session.user),
         documentContent: mockDeclarations.antiBribery.content.document,
         documentConfig: keystoneDocumentRendererConfig(),
         application: res.locals.application,
@@ -164,6 +166,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(mockApplication.referenceNumber),
+          userName: getUserNameFromSession(req.session.user),
           documentContent: mockDeclarations.confidentiality.content.document,
           documentConfig: keystoneDocumentRendererConfig(),
           validationErrors: generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),

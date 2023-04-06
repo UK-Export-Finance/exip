@@ -2,10 +2,11 @@ import { pageVariables, get, post, TEMPLATE } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save';
+import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { INSURANCE } = ROUTES;
@@ -70,6 +71,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
+        userName: getUserNameFromSession(req.session.user),
         application: res.locals.application,
       };
 
@@ -164,6 +166,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
+          userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(req.body),
         };
 

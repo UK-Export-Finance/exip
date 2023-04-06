@@ -85,4 +85,4 @@ declare module 'express-session' {
   }
 }
 
-export { Next, Request, RequestBody, RequestSession, Response };
+export { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response };

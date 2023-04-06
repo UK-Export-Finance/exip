@@ -39,6 +39,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.POLICY_TYPE,
       backLink: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
+      assertAuthenticatedHeader: false,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.

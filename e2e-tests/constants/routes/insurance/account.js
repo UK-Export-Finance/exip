@@ -18,6 +18,8 @@ const SIGN_IN = {
   REQUEST_NEW_CODE: `${INSURANCE_ROOT}${SIGN_IN_ROOT}/request-new-code`,
 };
 
+const MANAGE_ACCOUNT = `${INSURANCE_ROOT}/manage-account`;
+
 const RESET_PASSWORD = {
   ROOT: `${INSURANCE_ROOT}${RESET_PASSWORD_ROOT}`,
 };
@@ -27,6 +29,7 @@ const SIGNED_OUT = `${INSURANCE_ROOT}/signed-out`;
 export const ACCOUNT = {
   CREATE,
   SIGN_IN,
+  MANAGE_ACCOUNT,
   RESET_PASSWORD,
   SIGNED_OUT,
 };

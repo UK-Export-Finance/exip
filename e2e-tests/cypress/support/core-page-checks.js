@@ -75,6 +75,7 @@ const corePageChecks = ({
   assertSubmitButton = true,
   submitButtonCopy = BUTTONS.CONTINUE,
   assertBackLink = true,
+  assertAuthenticatedHeader = true,
   // lightHouseThresholds,
 }) => {
   // run lighthouse audit
@@ -88,6 +89,11 @@ const corePageChecks = ({
   // check analytics cookie banner
   cy.checkAnalyticsCookiesConsentAndAccept();
   cy.rejectAnalyticsCookies();
+
+  if (assertAuthenticatedHeader) {
+    // check authenticated header
+    cy.checkAuthenticatedHeader();
+  }
 
   // check phase banner
   cy.checkPhaseBanner();

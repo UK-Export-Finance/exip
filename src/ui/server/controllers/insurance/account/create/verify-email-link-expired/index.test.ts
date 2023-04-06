@@ -2,6 +2,7 @@ import { TEMPLATE, PAGE_CONTENT_STRINGS, get } from '.';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../../types';
 import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
 
@@ -49,6 +50,7 @@ describe('controllers/insurance/account/create/verify-email-link-expired', () =>
           PAGE_CONTENT_STRINGS,
           BACK_LINK: `${CONFIRM_EMAIL}?id=${req.query.id}`,
         }),
+        userName: getUserNameFromSession(req.session.user),
       });
     });
 

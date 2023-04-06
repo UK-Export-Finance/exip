@@ -50,6 +50,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES,
       backLink: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,
+      assertAuthenticatedHeader: false,
     });
   });
 

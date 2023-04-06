@@ -3,6 +3,7 @@ import { FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../con
 import api from '../../../api';
 import isPopulatedArray from '../../../helpers/is-populated-array';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import getCurrencyByCode from '../../../helpers/get-currency-by-code';
 import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-cover';
@@ -129,6 +130,7 @@ const get = async (req: Request, res: Response) => {
     const PAGE_VARIABLES = generatePageVariables(submittedData.quoteEligibility[POLICY_TYPE]);
 
     return res.render(TEMPLATE, {
+      userName: getUserNameFromSession(req.session.user),
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
       isSinglePolicyType: isSinglePolicyType(submittedData.quoteEligibility[POLICY_TYPE]),
@@ -197,6 +199,7 @@ const post = async (req: Request, res: Response) => {
       const PAGE_VARIABLES = generatePageVariables(submittedData.quoteEligibility[POLICY_TYPE]);
 
       return res.render(TEMPLATE, {
+        userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
         isSinglePolicyType: isSinglePolicyType(submittedData.quoteEligibility[POLICY_TYPE]),

@@ -1,9 +1,10 @@
 import { pageVariables, TEMPLATE, get, post } from '.';
-import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
+import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
@@ -51,6 +52,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
           ID: FIELD_ID,
           ...FIELDS[FIELD_ID],
         },
+        SUBMIT_BUTTON_COPY: BUTTONS.SUBMIT_APPLICATION,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED_SAVE_AND_BACK}`,
       };
 
@@ -80,6 +82,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(mockApplication.referenceNumber),
+        userName: getUserNameFromSession(req.session.user),
         documentContent: mockDeclarations.howDataWillBeUsed.content.document,
         documentConfig: keystoneDocumentRendererConfig(),
         application: res.locals.application,
@@ -174,6 +177,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(mockApplication.referenceNumber),
+          userName: getUserNameFromSession(req.session.user),
           documentContent: mockDeclarations.howDataWillBeUsed.content.document,
           documentConfig: keystoneDocumentRendererConfig(),
           validationErrors: generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),

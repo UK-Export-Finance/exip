@@ -1,6 +1,7 @@
 import { ROUTES, TEMPLATES, APPLICATION } from '../../../constants';
 import { PAGES } from '../../../content-strings';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 
 const {
@@ -34,6 +35,7 @@ export const get = (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.APPLICATION_SUBMITTED,
       BACK_LINK: req.headers.referer,
     }),
+    userName: getUserNameFromSession(req.session.user),
     application,
   });
 };

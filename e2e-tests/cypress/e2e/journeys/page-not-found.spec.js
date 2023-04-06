@@ -19,6 +19,7 @@ context('404 Page not found', () => {
       currentHref: '/test',
       assertSubmitButton: false,
       assertBackLink: false,
+      assertAuthenticatedHeader: false,
     });
   });
 

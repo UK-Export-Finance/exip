@@ -1,6 +1,7 @@
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -29,5 +30,6 @@ export const get = (req: Request, res: Response) => {
       BACK_LINK: req.headers.referer,
     }),
     SIGN_IN_LINK: SIGN_IN.ROOT,
+    userName: getUserNameFromSession(req.session.user),
   });
 };

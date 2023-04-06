@@ -53,6 +53,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: ENTER_CODE,
         backLink: SIGN_IN_ROOT,
+        assertAuthenticatedHeader: false,
       });
     });
 

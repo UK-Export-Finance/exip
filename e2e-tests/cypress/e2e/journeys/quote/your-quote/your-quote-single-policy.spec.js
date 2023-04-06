@@ -65,6 +65,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
       currentHref: url,
       assertSubmitButton: false,
       assertBackLink: false,
+      assertAuthenticatedHeader: false,
     });
   });
 

@@ -23,6 +23,7 @@ context('Insurance Eligibility - start page', () => {
       currentHref: url,
       backLink: `${url}#`,
       submitButtonCopy: BUTTONS.START_NOW,
+      assertAuthenticatedHeader: false,
     });
   });
 

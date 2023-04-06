@@ -1,6 +1,7 @@
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import { PAGES } from '../../../../../content-strings';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../../types';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_EXPIRED;
@@ -34,6 +35,7 @@ export const get = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS,
         BACK_LINK: `${CONFIRM_EMAIL}?id=${req.query.id}`,
       }),
+      userName: getUserNameFromSession(req.session.user),
     });
   } catch (err) {
     console.error("Error rendering 'verify email link expired' page", { err });

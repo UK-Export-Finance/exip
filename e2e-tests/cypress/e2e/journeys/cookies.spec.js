@@ -29,6 +29,7 @@ context('Cookies page', () => {
       currentHref: ROUTES.COOKIES,
       backLink: ROUTES.QUOTE.BUYER_COUNTRY,
       submitButtonCopy: BUTTONS.SAVE_CHANGES,
+      assertAuthenticatedHeader: false,
     });
   });
 

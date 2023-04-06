@@ -1,7 +1,8 @@
 import { TEMPLATE, get } from '.';
 import { PAGES, LINKS } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
-import corePageVariables from '../../../helpers/page-variables/core/insurance';
+import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
@@ -36,10 +37,11 @@ describe('controllers/insurance/apply-offline', () => {
       get(req, res);
 
       const expectedVariables = {
-        ...corePageVariables({
+        ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.APPLY_OFFLINE,
           BACK_LINK: req.headers.referer,
         }),
+        userName: getUserNameFromSession(req.session.user),
         EXIT_REASON: mockExitReason,
         DOWNLOAD_FORM_LINK: LINKS.EXTERNAL.NBI_FORM,
       };
@@ -60,10 +62,11 @@ describe('controllers/insurance/apply-offline', () => {
         get(req, res);
 
         const expectedVariables = {
-          ...corePageVariables({
+          ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.APPLY_OFFLINE,
             BACK_LINK: req.headers.referer,
           }),
+          userName: getUserNameFromSession(req.session.user),
           EXIT_REASON: NO_COMPANIES_HOUSE_NUMBER,
           DOWNLOAD_FORM_LINK: LINKS.EXTERNAL.PROPOSAL_FORM,
         };

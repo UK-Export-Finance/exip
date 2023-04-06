@@ -2,6 +2,7 @@ import { TEMPLATE, PAGE_CONTENT_STRINGS, get } from '.';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../../types';
 import api from '../../../../../api';
 import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
@@ -60,6 +61,7 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: `${req.headers.referer}?id=${req.query.id}`,
         }),
+        userName: getUserNameFromSession(req.session.user),
         exporterEmail: mockGetByEmailResponse.emailRecipient,
         exporterId: req.query.id,
       });

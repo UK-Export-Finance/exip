@@ -1,8 +1,4 @@
-import {
-  headingCaption,
-  submitButton,
-  saveAndBackButton,
-} from '../../../../pages/shared';
+import { headingCaption, submitButton, saveAndBackButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import {
   BUTTONS,
@@ -20,8 +16,6 @@ const {
     CHECK_YOUR_ANSWERS,
   },
 } = ROUTES.INSURANCE;
-
-const insuranceStartRoute = START;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CHECK_YOUR_ANSWERS;
 
@@ -71,7 +65,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
     });
 
     it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
+      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
     it('renders a heading caption', () => {

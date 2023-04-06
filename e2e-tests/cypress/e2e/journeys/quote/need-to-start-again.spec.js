@@ -28,6 +28,7 @@ context('Get a Quote - Need to start again exit page', () => {
       currentHref: ROUTES.QUOTE.NEED_TO_START_AGAIN,
       submitButtonCopy: LINKS.START_AGAIN.TEXT,
       assertBackLink: false,
+      assertAuthenticatedHeader: false,
     });
   });
 

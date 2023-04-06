@@ -2,6 +2,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
@@ -34,7 +35,7 @@ export const pageVariables = (referenceNumber: number) => ({
 
 export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.CONFIDENTIALITY;
 
-const CONFIDENTIALITY_CONTENT = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.LIST;
+const CONFIDENTIALITY_CONTENT = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.VERSIONS[0];
 
 /**
  * get
@@ -59,6 +60,7 @@ export const get = async (req: Request, res: Response) => {
       BACK_LINK: req.headers.referer,
     }),
     ...pageVariables(refNumber),
+    userName: getUserNameFromSession(req.session.user),
     CONFIDENTIALITY_CONTENT,
     application,
   });
@@ -90,6 +92,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(refNumber),
+      userName: getUserNameFromSession(req.session.user),
       CONFIDENTIALITY_CONTENT,
       validationErrors,
     });

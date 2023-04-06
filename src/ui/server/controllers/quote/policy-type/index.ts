@@ -2,6 +2,7 @@ import { FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
 import generateValidationErrors from './validation';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { isSinglePolicyType } from '../../../helpers/policy-type';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
@@ -38,6 +39,7 @@ export const TEMPLATE = TEMPLATES.QUOTE.POLICY_TYPE;
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
+    userName: getUserNameFromSession(req.session.user),
     ...PAGE_VARIABLES,
     submittedValues: req.session.submittedData.quoteEligibility,
   });
@@ -48,6 +50,7 @@ export const post = (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
+      userName: getUserNameFromSession(req.session.user),
       ...PAGE_VARIABLES,
       validationErrors,
       submittedValues: req.body,

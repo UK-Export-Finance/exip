@@ -2,6 +2,7 @@ import { TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
@@ -29,6 +30,7 @@ describe('controllers/insurance/eligibility/check-if-eligible', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
           BACK_LINK: req.headers.referer,
         }),
+        userName: getUserNameFromSession(req.session.user),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
