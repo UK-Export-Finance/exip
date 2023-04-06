@@ -132,3 +132,5 @@ export const EMAIL_TEMPLATE_IDS = {
     },
   },
 };
+
+export const ACCEPTED_FILE_TYPES = ['.csv'];

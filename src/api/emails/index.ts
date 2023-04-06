@@ -133,17 +133,21 @@ const applicationSubmitted = {
       // if something errors, it will fall into the catch handler below.
       const file = await fileSystem.readFile(csvPath);
 
-      const fileIsCsv = true;
+      if (file) {
+        const fileIsCsv = true;
 
-      const fileBuffer = Buffer.from(file);
+        const fileBuffer = Buffer.from(file);
 
-      const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
+        const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
 
-      // NOTE: no need to handle an error from fs.unlink here,
-      // if it errors, it will go into the catch handler below.
-      await fileSystem.unlink(csvPath);
+        // NOTE: no need to handle an error from fs.unlink here,
+        // if it errors, it will go into the catch handler below.
+        await fileSystem.unlink(csvPath);
 
-      return response;
+        return response;
+      }
+
+      throw new Error('Sending application submitted email to underwriting team - invalid file / file not found');
     } catch (err) {
       console.error(err);
 
