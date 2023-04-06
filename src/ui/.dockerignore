@@ -1,10 +1,8 @@
 .env
 .env.sample
 .gitignore
-.prettierrc.json
 .prettierignore
 .eslintignore
-jest.config.js
 README.md
 Dockerfile
 node_modules

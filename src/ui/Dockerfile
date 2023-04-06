@@ -15,7 +15,19 @@ ENV NODE_ENV=$NODE_ENV
 WORKDIR /app
 
 # Copy UI
-COPY --chown=node:node . .
+COPY --chown=node:node ./scripts ./scripts
+COPY --chown=node:node ./server ./server
+COPY --chown=node:node ./styles ./styles
+COPY --chown=node:node ./templates ./templates
+COPY --chown=node:node ./types ./types
+COPY --chown=node:node ./package.json .
+COPY --chown=node:node ./package-lock.json .
+COPY --chown=node:node ./tsconfig.json .
+COPY --chown=node:node ./jest.config.js .
+COPY --chown=node:node ./.prettierrc.json .
+COPY --chown=node:node ./.eslintrc.js .
+COPY --chown=node:node ./webpack.common.config.js .
+COPY --chown=node:node ./webpack.prod.config.js .
 
 RUN npm ci --legacy-peer-deps --ignore-scripts
 RUN npm cache clean --force
