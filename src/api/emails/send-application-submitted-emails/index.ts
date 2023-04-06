@@ -2,7 +2,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
 import sendEmail from '../index';
 import getExporterById from '../../helpers/get-exporter-by-id';
 import { ANSWERS, EMAIL_TEMPLATE_IDS } from '../../constants';
-import { SubmitApplicationResponse, ApplicationSubmissionEmailVariables } from '../../types';
+import { ApplicationSubmissionEmailVariables, SuccessResponse } from '../../types';
 
 /**
  * applicationSubmittedEmails.send
@@ -19,7 +19,7 @@ const send = async (
   buyerId: string,
   declarationId: string,
   exporterCompanyId: string,
-): Promise<SubmitApplicationResponse> => {
+): Promise<SuccessResponse> => {
   try {
     // get the application's exporter
     const exporter = await getExporterById(context, accountId);

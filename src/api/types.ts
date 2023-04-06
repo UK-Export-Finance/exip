@@ -1,5 +1,9 @@
 import { ExporterUpdateInput, ExporterCompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
 
+interface SuccessResponse {
+  success: boolean;
+}
+
 interface ApplicationRelationship {
   id: string;
 }
@@ -102,12 +106,7 @@ interface DeleteApplicationByReferenceNumberVariables {
   referenceNumber: number;
 }
 
-interface DeleteApplicationByReferenceNumberResponse {
-  success: boolean;
-}
-
-interface EmailResponse {
-  success: boolean;
+interface EmailResponse extends SuccessResponse {
   emailRecipient: string;
 }
 
@@ -133,16 +132,10 @@ interface VerifyEmailAddressVariables {
   token: string;
 }
 
-interface VerifyEmailAddressResponse {
-  success: boolean;
+interface VerifyEmailAddressResponse extends SuccessResponse {
   accountId?: string;
   expired?: boolean;
   emailRecipient?: string;
-}
-
-interface SendExporterEmailVariables {
-  exporterId: string;
-  referenceNumber?: string;
 }
 
 interface AccountCreationVariables {
@@ -161,8 +154,7 @@ interface AccountSignInSendNewCodeVariables {
   accountId: string;
 }
 
-interface AccountSignInResponse {
-  success: boolean;
+interface AccountSignInResponse extends SuccessResponse {
   accountId?: string;
 }
 
@@ -171,8 +163,7 @@ interface VerifyAccountSignInCodeVariables {
   securityCode: string;
 }
 
-interface VerifyAccountSignInCodeResponse {
-  success: boolean;
+interface VerifyAccountSignInCodeResponse extends SuccessResponse {
   expired?: boolean;
   accountId?: string;
   firstName?: string;
@@ -190,17 +181,17 @@ interface AddOtpToAccountVariables {
   email: string;
 }
 
-interface AddAndGetOtpResponse {
-  success: boolean;
+interface AddAndGetOtpResponse extends SuccessResponse {
   securityCode?: string;
+}
+
+interface SendExporterEmailVariables {
+  exporterId: string;
+  referenceNumber?: string;
 }
 
 interface SubmitApplicationVariables {
   applicationId: string;
-}
-
-interface SubmitApplicationResponse {
-  success: boolean;
 }
 
 interface UpdateExporterCompanyAndCompanyAddressVariablesData {
@@ -234,13 +225,12 @@ export {
   BufferEncoding,
   CompanyResponse,
   DeleteApplicationByReferenceNumberVariables,
-  DeleteApplicationByReferenceNumberResponse,
   EmailResponse,
   GetCompaniesHouseInformationVariables,
   SicCodes,
-  SubmitApplicationVariables,
-  SubmitApplicationResponse,
   SendExporterEmailVariables,
+  SubmitApplicationVariables,
+  SuccessResponse,
   UpdateExporterCompanyAndCompanyAddressVariables,
   VerifyEmailAddressVariables,
   VerifyEmailAddressResponse,

@@ -12,7 +12,7 @@ import {
   ApplicationBuyer,
   ApplicationDeclaration,
   SubmitApplicationVariables,
-  SubmitApplicationResponse,
+  SuccessResponse,
   ApplicationExporterCompany,
 } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -94,7 +94,7 @@ describe('custom-resolvers/submit-application', () => {
   let application: Application;
   let submittedApplication: Application;
   let variables: SubmitApplicationVariables;
-  let result: SubmitApplicationResponse;
+  let result: SuccessResponse;
 
   jest.mock('../../emails/send-application-submitted-emails');
 

@@ -29,6 +29,5 @@ const customResolvers = {
     getCompaniesHouseInformation,
   },
 };
-// } as IResolvers;
 
 export default customResolvers;

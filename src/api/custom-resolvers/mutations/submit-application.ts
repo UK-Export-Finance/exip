@@ -1,7 +1,7 @@
 import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import { APPLICATION } from '../../constants';
 import applicationSubmittedEmails from '../../emails/send-application-submitted-emails';
-import { SubmitApplicationVariables, SubmitApplicationResponse } from '../../types';
+import { SubmitApplicationVariables, SuccessResponse } from '../../types';
 
 /**
  * submitApplication
@@ -11,7 +11,7 @@ import { SubmitApplicationVariables, SubmitApplicationResponse } from '../../typ
  * @param {Object} KeystoneJS context API
  * @returns {Object} Object with success flag
  */
-const submitApplication = async (root: any, variables: SubmitApplicationVariables, context: Context): Promise<SubmitApplicationResponse> => {
+const submitApplication = async (root: any, variables: SubmitApplicationVariables, context: Context): Promise<SuccessResponse> => {
   try {
     console.info('Submitting application');
 

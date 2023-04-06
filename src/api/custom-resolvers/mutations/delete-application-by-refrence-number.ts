@@ -1,11 +1,11 @@
 import { Application, Context } from '.keystone/types'; // eslint-disable-line
-import { DeleteApplicationByReferenceNumberVariables, DeleteApplicationByReferenceNumberResponse } from '../../types';
+import { DeleteApplicationByReferenceNumberVariables, SuccessResponse } from '../../types';
 
 const deleteApplicationByReferenceNumber = async (
   root: any,
   variables: DeleteApplicationByReferenceNumberVariables,
   context: Context,
-): Promise<DeleteApplicationByReferenceNumberResponse> => {
+): Promise<SuccessResponse> => {
   try {
     console.info('Deleting application by reference number');
 
