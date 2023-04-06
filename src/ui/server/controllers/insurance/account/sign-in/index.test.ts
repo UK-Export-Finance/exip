@@ -138,7 +138,7 @@ describe('controllers/insurance/account/sign-in', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,
-          user: req.session.user,
+          userName: getUserNameFromSession(req.session.user),
           renderSuccessBanner: false,
           renderImportantBanner: true,
         });
