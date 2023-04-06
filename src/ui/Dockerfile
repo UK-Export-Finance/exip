@@ -2,13 +2,15 @@
 # 1. BUILD
 ###################
 
-FROM node:19.8-alpine3.16 AS build
+FROM node:19.8.1-alpine3.16 AS build
 
 # Build variables
 ARG GITHUB_SHA
 ARG PORT
+ARG NODE_ENV
 ENV GITHUB_SHA=$GITHUB_SHA
 ENV PORT=$PORT
+ENV NODE_ENV=$NODE_ENV
 
 WORKDIR /app
 
@@ -41,7 +43,7 @@ RUN npm ci --legacy-peer-deps --omit=dev --ignore-scripts
 ###################
 
 # NPM 9.5.1 Alpine linux image
-FROM node:19.8-alpine3.16 AS production
+FROM node:19.8.1-alpine3.16 AS production
 
 WORKDIR /app
 
