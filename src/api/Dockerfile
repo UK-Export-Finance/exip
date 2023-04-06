@@ -70,7 +70,6 @@ COPY --chown=node:node --from=build /app/integrations ./integrations
 COPY --chown=node:node --from=build /app/helpers ./helpers
 COPY --chown=node:node --from=build /app/emails ./emails
 COPY --chown=node:node --from=build /app/custom-resolvers ./custom-resolvers
-COPY --chown=node:node --from=build /app/test-mocks ./test-mocks
 
 # Non-root user
 USER node
