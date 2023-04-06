@@ -23,8 +23,8 @@ COPY --chown=node:node ./types ./types
 COPY --chown=node:node ./package.json .
 COPY --chown=node:node ./package-lock.json .
 COPY --chown=node:node ./tsconfig.json .
-COPY --chown=node:node ./jest.config.js .
 COPY --chown=node:node ./.prettierrc.json .
+COPY ./jest.config.js .
 COPY ./.eslintrc.js .
 COPY ./webpack.common.config.js .
 COPY ./webpack.prod.config.js .
