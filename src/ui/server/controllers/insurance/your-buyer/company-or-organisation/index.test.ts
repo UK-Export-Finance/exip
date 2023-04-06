@@ -5,11 +5,12 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import api from '../../../../api';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import yourBuyerDetailsValidation from './validation';
-import { mockReq, mockRes, mockApplication, mockCountries, mockBuyer } from '../../../../test-mocks';
-import { Request, Response } from '../../../../../types';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save';
+import { Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockApplication, mockCountries, mockBuyer } from '../../../../test-mocks';
 
 const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
@@ -125,6 +126,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
           BACK_LINK: req.headers.referer,
         }),
         application: mapApplicationToFormFields(mockApplication),
+        userName: getUserNameFromSession(req.session.user),
         ...pageVariables(mockApplication.referenceNumber),
         countries: expectedCountries,
       };
@@ -252,6 +254,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION,
             BACK_LINK: req.headers.referer,
           }),
+          userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber),
           submittedValues: req.body,
           countries: expectedCountries,

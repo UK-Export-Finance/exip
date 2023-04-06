@@ -1,7 +1,8 @@
 import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
-import { Request, Response } from '../../../../types';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import { Request, Response } from '../../../../types';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.START;
 
@@ -17,6 +18,7 @@ export const get = (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.START,
       BACK_LINK: req.headers.referer,
     }),
+    userName: getUserNameFromSession(req.session.user),
   });
 };
 

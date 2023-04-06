@@ -44,6 +44,7 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ACCOUNT_TO_APPLY_ONLINE,
       backLink: ELIGIBLE_TO_APPLY_ONLINE,
+      assertAuthenticatedHeader: false,
     });
   });
 

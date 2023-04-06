@@ -4,6 +4,7 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { eligibilitySummaryList } from '../../../../helpers/summary-lists/eligibility';
 import requiredFields from '../../../../helpers/required-fields/policy-and-exports';
 import sectionStatus from '../../../../helpers/section-status';
@@ -80,6 +81,7 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY,
           BACK_LINK: req.headers.referer,
         }),
+        userName: getUserNameFromSession(req.session.user),
         status,
         SUMMARY_LIST: summaryList,
         ...pageVariables(mockApplication.referenceNumber),

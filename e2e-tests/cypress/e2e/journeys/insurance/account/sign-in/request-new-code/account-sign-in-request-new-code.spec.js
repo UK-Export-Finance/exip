@@ -44,6 +44,7 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
       currentHref: REQUEST_NEW_CODE,
       backLink: ENTER_CODE,
       submitButtonCopy: BUTTONS.SEND_NEW_SECURITY_CODE,
+      assertAuthenticatedHeader: false,
     });
   });
 

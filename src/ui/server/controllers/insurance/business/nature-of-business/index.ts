@@ -1,13 +1,14 @@
 import { PAGES } from '../../../../content-strings';
-import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Request, Response } from '../../../../../types';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
@@ -74,6 +75,7 @@ const get = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: NATURE_OF_YOUR_BUSINESS,
         BACK_LINK: req.headers.referer,
       }),
+      userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       ...pageVariables(application.referenceNumber),
     });
@@ -120,6 +122,7 @@ const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: NATURE_OF_YOUR_BUSINESS,
           BACK_LINK: req.headers.referer,
         }),
+        userName: getUserNameFromSession(req.session.user),
         ...pageVariables(application.referenceNumber),
         validationErrors,
         application: mapApplicationToFormFields(application),

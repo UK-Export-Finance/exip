@@ -4,6 +4,7 @@ import api from '../../../../api';
 import isPopulatedArray from '../../../../helpers/is-populated-array';
 import { mapCisCountries } from '../../../../helpers/mappings/map-cis-countries';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import getCountryByName from '../../../../helpers/get-country-by-name';
 import { canApplyOnline, canApplyOffline, cannotApply } from '../../../../helpers/country-support';
@@ -53,6 +54,7 @@ export const get = async (req: Request, res: Response) => {
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
       }),
+      userName: getUserNameFromSession(req.session.user),
       countries: mappedCountries,
       submittedValues: req.session.submittedData.insuranceEligibility,
     });
@@ -81,6 +83,7 @@ export const post = async (req: Request, res: Response) => {
           ...PAGE_VARIABLES,
           BACK_LINK: req.headers.referer,
         }),
+        userName: getUserNameFromSession(req.session.user),
         countries: mappedCountries,
         validationErrors,
       });

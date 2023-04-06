@@ -2,6 +2,7 @@ import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES, APPLICATION } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
 
@@ -35,6 +36,7 @@ describe('controllers/insurance/application-submitted', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.APPLICATION_SUBMITTED,
           BACK_LINK: req.headers.referer,
         }),
+        userName: getUserNameFromSession(req.session.user),
         application: res.locals.application,
       };
 

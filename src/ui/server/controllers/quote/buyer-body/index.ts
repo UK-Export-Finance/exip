@@ -1,6 +1,7 @@
 import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
@@ -55,6 +56,7 @@ export const get = (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+    userName: getUserNameFromSession(req.session.user),
     submittedValues: {
       ...req.session.submittedData.quoteEligibility,
       [FIELD_ID]: mappedAnswer,
@@ -68,6 +70,7 @@ export const post = (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+      userName: getUserNameFromSession(req.session.user),
       validationErrors,
     });
   }

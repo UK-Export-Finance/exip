@@ -48,6 +48,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT,
       backLink: ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED,
+      assertAuthenticatedHeader: false,
     });
   });
 

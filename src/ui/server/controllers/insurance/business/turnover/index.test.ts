@@ -1,13 +1,14 @@
 import { PAGES } from '../../../../content-strings';
 import { pageVariables, get, post, TEMPLATE } from '.';
-import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save';
+import { Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER } = EXPORTER_BUSINESS.TURNOVER;
@@ -86,6 +87,7 @@ describe('controllers/insurance/business/turnover', () => {
             PAGE_CONTENT_STRINGS: TURNOVER,
             BACK_LINK: req.headers.referer,
           }),
+          userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
           ...pageVariables(mockApplication.referenceNumber),
         });
@@ -126,6 +128,7 @@ describe('controllers/insurance/business/turnover', () => {
             PAGE_CONTENT_STRINGS: TURNOVER,
             BACK_LINK: req.headers.referer,
           }),
+          userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),

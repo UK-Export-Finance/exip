@@ -6,6 +6,7 @@ export * from './default';
 export * from './error-messages';
 export * from './footer';
 export * from './fields';
+export * from './header';
 export * from './links';
 export * from './product';
 export * from './quote-titles';

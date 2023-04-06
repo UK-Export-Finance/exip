@@ -2,10 +2,11 @@ import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
-import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
+import { mockReq, mockRes } from '../../../test-mocks';
 
 describe('controllers/quote/exporter-location', () => {
   let req: Request;
@@ -39,6 +40,7 @@ describe('controllers/quote/exporter-location', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, {
         ...singleInputPageVariables(PAGE_VARIABLES),
+        userName: getUserNameFromSession(req.session.user),
         BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData.quoteEligibility,
       });
@@ -52,6 +54,7 @@ describe('controllers/quote/exporter-location', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, {
           ...singleInputPageVariables(PAGE_VARIABLES),
+          userName: getUserNameFromSession(req.session.user),
           BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),
         });

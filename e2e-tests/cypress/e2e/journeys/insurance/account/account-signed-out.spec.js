@@ -32,6 +32,7 @@ context('Insurance - Account - Signed out -  As an Exporter I want the system to
       currentHref: SIGNED_OUT,
       assertBackLink: false,
       assertSubmitButton: false,
+      assertAuthenticatedHeader: false,
     });
   });
 

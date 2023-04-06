@@ -1,14 +1,15 @@
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { objectHasValues } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import { isMultiPolicyType, isSinglePolicyType } from '../../../../helpers/policy-type';
 import mapAndSave from '../map-and-save';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE: {
@@ -52,6 +53,7 @@ export const get = (req: Request, res: Response) => {
       BACK_LINK: req.headers.referer,
     }),
     ...pageVariables(refNumber),
+    userName: getUserNameFromSession(req.session.user),
     application,
   });
 };
@@ -83,6 +85,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(refNumber),
+      userName: getUserNameFromSession(req.session.user),
       validationErrors,
     });
   }
