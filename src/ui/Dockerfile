@@ -33,7 +33,6 @@ RUN npm ci --legacy-peer-deps --ignore-scripts
 RUN npm cache clean --force
 
 # Build with all dependencies
-RUN ls -alh /public
 RUN npm run build
 RUN ls -alh /public
 
@@ -51,14 +50,13 @@ RUN ls -alh /public
 FROM node:19.8.1-alpine3.16 AS production
 
 WORKDIR /app
-RUN ls -alh /public
 
 # Copy from `build` to `prod`
 COPY --chown=node:node --from=build /app/package.json .
 COPY --chown=node:node --from=build /app/package-lock.json .
 COPY --chown=node:node --from=build /app/tsconfig.json .
 COPY --chown=node:node --from=build /app/node_modules ./node_modules
-RUN ls -alh /public
+RUN ls -alh ./
 COPY --from=build /app/public ./public
 RUN ls -alh /public
 COPY --chown=node:node --from=build /app/scripts ./scripts
