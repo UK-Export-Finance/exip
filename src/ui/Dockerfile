@@ -33,14 +33,14 @@ RUN npm ci --legacy-peer-deps --ignore-scripts
 RUN npm cache clean --force
 
 # Build with all dependencies
+RUN ls -alh public/
 RUN npm run build
-RUN ls -alh /public
+RUN ls -alh public/
 
 # Lean NPM - Only install `dependencies`
 # `devDependencies` will still be resolved inside `package-lock.json`,
 # however they will not be installed inside `node_modules` directory.
 RUN npm ci --legacy-peer-deps --omit=dev --ignore-scripts
-RUN ls -alh /public
 
 ###################
 # 2. PRODUCTION
@@ -49,6 +49,7 @@ RUN ls -alh /public
 # NPM 9.5.1 Alpine linux image
 FROM node:19.8.1-alpine3.16 AS production
 
+RUN ls -alh public/
 WORKDIR /app
 
 # Copy from `build` to `prod`
@@ -56,9 +57,9 @@ COPY --chown=node:node --from=build /app/package.json .
 COPY --chown=node:node --from=build /app/package-lock.json .
 COPY --chown=node:node --from=build /app/tsconfig.json .
 COPY --chown=node:node --from=build /app/node_modules ./node_modules
-RUN ls -alh ./
+RUN ls -alh public/
 COPY --from=build /app/public ./public
-RUN ls -alh /public
+RUN ls -alh public/
 COPY --chown=node:node --from=build /app/scripts ./scripts
 COPY --chown=node:node --from=build /app/styles ./styles
 COPY --chown=node:node --from=build /app/server ./server
