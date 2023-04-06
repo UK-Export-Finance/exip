@@ -1,14 +1,14 @@
-import { ROUTES } from '../constants';
+import { ROUTES, CONTACT_DETAILS } from '../constants';
 
 export const FOOTER = {
   HEADING: 'Contact us',
   EMAIL: {
     HEADING: 'Email',
-    VALUE: 'customer.service@ukexportfinance.gov.uk',
+    VALUE: CONTACT_DETAILS.EMAIL.CUSTOMER_SERVICE,
   },
   PHONE: {
     HEADING: 'Phone',
-    VALUE: '+44 (0)207 271 8010',
+    VALUE: CONTACT_DETAILS.TELEPHONE,
   },
   OPENING_TIMES: {
     HEADING: 'Opening times',

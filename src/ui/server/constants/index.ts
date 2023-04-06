@@ -11,3 +11,4 @@ export * from './routes';
 export * from './supported-currencies';
 export * from './task-ids';
 export * from './templates';
+export * from './ukef-contact-details';
