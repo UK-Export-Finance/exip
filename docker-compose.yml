@@ -72,9 +72,10 @@ services:
       - ./src/ui/public:/app/public:rw
       - ./src/ui/templates:/app/templates:ro
     environment:
-      PORT: ${UI_PORT}
       NODE_ENV:
+      PORT: ${UI_PORT}
       API_URL:
+      SESSION_SECRET:
       BASIC_AUTH_KEY:
       BASIC_AUTH_SECRET:
       MULESOFT_API_CIS_URL:
