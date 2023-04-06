@@ -49,6 +49,9 @@ const ACCOUNT = {
         HEADING: "You've confirmed your email address and activated your account.",
         SIGN_IN_TO_CONTINUE: 'Sign in to continue your application.',
       },
+      IMPORTANT_BANNER: {
+        SUCCESSFULLY_SIGNED_OUT: 'You have successfully signed out.',
+      },
       PAGE_TITLE: 'Sign in',
       RESET_PASSWORD: {
         TEXT: 'Reset password',

@@ -321,12 +321,54 @@ var EMAIL_TEMPLATE_IDS = {
     }
   }
 };
+var ACCEPTED_FILE_TYPES = [".csv"];
 
 // file-system/index.ts
 var import_fs = require("fs");
-var readFile = (filePath) => import_fs.promises.readFile(filePath);
-var unlink = (filePath) => import_fs.promises.unlink(filePath);
+var import_path = __toESM(require("path"));
+var fileExists = (filePath) => {
+  const fileBuffer = Buffer.from(filePath);
+  if (fileBuffer.length) {
+    return true;
+  }
+  return false;
+};
+var isAcceptedFileType = (filePath) => {
+  const fileType = import_path.default.extname(filePath);
+  if (ACCEPTED_FILE_TYPES.includes(fileType)) {
+    return true;
+  }
+  return false;
+};
+var readFile = async (filePath) => {
+  try {
+    console.info(`Reading file ${filePath}`);
+    const file = await import_fs.promises.readFile(filePath);
+    if (fileExists(file) && isAcceptedFileType(filePath)) {
+      return file;
+    }
+    throw new Error("Reading file - does not exist or is unaccepted file type");
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Reading file ${err}`);
+  }
+};
+var unlink = async (filePath) => {
+  try {
+    console.info(`Deleting file ${filePath}`);
+    const file = await readFile(filePath);
+    if (file) {
+      await import_fs.promises.unlink(filePath);
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Deleting file ${err}`);
+  }
+};
 var fileSystem = {
+  fileExists,
+  isAcceptedFileType,
   readFile,
   unlink
 };
@@ -355,16 +397,11 @@ var notify = {
       const personalisation = variables;
       if (file) {
         personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true, isCsv: fileIsCsv });
-        await notifyClient.sendEmail(templateId, sendToEmailAddress, {
-          personalisation,
-          reference: null
-        });
-      } else {
-        await notifyClient.sendEmail(templateId, sendToEmailAddress, {
-          personalisation,
-          reference: null
-        });
       }
+      await notifyClient.sendEmail(templateId, sendToEmailAddress, {
+        personalisation,
+        reference: null
+      });
       return {
         success: true,
         emailRecipient: sendToEmailAddress
@@ -453,11 +490,14 @@ var applicationSubmitted = {
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.UNDERWRITING_TEAM.NOTIFICATION;
       const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL;
       const file = await file_system_default.readFile(csvPath);
-      const fileIsCsv = true;
-      const fileBuffer = Buffer.from(file);
-      const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
-      await file_system_default.unlink(csvPath);
-      return response;
+      if (file) {
+        const fileIsCsv = true;
+        const fileBuffer = Buffer.from(file);
+        const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
+        await file_system_default.unlink(csvPath);
+        return response;
+      }
+      throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
     } catch (err) {
       console.error(err);
       throw new Error(`Sending application submitted email to underwriting team ${err}`);
@@ -2258,32 +2298,43 @@ var map_buyer_default = mapBuyer;
 
 // generate-csv/map-application-to-csv/index.ts
 var mapApplicationToCsv = (application) => {
-  const mapped = [
-    csv_row_seperator_default,
-    ...map_reference_number_and_dates_default(application),
-    csv_row_seperator_default,
-    ...map_eligibility_default(application),
-    csv_row_seperator_default,
-    ...map_policy_and_export_default(application),
-    csv_row_seperator_default,
-    ...map_exporter_default(application),
-    csv_row_seperator_default,
-    ...map_buyer_default(application)
-  ];
-  return mapped;
+  try {
+    const mapped = [
+      csv_row_seperator_default,
+      ...map_reference_number_and_dates_default(application),
+      csv_row_seperator_default,
+      ...map_eligibility_default(application),
+      csv_row_seperator_default,
+      ...map_policy_and_export_default(application),
+      csv_row_seperator_default,
+      ...map_exporter_default(application),
+      csv_row_seperator_default,
+      ...map_buyer_default(application)
+    ];
+    return mapped;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Mapping application to CSV ${err}`);
+  }
 };
 var map_application_to_csv_default = mapApplicationToCsv;
 
 // generate-csv/index.ts
 var csv = (application) => {
-  const { referenceNumber } = application;
-  return new Promise((resolve) => {
-    const filePath = `${referenceNumber}.csv`;
-    const csvData = map_application_to_csv_default(application);
-    (0, import_csv_stringify.stringify)(csvData, { header: true }, (err, output) => {
-      import_fs2.default.writeFile(filePath, output, () => resolve(String(filePath)));
+  try {
+    console.info("Generating CSV file");
+    const { referenceNumber } = application;
+    return new Promise((resolve) => {
+      const filePath = `${referenceNumber}.csv`;
+      const csvData = map_application_to_csv_default(application);
+      (0, import_csv_stringify.stringify)(csvData, { header: true }, (err, output) => {
+        import_fs2.default.writeFile(filePath, output, () => resolve(String(filePath)));
+      });
     });
-  });
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Generating CSV file ${err}`);
+  }
 };
 var generate2 = {
   csv
