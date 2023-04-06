@@ -1,4 +1,4 @@
-import { ExporterUpdateInput } from '.keystone/types'; // eslint-disable-line
+import { ExporterUpdateInput, ExporterCompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
 
 interface ApplicationRelationship {
   id: string;
@@ -51,6 +51,17 @@ interface Account extends ExporterUpdateInput {
   sessionIdentifier?: string;
 }
 
+interface ApplicationExporterCompanyAddress extends ApplicationRelationship {
+  addressLine1?: string;
+  addressLine2?: string;
+  careOf?: string;
+  locality?: string;
+  region?: string;
+  postalCode?: string;
+  country?: string;
+  premises?: string;
+}
+
 interface Application {
   id: string;
   referenceNumber: number;
@@ -65,7 +76,7 @@ interface Application {
   exporter: ApplicationRelationship;
   policyAndExport: ApplicationRelationship;
   exporterCompany: ApplicationExporterCompany;
-  exporterCompanyAddress: ApplicationRelationship;
+  exporterCompanyAddress: ApplicationExporterCompanyAddress;
   exporterBusiness: ApplicationRelationship;
   exporterBroker: ApplicationRelationship;
   buyer: ApplicationBuyer;
@@ -90,6 +101,10 @@ interface CompanyResponse {
 interface EmailResponse {
   success: boolean;
   emailRecipient: string;
+}
+
+interface GetCompaniesHouseInformationVariables {
+  companiesHouseNumber: string;
 }
 
 interface ConnectId {
@@ -180,6 +195,19 @@ interface SubmitApplicationResponse {
   success: boolean;
 }
 
+interface UpdateExporterCompanyAndCompanyAddressVariablesData {
+  address?: ApplicationExporterCompanyAddress;
+  sicCodes?: [string];
+  oldSicCodes?: [string];
+  exporterCompany?: ExporterCompanyUpdateInput;
+}
+
+interface UpdateExporterCompanyAndCompanyAddressVariables {
+  companyId: string;
+  companyAddressId: string;
+  data: UpdateExporterCompanyAndCompanyAddressVariablesData;
+}
+
 export {
   Account,
   AccountCreationVariables,
@@ -193,14 +221,17 @@ export {
   ApplicationBuyer,
   ApplicationDeclaration,
   ApplicationExporterCompany,
+  ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   BufferEncoding,
   CompanyResponse,
   EmailResponse,
+  GetCompaniesHouseInformationVariables,
   SicCodes,
   SubmitApplicationVariables,
   SubmitApplicationResponse,
   SendExporterEmailVariables,
+  UpdateExporterCompanyAndCompanyAddressVariables,
   VerifyEmailAddressVariables,
   VerifyEmailAddressResponse,
   VerifyAccountSignInCodeVariables,
