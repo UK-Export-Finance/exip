@@ -1,6 +1,7 @@
 import QUOTE_PAGES from './quote';
 import INSURANCE_PAGES from './insurance';
 import { LINKS } from '../links';
+import { CONTACT_DETAILS } from '../../constants';
 
 const BUYER_COUNTRY = {
   PAGE_TITLE: 'Where is your buyer based?',
@@ -111,6 +112,35 @@ const PAGE_NOT_FOUND_PAGE = {
   },
 };
 
+const CONTACT_US_PAGE = {
+  PAGE_TITLE: 'Contact us',
+  WHO_TO_CONTACT: 'Who you need to contact depends on your type of query.',
+  GENERAL_ENQUIRIES: {
+    HEADING: 'General enquiries or questions about UK Export Finance products',
+    TELEPHONE: {
+      PREFIX: 'Telephone: ',
+      VALUE: CONTACT_DETAILS.TELEPHONE,
+    },
+    EMAIL: {
+      PREFIX: 'Email: ',
+      VALUE: CONTACT_DETAILS.EMAIL.CUSTOMER_SERVICE,
+    },
+    OPENING_TIMES: 'Opening times: Monday to Friday, 9am to 5pm (excluding public holidays)',
+    CALL_CHARGES: {
+      TEXT: 'Call charges',
+      HREF: LINKS.EXTERNAL.CALL_CHARGES,
+    },
+  },
+  APPLICATION_ENQUIRES: {
+    HEADING: "If you have a question about an application you've submitted",
+    EMAIL: {
+      PREFIX: 'Email: ',
+      VALUE: CONTACT_DETAILS.EMAIL.UNDERWRITING,
+    },
+    QUOTE: 'Quote your application reference number',
+  },
+};
+
 const PROBLEM_WITH_SERVICE_PAGE = {
   PAGE_TITLE: 'Problem with the service',
 };
@@ -124,6 +154,7 @@ const PAGES = {
   NEED_TO_START_AGAIN_PAGE,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
+  CONTACT_US_PAGE,
   QUOTE: QUOTE_PAGES,
   INSURANCE: INSURANCE_PAGES,
 };

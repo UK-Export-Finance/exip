@@ -8,3 +8,4 @@ export * from './product';
 export * from './routes';
 export * from './supported-currencies';
 export * from './templates';
+export * from './ukef-contact-details';
