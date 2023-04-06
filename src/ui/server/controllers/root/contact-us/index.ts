@@ -7,6 +7,12 @@ const startRoute = ROUTES.QUOTE.START;
 
 export const TEMPLATE = TEMPLATES.CONTACT_US;
 
+/**
+ * gets the template for contact us page
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} renders contact us page
+ */
 export const get = (req: Request, res: Response) => {
   return res.render(TEMPLATE, {
     ...corePageVariables({
