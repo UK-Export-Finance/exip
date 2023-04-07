@@ -1,7 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { Account } from '../../types';
 
-const getAccountByField = async (context: Context, field: string, value: string) => {
+const getAccountByField = async (context: Context, field: string, value: string): Promise<Account> => {
   try {
     console.info('Getting exporter account by field/value');
 
@@ -23,7 +23,7 @@ const getAccountByField = async (context: Context, field: string, value: string)
     if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
       // throw new Error('Getting exporter by field - no exporter exists with the provided field/value');
       console.info('Getting exporter by field - no exporter exists with the provided field/value');
-      return false;
+      throw new Error('Getting exporter account by field/value');
     }
 
     const exporter = exportersArray[0] as Account;

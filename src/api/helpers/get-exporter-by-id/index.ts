@@ -21,6 +21,7 @@ const getExporterById = async (context: Context, exporterId: string) => {
     return exporter;
   } catch (err) {
     console.error(err);
+
     throw new Error(`Getting exporter by ID ${err}`);
   }
 };
