@@ -53,6 +53,7 @@ interface Account extends ExporterUpdateInput {
   optHash?: string;
   otpExpiry?: Date;
   sessionIdentifier?: string;
+  isVerified: boolean;
 }
 
 interface ApplicationExporterCompanyAddress extends ApplicationRelationship {
