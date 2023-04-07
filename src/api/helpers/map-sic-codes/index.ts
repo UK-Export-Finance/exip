@@ -1,4 +1,4 @@
-import { CompanyResponse, SicCodes } from '../types';
+import { CompanyResponse, SicCodes } from '../../types';
 
 /**
  * maps sic codes from response and adds to an array to add to the database

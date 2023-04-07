@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import jsonwebtoken from 'jsonwebtoken';
-import { ACCOUNT } from '../constants';
+import { ACCOUNT } from '../../constants';
 
 const {
   ENCRYPTION: { RANDOM_BYTES_SIZE, STRING_TYPE },

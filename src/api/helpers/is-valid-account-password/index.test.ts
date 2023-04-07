@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import crypto from 'crypto';
-import { ACCOUNT } from '../constants';
-import isValidAccountPassword from './is-valid-account-password';
+import { ACCOUNT } from '../../constants';
+import isValidAccountPassword from '.';
 
 dotenv.config();
 

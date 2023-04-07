@@ -1,5 +1,5 @@
-import { mapSicCodes } from './mapSicCodes';
-import { CompanyResponse } from '../types';
+import { mapSicCodes } from '.';
+import { CompanyResponse } from '../../types';
 
 describe('mapSicCodes', () => {
   let mockSicCodes = [] as Array<string>;

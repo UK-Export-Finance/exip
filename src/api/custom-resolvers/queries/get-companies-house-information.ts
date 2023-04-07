@@ -1,6 +1,6 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { mapCompaniesHouseFields } from '../../helpers/mapCompaniesHouseFields';
+import { mapCompaniesHouseFields } from '../../helpers/map-companies-house-fields';
 import { GetCompaniesHouseInformationVariables } from '../../types';
 
 dotenv.config();

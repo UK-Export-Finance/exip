@@ -1,5 +1,5 @@
-import { ACCOUNT } from '../constants';
-import generate from './generate-otp';
+import { ACCOUNT } from '../../constants';
+import generate from '.';
 
 const { OTP, ENCRYPTION } = ACCOUNT;
 

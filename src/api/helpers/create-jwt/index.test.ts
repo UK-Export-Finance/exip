@@ -1,6 +1,6 @@
-import { ACCOUNT } from '../constants';
-import create from './create-jwt';
-import { mockAccount } from '../test-mocks';
+import { ACCOUNT } from '../../constants';
+import create from '.';
+import { mockAccount } from '../../test-mocks';
 
 const {
   ENCRYPTION: { RANDOM_BYTES_SIZE },

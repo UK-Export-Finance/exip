@@ -1,5 +1,5 @@
-import generate from './generate-otp';
-import isValidOTP from './is-valid-otp';
+import generate from '../generate-otp';
+import isValidOTP from '.';
 
 describe('api/helpers/is-valid-otp', () => {
   const { salt, hash, securityCode } = generate.otp();

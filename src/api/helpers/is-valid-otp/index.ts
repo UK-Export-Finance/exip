@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { ACCOUNT } from '../constants';
+import { ACCOUNT } from '../../constants';
 
 const { ENCRYPTION } = ACCOUNT;
 

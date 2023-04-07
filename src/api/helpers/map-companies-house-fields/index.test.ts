@@ -1,5 +1,5 @@
-import { mapCompaniesHouseFields, CompanyHouseResponse } from './mapCompaniesHouseFields';
-import createFullTimestampFromDayAndMonth from './create-full-timestamp-from-day-month';
+import { mapCompaniesHouseFields, CompanyHouseResponse } from '.';
+import createFullTimestampFromDayAndMonth from '../create-full-timestamp-from-day-month';
 
 describe('mapCompaniesHouseFields()', () => {
   const companyHouseResponseMock = {

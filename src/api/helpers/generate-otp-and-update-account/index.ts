@@ -1,6 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import generate from './generate-otp';
-import { AddAndGetOtpResponse } from '../types';
+import generate from '../generate-otp';
+import { AddAndGetOtpResponse } from '../../types';
 
 /**
  * generateOTPAndUpdateAccount

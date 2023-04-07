@@ -1,4 +1,5 @@
-import createFullTimestampFromDayAndMonth from './create-full-timestamp-from-day-month';
+import createFullTimestampFromDayAndMonth from '../create-full-timestamp-from-day-month';
+
 interface CompaniesHouseAddress {
   care_of: string | null;
   premises: string | null;

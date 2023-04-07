@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { authenticator } from 'otplib';
-import { ACCOUNT } from '../constants';
+import { ACCOUNT } from '../../constants';
 
 const { ENCRYPTION, OTP } = ACCOUNT;
 

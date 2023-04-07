@@ -1,5 +1,5 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import { Account } from '../types';
+import { Account } from '../../types';
 
 const getAccountByField = async (context: Context, field: string, value: string) => {
   try {

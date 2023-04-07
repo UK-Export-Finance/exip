@@ -1,4 +1,4 @@
-import createTimestampFromNumbers from './create-full-timestamp-from-day-month';
+import createTimestampFromNumbers from '.';
 
 describe('api/helpers/create-date-from-numbers', () => {
   const day = '1';
