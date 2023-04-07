@@ -12,6 +12,11 @@ import {
 } from './mutations';
 import { getCompaniesHouseInformation } from './queries';
 
+/**
+ * customResolvers
+ * Custom resolvers to add to the keystone generated GraphQL API
+ * @returns {Object} Object with custom queries and mutations
+ */
 const customResolvers = {
   Mutation: {
     createAccount,
