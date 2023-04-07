@@ -4,6 +4,7 @@ import { addMonths } from 'date-fns';
 import baseConfig from './keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { APPLICATION } from './constants';
+import updateApplication from './helpers/update-application';
 import sendEmail from './emails';
 import { mockAccount, mockSendEmailResponse } from './test-mocks';
 import { Application, Account } from './types';
@@ -235,7 +236,7 @@ describe('Create an Application', () => {
   });
 });
 
-describe('Create an Exporter', () => {
+describe('Exporter', () => {
   let exporter: Account;
 
   describe('create', () => {
@@ -311,6 +312,117 @@ describe('Create an Exporter', () => {
 
     test('it should update updatedAt', () => {
       expect(updatedExporter.updatedAt).not.toEqual(exporter.createdAt);
+    });
+  });
+});
+
+describe('Application timestamp updates', () => {
+  const updateApplicationTimestampSpy = jest.fn();
+
+  let application: Application;
+
+  beforeAll(async () => {
+    application = (await context.query.Application.createOne({
+      data: {},
+      query:
+        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus eligibility { id } policyAndExport { id } exporter { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } sectionReview { id } declaration { id }',
+    })) as Application;
+  });
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+
+    jest.mock('./helpers/update-application');
+
+    updateApplication.timestamp = updateApplicationTimestampSpy;
+  });
+
+  const assertSpyWasCalled = () => {
+    expect(updateApplicationTimestampSpy).toHaveBeenCalledTimes(1);
+    expect(updateApplicationTimestampSpy).toHaveBeenCalledWith(context, application.id);
+  };
+
+  describe('PolicyAndExport', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.PolicyAndExport.updateOne({
+        where: { id: application.policyAndExport.id },
+        data: {},
+        query: 'id',
+      });
+
+      assertSpyWasCalled();
+    });
+  });
+
+  describe('ExporterBusiness', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.ExporterBusiness.updateOne({
+        where: { id: application.exporterBusiness.id },
+        data: {},
+        query: 'id',
+      });
+
+      assertSpyWasCalled();
+    });
+  });
+
+  describe('ExporterBroker', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.ExporterBroker.updateOne({
+        where: { id: application.exporterBroker.id },
+        data: {},
+        query: 'id',
+      });
+
+      assertSpyWasCalled();
+    });
+  });
+
+  describe('ExporterCompany', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.ExporterCompany.updateOne({
+        where: { id: application.exporterCompany.id },
+        data: {},
+        query: 'id',
+      });
+
+      assertSpyWasCalled();
+    });
+  });
+
+  describe('Buyer', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.Buyer.updateOne({
+        where: { id: application.buyer.id },
+        data: {},
+        query: 'id',
+      });
+
+      assertSpyWasCalled();
+    });
+  });
+
+  describe('SectionReview', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.SectionReview.updateOne({
+        where: { id: application.sectionReview.id },
+        data: {},
+        query: 'id',
+      });
+
+      assertSpyWasCalled();
+    });
+  });
+
+  describe('Declaration', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.Declaration.updateOne({
+        where: { id: application.declaration.id },
+        data: {},
+        query: 'id',
+      });
+
+      assertSpyWasCalled();
     });
   });
 });
