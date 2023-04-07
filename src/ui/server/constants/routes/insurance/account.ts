@@ -24,6 +24,8 @@ const RESET_PASSWORD = {
   ROOT: `${INSURANCE_ROOT}${RESET_PASSWORD_ROOT}`,
 };
 
+const SIGN_OUT = `${INSURANCE_ROOT}/sign-out`;
+
 const SIGNED_OUT = `${INSURANCE_ROOT}/signed-out`;
 
 export const ACCOUNT = {
@@ -31,5 +33,6 @@ export const ACCOUNT = {
   SIGN_IN,
   MANAGE_ACCOUNT,
   RESET_PASSWORD,
+  SIGN_OUT,
   SIGNED_OUT,
 };

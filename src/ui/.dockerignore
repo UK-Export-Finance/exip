@@ -1,6 +1,10 @@
 .env
-.prettierrc.json
+.env.sample
+.gitignore
+.prettierignore
 .eslintignore
-node_modules
 README.md
 Dockerfile
+node_modules
+public
+generated_reports

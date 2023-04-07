@@ -8,7 +8,7 @@ const {
     ROOT,
     DASHBOARD,
     ALL_SECTIONS,
-    ACCOUNT: { MANAGE_ACCOUNT, SIGN_IN: { ROOT: SIGN_IN_ROOT } },
+    ACCOUNT: { MANAGE_ACCOUNT, SIGN_OUT },
   },
 } = ROUTES;
 
@@ -56,9 +56,9 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
     it(`should redirect to ${MANAGE_ACCOUNT} when clicking the link`, () => {
       selector().click();
 
-      const expected = `${Cypress.config('baseUrl')}${MANAGE_ACCOUNT}`;
+      const expectedUrl = `${Cypress.config('baseUrl')}${MANAGE_ACCOUNT}`;
 
-      cy.url().should('eq', expected);
+      cy.url().should('eq', expectedUrl);
     });
   });
 
@@ -88,13 +88,7 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
     const selector = header.navigation.signOut;
 
     it('should render', () => {
-      cy.checkLink(selector(), SIGN_IN_ROOT, HEADER.SIGN_OUT.TEXT);
-    });
-
-    it(`should redirect to ${DASHBOARD} when clicking the link as the user is already logged in`, () => {
-      selector().click();
-
-      cy.url().should('eq', dashboardUrl);
+      cy.checkLink(selector(), SIGN_OUT, HEADER.SIGN_OUT.TEXT);
     });
   });
 });
