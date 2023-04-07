@@ -1,19 +1,6 @@
 import { ROUTES } from '../constants';
 
 export const FOOTER = {
-  HEADING: 'Contact us',
-  EMAIL: {
-    HEADING: 'Email',
-    VALUE: 'customer.service@ukexportfinance.gov.uk',
-  },
-  PHONE: {
-    HEADING: 'Phone',
-    VALUE: '+44 (0)207 271 8010',
-  },
-  OPENING_TIMES: {
-    HEADING: 'Opening times',
-    VALUE: 'Monday to Friday, 9am to 5pm (excluding public holidays)',
-  },
   SUPPORT_LINKS_HEADING: 'Support Links',
   PRIVACY: {
     TEXT: 'Privacy',
@@ -26,6 +13,10 @@ export const FOOTER = {
   REPORT_VULNERABILITY: {
     TEXT: 'Report a vulnerability',
     HREF: 'https://www.gov.uk/guidance/report-a-vulnerability-on-a-ukef-system',
+  },
+  CONTACT: {
+    TEXT: 'Contact',
+    HREF: ROUTES.CONTACT_US,
   },
   OGL_LICENCE: {
     INTRO: 'All content is available under the',
