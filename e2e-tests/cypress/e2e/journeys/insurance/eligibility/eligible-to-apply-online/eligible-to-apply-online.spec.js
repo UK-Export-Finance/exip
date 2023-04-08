@@ -1,9 +1,9 @@
-import { submitButton } from '../../../pages/shared';
-import { insurance } from '../../../pages';
-import partials from '../../../partials';
-import { PAGES } from '../../../../../content-strings';
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
+import { submitButton } from '../../../../pages/shared';
+import { insurance } from '../../../../pages';
+import partials from '../../../../partials';
+import { PAGES } from '../../../../../../content-strings';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
   completeStartForm,
   completeCheckIfEligibleForm,
@@ -15,7 +15,7 @@ import {
   completeLetterOfCreditForm,
   completePreCreditPeriodForm,
   completeCompaniesHouseNumberForm,
-} from '../../../../support/insurance/eligibility/forms';
+} from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
