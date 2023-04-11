@@ -3,7 +3,7 @@
 {% macro render(params) %}
 
   {% if params.type === 'ordered' %}
-    <ol class="govuk-list {{ params.firstLevelListClass }}">
+    <ol class="govuk-list govuk-list--number {{ params.firstLevelListClass }}">
 
       {% for child in params.content %}
 
