@@ -6,7 +6,7 @@ describe('api/generate-csv/index', () => {
   it('should return a CSV file path', async () => {
     const result = await generate.csv(mockApplication);
 
-    const expected = `${__dirname}${mockApplication.referenceNumber}.csv`;
+    const expected = `csvs/${mockApplication.referenceNumber}.csv`;
 
     expect(result).toEqual(expected);
 

@@ -36,6 +36,7 @@ COPY --chown=node:node ./content-strings ./content-strings
 COPY --chown=node:node ./custom-schema.ts .
 COPY --chown=node:node ./file-system ./file-system
 COPY --chown=node:node ./generate-csv ./generate-csv
+COPY --chown=node:node ./csvs ./csvs
 COPY --chown=node:node ./keystone.ts .
 COPY --chown=node:node ./schema.ts .
 COPY --chown=node:node ./types.ts .
