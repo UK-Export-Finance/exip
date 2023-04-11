@@ -167,9 +167,9 @@ describe('server/helpers/sanitise-data', () => {
     });
 
     it('should replace star characters', () => {
-      const result = replaceCharactersWithCharacterCode('*');
+      const result = replaceCharactersWithCharacterCode('**');
 
-      const expected = '&#42;';
+      const expected = '&#42;&#42;';
 
       expect(result).toEqual(expected);
     });
