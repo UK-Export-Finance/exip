@@ -16,7 +16,7 @@ const csv = (application: Application): Promise<string> => {
     const { referenceNumber } = application;
 
     return new Promise((resolve) => {
-      const filePath = `csvs/${referenceNumber}.csv`;
+      const filePath = `csv/${referenceNumber}.csv`;
 
       const csvData = mapApplicationToCsv(application);
 

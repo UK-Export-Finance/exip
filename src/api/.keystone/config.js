@@ -2325,7 +2325,7 @@ var csv = (application) => {
     console.info("Generating CSV file");
     const { referenceNumber } = application;
     return new Promise((resolve) => {
-      const filePath = `csvs/${referenceNumber}.csv`;
+      const filePath = `csv/${referenceNumber}.csv`;
       const csvData = map_application_to_csv_default(application);
       (0, import_csv_stringify.stringify)(csvData, { header: true }, (err, output) => {
         import_fs2.default.writeFile(filePath, output, () => resolve(String(filePath)));

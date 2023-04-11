@@ -1,4 +1,4 @@
-# CSVs
+# CSV
 
 This directory temporarily stores generated CSVs that are emailed to the underwriting team.
 
