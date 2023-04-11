@@ -1,4 +1,13 @@
-import { NUMBER_FIELDS, STRING_NUMBER_FIELDS, shouldChangeToNumber, sanitiseValue, isDayMonthYearField, shouldIncludeAndSanitiseField, sanitiseData } from '.';
+import {
+  NUMBER_FIELDS,
+  STRING_NUMBER_FIELDS,
+  shouldChangeToNumber,
+  replaceCharactersWithCharacterCode,
+  sanitiseValue,
+  isDayMonthYearField,
+  shouldIncludeAndSanitiseField,
+  sanitiseData,
+} from '.';
 import { FIELD_IDS } from '../../constants';
 import { mockPhoneNumbers } from '../../test-mocks';
 
@@ -108,6 +117,64 @@ describe('server/helpers/sanitise-data', () => {
     });
   });
 
+  describe('replaceCharactersWithCharacterCode', () => {
+    it('should replace ampersand characters', () => {
+      const result = replaceCharactersWithCharacterCode('&test&');
+
+      const expected = '&amp;test&amp;';
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should replace `lower than` characters', () => {
+      const result = replaceCharactersWithCharacterCode('<test<');
+
+      const expected = '&lt;test&lt;';
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should replace `greater than` characters', () => {
+      const result = replaceCharactersWithCharacterCode('>test>');
+
+      const expected = '&gt;test&gt;';
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should replace quote characters', () => {
+      const result = replaceCharactersWithCharacterCode('"test"');
+
+      const expected = '&quot;test&quot;';
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should replace apostrophe characters', () => {
+      const result = replaceCharactersWithCharacterCode("'test'");
+
+      const expected = '&#x27;test&#x27;';
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should replace forward slash characters', () => {
+      const result = replaceCharactersWithCharacterCode('/test/');
+
+      const expected = '&#x2F;test&#x2F;';
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should replace star characters', () => {
+      const result = replaceCharactersWithCharacterCode('*');
+
+      const expected = '&#42;';
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('sanitiseValue', () => {
     describe('when value is a string of true', () => {
       it('should return boolean', () => {
@@ -157,11 +224,15 @@ describe('server/helpers/sanitise-data', () => {
       });
     });
 
-    describe('when value is a plain string', () => {
-      it('should return value', () => {
-        const result = sanitiseValue(mockFieldKey, 'mock');
+    describe('when value is a string', () => {
+      it('should return value with replaceCharactersWithCharacterCode', () => {
+        const mockStr = '\'mock\'&><"test"/';
 
-        expect(result).toEqual('mock');
+        const result = sanitiseValue(mockFieldKey, mockStr);
+
+        const expected = replaceCharactersWithCharacterCode(mockStr);
+
+        expect(result).toEqual(expected);
       });
     });
 

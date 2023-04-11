@@ -30,7 +30,7 @@ const {
  * Explicit list of field IDs in the insurance forms that are number fields.
  * @returns {Array} Field IDs
  */
-const NUMBER_FIELDS = [
+export const NUMBER_FIELDS = [
   TOTAL_CONTRACT_VALUE,
   TOTAL_MONTHS_OF_COVER,
   TOTAL_SALES_TO_BUYER,
@@ -53,7 +53,7 @@ const NUMBER_FIELDS = [
  * - We avoid a "problem with service" page scenario where the data save fails, because it tries to save a number type as a text string type.
  * @returns {Array} Field IDs
  */
-const STRING_NUMBER_FIELDS = [
+export const STRING_NUMBER_FIELDS = [
   CREDIT_PERIOD_WITH_BUYER,
   DESCRIPTION,
   COMPANY_NUMBER,
@@ -77,7 +77,7 @@ const STRING_NUMBER_FIELDS = [
  * @param {String | Number} Field value
  * @returns {Boolean}
  */
-const shouldChangeToNumber = (key: string, value: string | number) => {
+export const shouldChangeToNumber = (key: string, value: string | number) => {
   if (STRING_NUMBER_FIELDS.includes(key) || isEmptyString(String(value))) {
     return false;
   }
@@ -94,12 +94,28 @@ const shouldChangeToNumber = (key: string, value: string | number) => {
 };
 
 /**
+ * replaceCharactersWithCharacterCode
+ * Replace certain characters with character codes
+ * @param {String} Field value
+ * @returns {String}
+ */
+export const replaceCharactersWithCharacterCode = (str: string) =>
+  str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;')
+    .replace(/\*/g, '&#42;');
+
+/**
  * sanitiseValue
  * Sanitise a form field value
  * @param {String | Number} Field value
  * @returns {Boolean}
  */
-const sanitiseValue = (key: string, value: string | number | boolean) => {
+export const sanitiseValue = (key: string, value: string | number | boolean) => {
   if (value === 'true' || value === true) {
     return true;
   }
@@ -114,7 +130,7 @@ const sanitiseValue = (key: string, value: string | number | boolean) => {
     return Number(stripped);
   }
 
-  return value;
+  return replaceCharactersWithCharacterCode(String(value));
 };
 
 /**
@@ -123,7 +139,7 @@ const sanitiseValue = (key: string, value: string | number | boolean) => {
  * @param {String} Form field name
  * @returns {Boolean}
  */
-const isDayMonthYearField = (fieldName: string): boolean => {
+export const isDayMonthYearField = (fieldName: string): boolean => {
   if (fieldName.includes('-day') || fieldName.includes('-month') || fieldName.includes('-year')) {
     return true;
   }
@@ -138,7 +154,7 @@ const isDayMonthYearField = (fieldName: string): boolean => {
  * @param {String} Form field value
  * @returns {Boolean}
  */
-const shouldIncludeAndSanitiseField = (key: string, value: string) => {
+export const shouldIncludeAndSanitiseField = (key: string, value: string) => {
   // do not include day/month/year fields, these should be captured as timestamps.
   if (isDayMonthYearField(key)) {
     return false;
@@ -159,7 +175,7 @@ const shouldIncludeAndSanitiseField = (key: string, value: string) => {
  * @param {Express.Request.body} Form body
  * @returns {Object} sanitised form data
  */
-const sanitiseData = (formBody: RequestBody) => {
+export const sanitiseData = (formBody: RequestBody) => {
   const formData = formBody;
 
   if (formData._csrf) {
@@ -180,5 +196,3 @@ const sanitiseData = (formBody: RequestBody) => {
 
   return sanitised;
 };
-
-export { NUMBER_FIELDS, STRING_NUMBER_FIELDS, shouldChangeToNumber, sanitiseValue, isDayMonthYearField, shouldIncludeAndSanitiseField, sanitiseData };
