@@ -26,7 +26,6 @@ const cypressConfig = defineConfig({
     specPattern: 'cypress/e2e/**/*.spec.js',
     excludeSpecPattern: [
       'cypress/e2e/journeys/quote/**/*.spec.js',
-      'cypress/e2e/journeys/footer.spec.js',
       'cypress/e2e/journeys/give-feedback.spec.js',
       'cypress/e2e/journeys/page-not-found.spec.js',
       'cypress/e2e/journeys/privacy.spec.js',
