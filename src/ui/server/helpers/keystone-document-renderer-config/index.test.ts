@@ -3,7 +3,6 @@ import keystoneDocumentRendererConfig from '.';
 describe('server/helpers/keystone-document-renderer-config', () => {
   const defaultConfig = {
     listItemClass: 'counter-list-item',
-    firstLevelListClass: 'counter-list',
     secondLevelListClass: 'lower-alpha-counter-list',
     thirdLevelListClass: 'lower-roman-counter-list',
   };
