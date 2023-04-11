@@ -1,3 +1,9 @@
+.counter-list--bold {
+  >li::before {
+    font-weight: bold;
+  }
+}
+
 .counter-list-item {
   > span {
     display: block;
