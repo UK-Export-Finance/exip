@@ -1,6 +1,7 @@
 import { get, post } from '../../test-mocks/mock-router';
 import { ROUTES } from '../../constants';
 import rootGet from '../../controllers/root';
+import { get as accessibilityStatementGet } from '../../controllers/root/accessibility-statement';
 import { get as cookiesGet, post as cookiesPost } from '../../controllers/root/cookies';
 import { get as contactUsGet } from '../../controllers/root/contact-us';
 import cookiesConsentPost from '../../controllers/root/cookies-consent';
@@ -20,6 +21,8 @@ describe('routes/index', () => {
     expect(post).toHaveBeenCalledTimes(2);
 
     expect(get).toHaveBeenCalledWith(ROUTES.ROOT, rootGet);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.ACCESSIBILITY_STATEMENT, accessibilityStatementGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.COOKIES, cookiesGet);
     expect(post).toHaveBeenCalledWith(ROUTES.COOKIES, cookiesPost);
