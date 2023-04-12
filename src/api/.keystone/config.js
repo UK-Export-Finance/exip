@@ -265,7 +265,7 @@ var insuranceFeedbackEmail = async (variables) => {
   try {
     console.info("Sending insurance feedback email");
     const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
-    const emailAddress = process.env.FEEDBACK_EMAIL;
+    const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT;
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
