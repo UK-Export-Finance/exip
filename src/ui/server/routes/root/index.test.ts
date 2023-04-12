@@ -17,7 +17,7 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(4);
+    expect(get).toHaveBeenCalledTimes(5);
     expect(post).toHaveBeenCalledTimes(2);
 
     expect(get).toHaveBeenCalledWith(ROUTES.ROOT, rootGet);
