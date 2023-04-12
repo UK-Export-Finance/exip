@@ -9,7 +9,6 @@ import { objectHasKeysAndValues } from '../object';
 const keystoneDocumentRendererConfig = (overrides?: object) => {
   let config = {
     listItemClass: 'counter-list-item',
-    firstLevelListClass: 'counter-list',
     secondLevelListClass: 'lower-alpha-counter-list',
     thirdLevelListClass: 'lower-roman-counter-list',
   };

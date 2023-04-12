@@ -2,7 +2,7 @@
 # 1. BUILD
 ###################
 
-FROM node:19.8-alpine3.16 AS build
+FROM node:18.15-alpine3.16 AS build
 
 # Build variables
 ARG GITHUB_SHA
@@ -56,8 +56,7 @@ USER node
 # 2. PRODUCTION
 ###################
 
-# NPM 9.5.1 Alpine linux image
-FROM node:19.8-alpine3.16 AS production
+FROM node:18.15-alpine3.16 AS production
 
 WORKDIR /app
 
