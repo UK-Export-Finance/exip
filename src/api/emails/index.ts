@@ -1,6 +1,6 @@
 import { EMAIL_TEMPLATE_IDS } from '../constants';
 import notify from '../integrations/notify';
-import { EmailResponse, ApplicationSubmissionEmailVariables } from '../types';
+import { EmailResponse, ApplicationSubmissionEmailVariables, InsuranceFeedbackVariables } from '../types';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -160,11 +160,36 @@ const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, te
   }
 };
 
+/**
+ * insuranceFeedbackEmail
+ * sends email for insurance feedback
+ * @param {InsuranceFeedbackVariables} variables
+ * @returns {Object} callNotify response
+ */
+const insuranceFeedbackEmail = async (variables: InsuranceFeedbackVariables): Promise<EmailResponse> => {
+  try {
+    console.info('Sending insurance feedback email');
+
+    const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
+
+    const emailAddress = 'zain.kassam@ukexportfinance.gov.uk';
+
+    const response = await callNotify(templateId, emailAddress, variables);
+
+    return response;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error(`Sending documents email ${err}`);
+  }
+};
+
 const sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
   applicationSubmitted,
   documentsEmail,
+  insuranceFeedbackEmail,
 };
 
 export default sendEmail;

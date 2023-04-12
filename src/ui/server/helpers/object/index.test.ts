@@ -1,10 +1,10 @@
-import { objectHasValues, objectHasProperty } from '.';
+import { objectHasKeysAndValues, objectHasProperty } from '.';
 
 describe('server/helpers/object', () => {
-  describe('objectHasValues', () => {
+  describe('objectHasKeysAndValues', () => {
     describe('when an object has values', () => {
       it('should return true', () => {
-        const result = objectHasValues({ a: true });
+        const result = objectHasKeysAndValues({ a: true });
 
         expect(result).toEqual(true);
       });
@@ -12,7 +12,15 @@ describe('server/helpers/object', () => {
 
     describe('when an object is empty', () => {
       it('should return false', () => {
-        const result = objectHasValues({});
+        const result = objectHasKeysAndValues({});
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when an object has empty keys', () => {
+      it('should return false', () => {
+        const result = objectHasKeysAndValues({ a: '' });
 
         expect(result).toEqual(false);
       });
@@ -20,7 +28,7 @@ describe('server/helpers/object', () => {
 
     describe('when there is no object', () => {
       it('should return false', () => {
-        const result = objectHasValues({});
+        const result = objectHasKeysAndValues({});
 
         expect(result).toEqual(false);
       });

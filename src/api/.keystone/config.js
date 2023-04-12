@@ -18,10 +18,6 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
@@ -79,7 +75,7 @@ var FIELD_IDS = {
 var ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
-      const now = /* @__PURE__ */ new Date();
+      const now = new Date();
       const day = now.getDate();
       const tomorrow = new Date(now.setDate(day + 1));
       return tomorrow;
@@ -103,17 +99,15 @@ var ACCOUNT = {
       }
     }
   },
-  // One time password
   OTP: {
     DIGITS: 6,
     VERIFICATION_EXPIRY: () => {
-      const now = /* @__PURE__ */ new Date();
+      const now = new Date();
       const milliseconds = 3e5;
       const future = new Date(now.setMilliseconds(milliseconds));
       return future;
     }
   },
-  // JSON web token
   JWT: {
     KEY: {
       SIGNATURE: String(process.env.JWT_SIGNING_KEY),
@@ -125,7 +119,7 @@ var ACCOUNT = {
       ALGORITHM: "RS256"
     },
     SESSION_EXPIRY: () => {
-      const now = /* @__PURE__ */ new Date();
+      const now = new Date();
       const hours = 8;
       const seconds = 60 * 60 * 1e3;
       const future = new Date(now.getTime() + hours * seconds);
@@ -152,6 +146,9 @@ var EMAIL_TEMPLATE_IDS = {
         NOTIFICATION: "676e4655-1e82-4094-9e3e-387ea91f44df"
       }
     }
+  },
+  FEEDBACK: {
+    INSURANCE: "4d3d7944-e894-4527-aee6-692038c84107"
   }
 };
 
@@ -228,12 +225,6 @@ var securityCodeEmail = async (emailAddress, firstName, securityCode) => {
   }
 };
 var applicationSubmitted = {
-  /**
-   * applicationSubmitted.exporter
-   * Send "application submitted" email to an exporter
-   * @param {Object} ApplicationSubmissionEmailVariables
-   * @returns {Object} callNotify response
-   */
   exporter: async (variables) => {
     try {
       console.info("Sending application submitted email to exporter");
@@ -246,12 +237,6 @@ var applicationSubmitted = {
       throw new Error(`Sending application submitted email to exporter ${err}`);
     }
   },
-  /**
-   * applicationSubmitted.underwritingTeam
-   * Send "application submitted" email to the underwriting team
-   * @param {Object} ApplicationSubmissionEmailVariables
-   * @returns {Object} callNotify response
-   */
   underwritingTeam: async (variables) => {
     try {
       console.info("Sending application submitted email to underwriting team");
@@ -276,11 +261,24 @@ var documentsEmail = async (variables, templateId) => {
     throw new Error(`Sending documents email ${err}`);
   }
 };
+var insuranceFeedbackEmail = async (variables) => {
+  try {
+    console.info("Sending insurance feedback email");
+    const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
+    const emailAddress = "zain.kassam@ukexportfinance.gov.uk";
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending documents email ${err}`);
+  }
+};
 var sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
   applicationSubmitted,
-  documentsEmail
+  documentsEmail,
+  insuranceFeedbackEmail
 };
 var emails_default = sendEmail;
 
@@ -408,7 +406,7 @@ var lists = {
                 id: declarationId
               }
             };
-            const now = /* @__PURE__ */ new Date();
+            const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
             modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
@@ -577,7 +575,6 @@ var lists = {
       email: (0, import_fields.text)({ validation: { isRequired: true } }),
       salt: (0, import_fields.text)({ validation: { isRequired: true } }),
       hash: (0, import_fields.text)({ validation: { isRequired: true } }),
-      // isVerified flag will only be true if the exporter has verified their email address.
       isVerified: (0, import_fields.checkbox)({ defaultValue: false }),
       verificationHash: (0, import_fields.text)(),
       verificationExpiry: (0, import_fields.timestamp)(),
@@ -598,7 +595,7 @@ var lists = {
         const accountInputData = resolvedData;
         if (operation === "create") {
           console.info("Creating new exporter account");
-          const now = /* @__PURE__ */ new Date();
+          const now = new Date();
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
           try {
@@ -614,7 +611,7 @@ var lists = {
         }
         if (operation === "update") {
           console.info("Updating exporter account");
-          accountInputData.updatedAt = /* @__PURE__ */ new Date();
+          accountInputData.updatedAt = new Date();
         }
         return accountInputData;
       }
@@ -897,8 +894,6 @@ var { withAuth } = (0, import_auth.createAuth)({
   sessionData: "name",
   secretField: "password",
   initFirstItem: {
-    // If there are no items in the database, keystone will ask you to create
-    // a new user, filling in these fields.
     fields: ["name", "email", "password"]
   }
 });
@@ -992,7 +987,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.VERIFICATION_HASH, variables.token);
     if (exporter) {
       const { id } = exporter;
-      const now = /* @__PURE__ */ new Date();
+      const now = new Date();
       const canActivateExporter = (0, import_date_fns2.isBefore)(now, exporter.verificationExpiry);
       if (!canActivateExporter) {
         console.info("Unable to verify exporter email - verification period has expired");
@@ -1296,7 +1291,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
       };
     }
     const { otpSalt, otpHash, otpExpiry } = exporter;
-    const now = /* @__PURE__ */ new Date();
+    const now = new Date();
     const hasExpired = (0, import_date_fns3.isAfter)(now, otpExpiry);
     if (hasExpired) {
       console.info("Unable to verify exporter account sign in code - verification period has expired");
@@ -1436,7 +1431,6 @@ var send = async (context, referenceNumber, accountId, buyerId, declarationId, e
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       exporterCompanyName: exporterCompany.companyName,
-      // TODO: EMS-1273 to remove below
       linkToFile: ""
     };
     const exporterSubmittedResponse = await emails_default.applicationSubmitted.exporter(sendEmailVars);
@@ -1490,7 +1484,7 @@ var submitApplication = async (root, variables, context) => {
     if (application) {
       const canSubmit = application.status === APPLICATION.STATUS.DRAFT;
       if (canSubmit) {
-        const now = /* @__PURE__ */ new Date();
+        const now = new Date();
         const update = {
           status: APPLICATION.STATUS.SUBMITTED,
           previousStatus: APPLICATION.STATUS.DRAFT,
@@ -1519,10 +1513,30 @@ var submitApplication = async (root, variables, context) => {
 };
 var submit_application_default = submitApplication;
 
+// custom-resolvers/send-email-insurance-feedback.ts
+var sendEmailInsuranceFeedback = async (root, variables) => {
+  try {
+    console.info("Generating and sending email for insurance feedback");
+    const emailResponse = await emails_default.insuranceFeedbackEmail(variables);
+    if (emailResponse.success) {
+      return {
+        ...emailResponse
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Generating and sending email for insurance feedback ${err}`);
+  }
+};
+var send_email_insurance_feedback_default = sendEmailInsuranceFeedback;
+
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
-    return /* @__PURE__ */ new Date(`${(/* @__PURE__ */ new Date()).getFullYear()}-${month}-${day}`);
+    return new Date(`${new Date().getFullYear()}-${month}-${day}`);
   }
   return null;
 };
@@ -1545,7 +1559,6 @@ var mapCompaniesHouseFields = (companiesHouseResponse) => {
     companyNumber: companiesHouseResponse.company_number,
     dateOfCreation: companiesHouseResponse.date_of_creation,
     sicCodes: companiesHouseResponse.sic_codes,
-    // creates timestamp for financialYearEndDate from day and month if exist
     financialYearEndDate: create_full_timestamp_from_day_month_default(
       companiesHouseResponse.accounts?.accounting_reference_date?.day,
       companiesHouseResponse.accounts?.accounting_reference_date?.month
@@ -1708,6 +1721,10 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         accountId: String
       }
 
+      type sendEmailInsuranceFeedbackResponse {
+        success: Boolean!
+      }
+
       type Mutation {
         """ create an account """
         createAccount(
@@ -1721,6 +1738,13 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         verifyAccountEmailAddress(
           token: String!
         ): VerifyAccountEmailAddressResponse
+
+        """ send email for insurance feedback """
+        sendEmailInsuranceFeedback(
+          satisfaction: String
+          improvement: String
+          otherComments: String
+        ): sendEmailInsuranceFeedbackResponse
 
         """ send confirm email address email """
         sendEmailConfirmEmailAddress(
@@ -1786,6 +1810,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       accountSignInSendNewCode: account_sign_in_new_code_default,
       verifyAccountEmailAddress: verify_account_email_address_default,
       sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
+      sendEmailInsuranceFeedback: send_email_insurance_feedback_default,
       verifyAccountSignInCode: verify_account_sign_in_code_default,
       addAndGetOTP: add_and_get_OTP_default,
       deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
@@ -1825,11 +1850,6 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       }
     },
     Query: {
-      /**
-       * Call for companies house API
-       * @param variables - companies house number is received as a string within variables
-       * @returns either mapped response or success false flag with or without apiError
-       */
       getCompaniesHouseInformation: async (root, variables) => {
         try {
           const { companiesHouseNumber } = variables;

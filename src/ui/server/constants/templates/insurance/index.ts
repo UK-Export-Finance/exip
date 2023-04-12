@@ -22,4 +22,6 @@ export const INSURANCE_TEMPLATES = {
   PAGE_NOT_FOUND: 'insurance/page-not-found.njk',
   NO_ACCESS_TO_APPLICATION: 'insurance/do-not-have-application-access.njk',
   APPLICATION_SUBMITTED: 'insurance/application-submitted.njk',
+  FEEDBACK: 'insurance/feedback.njk',
+  FEEDBACK_CONFIRMATION: 'insurance/feedback-confirmation.njk',
 };

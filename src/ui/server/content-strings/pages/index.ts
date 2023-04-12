@@ -145,6 +145,15 @@ const CONTACT_US_PAGE = {
   },
 };
 
+const FEEDBACK_PAGE = {
+  PAGE_TITLE: 'Give feedback on this service',
+};
+
+const FEEDBACK_CONFIRMATION_PAGE = {
+  PAGE_TITLE: 'Thank you for providing feedback',
+  FEEDBACK_TEXT: 'Feedback helps us improve the service and understand the user experience.',
+};
+
 export const PAGES = {
   BUYER_COUNTRY,
   EXPORTER_LOCATION,
@@ -155,6 +164,8 @@ export const PAGES = {
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
   CONTACT_US_PAGE,
+  FEEDBACK_PAGE,
+  FEEDBACK_CONFIRMATION_PAGE,
   QUOTE: QUOTE_PAGES,
   INSURANCE: INSURANCE_PAGES,
 };

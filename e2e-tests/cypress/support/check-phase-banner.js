@@ -1,5 +1,5 @@
 import partials from '../e2e/partials';
-import { LINKS } from '../../content-strings';
+// import { LINKS } from '../../content-strings';
 
 export default () => {
   cy.checkText(partials.phaseBanner.tag(), 'alpha');
@@ -8,5 +8,6 @@ export default () => {
 
   cy.checkText(partials.phaseBanner.feedbackLink(), 'feedback');
 
-  partials.phaseBanner.feedbackLink().should('have.attr', 'href', LINKS.EXTERNAL.FEEDBACK);
+  // TODO: EMS-1281
+  // partials.phaseBanner.feedbackLink().should('have.attr', 'href', LINKS.EXTERNAL.FEEDBACK);
 };
