@@ -3,17 +3,20 @@ import {
   STRING_NUMBER_FIELDS,
   shouldChangeToNumber,
   replaceCharactersWithCharacterCode,
+  sanitiseArray,
+  sanitiseObject,
   sanitiseValue,
   isDayMonthYearField,
   shouldIncludeAndSanitiseField,
   sanitiseData,
+  sanitiseFormField,
 } from '.';
 import { FIELD_IDS } from '../../constants';
 import { mockPhoneNumbers } from '../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { COMPANY_NUMBER },
+    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC },
     YOUR_COMPANY: { PHONE_NUMBER },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
@@ -59,6 +62,7 @@ describe('server/helpers/sanitise-data', () => {
         CREDIT_PERIOD_WITH_BUYER,
         DESCRIPTION,
         COMPANY_NUMBER,
+        COMPANY_SIC,
         PHONE_NUMBER,
         GOODS_OR_SERVICES,
         ADDRESS_LINE_1,
@@ -170,6 +174,37 @@ describe('server/helpers/sanitise-data', () => {
       const result = replaceCharactersWithCharacterCode('**');
 
       const expected = '&#42;&#42;';
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('sanitiseArray', () => {
+    it('should return the result of sanitiseValue for each value in the array', () => {
+      const mockKey = 'a';
+      const mockArray = ['mockValueA', 'mockValueB'];
+
+      const result = sanitiseArray(mockKey, mockArray);
+
+      const expected = [sanitiseValue(mockKey, mockArray[0]), sanitiseValue(mockKey, mockArray[1])];
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('sanitiseObject', () => {
+    it('should return the result of sanitiseValue for each property in the object', () => {
+      const mockObject = {
+        a: 'mock',
+        b: 'value',
+      };
+
+      const result = sanitiseObject(mockObject);
+
+      const expected = {
+        a: sanitiseValue('a', mockObject.a),
+        b: sanitiseValue('b', mockObject.b),
+      };
 
       expect(result).toEqual(expected);
     });
@@ -313,6 +348,73 @@ describe('server/helpers/sanitise-data', () => {
     });
   });
 
+  describe('sanitiseFormField', () => {
+    describe('when the field value is an array', () => {
+      it('should return the result of sanitiseArray', () => {
+        const mockKey = 'a';
+        const mockValue = ['123', '456'];
+
+        const result = sanitiseFormField(mockKey, mockValue);
+
+        const expected = sanitiseArray(mockKey, mockValue);
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when the field value is a valid date', () => {
+      it('should return the value as is', () => {
+        const mockKey = 'a';
+        const mockValue = new Date();
+
+        const result = sanitiseFormField(mockKey, mockValue);
+
+        const expected = mockValue;
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when the field value is a string', () => {
+      it('should return the result of sanitiseValue', () => {
+        const mockKey = 'a';
+        const mockValue = 'mock string';
+
+        const result = sanitiseFormField(mockKey, mockValue);
+
+        const expected = sanitiseValue(mockKey, mockValue);
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when the field value is an object with values', () => {
+      it('should return the result of sanitiseObject', () => {
+        const mockKey = 'a';
+        const mockValue = { mock: true };
+
+        const result = sanitiseFormField(mockKey, mockValue);
+
+        const expected = sanitiseObject(mockValue);
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when the field is an boolean', () => {
+      it('should return the value as is', () => {
+        const mockKey = 'a';
+        const mockValue = true;
+
+        const result = sanitiseFormField(mockKey, mockValue);
+
+        const expected = mockValue;
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
+
   describe('sanitiseData', () => {
     it('should return data without _csrf, day/month/year or empty number fields', () => {
       const mockFormData = {
@@ -330,10 +432,10 @@ describe('server/helpers/sanitise-data', () => {
       const result = sanitiseData(mockFormData);
 
       const expected = {
-        a: mockFormData.a,
-        b: true,
-        c: 100,
-        d: '',
+        a: sanitiseFormField('a', mockFormData.a),
+        b: sanitiseFormField('b', mockFormData.b),
+        c: sanitiseFormField('c', mockFormData.c),
+        d: sanitiseFormField('d', mockFormData.d),
       };
 
       expect(result).toEqual(expected);

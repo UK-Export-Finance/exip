@@ -1,11 +1,13 @@
+import { isValid as isValidDate } from 'date-fns';
 import { isNumber } from '../number';
 import { isEmptyString, stripCommas } from '../string';
+import { objectHasKeysAndValues } from '../object';
 import { RequestBody } from '../../../types';
 import { FIELD_IDS } from '../../constants';
 
 const {
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { COMPANY_NUMBER },
+    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC },
     YOUR_COMPANY: { PHONE_NUMBER },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
@@ -57,6 +59,7 @@ export const STRING_NUMBER_FIELDS = [
   CREDIT_PERIOD_WITH_BUYER,
   DESCRIPTION,
   COMPANY_NUMBER,
+  COMPANY_SIC,
   PHONE_NUMBER,
   GOODS_OR_SERVICES,
   ADDRESS_LINE_1,
@@ -112,7 +115,7 @@ export const replaceCharactersWithCharacterCode = (str: string) =>
 /**
  * sanitiseValue
  * Sanitise a form field value
- * @param {String | Number} Field value
+ * @param {String | Number | Boolean} Field value
  * @returns {Boolean}
  */
 export const sanitiseValue = (key: string, value: string | number | boolean) => {
@@ -131,6 +134,37 @@ export const sanitiseValue = (key: string, value: string | number | boolean) => 
   }
 
   return replaceCharactersWithCharacterCode(String(value));
+};
+
+/**
+ * sanitiseArray
+ * Sanitise an array
+ * @param {String} Field key
+ * @param {Array}
+ * @returns {Array}
+ */
+export const sanitiseArray = (key: string, arr: Array<string>) => {
+  const sanitised = arr.map((value) => sanitiseValue(key, value));
+
+  return sanitised;
+};
+
+/**
+ * sanitiseObject
+ * Sanitise an object
+ * @param {Object}
+ * @returns {Boolean}
+ */
+export const sanitiseObject = (obj: object) => {
+  const sanitised = {};
+
+  Object.keys(obj).forEach((key) => {
+    const value = obj[key];
+
+    sanitised[key] = sanitiseValue(key, value);
+  });
+
+  return sanitised;
 };
 
 /**
@@ -170,6 +204,37 @@ export const shouldIncludeAndSanitiseField = (key: string, value: string) => {
 };
 
 /**
+ * sanitiseFormField
+ * Sanitise a form field, depending on the field type/value
+ * @param {String} Form field key
+ * @param {String | Boolean | Object | Array} Form field value
+ * @returns {String | Boolean | Object | Array}
+ */
+export const sanitiseFormField = (key: string, value: string | boolean | object | Array<string>) => {
+  if (Array.isArray(value)) {
+    return sanitiseArray(key, value);
+  }
+
+  if (isValidDate(value)) {
+    return value;
+  }
+
+  if (typeof value === 'string') {
+    return sanitiseValue(key, value);
+  }
+
+  if (typeof value === 'object' && objectHasKeysAndValues(value)) {
+    return sanitiseObject(value);
+  }
+
+  if (typeof value === 'boolean') {
+    return value;
+  }
+
+  return null;
+};
+
+/**
  * sanitiseData
  * Sanitise form data
  * @param {Express.Request.body} Form body
@@ -190,7 +255,7 @@ export const sanitiseData = (formBody: RequestBody) => {
     const value = formData[key];
 
     if (shouldIncludeAndSanitiseField(key, value)) {
-      sanitised[key] = sanitiseValue(key, value);
+      sanitised[key] = sanitiseFormField(key, value);
     }
   });
 
