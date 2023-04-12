@@ -172,7 +172,7 @@ const insuranceFeedbackEmail = async (variables: InsuranceFeedbackVariables): Pr
 
     const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
 
-    const emailAddress = 'zain.kassam@ukexportfinance.gov.uk';
+    const emailAddress = process.env.FEEDBACK_EMAIL as string;
 
     const response = await callNotify(templateId, emailAddress, variables);
 
