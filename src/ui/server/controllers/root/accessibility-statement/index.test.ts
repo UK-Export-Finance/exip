@@ -4,7 +4,7 @@ import { TEMPLATES } from '../../../constants';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-describe('controllers/root/cookies', () => {
+describe('controllers/root/accessibility-statement', () => {
   let req: Request;
   let res: Response;
 
