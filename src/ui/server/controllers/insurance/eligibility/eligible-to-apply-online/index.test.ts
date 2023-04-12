@@ -10,7 +10,11 @@ import { Request, Response } from '../../../../../types';
 
 const {
   PROBLEM_WITH_SERVICE,
-  INSURANCE: { ELIGIBILITY, DASHBOARD },
+  INSURANCE: {
+    INSURANCE_ROOT,
+    ALL_SECTIONS,
+    ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE },
+  },
 } = ROUTES;
 
 describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
@@ -49,10 +53,10 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE}`, async () => {
+    it(`should redirect to ${ACCOUNT_TO_APPLY_ONLINE}`, async () => {
       await post(req, res);
 
-      const expected = `${ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE}`;
+      const expected = `${ACCOUNT_TO_APPLY_ONLINE}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
@@ -83,10 +87,10 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
         expect(createApplicationSpy).toHaveBeenCalledWith(sanitisedData, mockAccount.id);
       });
 
-      it(`should redirect to ${DASHBOARD}`, async () => {
+      it(`should redirect to ${ALL_SECTIONS}`, async () => {
         await post(req, res);
 
-        const expected = `${DASHBOARD}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
