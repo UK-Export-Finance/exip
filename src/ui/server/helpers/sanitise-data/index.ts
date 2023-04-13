@@ -7,6 +7,7 @@ import isValidWebsiteAddress from '../is-valid-website-address';
 import { RequestBody } from '../../../types';
 
 const {
+  ACCOUNT: { SECURITY_CODE },
   EXPORTER_BUSINESS: {
     COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC },
     YOUR_COMPANY: { PHONE_NUMBER },
@@ -57,6 +58,7 @@ export const NUMBER_FIELDS = [
  * @returns {Array} Field IDs
  */
 export const STRING_NUMBER_FIELDS = [
+  SECURITY_CODE,
   CREDIT_PERIOD_WITH_BUYER,
   DESCRIPTION,
   COMPANY_NUMBER,

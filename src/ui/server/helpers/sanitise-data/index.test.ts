@@ -15,6 +15,7 @@ import { FIELD_IDS } from '../../constants';
 import { mockPhoneNumbers, mockBuyer } from '../../test-mocks';
 
 const {
+  ACCOUNT: { SECURITY_CODE },
   EXPORTER_BUSINESS: {
     COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC },
     YOUR_COMPANY: { PHONE_NUMBER },
@@ -59,6 +60,7 @@ describe('server/helpers/sanitise-data', () => {
   describe('STRING_NUMBER_FIELDS', () => {
     it('should return an explicit array of field IDs that are string fields that could have a pure number value', () => {
       const expected = [
+        SECURITY_CODE,
         CREDIT_PERIOD_WITH_BUYER,
         DESCRIPTION,
         COMPANY_NUMBER,
