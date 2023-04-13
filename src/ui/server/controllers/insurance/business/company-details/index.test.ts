@@ -2,7 +2,6 @@ import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch, TEMPL
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import generateValidationErrors from '../../../../helpers/validation';
 import api from '../../../../api';
@@ -125,8 +124,8 @@ describe('controllers/insurance/business/companies-details', () => {
 
         const submittedValues = {
           [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
-          [TRADING_NAME]: sanitiseValue(TRADING_NAME, exporterCompany?.[TRADING_NAME]),
-          [TRADING_ADDRESS]: sanitiseValue(TRADING_ADDRESS, exporterCompany?.[TRADING_ADDRESS]),
+          [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
+          [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
           [WEBSITE]: exporterCompany?.[WEBSITE],
           [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
         };
@@ -165,8 +164,8 @@ describe('controllers/insurance/business/companies-details', () => {
 
         const submittedValues = {
           [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
-          [TRADING_NAME]: sanitiseValue(TRADING_NAME, exporterCompany?.[TRADING_NAME]),
-          [TRADING_ADDRESS]: sanitiseValue(TRADING_ADDRESS, exporterCompany?.[TRADING_ADDRESS]),
+          [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
+          [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
           [WEBSITE]: exporterCompany?.[WEBSITE],
           [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
         };

@@ -1,9 +1,9 @@
-import { submitButton } from '../../../pages/shared';
-import { insurance } from '../../../pages';
-import partials from '../../../partials';
-import { PAGES } from '../../../../../content-strings';
-import { ROUTES } from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
+import { submitButton } from '../../../../pages/shared';
+import { insurance } from '../../../../pages';
+import partials from '../../../../partials';
+import { PAGES } from '../../../../../../content-strings';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
   completeStartForm,
   completeCheckIfEligibleForm,
@@ -15,7 +15,7 @@ import {
   completeLetterOfCreditForm,
   completePreCreditPeriodForm,
   completeCompaniesHouseNumberForm,
-} from '../../../../support/insurance/eligibility/forms';
+} from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
@@ -26,13 +26,13 @@ const {
     COMPANIES_HOUSE_NUMBER,
     ACCOUNT_TO_APPLY_ONLINE,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 context('Insurance - Eligibility - You are eligible to apply online page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction', () => {
   let url;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
@@ -90,11 +90,9 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
       it(`should redirect to ${ACCOUNT_TO_APPLY_ONLINE}`, () => {
         submitButton().click();
 
-        cy.getReferenceNumber().then(() => {
-          const expectedUrl = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
+        const expectedUrl = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
 
-          cy.url().should('eq', expectedUrl);
-        });
+        cy.url().should('eq', expectedUrl);
       });
     });
   });
