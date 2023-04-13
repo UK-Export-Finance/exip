@@ -1,5 +1,5 @@
 import singleInputPageVariables from '..';
-import { PRODUCT } from '../../../../content-strings';
+import { PRODUCT, LINKS } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 import { SingleInputPageVariablesInitialInput } from '../../../../../types';
 
@@ -23,6 +23,7 @@ const quoteSingleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LI
     BACK_LINK,
     FIELD_ID,
     START_ROUTE: quoteStart,
+    FEEDBACK: LINKS.EXTERNAL.FEEDBACK,
   });
 
 export default quoteSingleInputPageVariables;

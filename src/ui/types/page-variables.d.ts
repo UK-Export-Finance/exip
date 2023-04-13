@@ -20,6 +20,7 @@ interface CorePageVariablesInitialInput {
   PAGE_CONTENT_STRINGS: PageContentStrings;
   BACK_LINK?: string;
   START_ROUTE?: string;
+  FEEDBACK?: string;
 }
 
 interface CorePageVariablesInput extends CorePageVariablesInitialInput {
@@ -30,6 +31,7 @@ interface CorePageVariables {
   CONTENT_STRINGS: PageVariablesContentStrings;
   BACK_LINK?: string;
   START_ROUTE?: string;
+  FEEDBACK?: string;
 }
 
 interface SingleInputPageVariablesInitialInput {
@@ -42,6 +44,7 @@ interface SingleInputPageVariablesInput extends SingleInputPageVariablesInitialI
   FIELD_ID: string;
   PRODUCT: PageVariablesProduct;
   START_ROUTE: string;
+  FEEDBACK: string;
 }
 
 interface SingleInputPageVariables extends CorePageVariables {

@@ -3,7 +3,7 @@ import { ROUTES } from '../../../../constants';
 import { CorePageVariablesInitialInput, CorePageVariables } from '../../../../../types';
 import corePageVariables from '..';
 
-const { START: startRoute } = ROUTES.INSURANCE;
+const { START: startRoute, FEEDBACK: feedbackRoute } = ROUTES.INSURANCE;
 
 /**
  * insuranceCorePageVariables
@@ -21,6 +21,7 @@ const insuranceCorePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK }: CorePag
     },
     BACK_LINK,
     START_ROUTE: startRoute,
+    FEEDBACK: feedbackRoute,
   }),
 });
 

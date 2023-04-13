@@ -42,6 +42,7 @@ const generatePageVariables = (policyType: string) => {
       },
     },
     START_ROUTE: quoteStart,
+    FEEDBACK: LINKS.FEEDBACK,
   };
 
   const { TELL_US_ABOUT_YOUR_POLICY } = PAGES.QUOTE;

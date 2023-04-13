@@ -1,4 +1,4 @@
-import { PAGES, PRODUCT } from '../../../content-strings';
+import { PAGES, PRODUCT, LINKS } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import { Request, Response } from '../../../../types';
 import corePageVariables from '../../../helpers/page-variables/core';
@@ -20,6 +20,7 @@ export const get = (req: Request, res: Response) => {
       BACK_LINK: req.headers.referer,
       PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
       START_ROUTE: startRoute,
+      FEEDBACK: LINKS.EXTERNAL.FEEDBACK,
     }),
   });
 };
