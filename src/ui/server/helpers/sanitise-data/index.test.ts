@@ -180,15 +180,30 @@ describe('server/helpers/sanitise-data', () => {
   });
 
   describe('sanitiseArray', () => {
-    it('should return the result of sanitiseValue for each value in the array', () => {
-      const mockKey = 'a';
-      const mockArray = ['mockValueA', 'mockValueB'];
+    describe('when the array is an array of objects', () => {
+      it('should return the result of sanitiseObject for each value in the array', () => {
+        const mockKey = 'a';
+        const mockArray = [{ mock: 'a' }, { mock: 'b' }];
 
-      const result = sanitiseArray(mockKey, mockArray);
+        const result = sanitiseArray(mockKey, mockArray);
 
-      const expected = [sanitiseValue(mockKey, mockArray[0]), sanitiseValue(mockKey, mockArray[1])];
+        const expected = [sanitiseObject(mockArray[0]), sanitiseObject(mockArray[1])];
 
-      expect(result).toEqual(expected);
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when the array is an array of strings', () => {
+      it('should return the result of sanitiseValue for each value in the array', () => {
+        const mockKey = 'a';
+        const mockArray = ['mockValueA', 'mockValueB'];
+
+        const result = sanitiseArray(mockKey, mockArray);
+
+        const expected = [sanitiseValue(mockKey, mockArray[0]), sanitiseValue(mockKey, mockArray[1])];
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 

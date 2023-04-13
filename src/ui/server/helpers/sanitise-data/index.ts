@@ -137,19 +137,6 @@ export const sanitiseValue = (key: string, value: string | number | boolean) => 
 };
 
 /**
- * sanitiseArray
- * Sanitise an array
- * @param {String} Field key
- * @param {Array}
- * @returns {Array}
- */
-export const sanitiseArray = (key: string, arr: Array<string>) => {
-  const sanitised = arr.map((value) => sanitiseValue(key, value));
-
-  return sanitised;
-};
-
-/**
  * sanitiseObject
  * Sanitise an object
  * @param {Object}
@@ -162,6 +149,29 @@ export const sanitiseObject = (obj: object) => {
     const value = obj[key];
 
     sanitised[key] = sanitiseValue(key, value);
+  });
+
+  return sanitised;
+};
+
+/**
+ * sanitiseArray
+ * Sanitise an array
+ * @param {String} Field key
+ * @param {Array}
+ * @returns {Array}
+ */
+export const sanitiseArray = (key: string, arr: Array<string> | Array<object>) => {
+  const sanitised = arr.map((value) => {
+    if (typeof value === 'object' && objectHasKeysAndValues(value)) {
+      return sanitiseObject(value);
+    }
+
+    if (typeof value === 'string') {
+      return sanitiseValue(key, value);
+    }
+
+    return null;
   });
 
   return sanitised;
