@@ -428,6 +428,17 @@ describe('server/helpers/sanitise-data', () => {
       });
     });
 
+    describe('when the field value is an object without values', () => {
+      it('should return an empty object', () => {
+        const mockKey = 'a';
+        const mockValue = {};
+
+        const result = sanitiseFormField(mockKey, mockValue);
+
+        expect(result).toEqual({});
+      });
+    });
+
     describe('when the field is an boolean', () => {
       it('should return the value as is', () => {
         const mockKey = 'a';

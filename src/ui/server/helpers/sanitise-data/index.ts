@@ -241,8 +241,12 @@ export const sanitiseFormField = (key: string, value: string | boolean | object 
     return sanitiseValue(key, value);
   }
 
-  if (typeof value === 'object' && objectHasKeysAndValues(value)) {
-    return sanitiseObject(value);
+  if (typeof value === 'object') {
+    if (objectHasKeysAndValues(value)) {
+      return sanitiseObject(value);
+    }
+
+    return {};
   }
 
   if (typeof value === 'boolean') {
