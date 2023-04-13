@@ -45,7 +45,6 @@ const CANNOT_APPLY = {
 
 const ACCESSIBILITY_STATEMENT_PAGE = {
   PAGE_TITLE: 'Accessibility Statement for the EXIP Get a Quote Service',
-  HEADING: 'Accessibility Statement for the EXIP Get a Quote Service',
   SERVICE_LINK: {
     TEXT: 'Get a quote for UKEF export insurance - GOV.UK (www.gov.uk)',
     HREF: LINKS.EXTERNAL.BEFORE_YOU_START,

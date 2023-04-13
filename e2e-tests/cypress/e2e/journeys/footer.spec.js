@@ -36,11 +36,13 @@ context('Footer', () => {
         expect(text.trim()).includes(FOOTER.OGL_LICENCE.DISCLAIMER);
       });
 
-      cy.checkLink(footer.supportLinks.licenseLink(), FOOTER.OGL_LICENCE.HREF, FOOTER.OGL_LICENCE.TEXT);
+      cy.checkLink(footer.supportLinks.licenseLink(), FOOTER.OGL_LICENCE.HREF, FOOTER.OGL_LICENCE.LICENCE);
     });
 
     it(`renders a link to ${FOOTER.CROWN_COPYRIGHT.TEXT} with the correct URL`, () => {
-      cy.checkLink(footer.supportLinks.copyright(), FOOTER.CROWN_COPYRIGHT.HREF, FOOTER.CROWN_COPYRIGHT.TEXT);
+      const expectedText = `© ${FOOTER.CROWN_COPYRIGHT.TEXT}`;
+
+      cy.checkLink(footer.supportLinks.copyright(), FOOTER.CROWN_COPYRIGHT.HREF, expectedText);
     });
   });
 });

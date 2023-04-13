@@ -1,6 +1,6 @@
 import { accessibilityStatementPage } from '../pages';
 import partials from '../partials';
-import { LINKS, PAGES } from '../../../content-strings';
+import { PAGES } from '../../../content-strings';
 import { ROUTES } from '../../../constants';
 
 const {
@@ -17,7 +17,6 @@ const {
 const CONTENT_STRINGS = PAGES.ACCESSIBILITY_STATEMENT_PAGE;
 
 const {
-  HEADING,
   SERVICE_LINK,
   USING_OUR_SERVICE,
   FEEDBACK_AND_CONTACT,
@@ -36,41 +35,18 @@ context('Accessibility statement page', () => {
     partials.footer.supportLinks.accessibilityStatement().click();
     cy.url().should('include', ROUTES.ACCESSIBILITY_STATEMENT);
 
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 60,
-    });
-  });
+  it('renders core page elements', () => {
+    cy.clearCookies();
 
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
-
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
-
-    partials.backLink().should('have.attr', 'href', expected);
-  });
-
-  it('renders a heading', () => {
-    accessibilityStatementPage.heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(HEADING);
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.ACCESSIBILITY_STATEMENT,
+      backLink: ROUTES.QUOTE.BUYER_COUNTRY,
+      assertSubmitButton: false,
+      assertAuthenticatedHeader: false,
     });
   });
 
