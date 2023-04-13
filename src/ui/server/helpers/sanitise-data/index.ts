@@ -2,8 +2,9 @@ import { isValid as isValidDate } from 'date-fns';
 import { isNumber } from '../number';
 import { isEmptyString, stripCommas } from '../string';
 import { objectHasKeysAndValues } from '../object';
-import { RequestBody } from '../../../types';
 import { FIELD_IDS } from '../../constants';
+import isValidWebsiteAddress from '../is-valid-website-address';
+import { RequestBody } from '../../../types';
 
 const {
   EXPORTER_BUSINESS: {
@@ -22,7 +23,7 @@ const {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
   },
   YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION: { NAME, REGISTRATION_NUMBER, ADDRESS, FIRST_NAME, LAST_NAME, POSITION },
+    COMPANY_OR_ORGANISATION: { NAME, REGISTRATION_NUMBER, ADDRESS, FIRST_NAME, LAST_NAME, POSITION, WEBSITE },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -131,6 +132,11 @@ export const sanitiseValue = (key: string, value: string | number | boolean) => 
     const stripped = stripCommas(String(value));
 
     return Number(stripped);
+  }
+
+  // Do not sanitise a valid website address. Otherwise, the website address becomes invalid.
+  if (key === WEBSITE && isValidWebsiteAddress(String(value))) {
+    return value;
   }
 
   return replaceCharactersWithCharacterCode(String(value));

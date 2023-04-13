@@ -12,7 +12,7 @@ import {
   sanitiseFormField,
 } from '.';
 import { FIELD_IDS } from '../../constants';
-import { mockPhoneNumbers } from '../../test-mocks';
+import { mockPhoneNumbers, mockBuyer } from '../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: {
@@ -31,7 +31,7 @@ const {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
   },
   YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION: { NAME, REGISTRATION_NUMBER, ADDRESS, FIRST_NAME, LAST_NAME, POSITION },
+    COMPANY_OR_ORGANISATION: { NAME, REGISTRATION_NUMBER, ADDRESS, FIRST_NAME, LAST_NAME, POSITION, WEBSITE },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -301,6 +301,16 @@ describe('server/helpers/sanitise-data', () => {
         const result = sanitiseValue(COMPANY_NUMBER, phoneNumber);
 
         expect(result).toEqual(phoneNumber);
+      });
+    });
+
+    describe(`when value is ${WEBSITE}`, () => {
+      it('should return value without sanitisation', () => {
+        const website = mockBuyer[WEBSITE];
+
+        const result = sanitiseValue(WEBSITE, website);
+
+        expect(result).toEqual(website);
       });
     });
   });
