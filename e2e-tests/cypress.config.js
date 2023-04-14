@@ -1,6 +1,8 @@
 const { defineConfig } = require('cypress');
 const dotenv = require('dotenv');
 
+const { lighthouse, prepareAudit } = require('@cypress-audit/lighthouse');
+
 dotenv.config();
 
 /**
@@ -29,8 +31,15 @@ const cypressConfig = defineConfig({
       GOV_NOTIFY_EMAIL_RECIPIENT_2: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_2,
       MOCK_ACCOUNT_PASSWORD: process.env.MOCK_ACCOUNT_PASSWORD,
     },
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins')(on, config); // eslint-disable-line global-require
+    setupNodeEvents(on) {
+      // eslint-disable-next-line
+      on('before:browser:launch', (browser = {}, launchOptions) => {
+        prepareAudit(launchOptions);
+      });
+
+      on('task', {
+        lighthouse: lighthouse(),
+      });
     },
   },
 });

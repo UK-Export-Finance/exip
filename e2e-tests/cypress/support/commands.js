@@ -6,7 +6,7 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
-import 'cypress-audit/commands';
+import '@cypress-audit/lighthouse/commands';
 import 'cypress-v10-preserve-cookie';
 
 import analytics from './analytics';

@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "dependencies": {
+    "@cypress-audit/lighthouse": "^1.4.2",
     "@keystone-6/auth": "^7.0.0",
     "@keystone-6/core": "^5.1.0",
     "@keystone-6/fields-document": "^7.0.0",
@@ -33,7 +34,6 @@
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
     "cypress": "^12.9.0",
-    "cypress-audit": "^1.1.0",
     "cypress-v10-preserve-cookie": "^1.2.1",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
