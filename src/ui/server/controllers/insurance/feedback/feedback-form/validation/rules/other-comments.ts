@@ -2,6 +2,7 @@ import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { RequestBody } from '../../../../../../../types';
 import inputValidation from '../../../../../../shared-validation/feedback';
+import { objectHasProperty } from '../../../../../../helpers/object';
 
 const {
   FEEDBACK: { OTHER_COMMENTS: FIELD_ID },
@@ -20,7 +21,7 @@ export const MAXIMUM = 1200;
  */
 const otherComments = (responseBody: RequestBody, errors: object) => {
   // if field has a value
-  if (responseBody[FIELD_ID]) {
+  if (objectHasProperty(responseBody, FIELD_ID)) {
     // checks field is not over maximum characters
     return inputValidation(responseBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, errors, MAXIMUM);
   }

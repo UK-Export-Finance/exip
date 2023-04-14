@@ -1721,7 +1721,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         accountId: String
       }
 
-      type sendEmailInsuranceFeedbackResponse {
+      type SuccessResponse {
         success: Boolean!
       }
 
@@ -1744,7 +1744,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           satisfaction: String
           improvement: String
           otherComments: String
-        ): sendEmailInsuranceFeedbackResponse
+        ): SuccessResponse
 
         """ send confirm email address email """
         sendEmailConfirmEmailAddress(

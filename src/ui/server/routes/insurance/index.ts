@@ -16,7 +16,7 @@ import insuranceAccountRouter from './account';
 import insuranceCheckYourAnswersRouter from './check-your-answers';
 import { get as applicationSubmittedGet } from '../../controllers/insurance/application-submitted';
 import { get as feedbackGet, post as feedbackPost } from '../../controllers/insurance/feedback/feedback-form';
-import { get as feedbackConfirmationGet, post as feedbackConfirmationPost } from '../../controllers/insurance/feedback/feedback-confirmation';
+import { get as feedbackConfirmationGet } from '../../controllers/insurance/feedback/feedback-confirmation';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
@@ -52,7 +52,6 @@ insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.APPLIC
 insuranceRouter.get(INSURANCE_ROUTES.FEEDBACK, feedbackGet);
 insuranceRouter.post(INSURANCE_ROUTES.FEEDBACK, feedbackPost);
 
-insuranceRouter.get(INSURANCE_ROUTES.FEEDBACK_CONFIRMATION, feedbackConfirmationGet);
-insuranceRouter.post(INSURANCE_ROUTES.FEEDBACK_CONFIRMATION, feedbackConfirmationPost);
+insuranceRouter.get(INSURANCE_ROUTES.FEEDBACK_SENT, feedbackConfirmationGet);
 
 export default insuranceRouter;

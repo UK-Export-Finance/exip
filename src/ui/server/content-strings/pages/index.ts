@@ -225,7 +225,7 @@ const FEEDBACK_PAGE = {
   PAGE_TITLE: 'Give feedback on this service',
 };
 
-const FEEDBACK_CONFIRMATION_PAGE = {
+const FEEDBACK_SENT_PAGE = {
   PAGE_TITLE: 'Thank you for providing feedback',
   FEEDBACK_TEXT: 'Feedback helps us improve the service and understand the user experience.',
 };
@@ -242,7 +242,7 @@ export const PAGES = {
   PROBLEM_WITH_SERVICE_PAGE,
   CONTACT_US_PAGE,
   FEEDBACK_PAGE,
-  FEEDBACK_CONFIRMATION_PAGE,
+  FEEDBACK_SENT_PAGE,
   QUOTE: QUOTE_PAGES,
   INSURANCE: INSURANCE_PAGES,
 };

@@ -7,7 +7,7 @@ import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-fou
 import { get as noAccessToApplicationGet } from '../../controllers/insurance/no-access-to-application';
 import { get as applicationSubmittedGet } from '../../controllers/insurance/application-submitted';
 import { get as feedbackGet, post as feedbackPost } from '../../controllers/insurance/feedback/feedback-form';
-import { get as feedbackConfirmationGet, post as feedbackConfirmationPost } from '../../controllers/insurance/feedback/feedback-confirmation';
+import { get as feedbackConfirmationGet } from '../../controllers/insurance/feedback/feedback-confirmation';
 
 describe('routes/insurance', () => {
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('routes/insurance', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(81);
-    expect(post).toHaveBeenCalledTimes(86);
+    expect(post).toHaveBeenCalledTimes(85);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startPost);
@@ -38,7 +38,6 @@ describe('routes/insurance', () => {
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.FEEDBACK, feedbackGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.FEEDBACK, feedbackPost);
 
-    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.FEEDBACK_CONFIRMATION, feedbackConfirmationGet);
-    expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.FEEDBACK_CONFIRMATION, feedbackConfirmationPost);
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.FEEDBACK_SENT, feedbackConfirmationGet);
   });
 });

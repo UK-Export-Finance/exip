@@ -11,7 +11,7 @@ const { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NE
 const { FEEDBACK_PAGE } = PAGES;
 const { FEEDBACK: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
 
-const { FEEDBACK_CONFIRMATION } = ROUTES.INSURANCE;
+const { FEEDBACK_SENT } = ROUTES.INSURANCE;
 
 export const TEMPLATE = FEEDBACK_TEMPLATE;
 
@@ -98,7 +98,7 @@ const post = async (req: Request, res: Response) => {
       await api.keystone.feedbackEmails.insurance(emailVariables);
     }
 
-    return res.redirect(FEEDBACK_CONFIRMATION);
+    return res.redirect(FEEDBACK_SENT);
   } catch (err) {
     console.error('Error posting insurance feedback page', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

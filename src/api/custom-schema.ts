@@ -155,7 +155,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         accountId: String
       }
 
-      type sendEmailInsuranceFeedbackResponse {
+      type SuccessResponse {
         success: Boolean!
       }
 
@@ -178,7 +178,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           satisfaction: String
           improvement: String
           otherComments: String
-        ): sendEmailInsuranceFeedbackResponse
+        ): SuccessResponse
 
         """ send confirm email address email """
         sendEmailConfirmEmailAddress(

@@ -57,26 +57,26 @@ context('Insurance - Feedback - As an exporter I want to give feedback on the UK
     });
 
     it(`should render the ${SATISFACTION} radios`, () => {
-      const field = feedbackPage[SATISFACTION];
+      const field = feedbackPage.field(SATISFACTION);
 
       cy.checkText(field.heading(), FIELDS[SATISFACTION].TITLE);
       cy.checkText(field.label(), FIELDS[SATISFACTION].LABEL);
 
-      cy.checkText(field[VERY_SATISFIED].label(), FIELDS[SATISFACTION].VERY_SATISFIED);
-      cy.checkText(field[SATISFIED].label(), FIELDS[SATISFACTION].SATISFIED);
-      cy.checkText(field[NEITHER].label(), FIELDS[SATISFACTION].NEITHER);
-      cy.checkText(field[DISSATISFIED].label(), FIELDS[SATISFACTION].DISSATISFIED);
-      cy.checkText(field[VERY_DISSATISIFED].label(), FIELDS[SATISFACTION].VERY_DISSATISIFED);
+      cy.checkText(feedbackPage.field(VERY_SATISFIED).label(), FIELDS[SATISFACTION].VERY_SATISFIED);
+      cy.checkText(feedbackPage.field(SATISFIED).label(), FIELDS[SATISFACTION].SATISFIED);
+      cy.checkText(feedbackPage.field(NEITHER).label(), FIELDS[SATISFACTION].NEITHER);
+      cy.checkText(feedbackPage.field(DISSATISFIED).label(), FIELDS[SATISFACTION].DISSATISFIED);
+      cy.checkText(feedbackPage.field(VERY_DISSATISIFED).label(), FIELDS[SATISFACTION].VERY_DISSATISIFED);
 
-      field[VERY_SATISFIED].input().should('exist');
-      field[SATISFIED].input().should('exist');
-      field[NEITHER].input().should('exist');
-      field[DISSATISFIED].input().should('exist');
-      field[VERY_DISSATISIFED].input().should('exist');
+      feedbackPage.field(VERY_SATISFIED).input().should('exist');
+      feedbackPage.field(SATISFIED).input().should('exist');
+      feedbackPage.field(NEITHER).input().should('exist');
+      feedbackPage.field(DISSATISFIED).input().should('exist');
+      feedbackPage.field(VERY_DISSATISIFED).input().should('exist');
     });
 
     it(`should render the ${IMPROVEMENT} section`, () => {
-      const field = feedbackPage[IMPROVEMENT];
+      const field = feedbackPage.field(IMPROVEMENT);
 
       cy.checkText(field.label(), FIELDS[IMPROVEMENT].LABEL);
       cy.checkText(field.hint(), FIELDS[IMPROVEMENT].HINT);
@@ -84,7 +84,7 @@ context('Insurance - Feedback - As an exporter I want to give feedback on the UK
     });
 
     it(`should render the ${OTHER_COMMENTS} section`, () => {
-      const field = feedbackPage[OTHER_COMMENTS];
+      const field = feedbackPage.field(OTHER_COMMENTS);
 
       cy.checkText(field.label(), FIELDS[OTHER_COMMENTS].LABEL);
       cy.checkText(field.hint(), FIELDS[OTHER_COMMENTS].HINT);

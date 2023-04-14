@@ -12,7 +12,7 @@ const { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NE
 const { FEEDBACK_PAGE } = PAGES;
 const { FEEDBACK: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
 
-const { FEEDBACK_CONFIRMATION } = ROUTES.INSURANCE;
+const { FEEDBACK_SENT } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/feedback/feedback-confirmation', () => {
   let req: Request;
@@ -98,7 +98,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
 
           await post(req, res);
 
-          const expected = FEEDBACK_CONFIRMATION;
+          const expected = FEEDBACK_SENT;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
 
@@ -130,7 +130,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
 
           await post(req, res);
 
-          const expected = FEEDBACK_CONFIRMATION;
+          const expected = FEEDBACK_SENT;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
 
