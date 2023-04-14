@@ -30,6 +30,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
       currentHref: url,
       backLink: ROUTES.QUOTE.BUYER_BODY,
       assertAuthenticatedHeader: false,
+      isInsurancePage: false,
     });
   });
 

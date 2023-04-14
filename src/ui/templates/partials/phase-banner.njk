@@ -1,7 +1,7 @@
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
 {% set bannerHtml %}
-  <span data-cy="phase-banner-text">This is a new service - your <a class="govuk-link" href="{{FEEDBACK}}" data-cy="phase-banner-feedback-link">feedback</a> will help us to improve it.</span>
+  <span data-cy="phase-banner-text">This is a new service - your <a class="govuk-link" href="{{ FEEDBACK_ROUTE }}" data-cy="phase-banner-feedback-link">feedback</a> will help us to improve it.</span>
 {% endset %}
 
 <div class="govuk-width-container" role="complementary">

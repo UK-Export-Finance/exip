@@ -1,4 +1,4 @@
-import { PAGES, PRODUCT } from '../../../content-strings';
+import { PAGES, PRODUCT, LINKS } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import corePageVariables from '../../../helpers/page-variables/core';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
@@ -11,6 +11,7 @@ const get = (req: Request, res: Response) =>
       PAGE_CONTENT_STRINGS: PAGES.PROBLEM_WITH_SERVICE_PAGE,
       BACK_LINK: req.headers.referer,
       PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
+      FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
     }),
   });
 

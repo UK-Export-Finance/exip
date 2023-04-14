@@ -21,7 +21,7 @@ const insuranceCorePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK }: CorePag
     },
     BACK_LINK,
     START_ROUTE: startRoute,
-    FEEDBACK: feedbackRoute,
+    FEEDBACK_ROUTE: feedbackRoute,
   }),
 });
 

@@ -3,7 +3,7 @@ import corePageVariables from '..';
 import { ROUTES } from '../../../../constants';
 import { PRODUCT } from '../../../../content-strings';
 
-const { START: insuranceStart } = ROUTES.INSURANCE;
+const { START: insuranceStart, FEEDBACK: feedbackRoute } = ROUTES.INSURANCE;
 
 describe('server/helpers/page-variables/core/insurance', () => {
   const mock = {
@@ -26,6 +26,7 @@ describe('server/helpers/page-variables/core/insurance', () => {
       },
       BACK_LINK: mock.BACK_LINK,
       START_ROUTE: insuranceStart,
+      FEEDBACK_ROUTE: feedbackRoute,
     });
 
     expect(result).toEqual(expected);

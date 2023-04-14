@@ -23,7 +23,7 @@ export const get = (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     userName: getUserNameFromSession(req.session.user),
-    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute, FEEDBACK: LINKS.EXTERNAL.FEEDBACK }),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute, FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
     submittedValue: req.cookies.optionalCookies,
   });
@@ -37,7 +37,7 @@ export const post = (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       userName: getUserNameFromSession(req.session.user),
-      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute, FEEDBACK: LINKS.EXTERNAL.FEEDBACK }),
+      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute, FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK }),
       FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
       BACK_LINK: req.headers.referer,
       validationErrors,
@@ -54,7 +54,7 @@ export const post = (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     userName: getUserNameFromSession(req.session.user),
-    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: backLink, START_ROUTE: startRoute, FEEDBACK: LINKS.EXTERNAL.FEEDBACK }),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: backLink, START_ROUTE: startRoute, FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
     submittedValue: req.cookies.optionalCookies,
     showSuccessMessage: true,

@@ -1,5 +1,5 @@
 import { TEMPLATE, get } from '.';
-import { PAGES, PRODUCT } from '../../../content-strings';
+import { PAGES, PRODUCT, LINKS } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import { Request, Response } from '../../../../types';
 import { mockReq, mockRes } from '../../../test-mocks';
@@ -36,6 +36,7 @@ describe('controllers/root/contact-us', () => {
           BACK_LINK: req.headers.referer,
           PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
           START_ROUTE: startRoute,
+          FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
         }),
       });
     });

@@ -23,7 +23,7 @@ const insuranceSingleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, BAC
     BACK_LINK,
     FIELD_ID,
     START_ROUTE: startRoute,
-    FEEDBACK: feedbackRoute,
+    FEEDBACK_ROUTE: feedbackRoute,
   });
 
 export default insuranceSingleInputPageVariables;

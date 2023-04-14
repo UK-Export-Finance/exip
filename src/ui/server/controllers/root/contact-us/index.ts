@@ -20,7 +20,7 @@ export const get = (req: Request, res: Response) => {
       BACK_LINK: req.headers.referer,
       PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
       START_ROUTE: startRoute,
-      FEEDBACK: LINKS.EXTERNAL.FEEDBACK,
+      FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
     }),
   });
 };

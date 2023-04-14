@@ -23,7 +23,7 @@ const quoteSingleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LI
     BACK_LINK,
     FIELD_ID,
     START_ROUTE: quoteStart,
-    FEEDBACK: LINKS.EXTERNAL.FEEDBACK,
+    FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
   });
 
 export default quoteSingleInputPageVariables;

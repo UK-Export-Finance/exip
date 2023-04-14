@@ -12,13 +12,14 @@ import { SingleInputPageVariablesInput, SingleInputPageVariables } from '../../.
  * @param {String} Link to the start route for the header
  * @returns {Object} Common page content strings combined with field specifics
  */
-const singleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, PRODUCT, BACK_LINK, START_ROUTE }: SingleInputPageVariablesInput) => {
+const singleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, PRODUCT, BACK_LINK, START_ROUTE, FEEDBACK_ROUTE }: SingleInputPageVariablesInput) => {
   const pageVariables: SingleInputPageVariables = {
     ...corePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK,
       PRODUCT,
       START_ROUTE,
+      FEEDBACK_ROUTE,
     }),
     FIELD_ID,
   };
