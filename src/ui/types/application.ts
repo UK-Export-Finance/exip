@@ -7,13 +7,12 @@ interface ApplicationExporter {
 
 type ApplicationCore = {
   id: string;
-  exporter: ApplicationExporter;
   referenceNumber: number;
   createdAt: string;
   updatedAt: string;
   submissionDeadline: string;
   submissionType: string;
-  submissionDate?: Date;
+  submissionDate?: string;
   status: string;
 };
 
@@ -136,7 +135,7 @@ interface Application extends ApplicationCore {
   declaration: ApplicationDeclaration;
 }
 
-interface ApplicationFlat extends ApplicationCore, InsuranceEligibilityCore, ApplicationPolicyAndExport, ApplicationExporterCompany {
+interface ApplicationFlat extends ApplicationCore, ApplicationExporter, InsuranceEligibilityCore, ApplicationPolicyAndExport, ApplicationExporterCompany, ApplicationDeclaration {
   buyerCountry: string;
 }
 

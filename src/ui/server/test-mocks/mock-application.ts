@@ -113,6 +113,7 @@ const mockApplication = {
   updatedAt: new Date().toISOString(),
   submissionDeadline: addMonths(new Date(), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS).toISOString(),
   submissionType: 'Manual Inclusion Application',
+  submissionDate: new Date().toISOString(),
   eligibility: {
     id: 'clav8by1g0000kgoq5a2afr1z',
     buyerCountry: mockCountries[0],
@@ -125,7 +126,7 @@ const mockApplication = {
     wantCoverOverMaxAmount: false,
     wantCoverOverMaxPeriod: false,
   },
-  status: APPLICATION.STATUS.SUBMITTED,
+  status: APPLICATION.STATUS.DRAFT,
   exporter: mockExporter,
   policyAndExport: mockSinglePolicyAndExport,
   exporterCompany: mockExporterCompany,

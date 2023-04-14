@@ -23,7 +23,7 @@ const { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL } = BROKER;
 
 /**
  * getBrokerTasks
- * returns tasks required for broker section based on isUsingBroker field
+ * Get broker section tasks depending on the isUsingBroker field
  * @param {String} isUsingBroker
  * @returns {Array} Array of tasks
  */
@@ -37,7 +37,8 @@ export const getBrokerTasks = (isUsingBroker?: string): Array<string> => {
 
 /**
  * Required fields for the insurance - exporter business section
- * @param {Array} Required field IDs
+ * @param {String} Is using broker
+ * @returns {Array} Required field IDs
  */
 const requiredFields = (isUsingBroker?: string): Array<string> => {
   let fields = {
