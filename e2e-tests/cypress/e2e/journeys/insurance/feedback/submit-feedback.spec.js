@@ -22,19 +22,16 @@ context('Insurance - Feedback - Submit feedback form', () => {
   const feedbackConfirmationUrl = `${Cypress.config('baseUrl')}${FEEDBACK_SENT}`;
 
   describe('when submitting an empty form', () => {
-    before(() => {
-      cy.navigateToUrl(startUrl);
-      partials.phaseBanner.feedbackLink().click();
-    });
-
     beforeEach(() => {
       cy.saveSession();
+
+      cy.navigateToUrl(startUrl);
+      partials.phaseBanner.feedbackLink().click();
+      submitButton().click();
     });
 
     describe('when submitting a valid feedback form', () => {
       it(`should redirect to ${FEEDBACK_SENT}`, () => {
-        submitButton().click();
-
         cy.url().should('eq', feedbackConfirmationUrl);
       });
     });
@@ -49,22 +46,20 @@ context('Insurance - Feedback - Submit feedback form', () => {
   });
 
   describe('when submitting a populated form', () => {
-    before(() => {
-      cy.navigateToUrl(startUrl);
-      partials.phaseBanner.feedbackLink().click();
-    });
-
     beforeEach(() => {
       cy.saveSession();
+
+      cy.navigateToUrl(startUrl);
+      partials.phaseBanner.feedbackLink().click();
+
+      feedbackPage.field(SATISFIED).input().click();
+      cy.keyboardInput(feedbackPage.field(IMPROVEMENT).input(), 'test');
+      cy.keyboardInput(feedbackPage.field(OTHER_COMMENTS).input(), 'test');
+      submitButton().click();
     });
 
     describe('when submitting a valid feedback form', () => {
       it(`should redirect to ${FEEDBACK_SENT}`, () => {
-        feedbackPage.field(SATISFIED).input().click();
-        cy.keyboardInput(feedbackPage.field(IMPROVEMENT).input(), 'test');
-        cy.keyboardInput(feedbackPage.field(OTHER_COMMENTS).input(), 'test');
-        submitButton().click();
-
         cy.url().should('eq', feedbackConfirmationUrl);
       });
     });
