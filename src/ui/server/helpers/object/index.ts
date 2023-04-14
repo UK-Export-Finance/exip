@@ -8,7 +8,7 @@ type ObjectType = {
  * @param {Object} Object to check
  * @returns {Boolean}
  */
-const objectHasKeysAndValues = (obj: ObjectType) => {
+export const objectHasKeysAndValues = (obj: ObjectType) => {
   const keys = Object.keys(obj);
 
   if (!keys.length) {
@@ -33,12 +33,10 @@ const objectHasKeysAndValues = (obj: ObjectType) => {
  * @param {String} Property to check
  * @returns {Boolean}
  */
-const objectHasProperty = (obj: ObjectType, propertyName: string) => {
+export const objectHasProperty = (obj: ObjectType, propertyName: string) => {
   if (obj[propertyName]) {
     return true;
   }
 
   return false;
 };
-
-export { objectHasKeysAndValues, objectHasProperty };
