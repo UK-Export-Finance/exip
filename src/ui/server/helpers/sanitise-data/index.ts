@@ -1,11 +1,15 @@
+import { isValid as isValidDate } from 'date-fns';
 import { isNumber } from '../number';
 import { isEmptyString, stripCommas } from '../string';
-import { RequestBody } from '../../../types';
+import { objectHasKeysAndValues } from '../object';
 import { FIELD_IDS } from '../../constants';
+import isValidWebsiteAddress from '../is-valid-website-address';
+import { RequestBody } from '../../../types';
 
 const {
+  ACCOUNT: { SECURITY_CODE },
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { COMPANY_NUMBER },
+    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC },
     YOUR_COMPANY: { PHONE_NUMBER },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
@@ -20,7 +24,7 @@ const {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
   },
   YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION: { NAME, REGISTRATION_NUMBER, ADDRESS, FIRST_NAME, LAST_NAME, POSITION },
+    COMPANY_OR_ORGANISATION: { NAME, REGISTRATION_NUMBER, ADDRESS, FIRST_NAME, LAST_NAME, POSITION, WEBSITE },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -30,7 +34,7 @@ const {
  * Explicit list of field IDs in the insurance forms that are number fields.
  * @returns {Array} Field IDs
  */
-const NUMBER_FIELDS = [
+export const NUMBER_FIELDS = [
   TOTAL_CONTRACT_VALUE,
   TOTAL_MONTHS_OF_COVER,
   TOTAL_SALES_TO_BUYER,
@@ -53,10 +57,12 @@ const NUMBER_FIELDS = [
  * - We avoid a "problem with service" page scenario where the data save fails, because it tries to save a number type as a text string type.
  * @returns {Array} Field IDs
  */
-const STRING_NUMBER_FIELDS = [
+export const STRING_NUMBER_FIELDS = [
+  SECURITY_CODE,
   CREDIT_PERIOD_WITH_BUYER,
   DESCRIPTION,
   COMPANY_NUMBER,
+  COMPANY_SIC,
   PHONE_NUMBER,
   GOODS_OR_SERVICES,
   ADDRESS_LINE_1,
@@ -77,7 +83,7 @@ const STRING_NUMBER_FIELDS = [
  * @param {String | Number} Field value
  * @returns {Boolean}
  */
-const shouldChangeToNumber = (key: string, value: string | number) => {
+export const shouldChangeToNumber = (key: string, value: string | number) => {
   if (STRING_NUMBER_FIELDS.includes(key) || isEmptyString(String(value))) {
     return false;
   }
@@ -94,12 +100,28 @@ const shouldChangeToNumber = (key: string, value: string | number) => {
 };
 
 /**
+ * replaceCharactersWithCharacterCode
+ * Replace certain characters with character codes
+ * @param {String} Field value
+ * @returns {String}
+ */
+export const replaceCharactersWithCharacterCode = (str: string) =>
+  str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;')
+    .replace(/\*/g, '&#42;');
+
+/**
  * sanitiseValue
  * Sanitise a form field value
- * @param {String | Number} Field value
+ * @param {String | Number | Boolean} Field value
  * @returns {Boolean}
  */
-const sanitiseValue = (key: string, value: string | number | boolean) => {
+export const sanitiseValue = (key: string, value: string | number | boolean) => {
   if (value === 'true' || value === true) {
     return true;
   }
@@ -114,7 +136,53 @@ const sanitiseValue = (key: string, value: string | number | boolean) => {
     return Number(stripped);
   }
 
-  return value;
+  // Do not sanitise a valid website address. Otherwise, the website address becomes invalid.
+  if (key === WEBSITE && isValidWebsiteAddress(String(value))) {
+    return value;
+  }
+
+  return replaceCharactersWithCharacterCode(String(value));
+};
+
+/**
+ * sanitiseObject
+ * Sanitise an object
+ * @param {Object}
+ * @returns {Boolean}
+ */
+export const sanitiseObject = (obj: object) => {
+  const sanitised = {};
+
+  Object.keys(obj).forEach((key) => {
+    const value = obj[key];
+
+    sanitised[key] = sanitiseValue(key, value);
+  });
+
+  return sanitised;
+};
+
+/**
+ * sanitiseArray
+ * Sanitise an array
+ * @param {String} Field key
+ * @param {Array}
+ * @returns {Array}
+ */
+export const sanitiseArray = (key: string, arr: Array<string> | Array<object>) => {
+  const sanitised = arr.map((value) => {
+    if (typeof value === 'object' && objectHasKeysAndValues(value)) {
+      return sanitiseObject(value);
+    }
+
+    if (typeof value === 'string') {
+      return sanitiseValue(key, value);
+    }
+
+    return null;
+  });
+
+  return sanitised;
 };
 
 /**
@@ -123,7 +191,7 @@ const sanitiseValue = (key: string, value: string | number | boolean) => {
  * @param {String} Form field name
  * @returns {Boolean}
  */
-const isDayMonthYearField = (fieldName: string): boolean => {
+export const isDayMonthYearField = (fieldName: string): boolean => {
   if (fieldName.includes('-day') || fieldName.includes('-month') || fieldName.includes('-year')) {
     return true;
   }
@@ -138,7 +206,7 @@ const isDayMonthYearField = (fieldName: string): boolean => {
  * @param {String} Form field value
  * @returns {Boolean}
  */
-const shouldIncludeAndSanitiseField = (key: string, value: string) => {
+export const shouldIncludeAndSanitiseField = (key: string, value: string) => {
   // do not include day/month/year fields, these should be captured as timestamps.
   if (isDayMonthYearField(key)) {
     return false;
@@ -154,12 +222,47 @@ const shouldIncludeAndSanitiseField = (key: string, value: string) => {
 };
 
 /**
+ * sanitiseFormField
+ * Sanitise a form field, depending on the field type/value
+ * @param {String} Form field key
+ * @param {String | Boolean | Object | Array} Form field value
+ * @returns {String | Boolean | Object | Array}
+ */
+export const sanitiseFormField = (key: string, value: string | boolean | object | Array<string>) => {
+  if (Array.isArray(value)) {
+    return sanitiseArray(key, value);
+  }
+
+  if (isValidDate(value)) {
+    return value;
+  }
+
+  if (typeof value === 'string') {
+    return sanitiseValue(key, value);
+  }
+
+  if (typeof value === 'object') {
+    if (objectHasKeysAndValues(value)) {
+      return sanitiseObject(value);
+    }
+
+    return {};
+  }
+
+  if (typeof value === 'boolean') {
+    return value;
+  }
+
+  return null;
+};
+
+/**
  * sanitiseData
  * Sanitise form data
  * @param {Express.Request.body} Form body
  * @returns {Object} sanitised form data
  */
-const sanitiseData = (formBody: RequestBody) => {
+export const sanitiseData = (formBody: RequestBody) => {
   const formData = formBody;
 
   if (formData._csrf) {
@@ -174,11 +277,9 @@ const sanitiseData = (formBody: RequestBody) => {
     const value = formData[key];
 
     if (shouldIncludeAndSanitiseField(key, value)) {
-      sanitised[key] = sanitiseValue(key, value);
+      sanitised[key] = sanitiseFormField(key, value);
     }
   });
 
   return sanitised;
 };
-
-export { NUMBER_FIELDS, STRING_NUMBER_FIELDS, shouldChangeToNumber, sanitiseValue, isDayMonthYearField, shouldIncludeAndSanitiseField, sanitiseData };

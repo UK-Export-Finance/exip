@@ -3,7 +3,7 @@ import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { objectHasValues } from '../../../../helpers/object';
+import { objectHasKeysAndValues } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import { isMultiPolicyType, isSinglePolicyType } from '../../../../helpers/policy-type';
 import mapAndSave from '../map-and-save';
@@ -78,7 +78,7 @@ export const post = async (req: Request, res: Response) => {
   // check for form errors.
   const validationErrors = generateValidationErrors(req.body);
 
-  if (objectHasValues(validationErrors)) {
+  if (objectHasKeysAndValues(validationErrors)) {
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
