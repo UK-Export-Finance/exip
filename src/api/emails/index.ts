@@ -180,7 +180,7 @@ const insuranceFeedbackEmail = async (variables: InsuranceFeedbackVariables): Pr
   } catch (err) {
     console.error(err);
 
-    throw new Error(`Sending documents email ${err}`);
+    throw new Error(`Sending insurance feedback email ${err}`);
   }
 };
 

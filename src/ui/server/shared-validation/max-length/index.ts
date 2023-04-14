@@ -2,7 +2,7 @@ import generateValidationErrors from '../../helpers/validation';
 import isAboveMaxLength from '../../helpers/is-above-max-length';
 
 /**
- * validates feedback character count input
+ * validates field character count input is not above max length
  * @param {string} fieldBody
  * @param {string} fieldId
  * @param {string} errorMessage
@@ -10,7 +10,7 @@ import isAboveMaxLength from '../../helpers/is-above-max-length';
  * @param {number} maximum
  * @returns {object} errors
  */
-const validateFeedbackInput = (fieldBody: string, fieldId: string, errorMessage: string, errors: object, maximum: number) => {
+const validateInputMaxLength = (fieldBody: string, fieldId: string, errorMessage: string, errors: object, maximum: number) => {
   let updatedErrors = errors;
 
   // is over maximum number of characters then will be false
@@ -23,4 +23,4 @@ const validateFeedbackInput = (fieldBody: string, fieldId: string, errorMessage:
   return updatedErrors;
 };
 
-export default validateFeedbackInput;
+export default validateInputMaxLength;

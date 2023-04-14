@@ -7,21 +7,17 @@ import { InsuranceFeedbackVariables } from '../types';
 dotenv.config();
 
 describe('custom-resolvers/send-email-insurance-feedback', () => {
-  let variables: InsuranceFeedbackVariables;
-
   jest.mock('../emails');
 
   let sendInsuranceFeedbackEmailSpy = jest.fn();
+
+  const variables = mockInsuranceFeedback as InsuranceFeedbackVariables;
 
   afterAll(() => {
     jest.resetAllMocks();
   });
 
   beforeEach(async () => {
-    variables = {
-      ...mockInsuranceFeedback,
-    };
-
     jest.resetAllMocks();
 
     sendInsuranceFeedbackEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));

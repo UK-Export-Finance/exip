@@ -1,7 +1,7 @@
 import otherComments, { MAXIMUM } from './other-comments';
 import { FIELD_IDS } from '../../../../../../constants';
 import { RequestBody } from '../../../../../../../types';
-import inputValidation from '../../../../../../shared-validation/feedback';
+import inputValidation from '../../../../../../shared-validation/max-length';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 
 const {

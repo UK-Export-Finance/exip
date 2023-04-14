@@ -18,7 +18,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
     req = mockReq();
     req.flash = (property: string) => {
       const obj = {
-        feedbackFrom: startRoute,
+        feedbackOriginUrl: startRoute,
       };
 
       return obj[property];

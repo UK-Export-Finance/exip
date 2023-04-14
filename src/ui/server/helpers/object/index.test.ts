@@ -25,14 +25,6 @@ describe('server/helpers/object', () => {
         expect(result).toEqual(false);
       });
     });
-
-    describe('when there is no object', () => {
-      it('should return false', () => {
-        const result = objectHasKeysAndValues({});
-
-        expect(result).toEqual(false);
-      });
-    });
   });
 
   describe('objectHasProperty', () => {

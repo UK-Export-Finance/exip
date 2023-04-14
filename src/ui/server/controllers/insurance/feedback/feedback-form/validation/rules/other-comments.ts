@@ -1,7 +1,7 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { RequestBody } from '../../../../../../../types';
-import inputValidation from '../../../../../../shared-validation/feedback';
+import inputValidation from '../../../../../../shared-validation/max-length';
 import { objectHasProperty } from '../../../../../../helpers/object';
 
 const {
@@ -14,7 +14,7 @@ export const MAXIMUM = 1200;
 
 /**
  * validates other comments field
- * checks if response has been provided
+ * checks if answer has been provided
  * @param {RequestBody} responseBody
  * @param {object} errors
  * @returns {object} errors

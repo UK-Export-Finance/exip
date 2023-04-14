@@ -111,6 +111,7 @@ jobs:
           GITHUB_SHA=${{ github.sha }}
           GOV_NOTIFY_API_KEY=${{ secrets.GOV_NOTIFY_API_KEY }}
           UNDERWRITING_TEAM_EMAIL=${{ secrets.UNDERWRITING_TEAM_EMAIL }}
+          FEEDBACK_EMAIL_RECIPIENT=${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
         add_git_labels: true
 
     - name: ACR - `dev` artifact

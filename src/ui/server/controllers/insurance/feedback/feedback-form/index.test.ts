@@ -41,7 +41,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
         FIELDS: {
           SATISFACTION: {
             ID: SATISFACTION,
-            VALUE_ID: { VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED },
+            OPTIONS: { VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED },
             ...FIELDS[SATISFACTION],
           },
           IMPROVEMENT: {
@@ -75,15 +75,17 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
-    it('should add feedbackFrom to req.flash', async () => {
+    it('should add feedbackOriginUrl to req.flash', async () => {
       get(req, res);
 
-      expect(req.flash).toHaveBeenCalledWith('feedbackFrom', req.headers.referer);
+      expect(req.flash).toHaveBeenCalledWith('feedbackOriginUrl', req.headers.referer);
     });
   });
 
   describe('post', () => {
-    api.keystone.feedbackEmails.insurance = jest.fn(() => Promise.resolve({ success: true }));
+    beforeEach(() => {
+      api.keystone.feedbackEmails.insurance = jest.fn(() => Promise.resolve({ success: true }));
+    });
 
     describe('when there are no validation errors', () => {
       describe('when the form body contains data', () => {
@@ -156,8 +158,6 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
 
         await post(req, res);
 
-        await post(req, res);
-
         const validationErrors = generateValidationErrors(req.body);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
@@ -169,6 +169,26 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
           validationErrors,
           submittedValues: body,
         });
+      });
+    });
+
+    describe('when api.keystone.feedbackEmails.insurance does not return a response', () => {
+      beforeEach(() => {
+        api.keystone.feedbackEmails.insurance = jest.fn(() => Promise.resolve(null));
+      });
+
+      const body = {
+        [SATISFACTION]: '',
+        [IMPROVEMENT]: 'test',
+        [OTHER_COMMENTS]: '',
+      };
+
+      it('should redirect to problem with service page', async () => {
+        req.body = body;
+
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });
     });
   });

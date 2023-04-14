@@ -130,7 +130,7 @@ jobs:
           JWT_SIGNING_KEY=${{ secrets.JWT_SIGNING_KEY }} \
           JWT_VALIDATING_KEY=${{ secrets.JWT_VALIDATING_KEY }} \
           UNDERWRITING_TEAM_EMAIL=${{ secrets.UNDERWRITING_TEAM_EMAIL }}
-
+          FEEDBACK_EMAIL_RECIPIENT=${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
 
           az webapp log config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
           --docker-container-logging filesystem

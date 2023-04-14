@@ -21,7 +21,7 @@ const get = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: FEEDBACK_SENT_PAGE,
         BACK_LINK: req.headers.referer,
       }),
-      BACK_TO_SERVICE_URL: req.flash('feedbackFrom'),
+      BACK_TO_SERVICE_URL: req.flash('feedbackOriginUrl'),
     });
   } catch (err) {
     console.error('Error getting insurance feedback page', { err });
