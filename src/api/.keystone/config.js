@@ -1392,6 +1392,9 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
+// custom-resolvers/submit-application.ts
+var import_date_fns4 = require("date-fns");
+
 // emails/send-application-submitted-emails/index.ts
 var send = async (context, referenceNumber, accountId, buyerId, declarationId, exporterCompanyId) => {
   try {
@@ -1488,9 +1491,11 @@ var submitApplication = async (root, variables, context) => {
       where: { id: variables.applicationId }
     });
     if (application) {
-      const canSubmit = application.status === APPLICATION.STATUS.DRAFT;
+      const hasDraftStatus = application.status === APPLICATION.STATUS.DRAFT;
+      const now = /* @__PURE__ */ new Date();
+      const validSubmissionDate = (0, import_date_fns4.isAfter)(new Date(application.submissionDeadline), now);
+      const canSubmit = hasDraftStatus && validSubmissionDate;
       if (canSubmit) {
-        const now = /* @__PURE__ */ new Date();
         const update = {
           status: APPLICATION.STATUS.SUBMITTED,
           previousStatus: APPLICATION.STATUS.DRAFT,

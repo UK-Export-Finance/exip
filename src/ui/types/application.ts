@@ -135,9 +135,10 @@ interface Application extends ApplicationCore {
   declaration: ApplicationDeclaration;
 }
 
-interface ApplicationFlat extends ApplicationCore, ApplicationExporter, InsuranceEligibilityCore, ApplicationPolicyAndExport, ApplicationExporterCompany, ApplicationDeclaration {
+interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationExporter {
   buyerCountry: string;
 }
+type ApplicationFlat = ApplicationFlatCore & ApplicationPolicyAndExport & ApplicationExporterCompany & ApplicationDeclaration;
 
 export {
   Application,
