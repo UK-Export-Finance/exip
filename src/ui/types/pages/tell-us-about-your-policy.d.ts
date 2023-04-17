@@ -20,6 +20,7 @@ interface TellUsAboutPolicyPageVariables {
   CONTENT_STRINGS: TellUsAboutPolicyPageVariablesContentStrings;
   FIELDS: TellUsAboutPolicyPageVariablesFields;
   START_ROUTE: string;
+  FEEDBACK_ROUTE: string;
 }
 
 export { TellUsAboutPolicyPageVariablesContentStrings, TellUsAboutPolicyPageVariablesFields, TellUsAboutPolicyPageVariables };

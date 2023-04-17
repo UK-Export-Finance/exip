@@ -76,6 +76,7 @@ const corePageChecks = ({
   submitButtonCopy = BUTTONS.CONTINUE,
   assertBackLink = true,
   assertAuthenticatedHeader = true,
+  isInsurancePage = true,
   // lightHouseThresholds,
 }) => {
   // run lighthouse audit
@@ -96,7 +97,7 @@ const corePageChecks = ({
   }
 
   // check phase banner
-  cy.checkPhaseBanner();
+  cy.checkPhaseBanner(isInsurancePage);
 
   // check page title and heading
   checkPageTitleAndHeading(pageTitle);

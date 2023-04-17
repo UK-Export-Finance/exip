@@ -91,7 +91,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
 
   describe('post', () => {
     const validBody = {
-      [FIELD_ID]: 'Yes',
+      [FIELD_ID]: FIELD_VALUES.YES,
     };
 
     describe('when there are no validation errors', () => {

@@ -14,7 +14,7 @@ describe('server/helpers/object', () => {
       it('should return false', () => {
         const result = objectHasKeysAndValues({ a: null });
 
-        expect(result).toEqual(true);
+        expect(result).toEqual(false);
       });
     });
 
