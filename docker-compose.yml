@@ -89,6 +89,5 @@ services:
       GOV_NOTIFY_EMAIL_RECIPIENT_1:
       GOV_NOTIFY_EMAIL_RECIPIENT_2:
       UNDERWRITING_TEAM_EMAIL:
-      FEEDBACK_EMAIL_RECIPIENT:
       MOCK_ACCOUNT_PASSWORD:
     entrypoint: npx nodemon src/index.ts -L
