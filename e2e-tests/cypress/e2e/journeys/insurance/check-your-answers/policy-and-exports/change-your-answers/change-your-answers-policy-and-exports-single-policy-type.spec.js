@@ -1,6 +1,6 @@
 import partials from '../../../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
-import { submitButton, status } from '../../../../../pages/shared';
+import { status } from '../../../../../pages/shared';
 import { checkYourAnswersPolicyAndExports } from '../../../../../pages/insurance/check-your-answers';
 import application from '../../../../../../fixtures/application';
 import { singleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
@@ -64,8 +64,8 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
       task.link().click();
 
-      // to get past eligibility check your answers page
-      submitButton().click();
+      // To get past "Eligibility" check your answers page
+      cy.submitCheckYourAnswersForm();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
