@@ -28,6 +28,7 @@ context('Contact us page', () => {
       backLink: ROUTES.QUOTE.BUYER_COUNTRY,
       assertSubmitButton: false,
       assertAuthenticatedHeader: false,
+      isInsurancePage: false,
     });
   });
 

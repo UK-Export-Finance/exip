@@ -47,6 +47,7 @@ context('Accessibility statement page', () => {
       backLink: ROUTES.QUOTE.BUYER_COUNTRY,
       assertSubmitButton: false,
       assertAuthenticatedHeader: false,
+      isInsurancePage: false,
     });
   });
 

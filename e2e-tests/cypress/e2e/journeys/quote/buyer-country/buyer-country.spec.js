@@ -23,6 +23,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       currentHref: ROUTES.QUOTE.BUYER_COUNTRY,
       backLink: LINKS.EXTERNAL.BEFORE_YOU_START,
       assertAuthenticatedHeader: false,
+      isInsurancePage: false,
       lightHouseThresholds: {
         performance: 70,
       },

@@ -1,5 +1,5 @@
 import { get } from '.';
-import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PRODUCT, PAGES } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PRODUCT, PAGES, PHASE_BANNER } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
@@ -24,9 +24,11 @@ describe('controllers/root/accessibility-statement', () => {
           FOOTER,
           LINKS,
           PRODUCT,
+          PHASE_BANNER,
           ...PAGES.ACCESSIBILITY_STATEMENT_PAGE,
         },
         BACK_LINK: req.headers.referer,
+        FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
       });
     });
   });

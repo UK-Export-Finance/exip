@@ -7,6 +7,7 @@ export * from './fields';
 export * from './header';
 export * from './links';
 export * from './pages';
+export * from './phase-banner';
 export * from './product';
 export * from './quote-titles';
 export * from './summary-answers';

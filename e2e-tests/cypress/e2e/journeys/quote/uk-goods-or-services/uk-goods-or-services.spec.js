@@ -37,6 +37,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
       currentHref: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
       backLink: ROUTES.QUOTE.EXPORTER_LOCATION,
       assertAuthenticatedHeader: false,
+      isInsurancePage: false,
     });
   });
 

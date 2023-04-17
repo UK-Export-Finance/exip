@@ -1,13 +1,19 @@
 import partials from '../e2e/partials';
-// import { LINKS } from '../../content-strings';
+import { LINKS, PHASE_BANNER } from '../../content-strings';
+import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 
-export default () => {
+const { PREFIX, LINK_TEXT, SUFFIX } = PHASE_BANNER;
+
+export default (isInsurancePage) => {
   cy.checkText(partials.phaseBanner.tag(), 'alpha');
 
-  cy.checkText(partials.phaseBanner.text(), 'This is a new service - your feedback will help us to improve it.');
+  cy.checkText(partials.phaseBanner.text(), `${PREFIX} ${LINK_TEXT} ${SUFFIX}`);
 
-  cy.checkText(partials.phaseBanner.feedbackLink(), 'feedback');
+  let route = LINKS.EXTERNAL.FEEDBACK;
 
-  // TODO: EMS-1281
-  // partials.phaseBanner.feedbackLink().should('have.attr', 'href', LINKS.EXTERNAL.FEEDBACK);
+  if (isInsurancePage) {
+    route = INSURANCE_ROUTES.FEEDBACK;
+  }
+
+  cy.checkLink(partials.phaseBanner.feedbackLink(), route, LINK_TEXT);
 };
