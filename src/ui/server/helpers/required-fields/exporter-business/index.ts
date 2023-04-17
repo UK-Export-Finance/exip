@@ -1,3 +1,4 @@
+import { FIELD_VALUES } from '../../../constants';
 import FIELD_IDS from '../../../constants/field-ids/insurance';
 
 const {
@@ -28,7 +29,7 @@ const { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL } = BROKER;
  * @returns {Array} Array of tasks
  */
 export const getBrokerTasks = (isUsingBroker?: string): Array<string> => {
-  if (isUsingBroker && isUsingBroker === 'Yes') {
+  if (isUsingBroker && isUsingBroker === FIELD_VALUES.YES) {
     return [NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL];
   }
 

@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { add, addMonths } from 'date-fns';
-import { APPLICATION } from '../constants';
+import { APPLICATION, FIELD_VALUES } from '../constants';
 import mockAccount from './mock-account';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
@@ -98,10 +98,10 @@ export const mockSectionReview = {
 
 export const mockApplicationDeclaration = {
   id: 'clf3te7vx1432cfoqp9rbop73',
-  agreeToConfidentiality: 'Yes',
+  agreeToConfidentiality: FIELD_VALUES.YES,
   agreeToAntiBribery: true,
-  hasAntiBriberyCodeOfConduct: 'Yes',
-  willExportWithAntiBriberyCodeOfConduct: 'Yes',
+  hasAntiBriberyCodeOfConduct: FIELD_VALUES.YES,
+  willExportWithAntiBriberyCodeOfConduct: FIELD_VALUES.YES,
   agreeToConfirmationAndAcknowledgements: true,
   agreeHowDataWillBeUsed: true,
 };

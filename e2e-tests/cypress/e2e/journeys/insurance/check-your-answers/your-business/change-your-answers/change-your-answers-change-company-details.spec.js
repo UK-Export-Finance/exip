@@ -1,7 +1,10 @@
 import { submitButton, status } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import {
-  VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANY_EXAMPLE,
+  FIELD_VALUES,
+  VALID_PHONE_NUMBERS,
+  WEBSITE_EXAMPLES,
+  COMPANY_EXAMPLE,
 } from '../../../../../../../constants';
 import { checkYourAnswersYourBusiness } from '../../../../../pages/insurance/check-your-answers';
 import { companyDetails } from '../../../../../pages/your-business';
@@ -174,7 +177,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
-        cy.checkText(summaryList.field(fieldId).value(), 'No');
+        cy.checkText(summaryList.field(fieldId).value(), FIELD_VALUES.NO);
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -215,7 +218,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
-        cy.checkText(summaryList.field(fieldId).value(), 'No');
+        cy.checkText(summaryList.field(fieldId).value(), FIELD_VALUES.NO);
 
         cy.checkTaskStatusCompleted(status());
       });

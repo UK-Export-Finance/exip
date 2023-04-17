@@ -7,6 +7,7 @@ import {
   FIELDS,
   PAGES,
 } from '../../../../../../content-strings';
+import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -60,11 +61,11 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
     it('renders yes and no radio buttons with a hint', () => {
       yesRadio().should('exist');
 
-      cy.checkText(yesRadio(), 'Yes');
+      cy.checkText(yesRadio(), FIELD_VALUES.YES);
 
       noRadio().should('exist');
 
-      cy.checkText(noRadio(), 'No');
+      cy.checkText(noRadio(), FIELD_VALUES.NO);
 
       cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
     });

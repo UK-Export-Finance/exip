@@ -1,6 +1,9 @@
 import partials from '../../../../partials';
 import {
-  VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANY_EXAMPLE,
+  VALID_PHONE_NUMBERS,
+  WEBSITE_EXAMPLES,
+  COMPANY_EXAMPLE,
+  FIELD_VALUES,
 } from '../../../../../../constants';
 import { companyDetails, checkYourAnswers } from '../../../../pages/your-business';
 import { submitButton } from '../../../../pages/shared';
@@ -142,7 +145,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       });
 
       it('should render the new answer', () => {
-        const expected = 'No';
+        const expected = FIELD_VALUES.NO;
 
         cy.assertSummaryListRowValue(summaryList, fieldId, expected);
       });
@@ -178,7 +181,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       });
 
       it('should render the new answer', () => {
-        const expected = 'No';
+        const expected = FIELD_VALUES.NO;
 
         cy.assertSummaryListRowValue(summaryList, fieldId, expected);
       });

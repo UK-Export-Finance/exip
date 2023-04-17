@@ -8,6 +8,7 @@ import {
   checkChangeAnswerRendered,
 } from '../../../../../../support/check-summary-list-field-change';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/exporter-business';
+import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
@@ -254,7 +255,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
       });
 
       it('should render the new answer, not render the optional broker sections and retain a `completed` status tag', () => {
-        cy.checkText(summaryList.field(fieldId).value(), 'No');
+        cy.checkText(summaryList.field(fieldId).value(), FIELD_VALUES.NO);
 
         summaryList.field(NAME).key().should('not.exist');
         summaryList.field(NAME).value().should('not.exist');
