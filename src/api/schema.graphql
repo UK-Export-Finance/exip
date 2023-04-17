@@ -2005,7 +2005,3 @@ type VerifyAccountEmailAddressResponse {
   success: Boolean!
   accountId: String
 }
-
-type sendEmailInsuranceFeedbackResponse {
-  success: Boolean!
-}
