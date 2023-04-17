@@ -85,6 +85,9 @@ Cypress.Commands.add('completePrepareApplicationMultiplePolicyType', require('./
 Cypress.Commands.add('completeAndSubmitCompanyOrOrganisationForm', require('./insurance/your-buyer/complete-and-submit-company-or-organisation-form'));
 Cypress.Commands.add('completeAndSubmitWorkingWithBuyerForm', require('./insurance/your-buyer/complete-and-submit-working-with-buyer-form'));
 
+Cypress.Commands.add('submitCheckYourAnswersForm', require('./insurance/check-your-answers/submit-form'));
+Cypress.Commands.add('completeAndSubmitCheckYourAnswers', require('./insurance/check-your-answers/submit-check-your-answers'));
+
 Cypress.Commands.add('completeAndSubmitDeclarationConfidentiality', require('./insurance/declarations/complete-and-submit-confidentiality-form'));
 Cypress.Commands.add('completeAndSubmitDeclarationAntiBribery', require('./insurance/declarations/complete-and-submit-anti-bribery-form'));
 Cypress.Commands.add('completeAndSubmitDeclarationAntiBriberyCodeOfConduct', require('./insurance/declarations/complete-and-submit-anti-bribery-code-of-conduct-form'));

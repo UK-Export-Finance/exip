@@ -4,7 +4,7 @@ const { REGISTRATION_NUMBER, WEBSITE: BUYER_WEBSITE, ...COMPANY_OR_ORGANISATION_
 
 /**
  * Required fields for the insurance - your buyer section
- * @param {Array} Required field IDs
+ * @returns {Array} Required field IDs
  */
 const requiredFields = () =>
   Object.values({

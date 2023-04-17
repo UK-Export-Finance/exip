@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import checkSummaryList from '../../../../../../support/insurance/check-your-buyer-summary-list';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -42,12 +41,14 @@ context('Insurance - Check your answers - Your buyer page- Summary list', () => 
 
       task.link().click();
 
-      // to get past eligibility check your answers page
-      submitButton().click();
-      // to get past policy and exports check your answers page
-      submitButton().click();
-      // to get past your business check your answers page
-      submitButton().click();
+      // To get past "Eligibility" check your answers page
+      cy.submitCheckYourAnswersForm();
+
+      // To get past "Policy and exports" check your answers page
+      cy.submitCheckYourAnswersForm();
+
+      // To get past "Your business" check your answers page
+      cy.submitCheckYourAnswersForm();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
 
