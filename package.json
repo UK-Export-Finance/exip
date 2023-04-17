@@ -27,6 +27,7 @@
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "dependencies": {
     "@cypress-audit/lighthouse": "^1.4.2",
+    "@cypress-audit/pa11y": "^1.4.2",
     "@keystone-6/auth": "^7.0.0",
     "@keystone-6/core": "^5.1.0",
     "@keystone-6/fields-document": "^7.0.0",
