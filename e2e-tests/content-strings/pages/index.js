@@ -220,6 +220,15 @@ const PROBLEM_WITH_SERVICE_PAGE = {
   PAGE_TITLE: 'Problem with the service',
 };
 
+const FEEDBACK_PAGE = {
+  PAGE_TITLE: 'Give feedback on this service',
+};
+
+const FEEDBACK_SENT_PAGE = {
+  PAGE_TITLE: 'Thank you for providing feedback',
+  FEEDBACK_TEXT: 'Feedback helps us improve the service and understand the user experience.',
+};
+
 const PAGES = {
   BUYER_COUNTRY,
   EXPORTER_LOCATION,
@@ -233,6 +242,8 @@ const PAGES = {
   CONTACT_US_PAGE,
   QUOTE: QUOTE_PAGES,
   INSURANCE: INSURANCE_PAGES,
+  FEEDBACK_SENT_PAGE,
+  FEEDBACK_PAGE,
 };
 
 export default PAGES;

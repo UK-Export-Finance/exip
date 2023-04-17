@@ -152,6 +152,9 @@ var EMAIL_TEMPLATE_IDS = {
         NOTIFICATION: "676e4655-1e82-4094-9e3e-387ea91f44df"
       }
     }
+  },
+  FEEDBACK: {
+    INSURANCE: "4d3d7944-e894-4527-aee6-692038c84107"
   }
 };
 
@@ -276,11 +279,24 @@ var documentsEmail = async (variables, templateId) => {
     throw new Error(`Sending documents email ${err}`);
   }
 };
+var insuranceFeedbackEmail = async (variables) => {
+  try {
+    console.info("Sending insurance feedback email");
+    const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
+    const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT;
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending insurance feedback email ${err}`);
+  }
+};
 var sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
   applicationSubmitted,
-  documentsEmail
+  documentsEmail,
+  insuranceFeedbackEmail
 };
 var emails_default = sendEmail;
 
@@ -1524,6 +1540,26 @@ var submitApplication = async (root, variables, context) => {
 };
 var submit_application_default = submitApplication;
 
+// custom-resolvers/send-email-insurance-feedback.ts
+var sendEmailInsuranceFeedback = async (root, variables) => {
+  try {
+    console.info("Generating and sending email for insurance feedback");
+    const emailResponse = await emails_default.insuranceFeedbackEmail(variables);
+    if (emailResponse.success) {
+      return {
+        ...emailResponse
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Generating and sending email for insurance feedback ${err}`);
+  }
+};
+var send_email_insurance_feedback_default = sendEmailInsuranceFeedback;
+
 // helpers/create-full-timestamp-from-day-month.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
@@ -1713,6 +1749,10 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         accountId: String
       }
 
+      type SuccessResponse {
+        success: Boolean!
+      }
+
       type Mutation {
         """ create an account """
         createAccount(
@@ -1726,6 +1766,13 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         verifyAccountEmailAddress(
           token: String!
         ): VerifyAccountEmailAddressResponse
+
+        """ send email for insurance feedback """
+        sendEmailInsuranceFeedback(
+          satisfaction: String
+          improvement: String
+          otherComments: String
+        ): SuccessResponse
 
         """ send confirm email address email """
         sendEmailConfirmEmailAddress(
@@ -1791,6 +1838,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
       accountSignInSendNewCode: account_sign_in_new_code_default,
       verifyAccountEmailAddress: verify_account_email_address_default,
       sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
+      sendEmailInsuranceFeedback: send_email_insurance_feedback_default,
       verifyAccountSignInCode: verify_account_sign_in_code_default,
       addAndGetOTP: add_and_get_OTP_default,
       deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,

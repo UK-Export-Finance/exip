@@ -1668,6 +1668,9 @@ type Mutation {
   """ verify an account's email address """
   verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
 
+  """ send email for insurance feedback """
+  sendEmailInsuranceFeedback(satisfaction: String, improvement: String, otherComments: String): SuccessResponse
+
   """ send confirm email address email """
   sendEmailConfirmEmailAddress(exporterId: String!): EmailResponse
 
