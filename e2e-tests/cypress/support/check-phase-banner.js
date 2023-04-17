@@ -9,12 +9,11 @@ export default (isInsurancePage) => {
 
   cy.checkText(partials.phaseBanner.text(), `${PREFIX} ${LINK_TEXT} ${SUFFIX}`);
 
-  cy.checkText(partials.phaseBanner.feedbackLink(), LINK_TEXT);
-
   let route = LINKS.EXTERNAL.FEEDBACK;
 
   if (isInsurancePage) {
     route = INSURANCE_ROUTES.FEEDBACK;
   }
-  partials.phaseBanner.feedbackLink().should('have.attr', 'href', route);
+
+  cy.checkLink(partials.phaseBanner.feedbackLink(), route, LINK_TEXT);
 };

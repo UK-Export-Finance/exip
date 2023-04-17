@@ -28,6 +28,7 @@ describe('controllers/root/accessibility-statement', () => {
           ...PAGES.ACCESSIBILITY_STATEMENT_PAGE,
         },
         BACK_LINK: req.headers.referer,
+        FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
       });
     });
   });
