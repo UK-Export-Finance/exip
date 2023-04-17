@@ -1,6 +1,6 @@
+import requiredFields, { getBrokerTasks } from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance';
 import { mockApplication } from '../../../test-mocks';
-import requiredFields, { getBrokerTasks } from '.';
 
 const {
   EXPORTER_BUSINESS: { COMPANY_HOUSE, YOUR_COMPANY, NATURE_OF_YOUR_BUSINESS, TURNOVER, BROKER },

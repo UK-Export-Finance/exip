@@ -1,4 +1,5 @@
 import { Context, Application } from '.keystone/types'; // eslint-disable-line
+import { isAfter } from 'date-fns';
 import { APPLICATION } from '../constants';
 import applicationSubmittedEmails from '../emails/send-application-submitted-emails';
 import { SubmitApplicationVariables, SubmitApplicationResponse } from '../types';
@@ -21,14 +22,17 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
     })) as Application;
 
     if (application) {
-      const canSubmit = application.status === APPLICATION.STATUS.DRAFT;
+      const hasDraftStatus = application.status === APPLICATION.STATUS.DRAFT;
+
+      const now = new Date();
+
+      // check the current date vs submission deadline
+      const validSubmissionDate = isAfter(new Date(application.submissionDeadline), now);
+
+      const canSubmit = hasDraftStatus && validSubmissionDate;
 
       if (canSubmit) {
-        // TODO: check that the application has all required fields/data.
-
         // change the status and add submission date
-        const now = new Date();
-
         const update = {
           status: APPLICATION.STATUS.SUBMITTED,
           previousStatus: APPLICATION.STATUS.DRAFT,

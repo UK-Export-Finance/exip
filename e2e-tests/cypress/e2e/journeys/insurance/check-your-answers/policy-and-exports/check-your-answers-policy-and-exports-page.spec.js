@@ -38,8 +38,8 @@ context('Insurance - Check your answers - Policy and exports - I want to confirm
 
       task.link().click();
 
-      // to get past eligibility check your answers page
-      submitButton().click();
+      // To get past "Eligibility" check your answers page
+      cy.submitCheckYourAnswersForm();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
