@@ -1,4 +1,4 @@
-import { PRODUCT, LINKS } from '../../../../content-strings';
+import { PRODUCT } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 import { CorePageVariablesInitialInput, CorePageVariables } from '../../../../../types';
 import corePageVariables from '..';
@@ -21,7 +21,6 @@ const quoteCorePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK }: CorePageVar
     },
     BACK_LINK,
     START_ROUTE: quoteStart,
-    FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
   }),
 });
 

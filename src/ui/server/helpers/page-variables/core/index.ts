@@ -10,7 +10,13 @@ import { CorePageVariablesInput, CorePageVariables } from '../../../../types';
  * @param {String} Link to the start route for the header
  * @returns {Object} Common page content strings
  */
-const corePageVariables = ({ PAGE_CONTENT_STRINGS, PRODUCT, BACK_LINK, START_ROUTE, FEEDBACK_ROUTE }: CorePageVariablesInput): CorePageVariables => ({
+const corePageVariables = ({
+  PAGE_CONTENT_STRINGS,
+  PRODUCT,
+  BACK_LINK,
+  START_ROUTE,
+  FEEDBACK_ROUTE = LINKS.EXTERNAL.FEEDBACK,
+}: CorePageVariablesInput): CorePageVariables => ({
   CONTENT_STRINGS: {
     ...PAGE_CONTENT_STRINGS,
     BUTTONS,

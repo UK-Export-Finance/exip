@@ -32,6 +32,7 @@ describe('server/helpers/page-variables/core', () => {
       },
       BACK_LINK: mock.BACK_LINK,
       START_ROUTE: quoteStart,
+      FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
     };
 
     expect(result).toEqual(expected);
