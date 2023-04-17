@@ -9,6 +9,7 @@ interface PageVariablesContentStrings {
   HEADER: object;
   FOOTER: object;
   LINKS: object;
+  PHASE_BANNER: object;
   PRODUCT: object;
 }
 

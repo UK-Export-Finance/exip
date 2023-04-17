@@ -1,4 +1,4 @@
-import { BUTTONS, COOKIES_CONSENT, HEADER, FOOTER, LINKS } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, HEADER, FOOTER, PHASE_BANNER, LINKS } from '../../../content-strings';
 import { CorePageVariablesInput, CorePageVariables } from '../../../../types';
 
 /**
@@ -24,6 +24,7 @@ const corePageVariables = ({
     HEADER,
     FOOTER,
     LINKS,
+    PHASE_BANNER,
     PRODUCT,
   },
   BACK_LINK,
