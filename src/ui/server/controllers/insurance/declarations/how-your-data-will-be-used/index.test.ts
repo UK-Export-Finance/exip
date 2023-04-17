@@ -1,6 +1,6 @@
 import { pageVariables, TEMPLATE, get, post } from '.';
 import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
+import { FIELD_IDS, TEMPLATES, ROUTES, APPLICATION } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -24,7 +24,7 @@ const {
 describe('controllers/insurance/declarations/how-your-data-will-be-used', () => {
   jest.mock('../save-data');
 
-  let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
+  let mockSaveDeclaration = jest.fn(() => Promise.resolve(mockApplication.declaration));
   let submitApplicationSpy = jest.fn(() => Promise.resolve({ success: true }));
 
   save.declaration = mockSaveDeclaration;
@@ -159,6 +159,19 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
+
+      describe('when an application cannot be submitted (e.g, is already submitted)', () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          res.locals.application = {
+            ...mockApplication,
+            status: APPLICATION.STATUS.SUBMITTED,
+          };
+
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
     });
 
     describe('when there are validation errors', () => {
@@ -218,8 +231,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
       describe('save data call', () => {
         describe('when the save data API call does not return anything', () => {
           beforeEach(() => {
-            mockSaveDeclaration = jest.fn(() => Promise.resolve(false));
-            save.declaration = mockSaveDeclaration;
+            save.declaration = jest.fn(() => Promise.resolve());
 
             req.body = validBody;
           });

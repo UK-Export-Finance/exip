@@ -7,6 +7,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
+import canSubmitApplication from '../../../../helpers/can-submit-application';
 import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED;
@@ -122,12 +123,30 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    // submit the application
-    const submissionResponse = await api.keystone.application.submit(application.id);
+    /**
+     * Combine the latest application with the saved declaration answer.
+     * Otherwise, we need to make another API call to get the latest full application.
+     */
+    const latestApplication = {
+      ...application,
+      declaration: {
+        ...application.declaration,
+        ...saveResponse,
+      },
+    };
 
-    if (submissionResponse.success) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`);
+    const canSubmit = canSubmitApplication(latestApplication);
+
+    if (canSubmit) {
+      // submit the application
+      const submissionResponse = await api.keystone.application.submit(application.id);
+
+      if (submissionResponse.success) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`);
+      }
     }
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   } catch (err) {
     console.error('Error updating application - declarations - how data will be used ', { err });
 

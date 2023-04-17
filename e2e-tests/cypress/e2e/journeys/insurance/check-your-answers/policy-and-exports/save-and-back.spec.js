@@ -1,4 +1,4 @@
-import { submitButton, saveAndBackButton } from '../../../../pages/shared';
+import { saveAndBackButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
@@ -26,8 +26,8 @@ context('Insurance - Check your answers - Policy and exports page - Save and bac
 
       task.link().click();
 
-      // to get past eligibility check your answers page
-      submitButton().click();
+      // To get past "Eligibility" check your answers page
+      cy.submitCheckYourAnswersForm();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
