@@ -9,6 +9,7 @@ export * from './fields';
 export * from './header';
 export * from './links';
 export * from './product';
+export * from './phase-banner';
 export * from './quote-titles';
 export * from './summary-answers';
 export * from './tasks';

@@ -1,4 +1,4 @@
-import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PRODUCT, PAGES } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PRODUCT, PAGES, PHASE_BANNER } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import { Request, Response } from '../../../../types';
 
@@ -10,8 +10,10 @@ export const get = (req: Request, res: Response) => {
       FOOTER,
       LINKS,
       PRODUCT,
+      PHASE_BANNER,
       ...PAGES.ACCESSIBILITY_STATEMENT_PAGE,
     },
     BACK_LINK: req.headers.referer,
+    FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
   });
 };
