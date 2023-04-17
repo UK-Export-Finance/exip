@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.15.1](https://github.com/UK-Export-Finance/exip/compare/v1.15.0...v1.15.1) (2023-02-20)
+
+
+### Bug Fixes
+
+* **EMS-1046:** accessibility statement - add missing E2E test for footer link ([#332](https://github.com/UK-Export-Finance/exip/issues/332)) ([66552b4](https://github.com/UK-Export-Finance/exip/commit/66552b486a900a0817043a422890d42666561c49))
+
+## [1.15.0](https://github.com/UK-Export-Finance/exip/compare/v1.14.13...v1.15.0) (2023-02-20)
+
+
+### Features
+
+* **EMS-1046:** Accessibility statement ([#330](https://github.com/UK-Export-Finance/exip/issues/330)) ([0df7857](https://github.com/UK-Export-Finance/exip/commit/0df7857cc9d5a635bb43e4c1bb27b1793188622f))
+
+## [1.14.13](https://github.com/UK-Export-Finance/exip/compare/v1.14.12...v1.14.13) (2023-02-17)
+
+
+### Bug Fixes
+
+* **cookie:** Docker image update + Cookie security ([a829229](https://github.com/UK-Export-Finance/exip/commit/a829229e92e77e28aa1d4d9b63beee1773eea5e4))
+
+## [1.14.12](https://github.com/UK-Export-Finance/exip/compare/v1.14.11...v1.14.12) (2023-02-06)
+
+
+### Miscellaneous
+
+* **npm:** Package update ([2d13590](https://github.com/UK-Export-Finance/exip/commit/2d13590e108c3ffe31ea045ed1af739f76b7fb73))
+
 ## [1.14.11](https://github.com/UK-Export-Finance/exip/compare/v1.14.10...v1.14.11) (2023-01-10)
 
 

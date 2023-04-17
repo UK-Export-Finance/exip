@@ -1,4 +1,4 @@
-import getTrueProperties from '../get-true-properties';
+import getYesAndTrueAnswerProperties from '../get-true-properties';
 import { Application, ApplicationFlat } from '../../../types';
 
 /**
@@ -8,19 +8,25 @@ import { Application, ApplicationFlat } from '../../../types';
  * @returns {Object} Application as a single level object
  */
 const flattenApplicationData = (application: Application): ApplicationFlat => {
-  const { policyAndExport, exporterCompany, exporterBroker, exporterBusiness, buyer, sectionReview, declaration, ...app } = application;
+  const { policyAndExport, exporterCompany, exporterBroker, exporterBusiness, buyer, sectionReview, declaration } = application;
 
   const flattened = {
     ...application.eligibility,
+    referenceNumber: application.referenceNumber,
+    createdAt: application.createdAt,
+    updatedAt: application.updatedAt,
+    submissionDeadline: application.submissionDeadline,
+    submissionType: application.submissionType,
+    submissionDate: application.submissionDate,
+    status: application.status,
     buyerCountry: application.eligibility?.buyerCountry?.isoCode,
     ...policyAndExport,
     ...exporterCompany,
     ...exporterBusiness,
     ...exporterBroker,
     ...buyer,
-    ...getTrueProperties(sectionReview),
-    ...getTrueProperties(declaration),
-    ...app,
+    ...getYesAndTrueAnswerProperties(sectionReview),
+    ...getYesAndTrueAnswerProperties(declaration),
   };
 
   return flattened;

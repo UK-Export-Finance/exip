@@ -288,7 +288,7 @@ var insuranceFeedbackEmail = async (variables) => {
     return response;
   } catch (err) {
     console.error(err);
-    throw new Error(`Sending documents email ${err}`);
+    throw new Error(`Sending insurance feedback email ${err}`);
   }
 };
 var sendEmail = {
@@ -1408,6 +1408,9 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
+// custom-resolvers/submit-application.ts
+var import_date_fns4 = require("date-fns");
+
 // emails/send-application-submitted-emails/index.ts
 var send = async (context, referenceNumber, accountId, buyerId, declarationId, exporterCompanyId) => {
   try {
@@ -1504,9 +1507,11 @@ var submitApplication = async (root, variables, context) => {
       where: { id: variables.applicationId }
     });
     if (application) {
-      const canSubmit = application.status === APPLICATION.STATUS.DRAFT;
+      const hasDraftStatus = application.status === APPLICATION.STATUS.DRAFT;
+      const now = /* @__PURE__ */ new Date();
+      const validSubmissionDate = (0, import_date_fns4.isAfter)(new Date(application.submissionDeadline), now);
+      const canSubmit = hasDraftStatus && validSubmissionDate;
       if (canSubmit) {
-        const now = /* @__PURE__ */ new Date();
         const update = {
           status: APPLICATION.STATUS.SUBMITTED,
           previousStatus: APPLICATION.STATUS.DRAFT,
@@ -1744,7 +1749,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
         accountId: String
       }
 
-      type sendEmailInsuranceFeedbackResponse {
+      type SuccessResponse {
         success: Boolean!
       }
 
@@ -1767,7 +1772,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
           satisfaction: String
           improvement: String
           otherComments: String
-        ): sendEmailInsuranceFeedbackResponse
+        ): SuccessResponse
 
         """ send confirm email address email """
         sendEmailConfirmEmailAddress(

@@ -1669,7 +1669,7 @@ type Mutation {
   verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
 
   """ send email for insurance feedback """
-  sendEmailInsuranceFeedback(satisfaction: String, improvement: String, otherComments: String): sendEmailInsuranceFeedbackResponse
+  sendEmailInsuranceFeedback(satisfaction: String, improvement: String, otherComments: String): SuccessResponse
 
   """ send confirm email address email """
   sendEmailConfirmEmailAddress(exporterId: String!): EmailResponse

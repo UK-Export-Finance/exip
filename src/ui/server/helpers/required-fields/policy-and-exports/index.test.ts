@@ -1,7 +1,7 @@
+import requiredFields, { getContractPolicyTasks } from '.';
 import { FIELD_IDS, FIELD_VALUES } from '../../../constants';
 import { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
 import { mockApplication } from '../../../test-mocks';
-import requiredFields, { getContractPolicyTasks } from '.';
 
 describe('server/helpers/required-fields/policy-and-exports', () => {
   const { policyAndExport } = mockApplication;

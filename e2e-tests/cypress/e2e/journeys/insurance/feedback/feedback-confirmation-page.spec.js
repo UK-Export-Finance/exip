@@ -4,16 +4,16 @@ import { feedbackConfirmation } from '../../../pages/insurance/feedback';
 import { BUTTONS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.FEEDBACK_CONFIRMATION_PAGE;
+const CONTENT_STRINGS = PAGES.FEEDBACK_SENT_PAGE;
 
 const {
   START,
-  FEEDBACK_CONFIRMATION,
+  FEEDBACK_SENT,
 } = ROUTES.INSURANCE;
 
 context('Insurance - Feedback Confirmation page', () => {
   const startUrl = START;
-  const url = FEEDBACK_CONFIRMATION;
+  const url = FEEDBACK_SENT;
 
   before(() => {
     cy.navigateToUrl(startUrl);

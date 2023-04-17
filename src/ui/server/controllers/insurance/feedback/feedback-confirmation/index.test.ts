@@ -1,12 +1,12 @@
-import { TEMPLATE, get, post } from '.';
+import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
-const { FEEDBACK_CONFIRMATION_PAGE } = PAGES;
-const { FEEDBACK_CONFIRMATION: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
+const { FEEDBACK_SENT_PAGE } = PAGES;
+const { FEEDBACK_SENT: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
 
 const startRoute = ROUTES.INSURANCE.START;
 
@@ -18,7 +18,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
     req = mockReq();
     req.flash = (property: string) => {
       const obj = {
-        feedbackFrom: startRoute,
+        feedbackOriginUrl: startRoute,
       };
 
       return obj[property];
@@ -39,20 +39,13 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: FEEDBACK_CONFIRMATION_PAGE,
+          PAGE_CONTENT_STRINGS: FEEDBACK_SENT_PAGE,
           BACK_LINK: req.headers.referer,
         }),
+        BACK_TO_SERVICE_URL: startRoute,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-  });
-
-  describe('post', () => {
-    it('should redirect to route from "req.flash"', async () => {
-      await post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(startRoute);
     });
   });
 });

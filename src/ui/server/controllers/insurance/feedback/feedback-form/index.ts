@@ -11,7 +11,7 @@ const { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NE
 const { FEEDBACK_PAGE } = PAGES;
 const { FEEDBACK: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
 
-const { FEEDBACK_CONFIRMATION } = ROUTES.INSURANCE;
+const { FEEDBACK_SENT } = ROUTES.INSURANCE;
 
 export const TEMPLATE = FEEDBACK_TEMPLATE;
 
@@ -21,7 +21,7 @@ const pageVariables = () => ({
   FIELDS: {
     SATISFACTION: {
       ID: SATISFACTION,
-      VALUE_ID: { VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED },
+      OPTIONS: { VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED },
       ...FIELDS[SATISFACTION],
     },
     IMPROVEMENT: {
@@ -44,7 +44,7 @@ const pageVariables = () => ({
  */
 const get = (req: Request, res: Response) => {
   try {
-    req.flash('feedbackFrom', req.headers.referer);
+    req.flash('feedbackOriginUrl', req.headers.referer);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -92,13 +92,17 @@ const post = async (req: Request, res: Response) => {
         // satisfaction will be null if not selected so set as empty string if null
         [SATISFACTION]: feedback[SATISFACTION] ?? '',
         [IMPROVEMENT]: feedback[IMPROVEMENT],
-        otherComments: feedback[OTHER_COMMENTS],
+        [OTHER_COMMENTS]: feedback[OTHER_COMMENTS],
       } as InsuranceFeedbackVariables;
 
-      await api.keystone.feedbackEmails.insurance(emailVariables);
+      const emailResponse = await api.keystone.feedbackEmails.insurance(emailVariables);
+
+      if (!emailResponse) {
+        return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      }
     }
 
-    return res.redirect(FEEDBACK_CONFIRMATION);
+    return res.redirect(FEEDBACK_SENT);
   } catch (err) {
     console.error('Error posting insurance feedback page', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

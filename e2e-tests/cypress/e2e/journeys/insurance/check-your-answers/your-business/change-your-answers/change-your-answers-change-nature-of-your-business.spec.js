@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -57,10 +56,11 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
 
       task.link().click();
 
-      // to get past eligibility check your answers page
-      submitButton().click();
-      // to get past policy and exports check your answers page
-      submitButton().click();
+      // To get past "Eligibility" check your answers page
+      cy.submitCheckYourAnswersForm();
+
+      // To get past "Policy and exports" check your answers page
+      cy.submitCheckYourAnswersForm();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 

@@ -62,10 +62,11 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
 
       task.link().click();
 
-      // to get past eligibility check your answers page
-      submitButton().click();
-      // to get past policy and exports check your answers page
-      submitButton().click();
+      // To get past "Eligibility" check your answers page
+      cy.submitCheckYourAnswersForm();
+
+      // To get past "Policy and exports" check your answers page
+      cy.submitCheckYourAnswersForm();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 

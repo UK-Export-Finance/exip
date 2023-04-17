@@ -1,7 +1,6 @@
 import partials from '../../../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../support/insurance/check-policy-and-exports-summary-list';
-import { submitButton } from '../../../../../pages/shared';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -44,8 +43,8 @@ context('Insurance - Check your answers - Policy and exports - Multiple contract
 
       task.link().click();
 
-      // to get past eligibility check your answers page
-      submitButton().click();
+      // To get past "Eligibility" check your answers page
+      cy.submitCheckYourAnswersForm();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
