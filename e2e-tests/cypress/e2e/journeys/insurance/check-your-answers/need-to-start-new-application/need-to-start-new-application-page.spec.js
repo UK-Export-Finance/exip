@@ -2,7 +2,7 @@ import { addMonths, format } from 'date-fns';
 import { checkYourAnswersEligibility, checkYourAnswersNeedToStartNewApplication } from '../../../../pages/insurance/check-your-answers';
 import partials from '../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
-import { ROUTES, APPLICATION } from '../../../../../../constants';
+import { ROUTES, APPLICATION, DATE_FORMAT } from '../../../../../../constants';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -78,7 +78,7 @@ context('Insurance - Check your answers - Need to start new application page', (
 
       const timestamp = addMonths(new Date(), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
 
-      const expectedDeadline = format(new Date(timestamp), 'd MMMM yyyy');
+      const expectedDeadline = format(new Date(timestamp), DATE_FORMAT);
 
       cy.checkText(inset.applicationDeadline(), expectedDeadline);
     });

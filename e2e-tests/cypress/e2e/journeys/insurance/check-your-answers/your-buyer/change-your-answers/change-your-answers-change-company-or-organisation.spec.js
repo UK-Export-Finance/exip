@@ -1,6 +1,6 @@
 import { submitButton, status } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
-import { WEBSITE_EXAMPLES } from '../../../../../../../constants';
+import { WEBSITE_EXAMPLES, FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { checkYourAnswersYourBuyer } from '../../../../../pages/insurance/check-your-answers';
@@ -353,7 +353,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
-        fieldVariables.newValue = 'No';
+        fieldVariables.newValue = FIELD_VALUES.NO;
         checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());

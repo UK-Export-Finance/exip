@@ -1,4 +1,9 @@
-import { FIELD_IDS, COMPANIES_HOUSE_NUMBER, WEBSITE_EXAMPLES } from '../../constants';
+import {
+  FIELD_IDS,
+  FIELD_VALUES,
+  COMPANIES_HOUSE_NUMBER,
+  WEBSITE_EXAMPLES,
+} from '../../constants';
 import { GBP_CURRENCY_CODE } from './currencies';
 import mockCountries from './countries';
 import { FIELDS_ELIGIBILITY } from '../../content-strings/fields/insurance/eligibility';
@@ -98,14 +103,14 @@ export const endDate = new Date(date.setMonth((date.getMonth() + 6))); // Add 6 
 const application = {
   ELIGIBILITY: {
     [BUYER_COUNTRY]: mockCountries[1].name,
-    [VALID_EXPORTER_LOCATION]: 'Yes',
+    [VALID_EXPORTER_LOCATION]: FIELD_VALUES.YES,
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES].ANSWER,
-    [WANT_COVER_OVER_MAX_AMOUNT]: 'No',
-    [WANT_COVER_OVER_MAX_PERIOD]: 'No',
-    [OTHER_PARTIES_INVOLVED]: 'No',
-    [LETTER_OF_CREDIT]: 'No',
-    [PRE_CREDIT_PERIOD]: 'No',
-    [ELIGIBILITY_COMPANIES_HOUSE_NUMBER]: 'Yes',
+    [WANT_COVER_OVER_MAX_AMOUNT]: FIELD_VALUES.NO,
+    [WANT_COVER_OVER_MAX_PERIOD]: FIELD_VALUES.NO,
+    [OTHER_PARTIES_INVOLVED]: FIELD_VALUES.NO,
+    [LETTER_OF_CREDIT]: FIELD_VALUES.NO,
+    [PRE_CREDIT_PERIOD]: FIELD_VALUES.NO,
+    [ELIGIBILITY_COMPANIES_HOUSE_NUMBER]: FIELD_VALUES.YES,
   },
   POLICY_AND_EXPORTS: {
     [REQUESTED_START_DATE]: {
@@ -143,8 +148,8 @@ const application = {
     },
     [COMPANY_SIC]: ['64999'],
     [FINANCIAL_YEAR_END_DATE]: '31 July',
-    [TRADING_NAME]: 'Yes',
-    [TRADING_ADDRESS]: 'Yes',
+    [TRADING_NAME]: FIELD_VALUES.YES,
+    [TRADING_ADDRESS]: FIELD_VALUES.YES,
   },
   EXPORTER_BUSINESS: {
     [GOODS_OR_SERVICES]: 'abc',
@@ -155,7 +160,7 @@ const application = {
     [PERCENTAGE_TURNOVER]: '0',
   },
   EXPORTER_BROKER: {
-    [USING_BROKER]: 'Yes',
+    [USING_BROKER]: FIELD_VALUES.YES,
     [NAME]: 'name',
     [ADDRESS_LINE_1]: 'Address line 1',
     [ADDRESS_LINE_2]: 'Address line 2',
@@ -174,9 +179,9 @@ const application = {
     [LAST_NAME]: 'Smith',
     [POSITION]: 'CEO',
     [BUYER_EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
-    [CAN_CONTACT_BUYER]: 'Yes',
-    [CONNECTED_WITH_BUYER]: 'Yes',
-    [TRADED_WITH_BUYER]: 'Yes',
+    [CAN_CONTACT_BUYER]: FIELD_VALUES.YES,
+    [CONNECTED_WITH_BUYER]: FIELD_VALUES.YES,
+    [TRADED_WITH_BUYER]: FIELD_VALUES.YES,
   },
 };
 

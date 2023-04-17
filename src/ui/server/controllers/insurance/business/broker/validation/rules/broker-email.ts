@@ -1,3 +1,4 @@
+import { FIELD_VALUES } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
 import { RequestBody } from '../../../../../../../types';
@@ -20,7 +21,7 @@ const {
  */
 const brokerEmail = (responseBody: RequestBody, errors: object) => {
   // if USING_BROKER radio is yes then check validation
-  if (responseBody[USING_BROKER] === 'Yes') {
+  if (responseBody[USING_BROKER] === FIELD_VALUES.YES) {
     const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
 
     // checks email is valid
