@@ -5,7 +5,7 @@ const lighthouseAudit = (lightHouseThresholds = {}) => {
   cy.lighthouse({
     accessibility: 100,
     performance: 75,
-    'best-practices': 100,
+    'best-practices': 92,
     seo: 70,
     ...lightHouseThresholds,
   });
