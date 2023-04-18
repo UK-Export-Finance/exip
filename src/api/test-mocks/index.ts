@@ -65,4 +65,10 @@ export const mockApplicationDeclaration = {
   agreeHowDataWillBeUsed: true,
 };
 
+export const mockInsuranceFeedback = {
+  satisfaction: 'satisfied',
+  improvement: 'test',
+  otherComments: '',
+};
+
 export const mockSendEmailResponse = { success: true, emailRecipient: mockAccount.email };

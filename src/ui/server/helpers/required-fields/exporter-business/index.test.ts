@@ -1,6 +1,7 @@
-import FIELD_IDS from '../../../constants/field-ids/insurance';
-import { mockApplication } from '../../../test-mocks';
 import requiredFields, { getBrokerTasks } from '.';
+import FIELD_IDS from '../../../constants/field-ids/insurance';
+import { FIELD_VALUES } from '../../../constants';
+import { mockApplication } from '../../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: { COMPANY_HOUSE, YOUR_COMPANY, NATURE_OF_YOUR_BUSINESS, TURNOVER, BROKER },
@@ -23,9 +24,9 @@ const { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL } = BROKER;
 
 describe('server/helpers/required-fields/exporter-business', () => {
   describe('getBrokerTasks', () => {
-    describe('when isUsingBroker is "Yes"', () => {
+    describe(`when isUsingBroker is "${FIELD_VALUES.YES}"`, () => {
       it('should return multiple field ids in an array', () => {
-        const result = getBrokerTasks('Yes');
+        const result = getBrokerTasks(FIELD_VALUES.YES);
 
         const expected = [NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL];
 
@@ -41,9 +42,9 @@ describe('server/helpers/required-fields/exporter-business', () => {
       });
     });
 
-    describe('when isUsingBroker is "No"', () => {
+    describe(`when isUsingBroker is "${FIELD_VALUES.NO}"`, () => {
       it('should return an empty array', () => {
-        const result = getBrokerTasks('No');
+        const result = getBrokerTasks(FIELD_VALUES.NO);
 
         expect(result).toEqual([]);
       });

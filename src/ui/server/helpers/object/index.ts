@@ -3,17 +3,27 @@ type ObjectType = {
 };
 
 /**
- * objectHasValues
- * Check if an object has values
+ * objectHasKeysAndValues
+ * Check if an object has keys and values
  * @param {Object} Object to check
  * @returns {Boolean}
  */
-const objectHasValues = (obj: ObjectType) => {
-  if (obj && Object.keys(obj).length > 0) {
-    return true;
+export const objectHasKeysAndValues = (obj: ObjectType) => {
+  const keys = Object.keys(obj);
+
+  if (!keys.length) {
+    return false;
   }
 
-  return false;
+  let hasValues = false;
+
+  keys.forEach((key) => {
+    if (obj[key]) {
+      hasValues = true;
+    }
+  });
+
+  return hasValues;
 };
 
 /**
@@ -23,12 +33,10 @@ const objectHasValues = (obj: ObjectType) => {
  * @param {String} Property to check
  * @returns {Boolean}
  */
-const objectHasProperty = (obj: ObjectType, propertyName: string) => {
+export const objectHasProperty = (obj: ObjectType, propertyName: string) => {
   if (obj[propertyName]) {
     return true;
   }
 
   return false;
 };
-
-export { objectHasValues, objectHasProperty };

@@ -3,7 +3,7 @@ import singleInputPageVariables from '..';
 import { PRODUCT } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
-const { START: insuranceStart } = ROUTES.INSURANCE;
+const { START: insuranceStart, FEEDBACK: feedbackRoute } = ROUTES.INSURANCE;
 
 describe('server/helpers/page-variables/single-input/insurance', () => {
   const mock = {
@@ -28,6 +28,7 @@ describe('server/helpers/page-variables/single-input/insurance', () => {
       BACK_LINK: mock.BACK_LINK,
       FIELD_ID: mock.FIELD_ID,
       START_ROUTE: insuranceStart,
+      FEEDBACK_ROUTE: feedbackRoute,
     });
 
     expect(result).toEqual(expected);

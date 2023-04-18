@@ -31,6 +31,7 @@ describe('custom-resolvers/submit-application', () => {
   let applicationSubmittedEmailsSpy = jest.fn();
 
   const mockGenerateCsvResponse = '/mock-path-to-csv';
+  const now = new Date();
 
   beforeEach(async () => {
     jest.resetAllMocks();
@@ -76,8 +77,6 @@ describe('custom-resolvers/submit-application', () => {
     const { submissionDate } = submittedApplication;
 
     const submissionDateDay = new Date(submissionDate).getDay();
-
-    const now = new Date();
 
     const expectedDay = now.getDay();
 
@@ -138,6 +137,37 @@ describe('custom-resolvers/submit-application', () => {
     it('should return success=false', async () => {
       variables = {
         applicationId: submittedApplication.id,
+      };
+
+      result = await submitApplication({}, variables, context);
+
+      expect(result.success).toEqual(false);
+    });
+  });
+
+  describe("when the date is NOT before the application's submission deadline", () => {
+    it('should return success=false', async () => {
+      // create a new application so we can set submission deadline in the past
+
+      // 1 minute ago
+      const milliseconds = 300000;
+      const oneMinuteAgo = new Date(now.setMilliseconds(-milliseconds)).toISOString();
+
+      const newApplication = (await context.query.Application.createOne({
+        query: 'id',
+        data: {},
+      })) as Application;
+
+      // update the submission deadline
+      await context.query.Application.updateOne({
+        where: { id: newApplication.id },
+        data: {
+          submissionDeadline: oneMinuteAgo,
+        },
+      });
+
+      variables = {
+        applicationId: newApplication.id,
       };
 
       result = await submitApplication({}, variables, context);

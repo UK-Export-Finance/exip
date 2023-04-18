@@ -2,6 +2,10 @@ import { ROUTES } from '../constants';
 
 export const FOOTER = {
   SUPPORT_LINKS_HEADING: 'Support Links',
+  ACCESSIBILITY_STATEMENT: {
+    TEXT: 'Accessibility statement',
+    HREF: ROUTES.ACCESSIBILITY_STATEMENT,
+  },
   PRIVACY: {
     TEXT: 'Privacy',
     HREF: 'https://www.gov.uk/government/publications/ukef-privacy-notice',

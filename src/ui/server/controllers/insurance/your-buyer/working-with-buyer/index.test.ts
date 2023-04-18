@@ -1,7 +1,7 @@
 import { get, post, pageVariables, TEMPLATE } from '.';
 import { PAGES } from '../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import workingWithBuyerValidation from './validation';
@@ -104,8 +104,8 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = {
-          [CONNECTED_WITH_BUYER]: 'Yes',
-          [TRADED_WITH_BUYER]: 'Yes',
+          [CONNECTED_WITH_BUYER]: FIELD_VALUES.YES,
+          [TRADED_WITH_BUYER]: FIELD_VALUES.YES,
         };
       });
 
@@ -127,8 +127,8 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
           req.body = {
-            [CONNECTED_WITH_BUYER]: 'Yes',
-            [TRADED_WITH_BUYER]: 'Yes',
+            [CONNECTED_WITH_BUYER]: FIELD_VALUES.YES,
+            [TRADED_WITH_BUYER]: FIELD_VALUES.YES,
           };
 
           req.originalUrl = WORKING_WITH_BUYER_CHECK_AND_CHANGE;

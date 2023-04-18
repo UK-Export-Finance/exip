@@ -1,6 +1,7 @@
 import express from 'express';
 import { ROUTES } from '../../constants';
 import rootGet from '../../controllers/root';
+import { get as accessibilityStatementGet } from '../../controllers/root/accessibility-statement';
 import { get as cookiesGet, post as cookiesPost } from '../../controllers/root/cookies';
 import { get as contactUsGet } from '../../controllers/root/contact-us';
 import cookiesConsentPost from '../../controllers/root/cookies-consent';
@@ -12,6 +13,8 @@ const rootRouter = express.Router();
 /* eslint-enable @typescript-eslint/ban-ts-comment */
 
 rootRouter.get(ROUTES.ROOT, rootGet);
+
+rootRouter.get(ROUTES.ACCESSIBILITY_STATEMENT, accessibilityStatementGet);
 
 rootRouter.get(ROUTES.COOKIES, cookiesGet);
 rootRouter.post(ROUTES.COOKIES, cookiesPost);

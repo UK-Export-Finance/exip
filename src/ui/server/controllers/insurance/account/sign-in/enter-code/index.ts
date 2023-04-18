@@ -3,6 +3,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import securityCodeValidationErrors from './validation/rules/security-code';
 import api from '../../../../../api';
@@ -77,7 +78,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(SIGN_IN_ROOT);
     }
 
-    const securityCode = req.body[FIELD_ID];
+    const securityCode = sanitiseValue(FIELD_ID, req.body[FIELD_ID]);
 
     let validationErrors = generateValidationErrors(req.body);
 
@@ -94,7 +95,7 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    const response = await api.keystone.account.verifyAccountSignInCode(req.session.accountId, securityCode);
+    const response = await api.keystone.account.verifyAccountSignInCode(req.session.accountId, String(securityCode));
 
     // valid sign in code - update the session and redirect to the dashboard
     if (response.success) {

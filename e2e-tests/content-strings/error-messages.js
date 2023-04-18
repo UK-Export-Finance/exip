@@ -45,6 +45,8 @@ export const ERROR_MESSAGES = {
     ABOVE_MAXIMUM: 'Enter policy length of no more than 22 months',
   },
   [FIELD_IDS.OPTIONAL_COOKIES]: 'Select whether you want to accept analytics cookies',
+  [FIELD_IDS.FEEDBACK.IMPROVEMENT]: 'How we could improve the service cannot be more than 1200 characters',
+  [FIELD_IDS.FEEDBACK.OTHER_COMMENTS]: 'Anything else you would like to tell us cannot be more than 1200 characters',
   INSURANCE: {
     ELIGIBILITY: {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT]: {

@@ -2,7 +2,7 @@ import { addMonths, format } from 'date-fns';
 import insurance from '../../pages/insurance';
 import partials from '../../partials';
 import { PAGES, TASKS } from '../../../../content-strings';
-import { APPLICATION, ROUTES } from '../../../../constants';
+import { APPLICATION, DATE_FORMAT, ROUTES } from '../../../../constants';
 
 const { taskList } = partials.insurancePartials;
 
@@ -181,7 +181,7 @@ context('Insurance - All sections - new application', () => {
       insurance.allSectionsPage.submissionDeadline().should('exist');
       const timestamp = addMonths(new Date(), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
 
-      const expected = format(new Date(timestamp), 'd MMMM yyyy');
+      const expected = format(new Date(timestamp), DATE_FORMAT);
       cy.checkText(insurance.allSectionsPage.submissionDeadline(), expected);
     });
   });

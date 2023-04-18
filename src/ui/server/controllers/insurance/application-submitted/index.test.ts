@@ -18,7 +18,10 @@ describe('controllers/insurance/application-submitted', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
+    res.locals.application = {
+      ...mockApplication,
+      status: APPLICATION.STATUS.SUBMITTED,
+    };
   });
 
   describe('TEMPLATE', () => {

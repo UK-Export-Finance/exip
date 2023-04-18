@@ -32,7 +32,7 @@ jobs:
     steps:
     - name: Environment 🧪
       run: echo "Environment set to ${{ env.environment }}"
-  
+
     - name: Timezone 🌐
       run: echo "Timezone set to ${{ env.timezone }}"
 
@@ -97,6 +97,7 @@ jobs:
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
           UNDERWRITING_TEAM_EMAIL: ${{ secrets.UNDERWRITING_TEAM_EMAIL }}
+          FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
           JWT_VALIDATING_KEY: ${{ secrets.JWT_VALIDATING_KEY }}
@@ -130,7 +131,7 @@ jobs:
         working-directory: ./
         run: npm ci --legacy-peer-deps
 
-      - name: Docker    
+      - name: Docker
         env:
           NODE_ENV: ${{ secrets.NODE_ENV }}
           DATABASE_PORT: ${{ vars.DATABASE_PORT }}
@@ -156,6 +157,7 @@ jobs:
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
           UNDERWRITING_TEAM_EMAIL: ${{ secrets.UNDERWRITING_TEAM_EMAIL }}
+          FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
           JWT_VALIDATING_KEY: ${{ secrets.JWT_VALIDATING_KEY }}
@@ -174,7 +176,7 @@ jobs:
           group: 'EXIP'
           project: ./e2e-tests
           config: video=false
-        env: 
+        env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}

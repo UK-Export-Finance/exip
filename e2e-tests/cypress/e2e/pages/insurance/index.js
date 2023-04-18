@@ -10,6 +10,7 @@ import * as policyAndExport from './policy-and-export';
 import * as checkYourAnswers from './check-your-answers';
 import * as declarations from './declarations';
 import applicationSubmittedPage from './applicationSubmitted';
+import * as feedback from './feedback';
 
 const insurancePages = {
   startPage,
@@ -24,6 +25,7 @@ const insurancePages = {
   checkYourAnswers,
   declarations,
   applicationSubmittedPage,
+  feedback,
 };
 
 export default insurancePages;

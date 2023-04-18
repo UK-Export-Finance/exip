@@ -13,6 +13,8 @@ const completeSignInAndSubmitAnApplication = () => {
 
   cy.completePrepareApplicationSinglePolicyType();
 
+  cy.completeAndSubmitCheckYourAnswers();
+
   cy.completeAndSubmitDeclarations();
 
   return cy.getReferenceNumber().then((referenceNumber) => referenceNumber);
