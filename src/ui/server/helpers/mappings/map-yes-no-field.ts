@@ -1,3 +1,5 @@
+import { FIELD_VALUES } from '../../constants';
+
 /**
  * mapYesNoField
  * maps true or false fields to Yes/No
@@ -6,11 +8,11 @@
  */
 const mapYesNoField = (answer?: boolean) => {
   if (answer === false) {
-    return 'No';
+    return FIELD_VALUES.NO;
   }
 
   if (answer === true) {
-    return 'Yes';
+    return FIELD_VALUES.YES;
   }
 
   return answer;

@@ -1,7 +1,7 @@
 import { pageVariables, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../../content-strings';
 import { DECLARATIONS_FIELDS } from '../../../../../content-strings/fields/insurance/declarations';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
@@ -91,7 +91,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-acode-o
 
   describe('post', () => {
     const validBody = {
-      [FIELD_ID]: 'Yes',
+      [FIELD_ID]: FIELD_VALUES.YES,
     };
 
     describe('when there are no validation errors', () => {

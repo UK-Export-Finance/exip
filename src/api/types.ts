@@ -148,6 +148,16 @@ interface AccountSignInSendNewCodeVariables {
   accountId: string;
 }
 
+interface InsuranceFeedbackVariables {
+  satisfaction?: string;
+  improvement?: string;
+  otherComments?: string;
+}
+
+interface InsuranceFeedbackResponse {
+  success: boolean;
+}
+
 interface AccountSignInResponse {
   success: boolean;
   accountId?: string;
@@ -208,6 +218,8 @@ export {
   BufferEncoding,
   CompanyResponse,
   EmailResponse,
+  InsuranceFeedbackVariables,
+  InsuranceFeedbackResponse,
   SicCodes,
   SendExporterEmailVariables,
   SubmitApplicationVariables,

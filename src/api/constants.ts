@@ -135,4 +135,7 @@ export const EMAIL_TEMPLATE_IDS = {
       },
     },
   },
+  FEEDBACK: {
+    INSURANCE: '4d3d7944-e894-4527-aee6-692038c84107',
+  },
 };

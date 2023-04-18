@@ -7,7 +7,7 @@ import {
   PAGES,
   ERROR_MESSAGES,
 } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import { completeStartForm, completeCheckIfEligibleForm, completeExporterLocationForm } from '../../../../../support/insurance/eligibility/forms';
 import {
@@ -72,13 +72,13 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     it('renders `yes` radio button', () => {
       yesRadio().should('exist');
 
-      cy.checkText(yesRadio(), 'Yes');
+      cy.checkText(yesRadio(), FIELD_VALUES.YES);
     });
 
     it('renders `no` radio button', () => {
       noRadio().should('exist');
 
-      cy.checkText(noRadio(), 'No');
+      cy.checkText(noRadio(), FIELD_VALUES.NO);
     });
 
     describe('expandable details - how to calculate percentage', () => {

@@ -1,24 +1,25 @@
+import { FIELD_VALUES } from '../constants';
 import { CisCountry } from '../../types';
 
 const mockCisCountries = [
   {
     marketName: 'Abu Dhabi',
     isoCode: 'XAD',
-    shortTermCoverAvailabilityDesc: 'No',
+    shortTermCoverAvailabilityDesc: FIELD_VALUES.NO,
     ESRAClasificationDesc: 'Standard risk',
     NBIIssue: 'N',
   },
   {
     marketName: 'Algeria',
     isoCode: 'DZA',
-    shortTermCoverAvailabilityDesc: 'Yes',
+    shortTermCoverAvailabilityDesc: FIELD_VALUES.YES,
     ESRAClasificationDesc: 'Standard Risk',
     NBIIssue: 'Y',
   },
   {
     marketName: 'Egypt',
     isoCode: 'EGY',
-    shortTermCoverAvailabilityDesc: 'Yes',
+    shortTermCoverAvailabilityDesc: FIELD_VALUES.YES,
     ESRAClasificationDesc: 'Standard Risk',
     NBIIssue: 'N',
   },

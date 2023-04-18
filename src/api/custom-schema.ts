@@ -6,6 +6,7 @@ import {
   createAccount,
   verifyAccountEmailAddress,
   sendEmailConfirmEmailAddress,
+  sendEmailInsuranceFeedback,
   accountSignIn,
   accountSignInSendNewCode,
   verifyAccountSignInCode,
@@ -155,6 +156,10 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         accountId: String
       }
 
+      type SuccessResponse {
+        success: Boolean!
+      }
+
       type Mutation {
         """ create an account """
         createAccount(
@@ -168,6 +173,13 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         verifyAccountEmailAddress(
           token: String!
         ): VerifyAccountEmailAddressResponse
+
+        """ send email for insurance feedback """
+        sendEmailInsuranceFeedback(
+          satisfaction: String
+          improvement: String
+          otherComments: String
+        ): SuccessResponse
 
         """ send confirm email address email """
         sendEmailConfirmEmailAddress(
@@ -238,6 +250,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         accountSignInSendNewCode,
         verifyAccountEmailAddress,
         sendEmailConfirmEmailAddress,
+        sendEmailInsuranceFeedback,
         verifyAccountSignInCode,
         addAndGetOTP,
         deleteApplicationByReferenceNumber,

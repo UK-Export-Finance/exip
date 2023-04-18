@@ -32,6 +32,7 @@ context('Cannot apply exit page', () => {
       backLink: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
       assertSubmitButton: false,
       assertAuthenticatedHeader: false,
+      isInsurancePage: false,
       lightHouseThresholds: {
         seo: 60,
       },

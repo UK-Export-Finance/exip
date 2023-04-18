@@ -49,6 +49,7 @@ import {
   SingleInputPageVariablesInput,
   SingleInputPageVariables,
 } from './page-variables';
+import { InsuranceFeedbackVariables } from './feedback';
 
 export {
   Account,
@@ -75,6 +76,7 @@ export {
   ExporterBusiness,
   InsuranceEligibility,
   InsuranceEligibilityCore,
+  InsuranceFeedbackVariables,
   Next,
   PageContentStrings,
   PageVariablesContentStrings,
