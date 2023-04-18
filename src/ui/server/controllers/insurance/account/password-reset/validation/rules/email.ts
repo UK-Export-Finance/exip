@@ -13,7 +13,7 @@ const {
 
 /**
  * emailRules
- * Returns emailAndPasswordValidation
+ * Returns emailValidation
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors

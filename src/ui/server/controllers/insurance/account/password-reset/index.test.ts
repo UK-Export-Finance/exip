@@ -28,9 +28,6 @@ describe('controllers/insurance/account/password-reset', () => {
 
   beforeEach(() => {
     req = mockReq();
-    req.flash = () => 'mock';
-
-    req.session.accountId = mockAccount.id;
 
     res = mockRes();
   });
