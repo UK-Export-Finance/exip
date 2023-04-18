@@ -37,6 +37,20 @@ export const FIELD_IDS = {
   },
 };
 
+/**
+ * DATE_5_MINUTES_FROM_NOW
+ * Generate a date that is 5 minutes from now
+ * @returns {Date}
+ */
+const DATE_5_MINUTES_FROM_NOW = () => {
+  const now = new Date();
+
+  const milliseconds = 300000;
+  const future = new Date(now.setMilliseconds(milliseconds));
+
+  return future;
+};
+
 export const ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
@@ -67,27 +81,11 @@ export const ACCOUNT = {
       },
     },
   },
-  PASSWORD_RESET_EXPIRY: () => {
-    // 5 minutes from now
-    const now = new Date();
-
-    const milliseconds = 300000;
-    const future = new Date(now.setMilliseconds(milliseconds));
-
-    return future;
-  },
+  PASSWORD_RESET_EXPIRY: DATE_5_MINUTES_FROM_NOW,
   // One time password
   OTP: {
     DIGITS: 6,
-    VERIFICATION_EXPIRY: () => {
-      // 5 minutes from now
-      const now = new Date();
-
-      const milliseconds = 300000;
-      const future = new Date(now.setMilliseconds(milliseconds));
-
-      return future;
-    },
+    VERIFICATION_EXPIRY: DATE_5_MINUTES_FROM_NOW,
   },
   // JSON web token
   JWT: {

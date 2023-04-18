@@ -76,6 +76,12 @@ var FIELD_IDS = {
     VERIFICATION_HASH: "verificationHash"
   }
 };
+var DATE_5_MINUTES_FROM_NOW = () => {
+  const now = /* @__PURE__ */ new Date();
+  const milliseconds = 3e5;
+  const future = new Date(now.setMilliseconds(milliseconds));
+  return future;
+};
 var ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
@@ -103,21 +109,11 @@ var ACCOUNT = {
       }
     }
   },
-  PASSWORD_RESET_EXPIRY: () => {
-    const now = /* @__PURE__ */ new Date();
-    const milliseconds = 3e5;
-    const future = new Date(now.setMilliseconds(milliseconds));
-    return future;
-  },
+  PASSWORD_RESET_EXPIRY: DATE_5_MINUTES_FROM_NOW,
   // One time password
   OTP: {
     DIGITS: 6,
-    VERIFICATION_EXPIRY: () => {
-      const now = /* @__PURE__ */ new Date();
-      const milliseconds = 3e5;
-      const future = new Date(now.setMilliseconds(milliseconds));
-      return future;
-    }
+    VERIFICATION_EXPIRY: DATE_5_MINUTES_FROM_NOW
   },
   // JSON web token
   JWT: {
