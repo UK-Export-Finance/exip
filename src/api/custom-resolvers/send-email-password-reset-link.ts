@@ -17,7 +17,7 @@ const {
 
 /**
  * sendEmailPasswordResetLink
- * - TODO
+ * Generate a password reset hash, update exporter account and send a link to the account via email
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SendEmailPasswordResetLink mutation
  * @param {Object} KeystoneJS context API
