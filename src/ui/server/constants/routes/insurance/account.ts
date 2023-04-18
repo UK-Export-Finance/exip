@@ -1,7 +1,7 @@
 const INSURANCE_ROOT = '/insurance';
 const CREATE_ROOT = '/create-account';
 const SIGN_IN_ROOT = '/sign-in';
-const RESET_PASSWORD_ROOT = '/password-reset';
+const PASSWORD_RESET_ROOT = '/password-reset';
 
 const CREATE = {
   ROOT: CREATE_ROOT,
@@ -20,8 +20,9 @@ const SIGN_IN = {
 
 const MANAGE_ACCOUNT = `${INSURANCE_ROOT}/manage-account`;
 
-const RESET_PASSWORD = {
-  ROOT: `${INSURANCE_ROOT}${RESET_PASSWORD_ROOT}`,
+const PASSWORD_RESET = {
+  ROOT: `${INSURANCE_ROOT}${PASSWORD_RESET_ROOT}`,
+  LINK_SENT: `${INSURANCE_ROOT}/link-sent`,
 };
 
 const SIGN_OUT = `${INSURANCE_ROOT}/sign-out`;
@@ -32,7 +33,7 @@ export const ACCOUNT = {
   CREATE,
   SIGN_IN,
   MANAGE_ACCOUNT,
-  RESET_PASSWORD,
+  PASSWORD_RESET,
   SIGN_OUT,
   SIGNED_OUT,
 };

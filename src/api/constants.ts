@@ -56,7 +56,6 @@ export const ACCOUNT = {
       ITERATIONS: 10000,
       DIGEST_ALGORITHM: 'sha512',
     },
-
     PASSWORD: {
       PBKDF2: {
         KEY_LENGTH: 64,
@@ -67,6 +66,15 @@ export const ACCOUNT = {
         KEY_LENGTH: 128,
       },
     },
+  },
+  PASSWORD_RESET_EXPIRY: () => {
+    // 5 minutes from now
+    const now = new Date();
+
+    const milliseconds = 300000;
+    const future = new Date(now.setMilliseconds(milliseconds));
+
+    return future;
   },
   // One time password
   OTP: {
@@ -110,6 +118,7 @@ export const EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
     CONFIRM_EMAIL: '24022e94-171c-4044-b0ee-d22418116575',
     SECURITY_CODE: 'b92650d1-9187-4510-ace2-5eec7ca7e626',
+    PASSWORD_RESET: '86d5f582-e1d3-4b55-b103-50141401fd13',
   },
   APPLICATION: {
     SUBMISSION: {

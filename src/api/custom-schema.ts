@@ -12,6 +12,7 @@ import {
   addAndGetOTP,
   deleteApplicationByReferenceNumber,
   submitApplication,
+  sendEmailPasswordResetLink,
 } from './custom-resolvers';
 import { mapCompaniesHouseFields } from './helpers/mapCompaniesHouseFields';
 import { mapSicCodes } from './helpers/mapSicCodes';
@@ -195,6 +196,11 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
           email: String!
         ): AddAndGetOtpResponse
 
+        """ send email with password reset link """
+        sendEmailPasswordResetLink(
+          email: String!
+        ): SuccessResponse
+
         """ update exporter company and company address """
         updateExporterCompanyAndCompanyAddress(
           companyId: ID!
@@ -236,6 +242,7 @@ export const extendGraphqlSchema = (schema: GraphQLSchema) =>
         addAndGetOTP,
         deleteApplicationByReferenceNumber,
         submitApplication,
+        sendEmailPasswordResetLink,
         updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
           try {
             console.info('Updating application exporter company and exporter company address for ', variables.companyId);

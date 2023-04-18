@@ -371,6 +371,8 @@ export const lists = {
       otpExpiry: timestamp(),
       sessionExpiry: timestamp(),
       sessionIdentifier: text(),
+      passwordResetHash: text(),
+      passwordResetExpiry: timestamp(),
       applications: relationship({
         ref: 'Application',
         many: true,

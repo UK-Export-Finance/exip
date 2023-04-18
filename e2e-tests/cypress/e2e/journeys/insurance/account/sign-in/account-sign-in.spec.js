@@ -103,9 +103,9 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
     });
 
     it('renders a `reset password` link', () => {
-      cy.checkText(signInPage.resetPasswordLink(), CONTENT_STRINGS.RESET_PASSWORD.TEXT);
+      cy.checkText(signInPage.resetPasswordLink(), CONTENT_STRINGS.PASSWORD_RESET.TEXT);
 
-      signInPage.resetPasswordLink().should('have.attr', 'href', CONTENT_STRINGS.RESET_PASSWORD.HREF);
+      signInPage.resetPasswordLink().should('have.attr', 'href', CONTENT_STRINGS.PASSWORD_RESET.HREF);
     });
 
     it('renders a `need to create an account` copy and button link', () => {

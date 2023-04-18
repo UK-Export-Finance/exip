@@ -88,6 +88,32 @@ const securityCodeEmail = async (emailAddress: string, firstName: string, securi
   }
 };
 
+/**
+ * passwordResetLink
+ * Send "reset your password" email to an exporter
+ * @param {String} Email address
+ * @param {String} First name
+ * @param {String} Password reet token
+ * @returns {Object} callNotify response
+ */
+const passwordResetLink = async (emailAddress: string, firstName: string, passwordResetHash: string): Promise<EmailResponse> => {
+  try {
+    console.info('Sending email for account password reset');
+
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
+
+    const variables = { passwordResetToken: passwordResetHash };
+
+    const response = await callNotify(templateId, emailAddress, variables, firstName);
+
+    return response;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error(`Sending email for account password reset ${err}`);
+  }
+};
+
 const applicationSubmitted = {
   /**
    * applicationSubmitted.exporter
@@ -163,6 +189,7 @@ const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, te
 const sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
+  passwordResetLink,
   applicationSubmitted,
   documentsEmail,
 };

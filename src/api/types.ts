@@ -49,6 +49,8 @@ interface Account extends ExporterUpdateInput {
   optHash?: string;
   otpExpiry?: Date;
   sessionIdentifier?: string;
+  passwordResetHash: string;
+  passwordResetExpiry: Date;
 }
 
 interface Application {
@@ -100,12 +102,6 @@ interface ConnectObj {
   connect: ConnectId;
 }
 
-interface SicCodes {
-  sicCode: string;
-  exporterCompany: ConnectObj;
-  application: ConnectObj;
-}
-
 interface VerifyEmailAddressVariables {
   token: string;
 }
@@ -122,11 +118,25 @@ interface SendExporterEmailVariables {
   referenceNumber?: string;
 }
 
+interface SicCodes {
+  sicCode: string;
+  exporterCompany: ConnectObj;
+  application: ConnectObj;
+}
+
+interface SuccessResponse {
+  success: boolean;
+}
+
 interface AccountCreationVariables {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+}
+
+interface AccountSendEmailPasswordResetLinkVariables {
+  email: string;
 }
 
 interface AccountSignInVariables {
@@ -184,6 +194,7 @@ export {
   Account,
   AccountCreationVariables,
   AccountInput,
+  AccountSendEmailPasswordResetLinkVariables,
   AccountSignInVariables,
   AccountSignInSendNewCodeVariables,
   AccountSignInResponse,
@@ -198,9 +209,10 @@ export {
   CompanyResponse,
   EmailResponse,
   SicCodes,
+  SendExporterEmailVariables,
   SubmitApplicationVariables,
   SubmitApplicationResponse,
-  SendExporterEmailVariables,
+  SuccessResponse,
   VerifyEmailAddressVariables,
   VerifyEmailAddressResponse,
   VerifyAccountSignInCodeVariables,
