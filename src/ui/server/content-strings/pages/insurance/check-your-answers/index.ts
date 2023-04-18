@@ -7,7 +7,7 @@ const ELIGIBILITY = {
   PAGE_TITLE: 'Eligibility',
   CHANGE_ELIGIBILITY: "If you want to change your eligibility answers, you'll need to",
   CHANGE_ELIGIBILITY_LINK: 'start a new application.',
-  CHANGE_ANSWERS: 'Change answers and start new application',
+  CHANGE_ANSWERS: 'Change answers and start a new application',
 };
 
 const START_NEW_APPLICATION = {
