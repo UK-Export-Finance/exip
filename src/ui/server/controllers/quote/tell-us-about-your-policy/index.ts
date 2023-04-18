@@ -1,4 +1,4 @@
-import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import isPopulatedArray from '../../../helpers/is-populated-array';
@@ -23,6 +23,7 @@ const generatePageVariables = (policyType: string) => {
       BUTTONS,
       COOKIES_CONSENT,
       LINKS,
+      PHASE_BANNER,
       FOOTER,
       PRODUCT: {
         DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,

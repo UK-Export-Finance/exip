@@ -5,7 +5,7 @@ import { backLink as backLinkSelector, heading, submitButton } from '../e2e/page
 //   cy.lighthouse({
 //     accessibility: 100,
 //     performance: 75,
-//     'best-practices': 100,
+//     'best-practices': 92,
 //     seo: 70,
 //     ...lightHouseThresholds,
 //   });
