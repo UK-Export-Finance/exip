@@ -6,7 +6,17 @@ import generateValidationErrors from './validation';
 import { Request, Response, InsuranceFeedbackVariables } from '../../../../../types';
 import api from '../../../../api';
 
-const { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED } = FIELD_IDS.FEEDBACK;
+const {
+  SATISFACTION,
+  IMPROVEMENT,
+  OTHER_COMMENTS,
+  VERY_SATISFIED,
+  SATISFIED, NEITHER,
+  DISSATISFIED,
+  VERY_DISSATISIFED,
+  REFERRAL_URL,
+  TYPE
+} = FIELD_IDS.FEEDBACK;
 
 const { FEEDBACK_PAGE } = PAGES;
 const { FEEDBACK: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
@@ -44,7 +54,10 @@ const pageVariables = () => ({
  */
 const get = (req: Request, res: Response) => {
   try {
+    // flash for href to go back to service
     req.flash('feedbackOriginUrl', req.headers.referer);
+    // flash for originUrl in database
+    req.flash('feedbackOriginUrlDB', req.headers.referer);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -87,6 +100,8 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
+    const referralUrl = req.flash('feedbackOriginUrlDB');
+
     if (objectHasKeysAndValues(feedback)) {
       const emailVariables = {
         // satisfaction will be null if not selected so set as empty string if null
@@ -95,9 +110,20 @@ const post = async (req: Request, res: Response) => {
         [OTHER_COMMENTS]: feedback[OTHER_COMMENTS],
       } as InsuranceFeedbackVariables;
 
+      // variables for adding feedback to the database
+      const databaseVariables = {
+        [SATISFACTION]: feedback[SATISFACTION] ?? '',
+        [IMPROVEMENT]: feedback[IMPROVEMENT],
+        [OTHER_COMMENTS]: feedback[OTHER_COMMENTS],
+        [TYPE]: 'Insurance',
+        [REFERRAL_URL]: referralUrl?.toString(),
+      };
+
+      const saveResponse = await api.keystone.feedback.createInsuranceFeedback(databaseVariables);
+
       const emailResponse = await api.keystone.feedbackEmails.insurance(emailVariables);
 
-      if (!emailResponse) {
+      if (!emailResponse || !saveResponse) {
         return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
       }
     }

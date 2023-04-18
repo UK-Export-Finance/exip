@@ -190,6 +190,15 @@ interface SubmitApplicationResponse {
   success: boolean;
 }
 
+interface Feedback {
+  id: string;
+  type: string;
+  satisfaction: string;
+  improvement: string;
+  otherComments: string;
+  referralUrl: string;
+}
+
 export {
   Account,
   AccountCreationVariables,
@@ -207,6 +216,7 @@ export {
   BufferEncoding,
   CompanyResponse,
   EmailResponse,
+  Feedback,
   InsuranceFeedbackVariables,
   InsuranceFeedbackResponse,
   SicCodes,

@@ -33,6 +33,8 @@ export const FIELD_IDS = {
     VERY_DISSATISIFED: 'veryDissatisfied',
     IMPROVEMENT: 'improvement',
     OTHER_COMMENTS: 'otherComments',
+    TYPE: 'type',
+    REFERRAL_URL: 'referralUrl',
   },
   INSURANCE,
 };

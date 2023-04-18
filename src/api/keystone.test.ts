@@ -5,8 +5,8 @@ import baseConfig from './keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { APPLICATION } from './constants';
 import sendEmail from './emails';
-import { mockAccount, mockSendEmailResponse } from './test-mocks';
-import { Application, Account } from './types';
+import { mockAccount, mockSendEmailResponse, mockInsuranceFeedback } from './test-mocks';
+import { Application, Account, Feedback } from './types';
 
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
@@ -311,6 +311,32 @@ describe('Create an Exporter', () => {
 
     test('it should update updatedAt', () => {
       expect(updatedExporter.updatedAt).not.toEqual(exporter.createdAt);
+    });
+  });
+});
+
+describe('Create feedback', () => {
+  let feedback: Feedback;
+
+  describe('create', () => {
+    beforeAll(async () => {
+      feedback = (await context.query.Feedback.createOne({
+        data: { ...mockInsuranceFeedback, type: 'Insurance', referralUrl: '' },
+        query: 'id type satisfaction improvement otherComments referralUrl',
+      })) as Feedback;
+    });
+
+    test('it should have an ID', () => {
+      expect(feedback.id).toBeDefined();
+      expect(typeof feedback.id).toEqual('string');
+    });
+
+    test('it should have the relevant fields', () => {
+      expect(feedback.type).toEqual('Insurance');
+      expect(feedback.satisfaction).toEqual(mockInsuranceFeedback.satisfaction);
+      expect(feedback.improvement).toEqual(mockInsuranceFeedback.improvement);
+      expect(feedback.otherComments).toEqual(mockInsuranceFeedback.otherComments);
+      expect(feedback.referralUrl).toEqual('');
     });
   });
 });

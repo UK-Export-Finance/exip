@@ -894,6 +894,16 @@ var lists = {
       }
     },
     access: import_access.allowAll
+  }),
+  Feedback: (0, import_core.list)({
+    fields: {
+      type: (0, import_fields.text)(),
+      satisfaction: (0, import_fields.text)(),
+      improvement: (0, import_fields.text)(),
+      otherComments: (0, import_fields.text)(),
+      referralUrl: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
   })
 };
 

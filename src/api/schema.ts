@@ -674,4 +674,14 @@ export const lists = {
     },
     access: allowAll,
   }),
+  Feedback: list({
+    fields: {
+      type: text(),
+      satisfaction: text(),
+      improvement: text(),
+      otherComments: text(),
+      referralUrl: text(),
+    },
+    access: allowAll,
+  }),
 } as Lists;
