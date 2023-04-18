@@ -3,6 +3,7 @@ type TellUsAboutPolicyPageVariablesContentStrings = {
   COOKIES_CONSENT: object;
   FOOTER: object;
   LINKS: object;
+  PHASE_BANNER: object;
   PAGE_TITLE?: string;
   PRODUCT: object;
 };

@@ -1,5 +1,5 @@
 import { generatePageVariables, TEMPLATE, get, post } from '.';
-import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
@@ -58,6 +58,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             COOKIES_CONSENT,
             FOOTER,
             LINKS,
+            PHASE_BANNER,
             PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.SINGLE_POLICY_PAGE_TITLE,
             PRODUCT: {
               DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
@@ -111,6 +112,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             COOKIES_CONSENT,
             FOOTER,
             LINKS,
+            PHASE_BANNER,
             PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.MULTIPLE_POLICY_PAGE_TITLE,
             PRODUCT: {
               DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
@@ -168,6 +170,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             },
             FOOTER,
             LINKS,
+            PHASE_BANNER,
             BUTTONS,
             COOKIES_CONSENT,
             ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
