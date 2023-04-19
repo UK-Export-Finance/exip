@@ -71,14 +71,6 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
-
-    it('renders a `save and back` button', () => {
-      submitButton().should('exist');
-      cy.checkText(submitButton(), BUTTONS.CONTINUE_NEXT_SECTION);
-
-      saveAndBackButton().should('exist');
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
-    });
   });
 
   describe('form submission', () => {

@@ -2,6 +2,7 @@ import {
   headingCaption,
   status,
   submitButton,
+  saveAndBackButton,
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { BUTTONS, PAGES, TASKS } from '../../../../../../content-strings';
@@ -85,6 +86,11 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
 
     it('renders a `completed` status tag', () => {
       cy.checkTaskStatusCompleted(status());
+    });
+
+    it('renders a `save and back` button', () => {
+      saveAndBackButton().should('exist');
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
 
     describe('form submission', () => {
