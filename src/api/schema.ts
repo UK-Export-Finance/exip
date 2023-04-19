@@ -4,7 +4,7 @@ import { checkbox, integer, relationship, select, text, timestamp, password } fr
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types'; // eslint-disable-line
-import { ANSWERS, APPLICATION } from './constants';
+import { ANSWERS, APPLICATION, FEEDBACK } from './constants';
 import sendEmail from './emails';
 import { AccountInput } from './types';
 
@@ -676,11 +676,21 @@ export const lists = {
   }),
   Feedback: list({
     fields: {
-      type: text(),
-      satisfaction: text(),
+      service: text(),
+      satisfaction: select({
+        options: [
+          { label: FEEDBACK.VERY_SATISFIED, value: FEEDBACK.VERY_SATISFIED },
+          { label: FEEDBACK.SATISFIED, value: FEEDBACK.SATISFIED },
+          { label: FEEDBACK.NEITHER, value: FEEDBACK.NEITHER },
+          { label: FEEDBACK.DISSATISFIED, value: FEEDBACK.DISSATISFIED },
+          { label: FEEDBACK.VERY_DISSATISIFED, value: FEEDBACK.VERY_DISSATISIFED },
+        ],
+        db: { isNullable: true },
+      }),
       improvement: text(),
       otherComments: text(),
       referralUrl: text(),
+      product: text(),
     },
     access: allowAll,
   }),

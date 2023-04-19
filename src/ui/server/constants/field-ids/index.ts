@@ -33,8 +33,9 @@ export const FIELD_IDS = {
     VERY_DISSATISIFED: 'veryDissatisfied',
     IMPROVEMENT: 'improvement',
     OTHER_COMMENTS: 'otherComments',
-    TYPE: 'type',
+    SERVICE: 'service',
     REFERRAL_URL: 'referralUrl',
+    PRODUCT: 'product',
   },
   INSURANCE,
 };

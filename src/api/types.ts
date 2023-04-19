@@ -192,11 +192,12 @@ interface SubmitApplicationResponse {
 
 interface Feedback {
   id: string;
-  type: string;
+  service: string;
   satisfaction: string;
   improvement: string;
   otherComments: string;
   referralUrl: string;
+  product: string;
 }
 
 export {

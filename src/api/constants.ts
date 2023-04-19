@@ -130,3 +130,11 @@ export const EMAIL_TEMPLATE_IDS = {
     INSURANCE: '4d3d7944-e894-4527-aee6-692038c84107',
   },
 };
+
+export const FEEDBACK = {
+  VERY_SATISFIED: 'verySatisfied',
+  SATISFIED: 'satisfied',
+  NEITHER: 'neither',
+  DISSATISFIED: 'dissatisfied',
+  VERY_DISSATISIFED: 'veryDissatisfied',
+};

@@ -1,5 +1,5 @@
 import { PAGES, FIELDS } from '../../../../content-strings';
-import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
+import { TEMPLATES, ROUTES, FIELD_IDS, INSURANCE, SERVICE_NAME } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { objectHasKeysAndValues } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
@@ -16,7 +16,8 @@ const {
   DISSATISFIED,
   VERY_DISSATISIFED,
   REFERRAL_URL,
-  TYPE,
+  SERVICE,
+  PRODUCT,
 } = FIELD_IDS.FEEDBACK;
 
 const { FEEDBACK_PAGE } = PAGES;
@@ -55,10 +56,10 @@ const pageVariables = () => ({
  */
 const get = (req: Request, res: Response) => {
   try {
-    // flash for href to go back to service
+    // flash for originUrl for href for button for redirect
     req.flash('feedbackOriginUrl', req.headers.referer);
-    // flash for originUrl in database
-    req.flash('feedbackOriginUrlDB', req.headers.referer);
+    // flash for originUrl for consumption by api
+    req.flash('feedbackOriginUrlAPI', req.headers.referer);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -101,7 +102,7 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
-    const referralUrl = req.flash('feedbackOriginUrlDB');
+    const referralUrl = req.flash('feedbackOriginUrlAPI');
 
     if (objectHasKeysAndValues(feedback)) {
       const emailVariables = {
@@ -111,16 +112,16 @@ const post = async (req: Request, res: Response) => {
         [OTHER_COMMENTS]: feedback[OTHER_COMMENTS],
       } as InsuranceFeedbackVariables;
 
-      // variables for adding feedback to the database
-      const databaseVariables = {
+      const feedbackVariables = {
         [SATISFACTION]: feedback[SATISFACTION] ?? '',
         [IMPROVEMENT]: feedback[IMPROVEMENT],
         [OTHER_COMMENTS]: feedback[OTHER_COMMENTS],
-        [TYPE]: 'Insurance',
+        [SERVICE]: INSURANCE,
         [REFERRAL_URL]: referralUrl?.toString(),
+        [PRODUCT]: SERVICE_NAME,
       };
 
-      const saveResponse = await api.keystone.feedback.createInsuranceFeedback(databaseVariables);
+      const saveResponse = await api.keystone.feedback.create(feedbackVariables);
 
       const emailResponse = await api.keystone.feedbackEmails.insurance(emailVariables);
 

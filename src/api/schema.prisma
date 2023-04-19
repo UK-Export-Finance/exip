@@ -309,10 +309,11 @@ model User {
 }
 
 model Feedback {
-  id            String @id @default(cuid())
-  type          String @default("")
-  satisfaction  String @default("")
-  improvement   String @default("")
-  otherComments String @default("")
-  referralUrl   String @default("")
+  id            String  @id @default(cuid())
+  service       String  @default("")
+  satisfaction  String?
+  improvement   String  @default("")
+  otherComments String  @default("")
+  referralUrl   String  @default("")
+  product       String  @default("")
 }

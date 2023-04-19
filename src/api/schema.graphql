@@ -1540,11 +1540,12 @@ input UserCreateInput {
 
 type Feedback {
   id: ID!
-  type: String
+  service: String
   satisfaction: String
   improvement: String
   otherComments: String
   referralUrl: String
+  product: String
 }
 
 input FeedbackWhereUniqueInput {
@@ -1556,28 +1557,31 @@ input FeedbackWhereInput {
   OR: [FeedbackWhereInput!]
   NOT: [FeedbackWhereInput!]
   id: IDFilter
-  type: StringFilter
-  satisfaction: StringFilter
+  service: StringFilter
+  satisfaction: StringNullableFilter
   improvement: StringFilter
   otherComments: StringFilter
   referralUrl: StringFilter
+  product: StringFilter
 }
 
 input FeedbackOrderByInput {
   id: OrderDirection
-  type: OrderDirection
+  service: OrderDirection
   satisfaction: OrderDirection
   improvement: OrderDirection
   otherComments: OrderDirection
   referralUrl: OrderDirection
+  product: OrderDirection
 }
 
 input FeedbackUpdateInput {
-  type: String
+  service: String
   satisfaction: String
   improvement: String
   otherComments: String
   referralUrl: String
+  product: String
 }
 
 input FeedbackUpdateArgs {
@@ -1586,11 +1590,12 @@ input FeedbackUpdateArgs {
 }
 
 input FeedbackCreateInput {
-  type: String
+  service: String
   satisfaction: String
   improvement: String
   otherComments: String
   referralUrl: String
+  product: String
 }
 
 """

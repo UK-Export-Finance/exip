@@ -321,8 +321,8 @@ describe('Create feedback', () => {
   describe('create', () => {
     beforeAll(async () => {
       feedback = (await context.query.Feedback.createOne({
-        data: { ...mockInsuranceFeedback, type: 'Insurance', referralUrl: '' },
-        query: 'id type satisfaction improvement otherComments referralUrl',
+        data: mockInsuranceFeedback,
+        query: 'id service satisfaction improvement otherComments referralUrl product',
       })) as Feedback;
     });
 
@@ -332,11 +332,12 @@ describe('Create feedback', () => {
     });
 
     test('it should have the relevant fields', () => {
-      expect(feedback.type).toEqual('Insurance');
+      expect(feedback.service).toEqual(mockInsuranceFeedback.service);
       expect(feedback.satisfaction).toEqual(mockInsuranceFeedback.satisfaction);
       expect(feedback.improvement).toEqual(mockInsuranceFeedback.improvement);
       expect(feedback.otherComments).toEqual(mockInsuranceFeedback.otherComments);
-      expect(feedback.referralUrl).toEqual('');
+      expect(feedback.referralUrl).toEqual(mockInsuranceFeedback.referralUrl);
+      expect(feedback.product).toEqual(mockInsuranceFeedback.product);
     });
   });
 });

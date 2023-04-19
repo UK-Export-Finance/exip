@@ -3,11 +3,12 @@ import gql from 'graphql-tag';
 const createInsuranceFeedbackMutation = gql`
   mutation CreateFeedback($data: FeedbackCreateInput!) {
     createFeedback(data: $data) {
-      type
+      service
       satisfaction
       improvement
       otherComments
       referralUrl
+      product
     }
   }
 `;

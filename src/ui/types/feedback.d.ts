@@ -4,6 +4,7 @@ interface InsuranceFeedbackVariables {
   improvement?: string;
   otherComments?: string;
   referralUrl?: string;
+  product?: string;
 }
 
 export { InsuranceFeedbackVariables };
