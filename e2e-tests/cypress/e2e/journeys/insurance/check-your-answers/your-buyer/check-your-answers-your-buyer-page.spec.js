@@ -2,7 +2,6 @@ import {
   headingCaption,
   status,
   submitButton,
-  saveAndBackButton,
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { BUTTONS, PAGES, TASKS } from '../../../../../../content-strings';
