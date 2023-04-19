@@ -118,17 +118,16 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
 
       describe(`${TABLE_HEADERS.REFERENCE_NUMBER}`, () => {
         let expectedUrl;
-        let applicationLink;
 
         beforeEach(() => {
           cy.navigateToUrl(url);
 
           expectedUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-          applicationLink = table.body.row(referenceNumber).referenceNumber();
         });
 
         it('should render a link to the application', () => {
+          const applicationLink = table.body.row(referenceNumber).referenceNumber();
+
           const expected = {
             href: expectedUrl,
             text: referenceNumber,
@@ -138,6 +137,8 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
         });
 
         it('should redirect to the application', () => {
+          const applicationLink = table.body.row(referenceNumber).referenceNumber();
+
           applicationLink.click();
 
           const expected = `${Cypress.config('baseUrl')}${expectedUrl}`;
