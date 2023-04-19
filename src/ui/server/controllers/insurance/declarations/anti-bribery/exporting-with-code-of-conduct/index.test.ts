@@ -1,8 +1,9 @@
 import { pageVariables, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../../content-strings';
 import { DECLARATIONS_FIELDS } from '../../../../../content-strings/fields/insurance/declarations';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
+import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import save from '../../save-data';
 import { Request, Response } from '../../../../../../types';
@@ -68,6 +69,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-acode-o
       const expectedVariables = {
         ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
         ...pageVariables(mockApplication.referenceNumber),
+        userName: getUserNameFromSession(req.session.user),
         application: res.locals.application,
       };
 
@@ -89,7 +91,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-acode-o
 
   describe('post', () => {
     const validBody = {
-      [FIELD_ID]: 'Yes',
+      [FIELD_ID]: FIELD_VALUES.YES,
     };
 
     describe('when there are no validation errors', () => {
@@ -120,6 +122,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-acode-o
         const expectedVariables = {
           ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
           ...pageVariables(mockApplication.referenceNumber),
+          userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
         };
 

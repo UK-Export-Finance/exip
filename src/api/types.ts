@@ -197,6 +197,16 @@ interface AccountSignInSendNewCodeVariables {
   accountId: string;
 }
 
+interface InsuranceFeedbackVariables {
+  satisfaction?: string;
+  improvement?: string;
+  otherComments?: string;
+}
+
+interface InsuranceFeedbackResponse {
+  success: boolean;
+}
+
 interface AccountSignInResponse {
   success: boolean;
   accountId?: string;
@@ -261,6 +271,8 @@ export {
   Currency,
   EmailResponse,
   NotifyPeronsalisation,
+  InsuranceFeedbackVariables,
+  InsuranceFeedbackResponse,
   SicCodes,
   SubmitApplicationVariables,
   SubmitApplicationResponse,

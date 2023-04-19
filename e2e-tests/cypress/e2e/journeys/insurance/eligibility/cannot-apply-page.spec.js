@@ -33,6 +33,7 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY,
       backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
       assertSubmitButton: false,
+      assertAuthenticatedHeader: false,
     });
   });
 

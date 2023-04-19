@@ -37,6 +37,8 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       pageTitle: CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE,
       currentHref: url,
       backLink: ROUTES.QUOTE.POLICY_TYPE,
+      assertAuthenticatedHeader: false,
+      isInsurancePage: false,
     });
   });
 

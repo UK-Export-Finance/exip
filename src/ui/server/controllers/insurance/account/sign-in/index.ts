@@ -2,7 +2,9 @@ import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
 
@@ -54,9 +56,11 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(DASHBOARD);
   }
 
-  const flash = req.flash('successBanner');
+  const successFlash = req.flash('successBanner');
+  const renderSuccessBanner = successFlash.includes('newAccountVerified') || false;
 
-  const renderSuccessBanner = flash.includes('newAccountVerified') || false;
+  const importantFlash = req.flash('importantBanner');
+  const renderImportantBanner = importantFlash.includes('successfulSignOut') || false;
 
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
@@ -64,7 +68,9 @@ export const get = (req: Request, res: Response) => {
       BACK_LINK: req.headers.referer,
     }),
     ...PAGE_VARIABLES,
+    userName: getUserNameFromSession(req.session.user),
     renderSuccessBanner,
+    renderImportantBanner,
   });
 };
 
@@ -85,6 +91,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...PAGE_VARIABLES,
+      userName: getUserNameFromSession(req.session.user),
       submittedValues: req.body,
       validationErrors,
     });
@@ -92,8 +99,10 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // validate credentials
-    const email = req.body[EMAIL];
-    const password = req.body[PASSWORD];
+    const sanitisedData = sanitiseData(req.body);
+
+    const email = sanitisedData[EMAIL];
+    const password = sanitisedData[PASSWORD];
 
     const response = await api.keystone.account.signIn(email, password);
 
@@ -112,6 +121,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...PAGE_VARIABLES,
+      userName: getUserNameFromSession(req.session.user),
       submittedValues: req.body,
       validationErrors,
     });

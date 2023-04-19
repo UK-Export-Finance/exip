@@ -6,7 +6,7 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
-import 'cypress-audit/commands';
+import '@cypress-audit/lighthouse/commands';
 import 'cypress-v10-preserve-cookie';
 
 import analytics from './analytics';
@@ -35,6 +35,8 @@ Cypress.Commands.add('checkCookiesConsentBannerIsVisible', analytics.checkCookie
 Cypress.Commands.add('checkCookiesConsentBannerDoesNotExist', analytics.checkCookiesConsentBannerDoesNotExist);
 
 Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);
+
+Cypress.Commands.add('checkAuthenticatedHeader', require('./check-authenticated-header'));
 
 Cypress.Commands.add('submitInsuranceEligibilityAnswersHappyPath', require('./insurance/eligibility/submit-answers-happy-path'));
 Cypress.Commands.add('submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath', require('./insurance/eligibility/submit-answers-from-buyer-country-happy-path'));
@@ -82,6 +84,9 @@ Cypress.Commands.add('completePrepareApplicationMultiplePolicyType', require('./
 
 Cypress.Commands.add('completeAndSubmitCompanyOrOrganisationForm', require('./insurance/your-buyer/complete-and-submit-company-or-organisation-form'));
 Cypress.Commands.add('completeAndSubmitWorkingWithBuyerForm', require('./insurance/your-buyer/complete-and-submit-working-with-buyer-form'));
+
+Cypress.Commands.add('submitCheckYourAnswersForm', require('./insurance/check-your-answers/submit-form'));
+Cypress.Commands.add('completeAndSubmitCheckYourAnswers', require('./insurance/check-your-answers/submit-check-your-answers'));
 
 Cypress.Commands.add('completeAndSubmitDeclarationConfidentiality', require('./insurance/declarations/complete-and-submit-confidentiality-form'));
 Cypress.Commands.add('completeAndSubmitDeclarationAntiBribery', require('./insurance/declarations/complete-and-submit-anti-bribery-form'));

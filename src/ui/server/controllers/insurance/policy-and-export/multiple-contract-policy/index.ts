@@ -1,8 +1,8 @@
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import api from '../../../../api';
 import isPopulatedArray from '../../../../helpers/is-populated-array';
 import { objectHasProperty } from '../../../../helpers/object';
@@ -13,6 +13,7 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE: {
@@ -119,6 +120,7 @@ export const get = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(refNumber),
+      userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       currencies: mappedCurrencies,
       monthOptions: mappedTotalMonthsOfCover,
@@ -179,6 +181,7 @@ export const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
+        userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
         submittedValues: req.body,
         currencies: mappedCurrencies,

@@ -1,9 +1,10 @@
 import { PAGES } from '../../../../content-strings';
-import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { yourBuyerSummaryList } from '../../../../helpers/summary-lists/your-buyer';
+import { Request, Response } from '../../../../../types';
 
 const { CHECK_YOUR_ANSWERS } = PAGES.INSURANCE.YOUR_BUYER;
 const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.YOUR_BUYER;
@@ -37,6 +38,7 @@ const get = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: CHECK_YOUR_ANSWERS,
         BACK_LINK: req.headers.referer,
       }),
+      userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`,
       SUMMARY_LIST: summaryList,

@@ -1,10 +1,51 @@
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 
-{{ govukHeader({
-  homepageUrl: "https://www.gov.uk",
-  serviceName: CONTENT_STRINGS.PRODUCT.DESCRIPTION,
-  serviceUrl: START_ROUTE,
-  attributes: {
-    "data-cy": "header"
-  }
-}) }}
+{% if userName %}
+
+  {{ govukHeader({
+    homepageUrl: "https://www.gov.uk",
+    serviceName: CONTENT_STRINGS.PRODUCT.DESCRIPTION,
+    serviceUrl: START_ROUTE,
+    navigation: [
+      {
+        text:  userName,
+        href: CONTENT_STRINGS.HEADER.ACCOUNT.HREF,
+        attributes: {
+          "data-cy": "header-navigation-link-manage-account"
+        },
+        active: false
+      },
+      {
+        text:  CONTENT_STRINGS.HEADER.APPLICATIONS.TEXT,
+        href: CONTENT_STRINGS.HEADER.APPLICATIONS.HREF,
+        attributes: {
+          "data-cy": "header-navigation-link-applications"
+        },
+        active: false
+      },
+      {
+        text:  CONTENT_STRINGS.HEADER.SIGN_OUT.TEXT,
+        href: CONTENT_STRINGS.HEADER.SIGN_OUT.HREF,
+        attributes: {
+          "data-cy": "header-navigation-link-sign-out"
+        },
+        active: false
+      }
+    ],
+    attributes: {
+      "data-cy": "header"
+    }
+  }) }}
+
+  {% else %}
+
+  {{ govukHeader({
+    homepageUrl: "https://www.gov.uk",
+    serviceName: CONTENT_STRINGS.PRODUCT.DESCRIPTION,
+    serviceUrl: START_ROUTE,
+    attributes: {
+      "data-cy": "header"
+    }
+  }) }}
+  
+{% endif %}

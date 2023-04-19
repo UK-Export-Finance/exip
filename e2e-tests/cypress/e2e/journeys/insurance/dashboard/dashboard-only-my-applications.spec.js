@@ -1,5 +1,6 @@
 import dashboardPage from '../../../pages/insurance/dashboard';
 import { backLink } from '../../../pages/shared';
+import header from '../../../partials/header';
 import { ROUTES } from '../../../../../constants';
 
 const { table } = dashboardPage;
@@ -25,8 +26,7 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
 
       url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
-      // TODO: EMS-1268 - when the authenticated header has been built, update this to click on the dashboard link.
-      cy.navigateToUrl(url);
+      header.navigation.applications().click();
 
       cy.url().should('eq', url);
     });
@@ -62,7 +62,7 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
     before(() => {
       // sign out / clear the user session.
 
-      // TODO: EMS-1268 - when the authenticated header has been built, update this to click on the sign out link.
+      // TODO: EMS-1334 - when the authenticated header has been built, update this to click on the sign out link.
       cy.clearCookies();
       Cypress.session.clearCurrentSessionData();
 

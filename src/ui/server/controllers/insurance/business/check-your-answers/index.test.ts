@@ -1,10 +1,11 @@
 import { get, TEMPLATE, post } from '.';
 import { PAGES } from '../../../../content-strings';
-import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
+import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import { mockExporterCompany, mockExporterBusiness, mockExporterBroker } from '../../../../test-mocks/mock-application';
 
@@ -47,6 +48,7 @@ describe('controllers/insurance/business/check-your-answers', () => {
           PAGE_CONTENT_STRINGS: CHECK_YOUR_ANSWERS,
           BACK_LINK: req.headers.referer,
         }),
+        userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS_ROUTE}`,
         SUMMARY_LIST: summaryList,

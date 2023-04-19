@@ -10,7 +10,7 @@ const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, GBP_CUR
 export const ERROR_MESSAGES = {
   [FIELD_IDS.BUYER_COUNTRY]: 'Select where your buyer is based',
   [FIELD_IDS.VALID_BUYER_BODY]: 'Select if your buyer is a government or public sector body',
-  [FIELD_IDS.VALID_EXPORTER_LOCATION]: 'Select if your company is based in the UK, Channel Islands, Isle of Man or not',
+  [FIELD_IDS.VALID_EXPORTER_LOCATION]: 'Select whether your company is based in the UK, Channel Islands, Isle of Man or not',
   [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
     IS_EMPTY: 'Select if 20% of your export contract value is made up from UK goods/services or not',
   },
@@ -49,6 +49,8 @@ export const ERROR_MESSAGES = {
     ABOVE_MAXIMUM: 'Enter policy length of no more than 22 months',
   },
   [FIELD_IDS.OPTIONAL_COOKIES]: 'Select whether you want to accept analytics cookies',
+  [FIELD_IDS.FEEDBACK.IMPROVEMENT]: 'How we could improve the service cannot be more than 1200 characters',
+  [FIELD_IDS.FEEDBACK.OTHER_COMMENTS]: 'Anything else you would like to tell us cannot be more than 1200 characters',
   INSURANCE: {
     ELIGIBILITY: {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT]: {

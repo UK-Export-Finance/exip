@@ -1,14 +1,14 @@
-import { Request, Response, Application } from '../../../../../types';
 import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch, TEMPLATE } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { sanitiseValue } from '../../../../helpers/sanitise-data';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import generateValidationErrors from '../../../../helpers/validation';
 import api from '../../../../api';
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
-import { mockReq, mockRes, mockCompany, mockApplication } from '../../../../test-mocks';
 import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
+import { mockReq, mockRes, mockCompany, mockApplication } from '../../../../test-mocks';
+import { Request, Response, Application } from '../../../../../types';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
@@ -124,8 +124,8 @@ describe('controllers/insurance/business/companies-details', () => {
 
         const submittedValues = {
           [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
-          [TRADING_NAME]: sanitiseValue(TRADING_NAME, exporterCompany?.[TRADING_NAME]),
-          [TRADING_ADDRESS]: sanitiseValue(TRADING_ADDRESS, exporterCompany?.[TRADING_ADDRESS]),
+          [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
+          [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
           [WEBSITE]: exporterCompany?.[WEBSITE],
           [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
         };
@@ -135,6 +135,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
+          userName: getUserNameFromSession(req.session.user),
           ...pageVariables(referenceNumber, COMPANY_DETAILS_ROUTE),
           submittedValues,
           SUMMARY_LIST: populateCompaniesHouseSummaryList(exporterCompany),
@@ -163,8 +164,8 @@ describe('controllers/insurance/business/companies-details', () => {
 
         const submittedValues = {
           [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
-          [TRADING_NAME]: sanitiseValue(TRADING_NAME, exporterCompany?.[TRADING_NAME]),
-          [TRADING_ADDRESS]: sanitiseValue(TRADING_ADDRESS, exporterCompany?.[TRADING_ADDRESS]),
+          [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
+          [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
           [WEBSITE]: exporterCompany?.[WEBSITE],
           [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
         };
@@ -174,6 +175,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
+          userName: getUserNameFromSession(req.session.user),
           ...pageVariables(referenceNumber, COMPANY_DETAILS_ROUTE),
           submittedValues,
           SUMMARY_LIST: null,
@@ -226,6 +228,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
+          userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
           submittedValues,
@@ -249,6 +252,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
+          userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
           submittedValues,
@@ -272,6 +276,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
+          userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
           submittedValues,
@@ -298,6 +303,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
+          userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
           submittedValues,
@@ -338,6 +344,7 @@ describe('controllers/insurance/business/companies-details', () => {
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
           }),
+          userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           SUMMARY_LIST: companyHouseSummaryList(mockCompany),
           submittedValues,

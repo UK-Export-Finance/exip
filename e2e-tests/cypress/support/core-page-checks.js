@@ -5,7 +5,7 @@ import { backLink as backLinkSelector, heading, submitButton } from '../e2e/page
 //   cy.lighthouse({
 //     accessibility: 100,
 //     performance: 75,
-//     'best-practices': 100,
+//     'best-practices': 92,
 //     seo: 70,
 //     ...lightHouseThresholds,
 //   });
@@ -75,6 +75,8 @@ const corePageChecks = ({
   assertSubmitButton = true,
   submitButtonCopy = BUTTONS.CONTINUE,
   assertBackLink = true,
+  assertAuthenticatedHeader = true,
+  isInsurancePage = true,
   // lightHouseThresholds,
 }) => {
   // run lighthouse audit
@@ -89,8 +91,13 @@ const corePageChecks = ({
   cy.checkAnalyticsCookiesConsentAndAccept();
   cy.rejectAnalyticsCookies();
 
+  if (assertAuthenticatedHeader) {
+    // check authenticated header
+    cy.checkAuthenticatedHeader();
+  }
+
   // check phase banner
-  cy.checkPhaseBanner();
+  cy.checkPhaseBanner(isInsurancePage);
 
   // check page title and heading
   checkPageTitleAndHeading(pageTitle);

@@ -1,7 +1,7 @@
 import { PAGES } from '../../../../content-strings';
-import { Request, Response } from '../../../../../types';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import companiesHouseSearch from './helpers/companies-house-search.helper';
 import companyDetailsValidation from './validation/company-details';
@@ -10,8 +10,8 @@ import mapAndSave from '../map-and-save';
 import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
+import { Request, Response } from '../../../../../types';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
@@ -95,6 +95,7 @@ const get = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
         BACK_LINK: req.headers.referer,
       }),
+      userName: getUserNameFromSession(req.session.user),
       ...pageVariables(application.referenceNumber, req.originalUrl),
       submittedValues,
       // summary list for company details
@@ -142,8 +143,8 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     const { companiesHouseNumber } = body;
     const submittedValues = {
       [COMPANY_HOUSE.INPUT]: companiesHouseNumber,
-      [TRADING_NAME]: sanitiseValue(TRADING_NAME, body[TRADING_NAME]),
-      [TRADING_ADDRESS]: sanitiseValue(TRADING_ADDRESS, body[TRADING_ADDRESS]),
+      [TRADING_NAME]: body[TRADING_NAME],
+      [TRADING_ADDRESS]: body[TRADING_ADDRESS],
       [WEBSITE]: body[WEBSITE],
       [PHONE_NUMBER]: body[PHONE_NUMBER],
     };
@@ -162,6 +163,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
+        userName: getUserNameFromSession(req.session.user),
         ...pageVariables(application.referenceNumber, req.originalUrl),
         validationErrors,
         submittedValues,
@@ -177,6 +179,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
+        userName: getUserNameFromSession(req.session.user),
         ...pageVariables(application.referenceNumber, req.originalUrl),
         validationErrors,
         SUMMARY_LIST: summaryList,
@@ -240,6 +243,7 @@ const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
         }),
+        userName: getUserNameFromSession(req.session.user),
         ...pageVariables(application.referenceNumber, req.originalUrl),
         validationErrors,
         submittedValues,

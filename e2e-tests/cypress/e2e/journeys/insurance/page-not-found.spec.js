@@ -21,6 +21,7 @@ context('Insurance - page not found', () => {
       currentHref: invalidUrl,
       assertSubmitButton: false,
       assertBackLink: false,
+      assertAuthenticatedHeader: false,
     });
   });
 

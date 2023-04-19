@@ -212,4 +212,21 @@ export const FIELDS = {
     LABEL: 'Your UK telephone number (optional)',
     HINT: 'We may need to contact you about your application',
   },
+  [FIELD_IDS.FEEDBACK.SATISFACTION]: {
+    TITLE: 'Satisfaction survey',
+    LABEL: 'Overall, how did you feel about the service you received today?',
+    VERY_SATISFIED: 'Very satisfied',
+    SATISFIED: 'Satisfied',
+    NEITHER: 'Neither satisfied or dissatisfied',
+    DISSATISFIED: 'Dissatisfied',
+    VERY_DISSATISIFED: 'Very dissatisfied',
+  },
+  [FIELD_IDS.FEEDBACK.IMPROVEMENT]: {
+    LABEL: 'How could we improve this service?',
+    HINT: 'Do not include any personal or financial information, for example your National Insurance or credit card numbers',
+  },
+  [FIELD_IDS.FEEDBACK.OTHER_COMMENTS]: {
+    LABEL: 'Is there anything else you would like to tell us about your experience?',
+    HINT: 'Do not include any personal or financial information, for example your National Insurance or credit card numbers',
+  },
 };

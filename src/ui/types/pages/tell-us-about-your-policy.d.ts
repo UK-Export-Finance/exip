@@ -3,6 +3,7 @@ type TellUsAboutPolicyPageVariablesContentStrings = {
   COOKIES_CONSENT: object;
   FOOTER: object;
   LINKS: object;
+  PHASE_BANNER: object;
   PAGE_TITLE?: string;
   PRODUCT: object;
 };
@@ -20,6 +21,7 @@ interface TellUsAboutPolicyPageVariables {
   CONTENT_STRINGS: TellUsAboutPolicyPageVariablesContentStrings;
   FIELDS: TellUsAboutPolicyPageVariablesFields;
   START_ROUTE: string;
+  FEEDBACK_ROUTE: string;
 }
 
 export { TellUsAboutPolicyPageVariablesContentStrings, TellUsAboutPolicyPageVariablesFields, TellUsAboutPolicyPageVariables };

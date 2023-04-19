@@ -23,7 +23,7 @@ const {
 
 const FIELD_STRINGS = ACCOUNT_FIELDS;
 
-context('Insurance - Account - Sign in - I want to sign in into my UKEF digital service account after completing eligibility, So that I can complete my application for a UKEF Export Insurance Policy', () => {
+context('Insurance - Account - Sign in - As an Exporter, I want to sign in into my UKEF digital service account after completing eligibility, So that I can complete my application for a UKEF Export Insurance Policy', () => {
   let url;
 
   before(() => {
@@ -56,6 +56,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: SIGN_IN_ROOT,
       backLink: YOUR_DETAILS,
+      assertAuthenticatedHeader: false,
       lightHouseThresholds: {
         performance: 70,
       },

@@ -3,6 +3,7 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { eligibilitySummaryList } from '../../../../helpers/summary-lists/eligibility';
 import requiredFields from '../../../../helpers/required-fields/eligibility';
 import sectionStatus from '../../../../helpers/section-status';
@@ -16,23 +17,23 @@ const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.ELIGIBILITY;
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
-    START,
     INSURANCE_ROOT,
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
+    CHECK_YOUR_ANSWERS: { START_NEW_APPLICATION, TYPE_OF_POLICY },
   },
 } = ROUTES;
 
 /**
  * pageVariables
- * Page fields and variables/flags
+ * Page fields and "start new application" URL
+ * @param {Number} Application reference number
  * @returns {Object} Page variables
  */
-export const pageVariables = () => ({
+export const pageVariables = (referenceNumber: number) => ({
   FIELD: {
     ID: FIELD_ID,
     ...FIELDS[FIELD_ID],
   },
-  START_NEW_APPLICATION: START,
+  START_NEW_APPLICATION: `${INSURANCE_ROOT}/${referenceNumber}${START_NEW_APPLICATION}`,
   renderNotificationBanner: true,
   eligibility: true,
 });
@@ -63,9 +64,10 @@ export const get = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY,
         BACK_LINK: req.headers.referer,
       }),
+      userName: getUserNameFromSession(req.session.user),
       status,
       SUMMARY_LIST: summaryList,
-      ...pageVariables(),
+      ...pageVariables(application.referenceNumber),
     });
   } catch (err) {
     console.error('Error getting check your answers - eligibility', { err });

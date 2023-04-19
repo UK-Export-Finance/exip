@@ -1,9 +1,10 @@
 import { pageVariables, TEMPLATE, get, post } from '.';
-import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
+import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../content-strings';
+import { FIELD_IDS, TEMPLATES, ROUTES, APPLICATION } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
@@ -23,7 +24,7 @@ const {
 describe('controllers/insurance/declarations/how-your-data-will-be-used', () => {
   jest.mock('../save-data');
 
-  let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
+  let mockSaveDeclaration = jest.fn(() => Promise.resolve(mockApplication.declaration));
   let submitApplicationSpy = jest.fn(() => Promise.resolve({ success: true }));
 
   save.declaration = mockSaveDeclaration;
@@ -51,6 +52,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
           ID: FIELD_ID,
           ...FIELDS[FIELD_ID],
         },
+        SUBMIT_BUTTON_COPY: BUTTONS.SUBMIT_APPLICATION,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED_SAVE_AND_BACK}`,
       };
 
@@ -80,6 +82,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(mockApplication.referenceNumber),
+        userName: getUserNameFromSession(req.session.user),
         documentContent: mockDeclarations.howDataWillBeUsed.content.document,
         documentConfig: keystoneDocumentRendererConfig(),
         application: res.locals.application,
@@ -156,6 +159,19 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
+
+      describe('when an application cannot be submitted (e.g, is already submitted)', () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          res.locals.application = {
+            ...mockApplication,
+            status: APPLICATION.STATUS.SUBMITTED,
+          };
+
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
     });
 
     describe('when there are validation errors', () => {
@@ -174,6 +190,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(mockApplication.referenceNumber),
+          userName: getUserNameFromSession(req.session.user),
           documentContent: mockDeclarations.howDataWillBeUsed.content.document,
           documentConfig: keystoneDocumentRendererConfig(),
           validationErrors: generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
@@ -214,8 +231,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
       describe('save data call', () => {
         describe('when the save data API call does not return anything', () => {
           beforeEach(() => {
-            mockSaveDeclaration = jest.fn(() => Promise.resolve(false));
-            save.declaration = mockSaveDeclaration;
+            save.declaration = jest.fn(() => Promise.resolve());
 
             req.body = validBody;
           });

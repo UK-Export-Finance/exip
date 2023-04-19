@@ -1,20 +1,17 @@
 import { ROUTES } from '../../../../../constants';
 
 const {
-  DASHBOARD,
   ACCOUNT: { SIGN_IN },
+  DASHBOARD,
 } = ROUTES.INSURANCE;
 
 context('Insurance - Dashboard - not signed in', () => {
-  before(() => {
-    const url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
-
-    // TODO: EMS-1268 - when the authenticated header has been built, update this to click on the dashboard link.
-    cy.navigateToUrl(url);
-  });
-
   beforeEach(() => {
     cy.saveSession();
+
+    const url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+
+    cy.navigateToUrl(url);
   });
 
   it(`should redirect to ${SIGN_IN.ROOT}`, () => {

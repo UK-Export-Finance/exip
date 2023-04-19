@@ -18,7 +18,7 @@ import { Country } from './country';
 import { Currency } from './currency';
 import { NumberErrorMessage } from './errors';
 import { ExporterBusiness } from './exporter-business';
-import { Next, Request, RequestBody, RequestSession, Response } from './express';
+import { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response } from './express';
 import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibility } from './required-data-state';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
 import { Quote, QuoteContent } from './quote';
@@ -49,6 +49,7 @@ import {
   SingleInputPageVariablesInput,
   SingleInputPageVariables,
 } from './page-variables';
+import { InsuranceFeedbackVariables } from './feedback';
 
 export {
   Account,
@@ -75,6 +76,7 @@ export {
   ExporterBusiness,
   InsuranceEligibility,
   InsuranceEligibilityCore,
+  InsuranceFeedbackVariables,
   Next,
   PageContentStrings,
   PageVariablesContentStrings,
@@ -86,6 +88,7 @@ export {
   Request,
   RequestBody,
   RequestSession,
+  RequestSessionUser,
   RequiredDataStateInsuranceEligibility,
   RequiredDataStateQuoteEligibility,
   Response,

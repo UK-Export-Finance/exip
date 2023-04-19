@@ -3,7 +3,9 @@ import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../test-mocks';
@@ -82,7 +84,9 @@ describe('controllers/insurance/account/sign-in', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
+        userName: getUserNameFromSession(req.session.user),
         renderSuccessBanner: false,
+        renderImportantBanner: false,
       });
     });
 
@@ -91,6 +95,7 @@ describe('controllers/insurance/account/sign-in', () => {
         req.flash = (property: string) => {
           const obj = {
             successBanner: 'newAccountVerified',
+            importantBanner: '',
           };
 
           return obj[property];
@@ -106,7 +111,37 @@ describe('controllers/insurance/account/sign-in', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,
+          userName: getUserNameFromSession(req.session.user),
           renderSuccessBanner: true,
+          renderImportantBanner: false,
+        });
+      });
+    });
+
+    describe("when req.flash('successBanner') includes 'newAccountVerified')", () => {
+      beforeEach(() => {
+        req.flash = (property: string) => {
+          const obj = {
+            successBanner: '',
+            importantBanner: 'successfulSignOut',
+          };
+
+          return obj[property];
+        };
+      });
+
+      it('should render template with renderSuccessBanner', () => {
+        get(req, res);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...PAGE_VARIABLES,
+          userName: getUserNameFromSession(req.session.user),
+          renderSuccessBanner: false,
+          renderImportantBanner: true,
         });
       });
     });
@@ -141,6 +176,7 @@ describe('controllers/insurance/account/sign-in', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,
+          userName: getUserNameFromSession(req.session.user),
           submittedValues: req.body,
           validationErrors: generateValidationErrors(req.body),
         });
@@ -157,7 +193,9 @@ describe('controllers/insurance/account/sign-in', () => {
 
         expect(accountSignInSpy).toHaveBeenCalledTimes(1);
 
-        expect(accountSignInSpy).toHaveBeenCalledWith(validBody[EMAIL], validBody[PASSWORD]);
+        const sanitisedData = sanitiseData(req.body);
+
+        expect(accountSignInSpy).toHaveBeenCalledWith(sanitisedData[EMAIL], sanitisedData[PASSWORD]);
       });
 
       it(`should redirect to ${ENTER_CODE}`, async () => {
@@ -193,6 +231,7 @@ describe('controllers/insurance/account/sign-in', () => {
               BACK_LINK: req.headers.referer,
             }),
             ...PAGE_VARIABLES,
+            userName: getUserNameFromSession(req.session.user),
             submittedValues: req.body,
             validationErrors: generateValidationErrors({}),
           });

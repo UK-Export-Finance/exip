@@ -3,7 +3,7 @@ import {
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
 
@@ -27,6 +27,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,
       backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+      assertAuthenticatedHeader: false,
     });
   });
 
@@ -37,11 +38,11 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
   it('renders yes and no radio buttons', () => {
     yesRadio().should('exist');
 
-    cy.checkText(yesRadio(), 'Yes');
+    cy.checkText(yesRadio(), FIELD_VALUES.YES);
 
     noRadio().should('exist');
 
-    cy.checkText(noRadio(), 'No');
+    cy.checkText(noRadio(), FIELD_VALUES.NO);
   });
 
   describe('form submission', () => {

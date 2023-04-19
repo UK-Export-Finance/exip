@@ -3,13 +3,14 @@ import { pageVariables, TEMPLATE, get, post } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import { Request, Response } from '../../../../../types';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save';
+import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
 
 const {
@@ -124,6 +125,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
+        userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
         currencies: expectedCurrencies,
       };
@@ -155,6 +157,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
+          userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithCurrencyCode),
           currencies: expectedCurrencies,
         };
@@ -288,6 +291,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
+          userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
           submittedValues: req.body,
           currencies: expectedCurrencies,
@@ -317,6 +321,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
               BACK_LINK: req.headers.referer,
             }),
             ...pageVariables(refNumber),
+            userName: getUserNameFromSession(req.session.user),
             application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
             submittedValues: req.body,
             currencies: expectedCurrencies,

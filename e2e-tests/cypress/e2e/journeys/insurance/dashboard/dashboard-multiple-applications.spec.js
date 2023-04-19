@@ -1,10 +1,10 @@
 import dashboardPage from '../../../pages/insurance/dashboard';
-import { backLink } from '../../../pages/shared';
+import header from '../../../partials/header';
 import { ROUTES } from '../../../../../constants';
 
 const { table } = dashboardPage;
 
-const { DASHBOARD } = ROUTES.INSURANCE;
+const { ROOT, ALL_SECTIONS, DASHBOARD } = ROUTES.INSURANCE;
 
 context('Insurance - Dashboard - new application', () => {
   let referenceNumber;
@@ -16,8 +16,7 @@ context('Insurance - Dashboard - new application', () => {
 
       url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
-      // TODO: EMS-1268 - when the authenticated header has been built, update this to click on the dashboard link.
-      cy.navigateToUrl(url);
+      header.navigation.applications().click();
 
       cy.url().should('eq', url);
 
@@ -41,24 +40,20 @@ context('Insurance - Dashboard - new application', () => {
 
       cy.submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath();
 
-      // check we're on the dashboard and not the "do you have an account" page
-      const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
-
-      cy.url().should('eq', expectedUrl);
-
-      // go into the most recently created application to get the reference number for deletion
-      table.body.firstRow.referenceNumber().click();
-
+      // get the reference number and check we're on the "all sections" and not the "do you have an account" page
       cy.getReferenceNumber().then((refNumber) => {
-        secondReferenceNumber = refNumber;
+        referenceNumber = refNumber;
 
-        // go back to the dashboard
-        backLink().click();
+        const allSectionsUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
+        cy.url().should('eq', allSectionsUrl);
       });
     });
 
     beforeEach(() => {
       cy.navigateToUrl(url);
+
+      header.navigation.applications().click();
     });
 
     after(() => {

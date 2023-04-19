@@ -1,7 +1,7 @@
 import { EMAIL_TEMPLATE_IDS } from '../constants';
 import fileSystem from '../file-system';
 import notify from '../integrations/notify';
-import { EmailResponse, ApplicationSubmissionEmailVariables } from '../types';
+import { EmailResponse, ApplicationSubmissionEmailVariables, InsuranceFeedbackVariables } from '../types';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -133,16 +133,21 @@ const applicationSubmitted = {
       // if something errors, it will fall into the catch handler below.
       const file = await fileSystem.readFile(csvPath);
 
-      const fileIsCsv = true;
+      if (file) {
+        const fileIsCsv = true;
 
-      const fileBuffer = Buffer.from(file);
+        const fileBuffer = Buffer.from(file);
 
-      const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
+        const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
 
-      // delete the CSV as it has been send to notify
-      await fileSystem.unlink(csvPath);
+        // NOTE: no need to handle an error from fs.unlink here,
+        // if it errors, it will go into the catch handler below.
+        await fileSystem.unlink(csvPath);
 
-      return response;
+        return response;
+      }
+
+      throw new Error('Sending application submitted email to underwriting team - invalid file / file not found');
     } catch (err) {
       console.error(err);
 
@@ -174,11 +179,36 @@ const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, te
   }
 };
 
+/**
+ * insuranceFeedbackEmail
+ * sends email for insurance feedback
+ * @param {InsuranceFeedbackVariables} variables
+ * @returns {Object} callNotify response
+ */
+const insuranceFeedbackEmail = async (variables: InsuranceFeedbackVariables): Promise<EmailResponse> => {
+  try {
+    console.info('Sending insurance feedback email');
+
+    const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
+
+    const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT as string;
+
+    const response = await callNotify(templateId, emailAddress, variables);
+
+    return response;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error(`Sending insurance feedback email ${err}`);
+  }
+};
+
 const sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
   applicationSubmitted,
   documentsEmail,
+  insuranceFeedbackEmail,
 };
 
 export default sendEmail;

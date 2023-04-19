@@ -31,11 +31,11 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters-from-desktop">
 
-      <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+      <p class="govuk-body" data-cy="intro">{{ CONFIDENTIALITY_CONTENT.INTRO }}</p>
 
       <ol class="counter-list counter-list--bold">
 
-        {% for level1Item in CONFIDENTIALITY_CONTENT %}
+        {% for level1Item in CONFIDENTIALITY_CONTENT.LIST %}
 
           <li class="govuk-!-margin-bottom-7 counter-list-item">
             <span class="govuk-!-margin-bottom-7" data-cy="list-level-1-item-{{ loop.index }}">{{ level1Item.text }}</span>

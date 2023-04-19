@@ -51,6 +51,7 @@ context('Insurance - no access to application page', () => {
         currentHref: NO_ACCESS_TO_APPLICATION,
         assertSubmitButton: false,
         assertBackLink: false,
+        assertAuthenticatedHeader: false,
       });
     });
 

@@ -1,4 +1,4 @@
-import { objectHasValues } from '../object';
+import { objectHasKeysAndValues } from '../object';
 
 /**
  * keystoneDocumentRendererConfig
@@ -9,12 +9,11 @@ import { objectHasValues } from '../object';
 const keystoneDocumentRendererConfig = (overrides?: object) => {
   let config = {
     listItemClass: 'counter-list-item',
-    firstLevelListClass: 'counter-list',
     secondLevelListClass: 'lower-alpha-counter-list',
     thirdLevelListClass: 'lower-roman-counter-list',
   };
 
-  if (overrides && objectHasValues(overrides)) {
+  if (overrides && objectHasKeysAndValues(overrides)) {
     config = {
       ...config,
       ...overrides,

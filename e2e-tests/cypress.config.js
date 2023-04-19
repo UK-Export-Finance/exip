@@ -1,4 +1,6 @@
 const { defineConfig } = require('cypress');
+const { lighthouse, prepareAudit } = require('@cypress-audit/lighthouse');
+const { pa11y } = require('@cypress-audit/pa11y');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -24,21 +26,23 @@ const cypressConfig = defineConfig({
     baseUrl: 'http://localhost:5000',
     apiUrl: 'http://localhost:5001/api/graphql',
     specPattern: 'cypress/e2e/**/*.spec.js',
-    excludeSpecPattern: [
-      'cypress/e2e/journeys/quote/**/*.spec.js',
-      'cypress/e2e/journeys/footer.spec.js',
-      'cypress/e2e/journeys/give-feedback.spec.js',
-      'cypress/e2e/journeys/page-not-found.spec.js',
-      'cypress/e2e/journeys/privacy.spec.js',
-      'cypress/e2e/journeys/skip-link.spec.js',
-    ],
     env: {
       GOV_NOTIFY_EMAIL_RECIPIENT_1: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
       GOV_NOTIFY_EMAIL_RECIPIENT_2: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_2,
       MOCK_ACCOUNT_PASSWORD: process.env.MOCK_ACCOUNT_PASSWORD,
     },
+    // eslint-disable-next-line
     setupNodeEvents(on, config) {
-      return require('./cypress/plugins')(on, config); // eslint-disable-line global-require
+      // eslint-disable-next-line
+      on('before:browser:launch', (browser = {}, launchOptions) => {
+        prepareAudit(launchOptions);
+      });
+
+      on('task', {
+        lighthouse: lighthouse(),
+        // pa11y: pa11y(console.log.bind(console)),
+        pa11y: pa11y(),
+      });
     },
   },
 });

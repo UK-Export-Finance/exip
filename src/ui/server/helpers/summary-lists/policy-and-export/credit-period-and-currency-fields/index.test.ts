@@ -31,7 +31,7 @@ describe('server/helpers/summary-lists/policy-and-export/credit-period-and-curre
           field: getFieldById(FIELDS.CONTRACT_POLICY, POLICY_CURRENCY_CODE),
           ...changeLink(mockAnswers[POLICY_TYPE], referenceNumber, POLICY_CURRENCY_CODE, checkAndChange),
         },
-        `${mockAnswers[POLICY_CURRENCY_CODE]} ${getCurrencyByCode(mockCurrencies, mockAnswers[POLICY_CURRENCY_CODE]).name}`,
+        getCurrencyByCode(mockCurrencies, mockAnswers[POLICY_CURRENCY_CODE]).name,
       ),
     ];
 

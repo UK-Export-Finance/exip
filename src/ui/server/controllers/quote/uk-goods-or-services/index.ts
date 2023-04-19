@@ -1,6 +1,7 @@
 import { PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import isChangeRoute from '../../../helpers/is-change-route';
@@ -21,6 +22,7 @@ export const TEMPLATE = TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES;
 
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
+    userName: getUserNameFromSession(req.session.user),
     ...singleInputPageVariables(PAGE_VARIABLES),
     BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData.quoteEligibility,
@@ -31,6 +33,7 @@ export const post = (req: Request, res: Response) => {
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
+      userName: getUserNameFromSession(req.session.user),
       ...singleInputPageVariables(PAGE_VARIABLES),
       BACK_LINK: req.headers.referer,
       validationErrors,

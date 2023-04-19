@@ -3,7 +3,7 @@ import {
 } from '../../../pages/shared';
 import partials from '../../../partials';
 import { ERROR_MESSAGES, PAGES } from '../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../constants';
+import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.BUYER_BODY;
@@ -23,6 +23,8 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.BUYER_BODY,
       backLink: ROUTES.QUOTE.BUYER_COUNTRY,
+      assertAuthenticatedHeader: false,
+      isInsurancePage: false,
     });
   });
 
@@ -33,11 +35,11 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   it('renders yes and no radio buttons', () => {
     yesRadio().should('exist');
 
-    cy.checkText(yesRadio(), 'Yes');
+    cy.checkText(yesRadio(), FIELD_VALUES.YES);
 
     noRadio().should('exist');
 
-    cy.checkText(noRadio(), 'No');
+    cy.checkText(noRadio(), FIELD_VALUES.NO);
   });
 
   describe('form submission', () => {

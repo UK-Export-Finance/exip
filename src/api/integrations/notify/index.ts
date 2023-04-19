@@ -27,17 +27,12 @@ const notify = {
 
       if (file) {
         personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true, isCsv: fileIsCsv });
-
-        await notifyClient.sendEmail(templateId, sendToEmailAddress, {
-          personalisation,
-          reference: null,
-        });
-      } else {
-        await notifyClient.sendEmail(templateId, sendToEmailAddress, {
-          personalisation,
-          reference: null,
-        });
       }
+
+      await notifyClient.sendEmail(templateId, sendToEmailAddress, {
+        personalisation,
+        reference: null,
+      });
 
       return {
         success: true,

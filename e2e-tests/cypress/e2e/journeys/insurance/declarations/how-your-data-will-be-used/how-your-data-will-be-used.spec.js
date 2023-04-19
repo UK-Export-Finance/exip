@@ -5,7 +5,9 @@ import {
 } from '../../../../pages/shared';
 import { howYourDataWillBeUsedPage } from '../../../../pages/insurance/declarations';
 import partials from '../../../../partials';
-import { PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
+import {
+  BUTTONS, PAGES, ERROR_MESSAGES, LINKS,
+} from '../../../../../../content-strings';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -38,6 +40,8 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
 
       cy.completePrepareApplicationSinglePolicyType();
 
+      cy.completeAndSubmitCheckYourAnswers();
+
       // go to the page we want to test.
       taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
 
@@ -67,6 +71,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`,
       backLink: `${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`,
       assertBackLink: false,
+      submitButtonCopy: BUTTONS.SUBMIT_APPLICATION,
     });
   });
 
@@ -116,7 +121,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
     });
 
     it('renders a submit button and `save and back` button', () => {
-      cy.assertSubmitAndSaveButtons();
+      cy.assertSubmitAndSaveButtons(BUTTONS.SUBMIT_APPLICATION);
     });
   });
 

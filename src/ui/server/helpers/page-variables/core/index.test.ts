@@ -1,5 +1,5 @@
 import corePageVariables from '.';
-import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, HEADER, FOOTER, PHASE_BANNER, LINKS, PRODUCT } from '../../../content-strings';
 import { ROUTES } from '../../../constants';
 
 const { START: quoteStart } = ROUTES.QUOTE;
@@ -25,12 +25,15 @@ describe('server/helpers/page-variables/core', () => {
         ...mock.PAGE_CONTENT_STRINGS,
         BUTTONS,
         COOKIES_CONSENT,
+        HEADER,
         FOOTER,
         LINKS,
+        PHASE_BANNER,
         PRODUCT: mock.PRODUCT,
       },
       BACK_LINK: mock.BACK_LINK,
       START_ROUTE: quoteStart,
+      FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
     };
 
     expect(result).toEqual(expected);

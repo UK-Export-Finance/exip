@@ -1,8 +1,9 @@
 import { generatePageVariables, TEMPLATE, get, post } from '.';
-import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import getCurrencyByCode from '../../../helpers/get-currency-by-code';
 import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-cover';
@@ -57,6 +58,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             COOKIES_CONSENT,
             FOOTER,
             LINKS,
+            PHASE_BANNER,
             PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.SINGLE_POLICY_PAGE_TITLE,
             PRODUCT: {
               DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
@@ -76,6 +78,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             },
           },
           START_ROUTE: quoteStart,
+          FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
         } as TellUsAboutPolicyPageVariables;
 
         expected.FIELDS.AMOUNT_CURRENCY = {
@@ -109,6 +112,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             COOKIES_CONSENT,
             FOOTER,
             LINKS,
+            PHASE_BANNER,
             PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.MULTIPLE_POLICY_PAGE_TITLE,
             PRODUCT: {
               DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
@@ -128,6 +132,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             },
           },
           START_ROUTE: quoteStart,
+          FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
         } as TellUsAboutPolicyPageVariables;
 
         expected.FIELDS.AMOUNT_CURRENCY = {
@@ -165,6 +170,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             },
             FOOTER,
             LINKS,
+            PHASE_BANNER,
             BUTTONS,
             COOKIES_CONSENT,
             ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
@@ -182,6 +188,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             },
           },
           START_ROUTE: quoteStart,
+          FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
         };
 
         expect(result).toEqual(expected);
@@ -222,6 +229,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       const expectedCurrencies = mapCurrencies(mockCurrencies);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+        userName: getUserNameFromSession(req.session.user),
         ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
         BACK_LINK: req.headers.referer,
         isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -246,6 +254,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         const expectedCurrencies = mapCurrencies(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+          userName: getUserNameFromSession(req.session.user),
           ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
           isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -273,6 +282,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData.quoteEligibility[PERCENTAGE_OF_COVER]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+          userName: getUserNameFromSession(req.session.user),
           ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
           isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -302,6 +312,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         const mappedCreditPeriodWithSelected = mapCreditPeriod(creditPeriodOptions, String(req.session.submittedData.quoteEligibility[CREDIT_PERIOD]));
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+          userName: getUserNameFromSession(req.session.user),
           ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
           isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -370,6 +381,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         await post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+          userName: getUserNameFromSession(req.session.user),
           ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           BACK_LINK: req.headers.referer,
           isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -398,6 +410,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           await post(req, res);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+            userName: getUserNameFromSession(req.session.user),
             ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             BACK_LINK: req.headers.referer,
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -425,6 +438,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.body[PERCENTAGE_OF_COVER]);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+            userName: getUserNameFromSession(req.session.user),
             ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             BACK_LINK: req.headers.referer,
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -452,6 +466,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           const mappedCreditPeriodWithSelected = mapCreditPeriod(creditPeriodOptions, String(req.session.submittedData.quoteEligibility[CREDIT_PERIOD]));
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
+            userName: getUserNameFromSession(req.session.user),
             ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             BACK_LINK: req.headers.referer,
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),

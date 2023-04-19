@@ -1,6 +1,5 @@
 import partials from '../../../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
-import { submitButton } from '../../../../../pages/shared';
 import { checkYourAnswersPolicyAndExports } from '../../../../../pages/insurance/check-your-answers';
 import application from '../../../../../../fixtures/application';
 import { multipleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
@@ -64,8 +63,8 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
       task.link().click();
 
-      // to get past eligibility check your answers page
-      submitButton().click();
+      // To get past "Eligibility" check your answers page
+      cy.submitCheckYourAnswersForm();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
@@ -314,9 +313,9 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
         });
 
         it('should render the new answer', () => {
-          const { isoCode, name } = currencies[3];
+          const { name } = currencies[3];
 
-          fieldVariables.newValue = `${isoCode} ${name}`;
+          fieldVariables.newValue = name;
           checkChangeAnswerRendered(fieldVariables);
         });
       });

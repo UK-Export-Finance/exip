@@ -4,7 +4,7 @@ import {
 import { insurance } from '../../../../pages';
 import partials from '../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
   completeStartForm,
@@ -47,6 +47,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED,
       backLink: ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD,
+      assertAuthenticatedHeader: false,
     });
   });
 
@@ -62,13 +63,13 @@ context('Insurance - Other parties page - I want to check if I can use online se
     it('renders `yes` radio button', () => {
       yesRadio().should('exist');
 
-      cy.checkText(yesRadio(), 'Yes');
+      cy.checkText(yesRadio(), FIELD_VALUES.YES);
     });
 
     it('renders `no` radio button', () => {
       noRadio().should('exist');
 
-      cy.checkText(noRadio(), 'No');
+      cy.checkText(noRadio(), FIELD_VALUES.NO);
     });
 
     describe('expandable details', () => {

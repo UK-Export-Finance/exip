@@ -3,7 +3,7 @@ import {
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
   completeStartForm,
@@ -48,6 +48,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT,
       backLink: ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED,
+      assertAuthenticatedHeader: false,
     });
   });
 
@@ -63,13 +64,13 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
     it('renders `yes` radio button', () => {
       yesRadio().should('exist');
 
-      cy.checkText(yesRadio(), 'Yes');
+      cy.checkText(yesRadio(), FIELD_VALUES.YES);
     });
 
     it('renders `no` radio button', () => {
       noRadio().should('exist');
 
-      cy.checkText(noRadio(), 'No');
+      cy.checkText(noRadio(), FIELD_VALUES.NO);
     });
   });
 

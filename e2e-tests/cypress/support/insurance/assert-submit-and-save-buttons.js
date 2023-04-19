@@ -2,10 +2,14 @@ import { submitButton, saveAndBackButton } from '../../e2e/pages/shared';
 
 import { BUTTONS } from '../../../content-strings';
 
-const assertSubmitAndSaveButtons = () => {
+/**
+ * assertSubmitAndSaveButtons
+ * @param {String} Custom submit button copy to assert
+ */
+const assertSubmitAndSaveButtons = (submitButtonCopy = BUTTONS.CONTINUE) => {
   submitButton().should('exist');
 
-  cy.checkText(submitButton(), BUTTONS.CONTINUE);
+  cy.checkText(submitButton(), submitButtonCopy);
 
   saveAndBackButton().should('exist');
 
