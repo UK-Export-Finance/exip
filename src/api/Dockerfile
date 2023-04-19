@@ -73,6 +73,9 @@ COPY --chown=node:node --from=build /app/integrations ./integrations
 COPY --chown=node:node --from=build /app/helpers ./helpers
 COPY --chown=node:node --from=build /app/emails ./emails
 COPY --chown=node:node --from=build /app/custom-resolvers ./custom-resolvers
+COPY --chown=node:node --from=build /app/file-system ./file-system
+COPY --chown=node:node --from=build /app/generate-csv ./generate-csv
+COPY --chown=node:node --from=build /app/csv ./csv
 
 # Non-root user
 USER node
