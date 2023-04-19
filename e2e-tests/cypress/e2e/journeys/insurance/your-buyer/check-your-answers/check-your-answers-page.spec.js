@@ -1,4 +1,4 @@
-import { headingCaption, submitButton, saveAndBackButton } from '../../../../pages/shared';
+import { headingCaption, submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import {
   BUTTONS,
@@ -55,7 +55,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
       backLink: `${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`,
-      submitButtonCopy: BUTTONS.CONTINUE_NEXT_SECTION,
+      submitButtonCopy: BUTTONS.SAVE_AND_BACK,
     });
   });
 
@@ -74,26 +74,13 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
   });
 
   describe('form submission', () => {
-    describe('continue', () => {
-      it(`should redirect to ${ALL_SECTIONS}`, () => {
-        cy.navigateToUrl(url);
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
+      cy.navigateToUrl(url);
 
-        submitButton().click();
+      submitButton().click();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-        cy.url().should('eq', expectedUrl);
-      });
-    });
-
-    describe('save and back', () => {
-      it(`should redirect to ${ALL_SECTIONS}`, () => {
-        cy.navigateToUrl(url);
-
-        saveAndBackButton().click();
-
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-        cy.url().should('eq', expectedUrl);
-      });
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      cy.url().should('eq', expectedUrl);
     });
   });
 });
