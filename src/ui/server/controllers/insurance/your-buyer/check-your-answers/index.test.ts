@@ -13,14 +13,11 @@ const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.
 
 export const TEMPLATE = CHECK_YOUR_ANSWERS_TEMPLATE;
 
-const { INSURANCE_ROOT, ALL_SECTIONS, YOUR_BUYER: YOUR_BUYER_ROUTES } = ROUTES.INSURANCE;
-
-const { CHECK_YOUR_ANSWERS_SAVE_AND_BACK } = YOUR_BUYER_ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/your-buyer/check-your-answers', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   beforeEach(() => {
     req = mockReq();
@@ -28,7 +25,6 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
 
     res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
   });
 
   describe('TEMPLATE', () => {
@@ -53,7 +49,6 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`,
         SUMMARY_LIST: summaryList,
       };
 

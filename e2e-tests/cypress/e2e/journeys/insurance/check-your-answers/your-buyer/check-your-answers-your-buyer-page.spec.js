@@ -88,14 +88,6 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
       cy.checkTaskStatusCompleted(status());
     });
 
-    it('renders a `save and back` button', () => {
-      submitButton().should('exist');
-      cy.checkText(submitButton(), BUTTONS.CONFIRM_AND_CONTINUE);
-
-      saveAndBackButton().should('exist');
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
-    });
-
     describe('form submission', () => {
       it(`should redirect to ${ALL_SECTIONS}`, () => {
         cy.navigateToUrl(url);
