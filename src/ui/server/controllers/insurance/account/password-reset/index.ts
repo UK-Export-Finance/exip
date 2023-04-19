@@ -37,7 +37,7 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.ROOT;
 
 /**
  * get
- * Render the Enter code page
+ * Render the Password reset page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Enter code page
@@ -53,7 +53,7 @@ export const get = (req: Request, res: Response) =>
 
 /**
  * post
- * TODO
+ * Check Password reset validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or validation errors
