@@ -39,6 +39,10 @@ services:
     volumes:
       - ./.api/src:/app/src:ro
       - ./.api/src/.keystone:/app/src/.keystone:ro
+      # TODO: Volumes permissions
+      # - ./src/api/generate-csv:/app/generate-csv:rw
+      # - ./src/api/file-system:/app/file-system:rw
+      # - ./src/api/csv:/app/csv:rw
     environment:
       NODE_ENV:
       PORT: ${API_PORT}

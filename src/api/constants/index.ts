@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 import { Algorithm } from 'jsonwebtoken';
-import { BufferEncoding } from './types';
+import { BufferEncoding } from '../types';
+
+import INSURANCE_FIELD_IDS from './field-ids/insurance';
 
 dotenv.config();
 
@@ -30,11 +32,14 @@ export const APPLICATION = {
   },
 };
 
+export const GBP_CURRENCY_CODE = 'GBP';
+
 export const FIELD_IDS = {
   ACCOUNT: {
     EMAIL: 'email',
     VERIFICATION_HASH: 'verificationHash',
   },
+  ...INSURANCE_FIELD_IDS,
 };
 
 export const ACCOUNT = {
@@ -130,3 +135,5 @@ export const EMAIL_TEMPLATE_IDS = {
     INSURANCE: '4d3d7944-e894-4527-aee6-692038c84107',
   },
 };
+
+export const ACCEPTED_FILE_TYPES = ['.csv'];

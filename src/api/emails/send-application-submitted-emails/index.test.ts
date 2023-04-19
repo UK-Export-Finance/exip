@@ -5,9 +5,10 @@ import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from '../index';
 import { ANSWERS, EMAIL_TEMPLATE_IDS } from '../../constants';
-import { mockAccount, mockBuyer, mockApplicationDeclaration, mockExporterCompany, mockSendEmailResponse } from '../../test-mocks';
-import { Account, Application, ApplicationBuyer, ApplicationDeclaration, ApplicationSubmissionEmailVariables, ApplicationExporterCompany } from '../../types';
+import { createFullApplication } from '../../test-helpers';
+import { Application, ApplicationSubmissionEmailVariables } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
+import { mockSendEmailResponse } from '../../test-mocks';
 
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
@@ -17,15 +18,13 @@ dotenv.config();
 const context = getContext(config, PrismaModule) as Context;
 
 describe('emails/send-email-application-submitted', () => {
-  let exporter: Account;
   let application: Application;
-  let exporterCompany: ApplicationExporterCompany;
-  let buyer: ApplicationBuyer;
-  let declaration: ApplicationDeclaration;
+  const mockCsvPath = '/path-to-csv';
 
   jest.mock('./index');
 
   let applicationSubmittedEmailSpy = jest.fn();
+  let underwritingTeamEmailSpy = jest.fn();
   let documentsEmailSpy = jest.fn();
 
   afterAll(() => {
@@ -33,45 +32,17 @@ describe('emails/send-email-application-submitted', () => {
   });
 
   beforeEach(async () => {
-    // create a new exporter
-    exporter = (await context.query.Exporter.createOne({
-      data: mockAccount,
-      query: 'id firstName lastName email salt hash verificationHash',
-    })) as Account;
-
-    // create a new application
-    application = (await context.query.Application.createOne({
-      data: {},
-      query: 'id referenceNumber exporterCompany { id } buyer { id } declaration { id }',
-    })) as Application;
-
-    // create a new exporter company
-    exporterCompany = (await context.query.ExporterCompany.updateOne({
-      where: { id: application.exporterCompany.id },
-      data: mockExporterCompany,
-      query: 'id companyName',
-    })) as ApplicationExporterCompany;
-
-    // create a new buyer
-    buyer = (await context.query.Buyer.updateOne({
-      where: { id: application.buyer.id },
-      data: mockBuyer,
-      query: 'id companyOrOrganisationName',
-    })) as ApplicationBuyer;
-
-    // create a new declaration
-    declaration = (await context.query.Declaration.updateOne({
-      where: { id: application.declaration.id },
-      data: mockApplicationDeclaration,
-      query: 'id',
-    })) as ApplicationDeclaration;
+    application = await createFullApplication(context);
 
     jest.resetAllMocks();
 
     applicationSubmittedEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+    underwritingTeamEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
     documentsEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
     sendEmail.applicationSubmitted.exporter = applicationSubmittedEmailSpy;
+    sendEmail.applicationSubmitted.underwritingTeam = underwritingTeamEmailSpy;
+
     sendEmail.documentsEmail = documentsEmailSpy;
   });
 
@@ -79,8 +50,8 @@ describe('emails/send-email-application-submitted', () => {
     let expectedSendEmailVars: ApplicationSubmissionEmailVariables;
 
     beforeEach(() => {
+      const { referenceNumber, exporter, exporterCompany, buyer } = application;
       const { email, firstName } = exporter;
-      const { referenceNumber } = application;
       const { companyName } = exporterCompany;
       const { companyOrOrganisationName } = buyer;
 
@@ -90,20 +61,18 @@ describe('emails/send-email-application-submitted', () => {
         referenceNumber,
         buyerName: companyOrOrganisationName,
         exporterCompanyName: companyName,
-        // TODO: EMS-1273 to remove below
-        linkToFile: '',
       } as ApplicationSubmissionEmailVariables;
     });
 
     test('it should call sendEmail.applicationSubmitted.exporter', async () => {
-      await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+      await sendApplicationSubmittedEmails.send(application, mockCsvPath);
 
       expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
       expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
     });
 
     test('it should call sendEmail.documentsEmail with correct template ID ', async () => {
-      await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+      await sendApplicationSubmittedEmails.send(application, mockCsvPath);
 
       expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -112,18 +81,16 @@ describe('emails/send-email-application-submitted', () => {
       expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
     });
 
-    describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and buyer has exporterIsConnectedWithBuyer', () => {
-      beforeEach(async () => {
-        declaration = (await context.query.Declaration.updateOne({
-          where: { id: application.declaration.id },
-          data: {
-            hasAntiBriberyCodeOfConduct: ANSWERS.NO,
-          },
-        })) as ApplicationDeclaration;
+    describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and buyer has exporterIsConnectedWithBuyer answer of `Yes`', () => {
+      beforeEach(() => {
+        application.declaration = {
+          ...application.declaration,
+          hasAntiBriberyCodeOfConduct: ANSWERS.NO,
+        };
       });
 
       test('it should call sendEmail.documentsEmail with correct template ID', async () => {
-        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+        await sendApplicationSubmittedEmails.send(application, mockCsvPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -134,24 +101,20 @@ describe('emails/send-email-application-submitted', () => {
     });
 
     describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and does NOT have exporterIsConnectedWithBuyer', () => {
-      beforeEach(async () => {
-        declaration = (await context.query.Declaration.updateOne({
-          where: { id: application.declaration.id },
-          data: {
-            hasAntiBriberyCodeOfConduct: ANSWERS.NO,
-          },
-        })) as ApplicationDeclaration;
+      beforeEach(() => {
+        application.declaration = {
+          ...application.declaration,
+          hasAntiBriberyCodeOfConduct: ANSWERS.NO,
+        };
 
-        buyer = (await context.query.Buyer.updateOne({
-          where: { id: application.buyer.id },
-          data: {
-            exporterIsConnectedWithBuyer: ANSWERS.NO,
-          },
-        })) as ApplicationDeclaration;
+        application.buyer = {
+          ...application.buyer,
+          exporterIsConnectedWithBuyer: ANSWERS.NO,
+        };
       });
 
       test('it should NOT call sendEmail.documentsEmail', async () => {
-        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+        await sendApplicationSubmittedEmails.send(application, mockCsvPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(0);
       });
@@ -159,23 +122,19 @@ describe('emails/send-email-application-submitted', () => {
 
     describe('when the declaration has an answer of `Yes` for hasAntiBriberyCodeOfConduct and does NOT have exporterIsConnectedWithBuyer', () => {
       beforeEach(async () => {
-        declaration = (await context.query.Declaration.updateOne({
-          where: { id: application.declaration.id },
-          data: {
-            hasAntiBriberyCodeOfConduct: ANSWERS.YES,
-          },
-        })) as ApplicationDeclaration;
+        application.declaration = {
+          ...application.declaration,
+          hasAntiBriberyCodeOfConduct: ANSWERS.YES,
+        };
 
-        buyer = (await context.query.Buyer.updateOne({
-          where: { id: application.buyer.id },
-          data: {
-            exporterIsConnectedWithBuyer: ANSWERS.NO,
-          },
-        })) as ApplicationDeclaration;
+        application.buyer = {
+          ...application.buyer,
+          exporterIsConnectedWithBuyer: ANSWERS.NO,
+        };
       });
 
       test('it should NOT call sendEmail.documentsEmail', async () => {
-        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+        await sendApplicationSubmittedEmails.send(application, mockCsvPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -186,49 +145,12 @@ describe('emails/send-email-application-submitted', () => {
     });
   });
 
-  it('should return the email response', async () => {
-    const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+  it('should return success=true', async () => {
+    const result = await sendApplicationSubmittedEmails.send(application, mockCsvPath);
 
-    const expected = {
-      success: true,
-      emailRecipient: mockAccount.email,
-    };
+    const expected = { success: true };
 
     expect(result).toEqual(expected);
-  });
-
-  describe('when no exporter is found', () => {
-    test('it should return success=false', async () => {
-      // wipe the exporter table so we have a clean slate.
-      const exporters = await context.query.Exporter.findMany();
-
-      await context.query.Exporter.deleteMany({
-        where: exporters,
-      });
-
-      const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
-
-      const expected = { success: false };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when no buyer is found', () => {
-    test('it should return success=false', async () => {
-      // wipe the buyer table so we have a clean slate.
-      const buyers = await context.query.Buyer.findMany();
-
-      await context.query.Buyer.deleteMany({
-        where: buyers,
-      });
-
-      const result = await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
-
-      const expected = { success: false };
-
-      expect(result).toEqual(expected);
-    });
   });
 
   describe('error handling', () => {
@@ -238,7 +160,7 @@ describe('emails/send-email-application-submitted', () => {
 
     test('should throw an error', async () => {
       try {
-        await sendApplicationSubmittedEmails.send(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+        await sendApplicationSubmittedEmails.send(application, mockCsvPath);
       } catch (err) {
         const expected = new Error(`Sending application submitted emails ${mockSendEmailResponse}`);
 

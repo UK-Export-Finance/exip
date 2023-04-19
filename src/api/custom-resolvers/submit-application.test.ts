@@ -3,18 +3,13 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import baseConfig from '../keystone';
 import submitApplication from './submit-application';
+import generate from '../generate-csv';
 import applicationSubmittedEmails from '../emails/send-application-submitted-emails';
 import { APPLICATION } from '../constants';
-import { mockAccount, mockBuyer, mockExporterCompany, mockApplicationDeclaration, mockSendEmailResponse, mockApplication } from '../test-mocks';
-import {
-  Account,
-  Application,
-  ApplicationBuyer,
-  ApplicationDeclaration,
-  SubmitApplicationVariables,
-  SubmitApplicationResponse,
-  ApplicationExporterCompany,
-} from '../types';
+import getPopulatedApplication from '../helpers/get-populated-application';
+import { createFullApplication } from '../test-helpers';
+import { mockSendEmailResponse } from '../test-mocks';
+import { Application, SubmitApplicationVariables, SubmitApplicationResponse } from '../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -24,82 +19,18 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
-const updateBuyer = async (buyerId: string): Promise<ApplicationBuyer> => {
-  // update the buyer so there is a name
-  const buyer = (await context.query.Buyer.updateOne({
-    where: {
-      id: buyerId,
-    },
-    data: mockBuyer,
-    query: 'id companyOrOrganisationName',
-  })) as ApplicationBuyer;
-
-  return buyer;
-};
-
-const createRequiredData = async () => {
-  // create a new exporter
-  const exporter = (await context.query.Exporter.createOne({
-    data: mockAccount,
-    query: 'id firstName email',
-  })) as Account;
-
-  // create a new application
-  const application = (await context.query.Application.createOne({
-    query: 'id referenceNumber exporter { id } exporterCompany { id } buyer { id } declaration { id }',
-    data: {
-      exporter: {
-        connect: {
-          id: exporter.id,
-        },
-      },
-    },
-  })) as Application;
-
-  // update the buyer so there is a name
-  const buyer = await updateBuyer(application.buyer.id);
-
-  // update the exporter company so we have a company name
-  const exporterCompany = (await context.query.ExporterCompany.updateOne({
-    where: {
-      id: application.exporterCompany.id,
-    },
-    data: mockExporterCompany,
-    query: 'id',
-  })) as ApplicationDeclaration;
-
-  // update the declaration so we have full data set.
-  const declaration = (await context.query.Declaration.updateOne({
-    where: {
-      id: application.declaration.id,
-    },
-    data: mockApplicationDeclaration,
-    query: 'id',
-  })) as ApplicationDeclaration;
-
-  return {
-    exporter,
-    exporterCompany,
-    application,
-    buyer,
-    declaration,
-  };
-};
-
 describe('custom-resolvers/submit-application', () => {
-  let exporter: Account;
-  let exporterCompany: ApplicationExporterCompany;
-  let buyer: ApplicationBuyer;
-  let declaration: ApplicationDeclaration;
-  let application: Application;
   let submittedApplication: Application;
   let variables: SubmitApplicationVariables;
   let result: SubmitApplicationResponse;
 
+  jest.mock('../generate-csv');
   jest.mock('../emails/send-application-submitted-emails');
 
+  let generateCsvSpy = jest.fn();
   let applicationSubmittedEmailsSpy = jest.fn();
 
+  const mockGenerateCsvResponse = '/mock-path-to-csv';
   const now = new Date();
 
   beforeEach(async () => {
@@ -109,13 +40,11 @@ describe('custom-resolvers/submit-application', () => {
 
     applicationSubmittedEmails.send = applicationSubmittedEmailsSpy;
 
-    const data = await createRequiredData();
+    generateCsvSpy = jest.fn(() => Promise.resolve(mockGenerateCsvResponse));
 
-    exporter = data.exporter;
-    exporterCompany = data.exporterCompany;
-    buyer = data.buyer;
-    declaration = data.declaration;
-    application = data.application;
+    generate.csv = generateCsvSpy;
+
+    const application = await createFullApplication(context);
 
     variables = {
       applicationId: application.id,
@@ -154,12 +83,29 @@ describe('custom-resolvers/submit-application', () => {
     expect(submissionDateDay).toEqual(expectedDay);
   });
 
-  test('it should call applicationSubmittedEmails.send', async () => {
-    result = await submitApplication({}, variables, context);
+  describe('CSV generation and emails', () => {
+    let populatedApplication: Application;
+    let fullSubmittedApplication;
 
-    expect(applicationSubmittedEmailsSpy).toHaveBeenCalledTimes(1);
+    beforeEach(async () => {
+      fullSubmittedApplication = await context.db.Application.findOne({
+        where: { id: submittedApplication.id },
+      });
 
-    expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(context, application.referenceNumber, exporter.id, buyer.id, declaration.id, exporterCompany.id);
+      populatedApplication = await getPopulatedApplication(context, fullSubmittedApplication);
+    });
+
+    test('it should call generate.csv', async () => {
+      expect(generateCsvSpy).toHaveBeenCalledTimes(1);
+
+      expect(generateCsvSpy).toHaveBeenCalledWith(populatedApplication);
+    });
+
+    test('it should call applicationSubmittedEmails.send', async () => {
+      expect(applicationSubmittedEmailsSpy).toHaveBeenCalledTimes(1);
+
+      expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(populatedApplication, mockGenerateCsvResponse);
+    });
   });
 
   describe('when an application is not found', () => {
@@ -216,7 +162,6 @@ describe('custom-resolvers/submit-application', () => {
       await context.query.Application.updateOne({
         where: { id: newApplication.id },
         data: {
-          ...mockApplication,
           submissionDeadline: oneMinuteAgo,
         },
       });
