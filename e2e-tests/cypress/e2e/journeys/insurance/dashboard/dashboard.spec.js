@@ -177,7 +177,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
 
         const expected = {
           href: expectedUrl,
-          text: BUTTONS.START_NEW_APPLICATION,
+          text: BUTTONS.START_A_NEW_APPLICATION,
         };
 
         cy.checkLink(element, expected.href, expected.text);

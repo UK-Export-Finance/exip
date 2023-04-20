@@ -1,76 +1,17 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import sendEmail from '../index';
-import getExporterById from '../../helpers/get-exporter-by-id';
 import { ANSWERS, EMAIL_TEMPLATE_IDS } from '../../constants';
-import { ApplicationSubmissionEmailVariables, SuccessResponse } from '../../types';
+import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } from '../../types';
 
 /**
  * applicationSubmittedEmails.send
  * Send "application submitted" emails
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the SendEmailConfirmEmailAddress mutation
- * @param {Object} KeystoneJS context API
+ * @param {Object} Application
+ * @param {String} Path to CSV file for underwriting team email
  * @returns {Object} Object with success flag and emailRecipient
  */
-const send = async (
-  context: Context,
-  referenceNumber: number,
-  accountId: string,
-  buyerId: string,
-  declarationId: string,
-  exporterCompanyId: string,
-): Promise<SuccessResponse> => {
+const send = async (application: Application, csvPath: string): Promise<SuccessResponse> => {
   try {
-    // get the application's exporter
-    const exporter = await getExporterById(context, accountId);
-
-    // ensure that we have found an acount with the requsted ID.
-    if (!exporter) {
-      console.error('Sending application submitted emails - no exporter exists with the provided ID');
-
-      return {
-        success: false,
-      };
-    }
-
-    // get the application's buyer
-    const buyer = await context.db.Buyer.findOne({
-      where: { id: buyerId },
-    });
-
-    if (!buyer) {
-      console.error('Sending application submitted emails - no buyer exists with the provided ID');
-
-      return {
-        success: false,
-      };
-    }
-
-    // get the application's declarations
-    const declaration = await context.db.Declaration.findOne({
-      where: { id: declarationId },
-    });
-
-    if (!declaration) {
-      console.error('Sending application submitted emails - no declarations exist with the provided ID');
-
-      return {
-        success: false,
-      };
-    }
-
-    // get the exporter's company
-    const exporterCompany = await context.db.ExporterCompany.findOne({
-      where: { id: exporterCompanyId },
-    });
-
-    if (!exporterCompany) {
-      console.error('Sending application submitted emails - no exporter company exists with the provided ID');
-
-      return {
-        success: false,
-      };
-    }
+    const { referenceNumber, exporter, exporterCompany, buyer, declaration } = application as Application;
 
     // generate email variables
     const { email, firstName } = exporter;
@@ -81,8 +22,6 @@ const send = async (
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       exporterCompanyName: exporterCompany.companyName,
-      // TODO: EMS-1273 to remove below
-      linkToFile: '',
     } as ApplicationSubmissionEmailVariables;
 
     // send "application submitted" email to the exporter
@@ -93,7 +32,8 @@ const send = async (
     }
 
     // send "application submitted" email to the underwriting team
-    const underwritingTeamSubmittedResponse = await sendEmail.applicationSubmitted.underwritingTeam(sendEmailVars);
+
+    const underwritingTeamSubmittedResponse = await sendEmail.applicationSubmitted.underwritingTeam(sendEmailVars, csvPath);
 
     if (!underwritingTeamSubmittedResponse.success) {
       throw new Error('Sending application submitted email to underwriting team');
@@ -123,11 +63,9 @@ const send = async (
     if (templateId) {
       documentsResponse = await sendEmail.documentsEmail(sendEmailVars, templateId);
 
-      if (documentsResponse.success) {
-        return documentsResponse;
+      if (!documentsResponse.success) {
+        throw new Error(`Sending application submitted emails ${documentsResponse}`);
       }
-
-      throw new Error(`Sending application submitted emails ${documentsResponse}`);
     }
 
     // no need to send "documents" email

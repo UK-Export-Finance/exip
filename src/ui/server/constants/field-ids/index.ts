@@ -24,5 +24,15 @@ export const FIELD_IDS = {
     ESTIMATED_COST: 'estimatedCost',
     BUYER_LOCATION: 'buyerCountry',
   },
+  FEEDBACK: {
+    SATISFACTION: 'satisfaction',
+    VERY_SATISFIED: 'verySatisfied',
+    SATISFIED: 'satisfied',
+    NEITHER: 'neither',
+    DISSATISFIED: 'dissatisfied',
+    VERY_DISSATISIFED: 'veryDissatisfied',
+    IMPROVEMENT: 'improvement',
+    OTHER_COMMENTS: 'otherComments',
+  },
   INSURANCE,
 };

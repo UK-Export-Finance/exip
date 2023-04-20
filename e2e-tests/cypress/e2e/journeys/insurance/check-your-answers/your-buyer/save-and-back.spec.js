@@ -1,4 +1,4 @@
-import { submitButton, saveAndBackButton } from '../../../../pages/shared';
+import { saveAndBackButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -26,12 +26,14 @@ context('Insurance - Check your answers - Your buyer page - Save and back', () =
 
       task.link().click();
 
-      // to get past eligibility check your answers page
-      submitButton().click();
-      // to get past policy and exports check your answers page
-      submitButton().click();
-      // to get past your business check your answers page
-      submitButton().click();
+      // To get past "Eligibility" check your answers page
+      cy.submitCheckYourAnswersForm();
+
+      // To get past "Policy and exports" check your answers page
+      cy.submitCheckYourAnswersForm();
+
+      // To get past "Your business" check your answers page
+      cy.submitCheckYourAnswersForm();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
 

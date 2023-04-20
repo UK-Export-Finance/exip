@@ -1,4 +1,5 @@
 import { contactUsPage } from '../pages';
+import footer from '../partials/footer';
 import { PAGES } from '../../../content-strings';
 import { ROUTES } from '../../../constants';
 
@@ -10,7 +11,8 @@ context('Contact us page', () => {
   beforeEach(() => {
     cy.login();
 
-    cy.navigateToUrl(url);
+    // click on contact link in footer
+    footer.supportLinks.contact().click();
 
     cy.url().should('include', url);
 
@@ -23,9 +25,10 @@ context('Contact us page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.CONTACT_US,
-      backLink: `${ROUTES.CONTACT_US}#`,
+      backLink: ROUTES.QUOTE.BUYER_COUNTRY,
       assertSubmitButton: false,
       assertAuthenticatedHeader: false,
+      isInsurancePage: false,
     });
   });
 

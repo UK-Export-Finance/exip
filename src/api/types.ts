@@ -8,22 +8,51 @@ interface ApplicationRelationship {
   id: string;
 }
 
+interface Country extends ApplicationRelationship {
+  name: string;
+  isoCode: string;
+}
+
+interface ApplicationEligibility extends ApplicationRelationship {
+  buyerCountry: Country;
+  hasCompaniesHouseNumber: boolean;
+  otherPartiesInvolved: boolean;
+  paidByLetterOfCredit: boolean;
+  needPreCreditPeriodCover: boolean;
+  wantCoverOverMaxAmount: boolean;
+  wantCoverOverMaxPeriod: boolean;
+}
+
+interface ApplicationExporter extends ApplicationRelationship {
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
 interface ApplicationExporterCompany {
   id: string;
   companyName?: string;
 }
 
-interface ApplicationBuyer {
-  id: string;
+interface ApplicationBuyer extends ApplicationRelationship {
   companyOrOrganisationName?: string;
+  address?: string;
+  country?: Country;
+  registrationNumber?: string;
+  website?: string;
+  contactFirstName?: string;
+  contactLastName?: string;
+  contactPosition?: string;
+  contactEmail?: string;
+  canContactBuyer?: boolean;
   exporterIsConnectedWithBuyer?: string;
+  exporterHasTradedWithBuyer?: string;
 }
 
-interface ApplicationDeclaration {
-  id: string;
+interface ApplicationDeclaration extends ApplicationRelationship {
   agreeToConfidentiality?: boolean;
   agreeToAntiBribery?: boolean;
-  hasAntiBriberyCodeOfConduct?: boolean;
+  hasAntiBriberyCodeOfConduct?: string;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
   agreeToConfirmationAndAcknowledgements?: boolean;
   agreeHowDataWillBeUsed?: boolean;
@@ -74,11 +103,11 @@ interface Application {
   updatedAt: string;
   submissionDeadline: string;
   submissionType: string;
-  submissionDate: string;
+  submissionDate: Date;
   status: string;
   previousStatus?: string;
-  eligibility: ApplicationRelationship;
-  exporter: ApplicationRelationship;
+  eligibility: ApplicationEligibility;
+  exporter: ApplicationExporter;
   policyAndExport: ApplicationRelationship;
   exporterCompany: ApplicationExporterCompany;
   exporterCompanyAddress: ApplicationExporterCompanyAddress;
@@ -86,7 +115,7 @@ interface Application {
   exporterBroker: ApplicationRelationship;
   buyer: ApplicationBuyer;
   sectionReview: ApplicationRelationship;
-  declaration: ApplicationRelationship;
+  declaration: ApplicationDeclaration;
 }
 
 interface ApplicationSubmissionEmailVariables {
@@ -107,6 +136,27 @@ interface DeleteApplicationByReferenceNumberVariables {
   referenceNumber: number;
 }
 
+interface CompaniesHouseAddress {
+  careOf: string | null;
+  premises: string | null;
+  addressLine1: string | null;
+  addressLine2: string | null;
+  locality: string | null;
+  region: string | null;
+  postalCode: string | null;
+  country: string | null;
+}
+
+interface CompanyHouseResponse {
+  companyName: string;
+  registeredOfficeAddress: CompaniesHouseAddress;
+  companyNumber: string;
+  dateOfCreation: string;
+  sicCodes: Array<string>;
+  success: boolean;
+  apiError: boolean;
+}
+
 interface EmailResponse extends SuccessResponse {
   emailRecipient: string;
 }
@@ -121,6 +171,15 @@ interface ConnectId {
 
 interface ConnectObj {
   connect: ConnectId;
+}
+
+interface Currency {
+  name: string;
+  isoCode: string;
+}
+
+interface NotifyPeronsalisation {
+  linkToFile?: string;
 }
 
 interface SicCodes {
@@ -153,6 +212,16 @@ interface AccountSignInVariables {
 
 interface AccountSignInSendNewCodeVariables {
   accountId: string;
+}
+
+interface InsuranceFeedbackVariables {
+  satisfaction?: string;
+  improvement?: string;
+  otherComments?: string;
+}
+
+interface InsuranceFeedbackResponse {
+  success: boolean;
 }
 
 interface AccountSignInResponse extends SuccessResponse {
@@ -220,14 +289,21 @@ export {
   Application,
   ApplicationBuyer,
   ApplicationDeclaration,
+  ApplicationEligibility,
   ApplicationExporterCompany,
   ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   BufferEncoding,
+  CompanyHouseResponse,
   CompanyResponse,
+  Country,
+  Currency,
   DeleteApplicationByReferenceNumberVariables,
   EmailResponse,
   GetCompaniesHouseInformationVariables,
+  NotifyPeronsalisation,
+  InsuranceFeedbackVariables,
+  InsuranceFeedbackResponse,
   SicCodes,
   SendExporterEmailVariables,
   SubmitApplicationVariables,

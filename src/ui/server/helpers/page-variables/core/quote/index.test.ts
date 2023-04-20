@@ -1,6 +1,6 @@
 import quoteCorePageVariables from '.';
 import corePageVariables from '..';
-import { PRODUCT } from '../../../../content-strings';
+import { PRODUCT, LINKS } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
 const { START: quoteStart } = ROUTES.QUOTE;
@@ -26,6 +26,7 @@ describe('server/helpers/page-variables/core/insurance', () => {
       },
       BACK_LINK: mock.BACK_LINK,
       START_ROUTE: quoteStart,
+      FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
     });
 
     expect(result).toEqual(expected);

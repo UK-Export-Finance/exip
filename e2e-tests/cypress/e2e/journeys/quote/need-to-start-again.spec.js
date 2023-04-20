@@ -29,6 +29,7 @@ context('Get a Quote - Need to start again exit page', () => {
       submitButtonCopy: LINKS.START_AGAIN.TEXT,
       assertBackLink: false,
       assertAuthenticatedHeader: false,
+      isInsurancePage: false,
     });
   });
 

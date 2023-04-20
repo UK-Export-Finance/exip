@@ -1,4 +1,5 @@
 import dashboardPage from '../../../pages/insurance/dashboard';
+import header from '../../../partials/header';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
@@ -71,18 +72,7 @@ context('Insurance - Dashboard - no applications', () => {
 
       cy.submitInsuranceEligibilityAnswersHappyPath();
 
-      // check we're on the dashboard and not the "do you have an account" page
-      const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
-
-      cy.url().should('eq', expectedUrl);
-
-      // check that the dashboard is now populated
-      dashboardPage.table.body.rows().should('have.length', 1);
-
-      // go into the new application
-      dashboardPage.table.body.lastRow.referenceNumber().click();
-
-      // get the reference number and assert the URL
+      // get the reference number and check we're on the "all sections" and not the "do you have an account" page
       cy.getReferenceNumber().then((refNumber) => {
         referenceNumber = refNumber;
 
@@ -90,6 +80,12 @@ context('Insurance - Dashboard - no applications', () => {
 
         cy.url().should('eq', allSectionsUrl);
       });
+
+      // go to the dashboard
+      header.navigation.applications().click();
+
+      // check that the dashboard is now populated
+      dashboardPage.table.body.rows().should('have.length', 1);
     });
   });
 });

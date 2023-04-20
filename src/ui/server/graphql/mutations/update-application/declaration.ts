@@ -3,7 +3,12 @@ import gql from 'graphql-tag';
 const updateApplicationDeclarationMutation = gql`
   mutation ($where: DeclarationWhereUniqueInput!, $data: DeclarationUpdateInput!) {
     updateDeclaration(where: $where, data: $data) {
-      id
+      agreeToConfidentiality
+      agreeToAntiBribery
+      hasAntiBriberyCodeOfConduct
+      willExportWithAntiBriberyCodeOfConduct
+      agreeToConfirmationAndAcknowledgements
+      agreeHowDataWillBeUsed
     }
   }
 `;

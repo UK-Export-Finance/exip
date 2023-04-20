@@ -4,6 +4,7 @@ import { ACCOUNT_FIELDS as FIELDS } from '../../../../content-strings/fields/ins
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
 
@@ -98,8 +99,10 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // validate credentials
-    const email = req.body[EMAIL];
-    const password = req.body[PASSWORD];
+    const sanitisedData = sanitiseData(req.body);
+
+    const email = sanitisedData[EMAIL];
+    const password = sanitisedData[PASSWORD];
 
     const response = await api.keystone.account.signIn(email, password);
 

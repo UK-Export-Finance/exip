@@ -33,6 +33,7 @@ context('Get a quote via email exit page', () => {
       backLink: ROUTES.QUOTE.BUYER_COUNTRY,
       assertSubmitButton: false,
       assertAuthenticatedHeader: false,
+      isInsurancePage: false,
       lightHouseThresholds: {
         seo: 60,
       },
