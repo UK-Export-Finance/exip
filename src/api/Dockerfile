@@ -36,7 +36,6 @@ COPY --chown=node:node ./content-strings ./content-strings
 COPY --chown=node:node ./custom-schema.ts .
 COPY --chown=node:node ./file-system ./file-system
 COPY --chown=node:node ./generate-csv ./generate-csv
-COPY --chown=node:node ./csv ./csv
 COPY --chown=node:node ./keystone.ts .
 COPY --chown=node:node ./schema.ts .
 COPY --chown=node:node ./types.ts .
@@ -75,7 +74,6 @@ COPY --chown=node:node --from=build /app/emails ./emails
 COPY --chown=node:node --from=build /app/custom-resolvers ./custom-resolvers
 COPY --chown=node:node --from=build /app/file-system ./file-system
 COPY --chown=node:node --from=build /app/generate-csv ./generate-csv
-COPY --chown=node:node --from=build /app/csv ./csv
 
 # Non-root user
 USER node
