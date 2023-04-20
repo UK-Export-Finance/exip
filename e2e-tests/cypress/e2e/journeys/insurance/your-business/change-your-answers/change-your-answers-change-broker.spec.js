@@ -2,6 +2,7 @@ import partials from '../../../../partials';
 import { broker, checkYourAnswers } from '../../../../pages/your-business';
 import { submitButton } from '../../../../pages/shared';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
+import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -218,7 +219,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       });
 
       it('should render the new answer and not render the optional broker sections', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, 'No');
+        cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
 
         summaryList[NAME].key().should('not.exist');
         summaryList[NAME].value().should('not.exist');

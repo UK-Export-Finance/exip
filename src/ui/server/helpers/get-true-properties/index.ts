@@ -1,19 +1,27 @@
+import { FIELD_VALUES } from '../../constants';
+
 /**
- * getTrueProperties
+ * getYesAndTrueAnswerProperties
  * Get true properties in an object
  * @param {Object}
  * @returns {Object} Object with only true properties
  */
-const getTrueProperties = (obj: object) => {
+const getYesAndTrueAnswerProperties = (obj: object) => {
   const cleanObj = {};
 
   Object.keys(obj).forEach((key) => {
-    if (obj[key] === true) {
+    const value = obj[key];
+
+    if (value === true) {
       cleanObj[key] = true;
+    }
+
+    if (value === FIELD_VALUES.YES) {
+      cleanObj[key] = FIELD_VALUES.YES;
     }
   });
 
   return cleanObj;
 };
 
-export default getTrueProperties;
+export default getYesAndTrueAnswerProperties;

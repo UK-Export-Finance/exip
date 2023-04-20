@@ -1,20 +1,11 @@
-import { ROUTES, CONTACT_DETAILS } from '../constants';
+import { ROUTES } from '../constants';
 
 export const FOOTER = {
-  HEADING: 'Contact us',
-  EMAIL: {
-    HEADING: 'Email',
-    VALUE: CONTACT_DETAILS.EMAIL.CUSTOMER_SERVICE,
-  },
-  PHONE: {
-    HEADING: 'Phone',
-    VALUE: CONTACT_DETAILS.TELEPHONE,
-  },
-  OPENING_TIMES: {
-    HEADING: 'Opening times',
-    VALUE: 'Monday to Friday, 9am to 5pm (excluding public holidays)',
-  },
   SUPPORT_LINKS_HEADING: 'Support Links',
+  ACCESSIBILITY_STATEMENT: {
+    TEXT: 'Accessibility statement',
+    HREF: ROUTES.ACCESSIBILITY_STATEMENT,
+  },
   PRIVACY: {
     TEXT: 'Privacy',
     HREF: 'https://www.gov.uk/government/publications/ukef-privacy-notice',
@@ -26,6 +17,10 @@ export const FOOTER = {
   REPORT_VULNERABILITY: {
     TEXT: 'Report a vulnerability',
     HREF: 'https://www.gov.uk/guidance/report-a-vulnerability-on-a-ukef-system',
+  },
+  CONTACT: {
+    TEXT: 'Contact',
+    HREF: ROUTES.CONTACT_US,
   },
   OGL_LICENCE: {
     INTRO: 'All content is available under the',

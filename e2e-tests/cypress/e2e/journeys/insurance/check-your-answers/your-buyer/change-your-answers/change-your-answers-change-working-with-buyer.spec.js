@@ -1,5 +1,6 @@
 import { submitButton, status } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
+import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { checkYourAnswersYourBuyer } from '../../../../../pages/insurance/check-your-answers';
@@ -54,12 +55,14 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
 
       task.link().click();
 
-      // to get past eligibility check your answers page
-      submitButton().click();
-      // to get past policy and exports check your answers page
-      submitButton().click();
-      // to get past your business check your answers page
-      submitButton().click();
+      // To get past "Eligibility" check your answers page
+      cy.submitCheckYourAnswersForm();
+
+      // To get past "Policy and exports" check your answers page
+      cy.submitCheckYourAnswersForm();
+
+      // To get past "Your business" check your answers page
+      cy.submitCheckYourAnswersForm();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
 
@@ -110,7 +113,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
-        fieldVariables.newValue = 'No';
+        fieldVariables.newValue = FIELD_VALUES.NO;
         checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());
@@ -151,7 +154,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
-        fieldVariables.newValue = 'No';
+        fieldVariables.newValue = FIELD_VALUES.NO;
         checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());

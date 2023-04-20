@@ -3,7 +3,7 @@ import corePageVariables from '../core';
 import { FIELDS, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../constants';
 
-const { START: insuranceStart } = ROUTES.INSURANCE;
+const { START: insuranceStart, FEEDBACK: feedbackRoute } = ROUTES.INSURANCE;
 
 describe('server/helpers/page-variables/single-input', () => {
   const mock = {
@@ -16,6 +16,7 @@ describe('server/helpers/page-variables/single-input', () => {
     },
     BACK_LINK: '/mock',
     START_ROUTE: insuranceStart,
+    FEEDBACK_ROUTE: feedbackRoute,
   };
 
   it('should return corePageVariables with BACK_LINK, quote product description and FIELD_ID', () => {

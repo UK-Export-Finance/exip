@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { add, addMonths } from 'date-fns';
-import { APPLICATION } from '../constants';
+import { APPLICATION, FIELD_VALUES } from '../constants';
 import mockAccount from './mock-account';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
@@ -98,10 +98,10 @@ export const mockSectionReview = {
 
 export const mockApplicationDeclaration = {
   id: 'clf3te7vx1432cfoqp9rbop73',
-  agreeToConfidentiality: 'Yes',
+  agreeToConfidentiality: FIELD_VALUES.YES,
   agreeToAntiBribery: true,
-  hasAntiBriberyCodeOfConduct: 'Yes',
-  willExportWithAntiBriberyCodeOfConduct: 'Yes',
+  hasAntiBriberyCodeOfConduct: FIELD_VALUES.YES,
+  willExportWithAntiBriberyCodeOfConduct: FIELD_VALUES.YES,
   agreeToConfirmationAndAcknowledgements: true,
   agreeHowDataWillBeUsed: true,
 };
@@ -113,6 +113,7 @@ const mockApplication = {
   updatedAt: new Date().toISOString(),
   submissionDeadline: addMonths(new Date(), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS).toISOString(),
   submissionType: 'Manual Inclusion Application',
+  submissionDate: new Date().toISOString(),
   eligibility: {
     id: 'clav8by1g0000kgoq5a2afr1z',
     buyerCountry: mockCountries[0],
@@ -125,7 +126,7 @@ const mockApplication = {
     wantCoverOverMaxAmount: false,
     wantCoverOverMaxPeriod: false,
   },
-  status: APPLICATION.STATUS.SUBMITTED,
+  status: APPLICATION.STATUS.DRAFT,
   exporter: mockExporter,
   policyAndExport: mockSinglePolicyAndExport,
   exporterCompany: mockExporterCompany,

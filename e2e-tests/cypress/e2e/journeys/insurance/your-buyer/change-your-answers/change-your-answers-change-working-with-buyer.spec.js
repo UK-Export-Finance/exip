@@ -1,5 +1,5 @@
 import partials from '../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { workingWithBuyerPage, checkYourAnswersPage } from '../../../../pages/insurance/your-buyer';
 import { submitButton } from '../../../../pages/shared';
 
@@ -84,7 +84,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       });
 
       it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, 'No');
+        cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
       });
     });
   });
@@ -118,7 +118,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       });
 
       it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, 'No');
+        cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
       });
     });
   });

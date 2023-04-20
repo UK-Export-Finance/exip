@@ -30,6 +30,7 @@ context('Cookies page', () => {
       backLink: ROUTES.QUOTE.BUYER_COUNTRY,
       submitButtonCopy: BUTTONS.SAVE_CHANGES,
       assertAuthenticatedHeader: false,
+      isInsurancePage: false,
     });
   });
 

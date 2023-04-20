@@ -1,7 +1,10 @@
 import { submitButton, status } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import {
-  VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANY_EXAMPLE,
+  FIELD_VALUES,
+  VALID_PHONE_NUMBERS,
+  WEBSITE_EXAMPLES,
+  COMPANY_EXAMPLE,
 } from '../../../../../../../constants';
 import { checkYourAnswersYourBusiness } from '../../../../../pages/insurance/check-your-answers';
 import { companyDetails } from '../../../../../pages/your-business';
@@ -68,10 +71,11 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
       task.link().click();
 
-      // to get past eligibility check your answers page
-      submitButton().click();
-      // to get past policy and exports check your answers page
-      submitButton().click();
+      // To get past "Eligibility" check your answers page
+      cy.submitCheckYourAnswersForm();
+
+      // To get past "Policy and exports" check your answers page
+      cy.submitCheckYourAnswersForm();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
@@ -174,7 +178,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
-        cy.checkText(summaryList.field(fieldId).value(), 'No');
+        cy.checkText(summaryList.field(fieldId).value(), FIELD_VALUES.NO);
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -215,7 +219,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
-        cy.checkText(summaryList.field(fieldId).value(), 'No');
+        cy.checkText(summaryList.field(fieldId).value(), FIELD_VALUES.NO);
 
         cy.checkTaskStatusCompleted(status());
       });

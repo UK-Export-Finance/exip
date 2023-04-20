@@ -45,6 +45,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       currentHref: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
       backLink: ROUTES.QUOTE.POLICY_TYPE,
       assertAuthenticatedHeader: false,
+      isInsurancePage: false,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.
